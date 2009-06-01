@@ -1,0 +1,65 @@
+!Account
+NAccount 1
+TBank
+B105.20
+^
+!Type:Bank
+D01/01/07
+MStarting Balance
+T42.32
+C*
+^
+Dbad date
+P
+MDeposit
+Tbad amount
+C*
+LSalary
+^
+D01/02/07
+P
+MWithdrawal
+T-60.00
+C*
+LCash
+^
+D01/02/07
+PHydro-Quebec
+MPower Bill
+N36
+T-57.12
+C*
+LUtilities
+^
+D02/04/07
+PAccount 2
+MTransfer
+T80.00
+C*
+L
+^
+!Account
+NAccount 2
+TBank
+B2928.92
+^
+!Type:Bank
+D01/01/07
+MStarting Balance
+T3000.00
+C*
+^
+D01/05/07
+PMy Bank
+MInterest
+T8.92
+C*
+LInterest
+^
+D02/04/07
+PAccount 1
+MTransfer
+T-80.00
+C*
+L
+^

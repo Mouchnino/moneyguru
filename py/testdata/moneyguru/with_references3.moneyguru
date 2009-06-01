@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<moneyguru-file>
+	<account name="Account 4" currency="CAD" reference="acc4"/>
+	<transaction date="2008-02-15" description="Transfer from Account 1">
+		<split account="Account 4" amount="42.00" reference="other_reference"/>
+	</transaction>
+</moneyguru-file>

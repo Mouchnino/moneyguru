@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<moneyguru-file>
+    <account currency="USD" name="Account 1" type="foobar"/>
+</moneyguru-file>

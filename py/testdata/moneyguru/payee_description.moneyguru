@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- Transactions with various payee/description values -->
+<moneyguru-file>
+	<account name="foo"/>
+	<account name="bar"/>
+    <transaction date="2008-03-19" description="description" payee="payee">
+		<split account="foo" amount="42.00"/>
+        <split account="bar" amount="42.00"/>
+	</transaction>
+    <transaction date="2008-03-19" description="description">
+		<split account="foo" amount="42.00"/>
+        <split account="bar" amount="42.00"/>
+	</transaction>
+    <transaction date="2008-03-19" payee="payee">
+		<split account="foo" amount="42.00"/>
+        <split account="bar" amount="42.00"/>
+	</transaction>
+</moneyguru-file>

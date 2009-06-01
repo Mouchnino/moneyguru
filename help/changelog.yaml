@@ -1,0 +1,174 @@
+- date: 2009-05-24
+  version: 1.5.4
+  description: |
+    * Fixed a crash sometimes happening when using the Filter field.
+- date: 2009-05-17
+  version: 1.5.3
+  description: |
+    * Fixed a few GUI glitches
+- date: 2009-05-14
+  version: 1.5.2
+  description: |
+    * Added a "Description <--> Payee" switch in the import window.
+    * Improved the CSV import layout system by removing some glitches.
+- date: 2009-04-26
+  version: 1.5.1
+  description: |
+    * Fixed an exception triggered by totals line with some specific configurations.
+    * Fixed incompatibilities with systems having some Accessibility features turned on.
+- date: 2009-04-22
+  version: 1.5.0
+  description: | 
+    * Added printing support.
+    * Added a target account selector in the CSV options panel, making it possible to save it in 
+        the layouts.
+    * Added a Multi-Currency Balance button in the Transaction Info panel.
+    * Account deletion prompts for a transaction re-assignment before it happens.
+    * Date swapping in the Import Window can now be applied on all accounts at once.
+    * The search box allows "account:" and "group:" search types.
+    * The position of the date range is remembered between sessions, not just its scope.
+    * Added a statistics line in the filter bar in the Transactions and Account panels.
+    * When an edition to a transaction will cause it to go out of the date range, an icon shows up
+        as an indicator of that fact.
+    * Improved date format guessing during CSV import.
+    * Added the "Reconciled" and "Not Reconciled" filters.
+    * Changed the "Income" and "Expense" filters in the Account view to "Increase" and "Decrease".
+    * Made a round of speed optimization. File loading and Net Worth / Profit calculations are now
+        significantly faster.
+    * Fixed an exception happening when pressing the delete key in the Import Window.
+    * Fixed an exception occasionally happening during split edition.
+    * Fixed an exception occasionally happening during transaction deletion.
+    * Fixed a crash on startup when the currency cache database was corrupted.
+    * Fixed a bug where it was impossible to import transactions with a future date.
+    * Fixed a bug where graph labels on the X axis would sometimes be wrong under a custom date
+        range.
+- date: 2009-04-09
+  version: 1.4.3
+  description: | 
+    * **Fixed** a few crashes.
+- date: 2009-03-20
+  version: 1.4.2
+  description: |
+    * **Fixed** en encoding issue with CSV imports.
+    * **Fixed** a bug in the account info panel.
+- date: 2009-03-14
+  version: 1.4.1
+  description: |
+    * **Fixed** a column visibility bug on Tiger.
+    * **Fixed** glitches in the CSV options dialog.
+    * **Fixed** a display glitch with the date range control.
+    * **Fixed** a bug in the account info panel.
+- date: 2009-02-22
+  version: 1.4.0
+  description: |
+    * **Added** CSV imports.
+    * **Added** a Running year date range.
+    * **Added** a Custom date range.
+    * **Added** a preference to disable reconciliation warnings.
+    * **Improved** the way pie charts look.
+    * Account exclusion states are now remembered between sessions.
+- date: 2009-01-08
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Fixed</b> a budget calculation crash.</li>\n\
+    \t\t\t\t\t\t<li><b>Fixed</b> a bug where some scheduled transactions wouldn't\
+    \ show up after a reload.</li>\n\t\t\t\t\t\t<li><b>Improved</b> QIF imports.</li>\n\
+    \t\t\t\t\t\t<li><b>Improved</b> QIF exports.</li>\n\t\t            </ul>"
+  version: 1.3.2
+- date: 2008-12-20
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Improved</b> QIF imports.</li>\n\t\t    \
+    \        </ul>"
+  version: 1.3.1
+- date: 2008-12-13
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Added</b> budgeting.</li>\n\t\t         \
+    \   \t<li><b>Added</b> a \"Year to date\" date range.</li>\n\t\t            \t\
+    <li><b>Added</b> a Today shortcut for date range navigation.</li>\n\t\t      \
+    \      \t<li><b>Improved</b> graphs so they clearly distinguish between past data\
+    \ and future data.</li>\n\t\t            \t<li><b>Improved</b> the reconciliation\
+    \ warning so it gives the option to continue the action without losing reconciliation.</li>\n\
+    \t\t            \t<li><b>Fixed</b> a pie chart inaccuracy in multiple currencies\
+    \ contexts.</li>\n\t\t            \t<li><b>Fixed</b> a bug causing scheduled transaction\
+    \ not to show up in searches.</li>\n\t\t            \t<li>The selected date range\
+    \ type is now remembered between sessions.</li>\n\t\t            </ul>"
+  version: 1.3.0
+- date: 2008-11-27
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Added</b> support for the Egyptian pound.</li>\n\
+    \t\t            \t<li><b>Fixed</b> a bug causing moneyGuru to not start at all\
+    \ on systems with an unusual date format.</li>\n\t\t            </ul>"
+  version: 1.2.3
+- date: 2008-11-22
+  description: "<ul>\n\t\t            \t<li><b>Improved</b> QIF imports.</li>\n\t\t\
+    \            </ul>"
+  version: 1.2.2
+- date: 2008-11-09
+  description: "<ul>\n\t\t            \t<li><b>Added</b> support for the Bahraini\
+    \ dinar.</li>\n\t\t            \t<li><b>Fixed</b> an autofill glitch.</li>\n\t\
+    \t            \t<li>The native currency now falls back to USD if the system currency\
+    \ is not supported.</li>\n\t\t            </ul>"
+  version: 1.2.1
+- date: 2008-11-03
+  description: "<ul>\n\t\t            \t<li><b>Added</b> scheduled transactions.</li>\n\
+    \t\t            \t<li><b>Added</b> a font size preference for tables and sheets.</li>\n\
+    \t\t            \t<li><b>Improved</b> weekly bar chart by completing the bars\
+    \ over the date range limits.</li>\n\t\t            \t<li>Columns position and\
+    \ width are now remembered between sessions.</li>\n\t\t            </ul>"
+  version: 1.2.0
+- date: 2008-10-11
+  description: "<ul>\n\t\t            \t<li><b>Fixed</b> an issue with Export to QIF.</li>\n\
+    \t\t            \t<li><b>Fixed</b> an amount formatting issue.</li>\n\t\t    \
+    \        </ul>"
+  version: 1.1.5
+- date: 2008-10-05
+  description: "<ul>\n\t\t            \t<li><b>Fixed</b> an issue with completion\
+    \ in the split table.</li>\n\t\t            </ul>"
+  version: 1.1.4
+- date: 2008-10-04
+  description: "<ul>\n\t\t            \t<li><b>Fixed</b> issues with the Transaction\
+    \ Info panel.</li>\n\t\t            \t<li><b>Fixed</b> issues with the pie charts.</li>\n\
+    \t\t            </ul>"
+  version: 1.1.3
+- date: 2008-09-17
+  description: "<ul>\n\t\t            \t<li><b>Improved</b> OFX imports.</li>\n\t\t\
+    \            </ul>"
+  version: 1.1.2
+- date: 2008-09-10
+  description: "<ul>\n\t\t            \t<li><b>Fixed</b> an occasional crash when\
+    \ undoing.</li>\n\t\t            </ul>"
+  version: 1.1.1
+- date: 2008-09-08
+  description: "<ul>\n\t\t            \t<li><b>Added</b> assets, liabilities, income\
+    \ and expenses pie charts.</li>\n\t\t            \t<li><b>Added</b> the ability\
+    \ to exclude accounts from totals and charts.</li>\n\t\t            \t<li><b>Added</b>\
+    \ Income, Expenses and Transfers filters in the Transactions and Account views.</li>\n\
+    \t\t            \t<li><b>Added</b> view options for charts.</li>\n\t\t       \
+    \     \t<li><b>Improved</b> OFX imports.</li>\n\t\t            \t<li><b>Fixed</b>\
+    \ a crash sometimes happening when editing dates.</li>\n\t\t            </ul>"
+  version: 1.1.0
+- date: 2008-09-03
+  description: "<ul>\n\t\t            \t<li><b>Added</b> \"Last\", \"Delta $\" and\
+    \ \"Delta %\" to the income statement columns.</li>\n\t\t            </ul>"
+  version: 1.0.5
+- date: 2008-09-02
+  description: "<ul>\n\t\t            \t<li><b>Improved</b> QIF import (again, yeah).</li>\n\
+    \t\t            </ul>"
+  version: 1.0.4
+- date: 2008-09-01
+  description: "<ul>\n\t\t            \t<li><b>Improved</b> QIF import.</li>\n\t\t\
+    \            \t<li><b>Fixed</b> error sometimes happening when column visibility\
+    \ was toggled.</li>\n\t\t            </ul>"
+  version: 1.0.3
+- date: 2008-08-31
+  description: "<ul>\n\t\t            \t<li><b>Added</b> \"Delta $\" and \"Delta %\"\
+    \ to the balance sheet columns.</li>\n\t\t            \t<li><b>Added</b> a View\
+    \ Options panel for transactions and balance sheet columns.</li>\n\t\t       \
+    \     \t<li>Documents now remember their main window position and size.</li>\n\
+    \t\t\t\t\t\t<li><b>Improved</b> net worth chart computation speed. With a lot\
+    \ of transactions in the current date range, it could get rather long to compute.</li>\n\
+    \t\t            </ul>"
+  version: 1.0.2
+- date: 2008-08-30
+  description: "<ul>\n\t\t            \t<li><b>Improved</b> QIF import/export.</li>\n\
+    \t\t            </ul>"
+  version: 1.0.1
+- date: 2008-08-29
+  description: "<ul>\n\t\t            \t<li>Initial release</li>\n\t\t           \
+    \ </ul>"
+  version: 1.0.0

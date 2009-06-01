@@ -1,0 +1,11 @@
+!Account
+NAccount 1
+TBank
+^
+!Type:Bank
+D01/01/07
+MStarting Balance
+T42.32CX
+Sfoo
+$42.32CX
+^

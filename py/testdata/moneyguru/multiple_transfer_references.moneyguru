@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- Multiple splits refer to the same transfer account -->
+<moneyguru-file>
+	<account name="asset" type="asset" currency="CAD"/>
+	<account name="income" type="income" currency="CAD"/>
+	<account name="expense" type="expense" currency="CAD"/>
+	<transaction date="2008-02-15" description="txn1">
+		<split account="asset" amount="42.00"/>
+		<split account="income" amount="-42.00"/>
+	</transaction>
+	<transaction date="2008-02-16" description="txn2">
+		<split account="asset" amount="-14.00"/>
+		<split account="expense" amount="14.00"/>
+	</transaction>
+	<transaction date="2008-02-12" description="txn3">
+		<split account="asset" amount="89.00"/>
+		<split account="income" amount="-89.00"/>
+	</transaction>
+	<transaction date="2008-02-19" description="txn4">
+		<split account="asset" amount="-101.00"/>
+		<split account="expense" amount="101.00"/>
+	</transaction>
+</moneyguru-file>

@@ -1,0 +1,329 @@
+# Unit Name: moneyguru.loader.base
+# Created By: Virgil Dupras
+# Created On: 2008-02-15
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
+import datetime
+import logging
+import re
+
+from hsutil.currency import Currency
+from hsutil.misc import nonone, flatten
+
+from ..const import REPEAT_NEVER
+from ..model.account import (Account, Group, AccountList, GroupList, ASSET, LIABILITY, INCOME,
+    EXPENSE)
+from ..model.amount import parse_amount
+from ..model.oven import Oven
+from ..model.recurrence import Recurrence, Spawn
+from ..model.transaction import Transaction, Split
+from ..model.transaction_list import TransactionList
+
+# date formats to use for format guessing
+# there is not one test for each single format
+DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%d.%m.%Y', '%d.%m.%y', '%m.%d.%y', 
+    '%m.%d.%Y', '%m-%d-%y', '%m-%d-%Y', '%d-%m-%Y', '%d-%m-%y', '%Y%m%d']
+
+re_possibly_a_date = re.compile(r'[\d/.-]{8,10}')
+
+class Loader(object):
+    """Base interface for loading files containing financial information to load into moneyGuru.
+    
+    To use it, just call load() and then fetch the accounts & transactions. This information is in
+    the form of lists of dicts. The transactions are sorted in order of date.
+    """
+    def __init__(self, default_currency):
+        self.default_currency = default_currency
+        self.groups = GroupList()
+        self.accounts = AccountList(default_currency)
+        self.transactions = TransactionList()
+        # I did not manage to create a repeatable test for it, but self.scheduled has to be ordered
+        # because the order in which the spawns are created must stay the same
+        self.scheduled = []
+        self.oven = Oven(self.accounts, self.transactions, self.scheduled)
+        self.target_account = None # when set, overrides the reference matching system
+        self.group_infos = []
+        self.account_infos = []
+        self.transaction_infos = []
+        self.recurrence_infos = []
+        self.group_info = GroupInfo()
+        self.account_info = AccountInfo()
+        self.transaction_info = TransactionInfo()
+        self.transaction_cancelled = False
+        self.split_info = SplitInfo()
+        self.recurrence_info = RecurrenceInfo()
+    
+    #--- Virtual
+    def _parse(self, infile):
+        """Parse infile and raise FileFormatError if infile is not the right format. Don't bother 
+        with an exception message, app.MoneyGuru will re-raise it with a message if needed.
+        """
+        raise NotImplementedError()
+    
+    def _load(self):
+        """Use the parsed info to fill the appropriate account/txn info with the start_* and flush_*
+        methods.
+        """
+        raise NotImplementedError()
+    
+    #--- Protected
+    def clean_date(self, str_date):
+        # return str_date without garbage around (such as timestamps) or None if impossible
+        match = re_possibly_a_date.search(str_date)
+        return match.group() if match is not None else None
+    
+    def guess_date_format(self, str_dates):
+        for format in DATE_FORMATS:
+            found_at_least_one = False
+            for str_date in str_dates:
+                try:
+                    datetime.datetime.strptime(str_date, format)
+                    found_at_least_one = True
+                except ValueError:
+                    logging.debug(u'Failed try to read the date {0} with the format {1}'.format(str_date, format))
+                    break
+            else:
+                if found_at_least_one:
+                    logging.debug(u'Correct date format: {0}'.format(format))
+                    return format
+        return None    
+    
+    def start_group(self):
+        pass
+    
+    def flush_group(self):
+        if self.group_info.is_valid():
+            self.group_infos.append(self.group_info)
+        self.group_info = GroupInfo()
+    
+    def start_account(self):
+        self.flush_account() # Implicit
+    
+    def flush_account(self):
+        self.flush_transaction()
+        if self.account_info.is_valid():
+            self.account_infos.append(self.account_info)
+        self.account_info = AccountInfo()
+    
+    def start_transaction(self):
+        self.flush_transaction() # Implicit
+    
+    def flush_transaction(self):
+        """If called between a start_account and flush_account call, ACCOUNT is automatically set"""
+        self.flush_split()
+        if not self.transaction_cancelled:
+            if self.transaction_info.account is None and self.account_info and self.account_info.name:
+                self.transaction_info.account = self.account_info.name
+            if self.transaction_info.is_valid():
+                self.transaction_infos.append(self.transaction_info)
+        self.transaction_cancelled = False
+        self.transaction_info = TransactionInfo()
+    
+    def cancel_transaction(self):
+        self.transaction_cancelled = True
+    
+    def flush_split(self):
+        if self.split_info.is_valid():
+            self.transaction_info.splits.append(self.split_info)
+        self.split_info = SplitInfo()
+    
+    def flush_recurrence(self):
+        if self.recurrence_info.is_valid():
+            self.recurrence_infos.append(self.recurrence_info)
+        self.recurrence_info = RecurrenceInfo()
+    
+    #--- Public
+    def parse(self, filename):
+        """Parses 'filename' and raises FileFormatError if appropriate."""
+        with open(filename, 'r') as infile:
+            self._parse(infile)
+    
+    @staticmethod
+    def parse_amount(string, currency):
+        return parse_amount(string, currency)
+    
+    def load(self):
+        """Loads the parsed info into self.accounts and self.transactions.
+        
+        You must have called parse() before calling this.
+        """
+        def load_transaction_info(info):
+            description = info.description
+            payee = info.payee
+            checkno = info.checkno
+            date = info.date
+            transaction = Transaction(date, description, payee, checkno)
+            for split_info in info.splits:
+                account = split_info.account
+                amount = split_info.amount
+                if split_info.amount_reversed:
+                    amount = -amount
+                memo = nonone(split_info.memo, '')
+                reconciled = split_info.reconciled
+                split = Split(transaction, account, amount, memo=memo, reconciled=reconciled)
+                split.reference = split_info.reference
+                transaction.splits.append(split)
+            transaction.balance()
+            while len(transaction.splits) < 2:
+                transaction.splits.append(Split(transaction, None, 0))
+            transaction.mtime = info.mtime
+            if info.reference is not None:
+                for split in transaction.splits:
+                    if split.reference is None:
+                        split.reference = info.reference
+            return transaction
+        
+        self._load()
+        self.flush_account() # Implicit
+        # Now, we take the info we have and transform it into model instances
+        currencies = set()
+        start_date = datetime.date.max
+        for info in self.group_infos:
+            group = Group(info.name, info.type)
+            self.groups.append(group)
+        for info in self.account_infos:
+            account_type = info.type
+            if account_type not in (ASSET, LIABILITY, INCOME, EXPENSE):
+                account_type = ASSET
+            account_currency = self.default_currency
+            try:
+                if info.currency:
+                    account_currency = Currency(info.currency)
+            except ValueError:
+                pass # keep account_currency as self.default_currency
+            account = Account(info.name, account_currency, account_type)
+            if info.group:
+                account.group = self.groups.find(info.group, account_type)
+            if info.budget:
+                account.budget = self.parse_amount(info.budget, account.currency)
+            account.budget_target_name = info.budget_target
+            account.reference = info.reference                    
+            currencies.add(account.currency)
+            self.accounts.add(account)
+        for account in (a for a in self.accounts if a.budget_target_name is not None):
+            account.budget_target = self.accounts.find(account.budget_target_name)
+        
+        # Pre-parse transaction info. We bring all relevant info recorded at the txn level into the split level
+        all_txn = self.transaction_infos + [r.transaction_info for r in self.recurrence_infos] +\
+                  flatten([filter(None, r.date2exception.values()) for r in self.recurrence_infos]) +\
+                  flatten([r.date2globalchange.values() for r in self.recurrence_infos])
+        for info in all_txn:
+            split_accounts = [s.account for s in info.splits]
+            if info.account and info.account not in split_accounts:
+                info.splits.insert(0, SplitInfo(info.account, info.amount, info.currency, False))
+            if info.transfer and info.transfer not in split_accounts:
+                info.splits.append(SplitInfo(info.transfer, info.amount, info.currency, True))
+            for split_info in info.splits:
+                # this amount is just to determine the auto_create_type
+                str_amount = split_info.amount
+                if split_info.currency:
+                    str_amount += split_info.currency
+                amount = self.parse_amount(str_amount, self.default_currency)
+                auto_create_type = INCOME if amount >= 0 else EXPENSE
+                split_info.account = self.accounts.find(split_info.account, auto_create_type) if split_info.account else None
+                currency = split_info.account.currency if split_info.account is not None else self.default_currency
+                split_info.amount = self.parse_amount(str_amount, currency)
+                if split_info.amount:
+                    currencies.add(split_info.amount.currency)
+        
+        position = 1
+        last_date = None
+        for info in self.transaction_infos:
+            transaction = load_transaction_info(info)
+            if transaction.date != last_date:
+                position = 1
+            start_date = min(start_date, transaction.date)
+            self.transactions.add(transaction, position=position)
+            position += 1
+        for info in self.recurrence_infos:
+            ref = load_transaction_info(info.transaction_info)
+            recurrence = Recurrence(ref, info.repeat_type, info.repeat_every, include_first=True)
+            recurrence.stop_date = info.stop_date
+            for date, transaction_info in info.date2exception.items():
+                if transaction_info is not None:
+                    exception = load_transaction_info(transaction_info)
+                    spawn = Spawn(recurrence, exception, date, exception.date)
+                else:
+                    spawn = None
+                recurrence.date2exception[date] = spawn
+            for date, transaction_info in info.date2globalchange.items():
+                change = load_transaction_info(transaction_info)
+                spawn = Spawn(recurrence, change, date, change.date)
+                recurrence.date2globalchange[date] = spawn
+            self.scheduled.append(recurrence)
+        self.oven.cook(datetime.date.min, until_date=None)
+        Currency.get_rates_db().ensure_rates(start_date, [x.code for x in currencies])
+    
+
+class GroupInfo(object):
+    def __init__(self):
+        self.name = None
+        self.type = ASSET
+    
+    def is_valid(self):
+        return bool(self.name)
+    
+
+class AccountInfo(object):
+    def __init__(self):
+        self.name = None
+        self.currency = None
+        self.type = ASSET
+        self.group = None
+        self.budget = None
+        self.budget_target = None
+        self.reference = None
+        self.balance = None
+
+    def is_valid(self):
+        return bool(self.name)
+    
+
+class TransactionInfo(object):
+    def __init__(self):
+        self.date = None
+        self.description = None
+        self.payee = None
+        self.checkno = None
+        self.account = None
+        self.transfer = None
+        self.amount = None
+        self.currency = None
+        self.reference = None # will be applied to all splits
+        self.mtime = 0
+        self.splits = []
+
+    def is_valid(self):
+        return bool(self.date and ((self.account and self.amount) or self.splits))
+    
+
+class SplitInfo(object):
+    def __init__(self, account=None, amount=None, currency=None, amount_reversed=False):
+        self.account = account
+        self.amount = amount
+        self.currency = currency
+        self.memo = None
+        self.reconciled = False
+        self.reference = None
+        self.amount_reversed = amount_reversed
+    
+    def __repr__(self):
+        return '<SplitInfo %r %r>' % (self.account, self.amount)
+    
+    def is_valid(self):
+        return self.amount is not None
+    
+
+class RecurrenceInfo(object):
+    def __init__(self):
+        self.repeat_type = REPEAT_NEVER
+        self.repeat_every = 1
+        self.stop_date = None
+        self.date2exception = {}
+        self.date2globalchange = {}
+        self.transaction_info = TransactionInfo()
+    
+    def is_valid(self):
+        return self.repeat_type != REPEAT_NEVER and self.transaction_info.is_valid()
+    

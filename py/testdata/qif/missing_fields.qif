@@ -1,0 +1,31 @@
+!Account
+NAccount
+^
+D01/01/07
+MComplete Entry
+T100.00
+LCategory
+^
+D01/02/07
+MNo Category
+T100.00
+^
+D01/03/07
+MNo Amount
+LCategory
+^
+MNo Date
+T100.00
+LCategory
+^
+D01/04/07
+T100.00
+LCategory
+^
+!Account
+^
+D01/01/07
+MThis entry shouldn't be anywhere
+T100.00
+LCategory
+^

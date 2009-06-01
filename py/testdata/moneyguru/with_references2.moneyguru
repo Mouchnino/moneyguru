@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<moneyguru-file>
+	<account name="Account 1" currency="CAD" reference="acc1"/>
+	<account name="Account 2" currency="CAD" reference="acc2"/>
+	<account name="Account 3" currency="CAD" reference="acc3"/>
+	<transaction date="2008-02-16" description="txn2" reference="txn2">
+		<split account="Account 1" amount="-14.00"/>
+	</transaction>
+	<transaction date="2008-02-19" description="changed" reference="txn4">
+		<split account="Account 2" amount="-102.00"/>
+	</transaction>
+	<transaction date="2008-02-20" description="txn5" reference="txn5">
+		<split account="Account 1" amount="50.00"/>
+	</transaction>
+	<transaction date="2008-02-21" description="txn6" reference="txn6">
+		<split account="Account 3" amount="60.00"/>
+	</transaction>
+	<transaction date="2008-02-21" description="txn7" reference="txn7">
+		<split account="Account 2" amount="70.00"/>
+	</transaction>
+</moneyguru-file>

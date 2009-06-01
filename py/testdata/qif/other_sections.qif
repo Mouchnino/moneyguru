@@ -1,0 +1,44 @@
+!Type:Class
+NMy Finances
+DMy Finances
+^
+!Type:Cat
+NATM Withdrawal
+DATM Withdrawal
+E
+^
+NATM Withdrawal:Cash
+DATM Withdrawal:Cash
+E
+^
+!Type:Bank
+!Account
+NChecking
+D
+TBank
+^
+!Type:Bank
+D03/06/2007
+T-695.00
+C 
+N
+PHarold Crabill
+M
+LATM Withdrawal
+^
+D03/05/2007
+T-19.95
+C 
+N
+PLinode
+M
+LATM Withdrawal
+^
+D03/05/2007
+T-8.36
+C 
+N
+PiTunes
+MTV Shows
+LATM Withdrawal
+^

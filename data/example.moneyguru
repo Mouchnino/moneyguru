@@ -1,0 +1,1558 @@
+<?xml version="1.0"?>
+<moneyguru-file>
+    <account currency="USD" name="Checking" type="asset"/>
+    <account currency="USD" name="Savings" type="asset"/>
+    <account currency="USD" name="Credit Card" type="liability"/>
+    <account currency="USD" name="Salary" type="income"/>
+    <account budget="USD 300.00" budget_target="Checking" currency="USD" name="Groceries" type="expense"/>
+    <account budget="USD 1200.00" budget_target="Checking" currency="USD" name="Cash" type="expense"/>
+    <account budget="USD 300.00" budget_target="Checking" currency="USD" name="Auto" type="expense"/>
+    <account currency="USD" name="Rent" type="expense"/>
+    <account currency="USD" name="Fees" type="expense"/>
+    <account currency="USD" name="Student Loan" type="liability"/>
+    <account budget="USD 80.00" budget_target="Checking" currency="USD" name="Clothes" type="expense"/>
+    <account currency="USD" name="Travel" type="expense"/>
+    <account budget="USD 100.00" budget_target="Checking" currency="USD" name="Utilities" type="expense"/>
+    <account currency="USD" name="Interest Gained" type="income"/>
+    <account currency="USD" name="Interest Paid" type="expense"/>
+    <transaction checkno="" date="2007-12-31" description="Starting Balance" mtime="1220182638" payee="">
+        <split account="" amount="USD -1283.62" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1283.62" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2007-12-31" description="Starting Balance" mtime="1220182650" payee="">
+        <split account="Credit Card" amount="USD -243.87" memo="" reconciled="y"/>
+        <split account="" amount="USD 243.87" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2007-12-31" description="Starting Balance" mtime="1220182655" payee="">
+        <split account="Savings" amount="USD 8247.16" memo="" reconciled="n"/>
+        <split account="" amount="USD -8247.16" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2007-12-31" description="Starting Balance" mtime="1220182666" payee="">
+        <split account="Student Loan" amount="USD -11800.00" memo="" reconciled="n"/>
+        <split account="" amount="USD 11800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-01" description="Rent" mtime="1219503894" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-03" description="Salary" mtime="0" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-05" description="Weekly groceries" mtime="1219334282" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -89.54" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 89.54" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-05" description="ATM Withdrawal" mtime="1219334520" payee="">
+        <split account="Checking" amount="USD -100.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 100.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-10" description="ATM Withdrawal" mtime="1219334465" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-10" description="Phone Bill" mtime="1219838043" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-12" description="Weekly groceries" mtime="1219334341" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -69.89" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 69.89" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-12" description="Gas" mtime="1219421696" payee="">
+        <split account="Credit Card" amount="USD -42.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 42.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-13" description="Internet Bill" mtime="1219838049" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 445.30" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -445.30" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-17" description="Salary" mtime="0" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-18" description="Shirt + misc" mtime="1219661025" payee="L.L. Beans">
+        <split account="Clothes" amount="USD 88.54" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -88.54" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-19" description="Weekly groceries" mtime="1219334368" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -75.55" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 75.55" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-20" description="Transfer" mtime="1219335170" payee="">
+        <split account="Checking" amount="USD -750.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 750.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-22" description="ATM Withdrawal" mtime="1219334478" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-24" description="Gas" mtime="1219421699" payee="">
+        <split account="Credit Card" amount="USD -54.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 54.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-26" description="Weekly groceries" mtime="1219335478" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 102.44" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -102.44" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-30" description="Change front breaks pads" mtime="1219336735" payee="Gus Auto Parts">
+        <split account="Credit Card" amount="USD -152.33" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 152.33" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-01-31" description="Salary" mtime="0" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-01" description="Rent" mtime="1219503911" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-02" description="Weekly groceries" mtime="1219335501" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 94.12" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -94.12" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-03" description="ATM Withdrawal" mtime="1219334494" payee="">
+        <split account="Checking" amount="USD -400.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 400.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-03" description="Power Bill" mtime="1219838053" payee="">
+        <split account="Utilities" amount="USD 132.74" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -132.74" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-09" description="Weekly groceries" mtime="1219335626" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 79.64" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -79.64" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-09" description="Gas" mtime="1219421708" payee="">
+        <split account="Credit Card" amount="USD -38.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 38.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-10" description="Phone Bill" mtime="1219838058" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-13" description="Internet Bill" mtime="1219838063" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-14" description="Salary" mtime="0" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 582.18" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -582.18" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-16" description="Weekly groceries" mtime="1219335644" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 87.33" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -87.33" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-19" description="Gas" mtime="1219421717" payee="">
+        <split account="Credit Card" amount="USD -67.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 67.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-20" description="Transfer" mtime="1219335179" payee="">
+        <split account="Checking" amount="USD -750.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 750.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-23" description="Weekly groceries" mtime="1219335660" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 100.04" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -100.04" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-27" description="Gas" mtime="1219421722" payee="">
+        <split account="Credit Card" amount="USD -48.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 48.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-28" description="Salary" mtime="1219331459" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-02-28" description="ATM Withdrawal" mtime="1219334550" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-01" description="Weekly groceries" mtime="1219335695" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 187.98" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -187.98" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-01" description="Rent" mtime="1219503917" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-02" description="Shoes + sunglasses" mtime="1219661033" payee="">
+        <split account="Credit Card" amount="USD -143.34" memo="" reconciled="y"/>
+        <split account="Clothes" amount="USD 143.34" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-03" description="Gas" mtime="1219421726" payee="">
+        <split account="Auto" amount="USD 52.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -52.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-05" description="ATM Withdrawal" mtime="1219334601" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-08" description="Weekly groceries" mtime="1219335711" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 62.35" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -62.35" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-10" description="Gas" mtime="1219421959" payee="">
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-10" description="Phone Bill" mtime="1219838067" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-13" description="Salary" mtime="1219331482" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-13" description="Internet Bill" mtime="1219838070" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-15" description="Weekly groceries" mtime="1219335801" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 74.84" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -74.84" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 760.53" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -760.53" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-17" description="ATM Withdrawal" mtime="1219837612" payee="">
+        <split account="Checking" amount="USD -100.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 100.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-19" description="Gas" mtime="1219421734" payee="">
+        <split account="Auto" amount="USD 55.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -55.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-20" description="Transfer" mtime="1219335189" payee="">
+        <split account="Checking" amount="USD -750.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 750.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-22" description="Weekly groceries" mtime="1219335822" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 238.98" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -238.98" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-23" description="Gas" mtime="1219421738" payee="">
+        <split account="Auto" amount="USD 48.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -48.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-25" description="ATM Withdrawal" mtime="1219334658" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-26" description="Gas" mtime="1219421748" payee="">
+        <split account="Auto" amount="USD 38.03" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -38.03" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-27" description="Salary" mtime="1219331495" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-03-29" description="Weekly groceries" mtime="1219335836" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 54.54" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -54.54" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-01" description="Rent" mtime="1219503926" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-04" description="Gas" mtime="1219421753" payee="">
+        <split account="Auto" amount="USD 66.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -66.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-04" description="Power Bill" mtime="1219838074" payee="">
+        <split account="Utilities" amount="USD 104.87" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -104.87" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-05" description="Weekly groceries" mtime="1219335929" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 96.44" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -96.44" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-06" description="Driver License Renewal" mtime="1219659124" payee="">
+        <split account="Fees" amount="USD 75.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -75.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-08" description="ATM Withdrawal" mtime="1219334686" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-10" description="Salary" mtime="1219331999" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-10" description="Phone Bill" mtime="1219838078" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-11" description="Gas" mtime="1219421644" payee="">
+        <split account="Auto" amount="USD 58.08" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -58.08" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-12" description="Weekly groceries" mtime="1219335906" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 92.12" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -92.12" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-13" description="Internet Bill" mtime="1219838081" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-14" description="ATM Withdrawal" mtime="1219334849" payee="">
+        <split account="Checking" amount="USD -600.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 600.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-16" description="Power Steering repair" mtime="1219504431" payee="Gus Auto Parts">
+        <split account="Auto" amount="USD 247.84" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -247.84" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-19" description="Weekly groceries" mtime="1219335951" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 84.57" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -84.57" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-22" description="Gas" mtime="1219421762" payee="">
+        <split account="Auto" amount="USD 51.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -51.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-22" description="Underwear &amp; socks restocking (where do these all go?)" mtime="1219661043" payee="L.L. Beans">
+        <split account="Credit Card" amount="USD -34.44" memo="" reconciled="y"/>
+        <split account="Clothes" amount="USD 34.44" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-24" description="Salary" mtime="1219332007" payee="">
+        <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-24" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 747.19" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -747.19" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-25" description="Gas" mtime="1219421779" payee="">
+        <split account="Auto" amount="USD 56.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -56.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-04-26" description="Weekly groceries" mtime="1219335977" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 79.88" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -79.88" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-01" description="Gas" mtime="1219421792" payee="">
+        <split account="Auto" amount="USD 47.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -47.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-01" description="Rent" mtime="1219503935" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-02" description="Flight ticket Portland &lt;--&gt; Paris" mtime="1219661051" payee="Expedia">
+        <split account="Travel" amount="USD 850.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -850.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-02" description="Borrowing some money from my saving account" mtime="1219661523" payee="">
+        <split account="Checking" amount="USD 3000.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD -3000.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-03" description="Weekly groceries" mtime="1219660279" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 34.44" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -34.44" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-05" description="ATM Withdrawal (200 EUR)" mtime="1219660616" payee="">
+        <split account="Cash" amount="USD 309.83" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -309.83" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-05" description="4 nights in Paris" mtime="1219657754" payee="Hostelling International">
+        <split account="Travel" amount="EUR 104.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -104.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-05" description="Foreign Withdrawal Fee" mtime="1219660481" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-07" description="ATM Withdrawal (200 EUR)" mtime="1219660631" payee="">
+        <split account="Cash" amount="USD 307.39" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -307.39" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-07" description="Foreign Withdrawal Fee" mtime="1219660487" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-08" description="Salary (got a raise!)" mtime="1219332010" payee="">
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-09" description="Train Paris --&gt; Brussels" mtime="1219658281" payee="">
+        <split account="Travel" amount="EUR 86.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -86.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-09" description="ATM Withdrawal (200 EUR)" mtime="1219660657" payee="">
+        <split account="Cash" amount="USD 308.96" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -308.96" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-09" description="3 nights in Brussels" mtime="1219657751" payee="Hostelling International">
+        <split account="Travel" amount="EUR 69.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -69.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-09" description="Foreign Withdrawal Fee" mtime="1219660493" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-10" description="Phone Bill" mtime="1219838084" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-11" description="ATM Withdrawal (200 EUR)" mtime="1219660681" payee="">
+        <split account="Cash" amount="USD 308.96" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -308.96" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-11" description="Foreign Withdrawal Fee" mtime="1219660497" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-12" description="Train Brussels --&gt; Berlin" mtime="1219658372" payee="">
+        <split account="Travel" amount="EUR 135.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -135.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-12" description="ATM Withdrawal (200 EUR)" mtime="1219660697" payee="">
+        <split account="Cash" amount="USD 310.67" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -310.67" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-12" description="3 nights in Berlin" mtime="1219657330" payee="Hostelling International">
+        <split account="Travel" amount="EUR 63.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -63.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-12" description="Foreign Withdrawal Fee" mtime="1219660501" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-13" description="Internet Bill" mtime="1219838089" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-15" description="Train Berlin --&gt; Wroc&#x142;aw" mtime="1219658839" payee="">
+        <split account="Travel" amount="EUR 67.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -67.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-15" description="ATM Withdrawal (600 PLN)" mtime="1219660729" payee="">
+        <split account="Cash" amount="USD 273.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -273.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-15" description="2 nights in Wroc&#x142;aw" mtime="1219658844" payee="Hostelling International">
+        <split account="Travel" amount="PLN 110.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="PLN -110.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-15" description="Foreign Withdrawal Fee" mtime="1219660504" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 1485.17" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -1485.17" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-17" description="Train Wroc&#x142;aw --&gt; Krak&#xF3;w" mtime="1219658901" payee="">
+        <split account="Travel" amount="PLN 178.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="PLN -178.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-17" description="ATM Withdrawal (600 PLN)" mtime="1219660759" payee="">
+        <split account="Cash" amount="USD 276.59" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -276.59" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-17" description="3 nights in Krak&#xF3;w" mtime="1219658875" payee="Hostelling International">
+        <split account="Travel" amount="PLN 190.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="PLN -190.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-17" description="Foreign Withdrawal Fee" mtime="1219660507" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-20" description="Train Krak&#xF3;w --&gt; Prague" mtime="1219658889" payee="">
+        <split account="Travel" amount="PLN 208.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="PLN -208.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-20" description="Transfer" mtime="1219335225" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-20" description="3 nights in Prague" mtime="1219658770" payee="Hostelling International">
+        <split account="Travel" amount="CZK 1000.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="CZK -1000.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-20" description="ATM Withdrawal (4000 CZK)" mtime="1219660858" payee="">
+        <split account="Cash" amount="USD 250.31" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -250.31" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-20" description="Foreign Withdrawal Fee" mtime="1219660513" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-22" description="Salary" mtime="1219332024" payee="">
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-23" description="Train Prague --&gt; Munich" mtime="1219658798" payee="">
+        <split account="Travel" amount="CZK 1400.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="CZK -1400.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-23" description="ATM Withdrawal (200 EUR)" mtime="1219660889" payee="">
+        <split account="Cash" amount="USD 315.67" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -315.67" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-23" description="2 nights in Munich" mtime="1219657920" payee="Hostelling International">
+        <split account="Travel" amount="EUR 44.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -44.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-23" description="Foreign Withdrawal Fee" mtime="1219660518" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-25" description="Train Munich --&gt; Zurich" mtime="1219658964" payee="">
+        <split account="Travel" amount="EUR 75.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -75.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-25" description="ATM Withdrawal (400 CHF)" mtime="1219660906" payee="">
+        <split account="Cash" amount="USD 390.77" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -390.77" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-25" description="2 nights in Zurich" mtime="1219658010" payee="Hostelling International">
+        <split account="Travel" amount="CHF 84.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="CHF -84.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-25" description="Foreign Withdrawal Fee" mtime="1219660522" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-27" description="Train Zurich --&gt; Lausanne" mtime="1219659007" payee="">
+        <split account="Travel" amount="CHF 64.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="CHF -64.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-27" description="2 nights in Lausanne" mtime="1219658005" payee="Hostelling International">
+        <split account="Travel" amount="CHF 74.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="CHF -74.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-27" description="ATM Withdrawal (300 CHF)" mtime="1219660928" payee="">
+        <split account="Cash" amount="USD 291.69" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -291.69" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-27" description="Foreign Withdrawal Fee" mtime="1219660525" payee="">
+        <split account="Checking" amount="USD -3.00" memo="" reconciled="y"/>
+        <split account="Fees" amount="USD 3.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-29" description="Train Lausanne --&gt; Paris" mtime="1219659062" payee="">
+        <split account="Travel" amount="CHF 182.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="CHF -182.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-29" description="1 night in Paris" mtime="1219660212" payee="Hostelling International">
+        <split account="Travel" amount="EUR 26.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="EUR -26.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-31" description="Weekly groceries" mtime="1219336113" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 114.08" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -114.08" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-31" description="Gas" mtime="1219421842" payee="">
+        <split account="Auto" amount="USD 49.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -49.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-05-31" description="ATM Withdrawal" mtime="1219660244" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-03" description="Power Bill" mtime="1219838091" payee="">
+        <split account="Utilities" amount="USD 71.22" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -71.22" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-05" description="Salary" mtime="1219332028" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-06" description="Rent (asked my land lady to wait a little bit before cashing the check)" mtime="1219837862" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-07" description="Weekly groceries" mtime="1219336149" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 94.48" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -94.48" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-10" description="ATM Withdrawal" mtime="1219334922" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-10" description="Phone Bill" mtime="1219838095" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-11" description="Gas" mtime="1219421856" payee="">
+        <split account="Auto" amount="USD 68.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -68.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-13" description="Internet Bill" mtime="1219838099" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-14" description="Weekly groceries" mtime="1219336160" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 89.23" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -89.23" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 300.71" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -300.71" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-18" description="ATM Withdrawal" mtime="1219334950" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-19" description="Salary" mtime="1219332045" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-20" description="Transfer" mtime="1219335234" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-21" description="Weekly groceries" mtime="1219336172" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 96.57" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -96.57" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-23" description="ATM Withdrawal" mtime="1219838747" payee="">
+        <split account="Checking" amount="USD -150.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 150.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-23" description="Gas" mtime="1219421871" payee="">
+        <split account="Auto" amount="USD 57.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -57.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-06-28" description="Weekly groceries" mtime="1219336230" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 93.87" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -93.87" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-01" description="Rent" mtime="1219503947" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-03" description="Salary" mtime="1219332049" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-03" description="Gas" mtime="1219421936" payee="">
+        <split account="Auto" amount="USD 55.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -55.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-03" description="ATM Withdrawal" mtime="1219838759" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-05" description="Weekly groceries" mtime="1219336282" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 90.50" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -90.50" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-09" description="ATM Withdrawal" mtime="1219335001" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-10" description="Loan Payment" mtime="1219506203" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-10" description="Phone Bill" mtime="1219838103" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-12" description="Weekly groceries" mtime="1219336297" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 80.99" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -80.99" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-13" description="Internet Bill" mtime="1219838106" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 418.93" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -418.93" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-16" description="Gas" mtime="1219421896" payee="">
+        <split account="Auto" amount="USD 51.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -51.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-17" description="Salary" mtime="1219332070" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-17" description="ATM Withdrawal" mtime="1219335010" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-19" description="Weekly groceries" mtime="1219336396" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 86.86" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -86.86" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-20" description="Transfer" mtime="1219335253" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-23" description="ATM Withdrawal" mtime="1219335057" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-23" description="Gas" mtime="1219421919" payee="">
+        <split account="Auto" amount="USD 49.04" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -49.04" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-26" description="Weekly groceries" mtime="1219336410" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 97.22" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -97.22" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-31" description="Salary" mtime="1219332072" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-07-31" description="ATM Withdrawal" mtime="1219335066" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-01" description="Rent" mtime="1225026225" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-02" description="Weekly groceries" mtime="1219336496" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 91.66" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -91.66" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-02" description="Gas" mtime="1219421984" payee="">
+        <split account="Auto" amount="USD 50.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD -50.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-03" description="Power Bill" mtime="1219838111" payee="">
+        <split account="Utilities" amount="USD 87.84" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -87.84" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-07" description="ATM Withdrawal" mtime="1219335087" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-09" description="Weekly groceries" mtime="1219336514" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 125.75" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -125.75" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-10" description="Gas" mtime="1219422002" payee="">
+        <split account="Auto" amount="USD 57.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -57.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-10" description="Loan Payment" mtime="1225026047" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-10" description="Phone Bill" mtime="1225026077" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-13" description="Internet Bill" mtime="1225026085" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-14" description="Salary" mtime="1219332204" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-14" description="ATM Withdrawal" mtime="1219335095" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-15" description="Credit Card payment" mtime="1220032598" payee="">
+        <split account="Credit Card" amount="USD 558.53" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -558.53" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-16" description="Weekly groceries" mtime="1219336530" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 72.77" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -72.77" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-20" description="ATM Withdrawal" mtime="1219335103" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-20" description="Transfer" mtime="1225026027" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-21" description="Gas" mtime="1219422017" payee="">
+        <split account="Auto" amount="USD 62.00" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -62.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-23" description="Weekly groceries" mtime="1219336546" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 105.09" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -105.09" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-28" description="Salary" mtime="1225025952" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-28" description="ATM Withdrawal" mtime="1219335116" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-30" description="Weekly groceries" mtime="1219336560" payee="Whole Food Market">
+        <split account="Groceries" amount="USD 68.89" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -68.89" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-08-31" description="Gas" mtime="1225026917" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-04" description="ATM Withdrawal" mtime="1225027610" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-06" description="Weekly groceries" mtime="1225026390" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -73.32" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 73.32" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-11" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-13" description="Weekly groceries" mtime="1225026524" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -87.09" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 87.09" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-13" description="Gas" mtime="1225026930" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-13" description="ATM Withdrawal" mtime="1225027631" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-15" description="Credit Card payment" mtime="1225027075" payee="">
+        <split account="Credit Card" amount="USD 589.16" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -589.16" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-20" description="Weekly groceries" mtime="1225026546" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -77.99" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 77.99" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-20" description="Transfer" mtime="0" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-22" description="Gas" mtime="1225026942" payee="">
+        <split account="Credit Card" amount="USD -70.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 70.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-25" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-25" description="ATM Withdrawal" mtime="1225027771" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-09-27" description="Weekly groceries" mtime="1225026558" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -54.23" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 54.23" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-01" description="ATM Withdrawal" mtime="1225027803" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-03" description="Gas" mtime="1225026954" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-03" description="Power Bill" mtime="1228651605" payee="">
+        <split account="Utilities" amount="USD 92.56" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -92.56" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-04" description="Weekly groceries" mtime="1225026573" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -60.88" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 60.88" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-09" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-11" description="Weekly groceries" mtime="1225026586" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -91.29" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 91.29" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-12" description="ATM Withdrawal" mtime="1225027818" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-15" description="Gas" mtime="1225026965" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-15" description="Credit Card payment" mtime="1225027105" payee="">
+        <split account="Credit Card" amount="USD 474.39" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -474.39" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-18" description="Weekly groceries" mtime="1225026599" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -65.44" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 65.44" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-20" description="Transfer" mtime="0" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-23" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-23" description="ATM Withdrawal" mtime="1225027837" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-25" description="Weekly groceries" mtime="1225026609" payee="Whole Food Market">
+        <split account="Credit Card" amount="USD -71.74" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 71.74" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-25" description="Gas" mtime="1225026973" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-10-29" description="ATM Withdrawal" mtime="1225027853" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-01" description="Weekly groceries" mtime="1228650901" payee="">
+        <split account="Credit Card" amount="USD -82.03" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 82.03" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-06" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-06" description="Gas" mtime="1228651035" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-08" description="Weekly groceries" mtime="1228650926" payee="">
+        <split account="Credit Card" amount="USD -68.88" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 68.88" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-08" description="ATM Withdrawal" mtime="1228651367" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-09" description="Car Repair (broke the exhaust on a darn bump)" mtime="1228651143" payee="">
+        <split account="Credit Card" amount="USD -245.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 245.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-15" description="Weekly groceries" mtime="1228650936" payee="">
+        <split account="Credit Card" amount="USD -91.92" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 91.92" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-15" description="Credit Card payment" mtime="1228651671" payee="">
+        <split account="Credit Card" amount="USD 745.01" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -745.01" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-15" description="Annual Interests" mtime="1228652446" payee="">
+        <split account="Savings" amount="USD 386.67" memo="" reconciled="n"/>
+        <split account="Interest Gained" amount="USD -386.67" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-16" description="Gas" mtime="1228651043" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-17" description="ATM Withdrawal" mtime="1228651376" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-18" description="Yearly car insurance" mtime="1228651686" payee="">
+        <split account="Credit Card" amount="USD -1360.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 1360.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-18" description="The whole shebang. badly needed new clothes" mtime="1228651884" payee="">
+        <split account="Clothes" amount="USD 246.85" memo="" reconciled="n"/>
+        <split account="Credit Card" amount="USD -246.85" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-20" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-20" description="Transfer" mtime="0" payee="">
+        <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-22" description="Weekly groceries" mtime="1228650965" payee="">
+        <split account="Credit Card" amount="USD -73.66" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 73.66" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-28" description="Gas" mtime="1228651052" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-29" description="Weekly groceries" mtime="1228650977" payee="">
+        <split account="Credit Card" amount="USD -78.95" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 78.95" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-11-30" description="ATM Withdrawal" mtime="1228651485" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-03" description="Power Bill" mtime="1235148975" payee="">
+        <split account="Checking" amount="USD -134.77" memo="" reconciled="y"/>
+        <split account="Utilities" amount="USD 134.77" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-04" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-05" description="Winter boots + gloves" mtime="1235149057" payee="">
+        <split account="Credit Card" amount="USD -121.21" memo="" reconciled="y"/>
+        <split account="Clothes" amount="USD 121.21" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-06" description="Weekly groceries" mtime="1235144314" payee="">
+        <split account="Credit Card" amount="USD -64.39" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 64.39" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-06" description="Gas" mtime="1235148636" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-13" description="Weekly groceries" mtime="1235144352" payee="">
+        <split account="Credit Card" amount="USD -81.85" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 81.85" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-13" description="ATM Withdrawal" mtime="1235148734" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-15" description="Credit Card payment" mtime="1235149382" payee="">
+        <split account="Credit Card" amount="USD 1300.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -1300.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-17" description="Gas" mtime="1235148644" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-18" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-20" description="Weekly groceries" mtime="1235144439" payee="">
+        <split account="Credit Card" amount="USD -57.92" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 57.92" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-20" description="Transfer (changing the montly transfers to 700 $)" mtime="1235149340" payee="">
+        <split account="Checking" amount="USD -700.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-23" description="Gas" mtime="1235148650" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-23" description="Credit card interest" mtime="1235149464" payee="">
+        <split account="Credit Card" amount="USD -199.52" memo="" reconciled="y"/>
+        <split account="Interest Paid" amount="USD 199.52" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-27" description="Weekly groceries" mtime="1235144455" payee="">
+        <split account="Credit Card" amount="USD -64.03" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 64.03" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-29" description="ATM Withdrawal" mtime="1235148741" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2008-12-30" description="Gas" mtime="1235148678" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-01" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-03" description="Weekly groceries" mtime="1235144474" payee="">
+        <split account="Credit Card" amount="USD -98.46" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 98.46" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-09" description="Gas" mtime="1235148686" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-10" description="Weekly groceries" mtime="1235144533" payee="">
+        <split account="Credit Card" amount="USD -77.30" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 77.30" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-11" description="ATM Withdrawal" mtime="1235148751" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-15" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-15" description="Credit Card payment" mtime="1235149544" payee="">
+        <split account="Credit Card" amount="USD 1644.14" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -1644.14" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-17" description="Weekly groceries" mtime="1235144546" payee="">
+        <split account="Credit Card" amount="USD -34.76" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 34.76" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-17" description="Gas" mtime="1235148692" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-20" description="ATM Withdrawal" mtime="1235148756" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-20" description="Transfer" mtime="0" payee="">
+        <split account="Checking" amount="USD -700.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-24" description="Weekly groceries" mtime="1235144563" payee="">
+        <split account="Credit Card" amount="USD -84.65" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 84.65" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-29" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-30" description="Gas" mtime="1235148698" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-30" description="ATM Withdrawal" mtime="1235148764" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-01-31" description="Weekly groceries" mtime="1235144582" payee="">
+        <split account="Credit Card" amount="USD -63.55" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 63.55" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-03" description="Power Bill" mtime="1236866949" payee="">
+        <split account="Checking" amount="USD -141.54" memo="" reconciled="y"/>
+        <split account="Utilities" amount="USD 141.54" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-07" description="Weekly groceries" mtime="1236866604" payee="">
+        <split account="Credit Card" amount="USD -74.42" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 74.42" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-07" description="Gas" mtime="1236866868" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-11" description="ATM Withdrawal" mtime="1236867096" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-12" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-14" description="Weekly groceries" mtime="1236866616" payee="">
+        <split account="Credit Card" amount="USD -83.24" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 83.24" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-15" description="Credit Card payment" mtime="1236867204" payee="">
+        <split account="Credit Card" amount="USD 520.62" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -520.62" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-18" description="Gas" mtime="1236866874" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-20" description="Transfer" mtime="1236868430" payee="">
+        <split account="Checking" amount="USD -700.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-21" description="Weekly groceries" mtime="1236866632" payee="">
+        <split account="Credit Card" amount="USD -91.07" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 91.07" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-22" description="ATM Withdrawal" mtime="1236867103" payee="">
+        <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
+        <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-26" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-27" description="Gas" mtime="1236866883" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-02-28" description="Weekly groceries" mtime="1236866647" payee="">
+        <split account="Credit Card" amount="USD -67.32" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 67.32" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-01" description="ATM Withdrawal" mtime="1240221195" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-07" description="Weekly groceries" mtime="1240221028" payee="">
+        <split account="Credit Card" amount="USD -74.55" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 74.55" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-09" description="Gas" mtime="1240221131" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-09" description="ATM Withdrawal" mtime="1240221202" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-12" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-14" description="Weekly groceries" mtime="1240221041" payee="">
+        <split account="Credit Card" amount="USD -79.37" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 79.37" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-15" description="Credit Card payment" mtime="1240221414" payee="">
+        <split account="Credit Card" amount="USD 492.31" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -492.31" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-17" description="Gas" mtime="1240221135" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-20" description="Transfer" mtime="0" payee="">
+        <split account="Checking" amount="USD -700.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-20" description="ATM Withdrawal" mtime="1240221214" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-21" description="Weekly groceries" mtime="1240221054" payee="">
+        <split account="Credit Card" amount="USD -68.15" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 68.15" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-26" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-27" description="ATM Withdrawal" mtime="1240221220" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-28" description="Weekly groceries" mtime="1240221067" payee="">
+        <split account="Credit Card" amount="USD -83.59" memo="" reconciled="y"/>
+        <split account="Groceries" amount="USD 83.59" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-03-30" description="Gas" mtime="1240221141" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+        <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-03" description="Power Bill" mtime="1240220869" payee="">
+        <split account="Checking" amount="USD -133.94" memo="" reconciled="n"/>
+        <split account="Utilities" amount="USD 133.94" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-04" description="Weekly groceries" mtime="1240221079" payee="">
+        <split account="Credit Card" amount="USD -78.44" memo="" reconciled="n"/>
+        <split account="Groceries" amount="USD 78.44" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-08" description="Gas" mtime="1240221151" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="n"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-09" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-09" description="ATM Withdrawal" mtime="1240221227" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-10" description="Loan Payment" mtime="0" payee="Dad">
+        <split account="Student Loan" amount="USD 350.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-10" description="Phone Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-11" description="Weekly groceries" mtime="1240221093" payee="">
+        <split account="Credit Card" amount="USD -61.61" memo="" reconciled="n"/>
+        <split account="Groceries" amount="USD 61.61" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-13" description="Internet Bill" mtime="0" payee="">
+        <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-15" description="A nice hat" mtime="1240221309" payee="Hat Inc.">
+        <split account="Credit Card" amount="USD -140.00" memo="" reconciled="n"/>
+        <split account="Clothes" amount="USD 140.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-15" description="Credit Card payment" mtime="1240221429" payee="">
+        <split account="Credit Card" amount="USD 611.79" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -611.79" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-18" description="Weekly groceries" mtime="1240221108" payee="">
+        <split account="Credit Card" amount="USD -51.24" memo="" reconciled="n"/>
+        <split account="Groceries" amount="USD 51.24" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-19" description="ATM Withdrawal" mtime="1240221234" payee="">
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-20" description="Transfer" mtime="0" payee="">
+        <split account="Checking" amount="USD -700.00" memo="" reconciled="y"/>
+        <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-20" description="Gas" mtime="1240221158" payee="">
+        <split account="Credit Card" amount="USD -60.00" memo="" reconciled="n"/>
+        <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <recurrence every="2" type="weekly">
+        <exception date="2009-02-12"/>
+        <exception date="2008-08-28"/>
+        <exception date="2009-01-29"/>
+        <exception date="2008-12-04"/>
+        <exception date="2009-01-01"/>
+        <exception date="2008-09-25"/>
+        <exception date="2009-03-12"/>
+        <exception date="2008-12-18"/>
+        <exception date="2009-01-15"/>
+        <exception date="2008-10-09"/>
+        <exception date="2008-09-11"/>
+        <exception date="2009-03-26"/>
+        <exception date="2008-11-06"/>
+        <exception date="2009-02-26"/>
+        <exception date="2009-04-09"/>
+        <exception date="2008-11-20"/>
+        <exception date="2008-10-23"/>
+        <transaction checkno="" date="2008-08-28" description="Salary" mtime="1225025952" payee="">
+            <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+            <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+        </transaction>
+    </recurrence>
+    <recurrence every="1" type="monthly">
+        <change date="2009-03-20">
+            <transaction checkno="" date="2009-03-20" description="Transfer" mtime="0" payee="">
+                <split account="Checking" amount="USD -700.00" memo="" reconciled="n"/>
+                <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+            </transaction>
+        </change>
+        <change date="2008-12-20">
+            <transaction checkno="" date="2008-12-20" description="Transfer (changing the montly transfers to 700 $)" mtime="0" payee="">
+                <split account="Checking" amount="USD -700.00" memo="" reconciled="n"/>
+                <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
+            </transaction>
+        </change>
+        <exception date="2008-09-20"/>
+        <exception date="2008-10-20"/>
+        <exception date="2009-02-20"/>
+        <exception date="2008-08-20"/>
+        <exception date="2009-01-20"/>
+        <exception date="2009-03-20"/>
+        <exception date="2009-04-20"/>
+        <exception date="2008-12-20"/>
+        <exception date="2008-11-20"/>
+        <transaction checkno="" date="2008-08-20" description="Transfer" mtime="1225026027" payee="">
+            <split account="Checking" amount="USD -900.00" memo="" reconciled="y"/>
+            <split account="Savings" amount="USD 900.00" memo="" reconciled="n"/>
+        </transaction>
+    </recurrence>
+    <recurrence every="1" stop_date="2010-11-09" type="monthly">
+        <exception date="2008-12-10"/>
+        <exception date="2010-10-10">
+            <transaction checkno="" date="2010-10-10" description="Loan Payment" mtime="0" payee="Dad">
+                <split account="Student Loan" amount="USD 250.00" memo="" reconciled="n"/>
+                <split account="Checking" amount="USD -250.00" memo="" reconciled="n"/>
+            </transaction>
+        </exception>
+        <exception date="2009-01-10"/>
+        <exception date="2009-02-10"/>
+        <exception date="2008-08-10"/>
+        <exception date="2008-10-10"/>
+        <exception date="2008-09-10"/>
+        <exception date="2008-11-10"/>
+        <exception date="2009-03-10"/>
+        <exception date="2009-04-10"/>
+        <transaction checkno="" date="2008-08-10" description="Loan Payment" mtime="1225026047" payee="Dad">
+            <split account="Student Loan" amount="USD 350.00" memo="" reconciled="n"/>
+            <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+        </transaction>
+    </recurrence>
+    <recurrence every="1" type="monthly">
+        <exception date="2008-12-10"/>
+        <exception date="2009-03-10"/>
+        <exception date="2009-01-10"/>
+        <exception date="2009-02-10"/>
+        <exception date="2008-08-10"/>
+        <exception date="2008-10-10"/>
+        <exception date="2008-09-10"/>
+        <exception date="2008-11-10"/>
+        <exception date="2009-04-10"/>
+        <transaction checkno="" date="2008-08-10" description="Phone Bill" mtime="1225026077" payee="">
+            <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
+            <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+        </transaction>
+    </recurrence>
+    <recurrence every="1" type="monthly">
+        <exception date="2009-02-13"/>
+        <exception date="2009-03-13"/>
+        <exception date="2008-12-13"/>
+        <exception date="2008-09-13"/>
+        <exception date="2009-04-13"/>
+        <exception date="2008-08-13"/>
+        <exception date="2009-01-13"/>
+        <exception date="2008-11-13"/>
+        <exception date="2008-10-13"/>
+        <transaction checkno="" date="2008-08-13" description="Internet Bill" mtime="1225026085" payee="">
+            <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
+            <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+        </transaction>
+    </recurrence>
+    <recurrence every="1" type="monthly">
+        <exception date="2008-09-01"/>
+        <exception date="2008-11-01"/>
+        <exception date="2009-02-01"/>
+        <exception date="2008-10-01"/>
+        <exception date="2008-08-01"/>
+        <exception date="2008-12-01"/>
+        <exception date="2009-01-01"/>
+        <exception date="2009-04-01"/>
+        <exception date="2009-03-01"/>
+        <transaction checkno="" date="2008-08-01" description="Rent" mtime="1225026225" payee="Mme Ownsmyflat">
+            <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+            <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
+        </transaction>
+    </recurrence>
+</moneyguru-file>

@@ -1,0 +1,17 @@
+!Account
+Nfirst
+B-42.00
+TBank
+^
+!Type:Bank
+D01/03/09
+T-42.00
+Mtransfer
+Lsecond
+^
+!Account
+Nsecond
+B42.00
+TBank
+^
+!Type:Bank

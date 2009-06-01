@@ -1,0 +1,11 @@
+QIF files don't have headers
+Therefore, what can happen is that
+Simple text file like this
+Nameless one are falsely interpreted
+^
+Despite the fact that it contains
+No financial data and
+Metadata.
+Therefore, we should not
+Load this file in moneyGuru
+^

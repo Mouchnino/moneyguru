@@ -1,0 +1,24 @@
+!Type:Cash
+D8/28/2008
+T-1,000.00
+LPayment Sent
+SPayment Sent
+$-1,000.00
+SFee
+$0.00
+CX
+MYou've got a payment
+PVirgil Dupras
+^
+!Type:Cash
+D8/28/2008
+T18.95
+LWeb Accept Payment Received
+SWeb Accept Payment Received
+$19.95
+SFee
+$-1.00
+CX
+MdupeGuru
+PMartin Schluepen
+^

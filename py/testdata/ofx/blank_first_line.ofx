@@ -1,0 +1,137 @@
+
+OFXHEADER:100
+DATA:OFXSGML
+VERSION:102
+SECURITY:NONE
+ENCODING:USASCII
+CHARSET:1252
+COMPRESSION:NONE
+OLDFILEUID:NONE
+NEWFILEUID:NONE
+
+<OFX>
+	<SIGNONMSGSRSV1>
+		<SONRS>
+			<STATUS>
+				<CODE>0
+				<SEVERITY>INFO
+			</STATUS>
+			<DTSERVER>20080916154741[-8:PST]
+			<LANGUAGE>ENG
+			
+			
+		</SONRS>
+	</SIGNONMSGSRSV1>
+	<BANKMSGSRSV1>
+		<STMTTRNRS>
+			<TRNUID>0
+			<STATUS>
+				<CODE>0
+				<SEVERITY>INFO
+			</STATUS>
+	
+			<STMTRS>
+				<CURDEF>USD
+	
+					<BANKACCTFROM>
+						
+							<BANKID>1234
+						
+						
+							<ACCTID>1234-60
+						
+						
+							<ACCTTYPE>CHECKING
+						
+					</BANKACCTFROM>
+	
+				<BANKTRANLIST>
+					<DTSTART>20080827000000[-8:PST]
+					<DTEND>20080828000000[-8:PST]
+	
+					
+						<STMTTRN>
+							<TRNTYPE>CHECK
+							<DTPOSTED>20080828000000[-8:PST]
+							<TRNAMT>-100.00
+							<FITID>20080828000000[-8:PST]*-000100.00*1*775355*SHARE DRAFT # 775355
+							<CHECKNUM>775355
+							<NAME>SHARE DRAFT # 775355	
+
+
+                                                        <MEMO>Share Draft
+
+						</STMTTRN>
+						
+						<STMTTRN>
+							<TRNTYPE>POS
+							<DTPOSTED>20080828000000[-8:PST]
+							<TRNAMT>-7.91
+							<FITID>20080828000000[-8:PST]*-000007.91*13**WAL-MART #5272 21200 OLHAVA
+							
+							<NAME>WAL-MART #5272 21200 OLHAVA	
+
+
+                                                        <MEMO>WAY NW POULSBO WAUS : POS Transaction
+
+						</STMTTRN>
+						
+						<STMTTRN>
+							<TRNTYPE>CHECK
+							<DTPOSTED>20080827000000[-8:PST]
+							<TRNAMT>-80.00
+							<FITID>20080827000000[-8:PST]*-000080.00*1*775358*SHARE DRAFT # 775358
+							<CHECKNUM>775358
+							<NAME>SHARE DRAFT # 775358	
+
+
+                                                        <MEMO>Share Draft
+
+						</STMTTRN>
+						
+						<STMTTRN>
+							<TRNTYPE>POS
+							<DTPOSTED>20080827000000[-8:PST]
+							<TRNAMT>-51.34
+							<FITID>20080827000000[-8:PST]*-000051.34*13**COSTCO GAS #00013
+							
+							<NAME>COSTCO GAS #00013	
+
+
+                                                        <MEMO>0930SILVERDALE WAUS : POS Transaction
+
+						</STMTTRN>
+						
+						<STMTTRN>
+							<TRNTYPE>DIRECTDEP
+							<DTPOSTED>20080827000000[-8:PST]
+							<TRNAMT>1373.12
+							<FITID>20080827000000[-8:PST]*0001373.12*510**RAYTHEON COMPANY DIR DEP
+							
+							<NAME>Pay COMPANY DIR DEP	
+
+
+                                                        <MEMO>Direct Deposit
+
+						</STMTTRN>
+						
+	
+				</BANKTRANLIST>
+	
+				<LEDGERBAL>
+					<BALAMT>779.53
+					<DTASOF>20080916154741[-8:PST]
+				</LEDGERBAL>
+	
+				<AVAILBAL>
+					<BALAMT>779.53
+					<DTASOF>20080916154741[-8:PST]
+				</AVAILBAL>
+	
+			</STMTRS>
+		</STMTTRNRS>
+	</BANKMSGSRSV1>
+		
+	
+</OFX>
+

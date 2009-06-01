@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Currency xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Observation>
+    <Currency_name>
+        U.S. dollar (close)
+        <Observation_date>2008-04-16</Observation_date>
+        <Observation_data>1.0014</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        U.S. dollar (close)
+        <Observation_date>2008-04-17</Observation_date>
+        <Observation_data>1.0122</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        U.S. dollar (close)
+        <Observation_date>2008-04-18</Observation_date>
+        <Observation_data>1.0049</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        U.S. dollar (close)
+        <Observation_date>2008-04-21</Observation_date>
+        <Observation_data>1.0060</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        U.S. dollar (close)
+        <Observation_date>2008-04-22</Observation_date>
+        <Observation_data>na</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        European Euro
+        <Observation_date>2008-04-16</Observation_date>
+        <Observation_data>1.6018</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        European Euro
+        <Observation_date>2008-04-17</Observation_date>
+        <Observation_data>1.6103</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        European Euro
+        <Observation_date>2008-04-18</Observation_date>
+        <Observation_data>1.5873</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        European Euro
+        <Observation_date>2008-04-21</Observation_date>
+        <Observation_data>1.5987</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        European Euro
+        <Observation_date>2008-04-22</Observation_date>
+        <Observation_data>na</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        Polish zloty
+        <Observation_date>2008-04-16</Observation_date>
+        <Observation_data>0.4675</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        Polish zloty
+        <Observation_date>2008-04-17</Observation_date>
+        <Observation_data>0.4702</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        Polish zloty
+        <Observation_date>2008-04-18</Observation_date>
+        <Observation_data>0.4624</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        Polish zloty
+        <Observation_date>2008-04-21</Observation_date>
+        <Observation_data>0.4684</Observation_data>
+    </Currency_name>
+</Observation>
+<Observation>
+    <Currency_name>
+        Polish zloty
+        <Observation_date>2008-04-22</Observation_date>
+        <Observation_data>na</Observation_data>
+    </Currency_name>
+</Observation>
+</Currency>

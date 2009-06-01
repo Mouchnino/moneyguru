@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<moneyguru-file>
+    <account currency="USD" name="Account 1"/>
+    <account currency="PLN" name="Account 2"/>
+    <transaction mtime="1203095456" date="2008-02-16" description="Entry 1">
+        <split account="Account 1" amount="200.00"/>
+        <split account="Account 2" amount="123.45"/>
+    </transaction>
+</moneyguru-file>

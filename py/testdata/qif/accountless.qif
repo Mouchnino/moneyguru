@@ -1,0 +1,35 @@
+!Type:Bank
+D01/01/07
+MStarting Balance
+T42.32
+C*
+^
+D01/01/07
+P
+MDeposit
+T100.00
+C*
+LSalary
+^
+D01/02/07
+P
+MWithdrawal
+T-60.00
+C*
+LCash
+^
+D01/02/07
+PHydro-Quebec
+MPower Bill
+N36
+T-57.12
+C*
+LUtilities
+^
+D02/04/07
+PAccount 2
+MTransfer
+T80.00
+C*
+L
+^
