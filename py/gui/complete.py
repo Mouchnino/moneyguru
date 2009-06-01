@@ -39,32 +39,18 @@ class CompletionMixIn(object):
 # XXX The _build_candidates method is called at each keystroke. Doing some kind of caching would be
 # wise because the number of entries/transactions involved can be big!
 
-class EntryCompletionMixIn(CompletionMixIn):
-    def _build_candidates(self, attrname):
-        if self.document.selected_account is None:
-            return None
-        entries = sorted(self.document.selected_account.entries, key=attrgetter('mtime'), reverse=True)
-        if attrname == 'description':
-            return [x.description for x in entries]
-        elif attrname == 'payee':
-            return [x.payee for x in entries]
-        elif attrname == 'transfer':
-            splits = flatten(e.splits for e in entries)
-            candidates = [s.account.name for s in splits if s.account]
-            candidates += [account.name for account in self.document.accounts if account is not self.document.selected_account]
-            return candidates
-    
-
 class TransactionCompletionMixIn(CompletionMixIn):
     def _build_candidates(self, attrname):
         if attrname == 'description':
             return [x.description for x in sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True)]
         elif attrname == 'payee':
             return [x.payee for x in sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True)]
-        elif attrname in ('from', 'to', 'account'):
+        elif attrname in ('from', 'to', 'account', 'transfer'):
             candidates = []
             for t in sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True):
-                candidates += [a.name for a in t.affected_accounts()]
-            candidates += [a.name for a in self.document.accounts]
-            return candidates
+                candidates += list(t.affected_accounts())
+            candidates += self.document.accounts[:]
+            if attrname == 'transfer' and self.document.selected_account is not None:
+                candidates = [a for a in candidates if a is not self.document.selected_account]
+            return [a.name for a in candidates]
     

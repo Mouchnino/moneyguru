@@ -317,8 +317,8 @@ class ThreeEntriesInTwoAccountTypes(TestCase):
         self.add_entry(description='third') # selected
     
     def test_complete(self):
-        """depends on the selected account type"""
-        self.assert_(self.etable.complete('f', 'description') is None)
+        # Even in the entry table, completion from other accounts show up
+        self.assertEqual(self.etable.complete('f', 'description'), 'first')
     
 
 class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):

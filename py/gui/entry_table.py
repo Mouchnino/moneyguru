@@ -12,10 +12,10 @@ from ..model.account import INCOME, EXPENSE
 from ..model.amount import parse_amount, convert_amount
 from ..model.recurrence import Spawn
 from .base import DocumentGUIObject
-from .complete import EntryCompletionMixIn
+from .complete import TransactionCompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit, RowWithDate, rowattr
 
-class EntryTable(DocumentGUIObject, GUITable, EntryCompletionMixIn):
+class EntryTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)

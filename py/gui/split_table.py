@@ -12,7 +12,7 @@ class SplitTable(TransactionPanelGUIObject, GUITable, TransactionCompletionMixIn
     def __init__(self, view, transaction_panel):
         TransactionPanelGUIObject.__init__(self, view, transaction_panel)
         GUITable.__init__(self)
-        self.document = transaction_panel.document # This is because of EntryCompletionMixIn, and is temporary
+        self.document = transaction_panel.document # TransactionCompletionMixIn requires a document member
     
     #--- Override
     def _do_add(self):
