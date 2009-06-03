@@ -8,7 +8,6 @@ import time
 from collections import defaultdict
 from copy import copy
 
-from hsutil.currency import CAD
 from hsutil.misc import allsame, first
 
 from ..const import NOEDIT
@@ -47,6 +46,10 @@ class Transaction(object):
             result.splits.append(newsplit)
         return result
     
+    def amount_for_account(self, account, currency):
+        splits = (s for s in self.splits if s.account is account)
+        return sum(convert_amount(s.amount, currency, self.date) for s in splits)
+    
     def affected_accounts(self):
         return set(s.account for s in self.splits if s.account is not None)
     
@@ -72,7 +75,10 @@ class Transaction(object):
         weak_split.amount = -strong_split.amount
     
     def balance(self, strong_split=None):
-        """Balance the transaction"""
+        """Balance the transaction
+        
+        strong_split: the split that initiated the imbalance. Will not be modified.
+        """
         currency2balance = defaultdict(int)
         splits_with_amount = (s for s in self.splits if s.amount != 0)
         for split in splits_with_amount:
@@ -201,6 +207,10 @@ class Transaction(object):
             return not allsame(s.amount.currency for s in splits_with_amount)
         except ValueError: # no split with amount
             return False
+    
+    @property
+    def is_null(self):
+        return all(not s.amount for s in self.splits)
     
 
 class Split(object):

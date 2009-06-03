@@ -5,18 +5,51 @@
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 
 from datetime import date
+from itertools import dropwhile
 from operator import attrgetter
 
+from hsutil.misc import flatten, first
+
+from ..const import REPEAT_MONTHLY
 from .amount import convert_amount
-from .transaction import Entry
+from .date import inc_month
+from .recurrence import Recurrence
+from .transaction import Entry, Transaction
 
 class Oven(object):
+    """The Oven takes "raw data" from accounts and transactions and "cooks" calculated data out of
+    them, such as running balance and scheduled transaction spawns.
+    """
     def __init__(self, accounts, transactions, scheduled):
         self._accounts = accounts
         self._transactions = transactions
         self._scheduled = scheduled
         self._cooked_until = date.min
         self.transactions = [] # cooked
+        self.budgets = [] # cooked
+    
+    def _budget_spawns(self, until_date):
+        result = []
+        TODAY = date.today()
+        base_date = date(TODAY.year, TODAY.month, 1)
+        relevant_txns = list(dropwhile(lambda t: t.date < base_date, self._transactions))
+        ref_date = inc_month(base_date, 1)
+        account_with_budget = (a for a in self._accounts if a.budget)
+        for account in account_with_budget:
+            ref = Transaction(ref_date, account=account, amount=account.budget)
+            rec = Recurrence(ref, REPEAT_MONTHLY, 1, include_first=True)
+            spawns = rec.get_spawns(until_date)
+            for spawn in spawns:
+                spawn_split = first(s for s in spawn.splits if s.account is account)
+                prev_date = inc_month(spawn.date, -1)
+                txns = (t for t in relevant_txns if prev_date <= t.date < spawn.date)
+                amount = sum(t.amount_for_account(account, account.budget.currency) for t in txns)
+                spawn_split.amount = max(spawn_split.amount - amount, 0)
+                spawn.balance_two_way(spawn_split)
+                spawn.is_budget = True
+            spawns = [spawn for spawn in spawns if not spawn.is_null]
+            result += spawns
+        return result
     
     def _cook_split(self, split):
         account = split.account
@@ -39,6 +72,12 @@ class Oven(object):
             self.cook(self._cooked_until, until_date)
     
     def cook(self, from_date=None, until_date=None):
+        """Cooks _accounts, _transactions, and _scheduled into transactions.
+        
+        from_date: when set, saves calculation time by re-using existing cooked transactions
+        until_date: because of recurrence, we must always have a date at which we stop cooking.
+                    If we don't, we might end up in an infinite loop.
+        """
         for account in self._accounts:
             account.clear(from_date)
         if from_date is None:
@@ -52,10 +91,8 @@ class Oven(object):
         self._transactions.sort(key=attrgetter('date', 'position')) # needed in case until_date is None
         if until_date is None:
             until_date = self._transactions[-1].date if self._transactions else from_date
-        spawns = []
-        for recurrence in self._scheduled:
-            # the first spawn is the same as txn, don't add it
-            spawns += recurrence.get_spawns(until_date)
+        spawns = flatten(recurrence.get_spawns(until_date) for recurrence in self._scheduled)
+        spawns += self._budget_spawns(until_date)
         txns = self._transactions + spawns
         tocook = [t for t in txns if from_date <= t.date <= until_date]
         tocook.sort(key=attrgetter('date'))

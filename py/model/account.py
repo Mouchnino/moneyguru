@@ -68,6 +68,7 @@ class Account(object):
     def _cash_flow(self, date_range, currency):
         cache = self._date2entries
         entries = flatten(cache[date] for date in date_range if date in cache)
+        entries = (e for e in entries if not getattr(e.transaction, 'is_budget', False))
         amounts = (convert_amount(e.amount, currency, e.date) for e in entries)
         return sum(amounts)
     
