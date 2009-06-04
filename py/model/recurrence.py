@@ -58,6 +58,11 @@ class Recurrence(object):
     def __repr__(self):
         return '<Recurrence %s %d>' % (self.repeat_type, self.repeat_every)
     
+    #--- Private
+    def _create_spawn(self, ref, date):
+        return Spawn(self, ref, date)
+    
+    #--- Public
     def add_exception(self, spawn):
         self.date2exception[spawn.recurrence_date] = spawn
     
@@ -104,7 +109,7 @@ class Recurrence(object):
                     result.append(exception)
             else:
                 if current_date not in self.date2instances:
-                    self.date2instances[current_date] = Spawn(self, current_ref, current_date)
+                    self.date2instances[current_date] = self._create_spawn(current_ref, current_date)
                 result.append(self.date2instances[current_date])
             new_date = None
             while new_date is None:

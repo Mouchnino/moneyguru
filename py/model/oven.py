@@ -8,13 +8,12 @@ from datetime import date
 from itertools import dropwhile
 from operator import attrgetter
 
-from hsutil.misc import flatten, first
+from hsutil.misc import flatten
 
-from ..const import REPEAT_MONTHLY
 from .amount import convert_amount
+from .budget import Budget
 from .date import inc_month
-from .recurrence import Recurrence
-from .transaction import Entry, Transaction
+from .transaction import Entry
 
 class Oven(object):
     """The Oven takes "raw data" from accounts and transactions and "cooks" calculated data out of
@@ -36,17 +35,8 @@ class Oven(object):
         ref_date = inc_month(base_date, 1)
         account_with_budget = (a for a in self._accounts if a.budget)
         for account in account_with_budget:
-            ref = Transaction(ref_date, account=account, amount=account.budget)
-            rec = Recurrence(ref, REPEAT_MONTHLY, 1, include_first=True)
-            spawns = rec.get_spawns(until_date)
-            for spawn in spawns:
-                spawn_split = first(s for s in spawn.splits if s.account is account)
-                prev_date = inc_month(spawn.date, -1)
-                txns = (t for t in relevant_txns if prev_date <= t.date < spawn.date)
-                amount = sum(t.amount_for_account(account, account.budget.currency) for t in txns)
-                spawn_split.amount = max(spawn_split.amount - amount, 0)
-                spawn.balance_two_way(spawn_split)
-                spawn.is_budget = True
+            budget = Budget(account, ref_date)
+            spawns = budget.get_spawns(until_date, relevant_txns)
             spawns = [spawn for spawn in spawns if not spawn.is_null]
             result += spawns
         return result
