@@ -102,23 +102,8 @@ class Account(object):
         if not (self.budget and date_range.future):
             return 0
         currency = currency or self.currency
-        result = 0
-        budget = -self.budget if self.is_credit_account() else self.budget
-        budget = convert_amount(budget, currency, date.today())
-        start_date = max(date_range.future.start, date_range.start)
-        month_range = MonthRange(start_date)
-        current_range = month_range & date_range
-        while current_range:
-            prior_cash_flow = self._cash_flow(month_range, currency)
-            if self._normalize_amount(budget) > self._normalize_amount(prior_cash_flow):
-                budget_diff = budget - prior_cash_flow
-                time_left = month_range.future
-                our_time = time_left & date_range
-                budget_proportionned = budget_diff * (our_time.days / time_left.days)
-                result += budget_proportionned
-            month_range = month_range.next()
-            current_range = month_range & date_range
-        return result
+        budget_txns = [e.transaction for e in self.entries if getattr(e.transaction, 'is_budget', False)]
+        return sum(bt.budget_for_account(self, date_range, currency) for bt in budget_txns)
     
     def cash_flow(self, date_range, currency=None):
         currency = currency or self.currency

@@ -20,7 +20,8 @@ class DateRange(object):
         self.end = end
     
     def __repr__(self):
-        return '<%s %s - %s>' % (type(self).__name__, self.start.strftime('%Y/%m/%d'), self.end.strftime('%Y/%m/%d'))
+        start_date_str = self.start.strftime('%Y/%m/%d') if self.start.year > 1900 else 'MINDATE'
+        return '<%s %s - %s>' % (type(self).__name__, start_date_str, self.end.strftime('%Y/%m/%d'))
     
     def __nonzero__(self):
         return self.start <= self.end

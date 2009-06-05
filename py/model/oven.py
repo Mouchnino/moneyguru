@@ -83,7 +83,8 @@ class Oven(object):
         spawns = flatten(recurrence.get_spawns(until_date) for recurrence in self._scheduled)
         spawns += self._budget_spawns(until_date)
         txns = self._transactions + spawns
-        tocook = [t for t in txns if from_date <= t.date <= until_date]
+        # we don't filter out txns > until_date because they might be budgets affecting current data
+        tocook = [t for t in txns if from_date <= t.date]
         tocook.sort(key=attrgetter('date'))
         for txn in tocook:
             self._cook_transaction(txn)

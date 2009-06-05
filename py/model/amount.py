@@ -242,3 +242,17 @@ def convert_amount(amount, target_currency, date):
         return amount
     exchange_rate = amount.currency.value_in(target_currency, date)
     return Amount(int(round(amount._value * exchange_rate)), target_currency, _convert_value=False)
+
+def prorate_amount(amount, spread_over_range, wanted_range):
+    """Returns the prorated part of `amount` spread over `spread_over_range`, for the `wanted_range`.
+    
+    For example, if 100$ are spead over a range that lasts 10 days and that there's an overlap of 4
+    days between `spread_over_range` and `wanted_range`, the result will be 40$.
+    """
+    if not spread_over_range:
+        return 0
+    intersect = spread_over_range & wanted_range
+    if not intersect:
+        return 0
+    rate = intersect.days / spread_over_range.days
+    return amount * rate

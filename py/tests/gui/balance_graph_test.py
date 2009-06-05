@@ -50,7 +50,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         self.add_account('expense', account_type=EXPENSE)
         self.document.select_income_statement()
         self.istatement.select = self.istatement.expenses[0]
-        self.set_budget('100') # 4 days left, 25$ each day
+        self.set_budget('100') # 16 days left, 6.25$ per day
         self.document.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.show_selected_account()
