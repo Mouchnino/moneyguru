@@ -30,9 +30,8 @@ class Oven(object):
     def _budget_spawns(self, until_date):
         result = []
         TODAY = date.today()
-        base_date = date(TODAY.year, TODAY.month, 1)
-        relevant_txns = list(dropwhile(lambda t: t.date < base_date, self._transactions))
-        ref_date = inc_month(base_date, 1)
+        ref_date = date(TODAY.year, TODAY.month, 1)
+        relevant_txns = list(dropwhile(lambda t: t.date < ref_date, self._transactions))
         account_with_budget = (a for a in self._accounts if a.budget)
         for account in account_with_budget:
             budget = Budget(account, ref_date)

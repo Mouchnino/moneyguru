@@ -26,13 +26,12 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         self.setup_one_expense_with_budget()
     
     def test_budget_transactions(self):
-        # When a budget is set budget transaction spawns show up in ttable, on the 1st of every month.
-        # We are in a yearly view, in january, so there's 11 budget txn coming.
+        # When a budget is set budget transaction spawns show up in ttable, at the end of each month.
         self.document.select_transaction_table()
-        self.assertEqual(len(self.ttable), 11)
+        self.assertEqual(len(self.ttable), 12)
         self.assertEqual(self.ttable[0].amount, '100.00')
-        self.assertEqual(self.ttable[0].date, '01/02/2008')
-        self.assertEqual(self.ttable[10].date, '01/12/2008')
+        self.assertEqual(self.ttable[0].date, '31/01/2008')
+        self.assertEqual(self.ttable[11].date, '31/12/2008')
      
 
 class OneExpenseWithBudgetAndTxn(TestCase, CommonSetup):
@@ -54,7 +53,7 @@ class OneExpenseWithBustedBudget(TestCase, CommonSetup):
         self.add_txn(date='27/01/2008', to='Some Expense', amount='142')
     
     def test_budget_spawn_doesnt_show(self):
-        # When a busget is busted, don't show the spawn
-        self.assertEqual(len(self.ttable), 11)
-        self.assertEqual(self.ttable[1].date, '01/03/2008')
+        # When a budget is busted, don't show the spawn
+        self.assertEqual(len(self.ttable), 12)
+        self.assertEqual(self.ttable[1].date, '29/02/2008')
     

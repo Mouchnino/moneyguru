@@ -16,7 +16,7 @@
 from hsutil.misc import extract, first
 
 from ..const import REPEAT_MONTHLY
-from .date import inc_month
+from .date import inc_month, ONE_DAY
 from .recurrence import Recurrence, Spawn
 from .transaction import Transaction
 
@@ -30,12 +30,13 @@ class Budget(Recurrence):
         self._account = account
     
     #--- Override
-    def _create_spawn(self, ref, date):
+    def _create_spawn(self, ref, recurrence_date):
+        # `recurrence_date` is the date at which the budget *starts*.
         account = self._account
         budget = account.budget
-        spawn = BudgetSpawn(self, ref, date)
-        prev_date = inc_month(spawn.date, -1)
-        affects_spawn = lambda t: prev_date <= t.date < spawn.date
+        end_date = inc_month(recurrence_date, 1) - ONE_DAY
+        spawn = BudgetSpawn(self, ref, recurrence_date=recurrence_date, date=end_date)
+        affects_spawn = lambda t: recurrence_date <= t.date <= spawn.date
         wheat, shaft = extract(affects_spawn, self._relevant_transactions)
         self._relevant_transactions = shaft
         amount = sum(t.amount_for_account(account, budget.currency) for t in wheat)
