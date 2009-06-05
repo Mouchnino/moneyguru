@@ -21,7 +21,7 @@ class BalanceGraph(Graph):
     
     def _budget_for_date(self, date):
         date_range = DateRange(date.min, date)
-        return self.document.accounts.budgeted_amount_for_target(self._account, date_range)
+        return self.document.budgeted_amount_for_target(self._account, date_range)
     
     #--- Override
     # Computation Notes: When the balance in the graph changes, we have to create a flat line until

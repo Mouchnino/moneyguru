@@ -55,6 +55,7 @@ class Document(Broadcaster, Listener):
         self.app = app
         self.view = view
         self.accounts = AccountList(self.app.default_currency)
+        self.excluded_accounts = set()
         self.groups = GroupList()
         self.transactions = TransactionList()
         # I did not manage to create a repeatable test for it, but self._scheduled has to be ordered
@@ -236,7 +237,7 @@ class Document(Broadcaster, Listener):
     def _restore_preferences_after_load(self):
         # some preference need the file loaded before attempting a restore
         excluded_account_names = set(nonone(self.app.get_default(EXCLUDED_ACCOUNTS_PREFERENCE), []))
-        self.accounts.excluded = set(a for a in self.accounts if a.name in excluded_account_names)
+        self.excluded_accounts = set(a for a in self.accounts if a.name in excluded_account_names)
     
     def _save_preferences(self):
         dr = self.date_range
@@ -256,7 +257,7 @@ class Document(Broadcaster, Listener):
         self.app.set_default(SELECTED_DATE_RANGE_START_PREFERENCE, str_start_date)
         str_end_date = dr.end.strftime(DATE_FORMAT_FOR_PREFERENCES)
         self.app.set_default(SELECTED_DATE_RANGE_END_PREFERENCE, str_end_date)
-        excluded_account_names = [a.name for a in self.accounts.excluded]
+        excluded_account_names = [a.name for a in self.excluded_accounts]
         self.app.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
     
     def _set_visible_entries(self):
@@ -375,15 +376,11 @@ class Document(Broadcaster, Listener):
         self._delete_account(account, reassign_to=reassign_to)
     
     def toggle_accounts_exclusion(self, accounts):
-        if accounts <= self.accounts.excluded: # all accounts are already excluded. re-include all
-            self.accounts.excluded -= accounts
+        if accounts <= self.excluded_accounts: # all accounts are already excluded. re-include all
+            self.excluded_accounts -= accounts
         else:
-            self.accounts.excluded |= accounts
+            self.excluded_accounts |= accounts
         self.notify('accounts_excluded')
-    
-    @property
-    def excluded_accounts(self):
-        return self.accounts.excluded
     
     #--- Group
     def change_group(self, group, name=NOEDIT):
@@ -706,6 +703,38 @@ class Document(Broadcaster, Listener):
     @property
     def visible_unfiltered_entry_count(self):
         return self._visible_unfiltered_entry_count
+    
+    #--- Budget
+    def budgeted_amount(self, account, date_range, currency=None):
+        if not (account.budget and date_range.future):
+            return 0
+        currency = currency or account.currency
+        budget_txns = [t for t in self.oven.transactions if getattr(t, 'is_budget', False)]
+        return sum(bt.budget_for_account(account, date_range, currency) for bt in budget_txns)
+    
+    def budgeted_amount_for_target(self, target, date_range):
+        """Returns the sum of all the budgeted amounts targeting 'target'. The currency of the 
+        result is target's currency. The result is normalized (reverted if target is a liability).
+        If target is None, all accounts are used.
+        """
+        accounts = set(a for a in self.accounts if a.is_income_statement_account())
+        accounts -= self.excluded_accounts
+        if target is None:
+            targeters = [a for a in accounts if a.budget and a.budget_target not in self.excluded_accounts]
+            currency = self.app.default_currency
+        else:
+            targeters = [a for a in accounts if a.budget_target is target]
+            currency = target.currency
+        if not targeters:
+            return 0
+        budgeted_amount = sum(self.budgeted_amount(a, date_range, currency=currency) for a in targeters)
+        if target is not None:
+            budgeted_amount = target._normalize_amount(budgeted_amount)
+        return budgeted_amount
+    
+    def normal_budgeted_amount(self, account, date_range, currency=None):
+        budgeted_amount = self.budgeted_amount(account, date_range, currency)
+        return account._normalize_amount(budgeted_amount)
     
     #--- Selection
     @property

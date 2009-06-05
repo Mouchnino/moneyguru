@@ -14,7 +14,7 @@ class NetWorthGraph(BalanceGraph):
     
     def _budget_for_date(self, date):
         date_range = DateRange(date.min, date)
-        return self.document.accounts.budgeted_amount_for_target(None, date_range)
+        return self.document.budgeted_amount_for_target(None, date_range)
     
     def compute_data(self):
         accounts = set(a for a in self.document.accounts if a.is_balance_sheet_account())

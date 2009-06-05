@@ -18,7 +18,7 @@ class ProfitGraph(BarGraph):
         accounts = set(a for a in self.document.accounts if a.is_income_statement_account())
         accounts = accounts - self.document.excluded_accounts
         cash_flow = -sum(a.cash_flow(date_range, currency=self.app.default_currency) for a in accounts)
-        budgeted_amount = self.document.accounts.budgeted_amount_for_target(None, date_range)
+        budgeted_amount = self.document.budgeted_amount_for_target(None, date_range)
         return cash_flow - budgeted_amount
     
     def _is_reverted(self):

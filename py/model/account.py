@@ -98,13 +98,6 @@ class Account(object):
         else:
             return 0
     
-    def budgeted_amount(self, date_range, currency=None):
-        if not (self.budget and date_range.future):
-            return 0
-        currency = currency or self.currency
-        budget_txns = [e.transaction for e in self.entries if getattr(e.transaction, 'is_budget', False)]
-        return sum(bt.budget_for_account(self, date_range, currency) for bt in budget_txns)
-    
     def cash_flow(self, date_range, currency=None):
         currency = currency or self.currency
         cache_key = (date_range, currency)
@@ -158,10 +151,6 @@ class Account(object):
         balance = self.balance(date=date, reconciled=reconciled, currency=currency)
         return self._normalize_amount(balance)
     
-    def normal_budgeted_amount(self, date_range, currency=None):
-        budgeted_amount = self.budgeted_amount(date_range, currency)
-        return self._normalize_amount(budgeted_amount)
-    
     def normal_cash_flow(self, date_range, currency=None):
         cash_flow = self.cash_flow(date_range, currency)
         return self._normalize_amount(cash_flow)
@@ -201,32 +190,10 @@ class AccountList(list):
         list.__init__(self)
         self.default_currency = default_currency
         self.auto_created = set()
-        self.excluded = set()
     
     def add(self, account):
         if self.find_reference(account.reference) is None:
             list.append(self, account)
-    
-    def budgeted_amount_for_target(self, target, date_range):
-        """ Returns the sum of all the budgeted amounts targeting 'target'. The currency os the 
-            result is target's currency. Note that for budgets targeting no account, the target
-            is the first asset by default. The result is also normalized (reverted is target is a
-            liability). If target is None, all accounts are used
-        """
-        accounts = set(a for a in self if a.is_income_statement_account())
-        accounts -= self.excluded
-        if target is None:
-            targeters = [a for a in accounts if a.budget and a.budget_target not in self.excluded]
-            currency = self.default_currency
-        else:
-            targeters = [a for a in accounts if a.budget_target is target]
-            currency = target.currency
-        if not targeters:
-            return 0
-        budgeted_amount = sum(a.budgeted_amount(date_range, currency=currency) for a in targeters)
-        if target is not None:
-            budgeted_amount = target._normalize_amount(budgeted_amount)
-        return budgeted_amount
     
     def clear(self):
         del self[:]

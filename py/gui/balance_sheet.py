@@ -22,10 +22,10 @@ class BalanceSheet(Report):
         start_amount_native = account.normal_balance(start_date - timedelta(1), currency=currency)
         end_amount = account.normal_balance(end_date)
         end_amount_native = account.normal_balance(end_date, currency=currency)
-        budgeted_amount = self.document.accounts.budgeted_amount_for_target(account, date_range)
+        budgeted_amount = self.document.budgeted_amount_for_target(account, date_range)
         budgeted_amount_native = convert_amount(budgeted_amount, currency, date_range.end)
         prev_date_range = DateRange(date.min, date_range.start - ONE_DAY)
-        prev_budgeted_amount = self.document.accounts.budgeted_amount_for_target(account, prev_date_range)
+        prev_budgeted_amount = self.document.budgeted_amount_for_target(account, prev_date_range)
         prev_budgeted_amount_native = convert_amount(prev_budgeted_amount, currency, date_range.start)
         # budgeted_amount is not normalized. We *subtract* here because what we want to do is to
         # reflect the "other side" of the budget. Therefore, if 100$ is budgeted for an income,
