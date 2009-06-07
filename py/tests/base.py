@@ -44,7 +44,6 @@ from ..gui.transaction_table import TransactionTable
 from ..loader import base
 from ..model.account import ASSET, LIABILITY, INCOME, EXPENSE
 from ..model.currency import RatesDB
-from ..model.currency_test import FakeServer
 from ..model.date import MonthRange
 from ..model import currency as currency_module
 from .. import document as document_module

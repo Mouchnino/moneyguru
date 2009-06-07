@@ -14,8 +14,8 @@ from hsutil.currency import Currency, USD, PLN, EUR, CAD
 from hsutil.decorators import log_calls
 
 from .base import CallLogger, TestCase, TestSaveLoadMixin
+from .model.currency_test import FakeServer
 from ..app import Application
-from ..model.currency_test import FakeServer
 from ..model import currency
 from ..model.account import INCOME, LIABILITY
 from ..model.currency import RatesDB
