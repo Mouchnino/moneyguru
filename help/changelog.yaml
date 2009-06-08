@@ -1,3 +1,7 @@
+- date: 2009-06-08
+  version: 1.5.5
+  description: |
+    * Fixed a bug preventing some CSV files from being imported.
 - date: 2009-05-24
   version: 1.5.4
   description: |
