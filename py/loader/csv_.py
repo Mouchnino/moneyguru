@@ -34,8 +34,13 @@ class Loader(base.Loader):
         def decode_line(line):
             return [unicode(cell, 'latin-1') for cell in line]
         
+        # Comment lines can confuse the sniffer. We remove them
+        content = infile.read()
+        lines = content.split('\n')
+        stripped_lines = [line for line in lines if not line.strip().startswith('#')]
+        content = '\n'.join(stripped_lines)
         try:
-            dialect = csv.Sniffer().sniff(infile.read())
+            dialect = csv.Sniffer().sniff(content)
         except csv.Error:
             raise FileFormatError()
         infile.seek(0)

@@ -6,6 +6,8 @@
 
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import USD, EUR
 from hsutil.misc import allsame
 
@@ -23,8 +25,8 @@ class Pristine(TestCase):
         # a fortis csv import. ';' delimiter, with headers.
         self.loader.parse(self.filepath('csv/fortis.csv'))
         # there are blank lines, but they have been stripped out
-        self.assertEqual(len(self.loader.lines), 19)
-        self.assertEqual(len(self.loader.lines[0]), 8)
+        eq_(len(self.loader.lines), 19)
+        eq_(len(self.loader.lines[0]), 8)
         # the lines below until the load() are the equivalent of the user linking columns with fields
         # and removing the first line.
         self.loader.column_indexes[CSV_DATE] = 1
@@ -34,19 +36,19 @@ class Pristine(TestCase):
         self.loader.column_indexes[CSV_REFERENCE] = 0
         self.loader.lines = self.loader.lines[1:]
         self.loader.load()
-        self.assertEqual(len(self.loader.accounts), 1)
+        eq_(len(self.loader.accounts), 1)
         [account] = self.loader.accounts
-        self.assertEqual(account.name, 'CSV Import')
+        eq_(account.name, 'CSV Import')
         transactions = self.loader.transactions
-        self.assertEqual(len(transactions), 18)
+        eq_(len(transactions), 18)
         txn = transactions[0]
-        self.assertEqual(txn.date, date(2008, 12, 1))
-        self.assertEqual(txn.description, 'RETRAIT A UN DISTRIBUTEUR FORTIS')
-        self.assertEqual(txn.splits[0].account.name, 'CSV Import')
-        self.assertEqual(txn.splits[0].amount, Amount(-100, EUR))
+        eq_(txn.date, date(2008, 12, 1))
+        eq_(txn.description, 'RETRAIT A UN DISTRIBUTEUR FORTIS')
+        eq_(txn.splits[0].account.name, 'CSV Import')
+        eq_(txn.splits[0].amount, Amount(-100, EUR))
         self.assertTrue(txn.splits[1].account is None)
-        self.assertEqual(txn.splits[1].amount, Amount(100, EUR))
-        self.assertEqual(txn.splits[0].reference, '2008-0069')
+        eq_(txn.splits[1].amount, Amount(100, EUR))
+        eq_(txn.splits[0].reference, '2008-0069')
     
     def test_lots_of_noise(self):
         # this file has 4 lines of non-separated header (Sniffer doesn't work) and a footer
@@ -56,4 +58,11 @@ class Pristine(TestCase):
     def test_no_transactions(self):
         # a Deutsch Bank export without transactions in it. It would raise an error during sniffing
         self.assertRaises(FileFormatError, self.loader.parse, self.filepath('csv/no_transaction.csv'))
+    
+    def test_with_comments(self):
+        # the 'comments.csv' file has lines starting with '#' which the parser had problems with.
+        self.loader.parse(self.filepath('csv/comments.csv')) # no exception
+        # It's not because the commented lines weren't passed to the sniffer that they don't show
+        # up in the csv options panel. All lines must be there.
+        eq_(len(self.loader.lines), 6)
     
