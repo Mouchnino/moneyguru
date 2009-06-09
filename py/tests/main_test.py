@@ -9,9 +9,13 @@ import os.path as op
 import sys
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import EUR
 
-from .base import TestCase, CommonSetup, TestQIFExportImportMixin, TestSaveLoadMixin, CallLogger
+from .base import (TestCase, CommonSetup, TestQIFExportImportMixin, TestSaveLoadMixin, CallLogger,
+    ApplicationGUI)
+from .. import app
 from ..app import Application
 from ..document import Document
 from ..exception import FileFormatError
@@ -23,6 +27,33 @@ from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
 #--- Transactions: 0
 
 class NoSetup(TestCase):
+    def test_app_loads_correct_pref_types(self):
+        # If the type loaded by Application from the prefs is not the correct one, we get a crash
+        # when the value goes back to the GUI, when it's depythonified.
+        gui = ApplicationGUI()
+        gui.defaults = {
+            app.FIRST_WEEKDAY_PREFERENCE: 'not an int',
+            app.AHEAD_MONTHS_PREFERENCE: 'not an int',
+            app.DONT_UNRECONCILE_PREFERENCE: 'not a bool',
+        }
+        self.app = Application(gui)
+        self.create_instances()
+        # because none of the prefs are of the correct type, use default values
+        eq_(self.app.first_weekday, 0)
+        eq_(self.app.ahead_months, 2)
+        assert isinstance(self.app.dont_unreconcile, bool)
+    
+    def test_app_tries_to_convert_different_types(self):
+        # The prefs might be stored as a different, but compatible type (for example, an int instead
+        # of a bool. Try to convert the value before falling back to the default value.
+        gui = ApplicationGUI()
+        gui.defaults = {
+            app.DONT_UNRECONCILE_PREFERENCE: 42,
+        }
+        self.app = Application(gui)
+        self.create_instances()
+        assert self.app.dont_unreconcile
+    
     def test_can_use_another_amount_format(self):
         self.app = Application(CallLogger(), decimal_sep=',', grouping_sep=' ')
         self.create_instances()

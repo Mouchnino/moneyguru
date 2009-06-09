@@ -56,8 +56,15 @@ class Application(Broadcaster, RegistrableApplication):
     def parse_date(self, date):
         return parse_date(date, self._date_format)
     
-    def get_default(self, key, value_if_missing=None):
-        return nonone(self.view.get_default(key), value_if_missing)
+    def get_default(self, key, fallback_value=None):
+        result = nonone(self.view.get_default(key), fallback_value)
+        if fallback_value is not None and not isinstance(result, type(fallback_value)):
+            # we don't want to end up with garbage values from the prefs
+            try:
+                result = type(fallback_value)(result)
+            except Exception:
+                result = fallback_value
+        return result
     
     def set_default(self, key, value):
         self.view.set_default(key, value)
