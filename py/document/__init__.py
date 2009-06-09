@@ -1076,6 +1076,7 @@ class Document(Broadcaster, Listener):
     def date_range(self, date_range):
         if date_range == self._date_range:
             return
+        self.stop_edition()
         self.notify('date_range_will_change')
         self._date_range = date_range
         self.oven.continue_cooking(date_range.end)

@@ -98,6 +98,11 @@ class EditionMode(TestCase):
         self.document.select_income_statement()
         self.assertEqual(self.istatement.income.children_count, 2)
     
+    def test_change_date_range(self):
+        # When changing the date range during edition, stop that edition before the date range changes
+        self.document.select_prev_date_range()
+        assert self.ttable.edited is None
+    
     def test_delete(self):
         """Calling delete() while in edition mode removes the edited transaction and put the table
         out of edition mode.
@@ -554,7 +559,7 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
         self.document.select_prev_date_range()
         row = self.ttable[0]
         self.assertEqual(row.description, 'first')
-        self.check_gui_calls(self.ttable_gui, refresh=1, show_selected_row=1)
+        self.check_gui_calls_partial(self.ttable_gui, refresh=1, show_selected_row=1)
     
     def test_selection_after_date_range_change(self):
         """The selection in the document is correctly updated when the date range changes"""

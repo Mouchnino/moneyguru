@@ -19,7 +19,7 @@ class Pristine(TestCase):
         self.document.date_range = self.document.date_range.prev()
         self.check_gui_calls(self.mainwindow_gui, refresh_date_range_selector=1, 
                              animate_date_range_backward=1)
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls_partial(self.bsheet_gui, refresh=1)
         self.check_gui_calls(self.nwgraph_gui, refresh=1)
         self.check_gui_calls(self.balgraph_gui) # no refresh, it is disconnected
         self.check_gui_calls(self.bargraph_gui) # no refresh, it is disconnected
