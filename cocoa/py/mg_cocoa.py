@@ -491,8 +491,12 @@ class PyOutline(PyListener):
         self.py.selected_path = path
 
     def property_valueAtPath_(self, property, path):
-        return getattr(self.py.get_node(path), property)
-
+        try:
+            return getattr(self.py.get_node(path), property)
+        except IndexError:
+            logging.warning(u"%r doesn't have a node at path %r", self.py, path)
+            return u''
+    
     def setProperty_value_atPath_(self, property, value, path):
         setattr(self.py.get_node(path), property, value)
     
