@@ -50,21 +50,26 @@ class Amount(object):
     - When comparing Amount with another type, raise TypeError.
     - Special case: amounts can be compared with 0
     """    
-    def __init__(self, value, currency, _convert_value=True):
+    def __init__(self, value, currency, _value_is_shifted=False):
         """Create an amount.
 
-        The _convert_value argument is for internal use."""
+        The _value_is_shifted argument is for internal use."""
         assert isinstance(currency, Currency)     # This is just to make sure nobody sends a string.
-        self._value = int(round(value * 10 ** currency.exponent)) if _convert_value else value
+        if _value_is_shifted:
+            self._shifted_value = value
+            self._value = value / 10 ** currency.exponent
+        else:
+            self._shifted_value = int(round(value * 10 ** currency.exponent))
+            self._value = value
         self._currency = currency
     
-    __slots__ = ['_value', '_currency']
+    __slots__ = ['_value', '_shifted_value', '_currency']
     
     def __nonzero__(self):
-        return bool(self._value)
+        return bool(self._shifted_value)
     
     def __float__(self):
-        return self.value
+        return float(self.value)
     
     def __str__(self):
         return format_amount(self)
@@ -74,10 +79,10 @@ class Amount(object):
     
     def __eq__(self, other):
         if other == 0:
-            return self._value == 0
+            return self._shifted_value == 0
         elif isinstance(other, Amount):
             if self._currency == other._currency:
-                return self._value == other._value
+                return self._shifted_value == other._shifted_value
             else:
                 return False
         else:
@@ -92,10 +97,10 @@ class Amount(object):
     __ge__ = cmp_wrap(operator.ge)
     
     def __neg__(self):
-        return Amount(-self._value, self.currency, _convert_value=False)
+        return Amount(-self._shifted_value, self.currency, _value_is_shifted=True)
 
     def __abs__(self):
-        return Amount(abs(self._value), self.currency, _convert_value=False)
+        return Amount(abs(self._shifted_value), self.currency, _value_is_shifted=True)
 
     def __add__(self, other):
         if self == 0:
@@ -104,7 +109,7 @@ class Amount(object):
             return self
         elif isinstance(other, Amount):
             if self._currency == other._currency:
-                return Amount(self._value + other._value, self._currency, _convert_value=False)
+                return Amount(self._shifted_value + other._shifted_value, self._currency, _value_is_shifted=True)
             else:
                 raise ValueError('Cannot coerce amounts of currency %s and %s' % (self.currency, other.currency))
         else:
@@ -117,7 +122,7 @@ class Amount(object):
             return self
         elif isinstance(other, Amount):
             if self._currency == other._currency:
-                return Amount(self._value - other._value, self._currency, _convert_value=False)
+                return Amount(self._shifted_value - other._shifted_value, self._currency, _value_is_shifted=True)
             else:
                 raise ValueError('Cannot coerce amounts of currency %s and %s' % (self.currency, other.currency))
         else:
@@ -139,7 +144,7 @@ class Amount(object):
         if isinstance(other, Amount):
             raise TypeError("Can't multiply two amounts together")
         else:
-            return Amount(int(round(self._value * other)), self._currency, _convert_value=False)
+            return Amount(int(round(self._shifted_value * other)), self._currency, _value_is_shifted=True)
 
     def __rmul__(self, other):
         return self * other
@@ -150,7 +155,7 @@ class Amount(object):
                 raise ValueError('Cannot coerce amounts of currency %s and %s' % (self.currency, other.currency))
             return self.value / other.value
         else:
-            return Amount(int(round(self._value / other)), self._currency, _convert_value=False)
+            return Amount(int(round(self._shifted_value / other)), self._currency, _value_is_shifted=True)
 
     @property
     def currency(self):
@@ -158,7 +163,7 @@ class Amount(object):
 
     @property
     def value(self):
-        return self._value / 10 ** self._currency.exponent
+        return self._value
 
 
 def format_amount(amount, default_currency=None, blank_zero=False, zero_currency=None, 
@@ -236,12 +241,13 @@ def parse_amount(string, default_currency=None, with_expression=True):
 
 
 def convert_amount(amount, target_currency, date):
-    # Using private Amount attr and avoid using _convert_value is done for optimization purposes
-    # The speedup is non-negligeable.
-    if amount == 0 or amount._currency == target_currency:
+    if amount == 0:
         return amount
-    exchange_rate = amount.currency.value_in(target_currency, date)
-    return Amount(int(round(amount._value * exchange_rate)), target_currency, _convert_value=False)
+    currency = amount._currency
+    if currency == target_currency:
+        return amount
+    exchange_rate = currency.value_in(target_currency, date)
+    return Amount(amount.value * exchange_rate, target_currency)
 
 def prorate_amount(amount, spread_over_range, wanted_range):
     """Returns the prorated part of `amount` spread over `spread_over_range`, for the `wanted_range`.

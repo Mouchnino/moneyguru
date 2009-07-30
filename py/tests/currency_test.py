@@ -9,8 +9,10 @@ import time
 import xmlrpclib
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil import io
-from hsutil.currency import Currency, USD, PLN, EUR, CAD
+from hsutil.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil.decorators import log_calls
 
 from .base import CallLogger, TestCase, TestSaveLoadMixin
@@ -359,4 +361,17 @@ class OneMCT(TestCase):
         expected = set(['12.00', 'CAD 40.00'])
         self.assertTrue(self.stable[2].debit in expected)
         self.assertTrue(self.stable[3].debit in expected)
+    
+
+class EntryWithXPFAmount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        XPF.set_CAD_value(0.42, date(2009, 7, 20))
+        self.add_account('account', CAD)
+        self.add_entry('20/07/2009', increase='100 XPF')
+    
+    def test_account_balance_is_correct(self):
+        # Because XPF has an exponent of 0, there was a bug where currency conversion wouldn't be
+        # done correctly.
+        eq_(self.etable[0].balance, 'CAD 42.00')
     
