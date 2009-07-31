@@ -185,6 +185,23 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.assertEqual(row.increase, '80.00')
     
 
+class LoadWithReference(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.TXNS = [
+            {'date': '20/07/2009', 'amount': '1', 'reference': 'txn1'},
+            {'date': '20/07/2009', 'amount': '1', 'reference': 'txn1'},
+        ]
+        self.fake_import('foo', self.TXNS)
+        self.iwin.import_selected_pane()
+    
+    def test_import_with_same_reference_twice(self):
+        # When 2 txns have the same ref in an account, importing a file with the same ref would
+        # cause a crash.
+        self.fake_import('foo', self.TXNS)
+        self.iwin.selected_target_account_index = 1 # no crash
+    
+
 class LoadThemImportWithReference(TestCase):
     def setUp(self):
         self.create_instances()

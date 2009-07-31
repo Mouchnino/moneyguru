@@ -54,6 +54,7 @@ class AccountPane(object):
                     if entry.reconciled:
                         other.will_import = False
                     to_import.remove(other)
+                    del reference2entry[entry.reference]
                 else:
                     other = None
                 if other is not None or not entry.reconciled:
