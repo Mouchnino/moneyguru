@@ -1,3 +1,8 @@
+- date: 2009-08-04
+  version: 1.5.7
+  description: |
+    * Fixed inaccuracies in some currencies' conversion process.
+    * Fixed a couple of interface glitches.
 - date: 2009-06-09
   version: 1.5.6
   description: |
