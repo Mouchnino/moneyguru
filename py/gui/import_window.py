@@ -1,8 +1,11 @@
-# Unit Name: moneyguru.gui.import_window
 # Created By: Virgil Dupras
 # Created On: 2008-08-07
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+# 
+# This software is licensed under the "HS" License as described in the "LICENSE" file, 
+# which should be included with this package. The terms are also available at 
+# http://www.hardcoded.net/licenses/hs_license
 
 from hsutil.notify import Broadcaster
 from hsutil.misc import flatten, dedupe, first

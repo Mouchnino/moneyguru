@@ -1,8 +1,12 @@
-# Unit Name: moneyguru.model.amount
 # Created By: Eric Mc Sween
 # Created On: 2007-12-13
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+# 
+# This software is licensed under the "HS" License as described in the "LICENSE" file, 
+# which should be included with this package. The terms are also available at 
+# http://www.hardcoded.net/licenses/hs_license
+
 from __future__ import division
 
 import operator

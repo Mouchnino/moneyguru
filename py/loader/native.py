@@ -1,8 +1,11 @@
-# Unit Name: moneyguru.loader.native
 # Created By: Virgil Dupras
 # Created On: 2008-02-15
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+# 
+# This software is licensed under the "HS" License as described in the "LICENSE" file, 
+# which should be included with this package. The terms are also available at 
+# http://www.hardcoded.net/licenses/hs_license
 
 from datetime import datetime
 import xml.etree.cElementTree as ET

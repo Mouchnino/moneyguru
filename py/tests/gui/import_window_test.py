@@ -1,8 +1,6 @@
-# Unit Name: moneyguru.gui.import_window_test
 # Created By: Virgil Dupras
 # Created On: 2008-08-08
 # $Id$
-# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 
 from datetime import date
 
