@@ -24,9 +24,9 @@ class CommonSetup(CommonSetup):
         self.add_account(account_name, account_type=account_type)
         self.document.select_income_statement()
         if is_expense:
-            self.istatement.select = self.istatement.expenses[0]
+            self.istatement.selected = self.istatement.expenses[0]
         else:
-            self.istatement.select = self.istatement.income[0]
+            self.istatement.selected = self.istatement.income[0]
         self.set_budget('100', target_index)
     
 
@@ -90,4 +90,12 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         # In the budget transaction, 'some asset' is in the 'from' column.
         self.document.select_transaction_table()
         eq_(self.ttable[0].from_, 'some asset')
+    
+    def test_budget_is_counted_in_etable_balance(self):
+        # When an asset is a budget target, its balance is correctly incremented in the etable.
+        self.document.select_balance_sheet()
+        self.bsheet.selected = self.bsheet.assets[0]
+        self.bsheet.show_selected_account()
+        # The balance of the budget entry has a correctly decremented balance (the budget is an expense).
+        eq_(self.etable[0].balance, '-100.00')
     

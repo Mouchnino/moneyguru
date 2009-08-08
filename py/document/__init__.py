@@ -637,13 +637,15 @@ class Document(Broadcaster, Listener):
         date = self.selected_transaction.date if self.selected_transaction else datetime.date.today()
         balance = 0
         reconciled_balance = 0
+        balance_with_budget = 0
         previous_entry = account.last_entry(date=date)
         if previous_entry:
             balance = previous_entry.balance
             reconciled_balance = previous_entry.reconciled_balance
+            balance_with_budget = previous_entry.balance_with_budget
         transaction = Transaction(date, account=self.selected_account, amount=0)
         split = transaction.splits[0]
-        entry = Entry(split, 0, balance, reconciled_balance)
+        entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
         return entry
     
     def toggle_entries_reconciled(self, entries):

@@ -68,6 +68,17 @@ class Account(object):
         return cmp(sort_key(self.name), sort_key(other.name))
     
     #--- Private
+    def _balance(self, balance_attr, date=None, currency=None):
+        entry = self.last_entry(date) if date else self.last_entry()
+        if entry:
+            balance = getattr(entry, balance_attr)
+            if currency:
+                return convert_amount(balance, currency, date)
+            else:
+                return balance
+        else:
+            return 0
+    
     def _cash_flow(self, date_range, currency):
         cache = self._date2entries
         entries = flatten(cache[date] for date in date_range if date in cache)
@@ -90,16 +101,14 @@ class Account(object):
         if not self._sorted_entry_dates or self._sorted_entry_dates[-1] < date:
             self._sorted_entry_dates.append(date)
     
-    def balance(self, date=None, reconciled=False, currency=None):
-        entry = self.last_entry(date) if date else self.last_entry()
-        if entry:
-            balance = entry.reconciled_balance if reconciled else entry.balance
-            if currency:
-                return convert_amount(balance, currency, date)
-            else:
-                return balance
-        else:
-            return 0
+    def balance(self, date=None, currency=None):
+        return self._balance('balance', date, currency=currency)
+    
+    def balance_of_reconciled(self, date=None, currency=None):
+        return self._balance('reconciled_balance', date, currency=currency)
+    
+    def balance_with_budget(self, date=None, currency=None):
+        return self._balance('balance_with_budget', date, currency=currency)
     
     def cash_flow(self, date_range, currency=None):
         currency = currency or self.currency
@@ -150,8 +159,12 @@ class Account(object):
                 return self._date2entries[date][-1]
         return None
     
-    def normal_balance(self, date=None, reconciled=False, currency=None):
-        balance = self.balance(date=date, reconciled=reconciled, currency=currency)
+    def normal_balance(self, date=None, currency=None):
+        balance = self.balance(date=date, currency=currency)
+        return self._normalize_amount(balance)
+    
+    def normal_balance_of_reconciled(self, date=None, currency=None):
+        balance = self.balance_of_reconciled(date=date, currency=currency)
         return self._normalize_amount(balance)
     
     def normal_cash_flow(self, date_range, currency=None):

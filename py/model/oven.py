@@ -50,12 +50,14 @@ class Oven(object):
         amount = split.amount
         converted_amount = convert_amount(amount, account.currency, split.transaction.date)
         balance = account.balance()
-        reconciled_balance = account.balance(reconciled=True)
+        reconciled_balance = account.balance_of_reconciled()
+        balance_with_budget = account.balance_with_budget()
+        balance_with_budget += converted_amount
         if not isinstance(split.transaction, BudgetSpawn):
             balance += converted_amount
             if split.reconciled or split.reconciliation_pending:
                 reconciled_balance += split.amount
-        account.add_entry(Entry(split, amount, balance, reconciled_balance))
+        account.add_entry(Entry(split, amount, balance, reconciled_balance, balance_with_budget))
     
     def _cook_transaction(self, txn):
         for split in txn.splits:

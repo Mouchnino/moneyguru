@@ -235,11 +235,12 @@ class Split(object):
     
 
 class Entry(object):
-    def __init__(self, split, amount, balance, reconciled_balance):
+    def __init__(self, split, amount, balance, reconciled_balance, balance_with_budget):
         self.split = split
         self.amount = amount
         self.balance = balance
         self.reconciled_balance = reconciled_balance
+        self.balance_with_budget = balance_with_budget
     
     def __repr__(self):
         return '<Entry %r>' % self.description
