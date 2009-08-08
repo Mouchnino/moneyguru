@@ -24,7 +24,7 @@ from ..const import REPEAT_MONTHLY
 from .amount import prorate_amount
 from .date import DateRange, inc_month, ONE_DAY
 from .recurrence import Recurrence, Spawn
-from .transaction import Transaction
+from .transaction import Transaction, Split
 
 class BudgetSpawn(Spawn):
     is_budget = True
@@ -42,7 +42,8 @@ class BudgetSpawn(Spawn):
 class Budget(Recurrence):
     def __init__(self, account, ref_date):
         budget = -account.budget if account.is_credit_account() else account.budget
-        ref = Transaction(ref_date, account=account, amount=budget)
+        ref = Transaction(ref_date)
+        ref.set_splits([Split(ref, account, budget), Split(ref, account.budget_target, -budget)])
         Recurrence.__init__(self, ref, REPEAT_MONTHLY, 1, include_first=True)
         self._account = account
     

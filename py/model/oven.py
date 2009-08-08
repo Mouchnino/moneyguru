@@ -14,7 +14,7 @@ from operator import attrgetter
 from hsutil.misc import flatten
 
 from .amount import convert_amount
-from .budget import Budget
+from .budget import Budget, BudgetSpawn
 from .date import inc_month
 from .transaction import Entry
 
@@ -49,10 +49,12 @@ class Oven(object):
             return
         amount = split.amount
         converted_amount = convert_amount(amount, account.currency, split.transaction.date)
-        balance = account.balance() + converted_amount
+        balance = account.balance()
         reconciled_balance = account.balance(reconciled=True)
-        if split.reconciled or split.reconciliation_pending:
-            reconciled_balance += split.amount
+        if not isinstance(split.transaction, BudgetSpawn):
+            balance += converted_amount
+            if split.reconciled or split.reconciliation_pending:
+                reconciled_balance += split.amount
         account.add_entry(Entry(split, amount, balance, reconciled_balance))
     
     def _cook_transaction(self, txn):

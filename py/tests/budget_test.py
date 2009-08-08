@@ -10,11 +10,13 @@
 
 from datetime import date
 
+from nose.tools import eq_
+
 from .base import TestCase, CommonSetup
 from ..model.account import EXPENSE, INCOME
 
 class CommonSetup(CommonSetup):
-    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense'):
+    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_index=None):
         # 4 days left to the month, 100$ monthly budget
         self.mock_today(2008, 1, 27)
         self.document.select_today_date_range()
@@ -25,7 +27,7 @@ class CommonSetup(CommonSetup):
             self.istatement.select = self.istatement.expenses[0]
         else:
             self.istatement.select = self.istatement.income[0]
-        self.set_budget('100')
+        self.set_budget('100', target_index)
     
 
 class OneExpenseWithBudget(TestCase, CommonSetup):
@@ -76,4 +78,16 @@ class OneExpenseWithBustedBudget(TestCase, CommonSetup):
         # When a budget is busted, don't show the spawn
         self.assertEqual(len(self.ttable), 12)
         self.assertEqual(self.ttable[1].date, '29/02/2008')
+    
+
+class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('some asset')
+        self.setup_account_with_budget(target_index=0)
+    
+    def test_asset_is_in_the_from_column(self):
+        # In the budget transaction, 'some asset' is in the 'from' column.
+        self.document.select_transaction_table()
+        eq_(self.ttable[0].from_, 'some asset')
     
