@@ -481,11 +481,6 @@ class TestAppCompareMixin(object):
                 self.assertEqual(account1.type, account2.type)
                 if not qif_mode:
                     self.assertEqual(account1.currency, account2.currency)
-                self.assertEqual(account1.budget, account2.budget)
-                if account1.budget_target is None:
-                    self.assertTrue(account2.budget_target is None)
-                else:
-                    self.assertEqual(account1.budget_target.name, account2.budget_target.name)
                 self.assertEqual(len(account1.entries), len(account2.entries))
             except AssertionError:
                 raise

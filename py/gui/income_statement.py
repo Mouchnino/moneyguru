@@ -18,10 +18,10 @@ class IncomeStatement(Report):
         cash_flow_native = account.normal_cash_flow(date_range, currency)
         last_cash_flow = account.normal_cash_flow(date_range.prev())
         last_cash_flow_native = account.normal_cash_flow(date_range.prev(), currency)
-        budgeted = self.document.normal_budgeted_amount(account, date_range)
-        budgeted_native = self.document.normal_budgeted_amount(account, date_range, currency)
-        last_budgeted = self.document.normal_budgeted_amount(account, date_range.prev())
-        last_budgeted_native = self.document.normal_budgeted_amount(account, date_range.prev(), currency)
+        budgeted = self.document.budgets.normal_amount_for_account(account, date_range)
+        budgeted_native = self.document.budgets.normal_amount_for_account(account, date_range, currency)
+        last_budgeted = self.document.budgets.normal_amount_for_account(account, date_range.prev())
+        last_budgeted_native = self.document.budgets.normal_amount_for_account(account, date_range.prev(), currency)
         total_cash_flow = cash_flow + budgeted
         last_total_cash_flow = last_cash_flow + last_budgeted
         delta = total_cash_flow - last_total_cash_flow

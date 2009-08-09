@@ -44,6 +44,12 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         self.assertEqual(self.ttable[0].to, 'Some Expense')
         self.assertEqual(self.ttable[11].date, '31/12/2008')
      
+    def test_set_budget_again(self):
+        # there was a crash upon modifying an existing Budget in change_account
+        self.set_budget('200', 0) # no crash
+        self.document.select_transaction_table()
+        self.assertEqual(self.ttable[0].amount, '200.00')
+     
 
 class OneIncomeWithBudget(TestCase, CommonSetup):
     def setUp(self):
@@ -55,6 +61,12 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
         self.document.select_transaction_table()
         self.assertEqual(self.ttable[0].from_, 'Some Income')
     
+    def test_set_budget_again(self):
+        # There was a bug where setting the amount on a budget again wouldn't invert that amount
+        # in the case of an income-based budget.
+        self.set_budget('200', 0)
+        self.document.select_transaction_table()
+        self.assertEqual(self.ttable[0].from_, 'Some Income')
 
 class OneExpenseWithBudgetAndTxn(TestCase, CommonSetup):
     def setUp(self):

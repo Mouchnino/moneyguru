@@ -103,6 +103,12 @@ class Loader(base.Loader):
                 except KeyError:
                     continue
             self.flush_recurrence()
+        for budget_element in root.getiterator('budget'):
+            attrib = budget_element.attrib
+            self.budget_info.account = attrib.get('account')
+            self.budget_info.target = attrib.get('target')
+            self.budget_info.amount = attrib.get('amount')
+            self.flush_budget()
     
     @staticmethod
     def parse_amount(string, currency): # uses with_expression=False for faster loading

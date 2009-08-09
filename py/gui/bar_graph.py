@@ -25,7 +25,7 @@ class BarGraph(Graph):
         account = self.document.selected_account
         currency = self._currency()
         cash_flow = account.normal_cash_flow(date_range, currency=currency)
-        budgeted = self.document.normal_budgeted_amount(account, date_range, currency=currency)
+        budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)
         return cash_flow + budgeted
     
     #--- Override

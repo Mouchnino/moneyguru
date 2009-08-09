@@ -11,7 +11,7 @@ import copy
 
 from ..model.recurrence import Spawn
 
-ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group', 'budget', 'budget_target']
+ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group']
 GROUP_SWAP_ATTRS = ['name', 'type']
 TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'position', 'splits']
 SPLIT_SWAP_ATTRS = ['account', 'amount', 'reconciled']

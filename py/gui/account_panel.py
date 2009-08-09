@@ -44,12 +44,13 @@ class AccountPanel(DocumentGUIObject):
         self.currency = account.currency
         self.type_index = TYPE_ORDER.index(self.type)
         self.currency_index = Currency.all.index(self.currency)
-        self._budget = account.budget
+        budget = self.document.budgets.budget_for_account(account)
+        self._budget = abs(budget.amount) if budget is not None else 0
         self._budget_targets = [a for a in self.document.accounts if a.is_balance_sheet_account()]
         self._budget_targets.sort(key=lambda a: (TYPE_ORDER.index(a.type), a.name))
         self.available_budget_targets = [a.name for a in self._budget_targets]
-        if account.budget_target in self._budget_targets:
-            self.budget_target_index = self._budget_targets.index(account.budget_target)
+        if budget is not None and budget.target in self._budget_targets:
+            self.budget_target_index = self._budget_targets.index(budget.target)
         self.account = account # for the save() assert
     
     def save(self):

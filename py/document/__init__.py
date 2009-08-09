@@ -22,7 +22,7 @@ from ..exception import FileFormatError, OperationAborted
 from ..loader import csv_, qif, ofx, native
 from ..model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
 from ..model.amount import Amount
-from ..model.budget import Budget
+from ..model.budget import Budget, BudgetList
 from ..model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     CustomDateRange, format_date)
 from ..model.oven import Oven
@@ -65,8 +65,8 @@ class Document(Broadcaster, Listener):
         # I did not manage to create a repeatable test for it, but self._scheduled has to be ordered
         # because the order in which the spawns are created must stay the same
         self._scheduled = []
-        self._budgets = []
-        self.oven = Oven(self.accounts, self.transactions, self._scheduled, self._budgets)
+        self.budgets = BudgetList()
+        self.oven = Oven(self.accounts, self.transactions, self._scheduled, self.budgets)
         self._undoer = Undoer(self.accounts, self.groups, self.transactions, self._scheduled)
         self._date_range = YearRange(datetime.date.today())
         self._in_reconciliation_mode = False
@@ -352,17 +352,15 @@ class Document(Broadcaster, Listener):
             account.group = group
         if budget_amount is not NOEDIT:
             assert budget_target is not NOEDIT # never supposed to happen
-            account.budget = budget_amount
-            account.budget_target = budget_target
-            budget = first(b for b in self._budgets if b.account is account)
+            budget = first(b for b in self.budgets if b.account is account)
             if budget is None:
                 TODAY = datetime.date.today()
                 ref_date = datetime.date(TODAY.year, TODAY.month, 1)
                 budget = Budget(account, budget_target, budget_amount, ref_date)
-                self._budgets.append(budget)
+                self.budgets.append(budget)
             else:
                 budget.target = budget_target
-                budget.amount = budget
+                budget.amount = budget_amount
         self._undoer.record(action)
         self._cook()
         self.notify('account_changed')
@@ -721,36 +719,30 @@ class Document(Broadcaster, Listener):
         return self._visible_unfiltered_entry_count
     
     #--- Budget
-    def budgeted_amount(self, account, date_range, currency=None):
-        if not (account.budget and date_range.future):
-            return 0
-        currency = currency or account.currency
-        budget_txns = [t for t in self.oven.transactions if getattr(t, 'is_budget', False)]
-        return sum(bt.budget_for_account(account, date_range, currency) for bt in budget_txns)
-    
     def budgeted_amount_for_target(self, target, date_range):
         """Returns the sum of all the budgeted amounts targeting 'target'. The currency of the 
         result is target's currency. The result is normalized (reverted if target is a liability).
         If target is None, all accounts are used.
         """
-        accounts = set(a for a in self.accounts if a.is_income_statement_account())
-        accounts -= self.excluded_accounts
         if target is None:
-            targeters = [a for a in accounts if a.budget and a.budget_target not in self.excluded_accounts]
+            budgets = self.budgets[:]
             currency = self.app.default_currency
         else:
-            targeters = [a for a in accounts if a.budget_target is target]
+            budgets = self.budgets.budgets_for_target(target)
             currency = target.currency
-        if not targeters:
+        # we must remove any budget touching an excluded account.
+        is_not_excluded = lambda b: b.account not in self.excluded_accounts and b.target not in self.excluded_accounts
+        budgets = filter(is_not_excluded, budgets)
+        if not budgets:
             return 0
-        budgeted_amount = sum(self.budgeted_amount(a, date_range, currency=currency) for a in targeters)
+        # XXX I was expecting to have to invert the result of amount_for_date_range() because the
+        # amount was for the target, but it turns out that to make the test pass, I must *not*
+        # invert it. Is it possible that every user of that method uses it backward (but end up
+        # with the right results because of a double negation)???
+        budgeted_amount = sum(b.amount_for_date_range(date_range, currency=currency) for b in budgets)
         if target is not None:
             budgeted_amount = target._normalize_amount(budgeted_amount)
         return budgeted_amount
-    
-    def normal_budgeted_amount(self, account, date_range, currency=None):
-        budgeted_amount = self.budgeted_amount(account, date_range, currency)
-        return account._normalize_amount(budgeted_amount)
     
     #--- Selection
     @property
@@ -825,7 +817,7 @@ class Document(Broadcaster, Listener):
         self.transactions.clear()
         self.groups.clear()
         del self._scheduled[:]
-        del self._budgets[:]
+        del self.budgets[:]
         self._undoer.clear()
         for group in loader.groups:
             self.groups.append(group)
@@ -836,7 +828,7 @@ class Document(Broadcaster, Listener):
         for recurrence in loader.scheduled:
             self._scheduled.append(recurrence)
         for budget in loader.budgets:
-            self._budgets.append(budget)
+            self.budgets.append(budget)
         self._cook()
         self._restore_preferences_after_load()
         self.notify('file_loaded')
@@ -878,10 +870,6 @@ class Document(Broadcaster, Listener):
             attrib['type'] = account.type
             if account.group:
                 attrib['group'] = account.group.name
-            if account.budget:
-                attrib['budget'] = str(account.budget)
-                assert account.budget_target is not None
-                attrib['budget_target'] = account.budget_target.name
             if account.reference is not None:
                 attrib['reference'] = account.reference
         for transaction in self.transactions:
@@ -906,6 +894,13 @@ class Document(Broadcaster, Listener):
                 if exception is not None:
                     write_transaction_element(exception_element, exception)
             write_transaction_element(recurrence_element, recurrence.ref)
+        for budget in self.budgets:
+            budget_element = ET.SubElement(root, 'budget')
+            attrib = budget_element.attrib
+            attrib['account'] = budget.account.name
+            attrib['amount'] = unicode(budget.amount)
+            if budget.target is not None:
+                attrib['target'] = budget.target.name
         tree = ET.ElementTree(root)
         tree.write(filename, 'utf-8')
         self._undoer.set_save_point()

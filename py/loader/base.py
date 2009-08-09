@@ -52,12 +52,14 @@ class Loader(object):
         self.account_infos = []
         self.transaction_infos = []
         self.recurrence_infos = []
+        self.budget_infos = []
         self.group_info = GroupInfo()
         self.account_info = AccountInfo()
         self.transaction_info = TransactionInfo()
         self.transaction_cancelled = False
         self.split_info = SplitInfo()
         self.recurrence_info = RecurrenceInfo()
+        self.budget_info = BudgetInfo()
     
     #--- Virtual
     def _parse(self, infile):
@@ -138,6 +140,11 @@ class Loader(object):
             self.recurrence_infos.append(self.recurrence_info)
         self.recurrence_info = RecurrenceInfo()
     
+    def flush_budget(self):
+        if self.budget_info.is_valid():
+            self.budget_infos.append(self.budget_info)
+        self.budget_info = BudgetInfo()
+    
     #--- Public
     def parse(self, filename):
         """Parses 'filename' and raises FileFormatError if appropriate."""
@@ -201,21 +208,10 @@ class Loader(object):
             if info.group:
                 account.group = self.groups.find(info.group, account_type)
             if info.budget:
-                account.budget = self.parse_amount(info.budget, account.currency)
-            account.budget_target_name = info.budget_target
+                self.budget_infos.append(BudgetInfo(info.name, info.budget_target, info.budget))
             account.reference = info.reference                    
             currencies.add(account.currency)
             self.accounts.add(account)
-        for account in (a for a in self.accounts if a.budget_target_name is not None):
-            account.budget_target = self.accounts.find(account.budget_target_name)
-        
-        # Create Budget instances
-        TODAY = datetime.date.today()
-        ref_date = datetime.date(TODAY.year, TODAY.month, 1)
-        accounts_with_budgets = (a for a in self.accounts if a.budget)
-        for account in accounts_with_budgets:
-            budget = Budget(account, account.budget_target, account.budget, ref_date)
-            self.budgets.append(budget)
         
         # Pre-parse transaction info. We bring all relevant info recorded at the txn level into the split level
         all_txn = self.transaction_infos + [r.transaction_info for r in self.recurrence_infos] +\
@@ -249,6 +245,7 @@ class Loader(object):
             start_date = min(start_date, transaction.date)
             self.transactions.add(transaction, position=position)
             position += 1
+        # Scheduled
         for info in self.recurrence_infos:
             ref = load_transaction_info(info.transaction_info)
             recurrence = Recurrence(ref, info.repeat_type, info.repeat_every, include_first=True)
@@ -265,6 +262,17 @@ class Loader(object):
                 spawn = Spawn(recurrence, change, date, change.date)
                 recurrence.date2globalchange[date] = spawn
             self.scheduled.append(recurrence)
+        # Budgets
+        TODAY = datetime.date.today()
+        ref_date = datetime.date(TODAY.year, TODAY.month, 1)
+        for info in self.budget_infos:
+            account = self.accounts.find(info.account)
+            if account is None:
+                continue
+            target = self.accounts.find(info.target)
+            amount = self.parse_amount(info.amount, account.currency)
+            budget = Budget(account, target, amount, ref_date)
+            self.budgets.append(budget)
         self.oven.cook(datetime.date.min, until_date=None)
         Currency.get_rates_db().ensure_rates(start_date, [x.code for x in currencies])
     
@@ -339,4 +347,14 @@ class RecurrenceInfo(object):
     
     def is_valid(self):
         return self.repeat_type != REPEAT_NEVER and self.transaction_info.is_valid()
+    
+
+class BudgetInfo(object):
+    def __init__(self, account=None, target=None, amount=None):
+        self.account = account
+        self.target = target
+        self.amount = amount
+    
+    def is_valid(self):
+        return self.account and self.amount
     

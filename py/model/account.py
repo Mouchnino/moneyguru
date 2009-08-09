@@ -46,8 +46,6 @@ class Account(object):
         self.type = type
         self.reference = None
         self.group = None
-        self.budget = 0
-        self.budget_target = None
         self._date2entries = {}
         self._sorted_entry_dates = []
         # the key for this dict is (date_range, currency)
