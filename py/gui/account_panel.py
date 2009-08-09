@@ -58,10 +58,10 @@ class AccountPanel(DocumentGUIObject):
         try:
             budget_target = self._budget_targets[self.budget_target_index]
         except IndexError:
-            budget_target = NOEDIT
+            budget_target = None
         try:
             self.document.change_account(self.account, name=self.name, type=self.type, 
-                currency=self.currency, budget=self._budget, budget_target=budget_target)
+                currency=self.currency, budget_amount=self._budget, budget_target=budget_target)
         except DuplicateAccountNameError:
             pass
     

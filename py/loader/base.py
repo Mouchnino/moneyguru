@@ -18,6 +18,7 @@ from ..const import REPEAT_NEVER
 from ..model.account import (Account, Group, AccountList, GroupList, ASSET, LIABILITY, INCOME,
     EXPENSE)
 from ..model.amount import parse_amount
+from ..model.budget import Budget
 from ..model.oven import Oven
 from ..model.recurrence import Recurrence, Spawn
 from ..model.transaction import Transaction, Split
@@ -44,7 +45,8 @@ class Loader(object):
         # I did not manage to create a repeatable test for it, but self.scheduled has to be ordered
         # because the order in which the spawns are created must stay the same
         self.scheduled = []
-        self.oven = Oven(self.accounts, self.transactions, self.scheduled)
+        self.budgets = []
+        self.oven = Oven(self.accounts, self.transactions, self.scheduled, self.budgets)
         self.target_account = None # when set, overrides the reference matching system
         self.group_infos = []
         self.account_infos = []
@@ -206,6 +208,14 @@ class Loader(object):
             self.accounts.add(account)
         for account in (a for a in self.accounts if a.budget_target_name is not None):
             account.budget_target = self.accounts.find(account.budget_target_name)
+        
+        # Create Budget instances
+        TODAY = datetime.date.today()
+        ref_date = datetime.date(TODAY.year, TODAY.month, 1)
+        accounts_with_budgets = (a for a in self.accounts if a.budget)
+        for account in accounts_with_budgets:
+            budget = Budget(account, account.budget_target, account.budget, ref_date)
+            self.budgets.append(budget)
         
         # Pre-parse transaction info. We bring all relevant info recorded at the txn level into the split level
         all_txn = self.transaction_infos + [r.transaction_info for r in self.recurrence_infos] +\

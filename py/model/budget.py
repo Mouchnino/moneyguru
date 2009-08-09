@@ -40,35 +40,68 @@ class BudgetSpawn(Spawn):
     
 
 class Budget(Recurrence):
-    def __init__(self, account, ref_date):
-        budget = -account.budget if account.is_credit_account() else account.budget
-        ref = Transaction(ref_date)
-        ref.set_splits([Split(ref, account, budget), Split(ref, account.budget_target, -budget)])
-        Recurrence.__init__(self, ref, REPEAT_MONTHLY, 1, include_first=True)
+    def __init__(self, account, target, amount, ref_date):
+        if account.is_credit_account():
+            amount = -amount
         self._account = account
+        self._target = target
+        self._amount = amount
+        ref = Transaction(ref_date)
+        Recurrence.__init__(self, ref, REPEAT_MONTHLY, 1, include_first=True)
+        self._update_ref_splits()
+    
+    def __repr__(self):
+        return '<Budget %r %r %r>' % (self._account, self._target, self._amount)
+    
+    def _update_ref_splits(self):
+        ref = self.ref
+        ref.set_splits([Split(ref, self._account, self._amount), Split(ref, self._target, -self._amount)])
     
     #--- Override
     def _create_spawn(self, ref, recurrence_date):
         # `recurrence_date` is the date at which the budget *starts*.
-        account = self._account
-        budget = account.budget
         end_date = inc_month(recurrence_date, 1) - ONE_DAY
-        spawn = BudgetSpawn(self, ref, recurrence_date=recurrence_date, date=end_date)
-        affects_spawn = lambda t: recurrence_date <= t.date <= spawn.date
-        wheat, shaft = extract(affects_spawn, self._relevant_transactions)
-        self._relevant_transactions = shaft
-        amount = sum(t.amount_for_account(account, budget.currency) for t in wheat)
-        spawn_split = first(s for s in spawn.splits if s.account is account)
-        if abs(amount) < abs(spawn_split.amount):
-            spawn_split.amount -= amount
-        else:
-            spawn_split.amount = 0
-        spawn.balance_two_way(spawn_split)
-        return spawn
+        return BudgetSpawn(self, ref, recurrence_date=recurrence_date, date=end_date)
     
     def get_spawns(self, end, transactions):
         # transactions will affect the amounts of the budget spawns
-        self._relevant_transactions = [t for t in transactions if self._account in t.affected_accounts()]
-        result = Recurrence.get_spawns(self, end)
-        return result
+        spawns = Recurrence.get_spawns(self, end)
+        account = self._account
+        budget_amount = self._amount
+        relevant_transactions = [t for t in transactions if account in t.affected_accounts()]
+        for spawn in spawns:
+            affects_spawn = lambda t: spawn.recurrence_date <= t.date <= spawn.date
+            wheat, shaft = extract(affects_spawn, relevant_transactions)
+            relevant_transactions = shaft
+            txns_amount = sum(t.amount_for_account(account, budget_amount.currency) for t in wheat)
+            spawn_split = first(s for s in spawn.splits if s.account is account)
+            if abs(txns_amount) < abs(budget_amount):
+                spawn_split.amount = budget_amount - txns_amount
+            else:
+                spawn_split.amount = 0
+            spawn.balance_two_way(spawn_split)
+        return spawns
+    
+    #--- Properties
+    @property
+    def account(self):
+        return self._account
+    
+    @property
+    def amount(self):
+        return self._amount
+    
+    @amount.setter
+    def amount(self, value):
+        self._amount = value
+        self._update_ref_splits()
+    
+    @property
+    def target(self):
+        return self._target
+    
+    @target.setter
+    def target(self, value):
+        self._target = value
+        self._update_ref_splits()
     

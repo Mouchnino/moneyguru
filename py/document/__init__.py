@@ -14,7 +14,7 @@ from itertools import dropwhile
 
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
-from hsutil.misc import nonone, flatten, allsame
+from hsutil.misc import nonone, flatten, allsame, first
 
 from ..const import (NOEDIT, REPEAT_NEVER, UNRECONCILIATION_CONTINUE,
     UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE)
@@ -22,6 +22,7 @@ from ..exception import FileFormatError, OperationAborted
 from ..loader import csv_, qif, ofx, native
 from ..model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
 from ..model.amount import Amount
+from ..model.budget import Budget
 from ..model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     CustomDateRange, format_date)
 from ..model.oven import Oven
@@ -64,7 +65,8 @@ class Document(Broadcaster, Listener):
         # I did not manage to create a repeatable test for it, but self._scheduled has to be ordered
         # because the order in which the spawns are created must stay the same
         self._scheduled = []
-        self.oven = Oven(self.accounts, self.transactions, self._scheduled)
+        self._budgets = []
+        self.oven = Oven(self.accounts, self.transactions, self._scheduled, self._budgets)
         self._undoer = Undoer(self.accounts, self.groups, self.transactions, self._scheduled)
         self._date_range = YearRange(datetime.date.today())
         self._in_reconciliation_mode = False
@@ -336,7 +338,7 @@ class Document(Broadcaster, Listener):
     
     #--- Account
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
-                       budget=NOEDIT, budget_target=NOEDIT):
+                       budget_amount=NOEDIT, budget_target=NOEDIT):
         assert account is not None
         action = Action('Change account')
         action.change_accounts([account])
@@ -348,10 +350,19 @@ class Document(Broadcaster, Listener):
             account.currency = currency
         if group is not NOEDIT:
             account.group = group
-        if budget is not NOEDIT:
-            account.budget = budget
-        if budget_target is not NOEDIT:
+        if budget_amount is not NOEDIT:
+            assert budget_target is not NOEDIT # never supposed to happen
+            account.budget = budget_amount
             account.budget_target = budget_target
+            budget = first(b for b in self._budgets if b.account is account)
+            if budget is None:
+                TODAY = datetime.date.today()
+                ref_date = datetime.date(TODAY.year, TODAY.month, 1)
+                budget = Budget(account, budget_target, budget_amount, ref_date)
+                self._budgets.append(budget)
+            else:
+                budget.target = budget_target
+                budget.amount = budget
         self._undoer.record(action)
         self._cook()
         self.notify('account_changed')
@@ -814,6 +825,7 @@ class Document(Broadcaster, Listener):
         self.transactions.clear()
         self.groups.clear()
         del self._scheduled[:]
+        del self._budgets[:]
         self._undoer.clear()
         for group in loader.groups:
             self.groups.append(group)
@@ -823,6 +835,8 @@ class Document(Broadcaster, Listener):
             self.transactions.add(transaction, position=transaction.position)
         for recurrence in loader.scheduled:
             self._scheduled.append(recurrence)
+        for budget in loader.budgets:
+            self._budgets.append(budget)
         self._cook()
         self._restore_preferences_after_load()
         self.notify('file_loaded')

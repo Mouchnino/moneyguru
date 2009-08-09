@@ -22,22 +22,22 @@ class Oven(object):
     """The Oven takes "raw data" from accounts and transactions and "cooks" calculated data out of
     them, such as running balance and scheduled transaction spawns.
     """
-    def __init__(self, accounts, transactions, scheduled):
+    def __init__(self, accounts, transactions, scheduled, budgets):
         self._accounts = accounts
         self._transactions = transactions
         self._scheduled = scheduled
+        self._budgets = budgets
         self._cooked_until = date.min
         self.transactions = [] # cooked
-        self.budgets = [] # cooked
     
     def _budget_spawns(self, until_date):
         result = []
         TODAY = date.today()
         ref_date = date(TODAY.year, TODAY.month, 1)
         relevant_txns = list(dropwhile(lambda t: t.date < ref_date, self._transactions))
-        account_with_budget = (a for a in self._accounts if a.budget)
-        for account in account_with_budget:
-            budget = Budget(account, ref_date)
+        for budget in self._budgets:
+            if not budget.amount:
+                continue
             spawns = budget.get_spawns(until_date, relevant_txns)
             spawns = [spawn for spawn in spawns if not spawn.is_null]
             result += spawns

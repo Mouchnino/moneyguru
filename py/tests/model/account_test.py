@@ -73,7 +73,7 @@ class OneAccount(TestCase):
             Transaction(date(2008, 1, 3), account=self.account, amount=Amount(70, CAD)),
             Transaction(date(2008, 1, 31), account=self.account, amount=Amount(2, USD)),
         ])
-        oven = Oven(accounts, transactions, [])
+        oven = Oven(accounts, transactions, [], [])
         oven.cook(date.min, date.max)
     
     def test_balance(self):

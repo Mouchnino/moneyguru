@@ -31,7 +31,7 @@ class Transaction(object):
         self.mtime = 0
     
     def __repr__(self):
-        return '<%s %r>' % (self.__class__.__name__, self.description)
+        return '<%s %r %r>' % (self.__class__.__name__, self.date, self.description)
     
     @classmethod
     def from_transaction(cls, transaction, link_splits=False):
