@@ -9,6 +9,7 @@
 
 from datetime import date
 
+from nose.tools import eq_
 from hsutil.testcase import TestCase
 
 from ...gui.date_widget import DateWidget, DAY, MONTH, YEAR
@@ -21,7 +22,12 @@ class Pristine(TestCase):
         """Default date is today"""
         self.assertEqual(self.w.date, date.today())
     
+    def test_set_text(self):
+        # It's possible to set the text to set the internal date
+        self.w.text = '12/08/2009'
+        eq_(self.w.date, date(2009, 8, 12))
     
+
 class DDMMYYYYWithSlash(TestCase):
     def setUp(self):
         self.w = DateWidget('dd/MM/yyyy')
@@ -84,6 +90,12 @@ class DDMMYYYYWithSlash(TestCase):
         self.assertEqual(self.w.text, '0 /06/2008')
         self.assertEqual(self.w.date, date(2008, 6, 12)) # date hasn't changed yet
         self.assertEqual(self.w.selection, (0, 1))
+    
+    def test_type_0_then_sep(self):
+        # There was a crash when a sep-caused _flush_buffer would be called with an invalid value
+        self.w.type('0')
+        self.w.type('/')
+        self.assertEqual(self.w.text, '0 /06/2008') # don't do anything (stay on DAY)
     
     def test_type_31(self):
         """Even if the current date is in a non-31 month, it's still possible to type '31' in the 
@@ -474,4 +486,23 @@ class DMYYWideMonth(TestCase):
     def test_text(self):
         """Year is shown in a 2 digits fashion"""
         self.assertEqual(self.w.text, '2/11/08')
+    
+
+class SetInvalidDate(TestCase):
+    def setUp(self):
+        self.w = DateWidget('dd/MM/yyyy')
+        self.w.text = '--'
+    
+    def test_date(self):
+        # the 'date' attribute returns None when invalid
+        assert self.w.date is None
+    
+    def test_displayed_text(self):
+        # When the date is invalid, display '-' chars in the current format
+        eq_(self.w.text, '--/--/----')
+    
+    def test_type_1(self):
+        # When we start typing, the rest of the "-" chars stay there
+        self.w.type('1')
+        eq_(self.w.text, '1 /--/----')
     

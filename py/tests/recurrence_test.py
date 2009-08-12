@@ -15,14 +15,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('account')
-        self.add_entry('13/09/2008', description='foobar')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction()
     
     def test_change_spawn(self):
         # changing a spawn adds an exception to the recurrence (even if the date is changed)

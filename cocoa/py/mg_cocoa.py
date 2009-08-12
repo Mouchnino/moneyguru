@@ -1352,7 +1352,7 @@ class PyDateWidget(NSObject):
         self.w.type(something)
     
     def setDate_(self, str_date):
-        self.w.date = parse_date(str_date, self.date_format)
+        self.w.text = str_date
     
     def text(self):
         return self.w.text

@@ -44,7 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
         {
             NSTableColumn *column = [[tableView tableColumns] objectAtIndex:editedColumn];
             NSString *name = [column identifier];
-            isDate = [name isEqualTo:@"start_date"] || [name isEqualTo:@"end_date"];
+            isDate = [name isEqualTo:@"start_date"] || [name isEqualTo:@"stop_date"];
         }
         [customFieldEditor setDateMode:isDate];
         return customFieldEditor;

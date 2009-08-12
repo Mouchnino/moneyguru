@@ -11,7 +11,7 @@ import re
 from calendar import monthrange
 from datetime import date, timedelta
 
-from ..model.date import format_year_month_day
+from ..model.date import format_year_month_day, parse_date
 
 DAY = 'day'
 MONTH = 'month'
@@ -120,7 +120,11 @@ class DateWidget(object):
     
     def type(self, stuff):
         if stuff == self._sep:
-            self._flush_buffer()
+            try:
+                self._flush_buffer()
+            except ValueError:
+                # Happens when _buffer is invalid. Ignore it and stay on the current field
+                pass
             return
         if not stuff.isdigit(): # invalid
             return
@@ -135,18 +139,24 @@ class DateWidget(object):
     
     @property
     def date(self):
-        while True:
-            try:
-                return date(self._year, self._month, self._day)
-            except ValueError:
-                assert self._day in [29, 30, 31]
+        try:
+            return date(self._year, self._month, self._day)
+        except ValueError:
+            if self._day in [29, 30, 31]: # Might be a "nearly valid" date
                 self._day -= 1
+                return self.date
+            else: # Invalid date
+                return None
     
     @date.setter
     def date(self, value):
-        self._year = value.year
-        self._month = value.month
-        self._day = value.day
+        # value: None for invalid date
+        if value is None:
+            self._year = self._month = self._day = 0
+        else:
+            self._year = value.year
+            self._month = value.month
+            self._day = value.day
         fmt_elems = self._format.split(self._sep)
         pos = 0
         self._elem_pos = {}
@@ -154,7 +164,7 @@ class DateWidget(object):
             elem_len = len(fmt_elem)
             elem = FMT_ELEM[fmt_elem]
             if elem_len == 1:
-                if ((elem == DAY) and (value.day >= 10)) or ((elem == MONTH) and (value.month >= 10)):
+                if ((elem == DAY) and (self._day >= 10)) or ((elem == MONTH) and (self._month >= 10)):
                     elem_len += 1
             self._elem_pos[elem] = (pos, pos + elem_len - 1)
             pos += elem_len + 1 # + 1 is for the separator
@@ -168,11 +178,21 @@ class DateWidget(object):
     
     @property
     def text(self):
+        elem2fmt = self._elem2fmt.copy()
+        elem2value = {DAY: self._day, MONTH: self._month, YEAR: self._year}
+        # Replace fields with invalid values (0) with "-" chars
+        for elem, value in elem2value.items():
+            if value == 0:
+                elem2fmt[elem] = '-' * len(elem2fmt[elem])
         if self._buffer:
-            elem2fmt = self._elem2fmt.copy()
             elem2fmt[self._selected] = self._buffer.ljust(max(2, len(elem2fmt[self._selected])))
-            format = self._sep.join([elem2fmt[elem] for elem in self._order])
-        else:
-            format = self._format
+        format = self._sep.join([elem2fmt[elem] for elem in self._order])
         return format_year_month_day(self._year, self._month, self._day, format)
+    
+    @text.setter
+    def text(self, value):
+        try:
+            self.date = parse_date(value, self._format)
+        except ValueError: # invalid date
+            self.date = None
     

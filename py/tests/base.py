@@ -556,6 +556,16 @@ class CommonSetup(object):
         self.add_entry('1/1/2008')
         self.document.date_range = MonthRange(date(2008, 2, 1))
     
+    def setup_scheduled_transaction(self):
+        self.add_account('account')
+        self.add_entry('13/09/2008', description='foobar')
+        self.document.select_transaction_table()
+        self.ttable.select([0])
+        self.tpanel.load()
+        self.tpanel.repeat_index = 1 # daily
+        self.tpanel.repeat_every = 3 # every 3 days
+        self.tpanel.save()
+    
     def setup_three_accounts(self):
         #Three accounts, empty
         self.add_account('one')

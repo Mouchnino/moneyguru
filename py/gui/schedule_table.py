@@ -120,7 +120,11 @@ class ScheduleTableRow(Row):
     
     @stop_date.setter
     def stop_date(self, value):
-        parsed = self.table.document.app.parse_date(value)
+        try:
+            parsed = self.table.document.app.parse_date(value)
+        except ValueError:
+            # If the value is an invalid date, just don't set anything
+            return
         if parsed == self._stop_date:
             return
         self._edit()
