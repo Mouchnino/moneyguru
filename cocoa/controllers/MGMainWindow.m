@@ -29,6 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     incomeStatement = [[MGIncomeStatement alloc] initWithDocument:document];
     transactionTable = [[MGTransactionTable alloc] initWithDocument:document];
     entryTable = [[MGEntryTable alloc] initWithDocument:document];
+    scheduleTable = [[MGScheduleTable alloc] initWithDocument:document];
     searchField = [[MGSearchField alloc] initWithDocument:document];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -57,6 +58,7 @@ http://www.hardcoded.net/licenses/hs_license
     [incomeStatement release];
     [entryTable release];
     [transactionTable release];
+    [scheduleTable release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -276,6 +278,11 @@ http://www.hardcoded.net/licenses/hs_license
     [[[self document] py] selectEntryTable];
 }
 
+- (IBAction)showScheduleTable:(id)sender
+{
+    [[[self document] py] selectScheduleTable];
+}
+
 - (IBAction)showNextView:(id)sender
 {
     if (top == balanceSheet)
@@ -382,6 +389,8 @@ http://www.hardcoded.net/licenses/hs_license
             MGIncomeStatementToolbarItemIdentifier,
             MGTransactionsToolbarItemIdentifier,
             MGEntriesToolbarItemIdentifier,
+            MGSchedulesToolbarItemIdentifier,
+            MGBudgetToolbarItemIdentifier,
             MGDateRangeToolbarItemIdentifier, 
             MGSearchFieldToolbarItemIdentifier, 
             MGReconcileToolbarItemIdentifier,
@@ -395,6 +404,8 @@ http://www.hardcoded.net/licenses/hs_license
             MGIncomeStatementToolbarItemIdentifier,
             MGTransactionsToolbarItemIdentifier,
             MGEntriesToolbarItemIdentifier,
+            MGSchedulesToolbarItemIdentifier,
+            MGBudgetToolbarItemIdentifier,
             NSToolbarFlexibleSpaceItemIdentifier,
             MGReconcileToolbarItemIdentifier,
             MGSearchFieldToolbarItemIdentifier,
@@ -459,6 +470,26 @@ http://www.hardcoded.net/licenses/hs_license
         [toolbarItem setToolTip:@"Edit the selected account's entries"];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showEntryTable:)];
+        return toolbarItem;
+    }
+    else if ([itemIdentifier isEqual:MGSchedulesToolbarItemIdentifier])
+    {
+        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+        [toolbarItem setLabel:@"Schedules"];
+        [toolbarItem setImage:[NSImage imageNamed:@"schedules_48"]];
+        [toolbarItem setToolTip:@"Edit your scheduled transactions"];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(showScheduleTable:)];
+        return toolbarItem;
+    }
+    else if ([itemIdentifier isEqual:MGBudgetToolbarItemIdentifier])
+    {
+        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+        [toolbarItem setLabel:@"Budgets"];
+        [toolbarItem setImage:[NSImage imageNamed:@"budget_48"]];
+        [toolbarItem setToolTip:@"Edit your budgets"];
+        // [toolbarItem setTarget:self];
+        // [toolbarItem setAction:@selector(showEntryTable:)];
         return toolbarItem;
     }
     else if ([itemIdentifier isEqual:MGReconcileToolbarItemIdentifier])
@@ -581,6 +612,12 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)showLineGraph
 {
     [entryTable showBalanceGraph];
+}
+
+- (void)showScheduleTable
+{
+    [self setTop:scheduleTable];
+    [[[self window] toolbar] setSelectedItemIdentifier:MGSchedulesToolbarItemIdentifier];
 }
 
 - (void)showTransactionTable

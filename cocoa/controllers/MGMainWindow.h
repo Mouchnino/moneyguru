@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBalanceSheet.h"
 #import "MGIncomeStatement.h"
 #import "MGTransactionTable.h"
+#import "MGScheduleTable.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
 #import "MGCSVImportOptions.h"
@@ -37,6 +38,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGIncomeStatement *incomeStatement;
     MGTransactionTable *transactionTable;
     MGEntryTable *entryTable;
+    MGScheduleTable *scheduleTable;
     MGSearchField *searchField;
     MGImportWindow *importWindow;
     MGCSVImportOptions *csvOptionsWindow;
@@ -74,6 +76,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)showIncomeStatement:(id)sender;
 - (IBAction)showTransactionTable:(id)sender;
 - (IBAction)showEntryTable:(id)sender;
+- (IBAction)showScheduleTable:(id)sender;
 - (IBAction)showNextView:(id)sender;
 - (IBAction)showPreviousView:(id)sender;
 - (IBAction)showSelectedAccount:(id)sender;

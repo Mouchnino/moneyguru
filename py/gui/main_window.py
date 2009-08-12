@@ -9,7 +9,7 @@
 
 from .base import DocumentGUIObject
 
-ENTRY_TABLE, BALANCE_SHEET, TRANSACTION_TABLE, INCOME_STATEMENT = range(4)
+ENTRY_TABLE, BALANCE_SHEET, TRANSACTION_TABLE, INCOME_STATEMENT, SCHEDULE_TABLE = range(5)
 LINE_GRAPH, BAR_GRAPH = range(2)
 
 
@@ -49,6 +49,11 @@ class MainWindow(DocumentGUIObject):
         if self.bottom != LINE_GRAPH:
             self.view.show_line_graph()
             self.bottom = LINE_GRAPH
+    
+    def show_schedule_table(self):
+        if self.top != SCHEDULE_TABLE:
+            self.view.show_schedule_table()
+            self.top = SCHEDULE_TABLE
     
     def show_transaction_table(self):
         if self.top != TRANSACTION_TABLE:
@@ -100,6 +105,9 @@ class MainWindow(DocumentGUIObject):
     
     def reconciliation_changed(self):
         self.view.refresh_reconciliation_button()
+    
+    def schedule_table_selected(self):
+        self.show_schedule_table()
     
     def transaction_table_selected(self):
         self.show_transaction_table()

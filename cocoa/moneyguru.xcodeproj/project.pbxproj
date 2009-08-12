@@ -153,6 +153,10 @@
 		CEAF7FB20E612A2E00765ADD /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF7FB10E612A2E00765ADD /* Sparkle.framework */; };
 		CEAF7FD00E612C4400765ADD /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEAF7FB10E612A2E00765ADD /* Sparkle.framework */; };
 		CEAFD2590E518B9B00A1E707 /* MGImportBindingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAFD2580E518B9B00A1E707 /* MGImportBindingCell.m */; };
+		CEB1E0B41031A386001FC4B4 /* budget_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1E0B21031A386001FC4B4 /* budget_48.png */; };
+		CEB1E0B51031A386001FC4B4 /* schedules_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1E0B31031A386001FC4B4 /* schedules_48.png */; };
+		CEB1E0B91031C286001FC4B4 /* ScheduleTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB1E0B81031C286001FC4B4 /* ScheduleTable.xib */; };
+		CEB1E0BE1031C3A3001FC4B4 /* MGScheduleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB1E0BD1031C3A3001FC4B4 /* MGScheduleTable.m */; };
 		CEB2FA1A0F223C4100A09E4C /* MGCSVImportOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */; };
 		CEB93C3A0E5C6162006923EB /* main_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C390E5C6162006923EB /* main_icon.icns */; };
 		CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */; };
@@ -457,6 +461,12 @@
 		CEAF7FB10E612A2E00765ADD /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = /Library/Frameworks/Sparkle.framework; sourceTree = "<absolute>"; };
 		CEAFD2570E518B9B00A1E707 /* MGImportBindingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportBindingCell.h; sourceTree = "<group>"; };
 		CEAFD2580E518B9B00A1E707 /* MGImportBindingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportBindingCell.m; sourceTree = "<group>"; };
+		CEB1E0B21031A386001FC4B4 /* budget_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_48.png; sourceTree = "<group>"; };
+		CEB1E0B31031A386001FC4B4 /* schedules_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedules_48.png; sourceTree = "<group>"; };
+		CEB1E0B81031C286001FC4B4 /* ScheduleTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleTable.xib; sourceTree = "<group>"; };
+		CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyScheduleTable.h; sourceTree = "<group>"; };
+		CEB1E0BC1031C3A3001FC4B4 /* MGScheduleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScheduleTable.h; sourceTree = "<group>"; };
+		CEB1E0BD1031C3A3001FC4B4 /* MGScheduleTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScheduleTable.m; sourceTree = "<group>"; };
 		CEB2FA170F223C3400A09E4C /* PyCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVImportOptions.m; sourceTree = "<group>"; };
@@ -753,6 +763,7 @@
 				0726B3C40E4A02C30059E8A7 /* IncomeStatement.xib */,
 				CEA25A790E27774C0067AE58 /* TransactionTable.xib */,
 				077FBF2B0E27B053001DC57D /* EntryTable.xib */,
+				CEB1E0B81031C286001FC4B4 /* ScheduleTable.xib */,
 				CE873A630E21621F004F63E9 /* AccountProperties.xib */,
 				CEE46FB70F91E4E400D08E40 /* AccountReassignPanel.xib */,
 				CE873A680E21621F004F63E9 /* TransactionInspector.xib */,
@@ -774,6 +785,8 @@
 		CE873A6F0E21622F004F63E9 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CEB1E0BC1031C3A3001FC4B4 /* MGScheduleTable.h */,
+				CEB1E0BD1031C3A3001FC4B4 /* MGScheduleTable.m */,
 				CEE46FC20F91E58500D08E40 /* MGAccountReassignPanel.h */,
 				CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */,
 				CE6E00140F4ED61800FE7628 /* MGGraph.h */,
@@ -849,6 +862,7 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
 				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
@@ -953,6 +967,8 @@
 		CEEED1D30E3F763100BBA154 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CEB1E0B21031A386001FC4B4 /* budget_48.png */,
+				CEB1E0B31031A386001FC4B4 /* schedules_48.png */,
 				CE40239E0F4C737D0083BAD2 /* doc_icon.icns */,
 				CEF4C5050F22274B004FDC9D /* popup_arrows.png */,
 				CEE674D10E7A7C0300941332 /* recurrent_16.png */,
@@ -1097,6 +1113,9 @@
 				CE6D38460F9364AD00FA8460 /* TabNewMetalRollover.png in Resources */,
 				CE6D384C0F9364EE00FA8460 /* ErrorReportWindow.xib in Resources */,
 				CE6D384D0F9364EE00FA8460 /* registration.nib in Resources */,
+				CEB1E0B41031A386001FC4B4 /* budget_48.png in Resources */,
+				CEB1E0B51031A386001FC4B4 /* schedules_48.png in Resources */,
+				CEB1E0B91031C286001FC4B4 /* ScheduleTable.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1203,6 +1222,7 @@
 				CE6D38170F93648E00FA8460 /* ValueTransformers.m in Sources */,
 				CE1BD3E20FDE4DE2005FB7B9 /* BRSingleLineFormatter.m in Sources */,
 				CE1BD3E30FDE4DE2005FB7B9 /* NSCharacterSet_Extensions.m in Sources */,
+				CEB1E0BE1031C3A3001FC4B4 /* MGScheduleTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

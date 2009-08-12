@@ -40,6 +40,7 @@ from ..gui.main_window import MainWindow
 from ..gui.mass_edition_panel import MassEditionPanel
 from ..gui.net_worth_graph import NetWorthGraph
 from ..gui.profit_graph import ProfitGraph
+from ..gui.schedule_table import ScheduleTable
 from ..gui.search_field import SearchField
 from ..gui.split_table import SplitTable
 from ..gui.transaction_panel import TransactionPanel
@@ -103,11 +104,12 @@ class DocumentGUI(CallLogger):
 
 class MainWindowGUI(CallLogger):
     """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, etable, ttable, bsheet, istatement, balgraph, bargraph, nwgraph, pgraph, 
+    def __init__(self, etable, ttable, sctable, bsheet, istatement, balgraph, bargraph, nwgraph, pgraph, 
                  efbar, tfbar, apie, lpie, ipie, epie, cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.etable = etable
         self.ttable = ttable
+        self.sctable = sctable
         self.bsheet = bsheet
         self.istatement = istatement
         self.balgraph = balgraph
@@ -125,8 +127,8 @@ class MainWindowGUI(CallLogger):
         self.pgraph = pgraph
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [etable, ttable, bsheet, istatement, efbar, tfbar, apie, lpie, ipie, epie,
-            nwgraph, pgraph, balgraph, bargraph]
+        self.views = [etable, ttable, sctable, bsheet, istatement, efbar, tfbar, apie, lpie, ipie, 
+            epie, nwgraph, pgraph, balgraph, bargraph]
     
     def connect_views(self, views):
         for candidate in self.views:
@@ -166,6 +168,10 @@ class MainWindowGUI(CallLogger):
         self.bargraph.disconnect()
         self.balgraph.connect()
         self._last_shown = self.balgraph
+    
+    @log
+    def show_schedule_table(self):
+        self.connect_views([self.sctable])
     
     @log
     def show_transaction_table(self):
@@ -244,6 +250,8 @@ class TestCase(TestCase):
         self.etable = EntryTable(self.etable_gui, self.document)
         self.ttable_gui = CallLogger()
         self.ttable = TransactionTable(self.ttable_gui, self.document)
+        self.sctable_gui = CallLogger()
+        self.sctable = ScheduleTable(self.sctable_gui, self.document)
         self.tpanel_gui = CallLogger()
         self.tpanel = TransactionPanel(self.tpanel_gui, self.document)
         self.mepanel_gui = CallLogger()
@@ -285,9 +293,9 @@ class TestCase(TestCase):
         self.itable = ImportTable(self.itable_gui, self.iwin)
         self.cdrpanel_gui = CallLogger()
         self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.document)
-        self.mainwindow_gui = MainWindowGUI(self.etable, self.ttable, self.bsheet, self.istatement,
-            self.balgraph, self.bargraph, self.nwgraph, self.pgraph, self.efbar, self.tfbar, 
-            self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, self.arpanel)
+        self.mainwindow_gui = MainWindowGUI(self.etable, self.ttable, self.sctable, self.bsheet, 
+            self.istatement, self.balgraph, self.bargraph, self.nwgraph, self.pgraph, self.efbar,
+            self.tfbar, self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, self.arpanel)
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document)
         self.document.connect()
         self.mainwindow.connect()
@@ -487,8 +495,8 @@ class TestAppCompareMixin(object):
         self.assertEqual(len(first.transactions), len(second.transactions))
         for txn1, txn2 in zip(first.transactions, second.transactions):
             compare_txns(txn1, txn2)
-        self.assertEqual(len(first._scheduled), len(second._scheduled))
-        for rec1, rec2 in zip(first._scheduled, second._scheduled):
+        self.assertEqual(len(first.scheduled), len(second.scheduled))
+        for rec1, rec2 in zip(first.scheduled, second.scheduled):
             self.assertEqual(rec1.repeat_type, rec2.repeat_type)
             self.assertEqual(rec1.repeat_every, rec2.repeat_every)
             compare_txns(rec1.ref, rec2.ref)

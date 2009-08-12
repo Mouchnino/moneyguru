@@ -40,6 +40,7 @@ from moneyguru.gui.mass_edition_panel import MassEditionPanel
 from moneyguru.gui.net_worth_graph import NetWorthGraph
 from moneyguru.gui.print_view import PrintView
 from moneyguru.gui.profit_graph import ProfitGraph
+from moneyguru.gui.schedule_table import ScheduleTable
 from moneyguru.gui.search_field import SearchField
 from moneyguru.gui.split_table import SplitTable
 from moneyguru.gui.transaction_panel import TransactionPanel
@@ -163,6 +164,9 @@ class PyDocument(NSObject):
     @objc.signature('i@:')
     def canSelectEntryTable(self):
         return self.py.shown_account is not None
+    
+    def selectScheduleTable(self):
+        self.py.select_schedule_table()
     
     #--- Date range
     def selectPrevDateRange(self):
@@ -647,6 +651,22 @@ class PyTransactionTable(PyTableWithDate):
         return PyTable.valueForColumn_row_(self, column, row)
     
 
+class PyScheduleTable(PyTable):
+    py_class = ScheduleTable
+
+    @objc.signature('v@:@@i')
+    def setValue_forColumn_row_(self, value, column, row):
+        if column == 'from':
+            column = 'from_'
+        PyTable.setValue_forColumn_row_(self, value, column, row)
+    
+    @objc.signature('@@:@i')
+    def valueForColumn_row_(self, column, row):
+        if column == 'from':
+            column = 'from_'
+        return PyTable.valueForColumn_row_(self, column, row)
+    
+
 class PySearchField(PyListener):
     py_class = SearchField
     
@@ -1106,7 +1126,10 @@ class PyMainWindow(PyListener):
     
     def show_income_statement(self):
         self.cocoa.showIncomeStatement()
-
+    
+    def show_schedule_table(self):
+        self.cocoa.showScheduleTable()
+    
     def show_transaction_table(self):
         self.cocoa.showTransactionTable()
     
