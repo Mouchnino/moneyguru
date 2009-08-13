@@ -14,6 +14,7 @@ from ..model.recurrence import Spawn
 from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
 from .table import GUITable, Row, rowattr
+from .transaction_table import TransactionTableRow
 
 class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
     def __init__(self, view, document):
@@ -30,8 +31,8 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
     #--- Public
     def refresh(self):
         del self[:]
-        for recurrence in self.document.scheduled:
-            self.append(ScheduleTableRow(self, recurrence))
+        for schedule in self.document.scheduled:
+            self.append(ScheduleTableRow(self, schedule))
     
     #--- Event handlers
     def edition_must_stop(self):
@@ -51,22 +52,43 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         self.view.refresh()
     
 
+AUTOFILL_ATTRS = frozenset(['description', 'payee', 'from', 'to', 'amount'])
+
 class ScheduleTableRow(Row):
-    def __init__(self, table, recurrence):
+    def __init__(self, table, schedule):
         Row.__init__(self, table)
         self.document = table.document
-        self.recurrence = recurrence
+        self.schedule = schedule
+        self.transaction = schedule.ref
         self.load()
     
+    def _autofill_row(self, ref_row, dest_attrs):
+        self._amount_fmt = None
+        if len(ref_row.transaction.splits) > 2:
+            dest_attrs.discard('_from')
+            dest_attrs.discard('_to')
+        Row._autofill_row(self, ref_row, dest_attrs)
+    
+    def _get_autofill_attrs(self):
+        return AUTOFILL_ATTRS
+    
+    def _get_autofill_rows(self):
+        original = self.transaction
+        transactions = sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True)
+        for transaction in transactions:
+            if transaction is original:
+                continue
+            yield TransactionTableRow(self.table, transaction)
+    
     def load(self):
-        rec = self.recurrence
-        txn = rec.ref
+        schedule = self.schedule
+        txn = schedule.ref
         self._start_date = txn.date
         self._start_date_fmt = None
-        self._stop_date = rec.stop_date
+        self._stop_date = schedule.stop_date
         self._stop_date_fmt = None
-        self._repeat_type = rec.repeat_type
-        self._interval = unicode(rec.repeat_every)
+        self._repeat_type = schedule.repeat_type
+        self._interval = unicode(schedule.repeat_every)
         self._description = txn.description
         self._payee = txn.payee
         self._checkno = txn.checkno
@@ -86,7 +108,18 @@ class ScheduleTableRow(Row):
         self._amount_fmt = None
     
     def save(self):
-        pass
+        kw = {'date': self._start_date, 'description': self._description, 'payee': self._payee,
+              'checkno': self._checkno}
+        if self._from_count == 1:
+            kw['from_'] = self._from
+        if self._to_count == 1:
+            kw['to'] = self._to
+        if self._from_count == self._to_count == 1:
+            kw['amount'] = self._amount
+        kw['repeat_type'] = self._repeat_type
+        kw['repeat_every'] = int(self._interval)
+        kw['stop_date'] = self._stop_date
+        self.document.change_schedule(self.schedule, **kw)
     
     # The "get" part of those properies below are called *very* often, hence, the format caching
     
@@ -135,12 +168,12 @@ class ScheduleTableRow(Row):
     def can_edit_stop_date(self):
         return True
     
-    repeat_type = rowattr('_repeat_type', 'repeat_type')
+    repeat_type = rowattr('_repeat_type')
     @property
     def can_edit_repeat_type(self):
         return True
     
-    interval = rowattr('_interval', 'interval')
+    interval = rowattr('_interval')
     @property
     def can_edit_interval(self):
         return True

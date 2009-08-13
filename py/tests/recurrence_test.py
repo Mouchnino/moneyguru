@@ -180,16 +180,6 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.assertTrue(self.ttable[5].recurrent)
         self.assertEqual(self.ttable[5].date, '28/09/2008')
     
-    def test_schedule_table_attrs(self):
-        self.document.select_schedule_table()
-        eq_(len(self.sctable), 1)
-        row = self.sctable[0]
-        eq_(row.start_date, '13/09/2008')
-        eq_(row.stop_date, '--')
-        eq_(row.repeat_type, 'daily')
-        eq_(row.interval, '3')
-        eq_(row.description, 'foobar')
-    
     def test_set_recurrence_back_to_never(self):
         # When the repeat_type of a transaction is set to never, the schedule stops there.
         self.ttable.select([1])

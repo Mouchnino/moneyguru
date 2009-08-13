@@ -718,6 +718,25 @@ class Document(Broadcaster, Listener):
     def visible_unfiltered_entry_count(self):
         return self._visible_unfiltered_entry_count
     
+    #--- Schedule
+    def change_schedule(self, schedule, repeat_type, repeat_every, stop_date, date=NOEDIT, 
+                        description=NOEDIT, payee=NOEDIT, checkno=NOEDIT, from_=NOEDIT, to=NOEDIT,
+                        amount=NOEDIT):
+        if from_ is not NOEDIT:
+            from_ = self.accounts.find(from_, INCOME) if from_ else None
+        if to is not NOEDIT:
+            to = self.accounts.find(to, EXPENSE) if to else None
+        txn = schedule.ref
+        min_date = txn.date
+        if date is not NOEDIT and date < min_date:
+            min_date = date
+        txn.change(date=date, description=description, payee=payee, checkno=checkno, from_=from_,
+                   to=to, amount=amount)
+        schedule.repeat_type = repeat_type
+        schedule.repeat_every = repeat_every
+        schedule.stop_date = stop_date
+        self._cook(from_date=min_date)    
+    
     #--- Budget
     def budgeted_amount_for_target(self, target, date_range):
         """Returns the sum of all the budgeted amounts targeting 'target'. The currency of the 
