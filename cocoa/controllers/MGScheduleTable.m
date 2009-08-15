@@ -17,39 +17,13 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    customFieldEditor = [[MGFieldEditor alloc] init];
     return self;
 }
         
-- (void)dealloc
-{
-    [customFieldEditor release];
-    [super dealloc];
-}
-
 /* Overrides */
 - (PyScheduleTable *)py
 {
     return (PyScheduleTable *)py;
-}
-
-/* Public */
-- (id)fieldEditorForObject:(id)asker
-{
-    if (asker == tableView)
-    {
-        BOOL isDate = NO;
-        int editedColumn = [tableView editedColumn];
-        if (editedColumn > -1)
-        {
-            NSTableColumn *column = [[tableView tableColumns] objectAtIndex:editedColumn];
-            NSString *name = [column identifier];
-            isDate = [name isEqualTo:@"start_date"] || [name isEqualTo:@"stop_date"];
-        }
-        [customFieldEditor setDateMode:isDate];
-        return customFieldEditor;
-    }
-    return nil;
 }
 
 @end

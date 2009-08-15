@@ -14,14 +14,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGEditableTable.h"
 #import "MGFieldEditor.h"
 
-@interface MGScheduleTable : MGEditableTable 
+@interface MGScheduleTable : MGTable 
 {
-    MGFieldEditor *customFieldEditor;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 /* Public */
 
 - (PyScheduleTable *)py;
-- (id)fieldEditorForObject:(id)asker;
 @end

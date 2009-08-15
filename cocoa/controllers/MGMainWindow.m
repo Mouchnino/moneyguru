@@ -377,8 +377,6 @@ http://www.hardcoded.net/licenses/hs_license
         return [entryTable fieldEditorForObject:asker];
     else if (top == transactionTable)
         return [transactionTable fieldEditorForObject:asker];
-    else if (top == scheduleTable)
-        return [scheduleTable fieldEditorForObject:asker];
     return nil;
 }
 
