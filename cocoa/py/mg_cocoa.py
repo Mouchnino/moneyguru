@@ -40,6 +40,7 @@ from moneyguru.gui.mass_edition_panel import MassEditionPanel
 from moneyguru.gui.net_worth_graph import NetWorthGraph
 from moneyguru.gui.print_view import PrintView
 from moneyguru.gui.profit_graph import ProfitGraph
+from moneyguru.gui.schedule_panel import SchedulePanel
 from moneyguru.gui.schedule_table import ScheduleTable
 from moneyguru.gui.search_field import SearchField
 from moneyguru.gui.split_table import SplitTable
@@ -560,6 +561,18 @@ class PyReport(PyOutline):
         self.py.collapse_node(self.py.get_node(path))
     
 
+class PyPanel(PyCompletion):
+    @objc.signature('i@:')
+    def canLoadPanel(self):
+        return self.py.can_load()
+    
+    def loadPanel(self): # if we use "load", pyobjc complains
+        self.py.load()
+    
+    def savePanel(self):
+        self.py.save()
+    
+
 #--- GUI layer classes
 
 class PyBalanceSheet(PyReport):
@@ -724,7 +737,7 @@ class PyEntryFilterBar(PyFilterBar):
         self.cocoa.enableTransfers()
     
 
-class PyAccountPanel(GUIProxy):
+class PyAccountPanel(PyPanel):
     py_class = AccountPanel
     
     def name(self):
@@ -773,16 +786,6 @@ class PyAccountPanel(GUIProxy):
     def availableBudgetTargets(self):
         return self.py.available_budget_targets
     
-    @objc.signature('i@:')
-    def canLoadPanel(self):
-        return self.py.can_load()
-    
-    def loadPanel(self): # if we use "load", pyobjc complains
-        self.py.load()
-    
-    def savePanel(self):
-        self.py.save()
-    
 
 class PySplitTable(PyTable):
     py_class = SplitTable
@@ -793,19 +796,9 @@ class PySplitTable(PyTable):
         return True
     
 
-class PyTransactionPanel(PyCompletion):
+class PyTransactionPanel(PyPanel):
     py_class = TransactionPanel
 
-    @objc.signature('i@:')
-    def canLoadPanel(self):
-        return self.py.can_load()
-    
-    def loadPanel(self): # if we use "load", pyobjc complains
-        self.py.load()
-    
-    def savePanel(self):
-        self.py.save()
-    
     def mctBalance(self):
         self.py.mct_balance()
     
@@ -874,19 +867,9 @@ class PyTransactionPanel(PyCompletion):
         self.cocoa.refreshRepeatOptions()
     
 
-class PyMassEditionPanel(PyCompletion):
+class PyMassEditionPanel(PyPanel):
     py_class = MassEditionPanel
 
-    @objc.signature('i@:')
-    def canLoadPanel(self):
-        return self.py.can_load()
-    
-    def loadPanel(self): # if we use "load", pyobjc complains
-        self.py.load()
-    
-    def savePanel(self):
-        self.py.save()
-    
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
@@ -1014,6 +997,69 @@ class PyMassEditionPanel(PyCompletion):
     @objc.signature('v@:i')
     def setCurrencyIndex_(self, value):
         self.py.currency_index = value
+    
+
+class PySchedulePanel(PyPanel):
+    py_class = SchedulePanel
+
+    def startDate(self):
+        return self.py.start_date
+    
+    def setStartDate_(self, value):
+        self.py.start_date = value
+    
+    def stopDate(self):
+        return ''
+    
+    def setStopDate_(self, value):
+        pass
+    
+    def description(self):
+        return self.py.description
+    
+    def setDescription_(self, value):
+        self.py.description = value
+    
+    def payee(self):
+        return self.py.payee
+    
+    def setPayee_(self, value):
+        self.py.payee = value
+    
+    def checkno(self):
+        return self.py.checkno
+    
+    def setCheckno_(self, value):
+        self.py.checkno = value
+    
+    @objc.signature('i@:')
+    def repeatEvery(self):
+        return self.py.repeat_every
+    
+    @objc.signature('v@:i')
+    def setRepeatEvery_(self, value):
+        self.py.repeat_every = value
+    
+    def repeatEveryDesc(self):
+        return self.py.repeat_every_desc
+    
+    @objc.signature('i@:')
+    def repeatTypeIndex(self):
+        return self.py.repeat_type_index
+    
+    @objc.signature('v@:i')
+    def setRepeatTypeIndex_(self, value):
+        self.py.repeat_type_index = value
+    
+    def repeatOptions(self):
+        return self.py.repeat_options
+    
+    #--- Python -> Cocoa
+    def refresh_repeat_every(self):
+        self.cocoa.refreshRepeatEvery()
+    
+    def refresh_repeat_options(self):
+        self.cocoa.refreshRepeatOptions()
     
 
 class PyCustomDateRangePanel(PyListener):

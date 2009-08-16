@@ -7,16 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGTableView.h"
-#import "MGDocument.h"
-#import "PySplitTable.h"
-#import "PyPanel.h"
-#import "MGEditableTable.h"
+#import "PyCompletion.h"
 
-@interface MGSplitTable : MGEditableTable {}
-
-- (void)setTransactionPanel:(PyPanel *)aPanel;
-
-- (IBAction)addSplit:(id)sender;
-- (IBAction)deleteSplit:(id)sender;
+@interface PyPanel : PyCompletion {}
+- (BOOL)canLoadPanel;
+- (void)loadPanel;
+- (void)savePanel;
 @end

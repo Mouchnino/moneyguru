@@ -7,13 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyCompletion.h"
+#import "PyPanel.h"
 
-@interface PyMassEditionPanel : PyCompletion {}
-- (BOOL)canLoadPanel;
-- (void)loadPanel;
-- (void)savePanel;
-
+@interface PyMassEditionPanel : PyPanel {}
 - (NSArray *)availableCurrencies;
 - (BOOL)canChangeAccountsAndAmount;
 - (BOOL)dateEnabled;

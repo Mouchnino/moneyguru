@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGSplitTable
 
-- (void)setTransactionPanel:(PyTransactionPanel *)aPanel;
+- (void)setTransactionPanel:(PyPanel *)aPanel;
 {
     if (py != nil)
     {

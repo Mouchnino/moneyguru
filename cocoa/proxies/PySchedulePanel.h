@@ -9,22 +9,21 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
 
-@interface PyTransactionPanel : PyPanel {}
-- (NSString *)date;
-- (void)setDate:(NSString *)date;
+@interface PySchedulePanel : PyPanel {}
+- (NSString *)startDate;
+- (void)setStartDate:(NSString *)startDate;
+- (NSString *)stopDate;
+- (void)setStopDate:(NSString *)stopDate;
 - (NSString *)description;
 - (void)setDescription:(NSString *)description;
 - (NSString *)payee;
 - (void)setPayee:(NSString *)payee;
 - (NSString *)checkno;
 - (void)setCheckno:(NSString *)checkno;
-- (void)mctBalance;
-- (BOOL)canDoMCTBalance;
-- (BOOL)isRecurrent;
 - (int)repeatEvery;
 - (void)setRepeatEvery:(int)value;
 - (NSString *)repeatEveryDesc;
-- (int)repeatIndex;
-- (void)setRepeatIndex:(int)value;
+- (int)repeatTypeIndex;
+- (void)setRepeatTypeIndex:(int)value;
 - (NSArray *)repeatOptions;
 @end

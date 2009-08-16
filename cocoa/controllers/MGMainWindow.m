@@ -25,6 +25,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountProperties = [[MGAccountProperties alloc] initWithDocument:document];
     transactionPanel = [[MGTransactionInspector alloc] initWithDocument:document];
     massEditionPanel = [[MGMassEditionPanel alloc] initWithDocument:document];
+    schedulePanel = [[MGSchedulePanel alloc] initWithDocument:document];
     balanceSheet = [[MGBalanceSheet alloc] initWithDocument:document];
     incomeStatement = [[MGIncomeStatement alloc] initWithDocument:document];
     transactionTable = [[MGTransactionTable alloc] initWithDocument:document];
@@ -154,7 +155,7 @@ http://www.hardcoded.net/licenses/hs_license
                 didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
         }
     }
-    else
+    else if ((top == entryTable) || (top == transactionTable))
     {
         if ([transactionPanel canLoad])
         {
@@ -166,6 +167,15 @@ http://www.hardcoded.net/licenses/hs_license
         {
             [massEditionPanel load];
             [NSApp beginSheet:[massEditionPanel window] modalForWindow:[self window] modalDelegate:self 
+                didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+        }
+    }
+    else if (top == scheduleTable)
+    {
+        if ([schedulePanel canLoad])
+        {
+            [schedulePanel load];
+            [NSApp beginSheet:[schedulePanel window] modalForWindow:[self window] modalDelegate:self 
                 didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
         }
     }

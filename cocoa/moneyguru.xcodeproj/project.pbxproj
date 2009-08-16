@@ -61,6 +61,8 @@
 		CE4B8C120E656DB70017432D /* moneyguru_help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* moneyguru_help */; };
 		CE4CD3810F2B78B6003F1738 /* CSVLayoutName.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4CD3800F2B78B6003F1738 /* CSVLayoutName.xib */; };
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
+		CE5CBBC5103834D8008AC465 /* SchedulePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5CBBC4103834D8008AC465 /* SchedulePanel.xib */; };
+		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
 		CE6818DD0EEA9286007C5CDF /* MGUnreconciliationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6818DC0EEA9286007C5CDF /* MGUnreconciliationDialog.m */; };
 		CE6818DF0EEA945D007C5CDF /* UnreconciliationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
@@ -301,6 +303,12 @@
 		CE4CD3870F2B7B0D003F1738 /* MGCSVLayoutNameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVLayoutNameDialog.h; sourceTree = "<group>"; };
 		CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVLayoutNameDialog.m; sourceTree = "<group>"; };
 		CE55964A0E711C20004A959D /* PyCashFlowPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCashFlowPieChart.h; sourceTree = "<group>"; };
+		CE5CBBC4103834D8008AC465 /* SchedulePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchedulePanel.xib; sourceTree = "<group>"; };
+		CE5CBBDB1038361D008AC465 /* MGSchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSchedulePanel.h; sourceTree = "<group>"; };
+		CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSchedulePanel.m; sourceTree = "<group>"; };
+		CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySchedulePanel.h; sourceTree = "<group>"; };
+		CE5CBBEC10383F51008AC465 /* PyPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanel.h; sourceTree = "<group>"; };
+		CE5CBBED10383F51008AC465 /* PyPanelWithTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanelWithTransaction.h; sourceTree = "<group>"; };
 		CE6818DB0EEA9286007C5CDF /* MGUnreconciliationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGUnreconciliationDialog.h; sourceTree = "<group>"; };
 		CE6818DC0EEA9286007C5CDF /* MGUnreconciliationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGUnreconciliationDialog.m; sourceTree = "<group>"; };
 		CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnreconciliationDialog.xib; sourceTree = "<group>"; };
@@ -770,6 +778,8 @@
 				CE873A630E21621F004F63E9 /* AccountProperties.xib */,
 				CEE46FB70F91E4E400D08E40 /* AccountReassignPanel.xib */,
 				CE873A680E21621F004F63E9 /* TransactionInspector.xib */,
+				CE5CBBC4103834D8008AC465 /* SchedulePanel.xib */,
+				CE0F138E0E39BA5F006B6982 /* MassEditionPanel.xib */,
 				CEF674AA0F4C7477003E5283 /* CustomDateRangePanel.xib */,
 				CEF4C4FE0F220F7A004FDC9D /* CSVImportOptions.xib */,
 				CE4CD3800F2B78B6003F1738 /* CSVLayoutName.xib */,
@@ -779,7 +789,6 @@
 				CECE10E90E5EA9B20080E298 /* ImportTableOneSided.xib */,
 				CE12EF3F0E503EBD0094C404 /* ImportTable.xib */,
 				CE1453420E4AFD6B009517B6 /* ImportWindow.xib */,
-				CE0F138E0E39BA5F006B6982 /* MassEditionPanel.xib */,
 				CE7045D70E34ACA2005E065F /* SearchField.xib */,
 			);
 			path = xib;
@@ -788,37 +797,49 @@
 		CE873A6F0E21622F004F63E9 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE41C98E0E2B52CD006D3BEA /* MGTable.h */,
+				CE41C98F0E2B52CD006D3BEA /* MGTable.m */,
+				CE873A8A0E21622F004F63E9 /* MGSplitTable.h */,
+				CE873A8B0E21622F004F63E9 /* MGSplitTable.m */,
+				CEA25A680E2776B20067AE58 /* MGTransactionTable.h */,
+				CEA25A690E2776B20067AE58 /* MGTransactionTable.m */,
 				CEB1E0BC1031C3A3001FC4B4 /* MGScheduleTable.h */,
 				CEB1E0BD1031C3A3001FC4B4 /* MGScheduleTable.m */,
-				CEE46FC20F91E58500D08E40 /* MGAccountReassignPanel.h */,
-				CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */,
-				CE6E00140F4ED61800FE7628 /* MGGraph.h */,
-				CE6E00150F4ED61800FE7628 /* MGGraph.m */,
-				CEF674AD0F4C76F7003E5283 /* MGCustomDateRangePanel.h */,
-				CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */,
-				CEC5CE4E0F45D8060042E33F /* MGPieChart.h */,
-				CEC5CE4F0F45D8060042E33F /* MGPieChart.m */,
-				CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */,
-				CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */,
-				CE6C6FEF0E74324B003B5062 /* MGChart.h */,
-				CE6C6FF00E74324B003B5062 /* MGChart.m */,
 				CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */,
 				CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */,
-				CE2B00630E5462E7000F0C9B /* MGWindowController.h */,
-				CE2B00640E5462E7000F0C9B /* MGWindowController.m */,
 				CE2DD62E0E4C684000AB107B /* MGImportTable.h */,
 				CE2DD62F0E4C684000AB107B /* MGImportTable.m */,
 				CE14537E0E4B40B3009517B6 /* MGEditableTable.h */,
 				CE14537F0E4B40B3009517B6 /* MGEditableTable.m */,
+				CE873A700E21622F004F63E9 /* MGAccountProperties.h */,
+				CE873A710E21622F004F63E9 /* MGAccountProperties.m */,
+				CEE46FC20F91E58500D08E40 /* MGAccountReassignPanel.h */,
+				CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */,
+				CEF674AD0F4C76F7003E5283 /* MGCustomDateRangePanel.h */,
+				CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */,
+				CE0F13920E39BC4A006B6982 /* MGMassEditionPanel.h */,
+				CE0F13930E39BC4A006B6982 /* MGMassEditionPanel.m */,
+				CE873A8C0E21622F004F63E9 /* MGTransactionInspector.h */,
+				CE873A8D0E21622F004F63E9 /* MGTransactionInspector.m */,
+				CE5CBBDB1038361D008AC465 /* MGSchedulePanel.h */,
+				CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */,
+				CE6E00140F4ED61800FE7628 /* MGGraph.h */,
+				CE6E00150F4ED61800FE7628 /* MGGraph.m */,
+				CEC5CE4E0F45D8060042E33F /* MGPieChart.h */,
+				CEC5CE4F0F45D8060042E33F /* MGPieChart.m */,
+				CE6C6FEF0E74324B003B5062 /* MGChart.h */,
+				CE6C6FF00E74324B003B5062 /* MGChart.m */,
+				07D049F00E2A676500DA8698 /* MGBalanceGraph.h */,
+				07D049F10E2A676500DA8698 /* MGBalanceGraph.m */,
+				CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */,
+				CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */,
+				CE2B00630E5462E7000F0C9B /* MGWindowController.h */,
+				CE2B00640E5462E7000F0C9B /* MGWindowController.m */,
 				CE14535C0E4B0A99009517B6 /* PyImportWindow.h */,
 				CE1453440E4AFE1D009517B6 /* MGImportWindow.h */,
 				CE1453450E4AFE1D009517B6 /* MGImportWindow.m */,
-				CE873A700E21622F004F63E9 /* MGAccountProperties.h */,
-				CE873A710E21622F004F63E9 /* MGAccountProperties.m */,
 				CE873A740E21622F004F63E9 /* MGAppDelegate.h */,
 				CE873A750E21622F004F63E9 /* MGAppDelegate.m */,
-				07D049F00E2A676500DA8698 /* MGBalanceGraph.h */,
-				07D049F10E2A676500DA8698 /* MGBalanceGraph.m */,
 				CE873A760E21622F004F63E9 /* MGBalanceSheet.h */,
 				CE873A770E21622F004F63E9 /* MGBalanceSheet.m */,
 				0726B3BB0E4A002F0059E8A7 /* MGIncomeStatement.h */,
@@ -839,22 +860,12 @@
 				0700EE050E2FA93200515978 /* MGGUIController.m */,
 				CE873A880E21622F004F63E9 /* MGMainWindow.h */,
 				CE873A890E21622F004F63E9 /* MGMainWindow.m */,
-				CE0F13920E39BC4A006B6982 /* MGMassEditionPanel.h */,
-				CE0F13930E39BC4A006B6982 /* MGMassEditionPanel.m */,
 				07373CB00E3130050082D3E8 /* MGOutline.h */,
 				07373CB10E3130050082D3E8 /* MGOutline.m */,
 				0726B2B20E49E1260059E8A7 /* MGReport.h */,
 				0726B2B30E49E1260059E8A7 /* MGReport.m */,
 				CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */,
 				CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */,
-				CE873A8A0E21622F004F63E9 /* MGSplitTable.h */,
-				CE873A8B0E21622F004F63E9 /* MGSplitTable.m */,
-				CE41C98E0E2B52CD006D3BEA /* MGTable.h */,
-				CE41C98F0E2B52CD006D3BEA /* MGTable.m */,
-				CEA25A680E2776B20067AE58 /* MGTransactionTable.h */,
-				CEA25A690E2776B20067AE58 /* MGTransactionTable.m */,
-				CE873A8C0E21622F004F63E9 /* MGTransactionInspector.h */,
-				CE873A8D0E21622F004F63E9 /* MGTransactionInspector.m */,
 				CE873A8E0E21622F004F63E9 /* MGUndoManager.h */,
 				CE873A8F0E21622F004F63E9 /* MGUndoManager.m */,
 			);
@@ -865,6 +876,9 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CE5CBBEC10383F51008AC465 /* PyPanel.h */,
+				CE5CBBED10383F51008AC465 /* PyPanelWithTransaction.h */,
+				CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */,
 				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
 				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
@@ -1120,6 +1134,7 @@
 				CEB1E0B51031A386001FC4B4 /* schedules_48.png in Resources */,
 				CEB1E0B91031C286001FC4B4 /* ScheduleTable.xib in Resources */,
 				CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */,
+				CE5CBBC5103834D8008AC465 /* SchedulePanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1227,6 +1242,7 @@
 				CE1BD3E20FDE4DE2005FB7B9 /* BRSingleLineFormatter.m in Sources */,
 				CE1BD3E30FDE4DE2005FB7B9 /* NSCharacterSet_Extensions.m in Sources */,
 				CEB1E0BE1031C3A3001FC4B4 /* MGScheduleTable.m in Sources */,
+				CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

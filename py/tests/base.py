@@ -40,6 +40,7 @@ from ..gui.main_window import MainWindow
 from ..gui.mass_edition_panel import MassEditionPanel
 from ..gui.net_worth_graph import NetWorthGraph
 from ..gui.profit_graph import ProfitGraph
+from ..gui.schedule_panel import SchedulePanel
 from ..gui.schedule_table import ScheduleTable
 from ..gui.search_field import SearchField
 from ..gui.split_table import SplitTable
@@ -252,6 +253,8 @@ class TestCase(TestCase):
         self.ttable = TransactionTable(self.ttable_gui, self.document)
         self.sctable_gui = CallLogger()
         self.sctable = ScheduleTable(self.sctable_gui, self.document)
+        self.scpanel_gui = CallLogger()
+        self.scpanel = SchedulePanel(self.scpanel_gui, self.document)
         self.tpanel_gui = CallLogger()
         self.tpanel = TransactionPanel(self.tpanel_gui, self.document)
         self.mepanel_gui = CallLogger()
