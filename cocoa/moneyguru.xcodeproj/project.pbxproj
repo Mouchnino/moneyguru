@@ -52,6 +52,7 @@
 		CE3040DA0F86094400884424 /* MGEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D70F86094400884424 /* MGEntryPrint.m */; };
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
+		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
 		CE3BD41D0E61C9570071559C /* reconcile_check_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BD41C0E61C9570071559C /* reconcile_check_48.png */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
 		CE4148210EAA059400B8BF6A /* NSIndexPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4148200EAA059400B8BF6A /* NSIndexPathAdditions.m */; };
@@ -286,6 +287,7 @@
 		CE31C65B0E851CF400BBA82E /* MGRecurrenceScopeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGRecurrenceScopeDialog.h; sourceTree = "<group>"; };
 		CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog.m; sourceTree = "<group>"; };
 		CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitGraph.h; sourceTree = "<group>"; };
+		CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		CE3BD41C0E61C9570071559C /* reconcile_check_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reconcile_check_48.png; sourceTree = "<group>"; };
 		CE40239E0F4C737D0083BAD2 /* doc_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_icon.icns; sourceTree = "<group>"; };
 		CE41481F0EAA059400B8BF6A /* NSIndexPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSIndexPathAdditions.h; sourceTree = "<group>"; };
@@ -744,6 +746,7 @@
 		CE8739FF0E21615F004F63E9 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
 				CEEED1D30E3F763100BBA154 /* images */,
 				CE873A620E21621F004F63E9 /* xib */,
@@ -1116,6 +1119,7 @@
 				CEB1E0B41031A386001FC4B4 /* budget_48.png in Resources */,
 				CEB1E0B51031A386001FC4B4 /* schedules_48.png in Resources */,
 				CEB1E0B91031C286001FC4B4 /* ScheduleTable.xib in Resources */,
+				CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
