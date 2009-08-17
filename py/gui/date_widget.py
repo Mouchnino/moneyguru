@@ -51,31 +51,34 @@ class DateWidget(object):
         elif self._selected == MONTH:
             self._selected = YEAR
     
-    def _flush_buffer(self, move=True):
+    def _flush_buffer(self, force=False):
+        # Returns a bool indicating if the buffer was effectively flushed
         if not self._buffer:
-            return
+            return False
         value = int(self._buffer)
+        valid = False
         if self._selected == DAY:
-            if not (1 <= value <= 31):
-                raise ValueError()
-            self._day = value
+            valid = 1 <= value <= 31
+            if valid:
+                self._day = value
         elif self._selected == MONTH:
-            if not (1 <= value <= 12):
-                raise ValueError()
-            self._month = value
+            valid = 1 <= value <= 12
+            if valid:
+                self._month = value
         else:
+            valid = True
             if value < 100:
                 value += 2000 if value < 69 else 1900
             self._year = value
-        self._buffer = ''
-        if move:
-            self._next()
+        if valid or force:
+            self._buffer = ''
+        return valid
     
     def _increase_or_decrease(self, increase):
         inc_count = 1 if increase else -1
         if self.date is None:
             return
-        self._flush_buffer(move=False)
+        self._flush_buffer(force=True)
         olddate = self.date
         if self._selected == DAY:
             self.date = inc_day(olddate, inc_count)
@@ -92,7 +95,7 @@ class DateWidget(object):
         self._increase_or_decrease(increase=False)
     
     def exit(self):
-        self._flush_buffer(move=False)
+        self._flush_buffer(force=True)
         self.date # will correct the date
         self._selected = DAY
     
@@ -100,22 +103,19 @@ class DateWidget(object):
         self._increase_or_decrease(increase=True)
     
     def left(self):
-        self._flush_buffer(move=False)
+        self._flush_buffer(force=True)
         index = (self._order.index(self._selected) - 1)
         self._selected = self._order[index]
     
     def right(self):
-        self._flush_buffer(move=False)
+        self._flush_buffer(force=True)
         index = (self._order.index(self._selected) + 1) % 3
         self._selected = self._order[index]
     
     def type(self, stuff):
         if stuff == self._sep:
-            try:
-                self._flush_buffer()
-            except ValueError:
-                # Happens when _buffer is invalid. Ignore it and stay on the current field
-                pass
+            if self._flush_buffer():
+                self._next()
             return
         if not stuff.isdigit(): # invalid
             return
@@ -123,9 +123,9 @@ class DateWidget(object):
         sel = self.selection
         sel_len = sel[1] - sel[0] + 1
         if len(self._buffer) == max(sel_len, 2): # We must at least buffer one char at all time
-            try:
-                self._flush_buffer()
-            except ValueError:
+            if self._flush_buffer():
+                self._next()
+            else:
                 self._buffer = self._buffer[:-1]
     
     @property

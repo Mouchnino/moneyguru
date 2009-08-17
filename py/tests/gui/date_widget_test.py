@@ -91,12 +91,6 @@ class DDMMYYYYWithSlash(TestCase):
         self.assertEqual(self.w.date, date(2008, 6, 12)) # date hasn't changed yet
         self.assertEqual(self.w.selection, (0, 1))
     
-    def test_type_0_then_sep(self):
-        # There was a crash when a sep-caused _flush_buffer would be called with an invalid value
-        self.w.type('0')
-        self.w.type('/')
-        self.assertEqual(self.w.text, '0 /06/2008') # don't do anything (stay on DAY)
-    
     def test_type_31(self):
         """Even if the current date is in a non-31 month, it's still possible to type '31' in the 
         day field.
@@ -512,4 +506,37 @@ class SetInvalidDate(TestCase):
         # When we start typing, the rest of the "-" chars stay there
         self.w.type('1')
         eq_(self.w.text, '1 /--/----')
+    
+
+class InvalidBuffer(TestCase):
+    # The widget is currently in buffer mode, but with a "0" (invalid) in its buffer
+    def setUp(self):
+        self.w = DateWidget('dd/MM/yyyy')
+        self.w.date = date(2008, 6, 12)
+        self.w.type('0')
+    
+    def test_exit(self):
+        # exiting cancels the buffer if invalid
+        self.w.exit()
+        self.assertEqual(self.w.text, '12/06/2008')
+    
+    def test_left(self):
+        # going left cancels the buffer if invalid
+        self.w.left()
+        self.assertEqual(self.w.text, '12/06/2008')
+    
+    def test_increase(self):
+        # When increasing, cancel the buffer if it's invalid
+        self.w.increase()
+        self.assertEqual(self.w.text, '13/06/2008')
+    
+    def test_right(self):
+        # going left cancels the buffer if invalid
+        self.w.right()
+        self.assertEqual(self.w.text, '12/06/2008')
+    
+    def test_type_sep(self):
+        # There was a crash when a sep-caused _flush_buffer would be called with an invalid value
+        self.w.type('/')
+        self.assertEqual(self.w.text, '0 /06/2008') # don't do anything (stay on DAY)
     
