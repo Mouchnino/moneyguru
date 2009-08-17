@@ -32,9 +32,13 @@ http://www.hardcoded.net/licenses/hs_license
 /* Methods */
 - (BOOL)canLoad;
 - (void)load;
+- (void)new;
 - (void)save;
 /* Actions */
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 - (IBAction)repeatTypeSelected:(id)sender;
+/* Python --> Cocoa */
+- (void)refreshRepeatEvery;
+- (void)refreshRepeatOptions;
 @end

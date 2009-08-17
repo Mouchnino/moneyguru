@@ -16,6 +16,7 @@ from hsutil.misc import first
 from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY, 
                      REPEAT_WEEKDAY_LAST)
 from ..model.account import Account, INCOME, EXPENSE
+from ..model.recurrence import Recurrence
 from ..model.transaction import Split, Transaction
 from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
@@ -35,15 +36,9 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         Broadcaster.__init__(self)
-        self.transaction = Transaction(date.today())
-        self._repeat_type_index = 0
-        self._repeat_every = 1
     
-    def can_load(self):
-        return True
-    
-    def load(self):
-        schedule = self.document.selected_schedule
+    #--- Private
+    def _load(self, schedule):
         self.schedule = schedule
         self.transaction = schedule.ref.replicate(link_splits=True)
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
@@ -51,6 +46,17 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
         self._stop_date = schedule.stop_date
         self.view.refresh_repeat_every()
         self.notify('panel_loaded')
+        
+    
+    def can_load(self):
+        return True
+    
+    def new(self):
+        schedule = Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1, include_first=True)
+        self._load(schedule)
+    
+    def load(self):
+        self._load(self.document.selected_schedule)
     
     def save(self):
         repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]

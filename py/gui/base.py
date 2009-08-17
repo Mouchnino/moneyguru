@@ -89,6 +89,9 @@ class DocumentGUIObject(Listener):
     def redone(self):
         pass
     
+    def schedule_changed(self):
+        pass
+    
     def schedule_table_selected(self):
         pass
     

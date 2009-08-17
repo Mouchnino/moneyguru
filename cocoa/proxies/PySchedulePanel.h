@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyPanel.h"
 
 @interface PySchedulePanel : PyPanel {}
+- (void)newItem;
 - (NSString *)startDate;
 - (void)setStartDate:(NSString *)startDate;
 - (NSString *)stopDate;

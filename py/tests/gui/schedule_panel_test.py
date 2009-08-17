@@ -12,6 +12,19 @@ from nose.tools import eq_
 
 from ..base import TestCase, CommonSetup
 
+class Pristine(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.document.select_schedule_table()
+    
+    def test_add_schedule(self):
+        self.scpanel.new()
+        self.scpanel.description = 'foobar'
+        self.scpanel.save()
+        eq_(len(self.sctable), 1)
+        eq_(self.sctable[0].description, 'foobar')
+    
+
 class OneDailyScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

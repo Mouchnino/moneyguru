@@ -62,12 +62,12 @@ class Document(Broadcaster, Listener):
         self.excluded_accounts = set()
         self.groups = GroupList()
         self.transactions = TransactionList()
-        # I did not manage to create a repeatable test for it, but self.scheduled has to be ordered
+        # I did not manage to create a repeatable test for it, but self.schedules has to be ordered
         # because the order in which the spawns are created must stay the same
-        self.scheduled = []
+        self.schedules = []
         self.budgets = BudgetList()
-        self.oven = Oven(self.accounts, self.transactions, self.scheduled, self.budgets)
-        self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.scheduled)
+        self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
+        self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules)
         self._date_range = YearRange(datetime.date.today())
         self._in_reconciliation_mode = False
         self._selected_account = None
@@ -333,9 +333,9 @@ class Document(Broadcaster, Listener):
                 if recurrence is not None:
                     txn.recurrence.delete(txn)
                     recurrence = Recurrence(txn.replicate(), recurrence.repeat_type, recurrence.repeat_every, include_first=True)
-                    self.scheduled.append(recurrence)
+                    self.schedules.append(recurrence)
         elif recurrence is not None:
-            self.scheduled.append(recurrence)
+            self.schedules.append(recurrence)
     
     #--- Account
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
@@ -756,7 +756,10 @@ class Document(Broadcaster, Listener):
         schedule.repeat_every = repeat_every
         schedule.stop_date = stop_date
         schedule.reset_spawn_cache()
+        if schedule not in self.schedules:
+            self.schedules.append(schedule)
         self._cook(from_date=min_date)
+        self.notify('schedule_changed')
     
     #--- Selection
     @property
@@ -844,7 +847,7 @@ class Document(Broadcaster, Listener):
         self.accounts.clear()
         self.transactions.clear()
         self.groups.clear()
-        del self.scheduled[:]
+        del self.schedules[:]
         del self.budgets[:]
         self._undoer.clear()
         for group in loader.groups:
@@ -853,8 +856,8 @@ class Document(Broadcaster, Listener):
             self.accounts.add(account)
         for transaction in loader.transactions:
             self.transactions.add(transaction, position=transaction.position)
-        for recurrence in loader.scheduled:
-            self.scheduled.append(recurrence)
+        for recurrence in loader.schedules:
+            self.schedules.append(recurrence)
         for budget in loader.budgets:
             self.budgets.append(budget)
         self._cook()
@@ -903,7 +906,7 @@ class Document(Broadcaster, Listener):
         for transaction in self.transactions:
             write_transaction_element(root, transaction)
         # the functionality of the line below is untested because it's an optimisation
-        scheduled = [s for s in self.scheduled if s.is_alive]
+        scheduled = [s for s in self.schedules if s.is_alive]
         for recurrence in scheduled:
             recurrence_element = ET.SubElement(root, 'recurrence')
             attrib = recurrence_element.attrib

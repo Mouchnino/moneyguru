@@ -1001,7 +1001,10 @@ class PyMassEditionPanel(PyPanel):
 
 class PySchedulePanel(PyPanel):
     py_class = SchedulePanel
-
+    
+    def newItem(self): # if we use "new", pyobjc complains
+        self.py.new()
+    
     def startDate(self):
         return self.py.start_date
     
@@ -1009,10 +1012,10 @@ class PySchedulePanel(PyPanel):
         self.py.start_date = value
     
     def stopDate(self):
-        return ''
+        return self.py.stop_date
     
     def setStopDate_(self, value):
-        pass
+        self.py.stop_date = value
     
     def description(self):
         return self.py.description

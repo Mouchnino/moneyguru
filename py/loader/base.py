@@ -42,11 +42,11 @@ class Loader(object):
         self.groups = GroupList()
         self.accounts = AccountList(default_currency)
         self.transactions = TransactionList()
-        # I did not manage to create a repeatable test for it, but self.scheduled has to be ordered
+        # I did not manage to create a repeatable test for it, but self.schedules has to be ordered
         # because the order in which the spawns are created must stay the same
-        self.scheduled = []
+        self.schedules = []
         self.budgets = []
-        self.oven = Oven(self.accounts, self.transactions, self.scheduled, self.budgets)
+        self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
         self.target_account = None # when set, overrides the reference matching system
         self.group_infos = []
         self.account_infos = []
@@ -261,7 +261,7 @@ class Loader(object):
                 change = load_transaction_info(transaction_info)
                 spawn = Spawn(recurrence, change, date, change.date)
                 recurrence.date2globalchange[date] = spawn
-            self.scheduled.append(recurrence)
+            self.schedules.append(recurrence)
         # Budgets
         TODAY = datetime.date.today()
         ref_date = datetime.date(TODAY.year, TODAY.month, 1)

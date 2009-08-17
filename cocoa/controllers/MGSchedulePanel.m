@@ -54,19 +54,17 @@ http://www.hardcoded.net/licenses/hs_license
     return nil;
 }
 
-/* Python --> Cocoa */
-- (void)refreshRepeatEvery
+- (void)loadFields
 {
-    [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
-}
-
-- (void)refreshRepeatOptions
-{
-    int index = [repeatOptionsPopUp indexOfSelectedItem];
-    [repeatOptionsPopUp removeAllItems];
-    NSArray *options = [[self py] repeatOptions];
-    [repeatOptionsPopUp addItemsWithTitles:options];
-    [repeatOptionsPopUp selectItemAtIndex:index];
+    [startDateField setStringValue:[[self py] startDate]];
+    [stopDateField setStringValue:[[self py] stopDate]];
+    [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
+    [repeatEveryField setIntValue:[[self py] repeatEvery]];
+    [descriptionField setStringValue:[[self py] description]];
+    [payeeField setStringValue:[[self py] payee]];
+    [checknoField setStringValue:[[self py] checkno]];
+    [splitTable refresh];
+    [self refreshRepeatOptions];
 }
 
 /* Public */
@@ -82,15 +80,15 @@ http://www.hardcoded.net/licenses/hs_license
     // the py widget during makeFirstResponder:
     [[self window] makeFirstResponder:nil];
     [[self py] loadPanel];
-    [startDateField setStringValue:[[self py] startDate]];
-    [stopDateField setStringValue:[[self py] stopDate]];
-    [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
-    [repeatEveryField setIntValue:[[self py] repeatEvery]];
-    [descriptionField setStringValue:[[self py] description]];
-    [payeeField setStringValue:[[self py] payee]];
-    [checknoField setStringValue:[[self py] checkno]];
-    [splitTable refresh];
-    [self refreshRepeatOptions];
+    [self loadFields];
+    [[self window] makeFirstResponder:startDateField];
+}
+
+- (void)new
+{
+    [[self window] makeFirstResponder:nil];
+    [[self py] newItem];
+    [self loadFields];
     [[self window] makeFirstResponder:startDateField];
 }
 
@@ -126,6 +124,21 @@ http://www.hardcoded.net/licenses/hs_license
 {
     // The label next to the "every" field has to be updated as soon as the popup selection changes
     [[self py] setRepeatTypeIndex:[repeatOptionsPopUp indexOfSelectedItem]];
+}
+
+/* Python --> Cocoa */
+- (void)refreshRepeatEvery
+{
+    [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
+}
+
+- (void)refreshRepeatOptions
+{
+    int index = [repeatOptionsPopUp indexOfSelectedItem];
+    [repeatOptionsPopUp removeAllItems];
+    NSArray *options = [[self py] repeatOptions];
+    [repeatOptionsPopUp addItemsWithTitles:options];
+    [repeatOptionsPopUp selectItemAtIndex:index];
 }
 
 /* Delegate */

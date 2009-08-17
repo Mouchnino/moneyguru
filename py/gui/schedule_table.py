@@ -33,7 +33,7 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
     #--- Public
     def refresh(self):
         del self[:]
-        for schedule in self.document.scheduled:
+        for schedule in self.document.schedules:
             self.append(ScheduleTableRow(self, schedule))
     
     #--- Properties
@@ -47,6 +47,10 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         self.view.refresh()
     
     def redone(self):
+        self.refresh()
+        self.view.refresh()
+    
+    def schedule_changed(self):
         self.refresh()
         self.view.refresh()
     

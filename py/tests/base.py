@@ -321,6 +321,11 @@ class TestCase(TestCase):
         if select:
             self.document.show_selected_account()
     
+    def add_accounts(self, *names):
+        # add a serie of simple accounts, *names being names for each account
+        for name in names:
+            self.add_account(name)
+    
     def add_entry(self, date=None, description=None, payee=None, transfer=None, increase=None, decrease=None, checkno=None):
         # This whole "if not None" thing allows to simulate a user tabbing over fields leaving the default value.
         self.etable.add()
@@ -498,8 +503,8 @@ class TestAppCompareMixin(object):
         self.assertEqual(len(first.transactions), len(second.transactions))
         for txn1, txn2 in zip(first.transactions, second.transactions):
             compare_txns(txn1, txn2)
-        self.assertEqual(len(first.scheduled), len(second.scheduled))
-        for rec1, rec2 in zip(first.scheduled, second.scheduled):
+        self.assertEqual(len(first.schedules), len(second.schedules))
+        for rec1, rec2 in zip(first.schedules, second.schedules):
             self.assertEqual(rec1.repeat_type, rec2.repeat_type)
             self.assertEqual(rec1.repeat_every, rec2.repeat_every)
             compare_txns(rec1.ref, rec2.ref)
@@ -571,13 +576,10 @@ class CommonSetup(object):
     
     def setup_three_accounts(self):
         #Three accounts, empty
-        self.add_account('one')
-        self.add_account('two')
-        self.add_account('three') # This is the selected account (in second position)
+        self.add_accounts('one', 'two', 'three') # three is the selected account (in second position)
     
     def setup_three_accounts_one_entry(self):
         # Two accounts of asset type, and one account of income type.
-        self.add_account('one')
-        self.add_account('two')
+        self.add_accounts('one', 'two')
         self.add_entry(transfer='three', increase='42')
     

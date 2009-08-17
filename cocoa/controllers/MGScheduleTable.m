@@ -34,6 +34,13 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Public */
+- (void)add
+{
+    [schedulePanel new];
+    [NSApp beginSheet:[schedulePanel window] modalForWindow:[[self view] window] modalDelegate:self 
+        didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+}
+
 - (void)editSelected
 {
     if ([schedulePanel canLoad])
