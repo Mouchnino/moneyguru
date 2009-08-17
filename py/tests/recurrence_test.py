@@ -17,6 +17,17 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.setup_monthly_range()
         self.setup_scheduled_transaction()
     
+    def test_change_schedule_transaction(self):
+        # when modifying a schedule's transaction through the scpanel, make sure that this change
+        # is reflected among all spawns (in other words, reset spawn cache).
+        self.document.select_schedule_table()
+        self.sctable.select([0])
+        self.scpanel.load()
+        self.scpanel.description = 'foobaz'
+        self.scpanel.save()
+        self.document.select_transaction_table()
+        eq_(self.ttable[1].description, 'foobaz')
+    
     def test_change_spawn(self):
         # changing a spawn adds an exception to the recurrence (even if the date is changed)
         self.ttable.select([1])

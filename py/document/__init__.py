@@ -755,6 +755,7 @@ class Document(Broadcaster, Listener):
         schedule.repeat_type = repeat_type
         schedule.repeat_every = repeat_every
         schedule.stop_date = stop_date
+        schedule.reset_spawn_cache()
         self._cook(from_date=min_date)
     
     #--- Selection

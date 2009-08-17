@@ -130,6 +130,9 @@ class Recurrence(object):
         result.date2instances = {}
         return result
     
+    def reset_spawn_cache(self):
+        self.date2instances = {}
+    
     def stop_at(self, spawn):
         self.stop_date = spawn.recurrence_date
     
