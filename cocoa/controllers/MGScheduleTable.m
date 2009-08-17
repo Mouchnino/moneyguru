@@ -17,13 +17,50 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
+    schedulePanel = [[MGSchedulePanel alloc] initWithDocument:aDocument];
     return self;
+}
+
+- (void)dealloc
+{
+    [schedulePanel release];
+    [super dealloc];
 }
         
 /* Overrides */
 - (PyScheduleTable *)py
 {
     return (PyScheduleTable *)py;
+}
+
+/* Public */
+- (void)editSelected
+{
+    if ([schedulePanel canLoad])
+    {
+        [schedulePanel load];
+        [NSApp beginSheet:[schedulePanel window] modalForWindow:[[self view] window] modalDelegate:self 
+            didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    }
+}
+
+/* Delegate */
+// MGTableView
+- (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
+{
+    [self editSelected];
+    return YES;
+}
+
+- (void)tableViewWasDoubleClicked:(MGTableView *)tableView
+{
+    [self editSelected];
+}
+
+// sheet
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [sheet orderOut:nil];
 }
 
 @end

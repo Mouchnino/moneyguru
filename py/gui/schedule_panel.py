@@ -22,6 +22,14 @@ from .complete import TransactionCompletionMixIn
 
 REPEAT_OPTIONS_ORDER = [REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY,
                         REPEAT_WEEKDAY_LAST]
+REPEAT_EVERY_DESCS = {
+    REPEAT_DAILY: 'day',
+    REPEAT_WEEKLY: 'week',
+    REPEAT_MONTHLY: 'month',
+    REPEAT_YEARLY: 'year',
+    REPEAT_WEEKDAY: 'month',
+    REPEAT_WEEKDAY_LAST: 'month',
+}
 
 class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
     def __init__(self, view, document):
@@ -41,6 +49,7 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
         self._repeat_every = schedule.repeat_every
         self._stop_date = schedule.stop_date
+        self.view.refresh_repeat_every()
         self.notify('panel_loaded')
     
     def save(self):
@@ -130,7 +139,8 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
     
     @property
     def repeat_every_desc(self):
-        desc = {0: 'day', 1: 'week', 2: 'month', 3: 'year'}.get(self._repeat_type_index)
+        repeat_option = REPEAT_OPTIONS_ORDER[self._repeat_type_index]
+        desc = REPEAT_EVERY_DESCS[repeat_option]
         if desc and self._repeat_every > 1:
             desc += 's'
         return desc

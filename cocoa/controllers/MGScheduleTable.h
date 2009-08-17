@@ -7,19 +7,19 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSTableColumnManager.h"
 #import "MGTableView.h"
 #import "MGDocument.h"
 #import "PyScheduleTable.h"
-#import "MGEditableTable.h"
-#import "MGFieldEditor.h"
+#import "MGTable.h"
+#import "MGSchedulePanel.h"
 
 @interface MGScheduleTable : MGTable 
 {
+    MGSchedulePanel *schedulePanel;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 /* Public */
-
 - (PyScheduleTable *)py;
+- (void)editSelected;
 @end

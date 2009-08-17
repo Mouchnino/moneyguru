@@ -26,5 +26,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSIndexSet *)selectedIndexes;
 - (void)tableViewDidEndEditing:(MGTableView *)tableView;
 - (void)tableViewCancelsEdition:(MGTableView *)tableView;
+- (void)tableViewWasDoubleClicked:(MGTableView *)tableView;
 @end
 

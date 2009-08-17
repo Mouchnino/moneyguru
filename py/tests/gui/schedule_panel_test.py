@@ -12,10 +12,24 @@ from nose.tools import eq_
 
 from ..base import TestCase, CommonSetup
 
+class OneDailyScheduledTransaction(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_scheduled_transaction()
+        self.document.select_schedule_table()
+        self.sctable.select([0])
+        self.clear_gui_calls()
+    
+    def test_calls_refresh_repeat_every_on_load(self):
+        # When the panel loads, make the panel call its refresh_repeat_every() view method so that
+        # the correct time unit escription shows up
+        self.scpanel.load()
+        self.check_gui_calls(self.scpanel_gui, refresh_repeat_every=1)
+    
+
 class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
         self.setup_scheduled_transaction()
         self.document.select_schedule_table()
         self.sctable.select([0])
@@ -44,3 +58,10 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         # To see if the save_edits() worked, we look if the spawns are correct in the ttable
         self.document.select_transaction_table()
         eq_(len(self.ttable), 3) #stops 2 days after it starts
+    
+    def test_repeat_desc_on_weekday_type(self):
+        # Make sure that the repeat desc is correct on weekday repeat type (was None before)
+        self.scpanel.repeat_type_index = 4 # weekday
+        eq_(self.scpanel.repeat_every_desc, 'months')
+        
+    

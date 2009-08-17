@@ -11,6 +11,16 @@ http://www.hardcoded.net/licenses/hs_license
 #import "NSEventAdditions.h"
 
 @implementation MGTableView
+- (void)awakeFromNib
+{
+    /* Respond to double-clicks */
+    id delegate = [self delegate];
+    if ([delegate respondsToSelector:@selector(tableViewWasDoubleClicked:)])
+    {
+        [self setTarget:[self delegate]];
+        [self setDoubleAction:@selector(tableViewWasDoubleClicked:)];
+    }
+}
 
 /* NSTableView */
 
