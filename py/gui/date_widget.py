@@ -11,7 +11,7 @@ import re
 from calendar import monthrange
 from datetime import date, timedelta
 
-from ..model.date import format_year_month_day, parse_date
+from ..model.date import format_year_month_day, parse_date, inc_day, inc_month, inc_year
 
 DAY = 'day'
 MONTH = 'month'
@@ -44,6 +44,7 @@ class DateWidget(object):
         self._year = 0
         self.date = date.today()
     
+    #--- Private
     def _next(self):
         if self._selected == DAY:
             self._selected = MONTH
@@ -70,23 +71,25 @@ class DateWidget(object):
         if move:
             self._next()
     
+    def _increase_or_decrease(self, increase):
+        inc_count = 1 if increase else -1
+        if self.date is None:
+            return
+        self._flush_buffer(move=False)
+        olddate = self.date
+        if self._selected == DAY:
+            self.date = inc_day(olddate, inc_count)
+        elif self._selected == MONTH:
+            self.date = inc_month(olddate, inc_count)
+        else:
+            self.date = inc_year(olddate, inc_count)
+    
+    #--- Public
     def backspace(self):
         self._buffer = self._buffer[:-1]
     
     def decrease(self):
-        self._flush_buffer(move=False)
-        if self._selected == DAY:
-            self.date -= timedelta(days=1)
-        elif self._selected == MONTH:
-            if self.date.month == 1:
-                self.date = self.date.replace(month=12, year=self.date.year - 1)
-            else:
-                month = self.date.month - 1
-                days_in_month = monthrange(self.date.year, month)[1]
-                day = min(self.date.day, days_in_month)
-                self.date = self.date.replace(month=month, day=day)
-        else:
-            self.date = self.date.replace(year=self.date.year - 1)
+        self._increase_or_decrease(increase=False)
     
     def exit(self):
         self._flush_buffer(move=False)
@@ -94,19 +97,7 @@ class DateWidget(object):
         self._selected = DAY
     
     def increase(self):
-        self._flush_buffer(move=False)
-        if self._selected == DAY:
-            self.date += timedelta(days=1)
-        elif self._selected == MONTH:
-            if self.date.month == 12:
-                self.date = self.date.replace(month=1, year=self.date.year + 1)
-            else:
-                month = self.date.month + 1
-                days_in_month = monthrange(self.date.year, month)[1]
-                day = min(self.date.day, days_in_month)
-                self.date = self.date.replace(month=month, day=day)
-        else:
-            self.date = self.date.replace(year=self.date.year + 1)
+        self._increase_or_decrease(increase=True)
     
     def left(self):
         self._flush_buffer(move=False)

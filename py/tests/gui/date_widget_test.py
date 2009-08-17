@@ -501,6 +501,13 @@ class SetInvalidDate(TestCase):
         # When the date is invalid, display '-' chars in the current format
         eq_(self.w.text, '--/--/----')
     
+    def test_increase_decrease(self):
+        # Trying to increase/decrease an invalid date doesn't do anything, but it doesn't crash either
+        self.w.increase() # no crash
+        self.w.decrease() # no crash
+        eq_(self.w.text, '--/--/----')
+        
+    
     def test_type_1(self):
         # When we start typing, the rest of the "-" chars stay there
         self.w.type('1')
