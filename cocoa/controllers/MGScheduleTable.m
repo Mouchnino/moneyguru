@@ -41,6 +41,11 @@ http://www.hardcoded.net/licenses/hs_license
         didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
+- (void)deleteSelected
+{
+    [[self py] deleteSelectedRows];
+}
+
 - (void)editSelected
 {
     if ([schedulePanel canLoad])

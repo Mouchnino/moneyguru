@@ -328,12 +328,13 @@ class Document(Broadcaster, Listener):
         recurrence and start a new one.
         """
         if isinstance(txn, Spawn):
-            if recurrence != txn.recurrence:
+            if recurrence is None:
                 txn.recurrence.stop_at(txn)
-                if recurrence is not None:
-                    txn.recurrence.delete(txn)
-                    recurrence = Recurrence(txn.replicate(), recurrence.repeat_type, recurrence.repeat_every, include_first=True)
-                    self.schedules.append(recurrence)
+            elif recurrence.repeat_type != txn.recurrence.repeat_type or recurrence.repeat_every != txn.recurrence.repeat_every:
+                txn.recurrence.stop_at(txn)
+                txn.recurrence.delete(txn)
+                recurrence = Recurrence(txn.replicate(), recurrence.repeat_type, recurrence.repeat_every, include_first=True)
+                self.schedules.append(recurrence)
         elif recurrence is not None:
             self.schedules.append(recurrence)
     
@@ -760,6 +761,15 @@ class Document(Broadcaster, Listener):
             self.schedules.append(schedule)
         self._cook(from_date=min_date)
         self.notify('schedule_changed')
+    
+    def delete_schedules(self, schedules):
+        if not schedules:
+            return
+        for schedule in schedules:
+            self.schedules.remove(schedule)
+        min_date = min(s.ref.date for s in schedules)
+        self._cook(from_date=min_date)
+        self.notify('schedule_deleted')
     
     #--- Selection
     @property

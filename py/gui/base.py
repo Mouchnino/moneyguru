@@ -92,6 +92,9 @@ class DocumentGUIObject(Listener):
     def schedule_changed(self):
         pass
     
+    def schedule_deleted(self):
+        pass
+    
     def schedule_table_selected(self):
         pass
     

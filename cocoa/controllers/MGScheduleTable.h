@@ -22,5 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
 /* Public */
 - (PyScheduleTable *)py;
 - (void)add;
+- (void)deleteSelected;
 - (void)editSelected;
 @end

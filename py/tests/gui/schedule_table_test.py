@@ -27,3 +27,12 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         eq_(row.interval, '3')
         eq_(row.description, 'foobar')
     
+    def test_delete(self):
+        # calling delete() deletes the selected rows
+        self.sctable.select([0])
+        self.sctable.delete()
+        eq_(len(self.sctable), 0)
+        # And the spawns aren't there anymore in the ttable
+        self.document.select_transaction_table()
+        eq_(len(self.ttable), 1) # the ref transaction
+    

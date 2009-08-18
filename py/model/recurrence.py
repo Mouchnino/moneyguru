@@ -50,14 +50,6 @@ class Recurrence(object):
         if not include_first:
             self.date2exception[ref.date] = None
     
-    def __eq__(self, other): # eq only checks repeat_type and repeat_every, not ref
-        if other is None:
-            return False
-        return self.repeat_type == other.repeat_type and self.repeat_every == other.repeat_every
-    
-    def __ne__(self, other):
-        return not self == other
-    
     def __repr__(self):
         return '<Recurrence %s %d>' % (self.repeat_type, self.repeat_every)
     

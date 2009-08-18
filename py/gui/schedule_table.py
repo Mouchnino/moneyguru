@@ -31,6 +31,9 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         self.view.refresh()
     
     #--- Public
+    def delete(self):
+        self.document.delete_schedules(self.selected_schedules)
+    
     def refresh(self):
         del self[:]
         for schedule in self.document.schedules:
@@ -54,6 +57,10 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         self.refresh()
         self.view.refresh()
     
+    def schedule_deleted(self):
+        self.refresh()
+        self.view.refresh()
+    
     def undone(self):
         self.refresh()
         self.view.refresh()
@@ -71,9 +78,9 @@ class ScheduleTableRow(Row):
         schedule = self.schedule
         txn = schedule.ref
         self._start_date = txn.date
-        self._start_date_fmt = None
+        self._start_date_fmt = self.table.document.app.format_date(self._start_date)
         self._stop_date = schedule.stop_date
-        self._stop_date_fmt = None
+        self._stop_date_fmt = self.table.document.app.format_date(self._start_date) if self._stop_date is not None else ''
         self._repeat_type = schedule.repeat_type
         self._interval = unicode(schedule.repeat_every)
         self._description = txn.description
@@ -92,28 +99,13 @@ class ScheduleTableRow(Row):
         except ValueError: # currency coercing problem
             currency = self.document.app.default_currency
             self._amount = sum(convert_amount(s.amount, currency, transaction.date) for s in tos)
-        self._amount_fmt = None
+        self._amount_fmt = self.document.app.format_amount(self._amount)
     
     def save(self):
         pass # read-only
     
-    # The "get" part of those properies below are called *very* often, hence, the format caching
-    
-    @property
-    def start_date(self):
-        if self._start_date_fmt is None:
-            self._start_date_fmt = self.table.document.app.format_date(self._start_date)
-        return self._start_date_fmt
-    
-    @property
-    def stop_date(self):
-        if self._stop_date_fmt is None:
-            if self._stop_date is None:
-                self._stop_date_fmt = ''
-            else:
-                self._stop_date_fmt = self.table.document.app.format_date(self._stop_date)
-        return self._stop_date_fmt
-    
+    start_date = rowattr('_start_date_fmt')
+    stop_date = rowattr('_stop_date_fmt')
     repeat_type = rowattr('_repeat_type')
     interval = rowattr('_interval')
     description = rowattr('_description')
@@ -121,10 +113,4 @@ class ScheduleTableRow(Row):
     checkno = rowattr('_checkno')
     from_ = rowattr('_from')
     to = rowattr('_to')
-
-    @property
-    def amount(self):
-        if self._amount_fmt is None:
-            self._amount_fmt = self.document.app.format_amount(self._amount)
-        return self._amount_fmt
-    
+    amount = rowattr('_amount_fmt')
