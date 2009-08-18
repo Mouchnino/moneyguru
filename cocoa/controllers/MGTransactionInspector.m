@@ -64,22 +64,6 @@ http://www.hardcoded.net/licenses/hs_license
     [mctBalanceButton setEnabled:[[self py] canDoMCTBalance]];
 }
 
-- (void)refreshRepeatEvery
-{
-    // This will do the trick
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
-}
-
-- (void)refreshRepeatOptions
-{
-    int index = [repeatOptionsPopUp indexOfSelectedItem];
-    [repeatOptionsPopUp removeAllItems];
-    NSArray *options = [[self py] repeatOptions];
-    [repeatOptionsPopUp addItemsWithTitles:options];
-    [repeatOptionsPopUp selectItemAtIndex:index];
-}
-
 /* Public */
 
 - (BOOL)canLoad
@@ -101,7 +85,6 @@ http://www.hardcoded.net/licenses/hs_license
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
     [splitTable refresh];
-    [self refreshRepeatOptions];
     [[self window] makeFirstResponder:dateField];
 }
 

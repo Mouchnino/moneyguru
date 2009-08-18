@@ -28,7 +28,7 @@ class Pristine(TestCase):
 class OneDailyScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction()
+        self.setup_scheduled_transaction(repeat_every=3)
         self.document.select_schedule_table()
         self.sctable.select([0])
         self.clear_gui_calls()
@@ -39,11 +39,46 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.scpanel.load()
         self.check_gui_calls(self.scpanel_gui, refresh_repeat_every=1)
     
+    def test_repeat_every(self):
+        # changing repeat every makes the desc plural if appropriate
+        self.assertEqual(self.scpanel.repeat_every, 3)
+        self.assertEqual(self.scpanel.repeat_every_desc, 'days')
+    
+    def test_repeat_type_index(self):
+        # changing the repeat_type_index changes the repeat_every_desc attribute
+        self.assertEqual(self.scpanel.repeat_every_desc, 'days')
+        self.scpanel.repeat_every = 1
+        self.assertEqual(self.scpanel.repeat_every_desc, 'day')
+        self.check_gui_calls(self.scpanel_gui, refresh_repeat_every=1)
+        self.scpanel.repeat_type_index = 1
+        self.assertEqual(self.scpanel.repeat_every_desc, 'week')
+        self.scpanel.repeat_type_index = 2
+        self.assertEqual(self.scpanel.repeat_every_desc, 'month')
+        self.scpanel.repeat_type_index = 3
+        self.assertEqual(self.scpanel.repeat_every_desc, 'year')
+        self.scpanel.repeat_type_index = 4
+        self.assertEqual(self.scpanel.repeat_every_desc, 'month')
+        self.scpanel.repeat_type_index = 5
+        self.assertEqual(self.scpanel.repeat_every_desc, 'month')
+    
+    def test_repeat_options(self):
+        # Repeat options depend on the txn's date. 13/09/2008 is the second saturday of July.
+        expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every second Saturday of the month']
+        self.assertEqual(self.scpanel.repeat_options, expected)
+    
+    def test_repeat_options_on_last_week(self):
+        # When the txn's date is on the last week of the month, there's an extra 'last' option
+        self.scpanel.start_date = '29/07/2008'
+        expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every fifth Tuesday of the month',
+                    'Every last Tuesday of the month']
+        self.assertEqual(self.scpanel.repeat_options, expected)
+        self.check_gui_calls(self.scpanel_gui, refresh_repeat_options=1)
+    
 
 class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction()
+        self.setup_scheduled_transaction(repeat_every=3)
         self.document.select_schedule_table()
         self.sctable.select([0])
         self.scpanel.load()
@@ -71,10 +106,4 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         # To see if the save_edits() worked, we look if the spawns are correct in the ttable
         self.document.select_transaction_table()
         eq_(len(self.ttable), 3) #stops 2 days after it starts
-    
-    def test_repeat_desc_on_weekday_type(self):
-        # Make sure that the repeat desc is correct on weekday repeat type (was None before)
-        self.scpanel.repeat_type_index = 4 # weekday
-        eq_(self.scpanel.repeat_every_desc, 'months')
-        
     

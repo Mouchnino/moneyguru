@@ -248,7 +248,7 @@ class Loader(object):
         # Scheduled
         for info in self.recurrence_infos:
             ref = load_transaction_info(info.transaction_info)
-            recurrence = Recurrence(ref, info.repeat_type, info.repeat_every, include_first=True)
+            recurrence = Recurrence(ref, info.repeat_type, info.repeat_every)
             recurrence.stop_date = info.stop_date
             for date, transaction_info in info.date2exception.items():
                 if transaction_info is not None:

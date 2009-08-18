@@ -52,7 +52,7 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
         return True
     
     def new(self):
-        schedule = Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1, include_first=True)
+        schedule = Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1)
         self._load(schedule)
     
     def load(self):

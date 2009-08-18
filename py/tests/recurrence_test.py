@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from datetime import date
+
 from nose.tools import eq_
 
 from .base import TestCase, TestSaveLoadMixin, CommonSetup
@@ -14,8 +16,8 @@ from .base import TestCase, TestSaveLoadMixin, CommonSetup
 class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.setup_scheduled_transaction()
+        self.add_account('account')
+        self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
     
     def test_change_schedule_transaction(self):
         # when modifying a schedule's transaction through the scpanel, make sure that this change
@@ -134,7 +136,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def test_etable_attrs(self):
         self.document.select_entry_table()
         self.assertEqual(len(self.etable), 6) # same thing in etable
-        self.assertFalse(self.etable[0].recurrent) # original is not recurrent
+        self.assertTrue(self.etable[0].recurrent)
         self.assertEqual(self.ttable[0].date, '13/09/2008')
         self.assertTrue(self.ttable[5].recurrent)
         self.assertEqual(self.ttable[5].date, '28/09/2008')
@@ -178,7 +180,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     
     def test_ttable_attrs(self):
         self.assertEqual(len(self.ttable), 6) # this txn happens 6 times this month
-        self.assertFalse(self.ttable[0].recurrent) # original is not recurrent
+        self.assertTrue(self.ttable[0].recurrent) # original is not recurrent
         self.assertEqual(self.ttable[0].date, '13/09/2008')
         self.assertTrue(self.ttable[1].recurrent)
         self.assertEqual(self.ttable[1].date, '16/09/2008')
@@ -191,18 +193,6 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.assertTrue(self.ttable[5].recurrent)
         self.assertEqual(self.ttable[5].date, '28/09/2008')
     
-    def test_set_recurrence_back_to_never(self):
-        # When the repeat_type of a transaction is set to never, the schedule stops there.
-        self.ttable.select([1])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 0 # never
-        self.tpanel.save()
-        self.assertEqual(len(self.ttable), 2) # recurrence stops at the changed txn
-        self.assertFalse(self.ttable[0].recurrent) # original is not recurrent
-        self.assertEqual(self.ttable[0].date, '13/09/2008')
-        self.assertTrue(self.ttable[1].recurrent) # yep, still flagged as recurrent
-        self.assertEqual(self.ttable[1].date, '16/09/2008')
-    
 
 class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSaveLoadMixin):
     # TestSaveLoadMixin: The native loader was loading the wrong split element into the Recurrence's
@@ -211,14 +201,8 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
         self.create_instances()
         self.setup_monthly_range()
         self.add_account('account')
-        self.add_entry('13/09/2008', description='foo', increase='1')
         self.add_entry('19/09/2008', description='bar', increase='2')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction(description='foo', account='account', debit='1', repeat_every=3)
     
     def test_ttable_attrs(self):
         self.assertEqual(len(self.ttable), 7)
@@ -226,6 +210,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
         self.assertEqual(self.ttable[2].description, 'bar')
         self.assertEqual(self.ttable[3].date, '19/09/2008')
         self.assertEqual(self.ttable[3].description, 'foo')
+        self.assertEqual(self.ttable[3].to, 'account')
     
     def test_etable_attrs(self):
         self.document.select_entry_table()
@@ -236,18 +221,11 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
         self.assertEqual(self.etable[3].description, 'foo')
     
 
-class OneDailyRecurrentTransactionWithLocalChange(TestCase):
+class OneDailyRecurrentTransactionWithLocalChange(TestCase, CommonSetup):
     def setUp(self):
         self.mock_today(2008, 9, 30)
         self.create_instances()
-        self.add_account('account')
-        self.add_entry('13/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
         self.ttable.select([2])
         self.ttable[2].date = '17/09/2008'
         self.ttable[2].description = 'changed'
@@ -257,6 +235,7 @@ class OneDailyRecurrentTransactionWithLocalChange(TestCase):
         # Previously, reloading an exception would result in recurrent_date being the same as date
         self.document = self.save_and_load()
         self.create_instances()
+        self.document.select_schedule_table()
         self.document.select_transaction_table()
         self.ttable.select([2])
         self.ttable.delete()
@@ -272,18 +251,11 @@ class OneDailyRecurrentTransactionWithLocalChange(TestCase):
         self.assertEqual(self.ttable[2].description, 'changed')
     
 
-class OneDailyRecurrentTransactionWithGlobalChange(TestCase, TestSaveLoadMixin):
+class OneDailyRecurrentTransactionWithGlobalChange(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.mock_today(2008, 9, 30)
         self.create_instances()
-        self.add_account('account')
-        self.add_entry('13/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
         self.ttable.select([2])
         self.ttable[2].date = '17/09/2008'
         self.ttable[2].description = 'changed'
@@ -299,18 +271,11 @@ class OneDailyRecurrentTransactionWithGlobalChange(TestCase, TestSaveLoadMixin):
         self.assertEqual(self.ttable[2].description, 'changed again')
     
 
-class OneDailyRecurrentTransactionWithLocalDeletion(TestCase, TestSaveLoadMixin):
+class OneDailyRecurrentTransactionWithLocalDeletion(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.mock_today(2008, 9, 30)
         self.create_instances()
-        self.add_account('account')
-        self.add_entry('13/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
         self.ttable.select([2])
         self.ttable.delete()
     
@@ -323,17 +288,10 @@ class OneDailyRecurrentTransactionWithLocalDeletion(TestCase, TestSaveLoadMixin)
         self.assertEqual(self.ttable[2].date, '22/09/2008')
     
 
-class OneDailyRecurrentTransactionWithStopDate(TestCase):
+class OneDailyRecurrentTransactionWithStopDate(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
-        self.add_entry('13/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction(repeat_every=3)
         self.ttable.select([3])
         self.document_gui.query_for_schedule_scope_result = True
         self.ttable.delete()
@@ -349,15 +307,7 @@ class OneDailyRecurrentTransactionWithStopDate(TestCase):
 class OneWeeklyRecurrentTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.add_account('account')
-        self.add_entry('13/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 2 # weekly
-        self.tpanel.repeat_every = 2 # every 2 weeks
-        self.tpanel.save()
+        self.setup_scheduled_transaction(repeat_type_index=1, repeat_every=2) # weekly
     
     def test_next_date_range(self):
         # The next date range also has the correct recurrent txns
@@ -368,23 +318,14 @@ class OneWeeklyRecurrentTransaction(TestCase, CommonSetup):
     
     def test_ttable_attrs(self):
         self.assertEqual(len(self.ttable), 2)
-        self.assertFalse(self.ttable[0].recurrent) # original is not recurrent
         self.assertEqual(self.ttable[0].date, '13/09/2008')
-        self.assertTrue(self.ttable[1].recurrent)
         self.assertEqual(self.ttable[1].date, '27/09/2008')
     
 
 class OneMonthlyRecurrentTransactionOnThirtyFirst(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.add_account('account')
-        self.add_entry('31/08/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 3 # monthly
-        self.tpanel.save()
+        self.setup_scheduled_transaction(start_date=date(2008, 8, 31), repeat_type_index=2) # monthly
     
     def test_use_last_day_in_invalid_months(self):
         self.document.select_next_date_range() # sept
@@ -396,16 +337,10 @@ class OneMonthlyRecurrentTransactionOnThirtyFirst(TestCase, CommonSetup):
         self.assertEqual(self.ttable[0].date, '31/10/2008')
     
 
-class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase):
+class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
-        self.add_entry('29/02/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 4 # yearly
-        self.tpanel.save()
+        self.setup_scheduled_transaction(start_date=date(2008, 2, 29), repeat_type_index=3) # yearly
     
     def test_use_last_day_in_invalid_months(self):
         self.document.select_year_range()
@@ -420,17 +355,10 @@ class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase):
         self.assertEqual(self.ttable[0].date, '29/02/2012')
     
 
-class TransactionRecurringOnThirdMondayOfTheMonth(TestCase):
+class TransactionRecurringOnThirdMondayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
-        self.add_entry('15/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 5 # week no in month
-        self.tpanel.repeat_every = 2 # will be ignored
-        self.tpanel.save()
+        self.setup_scheduled_transaction(start_date=date(2008, 9, 15), repeat_type_index=4, repeat_every=2) # week no in month
     
     def test_year_range(self):
         # The next date range also has the correct recurrent txns
@@ -445,14 +373,7 @@ class TransactionRecurringOnThirdMondayOfTheMonth(TestCase):
 class TransactionRecurringOnFifthTuesdayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.add_account('account')
-        self.add_entry('30/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 5 # week no in month
-        self.tpanel.save()
+        self.setup_scheduled_transaction(start_date=date(2008, 9, 30), repeat_type_index=4) # week no in month
     
     def test_next_date_range(self):
         # There's not a month with a fifth tuesday until december
@@ -468,14 +389,7 @@ class TransactionRecurringOnFifthTuesdayOfTheMonth(TestCase, CommonSetup):
 class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.add_account('account')
-        self.add_entry('30/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 6 # last week in month
-        self.tpanel.save()
+        self.setup_scheduled_transaction(start_date=date(2008, 9, 30), repeat_type_index=5) # last week in month
     
     def test_next_date_range(self):
         # next month has no 5th tuesday, so use the last one
@@ -484,42 +398,32 @@ class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
         self.assertEqual(self.ttable[0].date, '28/10/2008')
     
 
-class OneReconciledEntry(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.add_entry('1/1/2008')
-        self.etable.select([0])
-        self.document.toggle_reconciliation_mode()
-        row = self.etable.selected_row
-        row.toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
-    
-    def test_make_recurrent(self):
-        # A reconciled entry made recurrent does not result in reconciled scheduled entries
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.save()
-        self.assertFalse(self.etable[1].reconciled)
-    
+# XXX This test will be re-enabled when I introduce "Make schedule from selected transaction"
+# class OneReconciledEntry(TestCase):
+#     def setUp(self):
+#         self.create_instances()
+#         self.add_account()
+#         self.add_entry('1/1/2008')
+#         self.etable.select([0])
+#         self.document.toggle_reconciliation_mode()
+#         row = self.etable.selected_row
+#         row.toggle_reconciled()
+#         self.document.toggle_reconciliation_mode() # commit
+#     
+#     def test_make_recurrent(self):
+#         # A reconciled entry made recurrent does not result in reconciled scheduled entries
+#         self.tpanel.load()
+#         self.tpanel.repeat_index = 1 # daily
+#         self.tpanel.save()
+#         self.assertFalse(self.etable[1].reconciled)
+#     
 
-class TwoDailyRecurrentTransaction(TestCase):
+class TwoDailyRecurrentTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.add_account('account')
-        self.add_entry('13/09/2008', 'foo')
-        self.add_entry('13/09/2008', 'bar')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
-        self.ttable.select([1])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
+        self.setup_scheduled_transaction(description='foo')
+        self.setup_scheduled_transaction(description='bar')
     
     def test_can_order_sheduled_transaction(self):
         # scheduled transactions can't be re-ordered

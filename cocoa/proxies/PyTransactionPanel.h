@@ -20,11 +20,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setCheckno:(NSString *)checkno;
 - (void)mctBalance;
 - (BOOL)canDoMCTBalance;
-- (BOOL)isRecurrent;
-- (int)repeatEvery;
-- (void)setRepeatEvery:(int)value;
-- (NSString *)repeatEveryDesc;
-- (int)repeatIndex;
-- (void)setRepeatIndex:(int)value;
-- (NSArray *)repeatOptions;
 @end

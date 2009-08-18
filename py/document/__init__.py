@@ -26,7 +26,7 @@ from ..model.budget import Budget, BudgetList
 from ..model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     CustomDateRange, format_date)
 from ..model.oven import Oven
-from ..model.recurrence import Recurrence, Spawn
+from ..model.recurrence import Spawn
 from ..model.transaction import Transaction, Entry
 from ..model.transaction_list import TransactionList
 from .undo import Undoer, Action
@@ -322,22 +322,6 @@ class Document(Broadcaster, Listener):
             txns = [t for t in txns if all(not s.reconciled for s in t.splits)]
         self._visible_transactions = txns
     
-    def _update_schedule(self, txn, recurrence):
-        """Update the schedule of txn if needed. if a new recurrence is defined, create a schedule
-        for it, and if txn is a spawn and the current change is of global scope, stop the current
-        recurrence and start a new one.
-        """
-        if isinstance(txn, Spawn):
-            if recurrence is None:
-                txn.recurrence.stop_at(txn)
-            elif recurrence.repeat_type != txn.recurrence.repeat_type or recurrence.repeat_every != txn.recurrence.repeat_every:
-                txn.recurrence.stop_at(txn)
-                txn.recurrence.delete(txn)
-                recurrence = Recurrence(txn.replicate(), recurrence.repeat_type, recurrence.repeat_every, include_first=True)
-                self.schedules.append(recurrence)
-        elif recurrence is not None:
-            self.schedules.append(recurrence)
-    
     #--- Account
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
                        budget_amount=NOEDIT, budget_target=NOEDIT):
@@ -447,15 +431,12 @@ class Document(Broadcaster, Listener):
         after_date = after.date if after else None
         return from_date in (before_date, after_date)
     
-    def change_transaction(self, original, new, repeat_type, repeat_every):
+    def change_transaction(self, original, new):
         date_changed = new.date != original.date
-        recurrence = Recurrence(original, repeat_type, repeat_every) if repeat_type != REPEAT_NEVER else None
         
         def prepare():
             action = Action('Change transaction')
             action.change_transactions([original])
-            if not isinstance(original, Spawn) and recurrence is not None:
-                action.added_schedules.add(recurrence)
             if date_changed:
                 action.will_unreconcile |= set(original.splits)
             # Here, we don't just look for splits to unreconcile, we prepare the splits as well
@@ -480,7 +461,6 @@ class Document(Broadcaster, Listener):
             original.set_splits(new.splits)
             self._change_transaction(original, date=new.date, description=new.description,
                                      payee=new.payee, checkno=new.checkno)
-            self._update_schedule(original, recurrence)
             self._cook(from_date=min_date)
             self._clean_empty_categories()
             if not self._adjust_date_range(original.date):
@@ -748,11 +728,15 @@ class Document(Broadcaster, Listener):
     
     #--- Schedule
     def change_schedule(self, schedule, new_ref, repeat_type, repeat_every, stop_date):
+        for split in new_ref.splits:
+            if split.account is not None:
+                # same as in change_transaction()
+                split.account = self.accounts.find(split.account.name, split.account.type)
         original = schedule.ref
         min_date = min(original.date, new_ref.date)
         original.set_splits(new_ref.splits)
-        self._change_transaction(original, date=new_ref.date, description=new_ref.description,
-                                 payee=new_ref.payee, checkno=new_ref.checkno)
+        original.change(date=new_ref.date, description=new_ref.description, payee=new_ref.payee,
+                        checkno=new_ref.checkno)
         schedule.repeat_type = repeat_type
         schedule.repeat_every = repeat_every
         schedule.stop_date = stop_date

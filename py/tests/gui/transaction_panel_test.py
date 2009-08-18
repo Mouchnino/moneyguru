@@ -20,8 +20,6 @@ class Pristine(TestCase):
     def test_attrs(self):
         # No crash occur when trying to access atrtibutes while the panel is not loaded
         self.tpanel.date
-        self.tpanel.repeat_index
-        self.tpanel.is_recurrent
     
     def test_can_load(self):
         """When there is no selection, can_load() is False"""
@@ -103,7 +101,6 @@ class OneEntry(TestCase):
         self.assertEqual(self.tpanel.description, 'description')
         self.assertEqual(self.tpanel.payee, 'payee')
         self.assertEqual(self.tpanel.checkno, '42')
-        self.assertFalse(self.tpanel.is_recurrent)
     
     def test_values_after_deselect(self):
         """When there is no selection, can_load() is False"""
@@ -124,46 +121,6 @@ class OneAmountlessEntryPanelLoaded(TestCase):
     def test_can_do_mct_balance(self):
         # doesn't crash if there is no split with amounts
         self.assertFalse(self.tpanel.can_do_mct_balance)
-    
-    def test_repeat_every(self):
-        # changing repeat every makes the desc plural if appropriate
-        self.tpanel.repeat_index = 1
-        self.assertEqual(self.tpanel.repeat_every, 1)
-        self.tpanel.repeat_every = 0
-        self.assertEqual(self.tpanel.repeat_every, 1)
-        self.clear_gui_calls()
-        self.tpanel.repeat_every = 2
-        self.assertEqual(self.tpanel.repeat_every, 2)
-        self.assertEqual(self.tpanel.repeat_every_desc, 'days')
-        self.check_gui_calls(self.tpanel_gui, refresh_repeat_every=1)
-    
-    def test_repeat_index(self):
-        # changing the repeat_index changes the repeat_every_desc attribute
-        self.assertEqual(self.tpanel.repeat_index, 0)
-        self.assertTrue(self.tpanel.repeat_every_desc is None)
-        self.tpanel.repeat_index = 1
-        self.assertEqual(self.tpanel.repeat_index, 1)
-        self.assertEqual(self.tpanel.repeat_every_desc, 'day')
-        self.check_gui_calls(self.tpanel_gui, refresh_repeat_every=1)
-        self.tpanel.repeat_index = 2
-        self.assertEqual(self.tpanel.repeat_every_desc, 'week')
-        self.tpanel.repeat_index = 3
-        self.assertEqual(self.tpanel.repeat_every_desc, 'month')
-        self.tpanel.repeat_index = 4
-        self.assertEqual(self.tpanel.repeat_every_desc, 'year')
-    
-    def test_repeat_options(self):
-        # Repeat options depend on the txn's date. 06/07/2008 is the first sunday of July.
-        expected = ['Never', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Every first Sunday of the month']
-        self.assertEqual(self.tpanel.repeat_options, expected)
-    
-    def test_repeat_options_on_last_week(self):
-        # When the txn's date is on the last week of the month, there's an extra 'last' option
-        self.tpanel.date = '29/07/2008'
-        expected = ['Never', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Every fifth Tuesday of the month',
-                    'Every last Tuesday of the month']
-        self.assertEqual(self.tpanel.repeat_options, expected)
-        self.check_gui_calls(self.tpanel_gui, refresh_repeat_options=1)
     
 
 class OneEntryPanelLoaded(TestCase):
@@ -220,30 +177,6 @@ class TwoAmountlessEntries(TestCase):
         set_and_test('description', 'new', 'desc1')
         set_and_test('payee', 'new', 'payee1')
         set_and_test('checkno', '44', '42')
-    
-
-class OneRecurrentEntry(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('account')
-        self.add_entry('13/09/2008')
-        self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
-    
-    def test_recurrence_info_is_loaded(self):
-        # make sure that the recurrence info is actually loaded on panel.load()
-        # first, change the tpanel recurrence values
-        self.tpanel.repeat_index = 0
-        self.tpanel.repeat_every = 1
-        self.ttable.select([1])
-        self.tpanel.load()
-        self.assertEqual(self.tpanel.repeat_index, 1)
-        self.assertEqual(self.tpanel.repeat_every, 3)
-        self.assertTrue(self.tpanel.is_recurrent)
     
 
 class MultiCurrencyTransaction(TestCase):

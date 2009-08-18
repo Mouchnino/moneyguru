@@ -19,7 +19,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGTextField *payeeField;
     IBOutlet MGTextField *checknoField;
     IBOutlet MGSplitTable *splitTable;
-    IBOutlet NSPopUpButton *repeatOptionsPopUp;
     IBOutlet NSButton *mctBalanceButton;
     
     NSTextView *customFieldEditor;

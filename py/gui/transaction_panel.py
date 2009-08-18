@@ -28,9 +28,6 @@ class TransactionPanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixI
         DocumentGUIObject.__init__(self, view, document)
         Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
-        self._repeat_index = 0
-        self._repeat_every = 1
-        self.is_recurrent = False
     
     def can_load(self):
         return len(self.document.selected_transactions) == 1
@@ -41,19 +38,11 @@ class TransactionPanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixI
         assert original is not None            
         self.transaction = original.replicate(link_splits=True)
         self.original = original
-        self.is_recurrent = hasattr(original, 'recurrence')
-        if self.is_recurrent:
-            repeat_option = original.recurrence.repeat_type
-            self._repeat_index = REPEAT_OPTIONS_ORDER.index(repeat_option)
-            self._repeat_every = original.recurrence.repeat_every
-        else:
-            self._repeat_index = 0
         self.view.refresh_mct_button()
         self.notify('panel_loaded')
     
     def save(self):
-        repeat_option = REPEAT_OPTIONS_ORDER[self.repeat_index]
-        self.document.change_transaction(self.original, self.transaction, repeat_option, self.repeat_every)
+        self.document.change_transaction(self.original, self.transaction)
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:
@@ -130,45 +119,3 @@ class TransactionPanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixI
     def checkno(self, value):
         self.transaction.checkno = value
     
-    @property
-    def repeat_every(self):
-        return self._repeat_every
-    
-    @repeat_every.setter
-    def repeat_every(self, value):
-        value = max(1, value)
-        self._repeat_every = value
-        self.view.refresh_repeat_every()
-    
-    @property
-    def repeat_every_desc(self):
-        desc = {1: 'day', 2: 'week', 3: 'month', 4: 'year'}.get(self._repeat_index)
-        if desc and self._repeat_every > 1:
-            desc += 's'
-        return desc
-    
-    @property
-    def repeat_options(self):
-        result = ['Never', 'Daily', 'Weekly', 'Monthly', 'Yearly']
-        date = self.transaction.date
-        weekday_name = date.strftime('%A')
-        week_no = (date.day - 1) // 7
-        position = ['first', 'second', 'third', 'fourth', 'fifth'][week_no]
-        result.append('Every %s %s of the month' % (position, weekday_name))
-        _, days_in_month = monthrange(date.year, date.month)
-        if days_in_month - date.day < 7:
-            result.append('Every last %s of the month' % weekday_name)
-        return result
-    
-    @property
-    def repeat_index(self):
-        return self._repeat_index
-    
-    @repeat_index.setter
-    def repeat_index(self, value):
-        if value == self._repeat_index:
-            return
-        self._repeat_index = value
-        self.view.refresh_repeat_every()
-    
-

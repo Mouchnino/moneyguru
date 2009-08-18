@@ -261,6 +261,8 @@ class TestCase(TestCase):
         self.mepanel = MassEditionPanel(self.mepanel_gui, self.document)
         self.stable_gui = CallLogger()
         self.stable = SplitTable(self.stable_gui, self.tpanel)
+        self.scsplittable_gui = CallLogger()
+        self.scsplittable = SplitTable(self.scsplittable_gui, self.scpanel)
         self.balgraph_gui = CallLogger()
         self.balgraph = BalanceGraph(self.balgraph_gui, self.document)
         self.bargraph_gui = CallLogger()
@@ -564,15 +566,25 @@ class CommonSetup(object):
         self.add_entry('1/1/2008')
         self.document.date_range = MonthRange(date(2008, 2, 1))
     
-    def setup_scheduled_transaction(self):
-        self.add_account('account')
-        self.add_entry('13/09/2008', description='foobar')
+    def setup_scheduled_transaction(self, start_date=date(2008, 9, 13), description='foobar', 
+                                    account=None, debit=None, repeat_type_index=0, repeat_every=1):
+        # 0 = daily, 1 = weekly, etc..
+        # This setup also wraps a monthly range around the newly created schedule
+        self.document.date_range = MonthRange(start_date)
+        self.document.select_schedule_table()
+        self.scpanel.new()
+        self.scpanel.start_date = start_date.strftime('%d/%m/%Y')
+        self.scpanel.description = description
+        self.scpanel.repeat_type_index = repeat_type_index
+        self.scpanel.repeat_every = repeat_every
+        if account:
+            self.scsplittable.add()
+            self.scsplittable.edited.account = account
+            if debit:
+                self.scsplittable.edited.debit = debit
+            self.scsplittable.save_edits()
+        self.scpanel.save()
         self.document.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load()
-        self.tpanel.repeat_index = 1 # daily
-        self.tpanel.repeat_every = 3 # every 3 days
-        self.tpanel.save()
     
     def setup_three_accounts(self):
         #Three accounts, empty

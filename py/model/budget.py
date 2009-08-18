@@ -36,7 +36,7 @@ class Budget(Recurrence):
         self.amount = amount
         self._previous_spawns = []
         ref = Transaction(ref_date)
-        Recurrence.__init__(self, ref, REPEAT_MONTHLY, 1, include_first=True)
+        Recurrence.__init__(self, ref, REPEAT_MONTHLY, 1)
     
     def __repr__(self):
         return '<Budget %r %r %r>' % (self.account, self.target, self.amount)

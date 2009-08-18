@@ -830,41 +830,9 @@ class PyTransactionPanel(PyPanel):
     def setCheckno_(self, value):
         self.py.checkno = value
     
-    @objc.signature('i@:')
-    def isRecurrent(self):
-        return self.py.is_recurrent
-    
-    @objc.signature('i@:')
-    def repeatEvery(self):
-        return self.py.repeat_every
-    
-    @objc.signature('v@:i')
-    def setRepeatEvery_(self, value):
-        self.py.repeat_every = value
-    
-    def repeatEveryDesc(self):
-        return self.py.repeat_every_desc
-    
-    @objc.signature('i@:')
-    def repeatIndex(self):
-        return self.py.repeat_index
-    
-    @objc.signature('v@:i')
-    def setRepeatIndex_(self, value):
-        self.py.repeat_index = value
-    
-    def repeatOptions(self):
-        return self.py.repeat_options
-    
     #--- Python -> Cocoa
     def refresh_mct_button(self):
         self.cocoa.refreshMCTButton()
-    
-    def refresh_repeat_every(self):
-        self.cocoa.refreshRepeatEvery()
-    
-    def refresh_repeat_options(self):
-        self.cocoa.refreshRepeatOptions()
     
 
 class PyMassEditionPanel(PyPanel):

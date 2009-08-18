@@ -39,7 +39,7 @@ class Spawn(Transaction):
             split.reconciled = False
     
 class Recurrence(object):
-    def __init__(self, ref, repeat_type, repeat_every, include_first=False):
+    def __init__(self, ref, repeat_type, repeat_every):
         self.ref = ref
         self.repeat_type = repeat_type
         self.repeat_every = repeat_every
@@ -47,8 +47,6 @@ class Recurrence(object):
         self.date2exception = {}
         self.date2globalchange = {}
         self.date2instances = {}
-        if not include_first:
-            self.date2exception[ref.date] = None
     
     def __repr__(self):
         return '<Recurrence %s %d>' % (self.repeat_type, self.repeat_every)
