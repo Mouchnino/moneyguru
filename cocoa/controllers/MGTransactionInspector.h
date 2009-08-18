@@ -7,13 +7,14 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGTextField.h"
 #import "MGSplitTable.h"
 #import "MGWindowController.h"
 #import "PyTransactionPanel.h"
 
-@interface MGTransactionInspector : MGWindowController {
+@interface MGTransactionInspector : MGPanel {
     IBOutlet MGTextField *dateField;
     IBOutlet MGTextField *descriptionField;
     IBOutlet MGTextField *payeeField;
@@ -26,12 +27,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyTransactionPanel *)py;
-/* Methods */
-- (BOOL)canLoad;
-- (void)load;
-- (void)save;
 /* Actions */
-- (IBAction)cancel:(id)sender;
 - (IBAction)mctBalance:(id)sender;
-- (IBAction)save:(id)sender;
 @end

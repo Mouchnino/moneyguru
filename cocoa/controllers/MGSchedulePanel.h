@@ -7,13 +7,14 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGTextField.h"
 #import "MGSplitTable.h"
 #import "MGWindowController.h"
 #import "PySchedulePanel.h"
 
-@interface MGSchedulePanel : MGWindowController {
+@interface MGSchedulePanel : MGPanel {
     IBOutlet MGTextField *startDateField;
     IBOutlet MGTextField *repeatEveryField;
     IBOutlet NSTextField *repeatEveryDescLabel;
@@ -30,13 +31,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PySchedulePanel *)py;
 /* Methods */
-- (BOOL)canLoad;
-- (void)load;
 - (void)new;
-- (void)save;
 /* Actions */
-- (IBAction)cancel:(id)sender;
-- (IBAction)save:(id)sender;
 - (IBAction)repeatTypeSelected:(id)sender;
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery;

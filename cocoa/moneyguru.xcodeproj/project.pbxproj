@@ -25,6 +25,7 @@
 		07FDA2DA0E41231C006709EA /* right_arrow_white_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 07FDA2D90E41231C006709EA /* right_arrow_white_12.png */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		CE036D64103AE51100E172F8 /* MGPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE036D63103AE51100E172F8 /* MGPanel.m */; };
 		CE0C64ED0E6974BD007424CA /* ViewOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0C64EC0E6974BD007424CA /* ViewOptions.xib */; };
 		CE0E85C60F875C1800549758 /* MGBalancePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C10F875C1800549758 /* MGBalancePrint.m */; };
 		CE0E85C70F875C1800549758 /* MGProfitPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C30F875C1800549758 /* MGProfitPrint.m */; };
@@ -241,6 +242,8 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* moneyGuru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moneyGuru.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE00BDC20F890A9E00EB18BE /* PyTransactionPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPrint.h; sourceTree = "<group>"; };
+		CE036D62103AE51100E172F8 /* MGPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPanel.h; sourceTree = "<group>"; };
+		CE036D63103AE51100E172F8 /* MGPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPanel.m; sourceTree = "<group>"; };
 		CE0C64EC0E6974BD007424CA /* ViewOptions.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewOptions.xib; sourceTree = "<group>"; };
 		CE0E85C00F875C1800549758 /* MGBalancePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBalancePrint.h; path = print/MGBalancePrint.h; sourceTree = "<group>"; };
 		CE0E85C10F875C1800549758 /* MGBalancePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBalancePrint.m; path = print/MGBalancePrint.m; sourceTree = "<group>"; };
@@ -308,7 +311,6 @@
 		CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSchedulePanel.m; sourceTree = "<group>"; };
 		CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySchedulePanel.h; sourceTree = "<group>"; };
 		CE5CBBEC10383F51008AC465 /* PyPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanel.h; sourceTree = "<group>"; };
-		CE5CBBED10383F51008AC465 /* PyPanelWithTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanelWithTransaction.h; sourceTree = "<group>"; };
 		CE6818DB0EEA9286007C5CDF /* MGUnreconciliationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGUnreconciliationDialog.h; sourceTree = "<group>"; };
 		CE6818DC0EEA9286007C5CDF /* MGUnreconciliationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGUnreconciliationDialog.m; sourceTree = "<group>"; };
 		CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnreconciliationDialog.xib; sourceTree = "<group>"; };
@@ -797,6 +799,8 @@
 		CE873A6F0E21622F004F63E9 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE036D62103AE51100E172F8 /* MGPanel.h */,
+				CE036D63103AE51100E172F8 /* MGPanel.m */,
 				CE41C98E0E2B52CD006D3BEA /* MGTable.h */,
 				CE41C98F0E2B52CD006D3BEA /* MGTable.m */,
 				CE873A8A0E21622F004F63E9 /* MGSplitTable.h */,
@@ -877,7 +881,6 @@
 			isa = PBXGroup;
 			children = (
 				CE5CBBEC10383F51008AC465 /* PyPanel.h */,
-				CE5CBBED10383F51008AC465 /* PyPanelWithTransaction.h */,
 				CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */,
 				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
 				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
@@ -1243,6 +1246,7 @@
 				CE1BD3E30FDE4DE2005FB7B9 /* NSCharacterSet_Extensions.m in Sources */,
 				CEB1E0BE1031C3A3001FC4B4 /* MGScheduleTable.m in Sources */,
 				CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */,
+				CE036D64103AE51100E172F8 /* MGPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

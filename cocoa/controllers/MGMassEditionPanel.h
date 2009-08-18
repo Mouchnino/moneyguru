@@ -7,12 +7,13 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGTextField.h"
 #import "MGWindowController.h"
 #import "PyMassEditionPanel.h"
 
-@interface MGMassEditionPanel : MGWindowController {
+@interface MGMassEditionPanel : MGPanel {
     IBOutlet NSTextField *dateField;
     IBOutlet MGTextField *descriptionField;
     IBOutlet MGTextField *payeeField;
@@ -27,15 +28,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyMassEditionPanel *)py;
-
-/* Methods */
-- (BOOL)canLoad;
-- (void)load;
-- (void)save;
+/* Python --> Cocoa */
 - (void)refresh;
-
-/* Actions */
-- (IBAction)cancel:(id)sender;
-- (IBAction)save:(id)sender;
-
 @end

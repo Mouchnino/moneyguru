@@ -33,25 +33,16 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyMassEditionPanel *)py;
 }
 
-/* Private */
-
+/* Override */
 - (NSString *)fieldOfTextField:(NSTextField *)textField
 {
-    if (textField == dateField)
-    {
-        return @"date";
-    }
-    else if (textField == descriptionField)
+    if (textField == descriptionField)
     {
         return @"description";
     }
     else if (textField == payeeField)
     {
         return @"payee";
-    }
-    else if (textField == checknoField)
-    {
-        return @"checkno";
     }
     else if (textField == fromField)
     {
@@ -64,6 +55,22 @@ http://www.hardcoded.net/licenses/hs_license
     return nil;
 }
 
+- (NSResponder *)firstField
+{
+    return dateField;
+}
+
+- (void)loadFields
+{
+    [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
+    // The rest all load through bindings
+}
+
+- (void)saveFields
+{
+    // all fields are saved through bindings.
+}
+
 /* NSWindow delegate */
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
@@ -73,78 +80,6 @@ http://www.hardcoded.net/licenses/hs_license
         return customDateFieldEditor;
     }
     return customFieldEditor;
-}
-
-/* MGTextField Delegate */
-
-- (NSString *)autoCompletionForTextField:(MGTextField *)textField partialWord:(NSString *)text
-{
-    NSString *attr = [self fieldOfTextField:textField];
-    if (attr != nil)
-    {
-        return [[self py] completeValue:text forAttribute:attr];
-    }
-    return nil;
-}
-
-- (NSString *)currentValueForTextField:(MGTextField *)textField
-{
-    return [[self py] currentCompletion];
-}
-
-- (NSString *)prevValueForTextField:(MGTextField *)textField
-{
-    return [[self py] prevCompletion];
-}
-
-- (NSString *)nextValueForTextField:(MGTextField *)textField
-{
-    return [[self py] nextCompletion];
-}
-
-/* Public */
-
-- (BOOL)canLoad
-{
-    return [[self py] canLoadPanel];
-}
-
-- (void)load
-{
-    [[self py] loadPanel];
-    [self refresh];
-    [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
-    [[self window] makeFirstResponder:dateField];
-}
-
-- (void)save
-{
-    // Sometimes, the last edited fields doesn't have the time to flush its data before savePanel
-    // is called (Not when you press Return to Save, but when you click on Save, it happens).
-    // This is what the line below is for.
-    [[self window] makeFirstResponder:[self window]];
-    [[self py] savePanel];
-}
-
-- (void)refresh
-{
-    // When we change the values in the py side, it doesn't work with KVO mechanism.
-    // Notifications of a "py" change is enough to refresh all bound controls.
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
-}
-
-/* Actions */
-
-- (IBAction)cancel:(id)sender
-{
-    [NSApp endSheet:[self window]];
-}
-
-- (IBAction)save:(id)sender
-{
-    [self save];
-    [NSApp endSheet:[self window]];
 }
 
 /* Delegate */
@@ -202,5 +137,14 @@ http://www.hardcoded.net/licenses/hs_license
     // When the popup list is never popped (when only typing is used), this is what is called on tabbing out.
     int currencyIndex = [currencySelector indexOfSelectedItem];
     [[self py] setCurrencyIndex:currencyIndex];
+}
+
+/* Python --> Cocoa */
+- (void)refresh
+{
+    // When we change the values in the py side, it doesn't work with KVO mechanism.
+    // Notifications of a "py" change is enough to refresh all bound controls.
+    [self willChangeValueForKey:@"py"];
+    [self didChangeValueForKey:@"py"];
 }
 @end

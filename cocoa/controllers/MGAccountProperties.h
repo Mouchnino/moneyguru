@@ -7,11 +7,12 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGWindowController.h"
 #import "PyAccountPanel.h"
 
-@interface MGAccountProperties : MGWindowController {
+@interface MGAccountProperties : MGPanel {
     IBOutlet NSTextField *nameTextField;
     IBOutlet NSPopUpButton *typeSelector;
     IBOutlet NSComboBox *currencySelector;
@@ -21,13 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyAccountPanel *)py;
-/* Methods */
-- (BOOL)canLoad;
-- (void)load;
-- (void)save;
-/* Actions */
-- (IBAction)cancel:(id)sender;
-- (IBAction)save:(id)sender;
 /* Properties */
 - (int)typeIndex;
 - (void)setTypeIndex:(int)typeIndex;

@@ -32,17 +32,14 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyAccountPanel *)py;
 }
 
-/* Methods */
-- (BOOL)canLoad
+/* Override */
+- (NSResponder *)firstField
 {
-    return [[self py] canLoadPanel];
+    return nameTextField;
 }
 
-- (void)load
+- (void)loadFields
 {
-    // See MGTransactionInspector
-    [[self window] makeFirstResponder:nil];
-    [[self py] loadPanel];
     // Reload the budget target list
     [budgetTargetSelector removeAllItems];
     [budgetTargetSelector addItemsWithTitles:[[self py] availableBudgetTargets]];
@@ -55,13 +52,10 @@ http://www.hardcoded.net/licenses/hs_license
     [nameTextField setStringValue:[[self py] name]];
     [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
     [budgetTargetSelector selectItemAtIndex:[[self py] budgetTargetIndex]];
-    [[self window] makeFirstResponder:nameTextField];
 }
 
-- (void)save
+- (void)saveFields
 {
-    // See MGTransactionInspector
-    [[self window] makeFirstResponder:[self window]];
     [[self py] setName:[nameTextField stringValue]];
     int currencyIndex = [currencySelector indexOfSelectedItem];
     if (currencyIndex >= 0)
@@ -73,19 +67,6 @@ http://www.hardcoded.net/licenses/hs_license
     {
         [[self py] setBudgetTargetIndex:budgetTargetIndex];
     }
-    [[self py] savePanel];
-}
-
-/* Actions */
-- (IBAction)cancel:(id)sender
-{
-    [NSApp endSheet:[self window]];
-}
-
-- (IBAction)save:(id)sender
-{
-    [self save];
-    [NSApp endSheet:[self window]];
 }
 
 /* Properties */
