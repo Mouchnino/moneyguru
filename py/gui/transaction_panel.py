@@ -7,42 +7,22 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from calendar import monthrange
 from datetime import date
 
 from hsutil.notify import Broadcaster
 from hsutil.misc import first
 
-from ..const import (REPEAT_NEVER, REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, 
-    REPEAT_YEARLY, REPEAT_WEEKDAY, REPEAT_WEEKDAY_LAST)
 from ..model.account import Account, INCOME, EXPENSE
 from ..model.transaction import Split, Transaction
 from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
 
-REPEAT_OPTIONS_ORDER = [REPEAT_NEVER, REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, 
-                        REPEAT_WEEKDAY, REPEAT_WEEKDAY_LAST]
-
-class TransactionPanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
+class PanelWithTransaction(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
+    """Base class for panels working with a transaction"""
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
-    
-    def can_load(self):
-        return len(self.document.selected_transactions) == 1
-    
-    def load(self):
-        self.document.stop_edition()
-        original = self.document.selected_transaction
-        assert original is not None            
-        self.transaction = original.replicate(link_splits=True)
-        self.original = original
-        self.view.refresh_mct_button()
-        self.notify('panel_loaded')
-    
-    def save(self):
-        self.document.change_transaction(self.original, self.transaction)
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:
@@ -61,40 +41,13 @@ class TransactionPanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixI
         self.transaction.balance()
         self.view.refresh_mct_button()
     
-    def mct_balance(self):
-        """Balances the mct by using xchange rates. The currency of the new split is the currency of
-        the currently selected split.
-        """
-        self.notify('edition_must_stop')
-        split = first(self.document.selected_splits)
-        new_split_currency = self.app.default_currency
-        if split is not None and split.amount != 0:
-            new_split_currency = split.amount.currency
-        self.transaction.mct_balance(new_split_currency)
-        self.notify('split_changed')
-    
     def new_split(self):
         transaction = self.transaction
         split = Split(transaction, None, 0)
         transaction.splits.append(split)
         return split
     
-    @property
-    def can_do_mct_balance(self):
-        return self.transaction.is_mct
-    
-    @property
-    def date(self):
-        return self.app.format_date(self.transaction.date)
-    
-    @date.setter
-    def date(self, value):
-        date = self.app.parse_date(value)
-        if date == self.transaction.date:
-            return
-        self.transaction.date = date
-        self.view.refresh_repeat_options()
-    
+    #--- Properties
     @property
     def description(self):
         return self.transaction.description
@@ -118,4 +71,49 @@ class TransactionPanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixI
     @checkno.setter
     def checkno(self, value):
         self.transaction.checkno = value
+    
+
+class TransactionPanel(PanelWithTransaction):
+    def can_load(self):
+        return len(self.document.selected_transactions) == 1
+    
+    def load(self):
+        self.document.stop_edition()
+        original = self.document.selected_transaction
+        assert original is not None            
+        self.transaction = original.replicate(link_splits=True)
+        self.original = original
+        self.view.refresh_mct_button()
+        self.notify('panel_loaded')
+    
+    def save(self):
+        self.document.change_transaction(self.original, self.transaction)
+    
+    def mct_balance(self):
+        """Balances the mct by using xchange rates. The currency of the new split is the currency of
+        the currently selected split.
+        """
+        self.notify('edition_must_stop')
+        split = first(self.document.selected_splits)
+        new_split_currency = self.app.default_currency
+        if split is not None and split.amount != 0:
+            new_split_currency = split.amount.currency
+        self.transaction.mct_balance(new_split_currency)
+        self.notify('split_changed')
+    
+    @property
+    def can_do_mct_balance(self):
+        return self.transaction.is_mct
+    
+    @property
+    def date(self):
+        return self.app.format_date(self.transaction.date)
+    
+    @date.setter
+    def date(self, value):
+        date = self.app.parse_date(value)
+        if date == self.transaction.date:
+            return
+        self.transaction.date = date
+        self.view.refresh_repeat_options()
     

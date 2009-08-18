@@ -20,6 +20,7 @@ from ..model.recurrence import Recurrence
 from ..model.transaction import Split, Transaction
 from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
+from .transaction_panel import PanelWithTransaction
 
 REPEAT_OPTIONS_ORDER = [REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY,
                         REPEAT_WEEKDAY_LAST]
@@ -32,11 +33,7 @@ REPEAT_EVERY_DESCS = {
     REPEAT_WEEKDAY_LAST: 'month',
 }
 
-class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
-        Broadcaster.__init__(self)
-    
+class SchedulePanel(PanelWithTransaction):
     #--- Private
     def _load(self, schedule):
         self.schedule = schedule
@@ -46,8 +43,8 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
         self._stop_date = schedule.stop_date
         self.view.refresh_repeat_every()
         self.notify('panel_loaded')
-        
     
+    #--- Public
     def can_load(self):
         return True
     
@@ -62,27 +59,6 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
         repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
         self.document.change_schedule(self.schedule, self.transaction, repeat_type=repeat_type,
                                       repeat_every=self._repeat_every, stop_date=self._stop_date)
-    
-    def change_split(self, split, account_name, amount, memo):
-        if account_name:
-            account_type = split.account.type if split.account else EXPENSE if split.amount < 0 else INCOME
-            split.account = Account(account_name, self.app.default_currency, account_type)
-        else:
-            split.account = None
-        split.amount = amount
-        split.memo = memo
-        self.transaction.balance(split)
-        self.notify('split_changed')
-    
-    def delete_split(self, split):
-        self.transaction.splits.remove(split)
-        self.transaction.balance()
-     
-    def new_split(self):
-        transaction = self.transaction
-        split = Split(transaction, None, 0)
-        transaction.splits.append(split)
-        return split
     
     @property
     def start_date(self):
@@ -108,30 +84,6 @@ class SchedulePanel(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
             self._stop_date = self.app.parse_date(value)
         except ValueError:
             self._stop_date = None
-    
-    @property
-    def description(self):
-        return self.transaction.description
-    
-    @description.setter
-    def description(self, value):
-        self.transaction.description = value
-    
-    @property
-    def payee(self):
-        return self.transaction.payee
-    
-    @payee.setter
-    def payee(self, value):
-        self.transaction.payee = value
-    
-    @property
-    def checkno(self):
-        return self.transaction.checkno
-    
-    @checkno.setter
-    def checkno(self, value):
-        self.transaction.checkno = value
     
     @property
     def repeat_every(self):
