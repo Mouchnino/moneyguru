@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import copy
-from datetime import date, timedelta
+import datetime
 
 from hsutil.misc import nonone
 
@@ -27,6 +27,34 @@ RTYPE2INCFUNC = {
     REPEAT_WEEKDAY_LAST: inc_last_weekday_in_month,
 }
 
+ONE_DAY = datetime.timedelta(1)
+
+class DateCounter(object):
+    def __init__(self, base_date, repeat_type, repeat_every, end):
+        self.base_date = base_date
+        self.end = end
+        self.inccount = 0
+        self.incfunc = RTYPE2INCFUNC[repeat_type]
+        self.incsize = repeat_every
+        self.current_date = None
+    
+    def __iter__(self):
+        return self
+    
+    def next(self):
+        if self.current_date is None: # first date of the iteration is base_date
+            self.current_date = self.base_date
+            return self.current_date
+        new_date = None
+        while new_date is None:
+            self.inccount += self.incsize
+            new_date = self.incfunc(self.base_date, self.inccount)
+        if new_date <= self.current_date or new_date > self.end:
+            raise StopIteration()
+        self.current_date = new_date
+        return new_date
+    
+
 class Spawn(Transaction):
     def __init__(self, recurrence, ref, recurrence_date, date=None):
         date = date or recurrence_date
@@ -41,8 +69,8 @@ class Spawn(Transaction):
 class Recurrence(object):
     def __init__(self, ref, repeat_type, repeat_every):
         self.ref = ref
-        self.repeat_type = repeat_type
-        self.repeat_every = repeat_every
+        self._repeat_type = repeat_type
+        self._repeat_every = repeat_every
         self.stop_date = None
         self.date2exception = {}
         self.date2globalchange = {}
@@ -81,19 +109,11 @@ class Recurrence(object):
         changed_dates = self.date2exception.keys() + self.date2globalchange.keys()
         if changed_dates:
             end = max(end, max(changed_dates))
-        end = min(end, nonone(self.stop_date, date.max))
-        rtype = self.repeat_type
-        incsize = self.repeat_every
-        assert rtype is not REPEAT_NEVER
-        if rtype in (REPEAT_WEEKDAY, REPEAT_WEEKDAY_LAST):
-            incsize = 1
+        end = min(end, nonone(self.stop_date, datetime.date.max))
+        date_counter = DateCounter(self.start_date, self.repeat_type, self.repeat_every, end)
         result = []
-        base_date = self.ref.date
         current_ref = self.ref
-        current_date = base_date
-        inccount = 0
-        incfunc = RTYPE2INCFUNC[rtype]
-        while True:
+        for current_date in date_counter:
             if current_date in self.date2globalchange:
                 current_ref = self.date2globalchange[current_date]
             if current_date in self.date2exception:
@@ -104,13 +124,6 @@ class Recurrence(object):
                 if current_date not in self.date2instances:
                     self.date2instances[current_date] = self._create_spawn(current_ref, current_date)
                 result.append(self.date2instances[current_date])
-            new_date = None
-            while new_date is None:
-                inccount += incsize
-                new_date = incfunc(base_date, inccount)
-            if new_date <= current_date or new_date > end:
-                break
-            current_date = new_date
         return result
     
     def replicate(self):
@@ -120,6 +133,10 @@ class Recurrence(object):
         result.date2instances = {}
         return result
     
+    def reset_exceptions(self):
+        self.date2exception = {}
+        self.date2globalchange = {}
+    
     def reset_spawn_cache(self):
         self.date2instances = {}
     
@@ -127,12 +144,46 @@ class Recurrence(object):
         self.stop_date = spawn.recurrence_date
     
     def stop_before(self, spawn):
-        self.stop_date = spawn.recurrence_date - timedelta(1)
+        self.stop_date = spawn.recurrence_date - ONE_DAY
     
+    #--- Properties
     @property
     def is_alive(self):
         """Returns whether get_spawns() can ever return anything given the start and stop date"""
         if self.stop_date is None:
             return True
         return bool(self.get_spawns(self.stop_date))
+    
+    @property
+    def repeat_every(self):
+        return self._repeat_every
+    
+    @repeat_every.setter
+    def repeat_every(self, value):
+        if value == self._repeat_every:
+            return
+        self._repeat_every = value
+        self.reset_exceptions()
+    
+    @property
+    def repeat_type(self):
+        return self._repeat_type
+    
+    @repeat_type.setter
+    def repeat_type(self, value):
+        if value == self._repeat_type:
+            return
+        self._repeat_type = value
+        self.reset_exceptions()
+    
+    @property
+    def start_date(self):
+        return self.ref.date
+    
+    @start_date.setter
+    def start_date(self, value):
+        if value == self.ref.date:
+            return
+        self.ref.date = value
+        self.reset_exceptions()
     

@@ -168,16 +168,6 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.assertEqual(self.ttable[3].description, 'foobar')
         self.assertEqual(self.document_gui.calls, {}) # no query_for_schedule_scope calls
     
-    def test_reconcile_scheduled(self):
-        # reconciling a scheduled transaction "materializes" it
-        self.document.select_entry_table()
-        self.etable.select([1])
-        self.document.toggle_reconciliation_mode()
-        self.etable.selected_row.toggle_reconciled()
-        self.document.toggle_reconciliation_mode()
-        self.assertTrue(self.etable[1].reconciled)
-        self.assertFalse(self.etable[1].recurrent)
-    
     def test_ttable_attrs(self):
         self.assertEqual(len(self.ttable), 6) # this txn happens 6 times this month
         self.assertTrue(self.ttable[0].recurrent) # original is not recurrent
@@ -358,7 +348,7 @@ class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase, CommonSetup):
 class TransactionRecurringOnThirdMondayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(start_date=date(2008, 9, 15), repeat_type_index=4, repeat_every=2) # week no in month
+        self.setup_scheduled_transaction(start_date=date(2008, 9, 15), repeat_type_index=4) # week no in month
     
     def test_year_range(self):
         # The next date range also has the correct recurrent txns
@@ -428,4 +418,36 @@ class TwoDailyRecurrentTransaction(TestCase, CommonSetup):
     def test_can_order_sheduled_transaction(self):
         # scheduled transactions can't be re-ordered
         self.assertFalse(self.ttable.can_move([3], 2))
+    
+
+class DailyScheduleWithOneSpawnReconciled(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('account')
+        self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
+        self.document.select_entry_table()
+        self.etable.select([1]) # This one is the spawn on 16/09/2008
+        self.document.toggle_reconciliation_mode()
+        self.etable.selected_row.toggle_reconciled()
+        self.document.toggle_reconciliation_mode()
+    
+    def test_dont_spawn_before_last_materialization_on_change(self):
+        # One tricky problem was that if a schedule was changed to a more frequent one. When it happens,
+        # exceptions start to be all out of sync with the recurrence, and trying to figure out which
+        # ones should be kept is a nightmare. Thus, when a recurrence's start_date, repeat_type or
+        # repeat_every is changed, its exceptions are simply reset.
+        self.document.select_schedule_table()
+        self.sctable.select([0])
+        self.scpanel.load()
+        self.scpanel.repeat_every = 1
+        self.scpanel.save()
+        self.document.select_transaction_table()
+        # spawns start from the 13th, *not* the 13th, which means 18 spawn. If we add the reconciled
+        # spawn which have been materialized, we have 19
+        eq_(len(self.ttable), 19)
+    
+    def test_spawn_was_materialized(self):
+        # reconciling a scheduled transaction "materializes" it
+        self.assertTrue(self.etable[1].reconciled)
+        self.assertFalse(self.etable[1].recurrent)
     
