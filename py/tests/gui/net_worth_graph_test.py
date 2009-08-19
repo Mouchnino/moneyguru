@@ -34,7 +34,7 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.add_entry('1/7/2008', increase='10')
         self.add_account('liability2', account_type=LIABILITY)
         self.add_entry('8/7/2008', increase='100')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
     def test_add_group(self):
@@ -49,14 +49,14 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.mock_today(2008, 7, 27)
         self.add_account('income', account_type=INCOME)
         self.add_account('expense', account_type=EXPENSE)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.set_budget('300')
         self.istatement.selected = self.istatement.expenses[0]
         self.set_budget('100')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         # this means 200$ profit in 4 days
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         expected = [
             ('01/07/2008', '10.00'),
             ('02/07/2008', '34.96'), # 32 - 10 * 1.42 (the mock xchange rate)
@@ -76,15 +76,15 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
     def test_budget_target_excluded(self):
         # when the budget target is excluded, don't show it's budgeted data
         self.mock_today(2008, 7, 27)
-        self.document.select_income_statement() # refresh graph
-        self.document.select_balance_sheet() # refresh graph
+        self.mainwindow.select_income_statement() # refresh graph
+        self.mainwindow.select_balance_sheet() # refresh graph
         without_budget = self.nw_graph_data()
         self.add_account('asset3')
         self.add_account('income', account_type=INCOME)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.set_budget('300', 2) # asset3
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # asset3
         self.bsheet.toggle_excluded()
         self.assertEqual(self.nw_graph_data(), without_budget)

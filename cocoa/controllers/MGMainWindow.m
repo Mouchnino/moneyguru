@@ -264,27 +264,27 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showBalanceSheet:(id)sender
 {
-    [[[self document] py] selectBalanceSheet];
+    [py selectBalanceSheet];
 }
 
 - (IBAction)showIncomeStatement:(id)sender
 {
-    [[[self document] py] selectIncomeStatement];
+    [py selectIncomeStatement];
 }
 
 - (IBAction)showTransactionTable:(id)sender
 {
-    [[[self document] py] selectTransactionTable];
+    [py selectTransactionTable];
 }
 
 - (IBAction)showEntryTable:(id)sender
 {
-    [[[self document] py] selectEntryTable];
+    [py selectEntryTable];
 }
 
 - (IBAction)showScheduleTable:(id)sender
 {
-    [[[self document] py] selectScheduleTable];
+    [py selectScheduleTable];
 }
 
 - (IBAction)showNextView:(id)sender
@@ -421,7 +421,9 @@ http://www.hardcoded.net/licenses/hs_license
     return [NSArray arrayWithObjects:MGBalanceSheetToolbarItemIdentifier,
                                      MGIncomeStatementToolbarItemIdentifier,
                                      MGTransactionsToolbarItemIdentifier,
-                                     MGEntriesToolbarItemIdentifier, nil];
+                                     MGEntriesToolbarItemIdentifier, 
+                                     MGSchedulesToolbarItemIdentifier,
+                                     MGBudgetToolbarItemIdentifier, nil];
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier 
@@ -532,11 +534,11 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(toggleEntriesReconciled:))
         return (top == entryTable) && [[[self document] py] inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return (top != entryTable) && ((top != transactionTable) || [pyDoc canSelectEntryTable]);
+        return (top != entryTable) && ((top != transactionTable) || [py canSelectEntryTable]);
     else if (action == @selector(showPreviousView:))
         return (top != balanceSheet);
     else if (action == @selector(showEntryTable:))
-        return [pyDoc canSelectEntryTable];
+        return [py canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:))
         return [top respondsToSelector:@selector(canShowSelectedAccount)] && [(id)top canShowSelectedAccount];
     else if (action == @selector(navigateBack:))

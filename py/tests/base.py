@@ -355,7 +355,7 @@ class TestCase(TestCase):
     
     def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
                 checkno=None):
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         row = self.ttable.edited
         if date is not None:
@@ -571,7 +571,7 @@ class CommonSetup(object):
         # 0 = daily, 1 = weekly, etc..
         # This setup also wraps a monthly range around the newly created schedule
         self.document.date_range = MonthRange(start_date)
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
         self.scpanel.new()
         self.scpanel.start_date = start_date.strftime('%d/%m/%Y')
         self.scpanel.description = description
@@ -584,7 +584,7 @@ class CommonSetup(object):
                 self.scsplittable.edited.debit = debit
             self.scsplittable.save_edits()
         self.scpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def setup_three_accounts(self):
         #Three accounts, empty

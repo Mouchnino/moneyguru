@@ -10,14 +10,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyDocument : PyGUI {}
-/* Views */
-- (void)selectBalanceSheet;
-- (void)selectIncomeStatement;
-- (void)selectTransactionTable;
-- (void)selectEntryTable;
-- (BOOL)canSelectEntryTable;
-- (void)selectScheduleTable;
-
 /* Date range */
 - (void)selectPrevDateRange;
 - (void)selectNextDateRange;

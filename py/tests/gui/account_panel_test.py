@@ -19,7 +19,7 @@ class CommonSetup(CommonSetup):
         self.add_account('asset', account_type=ASSET)
         self.add_account('income', account_type=INCOME)
         self.add_account('expense', account_type=EXPENSE)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
     
 
 class SomeAccount(TestCase):
@@ -145,10 +145,10 @@ class AccountWithBudgetTarget(TestCase, CommonSetup):
         self.apanel.save()
     
     def test_delete_budget_target(self):
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.delete()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         try:
             self.apanel.load()

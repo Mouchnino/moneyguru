@@ -18,7 +18,7 @@ from ...model.date import MonthRange
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.check_gui_calls(self.istatement_gui, refresh=1)
     
     def test_add_account_in_other_groups(self):
@@ -52,14 +52,14 @@ class AccountsAndEntries(TestCase, CommonSetup):
         self.add_account('Account 2', account_type=INCOME)
         self.add_entry('11/12/2007', 'Entry 3', increase='100.00')
         self.add_entry('12/01/2008', 'Entry 4', decrease='20.00')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
     
     def test_add_entry(self):
         # adding an entry updates the cache flow (previously, the cache wouldn't be correctly invalidated)
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.add_entry('13/01/2008', 'Entry 3', increase='42.00')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].cash_flow, '292.00')
     
     def test_cash_flow_with_budget(self):
@@ -134,7 +134,7 @@ class MultipleCurrencies(TestCase):
         self.add_entry('1/1/2007', 'USD entry', increase='50.00')
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
     
     def test_with_budget(self):
         # What this test is making sure of is that the account's budget is of the same currency than
@@ -168,7 +168,7 @@ class MultipleCurrenciesOverTwoMonths(TestCase):
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
         self.add_entry('10/2/2008', 'USD entry', increase='100.00')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
     
     def test_income_statement(self):
         # the last_cach_flow and deltas are correct
@@ -204,7 +204,7 @@ class EntriesSpreadOverAYear(TestCase):
         self.add_entry('01/12/2008', 'Entry', increase='8')
         self.add_entry('01/03/2009', 'Entry', increase='9')
         self.add_entry('01/05/2009', 'Entry', increase='10')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
     
     def test_select_running_year_range(self):
         # the 'Last' column will correctly be set and will include amounts from a whole year before

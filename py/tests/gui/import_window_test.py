@@ -119,7 +119,7 @@ class ImportCheckbookQIF(TestCase):
         self.add_account('bar')
         self.check_gui_calls(self.iwin_gui, refresh=4) # one for add, one for change
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # bar
         self.bsheet.delete()
         self.check_gui_calls(self.iwin_gui, refresh=1)
@@ -211,7 +211,7 @@ class LoadThemImportWithReference(TestCase):
         self.etable.save_edits()
         self.etable[1].transfer = 'Account 2'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # Account 2
         self.bsheet.show_selected_account()
         self.document.toggle_reconciliation_mode()
@@ -220,7 +220,7 @@ class LoadThemImportWithReference(TestCase):
         self.etable[2].toggle_reconciled()
         self.etable[3].toggle_reconciled()
         self.document.toggle_reconciliation_mode() # commit
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.document.parse_file_for_import(self.filepath('moneyguru/with_references2.moneyguru'))
         self.clear_gui_calls()
     
@@ -243,7 +243,7 @@ class LoadThemImportWithReference(TestCase):
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[1].reconciled)
         # unreconciliation has cascaded in Account 2
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # Account 2
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[2].reconciled)

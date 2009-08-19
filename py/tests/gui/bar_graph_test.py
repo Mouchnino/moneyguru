@@ -51,7 +51,7 @@ class SomeIncomeInTheFutureWithRangeOnYearToDate(TestCase):
     
     def test_bar_graphs_during_ytd_dont_show_future_data(self):
         # Unlike all other date ranges, bar charts during YTD don't overflow
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(len(self.pgraph.data), 0)
     
 
@@ -105,6 +105,6 @@ class RunningYearWithSomeIncome(TestCase):
     
     def test_monthly_bars(self):
         # with the running year range, the bars are monthly
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(len(self.pgraph.data), 1) # there is only one bar
     

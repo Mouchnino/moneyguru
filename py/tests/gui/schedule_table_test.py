@@ -16,7 +16,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.create_instances()
         self.setup_monthly_range()
         self.setup_scheduled_transaction(repeat_every=3)
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
     
     def test_attrs(self):
         eq_(len(self.sctable), 1)
@@ -33,6 +33,6 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.sctable.delete()
         eq_(len(self.sctable), 0)
         # And the spawns aren't there anymore in the ttable
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 0)
     

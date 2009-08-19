@@ -40,7 +40,7 @@ class OneEntry(TestCase):
         row.debit = '40'
         self.stable.save_edits()
         # Now, let's force a refresh of etable
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable[0].increase, 'CAD 42.00')
@@ -51,14 +51,14 @@ class OneEntry(TestCase):
     
     def test_completion_new_txn(self):
         # When completing an account from a new txn, the completion wouldn't work at all
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.tpanel.load()
         self.assertEqual(self.stable.complete('f', 'account'), 'first')
     
     def test_load_tpanel_from_ttable(self):
         """When the tpanel is loaded form the ttable, the system currency is used"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.tpanel.load() # no crash
         self.assertEqual(self.stable[0].debit, 'CAD 42.00')
     
@@ -89,7 +89,7 @@ class OneEntry(TestCase):
 class OneTransactionBeingAdded(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
     
     def test_change_splits(self):
@@ -140,7 +140,7 @@ class OneTransactionWithMemos(TestCase, TestSaveLoadMixin, TestQIFExportImportMi
         self.create_instances()
         self.add_account('first')
         self.add_account('second')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.tpanel.load()
         self.stable[0].account = 'first'
@@ -184,7 +184,7 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.add_account('first')
         self.add_account('second')
         self.add_account('third')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable.edited.description = 'foo'
         self.tpanel.load()
@@ -200,18 +200,18 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.stable[2].debit = '22'
         self.stable.save_edits()
         self.tpanel.save()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry(description='bar')
         self.document.toggle_reconciliation_mode()
         self.etable[0].toggle_reconciled()
         self.etable[1].toggle_reconciled()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].toggle_reconciled()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
         self.bsheet.show_selected_account()
         self.etable[0].toggle_reconciled()
@@ -235,11 +235,11 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.stable.save_edits()
         self.tpanel.save()
         self.assertTrue(self.etable[0].reconciled) # 3rd split untouched
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled) # 2nd split untouched
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled) # 1st split unreconciled
@@ -258,15 +258,15 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.stable.save_edits()
         self.tpanel.save()
         self.assertTrue(self.etable[0].reconciled) # 3rd split untouched
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled) # 2nd split untouched
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled) # split following the split has been unreconciled
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[3] # zzz
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled) # 1st split unreconciled
@@ -276,11 +276,11 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.stable.delete() # the first split
         self.tpanel.save()
         self.assertTrue(self.etable[0].reconciled) # 3rd split untouched
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled) # 2nd split untouched
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled) # split following the split has been unreconciled

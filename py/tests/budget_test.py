@@ -22,7 +22,7 @@ class CommonSetup(CommonSetup):
         self.document.select_today_date_range()
         account_type = EXPENSE if is_expense else INCOME
         self.add_account(account_name, account_type=account_type)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         if is_expense:
             self.istatement.selected = self.istatement.expenses[0]
         else:
@@ -37,7 +37,7 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
     
     def test_budget_transactions(self):
         # When a budget is set budget transaction spawns show up in ttable, at the end of each month.
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 12)
         self.assertEqual(self.ttable[0].amount, '100.00')
         self.assertEqual(self.ttable[0].date, '31/01/2008')
@@ -47,7 +47,7 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
     def test_set_budget_again(self):
         # there was a crash upon modifying an existing Budget in change_account
         self.set_budget('200', 0) # no crash
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable[0].amount, '200.00')
      
 
@@ -58,14 +58,14 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
     
     def test_budget_amount_flow_direction(self):
         # When the budgeted account is an income, the account gets in the *from* column
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable[0].from_, 'Some Income')
     
     def test_set_budget_again(self):
         # There was a bug where setting the amount on a budget again wouldn't invert that amount
         # in the case of an income-based budget.
         self.set_budget('200', 0)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable[0].from_, 'Some Income')
 
 class OneExpenseWithBudgetAndTxn(TestCase, CommonSetup):
@@ -100,12 +100,12 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
     
     def test_asset_is_in_the_from_column(self):
         # In the budget transaction, 'some asset' is in the 'from' column.
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         eq_(self.ttable[0].from_, 'some asset')
     
     def test_budget_is_counted_in_etable_balance(self):
         # When an asset is a budget target, its balance is correctly incremented in the etable.
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         # The balance of the budget entry has a correctly decremented balance (the budget is an expense).

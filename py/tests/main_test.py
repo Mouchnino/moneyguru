@@ -404,7 +404,7 @@ class ThreeEmptyAccounts(TestCase, CommonSetup):
     def test_add_transfer_entry(self):
         """Add a balancing entry to the account of the entry's transfer"""
         self.add_entry(transfer='one', increase='42.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 1)
@@ -476,11 +476,11 @@ class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
         """Adding an entry with a transfer named after an existing income creates a bound entry in
         that account
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry(transfer='three')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(len(self.etable), 2)
@@ -592,7 +592,7 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         self.assertEqual(self.account_names(), ['Checking', 'Salary'])
         self.assertEqual(self.bsheet.assets.children_count, 3)
         self.assertEqual(self.bsheet.liabilities.children_count, 2)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income.children_count, 3)
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
@@ -607,7 +607,7 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
     
     def test_delete_entries_with_Salary_selected(self):
         """Deleting the last entry of an income account does not remove that account"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.etable.delete()
@@ -653,7 +653,7 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
     
     def test_entry_is_editable_of_opposite(self):
         """The other side of an Entry has the same edition rights as the Entry"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertTrue(self.etable.can_edit_column('date'))
@@ -674,12 +674,12 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
     
     def test_graph(self):
         """The 'Checking' account has a line graph. The 'Salary' account has a bar graph."""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.bar_graph_data(), [('01/10/2007', '01/11/2007', '42.00', '0.00')])
         self.assertEqual(self.bargraph.title, 'Salary')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.graph_data(), [('11/10/2007', '42.00'), ('01/01/2008', '42.00')])
@@ -789,20 +789,20 @@ class TwoBoundEntries(TestCase):
         self.add_account('second')
         self.add_entry(description='transfer', transfer='first', increase='42')
         self.add_account('third')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
     
     def test_change_amount(self):
         """The other side of the transaction follows"""
         # Because of MCT, a transfer between asset/liability accounts stopped balancing itself
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
         row.decrease = '40'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable[0].increase, '40.00')
@@ -812,28 +812,28 @@ class TwoBoundEntries(TestCase):
         row = self.etable.selected_row
         row.transfer = 'third'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # first
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 0)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # third
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 1)
     
     def test_change_transfer_backwards(self):
         """Entry binding works both ways"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
         row.transfer = 'third'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 0)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 1)
@@ -845,16 +845,16 @@ class TwoBoundEntries(TestCase):
         row = self.etable.selected_row
         row.transfer = 'other'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # first
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 0)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # third
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 0)
         # Make sure the entry don't try to unbind from 'first' again
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # second
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
@@ -864,7 +864,7 @@ class TwoBoundEntries(TestCase):
     def test_delete_entries(self):
         """Deleting an entry also delets any bound entry"""
         self.etable.delete()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 0)
@@ -882,7 +882,7 @@ class NegativeBoundEntry(TestCase):
         row = self.etable.selected_row
         row.decrease = '42' # we're decreasing the liability here
         self.etable.save_edits()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.expenses.children_count, 3)
     
 
@@ -898,12 +898,12 @@ class OneEntryInPreviousRange(TestCase, CommonSetup):
     
     def test_make_account_income(self):
         """If we make the account an income account, the previous balance entry disappears"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.apanel.load()
         self.apanel.type_index = 2 # income
         self.apanel.save()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 0)
@@ -1163,7 +1163,7 @@ class TwoAccountsTwoEntriesInTheFirst(TestCase):
         self.add_entry('3/10/2007', 'first', increase='1')
         self.add_entry('4/10/2007', 'second', increase='1')
         self.add_account()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
     
@@ -1191,28 +1191,28 @@ class AssetIncomeWithDecrease(TestCase):
     
     def test_income_balance(self):
         """Salary's entries' balances are positive"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[0].balance, '42.00')
     
     def test_income_decrease(self):
         """The Error Adjustment transaction is an decrease in Salary"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[1].decrease, '2.00')
     
     def test_income_increase(self):
         """The MacroSoft transaction is an increase in Salary"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[0].increase, '42.00')
     
     def test_set_income_decrease(self):
         """Setting an income entry's decrease actually sets the right side"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         row = self.etable.selected_row
@@ -1221,7 +1221,7 @@ class AssetIncomeWithDecrease(TestCase):
     
     def test_set_income_increase(self):
         """Setting an income entry's increase actually sets the right side"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         row = self.etable.selected_row
@@ -1242,14 +1242,14 @@ class LiabilityExpenseWithDecrease(TestCase):
     
     def test_expense_decrease(self):
         """The Rebate transaction is a decrease in Clothes"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[1].decrease, '2.00')
     
     def test_expense_increase(self):
         """The Shoes transaction is an increase in Clothes"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[0].increase, '42.00')
@@ -1352,7 +1352,7 @@ class ThreeEntriesInTheSameExpenseAccount(TestCase):
         self.add_entry('1/1/2008', 'entry1', transfer='Expense', decrease='100')
         self.add_entry('20/1/2008', 'entry2', transfer='Expense', decrease='200')
         self.add_entry('31/3/2008', 'entry3', transfer='Expense', decrease='150')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.show_selected_account()
     
@@ -1590,14 +1590,14 @@ class EntrySelectionOnAccountChange(TestCase):
     def test_keep_date(self):
         """Explicitely selecting a transaction make it so the nearest date is found as a fallback"""
         self.etable.select([0]) # the transaction from asset2 to expense1
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[1] # expense2
         self.istatement.show_selected_account()
         # The nearest date in expense2 is 2008/1/4
         self.assertEqual(self.etable.selected_indexes, [0])
         # Now select the 2008/1/12 date
         self.etable.select([1])
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[2] # expense3
         self.istatement.show_selected_account()
         # The 2008/1/11 date is nearer than the 2008/1/22 date, so it should be selected
@@ -1605,14 +1605,14 @@ class EntrySelectionOnAccountChange(TestCase):
     
     def test_keep_transaction(self):
         """Explicitely selecting a transaction make it so it stays selected when possible"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.etable.select([0]) # the transaction from asset1 to expense1
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # We select an account where the transaction don't exist
         self.bsheet.show_selected_account()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.show_selected_account()
         # Even though we selected asset2, the transaction from asset1 should be selected
@@ -1623,7 +1623,7 @@ class EntrySelectionOnAccountChange(TestCase):
         row = self.etable.selected_row
         row.date = '5/1/2008'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable.selected_indexes, [1]) #2008/1/4

@@ -32,9 +32,9 @@ class DocumentGUIObject(Listener):
     def accounts_excluded(self):
         pass
     
-    def balance_sheet_selected(self):
+    def account_must_be_shown(self):
         pass
-
+    
     def csv_options_needed(self):
         pass
     
@@ -62,15 +62,9 @@ class DocumentGUIObject(Listener):
     def entry_deleted(self):
         pass
     
-    def entry_table_selected(self):
-        pass
-    
     def group_expanded_state_changed(self):
         pass
     
-    def income_statement_selected(self):
-        pass
-
     def file_loaded_for_import(self):
         pass
 
@@ -95,12 +89,6 @@ class DocumentGUIObject(Listener):
     def schedule_deleted(self):
         pass
     
-    def schedule_table_selected(self):
-        pass
-    
-    def transaction_table_selected(self):
-        pass
-
     def undone(self):
         pass
 

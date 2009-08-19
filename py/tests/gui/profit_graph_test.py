@@ -26,7 +26,7 @@ class Pristine(TestCase, CommonSetup):
         self.add_entry('01/11/2008', transfer='Income', increase='42') #sunday
         self.document.select_prev_date_range() # oct 2008
         self.add_entry('31/10/2008', transfer='Income', increase='42')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         # now, the creation of the txn forced a recook. what we want to make sure is that both 
         # entries will be in the bar
         self.assertEqual(self.pgraph.data[0][2], 84)
@@ -48,7 +48,7 @@ class IncomesAndExpensesInDifferentAccounts(TestCase, CommonSetup):
         self.add_entry('15/7/2008', transfer='income2', increase='54') # 3rd week
         self.add_entry('1/7/2008', transfer='expense1', decrease='10 cad')
         self.add_entry('8/7/2008', transfer='expense2', decrease='100') # 2nd week
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.clear_gui_calls()
     
     def test_budget(self):

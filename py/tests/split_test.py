@@ -98,7 +98,7 @@ class OneEntry(TestCase):
         row.account = 'foo'
         self.stable.save_edits()
         self.tpanel.save()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets[1].name, 'foo') # The foo account was autocreated
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
@@ -110,7 +110,7 @@ class OneEntry(TestCase):
         self.tpanel.save()
         self.assertEqual(self.stable[1].account, 'bar')
         self.assertEqual(self.etable[0].transfer, 'bar')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].name, 'bar') # The bar account was autocreated
     
 

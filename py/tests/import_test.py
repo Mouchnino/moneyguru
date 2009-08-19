@@ -50,7 +50,7 @@ class Pristine(TestCase):
         self.importall(self.filepath('xml', 'moneyguru.xml'))
         # 2 assets, 1 expense
         self.assertEqual(self.bsheet.assets.children_count, 4)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.expenses.children_count, 3)
         # No need to test further, we already test moneyguru file loading, which is basically the 
         # same thing.
@@ -72,7 +72,7 @@ class LoadPayeeDescription(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 3, 1))
         self.document.load_from_xml(self.filepath('moneyguru', 'payee_description.moneyguru'))
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_attributes(self):
         """description and payee attributes load correctly, even when some of them are missing"""
@@ -94,7 +94,7 @@ class QIFImport(TestCase):
         self.add_account('Account 1')
         self.add_account('Account 1 1')
         self.importall(self.filepath('qif', 'checkbook.qif'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
     
@@ -109,7 +109,7 @@ class QIFImport(TestCase):
     
     def test_default_account_currency(self):
         """This QIF has no currency. Therefore, the default currency should be used for accounts"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
         self.apanel.load()
         self.assertEqual(self.apanel.currency, PLN)
@@ -118,7 +118,7 @@ class QIFImport(TestCase):
         """Entries default to their account's currency. Therefore, changing the account currency
         after the import should cause the entries to be cooked as amount with currency
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
         self.apanel.load()
         self.apanel.currency = CAD
@@ -132,7 +132,7 @@ class OFXImport(TestCase):
     def setUp(self):
         self.create_instances()
         self.importall(self.filepath('ofx', 'desjardins.ofx'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
 
@@ -163,7 +163,7 @@ class DoubleOFXImport(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.importall(self.filepath('ofx', 'desjardins.ofx'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         # The entry that is in both files in the "retrait" one, which we'll edit
@@ -197,7 +197,7 @@ class DoubleOFXImportAcrossSessions(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.importall(self.filepath('ofx', 'desjardins.ofx'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # 815-30219-11111-EOP
         self.bsheet.selected.name = 'Desjardins EOP'
         self.bsheet.save_edits()
@@ -225,11 +225,11 @@ class AnotherDoubleOFXImport(TestCase):
 
     def test_entries_counts(self):
         """All accounts have the appropriate number of entries."""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 2)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 1)
@@ -250,7 +250,7 @@ class TripleOFXImportAcrossSessions(TestCase):
     def test_entry_count(self):
         """The number of entries is the same as if the import was made once"""
         # Previously, the transaction reference would be lost in a transaction conflict resolution
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(len(self.etable), 3)
@@ -262,7 +262,7 @@ class DoubleOFXImportWithASplitInTheMiddle(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.importall(self.filepath('ofx', 'desjardins.ofx'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.etable.select([2]) #retrait
@@ -290,7 +290,7 @@ class LoadFile(TestCase):
         self.create_instances()
         self.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
         self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
     
@@ -308,7 +308,7 @@ class LoadFile(TestCase):
     
     def test_delete_account(self):
         """Removing an account sets the modified flag"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.arpanel.ok() # continue deletion
@@ -321,7 +321,7 @@ class LoadFile(TestCase):
     
     def test_delete_transactions(self):
         """Deleting a transaction sets the modified flag"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0]) # will be automatic at some point
         self.ttable.delete()
         self.assertTrue(self.document.is_dirty())
@@ -352,7 +352,7 @@ class LoadFile(TestCase):
     
     def test_rename_account(self):
         """Renaming an account sets the modified flag"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = 'some other name'
         self.bsheet.save_edits()
@@ -370,7 +370,7 @@ class LoadMultiCurrency(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.document.load_from_xml(self.filepath('xml', 'moneyguru2.xml'))
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.etable.select([0])
@@ -454,7 +454,7 @@ class TransferBetweenTwoReferencedAccounts(TestCase):
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.importall(self.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
         self.add_account('Account 4') # Add it as an asset
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.etable.select([0])
@@ -492,7 +492,7 @@ class ImportFileWithMultipleTransferReferences(TestCase):
     def test_account_names_are_correct(self):
         # the account names for the transfers are correctly imported. Previously, new_name() was
         # recursively called on them for each occurence in the split.
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].name, 'income')
         self.assertEqual(self.istatement.expenses[0].name, 'expense')
     

@@ -22,14 +22,14 @@ class Pristine(TestCase):
     
     def test_delete_account(self):
         """No crash occurs when trying to delete a group that can't be deleted"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets
         self.assertFalse(self.bsheet.can_delete())
         self.bsheet.delete()
     
     def test_delete_special_accounts(self):
         """special accounts cannot be deleted"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets
         self.assertFalse(self.bsheet.can_delete())
         self.bsheet.selected = self.bsheet.assets[0] # total node
@@ -50,7 +50,7 @@ class OneEmptyAccount(TestCase):
     
     def test_can_edit_account_name(self):
         """The name of base groups and the Imbalance account cannot be edited"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.assertTrue(self.bsheet.selected.can_edit_name)
         self.bsheet.selected = self.bsheet.assets
@@ -62,7 +62,7 @@ class OneEmptyAccount(TestCase):
     
     def test_empty_account_name(self):
         """An empty account name is not allowed"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = ''
         self.assertEqual(self.bsheet.assets[0].name, 'Checking')
@@ -85,7 +85,7 @@ class OneEmptyAccount(TestCase):
     
     def test_move_account(self):
         """move_account() methods to change the account type and move it to the correct section"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0], [1])
         self.assertEqual(self.bsheet.get_node([0]).children_count, 2) # 1 total node, 1 blank node
         self.assertEqual(self.bsheet.get_node([1]).children_count, 3) # 1 total node, 1 blank node
@@ -95,7 +95,7 @@ class OneEmptyAccount(TestCase):
     
     def test_move_account_makes_the_app_dirty(self):
         """calling make_account_asset() makes the app dirty"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0], [1])
         self.assertTrue(self.document.is_dirty())
     
@@ -118,7 +118,7 @@ class ThreeEmptyAccounts(TestCase):
     
     def test_account_sort_is_case_insensitive(self):
         """The account sort is case insensitive"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # three
         self.bsheet.selected.name = 'THREE'
         self.bsheet.save_edits()
@@ -126,7 +126,7 @@ class ThreeEmptyAccounts(TestCase):
     
     def test_can_move_account(self):
         """An account can only be moved in an account group that is on the 2nd or 3rd level"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertTrue(self.bsheet.can_move([0, 0], [1])) # Can move into Liabilities
         self.assertFalse(self.bsheet.can_move([0, 0], [])) # Cannot move in Root
         self.assertFalse(self.bsheet.can_move([0, 0], [0])) # Cannot move in Assets
@@ -134,7 +134,7 @@ class ThreeEmptyAccounts(TestCase):
     
     def test_delete_first_account(self):
         """Keep the selection there"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.assertEqual(self.account_names(), ['three', 'two'])
@@ -142,7 +142,7 @@ class ThreeEmptyAccounts(TestCase):
     
     def test_delete_last_account(self):
         """When a deletion causes the account selection to go in the next section, stay in the current section."""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.delete()
         self.assertEqual(self.account_names(), ['one', 'two']) 
@@ -154,7 +154,7 @@ class ThreeEmptyAccounts(TestCase):
     
     def test_set_account_name_duplicate(self):
         """save_edits() reverts to the old name when the name already exists (case insensitive)"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # three
         self.bsheet.selected.name = 'ONE'
         self.bsheet.save_edits()
@@ -164,7 +164,7 @@ class ThreeEmptyAccounts(TestCase):
         """Don't raise DuplicateAccountNameError when the duplicate name is the account being
         edited.
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # three
         self.bsheet.selected.name = 'Three'
         self.bsheet.save_edits()
@@ -181,20 +181,20 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
     
     def test_can_delete_group(self):
         """can_delete_account() returns True for user created groups"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.assertTrue(self.bsheet.can_delete())
     
     def test_delete_group(self):
         """delete_account() on a user created group removes the group"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.assertEqual(self.bsheet.assets.children_count, 3) # total + blank
     
     def test_move_account_to_group(self):
         """Accounts can be moved into user created groups"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected_path = [0, 0] # select the group
         self.assertTrue(self.bsheet.can_move([0, 1], [0, 0]))
         self.bsheet.move([0, 1], [0, 0])
@@ -205,20 +205,20 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
         """Account groups can contain more than one account"""
         # Refresh was previously bugged when more than one account were in the same group
         self.add_account()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 1], [0, 0])
         self.bsheet.move([0, 1], [0, 0])
         self.assertEqual(self.bsheet.get_node([0, 0]).children_count, 4) # 1 total node, 1 blank node
     
     def test_sort_order(self):
         """Groups are always first"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets[0].name, 'New group')
         self.assertEqual(self.bsheet.assets[1].name, 'New account')
     
     def test_user_groups_are_editable(self):
         """User created groups can have their name edited"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.assertTrue(self.bsheet.selected.can_edit_name)
         self.bsheet.selected.name = 'foobar'
@@ -235,7 +235,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
     
     def test_delete_account(self):
         """It's possible to delete an account that is inside a user created group"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0][0]
         self.bsheet.delete()
         self.assertEqual(self.bsheet.assets[0].children_count, 2) # total + blank
@@ -244,7 +244,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         """Deleteing a group with an account in it removes the group and put the account back at the
         base group level
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.assertFalse(self.bsheet.assets[0].is_group)
@@ -253,7 +253,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         """Moving the account in another account base group does not result in a crash"""
         # Previously, the edit system was working with None values to indicate "no edition", which
         # made it impossible to set the group to None.
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0, 0], [1])
         self.assertEqual(self.bsheet.get_node([0, 0]).children_count, 2) # 1 total node, 1 blank node
         self.assertEqual(self.bsheet.get_node([1]).children_count, 3) # 1 total node, 1 blank node
@@ -264,7 +264,7 @@ class TwoGroups(TestCase):
         self.create_instances()
         self.add_group()
         self.add_group()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_new_group_name(self):
         """When 'New group' already exists, another new group is created with a number"""
@@ -283,7 +283,7 @@ class TwoGroupsInTwoBaseTypes(TestCase):
         self.create_instances()
         self.add_group()
         self.add_group(account_type=LIABILITY)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_new_group_name(self):
         """Groups in different base types can have the same name"""
@@ -295,7 +295,7 @@ class AccountAndGroupWithTheSameName(TestCase):
         self.create_instances()
         self.add_account()
         self.add_group()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = 'some_name'
         self.bsheet.save_edits()
@@ -315,7 +315,7 @@ class DifferentAccountTypes(TestCase):
         self.add_account('one', select=False)
         self.add_account('two')
         self.add_entry(transfer='three')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # 'three'
         self.istatement.show_selected_account()
     
@@ -329,7 +329,7 @@ class DifferentAccountTypes(TestCase):
     
     def test_delete_account(self):
         """delete_account() takes place in the currently selected account type"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # three
         self.istatement.delete()
         self.arpanel.ok() # continue deletion
@@ -337,16 +337,16 @@ class DifferentAccountTypes(TestCase):
     
     def test_account_group_size(self):
         """The account group counts correct"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets.children_count, 4)
         self.assertEqual(self.bsheet.liabilities.children_count, 2)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income.children_count, 3)
         self.assertEqual(self.istatement.expenses.children_count, 2)
     
     def test_select_another_type_then_set_attribute_value(self):
         """select_account() works across accounts sections"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.selected.name = 'foo'
         self.bsheet.save_edits()
@@ -362,11 +362,11 @@ class EntryWithoutTransfer(TestCase):
     
     def test_delete_account(self):
         """Deleting an account don't rebind imbalanced entries, but delete them instead"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.arpanel.ok() # continue deletion
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 0)
     
 
@@ -384,7 +384,7 @@ class TwoBoundEntries(TestCase):
     def test_delete_account(self):
         """Deleting an account unbinds every entries in it, but does *not* delete the bound entries
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # second
         self.bsheet.delete()
         self.bsheet.selected = self.bsheet.assets[0] # second
@@ -403,24 +403,24 @@ class TwoEntriesWithTransfer(TestCase):
     
     def test_delete_asset_account(self):
         """When deleting the asset account, entry1 and entry2 go to imbalance"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.arpanel.ok() # continue deletion
         self.assertEqual(self.account_names(), ['transfer1', 'transfer2'])
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 2)
         self.assertEqual(self.ttable[0].to, '')
         self.assertEqual(self.ttable[1].to, '')
     
     def test_delete_transfer1_account(self):
         """When deleting transfer1, entry1 goes to imbalance"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # transfer1
         self.istatement.delete()
         self.arpanel.ok() # continue deletion
         self.assertEqual(self.account_names(), ['New account', 'transfer2'])
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 2)
         self.assertEqual(self.ttable[0].from_, '')
     
@@ -436,6 +436,6 @@ class ManuallyCreatedIncome(TestCase):
         # removed.
         self.add_entry()
         self.etable.delete()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].name, 'income')
     

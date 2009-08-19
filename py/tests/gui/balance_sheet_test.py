@@ -36,7 +36,7 @@ class _AccountsAndEntries(TestCase, CommonSetup):
         self.add_account('Account 2')
         self.add_entry('11/12/2007', 'Entry 3', transfer='income', increase='100.00')
         self.add_entry('12/01/2008', 'Entry 4', transfer='expense', decrease='20.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
 
@@ -123,7 +123,7 @@ class AccountHierarchy(TestCase):
         self.add_account('Liability 1', account_type=LIABILITY)
         self.add_group('Loans', account_type=LIABILITY)
         self.add_account('Loan 1', account_type=LIABILITY, group_name='Loans')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
 
     def test_balance_sheet(self):
@@ -182,7 +182,7 @@ class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('Checking')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
     def test_add_accounts_after_current(self):
@@ -267,7 +267,7 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
         self.create_instances()
         self.add_account()
         self.add_group()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # the group
     
     def test_add_account(self):
@@ -283,7 +283,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         self.create_instances()
         self.add_group('group')
         self.add_account(group_name='group')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0][0] # the account in the group
     
     def test_add_account(self):
@@ -320,12 +320,12 @@ class AccountsAndEntries(_AccountsAndEntries):
         # Account 1 is the target of the expense budget, and Account 2 is the target of the income
         # Assign budgeted amounts to the appropriate accounts.
         self.mock_today(2008, 1, 15)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.set_budget('400', 1) # + 150
         self.istatement.selected = self.istatement.expenses[0]
         self.set_budget('100', 0) # + 80
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets[0].end, '170.00') # 250 - 80
         self.assertEqual(self.bsheet.assets[1].end, '230.00') # 80 + 150
         self.assertEqual(self.bsheet.assets.end, '400.00')
@@ -344,24 +344,24 @@ class AccountsAndEntries(_AccountsAndEntries):
         # budgeted amounts must be correctly converted to the target's currency
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         self.mock_today(2008, 1, 15)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.apanel.load()
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.budget = '400' # + 150
         self.apanel.budget_target_index = 0
         self.apanel.save()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets[0].end, '500.00')
     
     def test_budget_target_liability(self):
         # The budgeted amount must be normalized before being added to a liability amount
         self.mock_today(2008, 1, 15)
         self.add_account('foo', account_type=LIABILITY)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.set_budget('400', 2) # + 150
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.liabilities[0].end, '-150.00')
     
     def test_change_date_range(self):
@@ -405,9 +405,9 @@ class AccountsAndEntries(_AccountsAndEntries):
         # does not change the account that will be shown is select_entry_table is called.
         self.bsheet.selected = self.bsheet.assets[0] # Account 1
         self.bsheet.show_selected_account()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # Account 2
-        self.document.select_entry_table()
+        self.mainwindow.select_entry_table()
         self.assertEqual(self.balgraph.title, 'Account 1')
         self.assertEqual(self.etable[0].description, 'Entry 1')
     
@@ -427,7 +427,7 @@ class MultipleCurrencies(TestCase):
         self.assertEqual(self.document.selected_account.balance(), Amount(150, USD))
         self.add_account('CAD account', currency=CAD, group_name='Group')
         self.add_entry('1/1/2008', 'USD entry', increase='100.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
 
     def test_balance_sheet(self):
         self.assertEqual(USD.value_in(CAD, date(2008, 2, 1)), 0.9)
@@ -444,10 +444,10 @@ class MultipleCurrencies(TestCase):
     def test_delete_transaction(self):
         # Deleting a transaction correctly updates the balance sheet balances. Previously, the
         # cache in Account would not correctly be cleared on cook()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([3]) # last entry, on the 31st
         self.ttable.delete()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets.end, '217.00')
     
     def test_exclude_group(self):
@@ -489,7 +489,7 @@ class Liability(TestCase):
         self.add_account('Credit card', account_type=LIABILITY, group_name='foo')
         self.add_entry(date='31/12/2007', description='Starting balance', decrease='100.00')
         self.add_entry(date='1/1/2008', description='Expensive jewel', increase='1200.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
 
     def test_balance_sheet(self):
         """Liability amounts are shown in their normal form (credit is positive)"""
@@ -528,10 +528,10 @@ class TwoAccountsInTwoReports(TestCase):
     
     def test_show_account_then_select_other_report(self):
         # If the shown account is not in the shown report, select the first account
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.selected, self.bsheet.assets[0])
     
 
@@ -542,7 +542,7 @@ class NegativeNetworthStart(TestCase):
         self.add_entry(date='31/12/2007', description='Starting balance', increase='1000')
         self.add_account('Checking')
         self.add_entry(date='1/1/2008', description='Salary', increase='1500.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_delta_perc(self):
         # When the balance at the start is negative, don't display a delta %

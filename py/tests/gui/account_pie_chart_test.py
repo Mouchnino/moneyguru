@@ -36,7 +36,7 @@ class _SomeAssetsAndLiabilities(TestCase, CommonSetup):
         self.add_entry(increase='3')
         self.add_account('l2', account_type=LIABILITY)
         self.add_entry(increase='5')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets
         self.clear_gui_calls()
     
@@ -63,9 +63,9 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
         self.add_account('income', account_type=INCOME)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.set_budget('5', 0) # target: a1
-        self.document.select_balance_sheet() # don't crash
+        self.mainwindow.select_balance_sheet() # don't crash
     
     def test_exclude_account(self):
         # excluding an account removes it from the pie chart
@@ -95,7 +95,7 @@ class SomeAssetsAndLiabilitiesWithBudget(_SomeAssetsAndLiabilities):
         self.document.select_today_date_range()
         self.add_account('income', account_type=INCOME)
         self.set_budget('5', 2) # target: a3
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_future_date_range(self):
         # the budget amounts used for the pie chart include all previous budgets
@@ -125,7 +125,7 @@ class MoreThanSliceCountAssets(TestCase):
         for i in range(SLICE_COUNT + 2):
             self.add_account('account %d' % i)
             self.add_entry(increase='1')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_assets_pie_chart_values(self):
         # The pie chart values are sorted in reversed order of amount and have correct titles
@@ -148,7 +148,7 @@ class SomeIncomeAndExpenses(TestCase, CommonSetup):
         self.add_entry(transfer='e2', decrease='1')
         self.add_entry(transfer='e3', decrease='4')
         self.add_entry(transfer='e4', decrease='2')
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses
         self.clear_gui_calls()
     
@@ -209,7 +209,7 @@ class DifferentDateRanges(TestCase, CommonSetup):
         self.add_entry(date='01/08/2008', transfer='baz', increase='5')
         self.add_entry(date='01/08/2008', transfer='bar', decrease='1')
         self.add_entry(date='01/09/2008', transfer='bar', decrease='2')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
     def test_balance_pie_chart(self):
@@ -221,7 +221,7 @@ class DifferentDateRanges(TestCase, CommonSetup):
     
     def test_cash_flow_pie_chart(self):
         # the data in the cash flow pie chart reflects the currencly selected date range
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.clear_gui_calls()
         self.assertEqual(self.epie.data, [('bar 100.0%', 2)])
@@ -241,7 +241,7 @@ class MultipleCurrencies(TestCase):
         self.add_entry('1/1/2008', 'USD entry', transfer='USD income', increase='1')
         self.add_account('CAD asset', currency=CAD)
         self.add_entry('1/1/2008', 'CAD entry', transfer='CAD income', increase='1')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_balance_pie_chart(self):
         # the amounts are converted to the default currency before being weighted
@@ -253,7 +253,7 @@ class MultipleCurrencies(TestCase):
     
     def test_cash_flow_pie_chart(self):
         # the amounts are converted to the default currency before being weighted
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         expected = [
             ('CAD income 55.6%', 1),
             ('USD income 44.4%', 0.8),
@@ -267,7 +267,7 @@ class NegativeAssetValue(TestCase):
         self.add_account('foo')
         self.add_account('bar')
         self.add_entry(date='01/08/2008', transfer='foo', increase='1')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
     
     def test_balance_pie_chart(self):
         # negative balances are ignored
@@ -289,7 +289,7 @@ class AccountGroup(TestCase):
         self.add_entry(increase='2')
         self.add_account('baz')
         self.add_entry(increase='7')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
     def test_collapse_group(self):

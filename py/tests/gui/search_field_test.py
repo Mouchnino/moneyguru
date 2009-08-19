@@ -90,7 +90,7 @@ class TwoTransactions(TestCase, CommonSetup):
     def test_query_space(self):
         # Querying for a space character doesn't cause a crash. Previously, it did because it was
         # parsed as an amount.
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.sfield.query = ' ' # no crash
         self.assertEqual(len(self.ttable), 2) # same as no filter
     
@@ -116,7 +116,7 @@ class ThreeTransactionsOneWithZeroAmount(TestCase, CommonSetup):
 class Split(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.tpanel.load()
         # Here, we're creating a split that looks like:
@@ -154,22 +154,22 @@ class ThreeTransactionsFiltered(TestCase):
     
     def test_change_account(self):
         """Changing selection to another account cancels the filter"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.sfield.query, '')
         # setting the sfield query didn't make document go to all_transactions again
         self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1)
         self.check_gui_calls(self.sfield_gui, refresh=1)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 3)
     
     def test_change_account_to_bsheet(self):
         """Balance sheet is another notification, so we must also test it in addition to 
         test_change_account.
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.assertEqual(self.sfield.query, '')
         self.check_gui_calls(self.sfield_gui, refresh=1)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 3)
     
     def test_modify_transaction_out_of_filter(self):

@@ -65,7 +65,7 @@ class NoSetup(TestCase):
         """It's possible to specify a default currency at startup"""
         self.app = Application(CallLogger(), default_currency=PLN)
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(self.app.default_currency, PLN)
         self.add_account()
         self.assertEqual(self.app.default_currency, PLN)
@@ -93,7 +93,7 @@ class OneEmptyAccountEUR(TestCase):
         """Saving an entry triggers an ensure_rates"""
         log = []
         FakeServer.hooklog(log)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable.edited.date = '20/5/2008'
         self.ttable.edited.amount = '12 eur'
@@ -117,14 +117,14 @@ class CADAssetAndUSDAsset(TestCase):
         # First, let's add a 'native' transaction
         self.add_entry(transfer='CAD Account', increase='42 usd')
         # Then, make the other side 'native'
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
         row.decrease = '40 cad'
         self.etable.save_edits()
         # The other side should have *not* followed
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable[0].increase, '42.00')
@@ -141,14 +141,14 @@ class CADLiabilityAndUSDLiability(TestCase):
         # First, let's add a 'native' transaction
         self.add_entry(transfer='CAD Account', increase='42 usd')
         # Then, make the other side 'native'
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
         row.decrease = '40 cad'
         self.etable.save_edits()
         # The other side should have *not* followed
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[1]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable[0].increase, '42.00')
@@ -165,7 +165,7 @@ class EntryWithForeignCurrencyAmount(TestCase):
         PLN.set_CAD_value(0.42, date(2007, 10, 1))
         self.add_account('first', CAD)
         self.add_account('second', PLN, account_type=INCOME)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry(date='1/10/2007', transfer='second', increase='42 eur')
@@ -173,7 +173,7 @@ class EntryWithForeignCurrencyAmount(TestCase):
     
     def test_bar_graph_data(self):
         """The amount shown in the bar graph is a converted amount"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.bar_graph_data(), [('01/10/2007', '08/10/2007', '%2.2f' % ((42 * 1.42) / 0.42), '0.00')])
@@ -196,7 +196,7 @@ class EntryWithForeignCurrencyAmount(TestCase):
     
     def test_opposite_entry_balance(self):
         """The 'other side' of the entry also have its balance correctly computed"""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[0].balance, 'PLN %2.2f' % ((42 * 1.42) / 0.42))
@@ -213,14 +213,14 @@ class CADAssetAndUSDIncome(TestCase):
         """Making an amount native when the other side is an income/expense never creates a MCT"""
         # First, let's add a 'native' transaction
         # Then, make the asset side 'native'
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
         row.increase = '40 cad'
         self.etable.save_edits()
         # The other side should have followed
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(self.etable[0].increase, 'CAD 40.00')
@@ -238,7 +238,7 @@ class DifferentCurrencies(TestCase, TestSaveLoadMixin):
         self.create_instances()
         self.add_account('first account')
         self.add_account('second account', USD)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry(description='first entry', transfer='second account', increase='42 usd')
@@ -248,7 +248,7 @@ class DifferentCurrencies(TestCase, TestSaveLoadMixin):
         """All entries have the appropriate currency"""
         self.assertEqual(self.etable[0].increase, 'USD 42.00')
         self.assertEqual(self.etable[1].increase, 'EUR 42.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable[0].decrease, 'USD 42.00')
@@ -265,7 +265,7 @@ class ThreeCurrenciesTwoEntriesSaveLoad(TestCase):
         self.add_account('first account')
         self.add_account('second account', USD)
         self.add_account('third account', EUR)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry(date='20/4/2008', increase='42 cad')
@@ -323,7 +323,7 @@ class OneMCT(TestCase):
         self.add_account('CAD Account', CAD)
         self.add_account('USD Account', USD)
         self.add_entry(transfer='CAD Account', increase='42 usd')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         row = self.etable.selected_row
@@ -347,7 +347,7 @@ class OneMCT(TestCase):
         row = self.etable.selected_row
         row.increase = '12 cad'
         self.etable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable[0].decrease, '42.00')

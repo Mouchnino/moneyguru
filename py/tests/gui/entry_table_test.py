@@ -82,7 +82,7 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_can_reconcile_expense(self):
         # income/expense entires can't be reconciled
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0] # second
         self.istatement.show_selected_account()
         self.assertFalse(self.etable[0].can_reconcile())
@@ -139,10 +139,10 @@ class TwoEntries(TestCase):
     
     def test_selection(self):
         """EntryTable stays in sync with TransactionTable"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0])
         self.clear_gui_calls()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable.selected_indexes, [0])
@@ -194,9 +194,9 @@ class TwoEntriesInTwoAccounts(TestCase):
     def test_selection_after_connect(self):
         """The selection in the document is correctly updated when the selected account changes"""
         # The tpanel loads the document selection, so this is why we test through it.
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0]) # first
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.tpanel.load()
@@ -282,7 +282,7 @@ class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
         self.create_instances()
         self.add_account('first')
         self.add_account('second')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry('19/07/2008', increase='1')
@@ -292,11 +292,11 @@ class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
         self.etable[0].toggle_reconciled()
         self.etable[1].toggle_reconciled()
         self.etable[2].toggle_reconciled()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.document.toggle_reconciliation_mode() # commit reconciliation
@@ -368,13 +368,13 @@ class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
     
     def test_change_other_side_amount(self):
         """Changing an entry's amount for which the 'other side' is reconciled unreconciles it"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].decrease = '12'
         self.etable.save_edits()
         self.assertFalse(self.etable[0].reconciled)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
@@ -383,13 +383,13 @@ class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
     
     def test_change_other_side_date(self):
         """Changing an entry's date for which the 'other side' is reconciled unreconciles it"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].date = '18/07/2008'
         self.etable.save_edits()
         self.assertFalse(self.etable[0].reconciled)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled)
@@ -400,13 +400,13 @@ class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
         """Changing an entry's transfer for which the 'other side' is reconciled unreconciles it.
         However, it does *not* unreconcile the changed entry.
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].transfer = 'foobaz'
         self.etable.save_edits()
         self.assertTrue(self.etable[0].reconciled) # stays reconciled
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)

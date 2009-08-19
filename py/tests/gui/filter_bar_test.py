@@ -42,7 +42,7 @@ class TransactionsOfEachType(TestCase):
         self.assertEqual(self.etable[0].description, 'third')
         self.assertEqual(self.etable[1].description, 'fourth')
         #The ttable's expense filter makes it only show entries with a transfer to an expense.
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_EXPENSE)
         self.assertEqual(len(self.ttable), 1)
@@ -56,7 +56,7 @@ class TransactionsOfEachType(TestCase):
         self.assertEqual(self.etable[0].description, 'first')
         self.assertEqual(self.etable[1].description, 'second')
         #The etable's income filter makes it only show entries with a transfer to an income.
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_INCOME)
         self.assertEqual(len(self.ttable), 1)
@@ -68,7 +68,7 @@ class TransactionsOfEachType(TestCase):
         self.check_gui_calls(self.etable_gui, refresh=1)
         self.assertEqual(len(self.etable), 1)
         self.assertEqual(self.etable[0].description, 'fourth')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_TRANSFER)
         self.assertEqual(len(self.ttable), 1)
@@ -82,7 +82,7 @@ class TransactionsOfEachType(TestCase):
         self.check_gui_calls(self.etable_gui, refresh=1)
         self.assertEqual(len(self.etable), 1)
         self.assertEqual(self.etable[0].description, 'second')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_UNASSIGNED)
         self.assertEqual(len(self.ttable), 1)
@@ -90,22 +90,22 @@ class TransactionsOfEachType(TestCase):
     def test_enable_disable_buttons(self):
         # The enable disable mechanism of the income, expense and transfer buttons work as expected
         self.efbar.filter_type = FILTER_INCOME
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.clear_gui_calls()
         self.istatement.show_selected_account()
         self.assertTrue(self.efbar.filter_type is None)
         self.check_gui_calls(self.efbar_gui, refresh=1, disable_transfers=1)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, refresh=1) # no disable
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.check_gui_calls(self.efbar_gui, refresh=1, enable_transfers=1)
     
     def test_multiple_filters_at_the_same_time(self):
         """Having an unassigned filter at the same time as a search filter works as expected"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.tfbar.filter_type = FILTER_UNASSIGNED
         self.sfield.query = 'first'
         self.assertEqual(len(self.ttable), 0)
@@ -120,7 +120,7 @@ class ThreeEntriesOneReconciled(_ThreeEntriesOneReconciled):
         self.efbar.filter_type = FILTER_NOTRECONCILED
         self.assertEqual(len(self.etable), 2)
         self.assertEqual(self.etable[0].description, 'one')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 2)
         self.assertEqual(self.ttable[1].description, 'three')
     
@@ -128,7 +128,7 @@ class ThreeEntriesOneReconciled(_ThreeEntriesOneReconciled):
         self.efbar.filter_type = FILTER_RECONCILED
         self.assertEqual(len(self.etable), 1)
         self.assertEqual(self.etable[0].description, 'two')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(len(self.ttable), 1)
         self.assertEqual(self.ttable[0].description, 'two')
     
@@ -158,7 +158,7 @@ class SplitExpenseFromAssetAndLiability(TestCase):
         self.efbar.filter_type = FILTER_EXPENSE # decrease
         self.assertEqual(len(self.etable), 1)
         # now, let's go to the liability side
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.show_selected_account()
         # we're still on FILTER_EXPENSE (decrease)

@@ -25,7 +25,7 @@ class Pristine(TestCase):
 class TwoTransactions(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable.save_edits()
         self.ttable.add()
@@ -53,7 +53,7 @@ class TwoTransactionsDifferentValues(TestCase):
         self.add_entry(date='06/07/2008', description='description1', payee='payee1', checkno='42', transfer='to1', decrease='42')
         self.add_account('from2')
         self.add_entry(date='07/07/2008', description='description2', payee='payee2', checkno='43', transfer='to2', decrease='43')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0, 1])
         self.mepanel.load()
     
@@ -279,7 +279,7 @@ class TwoForeignTransactions(TestCase):
         self.add_account('account1')
         self.add_entry(increase='42 eur')
         self.add_entry(increase='42 eur')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0, 1])
         self.mepanel.load()
     

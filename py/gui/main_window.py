@@ -65,16 +65,43 @@ class MainWindow(DocumentGUIObject):
         """When the entry table is shown, go back to the appropriate report"""
         assert self.top == ENTRY_TABLE # not supposed to be called outside the entry_table context
         if self.document.shown_account.is_balance_sheet_account():
-            self.document.select_balance_sheet()
+            self.select_balance_sheet()
         else:
-            self.document.select_income_statement()
+            self.select_income_statement()
+    
+    def select_balance_sheet(self):
+        self.document.filter_string = ''
+        self.show_balance_sheet()
+    
+    def select_income_statement(self):
+        self.document.filter_string = ''
+        self.show_income_statement()
+    
+    def select_transaction_table(self):
+        self.document.filter_string = ''
+        self.show_transaction_table()
+    
+    def select_entry_table(self):
+        if self.document.shown_account is None:
+            return
+        self.document.select_account(self.document.shown_account)
+        self.document.filter_string = ''
+        self.show_entry_table()
+        if self.document.shown_account.is_balance_sheet_account():
+            self.show_line_graph()
+        else:
+            self.show_bar_graph()
+    
+    def select_schedule_table(self):
+        self.document.filter_string = ''
+        self.show_schedule_table()
     
     #--- Event callbacks
+    def account_must_be_shown(self):
+        self.select_entry_table()
+    
     def account_needs_reassignment(self):
         self.view.show_account_reassign_panel()
-    
-    def balance_sheet_selected(self):
-        self.show_balance_sheet()
     
     def custom_date_range_selected(self):
         self.view.show_custom_date_range_panel()
@@ -92,31 +119,18 @@ class MainWindow(DocumentGUIObject):
             else:
                 self.view.animate_date_range_backward()
     
-    def entry_table_selected(self):
-        assert self.document.selected_account is not None
-        self.show_entry_table()
-        if self.document.selected_account.is_balance_sheet_account():
-            self.show_line_graph()
-        else:
-            self.show_bar_graph()
-    
-    def income_statement_selected(self):
-        self.show_income_statement()
+    def filter_applied(self):
+        if self.document.filter_string:
+            self.show_transaction_table()
     
     def reconciliation_changed(self):
         self.view.refresh_reconciliation_button()
     
-    def schedule_table_selected(self):
-        self.show_schedule_table()
-    
-    def transaction_table_selected(self):
-        self.show_transaction_table()
-    
     def undone(self):
         if self.document.selected_account is None and self.top == ENTRY_TABLE:
-            self.document.select_balance_sheet()
+            self.select_balance_sheet()
     
     def redone(self):
         if self.document.selected_account is None and self.top == ENTRY_TABLE:
-            self.document.select_balance_sheet()
+            self.select_balance_sheet()
     

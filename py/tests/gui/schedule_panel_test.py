@@ -15,7 +15,7 @@ from ..base import TestCase, CommonSetup
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
     
     def test_add_schedule(self):
         self.scpanel.new()
@@ -29,7 +29,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_scheduled_transaction(repeat_every=3)
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
         self.sctable.select([0])
         self.clear_gui_calls()
     
@@ -79,7 +79,7 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_scheduled_transaction(repeat_every=3)
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
         self.sctable.select([0])
         self.scpanel.load()
     
@@ -104,6 +104,6 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         self.scpanel.description = 'foobaz'
         self.scpanel.save()
         # To see if the save_edits() worked, we look if the spawns are correct in the ttable
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 3) #stops 2 days after it starts
     

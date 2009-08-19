@@ -92,7 +92,7 @@ class OneNamedAccount(TestCase):
         at the current index
         """
         self.document.undo() # undo set name
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = 'foobaz'
         self.bsheet.save_edits()
@@ -120,7 +120,7 @@ class OneNamedAccount(TestCase):
     def test_change_account_on_duplicate_account_name_doesnt_record_action(self):
         # Renaming an account and causing a duplicate account name error doesn't cause an action to
         # be recorded
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.add_account()
         self.bsheet.selected.name = 'foobar'
         self.bsheet.save_edits()
@@ -145,14 +145,14 @@ class OneNamedAccount(TestCase):
     
     def test_description_after_delete(self):
         """the undo description is 'Remove account' after deleting an account"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.assertEqual(self.document.undo_description(), 'Remove account')
     
     def test_gui_calls(self):
         # the correct gui calls are made when undoing/redoing (in particular: stop_editing)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
         self.document.undo()
         self.check_gui_calls(self.bsheet_gui, refresh=1, stop_editing=1)
@@ -181,7 +181,7 @@ class OneNamedAccount(TestCase):
     
     def test_redo_delete_while_in_etable(self):
         # If we're in etable and perform a redo that removes the account we're in, go back to the bsheet
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.document.undo()
@@ -202,20 +202,20 @@ class OneNamedAccount(TestCase):
     @save_state_then_verify
     def test_undo_delete_account(self):
         """Undo after having removed an account puts it back in"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
     
     @save_state_then_verify
     def test_undo_move_account(self):
         """Moving an account from one section to another can be undone"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0], [1])
 
     @save_state_then_verify
     def test_undo_set_account_name(self):
         """Undo after a name change puts back the old name"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = 'foobaz'
         self.bsheet.save_edits()
@@ -229,7 +229,7 @@ class OneNamedAccount(TestCase):
     
     def test_undo_add_while_in_etable(self):
         # If we're in etable and perform an undo that removes the account we're in, go back to the bsheet
-        self.document.select_entry_table()
+        self.mainwindow.select_entry_table()
         self.document.undo()
         self.clear_gui_calls()
         self.document.undo()
@@ -240,7 +240,7 @@ class OneNamedAccount(TestCase):
         """Undoing a new_account() just after having undone a change_account works"""
         # Previously, a copy of the changed account would be inserted, making it impossible for
         # undo to find the account to be removed.
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.document.undo()
         self.document.undo()
         self.assertEqual(self.bsheet.assets.children_count, 2)
@@ -264,14 +264,14 @@ class OneAccountGroup(TestCase):
     @save_state_then_verify
     def test_undo_delete_group(self):
         """It's possible to undo group deletion"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
     
     @save_state_then_verify
     def test_undo_rename_group(self):
         """It's possible to undo a group rename"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = 'foobar'
         self.bsheet.save_edits()
@@ -286,7 +286,7 @@ class AccountInGroup(TestCase):
     def test_change_group_on_duplicate_account_name_doesnt_record_action(self):
         # Renaming a group and causing a duplicate account name error doesn't cause an action to
         # be recorded
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.add_account_group()
         self.bsheet.selected.name = 'group'
         self.bsheet.save_edits()
@@ -297,7 +297,7 @@ class AccountInGroup(TestCase):
         """When undoing a group deletion, the accounts that were in it are 
         back in.
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
     
@@ -306,7 +306,7 @@ class AccountInGroup(TestCase):
         """Undoing a move_account for an account that was in a group puts it
         back in that group
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0, 0], [1])
     
 
@@ -323,7 +323,7 @@ class LoadFile(TestCase):
         # and recook.
         time.sleep(0.05)
         self.document._cook()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
     
@@ -347,7 +347,7 @@ class LoadFile(TestCase):
     def test_undo_add_group(self):
         """The undoer keeps its group list up-to-date after a load"""
         # Previously, the Undoer would hold an old instance of GroupList
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.add_account_group()
     
 
@@ -358,7 +358,7 @@ class TwoAccountsTwoTransactions(TestCase):
         self.create_instances()
         self.add_account('first')
         self.add_account('second')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # first
         self.bsheet.show_selected_account()
         self.add_entry('19/6/2008', transfer='second')
@@ -381,7 +381,7 @@ class TwoAccountsTwoTransactions(TestCase):
         self.check_gui_calls(self.etable_gui, refresh=1, stop_editing=1)
     
     def test_ttable_refreshes(self):
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
         self.document.undo()
         self.assertEqual(len(self.ttable), 1)
@@ -402,7 +402,7 @@ class TwoAccountsTwoTransactions(TestCase):
     @save_state_then_verify
     def test_undo_change_transaction_from_ttable(self):
         """It's possible to undo a transaction change"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         row = self.ttable[1]
         row.date = '21/6/2008'
         row.description = 'foo'
@@ -422,7 +422,7 @@ class TwoAccountsTwoTransactions(TestCase):
     @save_state_then_verify
     def test_undo_delete_transaction(self):
         """It's possible to undo a transaction deletion"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0, 1])
         self.ttable.delete()
     
@@ -431,7 +431,7 @@ class TwoAccountsTwoTransactions(TestCase):
         """When 'first' is deleted, one transaction is simply unbound, and the other is deleted. we 
         must undo all that
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.arpanel.ok() # continue deletion
@@ -498,7 +498,7 @@ class ThreeTransactionsReconciled(TestCase):
         """Performing a txn change that results in unreconciliation can be completely undone
         (including the unreconciliation).
         """
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.etable[0].date = '18/6/2008'
@@ -509,7 +509,7 @@ class ThreeTransactionsReconciled(TestCase):
         """Performing a txn change that results in unreconciliation can be completely undone
         (including the unreconciliation).
         """
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable[0].date = '18/6/2008'
         self.ttable.save_edits()
     
@@ -518,7 +518,7 @@ class ThreeTransactionsReconciled(TestCase):
         """Deleting txn change that results in unreconciliation can be completely undone
         (including the unreconciliation).
         """
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.delete()
     
     @save_state_then_verify
@@ -526,7 +526,7 @@ class ThreeTransactionsReconciled(TestCase):
         """Moving txn change that results in unreconciliation can be completely undone
         (including the unreconciliation).
         """
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.move([0], 2)
     
     @save_state_then_verify
@@ -545,7 +545,7 @@ class OFXImport(TestCase):
         # same cheat as in LoadFile
         time.sleep(0.05)
         self.document._cook()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
     
@@ -601,7 +601,7 @@ class ReconciledSplitsWithTransfersAndReferences(TestCase):
         self.etable[0].toggle_reconciled()
         self.etable[1].toggle_reconciled()
         self.document.toggle_reconciliation_mode() # commit
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # Account 2
         self.bsheet.show_selected_account()
         self.document.toggle_reconciliation_mode()
@@ -625,7 +625,7 @@ class ReconciledSplitsWithTransfersAndReferences(TestCase):
 #         self.create_instances()
 #         self.add_account('first')
 #         self.add_account('second')
-#         self.document.select_balance_sheet()
+#         self.mainwindow.select_balance_sheet()
 #         self.bsheet.selected = self.bsheet.assets[0] # first
 #         self.bsheet.show_selected_account()
 #         self.add_entry('19/6/2008', transfer='second')

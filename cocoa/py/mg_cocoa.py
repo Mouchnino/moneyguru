@@ -149,26 +149,6 @@ class PyDocument(NSObject):
         self.py.connect()
         return self
     
-    #--- Views
-    def selectBalanceSheet(self):
-        self.py.select_balance_sheet()
-    
-    def selectIncomeStatement(self):
-        self.py.select_income_statement()
-    
-    def selectTransactionTable(self):
-        self.py.select_transaction_table()
-    
-    def selectEntryTable(self):
-        self.py.select_entry_table()
-    
-    @objc.signature('i@:')
-    def canSelectEntryTable(self):
-        return self.py.shown_account is not None
-    
-    def selectScheduleTable(self):
-        self.py.select_schedule_table()
-    
     #--- Date range
     def selectPrevDateRange(self):
         self.py.select_prev_date_range()
@@ -1102,6 +1082,25 @@ class PyExpensesPieChart(PyChart):
 
 class PyMainWindow(PyListener):
     py_class = MainWindow
+    
+    def selectBalanceSheet(self):
+        self.py.select_balance_sheet()
+    
+    def selectIncomeStatement(self):
+        self.py.select_income_statement()
+    
+    def selectTransactionTable(self):
+        self.py.select_transaction_table()
+    
+    def selectEntryTable(self):
+        self.py.select_entry_table()
+    
+    @objc.signature('i@:')
+    def canSelectEntryTable(self):
+        return self.py.document.shown_account is not None
+    
+    def selectScheduleTable(self):
+        self.py.select_schedule_table()
     
     @objc.signature('i@:')
     def canNavigateDateRange(self):

@@ -10,6 +10,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyMainWindow : PyGUI {}
+- (void)selectBalanceSheet;
+- (void)selectIncomeStatement;
+- (void)selectTransactionTable;
+- (void)selectEntryTable;
+- (BOOL)canSelectEntryTable;
+- (void)selectScheduleTable;
 - (BOOL)canNavigateDateRange;
 - (void)navigateBack;
 @end

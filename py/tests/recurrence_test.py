@@ -22,12 +22,12 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def test_change_schedule_transaction(self):
         # when modifying a schedule's transaction through the scpanel, make sure that this change
         # is reflected among all spawns (in other words, reset spawn cache).
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
         self.sctable.select([0])
         self.scpanel.load()
         self.scpanel.description = 'foobaz'
         self.scpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         eq_(self.ttable[1].description, 'foobaz')
     
     def test_change_spawn(self):
@@ -134,7 +134,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.assertEqual(len(self.ttable), 2)
     
     def test_etable_attrs(self):
-        self.document.select_entry_table()
+        self.mainwindow.select_entry_table()
         self.assertEqual(len(self.etable), 6) # same thing in etable
         self.assertTrue(self.etable[0].recurrent)
         self.assertEqual(self.ttable[0].date, '13/09/2008')
@@ -203,7 +203,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
         self.assertEqual(self.ttable[3].to, 'account')
     
     def test_etable_attrs(self):
-        self.document.select_entry_table()
+        self.mainwindow.select_entry_table()
         self.assertEqual(len(self.etable), 7)
         self.assertEqual(self.etable[2].date, '19/09/2008')
         self.assertEqual(self.etable[2].description, 'bar')
@@ -225,8 +225,8 @@ class OneDailyRecurrentTransactionWithLocalChange(TestCase, CommonSetup):
         # Previously, reloading an exception would result in recurrent_date being the same as date
         self.document = self.save_and_load()
         self.create_instances()
-        self.document.select_schedule_table()
-        self.document.select_transaction_table()
+        self.mainwindow.select_schedule_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([2])
         self.ttable.delete()
         self.assertEqual(self.ttable[2].date, '22/09/2008')
@@ -236,7 +236,7 @@ class OneDailyRecurrentTransactionWithLocalChange(TestCase, CommonSetup):
         # Also, later, local changes would be lost at reload
         self.document = self.save_and_load()
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertTrue(self.ttable[2].recurrent)
         self.assertEqual(self.ttable[2].description, 'changed')
     
@@ -425,7 +425,7 @@ class DailyScheduleWithOneSpawnReconciled(TestCase, CommonSetup):
         self.create_instances()
         self.add_account('account')
         self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
-        self.document.select_entry_table()
+        self.mainwindow.select_entry_table()
         self.etable.select([1]) # This one is the spawn on 16/09/2008
         self.document.toggle_reconciliation_mode()
         self.etable.selected_row.toggle_reconciled()
@@ -436,12 +436,12 @@ class DailyScheduleWithOneSpawnReconciled(TestCase, CommonSetup):
         # exceptions start to be all out of sync with the recurrence, and trying to figure out which
         # ones should be kept is a nightmare. Thus, when a recurrence's start_date, repeat_type or
         # repeat_every is changed, its exceptions are simply reset.
-        self.document.select_schedule_table()
+        self.mainwindow.select_schedule_table()
         self.sctable.select([0])
         self.scpanel.load()
         self.scpanel.repeat_every = 1
         self.scpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         # spawns start from the 13th, *not* the 13th, which means 18 spawn. If we add the reconciled
         # spawn which have been materialized, we have 19
         eq_(len(self.ttable), 19)

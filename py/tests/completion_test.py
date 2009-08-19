@@ -277,7 +277,7 @@ class DifferentAccountTypes(TestCase):
     
     def test_complete_transfer(self):
         """Complete transfer with non-asset categories as well"""
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable.complete('th', 'transfer'), 'three')
@@ -410,10 +410,10 @@ class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
     
     def test_edit_ttable_changes_completion_list_order(self):
         # Changing a txn in the ttable updates the mtime
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.selected_row.amount = '1'
         self.ttable.save_edits()
-        self.document.select_entry_table()
+        self.mainwindow.select_entry_table()
         self.assert_completion_order_changed()
     
     def test_next_completion_after_description(self):
@@ -523,7 +523,7 @@ class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
         row.description = 'Duh, that shouldn\'t be here!'
         self.etable.save_edits()
         self.document.load_from_xml(filepath)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assert_completion_order_changed()

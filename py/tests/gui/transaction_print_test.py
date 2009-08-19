@@ -14,7 +14,7 @@ from ...gui.transaction_print import TransactionPrint
 class SplitTransaction(_SplitTransaction):
     def setUp(self):
         _SplitTransaction.setUp(self)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.pv = TransactionPrint(self.ttable)
     
     def test_split_count(self):

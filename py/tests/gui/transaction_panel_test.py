@@ -55,7 +55,7 @@ class OneEntry(TestCase):
     def test_can_load_selected_transaction(self):
         """can_load is based on the last selection of either the etable ot the ttable"""
         self.etable.select([])
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0])
         self.assertTrue(self.tpanel.can_load())
     
@@ -83,7 +83,7 @@ class OneEntry(TestCase):
     
     def test_load_while_ttable_is_editing(self):
         """loading the tpanel while ttable is editing saves the edits and stops editing mode"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         row = self.ttable.edited
         row.date = '07/07/2008'
@@ -113,7 +113,7 @@ class OneAmountlessEntryPanelLoaded(TestCase):
         self.create_instances()
         self.add_account()
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0])
         self.tpanel.load()
         self.clear_gui_calls()
@@ -128,7 +128,7 @@ class OneEntryPanelLoaded(TestCase):
         self.create_instances()
         self.add_account()
         self.add_entry(date='06/07/2008', description='description', increase='42')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0])
         self.tpanel.load()
         self.clear_gui_calls()
@@ -153,7 +153,7 @@ class TwoAmountlessEntries(TestCase):
     def test_loads_last_selected_transaction(self):
         """the tpanel also works with the ttable. If the ttable is the last to have had a selection,
         tpanel loads this one."""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([0]) # etable has index 1 selected
         self.tpanel.load()
         self.assertEqual(self.tpanel.description, 'desc1')
@@ -183,7 +183,7 @@ class MultiCurrencyTransaction(TestCase):
     def setUp(self):
         self.create_instances()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.tpanel.load()
         self.stable[0].account = 'first'

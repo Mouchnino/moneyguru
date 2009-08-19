@@ -22,7 +22,7 @@ from ...model.date import MonthRange, YearRange
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
     
     def test_add_and_cancel(self):
@@ -52,7 +52,7 @@ class Pristine(TestCase):
         self.clear_gui_calls()
         self.ttable.save_edits()
         self.check_gui_calls(self.mainwindow_gui) # No changes in the main window
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.assertEqual(len(self.etable), 1)
@@ -73,7 +73,7 @@ class Pristine(TestCase):
     
     def test_gui_call_on_filter_applied(self):
         """The ttable's view is refreshed on filter_applied"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
         self.sfield.query = 'foobar'
         self.check_gui_calls(self.ttable_gui, refresh=1)
@@ -91,14 +91,14 @@ class Pristine(TestCase):
 class EditionMode(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.clear_gui_calls()
     
     def test_add_and_save(self):
         """Leaving the from/to columns empty don't auto-create an empty named account"""
         self.ttable.save_edits()
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income.children_count, 2)
     
     def test_change_date_range(self):
@@ -119,7 +119,7 @@ class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
     # TestSaveLoadMixin: Make sure that unassigned transactions are loaded
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable[0].amount = '42'
         self.ttable.save_edits()
@@ -130,7 +130,7 @@ class OneEntry(TestCase, CommonSetup):
         self.create_instances()
         self.setup_monthly_range()
         self.setup_one_entry()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_add_then_delete(self):
         """calling delete() while being in edition mode just cancels the current edit. it does *not*
@@ -161,7 +161,7 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_can_edit(self):
         """All columns can be edited"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         self.assertTrue(row.can_edit_date)
         self.assertTrue(row.can_edit_description)
@@ -206,7 +206,7 @@ class OneEntry(TestCase, CommonSetup):
         """Deleting a transaction updates the graph and makes the 'second' account go away"""
         self.ttable.delete()
         self.assertEqual(len(self.ttable), 0)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(list(self.balgraph.data), [])
@@ -232,7 +232,7 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_save_edits(self):
         """save_edits() puts the changes in the buffer down to the model"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.save_edits() # does nothing
         row = self.ttable[0]
         row.date = '12/07/2008'
@@ -254,7 +254,7 @@ class OneEntry(TestCase, CommonSetup):
         self.assertEqual(row.to, 'newto')
         self.assertEqual(row.amount, '0.42')
         # 'newfrom' has been created as an income, and 'newto' as an expense. 'second' has been cleaned
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income.children_count, 3)
         self.assertEqual(self.istatement.expenses.children_count, 3)
         self.assertEqual(self.istatement.income[0].name, 'newfrom')
@@ -267,7 +267,7 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_set_date_in_range(self):
         """Setting the date in range doesn't cause useless notifications"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable[0].date = '12/07/2008'
         self.clear_gui_calls()
         self.ttable.save_edits()
@@ -275,7 +275,7 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_set_date_out_of_range(self):
         """Setting the date out of range makes the app's date range change accordingly"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable[0].date = '1/08/2008'
         self.clear_gui_calls()
         self.ttable.save_edits()
@@ -290,7 +290,7 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_set_negative_amount(self):
         """When you set a negative amount, the 'from' and 'to' columns are switched"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         row.amount = '-42'
         self.ttable.save_edits()
@@ -301,7 +301,7 @@ class OneEntry(TestCase, CommonSetup):
     def test_set_row_attr(self):
         """Setting a row's attr puts the table in edition mode, changes the row's buffer, but doesn't
         touch the transaction"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         row.date = '12/07/2008'
         row.description = 'foo'
@@ -352,7 +352,7 @@ class OneTwoWayTransactionOtherWay(TestCase):
     
     def test_attributes(self):
         """The from and to attributes depends on the money flow, not the order of the splits"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         self.assertEqual(row.from_, 'second')
         self.assertEqual(row.to, 'first')
@@ -374,7 +374,7 @@ class OneThreeWayTransaction(TestCase):
         row.account = 'third'
         self.stable.save_edits() # the 22 is now assigned to the newly created 'third'
         self.tpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_attributes(self):
         """Transactions with more than 2 splits are supported"""
@@ -432,7 +432,7 @@ class OneThreeWayTransactionMultipleCurrencies(TestCase):
         row.debit = '22 usd'
         self.stable.save_edits() # the 22 is now assigned to the newly created 'third'
         self.tpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_attributes(self):
         """When the 'to' side has more than one currency, convert everything to the account's curency"""
@@ -453,7 +453,7 @@ class OneFourWayTransactionWithUnassigned(TestCase):
         row.debit = '20'
         self.stable.save_edits() # We two new unassigned splits balancing themselves
         self.tpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_attributes(self):
         """The from/to fields show the unassigned splits"""
@@ -465,7 +465,7 @@ class OneFourWayTransactionWithUnassigned(TestCase):
 class TwoWayUnassignedWithAmount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable.selected_row.amount = '42'
         self.ttable.save_edits()
@@ -481,7 +481,7 @@ class TwoWayUnassignedWithAmount(TestCase):
 class EmptyTransaction(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable.save_edits()
     
@@ -497,7 +497,7 @@ class TwoWayNullAmounts(TestCase):
         self.create_instances()
         self.add_account('first')
         self.add_entry('11/07/2008', transfer='second')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_dont_blank_zero(self):
         """Null amounts are not blanked"""
@@ -522,7 +522,7 @@ class ThreeWayNullAmounts(TestCase):
         row.account = 'third'
         self.stable.save_edits()
         self.tpanel.save()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_can_edit_to(self):
         """The To column can be edited when it represents a single split"""
@@ -550,7 +550,7 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
         self.add_account()
         self.add_entry('11/06/2008', description='first')
         self.add_entry('11/07/2008', description='second') # The month range has now changed to July 2008
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
     
     def test_attributes(self):
@@ -584,7 +584,7 @@ class ThreeTransactionsInRange(TestCase):
         self.add_entry('11/07/2008', description='first', transfer='first')
         self.add_entry('11/07/2008', description='second', transfer='second')
         self.add_entry('12/07/2008', description='third', transfer='third') 
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_add_date_and_selection(self):
         """New transactions are added on the same date as the currently selected transaction, after
@@ -631,17 +631,17 @@ class ThreeTransactionsInRange(TestCase):
         """Only the explicit selection is sticky. If the non-explicit selection changes, this 
         doesn't affect the ttable selection.
         """
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[1] # second
         self.istatement.show_selected_account()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable.selected_indexes, [2]) # explicit selection
         # the other way around too
         self.ttable.select([1])
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[2]
         self.istatement.show_selected_account()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable.selected_indexes, [1]) # explicit selection
@@ -672,7 +672,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.create_instances()
         self.add_account('first')
         self.add_account('second')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.add_entry('19/07/2008', description='entry 1', increase='1')
@@ -682,12 +682,12 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.etable[0].toggle_reconciled()
         self.etable[1].toggle_reconciled()
         self.etable[2].toggle_reconciled()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
         self.document.toggle_reconciliation_mode() # commit reconciliation
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
     
     def test_cancel_change(self):
@@ -697,7 +697,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.ttable.save_edits()
         # The action was cancelled
         self.assertEqual(self.ttable[1].date, '20/07/2008')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
@@ -711,7 +711,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.ttable.delete()
         # The action was cancelled
         self.assertEqual(len(self.ttable), 3)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
@@ -724,7 +724,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.ttable.move([1], 3)
         # The action was cancelled
         self.assertEqual(self.ttable[1].amount, '2.00')
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
@@ -735,13 +735,13 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         """Changing the amount of a transaction is the same as changing the date"""
         self.ttable[1].amount = '12'
         self.ttable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
         self.assertFalse(self.etable[1].reconciled)
         self.assertFalse(self.etable[2].reconciled)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled)
@@ -755,13 +755,13 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         """
         self.ttable[1].date = '18/07/2008'
         self.ttable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled)
         self.assertTrue(self.etable[1].reconciled) # wasn't touched
         self.assertFalse(self.etable[2].reconciled)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled)
@@ -775,14 +775,14 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         """
         self.ttable[1].from_ = 'third' # from was previously 'second'
         self.ttable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         # Nothing changed in 'first'
         self.assertTrue(self.etable[0].reconciled)
         self.assertTrue(self.etable[1].reconciled)
         self.assertTrue(self.etable[2].reconciled)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         # The entry newly in 'third' is unreconciled
@@ -797,18 +797,18 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         """
         self.ttable[1].to = 'third' # from was previously 'first'
         self.ttable.save_edits()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         # The 2nd txn is gone from 'first' and the 3rd is unreconciled
         self.assertTrue(self.etable[0].reconciled)
         self.assertFalse(self.etable[1].reconciled)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         # In 'second' nothing has been touched
         self.assertTrue(self.etable[0].reconciled)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.show_selected_account()
         # The entry newly in 'third' is unreconciled
@@ -821,7 +821,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         """Deleting a txn unreconciles every splits in it"""
         self.ttable.select([1])
         self.ttable.delete()
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
@@ -833,13 +833,13 @@ class ThreeTransactionsEverythingReconciled(TestCase):
     def test_move(self):
         """Moving a txn unreconciles every splits in it"""
         self.ttable.move([1], 3)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertTrue(self.etable[0].reconciled)
         self.assertFalse(self.etable[1].reconciled)
         self.assertFalse(self.etable[2].reconciled)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled)
@@ -887,7 +887,7 @@ class LoadFile(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_add_txn(self):
         # The newly added txn will have the last transactions' date rather then today's date
@@ -951,7 +951,7 @@ class AutoFill(TestCase):
     
     def test_autofill_ignores_blank(self):
         """Blank values never result in autofill"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         row.description = ''
         self.ttable.save_edits()
@@ -1035,7 +1035,7 @@ class SevenEntries(TestCase):
 
     def test_can_reorder_entry(self):
         """Move is allowed only when it makes sense"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertFalse(self.ttable.can_move([0], 2)) # Not the same date
         self.assertFalse(self.ttable.can_move([2], 0)) # Likewise
         self.assertFalse(self.ttable.can_move([1], 1)) # Moving to the same row doesn't change anything
@@ -1049,7 +1049,7 @@ class SevenEntries(TestCase):
     
     def test_can_reorder_entry_multiple(self):
         """Move is allowed only when it makes sense"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.assertTrue(self.ttable.can_move([1, 2], 4)) # This one is valid
         self.assertFalse(self.ttable.can_move([1, 0], 4)) # from_indexes are on different days
         self.assertFalse(self.ttable.can_move([1, 2], 3)) # Nothing moving (just next to the second index)
@@ -1062,7 +1062,7 @@ class SevenEntries(TestCase):
     
     def test_change_date(self):
         """When chaing a txn date, the txn goes at the last position of its new date"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([2]) # txn 3
         row = self.ttable[2]
         row.date = '3/1/2008'
@@ -1072,38 +1072,38 @@ class SevenEntries(TestCase):
     
     def test_move_entry_to_the_end_of_the_day(self):
         """Moving a txn to the end of the day works"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.move([1], 5)
         self.assertEqual(self.transaction_descriptions()[:5], ['txn 1', 'txn 3', 'txn 4', 'txn 5', 'txn 2'])
     
     def test_move_entry_to_the_end_of_the_list(self):
         """Moving a txn to the end of the list works"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.move([5], 7)
         self.assertEqual(self.transaction_descriptions()[5:], ['txn 7', 'txn 6'])
     
     def test_reorder_entry(self):
         """Moving a txn reorders the entries."""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.move([1], 3)
         self.assertEqual(self.transaction_descriptions()[:4], ['txn 1', 'txn 3', 'txn 2', 'txn 4'])
     
     def test_reorder_entry_multiple(self):
         """Multiple txns can be re-ordered at once"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.move([1, 2], 4)
         self.assertEqual(self.transaction_descriptions()[:4], ['txn 1', 'txn 4', 'txn 2', 'txn 3'])
     
     def test_reorder_entry_makes_the_app_dirty(self):
         """reordering txns makes the app dirty"""
         self.save_file()
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.move([1], 3)
         self.assertTrue(self.document.is_dirty())
     
     def test_selection_follows(self):
         """The selection follows when we move the selected txn."""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([1])
         self.ttable.move([1], 3)
         self.assertEqual(self.ttable.selected_indexes, [2])
@@ -1112,14 +1112,14 @@ class SevenEntries(TestCase):
     
     def test_selection_follows_multiple(self):
         """The selection follows when we move the selected txns"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([1, 2])
         self.ttable.move([1, 2], 4)
         self.assertEqual(self.ttable.selected_indexes, [2, 3])
     
     def test_selection_stays(self):
         """The selection stays on the same txn if we don't move the selected one"""
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.ttable.select([2])
         self.ttable.move([1], 3)
         self.assertEqual(self.ttable.selected_indexes, [1])
@@ -1140,7 +1140,7 @@ class FourEntriesOnTheSameDate(TestCase):
         self.add_entry('1/1/2008', description='txn 2')
         self.add_entry('1/1/2008', description='txn 3')
         self.add_entry('1/1/2008', description='txn 4')
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
     
     def test_can_reorder_multiple(self):
         """It's not possible to move entries in the middle of a gapless multiple selection"""

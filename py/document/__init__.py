@@ -771,7 +771,7 @@ class Document(Broadcaster, Listener):
         if self._selected_account is not self._shown_account:
             self._visible_entries = None
         self._shown_account = self._selected_account
-        self.select_entry_table()
+        self.notify('account_must_be_shown')
     
     @property
     def selected_transactions(self):
@@ -809,26 +809,6 @@ class Document(Broadcaster, Listener):
     
     def select_schedules(self, schedules):
         self._selected_schedules = schedules
-    
-    def select_balance_sheet(self):
-        self.filter_string = ''
-        self.notify('balance_sheet_selected')
-    
-    def select_entry_table(self):
-        if self.shown_account is not None:
-            self.select_account(self.shown_account)
-            self.filter_string = ''
-            self.notify('entry_table_selected')
-    
-    def select_income_statement(self):
-        self.filter_string = ''
-        self.notify('income_statement_selected')
-    
-    def select_schedule_table(self):
-        self.notify('schedule_table_selected')
-    
-    def select_transaction_table(self):
-        self.notify('transaction_table_selected')
     
     #--- Load / Save / Import
     def load_from_xml(self, filename):
@@ -1185,7 +1165,6 @@ class Document(Broadcaster, Listener):
         self._filter_string = value
         self._visible_transactions = None
         self._visible_entries = None
-        self.select_transaction_table()
         self.notify('filter_applied')
     
     # use FILTER_* consts or None

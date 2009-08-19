@@ -51,7 +51,7 @@ class AssetAccountAndIncomeAccount(TestCase):
     
     def test_delete_account(self):
         # deleting a non-empty account shows the account reassign panel
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.clear_gui_calls()
         self.bsheet.delete()
@@ -59,13 +59,13 @@ class AssetAccountAndIncomeAccount(TestCase):
     
     def test_navigate_back(self):
         # navigate_back() shows the appropriate sheet depending on which account entry table shows
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.clear_gui_calls()
         self.mainwindow.navigate_back()
         self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1)
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.clear_gui_calls()
@@ -74,16 +74,16 @@ class AssetAccountAndIncomeAccount(TestCase):
     
     def test_switch_views(self):
         """Views shown in the main window depend on what's selected in the account tree."""
-        self.document.select_income_statement()
+        self.mainwindow.select_income_statement()
         self.check_gui_calls(self.mainwindow_gui, show_income_statement=1)
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.check_gui_calls(self.mainwindow_gui, show_entry_table=1, show_bar_graph=1)
-        self.document.select_balance_sheet()
+        self.mainwindow.select_balance_sheet()
         self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1)
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.check_gui_calls(self.mainwindow_gui, show_entry_table=1, show_line_graph=1)
-        self.document.select_transaction_table()
+        self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.mainwindow_gui, show_transaction_table=1)
     
