@@ -66,6 +66,9 @@ class TransactionTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         """Call this when the order or the visibility of the columns change"""
         self._columns = columns
     
+    def make_schedule_from_selected(self):
+        self.document.make_schedule_from_selected()
+    
     def move(self, row_indexes, to_index):
         try:
             to_row = self[to_index]

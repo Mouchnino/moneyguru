@@ -19,6 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     [self window]; // Initialize the window
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
+    parentWindow = [aDocument windowForSheet];
     [splitTable setTransactionPanel:[self py]];
     return self;
 }
@@ -108,6 +109,13 @@ http://www.hardcoded.net/licenses/hs_license
     [repeatOptionsPopUp selectItemAtIndex:index];
 }
 
+- (void)show
+{
+    [self load];
+    [NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:self 
+            didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+}
+
 /* Delegate */
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
@@ -118,4 +126,10 @@ http://www.hardcoded.net/licenses/hs_license
     }
     return customFieldEditor;
 }
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [sheet orderOut:nil];
+}
+
 @end

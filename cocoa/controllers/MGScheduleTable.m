@@ -33,6 +33,18 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyScheduleTable *)py;
 }
 
+- (void)connect
+{
+    [super connect];
+    [schedulePanel connect];
+}
+
+- (void)disconnect
+{
+    [super disconnect];
+    [schedulePanel disconnect];
+}
+
 /* Public */
 - (void)add
 {

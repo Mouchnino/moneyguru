@@ -175,6 +175,14 @@ http://www.hardcoded.net/licenses/hs_license
     }
 }
 
+- (IBAction)makeScheduleFromSelected:(id)sender
+{
+    if ([[self top] respondsToSelector:@selector(makeScheduleFromSelected)])
+    {
+        [(id)[self top] makeScheduleFromSelected];
+    }
+}
+
 - (IBAction)moveDown:(id)sender
 {
     if ([[self top] respondsToSelector:@selector(moveDown)])
@@ -543,7 +551,8 @@ http://www.hardcoded.net/licenses/hs_license
     if (action == @selector(addGroup:))
         return (top == balanceSheet) || (top == incomeStatement);
     else if ((action == @selector(moveUp:)) ||
-             (action == @selector(moveDown:)))
+             (action == @selector(moveDown:)) ||
+             (action == @selector(makeScheduleFromSelected:)))
         return (top == transactionTable) || (top == entryTable);
     else if (action == @selector(toggleEntriesReconciled:))
         return (top == entryTable) && [[[self document] py] inReconciliationMode];

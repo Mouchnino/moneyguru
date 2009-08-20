@@ -27,8 +27,8 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSTextView *customFieldEditor;
     NSTextView *customDateFieldEditor;
+    NSWindow *parentWindow;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
 - (PySchedulePanel *)py;
 /* Methods */
 - (void)new;

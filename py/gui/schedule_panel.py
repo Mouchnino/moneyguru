@@ -60,6 +60,12 @@ class SchedulePanel(PanelWithTransaction):
         self.document.change_schedule(self.schedule, self.transaction, repeat_type=repeat_type,
                                       repeat_every=self._repeat_every, stop_date=self._stop_date)
     
+    #--- Events
+    def schedule_must_be_edited(self):
+        self.load()
+        self.view.show()
+    
+    #--- Properties
     @property
     def start_date(self):
         return self.app.format_date(self.transaction.date)

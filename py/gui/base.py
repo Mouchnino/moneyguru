@@ -89,6 +89,12 @@ class DocumentGUIObject(Listener):
     def schedule_deleted(self):
         pass
     
+    def schedule_must_be_edited(self):
+        pass
+    
+    def schedule_table_must_be_shown(self):
+        pass
+    
     def undone(self):
         pass
 
@@ -119,24 +125,4 @@ class ImportWindowGUIObject(Listener):
     
     def pane_selected(self):
         pass
-    
-
-# A panel uses a save/load mechanism. It doesn't need to listen to Document
-class GUIPanel(object):
-    def __init__(self, view, document):
-        self.view = view
-        self.document = document
-    
-    def can_load(self):
-        raise NotImplementedError
-    
-    def load(self):
-        raise NotImplementedError
-    
-    def save(self):
-        raise NotImplementedError
-    
-    @property
-    def app(self):
-        return self.document.app
     

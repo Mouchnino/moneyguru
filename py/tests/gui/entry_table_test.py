@@ -47,6 +47,12 @@ class OneEntryInEdition(TestCase):
         # We can't test the order of the gui calls, but stop_editing must happen first
         self.check_gui_calls(self.etable_gui, refresh=1, stop_editing=1)
     
+    def test_make_schedule_from_selected(self):
+        # The mechanism is already tested in ttable, we just want to make sure that it also works in etable
+        self.etable.make_schedule_from_selected()
+        self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
+        self.check_gui_calls_partial(self.scpanel_gui, show=1)
+    
     def test_save(self):
         # Saving the document ends the edition mode and save the edits
         filepath = unicode(self.tmppath() + 'foo')

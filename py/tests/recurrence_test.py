@@ -388,26 +388,6 @@ class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
         self.assertEqual(self.ttable[0].date, '28/10/2008')
     
 
-# XXX This test will be re-enabled when I introduce "Make schedule from selected transaction"
-# class OneReconciledEntry(TestCase):
-#     def setUp(self):
-#         self.create_instances()
-#         self.add_account()
-#         self.add_entry('1/1/2008')
-#         self.etable.select([0])
-#         self.document.toggle_reconciliation_mode()
-#         row = self.etable.selected_row
-#         row.toggle_reconciled()
-#         self.document.toggle_reconciliation_mode() # commit
-#     
-#     def test_make_recurrent(self):
-#         # A reconciled entry made recurrent does not result in reconciled scheduled entries
-#         self.tpanel.load()
-#         self.tpanel.repeat_index = 1 # daily
-#         self.tpanel.save()
-#         self.assertFalse(self.etable[1].reconciled)
-#     
-
 class TwoDailyRecurrentTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

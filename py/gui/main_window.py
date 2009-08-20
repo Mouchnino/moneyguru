@@ -126,6 +126,9 @@ class MainWindow(DocumentGUIObject):
     def reconciliation_changed(self):
         self.view.refresh_reconciliation_button()
     
+    def schedule_table_must_be_shown(self):
+        self.select_schedule_table()
+    
     def undone(self):
         if self.document.selected_account is None and self.top == ENTRY_TABLE:
             self.select_balance_sheet()

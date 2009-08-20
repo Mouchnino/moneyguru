@@ -39,6 +39,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Public */
 - (PyEntryTable *)py;
 - (id)fieldEditorForObject:(id)asker;
+- (void)makeScheduleFromSelected;
 - (void)moveUp;
 - (void)moveDown;
 - (void)showBalanceGraph;

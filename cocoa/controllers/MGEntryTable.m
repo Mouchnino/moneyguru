@@ -257,6 +257,11 @@ http://www.hardcoded.net/licenses/hs_license
     return nil;
 }
 
+- (void)makeScheduleFromSelected
+{
+    [[self py] makeScheduleFromSelected];
+}
+
 - (void)moveUp
 {
     [[self py] moveUp];

@@ -12,12 +12,12 @@ from datetime import date
 from hsutil.currency import Currency
 from hsutil.misc import allsame, nonone, flatten
 
-from .base import GUIPanel
+from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
 
-class MassEditionPanel(GUIPanel, TransactionCompletionMixIn):
+class MassEditionPanel(DocumentGUIObject, TransactionCompletionMixIn):
     def __init__(self, view, document):
-        GUIPanel.__init__(self, view, document)
+        DocumentGUIObject.__init__(self, view, document)
         self._init_fields()
     
     def _init_fields(self):

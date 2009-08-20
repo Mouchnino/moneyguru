@@ -26,7 +26,7 @@ from ..model.budget import Budget, BudgetList
 from ..model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     CustomDateRange, format_date)
 from ..model.oven import Oven
-from ..model.recurrence import Spawn
+from ..model.recurrence import Recurrence, Spawn, REPEAT_MONTHLY
 from ..model.transaction import Transaction, Entry
 from ..model.transaction_list import TransactionList
 from .undo import Undoer, Action
@@ -775,6 +775,19 @@ class Document(Broadcaster, Listener):
             self.notify('schedule_deleted')
         
         self._perform_action(prepare, perform)
+    
+    def make_schedule_from_selected(self):
+        if not self.selected_transactions:
+            return
+        # There's no test case for this, but this notification must happen before 
+        # self.select_schedules() or else the sctable's selection upon view switch will overwrite
+        # our selection
+        self.notify('schedule_table_must_be_shown')
+        ref = self.selected_transactions[0]
+        schedule = Recurrence(ref.replicate(), REPEAT_MONTHLY, 1)
+        schedule.delete_at(ref.date)
+        self.select_schedules([schedule]) # yes, we select a schedule that ain't part of self.schedules
+        self.notify('schedule_must_be_edited')
     
     #--- Selection
     @property

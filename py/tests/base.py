@@ -310,6 +310,9 @@ class TestCase(TestCase):
         self.itable.connect()
         self.csvopt.connect()
         self.cdrpanel.connect()
+        # For the sake of simplicity, the scpanel is permanently connected, but in the real cocoa
+        # code, the sctable is responsible for connecting it.
+        self.scpanel.connect()
     
     def add_account(self, name=None, currency=None, account_type=ASSET, group_name=None, select=True):
         # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually

@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)canMoveRows:(NSArray *)rows to:(int)position;
 - (BOOL)canReconcileEntryAtRow:(int)row;
 - (BOOL)isBalanceNegativeAtRow:(int)row;
+- (void)makeScheduleFromSelected;
 - (void)moveDown;
 - (void)moveRows:(NSArray *)rows to:(int)position;
 - (void)moveUp;

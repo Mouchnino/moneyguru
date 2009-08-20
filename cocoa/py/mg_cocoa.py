@@ -316,7 +316,7 @@ class PyWindowController(PyListener):
 
 # I know, it's ugly, but pyobjc doesn't work with multiple inheritance
 
-class PyCompletion(GUIProxy):
+class PyCompletion(PyListener):
     def completeValue_forAttribute_(self, value, column):
         return self.py.complete(value, column)
     
@@ -330,21 +330,7 @@ class PyCompletion(GUIProxy):
         return self.py.prev_completion()
     
 
-class PyCompletionListener(PyListener):
-    def completeValue_forAttribute_(self, value, column):
-        return self.py.complete(value, column)
-    
-    def currentCompletion(self):
-        return self.py.current_completion()
-    
-    def nextCompletion(self):
-        return self.py.next_completion()
-    
-    def prevCompletion(self):
-        return self.py.prev_completion()
-    
-
-class PyTable(PyCompletionListener):
+class PyTable(PyCompletion):
     def add(self):
         self.py.add()
         
@@ -585,7 +571,10 @@ class PyEntryTable(PyTableWithDate):
     @objc.signature('i@:i')
     def isBalanceNegativeAtRow_(self, row):
         return self.py[row].is_balance_negative()
-
+    
+    def makeScheduleFromSelected(self):
+        self.py.make_schedule_from_selected()
+    
     def moveDown(self):
         self.py.move_down()
 
@@ -617,7 +606,10 @@ class PyTransactionTable(PyTableWithDate):
     @objc.signature('i@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
-
+    
+    def makeScheduleFromSelected(self):
+        self.py.make_schedule_from_selected()
+    
     def moveDown(self):
         self.py.move_down()
 
@@ -1011,6 +1003,9 @@ class PySchedulePanel(PyPanel):
     
     def refresh_repeat_options(self):
         self.cocoa.refreshRepeatOptions()
+    
+    def show(self):
+        self.cocoa.show()
     
 
 class PyCustomDateRangePanel(PyListener):

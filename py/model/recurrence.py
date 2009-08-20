@@ -102,6 +102,9 @@ class Recurrence(object):
     def delete(self, spawn):
         self.date2exception[spawn.recurrence_date] = None
     
+    def delete_at(self, date):
+        self.date2exception[date] = None
+    
     def get_spawns(self, end):
         # if a changed date end up being smaller than the "spawn date", it's possible that a spawn
         # that should have been spawned for the date range is not spawned. Therefore, we always
