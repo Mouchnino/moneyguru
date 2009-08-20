@@ -294,7 +294,14 @@ http://www.hardcoded.net/licenses/hs_license
     else if (top == incomeStatement)
         [self showTransactionTable:self];
     else if (top == transactionTable)
-        [self showEntryTable:self];
+    {
+        if ([py canSelectEntryTable])
+            [self showEntryTable:self];
+        else
+            [self showScheduleTable:self];
+    }
+    else if (top == entryTable)
+        [self showScheduleTable:self];
 }
 
 - (IBAction)showPreviousView:(id)sender
@@ -305,6 +312,13 @@ http://www.hardcoded.net/licenses/hs_license
         [self showIncomeStatement:self];
     else if (top == entryTable)
         [self showTransactionTable:self];
+    else if (top == scheduleTable)
+    {
+        if ([py canSelectEntryTable])
+            [self showEntryTable:self];
+        else
+            [self showTransactionTable:self];
+    }
 }
 
 - (IBAction)showSelectedAccount:(id)sender
@@ -534,7 +548,7 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(toggleEntriesReconciled:))
         return (top == entryTable) && [[[self document] py] inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return (top != entryTable) && ((top != transactionTable) || [py canSelectEntryTable]);
+        return (top != scheduleTable);
     else if (action == @selector(showPreviousView:))
         return (top != balanceSheet);
     else if (action == @selector(showEntryTable:))
