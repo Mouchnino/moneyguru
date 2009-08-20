@@ -728,32 +728,53 @@ class Document(Broadcaster, Listener):
     
     #--- Schedule
     def change_schedule(self, schedule, new_ref, repeat_type, repeat_every, stop_date):
-        for split in new_ref.splits:
-            if split.account is not None:
-                # same as in change_transaction()
-                split.account = self.accounts.find(split.account.name, split.account.type)
-        original = schedule.ref
-        min_date = min(original.date, new_ref.date)
-        original.set_splits(new_ref.splits)
-        original.change(description=new_ref.description, payee=new_ref.payee, checkno=new_ref.checkno)
-        schedule.start_date = new_ref.date
-        schedule.repeat_type = repeat_type
-        schedule.repeat_every = repeat_every
-        schedule.stop_date = stop_date
-        schedule.reset_spawn_cache()
-        if schedule not in self.schedules:
-            self.schedules.append(schedule)
-        self._cook(from_date=min_date)
-        self.notify('schedule_changed')
+        def prepare():
+            for split in new_ref.splits:
+                if split.account is not None:
+                    # same as in change_transaction()
+                    split.account = self.accounts.find(split.account.name, split.account.type)
+            if schedule in self.schedules:
+                action = Action('Change Schedule')
+                action.change_schedule(schedule)
+            else:
+                action = Action('Add Schedule')
+                action.added_schedules.add(schedule)
+            return action
+        
+        def perform():
+            original = schedule.ref
+            min_date = min(original.date, new_ref.date)
+            original.set_splits(new_ref.splits)
+            original.change(description=new_ref.description, payee=new_ref.payee, checkno=new_ref.checkno)
+            schedule.start_date = new_ref.date
+            schedule.repeat_type = repeat_type
+            schedule.repeat_every = repeat_every
+            schedule.stop_date = stop_date
+            schedule.reset_spawn_cache()
+            if schedule not in self.schedules:
+                self.schedules.append(schedule)
+            self._cook(from_date=min_date)
+            self.notify('schedule_changed')
+        
+        self._perform_action(prepare, perform)
     
     def delete_schedules(self, schedules):
         if not schedules:
             return
-        for schedule in schedules:
-            self.schedules.remove(schedule)
-        min_date = min(s.ref.date for s in schedules)
-        self._cook(from_date=min_date)
-        self.notify('schedule_deleted')
+        
+        def prepare():
+            action = Action('Remove Schedule')
+            action.deleted_schedules |= set(schedules)
+            return action
+        
+        def perform():
+            for schedule in schedules:
+                self.schedules.remove(schedule)
+            min_date = min(s.ref.date for s in schedules)
+            self._cook(from_date=min_date)
+            self.notify('schedule_deleted')
+        
+        self._perform_action(prepare, perform)
     
     #--- Selection
     @property

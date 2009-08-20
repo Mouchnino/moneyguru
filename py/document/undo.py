@@ -15,7 +15,8 @@ ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group']
 GROUP_SWAP_ATTRS = ['name', 'type']
 TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'position', 'splits']
 SPLIT_SWAP_ATTRS = ['account', 'amount', 'reconciled']
-RECURRENCE_SWAP_ATTRS = ['date2exception', 'date2globalchange', 'date2instances']
+SCHEDULE_SWAP_ATTRS = ['start_date', 'repeat_type', 'repeat_every', 'stop_date', 'date2exception', 
+                       'date2globalchange', 'date2instances']
 
 def swapvalues(first, second, attrs):
     for attr in attrs:
@@ -38,6 +39,7 @@ class Action(object):
         self.changed_splits = set()
         self.added_schedules = set()
         self.changed_schedules = set()
+        self.deleted_schedules = set()
         self.will_unreconcile = set() # unused in Undoer, but it's a placeholder for Document._perform_action()
     
     def change_accounts(self, accounts):
@@ -46,11 +48,12 @@ class Action(object):
     def change_groups(self, groups):
         self.changed_groups |= set((g, copy.copy(g)) for g in groups)
     
+    def change_schedule(self, schedule):
+        self.changed_schedules.add((schedule, schedule.replicate()))
+        self.changed_transactions.add((schedule.ref, schedule.ref.replicate()))
+    
     def change_transactions(self, transactions):
         self.changed_transactions |= set((t, t.replicate()) for t in transactions)
-        for txn in transactions:
-            if isinstance(txn, Spawn):
-                self.changed_schedules.add((txn.recurrence, txn.recurrence.replicate()))
     
     def change_splits(self, splits):
         self.changed_splits |= set((s, copy.copy(s)) for s in splits)
@@ -103,8 +106,8 @@ class Undoer(object):
             self._add_auto_created_accounts(txn)
         for split, old in action.changed_splits:
             swapvalues(split, old, SPLIT_SWAP_ATTRS)
-        for recurrence, old in action.changed_schedules:
-            swapvalues(recurrence, old, RECURRENCE_SWAP_ATTRS)
+        for schedule, old in action.changed_schedules:
+            swapvalues(schedule, old, SCHEDULE_SWAP_ATTRS)
     
     def _do_deletes(self, accounts, groups, transactions, schedules):
         for account in accounts:
@@ -155,7 +158,7 @@ class Undoer(object):
     def undo(self):
         assert self.can_undo()
         action = self._actions[self._index]
-        self._do_adds(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, [])
+        self._do_adds(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, action.deleted_schedules)
         self._do_deletes(action.added_accounts, action.added_groups, action.added_transactions, action.added_schedules)
         self._do_changes(action)
         self._index -= 1
@@ -164,7 +167,7 @@ class Undoer(object):
         assert self.can_redo()
         action = self._actions[self._index + 1]
         self._do_adds(action.added_accounts, action.added_groups, action.added_transactions, action.added_schedules)
-        self._do_deletes(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, [])
+        self._do_deletes(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, action.deleted_schedules)
         self._do_changes(action)
         self._index += 1
     

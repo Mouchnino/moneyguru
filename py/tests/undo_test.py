@@ -14,7 +14,7 @@ from datetime import date
 
 from hsutil.currency import EUR
 
-from .base import TestCase, TestAppCompareMixin
+from .base import TestCase, CommonSetup, TestAppCompareMixin
 from ..model.date import MonthRange, YearRange
 
 class TestCase(TestCase, TestAppCompareMixin):
@@ -70,6 +70,13 @@ class Pristine(TestCase):
     def test_undo_add_group(self):
         """It's possible to undo the addition of an account group"""
         self.bsheet.add_account_group()
+    
+    @save_state_then_verify
+    def test_add_schedule(self):
+        # schedule addition are undoable
+        self.mainwindow.select_schedule_table()
+        self.scpanel.new()
+        self.scpanel.save()    
     
     @save_state_then_verify
     def test_add_transaction(self):
@@ -619,40 +626,20 @@ class ReconciledSplitsWithTransfersAndReferences(TestCase):
         self.iwin.import_selected_pane()
     
 
-# XXX Undo for scheduled txns, for now, is broken
-# class ScheduledTransaction(TestCase):
-#     def setUp(self):
-#         self.create_instances()
-#         self.add_account('first')
-#         self.add_account('second')
-#         self.mainwindow.select_balance_sheet()
-#         self.bsheet.selected = self.bsheet.assets[0] # first
-#         self.bsheet.show_selected_account()
-#         self.add_entry('19/6/2008', transfer='second')
-#         self.tpanel.load()
-#         self.tpanel.repeat_index = 1 # daily
-#         self.tpanel.save()
-#     
-#     @save_state_then_verify
-#     def test_change_spawn(self):
-#         self.etable.select([3])
-#         self.etable[3].description = 'changed'
-#         self.etable.save_edits()
-#     
-#     def test_change_spawn_globally(self):
-#         # the state checker is not sufficient for this one
-#         self.etable.select([3])
-#         self.etable[3].description = 'changed'
-#         self.document_gui.query_for_schedule_scope_result = True
-#         self.etable.save_edits()
-#         self.document.undo()
-#         self.assertEqual(self.etable[3].description, '')
-#         self.assertEqual(self.etable[4].description, '')
-#     
-#     @save_state_then_verify
-#     def test_change_spawn_through_tpanel(self):
-#         self.etable.select([3])
-#         self.tpanel.load()
-#         self.tpanel.description = 'changed'
-#         self.tpanel.save()
-#     
+class ScheduledTransaction(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_scheduled_transaction()
+        self.mainwindow.select_schedule_table()
+        self.sctable.select([0])
+    
+    @save_state_then_verify
+    def test_change_achedule(self):
+        self.scpanel.load()
+        self.scpanel.description = 'changed'
+        self.scpanel.repeat_every = 12
+        self.scpanel.save()
+    
+    @save_state_then_verify
+    def test_delete_schedule(self):
+        self.sctable.delete()
