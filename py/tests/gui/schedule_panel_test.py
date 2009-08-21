@@ -37,7 +37,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         # When the panel loads, make the panel call its refresh_repeat_every() view method so that
         # the correct time unit escription shows up
         self.scpanel.load()
-        self.check_gui_calls(self.scpanel_gui, refresh_repeat_every=1)
+        self.check_gui_calls_partial(self.scpanel_gui, refresh_repeat_every=1)
     
     def test_repeat_every(self):
         # changing repeat every makes the desc plural if appropriate

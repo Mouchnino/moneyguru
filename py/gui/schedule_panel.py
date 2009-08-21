@@ -18,7 +18,6 @@ from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY,
 from ..model.account import Account, INCOME, EXPENSE
 from ..model.recurrence import Recurrence
 from ..model.transaction import Split, Transaction
-from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
 from .transaction_panel import PanelWithTransaction
 
@@ -34,8 +33,17 @@ REPEAT_EVERY_DESCS = {
 }
 
 class SchedulePanel(PanelWithTransaction):
+    #--- Override
+    def _load(self):
+        self._load_schedule(self.document.selected_schedule)
+    
+    def _save(self):
+        repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
+        self.document.change_schedule(self.schedule, self.transaction, repeat_type=repeat_type,
+                                      repeat_every=self._repeat_every, stop_date=self._stop_date)
+    
     #--- Private
-    def _load(self, schedule):
+    def _load_schedule(self, schedule):
         self.schedule = schedule
         self.transaction = schedule.ref.replicate(link_splits=True)
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
@@ -49,21 +57,14 @@ class SchedulePanel(PanelWithTransaction):
         return True
     
     def new(self):
+        self.view.pre_load()
         schedule = Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1)
-        self._load(schedule)
-    
-    def load(self):
-        self._load(self.document.selected_schedule)
-    
-    def save(self):
-        repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
-        self.document.change_schedule(self.schedule, self.transaction, repeat_type=repeat_type,
-                                      repeat_every=self._repeat_every, stop_date=self._stop_date)
+        self._load_schedule(schedule)
+        self.view.post_load()
     
     #--- Events
     def schedule_must_be_edited(self):
         self.load()
-        self.view.show()
     
     #--- Properties
     @property

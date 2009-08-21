@@ -126,3 +126,20 @@ class ImportWindowGUIObject(Listener):
     def pane_selected(self):
         pass
     
+
+class GUIPanel(DocumentGUIObject):
+    def _load(self):
+        raise NotImplementedError()
+    
+    def _save(self):
+        raise NotImplementedError()
+    
+    def load(self):
+        self.view.pre_load()
+        self._load()
+        self.view.post_load()
+    
+    def save(self):
+        self.view.pre_save()
+        self._save()
+    

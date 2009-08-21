@@ -13,29 +13,17 @@ from ..const import NOEDIT
 from ..exception import DuplicateAccountNameError
 from ..model.account import ASSET, LIABILITY, INCOME, EXPENSE
 from ..model.amount import Amount, parse_amount, format_amount
-from .base import DocumentGUIObject
+from .base import GUIPanel
 
 TYPE_ORDER = [ASSET, LIABILITY, INCOME, EXPENSE]
 
-class AccountPanel(DocumentGUIObject):
+class AccountPanel(GUIPanel):
     def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+        GUIPanel.__init__(self, view, document)
         self._init_fields()
     
-    def _init_fields(self):
-        self.type = ASSET
-        self._type_index = 0
-        self.currency = None
-        self._budget = 0
-        self.budget_target_index = 0
-        self.available_budget_targets = []
-    
-    def can_load(self):
-        account = self.document.selected_account
-        return account is not None
-    
-    def load(self):
-        """Loads the selected account's data"""
+    #--- Override
+    def _load(self):
         self._init_fields()
         account = self.document.selected_account
         assert account is not None
@@ -53,8 +41,7 @@ class AccountPanel(DocumentGUIObject):
             self.budget_target_index = self._budget_targets.index(budget.target)
         self.account = account # for the save() assert
     
-    def save(self):
-        """Save the panel fields's values into the selected account"""
+    def _save(self):
         assert self.account is self.document.selected_account
         try:
             budget_target = self._budget_targets[self.budget_target_index]
@@ -65,6 +52,19 @@ class AccountPanel(DocumentGUIObject):
                 currency=self.currency, budget_amount=self._budget, budget_target=budget_target)
         except DuplicateAccountNameError:
             pass
+    
+    #--- Private
+    def _init_fields(self):
+        self.type = ASSET
+        self._type_index = 0
+        self.currency = None
+        self._budget = 0
+        self.budget_target_index = 0
+        self.available_budget_targets = []
+    
+    def can_load(self):
+        account = self.document.selected_account
+        return account is not None
     
     #--- Properties
     @property

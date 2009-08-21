@@ -11,8 +11,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGWindowController.h"
 #import "PyPanel.h"
 
-@interface MGPanel : MGWindowController
-{}
+@interface MGPanel : MGWindowController {
+    NSWindow *parentWindow;
+}
+- (id)initWithNibName:aNibName pyClassName:aClassName document:aDocument;
 - (PyPanel *)py;
 /* Virtual */
 - (NSString *)fieldOfTextField:(NSTextField *)textField;

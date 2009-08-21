@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGTransactionInspector
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithNibName:@"TransactionInspector" pyClassName:@"PyTransactionPanel" pyParent:[aDocument py]];
+    self = [super initWithNibName:@"TransactionInspector" pyClassName:@"PyTransactionPanel" document:aDocument];
     [self window]; // Initialize the window
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];

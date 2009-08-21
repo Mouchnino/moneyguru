@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGAccountProperties
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithNibName:@"AccountProperties" pyClassName:@"PyAccountPanel" pyParent:[aDocument py]];
+    self = [super initWithNibName:@"AccountProperties" pyClassName:@"PyAccountPanel" document:aDocument];
     // We have to initialize the currencies before the widgets if we want the inital data source call
     // to return something
     currencies = [[[self py] availableCurrencies] retain];

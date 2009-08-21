@@ -10,6 +10,13 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTextField.h"
 
 @implementation MGPanel
+- (id)initWithNibName:aNibName pyClassName:aClassName document:aDocument
+{
+    self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aDocument py]];
+    parentWindow = [aDocument windowForSheet];
+    return self;
+}
+
 - (PyPanel *)py
 {
     return (PyPanel *)py;
@@ -44,25 +51,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)load
 {
-    // Is the date field is already the first responder, the date being set will not correctly go down
-    // the py widget during makeFirstResponder:
-    [[self window] makeFirstResponder:nil];
     [[self py] loadPanel];
-    // When we change the values in the py side, it doesn't work with KVO mechanism.
-    // Notifications of a "py" change is enough to refresh all bound controls.
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
-    [self loadFields];
-    [[self window] makeFirstResponder:[self firstField]];
 }
 
 - (void)save
 {
-    // Sometimes, the last edited fields doesn't have the time to flush its data before savePanel
-    // is called (Not when you press Return to Save, but when you click on Save, it happens).
-    // This is what the line below is for.
-    [[self window] makeFirstResponder:[self window]];
-    [self saveFields];
     [[self py] savePanel];
 }
 
@@ -103,5 +96,39 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSString *)nextValueForTextField:(MGTextField *)textField
 {
     return [[self py] nextCompletion];
+}
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [sheet orderOut:nil];
+}
+
+/* Python --> Cocoa */
+- (void)preLoad
+{
+    // If the date field is already the first responder, the date being set will not correctly go down
+    // the py widget during makeFirstResponder:
+    [[self window] makeFirstResponder:nil];
+}
+
+- (void)postLoad
+{
+    // When we change the values in the py side, it doesn't work with KVO mechanism.
+    // Notifications of a "py" change is enough to refresh all bound controls.
+    [self willChangeValueForKey:@"py"];
+    [self didChangeValueForKey:@"py"];
+    [self loadFields];
+    [[self window] makeFirstResponder:[self firstField]];
+    [NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:self 
+            didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)preSave
+{
+    // Sometimes, the last edited fields doesn't have the time to flush its data before savePanel
+    // is called (Not when you press Return to Save, but when you click on Save, it happens).
+    // This is what the line below is for.
+    [[self window] makeFirstResponder:[self window]];
+    [self saveFields];
 }
 @end

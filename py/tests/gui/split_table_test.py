@@ -248,7 +248,7 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.check_gui_calls(self.document_gui, confirm_unreconciliation=1)
         self.assertEqual(self.document_gui.last_affected_split_count, 2)
         # changing a split refreshes the mct button
-        self.check_gui_calls(self.tpanel_gui, refresh_mct_button=1)
+        self.check_gui_calls_partial(self.tpanel_gui, refresh_mct_button=1)
     
     def test_change_first_split_account(self):
         """Changing the account of a split only unreconcile this split (and the splits following it
@@ -285,5 +285,5 @@ class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
         self.bsheet.show_selected_account()
         self.assertFalse(self.etable[0].reconciled) # split following the split has been unreconciled
         # deleting a split refreshes the mct button
-        self.check_gui_calls(self.tpanel_gui, refresh_mct_button=1)
+        self.check_gui_calls_partial(self.tpanel_gui, refresh_mct_button=1)
     

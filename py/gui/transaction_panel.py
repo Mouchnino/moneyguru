@@ -14,13 +14,13 @@ from hsutil.misc import first
 
 from ..model.account import Account, INCOME, EXPENSE
 from ..model.transaction import Split, Transaction
-from .base import DocumentGUIObject
+from .base import GUIPanel
 from .complete import TransactionCompletionMixIn
 
-class PanelWithTransaction(DocumentGUIObject, Broadcaster, TransactionCompletionMixIn):
+class PanelWithTransaction(GUIPanel, Broadcaster, TransactionCompletionMixIn):
     """Base class for panels working with a transaction"""
     def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+        GUIPanel.__init__(self, view, document)
         Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
     
@@ -74,10 +74,8 @@ class PanelWithTransaction(DocumentGUIObject, Broadcaster, TransactionCompletion
     
 
 class TransactionPanel(PanelWithTransaction):
-    def can_load(self):
-        return len(self.document.selected_transactions) == 1
-    
-    def load(self):
+    #--- Override
+    def _load(self):
         self.document.stop_edition()
         original = self.document.selected_transaction
         assert original is not None            
@@ -86,8 +84,12 @@ class TransactionPanel(PanelWithTransaction):
         self.view.refresh_mct_button()
         self.notify('panel_loaded')
     
-    def save(self):
+    def _save(self):
         self.document.change_transaction(self.original, self.transaction)
+    
+    #--- Public
+    def can_load(self):
+        return len(self.document.selected_transactions) == 1
     
     def mct_balance(self):
         """Balances the mct by using xchange rates. The currency of the new split is the currency of

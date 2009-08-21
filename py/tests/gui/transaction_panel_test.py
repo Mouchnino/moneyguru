@@ -68,7 +68,7 @@ class OneEntry(TestCase):
     def test_load_refreshes_mct_button(self):
         # loading the panel refreshes the mct button
         self.tpanel.load()
-        self.check_gui_calls(self.tpanel_gui, refresh_mct_button=1)
+        self.check_gui_calls_partial(self.tpanel_gui, refresh_mct_button=1)
     
     def test_load_while_etable_is_editing(self):
         """loading the tpanel while etable is editing saves the edits and stops editing mode"""

@@ -538,6 +538,16 @@ class PyPanel(PyCompletion):
     def savePanel(self):
         self.py.save()
     
+    # Python --> Cocoa
+    def pre_load(self):
+        self.cocoa.preLoad()
+    
+    def post_load(self):
+        self.cocoa.postLoad()
+    
+    def pre_save(self):
+        self.cocoa.preSave()
+    
 
 #--- GUI layer classes
 
@@ -1003,9 +1013,6 @@ class PySchedulePanel(PyPanel):
     
     def refresh_repeat_options(self):
         self.cocoa.refreshRepeatOptions()
-    
-    def show(self):
-        self.cocoa.show()
     
 
 class PyCustomDateRangePanel(PyListener):

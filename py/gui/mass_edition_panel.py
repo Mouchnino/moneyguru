@@ -12,37 +12,16 @@ from datetime import date
 from hsutil.currency import Currency
 from hsutil.misc import allsame, nonone, flatten
 
-from .base import DocumentGUIObject
+from .base import GUIPanel
 from .complete import TransactionCompletionMixIn
 
-class MassEditionPanel(DocumentGUIObject, TransactionCompletionMixIn):
+class MassEditionPanel(GUIPanel, TransactionCompletionMixIn):
     def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+        GUIPanel.__init__(self, view, document)
         self._init_fields()
     
-    def _init_fields(self):
-        self.can_change_accounts_and_amount = False
-        self.date_enabled = False
-        self.description_enabled = False
-        self.payee_enabled = False
-        self.checkno_enabled = False
-        self.from_enabled = False
-        self.to_enabled = False
-        self.amount_enabled = False
-        self.currency_enabled = False
-        self._date = date.today()
-        self._description = ''
-        self._payee = ''
-        self._checkno = ''
-        self._from = ''
-        self._to = ''
-        self._amount = 0
-        self._currency_index = -1
-    
-    def can_load(self):
-        return len(self.document.selected_transactions) > 1
-    
-    def load(self):
+    #--- Override
+    def _load(self):
         self._init_fields()
         transactions = self.document.selected_transactions
         self.can_change_accounts_and_amount = all(len(t.splits) == 2 for t in transactions)
@@ -79,7 +58,7 @@ class MassEditionPanel(DocumentGUIObject, TransactionCompletionMixIn):
         if allsame(abs(t.splits[0].amount) for t in transactions):
             self._amount = abs(first.splits[0].amount)
     
-    def save(self):
+    def _save(self):
         transactions = self.document.selected_transactions
         kw = {}
         if self.date_enabled:
@@ -100,6 +79,31 @@ class MassEditionPanel(DocumentGUIObject, TransactionCompletionMixIn):
             kw['currency'] = Currency.all[self._currency_index]
         self.document.change_transactions(transactions, **kw)
     
+    #--- Private
+    def _init_fields(self):
+        self.can_change_accounts_and_amount = False
+        self.date_enabled = False
+        self.description_enabled = False
+        self.payee_enabled = False
+        self.checkno_enabled = False
+        self.from_enabled = False
+        self.to_enabled = False
+        self.amount_enabled = False
+        self.currency_enabled = False
+        self._date = date.today()
+        self._description = ''
+        self._payee = ''
+        self._checkno = ''
+        self._from = ''
+        self._to = ''
+        self._amount = 0
+        self._currency_index = -1
+    
+    #--- Public
+    def can_load(self):
+        return len(self.document.selected_transactions) > 1
+    
+    #--- Properties
     @property
     def date(self):
         return self.app.format_date(self._date)

@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGMassEditionPanel
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithNibName:@"MassEditionPanel" pyClassName:@"PyMassEditionPanel" pyParent:[aDocument py]];
+    self = [super initWithNibName:@"MassEditionPanel" pyClassName:@"PyMassEditionPanel" document:aDocument];
     currencies = [[[self py] availableCurrencies] retain];
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];

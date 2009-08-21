@@ -148,26 +148,14 @@ http://www.hardcoded.net/licenses/hs_license
     if ((top == balanceSheet) || (top == incomeStatement))
     {
         if ([accountProperties canLoad])
-        {
             [accountProperties load];
-            [NSApp beginSheet:[accountProperties window] modalForWindow:[self window] modalDelegate:self 
-                didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-        }
     }
     else if ((top == entryTable) || (top == transactionTable))
     {
         if ([transactionPanel canLoad])
-        {
             [transactionPanel load];
-            [NSApp beginSheet:[transactionPanel window] modalForWindow:[self window] modalDelegate:self 
-                didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-        }
         else if ([massEditionPanel canLoad])
-        {
             [massEditionPanel load];
-            [NSApp beginSheet:[massEditionPanel window] modalForWindow:[self window] modalDelegate:self 
-                didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-        }
     }
     else if (top == scheduleTable)
     {

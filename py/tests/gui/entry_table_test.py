@@ -51,7 +51,7 @@ class OneEntryInEdition(TestCase):
         # The mechanism is already tested in ttable, we just want to make sure that it also works in etable
         self.etable.make_schedule_from_selected()
         self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
-        self.check_gui_calls_partial(self.scpanel_gui, show=1)
+        self.check_gui_calls_partial(self.scpanel_gui, pre_load=1, post_load=1)
     
     def test_save(self):
         # Saving the document ends the edition mode and save the edits
