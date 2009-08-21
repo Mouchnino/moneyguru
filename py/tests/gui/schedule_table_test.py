@@ -15,7 +15,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.setup_scheduled_transaction(repeat_every=3)
+        self.setup_scheduled_transaction(repeat_type_index=4, repeat_every=3)
         self.mainwindow.select_schedule_table()
     
     def test_attrs(self):
@@ -23,7 +23,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         row = self.sctable[0]
         eq_(row.start_date, '13/09/2008')
         eq_(row.stop_date, '')
-        eq_(row.repeat_type, 'daily')
+        eq_(row.repeat_type, 'Every second Saturday of the month')
         eq_(row.interval, '3')
         eq_(row.description, 'foobar')
     

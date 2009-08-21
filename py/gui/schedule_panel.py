@@ -39,16 +39,17 @@ class SchedulePanel(PanelWithTransaction):
     
     def _save(self):
         repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
-        self.document.change_schedule(self.schedule, self.transaction, repeat_type=repeat_type,
-                                      repeat_every=self._repeat_every, stop_date=self._stop_date)
+        repeat_every = self.schedule.repeat_every
+        stop_date = self.schedule.stop_date
+        self.document.change_schedule(self.original, self.transaction, repeat_type=repeat_type,
+                                      repeat_every=repeat_every, stop_date=stop_date)
     
     #--- Private
     def _load_schedule(self, schedule):
-        self.schedule = schedule
-        self.transaction = schedule.ref.replicate(link_splits=True)
+        self.original = schedule
+        self.schedule = schedule.replicate()
+        self.transaction = self.schedule.ref
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
-        self._repeat_every = schedule.repeat_every
-        self._stop_date = schedule.stop_date
         self.view.refresh_repeat_every()
         self.notify('panel_loaded')
     
@@ -69,59 +70,53 @@ class SchedulePanel(PanelWithTransaction):
     #--- Properties
     @property
     def start_date(self):
-        return self.app.format_date(self.transaction.date)
+        return self.app.format_date(self.schedule.start_date)
     
     @start_date.setter
     def start_date(self, value):
         date = self.app.parse_date(value)
-        if date == self.transaction.date:
+        if date == self.schedule.start_date:
             return
-        self.transaction.date = date
+        self.schedule.start_date = date
         self.view.refresh_repeat_options()
     
     @property
     def stop_date(self):
-        if self._stop_date is None:
+        if self.schedule.stop_date is None:
             return ''
-        return self.app.format_date(self._stop_date)
+        return self.app.format_date(self.schedule.stop_date)
     
     @stop_date.setter
     def stop_date(self, value):
         try:
-            self._stop_date = self.app.parse_date(value)
+            self.schedule.stop_date = self.app.parse_date(value)
         except ValueError:
-            self._stop_date = None
+            self.schedule.stop_date = None
     
     @property
     def repeat_every(self):
-        return self._repeat_every
+        return self.schedule.repeat_every
     
     @repeat_every.setter
     def repeat_every(self, value):
         value = max(1, value)
-        self._repeat_every = value
+        self.schedule.repeat_every = value
         self.view.refresh_repeat_every()
     
     @property
     def repeat_every_desc(self):
         repeat_option = REPEAT_OPTIONS_ORDER[self._repeat_type_index]
         desc = REPEAT_EVERY_DESCS[repeat_option]
-        if desc and self._repeat_every > 1:
+        if desc and self.schedule.repeat_every > 1:
             desc += 's'
         return desc
     
     @property
     def repeat_options(self):
-        result = ['Daily', 'Weekly', 'Monthly', 'Yearly']
-        date = self.transaction.date
-        weekday_name = date.strftime('%A')
-        week_no = (date.day - 1) // 7
-        position = ['first', 'second', 'third', 'fourth', 'fifth'][week_no]
-        result.append('Every %s %s of the month' % (position, weekday_name))
-        _, days_in_month = monthrange(date.year, date.month)
-        if days_in_month - date.day < 7:
-            result.append('Every last %s of the month' % weekday_name)
-        return result
+        descs = [self.schedule.rtype2desc[rtype] for rtype in REPEAT_OPTIONS_ORDER]
+        # remove empty descs
+        descs = [desc for desc in descs if desc]
+        return descs
     
     @property
     def repeat_type_index(self):

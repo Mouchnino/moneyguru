@@ -9,6 +9,7 @@
 
 import copy
 import datetime
+from calendar import monthrange
 
 from hsutil.misc import nonone
 
@@ -75,6 +76,15 @@ class Recurrence(object):
         self.date2exception = {}
         self.date2globalchange = {}
         self.date2instances = {}
+        self.rtype2desc = {
+            REPEAT_DAILY: 'Daily',
+            REPEAT_WEEKLY: 'Weekly',
+            REPEAT_MONTHLY: 'Monthly',
+            REPEAT_YEARLY: 'Yearly',
+            REPEAT_WEEKDAY: '', # dynamic
+            REPEAT_WEEKDAY_LAST: '', # dynamic
+        }
+        self._update_rtype_descs()
     
     def __repr__(self):
         return '<Recurrence %s %d>' % (self.repeat_type, self.repeat_every)
@@ -82,6 +92,18 @@ class Recurrence(object):
     #--- Private
     def _create_spawn(self, ref, date):
         return Spawn(self, ref, date)
+    
+    def _update_rtype_descs(self):
+        date = self.start_date
+        weekday_name = date.strftime('%A')
+        week_no = (date.day - 1) // 7
+        position = ['first', 'second', 'third', 'fourth', 'fifth'][week_no]
+        self.rtype2desc[REPEAT_WEEKDAY] = 'Every %s %s of the month' % (position, weekday_name)
+        _, days_in_month = monthrange(date.year, date.month)
+        if days_in_month - date.day < 7:
+            self.rtype2desc[REPEAT_WEEKDAY_LAST] = 'Every last %s of the month' % weekday_name
+        else:
+            self.rtype2desc[REPEAT_WEEKDAY_LAST] = ''
     
     #--- Public
     def add_exception(self, spawn):
@@ -134,6 +156,7 @@ class Recurrence(object):
         result.date2exception = copy.copy(self.date2exception)
         result.date2globalchange = copy.copy(self.date2globalchange)
         result.date2instances = {}
+        result.ref = self.ref.replicate()
         return result
     
     def reset_exceptions(self):
@@ -180,6 +203,10 @@ class Recurrence(object):
         self.reset_exceptions()
     
     @property
+    def repeat_type_desc(self):
+        return self.rtype2desc[self._repeat_type]
+    
+    @property
     def start_date(self):
         return self.ref.date
     
@@ -189,4 +216,5 @@ class Recurrence(object):
             return
         self.ref.date = value
         self.reset_exceptions()
+        self._update_rtype_descs()
     
