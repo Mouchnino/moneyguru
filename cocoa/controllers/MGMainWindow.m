@@ -215,7 +215,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)selectMonthRange:(id)sender
 {
-    [[self document] selectMonthRange];
+    [[[self document] py] selectMonthRange];
 }
 
 - (IBAction)selectNextDateRange:(id)sender
@@ -235,27 +235,27 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)selectQuarterRange:(id)sender
 {
-    [[self document] selectQuarterRange];
+    [[[self document] py] selectQuarterRange];
 }
 
 - (IBAction)selectYearRange:(id)sender
 {
-    [[self document] selectYearRange];
+    [[[self document] py] selectYearRange];
 }
 
 - (IBAction)selectYearToDateRange:(id)sender
 {
-    [[self document] selectYearToDateRange];
+    [[[self document] py] selectYearToDateRange];
 }
 
 - (IBAction)selectRunningYearRange:(id)sender
 {
-    [[self document] selectRunningYearRange];
+    [[[self document] py] selectRunningYearRange];
 }
 
 - (IBAction)selectCustomDateRange:(id)sender
 {
-    [[self document] selectCustomDateRange];
+    [[[self document] py] selectCustomDateRange];
 }
 
 - (IBAction)showBalanceSheet:(id)sender
@@ -324,9 +324,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)toggleEntriesReconciled:(id)sender
 {
-    if ([[self document] inReconciliationMode])
+    if ([[[self document] py] inReconciliationMode])
     {
-        [[[self document] py] toggleEntriesReconciled];
+        [[entryTable py] toggleReconciled];
     }
 }
 

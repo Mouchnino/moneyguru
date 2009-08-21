@@ -188,9 +188,6 @@ class PyDocument(NSObject):
     def inReconciliationMode(self):
         return self.py.in_reconciliation_mode()
     
-    def toggleEntriesReconciled(self):
-        self.py.toggle_entries_reconciled()
-    
     #--- Undo
     @objc.signature('i@:')
     def canUndo(self):

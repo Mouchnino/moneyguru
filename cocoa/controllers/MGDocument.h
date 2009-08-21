@@ -24,12 +24,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)registerDefaults;
 
 /* Misc */
-- (void)selectMonthRange;
-- (void)selectQuarterRange;
-- (void)selectYearRange;
-- (void)selectYearToDateRange;
-- (void)selectRunningYearRange;
-- (void)selectCustomDateRange;
 - (void)stopEdition;
 - (NSString *)documentDefaultsKey;
 - (id)defaultForKey:(NSString *)aKey;

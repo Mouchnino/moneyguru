@@ -25,7 +25,6 @@ http://www.hardcoded.net/licenses/hs_license
 /* Reconciliation */
 - (void)toggleReconciliationMode;
 - (BOOL)inReconciliationMode;
-- (void)toggleEntriesReconciled;
 
 /* Undo */
 

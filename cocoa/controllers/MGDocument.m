@@ -192,36 +192,6 @@ http://www.hardcoded.net/licenses/hs_license
     return [py isDirty];
 }
 
-- (void)selectMonthRange
-{
-    [py selectMonthRange];
-}
-
-- (void)selectQuarterRange
-{
-    [py selectQuarterRange];
-}
-
-- (void)selectYearRange
-{
-    [py selectYearRange];
-}
-
-- (void)selectYearToDateRange
-{
-    [py selectYearToDateRange];
-}
-
-- (void)selectRunningYearRange
-{
-    [py selectRunningYearRange];
-}
-
-- (void)selectCustomDateRange
-{
-    [py selectCustomDateRange];
-}
-
 - (void)stopEdition
 {
     [py stopEdition];
