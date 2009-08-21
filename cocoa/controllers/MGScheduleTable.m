@@ -49,8 +49,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)add
 {
     [schedulePanel new];
-    [NSApp beginSheet:[schedulePanel window] modalForWindow:[[self view] window] modalDelegate:self 
-        didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)deleteSelected
@@ -76,11 +74,4 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [self editSelected];
 }
-
-// sheet
-- (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-    [sheet orderOut:nil];
-}
-
 @end

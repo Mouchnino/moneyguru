@@ -80,10 +80,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Public */
 - (void)new
 {
-    [[self window] makeFirstResponder:nil];
     [[self py] newItem];
-    [self loadFields];
-    [[self window] makeFirstResponder:startDateField];
 }
 
 /* Actions */
