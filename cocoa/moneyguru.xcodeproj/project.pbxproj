@@ -122,6 +122,8 @@
 		CE7045D80E34ACA2005E065F /* SearchField.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7045D70E34ACA2005E065F /* SearchField.xib */; };
 		CE720A5B0F84BF71005C4D5B /* MGOutlinePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */; };
 		CE720A5F0F84CB39005C4D5B /* MGTablePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */; };
+		CE7311D31040360A00DB8B30 /* BudgetTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7311D21040360A00DB8B30 /* BudgetTable.xib */; };
+		CE7311D71040364500DB8B30 /* MGBudgetTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7311D61040364500DB8B30 /* MGBudgetTable.m */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
 		CE873A690E21621F004F63E9 /* AccountProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE873A630E21621F004F63E9 /* AccountProperties.xib */; };
 		CE873A6A0E21621F004F63E9 /* BalanceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE873A640E21621F004F63E9 /* BalanceSheet.xib */; };
@@ -401,6 +403,10 @@
 		CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGOutlinePrint.m; path = print/MGOutlinePrint.m; sourceTree = "<group>"; };
 		CE720A5D0F84CB39005C4D5B /* MGTablePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTablePrint.h; path = print/MGTablePrint.h; sourceTree = "<group>"; };
 		CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTablePrint.m; path = print/MGTablePrint.m; sourceTree = "<group>"; };
+		CE7311D21040360A00DB8B30 /* BudgetTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetTable.xib; sourceTree = "<group>"; };
+		CE7311D41040361C00DB8B30 /* PyBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetTable.h; sourceTree = "<group>"; };
+		CE7311D51040364500DB8B30 /* MGBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBudgetTable.h; sourceTree = "<group>"; };
+		CE7311D61040364500DB8B30 /* MGBudgetTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBudgetTable.m; sourceTree = "<group>"; };
 		CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSearchField.h; sourceTree = "<group>"; };
 		CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSearchField.m; sourceTree = "<group>"; };
 		CE80FF3F0E34ABD3001CB573 /* PyCompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCompletion.h; sourceTree = "<group>"; };
@@ -777,6 +783,7 @@
 				CEA25A790E27774C0067AE58 /* TransactionTable.xib */,
 				077FBF2B0E27B053001DC57D /* EntryTable.xib */,
 				CEB1E0B81031C286001FC4B4 /* ScheduleTable.xib */,
+				CE7311D21040360A00DB8B30 /* BudgetTable.xib */,
 				CE873A630E21621F004F63E9 /* AccountProperties.xib */,
 				CEE46FB70F91E4E400D08E40 /* AccountReassignPanel.xib */,
 				CE873A680E21621F004F63E9 /* TransactionInspector.xib */,
@@ -809,6 +816,8 @@
 				CEA25A690E2776B20067AE58 /* MGTransactionTable.m */,
 				CEB1E0BC1031C3A3001FC4B4 /* MGScheduleTable.h */,
 				CEB1E0BD1031C3A3001FC4B4 /* MGScheduleTable.m */,
+				CE7311D51040364500DB8B30 /* MGBudgetTable.h */,
+				CE7311D61040364500DB8B30 /* MGBudgetTable.m */,
 				CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */,
 				CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */,
 				CE2DD62E0E4C684000AB107B /* MGImportTable.h */,
@@ -883,6 +892,7 @@
 				CE5CBBEC10383F51008AC465 /* PyPanel.h */,
 				CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */,
 				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
+				CE7311D41040361C00DB8B30 /* PyBudgetTable.h */,
 				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
@@ -1138,6 +1148,7 @@
 				CEB1E0B91031C286001FC4B4 /* ScheduleTable.xib in Resources */,
 				CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */,
 				CE5CBBC5103834D8008AC465 /* SchedulePanel.xib in Resources */,
+				CE7311D31040360A00DB8B30 /* BudgetTable.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1247,6 +1258,7 @@
 				CEB1E0BE1031C3A3001FC4B4 /* MGScheduleTable.m in Sources */,
 				CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */,
 				CE036D64103AE51100E172F8 /* MGPanel.m in Sources */,
+				CE7311D71040364500DB8B30 /* MGBudgetTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

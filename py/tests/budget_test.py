@@ -8,27 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from datetime import date
-
 from nose.tools import eq_
 
 from .base import TestCase, CommonSetup
-from ..model.account import EXPENSE, INCOME
-
-class CommonSetup(CommonSetup):
-    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_index=None):
-        # 4 days left to the month, 100$ monthly budget
-        self.mock_today(2008, 1, 27)
-        self.document.select_today_date_range()
-        account_type = EXPENSE if is_expense else INCOME
-        self.add_account(account_name, account_type=account_type)
-        self.mainwindow.select_income_statement()
-        if is_expense:
-            self.istatement.selected = self.istatement.expenses[0]
-        else:
-            self.istatement.selected = self.istatement.income[0]
-        self.set_budget('100', target_index)
-    
 
 class OneExpenseWithBudget(TestCase, CommonSetup):
     def setUp(self):

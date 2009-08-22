@@ -9,7 +9,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1306"/>
-			<integer value="1138"/>
+			<integer value="1385"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -701,6 +701,15 @@
 									<reference key="NSMenu" ref="644935139"/>
 									<string key="NSTitle">Schedules</string>
 									<string key="NSKeyEquiv">5</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+								</object>
+								<object class="NSMenuItem" id="262649211">
+									<reference key="NSMenu" ref="644935139"/>
+									<string key="NSTitle">Budgets</string>
+									<string key="NSKeyEquiv">6</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
@@ -2067,6 +2076,14 @@
 					</object>
 					<int key="connectionID">1384</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showBudgetTable:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="262649211"/>
+					</object>
+					<int key="connectionID">1386</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2552,6 +2569,7 @@
 							<reference ref="808918758"/>
 							<reference ref="707732137"/>
 							<reference ref="994774801"/>
+							<reference ref="262649211"/>
 						</object>
 						<reference key="parent" ref="875242672"/>
 					</object>
@@ -3052,6 +3070,11 @@
 						<reference key="object" ref="226242958"/>
 						<reference key="parent" ref="657949865"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1385</int>
+						<reference key="object" ref="262649211"/>
+						<reference key="parent" ref="644935139"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3187,6 +3210,7 @@
 					<string>1378.IBPluginDependency</string>
 					<string>1380.IBPluginDependency</string>
 					<string>1382.IBPluginDependency</string>
+					<string>1385.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -3302,7 +3326,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{378, 451}, {245, 363}}</string>
+					<string>{{378, 431}, {245, 383}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{658, 387}, {236, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3405,6 +3429,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3527,7 +3552,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1384</int>
+			<int key="maxID">1386</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3560,6 +3585,7 @@
 							<string>selectYearRange:</string>
 							<string>selectYearToDateRange:</string>
 							<string>showBalanceSheet:</string>
+							<string>showBudgetTable:</string>
 							<string>showEntryTable:</string>
 							<string>showIncomeStatement:</string>
 							<string>showNextView:</string>
@@ -3572,6 +3598,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -3706,6 +3733,7 @@
 							<string>selectYearRange:</string>
 							<string>selectYearToDateRange:</string>
 							<string>showBalanceSheet:</string>
+							<string>showBudgetTable:</string>
 							<string>showEntryTable:</string>
 							<string>showIncomeStatement:</string>
 							<string>showNextView:</string>
@@ -3718,6 +3746,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

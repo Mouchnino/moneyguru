@@ -6,21 +6,21 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import "MGScheduleTable.h"
+#import "MGBudgetTable.h"
 #import "MGTableView.h"
 
-@implementation MGScheduleTable
+@implementation MGBudgetTable
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
-    [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
+    self = [super initWithPyClassName:@"PyBudgetTable" pyParent:[aDocument py]];
+    [NSBundle loadNibNamed:@"BudgetTable" owner:self];
     return self;
 }
 
 /* Overrides */
-- (PyScheduleTable *)py
+- (PyBudgetTable *)py
 {
-    return (PyScheduleTable *)py;
+    return (PyBudgetTable *)py;
 }
 
 /* Delegate */

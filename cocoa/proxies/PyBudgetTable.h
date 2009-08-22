@@ -7,13 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
-#import "PyScheduleTable.h"
-#import "MGTable.h"
+#import "PyTable.h"
 
-@interface MGScheduleTable : MGTable {}
-- (id)initWithDocument:(MGDocument *)aDocument;
-
-/* Public */
-- (PyScheduleTable *)py;
+@interface PyBudgetTable : PyTable {}
+- (void)editItem;
 @end

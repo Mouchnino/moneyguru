@@ -29,6 +29,7 @@ from ..gui.account_reassign_panel import AccountReassignPanel
 from ..gui.balance_graph import BalanceGraph
 from ..gui.balance_sheet import BalanceSheet
 from ..gui.bar_graph import BarGraph
+from ..gui.budget_table import BudgetTable
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.entry_table import EntryTable
@@ -105,12 +106,13 @@ class DocumentGUI(CallLogger):
 
 class MainWindowGUI(CallLogger):
     """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, etable, ttable, sctable, bsheet, istatement, balgraph, bargraph, nwgraph, pgraph, 
+    def __init__(self, etable, ttable, sctable, btable, bsheet, istatement, balgraph, bargraph, nwgraph, pgraph, 
                  efbar, tfbar, apie, lpie, ipie, epie, cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.etable = etable
         self.ttable = ttable
         self.sctable = sctable
+        self.btable = btable
         self.bsheet = bsheet
         self.istatement = istatement
         self.balgraph = balgraph
@@ -128,8 +130,8 @@ class MainWindowGUI(CallLogger):
         self.pgraph = pgraph
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [etable, ttable, sctable, bsheet, istatement, efbar, tfbar, apie, lpie, ipie, 
-            epie, nwgraph, pgraph, balgraph, bargraph]
+        self.views = [etable, ttable, sctable, btable, bsheet, istatement, efbar, tfbar, apie, lpie,
+            ipie, epie, nwgraph, pgraph, balgraph, bargraph]
     
     def connect_views(self, views):
         for candidate in self.views:
@@ -173,6 +175,10 @@ class MainWindowGUI(CallLogger):
     @log
     def show_schedule_table(self):
         self.connect_views([self.sctable])
+    
+    @log
+    def show_budget_table(self):
+        self.connect_views([self.btable])
     
     @log
     def show_transaction_table(self):
@@ -253,6 +259,8 @@ class TestCase(TestCase):
         self.ttable = TransactionTable(self.ttable_gui, self.document)
         self.sctable_gui = CallLogger()
         self.sctable = ScheduleTable(self.sctable_gui, self.document)
+        self.btable_gui = CallLogger()
+        self.btable = BudgetTable(self.btable_gui, self.document)
         self.scpanel_gui = CallLogger()
         self.scpanel = SchedulePanel(self.scpanel_gui, self.document)
         self.tpanel_gui = CallLogger()
@@ -298,11 +306,12 @@ class TestCase(TestCase):
         self.itable = ImportTable(self.itable_gui, self.iwin)
         self.cdrpanel_gui = CallLogger()
         self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.document)
-        self.mainwindow_gui = MainWindowGUI(self.etable, self.ttable, self.sctable, self.bsheet, 
-            self.istatement, self.balgraph, self.bargraph, self.nwgraph, self.pgraph, self.efbar,
-            self.tfbar, self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, self.arpanel)
+        self.mainwindow_gui = MainWindowGUI(self.etable, self.ttable, self.sctable, self.btable, 
+            self.bsheet, self.istatement, self.balgraph, self.bargraph, self.nwgraph, self.pgraph, 
+            self.efbar, self.tfbar, self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, 
+            self.arpanel)
         children = [self.bsheet, self.istatement, self.ttable, self.etable, self.sctable,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel]
+            self.btable, self.apanel, self.tpanel, self.mepanel, self.scpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()
         self.mainwindow.connect()
@@ -600,3 +609,15 @@ class CommonSetup(object):
         self.add_accounts('one', 'two')
         self.add_entry(transfer='three', increase='42')
     
+    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_index=None):
+        # 4 days left to the month, 100$ monthly budget
+        self.mock_today(2008, 1, 27)
+        self.document.select_today_date_range()
+        account_type = EXPENSE if is_expense else INCOME
+        self.add_account(account_name, account_type=account_type)
+        self.mainwindow.select_income_statement()
+        if is_expense:
+            self.istatement.selected = self.istatement.expenses[0]
+        else:
+            self.istatement.selected = self.istatement.income[0]
+        self.set_budget('100', target_index)

@@ -15,8 +15,8 @@ LINE_GRAPH, BAR_GRAPH = range(2)
 class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
-        (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.apanel, 
-            self.tpanel, self.mepanel, self.scpanel) = children
+        (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.btable,
+            self.apanel, self.tpanel, self.mepanel, self.scpanel) = children
         self.top = None
         self.bottom = None
         self.show_balance_sheet()
@@ -31,20 +31,25 @@ class MainWindow(DocumentGUIObject):
             self.view.show_balance_sheet()
             self.top = self.bsheet
     
-    def show_income_statement(self):
-        if self.top is not self.istatement:
-            self.view.show_income_statement()
-            self.top = self.istatement
-    
     def show_bar_graph(self):
         if self.bottom != BAR_GRAPH:
             self.view.show_bar_graph()
             self.bottom = BAR_GRAPH
     
+    def show_budget_table(self):
+        if self.top is not self.btable:
+            self.view.show_budget_table()
+            self.top = self.btable
+    
     def show_entry_table(self):
         if self.top is not self.etable:
             self.view.show_entry_table()
             self.top = self.etable
+    
+    def show_income_statement(self):
+        if self.top is not self.istatement:
+            self.view.show_income_statement()
+            self.top = self.istatement
     
     def show_line_graph(self):
         if self.bottom != LINE_GRAPH:
@@ -138,6 +143,10 @@ class MainWindow(DocumentGUIObject):
         self.document.filter_string = ''
         self.show_schedule_table()
     
+    def select_budget_table(self):
+        self.document.filter_string = ''
+        self.show_budget_table()
+    
     def select_next_view(self):
         if self.top is self.bsheet:
             self.select_income_statement()
@@ -150,6 +159,8 @@ class MainWindow(DocumentGUIObject):
                 self.select_schedule_table()
         elif self.top is self.etable:
             self.select_schedule_table()
+        elif self.top is self.sctable:
+            self.select_budget_table()
     
     def select_previous_view(self):
         if self.top is self.istatement:
@@ -163,6 +174,8 @@ class MainWindow(DocumentGUIObject):
                 self.select_entry_table()
             else:
                 self.select_transaction_table()
+        elif self.top is self.btable:
+            self.select_schedule_table()
     
     #--- Event callbacks
     def account_must_be_shown(self):

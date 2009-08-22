@@ -7,16 +7,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from operator import attrgetter
-
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from .base import DocumentGUIObject
-from .complete import TransactionCompletionMixIn
 from .table import GUITable, Row, rowattr
 from .transaction_table import TransactionTableRow
 
-class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
+class ScheduleTable(DocumentGUIObject, GUITable):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)

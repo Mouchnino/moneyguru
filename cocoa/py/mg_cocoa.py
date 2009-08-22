@@ -26,6 +26,7 @@ from moneyguru.gui.account_reassign_panel import AccountReassignPanel
 from moneyguru.gui.bar_graph import BarGraph
 from moneyguru.gui.balance_graph import BalanceGraph
 from moneyguru.gui.balance_sheet import BalanceSheet
+from moneyguru.gui.budget_table import BudgetTable
 from moneyguru.gui.csv_options import CSVOptions
 from moneyguru.gui.custom_date_range_panel import CustomDateRangePanel
 from moneyguru.gui.date_widget import DateWidget
@@ -359,6 +360,8 @@ class PyTable(PyCompletion):
     
     @objc.signature('v@:@@i')
     def setValue_forColumn_row_(self, value, column, row):
+        if column == 'from':
+            column = 'from_'
         # this try except is important for the case while a row is in edition mode and the delete
         # button is clicked.
         try:
@@ -368,6 +371,8 @@ class PyTable(PyCompletion):
     
     @objc.signature('@@:@i')
     def valueForColumn_row_(self, column, row):
+        if column == 'from':
+            column = 'from_'
         try:
             return getattr(self.py[row], column)
         except IndexError:
@@ -603,20 +608,8 @@ class PyTransactionTable(PyTableWithDate):
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
 
-    @objc.signature('v@:@@i')
-    def setValue_forColumn_row_(self, value, column, row):
-        if column == 'from':
-            column = 'from_'
-        PyTable.setValue_forColumn_row_(self, value, column, row)
-    
     def totals(self):
         return self.py.totals
-    
-    @objc.signature('@@:@i')
-    def valueForColumn_row_(self, column, row):
-        if column == 'from':
-            column = 'from_'
-        return PyTable.valueForColumn_row_(self, column, row)
     
 
 class PyScheduleTable(PyTable):
@@ -625,17 +618,12 @@ class PyScheduleTable(PyTable):
     def editItem(self):
         self.py.edit()
     
-    @objc.signature('v@:@@i')
-    def setValue_forColumn_row_(self, value, column, row):
-        if column == 'from':
-            column = 'from_'
-        PyTable.setValue_forColumn_row_(self, value, column, row)
+
+class PyBudgetTable(PyTable):
+    py_class = BudgetTable
     
-    @objc.signature('@@:@i')
-    def valueForColumn_row_(self, column, row):
-        if column == 'from':
-            column = 'from_'
-        return PyTable.valueForColumn_row_(self, column, row)
+    def editItem(self):
+        self.py.edit()
     
 
 class PySearchField(PyListener):
@@ -1085,6 +1073,9 @@ class PyMainWindow(PyListener):
     def selectScheduleTable(self):
         self.py.select_schedule_table()
     
+    def selectBudgetTable(self):
+        self.py.select_budget_table()
+    
     def selectNextView(self):
         self.py.select_next_view()
     
@@ -1141,6 +1132,9 @@ class PyMainWindow(PyListener):
 
     def show_bar_graph(self):
         self.cocoa.showBarGraph()
+    
+    def show_budget_table(self):
+        self.cocoa.showBudgetTable()
     
     def show_custom_date_range_panel(self):
         self.cocoa.showCustomDateRangePanel()

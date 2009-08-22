@@ -33,6 +33,22 @@ class Pristine(TestCase):
         self.mainwindow.connect()
         self.check_gui_calls(self.mainwindow_gui, refresh_date_range_selector=1)
     
+    def test_select_next_previous_view(self):
+        self.mainwindow.select_next_view()
+        self.check_gui_calls(self.mainwindow_gui, show_income_statement=1)
+        self.mainwindow.select_next_view()
+        self.check_gui_calls(self.mainwindow_gui, show_transaction_table=1)
+        self.mainwindow.select_next_view()
+        self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
+        self.mainwindow.select_next_view()
+        self.check_gui_calls(self.mainwindow_gui, show_budget_table=1)
+        self.mainwindow.select_previous_view()
+        self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
+        self.mainwindow.select_previous_view()
+        self.check_gui_calls(self.mainwindow_gui, show_transaction_table=1)
+        self.mainwindow.select_previous_view()
+        self.check_gui_calls(self.mainwindow_gui, show_income_statement=1)
+    
     def test_select_ttable_on_sfield_query(self):
         """Setting a value in the search field selects the ttable"""
         self.sfield.query = 'foobar'
@@ -71,6 +87,17 @@ class AssetAccountAndIncomeAccount(TestCase):
         self.clear_gui_calls()
         self.mainwindow.navigate_back()
         self.check_gui_calls(self.mainwindow_gui, show_income_statement=1)
+    
+    def test_select_next_previous_view(self):
+        # Now that an account has been shown, the Account view is part of the view cycle
+        self.mainwindow.select_previous_view()
+        self.check_gui_calls(self.mainwindow_gui, show_transaction_table=1)
+        self.mainwindow.select_next_view()
+        self.check_gui_calls(self.mainwindow_gui, show_entry_table=1)
+        self.mainwindow.select_next_view()
+        self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
+        self.mainwindow.select_previous_view()
+        self.check_gui_calls(self.mainwindow_gui, show_entry_table=1)
     
     def test_switch_views(self):
         """Views shown in the main window depend on what's selected in the account tree."""
