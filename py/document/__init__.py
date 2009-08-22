@@ -776,6 +776,10 @@ class Document(Broadcaster, Listener):
         
         self._perform_action(prepare, perform)
     
+    # Temporary workaround
+    def edit_selected_schedule(self):
+        self.notify('schedule_must_be_edited')
+    
     def make_schedule_from_selected(self):
         if not self.selected_transactions:
             return

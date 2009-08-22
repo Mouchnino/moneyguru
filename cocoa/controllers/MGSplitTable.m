@@ -39,12 +39,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)addSplit:(id)sender
 {
-    [self add];
+    [[self py] add];
 }
 
 - (IBAction)deleteSplit:(id)sender
 {
-    [self deleteSelected];
+    [[self py] deleteSelectedRows];
 }
 
 @end

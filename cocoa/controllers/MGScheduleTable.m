@@ -17,61 +17,25 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    schedulePanel = [[MGSchedulePanel alloc] initWithDocument:aDocument];
     return self;
 }
 
-- (void)dealloc
-{
-    [schedulePanel release];
-    [super dealloc];
-}
-        
 /* Overrides */
 - (PyScheduleTable *)py
 {
     return (PyScheduleTable *)py;
 }
 
-- (void)connect
-{
-    [super connect];
-    [schedulePanel connect];
-}
-
-- (void)disconnect
-{
-    [super disconnect];
-    [schedulePanel disconnect];
-}
-
-/* Public */
-- (void)add
-{
-    [schedulePanel new];
-}
-
-- (void)deleteSelected
-{
-    [[self py] deleteSelectedRows];
-}
-
-- (void)editSelected
-{
-    if ([schedulePanel canLoad])
-        [schedulePanel load];
-}
-
 /* Delegate */
 // MGTableView
 - (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
 {
-    [self editSelected];
+    [[self py] editItem];
     return YES;
 }
 
 - (void)tableViewWasDoubleClicked:(MGTableView *)tableView
 {
-    [self editSelected];
+    [[self py] editItem];
 }
 @end

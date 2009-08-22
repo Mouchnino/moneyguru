@@ -645,7 +645,10 @@ class PyTransactionTable(PyTableWithDate):
 
 class PyScheduleTable(PyTable):
     py_class = ScheduleTable
-
+    
+    def editItem(self):
+        self.py.edit()
+    
     @objc.signature('v@:@@i')
     def setValue_forColumn_row_(self, value, column, row):
         if column == 'from':
@@ -1080,7 +1083,12 @@ class PyExpensesPieChart(PyChart):
     py_class = ExpensesPieChart
 
 class PyMainWindow(PyListener):
-    py_class = MainWindow
+    def initWithCocoa_pyParent_children_(self, cocoa, pyparent, children):
+        self = NSObject.init(self)
+        self.cocoa = cocoa
+        pychildren = [child.py for child in children]
+        self.py = MainWindow(self, pyparent.py, pychildren)
+        return self
     
     def selectBalanceSheet(self):
         self.py.select_balance_sheet()
@@ -1107,6 +1115,16 @@ class PyMainWindow(PyListener):
     
     def navigateBack(self):
         self.py.navigate_back()
+    
+    #--- Item Management
+    def newItem(self):
+        self.py.new_item()
+    
+    def deleteItem(self):
+        self.py.delete_item()
+    
+    def editItem(self):
+        self.py.edit_item()
     
     #--- Python -> Cocoa
     def animate_date_range_backward(self):

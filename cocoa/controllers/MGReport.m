@@ -24,19 +24,9 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyReport *)py;
 }
 
-- (void)add
-{
-    [[self py] addAccount];
-}
-
 - (void)addGroup
 {
     [[self py] addAccountGroup];
-}
-
-- (void)deleteSelected
-{
-    [[self py] deleteSelected];
 }
 
 - (IBAction)showSelectedAccount:(id)sender

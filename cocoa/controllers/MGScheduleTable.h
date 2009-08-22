@@ -11,17 +11,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDocument.h"
 #import "PyScheduleTable.h"
 #import "MGTable.h"
-#import "MGSchedulePanel.h"
 
-@interface MGScheduleTable : MGTable 
-{
-    MGSchedulePanel *schedulePanel;
-}
+@interface MGScheduleTable : MGTable {}
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 /* Public */
 - (PyScheduleTable *)py;
-- (void)add;
-- (void)deleteSelected;
-- (void)editSelected;
 @end

@@ -20,9 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)changeColumns; // call this right after init
 
 /* Public */
-
-- (void)add;
-- (void)deleteSelected;
 - (void)startEditing;
 - (void)stopEditing;
 

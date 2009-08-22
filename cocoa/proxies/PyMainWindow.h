@@ -10,6 +10,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyMainWindow : PyGUI {}
+// Rather than having a 3km long method name (this is objc, remember), we're passing a list of
+// instances here. However, they *have* to be in the right order, which is:
+// bsheet, istatement, ttable, etable, sctable, apanel, tpanel, mepanel, scpanel
+- (id)initWithCocoa:(id)cocoa pyParent:(id)pyParent children:(NSArray *)children;
 - (void)selectBalanceSheet;
 - (void)selectIncomeStatement;
 - (void)selectTransactionTable;
@@ -18,4 +22,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectScheduleTable;
 - (BOOL)canNavigateDateRange;
 - (void)navigateBack;
+
+// Item Management
+- (void)newItem;
+- (void)deleteItem;
+- (void)editItem;
 @end

@@ -90,17 +90,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Public */
-
-- (void)add
-{
-    [[self py] add];
-}
-
-- (void)deleteSelected
-{
-    [[self py] deleteSelectedRows];
-}
-
 - (void)startEditing
 {
     [[self tableView] startEditing];

@@ -34,6 +34,10 @@ class ScheduleTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
     def delete(self):
         self.document.delete_schedules(self.selected_schedules)
     
+    # This is a temporary workaround so that double-clicks and pressing return works in the sctable
+    def edit(self):
+        self.document.edit_selected_schedule()
+    
     def refresh(self):
         del self[:]
         for schedule in self.document.schedules:

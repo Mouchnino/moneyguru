@@ -9,13 +9,14 @@
 
 from .base import DocumentGUIObject
 
-ENTRY_TABLE, BALANCE_SHEET, TRANSACTION_TABLE, INCOME_STATEMENT, SCHEDULE_TABLE = range(5)
 LINE_GRAPH, BAR_GRAPH = range(2)
 
 
 class MainWindow(DocumentGUIObject):
-    def __init__(self, view, document):
+    def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
+        (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.apanel, 
+            self.tpanel, self.mepanel, self.scpanel) = children
         self.top = None
         self.bottom = None
         self.show_balance_sheet()
@@ -26,14 +27,14 @@ class MainWindow(DocumentGUIObject):
     
     #--- Private
     def show_balance_sheet(self):
-        if self.top != BALANCE_SHEET:
+        if self.top is not self.bsheet:
             self.view.show_balance_sheet()
-            self.top = BALANCE_SHEET
+            self.top = self.bsheet
     
     def show_income_statement(self):
-        if self.top != INCOME_STATEMENT:
+        if self.top is not self.istatement:
             self.view.show_income_statement()
-            self.top = INCOME_STATEMENT
+            self.top = self.istatement
     
     def show_bar_graph(self):
         if self.bottom != BAR_GRAPH:
@@ -41,9 +42,9 @@ class MainWindow(DocumentGUIObject):
             self.bottom = BAR_GRAPH
     
     def show_entry_table(self):
-        if self.top != ENTRY_TABLE:
+        if self.top is not self.etable:
             self.view.show_entry_table()
-            self.top = ENTRY_TABLE
+            self.top = self.etable
     
     def show_line_graph(self):
         if self.bottom != LINE_GRAPH:
@@ -51,23 +52,48 @@ class MainWindow(DocumentGUIObject):
             self.bottom = LINE_GRAPH
     
     def show_schedule_table(self):
-        if self.top != SCHEDULE_TABLE:
+        if self.top is not self.sctable:
             self.view.show_schedule_table()
-            self.top = SCHEDULE_TABLE
+            self.top = self.sctable
     
     def show_transaction_table(self):
-        if self.top != TRANSACTION_TABLE:
+        if self.top is not self.ttable:
             self.view.show_transaction_table()
-            self.top = TRANSACTION_TABLE
+            self.top = self.ttable
     
     #--- Public
+    def edit_item(self):
+        if self.top in (self.bsheet, self.istatement):
+            if self.apanel.can_load():
+                self.apanel.load()
+        elif self.top in (self.etable, self.ttable):
+            if self.tpanel.can_load():
+                self.tpanel.load()
+            elif self.mepanel.can_load():
+                self.mepanel.load()
+        elif self.top is self.sctable:
+            if self.scpanel.can_load():
+                self.scpanel.load()
+    
+    def delete_item(self):
+        if self.top in (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable):
+            self.top.delete()
+    
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
-        assert self.top == ENTRY_TABLE # not supposed to be called outside the entry_table context
+        assert self.top is self.etable # not supposed to be called outside the entry_table context
         if self.document.shown_account.is_balance_sheet_account():
             self.select_balance_sheet()
         else:
             self.select_income_statement()
+    
+    def new_item(self):
+        if self.top in (self.bsheet, self.istatement):
+            self.top.add_account()
+        elif self.top in (self.etable, self.ttable):
+            self.top.add()
+        elif self.top is self.sctable:
+            self.scpanel.new()
     
     def select_balance_sheet(self):
         self.document.filter_string = ''
@@ -130,10 +156,10 @@ class MainWindow(DocumentGUIObject):
         self.select_schedule_table()
     
     def undone(self):
-        if self.document.selected_account is None and self.top == ENTRY_TABLE:
+        if self.document.selected_account is None and self.top is self.etable:
             self.select_balance_sheet()
     
     def redone(self):
-        if self.document.selected_account is None and self.top == ENTRY_TABLE:
+        if self.document.selected_account is None and self.top is self.etable:
             self.select_balance_sheet()
     

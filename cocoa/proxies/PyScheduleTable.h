@@ -10,4 +10,5 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyTable.h"
 
 @interface PyScheduleTable : PyTable {}
+- (void)editItem;
 @end

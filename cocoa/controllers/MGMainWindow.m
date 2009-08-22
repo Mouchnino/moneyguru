@@ -25,6 +25,8 @@ http://www.hardcoded.net/licenses/hs_license
     accountProperties = [[MGAccountProperties alloc] initWithDocument:document];
     transactionPanel = [[MGTransactionInspector alloc] initWithDocument:document];
     massEditionPanel = [[MGMassEditionPanel alloc] initWithDocument:document];
+    schedulePanel = [[MGSchedulePanel alloc] initWithDocument:document];
+    [schedulePanel connect];
     balanceSheet = [[MGBalanceSheet alloc] initWithDocument:document];
     incomeStatement = [[MGIncomeStatement alloc] initWithDocument:document];
     transactionTable = [[MGTransactionTable alloc] initWithDocument:document];
@@ -43,8 +45,11 @@ http://www.hardcoded.net/licenses/hs_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
+    NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [incomeStatement py], 
+        [transactionTable py], [entryTable py], [scheduleTable py], [accountProperties py], 
+        [transactionPanel py], [massEditionPanel py], [schedulePanel py], nil];
     Class PyMainWindow = [MGUtils classNamed:@"PyMainWindow"];
-    py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py]];
+    py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];
     [py connect];
     [searchField connect];
 }
@@ -53,6 +58,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [transactionPanel release];
     [massEditionPanel release];
+    [schedulePanel release];
     [accountProperties release];
     [balanceSheet release];
     [incomeStatement release];
@@ -136,31 +142,13 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)delete:(id)sender
 {
-    if ([[self top] respondsToSelector:@selector(deleteSelected)])
-    {
-        [(id)[self top] deleteSelected];
-    }
+    [py deleteItem];
 }
 
 
 - (IBAction)editItemInfo:(id)sender
 {
-    if ((top == balanceSheet) || (top == incomeStatement))
-    {
-        if ([accountProperties canLoad])
-            [accountProperties load];
-    }
-    else if ((top == entryTable) || (top == transactionTable))
-    {
-        if ([transactionPanel canLoad])
-            [transactionPanel load];
-        else if ([massEditionPanel canLoad])
-            [massEditionPanel load];
-    }
-    else if (top == scheduleTable)
-    {
-        [scheduleTable editSelected];
-    }
+    [py editItem];
 }
 
 - (IBAction)makeScheduleFromSelected:(id)sender
@@ -202,10 +190,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)newItem:(id)sender
 {
-    if ([[self top] respondsToSelector:@selector(add)])
-    {
-        [(id)[self top] add];
-    }
+    [py newItem];
 }
 
 - (IBAction)search:(id)sender

@@ -301,7 +301,9 @@ class TestCase(TestCase):
         self.mainwindow_gui = MainWindowGUI(self.etable, self.ttable, self.sctable, self.bsheet, 
             self.istatement, self.balgraph, self.bargraph, self.nwgraph, self.pgraph, self.efbar,
             self.tfbar, self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, self.arpanel)
-        self.mainwindow = MainWindow(self.mainwindow_gui, self.document)
+        children = [self.bsheet, self.istatement, self.ttable, self.etable, self.sctable,
+            self.apanel, self.tpanel, self.mepanel, self.scpanel]
+        self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()
         self.mainwindow.connect()
         self.stable.connect()
