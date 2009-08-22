@@ -145,7 +145,6 @@ http://www.hardcoded.net/licenses/hs_license
     [py deleteItem];
 }
 
-
 - (IBAction)editItemInfo:(id)sender
 {
     [py editItem];
@@ -153,26 +152,17 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)makeScheduleFromSelected:(id)sender
 {
-    if ([[self top] respondsToSelector:@selector(makeScheduleFromSelected)])
-    {
-        [(id)[self top] makeScheduleFromSelected];
-    }
+    [py makeScheduleFromSelected];
 }
 
 - (IBAction)moveDown:(id)sender
 {
-    if ([[self top] respondsToSelector:@selector(moveDown)])
-    {
-        [(id)[self top] moveDown];
-    }
+    [py moveDown];
 }
 
 - (IBAction)moveUp:(id)sender
 {
-    if ([[self top] respondsToSelector:@selector(moveUp)])
-    {
-        [(id)[self top] moveUp];
-    }
+    [py moveUp];
 }
 
 - (IBAction)navigateBack:(id)sender
@@ -182,10 +172,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)newGroup:(id)sender
 {
-    if ([[self top] respondsToSelector:@selector(addGroup)])
-    {
-        [(id)[self top] addGroup];
-    }
+    [py newGroup];
 }
 
 - (IBAction)newItem:(id)sender
@@ -270,36 +257,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showNextView:(id)sender
 {
-    if (top == balanceSheet)
-        [self showIncomeStatement:self];
-    else if (top == incomeStatement)
-        [self showTransactionTable:self];
-    else if (top == transactionTable)
-    {
-        if ([py canSelectEntryTable])
-            [self showEntryTable:self];
-        else
-            [self showScheduleTable:self];
-    }
-    else if (top == entryTable)
-        [self showScheduleTable:self];
+    [py selectNextView];
 }
 
 - (IBAction)showPreviousView:(id)sender
 {
-    if (top == incomeStatement)
-        [self showBalanceSheet:self];
-    else if (top == transactionTable)
-        [self showIncomeStatement:self];
-    else if (top == entryTable)
-        [self showTransactionTable:self];
-    else if (top == scheduleTable)
-    {
-        if ([py canSelectEntryTable])
-            [self showEntryTable:self];
-        else
-            [self showTransactionTable:self];
-    }
+    [py selectPreviousView];
 }
 
 - (IBAction)showSelectedAccount:(id)sender

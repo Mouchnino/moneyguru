@@ -487,12 +487,6 @@ class PyOutline(PyListener):
     
 
 class PyReport(PyOutline):
-    def addAccount(self):
-        self.py.add_account()
-    
-    def addAccountGroup(self):
-        self.py.add_account_group()
-    
     @objc.signature('i@:')
     def canDeleteSelected(self):
         return self.py.can_delete()
@@ -579,19 +573,10 @@ class PyEntryTable(PyTableWithDate):
     def isBalanceNegativeAtRow_(self, row):
         return self.py[row].is_balance_negative()
     
-    def makeScheduleFromSelected(self):
-        self.py.make_schedule_from_selected()
-    
-    def moveDown(self):
-        self.py.move_down()
-
     @objc.signature('v@:@i')
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
 
-    def moveUp(self):
-        self.py.move_up()
-    
     @objc.signature('i@:')
     def shouldShowBalanceColumn(self):
         return self.py.should_show_balance_column()
@@ -614,19 +599,10 @@ class PyTransactionTable(PyTableWithDate):
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
     
-    def makeScheduleFromSelected(self):
-        self.py.make_schedule_from_selected()
-    
-    def moveDown(self):
-        self.py.move_down()
-
     @objc.signature('v@:@i')
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
 
-    def moveUp(self):
-        self.py.move_up()
-    
     @objc.signature('v@:@@i')
     def setValue_forColumn_row_(self, value, column, row):
         if column == 'from':
@@ -1109,6 +1085,12 @@ class PyMainWindow(PyListener):
     def selectScheduleTable(self):
         self.py.select_schedule_table()
     
+    def selectNextView(self):
+        self.py.select_next_view()
+    
+    def selectPreviousView(self):
+        self.py.select_previous_view()
+    
     @objc.signature('i@:')
     def canNavigateDateRange(self):
         return self.py.document.date_range.can_navigate
@@ -1117,14 +1099,26 @@ class PyMainWindow(PyListener):
         self.py.navigate_back()
     
     #--- Item Management
-    def newItem(self):
-        self.py.new_item()
-    
     def deleteItem(self):
         self.py.delete_item()
     
     def editItem(self):
         self.py.edit_item()
+    
+    def makeScheduleFromSelected(self):
+        self.py.make_schedule_from_selected()
+    
+    def moveDown(self):
+        self.py.move_down()
+    
+    def moveUp(self):
+        self.py.move_up()
+    
+    def newItem(self):
+        self.py.new_item()
+    
+    def newGroup(self):
+        self.py.new_group()
     
     #--- Python -> Cocoa
     def animate_date_range_backward(self):

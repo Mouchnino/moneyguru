@@ -257,21 +257,6 @@ http://www.hardcoded.net/licenses/hs_license
     return nil;
 }
 
-- (void)makeScheduleFromSelected
-{
-    [[self py] makeScheduleFromSelected];
-}
-
-- (void)moveUp
-{
-    [[self py] moveUp];
-}
-
-- (void)moveDown
-{
-    [[self py] moveDown];
-}
-
 - (void)showBalanceGraph
 {
     [self showGraph:balanceGraph];

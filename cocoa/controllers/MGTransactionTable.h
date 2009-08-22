@@ -31,8 +31,4 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (PyTransactionTable *)py;
 - (id)fieldEditorForObject:(id)asker;
-- (void)makeScheduleFromSelected;
-- (void)moveUp;
-- (void)moveDown;
-
 @end

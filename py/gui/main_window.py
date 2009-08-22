@@ -79,6 +79,18 @@ class MainWindow(DocumentGUIObject):
         if self.top in (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable):
             self.top.delete()
     
+    def make_schedule_from_selected(self):
+        if self.top in (self.ttable, self.etable):
+            self.document.make_schedule_from_selected()
+    
+    def move_down(self):
+        if self.top in (self.ttable, self.etable):
+            self.top.move_down()
+    
+    def move_up(self):
+        if self.top in (self.ttable, self.etable):
+            self.top.move_up()
+    
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
         assert self.top is self.etable # not supposed to be called outside the entry_table context
@@ -94,6 +106,10 @@ class MainWindow(DocumentGUIObject):
             self.top.add()
         elif self.top is self.sctable:
             self.scpanel.new()
+    
+    def new_group(self):
+        if self.top in (self.bsheet, self.istatement):
+            self.top.add_account_group()
     
     def select_balance_sheet(self):
         self.document.filter_string = ''
@@ -121,6 +137,32 @@ class MainWindow(DocumentGUIObject):
     def select_schedule_table(self):
         self.document.filter_string = ''
         self.show_schedule_table()
+    
+    def select_next_view(self):
+        if self.top is self.bsheet:
+            self.select_income_statement()
+        elif self.top is self.istatement:
+            self.select_transaction_table()
+        elif self.top is self.ttable:
+            if self.document.shown_account is not None:
+                self.select_entry_table()
+            else:
+                self.select_schedule_table()
+        elif self.top is self.etable:
+            self.select_schedule_table()
+    
+    def select_previous_view(self):
+        if self.top is self.istatement:
+            self.select_balance_sheet()
+        elif self.top is self.ttable:
+            self.select_income_statement()
+        elif self.top is self.etable:
+            self.select_transaction_table()
+        elif self.top is self.sctable:
+            if self.document.shown_account is not None:
+                self.select_entry_table()
+            else:
+                self.select_transaction_table()
     
     #--- Event callbacks
     def account_must_be_shown(self):

@@ -140,23 +140,7 @@ http://www.hardcoded.net/licenses/hs_license
     return nil;
 }
 
-- (void)makeScheduleFromSelected
-{
-    [[self py] makeScheduleFromSelected];
-}
-
-- (void)moveUp
-{
-    [[self py] moveUp];
-}
-
-- (void)moveDown
-{
-    [[self py] moveDown];
-}
-
 /* Delegate */
-
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)column row:(int)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row

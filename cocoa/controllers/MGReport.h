@@ -16,7 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (PyReport *)py;
 
-- (void)addGroup;
 - (IBAction)showSelectedAccount:(id)sender;
 - (BOOL)canShowSelectedAccount;
 @end

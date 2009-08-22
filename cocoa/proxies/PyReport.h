@@ -9,8 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 
 @interface PyReport : PyOutline {}
-- (void)addAccount;
-- (void)addAccountGroup;
 - (BOOL)canDeleteSelected;
 - (BOOL)canMovePath:(NSArray *)sourcePath toPath:(NSArray *)destPath;
 - (void)deleteSelected;

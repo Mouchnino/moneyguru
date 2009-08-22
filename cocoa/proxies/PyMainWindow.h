@@ -14,17 +14,25 @@ http://www.hardcoded.net/licenses/hs_license
 // instances here. However, they *have* to be in the right order, which is:
 // bsheet, istatement, ttable, etable, sctable, apanel, tpanel, mepanel, scpanel
 - (id)initWithCocoa:(id)cocoa pyParent:(id)pyParent children:(NSArray *)children;
+
+// Navigation
 - (void)selectBalanceSheet;
 - (void)selectIncomeStatement;
 - (void)selectTransactionTable;
 - (void)selectEntryTable;
 - (BOOL)canSelectEntryTable;
 - (void)selectScheduleTable;
+- (void)selectNextView;
+- (void)selectPreviousView;
 - (BOOL)canNavigateDateRange;
 - (void)navigateBack;
 
 // Item Management
-- (void)newItem;
 - (void)deleteItem;
 - (void)editItem;
+- (void)makeScheduleFromSelected;
+- (void)moveDown;
+- (void)moveUp;
+- (void)newGroup;
+- (void)newItem;
 @end

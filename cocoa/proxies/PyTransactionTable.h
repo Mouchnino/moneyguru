@@ -12,9 +12,6 @@ http://www.hardcoded.net/licenses/hs_license
 @interface PyTransactionTable : PyTableWithDate {}
 
 - (BOOL)canMoveRows:(NSArray *)rows to:(int)position;
-- (void)makeScheduleFromSelected;
-- (void)moveDown;
 - (void)moveRows:(NSArray *)rows to:(int)position;
-- (void)moveUp;
 - (NSString *)totals;
 @end

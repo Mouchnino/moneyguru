@@ -13,6 +13,33 @@ from nose.tools import eq_
 
 from .base import TestCase, TestSaveLoadMixin, CommonSetup
 
+class OneTransaction(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_monthly_range()
+        self.setup_one_entry()
+        self.mainwindow.select_transaction_table()
+        self.clear_gui_calls()
+    
+    def test_make_schedule_from_selected(self):
+        # make_schedule_from_selected takes the selected transaction, create a monthly schedule out
+        # of it, selects the schedule table, and pops the edition panel for it.
+        self.mainwindow.make_schedule_from_selected()
+        self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
+        self.check_gui_calls_partial(self.scpanel_gui, pre_load=1, post_load=1)
+        eq_(len(self.sctable), 0) # It's a *new* schedule, only added if we press save
+        eq_(self.scpanel.start_date, '11/07/2008')
+        eq_(self.scpanel.description, 'description')
+        eq_(self.scpanel.repeat_type_index, 2) # monthly
+        eq_(self.scpanel.repeat_every, 1)
+        self.scpanel.save()
+        eq_(len(self.sctable), 1) # now we have it
+        # When creating the schedule, we must delete the first occurrence because it overlapse with
+        # the base transaction
+        self.mainwindow.select_transaction_table()
+        eq_(len(self.ttable), 1)
+    
+
 class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
