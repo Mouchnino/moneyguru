@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTransactionInspector.h"
 #import "MGMassEditionPanel.h"
 #import "MGSchedulePanel.h"
+#import "MGBudgetPanel.h"
 #import "MGEntryTable.h"
 #import "MGBalanceSheet.h"
 #import "MGIncomeStatement.h"
@@ -37,6 +38,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGTransactionInspector *transactionPanel;
     MGMassEditionPanel *massEditionPanel;
     MGSchedulePanel *schedulePanel;
+    MGBudgetPanel *budgetPanel;
     MGBalanceSheet *balanceSheet;
     MGIncomeStatement *incomeStatement;
     MGTransactionTable *transactionTable;

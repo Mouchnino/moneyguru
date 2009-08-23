@@ -17,6 +17,7 @@ TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'position',
 SPLIT_SWAP_ATTRS = ['account', 'amount', 'reconciled']
 SCHEDULE_SWAP_ATTRS = ['start_date', 'repeat_type', 'repeat_every', 'stop_date', 'date2exception', 
                        'date2globalchange', 'date2instances']
+BUDGET_SWAP_ATTRS = SCHEDULE_SWAP_ATTRS + ['account', 'target', 'amount']
 
 def swapvalues(first, second, attrs):
     for attr in attrs:
@@ -40,6 +41,9 @@ class Action(object):
         self.added_schedules = set()
         self.changed_schedules = set()
         self.deleted_schedules = set()
+        self.added_budgets = set()
+        self.changed_budgets = set()
+        self.deleted_budgets = set()
         self.will_unreconcile = set() # unused in Undoer, but it's a placeholder for Document._perform_action()
     
     def change_accounts(self, accounts):
@@ -51,6 +55,9 @@ class Action(object):
     def change_schedule(self, schedule):
         self.changed_schedules.add((schedule, schedule.replicate()))
         self.changed_transactions.add((schedule.ref, schedule.ref.replicate()))
+    
+    def change_budget(self, budget):
+        self.changed_budgets.add((budget, budget.replicate()))
     
     def change_transactions(self, transactions):
         self.changed_transactions |= set((t, t.replicate()) for t in transactions)
@@ -67,12 +74,13 @@ class Action(object):
     
 
 class Undoer(object):
-    def __init__(self, accounts, groups, transactions, scheduled):
+    def __init__(self, accounts, groups, transactions, scheduled, budgets):
         self._actions = []
         self._accounts = accounts
         self._groups = groups
         self._transactions = transactions
         self._scheduled = scheduled
+        self._budgets = budgets
         self._index = -1
         self._save_point = None
     
@@ -82,7 +90,7 @@ class Undoer(object):
             if split.account is not None and split.account not in self._accounts:
                 self._accounts.add(split.account)
     
-    def _do_adds(self, accounts, groups, transactions, schedules):
+    def _do_adds(self, accounts, groups, transactions, schedules, budgets):
         for account in accounts:
             self._accounts.add(account)
         for group in groups:
@@ -90,8 +98,10 @@ class Undoer(object):
         for txn in transactions:
             self._transactions.add(txn, keep_position=True)
             self._add_auto_created_accounts(txn)
-        for recurrence in schedules:
-            self._scheduled.append(recurrence)
+        for schedule in schedules:
+            self._scheduled.append(schedule)
+        for budget in budgets:
+            self._budgets.append(budget)
     
     def _do_changes(self, action):
         for account, old in action.changed_accounts:
@@ -108,8 +118,10 @@ class Undoer(object):
             swapvalues(split, old, SPLIT_SWAP_ATTRS)
         for schedule, old in action.changed_schedules:
             swapvalues(schedule, old, SCHEDULE_SWAP_ATTRS)
+        for budget, old in action.changed_budgets:
+            swapvalues(budget, old, BUDGET_SWAP_ATTRS)
     
-    def _do_deletes(self, accounts, groups, transactions, schedules):
+    def _do_deletes(self, accounts, groups, transactions, schedules, budgets):
         for account in accounts:
             self._accounts.remove(account)
         for group in groups:
@@ -117,8 +129,10 @@ class Undoer(object):
         for txn in transactions:
             self._remove_auto_created_account(txn)
             self._transactions.remove(txn)
-        for recurrence in schedules:
-            self._scheduled.remove(recurrence)
+        for schedule in schedules:
+            self._scheduled.remove(schedule)
+        for budget in budgets:
+            self._budgets.remove(budget)
     
     def _remove_auto_created_account(self, transaction):
         for split in transaction.splits:
@@ -158,16 +172,20 @@ class Undoer(object):
     def undo(self):
         assert self.can_undo()
         action = self._actions[self._index]
-        self._do_adds(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, action.deleted_schedules)
-        self._do_deletes(action.added_accounts, action.added_groups, action.added_transactions, action.added_schedules)
+        self._do_adds(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, 
+            action.deleted_schedules, action.deleted_budgets)
+        self._do_deletes(action.added_accounts, action.added_groups, action.added_transactions,
+            action.added_schedules, action.added_budgets)
         self._do_changes(action)
         self._index -= 1
     
     def redo(self):
         assert self.can_redo()
         action = self._actions[self._index + 1]
-        self._do_adds(action.added_accounts, action.added_groups, action.added_transactions, action.added_schedules)
-        self._do_deletes(action.deleted_accounts, action.deleted_groups, action.deleted_transactions, action.deleted_schedules)
+        self._do_adds(action.added_accounts, action.added_groups, action.added_transactions,
+            action.added_schedules, action.added_budgets)
+        self._do_deletes(action.deleted_accounts, action.deleted_groups, action.deleted_transactions,
+            action.deleted_schedules, action.deleted_budgets)
         self._do_changes(action)
         self._index += 1
     

@@ -29,6 +29,7 @@ from ..gui.account_reassign_panel import AccountReassignPanel
 from ..gui.balance_graph import BalanceGraph
 from ..gui.balance_sheet import BalanceSheet
 from ..gui.bar_graph import BarGraph
+from ..gui.budget_panel import BudgetPanel
 from ..gui.budget_table import BudgetTable
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
@@ -267,6 +268,8 @@ class TestCase(TestCase):
         self.tpanel = TransactionPanel(self.tpanel_gui, self.document)
         self.mepanel_gui = CallLogger()
         self.mepanel = MassEditionPanel(self.mepanel_gui, self.document)
+        self.bpanel_gui = CallLogger()
+        self.bpanel = BudgetPanel(self.bpanel_gui, self.document)
         self.stable_gui = CallLogger()
         self.stable = SplitTable(self.stable_gui, self.tpanel)
         self.scsplittable_gui = CallLogger()
@@ -311,7 +314,7 @@ class TestCase(TestCase):
             self.efbar, self.tfbar, self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, 
             self.arpanel)
         children = [self.bsheet, self.istatement, self.ttable, self.etable, self.sctable,
-            self.btable, self.apanel, self.tpanel, self.mepanel, self.scpanel]
+            self.btable, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()
         self.mainwindow.connect()

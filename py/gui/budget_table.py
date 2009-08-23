@@ -20,8 +20,7 @@ class BudgetTable(DocumentGUIObject, GUITable):
     
     #--- Override
     def _update_selection(self):
-        # self.document.select_budgets(self.selected_budgets)
-        pass
+        self.document.select_budgets(self.selected_budgets)
     
     def connect(self):
         DocumentGUIObject.connect(self)
@@ -34,8 +33,7 @@ class BudgetTable(DocumentGUIObject, GUITable):
     
     # This is a temporary workaround so that double-clicks and pressing return works in the btable
     def edit(self):
-        # self.document.edit_selected_budget()
-        pass
+        self.document.edit_selected()
     
     def refresh(self):
         del self[:]
@@ -48,6 +46,14 @@ class BudgetTable(DocumentGUIObject, GUITable):
         return [row.budget for row in self.selected_rows]
     
     #--- Event handlers
+    def budget_changed(self):
+        self.refresh()
+        self.view.refresh()
+    
+    def budget_deleted(self):
+        self.refresh()
+        self.view.refresh()
+    
     def file_loaded(self):
         self.refresh()
         self.view.refresh()

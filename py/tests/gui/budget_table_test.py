@@ -29,3 +29,12 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         eq_(row.target, '')
         eq_(row.amount, '100.00')
     
+    def test_delete(self):
+        # calling delete() deletes the selected rows
+        self.btable.select([0])
+        self.mainwindow.delete_item()
+        eq_(len(self.btable), 0)
+        # And the spawns aren't there anymore in the ttable
+        self.mainwindow.select_transaction_table()
+        eq_(len(self.ttable), 0)
+    

@@ -11,11 +11,9 @@ from hsutil.currency import Currency
 
 from ..const import NOEDIT
 from ..exception import DuplicateAccountNameError
-from ..model.account import ASSET, LIABILITY, INCOME, EXPENSE
+from ..model.account import sort_accounts, ASSET, LIABILITY, INCOME, EXPENSE, TYPE_ORDER
 from ..model.amount import Amount, parse_amount, format_amount
 from .base import GUIPanel
-
-TYPE_ORDER = [ASSET, LIABILITY, INCOME, EXPENSE]
 
 class AccountPanel(GUIPanel):
     def __init__(self, view, document):
@@ -35,7 +33,7 @@ class AccountPanel(GUIPanel):
         budget = self.document.budgets.budget_for_account(account)
         self._budget = abs(budget.amount) if budget is not None else 0
         self._budget_targets = [a for a in self.document.accounts if a.is_balance_sheet_account()]
-        self._budget_targets.sort(key=lambda a: (TYPE_ORDER.index(a.type), a.name))
+        sort_accounts(self._budget_targets)
         self.available_budget_targets = [a.name for a in self._budget_targets]
         if budget is not None and budget.target in self._budget_targets:
             self.budget_target_index = self._budget_targets.index(budget.target)

@@ -27,6 +27,7 @@ ASSET = 'asset'
 LIABILITY = 'liability'
 INCOME = 'income'
 EXPENSE = 'expense'
+TYPE_ORDER = [ASSET, LIABILITY, INCOME, EXPENSE]
 
 # Placeholder when an argument is not given
 NOT_GIVEN = object()
@@ -37,6 +38,10 @@ diacritics = re.compile(u'[\u0300-\u036f\u1dc0-\u1dff]')
 def sort_key(s):
     """Returns a normalized version of 's' to be used for sorting."""
     return diacritics.sub('', unicodedata.normalize('NFD', unicode(s)).lower())
+
+def sort_accounts(accounts):
+    """Sort accounts according first to their type, then to their name"""
+    accounts.sort(key=lambda a: (TYPE_ORDER.index(a.type), sort_key(a.name)))
 
 class Account(object):
     def __init__(self, name, currency, type):

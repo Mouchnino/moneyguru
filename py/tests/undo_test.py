@@ -634,7 +634,7 @@ class ScheduledTransaction(TestCase, CommonSetup):
         self.sctable.select([0])
     
     @save_state_then_verify
-    def test_change_achedule(self):
+    def test_change_schedule(self):
         self.scpanel.load()
         self.scpanel.description = 'changed'
         self.scpanel.repeat_every = 12
@@ -643,3 +643,23 @@ class ScheduledTransaction(TestCase, CommonSetup):
     @save_state_then_verify
     def test_delete_schedule(self):
         self.sctable.delete()
+    
+
+class Budget(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_account_with_budget()
+        self.mainwindow.select_budget_table()
+        self.btable.select([0])
+    
+    @save_state_then_verify
+    def test_change_budget(self):
+        self.bpanel.load()
+        self.bpanel.repeat_every = 12
+        self.bpanel.save()
+    
+    @save_state_then_verify
+    def test_delete_budget(self):
+        self.btable.delete()
+    
+    

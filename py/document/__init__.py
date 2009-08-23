@@ -67,7 +67,7 @@ class Document(Broadcaster, Listener):
         self.schedules = []
         self.budgets = BudgetList()
         self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
-        self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules)
+        self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules, self.budgets)
         self._date_range = YearRange(datetime.date.today())
         self._in_reconciliation_mode = False
         self._selected_account = None
@@ -76,6 +76,7 @@ class Document(Broadcaster, Listener):
         self._explicitly_selected_transactions = []
         self._selected_splits = []
         self._selected_schedules = []
+        self._selected_budgets = []
         self._filter_string = ''
         self._filter_type = None
         self._visible_transactions = None
@@ -726,59 +727,78 @@ class Document(Broadcaster, Listener):
             budgeted_amount = target._normalize_amount(budgeted_amount)
         return budgeted_amount
     
+    def change_budget(self, original, new):
+        if original in self.budgets:
+            action = Action('Change Budget')
+            action.change_budget(original)
+        else:
+            action = Action('Add Budget')
+            action.added_budgets.add(original)
+        self._undoer.record(action)
+        min_date = min(original.start_date, new.start_date)
+        original.start_date = new.start_date
+        original.repeat_type = new.repeat_type
+        original.repeat_every = new.repeat_every
+        original.stop_date = new.stop_date
+        original.account = new.account
+        original.target = new.target
+        original.amount = new.amount
+        original.reset_spawn_cache()
+        if original not in self.budgets:
+            self.budgets.append(original)
+        self._cook(from_date=min_date)
+        self.notify('budget_changed')
+    
+    def delete_budgets(self, budgets):
+        if not budgets:
+            return
+        action = Action('Remove Budget')
+        action.deleted_budgets |= set(budgets)
+        self._undoer.record(action)
+        for budget in budgets:
+            self.budgets.remove(budget)
+        min_date = min(b.start_date for b in budgets)
+        self._cook(from_date=min_date)
+        self.notify('budget_deleted')
+    
     #--- Schedule
     def change_schedule(self, schedule, new_ref, repeat_type, repeat_every, stop_date):
-        def prepare():
-            for split in new_ref.splits:
-                if split.account is not None:
-                    # same as in change_transaction()
-                    split.account = self.accounts.find(split.account.name, split.account.type)
-            if schedule in self.schedules:
-                action = Action('Change Schedule')
-                action.change_schedule(schedule)
-            else:
-                action = Action('Add Schedule')
-                action.added_schedules.add(schedule)
-            return action
-        
-        def perform():
-            original = schedule.ref
-            min_date = min(original.date, new_ref.date)
-            original.set_splits(new_ref.splits)
-            original.change(description=new_ref.description, payee=new_ref.payee, checkno=new_ref.checkno)
-            schedule.start_date = new_ref.date
-            schedule.repeat_type = repeat_type
-            schedule.repeat_every = repeat_every
-            schedule.stop_date = stop_date
-            schedule.reset_spawn_cache()
-            if schedule not in self.schedules:
-                self.schedules.append(schedule)
-            self._cook(from_date=min_date)
-            self.notify('schedule_changed')
-        
-        self._perform_action(prepare, perform)
+        for split in new_ref.splits:
+            if split.account is not None:
+                # same as in change_transaction()
+                split.account = self.accounts.find(split.account.name, split.account.type)
+        if schedule in self.schedules:
+            action = Action('Change Schedule')
+            action.change_schedule(schedule)
+        else:
+            action = Action('Add Schedule')
+            action.added_schedules.add(schedule)
+        self._undoer.record(action)
+        original = schedule.ref
+        min_date = min(original.date, new_ref.date)
+        original.set_splits(new_ref.splits)
+        original.change(description=new_ref.description, payee=new_ref.payee, checkno=new_ref.checkno)
+        schedule.start_date = new_ref.date
+        schedule.repeat_type = repeat_type
+        schedule.repeat_every = repeat_every
+        schedule.stop_date = stop_date
+        schedule.reset_spawn_cache()
+        if schedule not in self.schedules:
+            self.schedules.append(schedule)
+        self._cook(from_date=min_date)
+        self.notify('schedule_changed')
     
     def delete_schedules(self, schedules):
         if not schedules:
             return
-        
-        def prepare():
-            action = Action('Remove Schedule')
-            action.deleted_schedules |= set(schedules)
-            return action
-        
-        def perform():
-            for schedule in schedules:
-                self.schedules.remove(schedule)
-            min_date = min(s.ref.date for s in schedules)
-            self._cook(from_date=min_date)
-            self.notify('schedule_deleted')
-        
-        self._perform_action(prepare, perform)
-    
-    # Temporary workaround
-    def edit_selected_schedule(self):
-        self.notify('schedule_must_be_edited')
+        action = Action('Remove Schedule')
+        action.deleted_schedules |= set(schedules)
+        self._undoer.record(action)
+        for schedule in schedules:
+            self.schedules.remove(schedule)
+        min_date = min(s.ref.date for s in schedules)
+        self._cook(from_date=min_date)
+        self.notify('schedule_deleted')
     
     def make_schedule_from_selected(self):
         if not self.selected_transactions:
@@ -791,7 +811,7 @@ class Document(Broadcaster, Listener):
         schedule = Recurrence(ref.replicate(), REPEAT_MONTHLY, 1)
         schedule.delete_at(ref.date)
         self.select_schedules([schedule]) # yes, we select a schedule that ain't part of self.schedules
-        self.notify('schedule_must_be_edited')
+        self.edit_selected()
     
     #--- Selection
     @property
@@ -847,6 +867,21 @@ class Document(Broadcaster, Listener):
     
     def select_schedules(self, schedules):
         self._selected_schedules = schedules
+    
+    @property
+    def selected_budget(self):
+        return self._selected_budgets[0] if self._selected_budgets else None
+    
+    @property
+    def selected_budgets(self):
+        return self._selected_budgets
+    
+    def select_budgets(self, budgets):
+        self._selected_budgets = budgets
+    
+    # Temporary workaround
+    def edit_selected(self):
+        self.notify('selected_must_be_edited')
     
     #--- Load / Save / Import
     def load_from_xml(self, filename):

@@ -33,7 +33,7 @@ class ScheduleTable(DocumentGUIObject, GUITable):
     
     # This is a temporary workaround so that double-clicks and pressing return works in the sctable
     def edit(self):
-        self.document.edit_selected_schedule()
+        self.document.edit_selected()
     
     def refresh(self):
         del self[:]

@@ -6,49 +6,31 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import "MGSchedulePanel.h"
-#import "Utils.h"
-#import "MGFieldEditor.h"
+#import "MGBudgetPanel.h"
 #import "MGDateFieldEditor.h"
 #import "MGUtils.h"
 
-@implementation MGSchedulePanel
+@implementation MGBudgetPanel
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" document:aDocument];
+    self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" document:aDocument];
     [self window]; // Initialize the window
-    customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
-    [splitTable setTransactionPanel:[self py]];
     return self;
 }
 
 - (void)dealloc
 {
     [customDateFieldEditor release];
-    [customFieldEditor release];
     [super dealloc];
 }
 
-- (PySchedulePanel *)py
+- (PyBudgetPanel *)py
 {
-    return (PySchedulePanel *)py;
+    return (PyBudgetPanel *)py;
 }
 
 /* Override */
-- (NSString *)fieldOfTextField:(NSTextField *)textField
-{
-    if (textField == descriptionField)
-    {
-        return @"description";
-    }
-    else if (textField == payeeField)
-    {
-        return @"payee";
-    }
-    return nil;
-}
-
 - (NSResponder *)firstField
 {
     return startDateField;
@@ -56,14 +38,17 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
+    [accountSelector removeAllItems];
+    [accountSelector addItemsWithTitles:[[self py] accountOptions]];
+    [targetSelector removeAllItems];
+    [targetSelector addItemsWithTitles:[[self py] targetOptions]];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
     [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
     [repeatEveryField setIntValue:[[self py] repeatEvery]];
-    [descriptionField setStringValue:[[self py] description]];
-    [payeeField setStringValue:[[self py] payee]];
-    [checknoField setStringValue:[[self py] checkno]];
-    [splitTable refresh];
+    [accountSelector selectItemAtIndex:[[self py] accountIndex]];
+    [targetSelector selectItemAtIndex:[[self py] targetIndex]];
+    [amountField setStringValue:[[self py] amount]];
     [self refreshRepeatOptions];
 }
 
@@ -73,9 +58,9 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setStopDate:[stopDateField stringValue]];
     [[self py] setRepeatTypeIndex:[repeatOptionsPopUp indexOfSelectedItem]];
     [[self py] setRepeatEvery:[repeatEveryField intValue]];
-    [[self py] setDescription:[descriptionField stringValue]];
-    [[self py] setPayee:[payeeField stringValue]];
-    [[self py] setCheckno:[checknoField stringValue]];
+    [[self py] setAccountIndex:[accountSelector indexOfSelectedItem]];
+    [[self py] setTargetIndex:[targetSelector indexOfSelectedItem]];
+    [[self py] setAmount:[amountField stringValue]];
 }
 
 /* Actions */
@@ -101,13 +86,10 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
-
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
     if ((asker == startDateField) || (asker == stopDateField))
-    {
         return customDateFieldEditor;
-    }
-    return customFieldEditor;
+    return nil;
 }
 @end

@@ -32,42 +32,7 @@ REPEAT_EVERY_DESCS = {
     REPEAT_WEEKDAY_LAST: 'month',
 }
 
-class SchedulePanel(PanelWithTransaction):
-    #--- Override
-    def _load(self):
-        self._load_schedule(self.document.selected_schedule)
-    
-    def _save(self):
-        repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
-        repeat_every = self.schedule.repeat_every
-        stop_date = self.schedule.stop_date
-        self.document.change_schedule(self.original, self.transaction, repeat_type=repeat_type,
-                                      repeat_every=repeat_every, stop_date=stop_date)
-    
-    #--- Private
-    def _load_schedule(self, schedule):
-        self.original = schedule
-        self.schedule = schedule.replicate()
-        self.transaction = self.schedule.ref
-        self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
-        self.view.refresh_repeat_every()
-        self.notify('panel_loaded')
-    
-    #--- Public
-    def can_load(self):
-        return True
-    
-    def new(self):
-        self.view.pre_load()
-        schedule = Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1)
-        self._load_schedule(schedule)
-        self.view.post_load()
-    
-    #--- Events
-    def schedule_must_be_edited(self):
-        self.load()
-    
-    #--- Properties
+class PanelWithScheduleMixIn(object):
     @property
     def start_date(self):
         return self.app.format_date(self.schedule.start_date)
@@ -130,3 +95,31 @@ class SchedulePanel(PanelWithTransaction):
         self.view.refresh_repeat_every()
     
 
+class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
+    #--- Override
+    def _load(self):
+        self._load_schedule(self.document.selected_schedule)
+    
+    def _save(self):
+        repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
+        repeat_every = self.schedule.repeat_every
+        stop_date = self.schedule.stop_date
+        self.document.change_schedule(self.original, self.transaction, repeat_type=repeat_type,
+                                      repeat_every=repeat_every, stop_date=stop_date)
+    
+    #--- Private
+    def _load_schedule(self, schedule):
+        self.original = schedule
+        self.schedule = schedule.replicate()
+        self.transaction = self.schedule.ref
+        self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
+        self.view.refresh_repeat_every()
+        self.notify('panel_loaded')
+    
+    #--- Public
+    def new(self):
+        self.view.pre_load()
+        schedule = Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1)
+        self._load_schedule(schedule)
+        self.view.post_load()
+    

@@ -10,25 +10,21 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGTextField.h"
-#import "MGSplitTable.h"
-#import "MGWindowController.h"
-#import "PySchedulePanel.h"
+#import "PyBudgetPanel.h"
 
-@interface MGSchedulePanel : MGPanel {
+@interface MGBudgetPanel : MGPanel {
     IBOutlet MGTextField *startDateField;
     IBOutlet MGTextField *repeatEveryField;
     IBOutlet NSTextField *repeatEveryDescLabel;
     IBOutlet NSPopUpButton *repeatOptionsPopUp;
     IBOutlet MGTextField *stopDateField;
-    IBOutlet MGTextField *descriptionField;
-    IBOutlet MGTextField *payeeField;
-    IBOutlet MGTextField *checknoField;
-    IBOutlet MGSplitTable *splitTable;
+    IBOutlet NSPopUpButton *accountSelector;
+    IBOutlet NSPopUpButton *targetSelector;
+    IBOutlet MGTextField *amountField;
     
-    NSTextView *customFieldEditor;
     NSTextView *customDateFieldEditor;
 }
-- (PySchedulePanel *)py;
+- (PyBudgetPanel *)py;
 /* Actions */
 - (IBAction)repeatTypeSelected:(id)sender;
 /* Python --> Cocoa */

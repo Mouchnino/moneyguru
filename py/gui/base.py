@@ -35,6 +35,12 @@ class DocumentGUIObject(Listener):
     def account_must_be_shown(self):
         pass
     
+    def budget_changed(self):
+        pass
+    
+    def budget_deleted(self):
+        pass
+    
     def csv_options_needed(self):
         pass
     
@@ -89,10 +95,10 @@ class DocumentGUIObject(Listener):
     def schedule_deleted(self):
         pass
     
-    def schedule_must_be_edited(self):
+    def schedule_table_must_be_shown(self):
         pass
     
-    def schedule_table_must_be_shown(self):
+    def selected_must_be_edited(self):
         pass
     
     def undone(self):
@@ -133,6 +139,9 @@ class GUIPanel(DocumentGUIObject):
     
     def _save(self):
         raise NotImplementedError()
+    
+    def can_load(self):
+        return True
     
     def load(self):
         self.view.pre_load()

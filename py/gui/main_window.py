@@ -16,7 +16,7 @@ class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
         (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.btable,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel) = children
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel) = children
         self.top = None
         self.bottom = None
         self.show_balance_sheet()
@@ -79,9 +79,12 @@ class MainWindow(DocumentGUIObject):
         elif self.top is self.sctable:
             if self.scpanel.can_load():
                 self.scpanel.load()
+        elif self.top is self.btable:
+            if self.bpanel.can_load():
+                self.bpanel.load()
     
     def delete_item(self):
-        if self.top in (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable):
+        if self.top in (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.btable):
             self.top.delete()
     
     def make_schedule_from_selected(self):
@@ -111,6 +114,8 @@ class MainWindow(DocumentGUIObject):
             self.top.add()
         elif self.top is self.sctable:
             self.scpanel.new()
+        elif self.top is self.btable:
+            self.bpanel.new()
     
     def new_group(self):
         if self.top in (self.bsheet, self.istatement):
@@ -209,6 +214,9 @@ class MainWindow(DocumentGUIObject):
     
     def schedule_table_must_be_shown(self):
         self.select_schedule_table()
+    
+    def selected_must_be_edited(self):
+        self.edit_item()
     
     def undone(self):
         if self.document.selected_account is None and self.top is self.etable:

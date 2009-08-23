@@ -11,8 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface PyMainWindow : PyGUI {}
 // Rather than having a 3km long method name (this is objc, remember), we're passing a list of
-// instances here. However, they *have* to be in the right order, which is:
-// bsheet, istatement, ttable, etable, sctable, btable, apanel, tpanel, mepanel, scpanel
+// instances here. However, they *have* to be in the right order. See gui.mainwindow.
 - (id)initWithCocoa:(id)cocoa pyParent:(id)pyParent children:(NSArray *)children;
 
 // Navigation

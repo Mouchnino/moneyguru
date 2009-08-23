@@ -27,6 +27,8 @@ http://www.hardcoded.net/licenses/hs_license
     massEditionPanel = [[MGMassEditionPanel alloc] initWithDocument:document];
     schedulePanel = [[MGSchedulePanel alloc] initWithDocument:document];
     [schedulePanel connect];
+    budgetPanel = [[MGBudgetPanel alloc] initWithDocument:document];
+    [budgetPanel connect];
     balanceSheet = [[MGBalanceSheet alloc] initWithDocument:document];
     incomeStatement = [[MGIncomeStatement alloc] initWithDocument:document];
     transactionTable = [[MGTransactionTable alloc] initWithDocument:document];
@@ -49,7 +51,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [incomeStatement py], 
         [transactionTable py], [entryTable py], [scheduleTable py], [budgetTable py], 
         [accountProperties py], [transactionPanel py], [massEditionPanel py], [schedulePanel py],
-        nil];
+        [budgetPanel py], nil];
     Class PyMainWindow = [MGUtils classNamed:@"PyMainWindow"];
     py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];
     [py connect];
@@ -501,7 +503,7 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(toggleEntriesReconciled:))
         return (top == entryTable) && [[[self document] py] inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return (top != scheduleTable);
+        return (top != budgetTable);
     else if (action == @selector(showPreviousView:))
         return (top != balanceSheet);
     else if (action == @selector(showEntryTable:))

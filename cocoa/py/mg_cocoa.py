@@ -27,6 +27,7 @@ from moneyguru.gui.bar_graph import BarGraph
 from moneyguru.gui.balance_graph import BalanceGraph
 from moneyguru.gui.balance_sheet import BalanceSheet
 from moneyguru.gui.budget_table import BudgetTable
+from moneyguru.gui.budget_panel import BudgetPanel
 from moneyguru.gui.csv_options import CSVOptions
 from moneyguru.gui.custom_date_range_panel import CustomDateRangePanel
 from moneyguru.gui.date_widget import DateWidget
@@ -916,9 +917,6 @@ class PyMassEditionPanel(PyPanel):
 class PySchedulePanel(PyPanel):
     py_class = SchedulePanel
     
-    def newItem(self): # if we use "new", pyobjc complains
-        self.py.new()
-    
     def startDate(self):
         return self.py.start_date
     
@@ -970,6 +968,80 @@ class PySchedulePanel(PyPanel):
     
     def repeatOptions(self):
         return self.py.repeat_options
+    
+    #--- Python -> Cocoa
+    def refresh_repeat_every(self):
+        self.cocoa.refreshRepeatEvery()
+    
+    def refresh_repeat_options(self):
+        self.cocoa.refreshRepeatOptions()
+    
+
+class PyBudgetPanel(PyPanel):
+    py_class = BudgetPanel
+    
+    def startDate(self):
+        return self.py.start_date
+    
+    def setStartDate_(self, value):
+        self.py.start_date = value
+    
+    def stopDate(self):
+        return self.py.stop_date
+    
+    def setStopDate_(self, value):
+        self.py.stop_date = value
+    
+    @objc.signature('i@:')
+    def repeatEvery(self):
+        return self.py.repeat_every
+    
+    @objc.signature('v@:i')
+    def setRepeatEvery_(self, value):
+        self.py.repeat_every = value
+    
+    def repeatEveryDesc(self):
+        return self.py.repeat_every_desc
+    
+    @objc.signature('i@:')
+    def repeatTypeIndex(self):
+        return self.py.repeat_type_index
+    
+    @objc.signature('v@:i')
+    def setRepeatTypeIndex_(self, value):
+        self.py.repeat_type_index = value
+    
+    @objc.signature('i@:')
+    def accountIndex(self):
+        return self.py.account_index
+    
+    @objc.signature('v@:i')
+    def setAccountIndex_(self, value):
+        self.py.account_index = value
+    
+    @objc.signature('i@:')
+    def targetIndex(self):
+        return self.py.target_index
+    
+    @objc.signature('v@:i')
+    def setTargetIndex_(self, value):
+        self.py.target_index = value
+    
+    def amount(self):
+        return self.py.amount
+    
+    def setAmount_(self, value):
+        self.py.amount = value
+    
+    #--- Lists
+    def repeatOptions(self):
+        return self.py.repeat_options
+    
+    def accountOptions(self):
+        return self.py.account_options
+    
+    def targetOptions(self):
+        return self.py.target_options
     
     #--- Python -> Cocoa
     def refresh_repeat_every(self):
