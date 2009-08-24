@@ -345,6 +345,19 @@ class TestCase(TestCase):
         for name in names:
             self.add_account(name)
     
+    def add_budget(self, account_name, target_name, str_amount):
+        # if no target, set target_name to None
+        self.mainwindow.select_budget_table()
+        self.mainwindow.new_item()
+        start_date = date(date.today().year, date.today().month, 1)
+        self.bpanel.start_date = self.app.format_date(start_date)
+        account_index = self.bpanel.account_options.index(account_name)
+        self.bpanel.account_index = account_index
+        target_index = self.bpanel.target_options.index(target_name) if target_name else 0
+        self.bpanel.target_index = target_index
+        self.bpanel.amount = str_amount
+        self.bpanel.save()
+    
     def add_entry(self, date=None, description=None, payee=None, transfer=None, increase=None, decrease=None, checkno=None):
         # This whole "if not None" thing allows to simulate a user tabbing over fields leaving the default value.
         self.etable.add()
@@ -452,13 +465,6 @@ class TestCase(TestCase):
         newdoc.load_from_xml(filepath)
         self.document._cook() # Make sure the balances have been converted using the latest fetched rates
         return newdoc
-    
-    def set_budget(self, str_amount, target_index=None):
-        self.apanel.load()
-        self.apanel.budget = str_amount
-        if target_index is not None:
-            self.apanel.budget_target_index = target_index
-        self.apanel.save()
     
     def transaction_descriptions(self):
         return [row.description for row in self.ttable]
@@ -612,7 +618,7 @@ class CommonSetup(object):
         self.add_accounts('one', 'two')
         self.add_entry(transfer='three', increase='42')
     
-    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_index=None):
+    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_name=None):
         # 4 days left to the month, 100$ monthly budget
         self.mock_today(2008, 1, 27)
         self.document.select_today_date_range()
@@ -623,4 +629,5 @@ class CommonSetup(object):
             self.istatement.selected = self.istatement.expenses[0]
         else:
             self.istatement.selected = self.istatement.income[0]
-        self.set_budget('100', target_index)
+        self.add_budget(account_name, target_name, '100')
+    

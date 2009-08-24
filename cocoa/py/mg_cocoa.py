@@ -709,29 +709,8 @@ class PyAccountPanel(PyPanel):
     def setCurrencyIndex_(self, index):
         self.py.currency_index = index
     
-    def budget(self):
-        return self.py.budget
-    
-    def setBudget_(self, budget):
-        self.py.budget = budget
-    
-    @objc.signature('i@:')
-    def budgetEnabled(self):
-        return self.py.budget_enabled
-    
-    @objc.signature('i@:')
-    def budgetTargetIndex(self):
-        return self.py.budget_target_index
-    
-    @objc.signature('v@:i')
-    def setBudgetTargetIndex_(self, index):
-        self.py.budget_target_index = index
-    
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
-    
-    def availableBudgetTargets(self):
-        return self.py.available_budget_targets
     
 
 class PySplitTable(PyTable):

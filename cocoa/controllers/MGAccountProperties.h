@@ -16,7 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *nameTextField;
     IBOutlet NSPopUpButton *typeSelector;
     IBOutlet NSComboBox *currencySelector;
-    IBOutlet NSPopUpButton *budgetTargetSelector;
     
     NSArray *currencies;
 }

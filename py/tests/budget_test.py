@@ -26,12 +26,6 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         self.assertEqual(self.ttable[0].to, 'Some Expense')
         self.assertEqual(self.ttable[11].date, '31/12/2008')
      
-    def test_set_budget_again(self):
-        # there was a crash upon modifying an existing Budget in change_account
-        self.set_budget('200', 0) # no crash
-        self.mainwindow.select_transaction_table()
-        self.assertEqual(self.ttable[0].amount, '200.00')
-     
 
 class OneIncomeWithBudget(TestCase, CommonSetup):
     def setUp(self):
@@ -46,7 +40,11 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
     def test_set_budget_again(self):
         # There was a bug where setting the amount on a budget again wouldn't invert that amount
         # in the case of an income-based budget.
-        self.set_budget('200', 0)
+        self.mainwindow.select_budget_table()
+        self.btable.select([0])
+        self.mainwindow.edit_item()
+        self.bpanel.amount = '200'
+        self.bpanel.save()
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable[0].from_, 'Some Income')
 
@@ -78,7 +76,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.add_account('some asset')
-        self.setup_account_with_budget(target_index=0)
+        self.setup_account_with_budget(target_name='some asset')
     
     def test_asset_is_in_the_from_column(self):
         # In the budget transaction, 'some asset' is in the 'from' column.

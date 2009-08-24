@@ -65,8 +65,8 @@ class AccountsAndEntries(TestCase, CommonSetup):
     def test_cash_flow_with_budget(self):
         # Must include the budget. 250 of the 400 are spent, there's 150 left to add
         self.mock_today(2008, 1, 17)
-        self.istatement.selected = self.istatement.income[0]
-        self.set_budget('400')
+        self.add_budget('Account 1', None, '400')
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].cash_flow, '400.00')
         self.document.select_next_date_range()
         self.assertEqual(self.istatement.income[0].cash_flow, '400.00')
@@ -79,8 +79,8 @@ class AccountsAndEntries(TestCase, CommonSetup):
     
     def test_cash_flow_with_underestimated_budget(self):
         self.mock_today(2008, 1, 17)
-        self.istatement.selected = self.istatement.income[0]
-        self.set_budget('200')
+        self.add_budget('Account 1', None, '200')
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].cash_flow, '250.00')
     
     def test_exclude_account(self):
@@ -140,7 +140,8 @@ class MultipleCurrencies(TestCase):
         # What this test is making sure of is that the account's budget is of the same currency than
         # the account itself
         self.mock_today(2008, 1, 20)
-        self.set_budget('300')
+        self.add_budget('USD account', None, '300usd')
+        self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0][1].cash_flow, 'USD 300.00')
     
     def test_income_statement(self):

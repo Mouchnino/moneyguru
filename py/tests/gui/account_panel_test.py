@@ -28,33 +28,11 @@ class SomeAccount(TestCase):
         self.add_account('foobar', CAD, account_type=EXPENSE)
         self.clear_gui_calls()
     
-    def test_budget_enabled(self):
-        # the budget fields are only enabled if the account is an income/expense
-        self.apanel.load()
-        self.assertTrue(self.apanel.budget_enabled)
-        self.apanel.type_index = 1
-        self.assertFalse(self.apanel.budget_enabled)
-    
     def test_can_load(self):
         """The panel can only load if the selected node is an non-special account"""
         self.assertTrue(self.apanel.can_load())
         self.bsheet.selected = self.bsheet.assets
         self.assertFalse(self.apanel.can_load())
-    
-    def test_change_budget(self):
-        # changing budget updates it correctly
-        self.apanel.load()
-        self.apanel.budget = '54,42'
-        self.assertEqual(self.apanel.budget, '54.42')
-        self.apanel.budget = 'foo'
-        self.assertEqual(self.apanel.budget, '54.42')
-    
-    def test_change_then_currency(self):
-        # the budget's currency follows the account's
-        self.apanel.load()
-        self.apanel.budget = '42'
-        self.apanel.currency_index = 12
-        self.assertEqual(self.apanel.budget, '42.00')
     
     def test_change_currency_index(self):
         """Changing currency_index correctly updates the currency"""
@@ -86,14 +64,10 @@ class SomeAccount(TestCase):
         self.assertEqual(self.apanel.currency, CAD)
         self.assertEqual(self.apanel.type_index, 3) # Expense type is last in the list
         self.assertEqual(self.apanel.currency_index, Currency.all.index(CAD))
-        self.assertEqual(self.apanel.budget, '0.00')
     
     def test_fields_before_load(self):
         # ensure no crash occurs
         self.apanel.type_index
-        self.apanel.budget
-        self.apanel.budget_enabled
-        self.apanel.budget_target_index
     
     def test_save(self):
         """save() calls document.change_account with the correct arguments and triggers a refresh on all GUI components."""
@@ -108,7 +82,6 @@ class SomeAccount(TestCase):
         self.assertEqual(self.apanel.currency, Currency.all[42])
         self.assertEqual(self.apanel.type, INCOME)
         self.assertEqual(self.apanel.name, 'foobaz')
-        self.assertEqual(self.apanel.budget, '42.00')
     
 
 class TwoAccounts(TestCase):
@@ -123,45 +96,4 @@ class TwoAccounts(TestCase):
         self.apanel.load()
         self.apanel.name = 'foobar'
         self.apanel.save() # the exception doesn't propagate
-    
-
-class AccountOfAllTypes(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_accounts_of_all_types()
-    
-    def test_available_budget_target(self):
-        # The available budget targets are asset + liability
-        self.apanel.load()
-        self.assertEqual(self.apanel.available_budget_targets, ['asset', 'liability'])
-    
-
-class AccountWithBudgetTarget(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_accounts_of_all_types()
-        self.apanel.load() # this is 'expense'
-        self.apanel.budget_target_index = 1 # 'liability'
-        self.apanel.save()
-    
-    def test_delete_budget_target(self):
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.liabilities[0]
-        self.bsheet.delete()
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.expenses[0]
-        try:
-            self.apanel.load()
-        except ValueError:
-            self.fail("When the target has been deleted, just select something else")
-        self.assertEqual(self.apanel.budget_target_index, 0)
-    
-    def test_remember_budget_target(self):
-        # budget target changes are remembered
-        self.istatement.selected = self.istatement.income[0]
-        self.apanel.load()
-        self.assertEqual(self.apanel.budget_target_index, 0)
-        self.istatement.selected = self.istatement.expenses[0]
-        self.apanel.load()
-        self.assertEqual(self.apanel.budget_target_index, 1)
     

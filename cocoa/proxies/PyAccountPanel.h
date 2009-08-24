@@ -17,14 +17,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setTypeIndex:(int)index;
 - (int)currencyIndex;
 - (void)setCurrencyIndex:(int)index;
-- (NSString *)budget;
-- (void)setBudget:(NSString *)budget;
-- (BOOL)budgetEnabled;
-- (int)budgetTargetIndex;
-- (void)setBudgetTargetIndex:(int)index;
 
 - (NSArray *)availableCurrencies;
-- (NSArray *)availableBudgetTargets;
 - (BOOL)canLoadPanel;
 - (void)loadPanel;
 - (void)savePanel;

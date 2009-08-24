@@ -320,11 +320,8 @@ class AccountsAndEntries(_AccountsAndEntries):
         # Account 1 is the target of the expense budget, and Account 2 is the target of the income
         # Assign budgeted amounts to the appropriate accounts.
         self.mock_today(2008, 1, 15)
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.set_budget('400', 1) # + 150
-        self.istatement.selected = self.istatement.expenses[0]
-        self.set_budget('100', 0) # + 80
+        self.add_budget('income', 'Account 2', '400') # + 150
+        self.add_budget('expense', 'Account 1', '100') # + 80
         self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets[0].end, '170.00') # 250 - 80
         self.assertEqual(self.bsheet.assets[1].end, '230.00') # 80 + 150
@@ -348,9 +345,8 @@ class AccountsAndEntries(_AccountsAndEntries):
         self.istatement.selected = self.istatement.income[0]
         self.apanel.load()
         self.apanel.currency_index = Currency.all.index(CAD)
-        self.apanel.budget = '400' # + 150
-        self.apanel.budget_target_index = 0
         self.apanel.save()
+        self.add_budget('income', 'Account 1', '400 cad') # + 150
         self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.assets[0].end, '500.00')
     
@@ -358,9 +354,7 @@ class AccountsAndEntries(_AccountsAndEntries):
         # The budgeted amount must be normalized before being added to a liability amount
         self.mock_today(2008, 1, 15)
         self.add_account('foo', account_type=LIABILITY)
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.set_budget('400', 2) # + 150
+        self.add_budget('income', 'foo', '400')
         self.mainwindow.select_balance_sheet()
         self.assertEqual(self.bsheet.liabilities[0].end, '-150.00')
     

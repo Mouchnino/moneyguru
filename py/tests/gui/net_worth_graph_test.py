@@ -49,11 +49,8 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.mock_today(2008, 7, 27)
         self.add_account('income', account_type=INCOME)
         self.add_account('expense', account_type=EXPENSE)
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.set_budget('300')
-        self.istatement.selected = self.istatement.expenses[0]
-        self.set_budget('100')
+        self.add_budget('income', 'asset1', '300')
+        self.add_budget('expense', 'asset1', '100')
         self.mainwindow.select_balance_sheet()
         # this means 200$ profit in 4 days
         self.mainwindow.select_balance_sheet()
@@ -81,9 +78,7 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         without_budget = self.nw_graph_data()
         self.add_account('asset3')
         self.add_account('income', account_type=INCOME)
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.set_budget('300', 2) # asset3
+        self.add_budget('income', 'asset3', '300')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # asset3
         self.bsheet.toggle_excluded()

@@ -24,9 +24,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         # when we add a budget, the balance graph will show a regular progression throughout date range
         self.mock_today(2008, 1, 27)
         self.add_account('expense', account_type=EXPENSE)
-        self.mainwindow.select_income_statement()
-        self.istatement.select = self.istatement.expenses[0]
-        self.set_budget('100') # 4 days left, 25$ each day
+        self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.show_selected_account()
@@ -40,9 +38,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         # don't raise a ZeroDivizionError
         self.mock_today(2008, 1, 31)
         self.add_account('expense', account_type=EXPENSE)
-        self.mainwindow.select_income_statement()
-        self.istatement.select = self.istatement.expenses[0]
-        self.set_budget('100')
+        self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.document.select_next_date_range()
     
@@ -51,9 +47,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         self.mock_today(2008, 1, 15)
         self.add_entry('20/1/2008', decrease='10')
         self.add_account('expense', account_type=EXPENSE)
-        self.mainwindow.select_income_statement()
-        self.istatement.select = self.istatement.expenses[0]
-        self.set_budget('100') # 16 days left, 6.25$ per day
+        self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.show_selected_account()

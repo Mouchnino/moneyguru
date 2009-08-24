@@ -81,7 +81,10 @@ class AccountAndEntriesAndBudget(TestCase, CommonSetup):
         self.setup_monthly_range()
         self.add_account('Account 1', account_type=INCOME)
         self.mock_today(2008, 1, 17)
-        self.set_budget('400')
+        self.add_budget('Account 1', None, '400')
+        self.mainwindow.select_income_statement()
+        self.istatement.selected = self.istatement.income[0]
+        self.istatement.show_selected_account()
         self.add_entry('10/01/2008', 'Entry 1', increase='100.00')
         self.add_entry('14/01/2008', 'Entry 2', increase='150.00')
     

@@ -9,10 +9,8 @@
 
 from hsutil.currency import Currency
 
-from ..const import NOEDIT
 from ..exception import DuplicateAccountNameError
-from ..model.account import sort_accounts, ASSET, LIABILITY, INCOME, EXPENSE, TYPE_ORDER
-from ..model.amount import Amount, parse_amount, format_amount
+from ..model.account import ASSET, TYPE_ORDER
 from .base import GUIPanel
 
 class AccountPanel(GUIPanel):
@@ -30,24 +28,13 @@ class AccountPanel(GUIPanel):
         self.currency = account.currency
         self.type_index = TYPE_ORDER.index(self.type)
         self.currency_index = Currency.all.index(self.currency)
-        budget = self.document.budgets.budget_for_account(account)
-        self._budget = abs(budget.amount) if budget is not None else 0
-        self._budget_targets = [a for a in self.document.accounts if a.is_balance_sheet_account()]
-        sort_accounts(self._budget_targets)
-        self.available_budget_targets = [a.name for a in self._budget_targets]
-        if budget is not None and budget.target in self._budget_targets:
-            self.budget_target_index = self._budget_targets.index(budget.target)
         self.account = account # for the save() assert
     
     def _save(self):
         assert self.account is self.document.selected_account
         try:
-            budget_target = self._budget_targets[self.budget_target_index]
-        except IndexError:
-            budget_target = None
-        try:
             self.document.change_account(self.account, name=self.name, type=self.type, 
-                currency=self.currency, budget_amount=self._budget, budget_target=budget_target)
+                currency=self.currency)
         except DuplicateAccountNameError:
             pass
     
@@ -56,30 +43,12 @@ class AccountPanel(GUIPanel):
         self.type = ASSET
         self._type_index = 0
         self.currency = None
-        self._budget = 0
-        self.budget_target_index = 0
-        self.available_budget_targets = []
     
     def can_load(self):
         account = self.document.selected_account
         return account is not None
     
     #--- Properties
-    @property
-    def budget(self):
-        return format_amount(self._budget, self.currency)
-    
-    @budget.setter
-    def budget(self, value):
-        try:
-            self._budget = parse_amount(value, self.currency)
-        except ValueError:
-            pass
-    
-    @property
-    def budget_enabled(self):
-        return self.type in (INCOME, EXPENSE)
-    
     @property
     def currency_index(self):
         return self._currency_index
@@ -88,8 +57,6 @@ class AccountPanel(GUIPanel):
     def currency_index(self, index):
         try:
             self.currency = Currency.all[index]
-            if self._budget:
-                self._budget = Amount(self._budget.value, self.currency)
         except IndexError:
             pass
         else:

@@ -54,8 +54,8 @@ class IncomesAndExpensesInDifferentAccounts(TestCase, CommonSetup):
     def test_budget(self):
         # budgets are counted in the pgraph
         self.mock_today(2008, 7, 18)
-        self.istatement.selected = self.istatement.income[0] # income1
-        self.set_budget('400') # + 180
+        self.add_budget('income1', 'asset', '400') # +180
+        self.mainwindow.select_income_statement()
         amounts = [data[2:] for data in self.pgraph.data]
         first_week = 50 + 80 + 32 + 22 - 7.04
         second_week = 90 - 100
@@ -71,8 +71,8 @@ class IncomesAndExpensesInDifferentAccounts(TestCase, CommonSetup):
     def test_budget_and_exclusion(self):
         # when an account is excluded, it's budget is not counted
         self.mock_today(2008, 7, 18)
-        self.istatement.selected = self.istatement.income[0] # income1
-        self.set_budget('400') # + 180
+        self.add_budget('income1', 'asset', '400') # +180
+        self.mainwindow.select_income_statement()
         self.istatement.toggle_excluded()
         # same as test_exclude_account
         amounts = [data[2] for data in self.pgraph.data]

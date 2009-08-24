@@ -40,9 +40,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
-    // Reload the budget target list
-    [budgetTargetSelector removeAllItems];
-    [budgetTargetSelector addItemsWithTitles:[[self py] availableBudgetTargets]];
     // When we change the values in the py side, it doesn't work with KVO mechanism.
     // Notifications of a "py" change is enough to refresh all bound controls.
     [self willChangeValueForKey:@"py"];
@@ -51,7 +48,6 @@ http://www.hardcoded.net/licenses/hs_license
     [self didChangeValueForKey:@"typeIndex"];
     [nameTextField setStringValue:[[self py] name]];
     [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
-    [budgetTargetSelector selectItemAtIndex:[[self py] budgetTargetIndex]];
 }
 
 - (void)saveFields
@@ -59,14 +55,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setName:[nameTextField stringValue]];
     int currencyIndex = [currencySelector indexOfSelectedItem];
     if (currencyIndex >= 0)
-    {
         [[self py] setCurrencyIndex:currencyIndex];
-    }
-    int budgetTargetIndex = [budgetTargetSelector indexOfSelectedItem];
-    if (budgetTargetIndex >= 0)
-    {
-        [[self py] setBudgetTargetIndex:budgetTargetIndex];
-    }
 }
 
 /* Properties */

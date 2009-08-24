@@ -63,8 +63,7 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
         self.add_account('income', account_type=INCOME)
-        self.mainwindow.select_income_statement()
-        self.set_budget('5', 0) # target: a1
+        self.add_budget('income', None, '5')
         self.mainwindow.select_balance_sheet() # don't crash
     
     def test_exclude_account(self):
@@ -94,7 +93,7 @@ class SomeAssetsAndLiabilitiesWithBudget(_SomeAssetsAndLiabilities):
         _SomeAssetsAndLiabilities.setUp(self)
         self.document.select_today_date_range()
         self.add_account('income', account_type=INCOME)
-        self.set_budget('5', 2) # target: a3
+        self.add_budget('income', 'a3', '5')
         self.mainwindow.select_balance_sheet()
     
     def test_future_date_range(self):
@@ -155,8 +154,8 @@ class SomeIncomeAndExpenses(TestCase, CommonSetup):
     def test_budget(self):
         # budgeted amounts are also reflected in the pie chart
         self.mock_today(2009, 1, 29) # On the last day of the month, this test fails
-        self.istatement.selected = self.istatement.expenses[0]
-        self.set_budget('5')
+        self.add_budget('e1', None, '5')
+        self.mainwindow.select_income_statement()
         expected = [
             ('e1 41.7%', 5),
             ('e3 33.3%', 4),

@@ -324,8 +324,7 @@ class Document(Broadcaster, Listener):
         self._visible_transactions = txns
     
     #--- Account
-    def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
-                       budget_amount=NOEDIT, budget_target=NOEDIT):
+    def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT):
         assert account is not None
         action = Action('Change account')
         action.change_accounts([account])
@@ -337,17 +336,6 @@ class Document(Broadcaster, Listener):
             account.currency = currency
         if group is not NOEDIT:
             account.group = group
-        if budget_amount is not NOEDIT:
-            assert budget_target is not NOEDIT # never supposed to happen
-            budget = first(b for b in self.budgets if b.account is account)
-            if budget is None:
-                TODAY = datetime.date.today()
-                ref_date = datetime.date(TODAY.year, TODAY.month, 1)
-                budget = Budget(account, budget_target, budget_amount, ref_date)
-                self.budgets.append(budget)
-            else:
-                budget.target = budget_target
-                budget.amount = budget_amount
         self._undoer.record(action)
         self._cook()
         self.notify('account_changed')
