@@ -206,7 +206,7 @@ class MultiCurrencyTransaction(TestCase):
         self.tpanel.mct_balance()
         self.assertEqual(len(self.stable), 3)
         self.assertEqual(self.stable[2].credit, 'CAD 6.80') # the selected split is the 2nd one
-        self.check_gui_calls(self.stable_gui, refresh=1, stop_editing=1)
+        self.check_gui_calls_partial(self.stable_gui, refresh=1, stop_editing=1)
     
     def test_mct_balance_select_null_split(self):
         # if the selected split has no amount, use the default currency

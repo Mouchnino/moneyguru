@@ -13,7 +13,7 @@ from .base import DocumentGUIObject
 from .table import GUITable, Row, rowattr
 from .transaction_table import TransactionTableRow
 
-class ScheduleTable(DocumentGUIObject, GUITable):
+class ScheduleTable(GUITable, DocumentGUIObject):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)
@@ -21,6 +21,10 @@ class ScheduleTable(DocumentGUIObject, GUITable):
     #--- Override
     def _update_selection(self):
         self.document.select_schedules(self.selected_schedules)
+    
+    def _fill(self):
+        for schedule in self.document.schedules:
+            self.append(ScheduleTableRow(self, schedule))
     
     def connect(self):
         DocumentGUIObject.connect(self)
@@ -35,11 +39,6 @@ class ScheduleTable(DocumentGUIObject, GUITable):
     def edit(self):
         self.document.edit_selected()
     
-    def refresh(self):
-        del self[:]
-        for schedule in self.document.schedules:
-            self.append(ScheduleTableRow(self, schedule))
-    
     #--- Properties
     @property
     def selected_schedules(self):
@@ -50,22 +49,8 @@ class ScheduleTable(DocumentGUIObject, GUITable):
         self.refresh()
         self.view.refresh()
     
-    def redone(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def schedule_changed(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def schedule_deleted(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def undone(self):
-        self.refresh()
-        self.view.refresh()
-    
+    schedule_changed = GUITable._item_changed
+    schedule_deleted = GUITable._item_deleted
 
 class ScheduleTableRow(Row):
     def __init__(self, table, schedule):

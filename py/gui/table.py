@@ -91,6 +91,10 @@ class GUITable(Table):
     def _do_delete(self):
         pass
     
+    def _fill(self):
+        # Called by refresh()
+        pass
+    
     def _is_edited_new(self):
         return False
     
@@ -139,7 +143,17 @@ class GUITable(Table):
             return
         if self:
             self._do_delete()
-        
+    
+    def refresh(self):
+        self.cancel_edits()
+        selected_indexes = self.selected_indexes
+        del self[:]
+        self._fill()
+        if not self.selected_indexes:
+            if not selected_indexes:
+                selected_indexes = [len(self) - 1]
+            self.selected_indexes = selected_indexes
+    
     def save_edits(self):
         if self.edited is None:
             return
@@ -150,6 +164,30 @@ class GUITable(Table):
     def select(self, row_indexes):
         self.selected_indexes = row_indexes
         self._update_selection()
+    
+    #--- Event handlers
+    def edition_must_stop(self):
+        self.view.stop_editing()
+        self.save_edits()
+    
+    def redone(self):
+        self.refresh()
+        self.view.refresh()
+    
+    def undone(self):
+        self.refresh()
+        self.view.refresh()
+    
+    # Plug these below to the appropriate event in subclasses
+    def _item_changed(self):
+        self.refresh()
+        self.view.refresh()
+        self.view.show_selected_row()
+    
+    def _item_deleted(self):
+        self.refresh()
+        self._update_selection()
+        self.view.refresh()
     
 
 class Row(object):

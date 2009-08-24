@@ -13,6 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
     BOOL canReconcile;
     BOOL reconciled;
     BOOL recurrent;
+    BOOL isBudget;
     BOOL isInFuture;
     BOOL isInPast;
 }
@@ -21,6 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setReconciled:(BOOL)aReconciled;
 - (void)setReconciliationPending:(BOOL)aReconciliationPending;
 - (void)setRecurrent:(BOOL)aRecurrent;
+- (void)setIsBudget:(BOOL)aIsBudget;
 - (void)setIsInFuture:(BOOL)aIsInFuture;
 - (void)setIsInPast:(BOOL)aIsInPast;
 @end

@@ -11,7 +11,7 @@ from .base import TransactionPanelGUIObject
 from .complete import TransactionCompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit
 
-class SplitTable(TransactionPanelGUIObject, GUITable, TransactionCompletionMixIn):
+class SplitTable(GUITable, TransactionPanelGUIObject, TransactionCompletionMixIn):
     def __init__(self, view, transaction_panel):
         TransactionPanelGUIObject.__init__(self, view, transaction_panel)
         GUITable.__init__(self)
@@ -30,33 +30,22 @@ class SplitTable(TransactionPanelGUIObject, GUITable, TransactionCompletionMixIn
         self.refresh()
         self.view.refresh()
     
+    def _fill(self):
+        transaction = self.panel.transaction
+        splits = transaction.splits
+        for split in splits:
+            self.append(SplitTableRow(self, split))
+    
     def _update_selection(self):
         self.document.select_splits([row.split for row in self.selected_rows])
     
-    #--- Public
-    def refresh(self):
-        transaction = self.panel.transaction
-        splits = transaction.splits
-        selected_indexes = self.selected_indexes
-        del self[:]
-        for split in splits:
-            self.append(SplitTableRow(self, split))
-        self.selected_indexes = selected_indexes
-    
     #--- Event Handlers
-    def edition_must_stop(self):
-        self.view.stop_editing()
-        self.save_edits()
-    
     def panel_loaded(self):
         self.refresh()
         self.select([0])
         self.view.refresh()
     
-    def split_changed(self):
-        self.refresh()
-        self.view.refresh()
-    
+    split_changed = GUITable._item_changed
 
 class SplitTableRow(RowWithDebitAndCredit):
     def __init__(self, table, split):

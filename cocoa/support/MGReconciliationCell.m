@@ -22,6 +22,8 @@ http://www.hardcoded.net/licenses/hs_license
         i = [NSImage imageNamed:@"check_16"];
     else if (canReconcile)
         [super drawInteriorWithFrame:cellFrame inView:controlView];
+    else if (isBudget)
+        i = [NSImage imageNamed:@"budget_16"];
     else if (recurrent)
         i = [NSImage imageNamed:@"recurrent_16"];
     
@@ -49,6 +51,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setRecurrent:(BOOL)aRecurrent
 {
     recurrent = aRecurrent;
+}
+
+- (void)setIsBudget:(BOOL)aIsBudget
+{
+    isBudget = aIsBudget;
 }
 
 - (void)setReconciliationPending:(BOOL)aReconciliationPending

@@ -101,6 +101,12 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+{
+    id control = [aNotification object];
+    if (control == repeatEveryField) // must be edited right away to update the desc label
+        [[self py] setRepeatEvery:[repeatEveryField intValue]];
+}
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {

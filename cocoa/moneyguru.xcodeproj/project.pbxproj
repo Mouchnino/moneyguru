@@ -153,6 +153,7 @@
 		CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */; };
 		CE873ACC0E21622F004F63E9 /* NSEventAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AB00E21622F004F63E9 /* NSEventAdditions.m */; };
 		CE873ACD0E21622F004F63E9 /* NSTableViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AB20E21622F004F63E9 /* NSTableViewAdditions.m */; };
+		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
 		CE98C6A90E6294A900DEE6BA /* NSCellAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */; };
 		CEA25A6A0E2776B20067AE58 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA25A690E2776B20067AE58 /* MGTransactionTable.m */; };
 		CEA25A7A0E27774C0067AE58 /* TransactionTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA25A790E27774C0067AE58 /* TransactionTable.xib */; };
@@ -474,6 +475,7 @@
 		CE873AB00E21622F004F63E9 /* NSEventAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEventAdditions.m; sourceTree = "<group>"; };
 		CE873AB10E21622F004F63E9 /* NSTableViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTableViewAdditions.h; sourceTree = "<group>"; };
 		CE873AB20E21622F004F63E9 /* NSTableViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewAdditions.m; sourceTree = "<group>"; };
+		CE8CD7AC1042E340004B30E0 /* budget_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_16.png; sourceTree = "<group>"; };
 		CE98C6A70E6294A900DEE6BA /* NSCellAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCellAdditions.h; sourceTree = "<group>"; };
 		CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCellAdditions.m; sourceTree = "<group>"; };
 		CEA25A680E2776B20067AE58 /* MGTransactionTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionTable.h; sourceTree = "<group>"; };
@@ -1007,6 +1009,7 @@
 		CEEED1D30E3F763100BBA154 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CE8CD7AC1042E340004B30E0 /* budget_16.png */,
 				CEB1E0B21031A386001FC4B4 /* budget_48.png */,
 				CEB1E0B31031A386001FC4B4 /* schedules_48.png */,
 				CE40239E0F4C737D0083BAD2 /* doc_icon.icns */,
@@ -1160,6 +1163,7 @@
 				CE5CBBC5103834D8008AC465 /* SchedulePanel.xib in Resources */,
 				CE7311D31040360A00DB8B30 /* BudgetTable.xib in Resources */,
 				CE1031C610413365007882D5 /* BudgetPanel.xib in Resources */,
+				CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

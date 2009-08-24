@@ -15,7 +15,7 @@ from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
 from .table import GUITable, Row, RowWithDate, rowattr
 
-class TransactionTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
+class TransactionTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)
@@ -39,6 +39,12 @@ class TransactionTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         transactions = self.selected_transactions
         if transactions:
             self.document.delete_transactions(transactions)
+    
+    def _fill(self):
+        for transaction in self.document.visible_transactions:
+            self.append(TransactionTableRow(self, transaction))
+        if self.document.explicitly_selected_transactions:
+            self.select_transactions(self.document.explicitly_selected_transactions)
     
     def _is_edited_new(self):
         return self.edited.transaction not in self.document.transactions
@@ -90,18 +96,6 @@ class TransactionTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         if self.can_move(self.selected_indexes, position):
             self.move(self.selected_indexes, position)
     
-    def refresh(self):
-        selected_indexes = self.selected_indexes
-        del self[:]
-        for transaction in self.document.visible_transactions:
-            self.append(TransactionTableRow(self, transaction))
-        if self.document.explicitly_selected_transactions:
-            self.select_transactions(self.document.explicitly_selected_transactions)
-        else:
-            if not selected_indexes:
-                selected_indexes = [len(self) - 1]
-            self.selected_indexes = selected_indexes
-    
     def select_transactions(self, transactions):
         self.selected_indexes = []
         for index, row in enumerate(self):
@@ -111,30 +105,18 @@ class TransactionTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
             self.selected_indexes = [len(self) - 1]
     
     #--- Event handlers
-    
     def date_range_changed(self):
         self.refresh()
-        self.document.select_transactions(self.selected_transactions)
+        self._update_selection()
         self.view.refresh()
         self.view.show_selected_row()
     
-    def edition_must_stop(self):
-        self.view.stop_editing()
-        self.save_edits()
-    
-    def entry_changed(self):
-        self.refresh()
-        self.view.refresh()
-        self.view.show_selected_row()
-    
-    def entry_deleted(self):
-        self.refresh()
-        self.document.select_transactions(self.selected_transactions)
-        self.view.refresh()
+    entry_changed = GUITable._item_changed
+    entry_deleted = GUITable._item_deleted
     
     def entries_imported(self):
         self.refresh()
-        self.document.select_transactions(self.selected_transactions)
+        self._update_selection()
         self.view.refresh()
     
     def file_loaded(self):
@@ -142,14 +124,6 @@ class TransactionTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         self.view.refresh()
     
     def filter_applied(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def redone(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def undone(self):
         self.refresh()
         self.view.refresh()
     
@@ -216,6 +190,7 @@ class TransactionTableRow(RowWithDate):
         self._amount_fmt = None
         self._recurrent = isinstance(transaction, Spawn)
         self._reconciled = any(split.reconciled for split in splits)
+        self._is_budget = getattr(transaction, 'is_budget', False)
     
     def save(self):
         kw = {'date': self._date, 'description': self._description, 'payee': self._payee,
@@ -286,4 +261,8 @@ class TransactionTableRow(RowWithDate):
     @property
     def recurrent(self):
         return self._recurrent
+    
+    @property
+    def is_budget(self):
+        return self._is_budget
     

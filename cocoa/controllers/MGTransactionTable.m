@@ -162,6 +162,7 @@ http://www.hardcoded.net/licenses/hs_license
             [rcell setIsInPast:NO];
         }
         [rcell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
+        [rcell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
         [rcell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
     }
 }

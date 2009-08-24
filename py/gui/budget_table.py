@@ -13,7 +13,7 @@ from .base import DocumentGUIObject
 from .table import GUITable, Row, rowattr
 from .transaction_table import TransactionTableRow
 
-class BudgetTable(DocumentGUIObject, GUITable):
+class BudgetTable(GUITable, DocumentGUIObject):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)
@@ -21,6 +21,10 @@ class BudgetTable(DocumentGUIObject, GUITable):
     #--- Override
     def _update_selection(self):
         self.document.select_budgets(self.selected_budgets)
+    
+    def _fill(self):
+        for budget in self.document.budgets:
+            self.append(BudgetTableRow(self, budget))
     
     def connect(self):
         DocumentGUIObject.connect(self)
@@ -35,34 +39,16 @@ class BudgetTable(DocumentGUIObject, GUITable):
     def edit(self):
         self.document.edit_selected()
     
-    def refresh(self):
-        del self[:]
-        for budget in self.document.budgets:
-            self.append(BudgetTableRow(self, budget))
-    
     #--- Properties
     @property
     def selected_budgets(self):
         return [row.budget for row in self.selected_rows]
     
     #--- Event handlers
-    def budget_changed(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def budget_deleted(self):
-        self.refresh()
-        self.view.refresh()
+    budget_changed = GUITable._item_changed
+    budget_deleted = GUITable._item_deleted
     
     def file_loaded(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def redone(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def undone(self):
         self.refresh()
         self.view.refresh()
     

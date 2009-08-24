@@ -18,7 +18,7 @@ from .base import DocumentGUIObject
 from .complete import TransactionCompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit, RowWithDate, rowattr
 
-class EntryTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
+class EntryTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)
@@ -48,6 +48,31 @@ class EntryTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         entries = self.selected_entries()
         if entries:
             self.document.delete_entries(entries)
+    
+    def _fill(self):
+        account = self.document.selected_account
+        if account is None:
+            return
+        date_range = self.document.date_range
+        self.account = account
+        if account.is_balance_sheet_account():
+            prev_entry = self.document.previous_entry
+            if prev_entry is not None:
+                balance = prev_entry.balance
+                rbalance = prev_entry.reconciled_balance
+                self.append(PreviousBalanceRow(self, date_range.start, balance, rbalance, account))
+        self._total_increase = 0
+        self._total_decrease = 0
+        for entry in self.document.visible_entries:
+            row = EntryTableRow(self, entry, account)
+            self.append(row)
+            convert = lambda a: convert_amount(a, account.currency, entry.date)
+            self._total_increase += convert(row._increase)
+            self._total_decrease += convert(row._decrease)
+        if self.document.explicitly_selected_transactions:
+            self.select_transactions(self.document.explicitly_selected_transactions)
+            if not self.selected_indexes:
+                self.select_nearest_date(self.document.explicitly_selected_transactions[0].date)
     
     def _is_edited_new(self):
         return self.edited.entry.transaction not in self.document.transactions
@@ -121,38 +146,6 @@ class EntryTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         if self.can_move(self.selected_indexes, position):
             self.move(self.selected_indexes, position)
     
-    def refresh(self):
-        self.cancel_edits()
-        selected_indexes = self.selected_indexes
-        del self[:]
-        account = self.document.selected_account
-        if account is None:
-            return
-        date_range = self.document.date_range
-        self.account = account
-        if account.is_balance_sheet_account():
-            prev_entry = self.document.previous_entry
-            if prev_entry is not None:
-                balance = prev_entry.balance
-                rbalance = prev_entry.reconciled_balance
-                self.append(PreviousBalanceRow(self, date_range.start, balance, rbalance, account))
-        self._total_increase = 0
-        self._total_decrease = 0
-        for entry in self.document.visible_entries:
-            row = EntryTableRow(self, entry, account)
-            self.append(row)
-            convert = lambda a: convert_amount(a, account.currency, entry.date)
-            self._total_increase += convert(row._increase)
-            self._total_decrease += convert(row._decrease)
-        if self.document.explicitly_selected_transactions:
-            self.select_transactions(self.document.explicitly_selected_transactions)
-            if not self.selected_indexes:
-                self.select_nearest_date(self.document.explicitly_selected_transactions[0].date)
-        else:
-            if not selected_indexes:
-                selected_indexes = [len(self) - 1]
-            self.select(selected_indexes)
-    
     def select_nearest_date(self, target_date):
         # This method assumes that self is sorted by date
         last_delta = datetime.timedelta.max
@@ -216,20 +209,9 @@ class EntryTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         delta = date - date_range.start
         self._delta_before_change = delta
     
-    def edition_must_stop(self):
-        self.view.stop_editing()
-        self.save_edits()
-    
-    def entry_changed(self):
-        self.refresh()
-        self.view.refresh()
-        self.view.show_selected_row()
-    
-    def entry_deleted(self):
-        self.refresh()
-        self.document.select_transactions(self.selected_transactions())
-        self.view.refresh()
-    
+    entry_changed = GUITable._item_changed
+    entry_deleted = GUITable._item_deleted
+
     def entries_imported(self):
         self.refresh()
         self.document.select_transactions(self.selected_transactions())
@@ -248,14 +230,6 @@ class EntryTable(DocumentGUIObject, GUITable, TransactionCompletionMixIn):
         self.refresh()
         self.view.refresh()
     
-    def redone(self):
-        self.refresh()
-        self.view.refresh()
-        
-    def undone(self):
-        self.refresh()
-        self.view.refresh()
-    
 
 class BaseEntryTableRow(RowWithDebitAndCredit):
     def __init__(self, table):
@@ -271,6 +245,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         self._reconciled = False
         self._reconciliation_pending = False
         self._recurrent = False
+        self._is_budget = False
     
     def _the_balance(self):
         if self.table.document._in_reconciliation_mode:
@@ -342,6 +317,10 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     def recurrent(self):
         return self._recurrent
     
+    @property
+    def is_budget(self):
+        return self._is_budget
+    
     
 AUTOFILL_ATTRS = frozenset(['description', 'payee', 'transfer', 'increase', 'decrease'])
 AMOUNT_AUTOFILL_ATTRS = frozenset(['increase', 'decrease'])
@@ -403,6 +382,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self._reconciled = entry.reconciled
         self._reconciliation_pending = entry.reconciliation_pending
         self._recurrent = isinstance(entry.transaction, Spawn)
+        self._is_budget = getattr(entry.transaction, 'is_budget', False)
     
     def save(self):
         change = self.table.document.change_entry
