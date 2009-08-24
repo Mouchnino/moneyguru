@@ -107,3 +107,24 @@ class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
         self.mainwindow.select_income_statement()
         eq_(self.istatement.income[0].cash_flow, '200.00')
     
+
+class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.mock_today(2009, 8, 24)
+        self.document.select_year_range()
+        self.add_account('income', account_type=INCOME)
+        self.add_entry(date='01/07/2009', increase='25')
+        self.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3) # yearly
+    
+    def test_entry_is_correctly_counted_in_budget(self):
+        # The entry, although not in the current month, is counted in budget calculations
+        self.mainwindow.select_income_statement()
+        eq_(self.istatement.income[0].cash_flow, '100.00')
+    
+    def test_spawn_has_correct_date(self):
+        # The spawn is created at the correct date, which is at the end of the year
+        self.mainwindow.select_transaction_table()
+        # first txn is the entry on 01/07
+        eq_(self.ttable[1].date, '31/12/2009')
+    

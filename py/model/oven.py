@@ -32,9 +32,10 @@ class Oven(object):
         self.transactions = [] # cooked
     
     def _budget_spawns(self, until_date):
+        if not self._budgets:
+            return []
         result = []
-        TODAY = date.today()
-        ref_date = date(TODAY.year, TODAY.month, 1)
+        ref_date = min(b.start_date for b in self._budgets)
         relevant_txns = list(dropwhile(lambda t: t.date < ref_date, self._transactions))
         # It's possible to have 2 budgets overlapping in date range and having the same account
         # When it happens, we need to keep track of which budget "consume" which txns

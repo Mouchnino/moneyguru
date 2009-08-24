@@ -345,12 +345,14 @@ class TestCase(TestCase):
         for name in names:
             self.add_account(name)
     
-    def add_budget(self, account_name, target_name, str_amount):
+    def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2):
         # if no target, set target_name to None
         self.mainwindow.select_budget_table()
         self.mainwindow.new_item()
-        start_date = date(date.today().year, date.today().month, 1)
-        self.bpanel.start_date = self.app.format_date(start_date)
+        if start_date is None:
+            start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
+        self.bpanel.start_date = start_date
+        self.bpanel.repeat_type_index = repeat_type_index
         account_index = self.bpanel.account_options.index(account_name)
         self.bpanel.account_index = account_index
         target_index = self.bpanel.target_options.index(target_name) if target_name else 0

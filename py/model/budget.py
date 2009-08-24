@@ -22,8 +22,8 @@ from hsutil.misc import extract, first
 
 from ..const import REPEAT_MONTHLY
 from .amount import prorate_amount
-from .date import DateRange, inc_month, ONE_DAY
-from .recurrence import Recurrence, Spawn
+from .date import DateRange, ONE_DAY
+from .recurrence import Recurrence, Spawn, DateCounter
 from .transaction import Transaction, Split
 
 class BudgetSpawn(Spawn):
@@ -44,7 +44,10 @@ class Budget(Recurrence):
     #--- Override
     def _create_spawn(self, ref, recurrence_date):
         # `recurrence_date` is the date at which the budget *starts*.
-        end_date = inc_month(recurrence_date, 1) - ONE_DAY
+        # We need a date counter to see which date is next (so we can know when our period ends
+        date_counter = DateCounter(recurrence_date, self.repeat_type, self.repeat_every, date.max)
+        date_counter.next() # first next() is the start_date
+        end_date = date_counter.next() - ONE_DAY
         return BudgetSpawn(self, ref, recurrence_date=recurrence_date, date=end_date)
     
     def get_spawns(self, end, transactions, consumedtxns):
