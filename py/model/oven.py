@@ -7,6 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from collections import defaultdict
 from datetime import date
 from itertools import dropwhile
 from operator import attrgetter
@@ -35,10 +36,14 @@ class Oven(object):
         TODAY = date.today()
         ref_date = date(TODAY.year, TODAY.month, 1)
         relevant_txns = list(dropwhile(lambda t: t.date < ref_date, self._transactions))
+        # It's possible to have 2 budgets overlapping in date range and having the same account
+        # When it happens, we need to keep track of which budget "consume" which txns
+        account2consumedtxns = defaultdict(set)
         for budget in self._budgets:
             if not budget.amount:
                 continue
-            spawns = budget.get_spawns(until_date, relevant_txns)
+            consumedtxns = account2consumedtxns[budget.account]
+            spawns = budget.get_spawns(until_date, relevant_txns, consumedtxns)
             spawns = [spawn for spawn in spawns if not spawn.is_null]
             result += spawns
         return result

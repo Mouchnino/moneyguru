@@ -47,12 +47,15 @@ class Budget(Recurrence):
         end_date = inc_month(recurrence_date, 1) - ONE_DAY
         return BudgetSpawn(self, ref, recurrence_date=recurrence_date, date=end_date)
     
-    def get_spawns(self, end, transactions):
+    def get_spawns(self, end, transactions, consumedtxns):
         # transactions will affect the amounts of the budget spawns
+        # consumedtxns is a set of txns already "consumed" by a budget. It is the budget's
+        # responsability to add txns to this set as it "consumes" them
         spawns = Recurrence.get_spawns(self, end)
         account = self.account
         budget_amount = self.amount if account.is_debit_account() else -self.amount
-        relevant_transactions = [t for t in transactions if account in t.affected_accounts()]
+        relevant_transactions = set(t for t in transactions if account in t.affected_accounts())
+        relevant_transactions -= consumedtxns
         for spawn in spawns:
             affects_spawn = lambda t: spawn.recurrence_date <= t.date <= spawn.date
             wheat, shaft = extract(affects_spawn, relevant_transactions)
@@ -63,6 +66,7 @@ class Budget(Recurrence):
                 spawn.set_splits([Split(spawn, account, spawn_amount), Split(spawn, self.target, -spawn_amount)])
             else:
                 spawn.set_splits([])
+            consumedtxns |= set(wheat)
         self._previous_spawns = spawns
         return spawns
     
@@ -84,14 +88,12 @@ class BudgetList(list):
     def amount_for_account(self, account, date_range, currency=None):
         if not date_range.future:
             return 0
-        budget = self.budget_for_account(account)
-        if budget is None or not budget.amount:
+        budgets = [b for b in self if b.account is account and b.amount]
+        if not budgets:
             return 0
         currency = currency or account.currency
-        return budget.amount_for_date_range(date_range, currency)
-    
-    def budget_for_account(self, account):
-        return first(b for b in self if b.account is account)
+        amount = sum(b.amount_for_date_range(date_range, currency) for b in budgets)
+        return amount
     
     def budgets_for_target(self, target):
         return [b for b in self if b.target is target]

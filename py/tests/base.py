@@ -624,10 +624,6 @@ class CommonSetup(object):
         self.document.select_today_date_range()
         account_type = EXPENSE if is_expense else INCOME
         self.add_account(account_name, account_type=account_type)
-        self.mainwindow.select_income_statement()
-        if is_expense:
-            self.istatement.selected = self.istatement.expenses[0]
-        else:
-            self.istatement.selected = self.istatement.income[0]
         self.add_budget(account_name, target_name, '100')
+        self.mainwindow.select_income_statement()
     

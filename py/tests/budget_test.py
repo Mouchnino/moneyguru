@@ -10,6 +10,7 @@
 
 from nose.tools import eq_
 
+from ..model.account import INCOME
 from .base import TestCase, CommonSetup
 
 class OneExpenseWithBudget(TestCase, CommonSetup):
@@ -90,4 +91,19 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         self.bsheet.show_selected_account()
         # The balance of the budget entry has a correctly decremented balance (the budget is an expense).
         eq_(self.etable[0].balance, '-100.00')
+    
+
+class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_monthly_range()
+        self.add_account('income', account_type=INCOME)
+        self.add_entry(increase='25') # This entry must not be counted twice in budget calculations!
+        self.add_budget('income', None, '100')
+        self.add_budget('income', None, '100')
+    
+    def test_both_budgets_are_counted(self):
+        # The amount budgeted is the sum of all budgets, not just the first one.
+        self.mainwindow.select_income_statement()
+        eq_(self.istatement.income[0].cash_flow, '200.00')
     
