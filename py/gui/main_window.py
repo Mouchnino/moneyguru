@@ -206,7 +206,7 @@ class MainWindow(DocumentGUIObject):
                 self.view.animate_date_range_backward()
     
     def filter_applied(self):
-        if self.document.filter_string:
+        if self.document.filter_string and self.top not in (self.ttable, self.etable):
             self.show_transaction_table()
     
     def reconciliation_changed(self):

@@ -276,9 +276,14 @@ class Document(Broadcaster, Listener):
         date_range = self.date_range
         entries = [e for e in account.entries if e.date in date_range]
         self._visible_unfiltered_entry_count = len(entries)
-        if self.filter_type is FILTER_UNASSIGNED:
+        query_string = self.filter_string
+        filter_type = self.filter_type
+        if query_string:
+            query = self._parse_search_query(query_string)
+            entries = [e for e in entries if e.transaction.matches(query)]
+        if filter_type is FILTER_UNASSIGNED:
             entries = [e for e in entries if not e.transfer]
-        elif (self.filter_type is FILTER_INCOME) or (self.filter_type is FILTER_EXPENSE):
+        elif (filter_type is FILTER_INCOME) or (filter_type is FILTER_EXPENSE):
             if account.is_credit_account():
                 want_positive = self.filter_type is FILTER_EXPENSE
             else:
@@ -287,11 +292,11 @@ class Document(Broadcaster, Listener):
                 entries = [e for e in entries if e.amount > 0]
             else:
                 entries = [e for e in entries if e.amount < 0]
-        elif self.filter_type is FILTER_TRANSFER:
+        elif filter_type is FILTER_TRANSFER:
             entries = [e for e in entries if any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
-        elif self.filter_type is FILTER_RECONCILED:
+        elif filter_type is FILTER_RECONCILED:
             entries = [e for e in entries if e.reconciled]
-        elif self.filter_type is FILTER_NOTRECONCILED:
+        elif filter_type is FILTER_NOTRECONCILED:
             entries = [e for e in entries if not e.reconciled]
         self._visible_entries = entries
     

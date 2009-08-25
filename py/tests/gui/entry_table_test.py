@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from nose.tools import eq_
+
 from hsutil.currency import EUR
 
 from ..base import TestCase, CommonSetup
@@ -136,6 +138,15 @@ class TwoEntries(TestCase):
         self.add_account()
         self.add_entry('11/07/2008', 'first', increase='42')
         self.add_entry('12/07/2008', 'second', decrease='12')
+        self.clear_gui_calls()
+    
+    def test_search(self):
+        # Searching when on etable doesn't switch to the ttable, and shows the results in etable
+        self.sfield.query = 'second'
+        # No show_transaction_table call
+        self.check_gui_calls(self.mainwindow_gui)
+        eq_(len(self.etable), 1)
+        eq_(self.etable[0].description, 'second')
     
     def test_selection(self):
         """EntryTable stays in sync with TransactionTable"""

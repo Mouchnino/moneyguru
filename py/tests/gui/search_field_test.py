@@ -15,6 +15,7 @@ class CommonSetup(CommonSetup):
         self.add_entry(description='a Deposit', payee='Joe SixPack', checkno='42A', transfer='Income', increase='212.12')
         # it's important for the test that this txns has no space in its fields
         self.add_entry(description='Withdrawal', payee='Dunno-What-To-Write', checkno='24B', transfer='Cash', decrease='140')
+        self.mainwindow.select_transaction_table()
     
 
 class Pristine(TestCase):
@@ -156,6 +157,7 @@ class ThreeTransactionsFiltered(TestCase):
         self.add_entry(description='foo')
         self.add_entry(description='bar')
         self.add_entry(description='bar')
+        self.mainwindow.select_transaction_table()
         self.sfield.query = 'bar'
         self.clear_gui_calls()
     
