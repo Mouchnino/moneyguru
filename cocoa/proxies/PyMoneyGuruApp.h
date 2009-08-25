@@ -19,6 +19,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setFirstWeekday:(int)weekday;
 - (int)aheadMonths;
 - (void)setAheadMonths:(int)months;
+- (int)yearStartMonth; // 0 = Jan 11 = Dec
+- (void)setYearStartMonth:(int)month;
 - (BOOL)dontUnreconcile;
 - (void)setDontUnreconcile:(BOOL)flag;
 @end

@@ -122,6 +122,15 @@ class PyMoneyGuruApp(NSObject):
     def setAheadMonths_(self, months):
         self.py.ahead_months = months
     
+    # The selector in the pref pane is 0-based, the py side's pref is 1-based
+    @objc.signature('i@:')
+    def yearStartMonth(self):
+        return self.py.year_start_month - 1
+    
+    @objc.signature('v@:i')
+    def setYearStartMonth_(self, month):
+        self.py.year_start_month = month + 1
+    
     @objc.signature('i@:')
     def dontUnreconcile(self):
         return self.py.dont_unreconcile

@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSMenuItem *unlockMenuItem;
     IBOutlet NSPopUpButton *firstWeekdayPopup;
     IBOutlet NSPopUpButton *aheadMonthsPopup;
+    IBOutlet NSPopUpButton *yearStartMonthPopup;
     IBOutlet NSButton *dontUnreconcileButton;
     
     NSWindowController *viewOptionsWindow;

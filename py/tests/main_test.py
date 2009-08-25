@@ -91,14 +91,16 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         self.document.select_year_range()
         self.app.first_weekday = 1
         self.app.ahead_months = 5
+        self.app.year_start_month = 4
         self.app.dont_unreconcile = True
         self.document.close()
         newapp = Application(self.app_gui)
         newdoc = Document(self.document_gui, newapp)
-        self.assertTrue(isinstance(newdoc.date_range, YearRange))
-        self.assertEqual(newapp.first_weekday, 1)
-        self.assertEqual(newapp.ahead_months, 5)
-        self.assertTrue(newapp.dont_unreconcile)
+        assert isinstance(newdoc.date_range, YearRange)
+        eq_(newapp.first_weekday, 1)
+        eq_(newapp.ahead_months, 5)
+        eq_(newapp.year_start_month, 4)
+        assert newapp.dont_unreconcile
     
     def test_date_range(self):
         """By default, the date range is a yearly range for today"""
@@ -260,6 +262,19 @@ class RangeOnYear2007(TestCase):
         self.document.select_month_range()
         self.assertEqual(self.document.date_range, MonthRange(date(2007, 1, 1)))
     
+    def test_year_start_month_at_4(self):
+        # when setting year_start_month at 4, the year range will start on april 1st
+        self.app.year_start_month = 4
+        eq_(self.document.date_range.start, date(2007, 4, 1))
+        eq_(self.document.date_range.end, date(2008, 3, 31))
+    
+    def test_year_start_month_at_4_then_select_next_previous(self):
+        # when navigating date ranges, preserve the year_start_month
+        self.app.year_start_month = 4
+        self.document.select_next_date_range()
+        eq_(self.document.date_range.start, date(2008, 4, 1))
+        self.document.select_prev_date_range()
+        eq_(self.document.date_range.start, date(2007, 4, 1))
 
 class RangeOnYearToDate(TestCase):
     def setUp(self):
@@ -286,6 +301,18 @@ class RangeOnYearToDate(TestCase):
         self.document.select_today_date_range()
         self.assertEqual(self.document.date_range.start, date(2008, 1, 1))
     
+    def test_year_start_month_at_4(self):
+        # when setting year_start_month at 4, the year-to-date range will start on april 1st
+        self.app.year_start_month = 4
+        eq_(self.document.date_range.start, date(2008, 4, 1))
+        eq_(self.document.date_range.end, date(2008, 11, 12))
+    
+    def test_year_start_month_at_12(self):
+        # when the year_start_month is higher than the current month in YTD, the date range will
+        # start in the previous year
+        self.app.year_start_month = 12
+        eq_(self.document.date_range.start, date(2007, 12, 1))
+        eq_(self.document.date_range.end, date(2008, 11, 12))
 
 class RangeOnRunningYear(TestCase):
     def setUp(self):

@@ -163,6 +163,7 @@ http://www.hardcoded.net/licenses/hs_license
     // binding cannot be done in the NIB, it has to be done manually here.
     [firstWeekdayPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.firstWeekday" options:nil];
     [aheadMonthsPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.aheadMonths" options:nil];
+    [yearStartMonthPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.yearStartMonth" options:nil];
     [dontUnreconcileButton bind:@"value" toObject:self withKeyPath:@"py.dontUnreconcile" options:nil];
 }
 @end

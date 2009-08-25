@@ -1127,10 +1127,10 @@ class Document(Broadcaster, Listener):
     def select_year_range(self, starting_point=None):
         if starting_point is None:
             starting_point = self.selected_transaction.date if self.selected_transaction else self.date_range
-        self.date_range = YearRange(starting_point)
+        self.date_range = YearRange(starting_point, year_start_month=self.app.year_start_month)
     
     def select_year_to_date_range(self):
-        self.date_range = YearToDateRange()
+        self.date_range = YearToDateRange(year_start_month=self.app.year_start_month)
     
     def select_running_year_range(self):
         self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
@@ -1251,6 +1251,12 @@ class Document(Broadcaster, Listener):
     def ahead_months_changed(self):
         if isinstance(self.date_range, RunningYearRange):
             self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
+    
+    def year_start_month_changed(self):
+        if isinstance(self.date_range, YearRange):
+            self.select_year_range()
+        elif isinstance(self.date_range, YearToDateRange):
+            self.select_year_to_date_range()
     
     def first_weekday_changed(self):
         self.notify('first_weekday_changed')

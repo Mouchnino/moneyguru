@@ -21,6 +21,7 @@ from .model.date import parse_date, format_date
 
 FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
 AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
+YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 DONT_UNRECONCILE_PREFERENCE = 'DontUnreconcile'
 
 class Application(Broadcaster, RegistrableApplication):
@@ -44,6 +45,7 @@ class Application(Broadcaster, RegistrableApplication):
         self._grouping_sep = grouping_sep
         self._first_weekday = self.get_default(FIRST_WEEKDAY_PREFERENCE, 0)
         self._ahead_months = self.get_default(AHEAD_MONTHS_PREFERENCE, 2)
+        self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._dont_unreconcile = self.get_default(DONT_UNRECONCILE_PREFERENCE, False)
     
     def format_amount(self, amount, **kw):
@@ -98,6 +100,19 @@ class Application(Broadcaster, RegistrableApplication):
         self._ahead_months = value
         self.set_default(AHEAD_MONTHS_PREFERENCE, value)
         self.notify('ahead_months_changed')
+    
+    @property
+    def year_start_month(self):
+        return self._year_start_month
+        
+    @year_start_month.setter
+    def year_start_month(self, value):
+        assert 1 <= value <= 12
+        if value == self._ahead_months:
+            return
+        self._year_start_month = value
+        self.set_default(YEAR_START_MONTH_PREFERENCE, value)
+        self.notify('year_start_month_changed')
     
     @property
     def dont_unreconcile(self):

@@ -145,13 +145,20 @@ class QuarterRange(NavigableDateRange):
     
 
 class YearRange(NavigableDateRange):
-    def __init__(self, seed):
+    def __init__(self, seed, year_start_month=1):
+        assert 1 <= year_start_month <= 12
         if isinstance(seed, DateRange):
             seed = seed.start
         year = seed.year
-        start = date(year, 1, 1)
-        end = date(year, 12, 31)
+        start = date(year, year_start_month, 1)
+        end = inc_year(start, 1) - ONE_DAY
         DateRange.__init__(self, start, end)
+    
+    def next(self):
+        return YearRange(inc_year(self.start, 1), year_start_month=self.start.month)
+    
+    def prev(self):
+        return YearRange(inc_year(self.start, -1), year_start_month=self.start.month)
     
     @property
     def display(self):
@@ -159,8 +166,11 @@ class YearRange(NavigableDateRange):
     
 
 class YearToDateRange(DateRange):
-    def __init__(self):
-        start = date(date.today().year, 1, 1)
+    def __init__(self, year_start_month=1):
+        start_year = date.today().year
+        if date.today().month < year_start_month:
+            start_year -= 1
+        start = date(start_year, year_start_month, 1)
         end = date.today()
         DateRange.__init__(self, start, end)
     
