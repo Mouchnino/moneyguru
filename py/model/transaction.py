@@ -150,6 +150,8 @@ class Transaction(object):
             for split in self.splits:
                 if split.account and query_all in split.account.name.lower():
                     return True
+                elif query_all in split.memo:
+                    return True
         query_amount = query.get('amount')
         if query_amount is not None:
             query_value = query_amount.value if query_amount else 0

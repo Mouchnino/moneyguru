@@ -125,16 +125,23 @@ class Split(TestCase):
         # third       12  0
         # Unasssigned  0 12
         self.stable[0].account = 'first'
+        self.stable[0].memo = 'memo1'
         self.stable[0].debit = '42'
         self.stable.save_edits()
         self.stable.select([1])
         self.stable[1].account = 'second'
+        self.stable[1].memo = 'memo2'
         self.stable.save_edits()
         self.stable.add()
         self.stable[2].account = 'third'
         self.stable[2].debit = '12'
         self.stable.save_edits()
         self.tpanel.save()
+    
+    def test_query_memo(self):
+        # memo fields are part of the search query
+        self.sfield.query = 'memo2'
+        self.assertEqual(len(self.ttable), 1)
     
     def test_query_split_account(self):
         """Any account in a split can match a sfield query"""
