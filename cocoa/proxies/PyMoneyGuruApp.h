@@ -21,6 +21,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setAheadMonths:(int)months;
 - (int)yearStartMonth; // 0 = Jan 11 = Dec
 - (void)setYearStartMonth:(int)month;
+- (int)autoSaveInterval;
+- (void)setAutoSaveInterval:(int)minutes;
 - (BOOL)dontUnreconcile;
 - (void)setDontUnreconcile:(BOOL)flag;
 @end

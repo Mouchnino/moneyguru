@@ -132,6 +132,14 @@ class PyMoneyGuruApp(NSObject):
         self.py.year_start_month = month + 1
     
     @objc.signature('i@:')
+    def autoSaveInterval(self):
+        return self.py.autosave_interval
+    
+    @objc.signature('v@:i')
+    def setAutoSaveInterval_(self, minutes):
+        self.py.autosave_interval = minutes
+    
+    @objc.signature('i@:')
     def dontUnreconcile(self):
         return self.py.dont_unreconcile
     

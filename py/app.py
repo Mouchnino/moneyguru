@@ -8,6 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import logging
+import threading
 
 from hsutil import io
 from hsutil.currency import USD
@@ -22,6 +23,7 @@ from .model.date import parse_date, format_date
 FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
 AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
 YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
+AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 DONT_UNRECONCILE_PREFERENCE = 'DontUnreconcile'
 
 class Application(Broadcaster, RegistrableApplication):
@@ -30,6 +32,7 @@ class Application(Broadcaster, RegistrableApplication):
         Broadcaster.__init__(self)
         RegistrableApplication.__init__(self, appid=6)
         self.view = view
+        self.cache_path = cache_path
         # cache_path is required, but for tests, we don't want to bother specifying it. When 
         # cache_path is kept as None, the path of the currency db will be ':memory:'
         if cache_path:
@@ -43,11 +46,31 @@ class Application(Broadcaster, RegistrableApplication):
         self._date_format = date_format
         self._decimal_sep = decimal_sep
         self._grouping_sep = grouping_sep
+        self._autosave_timer = None
         self._first_weekday = self.get_default(FIRST_WEEKDAY_PREFERENCE, 0)
         self._ahead_months = self.get_default(AHEAD_MONTHS_PREFERENCE, 2)
         self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
+        self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
+        self._update_autosave_timer()
         self._dont_unreconcile = self.get_default(DONT_UNRECONCILE_PREFERENCE, False)
     
+    #--- Private
+    def _autosave_all_documents(self):
+        self.notify('must_autosave')
+        self._update_autosave_timer()
+    
+    def _update_autosave_timer(self):
+        if self._autosave_timer is not None:
+            self._autosave_timer.cancel()
+        if self._autosave_interval > 0 and self.cache_path: # no need to start a timer if we have nowhere to autosave to
+            # By having the timer at the application level, we make sure that there will not be 2
+            # documents trying to autosave at the same time, thus overwriting each other.
+            self._autosave_timer = threading.Timer(self._autosave_interval * 60, self._autosave_all_documents)
+            self._autosave_timer.start()
+        else:
+            self._autosave_timer = None
+    
+    #--- Public
     def format_amount(self, amount, **kw):
         return format_amount(amount, self.default_currency, decimal_sep=self._decimal_sep,
                              grouping_sep=self._grouping_sep, **kw)
@@ -113,6 +136,18 @@ class Application(Broadcaster, RegistrableApplication):
         self._year_start_month = value
         self.set_default(YEAR_START_MONTH_PREFERENCE, value)
         self.notify('year_start_month_changed')
+    
+    @property
+    def autosave_interval(self):
+        return self._autosave_interval
+        
+    @autosave_interval.setter
+    def autosave_interval(self, value):
+        if value == self._autosave_interval:
+            return
+        self._autosave_interval = value
+        self.set_default(AUTOSAVE_INTERVAL_PREFERENCE, value)
+        self._update_autosave_timer()
     
     @property
     def dont_unreconcile(self):

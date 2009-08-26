@@ -9,9 +9,11 @@
 
 import datetime
 import logging
+import time
 import xml.etree.cElementTree as ET
 from itertools import dropwhile
 
+from hsutil import io
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
 from hsutil.misc import nonone, flatten, allsame, first
@@ -51,6 +53,8 @@ FILTER_EXPENSE = object() # in etable, the filter is for decrease
 FILTER_TRANSFER = object()
 FILTER_RECONCILED = object()
 FILTER_NOTRECONCILED = object()
+
+AUTOSAVE_BUFFER_COUNT = 10 # Number of autosave files that will be kept in the cache.
 
 class Document(Broadcaster, Listener):
     def __init__(self, view, app):
@@ -102,6 +106,22 @@ class Document(Broadcaster, Listener):
         self.notify('entry_changed')
         self.notify('date_range_changed')
         return True
+    
+    def _async_autosave(self):
+        # Because this method is called asynchronously, it's possible that, if unlucky, it happens
+        # exactly as the user is commiting a change. In these cases, the autosaved file might be a
+        # save of the data in a quite weird state. I think this risk is acceptable. The alternative
+        # is to put locks everywhere, which would complexify the application.
+        existing_names = [name for name in io.listdir(self.app.cache_path) if name.startswith('autosave')]
+        existing_names.sort()
+        timestamp = int(time.time())
+        autosave_name = 'autosave{0}.moneyguru'.format(timestamp)
+        while autosave_name in existing_names:
+            timestamp += 1
+            autosave_name = 'autosave{0}.moneyguru'.format(timestamp)
+        self.save_to_xml(unicode(self.app.cache_path + autosave_name), autosave=True)
+        if len(existing_names) >= AUTOSAVE_BUFFER_COUNT:
+            io.remove(self.app.cache_path + existing_names[0])
     
     def _change_transaction(self, transaction, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
                             checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT,
@@ -901,7 +921,9 @@ class Document(Broadcaster, Listener):
         self.notify('file_loaded')
         self._undoer.set_save_point()
     
-    def save_to_xml(self, filename):
+    def save_to_xml(self, filename, autosave=False):
+        # When called from _async_autosave, it should not disrupt the user: no stop edition, no
+        # change in the save state.
         def write_transaction_element(parent_element, transaction):
             transaction_element = ET.SubElement(parent_element, 'transaction')
             attrib = transaction_element.attrib
@@ -920,9 +942,10 @@ class Document(Broadcaster, Listener):
                     attrib['reference'] = split.reference
                 attrib['reconciled'] = 'y' if split.reconciled else 'n'
         
-        self.stop_edition()
-        self._commit_reconciliation()
-        self.notify('reconciliation_changed')
+        if not autosave:
+            self.stop_edition()
+            self._commit_reconciliation()
+            self.notify('reconciliation_changed')
         root = ET.Element('moneyguru-file')
         for group in self.groups:
             group_element = ET.SubElement(root, 'group')
@@ -970,7 +993,8 @@ class Document(Broadcaster, Listener):
                 attrib['target'] = budget.target.name
         tree = ET.ElementTree(root)
         tree.write(filename, 'utf-8')
-        self._undoer.set_save_point()
+        if not autosave:
+            self._undoer.set_save_point()
     
     def save_to_qif(self, filename):
         def format_amount_for_qif(amount):
@@ -1248,12 +1272,16 @@ class Document(Broadcaster, Listener):
         if isinstance(self.date_range, RunningYearRange):
             self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
     
+    def first_weekday_changed(self):
+        self.notify('first_weekday_changed')
+    
+    def must_autosave(self):
+        # this is called async
+        self._async_autosave()
+    
     def year_start_month_changed(self):
         if isinstance(self.date_range, YearRange):
             self.select_year_range()
         elif isinstance(self.date_range, YearToDateRange):
             self.select_year_to_date_range()
-    
-    def first_weekday_changed(self):
-        self.notify('first_weekday_changed')
     

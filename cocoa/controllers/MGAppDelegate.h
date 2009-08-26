@@ -15,6 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSPopUpButton *firstWeekdayPopup;
     IBOutlet NSPopUpButton *aheadMonthsPopup;
     IBOutlet NSPopUpButton *yearStartMonthPopup;
+    IBOutlet NSTextField *autoSaveIntervalField;
     IBOutlet NSButton *dontUnreconcileButton;
     
     NSWindowController *viewOptionsWindow;

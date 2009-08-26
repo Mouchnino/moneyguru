@@ -14,13 +14,14 @@ from datetime import date
 
 from nose.tools import eq_
 
+from hsutil import io
 from hsutil.currency import EUR
 
 from .base import (TestCase, CommonSetup, TestQIFExportImportMixin, TestSaveLoadMixin, CallLogger,
     ApplicationGUI)
 from .. import app
 from ..app import Application
-from ..document import Document
+from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError
 from ..gui.entry_table import EntryTable
 from ..loader import base
@@ -92,6 +93,7 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         self.app.first_weekday = 1
         self.app.ahead_months = 5
         self.app.year_start_month = 4
+        self.app.autosave_interval = 8
         self.app.dont_unreconcile = True
         self.document.close()
         newapp = Application(self.app_gui)
@@ -100,6 +102,7 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         eq_(newapp.first_weekday, 1)
         eq_(newapp.ahead_months, 5)
         eq_(newapp.year_start_month, 4)
+        eq_(newapp.autosave_interval, 8)
         assert newapp.dont_unreconcile
     
     def test_date_range(self):
@@ -378,6 +381,22 @@ class OneEmptyAccountRangeOnOctober2007(TestCase):
         self.create_instances()
         self.add_account('Checking', EUR)
         self.document.date_range = MonthRange(date(2007, 10, 1))
+        self.clear_gui_calls()
+    
+    def test_autosave(self):
+        # Testing the interval between autosaves would require some complicated mocking. We're just
+        # going to cheat here and call 'must_autosave' directly.
+        cache_path = self.tmppath()
+        self.app.cache_path = cache_path
+        self.document.must_autosave()
+        eq_(len(io.listdir(cache_path)), 1)
+        self.check_gui_calls(self.etable_gui) # no stop_edition call
+        assert self.document.is_dirty
+        # test that the autosave file rotation works
+        for i in range(AUTOSAVE_BUFFER_COUNT):
+            self.document.must_autosave()
+        # The extra autosave file has been deleted
+        eq_(len(io.listdir(cache_path)), AUTOSAVE_BUFFER_COUNT)
     
     def test_add_empty_entry_and_save(self):
         """An empty entry really gets saved"""
