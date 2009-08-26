@@ -67,7 +67,7 @@ class _BalancePieChart(_AccountPieChart):
             budget_date_range = DateRange(date.min, self.document.date_range.end)
             budgeted = self.document.budgeted_amount_for_target(account, budget_date_range)
             budgeted = convert_amount(budgeted, currency, date)
-            return balance - budgeted
+            return balance + budgeted
         
         return [(a, get_value(a)) for a in self._accounts()]
     

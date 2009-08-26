@@ -40,7 +40,7 @@ class BalanceGraph(Graph):
         last_added_date = None
         if last_balance:
             budget = self._budget_for_date(date_range.start - timedelta(1))
-            self._data.append((date_range.start.toordinal(), float(last_balance - budget)))
+            self._data.append((date_range.start.toordinal(), float(last_balance + budget)))
             last_added_date = date_range.start.toordinal() - 1
         for date in date_range:
             ordinal_date = date.toordinal()
@@ -50,15 +50,15 @@ class BalanceGraph(Graph):
                 continue
             if last_added_date and (last_added_date != ordinal_date - 1) and last_balance != balance:
                 last_budget = self._budget_for_date(date - timedelta(days=1))
-                self._data.append((ordinal_date, float(last_balance - last_budget)))
+                self._data.append((ordinal_date, float(last_balance + last_budget)))
             budget = self._budget_for_date(date)
-            self._data.append((ordinal_date + 1, float(balance - budget)))
+            self._data.append((ordinal_date + 1, float(balance + budget)))
             last_added_date = ordinal_date
             last_balance = balance
         if last_added_date and date_range.end.toordinal() > last_added_date:
             balance = self._balance_for_date(date_range.end)
             budget = self._budget_for_date(date_range.end)
-            self._data.append((date_range.end.toordinal() + 1, float(balance - budget)))
+            self._data.append((date_range.end.toordinal() + 1, float(balance + budget)))
     
     def yrange(self):
         if self._data:

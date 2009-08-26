@@ -711,11 +711,7 @@ class Document(Broadcaster, Listener):
         budgets = filter(is_not_excluded, budgets)
         if not budgets:
             return 0
-        # XXX I was expecting to have to invert the result of amount_for_date_range() because the
-        # amount was for the target, but it turns out that to make the test pass, I must *not*
-        # invert it. Is it possible that every user of that method uses it backward (but end up
-        # with the right results because of a double negation)???
-        budgeted_amount = sum(b.amount_for_date_range(date_range, currency=currency) for b in budgets)
+        budgeted_amount = sum(-b.amount_for_date_range(date_range, currency=currency) for b in budgets)
         if target is not None:
             budgeted_amount = target._normalize_amount(budgeted_amount)
         return budgeted_amount

@@ -108,7 +108,7 @@ class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
     def test_both_budgets_are_counted(self):
         # The amount budgeted is the sum of all budgets, not just the first one.
         self.mainwindow.select_income_statement()
-        eq_(self.istatement.income[0].cash_flow, '200.00')
+        eq_(self.istatement.income[0].budgeted, '175.00')
     
 
 class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
@@ -123,7 +123,7 @@ class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
     def test_entry_is_correctly_counted_in_budget(self):
         # The entry, although not in the current month, is counted in budget calculations
         self.mainwindow.select_income_statement()
-        eq_(self.istatement.income[0].cash_flow, '100.00')
+        eq_(self.istatement.income[0].budgeted, '75.00')
     
     def test_spawn_has_correct_date(self):
         # The spawn is created at the correct date, which is at the end of the year

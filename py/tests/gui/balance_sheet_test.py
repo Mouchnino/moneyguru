@@ -10,6 +10,8 @@ from __future__ import division
 
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import Currency, USD, CAD
 
 from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, CommonSetup
@@ -323,19 +325,18 @@ class AccountsAndEntries(_AccountsAndEntries):
         self.add_budget('income', 'Account 2', '400') # + 150
         self.add_budget('expense', 'Account 1', '100') # + 80
         self.mainwindow.select_balance_sheet()
-        self.assertEqual(self.bsheet.assets[0].end, '170.00') # 250 - 80
-        self.assertEqual(self.bsheet.assets[1].end, '230.00') # 80 + 150
-        self.assertEqual(self.bsheet.assets.end, '400.00')
-        # now, is we go to the next date range, the "start" value must be the same
+        eq_(self.bsheet.assets[0].end, '250.00')
+        eq_(self.bsheet.assets[0].budgeted, '-80.00')
+        eq_(self.bsheet.assets[1].end, '80.00')
+        eq_(self.bsheet.assets[1].budgeted, '150.00')
+        eq_(self.bsheet.assets.end, '330.00')
+        eq_(self.bsheet.assets.budgeted, '70.00')
+        eq_(self.bsheet.net_worth.budgeted, '70.00')
+        # When we go to the next date range, the "budgeted" value must be cumulated
         self.document.select_next_date_range()
-        self.assertEqual(self.bsheet.assets[0].start, '170.00') # 250 - 80
-        self.assertEqual(self.bsheet.assets[1].start, '230.00') # 80 + 150
-        self.assertEqual(self.bsheet.assets.start, '400.00')
-        # when calculating prev budgeting, calculate it for *everything* previous, not just the previous slice!
-        self.document.select_next_date_range()
-        self.assertEqual(self.bsheet.assets[0].start, '70.00') # 250 - 80
-        self.assertEqual(self.bsheet.assets[1].start, '630.00') # 80 + 150
-        self.assertEqual(self.bsheet.assets.start, '700.00')
+        eq_(self.bsheet.assets[0].budgeted, '-180.00') # 80 + 100
+        eq_(self.bsheet.assets[1].budgeted, '550.00') # 150 + 300
+        eq_(self.bsheet.assets.budgeted, '370.00')
     
     def test_budget_multiple_currencies(self):
         # budgeted amounts must be correctly converted to the target's currency
@@ -346,9 +347,10 @@ class AccountsAndEntries(_AccountsAndEntries):
         self.apanel.load()
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
-        self.add_budget('income', 'Account 1', '400 cad') # + 150
+        self.add_budget('income', 'Account 1', '400 cad')
         self.mainwindow.select_balance_sheet()
-        self.assertEqual(self.bsheet.assets[0].end, '500.00')
+        eq_(self.bsheet.assets[0].end, '250.00')
+        eq_(self.bsheet.assets[0].budgeted, '250.00') # 400 / 2 / 0.8 = 250
     
     def test_budget_target_liability(self):
         # The budgeted amount must be normalized before being added to a liability amount
@@ -356,7 +358,15 @@ class AccountsAndEntries(_AccountsAndEntries):
         self.add_account('foo', account_type=LIABILITY)
         self.add_budget('income', 'foo', '400')
         self.mainwindow.select_balance_sheet()
-        self.assertEqual(self.bsheet.liabilities[0].end, '-150.00')
+        eq_(self.bsheet.liabilities[0].end, '0.00')
+        eq_(self.bsheet.liabilities[0].budgeted, '-150.00')
+    
+    def test_budget_without_target(self):
+        # The Net Worth's "budgeted" column counts all budgets, including target-less ones
+        self.mock_today(2008, 1, 15)
+        self.add_budget('income', None, '400')
+        self.mainwindow.select_balance_sheet()
+        eq_(self.bsheet.net_worth.budgeted, '150.00')
     
     def test_change_date_range(self):
         self.document.date_range = self.document.date_range.prev()

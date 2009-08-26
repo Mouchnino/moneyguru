@@ -28,11 +28,13 @@ http://www.hardcoded.net/licenses/hs_license
     [d setObject:b2n(NO) forKey:BalanceSheetDeltaColumnVisible];
     [d setObject:b2n(YES) forKey:BalanceSheetDeltaPercColumnVisible];
     [d setObject:b2n(YES) forKey:BalanceSheetStartColumnVisible];
+    [d setObject:b2n(NO) forKey:BalanceSheetBudgetedColumnVisible];
     [d setObject:b2n(YES) forKey:NetWorthGraphVisible];
     [d setObject:b2n(YES) forKey:AssetLiabilityPieChartVisible];
     [d setObject:b2n(NO) forKey:IncomeStatementDeltaColumnVisible];
     [d setObject:b2n(NO) forKey:IncomeStatementDeltaPercColumnVisible];
     [d setObject:b2n(YES) forKey:IncomeStatementLastColumnVisible];
+    [d setObject:b2n(NO) forKey:IncomeStatementBudgetedColumnVisible];
     [d setObject:b2n(YES) forKey:ProfitGraphVisible];
     [d setObject:b2n(YES) forKey:IncomeExpensePieChartVisible];
     [d setObject:b2n(YES) forKey:TransactionDescriptionColumnVisible];

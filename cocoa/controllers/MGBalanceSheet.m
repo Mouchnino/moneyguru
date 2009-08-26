@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"delta" toUserDefault:BalanceSheetDeltaColumnVisible];
     [columnsManager linkColumn:@"delta_perc" toUserDefault:BalanceSheetDeltaPercColumnVisible];
     [columnsManager linkColumn:@"start" toUserDefault:BalanceSheetStartColumnVisible];
+    [columnsManager linkColumn:@"budgeted" toUserDefault:BalanceSheetBudgetedColumnVisible];
     assetsPieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyAssetsPieChart"];
     liabilitiesPieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyLiabilitiesPieChart"];
     [pieChartsView setFirstView:[assetsPieChart view]];

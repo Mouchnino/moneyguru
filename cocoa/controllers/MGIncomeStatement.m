@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"delta" toUserDefault:IncomeStatementDeltaColumnVisible];
     [columnsManager linkColumn:@"delta_perc" toUserDefault:IncomeStatementDeltaPercColumnVisible];
     [columnsManager linkColumn:@"last_cash_flow" toUserDefault:IncomeStatementLastColumnVisible];
+    [columnsManager linkColumn:@"budgeted" toUserDefault:IncomeStatementBudgetedColumnVisible];
     incomePieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyIncomePieChart"];
     expensesPieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyExpensesPieChart"];
     [pieChartsView setFirstView:[incomePieChart view]];

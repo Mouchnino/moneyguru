@@ -7,6 +7,8 @@
 
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import CAD, USD
 
 from ..base import TestCase, CommonSetup, CallLogger
@@ -62,20 +64,26 @@ class AccountsAndEntries(TestCase, CommonSetup):
         self.mainwindow.select_income_statement()
         self.assertEqual(self.istatement.income[0].cash_flow, '292.00')
     
-    def test_cash_flow_with_budget(self):
+    def test_attrs_with_budget(self):
         # Must include the budget. 250 of the 400 are spent, there's 150 left to add
         self.mock_today(2008, 1, 17)
         self.add_budget('Account 1', None, '400')
         self.mainwindow.select_income_statement()
-        self.assertEqual(self.istatement.income[0].cash_flow, '400.00')
+        eq_(self.istatement.income[0].cash_flow, '250.00')
+        eq_(self.istatement.income[0].budgeted, '150.00')
+        eq_(self.istatement.income.budgeted, '150.00')
+        eq_(self.istatement.net_income.budgeted, '150.00')
         self.document.select_next_date_range()
-        self.assertEqual(self.istatement.income[0].cash_flow, '400.00')
+        eq_(self.istatement.income[0].cash_flow, '0.00')
+        eq_(self.istatement.income[0].budgeted, '400.00')
         self.document.select_quarter_range()
-        self.assertEqual(self.istatement.income[0].cash_flow, '1200.00')
+        eq_(self.istatement.income[0].cash_flow, '250.00')
+        eq_(self.istatement.income[0].budgeted, '950.00')
         self.document.select_year_range()
-        self.assertEqual(self.istatement.income[0].cash_flow, '4800.00')
+        eq_(self.istatement.income[0].cash_flow, '250.00')
+        eq_(self.istatement.income[0].budgeted, '4550.00')
         self.document.select_year_to_date_range()
-        self.assertEqual(self.istatement.income[0].cash_flow, '250.00')
+        eq_(self.istatement.income[0].cash_flow, '250.00')
     
     def test_cash_flow_with_underestimated_budget(self):
         self.mock_today(2008, 1, 17)
@@ -142,7 +150,8 @@ class MultipleCurrencies(TestCase):
         self.mock_today(2008, 1, 20)
         self.add_budget('USD account', None, '300usd')
         self.mainwindow.select_income_statement()
-        self.assertEqual(self.istatement.income[0][1].cash_flow, 'USD 300.00')
+        eq_(self.istatement.income[0][1].cash_flow, 'USD 100.00')
+        eq_(self.istatement.income[0][1].budgeted, 'USD 200.00')
     
     def test_income_statement(self):
         """Each income/expense transaction is converted using the day's rate."""
