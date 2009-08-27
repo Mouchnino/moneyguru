@@ -13,6 +13,7 @@ from hsutil.notify import Broadcaster
 from hsutil.misc import first
 
 from ..model.account import Account, INCOME, EXPENSE
+from ..model.budget import BudgetSpawn
 from ..model.transaction import Split, Transaction
 from .base import GUIPanel
 from .complete import TransactionCompletionMixIn
@@ -89,7 +90,8 @@ class TransactionPanel(PanelWithTransaction):
     
     #--- Public
     def can_load(self):
-        return len(self.document.selected_transactions) == 1
+        txns = self.document.selected_transactions
+        return len(txns) == 1 and not isinstance(txns[0], BudgetSpawn)
     
     def mct_balance(self):
         """Balances the mct by using xchange rates. The currency of the new split is the currency of

@@ -13,24 +13,6 @@ from nose.tools import eq_
 from ..model.account import INCOME
 from .base import TestCase, CommonSetup
 
-class OneExpenseWithBudget(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_account_with_budget()
-    
-    def test_budget_transactions(self):
-        # When a budget is set budget transaction spawns show up in ttable, at the end of each month.
-        self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 12)
-        eq_(self.ttable[0].amount, '100.00')
-        eq_(self.ttable[0].date, '31/01/2008')
-        eq_(self.ttable[0].to, 'Some Expense')
-        assert self.ttable[0].is_budget
-        eq_(self.ttable[11].date, '31/12/2008')
-        self.mainwindow.select_entry_table()
-        assert self.etable[0].is_budget
-     
-
 class OneIncomeWithBudget(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

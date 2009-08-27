@@ -167,6 +167,9 @@ class TransactionTableRow(RowWithDate):
                 continue
             yield TransactionTableRow(self.table, transaction)
     
+    def can_edit(self):
+        return not self.is_budget
+    
     def load(self):
         transaction = self.transaction
         self._date = self.transaction.date
@@ -204,6 +207,7 @@ class TransactionTableRow(RowWithDate):
         self.document.change_transactions([self.transaction], **kw)
         self.load()
     
+    #--- Properties
     # The "get" part of those properies below are called *very* often, hence, the format caching
     
     description = rowattr('_description', 'description')

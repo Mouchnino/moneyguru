@@ -932,7 +932,7 @@ class OneEntryInPreviousRange(TestCase, CommonSetup):
     def test_attrs(self):
         row = self.etable[0]
         self.assertEqual(row.date, '01/02/2008')
-        self.assertTrue(row.read_only)
+        assert not row.can_edit()
     
     def test_make_account_income(self):
         """If we make the account an income account, the previous balance entry disappears"""

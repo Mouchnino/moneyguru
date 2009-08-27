@@ -523,8 +523,7 @@ class ThreeWayNullAmounts(TestCase):
     
     def test_can_edit_to(self):
         """The To column can be edited when it represents a single split"""
-        row = self.ttable[0]
-        self.assertTrue(row.can_edit_to)
+        assert self.ttable.can_edit_cell('to', 0)
     
     def test_edit_to(self):
         """When edited, the To column is saved"""
@@ -1164,4 +1163,25 @@ class FourEntriesOnTheSameDate(TestCase):
         self.assertEqual(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
         self.ttable.move_up()
         self.assertEqual(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
+    
+
+class WithBudget(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_account_with_budget()
+        self.mainwindow.select_transaction_table()
+        self.clear_gui_calls()
+    
+    def test_budget_spawns(self):
+        # When a budget is set budget transaction spawns show up in ttable, at the end of each month.
+        eq_(len(self.ttable), 12)
+        eq_(self.ttable[0].amount, '100.00')
+        eq_(self.ttable[0].date, '31/01/2008')
+        eq_(self.ttable[0].to, 'Some Expense')
+        assert self.ttable[0].is_budget
+        eq_(self.ttable[11].date, '31/12/2008')
+        # Budget spawns can't be edited
+        assert not self.ttable.can_edit_cell('date', 0)
+        self.mainwindow.edit_item() # budget spawns can't be edited
+        self.check_gui_calls_partial(self.tpanel_gui, post_load=0)
     

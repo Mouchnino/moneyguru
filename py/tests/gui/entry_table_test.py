@@ -526,3 +526,17 @@ class WithPreviousEntry(TestCase, CommonSetup):
         expected = "Showing 0 out of 0. Total increase: 0.00 Total decrease: 0.00"
         self.assertEqual(self.etable.totals, expected)
     
+
+class WithBudget(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.setup_account_with_budget()
+        self.mainwindow.select_entry_table()
+    
+    def test_budget_spawns(self):
+        # When a budget is set budget transaction spawns show up in wtable, at the end of each month.
+        eq_(len(self.etable), 12)
+        assert self.etable[0].is_budget
+        # Budget spawns can't be edited
+        assert not self.etable.can_edit_cell('date', 0)
+    

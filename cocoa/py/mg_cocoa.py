@@ -579,7 +579,7 @@ class PyEntryTable(PyTableWithDate):
 
     @objc.signature('i@:i')
     def canEditRow_(self, row):
-        return not self.py[row].read_only
+        return self.py[row].can_edit()
     
     @objc.signature('i@:@i')
     def canMoveRows_to_(self, rows, position):

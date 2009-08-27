@@ -14,7 +14,7 @@ from collections import defaultdict
 from datetime import date, datetime
 from operator import attrgetter
 
-from nose.tools import nottest, istest
+from nose.tools import nottest, istest, eq_
 
 from hsutil.path import Path
 from hsutil.testcase import TestCase
@@ -209,6 +209,13 @@ class DictLoader(base.Loader):
 class TestCase(TestCase):
     cls_tested_module = document_module # for mocks
     
+    def assert_gui_calls_equal(self, guicalls, expected):
+        for callname, callcount in expected.items():
+            if callcount == 0: # This means we just want to make sure that `callname` hasn't been called
+                assert callname not in guicalls, "'%s' was not supposed to be called, but was called %d times" % (callname, callcount)
+                del expected[callname]
+        eq_(guicalls, expected)
+    
     @classmethod
     def datadirpath(cls):
         return Path(__file__)[:-1] + 'testdata'
@@ -223,13 +230,13 @@ class TestCase(TestCase):
     
     def check_gui_calls(self, gui, **expected):
         """Checks that the expected calls have been made to 'gui', then clears the log."""
-        self.assertEqual(gui.calls, expected)
+        self.assert_gui_calls_equal(gui.calls, expected)
         gui.calls.clear()
     
     def check_gui_calls_partial(self, gui, **expected):
         """Check that **expected has been called, but ignore other calls"""
         calls = dict((k, v) for k, v in gui.calls.items() if k in expected)
-        self.assertEqual(calls, expected)
+        self.assert_gui_calls_equal(calls, expected)
         gui.calls.clear()
     
     def clear_gui_calls(self):

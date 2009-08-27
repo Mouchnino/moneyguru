@@ -113,7 +113,12 @@ class GUITable(Table):
         self.view.start_editing()
     
     def can_edit_cell(self, column, row):
+        # A row is, by default, editable as soon as it has an attr with the same name as `column`.
+        # If can_edit() returns False, the row is not editable at all. You can set editability of
+        # rows at the attribute level with can_edit_* properties
         row = self[row]
+        if not row.can_edit():
+            return False
         if not (hasattr(row, column) or hasattr(row, column + '_')): # '_' in case column is a keyword
             return False
         return getattr(row, 'can_edit_' + column, True)
@@ -245,6 +250,9 @@ class Row(object):
         self.table.edited = self
     
     #--- Virtual
+    def can_edit(self):
+        return True
+    
     def load(self):
         raise NotImplementedError()
     

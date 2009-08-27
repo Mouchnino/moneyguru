@@ -93,14 +93,6 @@ class EntryTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
             return
         GUITable.add(self)
     
-    def can_edit_cell(self, column, row):
-        if column in ('date', 'description', 'payee', 'checkno', 'increase', 'decrease'):
-            return self.selected_row.can_edit()
-        elif column == 'transfer':
-            return self.selected_row.can_edit_transfer()
-        else:
-            return False
-
     def can_move(self, row_indexes, position):
         if not GUITable.can_move(self, row_indexes, position):
             return False
@@ -259,9 +251,6 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     def can_edit(self):
         return False
     
-    def can_edit_transfer(self):
-        return False
-    
     def can_reconcile(self):
         return False
     
@@ -300,11 +289,8 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     def balance(self):
         account_currency = self.table.account.currency
         return self.table.document.app.format_amount(self._the_balance(), zero_currency=account_currency)
+    can_edit_balance = False
     
-    @property
-    def read_only(self):
-        return not self.can_edit()
-
     @property
     def reconciled(self):
         return self._reconciled
@@ -356,10 +342,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
             yield EntryTableRow(self.table, entry, self.account)
     
     def can_edit(self):
-        return True
-
-    def can_edit_transfer(self):
-        return len(self.entry.splits) == 1
+        return not self.is_budget
     
     def can_reconcile(self):
         inmode = self.table.document._in_reconciliation_mode
@@ -396,10 +379,15 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self.table._update_selection()
         self.table.toggle_reconciled()
     
+    #--- Properties
     description = rowattr('_description', 'description')
     payee = rowattr('_payee', 'payee')
     checkno = rowattr('_checkno')
     transfer = rowattr('_transfer', 'transfer')
+    @property
+    def can_edit_transfer(self):
+        return len(self.entry.splits) == 1
+    
     
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
