@@ -37,9 +37,9 @@ class BalanceGraph(Graph):
         date_range = self.document.date_range
         self._data = []
         last_balance = self._balance_for_date(date_range.start - timedelta(1))
+        budget = self._budget_for_date(date_range.start - timedelta(1))
         last_added_date = None
-        if last_balance:
-            budget = self._budget_for_date(date_range.start - timedelta(1))
+        if last_balance or budget:
             self._data.append((date_range.start.toordinal(), float(last_balance + budget)))
             last_added_date = date_range.start.toordinal() - 1
         for date in date_range:

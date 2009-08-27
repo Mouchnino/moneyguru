@@ -7,10 +7,12 @@
 
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import CAD
 
 from ..base import TestCase, CommonSetup
-from ...model.account import LIABILITY, EXPENSE
+from ...model.account import LIABILITY, EXPENSE, INCOME
 
 class TwoLiabilityTransactions(TestCase, CommonSetup):
     def setUp(self):
@@ -71,4 +73,24 @@ class ForeignAccount(TestCase):
     
     def test_graph(self):
         self.assertEqual(self.balgraph.currency, CAD)
+    
+
+class BudgetAndNoTranaction(TestCase, CommonSetup):
+    def setUp(self):
+        self.create_instances()
+        self.mock_today(2008, 1, 1)
+        self.document.select_month_range()
+        self.document.select_today_date_range()
+        self.add_account('asset')
+        self.add_account('income', account_type=INCOME)
+        self.add_budget('income', 'asset', '100')
+    
+    def test_future_date_range(self):
+        # There was a bug where when in a future date range, and also in a range with no transaction,
+        # no budget data would be drawn.
+        self.document.select_next_date_range()
+        self.mainwindow.select_balance_sheet()
+        # Now, we're supposed to see a graph starting at 100 and ending at 200
+        expected = [('01/02/2008', '100.00'), ('01/03/2008', '200.00')]
+        eq_(self.nw_graph_data(), expected)
     
