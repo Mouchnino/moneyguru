@@ -592,7 +592,7 @@ class CommonSetup(object):
         self.document.date_range = MonthRange(date(2008, 2, 1))
     
     def setup_scheduled_transaction(self, start_date=date(2008, 9, 13), description='foobar', 
-                                    account=None, debit=None, repeat_type_index=0, repeat_every=1):
+            account=None, debit=None, repeat_type_index=0, repeat_every=1, stop_date=None):
         # 0 = daily, 1 = weekly, etc..
         # This setup also wraps a monthly range around the newly created schedule
         self.document.date_range = MonthRange(start_date)
@@ -602,6 +602,7 @@ class CommonSetup(object):
         self.scpanel.description = description
         self.scpanel.repeat_type_index = repeat_type_index
         self.scpanel.repeat_every = repeat_every
+        self.scpanel.stop_date = stop_date
         if account:
             self.scsplittable.add()
             self.scsplittable.edited.account = account
