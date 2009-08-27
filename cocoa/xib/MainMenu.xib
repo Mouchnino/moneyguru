@@ -9,7 +9,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1306"/>
-			<integer value="1145"/>
+			<integer value="1148"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -798,18 +798,18 @@
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
 								</object>
-								<object class="NSMenuItem" id="1025164757">
+								<object class="NSMenuItem" id="549891574">
 									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Next Date Range</string>
+									<string key="NSTitle">Previous Date Range</string>
 									<string key="NSKeyEquiv">[</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
 								</object>
-								<object class="NSMenuItem" id="549891574">
+								<object class="NSMenuItem" id="1025164757">
 									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Previous Date Range</string>
+									<string key="NSTitle">Next Date Range</string>
 									<string key="NSKeyEquiv">]</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2874,7 +2874,6 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="1057183338"/>
-							<reference ref="549891574"/>
 							<reference ref="1025164757"/>
 							<reference ref="507330244"/>
 							<reference ref="201925107"/>
@@ -2893,6 +2892,7 @@
 							<reference ref="994774801"/>
 							<reference ref="262649211"/>
 							<reference ref="311891534"/>
+							<reference ref="549891574"/>
 						</object>
 						<reference key="parent" ref="875242672"/>
 					</object>
