@@ -10,6 +10,7 @@
 
 from datetime import date
 
+from ..exception import OperationAborted
 from ..model.account import sort_accounts
 from ..model.budget import Budget
 from .base import GUIPanel
@@ -28,6 +29,8 @@ class BudgetPanel(GUIPanel, PanelWithScheduleMixIn):
     
     #--- Private
     def _load_budget(self, budget):
+        if budget is None:
+            raise OperationAborted
         self.original = budget
         self.budget = budget.replicate()
         self.schedule = self.budget # for PanelWithScheduleMixIn

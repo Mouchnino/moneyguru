@@ -7,6 +7,8 @@
 
 from hsutil.notify import Listener
 
+from ..exception import OperationAborted
+
 class DocumentGUIObject(Listener):
     def __init__(self, view, document):
         Listener.__init__(self, document)
@@ -145,8 +147,12 @@ class GUIPanel(DocumentGUIObject):
     
     def load(self):
         self.view.pre_load()
-        self._load()
-        self.view.post_load()
+        try:
+            self._load()
+        except OperationAborted:
+            pass
+        else:
+            self.view.post_load()
     
     def save(self):
         self.view.pre_save()

@@ -152,7 +152,7 @@ class GUITable(Table):
         if not self.selected_indexes:
             if not selected_indexes:
                 selected_indexes = [len(self) - 1]
-            self.selected_indexes = selected_indexes
+            self.select(selected_indexes)
     
     def save_edits(self):
         if self.edited is None:

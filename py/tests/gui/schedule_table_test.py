@@ -17,6 +17,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.setup_monthly_range()
         self.setup_scheduled_transaction(repeat_type_index=4, repeat_every=3, stop_date='13/12/2008')
         self.mainwindow.select_schedule_table()
+        self.clear_gui_calls()
     
     def test_attrs(self):
         eq_(len(self.sctable), 1)
@@ -35,4 +36,11 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         # And the spawns aren't there anymore in the ttable
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 0)
+    
+    def test_edit_selected(self):
+        # There was a bug where, although the selected_indexes in the table were correctly set
+        # (to default values) on refresh(), the selection was not updated in the document.
+        # This caused item edition not to work until the user manually selected a schedule.
+        self.mainwindow.edit_item()
+        self.check_gui_calls_partial(self.scpanel_gui, post_load=1)
     

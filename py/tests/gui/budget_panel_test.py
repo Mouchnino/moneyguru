@@ -54,6 +54,11 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         eq_(row.from_, 'Some Income')
         eq_(row.amount, '42.00')
     
+    def test_edit_without_selection(self):
+        # Initiating a budget edition while none is selected doesn't crash
+        self.btable.select([])
+        self.mainwindow.edit_item() # no crash
+    
     def test_new_budget(self):
         self.mainwindow.new_item()
         eq_(self.bpanel.start_date, '27/01/2008') # mocked date

@@ -24,6 +24,10 @@ class Pristine(TestCase):
         eq_(len(self.sctable), 1)
         eq_(self.sctable[0].description, 'foobar')
     
+    def test_edit_schedule(self):
+        # Initiating a schedule edition while none is selected doesn't crash
+        self.mainwindow.edit_item() # no crash
+    
 
 class OneDailyScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):

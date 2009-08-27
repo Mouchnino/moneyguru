@@ -15,6 +15,7 @@ from hsutil.misc import first
 
 from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY, 
                      REPEAT_WEEKDAY_LAST)
+from ..exception import OperationAborted
 from ..model.account import Account, INCOME, EXPENSE
 from ..model.recurrence import Recurrence
 from ..model.transaction import Split, Transaction
@@ -55,7 +56,7 @@ class PanelWithScheduleMixIn(object):
     def stop_date(self, value):
         try:
             self.schedule.stop_date = self.app.parse_date(value)
-        except ValueError:
+        except (ValueError, TypeError):
             self.schedule.stop_date = None
     
     @property
@@ -109,6 +110,8 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
     
     #--- Private
     def _load_schedule(self, schedule):
+        if schedule is None:
+            raise OperationAborted()
         self.original = schedule
         self.schedule = schedule.replicate()
         self.transaction = self.schedule.ref
