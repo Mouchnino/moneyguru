@@ -10,7 +10,7 @@
 from __future__ import division
 from datetime import date, timedelta
 
-from ..model.date import DateRange
+from ..model.date import DateRange, ONE_DAY
 from .graph import Graph
 
 class BalanceGraph(Graph):
@@ -35,30 +35,33 @@ class BalanceGraph(Graph):
     def compute_data(self):
         self._account = self.document.selected_account
         date_range = self.document.date_range
-        self._data = []
-        last_balance = self._balance_for_date(date_range.start - timedelta(1))
-        budget = self._budget_for_date(date_range.start - timedelta(1))
-        last_added_date = None
-        if last_balance or budget:
-            self._data.append((date_range.start.toordinal(), float(last_balance + budget)))
-            last_added_date = date_range.start.toordinal() - 1
-        for date in date_range:
-            ordinal_date = date.toordinal()
-            balance = self._balance_for_date(date)
-            # For budgeting reasons, if date == date.today(), add a data point
-            if (balance == last_balance) and (date != date.today()):
+        TODAY = date.today()
+        date2value = {}
+        last_balance = self._balance_for_date(date_range.start - ONE_DAY)
+        if last_balance:
+            date2value[date_range.start] = last_balance
+        for date_point in date_range:
+            balance = self._balance_for_date(date_point)
+            if (balance != last_balance) or (date_point == TODAY) or (date_point == date_range.end):
+                if date2value and last_balance != balance:
+                    # create a "step"
+                    date2value[date_point] = last_balance
+                date2value[date_point + ONE_DAY] = balance
+                last_balance = balance
+        for date_point, value in date2value.items():
+            if date_point <= TODAY:
                 continue
-            if last_added_date and (last_added_date != ordinal_date - 1) and last_balance != balance:
-                last_budget = self._budget_for_date(date - timedelta(days=1))
-                self._data.append((ordinal_date, float(last_balance + last_budget)))
-            budget = self._budget_for_date(date)
-            self._data.append((ordinal_date + 1, float(balance + budget)))
-            last_added_date = ordinal_date
-            last_balance = balance
-        if last_added_date and date_range.end.toordinal() > last_added_date:
-            balance = self._balance_for_date(date_range.end)
-            budget = self._budget_for_date(date_range.end)
-            self._data.append((date_range.end.toordinal() + 1, float(balance + budget)))
+            budget = self._budget_for_date(date_point - ONE_DAY)
+            if budget:
+                date2value[date_point] += budget
+        if date_range.start not in date2value and date_range.start > TODAY:
+            budget = self._budget_for_date(date_range.start - ONE_DAY)
+            date2value[date_range.start] = budget
+        self._data = []
+        # if there's only zeroes, keep the data empty
+        if any(date2value.values()):
+            for date_point, value in sorted(date2value.items()):
+                self._data.append((date_point.toordinal(), float(value)))
     
     def yrange(self):
         if self._data:
