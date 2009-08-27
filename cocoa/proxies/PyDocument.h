@@ -36,6 +36,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)redo;
 
 /* Misc */
+- (void)adjustExampleFile;
 - (NSString *)loadFromFile:(NSString *)path; // Returns a non-nil value if it failed
 - (NSString *)saveToFile:(NSString *)path;
 - (void)saveToQIF:(NSString *)path;

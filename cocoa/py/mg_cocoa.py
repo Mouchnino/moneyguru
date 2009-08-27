@@ -229,10 +229,13 @@ class PyDocument(NSObject):
         self.py.redo()
     
     #--- Misc
+    def adjustExampleFile(self):
+        self.py.adjust_example_file()
+    
     def loadFromFile_(self, filename):
         try:
             self.py.load_from_xml(filename)
-        except FileFormatError, e:
+        except FileFormatError as e:
             return unicode(e)
     
     def saveToFile_(self, filename):

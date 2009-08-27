@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGAppDelegate.h"
+#import "MGDocument.h"
 #import "MGConst.h"
 #import "MGUtils.h"
 #import "RegistrationInterface.h"
@@ -90,8 +91,9 @@ http://www.hardcoded.net/licenses/hs_license
     NSString *filePath = [bundle pathForResource:@"example" ofType:@"moneyguru"];
     NSDocumentController *dc = [NSDocumentController sharedDocumentController];
     NSError *error;
-    NSDocument *doc = [dc makeUntitledDocumentOfType:@"moneyGuru Document" error:&error];
+    MGDocument *doc = [dc makeUntitledDocumentOfType:@"moneyGuru Document" error:&error];
     [doc readFromURL:[NSURL fileURLWithPath:filePath] ofType:@"moneyGuru Document" error:&error];
+    [[doc py] adjustExampleFile];
     [dc addDocument:doc];
     [doc makeWindowControllers];
     [doc showWindows];

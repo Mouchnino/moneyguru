@@ -1707,3 +1707,35 @@ class EntrySelectionOnDateRangeChange(TestCase):
         self.document.select_next_date_range()
         self.assertEqual(self.etable.selected_indexes, [5]) # 2008/2/2
     
+
+class ExampleDocumentLoadTest(TestCase):
+    def setUp(self):
+        # We're creating a couple of transactions with the latest being 4 months ago (in april).
+        self.mock_today(2009, 8, 27)
+        self.create_instances()
+        self.add_account()
+        self.add_entry('01/03/2008')
+        self.add_entry('29/10/2008') # this one will end up in february, but overflow
+        self.add_entry('01/03/2009')
+        self.add_entry('15/04/2009')
+        self.add_entry('28/04/2009') # will be deleted because in the future
+        self.mainwindow.select_schedule_table()
+        self.mainwindow.new_item()
+        self.scpanel.start_date = '03/03/2009'
+        self.scpanel.stop_date = '04/05/2009'
+        self.scpanel.repeat_type_index = 2 # monthly
+        self.scpanel.save()
+    
+    def test_adjust_example_file(self):
+        # When loading as an example file, an offset is correctly applied to transactions.
+        self.document.adjust_example_file()
+        print [(row.date, row.recurrent) for row in self.ttable]
+        self.mainwindow.select_transaction_table()
+        # There are 3 normal txns (the last one is deleted because it's in the future)
+        # and 1 schedule spawns (only future spawns are kept)
+        eq_(len(self.ttable), 4)
+        eq_(self.ttable[0].date, '01/03/2009') # from 29/09/2008, it was in feb, but overflowed
+        eq_(self.ttable[1].date, '01/07/2009') # from 01/03/2009
+        eq_(self.ttable[2].date, '15/08/2009') # from 15/04/2009
+        eq_(self.ttable[3].date, '03/09/2009') # spawn
+    
