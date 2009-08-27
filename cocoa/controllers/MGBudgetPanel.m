@@ -91,6 +91,8 @@ http://www.hardcoded.net/licenses/hs_license
     id control = [aNotification object];
     if (control == repeatEveryField) // must be edited right away to update the desc label
         [[self py] setRepeatEvery:[repeatEveryField intValue]];
+    else if (control == startDateField) // must be edited right away to update the repeat options
+        [[self py] setStartDate:[startDateField stringValue]];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
