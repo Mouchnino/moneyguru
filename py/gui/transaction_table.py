@@ -206,25 +206,9 @@ class TransactionTableRow(RowWithDate):
     
     # The "get" part of those properies below are called *very* often, hence, the format caching
     
-    @property
-    def can_edit_date(self):
-        return True
-    
     description = rowattr('_description', 'description')
-    @property
-    def can_edit_description(self):
-        return True
-    
     payee = rowattr('_payee', 'payee')
-    @property
-    def can_edit_payee(self):
-        return True
-        
     checkno = rowattr('_checkno')
-    @property
-    def can_edit_checkno(self):
-        return True
-    
     from_ = rowattr('_from', 'from')
     @property
     def can_edit_from(self):

@@ -163,16 +163,12 @@ class OneEntry(TestCase, CommonSetup):
         self.assertEqual(self.ttable.edited.amount, '42.00')
     
     def test_can_edit(self):
-        """All columns can be edited"""
+        # All columns can be edited, except unknown ones
         self.mainwindow.select_transaction_table()
-        row = self.ttable[0]
-        self.assertTrue(row.can_edit_date)
-        self.assertTrue(row.can_edit_description)
-        self.assertTrue(row.can_edit_payee)
-        self.assertTrue(row.can_edit_checkno)
-        self.assertTrue(row.can_edit_from)
-        self.assertTrue(row.can_edit_to)
-        self.assertTrue(row.can_edit_amount)
+        editable_columns = ['date', 'description', 'payee', 'checkno', 'from', 'to', 'amount']
+        for colname in editable_columns:
+            assert self.ttable.can_edit_cell(colname, 0)
+        assert not self.ttable.can_edit_cell('unknown', 0)
     
     def test_cancel_edits(self):
         """cancel_edits() reverts the edited row back to it's old values"""
@@ -395,14 +391,12 @@ class OneThreeWayTransaction(TestCase):
     
     def test_can_edit(self):
         """Can't edit from, to and amount"""
-        row = self.ttable[0]
-        self.assertTrue(row.can_edit_date)
-        self.assertTrue(row.can_edit_description)
-        self.assertTrue(row.can_edit_payee)
-        self.assertTrue(row.can_edit_checkno)
-        self.assertTrue(row.can_edit_from) # There is only one item in From
-        self.assertFalse(row.can_edit_to)
-        self.assertFalse(row.can_edit_amount)
+        # There is only one item in From
+        editable_columns = ['date', 'description', 'payee', 'checkno', 'from']
+        for colname in editable_columns:
+            assert self.ttable.can_edit_cell(colname, 0)
+        assert not self.ttable.can_edit_cell('to', 0)
+        assert not self.ttable.can_edit_cell('amount', 0)
     
     def test_edit_description(self):
         """save_edits() works for non-two-way splits"""

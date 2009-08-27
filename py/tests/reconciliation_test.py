@@ -103,7 +103,7 @@ class OneEntryInTheFuture(TestCase):
     
     def test_can_set_entry_balance(self):
         """It's not possible to set an entry's reconciliation balance"""
-        self.assertFalse(self.etable.can_edit_column('balance'))
+        assert not self.etable.can_edit_cell('balance', 0)
     
 
 class OneEntryInLiability(TestCase):

@@ -228,7 +228,7 @@ class SplitTransaction(_SplitTransaction):
     def test_transfer_read_only(self):
         """The transfer column shows a list of affecter *other* accounts and is read-only"""
         self.assertEqual(self.etable[0].transfer, 'expense1, expense2, income')
-        self.assertFalse(self.etable.can_edit_column('transfer'))
+        assert not self.etable.can_edit_cell('transfer', 0)
 
 
 class SplitWithNoAccount(TestCase):

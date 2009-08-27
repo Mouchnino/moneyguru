@@ -355,10 +355,10 @@ class PyTable(PyCompletion):
         
     def cancelEdits(self):
         self.py.cancel_edits()
-
+    
     @objc.signature('i@:@i')
     def canEditColumn_atRow_(self, column, row):
-        return getattr(self.py[row], 'can_edit_' + column, False)
+        return self.py.can_edit_cell(column, row)
     
     def changeColumns_(self, columns):
         self.py.change_columns(list(columns))
@@ -577,12 +577,6 @@ class PyIncomeStatement(PyReport):
 class PyEntryTable(PyTableWithDate):
     py_class = EntryTable
 
-    # This is a replacement for the PyTable's method, but we should eventually move to a row based
-    # "can_edit" scheme for this py as well.
-    @objc.signature('i@:@i')
-    def canEditColumn_atRow_(self, column, row):
-        return self.py.can_edit_column(column)
-    
     @objc.signature('i@:i')
     def canEditRow_(self, row):
         return not self.py[row].read_only
@@ -735,12 +729,7 @@ class PyAccountPanel(PyPanel):
 
 class PySplitTable(PyTable):
     py_class = SplitTable
-    
     # pyparent is a PyTransactionPanel
-    @objc.signature('i@:@i')
-    def canEditColumn_atRow_(self, column, row):
-        return True
-    
 
 class PyTransactionPanel(PyPanel):
     py_class = TransactionPanel

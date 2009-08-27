@@ -112,6 +112,12 @@ class GUITable(Table):
         self.view.refresh()
         self.view.start_editing()
     
+    def can_edit_cell(self, column, row):
+        row = self[row]
+        if not (hasattr(row, column) or hasattr(row, column + '_')): # '_' in case column is a keyword
+            return False
+        return getattr(row, 'can_edit_' + column, True)
+    
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):
             return False

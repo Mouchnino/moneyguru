@@ -687,30 +687,22 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
     
     def test_entry_is_editable(self):
         """An Entry has everything but balance editable"""
-        self.assertTrue(self.etable.can_edit_column('date'))
-        self.assertTrue(self.etable.can_edit_column('description'))
-        self.assertTrue(self.etable.can_edit_column('payee'))
-        self.assertTrue(self.etable.can_edit_column('transfer'))
-        self.assertTrue(self.etable.can_edit_column('increase'))
-        self.assertTrue(self.etable.can_edit_column('decrease'))
-        self.assertTrue(self.etable.can_edit_column('checkno'))
-        self.assertFalse(self.etable.can_edit_column('balance')) # Only in reconciliation mode
-        self.assertFalse(self.etable[0].can_reconcile()) # Only in reconciliation mode
+        editable_columns = ['date', 'description', 'payee', 'transfer', 'increase', 'decrease', 'checkno']
+        for colname in editable_columns:
+            assert self.etable.can_edit_cell(colname, 0)
+        assert not self.etable.can_edit_cell('balance', 0) 
+        assert not self.etable[0].can_reconcile() # Only in reconciliation mode
     
     def test_entry_is_editable_of_opposite(self):
         """The other side of an Entry has the same edition rights as the Entry"""
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        self.assertTrue(self.etable.can_edit_column('date'))
-        self.assertTrue(self.etable.can_edit_column('description'))
-        self.assertTrue(self.etable.can_edit_column('payee'))
-        self.assertTrue(self.etable.can_edit_column('transfer'))
-        self.assertTrue(self.etable.can_edit_column('increase'))
-        self.assertTrue(self.etable.can_edit_column('decrease'))
-        self.assertTrue(self.etable.can_edit_column('checkno'))
-        self.assertFalse(self.etable.can_edit_column('balance')) # Only in reconciliation mode
-        self.assertFalse(self.etable[0].can_reconcile()) # Only in reconciliation mode
+        editable_columns = ['date', 'description', 'payee', 'transfer', 'increase', 'decrease', 'checkno']
+        for colname in editable_columns:
+            assert self.etable.can_edit_cell(colname, 0)
+        assert not self.etable.can_edit_cell('balance', 0)
+        assert not self.etable[0].can_reconcile() # Only in reconciliation mode
     
     def test_entry_payee_get_set(self):
         self._test_entry_attribute_get_set('payee')
@@ -1027,12 +1019,9 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
     def test_prev_balance_entry_is_editable(self):
         """A PreviousBalanceEntry is read-only"""
         self.etable.select([0])
-        self.assertFalse(self.etable.can_edit_column('date'))
-        self.assertFalse(self.etable.can_edit_column('description'))
-        self.assertFalse(self.etable.can_edit_column('transfer'))
-        self.assertFalse(self.etable.can_edit_column('increase'))
-        self.assertFalse(self.etable.can_edit_column('decrease'))
-        self.assertFalse(self.etable.can_edit_column('balance'))
+        columns = ['date', 'description', 'payee', 'transfer', 'increase', 'decrease', 'checkno']
+        for colname in columns:
+            assert not self.etable.can_edit_cell(colname, 0)
     
     def test_prev_date_range(self):
         """app.select_prev_date_range() makes the date range go one month earlier"""

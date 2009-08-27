@@ -93,7 +93,7 @@ class EntryTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
             return
         GUITable.add(self)
     
-    def can_edit_column(self, column):
+    def can_edit_cell(self, column, row):
         if column in ('date', 'description', 'payee', 'checkno', 'increase', 'decrease'):
             return self.selected_row.can_edit()
         elif column == 'transfer':
