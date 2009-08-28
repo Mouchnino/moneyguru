@@ -27,15 +27,15 @@ http://www.hardcoded.net/licenses/hs_license
     NSMutableDictionary *d = [NSMutableDictionary dictionary];
     // Visibility
     [d setObject:b2n(NO) forKey:BalanceSheetDeltaColumnVisible];
-    [d setObject:b2n(YES) forKey:BalanceSheetDeltaPercColumnVisible];
+    [d setObject:b2n(NO) forKey:BalanceSheetDeltaPercColumnVisible];
     [d setObject:b2n(YES) forKey:BalanceSheetStartColumnVisible];
-    [d setObject:b2n(NO) forKey:BalanceSheetBudgetedColumnVisible];
+    [d setObject:b2n(YES) forKey:BalanceSheetBudgetedColumnVisible];
     [d setObject:b2n(YES) forKey:NetWorthGraphVisible];
     [d setObject:b2n(YES) forKey:AssetLiabilityPieChartVisible];
     [d setObject:b2n(NO) forKey:IncomeStatementDeltaColumnVisible];
     [d setObject:b2n(NO) forKey:IncomeStatementDeltaPercColumnVisible];
     [d setObject:b2n(YES) forKey:IncomeStatementLastColumnVisible];
-    [d setObject:b2n(NO) forKey:IncomeStatementBudgetedColumnVisible];
+    [d setObject:b2n(YES) forKey:IncomeStatementBudgetedColumnVisible];
     [d setObject:b2n(YES) forKey:ProfitGraphVisible];
     [d setObject:b2n(YES) forKey:IncomeExpensePieChartVisible];
     [d setObject:b2n(YES) forKey:TransactionDescriptionColumnVisible];
@@ -58,6 +58,10 @@ http://www.hardcoded.net/licenses/hs_license
     Class pyClass = [MGUtils classNamed:@"PyMoneyGuruApp"];
     py = [[pyClass alloc] initWithCocoa:self];
     viewOptionsWindow = [[NSWindowController alloc] initWithWindowNibName:@"ViewOptions"];
+    // Some weird bug showed up, and the first document instance (which get access to MGAppDelegate)
+    // through [NSApp delegate] would be created before the NIB unarchiver would set the delegate
+    // This is why we set it here.
+    [NSApp setDelegate:self];
 }
 
 - (void)dealloc
