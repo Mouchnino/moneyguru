@@ -1,3 +1,18 @@
+- date: 2009-08-28
+  version: 1.6.0
+  description: |
+    * Revamped the budget system, giving it much more flexibility.
+    * Added views to manage Schedules and Budgets.
+    * Memo fields in splits are now included in the search process.
+    * It's now possible to search the Account view.
+    * Added a preference to indicate when your fiscal year starts (for Year and Year-to-date ranges).
+    * Added a Budgeted column in the Net Worth and Profit & Loss views.
+    * Added an Auto-Save preference.
+    * Tweaked the view and date range navigation shortcuts so they don't interfere with the OS X 
+      text navigation ones.
+    * Tweaked auto-completion.
+    * Fixed a crash in date range navigation.
+    * Fixed a bug preventing certain CSV files from being imported.
 - date: 2009-08-04
   version: 1.5.7
   description: |

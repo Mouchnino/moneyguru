@@ -37,10 +37,6 @@ Create a Starting Balance transaction at the earliest date possible and leave th
 
 QIF files don't contain currency information. Therefore, moneyGuru always import such account as your **native** currency. To fix this, first change the currency of the account through the Account Details. However, this will **not** touch your amounts' currency. To change these, you have to perform a mass edition. Go into your account and select all transactions (you will have to do that in more than one shot if your transactions span on more than one year) and Show Info (&#8984;I). This will bring the Mass Edition panel. In the currency field, select the currency of the account you imported, make sure the little checkbox is checked, and press Save.
 
-### How do I set the stop date of a scheduled transaction?
-
-Select the transaction just after the last transaction you want the schedule to create, hold &#8679;, then delete that transaction. All future transactions for this schedule will be removed as well.
-
 ### I have another question. What can I do?
 
 You can always send an e-mail to support@hardcoded.net, but the best way to ask a question is to go on [Hardcoded Software's Get Satisfaction site](http://getsatisfaction.com/hardcodedsoftware). Who knows, your question might already have been answered there!

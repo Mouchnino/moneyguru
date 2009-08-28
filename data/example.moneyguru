@@ -4,15 +4,15 @@
     <account currency="USD" name="Savings" type="asset"/>
     <account currency="USD" name="Credit Card" type="liability"/>
     <account currency="USD" name="Salary" type="income"/>
-    <account budget="USD 300.00" budget_target="Checking" currency="USD" name="Groceries" type="expense"/>
-    <account budget="USD 1200.00" budget_target="Checking" currency="USD" name="Cash" type="expense"/>
-    <account budget="USD 300.00" budget_target="Checking" currency="USD" name="Auto" type="expense"/>
+    <account currency="USD" name="Groceries" type="expense"/>
+    <account currency="USD" name="Cash" type="expense"/>
+    <account currency="USD" name="Auto" type="expense"/>
     <account currency="USD" name="Rent" type="expense"/>
     <account currency="USD" name="Fees" type="expense"/>
     <account currency="USD" name="Student Loan" type="liability"/>
-    <account budget="USD 80.00" budget_target="Checking" currency="USD" name="Clothes" type="expense"/>
+    <account currency="USD" name="Clothes" type="expense"/>
     <account currency="USD" name="Travel" type="expense"/>
-    <account budget="USD 100.00" budget_target="Checking" currency="USD" name="Utilities" type="expense"/>
+    <account currency="USD" name="Utilities" type="expense"/>
     <account currency="USD" name="Interest Gained" type="income"/>
     <account currency="USD" name="Interest Paid" type="expense"/>
     <transaction checkno="" date="2007-12-31" description="Starting Balance" mtime="1220182638" payee="">
@@ -31,7 +31,7 @@
         <split account="Student Loan" amount="USD -11800.00" memo="" reconciled="n"/>
         <split account="" amount="USD 11800.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-01-01" description="Rent" mtime="1219503894" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-01-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -111,7 +111,7 @@
         <split account="Salary" amount="USD -1358.40" memo="" reconciled="n"/>
         <split account="Checking" amount="USD 1358.40" memo="" reconciled="y"/>
     </transaction>
-    <transaction checkno="" date="2008-02-01" description="Rent" mtime="1219503911" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-02-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -187,7 +187,7 @@
         <split account="Groceries" amount="USD 187.98" memo="" reconciled="n"/>
         <split account="Credit Card" amount="USD -187.98" memo="" reconciled="y"/>
     </transaction>
-    <transaction checkno="" date="2008-03-01" description="Rent" mtime="1219503917" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-03-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -271,7 +271,7 @@
         <split account="Groceries" amount="USD 54.54" memo="" reconciled="n"/>
         <split account="Credit Card" amount="USD -54.54" memo="" reconciled="y"/>
     </transaction>
-    <transaction checkno="" date="2008-04-01" description="Rent" mtime="1219503926" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-04-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -359,7 +359,7 @@
         <split account="Auto" amount="USD 47.00" memo="" reconciled="n"/>
         <split account="Credit Card" amount="USD -47.00" memo="" reconciled="y"/>
     </transaction>
-    <transaction checkno="" date="2008-05-01" description="Rent" mtime="1219503935" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-05-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -587,7 +587,7 @@
         <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
         <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-06-06" description="Rent (asked my land lady to wait a little bit before cashing the check)" mtime="1219837862" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-06-06" description="Rent (asked my land lady to wait a little bit before cashing the check)" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -651,7 +651,7 @@
         <split account="Groceries" amount="USD 93.87" memo="" reconciled="n"/>
         <split account="Credit Card" amount="USD -93.87" memo="" reconciled="y"/>
     </transaction>
-    <transaction checkno="" date="2008-07-01" description="Rent" mtime="1219503947" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-07-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -735,7 +735,7 @@
         <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-08-01" description="Rent" mtime="1225026225" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-08-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -823,7 +823,7 @@
         <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
         <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-09-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-09-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -891,7 +891,7 @@
         <split account="Credit Card" amount="USD -54.23" memo="" reconciled="y"/>
         <split account="Groceries" amount="USD 54.23" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-10-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-10-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -971,7 +971,7 @@
         <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-11-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-11-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -1063,7 +1063,7 @@
         <split account="Checking" amount="USD -300.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 300.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2008-12-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2008-12-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -1147,7 +1147,7 @@
         <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
         <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2009-01-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2009-01-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -1227,7 +1227,7 @@
         <split account="Credit Card" amount="USD -63.55" memo="" reconciled="y"/>
         <split account="Groceries" amount="USD 63.55" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2009-02-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2009-02-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
@@ -1299,12 +1299,12 @@
         <split account="Credit Card" amount="USD -67.32" memo="" reconciled="y"/>
         <split account="Groceries" amount="USD 67.32" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2009-03-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
+    <transaction checkno="" date="2009-03-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
         <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-01" description="ATM Withdrawal" mtime="1240221195" payee="">
-        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-07" description="Weekly groceries" mtime="1240221028" payee="">
@@ -1316,7 +1316,7 @@
         <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-09" description="ATM Withdrawal" mtime="1240221202" payee="">
-        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-10" description="Loan Payment" mtime="0" payee="Dad">
@@ -1341,7 +1341,7 @@
     </transaction>
     <transaction checkno="" date="2009-03-15" description="Credit Card payment" mtime="1240221414" payee="">
         <split account="Credit Card" amount="USD 492.31" memo="" reconciled="n"/>
-        <split account="Checking" amount="USD -492.31" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -492.31" memo="" reconciled="y"/>
     </transaction>
     <transaction checkno="" date="2009-03-17" description="Gas" mtime="1240221135" payee="">
         <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
@@ -1352,7 +1352,7 @@
         <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-20" description="ATM Withdrawal" mtime="1240221214" payee="">
-        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-21" description="Weekly groceries" mtime="1240221054" payee="">
@@ -1364,7 +1364,7 @@
         <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-27" description="ATM Withdrawal" mtime="1240221220" payee="">
-        <split account="Checking" amount="USD -200.00" memo="" reconciled="n"/>
+        <split account="Checking" amount="USD -200.00" memo="" reconciled="y"/>
         <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-03-28" description="Weekly groceries" mtime="1240221067" payee="">
@@ -1375,8 +1375,8 @@
         <split account="Credit Card" amount="USD -60.00" memo="" reconciled="y"/>
         <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
     </transaction>
-    <transaction checkno="" date="2009-04-01" description="Rent" mtime="0" payee="Mme Ownsmyflat">
-        <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
+    <transaction checkno="" date="2009-04-01" description="Rent" mtime="1251456569" payee="Miss Ownsmyflat">
+        <split account="Checking" amount="USD -800.00" memo="" reconciled="n"/>
         <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-03" description="Power Bill" mtime="1240220869" payee="">
@@ -1392,7 +1392,7 @@
         <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-09" description="Salary" mtime="0" payee="">
-        <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="n"/>
         <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-09" description="ATM Withdrawal" mtime="1240221227" payee="">
@@ -1401,11 +1401,11 @@
     </transaction>
     <transaction checkno="" date="2009-04-10" description="Loan Payment" mtime="0" payee="Dad">
         <split account="Student Loan" amount="USD 350.00" memo="" reconciled="n"/>
-        <split account="Checking" amount="USD -350.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -350.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-10" description="Phone Bill" mtime="0" payee="">
         <split account="Utilities" amount="USD 24.95" memo="" reconciled="n"/>
-        <split account="Checking" amount="USD -24.95" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -24.95" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-11" description="Weekly groceries" mtime="1240221093" payee="">
         <split account="Credit Card" amount="USD -61.61" memo="" reconciled="n"/>
@@ -1413,7 +1413,7 @@
     </transaction>
     <transaction checkno="" date="2009-04-13" description="Internet Bill" mtime="0" payee="">
         <split account="Utilities" amount="USD 44.95" memo="" reconciled="n"/>
-        <split account="Checking" amount="USD -44.95" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -44.95" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-15" description="A nice hat" mtime="1240221309" payee="Hat Inc.">
         <split account="Credit Card" amount="USD -140.00" memo="" reconciled="n"/>
@@ -1432,12 +1432,24 @@
         <split account="Cash" amount="USD 200.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-20" description="Transfer" mtime="0" payee="">
-        <split account="Checking" amount="USD -700.00" memo="" reconciled="y"/>
+        <split account="Checking" amount="USD -700.00" memo="" reconciled="n"/>
         <split account="Savings" amount="USD 700.00" memo="" reconciled="n"/>
     </transaction>
     <transaction checkno="" date="2009-04-20" description="Gas" mtime="1240221158" payee="">
         <split account="Credit Card" amount="USD -60.00" memo="" reconciled="n"/>
         <split account="Auto" amount="USD 60.00" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-23" description="Salary" mtime="0" payee="">
+        <split account="Checking" amount="USD 1784.98" memo="" reconciled="n"/>
+        <split account="Salary" amount="USD -1784.98" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-25" description="Weekly groceries" mtime="1251456791" payee="">
+        <split account="Credit Card" amount="USD -47.34" memo="" reconciled="n"/>
+        <split account="Groceries" amount="USD 47.34" memo="" reconciled="n"/>
+    </transaction>
+    <transaction checkno="" date="2009-04-28" description="ATM Withdrawal" mtime="1251457550" payee="">
+        <split account="Checking" amount="USD -150.00" memo="" reconciled="n"/>
+        <split account="Cash" amount="USD 150.00" memo="" reconciled="n"/>
     </transaction>
     <recurrence every="2" type="weekly">
         <exception date="2009-02-12"/>
@@ -1456,6 +1468,7 @@
         <exception date="2009-02-26"/>
         <exception date="2009-04-09"/>
         <exception date="2008-11-20"/>
+        <exception date="2009-04-23"/>
         <exception date="2008-10-23"/>
         <transaction checkno="" date="2008-08-28" description="Salary" mtime="1225025952" payee="">
             <split account="Checking" amount="USD 1784.98" memo="" reconciled="y"/>
@@ -1550,9 +1563,14 @@
         <exception date="2009-01-01"/>
         <exception date="2009-04-01"/>
         <exception date="2009-03-01"/>
-        <transaction checkno="" date="2008-08-01" description="Rent" mtime="1225026225" payee="Mme Ownsmyflat">
+        <transaction checkno="" date="2008-08-01" description="Rent" mtime="1251456521" payee="Miss Ownsmyflat">
             <split account="Checking" amount="USD -800.00" memo="" reconciled="y"/>
             <split account="Rent" amount="USD 800.00" memo="" reconciled="n"/>
         </transaction>
     </recurrence>
+    <budget account="Groceries" amount="USD 300.00" target="Checking"/>
+    <budget account="Cash" amount="USD 1200.00" target="Checking"/>
+    <budget account="Auto" amount="USD 300.00" target="Checking"/>
+    <budget account="Clothes" amount="USD 80.00" target="Checking"/>
+    <budget account="Utilities" amount="USD 100.00" target="Checking"/>
 </moneyguru-file>

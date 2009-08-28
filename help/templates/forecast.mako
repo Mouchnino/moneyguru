@@ -9,15 +9,18 @@ Some transactions happen in a regular manner, like salaries, utility bills, rent
 Creating a schedule
 -----
 
-To create a scheduled transaction, first create a normal transaction which will be the base for the schedule. Then, open the info panel, select a Repeat type, then save. If, for example, you want to create a scheduled bi-weekly salary, first create a normal salary transaction (or select your latest salary transaction), open the info panel, select the "weekly" Repeat type, type "2" in the Every field, then save.
+To create a scheduled transaction, go the the Schedules view and click on the New Item button. A Schedule Info panel will pop up. This panel is similar to the Transaction Info panel, but has a few extra fields: Repeat Type, Repeat Every and Stop Date. The Repeat type field determines what kind of interval you want (daily, weekly, etc..). The Repeat Every field is to tell how many of that interval type you want between each occurrences. For example, if you want a bi-weekly schedule, you would set the Repeat Type to Weekly, and the Repeat Every to 2.
+
+If you already have a "model transaction" from which you want a schedule to be created, there's a shortcut for this in the menu called Make Schedule From Selected. This will create a new schedule and copy all info from the selected transaction to populate it.
 
 When you create a scheduled transaction, all future occurrences of that schedule for the current date range will be displayed with a little ![](images/clock.png) next to them indicating that they are scheduled.
+
 Editing a schedule
 -----
 
-All occurrences of a schedule can be edited like any other transaction. However, there are a few tricks with the &#8679; key you can do to control the schedule.
+In addition to being able to edit your schedules through the Schedules view, you can also edit *any occurrence of it* in the Transactions or Account view! These occurrences can be edited like any other transaction, but there are a few tricks with the &#8679; key you can do to control the schedule.
 
-* **Editing only one occurrence:** If you change a future occurrence like you would with a normal transaction, an exception will be created in the schedule. Only this occurrence will contain the edition you made.
+* **Editing only one occurrence:** If you change an occurrence like you would with a normal transaction, an exception will be created in the schedule. Only this occurrence will contain the edition you made.
 * **Editing all future occurrences:** Sometimes, you want a schedule to be changed from a certain date until the end. To do so, hold &#8679; when you end the edition of the transaction. When you do so, all future occurrences of the schedule will be changed.
 * **Skip an occurrence:** Planning an unpaid 3 weeks vacation? Just delete the future occurrences in your salary's schedule just like you would do with a normal transaction.
 * **Stop a schedule:** Not all schedules run indefinitely. To stop a schedule at a certain date, just select the occurrence just after the last planned occurrence and delete it while holding &#8679;. All future occurrences will be removed.
@@ -29,9 +32,11 @@ As you can see, the concept is rather simple: You can edit scheduled transaction
 Budgeting
 -----
 
-When you bring up the info panel of an income or expense account, you have 2 fields you can edit: "Monthly Budget" and "Budget Target". If you set a value for "Monthly Budget" for an expense, the sheets and the charts will include those budgeted amount for future dates. For example, if you set up a 400$ monthly budget for groceries and that you spent 250$ in groceries so far in this month, 150$ in groceries expenses will be spread out evenly for the rest of the month (subsequent months will have the whole 400$ spread out, unless you scheduled future groceries expenses, which would also affect budgeting).
+Budgets are similar to schedules in the way they behave. The also create transactions at regular intervals, but instead of creating occurrences with fixed amounts, they create occurrences with **floating** amounts. For example, if you create a 200$ monthly budget for the expense account *Clothes*, it will, like the schedules, create regular occurrences of 200$ every month. However, if you create a transaction that sends 50$ to the *Clothes* account, the budget occurrence for that month will become 150$.
 
-The Budget Target tells moneyGuru where to take money for the budgets from. This way, budgets will affect your assets and liability, and thus, your net worth. You then end up with a really pretty net worth graph.
+A budget can be created from the Budgets view. The Repeat fields work exactly like they do for the schedules. The Account field is the income or expense account for which the budget is (Clothes, Salary, etc..). The Target field, which is optional, lets you indicate an asset or liability to be used for the other side of the transaction. When you define one, the "future" area of the balance graph in that account will correctly reflect change in its balance that will occur.
+
+It's important to remember that setting a Target account **does not** limit your budget to that target account. For example, if you create a 200$ budget for *Clothes*, with a target to your *Checking* account, buying 50$ worth of clothes with your *Credit Card* account will still correctly affect your budget occurrence for that month and make it go down to 150$.
 
 Forecasting
 -----

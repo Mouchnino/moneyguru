@@ -22,7 +22,7 @@ There are 6 types of date ranges:
 1. **Running year:** This date range <i>follows</i> today. It displays exactly <i>one year</i>, but instead of displaying full years, it uses the "Ahead months in Running year" preference to determine when the date range ends, and then starts exactly one year before that date.
 1. **Custom date range:** When you select this date range, moneyGuru will prompt you for a start date and an end date. Afterwards, the date range will be the dates you chose.
 
-For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's &#8984;&#8997;&#8592; and &#8984;&#8997;&#8594;). There are also shortcuts to select date range types (&#8984;&#8997;1-6). You can also press &#8984;&#8997;T to return to the today's date range.
+For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's &#8984;&#8997;[ and &#8984;&#8997;]). There are also shortcuts to select date range types (&#8984;&#8997;1-6). You can also press &#8984;&#8997;T to return to the today's date range.
 
 The thin red line
 -----
@@ -34,9 +34,9 @@ The toolbar
 
 ![](images/basics_toolbar.png)
 
-The toolbar has 5 buttons and a filter field. The 4 buttons to the left let you change the current view. The 5th button toggles [reconciliation](reconciliation.htm) on and off.
+The toolbar is mainly used to select one of the 6 *views* of moneyGuru, which are described below. Additionally to those button, there's also a button to toggle [reconciliation](reconciliation.htm) on and off and a filter field.
 
-The filter field allows you to see all transactions that match the stuff you type in it. To use it, type something and press return. The Transaction view (see below) will be selected and only transaction that have a description, payee, check #, account or amount matching with what you typed will be shown. If you want to see transactions from specific accounts or groups, type "account: account1,account2" or "group: group1,group2" in the filter box. This is very handy for [mass editions](edition.htm).
+The filter field allows you to see all transactions that match the stuff you type in it. To use it, type something and press return. Only transactions that have a description, payee, check #, account or amount matching with what you typed will be shown. If you want to see transactions from specific accounts or groups, type "account: account1,account2" or "group: group1,group2" in the filter box. This is very handy for [mass editions](edition.htm).
 
 Net Worth and Profit & Loss
 -----
@@ -54,6 +54,20 @@ The Net Worth and Profit &amp; Loss views are where you do account management an
 **Pie Chart:** At the right of the sheet of each view are two pie charts showing the weight of every account for each type. If you have account groups, you can collapse one of these groups in the sheet to have the account values grouped in the pie chart. For example, if you have a "Automobile" group with a few related accounts under it, you can collapse the group in the sheet to have "Automobile" as one slice (rather than having one slice for Gas, one slice for Insurance, etc..).
 
 **Graph:** The graph at the bottom of the view shows the progression of the primary view statistic (net worth or profit) over time.
+
+**Columns:** The sheets each have a different set of columns (customizable with &#8984;J).
+
+- **Balance Sheet:**
+    - **Start:** The balance of the account at the beginning of the date range. It includes scheduled transactions, but not budgets.
+    - **End:** The balance of the account at the end of the date range.
+    - **Change:** The difference between Start and End.
+    - **Change %:** The difference in percentage between Start and End
+    - **Budgeted:** The amount of budget (for which this account is a **target**) left to allocate in this current date range. This means that, if your budgets correctly reflect reality, End + Budgeted should be your actual balance at the end of the date range.
+- **Profit & Loss:**
+    - **Current:** The cash flow of the account for the current date range.
+    - **Last:** The cash flow of the account for the last date range. For example, if in a month range, the Last column shows the cash flow for the month prior to the current one. Year-to-date is a special case and under it, the Last column displays the last year's cash flow.
+    - **Change and Change %:** Same as in the balance sheet.
+    - **Budgeted:** The amount of budget assigned to this account left to allocate in this current date range. This means that, if your budgets correctly reflect reality, Current + Budgeted should be your actual cash flow at the end of the date range.
 
 Transactions
 -----
