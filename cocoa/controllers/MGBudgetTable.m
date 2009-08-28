@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGBudgetTable.h"
 #import "MGTableView.h"
+#import "MGBudgetPrint.h"
 
 @implementation MGBudgetTable
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -21,6 +22,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyBudgetTable *)py
 {
     return (PyBudgetTable *)py;
+}
+
+- (NSView *)viewToPrint
+{
+    return [[[MGBudgetPrint alloc] initWithPyParent:py tableView:[self tableView]] autorelease];
 }
 
 /* Delegate */

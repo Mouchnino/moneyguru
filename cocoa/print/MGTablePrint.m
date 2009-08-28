@@ -162,7 +162,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(int)aRow
 {
     id d = [tableView delegate];
-    [d tableView:tableView willDisplayCell:aCell forTableColumn:aColumn row:aRow];
+    if ([d respondsToSelector:@selector(tableView:willDisplayCell:forTableColumn:row:)])
+        [d tableView:tableView willDisplayCell:aCell forTableColumn:aColumn row:aRow];
 }
 
 - (float)indentForTableColumn:(NSTableColumn *)aColumn row:(int)aRow
