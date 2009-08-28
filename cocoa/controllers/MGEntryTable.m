@@ -194,13 +194,6 @@ http://www.hardcoded.net/licenses/hs_license
     {
         return;
     }
-    NSFont *font = [cell font];
-    NSFontManager *fontManager = [NSFontManager sharedFontManager];
-    if ([[self py] canEditRow:row])
-        font = [fontManager convertFont:font toNotHaveTrait:NSFontBoldTrait];
-    else
-        font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
-    [cell setFont:font];    
     if ([[column identifier] isEqualToString:@"balance"])
     {
         NSColor *color = [[self py] isBalanceNegativeAtRow:row] ? [NSColor redColor] : [NSColor blackColor];

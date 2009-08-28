@@ -577,10 +577,6 @@ class PyIncomeStatement(PyReport):
 class PyEntryTable(PyTableWithDate):
     py_class = EntryTable
 
-    @objc.signature('i@:i')
-    def canEditRow_(self, row):
-        return self.py[row].can_edit()
-    
     @objc.signature('i@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
