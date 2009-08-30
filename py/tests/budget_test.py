@@ -23,6 +23,19 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable[0].from_, 'Some Income')
     
+    def test_dont_replace_split_instances_needlessly(self):
+        # The bug was that during budget cooking, all spawns, including those before the cooked date
+        # range, would have their split re-created with new amounts. Because of this, going back in
+        # the date range would cause cached entries to be "bumped out" of the transaction. This
+        # would result in the shown account to be displayed in the "Transfer" column.
+        self.mainwindow.select_income_statement()
+        self.istatement.selected = self.istatement.income[0]
+        self.istatement.show_selected_account()
+        eq_(self.etable[0].transfer, '')
+        self.document.select_next_date_range()
+        self.document.select_prev_date_range()
+        eq_(self.etable[0].transfer, '') # It shouldn't be set to "Some Income"
+    
     def test_set_budget_again(self):
         # There was a bug where setting the amount on a budget again wouldn't invert that amount
         # in the case of an income-based budget.

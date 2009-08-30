@@ -66,7 +66,8 @@ class Budget(Recurrence):
             txns_amount = sum(t.amount_for_account(account, budget_amount.currency) for t in wheat)
             if abs(txns_amount) < abs(budget_amount):
                 spawn_amount = budget_amount - txns_amount
-                spawn.set_splits([Split(spawn, account, spawn_amount), Split(spawn, self.target, -spawn_amount)])
+                if spawn.amount_for_account(account, budget_amount.currency) != spawn_amount:
+                    spawn.set_splits([Split(spawn, account, spawn_amount), Split(spawn, self.target, -spawn_amount)])
             else:
                 spawn.set_splits([])
             consumedtxns |= set(wheat)
