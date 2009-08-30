@@ -17,6 +17,7 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         self.create_instances()
         self.setup_account_with_budget()
         self.mainwindow.select_budget_table()
+        self.clear_gui_calls()
     
     def test_attrs(self):
         eq_(len(self.btable), 1)
@@ -37,4 +38,10 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         # And the spawns aren't there anymore in the ttable
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 0)
+    
+    def test_edition_must_stop(self):
+        # When the edition_must_stop event is broadcasted, btable must ignore it because the objc
+        # side doesn't have a stop_editing method.
+        self.document.stop_edition()
+        self.check_gui_calls(self.btable_gui, stop_editing=0)
     

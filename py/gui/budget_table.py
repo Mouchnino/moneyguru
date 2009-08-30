@@ -48,6 +48,9 @@ class BudgetTable(GUITable, DocumentGUIObject):
     budget_changed = GUITable._item_changed
     budget_deleted = GUITable._item_deleted
     
+    def edition_must_stop(self):
+        pass # the view doesn't have a stop_editing method
+    
     def file_loaded(self):
         self.refresh()
         self.view.refresh()

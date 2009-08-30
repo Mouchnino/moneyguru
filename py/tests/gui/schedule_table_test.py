@@ -44,3 +44,9 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.mainwindow.edit_item()
         self.check_gui_calls_partial(self.scpanel_gui, post_load=1)
     
+    def test_edition_must_stop(self):
+        # When the edition_must_stop event is broadcasted, btable must ignore it because the objc
+        # side doesn't have a stop_editing method.
+        self.document.stop_edition()
+        self.check_gui_calls(self.sctable_gui, stop_editing=0)
+    

@@ -212,7 +212,8 @@ class TestCase(TestCase):
     def assert_gui_calls_equal(self, guicalls, expected):
         for callname, callcount in expected.items():
             if callcount == 0: # This means we just want to make sure that `callname` hasn't been called
-                assert callname not in guicalls, "'%s' was not supposed to be called, but was called %d times" % (callname, callcount)
+                assert callname not in guicalls,\
+                    "'%s' was not supposed to be called, but was called %d times" % (callname, guicalls[callname])
                 del expected[callname]
         eq_(guicalls, expected)
     

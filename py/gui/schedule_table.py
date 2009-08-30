@@ -45,6 +45,9 @@ class ScheduleTable(GUITable, DocumentGUIObject):
         return [row.schedule for row in self.selected_rows]
     
     #--- Event handlers
+    def edition_must_stop(self):
+        pass # the view doesn't have a stop_editing method
+    
     def file_loaded(self):
         self.refresh()
         self.view.refresh()
