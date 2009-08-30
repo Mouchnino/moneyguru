@@ -10,8 +10,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDocument.h"
 #import "PyScheduleTable.h"
 #import "MGTable.h"
+#import "HSTableColumnManager.h"
 
-@interface MGScheduleTable : MGTable {}
+@interface MGScheduleTable : MGTable
+{
+    HSTableColumnManager *columnsManager;
+}
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 /* Public */

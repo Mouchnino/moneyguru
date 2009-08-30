@@ -59,6 +59,9 @@ http://www.hardcoded.net/licenses/hs_license
 #define AccountPayeeColumnVisible @"AccountPayeeColumnVisible"
 #define AccountChecknoColumnVisible @"AccountChecknoColumnVisible"
 #define AccountGraphVisible @"AccountGraphVisible"
+#define ScheduleDescriptionColumnVisible @"ScheduleDescriptionColumnVisible"
+#define SchedulePayeeColumnVisible @"SchedulePayeeColumnVisible"
+#define ScheduleChecknoColumnVisible @"ScheduleChecknoColumnVisible"
 
 // Others
 #define ShowRecurrenceScopeDialog @"ShowRecurrenceScopeDialog"

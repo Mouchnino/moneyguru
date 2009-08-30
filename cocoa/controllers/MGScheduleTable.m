@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGScheduleTable.h"
+#import "MGConst.h"
 #import "MGTableView.h"
 #import "MGSchedulePrint.h"
 
@@ -15,6 +16,13 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
+    columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
+    // The 2 lines below are because of OS X Tiger, see MGEntryTable for details
+    [tableView setAutosaveName:@"ScheduleTable"];
+    [tableView setAutosaveTableColumns:YES];
+    [columnsManager linkColumn:@"description" toUserDefault:ScheduleDescriptionColumnVisible];
+    [columnsManager linkColumn:@"payee" toUserDefault:SchedulePayeeColumnVisible];
+    [columnsManager linkColumn:@"checkno" toUserDefault:ScheduleChecknoColumnVisible];
     return self;
 }
 
