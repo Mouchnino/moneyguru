@@ -137,6 +137,12 @@ class OneEntryPanelLoaded(TestCase):
         # the mct balance button is enabled if the txn is a MCT
         self.assertFalse(self.tpanel.can_do_mct_balance)
     
+    def test_change_date(self):
+        # Changing the date no longer calls refresh_repeat_options() on the view (this stuff is now
+        # in schedules)
+        self.tpanel.date = '17/07/2008'
+        self.check_gui_calls(self.tpanel_gui, refresh_repeat_options=0)
+    
 
 class TwoAmountlessEntries(TestCase):
     def setUp(self):

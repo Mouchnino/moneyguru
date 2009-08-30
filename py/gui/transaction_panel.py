@@ -115,9 +115,5 @@ class TransactionPanel(PanelWithTransaction):
     
     @date.setter
     def date(self, value):
-        date = self.app.parse_date(value)
-        if date == self.transaction.date:
-            return
-        self.transaction.date = date
-        self.view.refresh_repeat_options()
+        self.transaction.date = self.app.parse_date(value)
     
