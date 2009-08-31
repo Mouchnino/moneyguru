@@ -34,13 +34,11 @@ class PanelWithTransaction(GUIPanel, Broadcaster, TransactionCompletionMixIn):
         split.amount = amount
         split.memo = memo
         self.transaction.balance(split)
-        self.view.refresh_mct_button()
         self.notify('split_changed')
     
     def delete_split(self, split):
         self.transaction.splits.remove(split)
         self.transaction.balance()
-        self.view.refresh_mct_button()
     
     def new_split(self):
         transaction = self.transaction
@@ -87,6 +85,14 @@ class TransactionPanel(PanelWithTransaction):
     
     def _save(self):
         self.document.change_transaction(self.original, self.transaction)
+    
+    def change_split(self, split, account_name, amount, memo):
+        PanelWithTransaction.change_split(self, split, account_name, amount, memo)
+        self.view.refresh_mct_button()
+    
+    def delete_split(self, split):
+        PanelWithTransaction.delete_split(self, split)
+        self.view.refresh_mct_button()
     
     #--- Public
     def can_load(self):

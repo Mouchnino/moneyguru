@@ -86,6 +86,7 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         self.mainwindow.select_schedule_table()
         self.sctable.select([0])
         self.scpanel.load()
+        self.clear_gui_calls()
     
     def test_attrs(self):
         # The attributes of the panel are correctly set
@@ -110,4 +111,13 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         # To see if the save_edits() worked, we look if the spawns are correct in the ttable
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 3) #stops 2 days after it starts
+    
+    def test_change_and_delete_splits(self):
+        # Don't refesh the view's mct button on split change, it doesn't have such method!
+        self.scsplittable.add()
+        self.scsplittable.edited.memo = 'foo'
+        self.scsplittable.save_edits()
+        self.check_gui_calls(self.scpanel_gui, refresh_mct_button=0)
+        self.scsplittable.delete()
+        self.check_gui_calls(self.scpanel_gui, refresh_mct_button=0)
     
