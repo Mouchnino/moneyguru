@@ -1,4 +1,9 @@
 - date: 2009-08-31
+  version: 1.6.1
+  description: |
+    * Fixed a bug which prevented moneyGuru from loading files with target-less budgets
+    * Fixed a bug preventing schedules' splits from being edited.
+- date: 2009-08-31
   version: 1.6.0
   description: |
     * Revamped the budget system, giving it much more flexibility.
