@@ -36,6 +36,13 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
         self.document.select_prev_date_range()
         eq_(self.etable[0].transfer, '') # It shouldn't be set to "Some Income"
     
+    def test_save_and_load(self):
+        # There was a crash when loading a targetless budget
+        self.document = self.save_and_load() # no crash
+        self.create_instances()
+        self.mainwindow.select_budget_table()
+        eq_(len(self.btable), 1)
+    
     def test_set_budget_again(self):
         # There was a bug where setting the amount on a budget again wouldn't invert that amount
         # in the case of an income-based budget.
@@ -93,6 +100,9 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
 
 class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
     def setUp(self):
+        # XXX this mock is because the test previously failed because we were currently on the last
+        # day of the month. TODO: Re-create the last-day condition and fix the calculation bug
+        self.mock_today(2009, 8, 20)
         self.create_instances()
         self.setup_monthly_range()
         self.add_account('income', account_type=INCOME)

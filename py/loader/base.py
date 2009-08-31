@@ -269,7 +269,7 @@ class Loader(object):
             account = self.accounts.find(info.account)
             if account is None:
                 continue
-            target = self.accounts.find(info.target)
+            target = self.accounts.find(info.target) if info.target else None
             amount = self.parse_amount(info.amount, account.currency)
             budget = Budget(account, target, amount, ref_date)
             self.budgets.append(budget)
