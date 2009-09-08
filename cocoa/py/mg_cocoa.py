@@ -239,13 +239,7 @@ class PyDocument(NSObject):
             return unicode(e)
     
     def saveToFile_(self, filename):
-        try:
-            self.py.save_to_xml(filename)
-        except Exception:
-            logging.exception('An unexpected exception occured')
-            msg = u"An error has occured while saving. Please contact support@hardcoded.net with " \
-                "the content of your Console (/Applications/Utilities/Console)."
-            return msg
+        self.py.save_to_xml(filename)
     
     def saveToQIF_(self, filename):
         self.py.save_to_qif(filename)

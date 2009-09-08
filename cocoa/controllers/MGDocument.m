@@ -135,14 +135,8 @@ http://www.hardcoded.net/licenses/hs_license
                 return NO;
             }
         }
-        error = [py saveToFile:[url path]];
-        if (error == nil)
-            return YES;
-        else
-        {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:error forKey:NSLocalizedFailureReasonErrorKey];
-            *outError = [NSError errorWithDomain:MGErrorDomain code:MGUnknownErrorCode userInfo:userInfo];
-        }
+        [py saveToFile:[url path]];
+        return YES;
     }
     return NO;
 }

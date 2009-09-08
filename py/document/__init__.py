@@ -1079,22 +1079,16 @@ class Document(Broadcaster, Listener):
         fd.close()
     
     def parse_file_for_import(self, filename):
-        try:
-            for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv_.Loader):
-                try:
-                    loader = loaderclass(self.app.default_currency)
-                    loader.parse(filename)
-                    break
-                except FileFormatError:
-                    pass
-            else:
-                # No file fitted
-                raise FileFormatError('%s is of an unknown format.' % filename)
-        except Exception as e:
-            logging.warning('An unexpected error was raised during file load: %r' % e)
-            msg = 'An unexpected error occurred while importing. Please contact support@hardcoded.net'\
-                  ' with the content of your Console (in /Applications/Utilities/Console)'
-            raise FileFormatError(msg)
+        for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv_.Loader):
+            try:
+                loader = loaderclass(self.app.default_currency)
+                loader.parse(filename)
+                break
+            except FileFormatError:
+                pass
+        else:
+            # No file fitted
+            raise FileFormatError('%s is of an unknown format.' % filename)
         self.loader = loader
         if isinstance(self.loader, csv_.Loader):
             self.notify('csv_options_needed')

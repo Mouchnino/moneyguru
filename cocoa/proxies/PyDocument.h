@@ -38,7 +38,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Misc */
 - (void)adjustExampleFile;
 - (NSString *)loadFromFile:(NSString *)path; // Returns a non-nil value if it failed
-- (NSString *)saveToFile:(NSString *)path;
+- (void)saveToFile:(NSString *)path;
 - (void)saveToQIF:(NSString *)path;
 - (NSString *)import:(NSString *)path;
 - (BOOL)isDirty;
