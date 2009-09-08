@@ -24,7 +24,14 @@ http://www.hardcoded.net/licenses/hs_license
 {
     // get flags and strip the lower 16 (device dependant) bits
     // See modifierFlags's doc for details
-    return [self modifierFlags] & 0x00ff;
+    return [self modifierFlags] & NSDeviceIndependentModifierFlagsMask;
+}
+
+- (unsigned int)modifierKeysFlags
+{
+    // This is modifierFlags with only Command, Opt, Ctrl and Shift, without the rest of the flags
+    // to pollute.
+    return [self flags] & (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask);
 }
 
 - (BOOL)isDeleteOrBackspace
@@ -50,6 +57,11 @@ http://www.hardcoded.net/licenses/hs_license
     return [self firstCharacter] == NSBackTabCharacter;
 }
 
+- (BOOL)isSpace
+{
+    return ([self firstCharacter] == 0x20) && (![self flags]);
+}
+
 - (BOOL)isUp
 {
     return [self firstCharacter] == NSUpArrowFunctionKey;
@@ -60,9 +72,14 @@ http://www.hardcoded.net/licenses/hs_license
     return [self firstCharacter] == NSDownArrowFunctionKey;
 }
 
-- (BOOL)isSpace
+- (BOOL)isLeft
 {
-    return ([self firstCharacter] == 0x20) && (![self flags]);
+    return [self firstCharacter] == NSLeftArrowFunctionKey;
+}
+
+- (BOOL)isRight
+{
+    return [self firstCharacter] == NSRightArrowFunctionKey;
 }
 
 @end

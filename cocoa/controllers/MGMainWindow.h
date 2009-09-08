@@ -59,6 +59,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (MGGUIController *)top;
 - (void)setTop:(MGGUIController *)top;
 - (void)animateDateRange:(BOOL)forward;
+- (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 
 /* Actions */
 - (IBAction)delete:(id)sender;

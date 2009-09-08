@@ -11,11 +11,14 @@ http://www.hardcoded.net/licenses/hs_license
 @interface NSEvent(NSEventAdditions)
 - (unichar)firstCharacter;
 - (unsigned int)flags;
+- (unsigned int)modifierKeysFlags;
 - (BOOL)isDeleteOrBackspace;
 - (BOOL)isReturnOrEnter;
 - (BOOL)isTab;
 - (BOOL)isBackTab;
+- (BOOL)isSpace;
 - (BOOL)isUp;
 - (BOOL)isDown;
-- (BOOL)isSpace;
+- (BOOL)isLeft;
+- (BOOL)isRight;
 @end

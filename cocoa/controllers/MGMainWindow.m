@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import "MGConst.h"
 #import "MGUtils.h"
+#import "NSEventAdditions.h"
 
 @implementation MGMainWindow
 
@@ -88,6 +89,14 @@ http://www.hardcoded.net/licenses/hs_license
     [super release];
 }
 
+- (void)keyDown:(NSEvent *)event 
+{
+    if (![self dispatchSpecialKeys:event])
+	{
+        [super keyDown:event];
+	}
+}
+
 /* Private */
 
 - (void)arrangeViews
@@ -142,6 +151,38 @@ http://www.hardcoded.net/licenses/hs_license
     [anim setDelegate:self];
     [anim startAnimation];
 }
+
+- (BOOL)dispatchSpecialKeys:(NSEvent *)event
+{
+    if ([event modifierKeysFlags] == (NSCommandKeyMask | NSShiftKeyMask))
+    {
+        if ([event isLeft])
+        {
+            [self showPreviousView:self];
+            return YES;
+        }
+        else if ([event isRight])
+        {
+            [self showNextView:self];
+            return YES;
+        }
+    }
+    else if ([event modifierKeysFlags] == NSCommandKeyMask)
+    {
+        if ([event isLeft])
+        {
+            [self navigateBack:self];
+            return YES;
+        }
+        else if ([event isRight])
+        {
+            [self showSelectedAccount:self];
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 /* Actions */
 
