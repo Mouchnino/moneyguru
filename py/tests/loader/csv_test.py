@@ -53,6 +53,11 @@ class Pristine(TestCase):
         eq_(txn.splits[1].amount, Amount(100, EUR))
         eq_(txn.splits[0].reference, '2008-0069')
     
+    def test_fortis_with_r_linesep(self):
+        # Same as fortis.csv, but instead of being \r\n lineseps, it's \r only
+        self.loader.parse(self.filepath('csv/fortis_with_r_linesep.csv'))
+        eq_(len(self.loader.lines), 19) # no crash
+    
     def test_lots_of_noise(self):
         # this file has 4 lines of non-separated header (Sniffer doesn't work) and a footer
         self.loader.parse(self.filepath('csv/lots_of_noise.csv'))

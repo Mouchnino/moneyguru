@@ -13,6 +13,9 @@
 import csv
 import logging
 from datetime import datetime
+from StringIO import StringIO
+
+from hsutil.misc import first
 
 from . import base
 from ..exception import FileFormatError, FileLoadError
@@ -39,15 +42,15 @@ class Loader(base.Loader):
         
         # Comment lines can confuse the sniffer. We remove them
         content = infile.read()
-        lines = content.split('\n')
+        sep = first(sep for sep in ['\r\n', '\n', '\r'] if sep in content)
+        lines = content.split(sep)
         stripped_lines = [line for line in lines if not line.strip().startswith('#')]
-        content = '\n'.join(stripped_lines)
         try:
-            dialect = csv.Sniffer().sniff(content)
+            dialect = csv.Sniffer().sniff('\n'.join(stripped_lines))
         except csv.Error:
             raise FileFormatError()
-        infile.seek(0)
-        reader = csv.reader(infile, dialect)
+        fp = StringIO('\n'.join(lines))
+        reader = csv.reader(fp, dialect)
         lines = [decode_line(line) for line in reader if line]
         # complete smaller lines and strip whitespaces
         maxlen = max(len(line) for line in lines)
