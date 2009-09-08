@@ -21,8 +21,8 @@ re_expression = re.compile(r'^[+\-*/()\d\s.]*$')
 re_octal_zero = re.compile(r'(?<![\d.,\w])0(?=\d)')
 # 3 letters (capturing)
 re_currency = re.compile(r'([a-zA-Z]{3})')
-# grouping separator. a dot that has digit before and after *if* the right part is separated by a dot
-re_grouping_sep = re.compile(r'(?<=[\d.])\.(?=\d+?\.\d)')
+# grouping separator. a [.\s,'] that has digit before and after *if* the right part is separated by a dot
+re_grouping_sep = re.compile(r"(?<=[\d.])[.\s,'](?=\d+?\.\d)")
 
 def cmp_wrap(op):
     def wrapper(self, other):
@@ -220,16 +220,13 @@ def parse_amount(string, default_currency=None, with_expression=True):
         else:
             string = re_currency.sub('', string)
     currency = currency or default_currency
-    
+    string = string.replace(',', '.')
+    string = re_grouping_sep.sub('', string)
     if with_expression:
         string = string.replace(' ', '')
         string = re_octal_zero.sub('', string)
         if re_expression.match(string) is None:
-            # These below are rare cases. It should not waste CPU every time parsing goes on.
-            string = string.replace(',', '.')
-            string = re_grouping_sep.sub('', string)
-            if re_expression.match(string) is None:
-                raise ValueError('Invalid expression %r' % string)
+            raise ValueError('Invalid expression %r' % string)
         try:
             value = eval(string)
         except SyntaxError:

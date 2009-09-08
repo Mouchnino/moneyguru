@@ -9,6 +9,8 @@
 
 import operator as op
 
+from nose.tools import eq_
+
 from hsutil.currency import CAD, EUR, PLN, USD, CZK
 from hsutil.testcase import TestCase
 
@@ -207,6 +209,10 @@ class ParseAmount(TestCase):
             self.assertRaises(ValueError, parse_amount, 'open(\'some_important_file\').read()')
         except IOError:
             self.fail('Something is very wrong with parse_amount. You must *not* perform an eval on a string like this.')
+    
+    def test_quote_as_grouping_sep(self):
+        # an amount using quotes as grouping sep is correctly parsed.
+        eq_(parse_amount('1\'234.56', USD), Amount(1234.56, USD))
     
     def test_simple_amounts(self):
         self.assertEqual(parse_amount('1 EUR'), Amount(1, EUR))
