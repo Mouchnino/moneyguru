@@ -35,6 +35,14 @@ class CommonSetup(CommonSetup):
         self.csvopt.set_column_field(5, CSV_DESCRIPTION)
     
 
+class NoSetup(TestCase):
+    def test_invalid_default(self):
+        self.app_gui = ApplicationGUI()
+        self.app_gui.defaults[LAYOUT_PREFERENCE_NAME] = 'invalid'
+        self.app = Application(self.app_gui)
+        self.create_instances() # no crash when CSVOptions is created
+    
+
 class ImportFortisCSV(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

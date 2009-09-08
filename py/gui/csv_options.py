@@ -99,9 +99,9 @@ class CSVOptions(DocumentGUIObject):
         self._target_accounts = []
         self._default_layout = Layout('Default')
         preferences = self.app.get_default(LAYOUT_PREFERENCE_NAME)
-        if preferences:
+        try:    
             self._layouts = [preference2layout(pref) for pref in preferences]
-        else:
+        except Exception: # probably because of corrupted prefs
             self._layouts = []
         self.layout = self._default_layout
     
