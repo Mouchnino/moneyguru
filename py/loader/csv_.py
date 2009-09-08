@@ -44,11 +44,17 @@ class Loader(base.Loader):
         content = infile.read()
         sep = first(sep for sep in ['\r\n', '\n', '\r'] if sep in content)
         lines = content.split(sep)
-        stripped_lines = [line for line in lines if not line.strip().startswith('#')]
+        stripped_lines = [line.strip() for line in lines]
+        stripped_lines = [line for line in lines if line and not line.startswith('#')]
         try:
             dialect = csv.Sniffer().sniff('\n'.join(stripped_lines))
         except csv.Error:
-            raise FileFormatError()
+            # sometimes, it's the footer that plays trick with the sniffer. Let's try again, with
+            # the last line removed
+            try:
+                dialect = csv.Sniffer().sniff('\n'.join(stripped_lines[:-1]))
+            except csv.Error:
+                raise FileFormatError()
         fp = StringIO('\n'.join(lines))
         reader = csv.reader(fp, dialect)
         lines = [decode_line(line) for line in reader if line]

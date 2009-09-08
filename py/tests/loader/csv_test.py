@@ -12,7 +12,6 @@ from datetime import date
 from nose.tools import eq_
 
 from hsutil.currency import USD, EUR
-from hsutil.misc import allsame
 
 from ..base import TestCase
 from ...exception import FileFormatError
@@ -58,10 +57,18 @@ class Pristine(TestCase):
         self.loader.parse(self.filepath('csv/fortis_with_r_linesep.csv'))
         eq_(len(self.loader.lines), 19) # no crash
     
+    def test_unquoted_with_footer(self):
+        # It seems that the sniffer has problems with regular csv files that end with a non-data
+        # footer. This is strange, since the "lots_of_noise" file has way more "noise" than this
+        # file and the sniffer still gets it correctly.
+        self.loader.parse(self.filepath('csv/unquoted_with_footer.csv'))
+        eq_(len(self.loader.lines), 3) # no crash
+    
     def test_lots_of_noise(self):
-        # this file has 4 lines of non-separated header (Sniffer doesn't work) and a footer
+        # this file has 4 lines of non-separated header (Sniffer doesn't work) and a footer.
+        # The number of column must be according to the *data* columns
         self.loader.parse(self.filepath('csv/lots_of_noise.csv'))
-        self.assertTrue(allsame(len(line) for line in self.loader.lines))
+        assert all(len(line) == 6 for line in self.loader.lines)
     
     def test_no_transactions(self):
         # a Deutsch Bank export without transactions in it. It would raise an error during sniffing
