@@ -34,8 +34,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)dealloc
 {
     // NSLog(@"Document dealloc");
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud synchronize];
     [py release];
     [super dealloc];
 }
@@ -77,6 +75,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)close
 {
     [[self py] close];
+    // This must not happen in dealloc, because when quitting the app, the dealloc method might not be called
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
     [super close];
 }
 
