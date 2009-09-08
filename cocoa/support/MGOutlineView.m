@@ -21,7 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
     }
 }
 
-/* NSResponder */
+/* Overrides */
 
 - (void)keyDown:(NSEvent *)event 
 {
@@ -29,6 +29,17 @@ http://www.hardcoded.net/licenses/hs_license
     {
         [super keyDown:event];
     }
+}
+
+- (BOOL)shouldEditTableColumn:(NSTableColumn *)column row:(int)row
+{
+    BOOL result = [super shouldEditTableColumn:column row:row];
+    if (!result)
+        return result;
+    id delegate = [self delegate];
+    if ([delegate respondsToSelector:@selector(outlineView:shouldEditTableColumn:item:)])
+        return [delegate outlineView:self shouldEditTableColumn:column item:[self itemAtRow:row]];
+    return YES;
 }
 
 /* Notifications & Delegate */

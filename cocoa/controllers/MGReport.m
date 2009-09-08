@@ -41,7 +41,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* NSOutlineView data source */
 
-- (id)outlineView:(NSOutlineView *)theOutlineView objectValueForTableColumn:(NSTableColumn *)column byItem:(id)item
+- (id)outlineView:(NSOutlineView *)aOutlineView objectValueForTableColumn:(NSTableColumn *)column byItem:(id)item
 {
     NSIndexPath *path = item;
     
@@ -60,7 +60,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [super outlineView:outlineView objectValueForTableColumn:column byItem:item];
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+- (BOOL)outlineView:(NSOutlineView *)aOutlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
     NSIndexPath *path = [items objectAtIndex:0];
     if ([self boolProperty:@"is_account" valueAtPath:path])
@@ -73,7 +73,7 @@ http://www.hardcoded.net/licenses/hs_license
     return NO;
 }
 
-- (NSDragOperation)outlineView:(NSOutlineView *)theOutlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item 
+- (NSDragOperation)outlineView:(NSOutlineView *)aOutlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item 
             proposedChildIndex:(int)index
 {
     NSIndexPath *destPath = item;
@@ -94,7 +94,7 @@ http://www.hardcoded.net/licenses/hs_license
     return NSDragOperationNone;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(int)index
+- (BOOL)outlineView:(NSOutlineView *)aOutlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(int)index
 {
     NSPasteboard *pboard = [info draggingPasteboard];
     NSIndexPath *destPath = item;
@@ -109,7 +109,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* NSOutlineView delegate */
 
-- (void)outlineView:(NSOutlineView *)theOutlineView willDisplayCell:(id)theCell 
+- (void)outlineView:(NSOutlineView *)aOutlineView willDisplayCell:(id)theCell 
      forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     NSString *column = [tableColumn identifier];
@@ -192,10 +192,18 @@ http://www.hardcoded.net/licenses/hs_license
     }
 }
 
-- (BOOL)outlineView:(NSOutlineView *)theOutlineView shouldSelectItem:(id)item
+- (BOOL)outlineView:(NSOutlineView *)aOutlineView shouldSelectItem:(id)item
 {
     NSIndexPath *path = item;
     return ![self boolProperty:@"is_blank" valueAtPath:path];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)aOutlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+    NSIndexPath *path = item;
+    BOOL isTotal = [self boolProperty:@"is_total" valueAtPath:path];
+    BOOL isType = [self boolProperty:@"is_type" valueAtPath:path];
+    return !isTotal && !isType;
 }
 
 /* delegate */
