@@ -15,6 +15,7 @@ from hsutil.currency import Currency
 from hsutil.misc import nonone, flatten
 
 from ..const import REPEAT_NEVER
+from ..exception import FileFormatError
 from ..model.account import (Account, Group, AccountList, GroupList, ASSET, LIABILITY, INCOME,
     EXPENSE)
 from ..model.amount import parse_amount
@@ -148,8 +149,11 @@ class Loader(object):
     #--- Public
     def parse(self, filename):
         """Parses 'filename' and raises FileFormatError if appropriate."""
-        with open(filename, 'r') as infile:
-            self._parse(infile)
+        try:
+            with open(filename, 'r') as infile:
+                self._parse(infile)
+        except IOError:
+            raise FileFormatError()
     
     @staticmethod
     def parse_amount(string, currency):

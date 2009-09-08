@@ -120,9 +120,9 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         self.assertEqual(list(self.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
     
     def test_load_inexistant(self):
-        """Raise IOError when filename doesn't exist"""
+        # Raise FileFormatError when filename doesn't exist
         filename = op.join(self.tmpdir(), 'does_not_exist.xml')
-        self.assertRaises(IOError, self.document.load_from_xml, filename)
+        self.assertRaises(FileFormatError, self.document.load_from_xml, filename)
     
     def test_load_invalid(self):
         """Raises FileFormatError, which gives a message kind of like: <filename> is not a 
