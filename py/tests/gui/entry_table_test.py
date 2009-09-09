@@ -516,6 +516,27 @@ class SplitTransaction(TestCase):
         self.assertEqual(self.etable.edited.transfer, '')
     
 
+class TwoSplitsInTheSameAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('first')
+        self.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
+        self.tpanel.load()
+        self.stable.select([0])
+        self.stable.selected_row.debit = '20'
+        self.stable.save_edits()
+        self.stable.select([2])
+        self.stable.selected_row.account = 'first'
+        self.stable.save_edits()
+        self.tpanel.save()
+    
+    def test_delete_both_entries(self):
+        # There would be a crash when deleting two entries belonging to the same txn
+        self.etable.select([0, 1])
+        self.etable.delete() # no crash
+        eq_(len(self.etable), 0)
+    
+
 class WithPreviousEntry(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

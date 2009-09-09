@@ -16,7 +16,7 @@ from itertools import dropwhile
 from hsutil import io
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
-from hsutil.misc import nonone, flatten, allsame, first
+from hsutil.misc import nonone, flatten, allsame, first, dedupe
 
 from ..const import (NOEDIT, REPEAT_NEVER, UNRECONCILIATION_CONTINUE,
     UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE)
@@ -629,7 +629,7 @@ class Document(Broadcaster, Listener):
         self._perform_action(prepare, perform)
     
     def delete_entries(self, entries):
-        transactions = [e.transaction for e in entries]
+        transactions = dedupe(e.transaction for e in entries)
         self.delete_transactions(transactions)
     
     def move_entries(self, entries, to_entry):
