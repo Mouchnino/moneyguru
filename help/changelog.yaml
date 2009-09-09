@@ -1,7 +1,15 @@
+- date: 2009-09-09
+  version: 1.6.2
+  description: |
+    * Fixed bugs preventing some CSV files to be imported.
+    * Fixed a bug sometimes causing preferences not to be saved.
+    * Fixed crashes happening during edition in Net Worth and Profit & Loss sheets.
+    * Fixed crashes happening on startup due to corrupted preferences.
+    * Re-enabled arrow based shortcuts (they don't conflict with text based ones anymore).
 - date: 2009-08-31
   version: 1.6.1
   description: |
-    * Fixed a bug which prevented moneyGuru from loading files with target-less budgets
+    * Fixed a bug which prevented moneyGuru from loading files with target-less budgets.
     * Fixed a bug preventing schedules' splits from being edited.
 - date: 2009-08-31
   version: 1.6.0
