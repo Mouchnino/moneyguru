@@ -19,7 +19,7 @@ from nose.tools import nottest, istest, eq_
 from hsutil.path import Path
 from hsutil.testcase import TestCase
 
-from ..app import Application
+from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..const import UNRECONCILIATION_CONTINUE
 from ..document import Document
 from ..exception import FileFormatError
@@ -78,7 +78,8 @@ def log(method):
 class ApplicationGUI(CallLogger):
     def __init__(self):
         CallLogger.__init__(self)
-        self.defaults = {}
+        # We don't want the autosave thread to mess up with testunits
+        self.defaults = {AUTOSAVE_INTERVAL_PREFERENCE: 0}
     
     def get_default(self, key): # We don't want to log this one. It disturbs other test and is pointless to log
         return self.defaults.get(key)
@@ -467,7 +468,7 @@ class TestCase(TestCase):
         self.document.save_to_xml(filepath)
         self.document.close()
         if newapp:
-            newapp = Application(CallLogger(), default_currency=self.app.default_currency)
+            newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
         else:
             newapp = self.app
         newdoc = Document(DocumentGUI(), newapp)
@@ -571,7 +572,7 @@ class TestQIFExportImportMixin(TestAppCompareMixin):
     def test_qif_export_import(self):
         filepath = op.join(self.tmpdir(), 'foo.qif')
         self.document.save_to_qif(filepath)
-        newapp = Application(CallLogger(), default_currency=self.app.default_currency)
+        newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
         newdoc = Document(DocumentGUI(), newapp)
         iwin = ImportWindow(self.iwin_gui, newdoc)
         iwin.connect()
@@ -599,14 +600,14 @@ class CommonSetup(object):
         self.add_entry('1/1/2008')
         self.document.date_range = MonthRange(date(2008, 2, 1))
     
-    def setup_scheduled_transaction(self, start_date=date(2008, 9, 13), description='foobar', 
+    def setup_scheduled_transaction(self, start_date='13/09/2008', description='foobar', 
             account=None, debit=None, repeat_type_index=0, repeat_every=1, stop_date=None):
         # 0 = daily, 1 = weekly, etc..
         # This setup also wraps a monthly range around the newly created schedule
-        self.document.date_range = MonthRange(start_date)
+        self.document.date_range = MonthRange(self.app.parse_date(start_date))
         self.mainwindow.select_schedule_table()
         self.scpanel.new()
-        self.scpanel.start_date = start_date.strftime('%d/%m/%Y')
+        self.scpanel.start_date = start_date
         self.scpanel.description = description
         self.scpanel.repeat_type_index = repeat_type_index
         self.scpanel.repeat_every = repeat_every

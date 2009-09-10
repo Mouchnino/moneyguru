@@ -18,7 +18,7 @@ from hsutil import io
 from hsutil.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil.decorators import log_calls
 
-from .base import CallLogger, TestCase, TestSaveLoadMixin
+from .base import ApplicationGUI, TestCase, TestSaveLoadMixin
 from .model.currency_test import FakeServer
 from ..app import Application
 from ..model import currency
@@ -39,13 +39,13 @@ class NoSetup(TestCase):
     def test_cache_path_is_auto_created(self):
         """the cache_path directory is automatically created"""
         cache_path = self.tmppath() + 'foo/bar'
-        app = Application(CallLogger(), cache_path=cache_path)
+        app = Application(ApplicationGUI(), cache_path=cache_path)
         self.assertTrue(io.exists(cache_path))
     
     def test_cache_path_is_none(self):
         """currency.initialize_db() is called with :memory: when cache_path is None"""
         self.mock(currency, 'initialize_db', log_calls(currency.initialize_db))
-        app = Application(CallLogger()) # default cache_path is None
+        app = Application(ApplicationGUI()) # default cache_path is None
         expected = [
             {'path': ':memory:'}
         ]
@@ -55,7 +55,7 @@ class NoSetup(TestCase):
         """currency.initialize_db() is called with cache_path/currency.db when cache_path is not None"""
         cache_path = self.tmppath()
         self.mock(currency, 'initialize_db', log_calls(currency.initialize_db))
-        app = Application(CallLogger(), cache_path=cache_path)
+        app = Application(ApplicationGUI(), cache_path=cache_path)
         expected = [
             {'path': cache_path + 'currency.db'}
         ]
@@ -63,7 +63,7 @@ class NoSetup(TestCase):
     
     def test_default_currency(self):
         """It's possible to specify a default currency at startup"""
-        self.app = Application(CallLogger(), default_currency=PLN)
+        self.app = Application(ApplicationGUI(), default_currency=PLN)
         self.create_instances()
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.app.default_currency, PLN)
@@ -234,7 +234,7 @@ class DifferentCurrencies(TestCase, TestSaveLoadMixin):
     Mixed with TestSaveLoadMixin to make sure currency information is correctly saved/loaded
     """
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=CAD)
+        self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         self.add_account('first account')
         self.add_account('second account', USD)
@@ -260,7 +260,7 @@ class ThreeCurrenciesTwoEntriesSaveLoad(TestCase):
     and then loaded (The goal of this is to test that moneyguru ensures it got the rates it needs).
     """ 
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=CAD)
+        self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         self.add_account('first account')
         self.add_account('second account', USD)

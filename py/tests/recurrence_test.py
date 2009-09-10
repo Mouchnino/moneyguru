@@ -7,8 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from datetime import date
-
 from nose.tools import eq_
 
 from .base import TestCase, TestSaveLoadMixin, CommonSetup
@@ -342,7 +340,7 @@ class OneWeeklyRecurrentTransaction(TestCase, CommonSetup):
 class OneMonthlyRecurrentTransactionOnThirtyFirst(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(start_date=date(2008, 8, 31), repeat_type_index=2) # monthly
+        self.setup_scheduled_transaction(start_date='31/08/2008', repeat_type_index=2) # monthly
     
     def test_use_last_day_in_invalid_months(self):
         self.document.select_next_date_range() # sept
@@ -357,7 +355,7 @@ class OneMonthlyRecurrentTransactionOnThirtyFirst(TestCase, CommonSetup):
 class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(start_date=date(2008, 2, 29), repeat_type_index=3) # yearly
+        self.setup_scheduled_transaction(start_date='29/02/2008', repeat_type_index=3) # yearly
     
     def test_use_last_day_in_invalid_months(self):
         self.document.select_year_range()
@@ -375,7 +373,7 @@ class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase, CommonSetup):
 class TransactionRecurringOnThirdMondayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(start_date=date(2008, 9, 15), repeat_type_index=4) # week no in month
+        self.setup_scheduled_transaction(start_date='15/09/2008', repeat_type_index=4) # week no in month
     
     def test_year_range(self):
         # The next date range also has the correct recurrent txns
@@ -390,7 +388,7 @@ class TransactionRecurringOnThirdMondayOfTheMonth(TestCase, CommonSetup):
 class TransactionRecurringOnFifthTuesdayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(start_date=date(2008, 9, 30), repeat_type_index=4) # week no in month
+        self.setup_scheduled_transaction(start_date='30/09/2008', repeat_type_index=4) # week no in month
     
     def test_next_date_range(self):
         # There's not a month with a fifth tuesday until december
@@ -406,7 +404,7 @@ class TransactionRecurringOnFifthTuesdayOfTheMonth(TestCase, CommonSetup):
 class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(start_date=date(2008, 9, 30), repeat_type_index=5) # last week in month
+        self.setup_scheduled_transaction(start_date='30/09/2008', repeat_type_index=5) # last week in month
     
     def test_next_date_range(self):
         # next month has no 5th tuesday, so use the last one

@@ -12,7 +12,7 @@ import os.path as op
 
 from hsutil.currency import PLN, CAD
 
-from .base import CallLogger, TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
+from .base import ApplicationGUI, TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
 from ..app import Application
 from ..exception import FileFormatError
 from ..model.date import MonthRange, YearRange
@@ -88,7 +88,7 @@ class QIFImport(TestCase):
     """One account named 'Account 1' and then an parse_file_for_import() call for the 'checkbook.qif' test file
     """
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=PLN)
+        self.app = Application(ApplicationGUI(), default_currency=PLN)
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.add_account('Account 1')

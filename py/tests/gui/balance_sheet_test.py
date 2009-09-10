@@ -14,7 +14,7 @@ from nose.tools import eq_
 
 from hsutil.currency import Currency, USD, CAD
 
-from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, CommonSetup
+from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...document import Document
 from ...gui.balance_sheet import BalanceSheet
@@ -418,7 +418,7 @@ class AccountsAndEntries(_AccountsAndEntries):
 
 class MultipleCurrencies(TestCase):
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=CAD)
+        self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         self.document.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
@@ -511,7 +511,7 @@ class Liability(TestCase):
 
 class LoadFileBeforeCreatingInstances(TestCase):
     def setUp(self):
-        self.app = Application(CallLogger())
+        self.app = Application(ApplicationGUI())
         self.document = Document(DocumentGUI(), self.app)
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.document.load_from_xml(self.filepath('xml/moneyguru.xml'))

@@ -11,7 +11,7 @@ from nose.tools import eq_
 
 from hsutil.currency import CAD, USD
 
-from ..base import TestCase, CommonSetup, CallLogger
+from ..base import TestCase, CommonSetup, ApplicationGUI
 from ...app import Application
 from ...model.account import INCOME, EXPENSE
 from ...model.date import MonthRange
@@ -130,7 +130,7 @@ class AccountsAndEntries(TestCase, CommonSetup):
 
 class MultipleCurrencies(TestCase):
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=CAD)
+        self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         self.document.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
@@ -164,7 +164,7 @@ class MultipleCurrencies(TestCase):
 
 class MultipleCurrenciesOverTwoMonths(TestCase):
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=CAD)
+        self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         self.document.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))

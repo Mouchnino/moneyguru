@@ -13,7 +13,7 @@ from datetime import date
 
 from hsutil.currency import Currency, USD, CAD
 
-from ..base import TestCase, CallLogger, CommonSetup
+from ..base import TestCase, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...gui.pie_chart import SLICE_COUNT
 from ...model.account import LIABILITY, INCOME
@@ -231,7 +231,7 @@ class DifferentDateRanges(TestCase, CommonSetup):
 
 class MultipleCurrencies(TestCase):
     def setUp(self):
-        self.app = Application(CallLogger(), default_currency=CAD)
+        self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         self.add_account('USD income', account_type=INCOME, currency=USD)

@@ -17,8 +17,7 @@ from nose.tools import eq_
 from hsutil import io
 from hsutil.currency import EUR
 
-from .base import (TestCase, CommonSetup, TestQIFExportImportMixin, TestSaveLoadMixin, CallLogger,
-    ApplicationGUI)
+from .base import TestCase, CommonSetup, TestQIFExportImportMixin, TestSaveLoadMixin, ApplicationGUI
 from .. import app
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
@@ -59,14 +58,14 @@ class NoSetup(TestCase):
         assert self.app.dont_unreconcile
     
     def test_can_use_another_amount_format(self):
-        self.app = Application(CallLogger(), decimal_sep=',', grouping_sep=' ')
+        self.app = Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' ')
         self.create_instances()
         self.add_account()
         self.add_entry(increase='1234567890.99')
         self.assertEqual(self.etable[0].increase, '1 234 567 890,99')
     
     def test_can_use_another_date_format(self):
-        self.app = Application(CallLogger(), date_format='MM-dd-yyyy')
+        self.app = Application(ApplicationGUI(), date_format='MM-dd-yyyy')
         self.create_instances()
         self.add_account()
         self.add_entry(date='2-15-2008')

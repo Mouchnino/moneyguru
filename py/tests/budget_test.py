@@ -10,7 +10,7 @@
 
 from nose.tools import eq_
 
-from ..model.account import INCOME
+from ..model.account import INCOME, EXPENSE
 from .base import TestCase, CommonSetup
 
 class OneIncomeWithBudget(TestCase, CommonSetup):
@@ -135,4 +135,20 @@ class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
         self.mainwindow.select_transaction_table()
         # first txn is the entry on 01/07
         eq_(self.ttable[1].date, '31/12/2009')
+    
+
+class ScheduledTxnAndBudget(TestCase, CommonSetup):
+    def setUp(self):
+        self.mock_today(2009, 9, 10)
+        self.create_instances()
+        self.document.select_month_range()
+        self.add_account('account', account_type=EXPENSE)
+        self.setup_scheduled_transaction(start_date='10/09/2009', account='account', debit='1',
+            repeat_type_index=2) # monthly
+        self.add_budget('account', None, '10') # monthly
+    
+    def test_schedule_affects_budget(self):
+        # schedule spawns affect the budget spawns
+        self.mainwindow.select_transaction_table()
+        eq_(self.ttable[1].amount, '9.00') # 1$ has been removed from the budgeted 10
     
