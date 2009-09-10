@@ -154,33 +154,52 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event
 {
+    SEL action = nil;
     if ([event modifierKeysFlags] == (NSCommandKeyMask | NSShiftKeyMask))
     {
         if ([event isLeft])
-        {
-            [self showPreviousView:self];
-            return YES;
-        }
+            action = @selector(showPreviousView:);
         else if ([event isRight])
-        {
-            [self showNextView:self];
-            return YES;
-        }
+            action = @selector(showNextView:);
     }
     else if ([event modifierKeysFlags] == NSCommandKeyMask)
     {
         if ([event isLeft])
-        {
-            [self navigateBack:self];
-            return YES;
-        }
+            action = @selector(navigateBack:);
         else if ([event isRight])
-        {
-            [self showSelectedAccount:self];
-            return YES;
-        }
+            action = @selector(showSelectedAccount:);
     }
-    return NO;
+    if ((action != nil) && ([self validateAction:action]))
+        [self performSelector:action withObject:self];
+    return action != nil;
+}
+
+- (BOOL)validateAction:(SEL)action
+{
+    if (action == @selector(addGroup:))
+        return (top == balanceSheet) || (top == incomeStatement);
+    else if ((action == @selector(moveUp:)) ||
+             (action == @selector(moveDown:)) ||
+             (action == @selector(makeScheduleFromSelected:)))
+        return (top == transactionTable) || (top == entryTable);
+    else if (action == @selector(toggleEntriesReconciled:))
+        return (top == entryTable) && [[[self document] py] inReconciliationMode];
+    else if (action == @selector(showNextView:))
+        return (top != budgetTable);
+    else if (action == @selector(showPreviousView:))
+        return (top != balanceSheet);
+    else if (action == @selector(showEntryTable:))
+        return [py canSelectEntryTable];
+    else if (action == @selector(showSelectedAccount:))
+        return [top respondsToSelector:@selector(canShowSelectedAccount)] && [(id)top canShowSelectedAccount];
+    else if (action == @selector(navigateBack:))
+        return (top == entryTable);
+    else if (action == @selector(toggleReconciliationMode:))
+        return (top == entryTable) && [[[self document] py] shownAccountIsBalanceSheet];
+    else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
+        || (action == @selector(selectTodayDateRange:)))
+        return [py canNavigateDateRange];
+    return YES;
 }
 
 
@@ -533,32 +552,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)aItem
 {
-    SEL action = [aItem action];
-    PyDocument *pyDoc = [[self document] py];
-    if (action == @selector(addGroup:))
-        return (top == balanceSheet) || (top == incomeStatement);
-    else if ((action == @selector(moveUp:)) ||
-             (action == @selector(moveDown:)) ||
-             (action == @selector(makeScheduleFromSelected:)))
-        return (top == transactionTable) || (top == entryTable);
-    else if (action == @selector(toggleEntriesReconciled:))
-        return (top == entryTable) && [[[self document] py] inReconciliationMode];
-    else if (action == @selector(showNextView:))
-        return (top != budgetTable);
-    else if (action == @selector(showPreviousView:))
-        return (top != balanceSheet);
-    else if (action == @selector(showEntryTable:))
-        return [py canSelectEntryTable];
-    else if (action == @selector(showSelectedAccount:))
-        return [top respondsToSelector:@selector(canShowSelectedAccount)] && [(id)top canShowSelectedAccount];
-    else if (action == @selector(navigateBack:))
-        return (top == entryTable);
-    else if (action == @selector(toggleReconciliationMode:))
-        return (top == entryTable) && [pyDoc shownAccountIsBalanceSheet];
-    else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
-        || (action == @selector(selectTodayDateRange:)))
-        return [py canNavigateDateRange];
-    return YES;
+    return [self validateAction:[aItem action]];
 }
 
 /* Callbacks for python */
