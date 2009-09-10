@@ -30,6 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)newLayout:(id)sender;
 - (IBAction)renameSelectedLayout:(id)sender;
 - (IBAction)selectLayout:(id)sender;
+- (IBAction)selectTarget:(id)sender;
 - (IBAction)setColumnField:(id)sender;
 - (IBAction)toggleLineExclusion:(id)sender;
 

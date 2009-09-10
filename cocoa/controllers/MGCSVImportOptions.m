@@ -37,7 +37,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)continueImport:(id)sender
 {
-    [[self py] setSelectedTargetIndex:[targetSelector indexOfSelectedItem]];
     [[self py] continueImport];
 }
 
@@ -71,6 +70,12 @@ http://www.hardcoded.net/licenses/hs_license
         [[self py] selectLayout:nil];
     else
         [[self py] selectLayout:[item title]];
+}
+
+- (IBAction)selectTarget:(id)sender
+{
+    NSLog([NSString stringWithFormat:@"foobar%d",[targetSelector indexOfSelectedItem]]);
+    [[self py] setSelectedTargetIndex:[targetSelector indexOfSelectedItem]];
 }
 
 - (IBAction)setColumnField:(id)sender
