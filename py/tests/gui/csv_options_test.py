@@ -10,12 +10,14 @@
 
 from datetime import date
 
+from nose.tools import eq_
+
 from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...exception import FileLoadError
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
 from ...loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_REFERENCE)
+    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_REFERENCE)
 from ...model.date import YearRange
 
 class CommonSetup(CommonSetup):
@@ -346,4 +348,23 @@ class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
         self.setup_import_fortis()
         self.csvopt.select_layout('fortis')
         self.assertEqual(self.csvopt.columns[6], CSV_TRANSFER)
+    
+
+class IncreaseDecrease(TestCase):
+    def setUp(self):
+        # This file has two columns for amounts: increase and decrease. To make the matter worse,
+        # it has a negative value in the decrease column, which must be ignored
+        self.create_instances()
+        self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv'))
+        self.csvopt.set_column_field(0, CSV_DATE)
+        self.csvopt.set_column_field(1, CSV_INCREASE)
+        self.csvopt.set_column_field(2, CSV_DECREASE)
+        self.csvopt.set_line_excluded(0, True)
+    
+    def test_continue_import(self):
+        self.csvopt.continue_import()
+        eq_(len(self.itable), 3)
+        eq_(self.itable[0].amount_import, '10.00')
+        eq_(self.itable[1].amount_import, '-10.00')
+        eq_(self.itable[2].amount_import, '-10.00')
     

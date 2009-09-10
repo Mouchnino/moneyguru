@@ -13,7 +13,7 @@ from hsutil.misc import first, nonone
 
 from ..exception import FileLoadError
 from ..loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_CURRENCY, CSV_REFERENCE)
+    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE)
 from .base import DocumentGUIObject
 
 LAYOUT_PREFERENCE_NAME = 'CSVLayouts'
@@ -25,6 +25,8 @@ FIELD_NAMES = {
     CSV_CHECKNO: 'Check #',
     CSV_TRANSFER: 'Transfer',
     CSV_AMOUNT: 'Amount',
+    CSV_INCREASE: 'Increase',
+    CSV_DECREASE: 'Decrease',
     CSV_CURRENCY: 'Currency',
     CSV_REFERENCE: 'Transaction ID',
 }

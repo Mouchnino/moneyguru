@@ -25,6 +25,8 @@ CSV_PAYEE = 'payee'
 CSV_CHECKNO = 'checkno'
 CSV_TRANSFER = 'transfer'
 CSV_AMOUNT = 'amount'
+CSV_INCREASE = 'increase'
+CSV_DECREASE = 'decrease'
 CSV_CURRENCY = 'currency'
 CSV_REFERENCE = 'reference'
 
@@ -64,7 +66,10 @@ class Loader(base.Loader):
         self.lines = lines
     
     def _load(self):
-        if not (CSV_DATE in self.column_indexes and CSV_AMOUNT in self.column_indexes):
+        ci = self.column_indexes
+        hasdate = CSV_DATE in ci
+        hasamount = (CSV_AMOUNT in ci) or (CSV_INCREASE in ci and CSV_DECREASE in ci)
+        if not (hasdate and hasamount):
             raise FileLoadError('The Date and Amount columns must be set')
         self.account_info.name = 'CSV Import'
         date_index = self.column_indexes[CSV_DATE]
@@ -82,9 +87,17 @@ class Loader(base.Loader):
             self.start_transaction()
             for attr, index in self.column_indexes.items():
                 value = line[index]
+                print attr, value
                 if attr == CSV_DATE:
                     value = datetime.strptime(value, date_format).date()
-                elif isinstance(value, basestring):
+                elif attr == CSV_INCREASE:
+                    attr = CSV_AMOUNT
+                elif attr == CSV_DECREASE:
+                    attr = CSV_AMOUNT
+                    if value.strip() and not value.startswith('-'):
+                        value = '-' + value
+                if isinstance(value, basestring):
                     value = value.strip()
-                setattr(self.transaction_info, attr, value)
+                if value:
+                    setattr(self.transaction_info, attr, value)
     
