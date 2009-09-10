@@ -1,3 +1,10 @@
+- date: 2009-09-10
+  version: 1.6.3
+  description: |
+    * Added Increase and Decrease column types in the CSV import dialog.
+    * Fixed a glitch causing the Target Account selector to be flaky in the CSV import dialog.
+    * Fixed crashes with the newly re-enabled arrow based shortcuts.
+    * Fixed a bug causing scheduled transactions not to be counted in budgets.
 - date: 2009-09-09
   version: 1.6.2
   description: |

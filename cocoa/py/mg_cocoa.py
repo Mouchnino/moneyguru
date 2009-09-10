@@ -54,6 +54,7 @@ from moneyguru.loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHEC
 from moneyguru.model.date import parse_date, clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
+import csv
 from moneyguru import const
 from moneyguru.document import completion, undo
 from moneyguru.gui import base, chart, graph, report, table, tree
