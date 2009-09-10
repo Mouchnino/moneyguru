@@ -15,7 +15,7 @@ from hsutil.currency import USD, EUR
 
 from ..base import TestCase
 from ...exception import FileFormatError
-from ...loader.csv_ import (Loader, CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
+from ...loader.csv import (Loader, CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
     CSV_AMOUNT, CSV_CURRENCY, CSV_REFERENCE)
 from ...model.amount import Amount
 

@@ -12,7 +12,7 @@ from itertools import dropwhile
 from hsutil.misc import first, nonone
 
 from ..exception import FileLoadError
-from ..loader.csv_ import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
+from ..loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
     CSV_AMOUNT, CSV_CURRENCY, CSV_REFERENCE)
 from .base import DocumentGUIObject
 

@@ -49,7 +49,7 @@ from moneyguru.gui.split_table import SplitTable
 from moneyguru.gui.transaction_panel import TransactionPanel
 from moneyguru.gui.transaction_print import TransactionPrint
 from moneyguru.gui.transaction_table import TransactionTable
-from moneyguru.loader.csv_ import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
+from moneyguru.loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
     CSV_AMOUNT, CSV_CURRENCY, CSV_REFERENCE)
 from moneyguru.model.date import parse_date, clean_format
 

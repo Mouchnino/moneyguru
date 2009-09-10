@@ -21,7 +21,7 @@ from hsutil.misc import nonone, flatten, allsame, first, dedupe
 from ..const import (NOEDIT, REPEAT_NEVER, UNRECONCILIATION_CONTINUE,
     UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE)
 from ..exception import FileFormatError, OperationAborted
-from ..loader import csv_, qif, ofx, native
+from ..loader import csv, qif, ofx, native
 from ..model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
 from ..model.amount import Amount
 from ..model.budget import Budget, BudgetList
@@ -1079,7 +1079,7 @@ class Document(Broadcaster, Listener):
         fd.close()
     
     def parse_file_for_import(self, filename):
-        for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv_.Loader):
+        for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv.Loader):
             try:
                 loader = loaderclass(self.app.default_currency)
                 loader.parse(filename)
@@ -1090,7 +1090,7 @@ class Document(Broadcaster, Listener):
             # No file fitted
             raise FileFormatError('%s is of an unknown format.' % filename)
         self.loader = loader
-        if isinstance(self.loader, csv_.Loader):
+        if isinstance(self.loader, csv.Loader):
             self.notify('csv_options_needed')
         else:
             self.load_parsed_file_for_import()

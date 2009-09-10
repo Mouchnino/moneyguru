@@ -7,8 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-# The csv_ name is because when trying to import the csv from python's stdlib, all hell breaks
-# loose, *even* with absolute_import
+from __future__ import absolute_import
 
 import csv
 import logging

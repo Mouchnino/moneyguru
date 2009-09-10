@@ -14,7 +14,7 @@ from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...exception import FileLoadError
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
-from ...loader.csv_ import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
+from ...loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
     CSV_AMOUNT, CSV_REFERENCE)
 from ...model.date import YearRange
 
