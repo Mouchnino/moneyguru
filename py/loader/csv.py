@@ -87,7 +87,6 @@ class Loader(base.Loader):
             self.start_transaction()
             for attr, index in self.column_indexes.items():
                 value = line[index]
-                print attr, value
                 if attr == CSV_DATE:
                     value = datetime.strptime(value, date_format).date()
                 elif attr == CSV_INCREASE:

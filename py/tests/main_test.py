@@ -1717,7 +1717,6 @@ class ExampleDocumentLoadTest(TestCase):
     def test_adjust_example_file(self):
         # When loading as an example file, an offset is correctly applied to transactions.
         self.document.adjust_example_file()
-        print [(row.date, row.recurrent) for row in self.ttable]
         self.mainwindow.select_transaction_table()
         # There are 3 normal txns (the last one is deleted because it's in the future)
         # and 1 schedule spawns (only future spawns are kept)
