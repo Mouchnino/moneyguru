@@ -14,8 +14,6 @@ import logging
 from datetime import datetime
 from StringIO import StringIO
 
-from hsutil.misc import first
-
 from . import base
 from ..exception import FileFormatError, FileLoadError
 
@@ -43,8 +41,8 @@ class Loader(base.Loader):
         
         # Comment lines can confuse the sniffer. We remove them
         content = infile.read()
-        sep = first(sep for sep in ['\r\n', '\n', '\r'] if sep in content)
-        lines = content.split(sep)
+        content = content.replace('\r\n', '\n').replace('\r', '\n')
+        lines = content.split('\n')
         stripped_lines = [line.strip() for line in lines]
         stripped_lines = [line for line in lines if line and not line.startswith('#')]
         try:

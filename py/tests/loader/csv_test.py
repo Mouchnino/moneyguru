@@ -57,12 +57,15 @@ class Pristine(TestCase):
         self.loader.parse(self.filepath('csv/fortis_with_r_linesep.csv'))
         eq_(len(self.loader.lines), 19) # no crash
     
-    def test_unquoted_with_footer(self):
-        # It seems that the sniffer has problems with regular csv files that end with a non-data
-        # footer. This is strange, since the "lots_of_noise" file has way more "noise" than this
-        # file and the sniffer still gets it correctly.
-        self.loader.parse(self.filepath('csv/unquoted_with_footer.csv'))
-        eq_(len(self.loader.lines), 3) # no crash
+    def test_mixed_linesep(self):
+        # A file with the header line ending with \r\n, but the rest of the lines ending with \n
+        # this used to mix moneyGuru up and it wouldn't have the correct field sep (it would use
+        # the comma from the amounts). This is really a weird case, for which I couldn't figure
+        # the exact cause (it's somewhere in the sniffer). Oh, and watch out if you edit the csv
+        # because the linesep will likely be made uniform by the editor (I used a hex editor to 
+        # create this one).
+        self.loader.parse(self.filepath('csv/mixed_linesep.csv'))
+        eq_(len(self.loader.lines[0]), 3) # The correct fieldsep is found, thus all the fields are there.
     
     def test_lots_of_noise(self):
         # this file has 4 lines of non-separated header (Sniffer doesn't work) and a footer.
@@ -73,6 +76,13 @@ class Pristine(TestCase):
     def test_no_transactions(self):
         # a Deutsch Bank export without transactions in it. It would raise an error during sniffing
         self.assertRaises(FileFormatError, self.loader.parse, self.filepath('csv/no_transaction.csv'))
+    
+    def test_unquoted_with_footer(self):
+        # It seems that the sniffer has problems with regular csv files that end with a non-data
+        # footer. This is strange, since the "lots_of_noise" file has way more "noise" than this
+        # file and the sniffer still gets it correctly.
+        self.loader.parse(self.filepath('csv/unquoted_with_footer.csv'))
+        eq_(len(self.loader.lines), 3) # no crash
     
     def test_with_comments(self):
         # the 'comments.csv' file has lines starting with '#' which the parser had problems with.
