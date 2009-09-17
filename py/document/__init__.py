@@ -170,8 +170,26 @@ class Document(Broadcaster, Listener):
     def _delete_account(self, account, reassign_to=None):
         action = Action('Remove account')
         action.delete_account(account)
+        affected_schedules = [s for s in self.schedules if account in s.ref.affected_accounts()]
+        map(action.change_schedule, affected_schedules)
+        affected_budgets = [b for b in self.budgets if b.account is account or b.target is account]
+        if account.is_income_statement_account() and reassign_to is None:
+            action.deleted_budgets |= set(affected_budgets)
+        else:
+            map(action.change_budget, affected_budgets)
         self._undoer.record(action)
         self.transactions.reassign_account(account, reassign_to)
+        for schedule in affected_schedules:
+            schedule.ref.reassign_account(account, reassign_to)
+            schedule.reset_spawn_cache()
+        for budget in affected_budgets:
+            if budget.account is account:
+                if reassign_to is None:
+                    self.budgets.remove(budget)
+                else:
+                    budget.account = reassign_to
+            elif budget.target is account:
+                budget.target = reassign_to
         self.accounts.remove(account)
         self._cook()
         self.notify('account_deleted')

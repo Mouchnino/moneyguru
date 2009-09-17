@@ -132,6 +132,15 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.assertEqual(self.ttable[3].date, '22/09/2008')
         self.assertEqual(self.ttable[3].description, 'changed again')
     
+    def test_delete_account(self):
+        # Deleting an account affecting a schedule properly update that schedule
+        self.mainwindow.select_balance_sheet()
+        self.bsheet.selected = self.bsheet.assets[0]
+        self.bsheet.delete()
+        self.arpanel.ok()
+        self.mainwindow.select_schedule_table()
+        eq_(self.sctable[0].to, '')
+    
     def test_delete_spawn(self):
         # deleting a spawn only deletes this instance
         self.ttable.select([1])

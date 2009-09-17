@@ -629,7 +629,8 @@ class ReconciledSplitsWithTransfersAndReferences(TestCase):
 class ScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction()
+        self.add_account('account')
+        self.setup_scheduled_transaction(account='account')
         self.mainwindow.select_schedule_table()
         self.sctable.select([0])
     
@@ -639,6 +640,13 @@ class ScheduledTransaction(TestCase, CommonSetup):
         self.scpanel.description = 'changed'
         self.scpanel.repeat_every = 12
         self.scpanel.save()
+    
+    @save_state_then_verify
+    def test_delete_account(self):
+        self.mainwindow.select_balance_sheet()
+        self.bsheet.selected = self.bsheet.assets[0]
+        self.bsheet.delete()
+        self.arpanel.ok()
     
     @save_state_then_verify
     def test_delete_schedule(self):
@@ -657,6 +665,13 @@ class Budget(TestCase, CommonSetup):
         self.bpanel.load()
         self.bpanel.repeat_every = 12
         self.bpanel.save()
+    
+    @save_state_then_verify
+    def test_delete_account(self):
+        self.mainwindow.select_income_statement()
+        self.istatement.selected = self.istatement.expenses[0]
+        self.istatement.delete()
+        self.arpanel.ok()
     
     @save_state_then_verify
     def test_delete_budget(self):

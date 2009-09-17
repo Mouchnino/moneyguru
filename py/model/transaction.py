@@ -245,7 +245,7 @@ class Entry(object):
         self.balance_with_budget = balance_with_budget
     
     def __repr__(self):
-        return '<Entry %r>' % self.description
+        return '<Entry %r %r>' % (self.date, self.description)
     
     def change(self, date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT):
         self.transaction.change(date=date, description=description, payee=payee, checkno=checkno)

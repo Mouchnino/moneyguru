@@ -97,6 +97,47 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         # The balance of the budget entry has a correctly decremented balance (the budget is an expense).
         eq_(self.etable[0].balance, '-100.00')
     
+    def test_delete_account(self):
+        # When deleting an income or expense account, delete all budgets associated with it as well.
+        self.mainwindow.select_income_statement()
+        self.istatement.selected = self.istatement.expenses[0]
+        self.istatement.delete()
+        self.arpanel.ok() # don't reassign
+        self.mainwindow.select_budget_table()
+        eq_(len(self.btable), 0) # the budget has been removed
+    
+    def test_delete_account_and_reassign(self):
+        # When reassigning an account on deletion, change budgets instead of deleting it.
+        self.add_account('other expense', account_type=EXPENSE)
+        self.mainwindow.select_income_statement()
+        self.istatement.selected = self.istatement.expenses[1] # Some Expense
+        self.istatement.delete()
+        self.arpanel.account_index = 2 # other expense
+        self.arpanel.ok()
+        self.mainwindow.select_budget_table()
+        eq_(self.btable[0].account, 'other expense')
+    
+    def test_delete_target(self):
+        # When deleting the target account, budgets having this account as their target have it
+        # changed to None
+        self.mainwindow.select_balance_sheet()
+        self.bsheet.selected = self.bsheet.assets[0]
+        self.bsheet.delete()
+        self.arpanel.ok()
+        self.mainwindow.select_budget_table()
+        eq_(self.btable[0].target, '') # been changed to None
+    
+    def test_delete_target_and_reassign(self):
+        # When reassigning an account on deletion, change budgets' target.
+        self.add_account('other asset')
+        self.mainwindow.select_balance_sheet()
+        self.bsheet.selected = self.bsheet.assets[1] # some asset
+        self.bsheet.delete()
+        self.arpanel.account_index = 1 # other asset
+        self.arpanel.ok()
+        self.mainwindow.select_budget_table()
+        eq_(self.btable[0].target, 'other asset')
+    
 
 class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
     def setUp(self):

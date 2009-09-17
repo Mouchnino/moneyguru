@@ -7,6 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from ..model.account import sort_accounts
 from .base import DocumentGUIObject
 
 class AccountReassignPanel(DocumentGUIObject):
@@ -14,6 +15,7 @@ class AccountReassignPanel(DocumentGUIObject):
         self.account = self.document.selected_account
         accounts = self.document.accounts[:]
         accounts.remove(self.account)
+        sort_accounts(accounts)
         self.available_accounts = [a.name for a in accounts]
         self.available_accounts.insert(0, 'No Account')
         self._accounts = accounts

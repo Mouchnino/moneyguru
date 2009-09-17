@@ -67,7 +67,7 @@ class Action(object):
     
     def delete_account(self, account):
         self.deleted_accounts.add(account)
-        transactions = set(e.transaction for e in account.entries)
+        transactions = set(e.transaction for e in account.entries if not isinstance(e.transaction, Spawn))
         transactions = set(t for t in transactions if not t.affected_accounts() - set([account]))
         self.deleted_transactions |= transactions
         self.change_splits(e.split for e in account.entries)
