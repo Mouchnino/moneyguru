@@ -1,3 +1,10 @@
+- date: 2009-09-17
+  version: 1.6.4
+  description: |
+    * Fixed bug preventing some CSV files to be imported.
+    * Fixed crashes during budget creation.
+    * Fixed bugs sometimes causing budgets and schedules corruption during account deletion.
+    * Fixed bugs preventing account deletion's undo to restore budgets and schedules properly.
 - date: 2009-09-10
   version: 1.6.3
   description: |
