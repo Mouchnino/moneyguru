@@ -9,8 +9,11 @@
 
 from datetime import date
 
+from nose.tools import eq_, assert_raises
+
 from hsutil.currency import USD
 
+from ...exception import OperationAborted
 from ..base import TestCase
 
 class Pristine(TestCase):
@@ -22,8 +25,8 @@ class Pristine(TestCase):
         self.tpanel.date
     
     def test_can_load(self):
-        """When there is no selection, can_load() is False"""
-        self.assertFalse(self.tpanel.can_load())
+        # When there's no selection, loading the panel raises OperationAborted
+        assert_raises(OperationAborted, self.tpanel.load)
     
 
 class OneEntry(TestCase):
@@ -53,11 +56,11 @@ class OneEntry(TestCase):
         self.assertEqual(self.tpanel.checkno, '42')
     
     def test_can_load_selected_transaction(self):
-        """can_load is based on the last selection of either the etable ot the ttable"""
+        # Whether load() is possible is based on the last selection of either the etable ot the ttable
         self.etable.select([])
         self.mainwindow.select_transaction_table()
         self.ttable.select([0])
-        self.assertTrue(self.tpanel.can_load())
+        self.tpanel.load() # no OperationAborted
     
     def test_completion(self):
         """Here, we just want to make sure that complete() responds. We don't want to re-test 
@@ -95,17 +98,16 @@ class OneEntry(TestCase):
     
     def test_values(self):
         """The values of the panel are correct"""
-        self.assertTrue(self.tpanel.can_load())
-        self.tpanel.load()
+        self.tpanel.load() # no OperationAborted
         self.assertEqual(self.tpanel.date, '06/07/2008')
         self.assertEqual(self.tpanel.description, 'description')
         self.assertEqual(self.tpanel.payee, 'payee')
         self.assertEqual(self.tpanel.checkno, '42')
     
     def test_values_after_deselect(self):
-        """When there is no selection, can_load() is False"""
+        # When there is no selection, load() is not possible
         self.etable.select([])
-        self.assertFalse(self.tpanel.can_load())
+        assert_raises(OperationAborted, self.tpanel.load)
     
 
 class OneAmountlessEntryPanelLoaded(TestCase):
@@ -150,11 +152,6 @@ class TwoAmountlessEntries(TestCase):
         self.add_account()
         self.add_entry(date='06/07/2008', description='desc1', payee='payee1', checkno='42')
         self.add_entry(date='07/07/2008', description='desc2', payee='payee2', checkno='43')
-    
-    def test_can_load_with_multiple_selection(self):
-        """can_load() returns False if there is nore than one txn selected"""
-        self.etable.select([0, 1])
-        self.assertFalse(self.tpanel.can_load())
     
     def test_loads_last_selected_transaction(self):
         """the tpanel also works with the ttable. If the ttable is the last to have had a selection,

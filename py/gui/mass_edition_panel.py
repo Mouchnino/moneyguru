@@ -12,6 +12,7 @@ from datetime import date
 from hsutil.currency import Currency
 from hsutil.misc import allsame, nonone, flatten
 
+from ..exception import OperationAborted
 from .base import GUIPanel
 from .complete import TransactionCompletionMixIn
 
@@ -22,8 +23,10 @@ class MassEditionPanel(GUIPanel, TransactionCompletionMixIn):
     
     #--- Override
     def _load(self):
-        self._init_fields()
         transactions = self.document.selected_transactions
+        if len(transactions) < 2:
+            raise OperationAborted()
+        self._init_fields()
         self.can_change_accounts_and_amount = all(len(t.splits) == 2 for t in transactions)
         first = transactions[0]
         if allsame(t.date for t in transactions):
@@ -98,10 +101,6 @@ class MassEditionPanel(GUIPanel, TransactionCompletionMixIn):
         self._to = ''
         self._amount = 0
         self._currency_index = -1
-    
-    #--- Public
-    def can_load(self):
-        return len(self.document.selected_transactions) > 1
     
     #--- Properties
     @property

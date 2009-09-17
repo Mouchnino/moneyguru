@@ -145,19 +145,15 @@ class GUIPanel(DocumentGUIObject):
     def _save(self):
         raise NotImplementedError()
     
-    def can_load(self):
-        return True
-    
     def load(self):
+        # If the panel can't load, OperationAborted will be raised. If a message to the user is
+        # required, the OperationAborted exception will have a non-empty message
         self.view.pre_load()
-        try:
-            self._load()
-        except OperationAborted:
-            pass
-        else:
-            self.view.post_load()
+        self._load()
+        self.view.post_load()
     
     def new(self):
+        # Same as in load()
         self.view.pre_load()
         self._new()
         self.view.post_load()

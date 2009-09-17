@@ -7,9 +7,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from nose.tools import eq_, assert_raises
+
 from hsutil.currency import Currency, CAD
 
 from ..base import TestCase, CommonSetup
+from ...exception import OperationAborted
 from ...model.account import ASSET, LIABILITY, INCOME, EXPENSE
 
 class CommonSetup(CommonSetup):
@@ -29,10 +32,10 @@ class SomeAccount(TestCase):
         self.clear_gui_calls()
     
     def test_can_load(self):
-        """The panel can only load if the selected node is an non-special account"""
-        self.assertTrue(self.apanel.can_load())
+        # Make sure that OperationAborted is raised when appropriate
+        self.apanel.load() # no OperationAborted
         self.bsheet.selected = self.bsheet.assets
-        self.assertFalse(self.apanel.can_load())
+        assert_raises(OperationAborted, self.apanel.load)
     
     def test_change_currency_index(self):
         """Changing currency_index correctly updates the currency"""

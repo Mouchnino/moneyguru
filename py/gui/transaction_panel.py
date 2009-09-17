@@ -12,8 +12,8 @@ from datetime import date
 from hsutil.notify import Broadcaster
 from hsutil.misc import first
 
+from ..exception import OperationAborted
 from ..model.account import Account, INCOME, EXPENSE
-from ..model.budget import BudgetSpawn
 from ..model.transaction import Split, Transaction
 from .base import GUIPanel
 from .complete import TransactionCompletionMixIn
@@ -75,9 +75,10 @@ class PanelWithTransaction(GUIPanel, Broadcaster, TransactionCompletionMixIn):
 class TransactionPanel(PanelWithTransaction):
     #--- Override
     def _load(self):
-        self.document.stop_edition()
         original = self.document.selected_transaction
-        assert original is not None            
+        if original is None:
+            raise OperationAborted()
+        self.document.stop_edition()
         self.transaction = original.replicate(link_splits=True)
         self.original = original
         self.view.refresh_mct_button()
@@ -95,10 +96,6 @@ class TransactionPanel(PanelWithTransaction):
         self.view.refresh_mct_button()
     
     #--- Public
-    def can_load(self):
-        txns = self.document.selected_transactions
-        return len(txns) == 1 and not isinstance(txns[0], BudgetSpawn)
-    
     def mct_balance(self):
         """Balances the mct by using xchange rates. The currency of the new split is the currency of
         the currently selected split.

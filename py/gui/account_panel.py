@@ -9,7 +9,7 @@
 
 from hsutil.currency import Currency
 
-from ..exception import DuplicateAccountNameError
+from ..exception import DuplicateAccountNameError, OperationAborted
 from ..model.account import ASSET, TYPE_ORDER
 from .base import GUIPanel
 
@@ -20,9 +20,10 @@ class AccountPanel(GUIPanel):
     
     #--- Override
     def _load(self):
-        self._init_fields()
         account = self.document.selected_account
-        assert account is not None
+        if account is None:
+            raise OperationAborted()
+        self._init_fields()
         self.name = account.name
         self.type = account.type
         self.currency = account.currency
@@ -43,10 +44,6 @@ class AccountPanel(GUIPanel):
         self.type = ASSET
         self._type_index = 0
         self.currency = None
-    
-    def can_load(self):
-        account = self.document.selected_account
-        return account is not None
     
     #--- Properties
     @property

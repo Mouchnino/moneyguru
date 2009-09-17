@@ -7,10 +7,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from ..exception import OperationAborted
+from ..model.budget import BudgetSpawn
 from .base import DocumentGUIObject
 
 LINE_GRAPH, BAR_GRAPH = range(2)
-
 
 class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
@@ -68,20 +69,21 @@ class MainWindow(DocumentGUIObject):
     
     #--- Public
     def edit_item(self):
-        if self.top in (self.bsheet, self.istatement):
-            if self.apanel.can_load():
+        try:
+            if self.top in (self.bsheet, self.istatement):
                 self.apanel.load()
-        elif self.top in (self.etable, self.ttable):
-            if self.tpanel.can_load():
-                self.tpanel.load()
-            elif self.mepanel.can_load():
-                self.mepanel.load()
-        elif self.top is self.sctable:
-            if self.scpanel.can_load():
+            elif self.top in (self.etable, self.ttable):
+                editable_txns = [txn for txn in self.document.selected_transactions if not isinstance(txn, BudgetSpawn)]
+                if len(editable_txns) > 1:
+                    self.mepanel.load()
+                elif len(editable_txns) == 1:
+                    self.tpanel.load()
+            elif self.top is self.sctable:
                 self.scpanel.load()
-        elif self.top is self.btable:
-            if self.bpanel.can_load():
+            elif self.top is self.btable:
                 self.bpanel.load()
+        except OperationAborted:
+            pass
     
     def delete_item(self):
         if self.top in (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.btable):

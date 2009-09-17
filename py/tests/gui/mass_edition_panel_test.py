@@ -9,17 +9,20 @@
 
 from datetime import date
 
+from nose.tools import eq_, assert_raises
+
 from hsutil.currency import EUR
 
 from ..base import TestCase
+from ...exception import OperationAborted
 
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
     
     def test_can_load(self):
-        """When there is no selection, can_load() is False"""
-        self.assertFalse(self.mepanel.can_load())
+        # When there's no selection, loading the panel raises OperationAborted
+        assert_raises(OperationAborted, self.mepanel.load)
     
 
 class TwoTransactions(TestCase):
@@ -32,18 +35,15 @@ class TwoTransactions(TestCase):
         self.ttable.save_edits()
     
     def test_can_load(self):
-        """When there is only one txn selected, can_load() is False"""
-        self.assertFalse(self.mepanel.can_load())
+        # When there is only one txn selected, loading the panel raises OperationAborted
+        assert_raises(OperationAborted, self.mepanel.load)
     
     def test_can_load_after_selection(self):
-        """When there is more than one txn selected, can_load() is True"""
+        # When there is more than one txn selected, load() can be called
+        # This test has a collateral, which is to make sure that mepanel doesn't have a problem
+        # loading txns with splits with None accounts.
         self.ttable.select([0, 1])
-        self.assertTrue(self.mepanel.can_load())
-    
-    def test_load(self):
-        """No crash occurs when loading totally empty txns"""
-        # Previously, None accounts in the splits were a problem.
-        self.mepanel.load() # no crash
+        self.mepanel.load() # No OperationAborted
     
 
 class TwoTransactionsDifferentValues(TestCase):
@@ -266,11 +266,11 @@ class TwoTransactionsOneSplit(TestCase):
         row.debit = '24'
         self.stable.save_edits()
         self.tpanel.save()
+        self.etable.select([0, 1])
         self.mepanel.load()
     
     def test_attributes(self):
         self.assertFalse(self.mepanel.can_change_accounts_and_amount)
-    
     
 
 class TwoForeignTransactions(TestCase):
