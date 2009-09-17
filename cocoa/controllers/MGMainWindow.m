@@ -624,6 +624,13 @@ http://www.hardcoded.net/licenses/hs_license
     [entryTable showBalanceGraph];
 }
 
+- (void)showMessage:(NSString *)aMessage
+{
+    NSAlert *a = [NSAlert alertWithMessageText:aMessage defaultButton:nil alternateButton:nil
+        otherButton:nil informativeTextWithFormat:@""];
+    [a beginSheetModalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+}
+
 - (void)showScheduleTable
 {
     [self setTop:scheduleTable];

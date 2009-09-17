@@ -8,6 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from datetime import date
 
 from ..exception import OperationAborted
@@ -39,6 +41,9 @@ class BudgetPanel(GUIPanel, PanelWithScheduleMixIn):
         self.schedule = self.budget # for PanelWithScheduleMixIn
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(budget.repeat_type)
         self._accounts = [a for a in self.document.accounts if a.is_income_statement_account()]
+        if not self._accounts:
+            msg = "Income/Expense accounts must be created before budgets can be set."
+            raise OperationAborted(msg)
         sort_accounts(self._accounts)
         self._targets = [a for a in self.document.accounts if a.is_balance_sheet_account()]
         sort_accounts(self._targets)

@@ -1192,6 +1192,9 @@ class PyMainWindow(PyListener):
     def show_income_statement(self):
         self.cocoa.showIncomeStatement()
     
+    def show_message(self, message):
+        self.cocoa.showMessage_(message)
+    
     def show_schedule_table(self):
         self.cocoa.showScheduleTable()
     

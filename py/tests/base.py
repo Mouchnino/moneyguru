@@ -111,6 +111,7 @@ class MainWindowGUI(CallLogger):
     def __init__(self, etable, ttable, sctable, btable, bsheet, istatement, balgraph, bargraph, nwgraph, pgraph, 
                  efbar, tfbar, apie, lpie, ipie, epie, cdrpanel, arpanel):
         CallLogger.__init__(self)
+        self.messages = []
         self.etable = etable
         self.ttable = ttable
         self.sctable = sctable
@@ -173,6 +174,10 @@ class MainWindowGUI(CallLogger):
         self.bargraph.disconnect()
         self.balgraph.connect()
         self._last_shown = self.balgraph
+    
+    @log
+    def show_message(self, message):
+        self.messages.append(message)
     
     @log
     def show_schedule_table(self):

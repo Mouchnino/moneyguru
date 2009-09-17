@@ -13,6 +13,19 @@ from nose.tools import eq_
 from ...model.account import INCOME, LIABILITY
 from ..base import TestCase, CommonSetup
 
+class OneAssetAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('asset')
+    
+    def test_can_create_new(self):
+        # When trying to create a new budget in a document without income/expense accounts, an
+        # error message is displayed explaining that it's not possible.
+        self.mainwindow.select_budget_table()
+        self.mainwindow.new_item()
+        eq_(len(self.mainwindow_gui.messages), 1) # a message has been shown
+    
+
 class OneExpenseWithBudget(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

@@ -110,14 +110,18 @@ class MainWindow(DocumentGUIObject):
             self.select_income_statement()
     
     def new_item(self):
-        if self.top in (self.bsheet, self.istatement):
-            self.top.add_account()
-        elif self.top in (self.etable, self.ttable):
-            self.top.add()
-        elif self.top is self.sctable:
-            self.scpanel.new()
-        elif self.top is self.btable:
-            self.bpanel.new()
+        try:
+            if self.top in (self.bsheet, self.istatement):
+                self.top.add_account()
+            elif self.top in (self.etable, self.ttable):
+                self.top.add()
+            elif self.top is self.sctable:
+                self.scpanel.new()
+            elif self.top is self.btable:
+                self.bpanel.new()
+        except OperationAborted as e:
+            if e.message:
+                self.view.show_message(e.message)
     
     def new_group(self):
         if self.top in (self.bsheet, self.istatement):
