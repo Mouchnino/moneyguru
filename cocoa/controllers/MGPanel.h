@@ -22,8 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)loadFields;
 - (void)saveFields;
 /* Public */
-- (BOOL)canLoad;
-- (void)load;
 - (void)save;
 /* Actions */
 - (IBAction)cancel:(id)sender;

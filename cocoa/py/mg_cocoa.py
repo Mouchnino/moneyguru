@@ -540,13 +540,6 @@ class PyReport(PyOutline):
     
 
 class PyPanel(PyCompletion):
-    @objc.signature('i@:')
-    def canLoadPanel(self):
-        return self.py.can_load()
-    
-    def loadPanel(self): # if we use "load", pyobjc complains
-        self.py.load()
-    
     def savePanel(self):
         self.py.save()
     

@@ -44,16 +44,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Public */
-- (BOOL)canLoad
-{
-    return [[self py] canLoadPanel];
-}
-
-- (void)load
-{
-    [[self py] loadPanel];
-}
-
 - (void)save
 {
     [[self py] savePanel];

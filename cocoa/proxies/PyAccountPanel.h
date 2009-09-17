@@ -19,7 +19,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setCurrencyIndex:(int)index;
 
 - (NSArray *)availableCurrencies;
-- (BOOL)canLoadPanel;
-- (void)loadPanel;
 - (void)savePanel;
 @end

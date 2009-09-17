@@ -10,7 +10,5 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyCompletion.h"
 
 @interface PyPanel : PyCompletion {}
-- (BOOL)canLoadPanel;
-- (void)loadPanel;
 - (void)savePanel;
 @end
