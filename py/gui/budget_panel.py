@@ -21,6 +21,9 @@ class BudgetPanel(GUIPanel, PanelWithScheduleMixIn):
     def _load(self):
         self._load_budget(self.document.selected_budget)
     
+    def _new(self):
+        self._load_budget(Budget(None, None, 0, date.today()))
+    
     def _save(self):
         self.budget.repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
         self.budget.account = self._accounts[self.account_index]
@@ -45,13 +48,6 @@ class BudgetPanel(GUIPanel, PanelWithScheduleMixIn):
         self.account_index = self._accounts.index(budget.account) if budget.account is not None else 0
         self.target_index = self._targets.index(budget.target)
         self.view.refresh_repeat_every()
-    
-    #--- Public
-    def new(self):
-        self.view.pre_load()
-        budget = Budget(None, None, 0, date.today())
-        self._load_budget(budget)
-        self.view.post_load()
     
     #--- Properties
     @property

@@ -139,6 +139,9 @@ class GUIPanel(DocumentGUIObject):
     def _load(self):
         raise NotImplementedError()
     
+    def _new(self):
+        raise NotImplementedError()
+    
     def _save(self):
         raise NotImplementedError()
     
@@ -153,6 +156,11 @@ class GUIPanel(DocumentGUIObject):
             pass
         else:
             self.view.post_load()
+    
+    def new(self):
+        self.view.pre_load()
+        self._new()
+        self.view.post_load()
     
     def save(self):
         self.view.pre_save()
