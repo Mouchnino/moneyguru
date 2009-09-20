@@ -9,7 +9,6 @@
 
 NOEDIT = object()
 
-REPEAT_NEVER = 'never'
 REPEAT_DAILY = 'daily'
 REPEAT_WEEKLY = 'weekly'
 REPEAT_MONTHLY = 'monthly'

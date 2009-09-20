@@ -13,8 +13,8 @@ from calendar import monthrange
 
 from hsutil.misc import nonone
 
-from ..const import (REPEAT_NEVER, REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, 
-    REPEAT_WEEKDAY, REPEAT_WEEKDAY_LAST)
+from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY,
+    REPEAT_WEEKDAY_LAST)
 from .date import (inc_day, inc_week, inc_month, inc_year, inc_weekday_in_month,
     inc_last_weekday_in_month)
 from .transaction import Transaction
@@ -69,8 +69,9 @@ class Spawn(Transaction):
     
 class Recurrence(object):
     def __init__(self, ref, repeat_type, repeat_every):
-        assert repeat_type in [REPEAT_NEVER, REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, 
-            REPEAT_YEARLY, REPEAT_WEEKDAY, REPEAT_WEEKDAY_LAST]
+        if repeat_type not in RTYPE2INCFUNC:
+            # invalid repeat type, default to monthly
+            repeat_type = REPEAT_MONTHLY
         self.ref = ref
         self._repeat_type = repeat_type
         self._repeat_every = repeat_every

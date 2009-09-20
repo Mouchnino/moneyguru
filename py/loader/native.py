@@ -10,7 +10,6 @@
 from datetime import datetime
 import xml.etree.cElementTree as ET
 
-from ..const import REPEAT_NEVER, REPEAT_MONTHLY
 from ..exception import FileFormatError
 from ..model.amount import parse_amount
 from .base import SplitInfo, TransactionInfo
@@ -79,7 +78,7 @@ class Loader(base.Loader):
             self.flush_transaction()
         for recurrence_element in root.getiterator('recurrence'):
             attrib = recurrence_element.attrib
-            self.recurrence_info.repeat_type = attrib.get('type', REPEAT_NEVER)
+            self.recurrence_info.repeat_type = attrib.get('type')
             self.recurrence_info.repeat_every = int(attrib.get('every', '1'))
             try:
                 self.recurrence_info.stop_date = datetime.strptime(attrib['stop_date'], '%Y-%m-%d').date()
@@ -106,7 +105,7 @@ class Loader(base.Loader):
         for budget_element in root.getiterator('budget'):
             attrib = budget_element.attrib
             self.budget_info.account = attrib.get('account')
-            self.budget_info.repeat_type = attrib.get('type', REPEAT_MONTHLY)
+            self.budget_info.repeat_type = attrib.get('type')
             self.budget_info.target = attrib.get('target')
             self.budget_info.amount = attrib.get('amount')
             self.flush_budget()

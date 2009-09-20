@@ -14,7 +14,6 @@ import re
 from hsutil.currency import Currency
 from hsutil.misc import nonone, flatten
 
-from ..const import REPEAT_NEVER
 from ..exception import FileFormatError
 from ..model.account import (Account, Group, AccountList, GroupList, ASSET, LIABILITY, INCOME,
     EXPENSE)
@@ -342,7 +341,7 @@ class SplitInfo(object):
 
 class RecurrenceInfo(object):
     def __init__(self):
-        self.repeat_type = REPEAT_NEVER
+        self.repeat_type = None
         self.repeat_every = 1
         self.stop_date = None
         self.date2exception = {}
@@ -350,7 +349,7 @@ class RecurrenceInfo(object):
         self.transaction_info = TransactionInfo()
     
     def is_valid(self):
-        return self.repeat_type != REPEAT_NEVER and self.transaction_info.is_valid()
+        return self.transaction_info.is_valid()
     
 
 class BudgetInfo(object):
