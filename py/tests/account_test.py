@@ -10,6 +10,8 @@
 
 import os.path as op
 
+from nose.tools import eq_
+
 from hsutil.currency import EUR
 
 from .base import TestCase, TestSaveLoadMixin
@@ -231,11 +233,20 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         self.create_instances()
         self.add_group('group')
         self.add_account(group_name='group')
-        # The account is selected
+        self.mainwindow.select_balance_sheet()
+    
+    def test_change_account_type(self):
+        # When changing the account type through apanel, an account under a group wouldn't want to
+        # leave its group, thus refusing to go to its real type's base node.
+        self.bsheet.selected = self.bsheet.assets[0][0]
+        self.apanel.load()
+        self.apanel.type_index = 1 # liability
+        self.apanel.save()
+        eq_(len(self.bsheet.assets[0]), 2) # group is empty (2 is for the total nodes)
+        eq_(len(self.bsheet.liabilities), 3) # the account is in liabilities
     
     def test_delete_account(self):
         """It's possible to delete an account that is inside a user created group"""
-        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0][0]
         self.bsheet.delete()
         self.assertEqual(self.bsheet.assets[0].children_count, 2) # total + blank
@@ -244,7 +255,6 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         """Deleteing a group with an account in it removes the group and put the account back at the
         base group level
         """
-        self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
         self.assertFalse(self.bsheet.assets[0].is_group)
@@ -253,7 +263,6 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         """Moving the account in another account base group does not result in a crash"""
         # Previously, the edit system was working with None values to indicate "no edition", which
         # made it impossible to set the group to None.
-        self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0, 0], [1])
         self.assertEqual(self.bsheet.get_node([0, 0]).children_count, 2) # 1 total node, 1 blank node
         self.assertEqual(self.bsheet.get_node([1]).children_count, 3) # 1 total node, 1 blank node

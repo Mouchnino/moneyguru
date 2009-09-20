@@ -373,8 +373,9 @@ class Document(Broadcaster, Listener):
         action.change_accounts([account])
         if name is not NOEDIT:
             self.accounts.set_account_name(account, name)
-        if type is not NOEDIT:
+        if (type is not NOEDIT) and (type != account.type):
             account.type = type
+            account.group = None
         if currency is not NOEDIT:
             account.currency = currency
         if group is not NOEDIT:
