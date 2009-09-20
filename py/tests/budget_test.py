@@ -11,7 +11,7 @@
 from nose.tools import eq_
 
 from ..model.account import INCOME, EXPENSE
-from .base import TestCase, CommonSetup
+from .base import TestCase, CommonSetup, TestSaveLoadMixin
 
 class OneIncomeWithBudget(TestCase, CommonSetup):
     def setUp(self):
@@ -157,7 +157,8 @@ class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
         eq_(self.istatement.income[0].budgeted, '175.00')
     
 
-class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
+class YearBudgetWithEntryBeforeCurrentMonth(TestCase, TestSaveLoadMixin):
+    # TestSaveLoadMixin: to make sure that non-monthly budgets are correctly saved
     def setUp(self):
         self.create_instances()
         self.mock_today(2009, 8, 24)

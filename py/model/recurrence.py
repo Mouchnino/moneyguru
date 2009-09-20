@@ -69,6 +69,8 @@ class Spawn(Transaction):
     
 class Recurrence(object):
     def __init__(self, ref, repeat_type, repeat_every):
+        assert repeat_type in [REPEAT_NEVER, REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, 
+            REPEAT_YEARLY, REPEAT_WEEKDAY, REPEAT_WEEKDAY_LAST]
         self.ref = ref
         self._repeat_type = repeat_type
         self._repeat_every = repeat_every

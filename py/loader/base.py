@@ -275,7 +275,7 @@ class Loader(object):
                 continue
             target = self.accounts.find(info.target) if info.target else None
             amount = self.parse_amount(info.amount, account.currency)
-            budget = Budget(account, target, amount, ref_date)
+            budget = Budget(account, target, amount, ref_date, repeat_type=info.repeat_type)
             self.budgets.append(budget)
         self.oven.cook(datetime.date.min, until_date=None)
         Currency.get_rates_db().ensure_rates(start_date, [x.code for x in currencies])
@@ -358,6 +358,7 @@ class BudgetInfo(object):
         self.account = account
         self.target = target
         self.amount = amount
+        self.repeat_type = None
     
     def is_valid(self):
         return self.account and self.amount

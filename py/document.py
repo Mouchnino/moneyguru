@@ -1039,6 +1039,7 @@ class Document(Broadcaster, Listener):
             budget_element = ET.SubElement(root, 'budget')
             attrib = budget_element.attrib
             attrib['account'] = budget.account.name
+            attrib['type'] = budget.repeat_type
             attrib['amount'] = unicode(budget.amount)
             if budget.target is not None:
                 attrib['target'] = budget.target.name

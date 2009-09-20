@@ -18,7 +18,7 @@
 
 from datetime import date
 
-from hsutil.misc import extract, first
+from hsutil.misc import extract
 
 from ..const import REPEAT_MONTHLY
 from .amount import prorate_amount
@@ -30,13 +30,13 @@ class BudgetSpawn(Spawn):
     is_budget = True
 
 class Budget(Recurrence):
-    def __init__(self, account, target, amount, ref_date):
+    def __init__(self, account, target, amount, ref_date, repeat_type=REPEAT_MONTHLY):
         self.account = account
         self.target = target
         self.amount = amount
         self._previous_spawns = []
         ref = Transaction(ref_date)
-        Recurrence.__init__(self, ref, REPEAT_MONTHLY, 1)
+        Recurrence.__init__(self, ref, repeat_type, 1)
     
     def __repr__(self):
         return '<Budget %r %r %r>' % (self.account, self.target, self.amount)
