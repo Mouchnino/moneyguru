@@ -8,7 +8,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import datetime
-import logging
 import time
 import xml.etree.cElementTree as ET
 from itertools import dropwhile
@@ -16,22 +15,20 @@ from itertools import dropwhile
 from hsutil import io
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
-from hsutil.misc import nonone, flatten, allsame, first, dedupe
+from hsutil.misc import nonone, flatten, allsame, dedupe
 
-from ..const import (NOEDIT, REPEAT_NEVER, UNRECONCILIATION_CONTINUE,
-    UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE)
-from ..exception import FileFormatError, OperationAborted
-from ..loader import csv, qif, ofx, native
-from ..model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
-from ..model.amount import Amount
-from ..model.budget import Budget, BudgetList
-from ..model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
+from .const import NOEDIT, UNRECONCILIATION_CONTINUE, UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE
+from .exception import FileFormatError, OperationAborted
+from .loader import csv, qif, ofx, native
+from .model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
+from .model.budget import BudgetList
+from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     CustomDateRange, format_date, inc_month)
-from ..model.oven import Oven
-from ..model.recurrence import Recurrence, Spawn, REPEAT_MONTHLY
-from ..model.transaction import Transaction, Entry
-from ..model.transaction_list import TransactionList
-from .undo import Undoer, Action
+from .model.oven import Oven
+from .model.recurrence import Recurrence, Spawn, REPEAT_MONTHLY
+from .model.transaction import Transaction, Entry
+from .model.transaction_list import TransactionList
+from .model.undo import Undoer, Action
 
 SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
 SELECTED_DATE_RANGE_START_PREFERENCE = 'SelectedDateRangeStart'
@@ -1120,7 +1117,7 @@ class Document(Broadcaster, Listener):
         if self.loader.accounts:
             self.notify('file_loaded_for_import')
         else:
-            raise FileFormatError('%s does not contain any account to import.' % filename)
+            raise FileFormatError('This file does not contain any account to import.')
     
     def import_entries(self, target_account, ref_account, matches):
         # Matches is a list of 2 sized tuples (entry, ref), ref being the existing entry that 'entry'

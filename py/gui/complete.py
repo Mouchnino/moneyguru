@@ -11,7 +11,7 @@ from operator import attrgetter
 
 from hsutil.misc import flatten
 
-from ..document.completion import CompletionList
+from ..model.completion import CompletionList
 
 class CompletionMixIn(object):
     _completions = None

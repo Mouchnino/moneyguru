@@ -56,10 +56,10 @@ from moneyguru.model.date import parse_date, clean_format
 # These imports below are a workaround for py2app, which doesn't like relative imports
 import csv
 from moneyguru import const
-from moneyguru.document import completion, undo
 from moneyguru.gui import base, chart, graph, report, table, tree
 from moneyguru.loader import base, csv, native, ofx, qif
-from moneyguru.model import account, amount, currency, date, oven, recurrence, transaction, transaction_list
+from moneyguru.model import (account, amount, currency, date, oven, recurrence, transaction,
+    transaction_list, completion, undo)
 
 class PyMoneyGuruApp(NSObject):
     def initWithCocoa_(self, cocoa):
