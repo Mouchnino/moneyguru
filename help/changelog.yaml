@@ -1,30 +1,30 @@
 - date: 2009-09-20
   version: 1.6.5
   description: |
-    * Fixed a bug preventing non-monthly budgets to be properly saved.
-    * Fixed a bug with accounts in groups where their base type couldn't be changed.
+    * Fixed a bug preventing non-monthly budgets to be properly saved. (#76)
+    * Fixed a bug with accounts in groups where their base type couldn't be changed. (#58)
 - date: 2009-09-17
   version: 1.6.4
   description: |
-    * Fixed bug preventing some CSV files to be imported.
-    * Fixed crashes during budget creation.
-    * Fixed bugs sometimes causing budgets and schedules corruption during account deletion.
+    * Fixed bug preventing some CSV files to be imported. (#73)
+    * Fixed crashes during budget creation. (#74)
+    * Fixed bugs sometimes causing budgets and schedules corruption during account deletion. (#75)
     * Fixed bugs preventing account deletion's undo to restore budgets and schedules properly.
 - date: 2009-09-10
   version: 1.6.3
   description: |
-    * Added Increase and Decrease column types in the CSV import dialog.
-    * Fixed a glitch causing the Target Account selector to be flaky in the CSV import dialog.
-    * Fixed crashes with the newly re-enabled arrow based shortcuts.
-    * Fixed a bug causing scheduled transactions not to be counted in budgets.
+    * Added Increase and Decrease column types in the CSV import dialog. (#9)
+    * Fixed a glitch causing the Target Account selector to be flaky in the CSV import dialog. (#71)
+    * Fixed crashes with the newly re-enabled arrow based shortcuts. (#70)
+    * Fixed a bug causing scheduled transactions not to be counted in budgets. (#69)
 - date: 2009-09-09
   version: 1.6.2
   description: |
-    * Fixed bugs preventing some CSV files to be imported.
-    * Fixed a bug sometimes causing preferences not to be saved.
-    * Fixed crashes happening during edition in Net Worth and Profit & Loss sheets.
-    * Fixed crashes happening on startup due to corrupted preferences.
-    * Re-enabled arrow based shortcuts (they don't conflict with text based ones anymore).
+    * Fixed bugs preventing some CSV files to be imported. (#65)
+    * Fixed a bug sometimes causing preferences not to be saved. (#62)
+    * Fixed crashes happening during edition in Net Worth and Profit & Loss sheets. (#66)
+    * Fixed crashes happening on startup due to corrupted preferences. (#63)
+    * Re-enabled arrow based shortcuts (they don't conflict with text based ones anymore). (#59)
 - date: 2009-08-31
   version: 1.6.1
   description: |
@@ -33,17 +33,17 @@
 - date: 2009-08-31
   version: 1.6.0
   description: |
-    * Revamped the budget system, giving it much more flexibility.
-    * Added views to manage Schedules and Budgets.
-    * Memo fields in splits are now included in the search process.
-    * It's now possible to search the Account view.
-    * Added a preference to indicate when your fiscal year starts (for Year and Year-to-date ranges).
-    * Added a Budgeted column in the Net Worth and Profit & Loss views.
-    * Added an Auto-Save preference.
+    * Revamped the budget system, giving it much more flexibility. (#2)
+    * Added views to manage Schedules and Budgets. (#3)
+    * Memo fields in splits are now included in the search process. (#46)
+    * It's now possible to search the Account view. (#5)
+    * Added a preference to indicate when your fiscal year starts (for Year and Year-to-date ranges). (#7)
+    * Added a Budgeted column in the Net Worth and Profit & Loss views. (#4)
+    * Added an Auto-Save preference. (#1)
     * Tweaked the view and date range navigation shortcuts so they don't interfere with the OS X 
-      text navigation ones.
+      text navigation ones. (#59)
     * Tweaked auto-completion.
-    * Fixed a crash in date range navigation.
+    * Fixed a crash in date range navigation. (#8)
     * Fixed a bug preventing certain CSV files from being imported.
 - date: 2009-08-04
   version: 1.5.7
