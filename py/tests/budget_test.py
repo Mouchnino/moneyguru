@@ -157,8 +157,7 @@ class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
         eq_(self.istatement.income[0].budgeted, '175.00')
     
 
-class YearBudgetWithEntryBeforeCurrentMonth(TestCase, TestSaveLoadMixin):
-    # TestSaveLoadMixin: to make sure that non-monthly budgets are correctly saved
+class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
     def setUp(self):
         self.create_instances()
         self.mock_today(2009, 8, 24)
@@ -193,4 +192,13 @@ class ScheduledTxnAndBudget(TestCase, CommonSetup):
         # schedule spawns affect the budget spawns
         self.mainwindow.select_transaction_table()
         eq_(self.ttable[1].amount, '9.00') # 1$ has been removed from the budgeted 10
+    
+
+class YearlyBudgetWithStartDateStopDateInterval(TestCase, TestSaveLoadMixin):
+    # TestSaveLoadMixin: to make sure that all budget fields are correctly saved
+    def setUp(self):
+        self.create_instances()
+        self.add_account('income', account_type=INCOME)
+        self.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3,
+            repeat_every=2, stop_date='01/01/2022')
     

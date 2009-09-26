@@ -267,14 +267,18 @@ class Loader(object):
             self.schedules.append(recurrence)
         # Budgets
         TODAY = datetime.date.today()
-        ref_date = datetime.date(TODAY.year, TODAY.month, 1)
+        fallback_start_date = datetime.date(TODAY.year, TODAY.month, 1)
         for info in self.budget_infos:
             account = self.accounts.find(info.account)
             if account is None:
                 continue
             target = self.accounts.find(info.target) if info.target else None
             amount = self.parse_amount(info.amount, account.currency)
-            budget = Budget(account, target, amount, ref_date, repeat_type=info.repeat_type)
+            start_date = nonone(info.start_date, fallback_start_date)
+            budget = Budget(account, target, amount, start_date, repeat_type=info.repeat_type)
+            budget.stop_date = info.stop_date
+            if info.repeat_every:
+                budget.repeat_every = info.repeat_every
             self.budgets.append(budget)
         self.oven.cook(datetime.date.min, until_date=None)
         Currency.get_rates_db().ensure_rates(start_date, [x.code for x in currencies])
@@ -358,6 +362,9 @@ class BudgetInfo(object):
         self.target = target
         self.amount = amount
         self.repeat_type = None
+        self.repeat_every = None
+        self.start_date = None
+        self.stop_date = None
     
     def is_valid(self):
         return self.account and self.amount

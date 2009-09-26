@@ -975,10 +975,13 @@ class Document(Broadcaster, Listener):
     def save_to_xml(self, filename, autosave=False):
         # When called from _async_autosave, it should not disrupt the user: no stop edition, no
         # change in the save state.
+        def date2str(date):
+            return date.strftime('%Y-%m-%d')
+        
         def write_transaction_element(parent_element, transaction):
             transaction_element = ET.SubElement(parent_element, 'transaction')
             attrib = transaction_element.attrib
-            attrib['date'] = transaction.date.strftime('%Y-%m-%d')
+            attrib['date'] = date2str(transaction.date)
             attrib['description'] = transaction.description
             attrib['payee'] = transaction.payee
             attrib['checkno'] = transaction.checkno
@@ -1023,15 +1026,15 @@ class Document(Broadcaster, Listener):
             attrib['type'] = recurrence.repeat_type
             attrib['every'] = str(recurrence.repeat_every)
             if recurrence.stop_date is not None:
-                attrib['stop_date'] = recurrence.stop_date.strftime('%Y-%m-%d')
+                attrib['stop_date'] = date2str(recurrence.stop_date)
             for date, change in recurrence.date2globalchange.items():
                 change_element = ET.SubElement(recurrence_element, 'change')
-                change_element.attrib['date'] = date.strftime('%Y-%m-%d')
+                change_element.attrib['date'] = date2str(date)
                 if change is not None:
                     write_transaction_element(change_element, change)
             for date, exception in recurrence.date2exception.items():
                 exception_element = ET.SubElement(recurrence_element, 'exception')
-                exception_element.attrib['date'] = date.strftime('%Y-%m-%d')
+                exception_element.attrib['date'] = date2str(date)
                 if exception is not None:
                     write_transaction_element(exception_element, exception)
             write_transaction_element(recurrence_element, recurrence.ref)
@@ -1040,9 +1043,13 @@ class Document(Broadcaster, Listener):
             attrib = budget_element.attrib
             attrib['account'] = budget.account.name
             attrib['type'] = budget.repeat_type
+            attrib['every'] = unicode(budget.repeat_every)
             attrib['amount'] = unicode(budget.amount)
             if budget.target is not None:
                 attrib['target'] = budget.target.name
+            attrib['start_date'] = date2str(budget.start_date)
+            if budget.stop_date is not None:
+                attrib['stop_date'] = date2str(budget.stop_date)
         tree = ET.ElementTree(root)
         tree.write(filename, 'utf-8')
         if not autosave:

@@ -359,7 +359,8 @@ class TestCase(TestCase):
         for name in names:
             self.add_account(name)
     
-    def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2):
+    def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
+            repeat_every=1, stop_date=None):
         # if no target, set target_name to None
         self.mainwindow.select_budget_table()
         self.mainwindow.new_item()
@@ -367,6 +368,9 @@ class TestCase(TestCase):
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
         self.bpanel.start_date = start_date
         self.bpanel.repeat_type_index = repeat_type_index
+        self.bpanel.repeat_every = repeat_every
+        if stop_date is not None:
+            self.bpanel.stop_date = stop_date
         account_index = self.bpanel.account_options.index(account_name)
         self.bpanel.account_index = account_index
         target_index = self.bpanel.target_options.index(target_name) if target_name else 0
@@ -491,12 +495,12 @@ class TestAppCompareMixin(object):
     # qif_mode: don't compare reconciliation status and, don't compare memos
     def _compareapps(self, first, second, qif_mode=False):
         def compare_txns(txn1, txn2):
-            try:
-                self.assertEqual(txn1.date, txn2.date)
-                self.assertEqual(txn1.description, txn2.description)
-                self.assertEqual(txn1.payee, txn2.payee)
-                self.assertEqual(txn1.checkno, txn2.checkno)
-                self.assertEqual(len(txn1.splits), len(txn2.splits))
+            try: # XXX Why is there a try/except here? To catch silently some exeptions?
+                eq_(txn1.date, txn2.date)
+                eq_(txn1.description, txn2.description)
+                eq_(txn1.payee, txn2.payee)
+                eq_(txn1.checkno, txn2.checkno)
+                eq_(len(txn1.splits), len(txn2.splits))
             except AssertionError:
                 raise
             splits1 = txn1.splits
@@ -507,62 +511,73 @@ class TestAppCompareMixin(object):
                 try:
                     account1 = split1.account.name if split1.account else ''
                     account2 = split2.account.name if split2.account else ''
-                    self.assertEqual(account1, account2)
+                    eq_(account1, account2)
                     if qif_mode:
                         if split1.amount and split2.amount:
-                            self.assertEqual(split1.amount.value, split2.amount.value)
+                            eq_(split1.amount.value, split2.amount.value)
                         else:
-                            self.assertEqual(split1.amount, split2.amount)
+                            eq_(split1.amount, split2.amount)
                     else:
-                        self.assertEqual(split1.memo, split2.memo)
-                        self.assertEqual(split1.amount, split2.amount)
-                    self.assertEqual(split1.reconciled, split2.reconciled)
+                        eq_(split1.memo, split2.memo)
+                        eq_(split1.amount, split2.amount)
+                    eq_(split1.reconciled, split2.reconciled)
                 except AssertionError:
                     raise
         
-        self.assertEqual(len(first.groups), len(second.groups))
+        eq_(len(first.groups), len(second.groups))
         group_pairs = zip(sorted(first.groups, key=attrgetter('name')),
             sorted(second.groups, key=attrgetter('name')))
         for group1, group2 in group_pairs:
             try:
-                self.assertEqual(group1.name, group2.name)
-                self.assertEqual(group1.type, group2.type)
+                eq_(group1.name, group2.name)
+                eq_(group1.type, group2.type)
             except AssertionError:
                 raise
-        self.assertEqual(len(first.accounts), len(second.accounts))
+        eq_(len(first.accounts), len(second.accounts))
         account_pairs = zip(sorted(first.accounts, key=attrgetter('name')),
             sorted(second.accounts, key=attrgetter('name')))
         for account1, account2 in account_pairs:
             try:
-                self.assertEqual(account1.name, account2.name)
-                self.assertEqual(account1.type, account2.type)
+                eq_(account1.name, account2.name)
+                eq_(account1.type, account2.type)
                 if not qif_mode:
-                    self.assertEqual(account1.currency, account2.currency)
-                self.assertEqual(len(account1.entries), len(account2.entries))
+                    eq_(account1.currency, account2.currency)
+                eq_(len(account1.entries), len(account2.entries))
             except AssertionError:
                 raise
-        self.assertEqual(len(first.transactions), len(second.transactions))
+        eq_(len(first.transactions), len(second.transactions))
         for txn1, txn2 in zip(first.transactions, second.transactions):
             compare_txns(txn1, txn2)
-        self.assertEqual(len(first.schedules), len(second.schedules))
+        eq_(len(first.schedules), len(second.schedules))
         for rec1, rec2 in zip(first.schedules, second.schedules):
-            self.assertEqual(rec1.repeat_type, rec2.repeat_type)
-            self.assertEqual(rec1.repeat_every, rec2.repeat_every)
+            eq_(rec1.repeat_type, rec2.repeat_type)
+            eq_(rec1.repeat_every, rec2.repeat_every)
             compare_txns(rec1.ref, rec2.ref)
-            self.assertEqual(rec1.stop_date, rec2.stop_date)
-            self.assertEqual(len(rec1.date2exception), len(rec2.date2exception))
+            eq_(rec1.stop_date, rec2.stop_date)
+            eq_(len(rec1.date2exception), len(rec2.date2exception))
             for date in rec1.date2exception:
                 exc1 = rec1.date2exception[date]
                 exc2 = rec2.date2exception[date]
                 if exc1 is None:
-                    self.assertTrue(exc2 is None)
+                    assert exc2 is None
                 else:
                     compare_txns(exc1, exc2)
-            self.assertEqual(len(rec1.date2globalchange), len(rec2.date2globalchange))
+            eq_(len(rec1.date2globalchange), len(rec2.date2globalchange))
             for date in rec1.date2globalchange:
                 txn1 = rec1.date2globalchange[date]
                 txn2 = rec2.date2globalchange[date]
                 compare_txns(txn1, txn2)
+        for budget1, budget2 in zip(first.budgets, second.budgets):
+            eq_(budget1.account.name, budget2.account.name)
+            if budget1.target is None:
+                assert budget2.target is None
+            else:
+                eq_(budget1.target.name, budget2.target.name)
+            eq_(budget1.amount, budget2.amount)
+            eq_(budget1.repeat_type, budget2.repeat_type)
+            eq_(budget1.start_date, budget2.start_date)
+            eq_(budget1.stop_date, budget2.stop_date)
+            eq_(budget1.repeat_every, budget2.repeat_every)
     
 
 class TestSaveLoadMixin(TestAppCompareMixin):

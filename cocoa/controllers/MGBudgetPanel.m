@@ -44,7 +44,6 @@ http://www.hardcoded.net/licenses/hs_license
     [targetSelector addItemsWithTitles:[[self py] targetOptions]];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
-    [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
     [repeatEveryField setIntValue:[[self py] repeatEvery]];
     [accountSelector selectItemAtIndex:[[self py] accountIndex]];
     [targetSelector selectItemAtIndex:[[self py] targetIndex]];
@@ -78,11 +77,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refreshRepeatOptions
 {
-    int index = [repeatOptionsPopUp indexOfSelectedItem];
     [repeatOptionsPopUp removeAllItems];
     NSArray *options = [[self py] repeatOptions];
     [repeatOptionsPopUp addItemsWithTitles:options];
-    [repeatOptionsPopUp selectItemAtIndex:index];
+    [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
 }
 
 /* Delegate */
