@@ -29,12 +29,13 @@ class SomeAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('foobar', CAD, account_type=EXPENSE)
+        self.mainwindow.select_income_statement()
         self.clear_gui_calls()
     
     def test_can_load(self):
         # Make sure that OperationAborted is raised when appropriate
         self.apanel.load() # no OperationAborted
-        self.bsheet.selected = self.bsheet.assets
+        self.istatement.selected = self.istatement.expenses
         assert_raises(OperationAborted, self.apanel.load)
     
     def test_change_currency_index(self):
@@ -72,6 +73,11 @@ class SomeAccount(TestCase):
         # ensure no crash occurs
         self.apanel.type_index
     
+    def test_load_stops_edition(self):
+        # edition must be stop on apanel load or else an account type change can result in a crash
+        self.apanel.load()
+        self.check_gui_calls(self.istatement_gui, stop_editing=1)
+    
     def test_save(self):
         """save() calls document.change_account with the correct arguments and triggers a refresh on all GUI components."""
         self.apanel.load()
@@ -81,6 +87,7 @@ class SomeAccount(TestCase):
         self.apanel.budget = '42'
         self.apanel.save()
         # To test the currency, we have to load again
+        self.istatement.selected = self.istatement.income[0]
         self.apanel.load()
         self.assertEqual(self.apanel.currency, Currency.all[42])
         self.assertEqual(self.apanel.type, INCOME)

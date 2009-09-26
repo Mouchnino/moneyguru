@@ -23,6 +23,7 @@ class AccountPanel(GUIPanel):
         account = self.document.selected_account
         if account is None:
             raise OperationAborted()
+        self.document.stop_edition()
         self._init_fields()
         self.name = account.name
         self.type = account.type

@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 # 
@@ -158,10 +158,11 @@ class AccountHierarchy(TestCase):
         self.assertEqual(self.bsheet.selected.name, 'Asset 1')
     
     def test_delete_account(self):
-        """Removing an account refreshes the view."""
+        # Removing an account refreshes the view and stops any edition that was going on (if edition
+        # is not stopped, the current buffer will be applied to the node under the deleted account)
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.delete()
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls(self.bsheet_gui, refresh=1, stop_editing=1)
     
     def test_save_edits(self):
         """save_edits() refreshes the view"""

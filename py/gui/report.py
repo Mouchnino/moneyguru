@@ -122,6 +122,7 @@ class Report(DocumentGUIObject, tree.Tree):
     def delete(self):
         if not self.can_delete():
             return
+        self.view.stop_editing()
         node = self.selected
         selected_path = self.selected_path
         if node.is_account:
