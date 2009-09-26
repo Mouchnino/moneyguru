@@ -1,3 +1,8 @@
+- date: 2009-09-26
+  version: 1.6.6
+  description: |
+    * Fixed crashes on some account editions and deletions. (#77)
+    * Fixed a bug preventing some budgets to be properly saved. (#79)
 - date: 2009-09-20
   version: 1.6.5
   description: |
@@ -42,7 +47,7 @@
     * Added an Auto-Save preference. (#1)
     * Tweaked the view and date range navigation shortcuts so they don't interfere with the OS X 
       text navigation ones. (#59)
-    * Tweaked auto-completion.
+    * Tweaked auto-completion. (#6)
     * Fixed a crash in date range navigation. (#8)
     * Fixed a bug preventing certain CSV files from being imported.
 - date: 2009-08-04
