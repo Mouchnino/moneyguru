@@ -23,18 +23,18 @@ class _SomeAssetsAndLiabilities(TestCase, CommonSetup):
         self.create_instances()
         self.setup_monthly_range()
         self.mock_today(2009, 1, 29) # On the last day of the month, some tests fail
-        self.add_account('a1')
+        self.add_account_legacy('a1')
         self.add_entry(increase='1.01') # values are trucated
-        self.add_account('a2')
+        self.add_account_legacy('a2')
         self.add_entry(increase='4')
-        self.add_account('a3')
+        self.add_account_legacy('a3')
         self.add_entry(increase='2')
-        self.add_account('a4')
+        self.add_account_legacy('a4')
         self.add_entry(increase='3')
-        self.add_account('empty') # doesn't show
-        self.add_account('l1', account_type=LIABILITY)
+        self.add_account_legacy('empty') # doesn't show
+        self.add_account_legacy('l1', account_type=LIABILITY)
         self.add_entry(increase='3')
-        self.add_account('l2', account_type=LIABILITY)
+        self.add_account_legacy('l2', account_type=LIABILITY)
         self.add_entry(increase='5')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets
@@ -62,7 +62,7 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
         self.apanel.load()
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=INCOME)
         self.add_budget('income', None, '5')
         self.mainwindow.select_balance_sheet() # don't crash
     
@@ -92,7 +92,7 @@ class SomeAssetsAndLiabilitiesWithBudget(_SomeAssetsAndLiabilities):
     def setUp(self):
         _SomeAssetsAndLiabilities.setUp(self)
         self.document.select_today_date_range()
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=INCOME)
         self.add_budget('income', 'a3', '5')
         self.mainwindow.select_balance_sheet()
     
@@ -122,7 +122,7 @@ class MoreThanSliceCountAssets(TestCase):
     def setUp(self):
         self.create_instances()
         for i in range(SLICE_COUNT + 2):
-            self.add_account('account %d' % i)
+            self.add_account_legacy('account %d' % i)
             self.add_entry(increase='1')
         self.mainwindow.select_balance_sheet()
     
@@ -138,7 +138,7 @@ class SomeIncomeAndExpenses(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('foo')
+        self.add_account_legacy('foo')
         self.add_entry(transfer='i1', increase='2')
         self.add_entry(transfer='i2', increase='4')
         self.add_entry(transfer='i3', increase='1')
@@ -204,7 +204,7 @@ class DifferentDateRanges(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('foo')
+        self.add_account_legacy('foo')
         self.add_entry(date='01/08/2008', transfer='baz', increase='5')
         self.add_entry(date='01/08/2008', transfer='bar', decrease='1')
         self.add_entry(date='01/09/2008', transfer='bar', decrease='2')
@@ -234,11 +234,11 @@ class MultipleCurrencies(TestCase):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
-        self.add_account('USD income', account_type=INCOME, currency=USD)
-        self.add_account('CAD income', account_type=INCOME, currency=CAD)
-        self.add_account('USD asset', currency=USD)
+        self.add_account_legacy('USD income', account_type=INCOME, currency=USD)
+        self.add_account_legacy('CAD income', account_type=INCOME, currency=CAD)
+        self.add_account_legacy('USD asset', currency=USD)
         self.add_entry('1/1/2008', 'USD entry', transfer='USD income', increase='1')
-        self.add_account('CAD asset', currency=CAD)
+        self.add_account_legacy('CAD asset', currency=CAD)
         self.add_entry('1/1/2008', 'CAD entry', transfer='CAD income', increase='1')
         self.mainwindow.select_balance_sheet()
     
@@ -263,8 +263,8 @@ class MultipleCurrencies(TestCase):
 class NegativeAssetValue(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('foo')
-        self.add_account('bar')
+        self.add_account_legacy('foo')
+        self.add_account_legacy('bar')
         self.add_entry(date='01/08/2008', transfer='foo', increase='1')
         self.mainwindow.select_balance_sheet()
     
@@ -284,9 +284,9 @@ class AccountGroup(TestCase):
         self.bsheet.save_edits()
         self.bsheet.show_selected_account()
         self.add_entry(increase='1')
-        self.add_account('bar', group_name='group')
+        self.add_account_legacy('bar', group_name='group')
         self.add_entry(increase='2')
-        self.add_account('baz')
+        self.add_account_legacy('baz')
         self.add_entry(increase='7')
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()

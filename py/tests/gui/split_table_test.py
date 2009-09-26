@@ -14,7 +14,7 @@ from ..base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
 class OneEntry(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first', currency=CAD)
+        self.add_account_legacy('first', currency=CAD)
         self.add_entry(transfer='second', increase='42')
     
     def test_add_gui_calls(self):
@@ -123,8 +123,8 @@ class OneTransactionBeingAdded(TestCase):
 class EURAccountsEURTransfer(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first', EUR)
-        self.add_account('second', EUR)
+        self.add_account_legacy('first', EUR)
+        self.add_account_legacy('second', EUR)
         self.add_entry(transfer='first', increase='42') # EUR
         self.tpanel.load()
     
@@ -138,8 +138,8 @@ class OneTransactionWithMemos(TestCase, TestSaveLoadMixin, TestQIFExportImportMi
     # same for TestQIFExportImportMixin
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
         self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.tpanel.load()
@@ -157,7 +157,7 @@ class OneTransactionWithMemos(TestCase, TestSaveLoadMixin, TestQIFExportImportMi
 class OneTransactionWithUnassignedSplit(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
+        self.add_account_legacy('first')
         self.add_entry(transfer='second', increase='42')
         self.tpanel.load()
         self.stable.select([1])
@@ -181,9 +181,9 @@ class OneTransactionWithUnassignedSplit(TestCase):
 class ThreeWaySplitAllReconciledPlusOneSimpleEntryReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
-        self.add_account('third')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
+        self.add_account_legacy('third')
         self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable.edited.description = 'foo'

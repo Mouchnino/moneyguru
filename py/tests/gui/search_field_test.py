@@ -11,7 +11,7 @@ from ..base import TestCase, CommonSetup
 
 class CommonSetup(CommonSetup):
     def setup_two_transactions(self):
-        self.add_account('Desjardins')
+        self.add_account_legacy('Desjardins')
         self.add_entry(description='a Deposit', payee='Joe SixPack', checkno='42A', transfer='Income', increase='212.12')
         # it's important for the test that this txns has no space in its fields
         self.add_entry(description='Withdrawal', payee='Dunno-What-To-Write', checkno='24B', transfer='Cash', decrease='140')
@@ -153,7 +153,7 @@ class Split(TestCase):
 class ThreeTransactionsFiltered(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('some account')
+        self.add_account_legacy('some account')
         self.add_entry(description='foo')
         self.add_entry(description='bar')
         self.add_entry(description='bar')
@@ -194,8 +194,8 @@ class GroupedAndUngroupedTransactions(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_group('MyGroup')
-        self.add_account('Grouped', group_name='MyGroup')
-        self.add_account('Ungrouped')
+        self.add_account_legacy('Grouped', group_name='MyGroup')
+        self.add_account_legacy('Ungrouped')
         self.add_txn(description='first', from_='Grouped')
         self.add_txn(description='second', from_='Ungrouped')
     

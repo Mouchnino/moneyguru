@@ -92,7 +92,7 @@ class OneEntryWithAmountInReconciliationMode(TestCase, CommonSetup):
 class OneEntryInTheFuture(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         str_date = (date.today() + timedelta(days=1)).strftime('%d/%m/%Y')
         self.add_entry(str_date, increase='42')
         self.document.toggle_reconciliation_mode()
@@ -109,7 +109,7 @@ class OneEntryInTheFuture(TestCase):
 class OneEntryInLiability(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=LIABILITY)
+        self.add_account_legacy(account_type=LIABILITY)
         self.add_entry(increase='42')
         self.document.toggle_reconciliation_mode()
     
@@ -122,7 +122,7 @@ class OneEntryInLiability(TestCase):
 class TwoEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(increase='42')
         self.add_entry(increase='21')
         self.document.toggle_reconciliation_mode()
@@ -148,7 +148,7 @@ class TwoEntries(TestCase):
 class _ThreeEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('1/1/2008', 'one')
         self.add_entry('20/1/2008', 'two')
         self.add_entry('31/1/2008', 'three')

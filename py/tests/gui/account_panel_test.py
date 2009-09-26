@@ -18,17 +18,17 @@ from ...model.account import ASSET, LIABILITY, INCOME, EXPENSE
 class CommonSetup(CommonSetup):
     def setup_accounts_of_all_types(self):
         # liability created first to force a sorting on the panel side
-        self.add_account('liability', account_type=LIABILITY)
-        self.add_account('asset', account_type=ASSET)
-        self.add_account('income', account_type=INCOME)
-        self.add_account('expense', account_type=EXPENSE)
+        self.add_account_legacy('liability', account_type=LIABILITY)
+        self.add_account_legacy('asset', account_type=ASSET)
+        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('expense', account_type=EXPENSE)
         self.mainwindow.select_income_statement()
     
 
 class SomeAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('foobar', CAD, account_type=EXPENSE)
+        self.add_account_legacy('foobar', CAD, account_type=EXPENSE)
         self.mainwindow.select_income_statement()
         self.clear_gui_calls()
     
@@ -97,8 +97,8 @@ class SomeAccount(TestCase):
 class TwoAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('foobar')
-        self.add_account('foobaz')
+        self.add_account_legacy('foobar')
+        self.add_account_legacy('foobaz')
         self.clear_gui_calls()
     
     def test_duplicate_name(self):

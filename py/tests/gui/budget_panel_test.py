@@ -16,7 +16,7 @@ from ..base import TestCase, CommonSetup
 class OneAssetAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('asset')
+        self.add_account_legacy('asset')
     
     def test_can_create_new(self):
         # When trying to create a new budget in a document without income/expense accounts, an
@@ -32,9 +32,9 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         self.setup_account_with_budget()
         # The accounts' name and order in which they are created is important, as it tests that
         # the budget panel sorts them correctly.
-        self.add_account('liability', account_type=LIABILITY)
-        self.add_account('asset')
-        self.add_account('Some Income', account_type=INCOME)
+        self.add_account_legacy('liability', account_type=LIABILITY)
+        self.add_account_legacy('asset')
+        self.add_account_legacy('Some Income', account_type=INCOME)
         self.mainwindow.select_budget_table()
         self.btable.select([0])
         self.mainwindow.edit_item()

@@ -272,8 +272,8 @@ class Pristine(TestCase):
 class TransferBetweenAssets(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
         self.add_entry(date='03/01/2009', description='transfer', transfer='first', increase='42')
     
     def test_save_to_qif(self):

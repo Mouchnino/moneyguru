@@ -60,7 +60,7 @@ class AssetAccountAndIncomeAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.clear_gui_calls()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.clear_gui_calls()

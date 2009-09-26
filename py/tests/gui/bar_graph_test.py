@@ -22,8 +22,8 @@ class Pristine(TestCase, CommonSetup):
     def test_cook_bar_overflow(self):
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
         # until the end of the *overflow*, not the end of the date range.
-        self.add_account('Checking')
-        self.add_account('Income', account_type=INCOME)
+        self.add_account_legacy('Checking')
+        self.add_account_legacy('Income', account_type=INCOME)
         self.add_entry('01/11/2008', transfer='Checking', increase='42') #sunday
         self.document.select_prev_date_range() # oct 2008
         self.add_entry('31/10/2008', transfer='Checking', increase='42')
@@ -35,7 +35,7 @@ class Pristine(TestCase, CommonSetup):
 class ForeignAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Visa', account_type=INCOME, currency=CAD)
+        self.add_account_legacy('Visa', account_type=INCOME, currency=CAD)
     
     def test_graph(self):
         self.assertEqual(self.bargraph.currency, CAD)
@@ -44,7 +44,7 @@ class ForeignAccount(TestCase):
 class SomeIncomeInTheFutureWithRangeOnYearToDate(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         tomorrow = date.today() + timedelta(1)
         self.add_entry(tomorrow.strftime('%d/%m/%Y'), transfer='Income', increase='42')
         self.document.select_year_to_date_range()
@@ -58,8 +58,8 @@ class SomeIncomeInTheFutureWithRangeOnYearToDate(TestCase):
 class SomeIncomeTodayAndInTheFuture(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
-        self.add_account('Income', account_type=INCOME)
+        self.add_account_legacy('Checking')
+        self.add_account_legacy('Income', account_type=INCOME)
         tomorrow = date.today() + timedelta(1)
         self.add_entry(tomorrow.strftime('%d/%m/%Y'), transfer='Checking', increase='12')
         self.add_entry(date.today().strftime('%d/%m/%Y'), transfer='Checking', increase='30')
@@ -79,7 +79,7 @@ class AccountAndEntriesAndBudget(TestCase, CommonSetup):
         # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('Account 1', account_type=INCOME)
+        self.add_account_legacy('Account 1', account_type=INCOME)
         self.mock_today(2008, 1, 17)
         self.add_budget('Account 1', None, '400')
         self.mainwindow.select_income_statement()
@@ -101,7 +101,7 @@ class RunningYearWithSomeIncome(TestCase):
     def setUp(self):
         self.mock_today(2008, 11, 1)
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry('11/09/2008', transfer='Income', increase='42')
         self.add_entry('24/09/2008', transfer='Income', increase='44')
         self.document.select_running_year_range()

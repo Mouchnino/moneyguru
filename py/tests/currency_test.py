@@ -67,14 +67,14 @@ class NoSetup(TestCase):
         self.create_instances()
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.app.default_currency, PLN)
-        self.add_account()
+        self.add_account_legacy()
         self.assertEqual(self.app.default_currency, PLN)
     
 
 class OneEmptyAccountEUR(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking', EUR)
+        self.add_account_legacy('Checking', EUR)
         self.document.date_range = MonthRange(date(2007, 10, 1))
     
     def test_add_entry_with_foreign_amount(self):
@@ -109,8 +109,8 @@ class OneEmptyAccountEUR(TestCase):
 class CADAssetAndUSDAsset(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('CAD Account', CAD)
-        self.add_account('USD Account', USD)
+        self.add_account_legacy('CAD Account', CAD)
+        self.add_account_legacy('USD Account', USD)
     
     def test_make_amount_native(self):
         # Making an amount native when the both sides are asset/liability creates a MCT
@@ -133,8 +133,8 @@ class CADAssetAndUSDAsset(TestCase):
 class CADLiabilityAndUSDLiability(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('CAD Account', CAD, account_type=LIABILITY)
-        self.add_account('USD Account', USD, account_type=LIABILITY)
+        self.add_account_legacy('CAD Account', CAD, account_type=LIABILITY)
+        self.add_account_legacy('USD Account', USD, account_type=LIABILITY)
     
     def test_make_amount_native(self):
         # Making an amount native when the both sides are asset/liability creates a MCT
@@ -163,8 +163,8 @@ class EntryWithForeignCurrencyAmount(TestCase):
         Currency.set_rates_db(RatesDB())
         EUR.set_CAD_value(1.42, date(2007, 10, 1))
         PLN.set_CAD_value(0.42, date(2007, 10, 1))
-        self.add_account('first', CAD)
-        self.add_account('second', PLN, account_type=INCOME)
+        self.add_account_legacy('first', CAD)
+        self.add_account_legacy('second', PLN, account_type=INCOME)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -205,8 +205,8 @@ class EntryWithForeignCurrencyAmount(TestCase):
 class CADAssetAndUSDIncome(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('CAD Account', CAD)
-        self.add_account('USD Income', USD, account_type=INCOME)
+        self.add_account_legacy('CAD Account', CAD)
+        self.add_account_legacy('USD Income', USD, account_type=INCOME)
         self.add_entry(transfer='CAD Account', increase='42 usd')
     
     def test_make_amount_native(self):
@@ -236,8 +236,8 @@ class DifferentCurrencies(TestCase, TestSaveLoadMixin):
     def setUp(self):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
-        self.add_account('first account')
-        self.add_account('second account', USD)
+        self.add_account_legacy('first account')
+        self.add_account_legacy('second account', USD)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -262,9 +262,9 @@ class ThreeCurrenciesTwoEntriesSaveLoad(TestCase):
     def setUp(self):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
-        self.add_account('first account')
-        self.add_account('second account', USD)
-        self.add_account('third account', EUR)
+        self.add_account_legacy('first account')
+        self.add_account_legacy('second account', USD)
+        self.add_account_legacy('third account', EUR)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -320,8 +320,8 @@ class OneMCT(TestCase):
     """Two asset accounts, one MCT between the 2"""
     def setUp(self):
         self.create_instances()
-        self.add_account('CAD Account', CAD)
-        self.add_account('USD Account', USD)
+        self.add_account_legacy('CAD Account', CAD)
+        self.add_account_legacy('USD Account', USD)
         self.add_entry(transfer='CAD Account', increase='42 usd')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
@@ -370,7 +370,7 @@ class EntryWithXPFAmount(TestCase):
     def setUp(self):
         self.create_instances()
         XPF.set_CAD_value(0.42, date(2009, 7, 20))
-        self.add_account('account', CAD)
+        self.add_account_legacy('account', CAD)
         self.add_entry('20/07/2009', increase='100 XPF')
     
     def test_account_balance_is_correct(self):

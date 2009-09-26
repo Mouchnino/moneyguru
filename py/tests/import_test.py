@@ -91,8 +91,8 @@ class QIFImport(TestCase):
         self.app = Application(ApplicationGUI(), default_currency=PLN)
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.add_account('Account 1')
-        self.add_account('Account 1 1')
+        self.add_account_legacy('Account 1')
+        self.add_account_legacy('Account 1 1')
         self.importall(self.filepath('qif', 'checkbook.qif'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
@@ -288,7 +288,7 @@ class LoadFile(TestCase):
     def setUp(self):
         self.mock_today(2008, 2, 20) # so that the entries are shown
         self.create_instances()
-        self.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
+        self.add_account_legacy() # This is to set the modified flag to true so we can make sure it has been put back to false
         self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
@@ -393,7 +393,7 @@ class TwoEntriesInRangeSaveThenLoad(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2007, 10, 1))
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('1/10/2007', description='first')
         self.add_entry('1/10/2007', description='second')
         self.filename = op.join(self.tmpdir(), 'foo.xml')
@@ -418,10 +418,10 @@ class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase, TestSaveLoadMixin,
     """
     def setUp(self):
         self.create_instances()
-        self.add_account(u'first_account\u0142', currency=PLN)
+        self.add_account_legacy(u'first_account\u0142', currency=PLN)
         self.add_entry('3/10/2007', u'first\u0142', transfer='other account', increase='1 usd')
         self.add_entry('4/10/2007', u'second\u0142', increase='2 usd') # Imbalance
-        self.add_account(u'second_account\u0142', currency=CAD)
+        self.add_account_legacy(u'second_account\u0142', currency=CAD)
         self.add_entry('5/10/2007', u'third\u0142', transfer=u'first_account\u0142', decrease='1 usd')
         self.add_entry('6/10/2007', u'fourth\u0142', transfer='yet another account', decrease='2 usd')
     
@@ -453,7 +453,7 @@ class TransferBetweenTwoReferencedAccounts(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.importall(self.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
-        self.add_account('Account 4') # Add it as an asset
+        self.add_account_legacy('Account 4') # Add it as an asset
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()

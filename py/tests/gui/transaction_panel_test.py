@@ -32,7 +32,7 @@ class Pristine(TestCase):
 class OneEntry(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
     
     def test_add_cancel_then_load(self):
@@ -65,7 +65,7 @@ class OneEntry(TestCase):
     def test_completion(self):
         """Here, we just want to make sure that complete() responds. We don't want to re-test 
         completion, we just want to make sure that the transaction panel is of the right subclass"""
-        self.add_account() # the tpanel's completion must not be ependant on the selected account (like entries)
+        self.add_account_legacy() # the tpanel's completion must not be ependant on the selected account (like entries)
         self.assertEqual(self.tpanel.complete('d', 'description'), 'description')
     
     def test_load_refreshes_mct_button(self):
@@ -113,7 +113,7 @@ class OneEntry(TestCase):
 class OneAmountlessEntryPanelLoaded(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
         self.mainwindow.select_transaction_table()
         self.ttable.select([0])
@@ -128,7 +128,7 @@ class OneAmountlessEntryPanelLoaded(TestCase):
 class OneEntryPanelLoaded(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='06/07/2008', description='description', increase='42')
         self.mainwindow.select_transaction_table()
         self.ttable.select([0])
@@ -149,7 +149,7 @@ class OneEntryPanelLoaded(TestCase):
 class TwoAmountlessEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='06/07/2008', description='desc1', payee='payee1', checkno='42')
         self.add_entry(date='07/07/2008', description='desc2', payee='payee2', checkno='43')
     

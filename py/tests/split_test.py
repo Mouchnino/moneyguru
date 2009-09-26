@@ -15,7 +15,7 @@ from ..model.account import INCOME
 class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
     
     def test_add_entry_check_splits(self):
         """A newly added entry has its splits set"""
@@ -45,7 +45,7 @@ class OneEmptyAccount(TestCase):
 class OneEntry(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry('10/10/2007', 'Deposit', transfer='Salary', increase='42.00')
     
     def test_save_split_on_second_row(self):
@@ -118,7 +118,7 @@ class EntryWithoutTransfer(TestCase):
     """An entry without a transfer account set"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(description='foobar', decrease='130.00')
     
     def test_split(self):
@@ -139,7 +139,7 @@ class _SplitTransaction(TestCase):
         # income        0   1
         # Unassigned    0   9
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='2/1/2007', description='Split', transfer='expense1', decrease='100')
         self.add_entry(date='3/1/2007')   # That's to make sur the selection doesn't change on edits
         self.etable.select([0])
@@ -235,7 +235,7 @@ class SplitWithNoAccount(TestCase):
     """A split transaction containing a split that has a None account"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='2/1/2007', description='Split', transfer='expense1', decrease='100')
         self.tpanel.load()
         self.stable.add()
@@ -252,8 +252,8 @@ class SplitWithNoAccount(TestCase):
 class CADAssetAndUSDIncome(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('CAD Account', CAD)
-        self.add_account('USD Income', USD, account_type=INCOME)
+        self.add_account_legacy('CAD Account', CAD)
+        self.add_account_legacy('USD Income', USD, account_type=INCOME)
         self.add_entry(transfer='CAD Account', increase='42')
     
     def test_set_split_amount(self):
@@ -272,7 +272,7 @@ class CADAssetAndUSDIncome(TestCase):
 class SplitWithZeroAmounts(TestCase, TestQIFExportImportMixin):
     def setUp(self):
         self.create_instances()
-        self.add_account('foo')
+        self.add_account_legacy('foo')
         self.add_entry(date='2/1/2007', description='Split', transfer='bar')
         self.tpanel.load()
         self.stable.add()

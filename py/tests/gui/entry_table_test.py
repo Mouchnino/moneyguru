@@ -18,7 +18,7 @@ from ...document import FILTER_RECONCILED
 class OneAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.clear_gui_calls()
 
     def test_add_entry(self):
@@ -39,7 +39,7 @@ class OneAccount(TestCase):
 class OneEntryInEdition(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.etable.add()
         self.clear_gui_calls()
     
@@ -120,7 +120,7 @@ class OneEntry(TestCase, CommonSetup):
 class EURAccountEUREntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account(currency=EUR)
+        self.add_account_legacy(currency=EUR)
         self.add_entry(increase='42') # EUR
         self.add_entry(decrease='42') # EUR
     
@@ -135,7 +135,7 @@ class EURAccountEUREntries(TestCase):
 class TwoEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('11/07/2008', 'first', increase='42')
         self.add_entry('12/07/2008', 'second', decrease='12')
         self.clear_gui_calls()
@@ -182,7 +182,7 @@ class TwoEntriesOneOutOfRange(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('11/06/2008', 'first')
         self.add_entry('11/07/2008', 'second')
     
@@ -197,9 +197,9 @@ class TwoEntriesOneOutOfRange(TestCase, CommonSetup):
 class TwoEntriesInTwoAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('11/07/2008', 'first')
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('12/07/2008', 'second')
     
     def test_selection_after_connect(self):
@@ -216,7 +216,7 @@ class TwoEntriesInTwoAccounts(TestCase):
 class TwoEntriesInReconciliationMode(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(increase='1')
         self.add_entry(increase='2')
         self.document.toggle_reconciliation_mode()
@@ -237,7 +237,7 @@ class TwoEntriesInReconciliationMode(TestCase):
 class TwoEntriesInReconciliationModeOneReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(increase='1')
         self.add_entry(increase='2')
         self.document.toggle_reconciliation_mode()
@@ -271,7 +271,7 @@ class TwoEntriesInReconciliationModeOneReconciled(TestCase):
 class ThreeEntriesInReconciliationModeTwoReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('19/07/2008', increase='1')
         self.add_entry('20/07/2008', increase='2')
         self.add_entry('20/07/2008', increase='3')
@@ -291,8 +291,8 @@ class ThreeEntriesInReconciliationModeTwoReconciled(TestCase):
 class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -459,7 +459,7 @@ class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
 class TwoEntriesTwoCurrencies(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(increase='1')
         self.add_entry(increase='2 cad')
     
@@ -482,7 +482,7 @@ class TwoEntriesTwoCurrencies(TestCase):
 class ThreeEntriesDifferentDate(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('01/08/2008')
         self.add_entry('02/08/2008')
         # The date has to be "further" so select_nearest_date() doesn't pick it
@@ -498,7 +498,7 @@ class ThreeEntriesDifferentDate(TestCase):
 class SplitTransaction(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
+        self.add_account_legacy('first')
         self.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
         self.tpanel.load()
         self.stable.select([0])
@@ -519,7 +519,7 @@ class SplitTransaction(TestCase):
 class TwoSplitsInTheSameAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
+        self.add_account_legacy('first')
         self.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
         self.tpanel.load()
         self.stable.select([0])

@@ -49,9 +49,9 @@ class TwoTransactions(TestCase):
 class TwoTransactionsDifferentValues(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('from1')
+        self.add_account_legacy('from1')
         self.add_entry(date='06/07/2008', description='description1', payee='payee1', checkno='42', transfer='to1', decrease='42')
-        self.add_account('from2')
+        self.add_account_legacy('from2')
         self.add_entry(date='07/07/2008', description='description2', payee='payee2', checkno='43', transfer='to2', decrease='43')
         self.mainwindow.select_transaction_table()
         self.ttable.select([0, 1])
@@ -182,14 +182,14 @@ class TwoTransactionsDifferentValues(TestCase):
     def test_completion(self):
         """Here, we just want to make sure that complete() responds. We don't want to re-test 
         completion, we just want to make sure that the panel is of the right subclass"""
-        self.add_account() # the tpanel's completion must not be ependant on the selected account (like entries)
+        self.add_account_legacy() # the tpanel's completion must not be ependant on the selected account (like entries)
         self.assertEqual(self.mepanel.complete('d', 'description'), 'description2')
     
 
 class TwoTransactionsSameValues(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('account1')
+        self.add_account_legacy('account1')
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
         self.etable.select([0, 1])
@@ -256,7 +256,7 @@ class TwoTransactionsSameValues(TestCase):
 class TwoTransactionsOneSplit(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('account1')
+        self.add_account_legacy('account1')
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
         self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
         self.tpanel.load()
@@ -276,7 +276,7 @@ class TwoTransactionsOneSplit(TestCase):
 class TwoForeignTransactions(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('account1')
+        self.add_account_legacy('account1')
         self.add_entry(increase='42 eur')
         self.add_entry(increase='42 eur')
         self.mainwindow.select_transaction_table()
@@ -303,7 +303,7 @@ class TwoForeignTransactions(TestCase):
 class TwoForeignReconciledTransactions(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('account1', EUR)
+        self.add_account_legacy('account1', EUR)
         self.add_entry(increase='42 eur')
         self.add_entry(increase='42 eur')
         self.document.toggle_reconciliation_mode()

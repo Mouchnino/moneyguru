@@ -41,7 +41,7 @@ class OneTransaction(TestCase, CommonSetup):
 class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
+        self.add_account_legacy('account')
         self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
     
     def test_change_schedule_transaction(self):
@@ -224,7 +224,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('account')
+        self.add_account_legacy('account')
         self.add_entry('19/09/2008', description='bar', increase='2')
         self.setup_scheduled_transaction(description='foo', account='account', debit='1', repeat_every=3)
     
@@ -425,7 +425,7 @@ class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
 class TwoDailyRecurrentTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
+        self.add_account_legacy('account')
         self.setup_scheduled_transaction(description='foo')
         self.setup_scheduled_transaction(description='bar')
     
@@ -437,7 +437,7 @@ class TwoDailyRecurrentTransaction(TestCase, CommonSetup):
 class DailyScheduleWithOneSpawnReconciled(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
+        self.add_account_legacy('account')
         self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
         self.mainwindow.select_entry_table()
         self.etable.select([1]) # This one is the spawn on 16/09/2008

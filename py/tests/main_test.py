@@ -60,14 +60,14 @@ class NoSetup(TestCase):
     def test_can_use_another_amount_format(self):
         self.app = Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' ')
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(increase='1234567890.99')
         self.assertEqual(self.etable[0].increase, '1 234 567 890,99')
     
     def test_can_use_another_date_format(self):
         self.app = Application(ApplicationGUI(), date_format='MM-dd-yyyy')
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(date='2-15-2008')
         self.assertEqual(self.etable[0].date, '02-15-2008')
     
@@ -330,7 +330,7 @@ class RangeOnRunningYear(TestCase):
     
     def test_add_entry(self):
         # _adjust_date_range() on save_edits() caused a crash
-        self.add_account()
+        self.add_account_legacy()
         self.etable.add()
         self.etable.save_edits() # no crash
     
@@ -378,7 +378,7 @@ class OneEmptyAccountRangeOnOctober2007(TestCase):
     """One empty account, range on October 2007"""
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking', EUR)
+        self.add_account_legacy('Checking', EUR)
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.clear_gui_calls()
     
@@ -459,7 +459,7 @@ class LiabilityAccount(TestCase):
     """One liability account, empty"""
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=LIABILITY)
+        self.add_account_legacy(account_type=LIABILITY)
     
     def test_should_show_balance_column(self):
         """When a liability account is selected, we show the balance column"""
@@ -470,7 +470,7 @@ class IncomeAccount(TestCase):
     """One income account, empty"""
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=INCOME)
+        self.add_account_legacy(account_type=INCOME)
     
     def test_should_show_balance_column(self):
         """When an income account is selected, we don't show the balance column"""
@@ -481,7 +481,7 @@ class ExpenseAccount(TestCase):
     """One expense account, empty"""
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=EXPENSE)
+        self.add_account_legacy(account_type=EXPENSE)
     
     def test_should_show_balance_column(self):
         """When an expense account is selected, we don't show the balance column"""
@@ -503,8 +503,8 @@ class AccountWithBudget(TestCase, TestSaveLoadMixin):
     def setUp(self):
         # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
         self.create_instances()
-        self.add_account('asset')
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('asset')
+        self.add_account_legacy('income', account_type=INCOME)
         self.apanel.load()
         self.apanel.budget = '400'
         self.apanel.save()
@@ -535,7 +535,7 @@ class EntryInEditionMode(TestCase):
     """An empty account, but an entry is in edit mode in october 2007."""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.save_file()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.etable.add()
@@ -603,7 +603,7 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
     # TestQIFExportImportMixin: the same
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
         self.document.date_range = YearRange(date(2007, 1, 1))
     
@@ -768,7 +768,7 @@ class EntryWithoutTransfer(TestCase):
     """An entry without a transfer account set"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(description='foobar', decrease='130')
     
     def test_entry_transfer(self):
@@ -780,7 +780,7 @@ class EntryWithCredit(TestCase):
     """An entry with a credit"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(decrease='42.00')
     
     def test_set_decrease_to_zero_with_zero_increase(self):
@@ -808,7 +808,7 @@ class EntryInLiabilities(TestCase, TestQIFExportImportMixin):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2008, 1, 1))
-        self.add_account('Credit card', account_type=LIABILITY)
+        self.add_account_legacy('Credit card', account_type=LIABILITY)
         self.add_entry('1/1/2008', 'Payment', increase='10')
 
     def test_amount(self):
@@ -822,10 +822,10 @@ class TwoBoundEntries(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
         self.add_entry(description='transfer', transfer='first', increase='42')
-        self.add_account('third')
+        self.add_account_legacy('third')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
@@ -911,7 +911,7 @@ class NegativeBoundEntry(TestCase):
     """Account with one credit entry, bound to another account"""
     def setUp(self):
         self.create_instances()
-        self.add_account('visa', account_type=LIABILITY)
+        self.add_account_legacy('visa', account_type=LIABILITY)
         self.add_entry(transfer='clothes', increase='42')
     
     def test_make_balance_positive(self):
@@ -962,7 +962,7 @@ class TwoEntriesInDifferentQuartersWithYearRange(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('1/1/2007', 'first', increase='1')
         self.add_entry('1/4/2007', 'second', increase='2')
     
@@ -984,7 +984,7 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry('3/9/2007', 'first', increase='102.00')
         self.add_entry('10/10/2007', 'second', increase='42.00')
         self.document.date_range = MonthRange(date(2007, 10, 1))
@@ -1053,7 +1053,7 @@ class TwoEntriesInRange(TestCase):
     """Two entries, both on October 2007, first entry is selected"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_entry('2/10/2007', 'first', increase='102')
         self.add_entry('4/10/2007', 'second', increase='42')
@@ -1130,7 +1130,7 @@ class TwoEntriesInRangeBalanceGoesNegative(TestCase):
     """Two entries, both on October 2007. The balance first goes to -100, then at 100"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_entry('3/10/2007', 'first', decrease='100')
         self.add_entry('4/10/2007', 'second', increase='200')
@@ -1149,7 +1149,7 @@ class TwoEntryOnTheSameDate(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_entry('3/10/2007', 'foo', increase='10000')
         self.add_entry('3/10/2007', 'bar', decrease='9000')
@@ -1193,10 +1193,10 @@ class TwoAccountsTwoEntriesInTheFirst(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2007, 10, 1))
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('3/10/2007', 'first', increase='1')
         self.add_entry('4/10/2007', 'second', increase='1')
-        self.add_account()
+        self.add_account_legacy()
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -1210,7 +1210,7 @@ class AssetIncomeWithDecrease(TestCase):
     """An asset and income account with a transaction decreasing them both"""
     def setUp(self):
         self.create_instances()
-        self.add_account('Operations')
+        self.add_account_legacy('Operations')
         self.document.date_range = MonthRange(date(2008, 3, 1))
         self.add_entry('1/3/2008', description='MacroSoft', transfer='Salary', increase='42')
         self.add_entry('2/3/2008', description='Error Adjustment', transfer='Salary', decrease='2')
@@ -1267,7 +1267,7 @@ class LiabilityExpenseWithDecrease(TestCase):
     """An asset and income account with a transaction decreasing them both"""
     def setUp(self):
         self.create_instances()
-        self.add_account('Visa', account_type=LIABILITY)
+        self.add_account_legacy('Visa', account_type=LIABILITY)
         self.document.date_range = MonthRange(date(2008, 3, 1))
         # Visa is a liabilies, so increase/decrease are inverted
         # Clothes is created as an expense
@@ -1323,7 +1323,7 @@ class ThreeEntriesInThreeMonthsRangeOnThird(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 11, 1))
         self.add_entry('3/9/2007', 'first', increase='1')
         self.add_entry('10/10/2007', 'second', increase='2')
@@ -1341,7 +1341,7 @@ class EntriesWithZeroVariation(TestCase):
     """The first entry is normal, but the second has a null amount, resulting in no balance variation"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_entry('1/10/2007', 'first', increase='100')
         self.add_entry('3/10/2007', 'third')
@@ -1356,10 +1356,10 @@ class ThreeEntriesInTwoAccountTypes(TestCase):
     """3 entries in 2 accounts of different type."""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(description='first')
         self.add_entry(description='second')
-        self.add_account(account_type=INCOME)
+        self.add_account_legacy(account_type=INCOME)
         self.add_entry(description='third') # selected
     
     def test_delete_entries(self):
@@ -1381,7 +1381,7 @@ class ThreeEntriesInTheSameExpenseAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.select_year_range()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('31/12/2007', 'entry0', transfer='Expense', decrease='42')
         self.add_entry('1/1/2008', 'entry1', transfer='Expense', decrease='100')
         self.add_entry('20/1/2008', 'entry2', transfer='Expense', decrease='200')
@@ -1447,7 +1447,7 @@ class FourEntriesInRange(TestCase):
     """Four entries, all on October 2007, last entry is selected"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_entry('3/10/2007', 'first', increase='1')
         self.add_entry('4/10/2007', 'second', decrease='2')
@@ -1475,8 +1475,8 @@ class EightEntries(TestCase):
     """Eight entries setup for testing entry reordering."""
     def setUp(self):
         self.create_instances()
-        self.add_account()
-        self.add_account()
+        self.add_account_legacy()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2008, 1, 1))
         self.add_entry('1/1/2007', description='previous', increase='1')
         self.add_entry('1/1/2008', description='entry 1', increase='9')
@@ -1572,7 +1572,7 @@ class FourEntriesOnTheSameDate(TestCase):
     """Four entries in the same account on the same date"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2008, 1, 1))
         self.add_entry('1/1/2008', description='entry 1', increase='42.00')
         self.add_entry('1/1/2008', description='entry 2', increase='42.00')
@@ -1611,12 +1611,12 @@ class EntrySelectionOnAccountChange(TestCase):
     the same date, some not. The setup is to test entry selection upon account selection change."""
     def setUp(self):
         self.create_instances()
-        self.add_account('asset1')
+        self.add_account_legacy('asset1')
         self.add_entry('1/1/2008', transfer='expense1', decrease='42.00')
         self.add_entry('4/1/2008', transfer='expense2', decrease='42.00')
         self.add_entry('11/1/2008', transfer='expense3', decrease='42.00')
         self.add_entry('22/1/2008', transfer='expense3', decrease='42.00')
-        self.add_account('asset2')
+        self.add_account_legacy('asset2')
         self.add_entry('1/1/2008', transfer='expense1', decrease='42.00')
         self.add_entry('12/1/2008', transfer='expense2', decrease='42.00')
         # selected account is asset2
@@ -1668,7 +1668,7 @@ class EntrySelectionOnDateRangeChange(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.select_month_range()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('2/2/2007')
         self.add_entry('2/1/2008')
         self.add_entry('3/1/2008')
@@ -1701,7 +1701,7 @@ class ExampleDocumentLoadTest(TestCase):
         # We're creating a couple of transactions with the latest being 4 months ago (in april).
         self.mock_today(2009, 8, 27)
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('01/03/2008')
         self.add_entry('29/10/2008') # this one will end up in february, but overflow
         self.add_entry('01/03/2009')

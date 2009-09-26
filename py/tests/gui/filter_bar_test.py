@@ -26,8 +26,8 @@ class Pristine(TestCase):
 class TransactionsOfEachType(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('asset 1')
-        self.add_account('asset 2')
+        self.add_account_legacy('asset 1')
+        self.add_account_legacy('asset 2')
         self.add_entry(description='first', transfer='Income', increase='1')
         self.add_entry(description='second', increase='2')
         self.add_entry(description='third', transfer='Expense', decrease='3')
@@ -138,8 +138,8 @@ class SplitExpenseFromAssetAndLiability(TestCase):
     # liability
     def setUp(self):
         self.create_instances()
-        self.add_account('liability', account_type=LIABILITY)
-        self.add_account('asset')
+        self.add_account_legacy('liability', account_type=LIABILITY)
+        self.add_account_legacy('asset')
         self.add_entry(transfer='expense', decrease='100')
         self.tpanel.load()
         self.stable.select([0]) # the liability split

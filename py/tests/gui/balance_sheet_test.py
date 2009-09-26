@@ -30,12 +30,12 @@ class _AccountsAndEntries(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('income', account_type=INCOME)
-        self.add_account('expense', account_type=EXPENSE)
-        self.add_account('Account 1')
+        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('Account 1')
         self.add_entry('10/01/2008', 'Entry 1', transfer='income', increase='100.00')
         self.add_entry('13/01/2008', 'Entry 2', transfer='income', increase='150.00')
-        self.add_account('Account 2')
+        self.add_account_legacy('Account 2')
         self.add_entry('11/12/2007', 'Entry 3', transfer='income', increase='100.00')
         self.add_entry('12/01/2008', 'Entry 4', transfer='expense', decrease='20.00')
         self.mainwindow.select_balance_sheet()
@@ -119,12 +119,12 @@ class Pristine(TestCase):
 class AccountHierarchy(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Asset 1')
+        self.add_account_legacy('Asset 1')
         self.add_group('Bank')
-        self.add_account('Bank 1', group_name='Bank')
-        self.add_account('Liability 1', account_type=LIABILITY)
+        self.add_account_legacy('Bank 1', group_name='Bank')
+        self.add_account_legacy('Liability 1', account_type=LIABILITY)
         self.add_group('Loans', account_type=LIABILITY)
-        self.add_account('Loan 1', account_type=LIABILITY, group_name='Loans')
+        self.add_account_legacy('Loan 1', account_type=LIABILITY, group_name='Loans')
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
 
@@ -184,7 +184,7 @@ class AccountHierarchy(TestCase):
 class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
@@ -235,10 +235,10 @@ class OnlyOneGroup(TestCase):
     
     def test_accounts_sorted(self):
         """Accounts inside a group are sorted alphabetically."""
-        self.add_account('Zorg', group_name='Group', select=False)
-        self.add_account('Albany', group_name='Group', select=False)
-        self.add_account(u'Réal', group_name='Group', select=False)
-        self.add_account('Rex', group_name='Group', select=False)
+        self.add_account('Zorg', group_name='Group')
+        self.add_account('Albany', group_name='Group')
+        self.add_account(u'Réal', group_name='Group')
+        self.add_account('Rex', group_name='Group')
         self.assertEqual([x.name for x in self.bsheet.assets[0][:4]], ['Albany', u'Réal', 'Rex', 'Zorg'])
     
     def test_balance_sheet(self):
@@ -268,7 +268,7 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
     # TestSaveLoadMixin is to make sure that empty groups are kept when saving/loading
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_group()
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # the group
@@ -285,7 +285,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
         self.add_group('group')
-        self.add_account(group_name='group')
+        self.add_account_legacy(group_name='group')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0][0] # the account in the group
     
@@ -356,7 +356,7 @@ class AccountsAndEntries(_AccountsAndEntries):
     def test_budget_target_liability(self):
         # The budgeted amount must be normalized before being added to a liability amount
         self.mock_today(2008, 1, 15)
-        self.add_account('foo', account_type=LIABILITY)
+        self.add_account_legacy('foo', account_type=LIABILITY)
         self.add_budget('income', 'foo', '400')
         self.mainwindow.select_balance_sheet()
         eq_(self.bsheet.liabilities[0].end, '0.00')
@@ -425,12 +425,12 @@ class MultipleCurrencies(TestCase):
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         USD.set_CAD_value(0.9, date(2008, 1, 31))
         self.add_group('Group')
-        self.add_account('USD account', currency=USD, group_name='Group')
+        self.add_account_legacy('USD account', currency=USD, group_name='Group')
         self.add_entry('1/1/2007', 'USD entry', increase='50.00')
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
         self.assertEqual(self.document.selected_account.balance(), Amount(150, USD))
-        self.add_account('CAD account', currency=CAD, group_name='Group')
+        self.add_account_legacy('CAD account', currency=CAD, group_name='Group')
         self.add_entry('1/1/2008', 'USD entry', increase='100.00')
         self.mainwindow.select_balance_sheet()
 
@@ -491,7 +491,7 @@ class Liability(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_group('foo', account_type=LIABILITY)
-        self.add_account('Credit card', account_type=LIABILITY, group_name='foo')
+        self.add_account_legacy('Credit card', account_type=LIABILITY, group_name='foo')
         self.add_entry(date='31/12/2007', description='Starting balance', decrease='100.00')
         self.add_entry(date='1/1/2008', description='Expensive jewel', increase='1200.00')
         self.mainwindow.select_balance_sheet()
@@ -528,8 +528,8 @@ class LoadFileBeforeCreatingInstances(TestCase):
 class TwoAccountsInTwoReports(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('asset')
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('asset')
+        self.add_account_legacy('income', account_type=INCOME)
     
     def test_show_account_then_select_other_report(self):
         # If the shown account is not in the shown report, select the first account
@@ -543,9 +543,9 @@ class TwoAccountsInTwoReports(TestCase):
 class NegativeNetworthStart(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Loan', account_type=LIABILITY)
+        self.add_account_legacy('Loan', account_type=LIABILITY)
         self.add_entry(date='31/12/2007', description='Starting balance', increase='1000')
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry(date='1/1/2008', description='Salary', increase='1500.00')
         self.mainwindow.select_balance_sheet()
     

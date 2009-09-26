@@ -43,7 +43,7 @@ class Pristine(TestCase):
 class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking', EUR)
+        self.add_account_legacy('Checking', EUR)
     
     def test_accounts_count(self):
         """Check that the account is put in the assets section"""
@@ -105,13 +105,13 @@ class OneEmptyAccount(TestCase):
 class ThreeEmptyAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('one', select=False)
-        self.add_account('two', select=False)
-        self.add_account('three', select=False) # This is the selected account (in second position)
+        self.add_account('one')
+        self.add_account('two')
+        self.add_account('three') # This is the selected account (in second position)
     
     def test_accent_sorting(self):
         """Letters with accents should be sorted according to their decomposed form"""
-        self.add_account(u'é')
+        self.add_account_legacy(u'é')
         self.assertEqual(self.account_names(), [u'é', 'one', 'three', 'two'])
     
     def test_account_sort(self):
@@ -177,7 +177,7 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
     # TestSaveLoadMixin is to make sure that empty groups are kept when saving/loading
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_group()
         # The group is selected
     
@@ -206,7 +206,7 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
     def test_move_two_accounts(self):
         """Account groups can contain more than one account"""
         # Refresh was previously bugged when more than one account were in the same group
-        self.add_account()
+        self.add_account_legacy()
         self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 1], [0, 0])
         self.bsheet.move([0, 1], [0, 0])
@@ -232,7 +232,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
         self.add_group('group')
-        self.add_account(group_name='group')
+        self.add_account_legacy(group_name='group')
         self.mainwindow.select_balance_sheet()
     
     def test_change_account_type(self):
@@ -302,7 +302,7 @@ class TwoGroupsInTwoBaseTypes(TestCase):
 class AccountAndGroupWithTheSameName(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_group()
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
@@ -321,8 +321,8 @@ class DifferentAccountTypes(TestCase):
     """Two accounts of asset type, and one account of income type."""
     def setUp(self):
         self.create_instances()
-        self.add_account('one', select=False)
-        self.add_account('two')
+        self.add_account('one')
+        self.add_account_legacy('two')
         self.add_entry(transfer='three')
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # 'three'
@@ -366,7 +366,7 @@ class EntryWithoutTransfer(TestCase):
     """An entry without a transfer account set"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(description='foobar', decrease='130')
     
     def test_delete_account(self):
@@ -385,10 +385,10 @@ class TwoBoundEntries(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
         self.add_entry(description='transfer', transfer='first', increase='42')
-        self.add_account('third')
+        self.add_account_legacy('third')
     
     def test_delete_account(self):
         """Deleting an account unbinds every entries in it, but does *not* delete the bound entries
@@ -406,7 +406,7 @@ class TwoEntriesWithTransfer(TestCase):
     """Two entries, in range, both having a different transfer"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('1/10/2007', 'entry1', transfer='transfer1', increase='1')
         self.add_entry('2/10/2007', 'entry2', transfer='transfer2', increase='2')
     
@@ -437,8 +437,8 @@ class TwoEntriesWithTransfer(TestCase):
 class ManuallyCreatedIncome(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('income', account_type=INCOME)
-        self.add_account('asset')
+        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('asset')
     
     def test_auto_clean_doesnt_clean_manually_created(self):
         # We add & remove an entry to trigger auto clean. The manually created account must not be 

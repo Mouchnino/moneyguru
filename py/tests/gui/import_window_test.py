@@ -35,7 +35,7 @@ class ImportCheckbookQIF(TestCase):
     
     def test_close_selected_pane(self):
         """When closing the selected pane, everything is correctly refreshed"""
-        self.add_account('bar')
+        self.add_account_legacy('bar')
         self.iwin.selected_target_account_index = 1
         self.iwin.close_pane(0)
         self.assertEqual(len(self.iwin.panes), 1)
@@ -86,7 +86,7 @@ class ImportCheckbookQIF(TestCase):
     
     def test_remember_target_account_selection(self):
         """When selecting a target account, it's specific to the ane we're in"""
-        self.add_account('foo')
+        self.add_account_legacy('foo')
         self.iwin.selected_target_account_index = 1
         self.clear_gui_calls()
         self.iwin.selected_pane_index = 1
@@ -96,7 +96,7 @@ class ImportCheckbookQIF(TestCase):
         self.iwin.selected_pane_index = 0
         self.assertEqual(self.iwin.selected_target_account_index, 1)
         # target account selection is instance based, not index based
-        self.add_account('bar')
+        self.add_account_legacy('bar')
         self.assertEqual(self.iwin.selected_target_account_index, 2)
         self.iwin.selected_pane_index = 1
         self.assertEqual(self.iwin.selected_target_account_index, 2)
@@ -115,8 +115,8 @@ class ImportCheckbookQIF(TestCase):
     def test_target_accounts(self):
         """Target accounts are updated when accounts are added/removed"""
         self.assertEqual(self.iwin.target_account_names, ['< New Account >'])
-        self.add_account('Foo')
-        self.add_account('bar')
+        self.add_account_legacy('Foo')
+        self.add_account_legacy('bar')
         self.check_gui_calls(self.iwin_gui, refresh=4) # one for add, one for change
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
         self.mainwindow.select_balance_sheet()
@@ -124,7 +124,7 @@ class ImportCheckbookQIF(TestCase):
         self.bsheet.delete()
         self.check_gui_calls(self.iwin_gui, refresh=1)
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo'])
-        self.add_account()
+        self.add_account_legacy()
         self.check_gui_calls(self.iwin_gui, refresh=1)
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
     
@@ -151,7 +151,7 @@ class ImportCheckbookQIFTwice(TestCase):
 class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('foo')
+        self.add_account_legacy('foo')
         self.add_entry(date='01/01/2007', description='first entry', increase='1')
         self.document.toggle_reconciliation_mode()
         self.etable.toggle_reconciled()

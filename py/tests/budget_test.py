@@ -81,7 +81,7 @@ class OneExpenseWithBustedBudget(TestCase, CommonSetup):
 class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('some asset')
+        self.add_account_legacy('some asset')
         self.setup_account_with_budget(target_name='some asset')
     
     def test_asset_is_in_the_from_column(self):
@@ -108,7 +108,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
     
     def test_delete_account_and_reassign(self):
         # When reassigning an account on deletion, change budgets instead of deleting it.
-        self.add_account('other expense', account_type=EXPENSE)
+        self.add_account_legacy('other expense', account_type=EXPENSE)
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[1] # Some Expense
         self.istatement.delete()
@@ -129,7 +129,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
     
     def test_delete_target_and_reassign(self):
         # When reassigning an account on deletion, change budgets' target.
-        self.add_account('other asset')
+        self.add_account_legacy('other asset')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # some asset
         self.bsheet.delete()
@@ -146,7 +146,7 @@ class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
         self.mock_today(2009, 8, 20)
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=INCOME)
         self.add_entry(increase='25') # This entry must not be counted twice in budget calculations!
         self.add_budget('income', None, '100')
         self.add_budget('income', None, '100')
@@ -162,7 +162,7 @@ class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
         self.create_instances()
         self.mock_today(2009, 8, 24)
         self.document.select_year_range()
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=INCOME)
         self.add_entry(date='01/07/2009', increase='25')
         self.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3) # yearly
     
@@ -183,7 +183,7 @@ class ScheduledTxnAndBudget(TestCase, CommonSetup):
         self.mock_today(2009, 9, 10)
         self.create_instances()
         self.document.select_month_range()
-        self.add_account('account', account_type=EXPENSE)
+        self.add_account_legacy('account', account_type=EXPENSE)
         self.setup_scheduled_transaction(start_date='10/09/2009', account='account', debit='1',
             repeat_type_index=2) # monthly
         self.add_budget('account', None, '10') # monthly
@@ -198,7 +198,7 @@ class YearlyBudgetWithStartDateStopDateInterval(TestCase, TestSaveLoadMixin):
     # TestSaveLoadMixin: to make sure that all budget fields are correctly saved
     def setUp(self):
         self.create_instances()
-        self.add_account('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=INCOME)
         self.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3,
             repeat_every=2, stop_date='01/01/2022')
     

@@ -26,7 +26,7 @@ class Pristine(TestCase):
 class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
     
     def test_complete_transfer(self):
         """Don't lookup the selected account for transfer completion"""
@@ -37,8 +37,8 @@ class EmptyAccountWithWhitespaceInName(TestCase):
     """One empty account named '  Foobar  ' and one account 'foobaz'"""
     def setUp(self):
         self.create_instances()
-        self.add_account('  Foobar  ')
-        self.add_account('foobaz')
+        self.add_account_legacy('  Foobar  ')
+        self.add_account_legacy('foobaz')
     
     def test_complete_transfer(self):
         """transfer completion looking up account names ignores whitespaces (and case)"""
@@ -49,9 +49,9 @@ class ThreeEmptyAccounts(TestCase):
     """Three accounts, empty"""
     def setUp(self):
         self.create_instances()
-        self.add_account('one')
-        self.add_account('two')
-        self.add_account('three') # This is the selected account (in second position)
+        self.add_account_legacy('one')
+        self.add_account_legacy('two')
+        self.add_account_legacy('three') # This is the selected account (in second position)
     
     def test_complete_transfer(self):
         """When no entry match for transfer completion, lookup in accounts"""
@@ -70,8 +70,8 @@ class DifferentAccountTypes(TestCase):
     """Two accounts of asset type, and one account of income type."""
     def setUp(self):
         self.create_instances()
-        self.add_account('one')
-        self.add_account('two')
+        self.add_account_legacy('one')
+        self.add_account_legacy('two')
         self.add_entry(transfer='three')
     
     def test_complete_transfer_ignore_selected(self):
@@ -85,7 +85,7 @@ class EntryInEditionMode(TestCase):
     """An empty account, but an entry is in edit mode in october 2007."""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.etable.add()
         row = self.etable.edited
         row.date = '1/10/2007'
@@ -103,7 +103,7 @@ class OneEntryYearRange2007(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking')
+        self.add_account_legacy('Checking')
         self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
     
     def test_amount_completion_uses_the_latest_entered(self):
@@ -233,7 +233,7 @@ class EntryWithBlankDescription(TestCase, TestSaveLoadMixin):
     """One account, one entry, which has a blank description"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
     
     def test_field_completion_on_description(self):
@@ -255,7 +255,7 @@ class EntryWithWhitespaceInDescription(TestCase):
     """One account, one entry, which has whitespace in its description"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('10/10/2007', description='  foobar  ', increase='1')
     
     def test_completion_ignore_whitespaces(self):
@@ -271,8 +271,8 @@ class DifferentAccountTypes(TestCase):
     """Two accounts of asset type, and one account of income type."""
     def setUp(self):
         self.create_instances()
-        self.add_account('one')
-        self.add_account('two')
+        self.add_account_legacy('one')
+        self.add_account_legacy('two')
         self.add_entry(transfer='three')
     
     def test_complete_transfer(self):
@@ -287,7 +287,7 @@ class TwoEntriesInRange(TestCase):
     """Two entries, both on October 2007, first entry is selected"""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_entry('2/10/2007', 'first', increase='102.00')
         self.add_entry('4/10/2007', 'second', increase='42.00')
@@ -313,10 +313,10 @@ class ThreeEntriesInTwoAccountTypes(TestCase):
     """3 entries in 2 accounts of different type."""
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(description='first')
         self.add_entry(description='second')
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry(description='third') # selected
     
     def test_complete(self):
@@ -334,7 +334,7 @@ class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
     """
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.mock(time, 'time', lambda: 42)
         self.add_entry('2/10/2007', description='description', payee='payee', transfer='category', increase='42')
         self.mock(time, 'time', lambda: 43)
@@ -517,7 +517,7 @@ class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
         self.document.save_to_xml(filepath)
         del self.document
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.etable.add()
         row = self.etable.selected_row
         row.description = 'Duh, that shouldn\'t be here!'

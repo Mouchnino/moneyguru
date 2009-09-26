@@ -82,7 +82,7 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
     # (the first is reconciled)
     def setUp(self):
         self.create_instances()
-        self.add_account('foo')
+        self.add_account_legacy('foo')
         self.add_entry(date='01/01/2007', description='first entry', increase='1')
         self.document.toggle_reconciliation_mode()
         self.etable.toggle_reconciled()

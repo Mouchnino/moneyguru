@@ -342,7 +342,7 @@ class TestCase(TestCase):
         # code, the sctable is responsible for connecting it.
         self.scpanel.connect()
     
-    def add_account(self, name=None, currency=None, account_type=ASSET, group_name=None, select=True):
+    def add_account(self, name=None, currency=None, account_type=ASSET, group_name=None):
         # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
         group = self.document.groups.find(group_name, account_type) if group_name else None
         account = self.document.new_account(account_type, group)
@@ -351,13 +351,34 @@ class TestCase(TestCase):
         if currency is not None:
             self.document.change_account(account, currency=currency)
         self.document.select_account(account)
-        if select:
-            self.document.show_selected_account()
+    
+    def add_account_legacy(self, *args, **kwargs):
+        # In the early development stages, moneyGuru's account were on a left section and when an
+        # account would be selected, its entries would show on the right. This means that a lot of
+        # early tests assume that adding an account (which selects it) means that an entry could be
+        # added right away. Then, a gui change was made, and the current "view" scheme was adopted.
+        # No longer would entries automatically be visible when an account was added, thus making a
+        # lot of tests fail. For simplicity, I had TestCase.add_account() automatically perform a
+        # show_selected_account() call, which made tests pass. However, with the new view based gui,
+        # I soon had to create tests that require the current view to stay on the sheet on which it
+        # was created. There was a "select" argument to add_account, but I was always forgetting
+        # about it, thus leading to most add_account() calls being followed by workarounds for the
+        # fact that the Entry view was selected. This would lead to generally uglier tests. This
+        # went for *way* too long. I'm now creating add_account_legacy method so that the default
+        # behavior is not the legacy one anymore. To avoid invalidating or messing with any tests,
+        # I made all existing tests (except those with an explicit "select=False") call
+        # add_account_legacy(), but this shouldn't be used anymore. From now on, when adding tests
+        # around such calls, calls to add_account_legacy() should be replaced by an add_account()
+        # call followed or not by a show_selected_account(), depending on the carefully evaluated
+        # situation. Such carefulness can hardly be achieved in a mass re-factoring, so it has to be
+        # made progressively.
+        self.add_account(*args, **kwargs)
+        self.document.show_selected_account()
     
     def add_accounts(self, *names):
         # add a serie of simple accounts, *names being names for each account
         for name in names:
-            self.add_account(name)
+            self.add_account_legacy(name)
     
     def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
             repeat_every=1, stop_date=None):
@@ -610,13 +631,13 @@ class CommonSetup(object):
         self.document.date_range = MonthRange(date.today())
     
     def setup_one_entry(self):
-        self.add_account('first')
+        self.add_account_legacy('first')
         self.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42', checkno='24')
     
     def setup_one_entry_in_previous_range(self):
         # One entry with a date before the start of the current range. The only entry in the entry list
         # is a previous balance
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('1/1/2008')
         self.document.date_range = MonthRange(date(2008, 2, 1))
     
@@ -655,7 +676,7 @@ class CommonSetup(object):
         self.mock_today(2008, 1, 27)
         self.document.select_today_date_range()
         account_type = EXPENSE if is_expense else INCOME
-        self.add_account(account_name, account_type=account_type)
+        self.add_account_legacy(account_name, account_type=account_type)
         self.add_budget(account_name, target_name, '100')
         self.mainwindow.select_income_statement()
     

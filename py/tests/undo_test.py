@@ -92,7 +92,7 @@ class Pristine(TestCase):
 class OneNamedAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('foobar')
+        self.add_account_legacy('foobar')
     
     def test_action_after_undo(self):
         """When doing an action after an undo, the whole undo chain is broken
@@ -288,7 +288,7 @@ class AccountInGroup(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_group('group')
-        self.add_account(group_name='group')
+        self.add_account_legacy(group_name='group')
     
     def test_change_group_on_duplicate_account_name_doesnt_record_action(self):
         # Renaming a group and causing a duplicate account name error doesn't cause an action to
@@ -322,7 +322,7 @@ class LoadFile(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.add_account(select=False) # This is to set the modified flag to true so we can make sure it has been put back to false
+        self.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
         self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
         # we have to cheat here because the first save state is articifially
         # different than the second save state because the second state has
@@ -363,8 +363,8 @@ class TwoAccountsTwoTransactions(TestCase):
     is imbalanced"""
     def setUp(self):
         self.create_instances()
-        self.add_account('first')
-        self.add_account('second')
+        self.add_account_legacy('first')
+        self.add_account_legacy('second')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # first
         self.bsheet.show_selected_account()
@@ -471,7 +471,7 @@ class TwoAccountsTwoTransactions(TestCase):
 class TwoTransactionsSameDate(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('19/6/2008', description='first')
         self.add_entry('19/6/2008', description='second')
     
@@ -490,7 +490,7 @@ class TwoTransactionsSameDate(TestCase):
 class ThreeTransactionsReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('19/6/2008', description='first')
         self.add_entry('19/6/2008', description='second')
         self.add_entry('20/6/2008', description='third')
@@ -582,7 +582,7 @@ class OFXImport(TestCase):
 class TransactionWithAutoCreatedTransfer(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account_legacy()
         self.add_entry('19/6/2008', transfer='auto')
     
     @save_state_then_verify
@@ -629,7 +629,7 @@ class ReconciledSplitsWithTransfersAndReferences(TestCase):
 class ScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account('account')
+        self.add_account_legacy('account')
         self.setup_scheduled_transaction(account='account')
         self.mainwindow.select_schedule_table()
         self.sctable.select([0])
