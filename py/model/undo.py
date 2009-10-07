@@ -89,6 +89,7 @@ class Undoer(object):
         for split in transaction.splits:
             if split.account is not None and split.account not in self._accounts:
                 self._accounts.add(split.account)
+                self._accounts.auto_created.add(split.account)
     
     def _do_adds(self, accounts, groups, transactions, schedules, budgets):
         for account in accounts:
@@ -138,8 +139,7 @@ class Undoer(object):
         for split in transaction.splits:
             account = split.account
             # if len(account.entries) == 1, it means that the transactions was last
-            if account is not None and len(account.entries) == 1 and \
-               account.is_income_statement_account():
+            if account in self._accounts.auto_created and len(account.entries) == 1:
                 self._accounts.remove(account)
     
     #--- Public

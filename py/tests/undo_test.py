@@ -88,6 +88,13 @@ class Pristine(TestCase):
         row.to = 'bar'
         self.ttable.save_edits()
     
+    @save_state_then_verify
+    def test_import(self):
+        # When undoing an import that creates income/expense accounts, don't crash on auto account
+        # removal
+        self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
+        self.iwin.import_selected_pane()
+    
 
 class OneNamedAccount(TestCase):
     def setUp(self):
