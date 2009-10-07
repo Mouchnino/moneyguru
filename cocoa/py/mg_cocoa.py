@@ -10,7 +10,6 @@ import objc
 from Foundation import *
 from AppKit import *
 import logging
-import os.path as op
 
 import hsutil.cocoa
 from hsutil.path import Path
@@ -51,7 +50,7 @@ from moneyguru.gui.transaction_print import TransactionPrint
 from moneyguru.gui.transaction_table import TransactionTable
 from moneyguru.loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
     CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE)
-from moneyguru.model.date import parse_date, clean_format
+from moneyguru.model.date import clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
 import csv
@@ -69,7 +68,8 @@ class PyMoneyGuruApp(NSObject):
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
         logging.debug('started in debug mode')
         hsutil.cocoa.install_exception_hook()
-        cache_path = Path(op.expanduser('~/Library/Caches/moneyGuru'))
+        std_caches_path = Path(NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, True)[0])
+        cache_path = std_caches_path + 'moneyGuru'
         currency_code = NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode)
         logging.info('Currency code: {0}'.format(currency_code))
         try:
