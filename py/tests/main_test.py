@@ -24,7 +24,7 @@ from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError
 from ..gui.entry_table import EntryTable
 from ..loader import base
-from ..model.account import ASSET, LIABILITY, INCOME, EXPENSE
+from ..model.account import LIABILITY, INCOME, EXPENSE
 from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
 
 #--- Transactions: 0
@@ -163,8 +163,9 @@ class Pristine(TestCase, TestQIFExportImportMixin):
     
 class RangeOnOctober2007(TestCase):
     def setUp(self):
+        self.mock_today(2007, 10, 1)
         self.create_instances()
-        self.document.date_range = MonthRange(date(2007, 10, 1))
+        self.document.select_month_range()
         self.clear_gui_calls()
     
     def test_close_and_load(self):
@@ -240,9 +241,9 @@ class RangeOnOctober2007(TestCase):
     def test_select_year_to_date_range(self):
         # Year-to-date starts at the first day of this year and ends today.
         self.document.select_year_to_date_range()
-        self.assertEqual(self.document.date_range.start, date(date.today().year, 1, 1))
-        self.assertEqual(self.document.date_range.end, date.today())
-        self.assertEqual(self.document.date_range.display, 'Year to date')
+        eq_(self.document.date_range.start, date(date.today().year, 1, 1))
+        eq_(self.document.date_range.end, date.today())
+        eq_(self.document.date_range.display, 'Jan 2007 - Now')
     
 
 class RangeOnJuly2006(TestCase):
@@ -264,19 +265,33 @@ class RangeOnYear2007(TestCase):
         self.document.select_month_range()
         self.assertEqual(self.document.date_range, MonthRange(date(2007, 1, 1)))
     
-    def test_year_start_month_at_4(self):
-        # when setting year_start_month at 4, the year range will start on april 1st
+
+class RangeOnYearStartsOnApril(TestCase):
+    def setUp(self):
+        self.mock_today(2007, 4, 1)
+        self.create_instances()
+        self.document.select_year_range()
         self.app.year_start_month = 4
+    
+    def test_add_entry(self):
+        # When adding an entry, don't revert to a jan-dec based year range
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry('01/01/2008') # in the same date range
+        self.test_date_range() # date range hasn't changed
+    
+    def test_date_range(self):
+        # when setting year_start_month at 4, the year range will start on april 1st
         eq_(self.document.date_range.start, date(2007, 4, 1))
         eq_(self.document.date_range.end, date(2008, 3, 31))
     
-    def test_year_start_month_at_4_then_select_next_previous(self):
+    def test_select_next_then_previous(self):
         # when navigating date ranges, preserve the year_start_month
-        self.app.year_start_month = 4
         self.document.select_next_date_range()
         eq_(self.document.date_range.start, date(2008, 4, 1))
         self.document.select_prev_date_range()
         eq_(self.document.date_range.start, date(2007, 4, 1))
+    
 
 class RangeOnYearToDate(TestCase):
     def setUp(self):

@@ -164,6 +164,14 @@ class Document(Broadcaster, Listener):
         self._visible_transactions = None
         self._visible_entries = None
     
+    def _date_range_starting_point(self):
+        if self.selected_transaction:
+            return self.selected_transaction.date
+        elif datetime.date.today() in self.date_range:
+            return datetime.date.today()
+        else:
+            return self.date_range
+    
     def _delete_account(self, account, reassign_to=None):
         action = Action('Remove account')
         action.delete_account(account)
@@ -1189,17 +1197,17 @@ class Document(Broadcaster, Listener):
     #--- Date Range
     def select_month_range(self, starting_point=None):
         if starting_point is None:
-            starting_point = self.selected_transaction.date if self.selected_transaction else self.date_range
+            starting_point = self._date_range_starting_point()
         self.date_range = MonthRange(starting_point)
     
     def select_quarter_range(self, starting_point=None):
         if starting_point is None:
-            starting_point = self.selected_transaction.date if self.selected_transaction else self.date_range
+            starting_point = self._date_range_starting_point()
         self.date_range = QuarterRange(starting_point)
     
     def select_year_range(self, starting_point=None):
         if starting_point is None:
-            starting_point = self.selected_transaction.date if self.selected_transaction else self.date_range
+            starting_point = self._date_range_starting_point()
         self.date_range = YearRange(starting_point, year_start_month=self.app.year_start_month)
     
     def select_year_to_date_range(self):

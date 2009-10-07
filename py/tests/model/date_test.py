@@ -10,10 +10,12 @@
 import unittest
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.testcase import TestCase
 
 from ...model.date import (parse_date, format_date, clean_format, DateRange, MonthRange,
-    QuarterRange, YearRange, RunningYearRange)
+    QuarterRange, YearRange, RunningYearRange, YearToDateRange)
 
 class DateStuff(TestCase):
     def test_clean_format(self):
@@ -103,16 +105,16 @@ class Ranges(TestCase):
         self.assertFalse(date(2008, 2, 2) in self.q2)
 
     def test_display(self):
-        self.assertEqual(self.january.display, 'January 2008')
-        self.assertEqual(self.february.display, 'February 2008')
-        self.assertEqual(self.december.display, 'December 2008')
-        self.assertEqual(self.january2009.display, 'January 2009')
-        self.assertEqual(self.q1.display, 'Q1 2008')
-        self.assertEqual(self.q2.display, 'Q2 2008')
-        self.assertEqual(self.q12009.display, 'Q1 2009')
-        self.assertEqual(self.q4.display, 'Q4 2008')
-        self.assertEqual(self.year2008.display, '2008')
-        self.assertEqual(self.year2009.display, '2009')
+        eq_(self.january.display, 'January 2008')
+        eq_(self.february.display, 'February 2008')
+        eq_(self.december.display, 'December 2008')
+        eq_(self.january2009.display, 'January 2009')
+        eq_(self.q1.display, 'Q1 2008')
+        eq_(self.q2.display, 'Q2 2008')
+        eq_(self.q12009.display, 'Q1 2009')
+        eq_(self.q4.display, 'Q4 2008')
+        eq_(self.year2008.display, 'Jan 2008 - Dec 2008')
+        eq_(self.year2009.display, 'Jan 2009 - Dec 2009')
     
     def test_iter(self):
         # iter(date_ranges) iterates through every date present in the range
@@ -155,6 +157,15 @@ class RangesNoSetup(TestCase):
         self.assertEqual(dr.end, date(2009, 3, 31))
         self.assertEqual(dr.start, date(2008, 4, 1))
         self.assertEqual(dr.display, 'Running year')
+    
+    def test_year_to_date(self):
+        self.mock_today(2009, 10, 7)
+        dr = YearToDateRange(year_start_month=2)
+        eq_(dr.display, 'Feb 2009 - Now')
+    
+    def test_year_with_start_month(self):
+        dr = YearRange(date(2009, 10, 7), year_start_month=5)
+        eq_(dr.display, 'May 2009 - Apr 2010')
     
 
 if __name__ == '__main__':

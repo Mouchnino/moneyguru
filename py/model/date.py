@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+from __future__ import division, unicode_literals
 
 import re
 from calendar import monthrange
@@ -150,9 +150,14 @@ class YearRange(NavigableDateRange):
         if isinstance(seed, DateRange):
             seed = seed.start
         year = seed.year
+        if seed.month < year_start_month:
+            year -= 1
         start = date(year, year_start_month, 1)
         end = inc_year(start, 1) - ONE_DAY
         DateRange.__init__(self, start, end)
+    
+    def around(self, date):
+        return type(self)(date, year_start_month=self.start.month)
     
     def next(self):
         return YearRange(inc_year(self.start, 1), year_start_month=self.start.month)
@@ -162,7 +167,7 @@ class YearRange(NavigableDateRange):
     
     @property
     def display(self):
-        return self.start.strftime('%Y')
+        return '{0} - {1}'.format(self.start.strftime('%b %Y'), self.end.strftime('%b %Y'))
     
 
 class YearToDateRange(DateRange):
@@ -179,7 +184,7 @@ class YearToDateRange(DateRange):
     
     @property
     def display(self):
-        return 'Year to date'
+        return '{0} - Now'.format(self.start.strftime('%b %Y'))
     
 
 class RunningYearRange(DateRange):
