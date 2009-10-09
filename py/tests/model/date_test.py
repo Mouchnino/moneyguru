@@ -154,9 +154,9 @@ class RangesNoSetup(TestCase):
         # start date is then one year earlier.
         self.mock_today(2009, 1, 25)
         dr = RunningYearRange(ahead_months=2)
-        self.assertEqual(dr.end, date(2009, 3, 31))
-        self.assertEqual(dr.start, date(2008, 4, 1))
-        self.assertEqual(dr.display, 'Running year')
+        eq_(dr.end, date(2009, 3, 31))
+        eq_(dr.start, date(2008, 4, 1))
+        eq_(dr.display, 'Running year (Apr - Mar)')
     
     def test_year_to_date(self):
         self.mock_today(2009, 10, 7)

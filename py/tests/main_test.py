@@ -352,9 +352,9 @@ class RangeOnRunningYear(TestCase):
     def test_date_range(self):
         # Running year (with the default 2 ahead months) starts 10 months in the past and ends 2 
         # months in the future, rounding the months. (default ahead_months is 2)
-        self.assertEqual(self.document.date_range.start, date(2008, 4, 1))
-        self.assertEqual(self.document.date_range.end, date(2009, 3, 31))
-        self.assertEqual(self.document.date_range.display, 'Running year')
+        eq_(self.document.date_range.start, date(2008, 4, 1))
+        eq_(self.document.date_range.end, date(2009, 3, 31))
+        eq_(self.document.date_range.display, 'Running year (Apr - Mar)')
     
     def test_prev_date_range(self):
         # prev_date_range() does nothing

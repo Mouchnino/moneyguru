@@ -205,7 +205,7 @@ class RunningYearRange(DateRange):
     
     @property
     def display(self):
-        return 'Running year'
+        return 'Running year ({0} - {1})'.format(self.start.strftime('%b'), self.end.strftime('%b'))
     
 
 class CustomDateRange(DateRange):
