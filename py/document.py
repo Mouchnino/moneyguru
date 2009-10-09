@@ -15,7 +15,7 @@ from itertools import dropwhile
 from hsutil import io
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
-from hsutil.misc import nonone, flatten, allsame, dedupe
+from hsutil.misc import nonone, flatten, allsame, dedupe, extract
 
 from .const import NOEDIT, UNRECONCILIATION_CONTINUE, UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE
 from .exception import FileFormatError, OperationAborted
@@ -557,7 +557,11 @@ class Document(Broadcaster, Listener):
     def delete_transactions(self, transactions):
         def prepare():
             action = Action('Remove transaction')
-            action.deleted_transactions |= set(transactions)
+            spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
+            schedules = set(spawn.recurrence for spawn in spawns)
+            action.deleted_transactions |= set(txns)
+            for schedule in schedules:
+                action.change_schedule(schedule)
             action.will_unreconcile |= set(flatten(t.splits for t in transactions))
             return action
         

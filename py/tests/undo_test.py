@@ -8,9 +8,10 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import copy
-import os.path as op
 import time
 from datetime import date
+
+from nose.tools import eq_
 
 from hsutil.currency import EUR
 
@@ -636,7 +637,7 @@ class ReconciledSplitsWithTransfersAndReferences(TestCase):
 class ScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('account')
+        self.add_account('account')
         self.setup_scheduled_transaction(account='account')
         self.mainwindow.select_schedule_table()
         self.sctable.select([0])
@@ -658,6 +659,19 @@ class ScheduledTransaction(TestCase, CommonSetup):
     @save_state_then_verify
     def test_delete_schedule(self):
         self.sctable.delete()
+    
+    def test_delete_spawn_undo_then_delete_again(self):
+        # There was a bug where a spawn deletion being undone would result in an undeletable spawn
+        # being put back into the ttable.
+        self.mainwindow.select_transaction_table()
+        self.ttable.select([0])
+        self.ttable.delete()
+        self.document.undo()
+        # we don't care about the exact len, we just care that it decreases by 1
+        len_before = len(self.ttable)
+        self.ttable.select([0])
+        self.ttable.delete()
+        eq_(len(self.ttable), len_before-1)
     
 
 class Budget(TestCase, CommonSetup):

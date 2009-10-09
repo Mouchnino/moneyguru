@@ -97,6 +97,7 @@ class Oven(object):
         spawns += self._budget_spawns(until_date, spawns)
         txns = self._transactions + spawns
         # we don't filter out txns > until_date because they might be budgets affecting current data
+        # XXX now that budget's base date is the start date, isn't this untrue?
         tocook = [t for t in txns if from_date <= t.date]
         tocook.sort(key=attrgetter('date'))
         for txn in tocook:
