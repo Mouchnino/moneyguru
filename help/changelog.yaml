@@ -1,3 +1,11 @@
+- date: 2009-10-09
+  version: 1.6.7
+  description: |
+    * Fixed a crash during import undo. (#84)
+    * Fixed a bug causing yearly date ranges not starting in January to go wrong after transaction 
+      edition. (#88)
+    * Changed yearly date range descriptions so that they explicitly show start/end months. (#88)
+    * Fixed a bug preventing certain scheduled transaction spawns from being deleted. (#87) 
 - date: 2009-09-26
   version: 1.6.6
   description: |
