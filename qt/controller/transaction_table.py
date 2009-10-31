@@ -53,4 +53,6 @@ class TransactionTable(QAbstractTableModel):
     def show_selected_row(self):
         pass
     
+    def stop_editing(self):
+        pass
     

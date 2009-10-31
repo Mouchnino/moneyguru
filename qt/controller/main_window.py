@@ -26,23 +26,66 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self._setupUi()
+        self.model.connect()
         self.model.select_transaction_table()
         
         # Actions
         self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
+        self.connect(self.actionNextDateRange, SIGNAL('triggered()'), self.nextDateRangeTriggered)
+        self.connect(self.actionPreviousDateRange, SIGNAL('triggered()'), self.previousDateRangeTriggered)
+        self.connect(self.actionChangeDateRangeMonth, SIGNAL('triggered()'), self.changeDateRangeMonthTriggered)
+        self.connect(self.actionChangeDateRangeQuarter, SIGNAL('triggered()'), self.changeDateRangeQuarterTriggered)
+        self.connect(self.actionChangeDateRangeYear, SIGNAL('triggered()'), self.changeDateRangeYearTriggered)
+        self.connect(self.actionChangeDateRangeYearToDate, SIGNAL('triggered()'), self.changeDateRangeYearToDateTriggered)
+        self.connect(self.actionChangeDateRangeRunningYear, SIGNAL('triggered()'), self.changeDateRangeRunningYearTriggered)
+        self.connect(self.actionChangeDateRangeCustom, SIGNAL('triggered()'), self.changeDateRangeCustomTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
         self.mainView.addWidget(self.tview)
+        self.dateRangeMenuButton.setMenu(self.menuDateRange)
     
     #--- Actions
+    def changeDateRangeCustomTriggered(self):
+        self.doc.model.select_custom_range()
+    
+    def changeDateRangeMonthTriggered(self):
+        self.doc.model.select_month_range()
+    
+    def changeDateRangeQuarterTriggered(self):
+        self.doc.model.select_quarter_range()
+    
+    def changeDateRangeRunningYearTriggered(self):
+        self.doc.model.select_running_year_range()
+    
+    def changeDateRangeYearTriggered(self):
+        self.doc.model.select_year_range()
+    
+    def changeDateRangeYearToDateTriggered(self):
+        self.doc.model.select_year_to_date_range()
+    
     def loadFileTriggered(self):
         title = "Select a document to load"
         docpath = unicode(QFileDialog.getOpenFileName(self, title))
         if docpath:
             self.doc.model.load_from_xml(docpath)
     
+    def nextDateRangeTriggered(self):
+        self.doc.model.select_next_date_range()
+    
+    def previousDateRangeTriggered(self):
+        self.doc.model.select_prev_date_range()
+    
     #--- model --> view
+    def animate_date_range_backward(self):
+        pass
+    
+    def animate_date_range_forward(self):
+        pass
+    
+    def refresh_date_range_selector(self):
+        self.dateRangeDisplayLabel.setText(self.doc.model.date_range.display)
+    
     def show_transaction_table(self):
         self.mainView.currentWidget().disconnect()
         self.mainView.setCurrentIndex(0)
