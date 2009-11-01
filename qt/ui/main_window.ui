@@ -99,34 +99,27 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="dateRangeDisplayLabel">
-         <property name="text">
-          <string>&lt;date range&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="dateRangeMenuButton">
+        <widget class="QPushButton" name="dateRangeButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>50</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>&lt;date range&gt;</string>
          </property>
          <property name="iconSize">
           <size>

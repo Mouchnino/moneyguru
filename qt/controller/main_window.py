@@ -57,7 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.nwview)
         self.mainView.addWidget(self.pview)
         self.mainView.addWidget(self.tview)
-        self.dateRangeMenuButton.setMenu(self.menuDateRange)
+        self.dateRangeButton.setMenu(self.menuDateRange)
     
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
@@ -115,7 +115,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pass
     
     def refresh_date_range_selector(self):
-        self.dateRangeDisplayLabel.setText(self.doc.model.date_range.display)
+        self.dateRangeButton.setText(self.doc.model.date_range.display)
     
     def show_balance_sheet(self):
         self._setMainWidgetIndex(0)        
