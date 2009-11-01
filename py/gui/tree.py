@@ -13,6 +13,9 @@ class Node(list):
     def __eq__(self, other):
         return self is other
     
+    def __hash__(self):
+        return object.__hash__(self)
+    
     def __repr__(self):
         return '<Node %r>' % self.name
     

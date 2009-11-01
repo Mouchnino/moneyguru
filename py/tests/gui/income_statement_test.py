@@ -42,7 +42,11 @@ class Pristine(TestCase):
     def test_income_statement(self):
         """The income statement is empty"""
         self.assertEqual([x.name for x in self.istatement], ['INCOME', 'EXPENSES', 'NET INCOME'])
-        
+    
+    def test_nodes_are_hashable(self):
+        # Just make sure it's possible to put the nodes in containers based on hashes.
+        eq_(len(set([self.istatement.income, self.istatement.expenses])), 2) # no crash
+    
 
 class AccountsAndEntries(TestCase, CommonSetup):
     def setUp(self):

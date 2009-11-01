@@ -15,17 +15,21 @@ from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
 from ui.main_window_ui import Ui_MainWindow
 
+from .networth_view import NetWorthView
+from .profit_view import ProfitView
 from .transaction_view import TransactionView
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
         QMainWindow.__init__(self, None)
         self.doc = doc
+        self.nwview = NetWorthView(doc=doc)
+        self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
-        children = [None, None, self.tview.ttable.model, None, None, None, None, None, None, None,
-            None]
-        self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self._setupUi()
+        children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
+            None, None, None, None, None, None, None, None]
+        self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.model.select_transaction_table()
         
@@ -41,6 +45,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionChangeDateRangeCustom, SIGNAL('triggered()'), self.changeDateRangeCustomTriggered)
         
         # Views
+        self.connect(self.actionShowNetWorth, SIGNAL('triggered()'), self.showNetWorthTriggered)        
+        self.connect(self.actionShowProfitLoss, SIGNAL('triggered()'), self.showProfitLossTriggered)        
         self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
     
         # Misc
@@ -48,8 +54,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
     def _setupUi(self):
         self.setupUi(self)
+        self.mainView.addWidget(self.nwview)
+        self.mainView.addWidget(self.pview)
         self.mainView.addWidget(self.tview)
         self.dateRangeMenuButton.setMenu(self.menuDateRange)
+    
+    def _setMainWidgetIndex(self, index):
+        self.mainView.currentWidget().disconnect()
+        self.mainView.setCurrentIndex(index)
+        self.mainView.currentWidget().connect()
     
     #--- Actions
     # Date range
@@ -78,6 +91,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.doc.model.select_prev_date_range()
     
     # Views
+    def showNetWorthTriggered(self):
+        self.model.select_balance_sheet()
+    
+    def showProfitLossTriggered(self):
+        self.model.select_income_statement()
+    
     def showTransactionsTriggered(self):
         self.model.select_transaction_table()
     
@@ -98,8 +117,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def refresh_date_range_selector(self):
         self.dateRangeDisplayLabel.setText(self.doc.model.date_range.display)
     
-    def show_transaction_table(self):
-        self.mainView.currentWidget().disconnect()
-        self.mainView.setCurrentIndex(0)
-        self.mainView.currentWidget().connect()
+    def show_balance_sheet(self):
+        self._setMainWidgetIndex(0)        
     
+    def show_income_statement(self):
+        self._setMainWidgetIndex(1)        
+    
+    def show_transaction_table(self):
+        self._setMainWidgetIndex(2)
