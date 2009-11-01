@@ -31,21 +31,48 @@ class Table(QAbstractTableModel):
     def data(self, index, role):
         if not index.isValid():
             return None
-        if role == Qt.DisplayRole:
+        if role in (Qt.DisplayRole, Qt.EditRole):
             row = self.model[index.row()]
             rowattr = self.ROWATTRS[index.column()]
             return getattr(row, rowattr)
         return None
+    
+    def flags(self, index):
+        if not index.isValid():
+            return Qt.ItemIsEnabled
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        rowattr = self.ROWATTRS[index.column()]
+        if self.model.can_edit_cell(rowattr, index.row()):
+            flags |= Qt.ItemIsEditable
+        return flags
     
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
             return self.HEADER[section]
         return None
     
+    def revert(self):
+        self.model.cancel_edits()
+    
     def rowCount(self, index):
         if index.isValid():
             return 0
         return len(self.model)
+    
+    def setData(self, index, value, role):
+        if not index.isValid():
+            return False
+        if role == Qt.EditRole:
+            row = self.model[index.row()]
+            rowattr = self.ROWATTRS[index.column()]
+            value = unicode(value.toString())
+            setattr(row, rowattr, value)
+            return True
+        return False
+    
+    def submit(self):
+        self.model.save_edits()
+        return True
     
     #--- model --> view
     def refresh(self):

@@ -116,7 +116,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.doc.model.load_from_xml(docpath)
     
     def showSelectedAccountTriggered(self):
-        print repr(self.doc.model.selected_account)
         self.doc.model.show_selected_account()
     
     #--- model --> view

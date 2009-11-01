@@ -19,16 +19,19 @@
    </property>
    <item>
     <widget class="QTableView" name="tableView">
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
      <attribute name="horizontalHeaderMinimumSectionSize">
       <number>18</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>18</number>
      </attribute>
-     <attribute name="horizontalHeaderMinimumSectionSize">
+     <attribute name="verticalHeaderDefaultSectionSize">
       <number>18</number>
      </attribute>
     </widget>

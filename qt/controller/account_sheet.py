@@ -65,7 +65,9 @@ class AccountSheet(TreeModel):
         if not index.isValid():
             return Qt.ItemIsEnabled
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
-        if index.column() == 0:
+        node = index.internalPointer()
+        rowattr = self.ROWATTRS[index.column()]
+        if getattr(node.ref, 'can_edit_' + rowattr, False):
             flags |= Qt.ItemIsEditable
         return flags
     
@@ -74,13 +76,29 @@ class AccountSheet(TreeModel):
             return self.HEADER[section]
         return None
     
+    def revert(self):
+        self.model.cancel_edits()
+    
+    def setData(self, index, value, role):
+        if not index.isValid():
+            return False
+        if role == Qt.EditRole:
+            node = index.internalPointer()
+            rowattr = self.ROWATTRS[index.column()]
+            value = unicode(value.toString())
+            setattr(node.ref, rowattr, value)
+            return True
+        return False
+    
+    def submit(self):
+        self.model.save_edits()
+        return True
+    
     #--- Events
     def currentRowChanged(self, current, previous):
-        print 'foo'
         if not current.isValid():
             return
         node = current.internalPointer()
-        print node.ref.name
         self.model.selected = node.ref
     
     #--- model --> view
