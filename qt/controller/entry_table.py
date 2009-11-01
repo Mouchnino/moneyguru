@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
-# Created On: 2009-10-31
+# Created On: 2009-11-01
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 # 
@@ -8,13 +8,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.transaction_table import TransactionTable as TransactionTableModel
+from moneyguru.gui.entry_table import EntryTable as EntryTableModel
 from .table import Table
 
-class TransactionTable(Table):
-    HEADER = ['Date', 'Description', 'From', 'To', 'Amount']
-    ROWATTRS = ['date', 'description', 'from_', 'to', 'amount']
+class EntryTable(Table):
+    HEADER = ['Date', 'Description', 'Transfer', 'Increase', 'Decrease', 'Balance']
+    ROWATTRS = ['date', 'description', 'transfer', 'increase', 'decrease', 'balance']
     
     def _getModel(self):
-        return TransactionTableModel(view=self, document=self.doc.model)
+        return EntryTableModel(view=self, document=self.doc.model)
     

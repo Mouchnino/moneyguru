@@ -18,6 +18,7 @@ from ui.main_window_ui import Ui_MainWindow
 from .networth_view import NetWorthView
 from .profit_view import ProfitView
 from .transaction_view import TransactionView
+from .entry_view import EntryView
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
@@ -26,9 +27,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nwview = NetWorthView(doc=doc)
         self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
+        self.eview = EntryView(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
-            None, None, None, None, None, None, None, None]
+            self.eview.etable.model, None, None, None, None, None, None, None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.model.select_transaction_table()
@@ -48,15 +50,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowNetWorth, SIGNAL('triggered()'), self.showNetWorthTriggered)        
         self.connect(self.actionShowProfitLoss, SIGNAL('triggered()'), self.showProfitLossTriggered)        
         self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
-    
+        self.connect(self.actionShowAccount, SIGNAL('triggered()'), self.showAccountTriggered)        
+        
         # Misc
         self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
-        
+        self.connect(self.actionShowSelectedAccount, SIGNAL('triggered()'), self.showSelectedAccountTriggered)
+    
     def _setupUi(self):
         self.setupUi(self)
         self.mainView.addWidget(self.nwview)
         self.mainView.addWidget(self.pview)
         self.mainView.addWidget(self.tview)
+        self.mainView.addWidget(self.eview)
         self.dateRangeButton.setMenu(self.menuDateRange)
     
     def _setMainWidgetIndex(self, index):
@@ -100,12 +105,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def showTransactionsTriggered(self):
         self.model.select_transaction_table()
     
+    def showAccountTriggered(self):
+        self.model.select_entry_table()
+    
     # Misc
     def loadFileTriggered(self):
         title = "Select a document to load"
         docpath = unicode(QFileDialog.getOpenFileName(self, title))
         if docpath:
             self.doc.model.load_from_xml(docpath)
+    
+    def showSelectedAccountTriggered(self):
+        print repr(self.doc.model.selected_account)
+        self.doc.model.show_selected_account()
     
     #--- model --> view
     def animate_date_range_backward(self):
@@ -120,8 +132,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_balance_sheet(self):
         self._setMainWidgetIndex(0)        
     
+    def show_entry_table(self):
+        self._setMainWidgetIndex(3)
+    
+    def show_line_graph(self):
+        pass
+    
     def show_income_statement(self):
         self._setMainWidgetIndex(1)        
     
     def show_transaction_table(self):
         self._setMainWidgetIndex(2)
+    

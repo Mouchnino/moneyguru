@@ -192,8 +192,15 @@
     <addaction name="menuDateRange"/>
     <addaction name="menuType_Here"/>
    </widget>
+   <widget class="QMenu" name="menuDocument">
+    <property name="title">
+     <string>Document</string>
+    </property>
+    <addaction name="actionShowSelectedAccount"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menuDocument"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -219,6 +226,9 @@
   <action name="actionLoadFile">
    <property name="text">
     <string>Load File...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
   <action name="actionPreviousDateRange">
@@ -295,6 +305,14 @@
    </property>
    <property name="text">
     <string>Account</string>
+   </property>
+  </action>
+  <action name="actionShowSelectedAccount">
+   <property name="text">
+    <string>Show Account</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+]</string>
    </property>
   </action>
  </widget>

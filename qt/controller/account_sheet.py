@@ -37,6 +37,8 @@ class AccountSheet(TreeModel):
         self.view = view
         self.model = self._getModel()
         self.view.setModel(self)
+        
+        self.connect(self.view.selectionModel(), SIGNAL('currentRowChanged(QModelIndex,QModelIndex)'), self.currentRowChanged)
     
     def _createNode(self, ref, row):
         return Node(self, None, ref, row)
@@ -71,6 +73,15 @@ class AccountSheet(TreeModel):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
             return self.HEADER[section]
         return None
+    
+    #--- Events
+    def currentRowChanged(self, current, previous):
+        print 'foo'
+        if not current.isValid():
+            return
+        node = current.internalPointer()
+        print node.ref.name
+        self.model.selected = node.ref
     
     #--- model --> view
     def refresh(self):
