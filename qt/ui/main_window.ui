@@ -202,6 +202,27 @@
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionShowNetWorth"/>
+   <addaction name="actionShowProfitLoss"/>
+   <addaction name="actionShowTransactions"/>
+   <addaction name="actionShowAccount"/>
+  </widget>
   <action name="actionLoadFile">
    <property name="text">
     <string>Load File...</string>
@@ -245,6 +266,42 @@
   <action name="actionChangeDateRangeCustom">
    <property name="text">
     <string>Custom...</string>
+   </property>
+  </action>
+  <action name="actionShowNetWorth">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/balance_sheet_48</normaloff>:/balance_sheet_48</iconset>
+   </property>
+   <property name="text">
+    <string>Net Worth</string>
+   </property>
+  </action>
+  <action name="actionShowProfitLoss">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/income_statement_48</normaloff>:/income_statement_48</iconset>
+   </property>
+   <property name="text">
+    <string>Profit &amp; Loss</string>
+   </property>
+  </action>
+  <action name="actionShowTransactions">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/transaction_table_48</normaloff>:/transaction_table_48</iconset>
+   </property>
+   <property name="text">
+    <string>Transactions</string>
+   </property>
+  </action>
+  <action name="actionShowAccount">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/entry_table_48</normaloff>:/entry_table_48</iconset>
+   </property>
+   <property name="text">
+    <string>Account</string>
    </property>
   </action>
  </widget>

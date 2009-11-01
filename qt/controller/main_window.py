@@ -30,7 +30,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.select_transaction_table()
         
         # Actions
-        self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
+        # Date range
         self.connect(self.actionNextDateRange, SIGNAL('triggered()'), self.nextDateRangeTriggered)
         self.connect(self.actionPreviousDateRange, SIGNAL('triggered()'), self.previousDateRangeTriggered)
         self.connect(self.actionChangeDateRangeMonth, SIGNAL('triggered()'), self.changeDateRangeMonthTriggered)
@@ -39,13 +39,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionChangeDateRangeYearToDate, SIGNAL('triggered()'), self.changeDateRangeYearToDateTriggered)
         self.connect(self.actionChangeDateRangeRunningYear, SIGNAL('triggered()'), self.changeDateRangeRunningYearTriggered)
         self.connect(self.actionChangeDateRangeCustom, SIGNAL('triggered()'), self.changeDateRangeCustomTriggered)
+        
+        # Views
+        self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
     
+        # Misc
+        self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
+        
     def _setupUi(self):
         self.setupUi(self)
         self.mainView.addWidget(self.tview)
         self.dateRangeMenuButton.setMenu(self.menuDateRange)
     
     #--- Actions
+    # Date range
     def changeDateRangeCustomTriggered(self):
         self.doc.model.select_custom_range()
     
@@ -64,17 +71,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def changeDateRangeYearToDateTriggered(self):
         self.doc.model.select_year_to_date_range()
     
-    def loadFileTriggered(self):
-        title = "Select a document to load"
-        docpath = unicode(QFileDialog.getOpenFileName(self, title))
-        if docpath:
-            self.doc.model.load_from_xml(docpath)
-    
     def nextDateRangeTriggered(self):
         self.doc.model.select_next_date_range()
     
     def previousDateRangeTriggered(self):
         self.doc.model.select_prev_date_range()
+    
+    # Views
+    def showTransactionsTriggered(self):
+        self.model.select_transaction_table()
+    
+    # Misc
+    def loadFileTriggered(self):
+        title = "Select a document to load"
+        docpath = unicode(QFileDialog.getOpenFileName(self, title))
+        if docpath:
+            self.doc.model.load_from_xml(docpath)
     
     #--- model --> view
     def animate_date_range_backward(self):

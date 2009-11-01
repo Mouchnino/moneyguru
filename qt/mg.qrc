@@ -1,4 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
+    <file alias="balance_sheet_48">images/balance_sheet_48.png</file>
+    <file alias="income_statement_48">images/income_statement_48.png</file>
+    <file alias="transaction_table_48">images/transaction_table_48.png</file>
+    <file alias="entry_table_48">images/entry_table_48.png</file>
 </qresource>
 </RCC>
