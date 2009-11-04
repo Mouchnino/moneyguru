@@ -63,7 +63,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="itemInfoButton">
+        <widget class="QPushButton" name="editItemButton">
          <property name="minimumSize">
           <size>
            <width>52</width>
@@ -315,6 +315,21 @@
     <string>Ctrl+]</string>
    </property>
   </action>
+  <action name="actionNewItem">
+   <property name="text">
+    <string>New Item</string>
+   </property>
+  </action>
+  <action name="actionDeleteItem">
+   <property name="text">
+    <string>Remove Item</string>
+   </property>
+  </action>
+  <action name="actionEditItem">
+   <property name="text">
+    <string>Edit Item</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../mg.qrc"/>
@@ -344,6 +359,54 @@
    <hints>
     <hint type="sourcelabel">
      <x>423</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>newItemButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionNewItem</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>25</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteItemButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionDeleteItem</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editItemButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionEditItem</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
      <y>451</y>
     </hint>
     <hint type="destinationlabel">
