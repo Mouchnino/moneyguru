@@ -52,6 +52,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
         self.connect(self.actionShowAccount, SIGNAL('triggered()'), self.showAccountTriggered)        
         
+        # Add Delete Edit
+        self.connect(self.newItemButton, SIGNAL('clicked()'), self.newItemButtonClicked)
+        self.connect(self.deleteItemButton, SIGNAL('clicked()'), self.deleteItemButtonClicked)
+        
         # Misc
         self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
         self.connect(self.actionShowSelectedAccount, SIGNAL('triggered()'), self.showSelectedAccountTriggered)
@@ -107,6 +111,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showAccountTriggered(self):
         self.model.select_entry_table()
+    
+    # Add Delete Edit
+    def newItemButtonClicked(self):
+        self.model.new_item()
+    
+    def deleteItemButtonClicked(self):
+        self.model.delete_item()
     
     # Misc
     def loadFileTriggered(self):

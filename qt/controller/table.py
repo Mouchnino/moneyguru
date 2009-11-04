@@ -8,7 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, QAbstractTableModel
+from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
+from PyQt4.QtGui import QItemSelectionModel, QItemSelection
 
 class Table(QAbstractTableModel):
     HEADER = []
@@ -20,9 +21,30 @@ class Table(QAbstractTableModel):
         self.view = view
         self.model = self._getModel()
         self.view.setModel(self)
+        
+        self.connect(self.view.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
     
     def _getModel(self):
         raise NotImplementedError()
+    
+    def _updateModelSelection(self):
+        # Takes the selection on the view's side and update the model with it.
+        # an _updateViewSelection() call will normally result in an _updateModelSelection() call.
+        # to avoid infinite loops, we check that the selection will actually change before calling
+        # model.select()
+        newIndexes = [modelIndex.row() for modelIndex in self.view.selectionModel().selectedRows()]
+        if newIndexes != self.model.selected_indexes:
+            self.model.select(newIndexes)
+    
+    def _updateViewSelection(self):
+        # Takes the selection on the model's side and update the view with it.
+        newSelection = QItemSelection()
+        columnCount = self.columnCount(QModelIndex())
+        for index in self.model.selected_indexes:
+            newSelection.select(self.createIndex(index, 0), self.createIndex(index, columnCount-1))
+        self.view.selectionModel().select(newSelection, QItemSelectionModel.ClearAndSelect)
+        if len(newSelection.indexes()):
+            self.view.selectionModel().setCurrentIndex(newSelection.indexes()[0], QItemSelectionModel.Current)
     
     #--- Data Model methods
     def columnCount(self, index):
@@ -74,12 +96,21 @@ class Table(QAbstractTableModel):
         self.model.save_edits()
         return True
     
+    #--- Events
+    def selectionChanged(self, selected, deselected):
+        self._updateModelSelection()
+    
     #--- model --> view
     def refresh(self):
         self.reset()
+        self._updateViewSelection()
     
     def show_selected_row(self):
         pass
+    
+    def start_editing(self):
+        selectedIndex = self.view.selectionModel().selectedRows()[0]
+        self.view.edit(selectedIndex)
     
     def stop_editing(self):
         pass
