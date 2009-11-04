@@ -85,20 +85,24 @@ class GUITable(Table):
         self.edited = None
     
     #--- Virtual
-    def _do_add(self): # must return a row to edit
+    def _do_add(self):
+        # Creates a new row, adds it in the table and returns it.
         return None
     
     def _do_delete(self):
+        # Delete the selected rows
         pass
     
     def _fill(self):
         # Called by refresh()
+        # Fills the table with all the rows that this table is supposed to have.
         pass
     
     def _is_edited_new(self):
         return False
     
     def _update_selection(self):
+        # Takes the table's selection and does appropriates updates on the Document's side.
         pass
     
     #--- Public
