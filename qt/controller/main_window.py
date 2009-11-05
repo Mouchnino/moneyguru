@@ -19,6 +19,7 @@ from .networth_view import NetWorthView
 from .profit_view import ProfitView
 from .transaction_view import TransactionView
 from .entry_view import EntryView
+from .transaction_panel import TransactionPanel
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
@@ -28,9 +29,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
         self.eview = EntryView(doc=doc)
+        self.tpanel = TransactionPanel(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
-            self.eview.etable.model, None, None, None, None, None, None, None]
+            self.eview.etable.model, None, None, None, self.tpanel.model, None, None, None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.model.select_transaction_table()
@@ -55,6 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Add Delete Edit
         self.connect(self.actionNewItem, SIGNAL('triggered()'), self.newItemTriggered)
         self.connect(self.actionDeleteItem, SIGNAL('triggered()'), self.deleteItemTriggered)
+        self.connect(self.actionEditItem, SIGNAL('triggered()'), self.editItemTriggered)
         
         # Misc
         self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
@@ -118,6 +121,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def deleteItemTriggered(self):
         self.model.delete_item()
+    
+    def editItemTriggered(self):
+        self.model.edit_item()
     
     # Misc
     def loadFileTriggered(self):
