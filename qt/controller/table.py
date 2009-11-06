@@ -19,7 +19,7 @@ class TableDelegate(QStyledItemDelegate):
         self._dateColumnIndexes = dateColumnIndexes
     
     def createEditor(self, parent, option, index):
-        if index.column() == 0:
+        if index.column() in self._dateColumnIndexes:
             return DateEdit(parent)
         else:
             return QStyledItemDelegate.createEditor(self, parent, option, index)
