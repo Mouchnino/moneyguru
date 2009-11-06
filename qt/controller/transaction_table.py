@@ -14,6 +14,7 @@ from .table import Table
 class TransactionTable(Table):
     HEADER = ['Date', 'Description', 'From', 'To', 'Amount']
     ROWATTRS = ['date', 'description', 'from_', 'to', 'amount']
+    DATECOLUMNS = frozenset(['date'])
     
     def _getModel(self):
         return TransactionTableModel(view=self, document=self.doc.model)

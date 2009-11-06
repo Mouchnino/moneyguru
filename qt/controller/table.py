@@ -9,11 +9,26 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
-from PyQt4.QtGui import QItemSelectionModel, QItemSelection
+from PyQt4.QtGui import QItemSelectionModel, QItemSelection, QStyledItemDelegate
+
+from support.date_edit import DateEdit
+
+class TableDelegate(QStyledItemDelegate):
+    def __init__(self, dateColumnIndexes):
+        QStyledItemDelegate.__init__(self)
+        self._dateColumnIndexes = dateColumnIndexes
+    
+    def createEditor(self, parent, option, index):
+        if index.column() == 0:
+            return DateEdit(parent)
+        else:
+            return QStyledItemDelegate.createEditor(self, parent, option, index)
+    
 
 class Table(QAbstractTableModel):
     HEADER = []
     ROWATTRS = []
+    DATECOLUMNS = frozenset()
     
     def __init__(self, doc, view):
         QAbstractTableModel.__init__(self)
@@ -21,6 +36,9 @@ class Table(QAbstractTableModel):
         self.view = view
         self.model = self._getModel()
         self.view.setModel(self)
+        dateColumnIndexes = frozenset(i for i, attr in enumerate(self.ROWATTRS) if attr in self.DATECOLUMNS)
+        self.tableDelegate = TableDelegate(dateColumnIndexes)
+        self.view.setItemDelegate(self.tableDelegate)
         
         self.connect(self.view.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
     

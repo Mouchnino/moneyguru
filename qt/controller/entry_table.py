@@ -14,6 +14,7 @@ from .table import Table
 class EntryTable(Table):
     HEADER = ['Date', 'Description', 'Transfer', 'Increase', 'Decrease', 'Balance']
     ROWATTRS = ['date', 'description', 'transfer', 'increase', 'decrease', 'balance']
+    DATECOLUMNS = frozenset(['date'])
     
     def _getModel(self):
         return EntryTableModel(view=self, document=self.doc.model)
