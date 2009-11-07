@@ -21,37 +21,19 @@ class Chart(DocumentGUIObject):
         raise NotImplementedError()
     
     #--- Event Handlers
-    def account_changed(self):
+    def _data_changed(self):
         self.compute()
         self.view.refresh()
     
-    def account_deleted(self):
-        self.compute()
-        self.view.refresh()
-    
-    def date_range_changed(self):
-        self.compute()
-        self.view.refresh()
-    
-    def entries_imported(self):
-        self.compute()
-        self.view.refresh()
-    
-    def entry_changed(self):
-        self.compute()
-        self.view.refresh()
-    
-    def entry_deleted(self):
-        self.compute()
-        self.view.refresh()
-    
-    def redone(self):
-        self.compute()
-        self.view.refresh()
-    
-    def undone(self):
-        self.compute()
-        self.view.refresh()
+    account_changed = _data_changed
+    account_deleted = _data_changed
+    date_range_changed = _data_changed
+    entries_imported = _data_changed
+    entry_changed = _data_changed
+    entry_deleted = _data_changed
+    file_loaded = _data_changed
+    redone = _data_changed
+    undone = _data_changed
     
     #--- Properties
     @property

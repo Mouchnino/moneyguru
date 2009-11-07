@@ -268,6 +268,7 @@ class Report(DocumentGUIObject, tree.Tree):
     def file_loaded(self):
         self.refresh()
         self._select_first()
+        self.view.refresh()
     
     def redone(self):
         self.refresh()
