@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
-# Created On: 2009-11-06
+# Created On: 2009-11-07
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 # 
@@ -8,13 +8,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.net_worth_graph import NetWorthGraph as NetWorthGraphModel
+from moneyguru.gui.profit_graph import ProfitGraph as ProfitGraphModel
 
-class NetWorthGraph(object):
+class ProfitGraph(object):
     def __init__(self, doc, view):
         self.doc = doc
         self.view = view
-        self.model = NetWorthGraphModel(document=doc.model, view=self)
+        self.model = ProfitGraphModel(document=doc.model, view=self)
         self.view.dataSource = self.model
     
     #--- model --> view

@@ -10,15 +10,17 @@
 
 from .base_view import BaseView
 from .profit_sheet import ProfitSheet
-from ui.sheet_view_ui import Ui_SheetView
+from .profit_graph import ProfitGraph
+from ui.profit_view_ui import Ui_ProfitView
 
-class ProfitView(BaseView, Ui_SheetView):
+class ProfitView(BaseView, Ui_ProfitView):
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
         self.psheet = ProfitSheet(doc=doc, view=self.treeView)
-        self.children = [self.psheet]
+        self.pgraph = ProfitGraph(doc=doc, view=self.graphView)
+        self.children = [self.psheet, self.pgraph]
     
     def _setupUi(self):
         self.setupUi(self)

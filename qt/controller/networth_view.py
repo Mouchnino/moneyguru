@@ -11,9 +11,9 @@
 from .base_view import BaseView
 from .networth_sheet import NetWorthSheet
 from .networth_graph import NetWorthGraph
-from ui.sheet_view_ui import Ui_SheetView
+from ui.networth_view_ui import Ui_NetWorthView
 
-class NetWorthView(BaseView, Ui_SheetView):
+class NetWorthView(BaseView, Ui_NetWorthView):
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc

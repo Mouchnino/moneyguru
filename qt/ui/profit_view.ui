@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SheetView</class>
- <widget class="QWidget" name="SheetView">
+ <class>ProfitView</class>
+ <widget class="QWidget" name="ProfitView">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item>
-    <widget class="GraphView" name="graphView" native="true">
+    <widget class="BarGraphView" name="graphView" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -38,9 +38,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GraphView</class>
+   <class>BarGraphView</class>
    <extends>QWidget</extends>
-   <header>support.graph_view</header>
+   <header>support.bar_graph_view</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

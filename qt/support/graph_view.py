@@ -10,7 +10,7 @@
 
 from __future__ import division
 
-from PyQt4.QtCore import Qt, QPoint, QPointF
+from PyQt4.QtCore import Qt, QPoint
 from PyQt4.QtGui import QWidget, QPainter, QFont, QFontMetrics, QPen, QColor, QBrush, QLinearGradient
 
 class GraphView(QWidget):
@@ -24,35 +24,19 @@ class GraphView(QWidget):
     def __init__(self, parent):
         QWidget.__init__(self, parent)
         self.dataSource = None
+        pen = QPen()
+        pen.setColor(QColor(20, 158, 11))
+        pen.setWidthF(self.LINE_WIDTH)
+        self.linePen = pen
+        
+        gradient = QLinearGradient(0, 0, 0, 1)
+        gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
+        gradient.setColorAt(0, QColor(93, 188, 86)) # dark green
+        gradient.setColorAt(1, QColor(164, 216, 158)) # light green
+        self.graphBrush = QBrush(gradient)
     
     def _drawGraph(self, painter, xFactor, yFactor):
-        ds = self.dataSource
-        if len(ds.data) < 2:
-            return
-            
-        lineColor = QColor(20, 158, 11)
-        linePen = QPen(painter.pen())
-        linePen.setColor(lineColor)
-        linePen.setWidthF(self.LINE_WIDTH)
-        
-        gradient = QLinearGradient(0, ds.ymax*yFactor, 0, ds.ymin*yFactor)
-        gradient.setColorAt(0, QColor(164, 216, 158)) # light green
-        gradient.setColorAt(1, QColor(93, 188, 86)) # dark green
-        graphBrush = QBrush(gradient)
-        
-        # draw the line
-        points = [QPointF(x*xFactor, y*yFactor) for x, y in ds.data]
-        painter.setPen(linePen)
-        painter.drawPolyline(*points)
-        
-        # close the polygon and fill it.
-        firstPoint = points[0]
-        lastPoint = points[-1]
-        points.append(QPointF(lastPoint.x(), 0))
-        points.append(QPointF(firstPoint.x(), 0))
-        painter.setPen(QPen(Qt.NoPen))
-        painter.setBrush(graphBrush)
-        painter.drawPolygon(*points)
+        raise NotImplementedError()
     
     def paintEvent(self, event):
         QWidget.paintEvent(self, event)
@@ -67,9 +51,9 @@ class GraphView(QWidget):
         labelsFont.setPointSize(self.LABEL_FONT_SIZE)
         labelsFontM = QFontMetrics(labelsFont)
         
-        linePen = QPen(painter.pen())
-        linePen.setColor(Qt.darkGray)
-        linePen.setWidthF(self.LINE_WIDTH)
+        axisPen = QPen(painter.pen())
+        axisPen.setColor(Qt.darkGray)
+        axisPen.setWidthF(self.LINE_WIDTH)
         
         viewWidth = self.width()
         viewHeight = self.height()
@@ -95,7 +79,7 @@ class GraphView(QWidget):
         shiftY = self.PADDING + graphTop
         painter.translate(shiftX, shiftY)
         painter.scale(1, -1)
-        painter.setPen(linePen)
+        painter.setPen(axisPen)
         
         painter.save()
         self._drawGraph(painter, xFactor, yFactor)
