@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>484</width>
-    <height>354</height>
+    <width>558</width>
+    <height>447</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,26 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="GraphView" name="graphView" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+      </size>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphView</class>
+   <extends>QWidget</extends>
+   <header>support.graph_view</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

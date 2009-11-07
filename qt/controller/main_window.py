@@ -35,7 +35,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.eview.etable.model, None, None, None, self.tpanel.model, None, None, None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
-        self.model.select_transaction_table()
         
         # Actions
         # Date range

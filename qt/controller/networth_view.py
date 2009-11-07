@@ -10,6 +10,7 @@
 
 from .base_view import BaseView
 from .networth_sheet import NetWorthSheet
+from .networth_graph import NetWorthGraph
 from ui.sheet_view_ui import Ui_SheetView
 
 class NetWorthView(BaseView, Ui_SheetView):
@@ -18,7 +19,8 @@ class NetWorthView(BaseView, Ui_SheetView):
         self.doc = doc
         self._setupUi()
         self.nwsheet = NetWorthSheet(doc=doc, view=self.treeView)
-        self.children = [self.nwsheet]
+        self.nwgraph = NetWorthGraph(doc=doc, view=self.graphView)
+        self.children = [self.nwsheet, self.nwgraph]
     
     def _setupUi(self):
         self.setupUi(self)
