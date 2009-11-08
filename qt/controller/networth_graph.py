@@ -10,14 +10,7 @@
 
 from moneyguru.gui.net_worth_graph import NetWorthGraph as NetWorthGraphModel
 
-class NetWorthGraph(object):
-    def __init__(self, doc, view):
-        self.doc = doc
-        self.view = view
-        self.model = NetWorthGraphModel(document=doc.model, view=self)
-        self.view.dataSource = self.model
-    
-    #--- model --> view
-    def refresh(self):
-        self.view.update()
-    
+from .chart import Chart
+
+class NetWorthGraph(Chart):
+    CHART_MODEL_CLASS = NetWorthGraphModel

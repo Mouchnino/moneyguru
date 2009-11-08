@@ -13,16 +13,34 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QTreeView" name="treeView">
-     <property name="uniformRowHeights">
-      <bool>true</bool>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTreeView" name="treeView">
+       <property name="uniformRowHeights">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="PieChartView" name="incomePieChart" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="PieChartView" name="expensePieChart" native="true"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="BarGraphView" name="graphView" native="true">
@@ -41,6 +59,12 @@
    <class>BarGraphView</class>
    <extends>QWidget</extends>
    <header>support.bar_graph_view</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PieChartView</class>
+   <extends>QWidget</extends>
+   <header>support.pie_chart_view</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

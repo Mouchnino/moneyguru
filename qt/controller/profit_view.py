@@ -11,6 +11,8 @@
 from .base_view import BaseView
 from .profit_sheet import ProfitSheet
 from .profit_graph import ProfitGraph
+from .income_pie_chart import IncomePieChart
+from .expense_pie_chart import ExpensePieChart
 from ui.profit_view_ui import Ui_ProfitView
 
 class ProfitView(BaseView, Ui_ProfitView):
@@ -20,7 +22,9 @@ class ProfitView(BaseView, Ui_ProfitView):
         self._setupUi()
         self.psheet = ProfitSheet(doc=doc, view=self.treeView)
         self.pgraph = ProfitGraph(doc=doc, view=self.graphView)
-        self.children = [self.psheet, self.pgraph]
+        self.ipiechart = IncomePieChart(doc=doc, view=self.incomePieChart)
+        self.epiechart = ExpensePieChart(doc=doc, view=self.expensePieChart)
+        self.children = [self.psheet, self.pgraph, self.ipiechart, self.epiechart]
     
     def _setupUi(self):
         self.setupUi(self)
