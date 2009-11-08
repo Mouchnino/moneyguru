@@ -150,8 +150,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_entry_table(self):
         self._setMainWidgetIndex(3)
     
+    def show_bar_graph(self):
+        self.eview.showBarGraph()
+    
     def show_line_graph(self):
-        pass
+        self.eview.showLineGraph()
     
     def show_income_statement(self):
         self._setMainWidgetIndex(1)        
