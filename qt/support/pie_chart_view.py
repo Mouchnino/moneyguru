@@ -15,7 +15,10 @@ from PyQt4.QtCore import Qt, QPointF, QRectF
 from PyQt4.QtGui import QWidget, QPainter, QFont, QFontMetrics, QPen, QColor, QBrush, QLinearGradient
 
 class PieChartView(QWidget):
-    PADDING = 16
+    PADDING = 4
+    TITLE_FONT_FAMILY = "Lucida Grande"
+    TITLE_FONT_SIZE = 15
+    LINE_WIDTH = 1
     
     def __init__(self, parent):
         QWidget.__init__(self, parent)
@@ -38,6 +41,8 @@ class PieChartView(QWidget):
             gradient.setColorAt(1, color.lighter())
             gradients.append(gradient)
         self.gradients = gradients
+        
+        self.titleFont = QFont(self.TITLE_FONT_FAMILY, self.TITLE_FONT_SIZE, QFont.Bold)
     
     def paintEvent(self, event):
         QWidget.paintEvent(self, event)
@@ -48,17 +53,34 @@ class PieChartView(QWidget):
         painter.fillRect(self.rect(), Qt.white)
         ds = self.dataSource
         
+        # view dimensions
         viewWidth = self.width()
         viewHeight = self.height()
+        
+        # title dimensions
+        titleText = ds.title
+        painter.setFont(self.titleFont)
+        fm = painter.fontMetrics()
+        titleHeight = fm.height()
+        titleAscent = fm.ascent()
+        titleWidth = fm.width(titleText)
+        
+        # circle coords
         maxWidth = viewWidth - (self.PADDING * 2)
-        maxHeight = viewHeight - (self.PADDING * 2)
+        maxHeight = viewHeight - titleHeight - (self.PADDING * 2)
         circleSize = min(maxWidth, maxHeight)
         radius = circleSize / 2
         centerX = viewWidth / 2 
-        centerY = viewHeight / 2
+        centerY = ((viewHeight - titleHeight) / 2) + titleHeight
         circleRect = QRectF(centerX - radius, centerY - radius, circleSize, circleSize)
         
-        # pie
+        # draw title
+        painter.setFont(self.titleFont)
+        titleX = (viewWidth - titleWidth) / 2
+        titleY = self.PADDING + titleAscent
+        painter.drawText(QPointF(titleX, titleY), titleText)
+        
+        # draw pie
         totalAmount = sum(amount for _, amount in ds.data)
         startAngle = 0
         for (_, amount), gradient in zip(ds.data, self.gradients):
