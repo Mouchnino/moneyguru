@@ -10,6 +10,7 @@
 
 from __future__ import division
 
+from itertools import combinations
 from math import radians, sin
 
 from PyQt4.QtCore import Qt, QPointF, QRectF, QSizeF
@@ -44,13 +45,43 @@ def rectFromCenter(center, size):
     y = center.y() - size.height() / 2
     return QRectF(QPointF(x, y), size)
 
+def pullRectIn(rect, container):
+    if container.contains(rect):
+        return
+    if rect.top() < container.top():
+        rect.moveTop(container.top())
+    elif rect.bottom() > container.bottom():
+        rect.moveBottom(container.bottom())
+    if rect.left() < container.left():
+        rect.moveLeft(container.left())
+    elif rect.right() > container.right():
+        rect.moveRight(container.right())
+
+class Legend(object):
+    PADDING = 2 # the padding between legend text and the rectangle behind it
+    
+    def __init__(self, text, color, angle):
+        self.text = text
+        self.color = color
+        self.angle = angle
+        self.textRect = None
+        self.labelRect = None
+    
+    def computeLabelRect(self):
+        padding = self.PADDING
+        self.labelRect = self.textRect.adjusted(-padding, -padding, padding*2, padding*2)
+    
+    def computeTextRect(self):
+        padding = self.PADDING
+        self.textRect = self.labelRect.adjusted(padding, padding, -padding*2, -padding*2)
+    
+
 class PieChartView(QWidget):
     PADDING = 4
     TITLE_FONT_FAMILY = "Lucida Grande"
     TITLE_FONT_SIZE = 15
     LEGEND_FONT_FAMILY = "Lucida Grande"
     LEGEND_FONT_SIZE = 11
-    LEGEND_PADDING = 2 # the padding between legend text and the rectangle behind it
     LINE_WIDTH = 1
     
     def __init__(self, parent):
@@ -119,33 +150,72 @@ class PieChartView(QWidget):
         # draw pie
         totalAmount = sum(amount for _, amount in ds.data)
         startAngle = 0
-        legendAngles = []
-        for (_, amount), gradient in zip(ds.data, self.gradients):
+        legends = []
+        for (legendText, amount), gradient in zip(ds.data, self.gradients):
             fraction = amount / totalAmount
             angle = fraction * 360
             painter.setBrush(QBrush(gradient))
             # pie slices have to be drawn with 1/16th of an angle as argument
             painter.drawPie(circleRect, startAngle*16, angle*16)
-            legendAngles.append(startAngle + (angle / 2))
-            startAngle += angle
-        
-        # draw legends
-        painter.setFont(self.legendFont)
-        painter.setBrush(QBrush(Qt.white))
-        fm = painter.fontMetrics()
-        legendHeight = fm.height()
-        legendPadding = self.LEGEND_PADDING
-        for (text, _), angle, gradient in zip(ds.data, legendAngles, self.gradients):
-            point = pointInCircle(center, radius, angle)
             # stops is a QVector<QPair<qreal, QColor>>. We chose the dark color of the gardient.
             legendColor = gradient.stops()[0][1]
-            legendWidth = fm.width(text)
-            legendRect = rectFromCenter(point, QSizeF(legendWidth, legendHeight))
-            labelRect = legendRect.adjusted(-legendPadding, -legendPadding, legendPadding*2, legendPadding*2)
-            pen = QPen(legendColor)
+            legendAngle = startAngle + (angle / 2)
+            legend = Legend(text=legendText, color=legendColor, angle=legendAngle)
+            legends.append(legend)
+            startAngle += angle
+        
+        # compute legend rects
+        painter.setFont(self.legendFont)
+        fm = painter.fontMetrics()
+        legendHeight = fm.height()
+        
+        # base rects
+        for legend in legends:
+            point = pointInCircle(center, radius, legend.angle)
+            legendWidth = fm.width(legend.text)
+            legend.textRect = rectFromCenter(point, QSizeF(legendWidth, legendHeight))
+            legend.computeLabelRect()
+        
+        # make sure they're inside circleBounds
+        for legend in legends:
+            pullRectIn(legend.labelRect, circleBounds)
+        
+        # now, the tricky part: Make sure the labels are not over one another. It's not always
+        # possible, and doing it properly can get very complicated. What we're doing here is to 
+        # first to compare every rect with the next one, and if they intersect, we move the highest
+        # one further up. After that, it's possible that intersects still exist, but they'd me more
+        # on the X axis, so we compare each rect with every other, and we move them apart on the X
+        # axis as much as we can (within circleBounds).
+        for legend1, legend2 in zip(legends, legends[1:]):
+            rect1, rect2 = legend1.labelRect, legend2.labelRect
+            inter = rect1 & rect2
+            if inter.isEmpty():
+                continue
+            highest = rect1 if rect1.top() < rect2.top() else rect2
+            highest.translate(0, -inter.height())
+        
+        for legend1, legend2 in combinations(legends, 2):
+            rect1, rect2 = legend1.labelRect, legend2.labelRect
+            inter = rect1 & rect2
+            if inter.isEmpty():
+                continue
+            leftr, rightr = (rect1, rect2) if rect1.left() < rect2.left() else (rect2, rect1)
+            leftr.translate(-inter.width(), 0)
+            pullRectIn(leftr, circleBounds)
+            inter = leftr & rightr
+            if inter.isEmpty():
+                continue
+            rightr.translate(inter.width(), 0)
+            pullRectIn(rightr, circleBounds) # at this point, if we still have inter, we don't care
+        
+        # draw legends
+        painter.setBrush(QBrush(Qt.white))
+        for legend in legends:
+            pen = QPen(legend.color)
             pen.setWidth(self.LINE_WIDTH)
             painter.setPen(pen)
-            painter.drawRect(labelRect) # The label behind the text
+            painter.drawRect(legend.labelRect) # The label behind the text
             painter.setPen(QPen(Qt.black))
-            painter.drawText(legendRect, 0, text) # the text
+            legend.computeTextRect()
+            painter.drawText(legend.textRect, 0, legend.text) # the text
     
