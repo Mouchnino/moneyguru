@@ -64,6 +64,7 @@ class Legend(object):
         self.text = text
         self.color = color
         self.angle = angle
+        self.basePoint = None
         self.textRect = None
         self.labelRect = None
     
@@ -171,9 +172,9 @@ class PieChartView(QWidget):
         
         # base rects
         for legend in legends:
-            point = pointInCircle(center, radius, legend.angle)
+            legend.basePoint = pointInCircle(center, radius, legend.angle)
             legendWidth = fm.width(legend.text)
-            legend.textRect = rectFromCenter(point, QSizeF(legendWidth, legendHeight))
+            legend.textRect = rectFromCenter(legend.basePoint, QSizeF(legendWidth, legendHeight))
             legend.computeLabelRect()
         
         # make sure they're inside circleBounds
@@ -185,27 +186,30 @@ class PieChartView(QWidget):
         # first to compare every rect with the next one, and if they intersect, we move the highest
         # one further up. After that, it's possible that intersects still exist, but they'd me more
         # on the X axis, so we compare each rect with every other, and we move them apart on the X
-        # axis as much as we can (within circleBounds).
+        # axis as much as we can (within circleBounds). This is not perfect because in some cases
+        # it moves labels on the Y axis when it would be prettier to move them on the X axis, but
+        # handling those cases would likely make the code significantly more complex.
         for legend1, legend2 in zip(legends, legends[1:]):
             rect1, rect2 = legend1.labelRect, legend2.labelRect
-            inter = rect1 & rect2
-            if inter.isEmpty():
+            if not rect1.intersects(rect2):
                 continue
-            highest = rect1 if rect1.top() < rect2.top() else rect2
-            highest.translate(0, -inter.height())
+            # Here, we use legend.basePoint.y() rather than rect.top() to determine which rect is
+            # the highest because rect1 might already have been pushed up earlier, and end up being
+            # the highest, when in fact it's rect2 that "deserves" to be the highest.
+            p1, p2 = legend1.basePoint, legend2.basePoint
+            highest, lowest = (rect1, rect2) if p1.y() < p2.y() else (rect2, rect1)
+            highest.moveBottom(lowest.top()-1)
         
         for legend1, legend2 in combinations(legends, 2):
             rect1, rect2 = legend1.labelRect, legend2.labelRect
-            inter = rect1 & rect2
-            if inter.isEmpty():
+            if not rect1.intersects(rect2):
                 continue
             leftr, rightr = (rect1, rect2) if rect1.left() < rect2.left() else (rect2, rect1)
-            leftr.translate(-inter.width(), 0)
+            leftr.moveRight(rightr.left()-1)
             pullRectIn(leftr, circleBounds)
-            inter = leftr & rightr
-            if inter.isEmpty():
+            if not leftr.intersects(rightr):
                 continue
-            rightr.translate(inter.width(), 0)
+            rightr.moveLeft(leftr.right()+1)
             pullRectIn(rightr, circleBounds) # at this point, if we still have inter, we don't care
         
         # draw legends
