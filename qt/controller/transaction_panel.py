@@ -12,12 +12,13 @@ from PyQt4.QtGui import QDialog
 
 from moneyguru.gui.transaction_panel import TransactionPanel as TransactionPanelModel
 
+from .panel import Panel
 from .split_table import SplitTable
 from ui.transaction_panel_ui import Ui_TransactionPanel
 
-class TransactionPanel(QDialog, Ui_TransactionPanel):
+class TransactionPanel(Panel, Ui_TransactionPanel):
     def __init__(self, doc):
-        QDialog.__init__(self, None)
+        Panel.__init__(self)
         self._setupUi()
         self.doc = doc
         self.model = TransactionPanelModel(view=self, document=doc.model)
@@ -39,21 +40,7 @@ class TransactionPanel(QDialog, Ui_TransactionPanel):
     def _setupUi(self):
         self.setupUi(self)
     
-    def accept(self):
-        self.model.save()
-        QDialog.accept(self)
-    
     #--- model --> view
-    def pre_load(self):
-        pass
-    
-    def pre_save(self):
-        self._saveFields()
-    
-    def post_load(self):
-        self._loadFields()
-        self.show()
-    
     def refresh_mct_button(self):
         pass
     

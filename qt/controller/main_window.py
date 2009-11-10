@@ -19,6 +19,7 @@ from .networth_view import NetWorthView
 from .profit_view import ProfitView
 from .transaction_view import TransactionView
 from .entry_view import EntryView
+from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -29,10 +30,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
         self.eview = EntryView(doc=doc)
+        self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
-            self.eview.etable.model, None, None, None, self.tpanel.model, None, None, None]
+            self.eview.etable.model, None, None, self.apanel.model, self.tpanel.model, None, None,
+            None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         

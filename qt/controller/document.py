@@ -14,3 +14,7 @@ class Document(object):
     def __init__(self, app):
         self.model = DocumentModel(view=self, app=app.model)
     
+    # model --> view
+    def query_for_schedule_scope(self):
+        return False
+    
