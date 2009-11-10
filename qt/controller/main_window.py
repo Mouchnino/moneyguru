@@ -56,14 +56,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
         self.connect(self.actionShowAccount, SIGNAL('triggered()'), self.showAccountTriggered)        
         
-        # Add Delete Edit
+        # Document Edition
         self.connect(self.actionNewItem, SIGNAL('triggered()'), self.newItemTriggered)
+        self.connect(self.actionNewAccountGroup, SIGNAL('triggered()'), self.newAccountGroupTriggered)
         self.connect(self.actionDeleteItem, SIGNAL('triggered()'), self.deleteItemTriggered)
         self.connect(self.actionEditItem, SIGNAL('triggered()'), self.editItemTriggered)
+        self.connect(self.actionMoveUp, SIGNAL('triggered()'), self.moveUpTriggered)
+        self.connect(self.actionMoveDown, SIGNAL('triggered()'), self.moveDownTriggered)
         
         # Misc
         self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
         self.connect(self.actionShowSelectedAccount, SIGNAL('triggered()'), self.showSelectedAccountTriggered)
+        self.connect(self.actionNavigateBack, SIGNAL('triggered()'), self.navigateBackTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -117,15 +121,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def showAccountTriggered(self):
         self.model.select_entry_table()
     
-    # Add Delete Edit
+    # Document Edition
     def newItemTriggered(self):
         self.model.new_item()
+    
+    def newAccountGroupTriggered(self):
+        self.model.new_group()
     
     def deleteItemTriggered(self):
         self.model.delete_item()
     
     def editItemTriggered(self):
         self.model.edit_item()
+    
+    def moveUpTriggered(self):
+        self.model.move_up()
+    
+    def moveDownTriggered(self):
+        self.model.move_down()
     
     # Misc
     def loadFileTriggered(self):
@@ -136,6 +149,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showSelectedAccountTriggered(self):
         self.doc.model.show_selected_account()
+    
+    def navigateBackTriggered(self):
+        self.model.navigate_back()
     
     #--- model --> view
     def animate_date_range_backward(self):

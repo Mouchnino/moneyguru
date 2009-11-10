@@ -196,11 +196,19 @@
     <property name="title">
      <string>Document</string>
     </property>
+    <addaction name="actionNewItem"/>
+    <addaction name="actionNewAccountGroup"/>
+    <addaction name="separator"/>
+    <addaction name="actionEditItem"/>
+    <addaction name="actionMoveUp"/>
+    <addaction name="actionMoveDown"/>
+    <addaction name="separator"/>
     <addaction name="actionShowSelectedAccount"/>
+    <addaction name="actionNavigateBack"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuView"/>
    <addaction name="menuDocument"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -319,6 +327,9 @@
    <property name="text">
     <string>New Item</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionDeleteItem">
    <property name="text">
@@ -327,7 +338,42 @@
   </action>
   <action name="actionEditItem">
    <property name="text">
-    <string>Edit Item</string>
+    <string>Show Info</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionMoveUp">
+   <property name="text">
+    <string>Move Up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionMoveDown">
+   <property name="text">
+    <string>Move Down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionNavigateBack">
+   <property name="text">
+    <string>Go Back</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+[</string>
+   </property>
+  </action>
+  <action name="actionNewAccountGroup">
+   <property name="text">
+    <string>New Account Group</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
    </property>
   </action>
  </widget>

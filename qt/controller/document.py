@@ -15,6 +15,9 @@ class Document(object):
         self.model = DocumentModel(view=self, app=app.model)
     
     # model --> view
+    def confirm_unreconciliation(self, affectedSplitCount):
+        return 2 # continue, don't reconcile
+    
     def query_for_schedule_scope(self):
         return False
     

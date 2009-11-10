@@ -10,8 +10,7 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt, SIGNAL, QMimeData, QByteArray
-from PyQt4.QtGui import QPixmap
+from PyQt4.QtCore import Qt, SIGNAL
 
 from qtlib.tree_model import TreeNode, TreeModel
 
@@ -105,6 +104,15 @@ class AccountSheet(TreeModel):
     def refresh(self):
         self.reset()
     
+    def start_editing(self):
+        selectedIndex = self.view.selectionModel().selectedRows()[0]
+        self.view.edit(selectedIndex)
+    
     def stop_editing(self):
         pass
+    
+    def update_selection(self):
+        selectedPath = self.model.selected_path
+        modelIndex = self.findIndex(selectedPath)
+        self.view.setCurrentIndex(modelIndex)
     
