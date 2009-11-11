@@ -21,7 +21,7 @@ class GraphView(QWidget):
     XLABELS_PADDING = 3
     YLABELS_PADDING = 8
     
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.dataSource = None
         pen = QPen()

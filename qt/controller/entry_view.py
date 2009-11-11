@@ -31,20 +31,14 @@ class EntryView(BaseView, Ui_EntryView):
     
     def _setupUi(self):
         self.setupUi(self)
-        self.lineGraphView = LineGraphView(None)
-        self.lineGraphView.setMinimumSize(QSize(0, 200))
-        self.barGraphView = BarGraphView(None)
-        self.barGraphView.setMinimumSize(QSize(0, 200))
     
     def showBarGraph(self):
         self.lgraph.model.disconnect()
-        self.verticalLayout.removeWidget(self.lineGraphView)
         self.bgraph.model.connect()
-        self.verticalLayout.addWidget(self.barGraphView)
+        self.graphView.setCurrentIndex(1)
     
     def showLineGraph(self):
         self.bgraph.model.disconnect()
-        self.verticalLayout.removeWidget(self.barGraphView)
         self.lgraph.model.connect()
-        self.verticalLayout.addWidget(self.lineGraphView)
+        self.graphView.setCurrentIndex(0)
     
