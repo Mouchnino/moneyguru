@@ -21,6 +21,7 @@ from .transaction_view import TransactionView
 from .entry_view import EntryView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
+from .custom_date_range_panel import CustomDateRangePanel
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
@@ -32,6 +33,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.eview = EntryView(doc=doc)
         self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
+        self.cdrpanel = CustomDateRangePanel(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
             self.eview.etable.model, None, None, self.apanel.model, self.tpanel.model, None, None,
@@ -85,7 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #--- Actions
     # Date range
     def changeDateRangeCustomTriggered(self):
-        self.doc.model.select_custom_range()
+        self.doc.model.select_custom_date_range()
     
     def changeDateRangeMonthTriggered(self):
         self.doc.model.select_month_range()
@@ -166,11 +168,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_balance_sheet(self):
         self._setMainWidgetIndex(0)        
     
-    def show_entry_table(self):
-        self._setMainWidgetIndex(3)
-    
     def show_bar_graph(self):
         self.eview.showBarGraph()
+    
+    def show_custom_date_range_panel(self):
+        self.cdrpanel.load()
+    
+    def show_entry_table(self):
+        self._setMainWidgetIndex(3)
     
     def show_line_graph(self):
         self.eview.showLineGraph()
