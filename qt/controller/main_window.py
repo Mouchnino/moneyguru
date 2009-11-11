@@ -9,7 +9,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QMainWindow, QFileDialog
+from PyQt4.QtGui import QMainWindow, QFileDialog, QMenu
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -45,6 +45,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Date range
         self.connect(self.actionNextDateRange, SIGNAL('triggered()'), self.nextDateRangeTriggered)
         self.connect(self.actionPreviousDateRange, SIGNAL('triggered()'), self.previousDateRangeTriggered)
+        self.connect(self.actionTodayDateRange, SIGNAL('triggered()'), self.todayDateRangeTriggered)
         self.connect(self.actionChangeDateRangeMonth, SIGNAL('triggered()'), self.changeDateRangeMonthTriggered)
         self.connect(self.actionChangeDateRangeQuarter, SIGNAL('triggered()'), self.changeDateRangeQuarterTriggered)
         self.connect(self.actionChangeDateRangeYear, SIGNAL('triggered()'), self.changeDateRangeYearTriggered)
@@ -57,6 +58,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowProfitLoss, SIGNAL('triggered()'), self.showProfitLossTriggered)        
         self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
         self.connect(self.actionShowAccount, SIGNAL('triggered()'), self.showAccountTriggered)        
+        self.connect(self.actionShowPreviousView, SIGNAL('triggered()'), self.showPreviousViewTriggered)        
+        self.connect(self.actionShowNextView, SIGNAL('triggered()'), self.showNextViewTriggered)        
         
         # Document Edition
         self.connect(self.actionNewItem, SIGNAL('triggered()'), self.newItemTriggered)
@@ -77,7 +80,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.pview)
         self.mainView.addWidget(self.tview)
         self.mainView.addWidget(self.eview)
-        self.dateRangeButton.setMenu(self.menuDateRange)
+        
+        # Date range menu
+        menu = QMenu(self.dateRangeButton)
+        menu.addAction(self.actionChangeDateRangeMonth)
+        menu.addAction(self.actionChangeDateRangeQuarter)
+        menu.addAction(self.actionChangeDateRangeYear)
+        menu.addAction(self.actionChangeDateRangeYearToDate)
+        menu.addAction(self.actionChangeDateRangeRunningYear)
+        menu.addAction(self.actionChangeDateRangeCustom)
+        self.dateRangeButton.setMenu(menu)
     
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
@@ -110,6 +122,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def previousDateRangeTriggered(self):
         self.doc.model.select_prev_date_range()
     
+    def todayDateRangeTriggered(self):
+        self.doc.model.select_today_date_range()
+    
     # Views
     def showNetWorthTriggered(self):
         self.model.select_balance_sheet()
@@ -122,6 +137,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showAccountTriggered(self):
         self.model.select_entry_table()
+    
+    def showPreviousViewTriggered(self):
+        self.model.select_previous_view()
+    
+    def showNextViewTriggered(self):
+        self.model.select_next_view()
     
     # Document Edition
     def newItemTriggered(self):
