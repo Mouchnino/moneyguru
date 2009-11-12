@@ -7,8 +7,6 @@
 
 from hsutil.notify import Listener
 
-from ..exception import OperationAborted
-
 class DocumentGUIObject(Listener):
     def __init__(self, view, document):
         Listener.__init__(self, document)
@@ -28,6 +26,7 @@ class DocumentGUIObject(Listener):
     def account_deleted(self):
         pass
     
+    # When a non-empty account is deleted, it needs its txns re-assigned
     def account_needs_reassignment(self):
         pass
     
@@ -55,40 +54,34 @@ class DocumentGUIObject(Listener):
     def date_range_will_change(self):
         pass
     
+    # When the whole document changed
+    def document_changed(self): 
+        pass
+    
     def document_will_close(self):
         pass
     
     def edition_must_stop(self):
         pass
     
-    def entries_imported(self):
-        pass
-    
-    def entry_changed(self):
-        pass
-
-    def entry_deleted(self):
-        pass
-    
     def group_expanded_state_changed(self):
         pass
     
+    # A file has been parsed and is ready to be shown to the user in the import window
     def file_loaded_for_import(self):
-        pass
-
-    def file_loaded(self):
         pass
     
     def filter_applied(self):
         pass
     
-    def first_weekday_changed(self):
+    # The First Weekday preferences has been changed
+    def first_weekday_changed(self): 
+        pass
+    
+    def performed_undo_or_redo(self):
         pass
     
     def reconciliation_changed(self):
-        pass
-
-    def redone(self):
         pass
     
     def schedule_changed(self):
@@ -103,8 +96,15 @@ class DocumentGUIObject(Listener):
     def selected_must_be_edited(self):
         pass
     
-    def undone(self):
+    def transaction_changed(self):
         pass
+    
+    def transaction_deleted(self):
+        pass
+    
+    def transactions_imported(self):
+        pass
+    
 
 class TransactionPanelGUIObject(Listener):
     def __init__(self, view, panel):

@@ -28,12 +28,11 @@ class Chart(DocumentGUIObject):
     account_changed = _data_changed
     account_deleted = _data_changed
     date_range_changed = _data_changed
-    entries_imported = _data_changed
-    entry_changed = _data_changed
-    entry_deleted = _data_changed
-    file_loaded = _data_changed
-    redone = _data_changed
-    undone = _data_changed
+    document_changed = _data_changed
+    performed_undo_or_redo = _data_changed
+    transaction_changed = _data_changed
+    transaction_deleted = _data_changed
+    transactions_imported = _data_changed
     
     #--- Properties
     @property

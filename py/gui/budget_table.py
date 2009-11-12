@@ -51,10 +51,6 @@ class BudgetTable(GUITable, DocumentGUIObject):
     def edition_must_stop(self):
         pass # the view doesn't have a stop_editing method
     
-    def file_loaded(self):
-        self.refresh()
-        self.view.refresh()
-    
 
 class BudgetTableRow(Row):
     def __init__(self, table, budget):

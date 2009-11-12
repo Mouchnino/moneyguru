@@ -224,11 +224,7 @@ class MainWindow(DocumentGUIObject):
     def selected_must_be_edited(self):
         self.edit_item()
     
-    def undone(self):
-        if self.document.selected_account is None and self.top is self.etable:
-            self.select_balance_sheet()
-    
-    def redone(self):
+    def performed_undo_or_redo(self):
         if self.document.selected_account is None and self.top is self.etable:
             self.select_balance_sheet()
     

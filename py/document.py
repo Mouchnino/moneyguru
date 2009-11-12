@@ -100,7 +100,7 @@ class Document(Broadcaster, Listener):
         self.notify('date_range_will_change')
         self._date_range = new_date_range
         self.oven.continue_cooking(new_date_range.end)
-        self.notify('entry_changed')
+        self.notify('transaction_changed')
         self.notify('date_range_changed')
         return True
     
@@ -502,7 +502,7 @@ class Document(Broadcaster, Listener):
             self._cook(from_date=min_date)
             self._clean_empty_categories()
             if not self._adjust_date_range(original.date):
-                self.notify('entry_changed')
+                self.notify('transaction_changed')
         
         self._perform_action(prepare, perform)
     
@@ -546,7 +546,7 @@ class Document(Broadcaster, Listener):
             self._cook(from_date=min_date)
             self._clean_empty_categories()
             if not self._adjust_date_range(transaction.date):
-                self.notify('entry_changed')
+                self.notify('transaction_changed')
             transaction = transactions[0]
         
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
@@ -580,7 +580,7 @@ class Document(Broadcaster, Listener):
             min_date = min(t.date for t in transactions)
             self._cook(from_date=min_date)
             self._clean_empty_categories()
-            self.notify('entry_deleted')
+            self.notify('transaction_deleted')
         
         self._perform_action(prepare, perform)
     
@@ -599,7 +599,7 @@ class Document(Broadcaster, Listener):
             for transaction in transactions:
                 self.transactions.move_before(transaction, to_transaction)
             self._cook()
-            self.notify('entry_changed')
+            self.notify('transaction_changed')
         
         self._perform_action(prepare, perform)
     
@@ -652,7 +652,7 @@ class Document(Broadcaster, Listener):
             self._cook(from_date=min_date)
             self._clean_empty_categories()
             if not self._adjust_date_range(entry.date):
-                self.notify('entry_changed')
+                self.notify('transaction_changed')
         
         self._perform_action(prepare, perform)
     
@@ -719,7 +719,7 @@ class Document(Broadcaster, Listener):
                 for entry in reconciled_entries:
                     entry.split.reconciled = False
             self._cook(from_date=min_date)
-            self.notify('entry_changed')
+            self.notify('transaction_changed')
         
         self._perform_action(prepare, perform)
     
@@ -954,7 +954,7 @@ class Document(Broadcaster, Listener):
                 newdate = inc_month_overflow(date, month_diff)
                 schedule.date2exception[newdate] = exception
         self._cook()
-        self.notify('file_loaded') # do it again to refresh the guis
+        self.notify('document_changed') # do it again to refresh the guis
     
     def load_from_xml(self, filename):
         loader = native.Loader(self.app.default_currency)
@@ -981,7 +981,7 @@ class Document(Broadcaster, Listener):
             self.budgets.append(budget)
         self._cook()
         self._restore_preferences_after_load()
-        self.notify('file_loaded')
+        self.notify('document_changed')
         self._undoer.set_save_point()
     
     def save_to_xml(self, filename, autosave=False):
@@ -1193,7 +1193,7 @@ class Document(Broadcaster, Listener):
                 if entry.transaction not in self.transactions:
                     self.transactions.add(entry.transaction)
         self._cook()
-        self.notify('entries_imported')
+        self.notify('transactions_imported')
     
     def is_dirty(self):
         return self._undoer.modified
@@ -1267,7 +1267,7 @@ class Document(Broadcaster, Listener):
         if self.selected_account is not None and self.selected_account not in self.accounts:
             self.select_account(None)
         self._cook()
-        self.notify('undone')
+        self.notify('performed_undo_or_redo')
     
     def can_redo(self):
         return self._undoer.can_redo()
@@ -1281,7 +1281,7 @@ class Document(Broadcaster, Listener):
         if self.selected_account is not None and self.selected_account not in self.accounts:
             self.select_account(None)
         self._cook()
-        self.notify('redone')
+        self.notify('performed_undo_or_redo')
     
     #--- Misc
     def close(self):

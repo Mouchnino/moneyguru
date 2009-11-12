@@ -185,11 +185,11 @@ class GUITable(Table):
         self.view.stop_editing()
         self.save_edits()
     
-    def redone(self):
+    def document_changed(self):
         self.refresh()
         self.view.refresh()
     
-    def undone(self):
+    def performed_undo_or_redo(self):
         self.refresh()
         self.view.refresh()
     

@@ -201,25 +201,20 @@ class EntryTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
         delta = date - date_range.start
         self._delta_before_change = delta
     
-    entry_changed = GUITable._item_changed
-    entry_deleted = GUITable._item_deleted
-
-    def entries_imported(self):
-        self.refresh()
-        self.document.select_transactions(self.selected_transactions())
-        self.view.refresh()
-    
-    def file_loaded(self):
-        self.refresh()
-        self.document.select_transactions(self.selected_transactions())
-        self.view.refresh()
-    
     def filter_applied(self):
         self.refresh()
         self.view.refresh()
     
     def reconciliation_changed(self):
         self.refresh()
+        self.view.refresh()
+    
+    transaction_changed = GUITable._item_changed
+    transaction_deleted = GUITable._item_deleted
+    
+    def transactions_imported(self):
+        self.refresh()
+        self.document.select_transactions(self.selected_transactions())
         self.view.refresh()
     
 

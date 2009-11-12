@@ -260,21 +260,18 @@ class Report(DocumentGUIObject, tree.Tree):
         self.view.stop_editing()
         self.save_edits()
     
-    def entries_imported(self):
+    # account might have been auto-created during import
+    def transactions_imported(self):
         self.refresh()
         self._select_first()
         self.view.refresh()
     
-    def file_loaded(self):
+    def document_changed(self):
         self.refresh()
         self._select_first()
         self.view.refresh()
     
-    def redone(self):
-        self.refresh()
-        self.view.refresh()
-    
-    def undone(self):
+    def performed_undo_or_redo(self):
         self.refresh()
         self.view.refresh()
     
