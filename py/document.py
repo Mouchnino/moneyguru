@@ -145,6 +145,16 @@ class Document(Broadcaster, Listener):
             if not account.entries:
                 self.accounts.remove(account)
     
+    def _clear(self):
+        self.select_account(None)
+        self.accounts.clear()
+        self.transactions.clear()
+        self.groups.clear()
+        del self.schedules[:]
+        del self.budgets[:]
+        self._undoer.clear()
+        self._cook()
+    
     def _commit_reconciliation(self):
         # process pending reconciliation
         splits = flatten(t.splits for t in self.oven.transactions)
@@ -956,6 +966,10 @@ class Document(Broadcaster, Listener):
         self._cook()
         self.notify('document_changed') # do it again to refresh the guis
     
+    def clear(self):
+        self._clear()
+        self.notify('document_changed')
+    
     def load_from_xml(self, filename):
         loader = native.Loader(self.app.default_currency)
         try:
@@ -963,12 +977,7 @@ class Document(Broadcaster, Listener):
         except FileFormatError:
             raise FileFormatError('"%s" is not a moneyGuru file' % filename)
         loader.load()
-        self.accounts.clear()
-        self.transactions.clear()
-        self.groups.clear()
-        del self.schedules[:]
-        del self.budgets[:]
-        self._undoer.clear()
+        self._clear()
         for group in loader.groups:
             self.groups.append(group)
         for account in loader.accounts:

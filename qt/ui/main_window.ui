@@ -167,7 +167,8 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionLoadFile"/>
+    <addaction name="actionNewDocument"/>
+    <addaction name="actionOpenDocument"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -234,12 +235,12 @@
    <addaction name="actionShowTransactions"/>
    <addaction name="actionShowAccount"/>
   </widget>
-  <action name="actionLoadFile">
+  <action name="actionOpenDocument">
    <property name="text">
-    <string>Load File...</string>
+    <string>Open...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+L</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionPreviousDateRange">
@@ -437,6 +438,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+[</string>
+   </property>
+  </action>
+  <action name="actionNewDocument">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>

@@ -399,6 +399,8 @@ class TwoEntriesInRangeSaveThenLoad(TestCase):
         self.filename = op.join(self.tmpdir(), 'foo.xml')
         self.document.save_to_xml(self.filename)
         self.document.load_from_xml(self.filename)
+        # have been kicked back to bsheet. Select the account again
+        self.bsheet.show_selected_account()
         self.etable.select([0])
     
     def test_editing_an_entry_doesnt_change_the_order(self):

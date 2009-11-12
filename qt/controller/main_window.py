@@ -70,7 +70,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionMoveDown, SIGNAL('triggered()'), self.moveDownTriggered)
         
         # Misc
-        self.connect(self.actionLoadFile, SIGNAL('triggered()'), self.loadFileTriggered)
+        self.connect(self.actionNewDocument, SIGNAL('triggered()'), self.newDocumentTriggered)
+        self.connect(self.actionOpenDocument, SIGNAL('triggered()'), self.openDocumentTriggered)
         self.connect(self.actionShowSelectedAccount, SIGNAL('triggered()'), self.showSelectedAccountTriggered)
         self.connect(self.actionNavigateBack, SIGNAL('triggered()'), self.navigateBackTriggered)
     
@@ -164,7 +165,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.move_down()
     
     # Misc
-    def loadFileTriggered(self):
+    def newDocumentTriggered(self):
+        self.doc.model.clear()
+    
+    def openDocumentTriggered(self):
         title = "Select a document to load"
         docpath = unicode(QFileDialog.getOpenFileName(self, title))
         if docpath:

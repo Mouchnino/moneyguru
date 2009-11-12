@@ -913,6 +913,17 @@ class TwoBoundEntries(TestCase):
         row.transfer = 'yet-another'
         self.etable.save_edits() # shouldn't raise anything
     
+    def test_clear_document(self):
+        # Document.clear() removes all transactions and accounts and sends 'document_changed'.
+        # Also, since the currently shown account in etable has been deleted, the current view
+        # in the main window is kicked back to the bsheet.
+        self.clear_gui_calls()
+        self.document.clear()
+        self.check_gui_calls_partial(self.mainwindow_gui, show_balance_sheet=1)
+        eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
+        self.mainwindow.select_transaction_table()
+        eq_(len(self.ttable), 0)
+    
     def test_delete_entries(self):
         """Deleting an entry also delets any bound entry"""
         self.etable.delete()
