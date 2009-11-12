@@ -104,10 +104,10 @@ class Pristine(TestCase):
         self.assertEqual(self.bsheet.liabilities[0].name, 'New group')
     
     def test_balance_sheet(self):
-        """The balance sheet is empty... well, except for the "total" and blank nodes."""
-        self.assertEqual([x.name for x in self.bsheet], ['ASSETS',  'LIABILITIES',  'NET WORTH'])
-        self.assertEqual(len(self.bsheet.assets), 2)
-        self.assertEqual(len(self.bsheet.liabilities), 2)
+        # The balance sheet is empty
+        eq_([x.name for x in self.bsheet], ['ASSETS',  'LIABILITIES',  'NET WORTH'])
+        eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
+        eq_(self.account_node_subaccount_count(self.bsheet.liabilities), 0)
     
     def test_is_excluded_is_bool_for_empty_groups_and_type(self):
         # previously, empty lists would be returned, causing a crash in the gui
@@ -276,8 +276,8 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
     def test_add_account(self):
         """New accounts are created under the selected user created group"""
         self.bsheet.add_account()
-        self.assertEqual(self.bsheet.assets.children_count, 4)
-        self.assertEqual(self.bsheet.assets[0].children_count, 3)
+        eq_(self.account_node_subaccount_count(self.bsheet.assets), 2)
+        eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 1)
     
 
 class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
@@ -294,7 +294,7 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         the new account under that same group
         """
         self.bsheet.add_account()
-        self.assertEqual(self.bsheet.assets[0].children_count, 4)
+        eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 2)
     
 
 class AccountsAndEntries(_AccountsAndEntries):
@@ -385,7 +385,9 @@ class AccountsAndEntries(_AccountsAndEntries):
         # Excluding a type toggles exclusion for all accounts of that type
         self.bsheet.selected = self.bsheet.assets
         self.bsheet.toggle_excluded()
-        self.assertEqual(self.bsheet.assets.children_count, 3) # the 2 accounts and the blank node
+        # The total line for an excluded node diseappears, leaving only the 2 account lines and the
+        # blank node
+        eq_(self.bsheet.assets.children_count, 3)
         self.assertTrue(self.bsheet.assets[2].is_blank)
         self.assertEqual(self.bsheet.assets[0].start, '')
         self.assertEqual(self.bsheet.assets[0].end, '')
@@ -520,7 +522,7 @@ class LoadFileBeforeCreatingInstances(TestCase):
     
     def test_refresh_on_connect(self):
         """the account tree refreshes itself and selects the first asset"""
-        self.assertEqual(self.bsheet.assets.children_count, 4)
+        eq_(self.account_node_subaccount_count(self.bsheet.assets), 2)
         self.assertEqual(self.bsheet.selected, self.bsheet.assets[0])
         self.check_gui_calls(self.bsheet_gui, refresh=1)
     

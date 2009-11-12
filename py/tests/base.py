@@ -342,6 +342,12 @@ class TestCase(TestCase):
         # code, the sctable is responsible for connecting it.
         self.scpanel.connect()
     
+    def account_names(self): # doesn't include Imbalance
+        account_sort = {ASSET:0, LIABILITY: 1, INCOME: 2, EXPENSE: 3}
+        accounts = list(self.document.accounts)
+        accounts.sort(key=lambda a: (account_sort[a.type], a))
+        return [a.name for a in accounts]
+    
     def add_account(self, name=None, currency=None, account_type=ASSET, group_name=None):
         # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
         group = self.document.groups.find(group_name, account_type) if group_name else None
@@ -445,11 +451,11 @@ class TestCase(TestCase):
             row.checkno = checkno
         self.ttable.save_edits()
     
-    def account_names(self): # doesn't include Imbalance
-        account_sort = {ASSET:0, LIABILITY: 1, INCOME: 2, EXPENSE: 3}
-        accounts = list(self.document.accounts)
-        accounts.sort(key=lambda a: (account_sort[a.type], a))
-        return [a.name for a in accounts]
+    def account_node_subaccount_count(self, node):
+        # In the balance sheet and the income statement testing for emptyness becomes cumbersome
+        # because of the 2 total nodes (1 total, 1 blank) that are always there, even if empty. To
+        # avoid putting a comment next to each len() test, just use this method.
+        return len(node) - 2
     
     def balances(self):
         return [self.etable[i].balance for i in range(len(self.etable))]

@@ -89,11 +89,11 @@ class OneEmptyAccount(TestCase):
         """move_account() methods to change the account type and move it to the correct section"""
         self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0], [1])
-        self.assertEqual(self.bsheet.get_node([0]).children_count, 2) # 1 total node, 1 blank node
-        self.assertEqual(self.bsheet.get_node([1]).children_count, 3) # 1 total node, 1 blank node
-        self.bsheet.move([1, 0], [0])
-        self.assertEqual(self.bsheet.get_node([0]).children_count, 3) # 1 total node, 1 blank node
-        self.assertEqual(self.bsheet.get_node([1]).children_count, 2) # 1 total node, 1 blank node
+        eq_(self.account_node_subaccount_count(self.bsheet.get_node([0])), 0)
+        eq_(self.account_node_subaccount_count(self.bsheet.get_node([1])), 1)
+        self.bsheet.move([1, 0], [0])                                
+        eq_(self.account_node_subaccount_count(self.bsheet.get_node([0])), 1)
+        eq_(self.account_node_subaccount_count(self.bsheet.get_node([1])), 0)
     
     def test_move_account_makes_the_app_dirty(self):
         """calling make_account_asset() makes the app dirty"""
@@ -242,14 +242,14 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         self.apanel.load()
         self.apanel.type_index = 1 # liability
         self.apanel.save()
-        eq_(len(self.bsheet.assets[0]), 2) # group is empty (2 is for the total nodes)
-        eq_(len(self.bsheet.liabilities), 3) # the account is in liabilities
+        eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 0) # group is empty
+        eq_(self.account_node_subaccount_count(self.bsheet.liabilities), 1) # the account is in liabilities
     
     def test_delete_account(self):
         """It's possible to delete an account that is inside a user created group"""
         self.bsheet.selected = self.bsheet.assets[0][0]
         self.bsheet.delete()
-        self.assertEqual(self.bsheet.assets[0].children_count, 2) # total + blank
+        eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 0)
     
     def test_delete_group(self):
         """Deleteing a group with an account in it removes the group and put the account back at the
@@ -264,8 +264,8 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         # Previously, the edit system was working with None values to indicate "no edition", which
         # made it impossible to set the group to None.
         self.bsheet.move([0, 0, 0], [1])
-        self.assertEqual(self.bsheet.get_node([0, 0]).children_count, 2) # 1 total node, 1 blank node
-        self.assertEqual(self.bsheet.get_node([1]).children_count, 3) # 1 total node, 1 blank node
+        eq_(self.account_node_subaccount_count(self.bsheet.get_node([0, 0])), 0)
+        eq_(self.account_node_subaccount_count(self.bsheet.get_node([1])), 1)
     
 
 class TwoGroups(TestCase):
@@ -347,11 +347,11 @@ class DifferentAccountTypes(TestCase):
     def test_account_group_size(self):
         """The account group counts correct"""
         self.mainwindow.select_balance_sheet()
-        self.assertEqual(self.bsheet.assets.children_count, 4)
-        self.assertEqual(self.bsheet.liabilities.children_count, 2)
+        eq_(self.account_node_subaccount_count(self.bsheet.assets), 2)
+        eq_(self.account_node_subaccount_count(self.bsheet.liabilities), 0)
         self.mainwindow.select_income_statement()
-        self.assertEqual(self.istatement.income.children_count, 3)
-        self.assertEqual(self.istatement.expenses.children_count, 2)
+        eq_(self.account_node_subaccount_count(self.istatement.income), 1)
+        eq_(self.account_node_subaccount_count(self.istatement.expenses), 0)
     
     def test_select_another_type_then_set_attribute_value(self):
         """select_account() works across accounts sections"""
