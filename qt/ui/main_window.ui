@@ -167,8 +167,14 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuOpenRecent">
+     <property name="title">
+      <string>Open Recent</string>
+     </property>
+    </widget>
     <addaction name="actionNewDocument"/>
     <addaction name="actionOpenDocument"/>
+    <addaction name="menuOpenRecent"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">

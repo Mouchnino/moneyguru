@@ -8,13 +8,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import os.path as op
+
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QMainWindow, QFileDialog, QMenu
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
-from ui.main_window_ui import Ui_MainWindow
-
+from support.recent import Recent
 from .networth_view import NetWorthView
 from .profit_view import ProfitView
 from .transaction_view import TransactionView
@@ -22,6 +23,7 @@ from .entry_view import EntryView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
 from .custom_date_range_panel import CustomDateRangePanel
+from ui.main_window_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
@@ -40,6 +42,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
+        
+        # Recent Menu
+        self.recentDocuments = Recent(self.menuOpenRecent, 'RecentDocuments', filterFunc=op.exists)
+        self.connect(self.recentDocuments, SIGNAL('mustOpenItem(QString)'), self.mustOpenRecentDocument)
         
         # Actions
         # Date range
@@ -173,12 +179,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         docpath = unicode(QFileDialog.getOpenFileName(self, title))
         if docpath:
             self.doc.model.load_from_xml(docpath)
+            self.recentDocuments.itemWasOpened(docpath)
     
     def showSelectedAccountTriggered(self):
         self.doc.model.show_selected_account()
     
     def navigateBackTriggered(self):
         self.model.navigate_back()
+    
+    def mustOpenRecentDocument(self, docpath):
+        self.doc.model.load_from_xml(docpath)
     
     #--- model --> view
     def animate_date_range_backward(self):
