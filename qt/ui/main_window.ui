@@ -175,6 +175,7 @@
     <addaction name="actionNewDocument"/>
     <addaction name="actionOpenDocument"/>
     <addaction name="menuOpenRecent"/>
+    <addaction name="actionOpenExampleDocument"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -449,6 +450,11 @@
   <action name="actionNewDocument">
    <property name="text">
     <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpenExampleDocument">
+   <property name="text">
+    <string>Open Example Document</string>
    </property>
   </action>
  </widget>

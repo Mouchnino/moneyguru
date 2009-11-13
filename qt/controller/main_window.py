@@ -9,8 +9,9 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import os.path as op
+import tempfile
 
-from PyQt4.QtCore import SIGNAL
+from PyQt4.QtCore import SIGNAL, QFile
 from PyQt4.QtGui import QMainWindow, QFileDialog, QMenu
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
@@ -78,6 +79,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Misc
         self.connect(self.actionNewDocument, SIGNAL('triggered()'), self.newDocumentTriggered)
         self.connect(self.actionOpenDocument, SIGNAL('triggered()'), self.openDocumentTriggered)
+        self.actionOpenExampleDocument.triggered.connect(self.openExampleDocumentTriggered)
         self.connect(self.actionShowSelectedAccount, SIGNAL('triggered()'), self.showSelectedAccountTriggered)
         self.connect(self.actionNavigateBack, SIGNAL('triggered()'), self.navigateBackTriggered)
     
@@ -180,6 +182,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if docpath:
             self.doc.model.load_from_xml(docpath)
             self.recentDocuments.itemWasOpened(docpath)
+    
+    def openExampleDocumentTriggered(self):
+        dirpath = tempfile.mkdtemp()
+        destpath = op.join(dirpath, 'example.moneyguru')
+        QFile.copy(':/example.moneyguru', destpath)
+        self.doc.model.load_from_xml(destpath)
+        self.doc.model.adjust_example_file()
     
     def showSelectedAccountTriggered(self):
         self.doc.model.show_selected_account()
