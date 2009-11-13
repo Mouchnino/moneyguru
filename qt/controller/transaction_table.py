@@ -17,5 +17,5 @@ class TransactionTable(Table):
     DATECOLUMNS = frozenset(['date'])
     
     def _getModel(self):
-        return TransactionTableModel(view=self, document=self.doc.model)
+        return TransactionTableModel(view=self, document=self.dataSource)
     

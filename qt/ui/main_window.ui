@@ -176,6 +176,8 @@
     <addaction name="actionOpenDocument"/>
     <addaction name="menuOpenRecent"/>
     <addaction name="actionOpenExampleDocument"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -455,6 +457,11 @@
   <action name="actionOpenExampleDocument">
    <property name="text">
     <string>Open Example Document</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import...</string>
    </property>
   </action>
  </widget>

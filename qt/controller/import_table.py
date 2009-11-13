@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
-# Created On: 2009-11-01
+# Created On: 2009-11-13
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 # 
@@ -8,14 +8,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.entry_table import EntryTable as EntryTableModel
+from moneyguru.gui.import_table import ImportTable as ImportTableModel
 from .table import Table
 
-class EntryTable(Table):
-    HEADER = ['Date', 'Description', 'Transfer', 'Increase', 'Decrease', 'Balance']
-    ROWATTRS = ['date', 'description', 'transfer', 'increase', 'decrease', 'balance']
-    DATECOLUMNS = frozenset(['date'])
+class ImportTable(Table):
+    HEADER = ['Date', 'Description', 'Amount']
+    ROWATTRS = ['date_import', 'description_import', 'amount_import']
+    DATECOLUMNS = frozenset(['date_import'])
     
     def _getModel(self):
-        return EntryTableModel(view=self, document=self.dataSource)
+        return ImportTableModel(view=self, import_window=self.dataSource)
     

@@ -30,9 +30,9 @@ class Table(QAbstractTableModel):
     ROWATTRS = []
     DATECOLUMNS = frozenset()
     
-    def __init__(self, doc, view):
+    def __init__(self, dataSource, view):
         QAbstractTableModel.__init__(self)
-        self.doc = doc
+        self.dataSource = dataSource
         self.view = view
         self.model = self._getModel()
         self.view.setModel(self)

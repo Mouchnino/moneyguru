@@ -15,10 +15,6 @@ class SplitTable(Table):
     HEADER = ['Account', 'Memo', 'Debit', 'Credit']
     ROWATTRS = ['account', 'memo', 'debit', 'credit']
     
-    def __init__(self, transaction_panel, view):
-        self.transaction_panel = transaction_panel
-        Table.__init__(self, transaction_panel.doc, view)
-    
     def _getModel(self):
-        return SplitTableModel(view=self, transaction_panel=self.transaction_panel.model)
+        return SplitTableModel(view=self, transaction_panel=self.dataSource)
     

@@ -24,6 +24,7 @@ from .entry_view import EntryView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
 from .custom_date_range_panel import CustomDateRangePanel
+from .import_window import ImportWindow
 from ui.main_window_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -37,6 +38,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
+        self.iwindow = ImportWindow(doc=doc)
+        self.iwindow.model.connect()
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
             self.eview.etable.model, None, None, self.apanel.model, self.tpanel.model, None, None,
@@ -80,6 +83,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNewDocument.triggered.connect(self.newDocumentTriggered)
         self.actionOpenDocument.triggered.connect(self.openDocumentTriggered)
         self.actionOpenExampleDocument.triggered.connect(self.openExampleDocumentTriggered)
+        self.actionImport.triggered.connect(self.importTriggered)
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
     
@@ -189,6 +193,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QFile.copy(':/example.moneyguru', destpath)
         self.doc.model.load_from_xml(destpath)
         self.doc.model.adjust_example_file()
+    
+    def importTriggered(self):
+        title = "Select a document to import"
+        docpath = unicode(QFileDialog.getOpenFileName(self, title))
+        if docpath:
+            self.doc.model.parse_file_for_import(docpath)
     
     def showSelectedAccountTriggered(self):
         self.doc.model.show_selected_account()
