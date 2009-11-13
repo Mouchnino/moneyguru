@@ -50,38 +50,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         # Actions
         # Date range
-        self.connect(self.actionNextDateRange, SIGNAL('triggered()'), self.nextDateRangeTriggered)
-        self.connect(self.actionPreviousDateRange, SIGNAL('triggered()'), self.previousDateRangeTriggered)
-        self.connect(self.actionTodayDateRange, SIGNAL('triggered()'), self.todayDateRangeTriggered)
-        self.connect(self.actionChangeDateRangeMonth, SIGNAL('triggered()'), self.changeDateRangeMonthTriggered)
-        self.connect(self.actionChangeDateRangeQuarter, SIGNAL('triggered()'), self.changeDateRangeQuarterTriggered)
-        self.connect(self.actionChangeDateRangeYear, SIGNAL('triggered()'), self.changeDateRangeYearTriggered)
-        self.connect(self.actionChangeDateRangeYearToDate, SIGNAL('triggered()'), self.changeDateRangeYearToDateTriggered)
-        self.connect(self.actionChangeDateRangeRunningYear, SIGNAL('triggered()'), self.changeDateRangeRunningYearTriggered)
-        self.connect(self.actionChangeDateRangeCustom, SIGNAL('triggered()'), self.changeDateRangeCustomTriggered)
+        self.actionNextDateRange.triggered.connect(self.nextDateRangeTriggered)
+        self.actionPreviousDateRange.triggered.connect(self.previousDateRangeTriggered)
+        self.actionTodayDateRange.triggered.connect(self.todayDateRangeTriggered)
+        self.actionChangeDateRangeMonth.triggered.connect(self.changeDateRangeMonthTriggered)
+        self.actionChangeDateRangeQuarter.triggered.connect(self.changeDateRangeQuarterTriggered)
+        self.actionChangeDateRangeYear.triggered.connect(self.changeDateRangeYearTriggered)
+        self.actionChangeDateRangeYearToDate.triggered.connect(self.changeDateRangeYearToDateTriggered)
+        self.actionChangeDateRangeRunningYear.triggered.connect(self.changeDateRangeRunningYearTriggered)
+        self.actionChangeDateRangeCustom.triggered.connect(self.changeDateRangeCustomTriggered)
         
         # Views
-        self.connect(self.actionShowNetWorth, SIGNAL('triggered()'), self.showNetWorthTriggered)        
-        self.connect(self.actionShowProfitLoss, SIGNAL('triggered()'), self.showProfitLossTriggered)        
-        self.connect(self.actionShowTransactions, SIGNAL('triggered()'), self.showTransactionsTriggered)        
-        self.connect(self.actionShowAccount, SIGNAL('triggered()'), self.showAccountTriggered)        
-        self.connect(self.actionShowPreviousView, SIGNAL('triggered()'), self.showPreviousViewTriggered)        
-        self.connect(self.actionShowNextView, SIGNAL('triggered()'), self.showNextViewTriggered)        
+        self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
+        self.actionShowProfitLoss.triggered.connect(self.showProfitLossTriggered)        
+        self.actionShowTransactions.triggered.connect(self.showTransactionsTriggered)        
+        self.actionShowAccount.triggered.connect(self.showAccountTriggered)        
+        self.actionShowPreviousView.triggered.connect(self.showPreviousViewTriggered)        
+        self.actionShowNextView.triggered.connect(self.showNextViewTriggered)        
         
         # Document Edition
-        self.connect(self.actionNewItem, SIGNAL('triggered()'), self.newItemTriggered)
-        self.connect(self.actionNewAccountGroup, SIGNAL('triggered()'), self.newAccountGroupTriggered)
-        self.connect(self.actionDeleteItem, SIGNAL('triggered()'), self.deleteItemTriggered)
-        self.connect(self.actionEditItem, SIGNAL('triggered()'), self.editItemTriggered)
-        self.connect(self.actionMoveUp, SIGNAL('triggered()'), self.moveUpTriggered)
-        self.connect(self.actionMoveDown, SIGNAL('triggered()'), self.moveDownTriggered)
+        self.actionNewItem.triggered.connect(self.newItemTriggered)
+        self.actionNewAccountGroup.triggered.connect(self.newAccountGroupTriggered)
+        self.actionDeleteItem.triggered.connect(self.deleteItemTriggered)
+        self.actionEditItem.triggered.connect(self.editItemTriggered)
+        self.actionMoveUp.triggered.connect(self.moveUpTriggered)
+        self.actionMoveDown.triggered.connect(self.moveDownTriggered)
         
         # Misc
-        self.connect(self.actionNewDocument, SIGNAL('triggered()'), self.newDocumentTriggered)
-        self.connect(self.actionOpenDocument, SIGNAL('triggered()'), self.openDocumentTriggered)
+        self.actionNewDocument.triggered.connect(self.newDocumentTriggered)
+        self.actionOpenDocument.triggered.connect(self.openDocumentTriggered)
         self.actionOpenExampleDocument.triggered.connect(self.openExampleDocumentTriggered)
-        self.connect(self.actionShowSelectedAccount, SIGNAL('triggered()'), self.showSelectedAccountTriggered)
-        self.connect(self.actionNavigateBack, SIGNAL('triggered()'), self.navigateBackTriggered)
+        self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
+        self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
