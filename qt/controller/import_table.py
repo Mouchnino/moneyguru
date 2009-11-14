@@ -14,10 +14,10 @@ from moneyguru.gui.import_table import ImportTable as ImportTableModel
 from .table import Table
 
 class ImportTable(Table):
-    HEADER = ['', 'Date', 'Description', 'Payee', 'Check #', 'Transfer', 'Amount']
-    ROWATTRS = ['will_import', 'date_import', 'description_import', 'payee_import', 'checkno_import',
-        'transfer_import', 'amount_import']
-    DATECOLUMNS = frozenset(['date_import'])
+    HEADER = ['', 'Date', 'Description', 'Amount', 'Bound', 'Date', 'Description', 'Payee', 
+        'Check #', 'Transfer', 'Amount']
+    ROWATTRS = ['will_import', 'date', 'description', 'amount', 'bound', 'date_import', 
+        'description_import', 'payee_import', 'checkno_import', 'transfer_import', 'amount_import']
     
     def _getModel(self):
         return ImportTableModel(view=self, import_window=self.dataSource)
