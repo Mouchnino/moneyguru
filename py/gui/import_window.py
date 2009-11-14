@@ -16,11 +16,16 @@ from .base import DocumentGUIObject
 DAY = 'day'
 MONTH = 'month'
 YEAR = 'year'
-MAX_MONTH = 12
-MAX_DAY = 31
 
 def last_two_digits(year):
     return year - ((year // 100) * 100)
+
+def swapped_date(date, first, second):
+    attrs = {DAY: date.day, MONTH: date.month, YEAR: last_two_digits(date.year)}
+    newattrs = {first: attrs[second], second: attrs[first]}
+    if YEAR in newattrs:
+        newattrs[YEAR] += 2000
+    return date.replace(**newattrs)
 
 class AccountPane(object):
     def __init__(self, account, target_account):
@@ -33,15 +38,21 @@ class AccountPane(object):
         self.max_month = 12
         self.max_year = 99 # 2 digits
         self._match_entries()
-        self._get_date_maximums()
+        self._swap_possibilities = set()
+        self._compute_swap_possibilities()
     
-    def _get_date_maximums(self):
+    def _compute_swap_possibilities(self):
         entries = self.account.entries[:]
         if not entries:
             return
-        self.max_day = max(e.date.day for e in entries)
-        self.max_month = max(e.date.month for e in entries)
-        self.max_year = max(last_two_digits(e.date.year) for e in entries)
+        self._swap_possibilities = set([(DAY, MONTH), (MONTH, YEAR), (DAY, YEAR)])
+        for first, second in self._swap_possibilities.copy():
+            for entry in entries:
+                try:
+                    swapped_date(entry.date, first, second)
+                except ValueError:
+                    self._swap_possibilities.remove((first, second))
+                    break
     
     def _match_entries(self):
         to_import = self.account.entries[:]
@@ -76,10 +87,7 @@ class AccountPane(object):
         self.matches.remove(match2)
     
     def can_switch_date_fields(self, first, second): # 'day', 'month', 'year'
-        both_fields = (first, second)
-        assert all(x in [DAY, MONTH, YEAR] for x in both_fields)
-        max_value = MAX_MONTH if MONTH in both_fields else MAX_DAY
-        return all(getattr(self, 'max_{0}'.format(field)) <= max_value for field in both_fields)
+        return (first, second) in self._swap_possibilities or (second, first) in self._swap_possibilities
     
     def unbind(self, existing, imported):
         [match] = [m for m in self.matches if m[0] is existing and m[1] is imported]
@@ -184,12 +192,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             panes = [self.selected_pane]
         
         def switch_func(txn):
-            date = txn.date
-            attrs = {DAY: date.day, MONTH: date.month, YEAR: last_two_digits(date.year)}
-            newattrs = {first: attrs[second], second: attrs[first]}
-            if YEAR in newattrs:
-                newattrs[YEAR] += 2000
-            txn.date = txn.date.replace(**newattrs)
+            txn.date = swapped_date(txn.date, first, second)
         
         self._switch_fields(panes, switch_func)
     

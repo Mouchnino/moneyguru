@@ -1,6 +1,11 @@
 # Created By: Virgil Dupras
 # Created On: 2008-08-08
 # $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+# 
+# This software is licensed under the "HS" License as described in the "LICENSE" file, 
+# which should be included with this package. The terms are also available at 
+# http://www.hardcoded.net/licenses/hs_license
 
 from datetime import date
 
@@ -377,6 +382,17 @@ class ImportTransactionsWithHighYearField(TestCase):
         self.assertFalse(self.iwin.can_switch_date_fields('day', 'year'))
         self.assertFalse(self.iwin.can_switch_date_fields('year', 'month'))
     
+
+class ImportTransactionWithDayOn31stAndYearCorrespondingToLowMonth(TestCase):
+    # The date 31/07/2009 has a high day, and if we were to swap year and month, we'd be ending up
+    # with an invalid date (31/09/2007).
+    def setUp(self):
+        self.create_instances()
+        self.fake_import('foo', [{'date': '31/07/2009', 'amount': '1'}])
+    
+    def test_can_switch_fields(self):
+        # September has 30 days, so it's impossible to swap the month and the year.
+        assert not self.iwin.can_switch_date_fields('year', 'month')
 
 class ThreeImportsTwoOfThemWithLowDateFields(TestCase):
     def setUp(self):
