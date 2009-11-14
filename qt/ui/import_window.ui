@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>682</width>
-    <height>354</height>
+    <width>557</width>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,87 @@
     </widget>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="targetAccountLayout">
+     <item>
+      <widget class="QLabel" name="targetAccountLabel">
+       <property name="text">
+        <string>Target Account:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="targetAccountComboBox">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Some fields are wrong? Swap them!</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0" colspan="2">
+         <widget class="QComboBox" name="swapOptionsComboBox">
+          <item>
+           <property name="text">
+            <string>Day &lt;--&gt; Month</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Month &lt;--&gt; Year</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Day &lt;--&gt; Year</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Description &lt;--&gt; Payee</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="applyToAllCheckBox">
+          <property name="text">
+           <string>Apply to all accounts</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="swapButton">
+          <property name="text">
+           <string>Swap</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QTableView" name="tableView">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
@@ -37,9 +118,6 @@
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>18</number>
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>18</number>
