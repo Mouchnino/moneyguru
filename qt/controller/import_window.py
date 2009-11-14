@@ -22,9 +22,11 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.model = ImportWindowModel(view=self, document=doc.model)
         self.table = ImportTable(dataSource=self.model, view=self.tableView)
         self.table.model.connect()
+        self._setupColumns() # Can only be done after the model has been connected
         
         self.tabView.tabCloseRequested.connect(self.tabCloseRequested)
         self.tabView.currentChanged.connect(self.currentTabChanged)
+        self.importButton.clicked.connect(self.importClicked)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -32,9 +34,17 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.tabView.setDrawBase(False)
         self.tabView.setDocumentMode(True)
     
+    def _setupColumns(self):
+        h = self.tableView.horizontalHeader()
+        h.setHighlightSections(False)
+        h.resizeSection(0, 28)
+    
     #--- Event Handlers
     def currentTabChanged(self, index):
         self.model.selected_pane_index = index
+    
+    def importClicked(self):
+        self.model.import_selected_pane()
     
     def tabCloseRequested(self, index):
         self.model.close_pane(index)
@@ -43,6 +53,9 @@ class ImportWindow(QWidget, Ui_ImportWindow):
     #--- model --> view
     def close(self):
         self.hide()
+    
+    def close_selected_tab(self):
+        self.tabView.removeTab(self.tabView.currentIndex())
     
     def refresh(self):
         while self.tabView.count():
