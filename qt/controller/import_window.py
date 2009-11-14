@@ -28,6 +28,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.tabView.tabCloseRequested.connect(self.tabCloseRequested)
         self.tabView.currentChanged.connect(self.currentTabChanged)
         self.targetAccountComboBox.currentIndexChanged.connect(self.targetAccountChanged)
+        self.tableView.clicked.connect(self.table.cellClicked)
         self.importButton.clicked.connect(self.importClicked)
         self.swapButton.clicked.connect(self.swapClicked)
     
@@ -42,6 +43,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
         h.resizeSection(0, 28)
+        h.resizeSection(4, 20)
         
         # Can't set widget alignment in a layout in the Designer
         l = self.targetAccountLayout
