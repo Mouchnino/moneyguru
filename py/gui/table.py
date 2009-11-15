@@ -116,16 +116,12 @@ class GUITable(Table):
         self.view.refresh()
         self.view.start_editing()
     
-    def can_edit_cell(self, column, row):
+    def can_edit_cell(self, column_name, row_index):
         # A row is, by default, editable as soon as it has an attr with the same name as `column`.
         # If can_edit() returns False, the row is not editable at all. You can set editability of
         # rows at the attribute level with can_edit_* properties
-        row = self[row]
-        if not row.can_edit():
-            return False
-        if not (hasattr(row, column) or hasattr(row, column + '_')): # '_' in case column is a keyword
-            return False
-        return getattr(row, 'can_edit_' + column, True)
+        row = self[row_index]
+        return row.can_edit_cell(column_name)
     
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):
@@ -262,6 +258,15 @@ class Row(object):
     
     def save(self):
         raise NotImplementedError()
+    
+    #--- Public
+    def can_edit_cell(self, column_name):
+        if not self.can_edit():
+            return False
+        # '_' is in case column is a python keyword
+        if not (hasattr(self, column_name) or hasattr(self, column_name + '_')):
+            return False
+        return getattr(self, 'can_edit_' + column_name, True)
     
 
 class RowWithDebitAndCredit(Row):

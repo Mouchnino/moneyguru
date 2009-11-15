@@ -169,6 +169,9 @@ class OneEntry(TestCase, CommonSetup):
         for colname in editable_columns:
             assert self.ttable.can_edit_cell(colname, 0)
         assert not self.ttable.can_edit_cell('unknown', 0)
+        # It's also possible to call cen_edit_cell() on the row instance
+        assert self.ttable[0].can_edit_cell('date')
+        assert not self.ttable[0].can_edit_cell('unknown')
     
     def test_cancel_edits(self):
         """cancel_edits() reverts the edited row back to it's old values"""
