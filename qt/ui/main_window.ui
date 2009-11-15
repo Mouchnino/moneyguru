@@ -176,8 +176,8 @@
     <addaction name="actionOpenDocument"/>
     <addaction name="menuOpenRecent"/>
     <addaction name="actionOpenExampleDocument"/>
-    <addaction name="separator"/>
     <addaction name="actionImport"/>
+    <addaction name="actionExportToQIF"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -462,6 +462,11 @@
   <action name="actionImport">
    <property name="text">
     <string>Import...</string>
+   </property>
+  </action>
+  <action name="actionExportToQIF">
+   <property name="text">
+    <string>Export to QIF...</string>
    </property>
   </action>
  </widget>

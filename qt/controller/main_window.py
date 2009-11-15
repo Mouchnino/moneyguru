@@ -84,6 +84,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionOpenDocument.triggered.connect(self.openDocumentTriggered)
         self.actionOpenExampleDocument.triggered.connect(self.openExampleDocumentTriggered)
         self.actionImport.triggered.connect(self.importTriggered)
+        self.actionExportToQIF.triggered.connect(self.exportToQIFTriggered)
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
     
@@ -199,6 +200,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         docpath = unicode(QFileDialog.getOpenFileName(self, title))
         if docpath:
             self.doc.model.parse_file_for_import(docpath)
+    
+    def exportToQIFTriggered(self):
+        title = "Export to QIF"
+        docpath = unicode(QFileDialog.getSaveFileName(self, title, 'export.qif'))
+        if docpath:
+            self.doc.model.save_to_qif(docpath)
     
     def showSelectedAccountTriggered(self):
         self.doc.model.show_selected_account()
