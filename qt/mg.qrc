@@ -6,5 +6,8 @@
     <file alias="transaction_table_48">images/transaction_table_48.png</file>
     <file alias="entry_table_48">images/entry_table_48.png</file>
     <file alias="lock_12">images/lock_12.png</file>
+    <file alias="budget_16">images/budget_16.png</file>
+    <file alias="check_16">images/check_16.png</file>
+    <file alias="recurrent_16">images/recurrent_16.png</file>
 </qresource>
 </RCC>

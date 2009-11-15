@@ -19,7 +19,13 @@ class TransactionView(BaseView, Ui_TransactionView):
         self._setupUi()
         self.ttable = TransactionTable(doc=doc, view=self.tableView)
         self.children = [self.ttable]
+        self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
         self.setupUi(self)
+    
+    def _setupColumns(self):
+        h = self.tableView.horizontalHeader()
+        h.setHighlightSections(False)
+        h.resizeSection(0, 28)
     

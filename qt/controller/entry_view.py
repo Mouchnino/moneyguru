@@ -28,9 +28,15 @@ class EntryView(BaseView, Ui_EntryView):
         self.lgraph = AccountLineGraph(doc=doc, view=self.lineGraphView)
         # We don't add the graphs to self.children because connection/disconnection occur separately for them
         self.children = [self.etable]
+        self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
         self.setupUi(self)
+    
+    def _setupColumns(self):
+        h = self.tableView.horizontalHeader()
+        h.setHighlightSections(False)
+        h.resizeSection(0, 28)
     
     def showBarGraph(self):
         self.lgraph.model.disconnect()
