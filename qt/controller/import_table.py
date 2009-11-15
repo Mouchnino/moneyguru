@@ -21,9 +21,10 @@ class ImportTable(Table):
         'Transfer', 'Amount']
     ROWATTRS = ['will_import', 'date', 'description', 'amount', 'bound', 'date_import', 
         'description_import', 'payee_import', 'checkno_import', 'transfer_import', 'amount_import']
-    
-    def _getModel(self):
-        return ImportTableModel(view=self, import_window=self.dataSource)
+        
+    def __init__(self, importWindow, view):
+        model = ImportTableModel(view=self, import_window=importWindow.model)
+        Table.__init__(self, model, view)
     
     #--- Public
     def cellClicked(self, index): # connect the view's clicked() signal to this

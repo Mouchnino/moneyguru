@@ -23,7 +23,7 @@ class EntryView(BaseView, Ui_EntryView):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
-        self.etable = EntryTable(dataSource=doc.model, view=self.tableView)
+        self.etable = EntryTable(doc=doc, view=self.tableView)
         self.bgraph = AccountBarGraph(doc=doc, view=self.barGraphView)
         self.lgraph = AccountLineGraph(doc=doc, view=self.lineGraphView)
         # We don't add the graphs to self.children because connection/disconnection occur separately for them

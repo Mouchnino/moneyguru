@@ -22,7 +22,7 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         self._setupUi()
         self.doc = doc
         self.model = TransactionPanelModel(view=self, document=doc.model)
-        self.splitTable = SplitTable(dataSource=self.model, view=self.splitTableView)
+        self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
         self.splitTable.model.connect()
     
     def _loadFields(self):

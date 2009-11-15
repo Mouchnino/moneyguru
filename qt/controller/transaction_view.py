@@ -17,7 +17,7 @@ class TransactionView(BaseView, Ui_TransactionView):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
-        self.ttable = TransactionTable(dataSource=doc.model, view=self.tableView)
+        self.ttable = TransactionTable(doc=doc, view=self.tableView)
         self.children = [self.ttable]
     
     def _setupUi(self):

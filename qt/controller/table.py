@@ -30,20 +30,16 @@ class Table(QAbstractTableModel):
     ROWATTRS = []
     DATECOLUMNS = frozenset()
     
-    def __init__(self, dataSource, view):
+    def __init__(self, model, view):
         QAbstractTableModel.__init__(self)
-        self.dataSource = dataSource
+        self.model = model
         self.view = view
-        self.model = self._getModel()
         self.view.setModel(self)
         dateColumnIndexes = frozenset(i for i, attr in enumerate(self.ROWATTRS) if attr in self.DATECOLUMNS)
         self.tableDelegate = TableDelegate(dateColumnIndexes)
         self.view.setItemDelegate(self.tableDelegate)
         
         self.connect(self.view.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
-    
-    def _getModel(self):
-        raise NotImplementedError()
     
     def _updateModelSelection(self):
         # Takes the selection on the view's side and update the model with it.

@@ -21,7 +21,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self._setupUi()
         self.doc = doc
         self.model = ImportWindowModel(view=self, document=doc.model)
-        self.table = ImportTable(dataSource=self.model, view=self.tableView)
+        self.table = ImportTable(importWindow=self, view=self.tableView)
         self.table.model.connect()
         self._setupColumns() # Can only be done after the model has been connected
         

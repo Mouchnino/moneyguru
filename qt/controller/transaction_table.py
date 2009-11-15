@@ -16,6 +16,7 @@ class TransactionTable(Table):
     ROWATTRS = ['date', 'description', 'from_', 'to', 'amount']
     DATECOLUMNS = frozenset(['date'])
     
-    def _getModel(self):
-        return TransactionTableModel(view=self, document=self.dataSource)
+    def __init__(self, doc, view):
+        model = TransactionTableModel(view=self, document=doc.model)
+        Table.__init__(self, model, view)
     

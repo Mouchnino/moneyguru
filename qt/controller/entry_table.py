@@ -16,6 +16,7 @@ class EntryTable(Table):
     ROWATTRS = ['date', 'description', 'transfer', 'increase', 'decrease', 'balance']
     DATECOLUMNS = frozenset(['date'])
     
-    def _getModel(self):
-        return EntryTableModel(view=self, document=self.dataSource)
+    def __init__(self, doc, view):
+        model = EntryTableModel(view=self, document=doc.model)
+        Table.__init__(self, model, view)
     
