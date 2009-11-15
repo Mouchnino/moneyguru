@@ -33,50 +33,37 @@ class ImportTable(Table):
             self.model.unbind(index.row())
     
     #--- Data methods override
-    def data(self, index, role):
-        if not index.isValid():
-            return None
-        rowattr = self.ROWATTRS[index.column()]
+    def _getData(self, row, rowattr, role):
         if rowattr == 'will_import':
             if role == Qt.CheckStateRole:
-                result = Table.data(self, index, Qt.DisplayRole)
-                return Qt.Checked if result else Qt.Unchecked
+                return Qt.Checked if row.will_import else Qt.Unchecked
             else:
                 return None
         elif rowattr == 'bound':
             if role == Qt.DecorationRole:
-                result = Table.data(self, index, Qt.DisplayRole)
-                return QPixmap(':/lock_12') if result else None
+                return QPixmap(':/lock_12') if row.bound else None
             else:
                 return None
         else:
-            return Table.data(self, index, role)
+            return Table._getData(self, row, rowattr, role)
     
-    def flags(self, index):
-        if not index.isValid():
-            return Qt.ItemIsEnabled
-        flags = Table.flags(self, index)
-        row = self.model[index.row()]
-        rowattr = self.ROWATTRS[index.column()]
+    def _getFlags(self, row, rowattr):
+        flags = Table._getFlags(self, row, rowattr)
         if rowattr == 'will_import':
             flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
         if not row.bound:
             flags |= Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
         return flags
     
-    def setData(self, index, value, role):
-        if not index.isValid():
-            return False
-        rowattr = self.ROWATTRS[index.column()]
+    def _setData(self, row, rowattr, value, role):
         if rowattr == 'will_import':
             if role == Qt.CheckStateRole:
-                row = self.model[index.row()]
                 row.will_import = value.toBool()
                 return True
             else:
                 return False
         else:
-            return Table.setData(self, index, value, role)
+            return Table._setData(self, row, rowattr, value, role)
     
     #--- Drag & Drop
     def dropMimeData(self, mimeData, action, row, column, parentIndex):

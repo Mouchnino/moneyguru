@@ -61,26 +61,43 @@ class Table(QAbstractTableModel):
             self.view.selectionModel().setCurrentIndex(newSelection.indexes()[0], QItemSelectionModel.Current)
     
     #--- Data Model methods
+    # Virtual
+    def _getData(self, row, rowattr, role):
+        if role in (Qt.DisplayRole, Qt.EditRole):
+            return getattr(row, rowattr)
+        return None
+    
+    # Virtual
+    def _getFlags(self, row, rowattr):
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        if row.can_edit_cell(rowattr):
+            flags |= Qt.ItemIsEditable
+        return flags
+    
+    # Virtual
+    def _setData(self, row, rowattr, value, role):
+        if role == Qt.EditRole:
+            value = unicode(value.toString())
+            setattr(row, rowattr, value)
+            return True
+        return False
+    
     def columnCount(self, index):
         return len(self.HEADER)
     
     def data(self, index, role):
         if not index.isValid():
             return None
-        if role in (Qt.DisplayRole, Qt.EditRole):
-            row = self.model[index.row()]
-            rowattr = self.ROWATTRS[index.column()]
-            return getattr(row, rowattr)
-        return None
+        row = self.model[index.row()]
+        rowattr = self.ROWATTRS[index.column()]
+        return self._getData(row, rowattr, role)
     
     def flags(self, index):
         if not index.isValid():
             return Qt.ItemIsEnabled
-        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        row = self.model[index.row()]
         rowattr = self.ROWATTRS[index.column()]
-        if self.model.can_edit_cell(rowattr, index.row()):
-            flags |= Qt.ItemIsEditable
-        return flags
+        return self._getFlags(row, rowattr)
     
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
@@ -98,13 +115,9 @@ class Table(QAbstractTableModel):
     def setData(self, index, value, role):
         if not index.isValid():
             return False
-        if role == Qt.EditRole:
-            row = self.model[index.row()]
-            rowattr = self.ROWATTRS[index.column()]
-            value = unicode(value.toString())
-            setattr(row, rowattr, value)
-            return True
-        return False
+        row = self.model[index.row()]
+        rowattr = self.ROWATTRS[index.column()]
+        return self._setData(row, rowattr, value, role)
     
     def submit(self):
         self.model.save_edits()
