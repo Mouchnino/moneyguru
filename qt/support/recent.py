@@ -8,9 +8,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import SIGNAL, QObject, QSettings
+from PyQt4.QtCore import pyqtSignal, QObject, QSettings
 from PyQt4.QtGui import QAction
 
+from hsutil.misc import dedupe
 from qtlib.preferences import variant_to_py
 
 class Recent(QObject):
@@ -35,6 +36,10 @@ class Recent(QObject):
             items = filter(self._filterFunc, items)
         self._items = items
     
+    def _insertItem(self, item):
+        self._items = dedupe([item] + self._items)[:self._maxItemCount]
+        self._saveToSettings()
+    
     def _refreshMenu(self):
         menu = self._menu
         menu.clear()
@@ -49,20 +54,20 @@ class Recent(QObject):
         settings.setValue(self._settingName, self._items)
     
     #--- Public
-    def itemWasOpened(self, item):
-        self._items = ([item] + self._items)[:self._maxItemCount]
+    def insertItem(self, item):
+        self._insertItem(unicode(item))
         self._refreshMenu()
-        self._saveToSettings()
     
     #--- Event Handlers
     def menuItemWasClicked(self):
         action = self.sender()
         if action is not None:
             item = action.data().toString()
-            self.emit(SIGNAL('mustOpenItem(QString)'), item)
-            self._items.remove(item)
-            self._items.insert(0, item)
+            self.mustOpenItem.emit(item)
+            self._insertItem(unicode(item))
             self._refreshMenu()
     
+    #--- Signals
+    mustOpenItem = pyqtSignal(unicode)
 
     

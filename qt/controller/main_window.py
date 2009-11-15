@@ -9,10 +9,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import os.path as op
-import tempfile
 
-from PyQt4.QtCore import SIGNAL, QFile
-from PyQt4.QtGui import QMainWindow, QFileDialog, QMenu
+from PyQt4.QtGui import QMainWindow, QMenu
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -49,7 +47,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         # Recent Menu
         self.recentDocuments = Recent(self.menuOpenRecent, 'RecentDocuments', filterFunc=op.exists)
-        self.connect(self.recentDocuments, SIGNAL('mustOpenItem(QString)'), self.mustOpenRecentDocument)
+        self.recentDocuments.mustOpenItem.connect(self.doc.open)
+        self.doc.documentOpened.connect(self.recentDocuments.insertItem)
+        self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
         
         # Actions
         # Date range
@@ -79,12 +79,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionMoveUp.triggered.connect(self.moveUpTriggered)
         self.actionMoveDown.triggered.connect(self.moveDownTriggered)
         
+        # Open / Save / Import / Export / New
+        self.actionNewDocument.triggered.connect(self.doc.new)
+        self.actionOpenDocument.triggered.connect(self.doc.openDocument)
+        self.actionOpenExampleDocument.triggered.connect(self.doc.openExampleDocument)
+        self.actionImport.triggered.connect(self.doc.importDocument)
+        self.actionSave.triggered.connect(self.doc.save)
+        self.actionSaveAs.triggered.connect(self.doc.saveAs)
+        self.actionExportToQIF.triggered.connect(self.doc.exportToQIF)
+        
         # Misc
-        self.actionNewDocument.triggered.connect(self.newDocumentTriggered)
-        self.actionOpenDocument.triggered.connect(self.openDocumentTriggered)
-        self.actionOpenExampleDocument.triggered.connect(self.openExampleDocumentTriggered)
-        self.actionImport.triggered.connect(self.importTriggered)
-        self.actionExportToQIF.triggered.connect(self.exportToQIFTriggered)
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
     
@@ -178,43 +182,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.move_down()
     
     # Misc
-    def newDocumentTriggered(self):
-        self.doc.model.clear()
-    
-    def openDocumentTriggered(self):
-        title = "Select a document to load"
-        docpath = unicode(QFileDialog.getOpenFileName(self, title))
-        if docpath:
-            self.doc.model.load_from_xml(docpath)
-            self.recentDocuments.itemWasOpened(docpath)
-    
-    def openExampleDocumentTriggered(self):
-        dirpath = tempfile.mkdtemp()
-        destpath = op.join(dirpath, 'example.moneyguru')
-        QFile.copy(':/example.moneyguru', destpath)
-        self.doc.model.load_from_xml(destpath)
-        self.doc.model.adjust_example_file()
-    
-    def importTriggered(self):
-        title = "Select a document to import"
-        docpath = unicode(QFileDialog.getOpenFileName(self, title))
-        if docpath:
-            self.doc.model.parse_file_for_import(docpath)
-    
-    def exportToQIFTriggered(self):
-        title = "Export to QIF"
-        docpath = unicode(QFileDialog.getSaveFileName(self, title, 'export.qif'))
-        if docpath:
-            self.doc.model.save_to_qif(docpath)
-    
     def showSelectedAccountTriggered(self):
         self.doc.model.show_selected_account()
     
     def navigateBackTriggered(self):
         self.model.navigate_back()
-    
-    def mustOpenRecentDocument(self, docpath):
-        self.doc.model.load_from_xml(docpath)
     
     #--- model --> view
     def animate_date_range_backward(self):
@@ -225,6 +197,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def refresh_date_range_selector(self):
         self.dateRangeButton.setText(self.doc.model.date_range.display)
+    
+    def refresh_reconciliation_button(self):
+        pass
     
     def show_balance_sheet(self):
         self._setMainWidgetIndex(0)        
