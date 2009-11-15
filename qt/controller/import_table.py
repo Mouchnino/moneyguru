@@ -8,11 +8,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.import_table import ImportTable as ImportTableModel
 from .table import Table
+
+MIME_INDEXES = 'application/moneyguru.rowindexes'
 
 class ImportTable(Table):
     HEADER = ['', 'Date', 'Description', 'Amount', '', 'Date', 'Description', 'Payee', 'Check #',
@@ -53,9 +55,12 @@ class ImportTable(Table):
         if not index.isValid():
             return Qt.ItemIsEnabled
         flags = Table.flags(self, index)
+        row = self.model[index.row()]
         rowattr = self.ROWATTRS[index.column()]
         if rowattr == 'will_import':
             flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
+        if not row.bound:
+            flags |= Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
         return flags
     
     def setData(self, index, value, role):
@@ -71,4 +76,32 @@ class ImportTable(Table):
                 return False
         else:
             return Table.setData(self, index, value, role)
+    
+    #--- Drag & Drop
+    def dropMimeData(self, mimeData, action, row, column, parentIndex):
+        if not mimeData.hasFormat(MIME_INDEXES):
+            return False
+        if not parentIndex.isValid():
+            return False
+        indexes = map(int, unicode(mimeData.data(MIME_INDEXES)).split(','))
+        if len(indexes) != 1:
+            return False
+        index = indexes[0]
+        if not self.model.can_bind(index, parentIndex.row()):
+            return False
+        self.model.bind(index, parentIndex.row())
+        return True
+    
+    def mimeData(self, indexes):
+        rows = set(unicode(index.row()) for index in indexes)
+        data = ','.join(rows)
+        mimeData = QMimeData()
+        mimeData.setData(MIME_INDEXES, QByteArray(data))
+        return mimeData
+    
+    def mimeTypes(self):
+        return [MIME_INDEXES]
+    
+    def supportedDropActions(self):
+        return Qt.MoveAction
     
