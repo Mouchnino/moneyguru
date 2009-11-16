@@ -53,6 +53,22 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
         self.bpanel.save()
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable[0].from_, 'Some Income')
+    
+
+class OneIncomeWithBudgetInPast(TestCase):
+    def setUp(self):
+        self.mock_today(2009, 11, 16)
+        self.create_instances()
+        self.add_account('income', account_type=INCOME)
+        self.add_budget('income', None, '100', start_date='01/09/2009')
+    
+    def test_spawns_dont_linger(self):
+        # If the budget hasn't been spent in the past, we don't continue to spawn transactions for
+        # it once we went past the spawn's end date.
+        self.mainwindow.select_transaction_table()
+         # Only the spawns for november and december, NOT, september and october.
+        eq_(len(self.ttable), 2)
+    
 
 class OneExpenseWithBudgetAndTxn(TestCase, CommonSetup):
     def setUp(self):

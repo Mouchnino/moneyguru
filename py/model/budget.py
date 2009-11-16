@@ -55,6 +55,8 @@ class Budget(Recurrence):
         # consumedtxns is a set of txns already "consumed" by a budget. It is the budget's
         # responsability to add txns to this set as it "consumes" them
         spawns = Recurrence.get_spawns(self, end)
+        # No spawn in the past
+        spawns = [spawn for spawn in spawns if spawn.date > date.today()]
         account = self.account
         budget_amount = self.amount if account.is_debit_account() else -self.amount
         relevant_transactions = set(t for t in transactions if account in t.affected_accounts())
