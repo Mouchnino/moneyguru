@@ -190,6 +190,11 @@ class GUITable(Table):
         self.view.refresh()
     
     # Plug these below to the appropriate event in subclasses
+    def _filter_applied(self):
+        self.refresh()
+        self._update_selection()
+        self.view.refresh()
+    
     def _item_changed(self):
         self.refresh()
         self.view.refresh()

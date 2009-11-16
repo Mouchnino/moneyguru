@@ -7,7 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import os.path as op
 from datetime import date
 
 from nose.tools import eq_
@@ -654,6 +653,15 @@ class ThreeTransactionsInRange(TestCase):
         self.ttable.connect()
         self.assertEqual(self.ttable.selected_indexes, [0, 1])
         self.check_gui_calls(self.ttable_gui, refresh=1, show_selected_row=1)
+    
+    def test_selection_changed_when_filtering_out(self):
+        # selected transactions becoming filtered out are not selected anymore. Also, the selection
+        # is updated at the document level
+        self.ttable.select([0]) # first
+        self.sfield.query = 'second'
+        eq_(self.ttable.selected_row.description, 'second')
+        self.mainwindow.edit_item()
+        eq_(self.tpanel.description, 'second')
     
     def test_totals(self):
         # the totals line shows the number of shown transactions

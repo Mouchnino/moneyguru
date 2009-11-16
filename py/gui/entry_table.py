@@ -10,8 +10,6 @@
 import datetime
 from operator import attrgetter
 
-from ..document import FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, FILTER_TRANSFER
-from ..model.account import INCOME, EXPENSE
 from ..model.amount import parse_amount, convert_amount
 from ..model.recurrence import Spawn
 from .base import DocumentGUIObject
@@ -201,9 +199,7 @@ class EntryTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
         delta = date - date_range.start
         self._delta_before_change = delta
     
-    def filter_applied(self):
-        self.refresh()
-        self.view.refresh()
+    filter_applied = GUITable._filter_applied
     
     def reconciliation_changed(self):
         self.refresh()

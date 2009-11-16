@@ -111,10 +111,7 @@ class TransactionTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
         self.view.refresh()
         self.view.show_selected_row()
     
-    def filter_applied(self):
-        self.refresh()
-        self.view.refresh()
-    
+    filter_applied = GUITable._filter_applied
     transaction_changed = GUITable._item_changed
     transaction_deleted = GUITable._item_deleted
     
