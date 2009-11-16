@@ -102,6 +102,10 @@ class Pristine(TestCase):
         eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
         eq_(self.account_node_subaccount_count(self.bsheet.liabilities), 0)
     
+    def test_can_delete(self):
+        # can_delete doesn't crash when nothing is selected
+        assert not self.bsheet.can_delete() # no crash
+    
     def test_is_excluded_is_bool_for_empty_groups_and_type(self):
         # previously, empty lists would be returned, causing a crash in the gui
         self.assertTrue(isinstance(self.bsheet.assets.is_excluded, bool))
@@ -177,8 +181,7 @@ class AccountHierarchy(TestCase):
 class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('Checking')
-        self.mainwindow.select_balance_sheet()
+        self.add_account('Checking')
         self.clear_gui_calls()
     
     def test_add_accounts_after_current(self):

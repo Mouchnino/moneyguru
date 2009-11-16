@@ -96,7 +96,7 @@ class Report(DocumentGUIObject, tree.Tree):
     
     def can_delete(self):
         node = self.selected
-        return node.is_account or node.is_group
+        return isinstance(node, Node) and (node.is_account or node.is_group)
     
     def can_move(self, source_path, dest_path):
         """Returns whether it's possible to move the node at 'source_path' under the node at 'dest_path'."""
