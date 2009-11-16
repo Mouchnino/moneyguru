@@ -18,7 +18,6 @@ from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, Applica
 from ...app import Application
 from ...document import Document
 from ...gui.balance_sheet import BalanceSheet
-from ...model import currency
 from ...model.account import LIABILITY, INCOME, EXPENSE
 from ...model.amount import Amount
 from ...model.date import MonthRange
@@ -45,7 +44,6 @@ class _AccountsAndEntries(TestCase, CommonSetup):
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
     
     def test_add_account(self):
         """The default name for an account is 'New Account', and the selection goes from None to 0.
@@ -91,11 +89,6 @@ class Pristine(TestCase):
         self.assertEqual(self.bsheet.liabilities[0].name, 'New group')
         self.assertTrue(self.bsheet.liabilities[0].is_group)
         self.assertTrue(self.document.is_dirty())
-    
-    def test_add_group(self):
-        """Adding a group refreshes the view and goes into edit mode."""
-        self.bsheet.add_account_group()
-        self.check_gui_calls(self.bsheet_gui, stop_editing=1, start_editing=1, refresh=1, update_selection=1)
     
     def test_add_group_with_total_node_selected(self):
         # The added group will be of the type of the type node we're under

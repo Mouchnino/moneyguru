@@ -14,6 +14,17 @@
 
 from ..base import TestCase
 
+class Pristine(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.check_gui_calls(self.bsheet_gui, refresh=1)
+    
+    def test_add_group(self):
+        # Adding a group refreshes the view and goes into edit mode.
+        self.bsheet.add_account_group()
+        self.check_gui_calls(self.bsheet_gui, stop_editing=1, start_editing=1, refresh=1, update_selection=1)
+    
+    
 class LoadFileWithBalanceSheetSelected(TestCase):
     def setUp(self):
         self.create_instances()
