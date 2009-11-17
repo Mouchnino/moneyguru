@@ -1,3 +1,10 @@
+- date: 2009-11-17
+  version: 1.6.8
+  description: |
+    * Fixed a bug causing budget spawn transactions to linger around longer than they should. (#92)
+    * Fixed a bug making moneyGuru confused about what transaction is selected after applying a
+      filter. (#91)
+    * Fixed a crash on trying to delete an account when no account was selected. (#89)
 - date: 2009-10-09
   version: 1.6.7
   description: |
