@@ -10,7 +10,7 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, QModelIndex
 
 from qtlib.tree_model import TreeNode, TreeModel
 
@@ -29,17 +29,26 @@ class Node(TreeNode):
 class AccountSheet(TreeModel):
     HEADER = ['Account']
     ROWATTRS = ['name']
+    EXPANDED_NODE_PREF_NAME = None # must set in subclass
     
     def __init__(self, doc, view):
         TreeModel.__init__(self)
         self.doc = doc
+        self.app = doc.app
         self.view = view
+        self._wasRestored = False
         self.model = self._getModel()
         self.view.setModel(self)
+        self._restoreNodeExpansionState()
         
         self.view.selectionModel().currentRowChanged.connect(self.currentRowChanged)
         self.view.collapsed.connect(self.nodeCollapsed)
         self.view.expanded.connect(self.nodeExpanded)
+        self.app.willSavePrefs.connect(self._saveNodeExpansionState)
+    
+    #--- Virtual
+    def _getModel(self):
+        raise NotImplementedError()
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):
@@ -48,8 +57,21 @@ class AccountSheet(TreeModel):
     def _getChildren(self):
         return self.model[:]
     
-    def _getModel(self):
-        raise NotImplementedError()
+    #--- Private
+    def _restoreNodeExpansionState(self):
+        paths = getattr(self.app.prefs, self.EXPANDED_NODE_PREF_NAME)
+        for path in paths:
+            index = self.findIndex(path)
+            self.view.expand(index)
+    
+    def _saveNodeExpansionState(self):
+        paths = []
+        index = self.index(0, 0, QModelIndex())
+        while index.isValid():
+            if self.view.isExpanded(index):
+                paths.append(self.pathForIndex(index))
+            index = self.view.indexBelow(index)
+        setattr(self.app.prefs, self.EXPANDED_NODE_PREF_NAME, paths)
     
     #--- Data Model methods
     def columnCount(self, parent):
@@ -114,7 +136,11 @@ class AccountSheet(TreeModel):
     
     #--- model --> view
     def refresh(self):
+        if self._wasRestored:
+            self._saveNodeExpansionState()
         self.reset()
+        self._restoreNodeExpansionState()
+        self._wasRestored = True
     
     def start_editing(self):
         selectedIndex = self.view.selectionModel().selectedRows()[0]

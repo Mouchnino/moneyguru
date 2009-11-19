@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import SIGNAL
+from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication
 
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
@@ -37,6 +37,7 @@ class MoneyGuru(ApplicationBase):
         self.model.set_registration(self.prefs.registration_code, self.prefs.registration_email)
         
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
+        QCoreApplication.instance().aboutToQuit.connect(self.applicationWillTerminate)
     
     #--- Public
     def askForRegCode(self):
@@ -51,6 +52,13 @@ class MoneyGuru(ApplicationBase):
             self.reg.show_nag()
         self.mainWindow.show()
     
+    def applicationWillTerminate(self):
+        self.willSavePrefs.emit()
+        self.prefs.save()
+    
+    #--- Signals
+    willSavePrefs = pyqtSignal()
+    
     #--- model --> view
     def get_default(self, key):
         return None
@@ -58,7 +66,6 @@ class MoneyGuru(ApplicationBase):
     def setup_as_registered(self):
         self.prefs.registration_code = self.model.registration_code
         self.prefs.registration_email = self.model.registration_email
-        self.prefs.save()
         self.mainWindow.actionRegister.setVisible(False)
         self.aboutBox.registerButton.hide()
         self.aboutBox.registeredEmailLabel.setText(self.prefs.registration_email)

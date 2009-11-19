@@ -14,6 +14,7 @@ from .account_sheet import AccountSheet
 class NetWorthSheet(AccountSheet):
     HEADER = ['Account', 'End', 'Start', 'Budgeted']
     ROWATTRS = ['name', 'end', 'start', 'budgeted']
+    EXPANDED_NODE_PREF_NAME = 'netWorthExpandedPaths'
     
     def _getModel(self):
         return BalanceSheetModel(view=self, document=self.doc.model)

@@ -14,6 +14,7 @@ from .account_sheet import AccountSheet
 class ProfitSheet(AccountSheet):
     HEADER = ['Account', 'Current', 'Last', 'Budgeted']
     ROWATTRS = ['name', 'cash_flow', 'last_cash_flow', 'budgeted']
+    EXPANDED_NODE_PREF_NAME = 'profitLossExpandedPaths'
     
     def _getModel(self):
         return IncomeStatementModel(view=self, document=self.doc.model)

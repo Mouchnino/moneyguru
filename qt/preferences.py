@@ -14,12 +14,18 @@ class Preferences(PreferencesBase):
     def _load_values(self, settings, get):
         self.registration_code = get('RegistrationCode', self.registration_code)
         self.registration_email = get('RegistrationEmail', self.registration_email)
+        self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
+        self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     
     def reset(self):
         self.registration_code = ''
         self.registration_email = ''
+        self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
+        self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
     
     def _save_values(self, settings, set_):
         set_('RegistrationCode', self.registration_code)
         set_('RegistrationEmail', self.registration_email)
+        set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
+        set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     
