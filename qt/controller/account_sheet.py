@@ -10,7 +10,7 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtCore import Qt
 
 from qtlib.tree_model import TreeNode, TreeModel
 
@@ -37,8 +37,11 @@ class AccountSheet(TreeModel):
         self.model = self._getModel()
         self.view.setModel(self)
         
-        self.connect(self.view.selectionModel(), SIGNAL('currentRowChanged(QModelIndex,QModelIndex)'), self.currentRowChanged)
+        self.view.selectionModel().currentRowChanged.connect(self.currentRowChanged)
+        self.view.collapsed.connect(self.nodeCollapsed)
+        self.view.expanded.connect(self.nodeExpanded)
     
+    #--- TreeModel overrides
     def _createNode(self, ref, row):
         return Node(self, None, ref, row)
     
@@ -48,6 +51,7 @@ class AccountSheet(TreeModel):
     def _getModel(self):
         raise NotImplementedError()
     
+    #--- Data Model methods
     def columnCount(self, parent):
         return len(self.HEADER)
     
@@ -99,6 +103,14 @@ class AccountSheet(TreeModel):
             return
         node = current.internalPointer()
         self.model.selected = node.ref
+    
+    def nodeCollapsed(self, index):
+        node = index.internalPointer()
+        self.model.collapse_node(node.ref)
+    
+    def nodeExpanded(self, index):
+        node = index.internalPointer()
+        self.model.expand_node(node.ref)
     
     #--- model --> view
     def refresh(self):
