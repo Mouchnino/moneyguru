@@ -1,6 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file alias="example.moneyguru">data/example.moneyguru</file>
+    <file alias="logo_big">images/logo_big.png</file>
+    <file alias="logo_small">images/logo_small.png</file>
     <file alias="balance_sheet_48">images/balance_sheet_48.png</file>
     <file alias="income_statement_48">images/income_statement_48.png</file>
     <file alias="transaction_table_48">images/transaction_table_48.png</file>

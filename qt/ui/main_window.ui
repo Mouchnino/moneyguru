@@ -222,9 +222,17 @@
     <addaction name="actionShowSelectedAccount"/>
     <addaction name="actionNavigateBack"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionRegister"/>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDocument"/>
    <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -486,6 +494,16 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionRegister">
+   <property name="text">
+    <string>Register moneyGuru</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About moneyGuru</string>
    </property>
   </action>
  </widget>

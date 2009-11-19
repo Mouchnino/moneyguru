@@ -27,6 +27,9 @@ AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 DONT_UNRECONCILE_PREFERENCE = 'DontUnreconcile'
 
 class Application(Broadcaster, RegistrableApplication):
+    VERSION = '1.6.8'
+    DEMO_LIMIT_DESC = "In the demo version, documents with more than 100 transactions cannot be saved."
+    
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
         default_currency=USD, cache_path=None):
         Broadcaster.__init__(self)
@@ -53,6 +56,11 @@ class Application(Broadcaster, RegistrableApplication):
         self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
         self._update_autosave_timer()
         self._dont_unreconcile = self.get_default(DONT_UNRECONCILE_PREFERENCE, False)
+    
+    #--- Override
+    #XXX Implement setup_as_registered in the Cocoa codebase!
+    def _setup_as_registered(self):
+        self.view.setup_as_registered()
     
     #--- Private
     def _autosave_all_documents(self):

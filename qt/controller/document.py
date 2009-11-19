@@ -12,7 +12,7 @@ import os.path as op
 import tempfile
 
 from PyQt4.QtCore import pyqtSignal, QObject, QFile
-from PyQt4.QtGui import QFileDialog
+from PyQt4.QtGui import QFileDialog, QMessageBox
 
 from moneyguru.document import Document as DocumentModel
 
@@ -22,6 +22,14 @@ class Document(QObject):
         self.app = app
         self.documentPath = None
         self.model = DocumentModel(view=self, app=app.model)
+    
+    def _save(self, docpath):
+        if not self.app.model.registered and len(self.model.transactions) > 100:
+            msg = "You have reached the limits of this demo version. You must buy moneyGuru to save the document."
+            QMessageBox.warning(self.app.mainWindow, "Registration Required", msg)
+            return False
+        self.model.save_to_xml(docpath)
+        return True
     
     #--- Public
     def exportToQIF(self):
@@ -60,7 +68,7 @@ class Document(QObject):
     
     def save(self):
         if self.documentPath is not None:
-            self.model.save_to_xml(self.documentPath)
+            self._save(self.documentPath)
         else:
             self.saveAs()
     
@@ -68,9 +76,9 @@ class Document(QObject):
         title = "Save As"
         docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title))
         if docpath:
-            self.model.save_to_xml(docpath)
-            self.documentPath = docpath
-            self.documentSavedAs.emit(docpath)
+            if self._save(docpath):
+                self.documentPath = docpath
+                self.documentSavedAs.emit(docpath)
     
     # model --> view
     def confirm_unreconciliation(self, affectedSplitCount):

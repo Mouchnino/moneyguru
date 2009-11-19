@@ -29,6 +29,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
         QMainWindow.__init__(self, None)
         self.doc = doc
+        self.app = doc.app
         self.nwview = NetWorthView(doc=doc)
         self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
@@ -91,6 +92,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Misc
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
+        self.actionRegister.triggered.connect(self.registerTriggered)
+        self.actionAbout.triggered.connect(self.aboutTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -187,6 +190,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def navigateBackTriggered(self):
         self.model.navigate_back()
+    
+    def registerTriggered(self):
+        self.app.askForRegCode()
+    
+    def aboutTriggered(self):
+        self.app.showAboutBox()
     
     #--- model --> view
     def animate_date_range_backward(self):

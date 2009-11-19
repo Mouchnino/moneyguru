@@ -18,7 +18,7 @@ from app import MoneyGuru
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # app.setWindowIcon(QIcon(QPixmap(":/logo_se")))
+    app.setWindowIcon(QIcon(QPixmap(":/logo_small")))
     QCoreApplication.setOrganizationName('Hardcoded Software')
     QCoreApplication.setApplicationName('moneyGuru')
     QCoreApplication.setApplicationVersion(MoneyGuru.VERSION)
