@@ -51,6 +51,8 @@ class ImportTable(Table):
         flags = Table._getFlags(self, row, rowattr)
         if rowattr == 'will_import':
             flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
+            if not row.can_edit_will_import:
+                flags &= ~Qt.ItemIsEnabled
         if not row.bound:
             flags |= Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
         return flags
