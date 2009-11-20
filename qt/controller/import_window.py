@@ -28,7 +28,6 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.tabView.tabCloseRequested.connect(self.tabCloseRequested)
         self.tabView.currentChanged.connect(self.currentTabChanged)
         self.targetAccountComboBox.currentIndexChanged.connect(self.targetAccountChanged)
-        self.tableView.clicked.connect(self.table.cellClicked)
         self.importButton.clicked.connect(self.importClicked)
         self.swapButton.clicked.connect(self.swapClicked)
     

@@ -25,12 +25,7 @@ class ImportTable(Table):
     def __init__(self, importWindow, view):
         model = ImportTableModel(view=self, import_window=importWindow.model)
         Table.__init__(self, model, view)
-    
-    #--- Public
-    def cellClicked(self, index): # connect the view's clicked() signal to this
-        rowattr = self.ROWATTRS[index.column()]
-        if rowattr == 'bound':
-            self.model.unbind(index.row())
+        self.view.clicked.connect(self.cellClicked)
     
     #--- Data methods override
     def _getData(self, row, rowattr, role):
@@ -94,4 +89,10 @@ class ImportTable(Table):
     
     def supportedDropActions(self):
         return Qt.MoveAction
+    
+    #--- Event Handling
+    def cellClicked(self, index):
+        rowattr = self.ROWATTRS[index.column()]
+        if rowattr == 'bound':
+            self.model.unbind(index.row())
     
