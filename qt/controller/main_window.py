@@ -10,7 +10,7 @@
 
 import os.path as op
 
-from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap
+from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -23,6 +23,7 @@ from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .import_window import ImportWindow
+from .search_field import SearchField
 from ui.main_window_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -37,14 +38,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
-        self.iwindow = ImportWindow(doc=doc)
-        self.iwindow.model.connect()
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
             self.eview.etable.model, None, None, self.apanel.model, self.tpanel.model, None, None,
             None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
+        self.iwindow = ImportWindow(doc=doc)
+        self.iwindow.model.connect()
+        self.sfield = SearchField(doc=doc, view=self.searchLineEdit)
+        self.sfield.model.connect()
         
         # Recent Menu
         self.recentDocuments = Recent(self.menuOpenRecent, 'RecentDocuments', filterFunc=op.exists)
@@ -113,6 +116,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         menu.addAction(self.actionChangeDateRangeRunningYear)
         menu.addAction(self.actionChangeDateRangeCustom)
         self.dateRangeButton.setMenu(menu)
+        
+        # Filter field
+        self.searchLineEdit = QLineEdit()
+        self.toolBar.addWidget(self.searchLineEdit)
     
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
