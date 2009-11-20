@@ -22,6 +22,7 @@ class EntryTable(Table):
     def __init__(self, doc, view):
         model = EntryTableModel(view=self, document=doc.model)
         Table.__init__(self, model, view)
+        self.view.clicked.connect(self.cellClicked)
     
     #--- Data methods override
     def _getData(self, row, rowattr, role):
@@ -35,8 +36,35 @@ class EntryTable(Table):
                     return QPixmap(':/recurrent_16')
                 else:
                     return None
+            elif (role == Qt.CheckStateRole) and row.can_reconcile() and not row.reconciled:
+                return Qt.Checked if row.reconciliation_pending else Qt.Unchecked
             else:
                 return None
         else:
             return Table._getData(self, row, rowattr, role)
+    
+    def _getFlags(self, row, rowattr):
+        flags = Table._getFlags(self, row, rowattr)
+        if rowattr == 'status':
+            if row.can_reconcile() and not row.reconciled:
+                flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
+        return flags
+    
+    def _setData(self, row, rowattr, value, role):
+        if rowattr == 'status':
+            if role == Qt.CheckStateRole:
+                row.toggle_reconciled()
+                return True
+            else:
+                return False
+        else:
+            return Table._setData(self, row, rowattr, value, role)
+    
+    #--- Event Handling
+    def cellClicked(self, index):
+        rowattr = self.ROWATTRS[index.column()]
+        if rowattr == 'status':
+            row = self.model[index.row()]
+            if row.can_reconcile() and row.reconciled:
+                row.toggle_reconciled()
     

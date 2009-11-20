@@ -218,6 +218,7 @@
     <addaction name="actionEditItem"/>
     <addaction name="actionMoveUp"/>
     <addaction name="actionMoveDown"/>
+    <addaction name="actionToggleReconciliationMode"/>
     <addaction name="separator"/>
     <addaction name="actionShowSelectedAccount"/>
     <addaction name="actionNavigateBack"/>
@@ -254,6 +255,8 @@
    <addaction name="actionShowProfitLoss"/>
    <addaction name="actionShowTransactions"/>
    <addaction name="actionShowAccount"/>
+   <addaction name="separator"/>
+   <addaction name="actionToggleReconciliationModeToolbar"/>
   </widget>
   <action name="actionOpenDocument">
    <property name="text">
@@ -504,6 +507,23 @@
   <action name="actionAbout">
    <property name="text">
     <string>About moneyGuru</string>
+   </property>
+  </action>
+  <action name="actionToggleReconciliationMode">
+   <property name="text">
+    <string>Toggle Reconciliation Mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionToggleReconciliationModeToolbar">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/reconcile_48</normaloff>:/reconcile_48</iconset>
+   </property>
+   <property name="text">
+    <string>Reconcile</string>
    </property>
   </action>
  </widget>

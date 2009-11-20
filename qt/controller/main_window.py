@@ -10,7 +10,7 @@
 
 import os.path as op
 
-from PyQt4.QtGui import QMainWindow, QMenu
+from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -92,6 +92,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Misc
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
+        self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
+        self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
     
@@ -191,6 +193,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def navigateBackTriggered(self):
         self.model.navigate_back()
     
+    def toggleReconciliationModeTriggered(self):
+        self.doc.model.toggle_reconciliation_mode()
+    
     def registerTriggered(self):
         self.app.askForRegCode()
     
@@ -208,7 +213,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.dateRangeButton.setText(self.doc.model.date_range.display)
     
     def refresh_reconciliation_button(self):
-        pass
+        imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
+        self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
     
     def show_balance_sheet(self):
         self._setMainWidgetIndex(0)        
