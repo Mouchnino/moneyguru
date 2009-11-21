@@ -119,6 +119,7 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
         self.schedule = schedule.replicate()
         self.transaction = self.schedule.ref
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
+        self.view.refresh_repeat_options()
         self.view.refresh_repeat_every()
         self.notify('panel_loaded')
     

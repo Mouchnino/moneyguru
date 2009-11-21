@@ -18,13 +18,20 @@ class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
         self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.clear_gui_calls()
     
     def test_add_group(self):
         # Adding a group refreshes the view and goes into edit mode.
         self.bsheet.add_account_group()
         self.check_gui_calls(self.bsheet_gui, stop_editing=1, start_editing=1, refresh=1, update_selection=1)
     
+    def test_new_schedule(self):
+        # Repeat options must be updated upon panel load
+        self.mainwindow.select_schedule_table()
+        self.mainwindow.new_item()
+        self.check_gui_calls_partial(self.scpanel_gui, refresh_repeat_options=1)
     
+
 class LoadFileWithBalanceSheetSelected(TestCase):
     def setUp(self):
         self.create_instances()
