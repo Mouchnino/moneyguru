@@ -8,33 +8,35 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.schedule_panel import SchedulePanel as SchedulePanelModel
+from moneyguru.gui.budget_panel import BudgetPanel as BudgetPanelModel
 
 from .panel import Panel
-from .split_table import SplitTable
-from ui.schedule_panel_ui import Ui_SchedulePanel
+from ui.budget_panel_ui import Ui_BudgetPanel
 
-class SchedulePanel(Panel, Ui_SchedulePanel):
+class BudgetPanel(Panel, Ui_BudgetPanel):
     FIELDS = [
         ('startDateEdit', 'start_date'),
         ('repeatTypeComboBox', 'repeat_type_index'),
         ('repeatEverySpinBox', 'repeat_every'),
         ('stopDateEdit', 'stop_date'),
-        ('descriptionEdit', 'description'),
-        ('payeeEdit', 'payee'),
-        ('checkNoEdit', 'checkno'),
+        ('accountComboBox', 'account_index'),
+        ('targetComboBox', 'target_index'),
+        ('amountEdit', 'amount'),
     ]
     
     def __init__(self, doc):
         Panel.__init__(self)
         self._setupUi()
         self.doc = doc
-        self.model = SchedulePanelModel(view=self, document=doc.model)
-        self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
-        self.splitTable.model.connect()
+        self.model = BudgetPanelModel(view=self, document=doc.model)
         
     def _setupUi(self):
         self.setupUi(self)
+    
+    def _loadFields(self):
+        self._changeComboBoxItems(self.accountComboBox, self.model.account_options)
+        self._changeComboBoxItems(self.targetComboBox, self.model.target_options)
+        Panel._loadFields(self)
     
     #--- model --> view
     def refresh_repeat_every(self):
