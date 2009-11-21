@@ -23,6 +23,7 @@ from .schedule_view import ScheduleView
 from .budget_view import BudgetView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
+from .mass_edition_panel import MassEditionPanel
 from .schedule_panel import SchedulePanel
 from .budget_panel import BudgetPanel
 from .custom_date_range_panel import CustomDateRangePanel
@@ -43,13 +44,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bview = BudgetView(doc=doc)
         self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
+        self.mepanel = MassEditionPanel(doc=doc)
         self.scpanel = SchedulePanel(doc=doc)
         self.bpanel = BudgetPanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
             self.eview.etable.model, self.scview.sctable.model, self.bview.btable.model,
-            self.apanel.model, self.tpanel.model, None, self.scpanel.model, self.bpanel.model]
+            self.apanel.model, self.tpanel.model, self.mepanel.model, self.scpanel.model,
+            self.bpanel.model]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.iwindow = ImportWindow(doc=doc)

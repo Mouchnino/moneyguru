@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox
+from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox
 
 class Panel(QDialog):
     # A list of two-sized tuples (QWidget's name, model field name).
@@ -40,6 +40,8 @@ class Panel(QDialog):
                 widget.valueChanged.connect(self.spinBoxValueChanged)
             elif isinstance(widget, QLineEdit):
                 widget.editingFinished.connect(self.lineEditEditingFinished)
+            elif isinstance(widget, QCheckBox):
+                widget.stateChanged.connect(self.checkBoxStateChanged)
     
     def _loadFields(self):
         for widgetName, modelAttr in self.FIELDS:
@@ -51,6 +53,8 @@ class Panel(QDialog):
                 widget.setValue(value)
             elif isinstance(widget, QLineEdit):
                 widget.setText(value)
+            elif isinstance(widget, QCheckBox):
+                widget.setChecked(value)
     
     def _saveFields(self):
         pass
@@ -60,6 +64,11 @@ class Panel(QDialog):
         QDialog.accept(self)
     
     #--- Event Handlers
+    def checkBoxStateChanged(self):
+        sender = self.sender()
+        modelAttr = self._widget2ModelAttr[sender]
+        setattr(self.model, modelAttr, sender.isChecked())
+    
     def comboBoxCurrentIndexChanged(self):
         sender = self.sender()
         modelAttr = self._widget2ModelAttr[sender]
