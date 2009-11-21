@@ -16,21 +16,17 @@ from .panel import Panel
 from ui.account_panel_ui import Ui_AccountPanel
 
 class AccountPanel(Panel, Ui_AccountPanel):
+    FIELDS = [
+        ('nameEdit', 'name'),
+        ('typeComboBox', 'type_index'),
+        ('currencyComboBox', 'currency_index'),
+    ]
+    
     def __init__(self, doc):
         Panel.__init__(self)
         self._setupUi()
         self.doc = doc
         self.model = AccountPanelModel(view=self, document=doc.model)
-    
-    def _loadFields(self):
-        self.nameEdit.setText(self.model.name)
-        self.typeComboBox.setCurrentIndex(self.model.type_index)
-        self.currencyComboBox.setCurrentIndex(self.model.currency_index)
-    
-    def _saveFields(self):
-        self.model.name = unicode(self.nameEdit.text())
-        self.model.type_index = self.typeComboBox.currentIndex()
-        self.model.currency_index = self.currencyComboBox.currentIndex()
     
     def _setupUi(self):
         self.setupUi(self)

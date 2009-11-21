@@ -17,6 +17,13 @@ from .split_table import SplitTable
 from ui.transaction_panel_ui import Ui_TransactionPanel
 
 class TransactionPanel(Panel, Ui_TransactionPanel):
+    FIELDS = [
+        ('dateEdit', 'date'),
+        ('descriptionEdit', 'description'),
+        ('payeeEdit', 'payee'),
+        ('checkNoEdit', 'checkno'),
+    ]
+    
     def __init__(self, doc):
         Panel.__init__(self)
         self._setupUi()
@@ -24,18 +31,6 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         self.model = TransactionPanelModel(view=self, document=doc.model)
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
         self.splitTable.model.connect()
-    
-    def _loadFields(self):
-        self.dateEdit.setText(self.model.date)
-        self.descriptionEdit.setText(self.model.description)
-        self.payeeEdit.setText(self.model.payee)
-        self.checkNoEdit.setText(self.model.checkno)
-    
-    def _saveFields(self):
-        self.model.date = unicode(self.dateEdit.text())
-        self.model.description = unicode(self.descriptionEdit.text())
-        self.model.payee = unicode(self.payeeEdit.text())
-        self.model.checkno = unicode(self.checkNoEdit.text())
     
     def _setupUi(self):
         self.setupUi(self)
