@@ -204,6 +204,8 @@
     <addaction name="actionShowProfitLoss"/>
     <addaction name="actionShowTransactions"/>
     <addaction name="actionShowAccount"/>
+    <addaction name="actionShowSchedules"/>
+    <addaction name="actionShowBudgets"/>
     <addaction name="actionShowPreviousView"/>
     <addaction name="actionShowNextView"/>
     <addaction name="menuDateRange"/>
@@ -255,6 +257,8 @@
    <addaction name="actionShowProfitLoss"/>
    <addaction name="actionShowTransactions"/>
    <addaction name="actionShowAccount"/>
+   <addaction name="actionShowSchedules"/>
+   <addaction name="actionShowBudgets"/>
    <addaction name="separator"/>
    <addaction name="actionToggleReconciliationModeToolbar"/>
   </widget>
@@ -524,6 +528,30 @@
    </property>
    <property name="text">
     <string>Reconcile</string>
+   </property>
+  </action>
+  <action name="actionShowSchedules">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/schedules_48</normaloff>:/schedules_48</iconset>
+   </property>
+   <property name="text">
+    <string>Schedules</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionShowBudgets">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/budget_48</normaloff>:/budget_48</iconset>
+   </property>
+   <property name="text">
+    <string>Budgets</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
    </property>
   </action>
  </widget>

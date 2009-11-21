@@ -19,6 +19,8 @@ from .networth_view import NetWorthView
 from .profit_view import ProfitView
 from .transaction_view import TransactionView
 from .entry_view import EntryView
+from .schedule_view import ScheduleView
+from .budget_view import BudgetView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
 from .custom_date_range_panel import CustomDateRangePanel
@@ -35,13 +37,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
         self.eview = EntryView(doc=doc)
+        self.scview = ScheduleView(doc=doc)
+        self.bview = BudgetView(doc=doc)
         self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
-            self.eview.etable.model, None, None, self.apanel.model, self.tpanel.model, None, None,
-            None]
+            self.eview.etable.model, self.scview.sctable.model, self.bview.btable.model,
+            self.apanel.model, self.tpanel.model, None, None, None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.iwindow = ImportWindow(doc=doc)
@@ -72,6 +76,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionShowProfitLoss.triggered.connect(self.showProfitLossTriggered)        
         self.actionShowTransactions.triggered.connect(self.showTransactionsTriggered)        
         self.actionShowAccount.triggered.connect(self.showAccountTriggered)        
+        self.actionShowSchedules.triggered.connect(self.showSchedulesTriggered)        
+        self.actionShowBudgets.triggered.connect(self.showBudgetsTriggered)        
         self.actionShowPreviousView.triggered.connect(self.showPreviousViewTriggered)        
         self.actionShowNextView.triggered.connect(self.showNextViewTriggered)        
         
@@ -106,6 +112,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.pview)
         self.mainView.addWidget(self.tview)
         self.mainView.addWidget(self.eview)
+        self.mainView.addWidget(self.scview)
+        self.mainView.addWidget(self.bview)
         
         # Date range menu
         menu = QMenu(self.dateRangeButton)
@@ -168,6 +176,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def showAccountTriggered(self):
         self.model.select_entry_table()
     
+    def showSchedulesTriggered(self):
+        self.model.select_schedule_table()
+    
+    def showBudgetsTriggered(self):
+        self.model.select_budget_table()
+    
     def showPreviousViewTriggered(self):
         self.model.select_previous_view()
     
@@ -224,10 +238,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
     
     def show_balance_sheet(self):
-        self._setMainWidgetIndex(0)        
+        self._setMainWidgetIndex(0)
     
     def show_bar_graph(self):
         self.eview.showBarGraph()
+    
+    def show_budget_table(self):
+        self._setMainWidgetIndex(5)
     
     def show_custom_date_range_panel(self):
         self.cdrpanel.load()
@@ -240,6 +257,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def show_income_statement(self):
         self._setMainWidgetIndex(1)        
+    
+    def show_schedule_table(self):
+        self._setMainWidgetIndex(4)
     
     def show_transaction_table(self):
         self._setMainWidgetIndex(2)
