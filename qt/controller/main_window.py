@@ -23,6 +23,7 @@ from .schedule_view import ScheduleView
 from .budget_view import BudgetView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
+from .schedule_panel import SchedulePanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .import_window import ImportWindow
 from .search_field import SearchField
@@ -41,11 +42,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bview = BudgetView(doc=doc)
         self.apanel = AccountPanel(doc=doc)
         self.tpanel = TransactionPanel(doc=doc)
+        self.scpanel = SchedulePanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
         self._setupUi()
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
             self.eview.etable.model, self.scview.sctable.model, self.bview.btable.model,
-            self.apanel.model, self.tpanel.model, None, None, None]
+            self.apanel.model, self.tpanel.model, None, self.scpanel.model, None]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.iwindow = ImportWindow(doc=doc)
