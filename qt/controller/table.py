@@ -12,7 +12,7 @@ from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
 from PyQt4.QtGui import QItemSelectionModel, QItemSelection, QStyledItemDelegate
 
 from support.date_edit import DateEdit
-from support.completable_edit import CompletableEdit
+from support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
 
 DATE_EDIT = 'date_edit'
 DESCRIPTION_EDIT = 'description_edit'
@@ -32,9 +32,13 @@ class TableDelegate(QStyledItemDelegate):
         elif editType == DATE_EDIT:
             return DateEdit(parent)
         elif editType in (DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT):
-            result = CompletableEdit(parent)
+            editClass = {
+                DESCRIPTION_EDIT: DescriptionEdit,
+                PAYEE_EDIT: PayeeEdit,
+                ACCOUNT_EDIT: AccountEdit
+            }[editType]
+            result = editClass(parent)
             result.model = self._model
-            result.attrname = {DESCRIPTION_EDIT: 'description', PAYEE_EDIT: 'payee', ACCOUNT_EDIT: 'account'}[editType]
             return result
     
 

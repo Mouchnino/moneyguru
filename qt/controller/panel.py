@@ -44,7 +44,6 @@ class Panel(QDialog):
                 widget.editingFinished.connect(self.lineEditEditingFinished)
                 if isinstance(widget, CompletableEdit):
                     widget.model = self.model
-                    widget.attrname = modelAttr
             elif isinstance(widget, QCheckBox):
                 widget.stateChanged.connect(self.checkBoxStateChanged)
     

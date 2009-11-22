@@ -23,10 +23,11 @@ from PyQt4.QtGui import QLineEdit
 # prev_completion().
 
 class CompletableEdit(QLineEdit):
+    ATTRNAME = None # must be set
+    
     def __init__(self, parent):
         QLineEdit.__init__(self, parent)
         self.model = None
-        self.attrname = None
     
     def _prefix(self):
         # Returns the text before the selection, lowered
@@ -56,8 +57,17 @@ class CompletableEdit(QLineEdit):
             QLineEdit.keyPressEvent(self, event)
             newPrefix = self._prefix()
             if oldPrefix != newPrefix: # text changed, do completion
-                completion = self.model.complete(newPrefix, self.attrname)
+                completion = self.model.complete(newPrefix, self.ATTRNAME)
                 if completion:
                     self.setText(completion)
                     self.setSelection(len(newPrefix), len(completion) - len(newPrefix))
     
+
+class DescriptionEdit(CompletableEdit):
+    ATTRNAME = 'description'
+
+class PayeeEdit(CompletableEdit):
+    ATTRNAME = 'payee'
+
+class AccountEdit(CompletableEdit):
+    ATTRNAME = 'account'
