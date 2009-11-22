@@ -66,7 +66,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="descriptionEdit"/>
+        <widget class="CompletableEdit" name="descriptionEdit"/>
        </item>
       </layout>
      </item>
@@ -90,7 +90,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="payeeEdit"/>
+        <widget class="CompletableEdit" name="payeeEdit"/>
        </item>
       </layout>
      </item>
@@ -138,7 +138,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="fromEdit"/>
+        <widget class="CompletableEdit" name="fromEdit"/>
        </item>
       </layout>
      </item>
@@ -162,7 +162,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="toEdit"/>
+        <widget class="CompletableEdit" name="toEdit"/>
        </item>
       </layout>
      </item>
@@ -237,6 +237,11 @@
    <class>DateEdit</class>
    <extends>QLineEdit</extends>
    <header>support.date_edit</header>
+  </customwidget>
+  <customwidget>
+   <class>CompletableEdit</class>
+   <extends>QLineEdit</extends>
+   <header>support.completable_edit</header>
   </customwidget>
  </customwidgets>
  <resources/>

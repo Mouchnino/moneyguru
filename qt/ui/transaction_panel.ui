@@ -70,7 +70,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="descriptionEdit"/>
+      <widget class="CompletableEdit" name="descriptionEdit"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_4">
@@ -83,7 +83,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="payeeEdit"/>
+      <widget class="CompletableEdit" name="payeeEdit"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_5">
@@ -186,6 +186,11 @@
    <class>DateEdit</class>
    <extends>QLineEdit</extends>
    <header>support.date_edit</header>
+  </customwidget>
+  <customwidget>
+   <class>CompletableEdit</class>
+   <extends>QLineEdit</extends>
+   <header>support.completable_edit</header>
   </customwidget>
  </customwidgets>
  <resources/>

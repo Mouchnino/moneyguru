@@ -10,6 +10,8 @@
 
 from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox
 
+from support.completable_edit import CompletableEdit
+
 class Panel(QDialog):
     # A list of two-sized tuples (QWidget's name, model field name).
     FIELDS = []
@@ -40,6 +42,9 @@ class Panel(QDialog):
                 widget.valueChanged.connect(self.spinBoxValueChanged)
             elif isinstance(widget, QLineEdit):
                 widget.editingFinished.connect(self.lineEditEditingFinished)
+                if isinstance(widget, CompletableEdit):
+                    widget.model = self.model
+                    widget.attrname = modelAttr
             elif isinstance(widget, QCheckBox):
                 widget.stateChanged.connect(self.checkBoxStateChanged)
     

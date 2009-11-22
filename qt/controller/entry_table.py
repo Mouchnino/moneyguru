@@ -12,12 +12,16 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.entry_table import EntryTable as EntryTableModel
-from .table import Table
+from .table import Table, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 
 class EntryTable(Table):
     HEADER = ['', 'Date', 'Description', 'Transfer', 'Increase', 'Decrease', 'Balance']
     ROWATTRS = ['status', 'date', 'description', 'transfer', 'increase', 'decrease', 'balance']
-    DATECOLUMNS = frozenset(['date'])
+    SPECIAL_COLUMNS = {
+        'date': DATE_EDIT,
+        'description': DESCRIPTION_EDIT,
+        'transfer': ACCOUNT_EDIT,
+    }
     
     def __init__(self, doc, view):
         model = EntryTableModel(view=self, document=doc.model)

@@ -12,31 +12,44 @@ from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
 from PyQt4.QtGui import QItemSelectionModel, QItemSelection, QStyledItemDelegate
 
 from support.date_edit import DateEdit
+from support.completable_edit import CompletableEdit
+
+DATE_EDIT = 'date_edit'
+DESCRIPTION_EDIT = 'description_edit'
+PAYEE_EDIT = 'payee_edit'
+ACCOUNT_EDIT = 'account_edit'
 
 class TableDelegate(QStyledItemDelegate):
-    def __init__(self, dateColumnIndexes):
+    def __init__(self, model, specialColumns):
         QStyledItemDelegate.__init__(self)
-        self._dateColumnIndexes = dateColumnIndexes
+        self._model = model
+        self._specialColumns = specialColumns
     
     def createEditor(self, parent, option, index):
-        if index.column() in self._dateColumnIndexes:
-            return DateEdit(parent)
-        else:
+        editType = self._specialColumns.get(index.column())
+        if editType is None:
             return QStyledItemDelegate.createEditor(self, parent, option, index)
+        elif editType == DATE_EDIT:
+            return DateEdit(parent)
+        elif editType in (DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT):
+            result = CompletableEdit(parent)
+            result.model = self._model
+            result.attrname = {DESCRIPTION_EDIT: 'description', PAYEE_EDIT: 'payee', ACCOUNT_EDIT: 'account'}[editType]
+            return result
     
 
 class Table(QAbstractTableModel):
     HEADER = []
     ROWATTRS = []
-    DATECOLUMNS = frozenset()
+    SPECIAL_COLUMNS = {}
     
     def __init__(self, model, view):
         QAbstractTableModel.__init__(self)
         self.model = model
         self.view = view
         self.view.setModel(self)
-        dateColumnIndexes = frozenset(i for i, attr in enumerate(self.ROWATTRS) if attr in self.DATECOLUMNS)
-        self.tableDelegate = TableDelegate(dateColumnIndexes)
+        specialColumns = dict((self.ROWATTRS.index(colName), editType) for colName, editType in self.SPECIAL_COLUMNS.items())
+        self.tableDelegate = TableDelegate(self.model, specialColumns)
         self.view.setItemDelegate(self.tableDelegate)
         
         self.connect(self.view.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
