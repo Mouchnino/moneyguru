@@ -13,8 +13,9 @@ from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.entry_table import EntryTable as EntryTableModel
 from .table import Table, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from .table_with_transactions import TableWithTransactions
 
-class EntryTable(Table):
+class EntryTable(TableWithTransactions):
     HEADER = ['', 'Date', 'Description', 'Transfer', 'Increase', 'Decrease', 'Balance']
     ROWATTRS = ['status', 'date', 'description', 'transfer', 'increase', 'decrease', 'balance']
     SPECIAL_COLUMNS = {
@@ -25,7 +26,7 @@ class EntryTable(Table):
     
     def __init__(self, doc, view):
         model = EntryTableModel(view=self, document=doc.model)
-        Table.__init__(self, model, view)
+        TableWithTransactions.__init__(self, model, view)
         self.view.clicked.connect(self.cellClicked)
     
     #--- Data methods override
@@ -45,10 +46,10 @@ class EntryTable(Table):
             else:
                 return None
         else:
-            return Table._getData(self, row, rowattr, role)
+            return TableWithTransactions._getData(self, row, rowattr, role)
     
     def _getFlags(self, row, rowattr):
-        flags = Table._getFlags(self, row, rowattr)
+        flags = TableWithTransactions._getFlags(self, row, rowattr)
         if rowattr == 'status':
             if row.can_reconcile() and not row.reconciled:
                 flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
@@ -62,7 +63,7 @@ class EntryTable(Table):
             else:
                 return False
         else:
-            return Table._setData(self, row, rowattr, value, role)
+            return TableWithTransactions._setData(self, row, rowattr, value, role)
     
     #--- Event Handling
     def cellClicked(self, index):

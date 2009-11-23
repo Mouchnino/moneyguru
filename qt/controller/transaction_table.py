@@ -12,9 +12,10 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.transaction_table import TransactionTable as TransactionTableModel
-from .table import Table, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from .table import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from .table_with_transactions import TableWithTransactions
 
-class TransactionTable(Table):
+class TransactionTable(TableWithTransactions):
     HEADER = ['', 'Date', 'Description', 'From', 'To', 'Amount']
     ROWATTRS = ['status', 'date', 'description', 'from_', 'to', 'amount']
     SPECIAL_COLUMNS = {
@@ -26,7 +27,7 @@ class TransactionTable(Table):
     
     def __init__(self, doc, view):
         model = TransactionTableModel(view=self, document=doc.model)
-        Table.__init__(self, model, view)
+        TableWithTransactions.__init__(self, model, view)
     
     #--- Data methods override
     def _getData(self, row, rowattr, role):
@@ -43,5 +44,5 @@ class TransactionTable(Table):
             else:
                 return None
         else:
-            return Table._getData(self, row, rowattr, role)
+            return TableWithTransactions._getData(self, row, rowattr, role)
     

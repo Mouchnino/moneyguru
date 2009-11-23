@@ -46,6 +46,8 @@ class Table(QAbstractTableModel):
     HEADER = []
     ROWATTRS = []
     SPECIAL_COLUMNS = {}
+    # Flags you want when index.isValid() is False. In those cases, _getFlags() is never called.
+    INVALID_INDEX_FLAGS = Qt.ItemIsEnabled
     
     def __init__(self, model, view):
         QAbstractTableModel.__init__(self)
@@ -111,7 +113,7 @@ class Table(QAbstractTableModel):
     
     def flags(self, index):
         if not index.isValid():
-            return Qt.ItemIsEnabled
+            return self.INVALID_INDEX_FLAGS
         row = self.model[index.row()]
         rowattr = self.ROWATTRS[index.column()]
         return self._getFlags(row, rowattr)
