@@ -18,6 +18,15 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QTreeView" name="treeView">
+       <property name="acceptDrops">
+        <bool>true</bool>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::InternalMove</enum>
+       </property>
        <property name="uniformRowHeights">
         <bool>true</bool>
        </property>

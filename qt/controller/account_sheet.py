@@ -10,9 +10,11 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt, QModelIndex
+from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
 
 from qtlib.tree_model import TreeNode, TreeModel
+
+MIME_PATH = 'application/moneyguru.nodepath'
 
 class Node(TreeNode):
     def __init__(self, model, parent, ref, row):
@@ -94,6 +96,10 @@ class AccountSheet(TreeModel):
         rowattr = self.ROWATTRS[index.column()]
         if getattr(node.ref, 'can_edit_' + rowattr, False):
             flags |= Qt.ItemIsEditable
+        if node.ref.is_group or node.ref.is_type:
+            flags |= Qt.ItemIsDropEnabled
+        if node.ref.is_account:
+            flags |= Qt.ItemIsDragEnabled
         return flags
     
     def headerData(self, section, orientation, role):
@@ -118,6 +124,33 @@ class AccountSheet(TreeModel):
     def submit(self):
         self.model.save_edits()
         return True
+    
+    #--- Drag & Drop
+    def dropMimeData(self, mimeData, action, row, column, parentIndex):
+        if not mimeData.hasFormat(MIME_PATH):
+            return False
+        if not parentIndex.isValid():
+            return False
+        path = map(int, unicode(mimeData.data(MIME_PATH)).split(','))
+        destPath = self.pathForIndex(parentIndex)
+        if not self.model.can_move(path, destPath):
+            return False
+        self.model.move(path, destPath)
+        return True
+    
+    def mimeData(self, indexes):
+        index = indexes[0]
+        path = self.pathForIndex(index)
+        data = ','.join(map(unicode, path))
+        mimeData = QMimeData()
+        mimeData.setData(MIME_PATH, QByteArray(data))
+        return mimeData
+    
+    def mimeTypes(self):
+        return [MIME_PATH]
+    
+    def supportedDropActions(self):
+        return Qt.MoveAction
     
     #--- Events
     def currentRowChanged(self, current, previous):
