@@ -28,3 +28,17 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
     
+    #--- Public
+    def updateOptionalWidgetsVisibility(self):
+        prefs = self.doc.app.prefs
+        h = self.tableView.horizontalHeader()
+        PREF2COLNAME = {
+            'scheduleTableDescriptionColumnVisible': 'description',
+            'scheduleTablePayeeColumnVisible': 'payee',
+            'scheduleTableChecknoColumnVisible': 'checkno',
+        }
+        for prefName, colName in PREF2COLNAME.items():
+            sectionIndex = self.sctable.ROWATTRS.index(colName)
+            isVisible = getattr(prefs, prefName)
+            h.setSectionHidden(sectionIndex, not isVisible)
+    

@@ -9,6 +9,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication
+from PyQt4.QtGui import QDialog
 
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
@@ -18,6 +19,7 @@ from moneyguru.app import Application as MoneyGuruModel
 
 from controller.document import Document
 from controller.main_window import MainWindow
+from controller.view_options import ViewOptionsDialog
 from preferences import Preferences
 
 class MoneyGuru(ApplicationBase):
@@ -32,9 +34,11 @@ class MoneyGuru(ApplicationBase):
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
         self.mainWindow = MainWindow(doc=self.doc)
+        self.viewOptions = ViewOptionsDialog(app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)
         self.reg = Registration(self.model)
         self.model.set_registration(self.prefs.registration_code, self.prefs.registration_email)
+        self.mainWindow.updateOptionalWidgetsVisibility()
         
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
         QCoreApplication.instance().aboutToQuit.connect(self.applicationWillTerminate)
@@ -45,6 +49,12 @@ class MoneyGuru(ApplicationBase):
     
     def showAboutBox(self):
         self.aboutBox.show()
+    
+    def showViewOptions(self):
+        self.viewOptions.loadFromPrefs()
+        if self.viewOptions.exec_() == QDialog.Accepted:
+            self.viewOptions.saveToPrefs()
+            self.mainWindow.updateOptionalWidgetsVisibility()
     
     #--- Event Handling
     def applicationFinishedLaunching(self):

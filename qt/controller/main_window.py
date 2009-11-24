@@ -110,6 +110,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
+        self.actionShowViewOptions.triggered.connect(self.showViewOptionsTriggered)
         self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
     
@@ -140,6 +141,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.currentWidget().disconnect()
         self.mainView.setCurrentIndex(index)
         self.mainView.currentWidget().connect()
+    
+    #--- Public
+    def updateOptionalWidgetsVisibility(self):
+        self.nwview.updateOptionalWidgetsVisibility()
+        self.pview.updateOptionalWidgetsVisibility()
+        self.tview.updateOptionalWidgetsVisibility()
+        self.eview.updateOptionalWidgetsVisibility()
+        self.scview.updateOptionalWidgetsVisibility()
     
     #--- Actions
     # Date range
@@ -223,6 +232,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def toggleReconciliationModeTriggered(self):
         self.doc.model.toggle_reconciliation_mode()
+    
+    def showViewOptionsTriggered(self):
+        self.app.showViewOptions()
     
     def registerTriggered(self):
         self.app.askForRegCode()

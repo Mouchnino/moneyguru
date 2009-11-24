@@ -12,9 +12,10 @@ from moneyguru.gui.income_statement import IncomeStatement as IncomeStatementMod
 from .account_sheet import AccountSheet
 
 class ProfitSheet(AccountSheet):
-    HEADER = ['Account', 'Current', 'Last', 'Budgeted']
-    ROWATTRS = ['name', 'cash_flow', 'last_cash_flow', 'budgeted']
+    HEADER = ['Account', 'Current', 'Last', 'Change', 'Change %', 'Budgeted']
+    ROWATTRS = ['name', 'cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted']
     EXPANDED_NODE_PREF_NAME = 'profitLossExpandedPaths'
     
     def _getModel(self):
         return IncomeStatementModel(view=self, document=self.doc.model)
+    

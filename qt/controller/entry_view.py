@@ -38,6 +38,7 @@ class EntryView(BaseView, Ui_EntryView):
         h.setHighlightSections(False)
         h.resizeSection(0, 28)
     
+    #--- Public
     def showBarGraph(self):
         self.lgraph.model.disconnect()
         self.bgraph.model.connect()
@@ -47,4 +48,18 @@ class EntryView(BaseView, Ui_EntryView):
         self.bgraph.model.disconnect()
         self.lgraph.model.connect()
         self.graphView.setCurrentIndex(0)
+    
+    def updateOptionalWidgetsVisibility(self):
+        prefs = self.doc.app.prefs
+        h = self.tableView.horizontalHeader()
+        PREF2COLNAME = {
+            'entryTableDescriptionColumnVisible': 'description',
+            'entryTablePayeeColumnVisible': 'payee',
+            'entryTableChecknoColumnVisible': 'checkno',
+        }
+        for prefName, colName in PREF2COLNAME.items():
+            sectionIndex = self.etable.ROWATTRS.index(colName)
+            isVisible = getattr(prefs, prefName)
+            h.setSectionHidden(sectionIndex, not isVisible)
+        self.graphView.setHidden(not prefs.entryTableGraphVisible)
     

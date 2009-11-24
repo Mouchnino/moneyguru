@@ -12,8 +12,10 @@ from moneyguru.gui.schedule_table import ScheduleTable as ScheduleTableModel
 from .table import Table
 
 class ScheduleTable(Table):
-    HEADER = ['Start Date', 'Stop Date', 'Repeat Type', 'Interval', 'Description', 'From', 'To', 'Amount']
-    ROWATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'description', 'from_', 'to', 'amount']
+    HEADER = ['Start Date', 'Stop Date', 'Repeat Type', 'Interval', 'Description', 'Payee',
+        'Check #', 'From', 'To', 'Amount']
+    ROWATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'description', 'payee', 
+        'checkno', 'from_', 'to', 'amount']
     
     def __init__(self, doc, view):
         model = ScheduleTableModel(view=self, document=doc.model)

@@ -16,8 +16,8 @@ from .table import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from .table_with_transactions import TableWithTransactions
 
 class TransactionTable(TableWithTransactions):
-    HEADER = ['', 'Date', 'Description', 'From', 'To', 'Amount']
-    ROWATTRS = ['status', 'date', 'description', 'from_', 'to', 'amount']
+    HEADER = ['', 'Date', 'Description', 'Payee', 'Check #', 'From', 'To', 'Amount']
+    ROWATTRS = ['status', 'date', 'description', 'payee', 'checkno', 'from_', 'to', 'amount']
     SPECIAL_COLUMNS = {
         'date': DATE_EDIT,
         'description': DESCRIPTION_EDIT,

@@ -22,6 +22,28 @@ class Preferences(PreferencesBase):
         self.registration_email = ''
         self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
         self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
+        self.networthSheetChangeColumnVisible = False
+        self.networthSheetChangePercColumnVisible = False
+        self.networthSheetStartColumnVisible = True
+        self.networthSheetBudgetedColumnVisible = True
+        self.networthSheetGraphVisible = True
+        self.networthSheetPieChartsVisible = True
+        self.profitSheetChangeColumnVisible = False
+        self.profitSheetChangePercColumnVisible = False
+        self.profitSheetLastColumnVisible = True
+        self.profitSheetBudgetedColumnVisible = True
+        self.profitSheetGraphVisible = True
+        self.profitSheetPieChartsVisible = True
+        self.transactionTableDescriptionColumnVisible = True
+        self.transactionTablePayeeColumnVisible = False
+        self.transactionTableChecknoColumnVisible = False
+        self.entryTableDescriptionColumnVisible = True
+        self.entryTablePayeeColumnVisible = False
+        self.entryTableChecknoColumnVisible = False
+        self.entryTableGraphVisible = True
+        self.scheduleTableDescriptionColumnVisible = True
+        self.scheduleTablePayeeColumnVisible = False
+        self.scheduleTableChecknoColumnVisible = False
     
     def _save_values(self, settings, set_):
         set_('RegistrationCode', self.registration_code)

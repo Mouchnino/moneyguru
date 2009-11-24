@@ -29,3 +29,21 @@ class ProfitView(BaseView, Ui_ProfitView):
     def _setupUi(self):
         self.setupUi(self)
     
+    #--- Public
+    def updateOptionalWidgetsVisibility(self):
+        prefs = self.doc.app.prefs
+        h = self.treeView.header()
+        PREF2COLNAME = {
+            'profitSheetChangeColumnVisible': 'delta',
+            'profitSheetChangePercColumnVisible': 'delta_perc',
+            'profitSheetLastColumnVisible': 'last_cash_flow',
+            'profitSheetBudgetedColumnVisible': 'budgeted',
+        }
+        for prefName, colName in PREF2COLNAME.items():
+            sectionIndex = self.psheet.ROWATTRS.index(colName)
+            isVisible = getattr(prefs, prefName)
+            h.setSectionHidden(sectionIndex, not isVisible)
+        self.graphView.setHidden(not prefs.profitSheetGraphVisible)
+        self.incomePieChart.setHidden(not prefs.profitSheetPieChartsVisible)
+        self.expensePieChart.setHidden(not prefs.profitSheetPieChartsVisible)
+    

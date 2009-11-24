@@ -12,8 +12,8 @@ from moneyguru.gui.balance_sheet import BalanceSheet as BalanceSheetModel
 from .account_sheet import AccountSheet
 
 class NetWorthSheet(AccountSheet):
-    HEADER = ['Account', 'End', 'Start', 'Budgeted']
-    ROWATTRS = ['name', 'end', 'start', 'budgeted']
+    HEADER = ['Account', 'End', 'Start', 'Change', 'Change %', 'Budgeted']
+    ROWATTRS = ['name', 'end', 'start', 'delta', 'delta_perc', 'budgeted']
     EXPANDED_NODE_PREF_NAME = 'netWorthExpandedPaths'
     
     def _getModel(self):

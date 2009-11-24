@@ -209,6 +209,7 @@
     <addaction name="actionShowPreviousView"/>
     <addaction name="actionShowNextView"/>
     <addaction name="menuDateRange"/>
+    <addaction name="actionShowViewOptions"/>
    </widget>
    <widget class="QMenu" name="menuDocument">
     <property name="title">
@@ -552,6 +553,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+6</string>
+   </property>
+  </action>
+  <action name="actionShowViewOptions">
+   <property name="text">
+    <string>View Options...</string>
    </property>
   </action>
  </widget>
