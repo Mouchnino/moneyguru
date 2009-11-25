@@ -8,14 +8,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import QSize
-
 from .base_view import BaseView
 from .entry_table import EntryTable
 from .account_bar_graph import AccountBarGraph
 from .account_line_graph import AccountLineGraph
-from support.line_graph_view import LineGraphView
-from support.bar_graph_view import BarGraphView
 from ui.entry_view_ui import Ui_EntryView
 
 class EntryView(BaseView, Ui_EntryView):
@@ -58,7 +54,7 @@ class EntryView(BaseView, Ui_EntryView):
             'entryTableChecknoColumnVisible': 'checkno',
         }
         for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.etable.ROWATTRS.index(colName)
+            sectionIndex = self.etable.ATTR2COLUMN[colName].index
             isVisible = getattr(prefs, prefName)
             h.setSectionHidden(sectionIndex, not isVisible)
         self.graphView.setHidden(not prefs.entryTableGraphVisible)

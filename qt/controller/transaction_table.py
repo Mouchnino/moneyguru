@@ -12,18 +12,20 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.transaction_table import TransactionTable as TransactionTableModel
-from .table import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from .column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from .table_with_transactions import TableWithTransactions
 
 class TransactionTable(TableWithTransactions):
-    HEADER = ['', 'Date', 'Description', 'Payee', 'Check #', 'From', 'To', 'Amount']
-    ROWATTRS = ['status', 'date', 'description', 'payee', 'checkno', 'from_', 'to', 'amount']
-    SPECIAL_COLUMNS = {
-        'date': DATE_EDIT,
-        'description': DESCRIPTION_EDIT,
-        'from_': ACCOUNT_EDIT,
-        'to': ACCOUNT_EDIT,
-    }
+    COLUMNS = [
+        Column('status', '', 28),
+        Column('date', 'Date', 120, editor=DATE_EDIT),
+        Column('description', 'Description', 150, editor=DESCRIPTION_EDIT),
+        Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
+        Column('checkno', 'Check #', 100),
+        Column('from_', 'From', 120, editor=ACCOUNT_EDIT),
+        Column('to', 'To', 120, editor=ACCOUNT_EDIT),
+        Column('amount', 'Amount', 120),
+    ]
     
     def __init__(self, doc, view):
         model = TransactionTableModel(view=self, document=doc.model)

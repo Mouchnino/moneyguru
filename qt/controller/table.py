@@ -11,22 +11,20 @@
 from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
 from PyQt4.QtGui import QItemSelectionModel, QItemSelection, QStyledItemDelegate
 
+from .column import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+
 from support.date_edit import DateEdit
 from support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
 
-DATE_EDIT = 'date_edit'
-DESCRIPTION_EDIT = 'description_edit'
-PAYEE_EDIT = 'payee_edit'
-ACCOUNT_EDIT = 'account_edit'
-
 class TableDelegate(QStyledItemDelegate):
-    def __init__(self, model, specialColumns):
+    def __init__(self, model, columns):
         QStyledItemDelegate.__init__(self)
         self._model = model
-        self._specialColumns = specialColumns
+        self._columns = columns
     
     def createEditor(self, parent, option, index):
-        editType = self._specialColumns.get(index.column())
+        column = self._columns[index.column()]
+        editType = column.editor
         if editType is None:
             return QStyledItemDelegate.createEditor(self, parent, option, index)
         elif editType == DATE_EDIT:
@@ -43,19 +41,20 @@ class TableDelegate(QStyledItemDelegate):
     
 
 class Table(QAbstractTableModel):
-    HEADER = []
-    ROWATTRS = []
-    SPECIAL_COLUMNS = {}
+    COLUMNS = []
     # Flags you want when index.isValid() is False. In those cases, _getFlags() is never called.
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled
     
     def __init__(self, model, view):
         QAbstractTableModel.__init__(self)
+        for index, col in enumerate(self.COLUMNS):
+            col.index = index
+        # A map attrname:column is useful sometimes, so we create it here
+        self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
         self.model = model
         self.view = view
         self.view.setModel(self)
-        specialColumns = dict((self.ROWATTRS.index(colName), editType) for colName, editType in self.SPECIAL_COLUMNS.items())
-        self.tableDelegate = TableDelegate(self.model, specialColumns)
+        self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
         
         self.connect(self.view.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
@@ -102,25 +101,25 @@ class Table(QAbstractTableModel):
         return False
     
     def columnCount(self, index):
-        return len(self.HEADER)
+        return len(self.COLUMNS)
     
     def data(self, index, role):
         if not index.isValid():
             return None
         row = self.model[index.row()]
-        rowattr = self.ROWATTRS[index.column()]
+        rowattr = self.COLUMNS[index.column()].attrname
         return self._getData(row, rowattr, role)
     
     def flags(self, index):
         if not index.isValid():
             return self.INVALID_INDEX_FLAGS
         row = self.model[index.row()]
-        rowattr = self.ROWATTRS[index.column()]
+        rowattr = self.COLUMNS[index.column()].attrname
         return self._getFlags(row, rowattr)
     
     def headerData(self, section, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
-            return self.HEADER[section]
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.COLUMNS):
+            return self.COLUMNS[section].title
         return None
     
     def revert(self):
@@ -135,7 +134,7 @@ class Table(QAbstractTableModel):
         if not index.isValid():
             return False
         row = self.model[index.row()]
-        rowattr = self.ROWATTRS[index.column()]
+        rowattr = self.COLUMNS[index.column()].attrname
         return self._setData(row, rowattr, value, role)
     
     def submit(self):

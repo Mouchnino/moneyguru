@@ -27,7 +27,8 @@ class TransactionView(BaseView, Ui_TransactionView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        h.resizeSection(0, 28)
+        for columnIndex, col in enumerate(self.ttable.COLUMNS):
+            h.resizeSection(columnIndex, col.defaultWidth)
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
@@ -39,7 +40,7 @@ class TransactionView(BaseView, Ui_TransactionView):
             'transactionTableChecknoColumnVisible': 'checkno',
         }
         for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.ttable.ROWATTRS.index(colName)
+            sectionIndex = self.ttable.ATTR2COLUMN[colName].index
             isVisible = getattr(prefs, prefName)
             h.setSectionHidden(sectionIndex, not isVisible)
     

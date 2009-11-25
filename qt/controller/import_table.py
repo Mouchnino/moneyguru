@@ -12,15 +12,27 @@ from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.import_table import ImportTable as ImportTableModel
+from .column import Column
 from .table import Table
 
 MIME_INDEXES = 'application/moneyguru.rowindexes'
 
 class ImportTable(Table):
+    COLUMNS = [
+        Column('will_import', '', 28),
+        Column('date', 'Date', 120),
+        Column('description', 'Description', 150),
+        Column('amount', 'Amount', 120),
+        Column('bound', '', 28),
+        Column('date_import', 'Date', 120),
+        Column('description_import', 'Description', 150),
+        Column('payee_import', 'Payee', 150),
+        Column('checkno_import', 'Check #', 100),
+        Column('transfer_import', 'Transfer', 100),
+        Column('amount_import', 'Amount', 120),
+    ]
     HEADER = ['', 'Date', 'Description', 'Amount', '', 'Date', 'Description', 'Payee', 'Check #',
         'Transfer', 'Amount']
-    ROWATTRS = ['will_import', 'date', 'description', 'amount', 'bound', 'date_import', 
-        'description_import', 'payee_import', 'checkno_import', 'transfer_import', 'amount_import']
         
     def __init__(self, importWindow, view):
         model = ImportTableModel(view=self, import_window=importWindow.model)
@@ -92,7 +104,7 @@ class ImportTable(Table):
     
     #--- Event Handling
     def cellClicked(self, index):
-        rowattr = self.ROWATTRS[index.column()]
+        rowattr = self.COLUMNS[index.column()].attrname
         if rowattr == 'bound':
             self.model.unbind(index.row())
     

@@ -9,11 +9,19 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.budget_table import BudgetTable as BudgetTableModel
+from .column import Column
 from .table import Table
 
 class BudgetTable(Table):
-    HEADER = ['Start Date', 'Stop Date', 'Repeat Type', 'Interval', 'Account', 'Target', 'Amount']
-    ROWATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'account', 'target', 'amount']
+    COLUMNS = [
+        Column('start_date', 'Start Date', 120),
+        Column('stop_date', 'Stop Date', 120),
+        Column('repeat_type', 'Repeat Type', 120),
+        Column('interval', 'Interval', 80),
+        Column('account', 'Account', 120),
+        Column('target', 'Target', 120),
+        Column('amount', 'Amount', 120),
+    ]
     
     def __init__(self, doc, view):
         model = BudgetTableModel(view=self, document=doc.model)

@@ -9,13 +9,22 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.schedule_table import ScheduleTable as ScheduleTableModel
+from .column import Column
 from .table import Table
 
 class ScheduleTable(Table):
-    HEADER = ['Start Date', 'Stop Date', 'Repeat Type', 'Interval', 'Description', 'Payee',
-        'Check #', 'From', 'To', 'Amount']
-    ROWATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'description', 'payee', 
-        'checkno', 'from_', 'to', 'amount']
+    COLUMNS = [
+        Column('start_date', 'Start Date', 120),
+        Column('stop_date', 'Stop Date', 120),
+        Column('repeat_type', 'Repeat Type', 120),
+        Column('interval', 'Interval', 80),
+        Column('description', 'Description', 150),
+        Column('payee', 'Payee', 150),
+        Column('checkno', 'Check #', 100),
+        Column('from_', 'From', 120),
+        Column('to', 'To', 120),
+        Column('amount', 'Amount', 120),
+    ]
     
     def __init__(self, doc, view):
         model = ScheduleTableModel(view=self, document=doc.model)

@@ -9,11 +9,16 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.split_table import SplitTable as SplitTableModel
+from .column import Column
 from .table import Table
 
 class SplitTable(Table):
-    HEADER = ['Account', 'Memo', 'Debit', 'Credit']
-    ROWATTRS = ['account', 'memo', 'debit', 'credit']
+    COLUMNS = [
+        Column('account', 'Account', 50),
+        Column('memo', 'Memo', 50),
+        Column('debit', 'Debit', 70),
+        Column('credit', 'Credit', 70),
+    ]
     
     def __init__(self, transactionPanel, view):
         model = SplitTableModel(view=self, transaction_panel=transactionPanel.model)

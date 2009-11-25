@@ -38,7 +38,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
             'scheduleTableChecknoColumnVisible': 'checkno',
         }
         for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.sctable.ROWATTRS.index(colName)
+            sectionIndex = self.sctable.ATTR2COLUMN[colName].index
             isVisible = getattr(prefs, prefName)
             h.setSectionHidden(sectionIndex, not isVisible)
     
