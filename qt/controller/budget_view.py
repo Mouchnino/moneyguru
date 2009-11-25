@@ -28,11 +28,14 @@ class BudgetView(BaseView, Ui_BudgetView):
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
-        h.setHighlightSections(False)
+        h.setMovable(True) # column drag & drop reorder
         self.btable.setColumnsWidth(self.doc.app.prefs.budgetColumnWidths)
+        self.btable.setColumnsOrder(self.doc.app.prefs.budgetColumnOrder)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnWidths = widths
+        order = [h.visualIndex(index) for index in xrange(len(self.btable.COLUMNS))]
+        self.doc.app.prefs.budgetColumnOrder = order
     

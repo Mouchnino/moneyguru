@@ -28,13 +28,16 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
-        h.setHighlightSections(False)
+        h.setMovable(True) # column drag & drop reorder
         self.sctable.setColumnsWidth(self.doc.app.prefs.scheduleColumnWidths)
+        self.sctable.setColumnsOrder(self.doc.app.prefs.scheduleColumnOrder)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.sctable.COLUMNS))]
         self.doc.app.prefs.scheduleColumnWidths = widths
+        order = [h.visualIndex(index) for index in xrange(len(self.sctable.COLUMNS))]
+        self.doc.app.prefs.scheduleColumnOrder = order
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):

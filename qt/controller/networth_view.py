@@ -33,8 +33,6 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.setupUi(self)
     
     def _setupColumns(self):
-        h = self.treeView.header()
-        h.setHighlightSections(False)
         self.nwsheet.setColumnsWidth(self.doc.app.prefs.networthColumnWidths)
     
     def _savePrefs(self):

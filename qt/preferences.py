@@ -24,22 +24,33 @@ class Preferences(PreferencesBase):
         self.registration_email = get('RegistrationEmail', self.registration_email)
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
         self.recentDocuments = filter(op.exists, self.recentDocuments)
+        
         self.networthColumnWidths = get('NetworthColumnWidths', self.networthColumnWidths)
         self.profitColumnWidths = get('ProfitColumnWidths', self.profitColumnWidths)
         self.transactionColumnWidths = get('TransactionColumnWidths', self.transactionColumnWidths)
         self.entryColumnWidths = get('EntryColumnWidths', self.entryColumnWidths)
         self.scheduleColumnWidths = get('ScheduleColumnWidths', self.scheduleColumnWidths)
         self.budgetColumnWidths = get('BudgetColumnWidths', self.budgetColumnWidths)
+        
+        self.networthColumnOrder = get('NetworthColumnOrder', self.networthColumnOrder)
+        self.profitColumnOrder = get('ProfitColumnOrder', self.profitColumnOrder)
+        self.transactionColumnOrder = get('TransactionColumnOrder', self.transactionColumnOrder)
+        self.entryColumnOrder = get('EntryColumnOrder', self.entryColumnOrder)
+        self.scheduleColumnOrder = get('ScheduleColumnOrder', self.scheduleColumnOrder)
+        self.budgetColumnOrder = get('BudgetColumnOrder', self.budgetColumnOrder)
+        
         self.networthHiddenColumns = set(get('NetworthHiddenColumns', self.networthHiddenColumns))
         self.profitHiddenColumns = set(get('ProfitHiddenColumns', self.profitHiddenColumns))
         self.transactionHiddenColumns = set(get('TransactionHiddenColumns', self.transactionHiddenColumns))
         self.entryHiddenColumns = set(get('EntryHiddenColumns', self.entryHiddenColumns))
         self.scheduleHiddenColumns = set(get('ScheduleHiddenColumns', self.scheduleHiddenColumns))
+        
         self.networthGraphVisible = get('NetworthGraphVisible', self.networthGraphVisible)
         self.networthPieChartsVisible = get('NetworthPieChartsVisible', self.networthPieChartsVisible)
         self.profitGraphVisible = get('ProfitGraphVisible', self.profitGraphVisible)
         self.profitPieChartsVisible = get('ProfitPieChartsVisible', self.profitPieChartsVisible)
         self.entryGraphVisible = get('EntryGraphVisible', self.entryGraphVisible)
+        
         self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     
@@ -47,45 +58,67 @@ class Preferences(PreferencesBase):
         self.registration_code = ''
         self.registration_email = ''
         self.recentDocuments = []
-        self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
-        self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
+        
         self.networthColumnWidths = None
         self.profitColumnWidths = None
         self.transactionColumnWidths = None
         self.entryColumnWidths = None
         self.scheduleColumnWidths = None
         self.budgetColumnWidths = None
+        
+        self.networthColumnOrder = None
+        self.profitColumnOrder = None
+        self.transactionColumnOrder = None
+        self.entryColumnOrder = None
+        self.scheduleColumnOrder = None
+        self.budgetColumnOrder = None
+        
         self.networthHiddenColumns = set(['delta', 'delta_perc'])
         self.profitHiddenColumns = set(['delta', 'delta_perc'])
         self.transactionHiddenColumns = set(['payee', 'checkno'])
         self.entryHiddenColumns = set(['payee', 'checkno'])
         self.scheduleHiddenColumns = set(['payee', 'checkno'])
+        
         self.networthGraphVisible = True
         self.networthPieChartsVisible = True
         self.profitGraphVisible = True
         self.profitPieChartsVisible = True
         self.entryGraphVisible = True
+        
+        self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
+        self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
     
     def _save_values(self, settings, set_):
         set_('RegistrationCode', self.registration_code)
         set_('RegistrationEmail', self.registration_email)
         set_('RecentDocuments', self.recentDocuments)
+        
         set_('NetworthColumnWidths', self.networthColumnWidths)
         set_('ProfitColumnWidths', self.profitColumnWidths)
         set_('TransactionColumnWidths', self.transactionColumnWidths)
         set_('EntryColumnWidths', self.entryColumnWidths)
         set_('ScheduleColumnWidths', self.scheduleColumnWidths)
         set_('BudgetColumnWidths', self.budgetColumnWidths)
+        
+        set_('NetworthColumnOrder', self.networthColumnOrder)
+        set_('ProfitColumnOrder', self.profitColumnOrder)
+        set_('TransactionColumnOrder', self.transactionColumnOrder)
+        set_('EntryColumnOrder', self.entryColumnOrder)
+        set_('ScheduleColumnOrder', self.scheduleColumnOrder)
+        set_('BudgetColumnOrder', self.budgetColumnOrder)
+        
         set_('NetworthHiddenColumns', self.networthHiddenColumns)
         set_('ProfitHiddenColumns', self.profitHiddenColumns)
         set_('TransactionHiddenColumns', self.transactionHiddenColumns)
         set_('EntryHiddenColumns', self.entryHiddenColumns)
         set_('ScheduleHiddenColumns', self.scheduleHiddenColumns)
+        
         set_('NetworthGraphVisible', self.networthGraphVisible)
         set_('NetworthPieChartsVisible', self.networthPieChartsVisible)
         set_('ProfitGraphVisible', self.profitGraphVisible)
         set_('ProfitPieChartsVisible', self.profitPieChartsVisible)
         set_('EntryGraphVisible', self.entryGraphVisible)
+        
         set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     

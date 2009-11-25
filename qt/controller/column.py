@@ -34,12 +34,17 @@ class ColumnBearer(object):
     
     #--- Public
     def setColumnsWidth(self, widths):
-        """Set sections width according to `widths` which is a list of numbers.
-        
-        `widths` can be None. If it is, then default widths are set.
-        """
+        #`widths` can be None. If it is, then default widths are set.
         if not widths:
             widths = [column.defaultWidth for column in self.COLUMNS]
         for column, width in zip(self.COLUMNS, widths):
             self._headerView.resizeSection(column.index, width)
+    
+    def setColumnsOrder(self, columnIndexes):
+        if not columnIndexes:
+            return
+        for destIndex, columnIndex in enumerate(columnIndexes):
+            # moveSection takes 2 visual index arguments, so we have to get our visual index first
+            visualIndex = self._headerView.visualIndex(columnIndex)
+            self._headerView.moveSection(visualIndex, destIndex)
     

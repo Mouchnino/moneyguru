@@ -40,7 +40,6 @@ class ImportWindow(QWidget, Ui_ImportWindow):
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
-        h.setHighlightSections(False)
         h.resizeSection(0, 28)
         h.resizeSection(4, 20)
         

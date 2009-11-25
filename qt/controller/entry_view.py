@@ -33,13 +33,16 @@ class EntryView(BaseView, Ui_EntryView):
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
-        h.setHighlightSections(False)
+        h.setMovable(True) # column drag & drop reorder
         self.etable.setColumnsWidth(self.doc.app.prefs.entryColumnWidths)
+        self.etable.setColumnsOrder(self.doc.app.prefs.entryColumnOrder)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnWidths = widths
+        order = [h.visualIndex(index) for index in xrange(len(self.etable.COLUMNS))]
+        self.doc.app.prefs.entryColumnOrder = order
     
     #--- Public
     def showBarGraph(self):

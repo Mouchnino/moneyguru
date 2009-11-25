@@ -28,13 +28,16 @@ class TransactionView(BaseView, Ui_TransactionView):
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
-        h.setHighlightSections(False)
+        h.setMovable(True) # column drag & drop reorder
         self.ttable.setColumnsWidth(self.doc.app.prefs.transactionColumnWidths)
+        self.ttable.setColumnsOrder(self.doc.app.prefs.transactionColumnOrder)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnWidths = widths
+        order = [h.visualIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
+        self.doc.app.prefs.transactionColumnOrder = order
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
