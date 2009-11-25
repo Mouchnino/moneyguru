@@ -57,14 +57,8 @@ class EntryView(BaseView, Ui_EntryView):
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
         h = self.tableView.horizontalHeader()
-        PREF2COLNAME = {
-            'entryTableDescriptionColumnVisible': 'description',
-            'entryTablePayeeColumnVisible': 'payee',
-            'entryTableChecknoColumnVisible': 'checkno',
-        }
-        for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.etable.ATTR2COLUMN[colName].index
-            isVisible = getattr(prefs, prefName)
-            h.setSectionHidden(sectionIndex, not isVisible)
-        self.graphView.setHidden(not prefs.entryTableGraphVisible)
+        for column in self.etable.COLUMNS:
+            isHidden = column.attrname in prefs.entryHiddenColumns
+            h.setSectionHidden(column.index, isHidden)
+        self.graphView.setHidden(not prefs.entryGraphVisible)
     

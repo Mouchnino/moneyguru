@@ -48,17 +48,10 @@ class NetWorthView(BaseView, Ui_NetWorthView):
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
         h = self.treeView.header()
-        PREF2COLNAME = {
-            'networthSheetChangeColumnVisible': 'delta',
-            'networthSheetChangePercColumnVisible': 'delta_perc',
-            'networthSheetStartColumnVisible': 'start',
-            'networthSheetBudgetedColumnVisible': 'budgeted',
-        }
-        for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.nwsheet.ATTR2COLUMN[colName].index
-            isVisible = getattr(prefs, prefName)
-            h.setSectionHidden(sectionIndex, not isVisible)
-        self.graphView.setHidden(not prefs.networthSheetGraphVisible)
-        self.assetPieChart.setHidden(not prefs.networthSheetPieChartsVisible)
-        self.liabilityPieChart.setHidden(not prefs.networthSheetPieChartsVisible)
+        for column in self.nwsheet.COLUMNS:
+            isHidden = column.attrname in prefs.networthHiddenColumns
+            h.setSectionHidden(column.index, isHidden)
+        self.graphView.setHidden(not prefs.networthGraphVisible)
+        self.assetPieChart.setHidden(not prefs.networthPieChartsVisible)
+        self.liabilityPieChart.setHidden(not prefs.networthPieChartsVisible)
     

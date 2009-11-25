@@ -14,28 +14,32 @@ from ui.view_options_dialog_ui import Ui_ViewOptionsDialog
 
 class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
     WIDGET2PREF = {
-        'nwChangeCheckBox': 'networthSheetChangeColumnVisible',
-        'nwChangePercCheckBox': 'networthSheetChangePercColumnVisible',
-        'nwStartCheckBox': 'networthSheetStartColumnVisible',
-        'nwBudgetedCheckBox': 'networthSheetBudgetedColumnVisible',
-        'nwGraphCheckBox': 'networthSheetGraphVisible',
-        'nwPieChartsCheckBox': 'networthSheetPieChartsVisible',
-        'plChangeCheckBox': 'profitSheetChangeColumnVisible',
-        'plChangePercCheckBox': 'profitSheetChangePercColumnVisible',
-        'plLastCheckBox': 'profitSheetLastColumnVisible',
-        'plBudgetedCheckBox': 'profitSheetBudgetedColumnVisible',
-        'plGraphCheckBox': 'profitSheetGraphVisible',
-        'plPieChartsCheckBox': 'profitSheetPieChartsVisible',
-        'txnDescriptionCheckBox': 'transactionTableDescriptionColumnVisible',
-        'txnPayeeCheckBox': 'transactionTablePayeeColumnVisible',
-        'txnChecknoCheckBox': 'transactionTableChecknoColumnVisible',
-        'accDescriptionCheckBox': 'entryTableDescriptionColumnVisible',
-        'accPayeeCheckBox': 'entryTablePayeeColumnVisible',
-        'accChecknoCheckBox': 'entryTableChecknoColumnVisible',
-        'accGraphCheckBox': 'entryTableGraphVisible',
-        'schDescriptionCheckBox': 'scheduleTableDescriptionColumnVisible',
-        'schPayeeCheckBox': 'scheduleTablePayeeColumnVisible',
-        'schChecknoCheckBox': 'scheduleTableChecknoColumnVisible',
+        'nwGraphCheckBox': 'networthGraphVisible',
+        'nwPieChartsCheckBox': 'networthPieChartsVisible',
+        'plGraphCheckBox': 'profitGraphVisible',
+        'plPieChartsCheckBox': 'profitPieChartsVisible',
+        'accGraphCheckBox': 'entryGraphVisible',
+    }
+    # widgetName: (prefName, columnName)
+    # The preference refers to *hidden* columns!
+    WIDGET2COLUMN = {
+        'nwChangeCheckBox': ('networthHiddenColumns', 'delta'),
+        'nwChangePercCheckBox': ('networthHiddenColumns', 'delta_perc'),
+        'nwStartCheckBox': ('networthHiddenColumns', 'start'),
+        'nwBudgetedCheckBox': ('networthHiddenColumns', 'budgeted'),
+        'plChangeCheckBox': ('profitHiddenColumns', 'delta'),
+        'plChangePercCheckBox': ('profitHiddenColumns', 'delta_perc'),
+        'plLastCheckBox': ('profitHiddenColumns', 'last_cash_flow'),
+        'plBudgetedCheckBox': ('profitHiddenColumns', 'budgeted'),
+        'txnDescriptionCheckBox': ('transactionHiddenColumns', 'description'),
+        'txnPayeeCheckBox': ('transactionHiddenColumns', 'payee'),
+        'txnChecknoCheckBox': ('transactionHiddenColumns', 'checkno'),
+        'accDescriptionCheckBox': ('entryHiddenColumns', 'description'),
+        'accPayeeCheckBox': ('entryHiddenColumns', 'payee'),
+        'accChecknoCheckBox': ('entryHiddenColumns', 'checkno'),
+        'schDescriptionCheckBox': ('scheduleHiddenColumns', 'description'),
+        'schPayeeCheckBox': ('scheduleHiddenColumns', 'payee'),
+        'schChecknoCheckBox': ('scheduleHiddenColumns', 'checkno'),
     }
     
     def __init__(self, app):
@@ -50,9 +54,21 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
         for widgetName, prefName in self.WIDGET2PREF.items():
             widget = getattr(self, widgetName)
             widget.setChecked(getattr(self.app.prefs, prefName))
+        for widgetName, (prefName, columnName) in self.WIDGET2COLUMN.items():
+            widget = getattr(self, widgetName)
+            hiddenColumns = getattr(self.app.prefs, prefName)
+            # We use "not in" because the preference stores hidden columns
+            widget.setChecked(columnName not in hiddenColumns)
     
     def saveToPrefs(self):
         for widgetName, prefName in self.WIDGET2PREF.items():
             widget = getattr(self, widgetName)
             setattr(self.app.prefs, prefName, bool(widget.isChecked()))
+        for widgetName, (prefName, columnName) in self.WIDGET2COLUMN.items():
+            widget = getattr(self, widgetName)
+            hiddenColumns = getattr(self.app.prefs, prefName)
+            if widget.isChecked():
+                hiddenColumns.discard(columnName)
+            else:
+                hiddenColumns.add(columnName)
     

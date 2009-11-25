@@ -42,13 +42,7 @@ class TransactionView(BaseView, Ui_TransactionView):
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
         h = self.tableView.horizontalHeader()
-        PREF2COLNAME = {
-            'transactionTableDescriptionColumnVisible': 'description',
-            'transactionTablePayeeColumnVisible': 'payee',
-            'transactionTableChecknoColumnVisible': 'checkno',
-        }
-        for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.ttable.ATTR2COLUMN[colName].index
-            isVisible = getattr(prefs, prefName)
-            h.setSectionHidden(sectionIndex, not isVisible)
+        for column in self.ttable.COLUMNS:
+            isHidden = column.attrname in prefs.transactionHiddenColumns
+            h.setSectionHidden(column.index, isHidden)
     
