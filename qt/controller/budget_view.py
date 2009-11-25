@@ -20,6 +20,8 @@ class BudgetView(BaseView, Ui_BudgetView):
         self.btable = BudgetTable(doc=doc, view=self.tableView)
         self.children = [self.btable]
         self._setupColumns() # Can only be done after the model has been connected
+        
+        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -27,5 +29,12 @@ class BudgetView(BaseView, Ui_BudgetView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
+        if self.doc.app.prefs.budgetColumnWidths:
+            self.btable.setColumnsWidth(self.doc.app.prefs.budgetColumnWidths)
         self.btable.resizeColumns()
+    
+    def _savePrefs(self):
+        h = self.tableView.horizontalHeader()
+        widths = [h.sectionSize(index) for index in xrange(len(self.btable.COLUMNS))]
+        self.doc.app.prefs.budgetColumnWidths = widths
     

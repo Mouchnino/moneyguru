@@ -25,6 +25,8 @@ class EntryView(BaseView, Ui_EntryView):
         # We don't add the graphs to self.children because connection/disconnection occur separately for them
         self.children = [self.etable]
         self._setupColumns() # Can only be done after the model has been connected
+        
+        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -32,7 +34,14 @@ class EntryView(BaseView, Ui_EntryView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
+        if self.doc.app.prefs.entryColumnWidths:
+            self.etable.setColumnsWidth(self.doc.app.prefs.entryColumnWidths)
         self.etable.resizeColumns()
+    
+    def _savePrefs(self):
+        h = self.tableView.horizontalHeader()
+        widths = [h.sectionSize(index) for index in xrange(len(self.etable.COLUMNS))]
+        self.doc.app.prefs.entryColumnWidths = widths
     
     #--- Public
     def showBarGraph(self):

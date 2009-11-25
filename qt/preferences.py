@@ -18,6 +18,12 @@ class Preferences(PreferencesBase):
         self.registration_email = get('RegistrationEmail', self.registration_email)
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
         self.recentDocuments = filter(op.exists, self.recentDocuments)
+        self.networthColumnWidths = get('NetworthColumnWidths', self.networthColumnWidths)
+        self.profitColumnWidths = get('ProfitColumnWidths', self.profitColumnWidths)
+        self.transactionColumnWidths = get('TransactionColumnWidths', self.transactionColumnWidths)
+        self.entryColumnWidths = get('EntryColumnWidths', self.entryColumnWidths)
+        self.scheduleColumnWidths = get('ScheduleColumnWidths', self.scheduleColumnWidths)
+        self.budgetColumnWidths = get('BudgetColumnWidths', self.budgetColumnWidths)
         self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     
@@ -27,6 +33,12 @@ class Preferences(PreferencesBase):
         self.recentDocuments = []
         self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
         self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
+        self.networthColumnWidths = None
+        self.profitColumnWidths = None
+        self.transactionColumnWidths = None
+        self.entryColumnWidths = None
+        self.scheduleColumnWidths = None
+        self.budgetColumnWidths = None
         self.networthSheetChangeColumnVisible = False
         self.networthSheetChangePercColumnVisible = False
         self.networthSheetStartColumnVisible = True
@@ -54,6 +66,12 @@ class Preferences(PreferencesBase):
         set_('RegistrationCode', self.registration_code)
         set_('RegistrationEmail', self.registration_email)
         set_('RecentDocuments', self.recentDocuments)
+        set_('NetworthColumnWidths', self.networthColumnWidths)
+        set_('ProfitColumnWidths', self.profitColumnWidths)
+        set_('TransactionColumnWidths', self.transactionColumnWidths)
+        set_('EntryColumnWidths', self.entryColumnWidths)
+        set_('ScheduleColumnWidths', self.scheduleColumnWidths)
+        set_('BudgetColumnWidths', self.budgetColumnWidths)
         set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     

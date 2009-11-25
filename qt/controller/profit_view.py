@@ -26,6 +26,8 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.epiechart = ExpensePieChart(doc=doc, view=self.expensePieChart)
         self.children = [self.psheet, self.pgraph, self.ipiechart, self.epiechart]
         self._setupColumns() # Can only be done after the model has been connected
+        
+        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -33,7 +35,14 @@ class ProfitView(BaseView, Ui_ProfitView):
     def _setupColumns(self):
         h = self.treeView.header()
         h.setHighlightSections(False)
+        if self.doc.app.prefs.profitColumnWidths:
+            self.psheet.setColumnsWidth(self.doc.app.prefs.profitColumnWidths)
         self.psheet.resizeColumns()
+    
+    def _savePrefs(self):
+        h = self.treeView.header()
+        widths = [h.sectionSize(index) for index in xrange(len(self.psheet.COLUMNS))]
+        self.doc.app.prefs.profitColumnWidths = widths
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):

@@ -20,6 +20,8 @@ class TransactionView(BaseView, Ui_TransactionView):
         self.ttable = TransactionTable(doc=doc, view=self.tableView)
         self.children = [self.ttable]
         self._setupColumns() # Can only be done after the model has been connected
+        
+        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -27,7 +29,14 @@ class TransactionView(BaseView, Ui_TransactionView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
+        if self.doc.app.prefs.transactionColumnWidths:
+            self.ttable.setColumnsWidth(self.doc.app.prefs.transactionColumnWidths)
         self.ttable.resizeColumns()
+    
+    def _savePrefs(self):
+        h = self.tableView.horizontalHeader()
+        widths = [h.sectionSize(index) for index in xrange(len(self.ttable.COLUMNS))]
+        self.doc.app.prefs.transactionColumnWidths = widths
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
