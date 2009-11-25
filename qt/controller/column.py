@@ -18,7 +18,7 @@ class Column(object):
         self.index = None # Is set when the column list is read
         self.attrname = attrname
         self.title = title
-        self.width = defaultWidth
+        self.defaultWidth = defaultWidth
         self.editor = editor
     
 
@@ -33,13 +33,13 @@ class ColumnBearer(object):
         self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
     
     #--- Public
-    def resizeColumns(self):
-        """Resizes headerView's columns according to widths in `COLUMNS`."""
-        for column in self.COLUMNS:
-            self._headerView.resizeSection(column.index, column.width)
-    
-    def setColumnsWidth(self, newWidths):
-        """Set `COLUMNS` widths according to `newWidths` which is a list of numbers."""
-        for column, newWidth in zip(self.COLUMNS, newWidths):
-            column.width = newWidth
+    def setColumnsWidth(self, widths):
+        """Set sections width according to `widths` which is a list of numbers.
+        
+        `widths` can be None. If it is, then default widths are set.
+        """
+        if not widths:
+            widths = [column.defaultWidth for column in self.COLUMNS]
+        for column, width in zip(self.COLUMNS, widths):
+            self._headerView.resizeSection(column.index, width)
     

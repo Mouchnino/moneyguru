@@ -29,9 +29,7 @@ class BudgetView(BaseView, Ui_BudgetView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        if self.doc.app.prefs.budgetColumnWidths:
-            self.btable.setColumnsWidth(self.doc.app.prefs.budgetColumnWidths)
-        self.btable.resizeColumns()
+        self.btable.setColumnsWidth(self.doc.app.prefs.budgetColumnWidths)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()

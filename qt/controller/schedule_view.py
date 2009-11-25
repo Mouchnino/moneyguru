@@ -29,9 +29,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        if self.doc.app.prefs.scheduleColumnWidths:
-            self.sctable.setColumnsWidth(self.doc.app.prefs.scheduleColumnWidths)
-        self.sctable.resizeColumns()
+        self.sctable.setColumnsWidth(self.doc.app.prefs.scheduleColumnWidths)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()

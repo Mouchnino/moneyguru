@@ -29,9 +29,7 @@ class TransactionView(BaseView, Ui_TransactionView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        if self.doc.app.prefs.transactionColumnWidths:
-            self.ttable.setColumnsWidth(self.doc.app.prefs.transactionColumnWidths)
-        self.ttable.resizeColumns()
+        self.ttable.setColumnsWidth(self.doc.app.prefs.transactionColumnWidths)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()

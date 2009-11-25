@@ -35,9 +35,7 @@ class ProfitView(BaseView, Ui_ProfitView):
     def _setupColumns(self):
         h = self.treeView.header()
         h.setHighlightSections(False)
-        if self.doc.app.prefs.profitColumnWidths:
-            self.psheet.setColumnsWidth(self.doc.app.prefs.profitColumnWidths)
-        self.psheet.resizeColumns()
+        self.psheet.setColumnsWidth(self.doc.app.prefs.profitColumnWidths)
     
     def _savePrefs(self):
         h = self.treeView.header()

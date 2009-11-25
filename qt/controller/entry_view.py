@@ -34,9 +34,7 @@ class EntryView(BaseView, Ui_EntryView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        if self.doc.app.prefs.entryColumnWidths:
-            self.etable.setColumnsWidth(self.doc.app.prefs.entryColumnWidths)
-        self.etable.resizeColumns()
+        self.etable.setColumnsWidth(self.doc.app.prefs.entryColumnWidths)
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
