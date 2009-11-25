@@ -15,30 +15,26 @@ from hsutil.misc import dedupe
 from qtlib.preferences import variant_to_py
 
 class Recent(QObject):
-    def __init__(self, menu, settingName, maxItemCount=10, filterFunc=None):
+    def __init__(self, app, menu, prefName, maxItemCount=10):
         QObject.__init__(self)
+        self._app = app
         self._menu = menu
-        self._settingName = settingName
+        self._prefName = prefName
         self._maxItemCount = maxItemCount
-        self._filterFunc = filterFunc
         self._items = []
-        self._loadFromSettings()
+        self._loadFromPrefs()
         self._refreshMenu()
+        
+        self._app.willSavePrefs.connect(self._saveToPrefs)
     
     #--- Private
-    def _loadFromSettings(self):
-        settings = QSettings()
-        if not settings.contains(self._settingName):
-            return
-        items = variant_to_py(settings.value(self._settingName))
+    def _loadFromPrefs(self):
+        items = getattr(self._app.prefs, self._prefName)
         assert isinstance(items, list)
-        if self._filterFunc is not None:
-            items = filter(self._filterFunc, items)
         self._items = items
     
     def _insertItem(self, item):
         self._items = dedupe([item] + self._items)[:self._maxItemCount]
-        self._saveToSettings()
     
     def _refreshMenu(self):
         menu = self._menu
@@ -49,9 +45,8 @@ class Recent(QObject):
             action.triggered.connect(self.menuItemWasClicked)
             menu.addAction(action)
     
-    def _saveToSettings(self):
-        settings = QSettings()
-        settings.setValue(self._settingName, self._items)
+    def _saveToPrefs(self):
+        setattr(self._app.prefs, self._prefName, self._items)
     
     #--- Public
     def insertItem(self, item):

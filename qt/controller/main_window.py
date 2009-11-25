@@ -8,8 +8,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import os.path as op
-
 from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
@@ -61,7 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.sfield.model.connect()
         
         # Recent Menu
-        self.recentDocuments = Recent(self.menuOpenRecent, 'RecentDocuments', filterFunc=op.exists)
+        self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
         self.recentDocuments.mustOpenItem.connect(self.doc.open)
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)

@@ -39,6 +39,8 @@ class MoneyGuru(ApplicationBase):
         self.reg = Registration(self.model)
         self.model.set_registration(self.prefs.registration_code, self.prefs.registration_email)
         self.mainWindow.updateOptionalWidgetsVisibility()
+        if self.prefs.recentDocuments:
+            self.doc.open(self.prefs.recentDocuments[0])
         
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
         QCoreApplication.instance().aboutToQuit.connect(self.applicationWillTerminate)
