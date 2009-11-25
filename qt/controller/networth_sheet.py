@@ -10,10 +10,17 @@
 
 from moneyguru.gui.balance_sheet import BalanceSheet as BalanceSheetModel
 from .account_sheet import AccountSheet
+from .column import Column
 
 class NetWorthSheet(AccountSheet):
-    HEADER = ['Account', 'End', 'Start', 'Change', 'Change %', 'Budgeted']
-    ROWATTRS = ['name', 'end', 'start', 'delta', 'delta_perc', 'budgeted']
+    COLUMNS = [
+        Column('name', 'Account', 120),
+        Column('end', 'End', 100),
+        Column('start', 'Start', 100),
+        Column('delta', 'Change', 100),
+        Column('delta_perc', 'Change %', 100),
+        Column('budgeted', 'Budgeted', 100),
+    ]
     EXPANDED_NODE_PREF_NAME = 'netWorthExpandedPaths'
     
     def _getModel(self):

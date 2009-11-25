@@ -10,10 +10,17 @@
 
 from moneyguru.gui.income_statement import IncomeStatement as IncomeStatementModel
 from .account_sheet import AccountSheet
+from .column import Column
 
 class ProfitSheet(AccountSheet):
-    HEADER = ['Account', 'Current', 'Last', 'Change', 'Change %', 'Budgeted']
-    ROWATTRS = ['name', 'cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted']
+    COLUMNS = [
+        Column('name', 'Account', 120),
+        Column('cash_flow', 'Current', 100),
+        Column('last_cash_flow', 'Last', 100),
+        Column('delta', 'Change', 100),
+        Column('delta_perc', 'Change %', 100),
+        Column('budgeted', 'Budgeted', 100),
+    ]
     EXPANDED_NODE_PREF_NAME = 'profitLossExpandedPaths'
     
     def _getModel(self):

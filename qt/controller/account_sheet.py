@@ -29,12 +29,15 @@ class Node(TreeNode):
     
 
 class AccountSheet(TreeModel):
-    HEADER = ['Account']
-    ROWATTRS = ['name']
+    COLUMNS = []
     EXPANDED_NODE_PREF_NAME = None # must set in subclass
     
     def __init__(self, doc, view):
         TreeModel.__init__(self)
+        for index, col in enumerate(self.COLUMNS):
+            col.index = index
+        # A map attrname:column is useful sometimes, so we create it here
+        self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
         self.doc = doc
         self.app = doc.app
         self.view = view
@@ -77,14 +80,14 @@ class AccountSheet(TreeModel):
     
     #--- Data Model methods
     def columnCount(self, parent):
-        return len(self.HEADER)
+        return len(self.COLUMNS)
     
     def data(self, index, role):
         if not index.isValid():
             return None
         if role == Qt.DisplayRole:
             node = index.internalPointer()
-            rowattr = self.ROWATTRS[index.column()]
+            rowattr = self.COLUMNS[index.column()].attrname
             return getattr(node.ref, rowattr)
         return None
     
@@ -93,7 +96,7 @@ class AccountSheet(TreeModel):
             return Qt.ItemIsEnabled
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
         node = index.internalPointer()
-        rowattr = self.ROWATTRS[index.column()]
+        rowattr = self.COLUMNS[index.column()].attrname
         if getattr(node.ref, 'can_edit_' + rowattr, False):
             flags |= Qt.ItemIsEditable
         if node.ref.is_group or node.ref.is_type:
@@ -103,8 +106,8 @@ class AccountSheet(TreeModel):
         return flags
     
     def headerData(self, section, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
-            return self.HEADER[section]
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.COLUMNS):
+            return self.COLUMNS[section].title
         return None
     
     def revert(self):
@@ -115,7 +118,7 @@ class AccountSheet(TreeModel):
             return False
         if role == Qt.EditRole:
             node = index.internalPointer()
-            rowattr = self.ROWATTRS[index.column()]
+            rowattr = self.COLUMNS[index.column()].attrname
             value = unicode(value.toString())
             setattr(node.ref, rowattr, value)
             return True

@@ -40,7 +40,7 @@ class NetWorthView(BaseView, Ui_NetWorthView):
             'networthSheetBudgetedColumnVisible': 'budgeted',
         }
         for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.nwsheet.ROWATTRS.index(colName)
+            sectionIndex = self.nwsheet.ATTR2COLUMN[colName].index
             isVisible = getattr(prefs, prefName)
             h.setSectionHidden(sectionIndex, not isVisible)
         self.graphView.setHidden(not prefs.networthSheetGraphVisible)

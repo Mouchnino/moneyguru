@@ -40,7 +40,7 @@ class ProfitView(BaseView, Ui_ProfitView):
             'profitSheetBudgetedColumnVisible': 'budgeted',
         }
         for prefName, colName in PREF2COLNAME.items():
-            sectionIndex = self.psheet.ROWATTRS.index(colName)
+            sectionIndex = self.psheet.ATTR2COLUMN[colName].index
             isVisible = getattr(prefs, prefName)
             h.setSectionHidden(sectionIndex, not isVisible)
         self.graphView.setHidden(not prefs.profitSheetGraphVisible)
