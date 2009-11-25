@@ -25,9 +25,15 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.ipiechart = IncomePieChart(doc=doc, view=self.incomePieChart)
         self.epiechart = ExpensePieChart(doc=doc, view=self.expensePieChart)
         self.children = [self.psheet, self.pgraph, self.ipiechart, self.epiechart]
+        self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
         self.setupUi(self)
+    
+    def _setupColumns(self):
+        h = self.treeView.header()
+        h.setHighlightSections(False)
+        self.psheet.resizeColumns()
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):

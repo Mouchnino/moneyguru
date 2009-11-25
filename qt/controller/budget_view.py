@@ -27,4 +27,5 @@ class BudgetView(BaseView, Ui_BudgetView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
+        self.btable.resizeColumns()
     

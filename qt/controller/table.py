@@ -11,7 +11,7 @@
 from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
 from PyQt4.QtGui import QItemSelectionModel, QItemSelection, QStyledItemDelegate
 
-from .column import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from .column import ColumnBearer, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 
 from support.date_edit import DateEdit
 from support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
@@ -40,17 +40,13 @@ class TableDelegate(QStyledItemDelegate):
             return result
     
 
-class Table(QAbstractTableModel):
-    COLUMNS = []
+class Table(QAbstractTableModel, ColumnBearer):
     # Flags you want when index.isValid() is False. In those cases, _getFlags() is never called.
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled
     
     def __init__(self, model, view):
         QAbstractTableModel.__init__(self)
-        for index, col in enumerate(self.COLUMNS):
-            col.index = index
-        # A map attrname:column is useful sometimes, so we create it here
-        self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
+        ColumnBearer.__init__(self, view.horizontalHeader())
         self.model = model
         self.view = view
         self.view.setModel(self)

@@ -14,6 +14,8 @@ from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
 
 from qtlib.tree_model import TreeNode, TreeModel
 
+from .column import ColumnBearer
+
 MIME_PATH = 'application/moneyguru.nodepath'
 
 class Node(TreeNode):
@@ -28,16 +30,12 @@ class Node(TreeNode):
         return self.ref[:]
     
 
-class AccountSheet(TreeModel):
-    COLUMNS = []
+class AccountSheet(TreeModel, ColumnBearer):
     EXPANDED_NODE_PREF_NAME = None # must set in subclass
     
     def __init__(self, doc, view):
         TreeModel.__init__(self)
-        for index, col in enumerate(self.COLUMNS):
-            col.index = index
-        # A map attrname:column is useful sometimes, so we create it here
-        self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
+        ColumnBearer.__init__(self, view.header())
         self.doc = doc
         self.app = doc.app
         self.view = view

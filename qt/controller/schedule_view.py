@@ -27,6 +27,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
+        self.sctable.resizeColumns()
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):

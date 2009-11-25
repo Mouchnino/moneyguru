@@ -21,3 +21,23 @@ class Column(object):
         self.defaultWidth = defaultWidth
         self.editor = editor
     
+
+class ColumnBearer(object):
+    COLUMNS = []
+    
+    def __init__(self, headerView):
+        self._headerView = headerView
+        for index, col in enumerate(self.COLUMNS):
+            col.index = index
+        # A map attrname:column is useful sometimes, so we create it here
+        self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
+    
+    #--- Public
+    def resizeColumns(self, widths=None):
+        """Resizes columns according to `widths`.
+        
+        If `widths` is None, resize according to `defaultWidth` in `Column`.
+        """
+        for column in self.COLUMNS:
+            self._headerView.resizeSection(column.index, column.defaultWidth)
+    

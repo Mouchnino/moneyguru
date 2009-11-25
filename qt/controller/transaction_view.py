@@ -27,8 +27,7 @@ class TransactionView(BaseView, Ui_TransactionView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        for columnIndex, col in enumerate(self.ttable.COLUMNS):
-            h.resizeSection(columnIndex, col.defaultWidth)
+        self.ttable.resizeColumns()
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):

@@ -32,7 +32,7 @@ class EntryView(BaseView, Ui_EntryView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setHighlightSections(False)
-        h.resizeSection(0, 28)
+        self.etable.resizeColumns()
     
     #--- Public
     def showBarGraph(self):

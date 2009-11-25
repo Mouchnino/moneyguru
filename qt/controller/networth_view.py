@@ -25,9 +25,15 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.apiechart = AssetPieChart(doc=doc, view=self.assetPieChart)
         self.lpiechart = LiabilityPieChart(doc=doc, view=self.liabilityPieChart)
         self.children = [self.nwsheet, self.nwgraph, self.apiechart, self.lpiechart]
+        self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
         self.setupUi(self)
+    
+    def _setupColumns(self):
+        h = self.treeView.header()
+        h.setHighlightSections(False)
+        self.nwsheet.resizeColumns()
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
