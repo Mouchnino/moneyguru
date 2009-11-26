@@ -38,6 +38,7 @@ class ImportTable(Table):
         model = ImportTableModel(view=self, import_window=importWindow.model)
         Table.__init__(self, model, view)
         self.view.clicked.connect(self.cellClicked)
+        self.view.spacePressed.connect(self.spacePressed)
     
     #--- Data methods override
     def _getData(self, row, rowattr, role):
@@ -107,4 +108,11 @@ class ImportTable(Table):
         rowattr = self.COLUMNS[index.column()].attrname
         if rowattr == 'bound':
             self.model.unbind(index.row())
+    
+    def spacePressed(self):
+        selectedIndexes = self.view.selectionModel().selectedRows()
+        for index in selectedIndexes:
+            row = self.model[index.row()]
+            row.will_import = not row.will_import
+        self.refresh()
     

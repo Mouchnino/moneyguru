@@ -33,6 +33,7 @@ class EntryTable(TableWithTransactions):
         TableWithTransactions.__init__(self, model, view)
         self.view.clicked.connect(self.cellClicked)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
+        self.view.spacePressed.connect(self.model.toggle_reconciled)
     
     #--- ColumnBearer override
     def setHiddenColumns(self, hiddenColumns):
