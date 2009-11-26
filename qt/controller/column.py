@@ -38,6 +38,8 @@ class ColumnBearer(object):
         if not widths:
             widths = [column.defaultWidth for column in self.COLUMNS]
         for column, width in zip(self.COLUMNS, widths):
+            if width == 0: # column was hidden before.
+                width = column.defaultWidth
             self._headerView.resizeSection(column.index, width)
     
     def setColumnsOrder(self, columnIndexes):
