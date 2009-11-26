@@ -135,10 +135,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.searchLineEdit = QLineEdit()
         self.toolBar.addWidget(self.searchLineEdit)
     
+    #--- Private
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
         self.mainView.setCurrentIndex(index)
         self.mainView.currentWidget().connect()
+        self._updateViewButtons()
+    
+    def _updateViewButtons(self):
+        actionsInOrder = [
+            self.actionShowNetWorth,
+            self.actionShowProfitLoss,
+            self.actionShowTransactions,
+            self.actionShowAccount,
+            self.actionShowSchedules,
+            self.actionShowBudgets,
+        ]
+        viewIndex = self.mainView.currentIndex()
+        for index, action in enumerate(actionsInOrder):
+            action.setCheckable(viewIndex == index)
+            action.setChecked(viewIndex == index)
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
