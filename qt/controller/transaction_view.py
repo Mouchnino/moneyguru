@@ -41,9 +41,5 @@ class TransactionView(BaseView, Ui_TransactionView):
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
-        prefs = self.doc.app.prefs
-        h = self.tableView.horizontalHeader()
-        for column in self.ttable.COLUMNS:
-            isHidden = column.attrname in prefs.transactionHiddenColumns
-            h.setSectionHidden(column.index, isHidden)
+        self.ttable.setHiddenColumns(self.doc.app.prefs.transactionHiddenColumns)
     

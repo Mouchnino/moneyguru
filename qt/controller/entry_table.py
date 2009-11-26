@@ -32,6 +32,12 @@ class EntryTable(TableWithTransactions):
         model = EntryTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
         self.view.clicked.connect(self.cellClicked)
+        self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
+    
+    #--- ColumnBearer override
+    def setHiddenColumns(self, hiddenColumns):
+        TableWithTransactions.setHiddenColumns(self, hiddenColumns)
+        self.model.change_columns(self.visibleRowAttrs())
     
     #--- Data methods override
     def _getData(self, row, rowattr, role):
@@ -76,4 +82,7 @@ class EntryTable(TableWithTransactions):
             row = self.model[index.row()]
             if row.can_reconcile() and row.reconciled:
                 row.toggle_reconciled()
+    
+    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
+        self.model.change_columns(self.visibleRowAttrs())
     

@@ -43,10 +43,7 @@ class ProfitView(BaseView, Ui_ProfitView):
     #--- Public
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
-        h = self.treeView.header()
-        for column in self.psheet.COLUMNS:
-            isHidden = column.attrname in prefs.profitHiddenColumns
-            h.setSectionHidden(column.index, isHidden)
+        self.psheet.setHiddenColumns(prefs.profitHiddenColumns)
         self.graphView.setHidden(not prefs.profitGraphVisible)
         self.incomePieChart.setHidden(not prefs.profitPieChartsVisible)
         self.expensePieChart.setHidden(not prefs.profitPieChartsVisible)

@@ -30,6 +30,14 @@ class TransactionTable(TableWithTransactions):
     def __init__(self, doc, view):
         model = TransactionTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
+        self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
+    
+    #--- ColumnBearer override
+    def setHiddenColumns(self, hiddenColumns):
+        # There doesn't seem to be a signal for column hide. Since we only hide column through this
+        # call, we can call change_columns() here.
+        TableWithTransactions.setHiddenColumns(self, hiddenColumns)
+        self.model.change_columns(self.visibleRowAttrs())
     
     #--- Data methods override
     def _getData(self, row, rowattr, role):
@@ -47,4 +55,8 @@ class TransactionTable(TableWithTransactions):
                 return None
         else:
             return TableWithTransactions._getData(self, row, rowattr, role)
+    
+    #--- Event Handling
+    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
+        self.model.change_columns(self.visibleRowAttrs())
     

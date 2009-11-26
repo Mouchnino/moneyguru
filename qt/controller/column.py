@@ -50,3 +50,15 @@ class ColumnBearer(object):
             visualIndex = self._headerView.visualIndex(columnIndex)
             self._headerView.moveSection(visualIndex, destIndex)
     
+    def setHiddenColumns(self, hiddenColumns):
+        for column in self.COLUMNS:
+            isHidden = column.attrname in hiddenColumns
+            self._headerView.setSectionHidden(column.index, isHidden)
+    
+    def visibleRowAttrs(self):
+        """Returns a list of row attrs in visual order"""
+        h = self._headerView
+        visibleColumns = [column for column in self.COLUMNS if not h.isSectionHidden(column.index)]
+        orderedColumns = sorted(visibleColumns, key=lambda col: h.visualIndex(col.index))
+        return [column.attrname for column in orderedColumns]
+    
