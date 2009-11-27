@@ -83,7 +83,7 @@ class AccountSheet(TreeModel, ColumnBearer):
     def data(self, index, role):
         if not index.isValid():
             return None
-        if role == Qt.DisplayRole:
+        if role in (Qt.DisplayRole, Qt.EditRole):
             node = index.internalPointer()
             rowattr = self.COLUMNS[index.column()].attrname
             return getattr(node.ref, rowattr)
