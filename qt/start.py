@@ -14,6 +14,7 @@ import sys
 from PyQt4.QtCore import QCoreApplication
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
+from qtlib.error_report_dialog import install_excepthook
 from app import MoneyGuru
 
 if __name__ == "__main__":
@@ -23,4 +24,5 @@ if __name__ == "__main__":
     QCoreApplication.setApplicationName('moneyGuru')
     QCoreApplication.setApplicationVersion(MoneyGuru.VERSION)
     mgapp = MoneyGuru()
+    install_excepthook()
     sys.exit(app.exec_())
