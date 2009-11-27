@@ -29,6 +29,13 @@ from .import_window import ImportWindow
 from .search_field import SearchField
 from ui.main_window_ui import Ui_MainWindow
 
+NETWORTH_INDEX = 0
+PROFIT_INDEX = 1
+TRANSACTION_INDEX = 2
+ACCOUNT_INDEX = 3
+SCHEDULE_INDEX = 4
+BUDGET_INDEX = 5
+
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
         QMainWindow.__init__(self, None)
@@ -140,9 +147,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.currentWidget().disconnect()
         self.mainView.setCurrentIndex(index)
         self.mainView.currentWidget().connect()
-        self._updateViewButtons()
+        self._updateActionsState()
     
-    def _updateViewButtons(self):
+    def _updateActionsState(self):
+        # Updates enable/disable checked/unchecked state of all actions. These state can change
+        # under various conditions: main view change, date range type change... and nothing else.
+        
+        # Determine what view action is checked
         actionsInOrder = [
             self.actionShowNetWorth,
             self.actionShowProfitLoss,
@@ -155,6 +166,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for index, action in enumerate(actionsInOrder):
             action.setCheckable(viewIndex == index)
             action.setChecked(viewIndex == index)
+        
+        # Determine what actions are enabled
+        isSheet = viewIndex in (NETWORTH_INDEX, PROFIT_INDEX)
+        isTransactionOrEntryTable = viewIndex in (TRANSACTION_INDEX, ACCOUNT_INDEX)
+        shownAccount = self.doc.model.shown_account
+        canToggleReconciliation = viewIndex == ACCOUNT_INDEX and shownAccount is not None and \
+            shownAccount.is_balance_sheet_account()
+        canNavigateDateRange = self.doc.model.date_range.can_navigate
+        
+        self.actionNewAccountGroup.setEnabled(isSheet)
+        self.actionMoveDown.setEnabled(isTransactionOrEntryTable)
+        self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
+        self.actionShowNextView.setEnabled(viewIndex != BUDGET_INDEX)
+        self.actionShowPreviousView.setEnabled(viewIndex != NETWORTH_INDEX)
+        self.actionShowAccount.setEnabled(shownAccount is not None)
+        self.actionShowSelectedAccount.setEnabled(isSheet)
+        self.actionNavigateBack.setEnabled(viewIndex == ACCOUNT_INDEX)
+        self.actionToggleReconciliationMode.setEnabled(canToggleReconciliation)
+        self.actionToggleReconciliationModeToolbar.setEnabled(canToggleReconciliation)
+        self.actionNextDateRange.setEnabled(canNavigateDateRange)
+        self.actionPreviousDateRange.setEnabled(canNavigateDateRange)
+        self.actionTodayDateRange.setEnabled(canNavigateDateRange)
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
@@ -265,35 +298,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def refresh_date_range_selector(self):
         self.dateRangeButton.setText(self.doc.model.date_range.display)
+        self._updateActionsState()
     
     def refresh_reconciliation_button(self):
         imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
     
     def show_balance_sheet(self):
-        self._setMainWidgetIndex(0)
+        self._setMainWidgetIndex(NETWORTH_INDEX)
     
     def show_bar_graph(self):
         self.eview.showBarGraph()
     
     def show_budget_table(self):
-        self._setMainWidgetIndex(5)
+        self._setMainWidgetIndex(BUDGET_INDEX)
     
     def show_custom_date_range_panel(self):
         self.cdrpanel.load()
     
     def show_entry_table(self):
-        self._setMainWidgetIndex(3)
+        self._setMainWidgetIndex(ACCOUNT_INDEX)
     
     def show_line_graph(self):
         self.eview.showLineGraph()
     
     def show_income_statement(self):
-        self._setMainWidgetIndex(1)        
+        self._setMainWidgetIndex(PROFIT_INDEX)
     
     def show_schedule_table(self):
-        self._setMainWidgetIndex(4)
+        self._setMainWidgetIndex(SCHEDULE_INDEX)
     
     def show_transaction_table(self):
-        self._setMainWidgetIndex(2)
+        self._setMainWidgetIndex(TRANSACTION_INDEX)
     
