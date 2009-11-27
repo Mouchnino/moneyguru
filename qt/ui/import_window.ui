@@ -172,7 +172,7 @@
   <customwidget>
    <class>TableView</class>
    <extends>QTableView</extends>
-   <header>support.table_view</header>
+   <header>support.item_view</header>
   </customwidget>
  </customwidgets>
  <resources/>

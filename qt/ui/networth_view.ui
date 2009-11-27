@@ -17,7 +17,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTreeView" name="treeView">
+      <widget class="TreeView" name="treeView">
        <property name="acceptDrops">
         <bool>true</bool>
        </property>
@@ -30,9 +30,6 @@
        <property name="uniformRowHeights">
         <bool>true</bool>
        </property>
-       <attribute name="headerStretchLastSection">
-        <bool>false</bool>
-       </attribute>
        <attribute name="headerStretchLastSection">
         <bool>false</bool>
        </attribute>
@@ -81,6 +78,11 @@
    <extends>QWidget</extends>
    <header>support.pie_chart_view</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TreeView</class>
+   <extends>QTreeView</extends>
+   <header>support.item_view</header>
   </customwidget>
  </customwidgets>
  <resources/>
