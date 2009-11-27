@@ -36,7 +36,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.sctable.COLUMNS))]
         self.doc.app.prefs.scheduleColumnWidths = widths
-        order = [h.visualIndex(index) for index in xrange(len(self.sctable.COLUMNS))]
+        order = [h.logicalIndex(index) for index in xrange(len(self.sctable.COLUMNS))]
         self.doc.app.prefs.scheduleColumnOrder = order
     
     #--- Public

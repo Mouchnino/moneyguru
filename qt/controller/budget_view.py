@@ -36,6 +36,6 @@ class BudgetView(BaseView, Ui_BudgetView):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnWidths = widths
-        order = [h.visualIndex(index) for index in xrange(len(self.btable.COLUMNS))]
+        order = [h.logicalIndex(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnOrder = order
     

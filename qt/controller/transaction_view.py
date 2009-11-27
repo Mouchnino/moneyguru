@@ -36,7 +36,7 @@ class TransactionView(BaseView, Ui_TransactionView):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnWidths = widths
-        order = [h.visualIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
+        order = [h.logicalIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnOrder = order
     
     #--- Public

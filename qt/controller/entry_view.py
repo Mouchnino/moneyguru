@@ -41,7 +41,7 @@ class EntryView(BaseView, Ui_EntryView):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnWidths = widths
-        order = [h.visualIndex(index) for index in xrange(len(self.etable.COLUMNS))]
+        order = [h.logicalIndex(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnOrder = order
     
     #--- Public
