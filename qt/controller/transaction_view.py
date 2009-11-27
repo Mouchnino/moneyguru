@@ -9,6 +9,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from .base_view import BaseView
+from .transaction_filter_bar import TransactionFilterBar
 from .transaction_table import TransactionTable
 from ui.transaction_view_ui import Ui_TransactionView
 
@@ -18,7 +19,8 @@ class TransactionView(BaseView, Ui_TransactionView):
         self.doc = doc
         self._setupUi()
         self.ttable = TransactionTable(doc=doc, view=self.tableView)
-        self.children = [self.ttable]
+        self.tfbar = TransactionFilterBar(doc=doc, view=self.filterBar)
+        self.children = [self.ttable, self.tfbar]
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

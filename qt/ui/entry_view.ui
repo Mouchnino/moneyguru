@@ -21,6 +21,16 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QTabBar" name="filterBar" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="TableView" name="tableView">
      <property name="acceptDrops">
       <bool>true</bool>
@@ -91,6 +101,12 @@
    <class>TableView</class>
    <extends>QTableView</extends>
    <header>support.item_view</header>
+  </customwidget>
+  <customwidget>
+   <class>QTabBar</class>
+   <extends>QWidget</extends>
+   <header>PyQt4.QtGui</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -9,6 +9,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from .base_view import BaseView
+from .entry_filter_bar import EntryFilterBar
 from .entry_table import EntryTable
 from .account_bar_graph import AccountBarGraph
 from .account_line_graph import AccountLineGraph
@@ -20,10 +21,11 @@ class EntryView(BaseView, Ui_EntryView):
         self.doc = doc
         self._setupUi()
         self.etable = EntryTable(doc=doc, view=self.tableView)
+        self.efbar = EntryFilterBar(doc=doc, view=self.filterBar)
         self.bgraph = AccountBarGraph(doc=doc, view=self.barGraphView)
         self.lgraph = AccountLineGraph(doc=doc, view=self.lineGraphView)
         # We don't add the graphs to self.children because connection/disconnection occur separately for them
-        self.children = [self.etable]
+        self.children = [self.etable, self.efbar]
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
