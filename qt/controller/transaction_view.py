@@ -18,7 +18,7 @@ class TransactionView(BaseView, Ui_TransactionView):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
-        self.ttable = TransactionTable(doc=doc, view=self.tableView)
+        self.ttable = TransactionTable(doc=doc, view=self.tableView, totalsLabel=self.totalsLabel)
         self.tfbar = TransactionFilterBar(doc=doc, view=self.filterBar)
         self.children = [self.ttable, self.tfbar]
         self._setupColumns() # Can only be done after the model has been connected

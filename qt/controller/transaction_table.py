@@ -15,6 +15,10 @@ from moneyguru.gui.transaction_table import TransactionTable as TransactionTable
 from .column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from .table_with_transactions import TableWithTransactions
 
+# XXX The totals label is tied to the table, even in the model. This is a design flaw. The totals
+# label should be an independent gui element (or be a part of an eventual new transaction_view gui
+# element).
+
 class TransactionTable(TableWithTransactions):
     COLUMNS = [
         Column('status', '', 28),
@@ -27,9 +31,10 @@ class TransactionTable(TableWithTransactions):
         Column('amount', 'Amount', 120),
     ]
     
-    def __init__(self, doc, view):
+    def __init__(self, doc, view, totalsLabel):
         model = TransactionTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
+        self.totalsLabel = totalsLabel
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
     
     #--- ColumnBearer override
@@ -59,4 +64,9 @@ class TransactionTable(TableWithTransactions):
     #--- Event Handling
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         self.model.change_columns(self.visibleRowAttrs())
+    
+    #--- model --> view
+    def refresh(self):
+        TableWithTransactions.refresh(self)
+        self.totalsLabel.setText(self.model.totals)
     

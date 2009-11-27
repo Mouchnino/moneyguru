@@ -20,7 +20,7 @@ class EntryView(BaseView, Ui_EntryView):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
-        self.etable = EntryTable(doc=doc, view=self.tableView)
+        self.etable = EntryTable(doc=doc, view=self.tableView, totalsLabel=self.totalsLabel)
         self.efbar = EntryFilterBar(doc=doc, view=self.filterBar)
         self.bgraph = AccountBarGraph(doc=doc, view=self.barGraphView)
         self.lgraph = AccountLineGraph(doc=doc, view=self.lineGraphView)

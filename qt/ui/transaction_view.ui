@@ -28,6 +28,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="totalsLabel">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="TableView" name="tableView">
      <property name="acceptDrops">
       <bool>true</bool>

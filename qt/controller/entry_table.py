@@ -28,9 +28,10 @@ class EntryTable(TableWithTransactions):
         Column('balance', 'Balance', 120),
     ]
     
-    def __init__(self, doc, view):
+    def __init__(self, doc, view, totalsLabel):
         model = EntryTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
+        self.totalsLabel = totalsLabel
         self.view.clicked.connect(self.cellClicked)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.spacePressed.connect(self.model.toggle_reconciled)
@@ -86,4 +87,9 @@ class EntryTable(TableWithTransactions):
     
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         self.model.change_columns(self.visibleRowAttrs())
+    
+    #--- model --> view
+    def refresh(self):
+        TableWithTransactions.refresh(self)
+        self.totalsLabel.setText(self.model.totals)
     
