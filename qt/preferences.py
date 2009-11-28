@@ -24,6 +24,7 @@ class Preferences(PreferencesBase):
         self.registration_email = get('RegistrationEmail', self.registration_email)
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
         self.recentDocuments = filter(op.exists, self.recentDocuments)
+        self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         
         self.networthColumnWidths = get('NetworthColumnWidths', self.networthColumnWidths)
         self.profitColumnWidths = get('ProfitColumnWidths', self.profitColumnWidths)
@@ -58,6 +59,7 @@ class Preferences(PreferencesBase):
         self.registration_code = ''
         self.registration_email = ''
         self.recentDocuments = []
+        self.showScheduleScopeDialog = True # XXX Push down this pref at the model level
         
         self.networthColumnWidths = None
         self.profitColumnWidths = None
@@ -92,6 +94,7 @@ class Preferences(PreferencesBase):
         set_('RegistrationCode', self.registration_code)
         set_('RegistrationEmail', self.registration_email)
         set_('RecentDocuments', self.recentDocuments)
+        set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         
         set_('NetworthColumnWidths', self.networthColumnWidths)
         set_('ProfitColumnWidths', self.profitColumnWidths)

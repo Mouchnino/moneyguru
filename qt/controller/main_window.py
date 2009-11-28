@@ -117,7 +117,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
-        self.actionShowViewOptions.triggered.connect(self.showViewOptionsTriggered)
+        self.actionShowPreferences.triggered.connect(self.app.showPreferences)
+        self.actionShowViewOptions.triggered.connect(self.app.showViewOptions)
         self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
     
@@ -290,9 +291,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def toggleReconciliationModeTriggered(self):
         self.doc.model.toggle_reconciliation_mode()
-    
-    def showViewOptionsTriggered(self):
-        self.app.showViewOptions()
     
     def registerTriggered(self):
         self.app.askForRegCode()

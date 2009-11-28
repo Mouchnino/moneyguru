@@ -19,6 +19,7 @@ from moneyguru.app import Application as MoneyGuruModel
 
 from controller.document import Document
 from controller.main_window import MainWindow
+from controller.preferences_panel import PreferencesPanel
 from controller.view_options import ViewOptionsDialog
 from preferences import Preferences
 
@@ -34,6 +35,7 @@ class MoneyGuru(ApplicationBase):
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
         self.mainWindow = MainWindow(doc=self.doc)
+        self.preferencesPanel = PreferencesPanel(app=self)
         self.viewOptions = ViewOptionsDialog(app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)
         self.reg = Registration(self.model)
@@ -51,6 +53,11 @@ class MoneyGuru(ApplicationBase):
     
     def showAboutBox(self):
         self.aboutBox.show()
+    
+    def showPreferences(self):
+        self.preferencesPanel.load()
+        if self.preferencesPanel.exec_() == QDialog.Accepted:
+            self.preferencesPanel.save()    
     
     def showViewOptions(self):
         self.viewOptions.loadFromPrefs()
@@ -74,10 +81,10 @@ class MoneyGuru(ApplicationBase):
     
     #--- model --> view
     def get_default(self, key):
-        return None
+        return self.prefs.get_value(key)
     
     def set_default(self, key, value):
-        pass
+        self.prefs.set_value(key, value)
     
     def setup_as_registered(self):
         self.prefs.registration_code = self.model.registration_code
