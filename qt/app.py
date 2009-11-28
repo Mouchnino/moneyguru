@@ -65,6 +65,7 @@ class MoneyGuru(ApplicationBase):
         self.mainWindow.show()
     
     def applicationWillTerminate(self):
+        self.doc.close()
         self.willSavePrefs.emit()
         self.prefs.save()
     
@@ -74,6 +75,9 @@ class MoneyGuru(ApplicationBase):
     #--- model --> view
     def get_default(self, key):
         return None
+    
+    def set_default(self, key, value):
+        pass
     
     def setup_as_registered(self):
         self.prefs.registration_code = self.model.registration_code

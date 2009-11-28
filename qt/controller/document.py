@@ -32,6 +32,10 @@ class Document(QObject):
         return True
     
     #--- Public
+    def close(self):
+        if self.documentPath:
+            self.model.close()
+    
     def exportToQIF(self):
         title = "Export to QIF"
         docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif'))
@@ -45,9 +49,11 @@ class Document(QObject):
             self.model.parse_file_for_import(docpath)
     
     def new(self):
+        self.close()
         self.model.clear()
     
     def open(self, docpath):
+        self.close()
         self.model.load_from_xml(docpath)
         self.documentPath = docpath
     
@@ -59,6 +65,7 @@ class Document(QObject):
             self.documentOpened.emit(docpath)
     
     def openExampleDocument(self):
+        self.close()
         dirpath = tempfile.mkdtemp()
         destpath = op.join(dirpath, 'example.moneyguru')
         QFile.copy(':/example.moneyguru', destpath)
