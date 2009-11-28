@@ -113,6 +113,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Misc
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
+        self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionShowViewOptions.triggered.connect(self.showViewOptionsTriggered)
@@ -151,7 +152,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def _updateActionsState(self):
         # Updates enable/disable checked/unchecked state of all actions. These state can change
-        # under various conditions: main view change, date range type change... and nothing else.
+        # under various conditions: main view change, date range type change and when reconciliation
+        # mode is toggled
         
         # Determine what view action is checked
         actionsInOrder = [
@@ -178,6 +180,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNewAccountGroup.setEnabled(isSheet)
         self.actionMoveDown.setEnabled(isTransactionOrEntryTable)
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
+        self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and self.doc.model.in_reconciliation_mode())
         self.actionShowNextView.setEnabled(viewIndex != BUDGET_INDEX)
         self.actionShowPreviousView.setEnabled(viewIndex != NETWORTH_INDEX)
         self.actionShowAccount.setEnabled(shownAccount is not None)
@@ -277,6 +280,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def navigateBackTriggered(self):
         self.model.navigate_back()
     
+    def reconcileSelectedTriggered(self):
+        self.eview.etable.model.toggle_reconciled()
+    
     def toggleReconciliationModeTriggered(self):
         self.doc.model.toggle_reconciliation_mode()
     
@@ -303,6 +309,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def refresh_reconciliation_button(self):
         imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
+        self._updateActionsState()
     
     def show_balance_sheet(self):
         self._setMainWidgetIndex(NETWORTH_INDEX)

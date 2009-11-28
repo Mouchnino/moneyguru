@@ -221,6 +221,7 @@
     <addaction name="actionEditItem"/>
     <addaction name="actionMoveUp"/>
     <addaction name="actionMoveDown"/>
+    <addaction name="actionReconcileSelected"/>
     <addaction name="actionToggleReconciliationMode"/>
     <addaction name="separator"/>
     <addaction name="actionShowSelectedAccount"/>
@@ -558,6 +559,14 @@
   <action name="actionShowViewOptions">
    <property name="text">
     <string>View Options...</string>
+   </property>
+  </action>
+  <action name="actionReconcileSelected">
+   <property name="text">
+    <string>Reconcile Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>
