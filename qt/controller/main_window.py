@@ -113,6 +113,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Misc
         self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
+        self.actionMakeScheduleFromSelected.triggered.connect(self.makeScheduleFromSelectedTriggered)
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
@@ -180,6 +181,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNewAccountGroup.setEnabled(isSheet)
         self.actionMoveDown.setEnabled(isTransactionOrEntryTable)
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
+        self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
         self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and self.doc.model.in_reconciliation_mode())
         self.actionShowNextView.setEnabled(viewIndex != BUDGET_INDEX)
         self.actionShowPreviousView.setEnabled(viewIndex != NETWORTH_INDEX)
@@ -279,6 +281,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def navigateBackTriggered(self):
         self.model.navigate_back()
+    
+    def makeScheduleFromSelectedTriggered(self):
+        self.model.make_schedule_from_selected()
     
     def reconcileSelectedTriggered(self):
         self.eview.etable.model.toggle_reconciled()
