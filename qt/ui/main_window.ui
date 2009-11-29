@@ -209,6 +209,7 @@
     <addaction name="actionShowPreviousView"/>
     <addaction name="actionShowNextView"/>
     <addaction name="menuDateRange"/>
+    <addaction name="actionShowPreferences"/>
     <addaction name="actionShowViewOptions"/>
    </widget>
    <widget class="QMenu" name="menuDocument">
@@ -561,6 +562,9 @@
    <property name="text">
     <string>View Options...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
+   </property>
   </action>
   <action name="actionReconcileSelected">
    <property name="text">
@@ -576,6 +580,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionShowPreferences">
+   <property name="text">
+    <string>Preferences...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>
