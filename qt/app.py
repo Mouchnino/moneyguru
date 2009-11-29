@@ -34,6 +34,7 @@ class MoneyGuru(ApplicationBase):
         self.model = MoneyGuruModel(view=self)
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
+        self.doc.model.connect()
         self.mainWindow = MainWindow(doc=self.doc)
         self.preferencesPanel = PreferencesPanel(app=self)
         self.viewOptions = ViewOptionsDialog(app=self)
