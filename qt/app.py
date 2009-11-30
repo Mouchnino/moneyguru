@@ -19,6 +19,7 @@ from moneyguru.app import Application as MoneyGuruModel
 
 from controller.document import Document
 from controller.main_window import MainWindow
+from controller.csv_options import CSVOptionsWindow
 from controller.preferences_panel import PreferencesPanel
 from controller.view_options import ViewOptionsDialog
 from preferences import Preferences
@@ -36,6 +37,8 @@ class MoneyGuru(ApplicationBase):
         self.doc = Document(app=self)
         self.doc.model.connect()
         self.mainWindow = MainWindow(doc=self.doc)
+        self.csvOptionsWindow = CSVOptionsWindow(doc=self.doc)
+        self.csvOptionsWindow.model.connect()
         self.preferencesPanel = PreferencesPanel(app=self)
         self.viewOptions = ViewOptionsDialog(app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)

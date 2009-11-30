@@ -15,5 +15,6 @@
     <file alias="budget_16">images/budget_16.png</file>
     <file alias="check_16">images/check_16.png</file>
     <file alias="recurrent_16">images/recurrent_16.png</file>
+    <file alias="popup_arrows">images/popup_arrows.png</file>
 </qresource>
 </RCC>
