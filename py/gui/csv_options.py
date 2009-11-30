@@ -31,6 +31,10 @@ FIELD_NAMES = {
     CSV_REFERENCE: 'Transaction ID',
 }
 
+#XXX Use this const in mg_cocoa
+FIELD_ORDER = [None, CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
+    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE]
+
 class Layout(object):
     def __init__(self, name):
         self.name = name
