@@ -250,7 +250,8 @@ class TestCase(TestCase):
         for attr in dir(self):
             if attr.endswith('_gui'):
                 gui = getattr(self, attr)
-                gui.calls.clear()
+                if hasattr(gui, 'calls'): # We might have test methods ending with '_gui'
+                    gui.calls.clear()
 
     def create_instances(self):
         """Creates a Document instance along with all gui layers attached to it.

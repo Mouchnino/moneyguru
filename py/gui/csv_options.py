@@ -142,7 +142,8 @@ class CSVOptions(DocumentGUIObject):
             self.view.hide()
     
     def delete_selected_layout(self):
-        assert self.layout is not self._default_layout
+        if self.layout is self._default_layout:
+            return
         self._layouts.remove(self.layout)
         self.layout = self._default_layout
         self.layout.adjust_columns(self._colcount)
@@ -177,9 +178,12 @@ class CSVOptions(DocumentGUIObject):
     
     def select_layout(self, name):
         if not name:
-            self.layout = self._default_layout
+            new_layout = self._default_layout
         else:
-            self.layout = first(layout for layout in self._layouts if layout.name == name)
+            new_layout = first(layout for layout in self._layouts if layout.name == name)
+        if new_layout is self.layout:
+            return
+        self.layout = new_layout
         self.layout.adjust_columns(self._colcount)
         self.view.refresh_columns_name()
         self.view.refresh_lines()

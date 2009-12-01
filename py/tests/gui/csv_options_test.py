@@ -62,6 +62,13 @@ class ImportFortisCSV(TestCase, CommonSetup):
         self.check_gui_calls(self.iwin_gui) # nothing
         self.check_gui_calls(self.csvopt_gui, show_message=1)
     
+    def test_delete_selected_layout(self):
+        # There used to be an assert in delete_selected_layout to make sure the default layout was
+        # never deleted, but on PyQt, there doesn't seem to be an easy way to disable a menu item
+        # in a combobox, so we'll just make delete_selected_layout do nothing.
+        self.csvopt.delete_selected_layout() # do nothing, no assertion error
+        eq_(self.csvopt.layout_names, ['Default'])
+    
     def test_exclude_first_line(self):
         self.csvopt.set_line_excluded(0, True)
         self.assertTrue(self.csvopt.line_is_excluded(0))
@@ -241,6 +248,11 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
         self.csvopt.rename_selected_layout('foobaz')
         self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=1)
         self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
+    
+    def test_select_same_layout_doesnt_refresh_gui(self):
+        # Selecting the layout that's already selected doesn't trigger gui refreshes
+        self.csvopt.select_layout('foobaz')
+        self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=0)
     
 
 class FortisWithLoadedLayouts(TestCase, CommonSetup):
