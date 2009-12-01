@@ -13,19 +13,18 @@ from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
 from support.recent import Recent
-from .networth_view import NetWorthView
-from .profit_view import ProfitView
-from .transaction_view import TransactionView
-from .entry_view import EntryView
-from .schedule_view import ScheduleView
-from .budget_view import BudgetView
+from .account.view import EntryView
+from .budget.view import BudgetView
+from .networth.view import NetWorthView
+from .profit.view import ProfitView
+from .transaction.view import TransactionView
+from .schedule.view import ScheduleView
 from .account_panel import AccountPanel
 from .transaction_panel import TransactionPanel
 from .mass_edition_panel import MassEditionPanel
 from .schedule_panel import SchedulePanel
 from .budget_panel import BudgetPanel
 from .custom_date_range_panel import CustomDateRangePanel
-from .import_window import ImportWindow
 from .search_field import SearchField
 from ui.main_window_ui import Ui_MainWindow
 
@@ -62,8 +61,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.bpanel.model]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
-        self.iwindow = ImportWindow(doc=doc)
-        self.iwindow.model.connect()
         self.sfield = SearchField(doc=doc, view=self.searchLineEdit)
         self.sfield.model.connect()
         

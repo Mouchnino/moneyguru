@@ -12,8 +12,8 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.entry_table import EntryTable as EntryTableModel
-from .column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
-from .table_with_transactions import TableWithTransactions
+from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from ..table_with_transactions import TableWithTransactions
 
 class EntryTable(TableWithTransactions):
     COLUMNS = [

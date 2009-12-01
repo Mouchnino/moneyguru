@@ -9,8 +9,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.schedule_table import ScheduleTable as ScheduleTableModel
-from .column import Column
-from .table import Table
+from ..column import Column
+from ..table import Table
 
 class ScheduleTable(Table):
     COLUMNS = [

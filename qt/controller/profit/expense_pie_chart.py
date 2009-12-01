@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
-# Created On: 2009-11-06
+# Created On: 2009-11-08
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 # 
@@ -8,9 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.net_worth_graph import NetWorthGraph as NetWorthGraphModel
+from moneyguru.gui.account_pie_chart import ExpensesPieChart as ExpensesPieChartModel
 
-from .chart import Chart
+from ..chart import Chart
 
-class NetWorthGraph(Chart):
-    CHART_MODEL_CLASS = NetWorthGraphModel
+class ExpensePieChart(Chart):
+    CHART_MODEL_CLASS = ExpensesPieChartModel

@@ -8,8 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base_view import BaseView
-from .schedule_table import ScheduleTable
+from ..base_view import BaseView
+from .table import ScheduleTable
 from ui.schedule_view_ui import Ui_ScheduleView
 
 class ScheduleView(BaseView, Ui_ScheduleView):

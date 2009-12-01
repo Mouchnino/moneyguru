@@ -8,8 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base_view import BaseView
-from .budget_table import BudgetTable
+from ..base_view import BaseView
+from .table import BudgetTable
 from ui.budget_view_ui import Ui_BudgetView
 
 class BudgetView(BaseView, Ui_BudgetView):

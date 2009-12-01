@@ -8,9 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base_view import BaseView
-from .profit_sheet import ProfitSheet
-from .profit_graph import ProfitGraph
+from ..base_view import BaseView
+from .sheet import ProfitSheet
+from .graph import ProfitGraph
 from .income_pie_chart import IncomePieChart
 from .expense_pie_chart import ExpensePieChart
 from ui.profit_view_ui import Ui_ProfitView

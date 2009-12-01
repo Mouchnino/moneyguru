@@ -12,7 +12,7 @@ from moneyguru.document import (FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE
     FILTER_RECONCILED, FILTER_NOTRECONCILED)
 from moneyguru.gui.filter_bar import FilterBar as FilterBarModel
 
-from .filter_bar import FilterBar
+from ..filter_bar import FilterBar
 
 class TransactionFilterBar(FilterBar):
     BUTTONS = [

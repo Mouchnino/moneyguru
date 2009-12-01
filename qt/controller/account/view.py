@@ -8,11 +8,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base_view import BaseView
-from .entry_filter_bar import EntryFilterBar
-from .entry_table import EntryTable
-from .account_bar_graph import AccountBarGraph
-from .account_line_graph import AccountLineGraph
+from ..base_view import BaseView
+from .filter_bar import EntryFilterBar
+from .table import EntryTable
+from .bar_graph import AccountBarGraph
+from .line_graph import AccountLineGraph
 from ui.entry_view_ui import Ui_EntryView
 
 class EntryView(BaseView, Ui_EntryView):

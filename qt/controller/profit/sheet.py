@@ -9,8 +9,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.income_statement import IncomeStatement as IncomeStatementModel
-from .account_sheet import AccountSheet
-from .column import Column
+from ..account_sheet import AccountSheet
+from ..column import Column
 
 class ProfitSheet(AccountSheet):
     COLUMNS = [

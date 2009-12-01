@@ -12,8 +12,8 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.transaction_table import TransactionTable as TransactionTableModel
-from .column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
-from .table_with_transactions import TableWithTransactions
+from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from ..table_with_transactions import TableWithTransactions
 
 # XXX The totals label is tied to the table, even in the model. This is a design flaw. The totals
 # label should be an independent gui element (or be a part of an eventual new transaction_view gui

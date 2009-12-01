@@ -9,8 +9,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.budget_table import BudgetTable as BudgetTableModel
-from .column import Column
-from .table import Table
+from ..column import Column
+from ..table import Table
 
 class BudgetTable(Table):
     COLUMNS = [

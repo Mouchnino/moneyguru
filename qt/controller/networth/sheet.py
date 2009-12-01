@@ -9,8 +9,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from moneyguru.gui.balance_sheet import BalanceSheet as BalanceSheetModel
-from .account_sheet import AccountSheet
-from .column import Column
+from ..account_sheet import AccountSheet
+from ..column import Column
 
 class NetWorthSheet(AccountSheet):
     COLUMNS = [

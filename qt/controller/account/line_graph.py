@@ -8,9 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.bar_graph import BarGraph as BarGraphModel
+from moneyguru.gui.balance_graph import BalanceGraph as BalanceGraphModel
 
-from .chart import Chart
+from ..chart import Chart
 
-class AccountBarGraph(Chart):
-    CHART_MODEL_CLASS = BarGraphModel
+class AccountLineGraph(Chart):
+    CHART_MODEL_CLASS = BalanceGraphModel

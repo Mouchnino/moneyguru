@@ -10,7 +10,7 @@
 
 from moneyguru.gui.profit_graph import ProfitGraph as ProfitGraphModel
 
-from .chart import Chart
+from ..chart import Chart
 
 class ProfitGraph(Chart):
     CHART_MODEL_CLASS = ProfitGraphModel

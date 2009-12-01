@@ -8,9 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base_view import BaseView
-from .networth_sheet import NetWorthSheet
-from .networth_graph import NetWorthGraph
+from ..base_view import BaseView
+from .sheet import NetWorthSheet
+from .graph import NetWorthGraph
 from .asset_pie_chart import AssetPieChart
 from .liability_pie_chart import LiabilityPieChart
 from ui.networth_view_ui import Ui_NetWorthView

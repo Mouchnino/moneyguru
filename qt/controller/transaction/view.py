@@ -8,9 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base_view import BaseView
-from .transaction_filter_bar import TransactionFilterBar
-from .transaction_table import TransactionTable
+from ..base_view import BaseView
+from .filter_bar import TransactionFilterBar
+from .table import TransactionTable
 from ui.transaction_view_ui import Ui_TransactionView
 
 class TransactionView(BaseView, Ui_TransactionView):
