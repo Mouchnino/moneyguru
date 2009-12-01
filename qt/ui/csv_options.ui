@@ -110,12 +110,18 @@
        <property name="text">
         <string>Cancel</string>
        </property>
+       <property name="shortcut">
+        <string>Esc</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="continueButton">
        <property name="text">
         <string>Continue Import</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

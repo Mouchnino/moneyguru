@@ -9,7 +9,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, QAbstractTableModel
-from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog
+from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog, QMessageBox
 
 from moneyguru.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER
 from ui.csv_options_ui import Ui_CSVOptionsWindow
@@ -27,6 +27,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         self.tableModel = CSVOptionsTableModel(self.model, self.tableView)
         
         self.cancelButton.clicked.connect(self.hide)
+        self.continueButton.clicked.connect(self.model.continue_import)
         self.targetComboBox.currentIndexChanged.connect(self.targetIndexChanged)
         self.layoutComboBox.currentIndexChanged.connect(self.layoutIndexChanged)
     
@@ -69,7 +70,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         self.model.selected_target_index = index
     
     #--- model --> view
-    # show() and hide() are called from the model, but are already covered by QWidget
+    # hide() is called from the model, but is already covered by QWidget
     def refresh_columns(self):
         self.tableModel.reset()
     
@@ -96,6 +97,16 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         self.targetComboBox.addItems(self.model.target_account_names)
         self.targetComboBox.currentIndexChanged.connect(self.targetIndexChanged)
     
+    def show(self):
+        # For non-modal dialogs, show() is not enough to bring the window at the forefront, we have
+        # to call raise() as well
+        QWidget.show(self)
+        self.raise_()
+    
+    def show_message(self, msg):
+        title = "Warning"
+        QMessageBox.warning(self, title, msg)
+    
 
 class CSVOptionsTableModel(QAbstractTableModel):
     def __init__(self, model, view):
@@ -113,31 +124,42 @@ class CSVOptionsTableModel(QAbstractTableModel):
         self.view.horizontalHeader().sectionClicked.connect(self.tableSectionClicked)
     
     #--- QAbstractTableModel overrides
+    # We add an additional "Import" column to the csv columns
     def columnCount(self, index):
-        return len(self.model.columns)
+        return len(self.model.columns) + 1
     
     def data(self, index, role):
         if not index.isValid():
             return None
         if role == Qt.DisplayRole:
+            if index.column() == 0:
+                return None
             line = self.model.lines[index.row()]
-            return line[index.column()]
+            return line[index.column()-1]
+        elif role == Qt.CheckStateRole and index.column() == 0:
+            return Qt.Unchecked if self.model.line_is_excluded(index.row()) else Qt.Checked
         else:
             return None
     
     def flags(self, index):
         if not index.isValid():
             return Qt.ItemIsEnabled
-        return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        if index.column() == 0:
+            flags |= Qt.ItemIsUserCheckable
+        return flags
     
     def headerData(self, section, orientation, role):
         if orientation != Qt.Horizontal:
             return None
-        if section >= len(self.model.columns):
+        if section > len(self.model.columns):
             return None
         if role == Qt.DisplayRole:
-            return self.model.get_column_name(section)
-        elif role == Qt.DecorationRole:
+            if section == 0:
+                return "Import"
+            else:
+                return self.model.get_column_name(section-1)
+        elif role == Qt.DecorationRole and section > 0:
             return QPixmap(':/popup_arrows')
         else:
             return None
@@ -147,17 +169,26 @@ class CSVOptionsTableModel(QAbstractTableModel):
             return 0
         return len(self.model.lines)
     
+    def setData(self, index, value, role):
+        if not index.isValid():
+            return False
+        if role == Qt.CheckStateRole and index.column() == 0:
+            self.model.set_line_excluded(index.row(), value == Qt.Unchecked)
+            return True
+        return False
+    
     #--- Public
     def refreshColumnsName(self):
-        self.headerDataChanged.emit(Qt.Horizontal, 0, len(self.model.columns)-1)
+        self.headerDataChanged.emit(Qt.Horizontal, 0, len(self.model.columns))
     
     #--- Event Handling
     def columnMenuItemClicked(self):
         action = self.sender()
         index, _ = action.data().toInt()
         fieldId = FIELD_ORDER[index]
-        self.model.set_column_field(self._lastClickedColumn, fieldId)
+        self.model.set_column_field(self._lastClickedColumn-1, fieldId)
     
     def tableSectionClicked(self, index):
         self._lastClickedColumn = index
-        self.columnMenu.exec_(QCursor.pos())
+        if index > 0:
+            self.columnMenu.exec_(QCursor.pos())

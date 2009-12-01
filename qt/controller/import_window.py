@@ -113,6 +113,12 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         for pane in self.model.panes:
             self.tabView.addTab(pane.name)
     
+    def show(self):
+        # For non-modal dialogs, show() is not enough to bring the window at the forefront, we have
+        # to call raise() as well
+        QWidget.show(self)
+        self.raise_()
+    
     def update_selected_pane(self):
         index = self.model.selected_pane_index
         if index != self.tabView.currentIndex(): # this prevents infinite loops
