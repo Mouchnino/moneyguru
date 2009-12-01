@@ -36,6 +36,27 @@ class Document(QObject):
         if self.documentPath:
             self.model.close()
     
+    def confirmDestructiveAction(self):
+        # Asks whether the user wants to continue before continuing with an action that will replace
+        # the current document. Will save the document as needed. Returns True if the action can
+        # continue.
+        if not self.model.is_dirty():
+            return True
+        title = "Unsaved Document"
+        msg = "Do you want to save your changes before continuing?"
+        buttons = QMessageBox.Save | QMessageBox.Cancel | QMessageBox.Discard
+        result = QMessageBox.question(self.app.mainWindow, title, msg, buttons)
+        if result == QMessageBox.Save:
+            self.doc.save()
+            if self.doc.model.is_dirty(): # "save as" was cancelled
+                return False
+            else:
+                return True
+        elif result == QMessageBox.Cancel:
+            return False
+        elif result == QMessageBox.Discard:
+            return True
+    
     def exportToQIF(self):
         title = "Export to QIF"
         docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif'))
@@ -49,10 +70,14 @@ class Document(QObject):
             self.model.parse_file_for_import(docpath)
     
     def new(self):
+        if not self.confirmDestructiveAction():
+            return
         self.close()
         self.model.clear()
     
     def open(self, docpath):
+        if not self.confirmDestructiveAction():
+            return
         self.close()
         self.model.load_from_xml(docpath)
         self.documentPath = docpath

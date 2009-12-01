@@ -145,6 +145,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.searchLineEdit = QLineEdit()
         self.toolBar.addWidget(self.searchLineEdit)
     
+    #--- QWidget overrides
+    def closeEvent(self, event):
+        if self.doc.confirmDestructiveAction():
+            event.accept()
+        else:
+            event.ignore()
+    
     #--- Private
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
