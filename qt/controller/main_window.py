@@ -54,6 +54,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bpanel = BudgetPanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
         self._setupUi()
+        if self.app.prefs.mainWindowRect is not None:
+            self.setGeometry(self.app.prefs.mainWindowRect)
         children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
             self.eview.etable.model, self.scview.sctable.model, self.bview.btable.model,
             self.apanel.model, self.tpanel.model, self.mepanel.model, self.scpanel.model,
@@ -70,6 +72,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.recentDocuments.mustOpenItem.connect(self.doc.open)
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
+        
+        self.app.willSavePrefs.connect(self._savePrefs)
         
         # Actions
         # Date range
@@ -153,6 +157,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             event.ignore()
     
     #--- Private
+    def _savePrefs(self):
+        self.app.prefs.mainWindowRect = self.geometry()
+    
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
         self.mainView.setCurrentIndex(index)

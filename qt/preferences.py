@@ -10,13 +10,19 @@
 
 import os.path as op
 
+from PyQt4.QtCore import QRect
+
 from qtlib.preferences import Preferences as PreferencesBase
 
-# About the hidden columns prefernce:
+# About the hidden columns preference:
 # Rather than keeping a list of visible columns, we keep a list of hidden column. This is because
 # not all columns are optionally visible, so we either need to know which columns are optionally
 # visible, or only store information about hidden columns. The second way is simpler, so that's
 # what we do.
+
+# About QRect onversion:
+# I think Qt supports putting basic structures like QRect directly in QSettings, but I prefer not
+# to rely on it and stay with generic structures.
 
 class Preferences(PreferencesBase):
     def _load_values(self, settings, get):
@@ -54,6 +60,10 @@ class Preferences(PreferencesBase):
         
         self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
+        
+        self.mainWindowRect = get('MainWindowRect', self.mainWindowRect)
+        if self.mainWindowRect is not None: # a list of 4 values
+            self.mainWindowRect = QRect(*self.mainWindowRect)
     
     def reset(self):
         self.registration_code = ''
@@ -89,6 +99,8 @@ class Preferences(PreferencesBase):
         
         self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
         self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
+        
+        self.mainWindowRect = None
     
     def _save_values(self, settings, set_):
         set_('RegistrationCode', self.registration_code)
@@ -124,4 +136,8 @@ class Preferences(PreferencesBase):
         
         set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
+        
+        r = self.mainWindowRect
+        rectAsList = [r.x(), r.y(), r.width(), r.height()]
+        set_('MainWindowRect', rectAsList)
     
