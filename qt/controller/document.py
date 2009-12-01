@@ -59,13 +59,15 @@ class Document(QObject):
     
     def exportToQIF(self):
         title = "Export to QIF"
-        docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif'))
+        filters = "QIF Files (*.qif)"
+        docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', '', filters))
         if docpath:
             self.doc.model.save_to_qif(docpath)
     
     def importDocument(self):
         title = "Select a document to import"
-        docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title))
+        filters = "moneyGuru Documents (*.moneyguru);;OFX Files (*.ofx *.qfx);;QIF Files (*.qif);;CSV Files (*.csv *.txt)"
+        docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             self.model.parse_file_for_import(docpath)
     
@@ -84,7 +86,8 @@ class Document(QObject):
     
     def openDocument(self):
         title = "Select a document to load"
-        docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title))
+        filters = "moneyGuru Documents (*.moneyguru)"
+        docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             self.open(docpath)
             self.documentOpened.emit(docpath)
@@ -106,7 +109,8 @@ class Document(QObject):
     
     def saveAs(self):
         title = "Save As"
-        docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title))
+        filters = "moneyGuru Documents (*.moneyguru)"
+        docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             if self._save(docpath):
                 self.documentPath = docpath
