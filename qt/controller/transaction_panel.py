@@ -31,11 +31,13 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         self.model = TransactionPanelModel(view=self, document=doc.model)
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
         self.splitTable.model.connect()
+        
+        self.mctButton.clicked.connect(self.model.mct_balance)
     
     def _setupUi(self):
         self.setupUi(self)
     
     #--- model --> view
     def refresh_mct_button(self):
-        pass
+        self.mctButton.setEnabled(self.model.can_do_mct_balance)
     
