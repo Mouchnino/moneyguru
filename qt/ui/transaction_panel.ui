@@ -116,7 +116,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QTableView" name="splitTableView">
+      <widget class="TableView" name="splitTableView">
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>40</number>
        </attribute>
@@ -158,14 +158,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="addSplitButton">
           <property name="text">
            <string>+</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="removeSplitButton">
           <property name="text">
            <string>-</string>
           </property>
@@ -203,6 +203,11 @@
    <class>PayeeEdit</class>
    <extends>QLineEdit</extends>
    <header>support.completable_edit</header>
+  </customwidget>
+  <customwidget>
+   <class>TableView</class>
+   <extends>QTableView</extends>
+   <header>support.item_view</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -33,6 +33,8 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         self.splitTable.model.connect()
         
         self.mctButton.clicked.connect(self.model.mct_balance)
+        self.addSplitButton.clicked.connect(self.splitTable.model.add)
+        self.removeSplitButton.clicked.connect(self.splitTable.model.delete)
     
     def _setupUi(self):
         self.setupUi(self)
