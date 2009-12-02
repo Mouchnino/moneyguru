@@ -177,7 +177,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.editSelected()
     
     def stop_editing(self):
-        pass
+        self.view.setFocus() # enough to stop editing
     
     def update_selection(self):
         selectedPath = self.model.selected_path

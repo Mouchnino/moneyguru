@@ -147,11 +147,11 @@ class Table(QAbstractTableModel, ColumnBearer):
         self._updateViewSelection()
     
     def show_selected_row(self):
-        pass
+        self.view.showRow(self.model.selected_index)
     
     def start_editing(self):
         self.view.editSelected()
     
     def stop_editing(self):
-        pass
+        self.view.setFocus() # enough to stop editing
     
