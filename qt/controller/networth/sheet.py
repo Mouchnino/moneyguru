@@ -23,6 +23,7 @@ class NetWorthSheet(AccountSheet):
     ]
     EXPANDED_NODE_PREF_NAME = 'netWorthExpandedPaths'
     
-    def _getModel(self):
-        return BalanceSheetModel(view=self, document=self.doc.model)
+    def __init__(self, doc, view):
+        model = BalanceSheetModel(view=self, document=doc.model)
+        AccountSheet.__init__(self, doc, model, view)
     

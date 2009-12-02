@@ -35,6 +35,7 @@ class EntryTable(TableWithTransactions):
         self.view.clicked.connect(self.cellClicked)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.spacePressed.connect(self.model.toggle_reconciled)
+        self.view.deletePressed.connect(self.model.delete)
     
     #--- ColumnBearer override
     def setHiddenColumns(self, hiddenColumns):

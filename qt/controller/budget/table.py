@@ -26,4 +26,5 @@ class BudgetTable(Table):
     def __init__(self, doc, view):
         model = BudgetTableModel(view=self, document=doc.model)
         Table.__init__(self, model, view)
+        self.view.deletePressed.connect(self.model.delete)
     

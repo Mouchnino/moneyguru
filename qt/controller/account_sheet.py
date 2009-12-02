@@ -33,25 +33,22 @@ class Node(TreeNode):
 class AccountSheet(TreeModel, ColumnBearer):
     EXPANDED_NODE_PREF_NAME = None # must set in subclass
     
-    def __init__(self, doc, view):
+    def __init__(self, doc, model, view):
         TreeModel.__init__(self)
         ColumnBearer.__init__(self, view.header())
         self.doc = doc
         self.app = doc.app
         self.view = view
         self._wasRestored = False
-        self.model = self._getModel()
+        self.model = model
         self.view.setModel(self)
         self._restoreNodeExpansionState()
         
         self.view.selectionModel().currentRowChanged.connect(self.currentRowChanged)
         self.view.collapsed.connect(self.nodeCollapsed)
         self.view.expanded.connect(self.nodeExpanded)
+        self.view.deletePressed.connect(self.model.delete)
         self.app.willSavePrefs.connect(self._saveNodeExpansionState)
-    
-    #--- Virtual
-    def _getModel(self):
-        raise NotImplementedError()
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):

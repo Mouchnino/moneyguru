@@ -23,6 +23,7 @@ class ProfitSheet(AccountSheet):
     ]
     EXPANDED_NODE_PREF_NAME = 'profitLossExpandedPaths'
     
-    def _getModel(self):
-        return IncomeStatementModel(view=self, document=self.doc.model)
+    def __init__(self, doc, view):
+        model = IncomeStatementModel(view=self, document=doc.model)
+        AccountSheet.__init__(self, doc, model, view)
     

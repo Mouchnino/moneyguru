@@ -73,6 +73,8 @@ class TableView(QTableView, ItemViewMixIn):
         key = event.key()
         if key == Qt.Key_Space:
             self.spacePressed.emit()
+        elif key in (Qt.Key_Backspace, Qt.Key_Delete):
+            self.deletePressed.emit()
         else:
             QTableView.keyPressEvent(self, event)
     
@@ -91,10 +93,11 @@ class TableView(QTableView, ItemViewMixIn):
         QTableView.edit(self, selectedIndex)
     
     #--- Signals
+    deletePressed = pyqtSignal()
     spacePressed = pyqtSignal()
 
 class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments there
-     #--- QTreeView override
+    #--- QTreeView override
     def edit(self, index, trigger, event):
         if self._shouldEditFromKeyPress(trigger):
             editableIndex = self._firstEditableIndex(index)
@@ -104,6 +107,15 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
                 return False
         else:
             return QTreeView.edit(self, index, trigger, event)
+    
+    def keyPressEvent(self, event):
+        key = event.key()
+        if key == Qt.Key_Space:
+            self.spacePressed.emit()
+        elif key in (Qt.Key_Backspace, Qt.Key_Delete):
+            self.deletePressed.emit()
+        else:
+            QTreeView.keyPressEvent(self, event)
     
     #--- ItemViewMixIn overrides
     def _headerView(self):
@@ -117,3 +129,6 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
         selectedIndex = selectedRows[0]
         QTreeView.edit(self, selectedIndex)
     
+    #--- Signals
+    deletePressed = pyqtSignal()
+    spacePressed = pyqtSignal()

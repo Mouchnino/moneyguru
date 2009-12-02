@@ -36,6 +36,7 @@ class TransactionTable(TableWithTransactions):
         TableWithTransactions.__init__(self, model, view)
         self.totalsLabel = totalsLabel
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
+        self.view.deletePressed.connect(self.model.delete)
     
     #--- ColumnBearer override
     def setHiddenColumns(self, hiddenColumns):
