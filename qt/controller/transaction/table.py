@@ -9,7 +9,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.transaction_table import TransactionTable as TransactionTableModel
 from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
@@ -44,23 +43,6 @@ class TransactionTable(TableWithTransactions):
         # call, we can call change_columns() here.
         TableWithTransactions.setHiddenColumns(self, hiddenColumns)
         self.model.change_columns(self.visibleRowAttrs())
-    
-    #--- Data methods override
-    def _getData(self, row, rowattr, role):
-        if rowattr == 'status':
-            if role == Qt.DecorationRole:
-                if row.reconciled:
-                    return QPixmap(':/check_16')
-                elif row.is_budget:
-                    return QPixmap(':/budget_16')
-                elif row.recurrent:
-                    return QPixmap(':/recurrent_16')
-                else:
-                    return None
-            else:
-                return None
-        else:
-            return TableWithTransactions._getData(self, row, rowattr, role)
     
     #--- Event Handling
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):

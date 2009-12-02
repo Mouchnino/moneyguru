@@ -9,7 +9,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, pyqtSignal
-from PyQt4.QtGui import QAbstractItemView, QTableView, QTreeView, QItemSelectionModel
+from PyQt4.QtGui import (QAbstractItemView, QTableView, QTreeView, QItemSelectionModel,
+    QAbstractItemDelegate)
 
 from hsutil.misc import first
 
@@ -48,6 +49,14 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         # the edit triggers. Moreover, this only returns True if we're not already in edition state.
         if self.state() == QAbstractItemView.EditingState:
             return False
+        # It turns out that the view's state reverts to NoState between field shifting (tab backtab)
+        # So, in fact, even if we're editing, we might be in NoState mode. Unfortunately, although
+        # QAbstractItemMode has submit()/revert(), we have no interface for querying the model about
+        # it's edition state. Eventually, maybe that I should make my own one, but for now, one
+        # special behavior I observed about tabbing/backtabbing during edition is that the trigger
+        # passed is AllEditTriggers. So what we can do is to return False when the trigger is this.
+        if trigger == QAbstractItemView.AllEditTriggers:
+            return False
         if not (trigger & (QAbstractItemView.EditKeyPressed | QAbstractItemView.AnyKeyPressed)):
             return False
         if not (trigger & self.editTriggers()):
@@ -57,6 +66,16 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
 
 class TableView(QTableView, ItemViewMixIn):
     #--- QTableView override
+    def closeEditor(self, edit, hint):
+        # The problem we're trying to solve here is the edit-and-go-away problem. When ending the
+        # editing with submit or return, there's no problem, the model's submit()/revert() is
+        # correctly called. However, when ending editing by clicking away, submit() is never called.
+        # Fortunately, closeEditor is called, and AFAIK, it's the only case where it's called with
+        # NoHint (0). So, in these cases, we want to call model.submit()
+        if hint == QAbstractItemDelegate.NoHint:
+            self.model().submit()
+        QTableView.closeEditor(self, edit, hint)
+    
     def edit(self, index, trigger, event):
         # When an edit is triggered by a key, rather than editing the selected cell (default
         # behavior), we want to look at the row and edit the first editable cell in it.
@@ -98,6 +117,11 @@ class TableView(QTableView, ItemViewMixIn):
 
 class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments there
     #--- QTreeView override
+    def closeEditor(self, edit, hint):
+        if hint == QAbstractItemDelegate.NoHint:
+            self.model().submit()
+        QTreeView.closeEditor(self, edit, hint)
+    
     def edit(self, index, trigger, event):
         if self._shouldEditFromKeyPress(trigger):
             editableIndex = self._firstEditableIndex(index)

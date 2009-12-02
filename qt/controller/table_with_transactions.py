@@ -9,6 +9,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
+from PyQt4.QtGui import QPixmap
 
 from .table import Table
 
@@ -19,6 +20,32 @@ MIME_INDEXES = 'application/moneyguru.rowindexes'
 
 class TableWithTransactions(Table):
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled | Qt.ItemIsDropEnabled
+    
+    def _getStatusData(self, row, role):
+        if role == Qt.DecorationRole:
+            iconName = None
+            if row is self.model.edited and row.is_date_in_future():
+                iconName = 'forward_16'
+            elif row is self.model.edited and row.is_date_in_past():
+                iconName = 'backward_16'
+            elif row.reconciled:
+                iconName = 'check_16'
+            elif row.is_budget:
+                iconName = 'budget_16'
+            elif row.recurrent:
+                iconName = 'recurrent_16'
+            if iconName:
+                return QPixmap(':/' + iconName)
+            else:
+                return None
+        else:
+            return None
+    
+    def _getData(self, row, rowattr, role):
+        if rowattr == 'status':
+            return self._getStatusData(row, role)
+        else:
+            return Table._getData(self, row, rowattr, role)
     
     def _getFlags(self, row, rowattr):
         flags = Table._getFlags(self, row, rowattr)

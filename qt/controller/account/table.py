@@ -9,7 +9,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QPixmap
 
 from moneyguru.gui.entry_table import EntryTable as EntryTableModel
 from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
@@ -43,23 +42,15 @@ class EntryTable(TableWithTransactions):
         self.model.change_columns(self.visibleRowAttrs())
     
     #--- Data methods override
-    def _getData(self, row, rowattr, role):
-        if rowattr == 'status':
-            if role == Qt.DecorationRole:
-                if row.reconciled:
-                    return QPixmap(':/check_16')
-                elif row.is_budget:
-                    return QPixmap(':/budget_16')
-                elif row.recurrent:
-                    return QPixmap(':/recurrent_16')
-                else:
-                    return None
-            elif (role == Qt.CheckStateRole) and row.can_reconcile() and not row.reconciled:
+    def _getStatusData(self, row, role):
+        # DecorationRole is handled in TableWithTransactions
+        if role == Qt.CheckStateRole:
+            if row.can_reconcile() and not row.reconciled:
                 return Qt.Checked if row.reconciliation_pending else Qt.Unchecked
             else:
                 return None
         else:
-            return TableWithTransactions._getData(self, row, rowattr, role)
+            return TableWithTransactions._getStatusData(self, row, role)
     
     def _getFlags(self, row, rowattr):
         flags = TableWithTransactions._getFlags(self, row, rowattr)
