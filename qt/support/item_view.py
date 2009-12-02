@@ -43,12 +43,24 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.Current)
         return editableIndex
     
+    def _shouldEditFromKeyPress(self, trigger):
+        # Returns True if the trigger is a key press and that this type of trigger is allowed in
+        # the edit triggers. Moreover, this only returns True if we're not already in edition state.
+        if self.state() == QAbstractItemView.EditingState:
+            return False
+        if not (trigger & (QAbstractItemView.EditKeyPressed | QAbstractItemView.AnyKeyPressed)):
+            return False
+        if not (trigger & self.editTriggers()):
+            return False
+        return True
+    
+
 class TableView(QTableView, ItemViewMixIn):
     #--- QTableView override
     def edit(self, index, trigger, event):
         # When an edit is triggered by a key, rather than editing the selected cell (default
         # behavior), we want to look at the row and edit the first editable cell in it.
-        if trigger in (QAbstractItemView.EditKeyPressed, QAbstractItemView.AnyKeyPressed):
+        if self._shouldEditFromKeyPress(trigger):
             editableIndex = self._firstEditableIndex(index)
             if editableIndex is not None:
                 return QTableView.edit(self, editableIndex, trigger, event)
@@ -74,7 +86,7 @@ class TableView(QTableView, ItemViewMixIn):
 class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments there
      #--- QTreeView override
     def edit(self, index, trigger, event):
-        if trigger in (QAbstractItemView.EditKeyPressed, QAbstractItemView.AnyKeyPressed):
+        if self._shouldEditFromKeyPress(trigger):
             editableIndex = self._firstEditableIndex(index)
             if editableIndex is not None:
                 return QTreeView.edit(self, editableIndex, trigger, event)
