@@ -20,6 +20,7 @@ from .profit.view import ProfitView
 from .transaction.view import TransactionView
 from .schedule.view import ScheduleView
 from .account_panel import AccountPanel
+from .account_reassign_panel import AccountReassignPanel
 from .transaction_panel import TransactionPanel
 from .mass_edition_panel import MassEditionPanel
 from .schedule_panel import SchedulePanel
@@ -52,6 +53,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.scpanel = SchedulePanel(doc=doc)
         self.bpanel = BudgetPanel(doc=doc)
         self.cdrpanel = CustomDateRangePanel(doc=doc)
+        self.arpanel = AccountReassignPanel(doc=doc)
         self._setupUi()
         if self.app.prefs.mainWindowRect is not None:
             self.setGeometry(self.app.prefs.mainWindowRect)
@@ -324,6 +326,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
         self._updateActionsState()
+    
+    def show_account_reassign_panel(self):
+        self.arpanel.load()
     
     def show_balance_sheet(self):
         self._setMainWidgetIndex(NETWORTH_INDEX)
