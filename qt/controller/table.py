@@ -150,8 +150,7 @@ class Table(QAbstractTableModel, ColumnBearer):
         pass
     
     def start_editing(self):
-        selectedIndex = self.view.selectionModel().selectedRows()[0]
-        self.view.edit(selectedIndex)
+        self.view.editSelected()
     
     def stop_editing(self):
         pass

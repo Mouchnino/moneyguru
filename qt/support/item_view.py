@@ -80,6 +80,16 @@ class TableView(QTableView, ItemViewMixIn):
     def _headerView(self):
         return self.horizontalHeader()
     
+    #--- Public
+    def editSelected(self):
+        # By overriding edit(), we lose the PyQt ability to do method overloading, so the simple
+        # edit(index) slot is not reachable anymore. We can use this one instead.
+        selectedRows = self.selectionModel().selectedRows()
+        if not selectedRows:
+            return
+        selectedIndex = selectedRows[0]
+        QTableView.edit(self, selectedIndex)
+    
     #--- Signals
     spacePressed = pyqtSignal()
 
@@ -98,4 +108,12 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
     #--- ItemViewMixIn overrides
     def _headerView(self):
         return self.header()
+    
+    #--- Public
+    def editSelected(self):
+        selectedRows = self.selectionModel().selectedRows()
+        if not selectedRows:
+            return
+        selectedIndex = selectedRows[0]
+        QTreeView.edit(self, selectedIndex)
     
