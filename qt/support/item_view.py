@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, pyqtSignal
+from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect
 from PyQt4.QtGui import (QAbstractItemView, QTableView, QTreeView, QItemSelectionModel,
     QAbstractItemDelegate)
 
@@ -43,6 +43,18 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             # well.
             self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.Current)
         return editableIndex
+    
+    def _redirectMouseEventToDelegate(self, event):
+        pos = event.pos()
+        index = self.indexAt(pos)
+        if not index.isValid():
+            return
+        rect = self.visualRect(index)
+        relativePos = QPoint(pos.x()-rect.x(), pos.y()-rect.y())
+        delegate = self.itemDelegate(index)
+        # handleClick(index, relativePos, itemRect)
+        if hasattr(delegate, 'handleClick'):
+            delegate.handleClick(index, relativePos, QRect(0, 0, rect.width(), rect.height()))
     
     def _shouldEditFromKeyPress(self, trigger):
         # Returns True if the trigger is a key press and that this type of trigger is allowed in
@@ -97,6 +109,10 @@ class TableView(QTableView, ItemViewMixIn):
         else:
             QTableView.keyPressEvent(self, event)
     
+    def mouseReleaseEvent(self, event):
+        QTableView.mouseReleaseEvent(self, event)
+        self._redirectMouseEventToDelegate(event)
+    
     #--- ItemViewMixIn overrides
     def _headerView(self):
         return self.horizontalHeader()
@@ -140,6 +156,10 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
             self.deletePressed.emit()
         else:
             QTreeView.keyPressEvent(self, event)
+    
+    def mouseReleaseEvent(self, event):
+        QTreeView.mouseReleaseEvent(self, event)
+        self._redirectMouseEventToDelegate(event)
     
     #--- ItemViewMixIn overrides
     def _headerView(self):

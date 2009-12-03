@@ -10,7 +10,8 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
+from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect
+from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle
 
 from qtlib.tree_model import TreeNode, TreeModel
 
@@ -30,6 +31,41 @@ class Node(TreeNode):
         return self.ref[:]
     
 
+class AccountSheetDelegate(QStyledItemDelegate):
+    def __init__(self, model, columns):
+        QStyledItemDelegate.__init__(self)
+        self._model = model
+        self._columns = columns
+    
+    def _indexDrawsArrow(self, index):
+        column = self._columns[index.column()]
+        if column.attrname == 'name':
+            node = index.internalPointer()
+            if node.ref.is_account:
+                return True
+        return False
+    
+    def handleClick(self, index, pos, itemRect):
+        if self._indexDrawsArrow(index):
+            if pos.x() >= itemRect.right()-12:
+                self._model.show_selected_account()
+    
+    def paint(self, painter, option, index):
+        if self._indexDrawsArrow(index):
+            arrowImageName = ':/right_arrow_gray_12'
+            if option.state & QStyle.State_Selected:
+                painter.fillRect(option.rect, option.palette.highlight())
+                arrowImageName = ':/right_arrow_white_12'
+            arrowRect = QRect(0, 0, 12, 12)
+            arrowRect.moveCenter(option.rect.center()) # centered vertically
+            arrowRect.moveRight(option.rect.right())
+            option.rect.setRight(arrowRect.left()-1)
+            painter.drawPixmap(arrowRect, QPixmap(arrowImageName))
+            QStyledItemDelegate.paint(self, painter, option, index)
+        else:
+            QStyledItemDelegate.paint(self, painter, option, index)
+    
+
 class AccountSheet(TreeModel, ColumnBearer):
     EXPANDED_NODE_PREF_NAME = None # must set in subclass
     
@@ -42,6 +78,8 @@ class AccountSheet(TreeModel, ColumnBearer):
         self._wasRestored = False
         self.model = model
         self.view.setModel(self)
+        self.accountSheetDelegate = AccountSheetDelegate(self.model, self.COLUMNS)
+        self.view.setItemDelegate(self.accountSheetDelegate)
         self._restoreNodeExpansionState()
         
         self.view.selectionModel().currentRowChanged.connect(self.currentRowChanged)

@@ -147,7 +147,8 @@ class Table(QAbstractTableModel, ColumnBearer):
         self._updateViewSelection()
     
     def show_selected_row(self):
-        self.view.showRow(self.model.selected_index)
+        if self.model.selected_index is not None:
+            self.view.showRow(self.model.selected_index)
     
     def start_editing(self):
         self.view.editSelected()

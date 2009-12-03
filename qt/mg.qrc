@@ -18,5 +18,7 @@
     <file alias="popup_arrows">images/popup_arrows.png</file>
     <file alias="backward_16">images/backward_16.png</file>
     <file alias="forward_16">images/forward_16.png</file>
+    <file alias="right_arrow_gray_12">images/right_arrow_gray_12.png</file>
+    <file alias="right_arrow_white_12">images/right_arrow_white_12.png</file>
 </qresource>
 </RCC>
