@@ -32,9 +32,13 @@ class Node(TreeNode):
     
 
 class AccountSheetDelegate(QStyledItemDelegate):
-    def __init__(self, model, columns):
+    BOLD_ATTRS = set()
+    AMOUNT_ATTRS = set()
+    
+    def __init__(self, model, view, columns):
         QStyledItemDelegate.__init__(self)
         self._model = model
+        self._view = view
         self._columns = columns
     
     def handleClick(self, index, pos, itemRect):
@@ -51,12 +55,21 @@ class AccountSheetDelegate(QStyledItemDelegate):
                     self._model.toggle_excluded()
     
     def paint(self, painter, option, index):
+        self.initStyleOption(option, index)
+        isBold = False
+        isItalic = False
         column = self._columns[index.column()]
         if column.attrname == 'name':
             node = index.internalPointer()
+            ref = node.ref
+            if ref.is_group or ref.is_total or ref.is_type:
+                isBold = True
+            if ref.is_total:
+                isItalic = True
+                option.rect.setLeft(option.rect.left()-self._view.indentation())
             if option.state & QStyle.State_Selected:
                 painter.fillRect(option.rect, option.palette.highlight())
-            if node.ref.is_account:
+            if ref.is_account:
                 arrowImageName = ':/right_arrow_white_12' if option.state & QStyle.State_Selected else ':/right_arrow_gray_12'
                 pixmap = QPixmap(arrowImageName)
                 arrowRect = QRect(0, 0, pixmap.width(), pixmap.height())
@@ -64,19 +77,37 @@ class AccountSheetDelegate(QStyledItemDelegate):
                 arrowRect.moveRight(option.rect.right())
                 option.rect.setRight(arrowRect.left()-1)
                 painter.drawPixmap(arrowRect, pixmap)
-            if option.state & QStyle.State_Selected and not (node.ref.is_total or node.ref.is_blank):
-                excludeImageName = ':/account_in_16' if node.ref.is_excluded else ':/account_out_16'
+            if option.state & QStyle.State_Selected and not (ref.is_total or ref.is_blank):
+                excludeImageName = ':/account_in_16' if ref.is_excluded else ':/account_out_16'
                 pixmap = QPixmap(excludeImageName)
                 excludeRect = QRect(0, 0, pixmap.width(), pixmap.height())
                 excludeRect.moveCenter(option.rect.center()) # centered vertically
                 excludeRect.moveRight(option.rect.right())
                 option.rect.setRight(excludeRect.left()-1)
                 painter.drawPixmap(excludeRect, pixmap)
+        elif column.attrname in self.BOLD_ATTRS:
+            isBold = True
+        option.font.setBold(isBold)
+        option.font.setItalic(isItalic)
         QStyledItemDelegate.paint(self, painter, option, index)
+        if column.attrname in self.AMOUNT_ATTRS:
+            node = index.internalPointer()
+            ref = node.ref
+            if ref.is_total or ref.is_subtotal:
+                p1 = option.rect.bottomLeft()
+                p2 = option.rect.bottomRight()
+                p1.setX(p1.x()+1)
+                p2.setX(p2.x()-1)
+                painter.drawLine(p1, p2)
+                if ref.is_total:
+                    p1.setY(p1.y()-2)
+                    p2.setY(p2.y()-2)
+                    painter.drawLine(p1, p2)
     
 
 class AccountSheet(TreeModel, ColumnBearer):
     EXPANDED_NODE_PREF_NAME = None # must set in subclass
+    DELEGATE_CLASS = AccountSheetDelegate
     
     def __init__(self, doc, model, view):
         TreeModel.__init__(self)
@@ -87,7 +118,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self._wasRestored = False
         self.model = model
         self.view.setModel(self)
-        self.accountSheetDelegate = AccountSheetDelegate(self.model, self.COLUMNS)
+        self.accountSheetDelegate = self.DELEGATE_CLASS(self.model, self.view, self.COLUMNS)
         self.view.setItemDelegate(self.accountSheetDelegate)
         self._restoreNodeExpansionState()
         
