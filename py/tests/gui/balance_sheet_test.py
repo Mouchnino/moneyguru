@@ -112,6 +112,17 @@ class Pristine(TestCase):
         self.bsheet.add_account_group()
         self.assertTrue(isinstance(self.bsheet.assets[0].is_excluded, bool))
     
+    def test_save_edits_doesnt_lead_to_infinite_loop(self):
+        # in save_edits, self.edited must be put to None asap because changes in the document could
+        # lead to refreshes in the views that would call save_edits again and create an infinite
+        # loop
+        self.bsheet.add_account()
+        self.bsheet.assets[0].name = 'foo'
+        def fake_refresh():
+            assert self.bsheet.edited is None
+        self.mock(self.bsheet_gui, 'refresh', fake_refresh)
+        self.bsheet.save_edits()
+    
 
 class AccountHierarchy(TestCase):
     def setUp(self):

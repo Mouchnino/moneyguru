@@ -203,6 +203,7 @@ class Report(DocumentGUIObject, tree.Tree):
         node = self.edited
         if node is None:
             return
+        self.edited = None
         assert node.is_account or node.is_group
         try:
             if node.is_account:
@@ -213,7 +214,6 @@ class Report(DocumentGUIObject, tree.Tree):
             msg = "The account '{0}' already exists.".format(node.name)
             node.name = node.account.name if node.is_account else node.group.name
             self.view.show_message(msg)
-        self.edited = None
     
     def show_selected_account(self):
         self.document.show_selected_account()
