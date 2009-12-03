@@ -161,6 +161,15 @@ class AccountHierarchy(TestCase):
         self.bsheet.delete()
         self.check_gui_calls(self.bsheet_gui, refresh=1, stop_editing=1)
     
+    def test_is_subtotal(self):
+        # Node.is_subtotal is True when the node under it is a total node (is_total).
+        assert not self.bsheet.assets.is_subtotal
+        assert not self.bsheet.assets[0].is_subtotal
+        assert self.bsheet.assets[0][0].is_subtotal
+        assert not self.bsheet.assets[0][1].is_subtotal
+        assert not self.bsheet.assets[0][2].is_subtotal
+        assert not self.bsheet.liabilities.is_subtotal
+    
     def test_save_edits(self):
         """save_edits() refreshes the view"""
         self.bsheet.selected = self.bsheet.assets[1]
@@ -291,6 +300,15 @@ class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
         """
         self.bsheet.add_account()
         eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 2)
+    
+    def test_is_subtotal(self):
+        # In case we only have a group node just before a total node, this not will be considered
+        # a subtotal node *only* if it's collapsed (if it's expanded, it has a total node hierarchy
+        # of its own).
+        self.bsheet.expand_node(self.bsheet.assets[0])
+        assert not self.bsheet.assets[0].is_subtotal
+        self.bsheet.collapse_node(self.bsheet.assets[0])
+        assert self.bsheet.assets[0].is_subtotal
     
 
 class AccountsAndEntries(_AccountsAndEntries):

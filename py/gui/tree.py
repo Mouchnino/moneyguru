@@ -37,6 +37,7 @@ class Node(list):
                 result = result[index]
         return result
     
+    #XXX Make this more efficient. This is called rather often, and it's really inefficient
     def get_path(self, target_node):
         if target_node is None:
             return None

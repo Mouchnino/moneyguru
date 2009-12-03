@@ -117,6 +117,7 @@ class Report(DocumentGUIObject, tree.Tree):
     
     def collapse_node(self, node):
         if node.is_group:
+            node.is_expanded = False
             self.document.collapse_group(node.group)
     
     def delete(self):
@@ -133,6 +134,7 @@ class Report(DocumentGUIObject, tree.Tree):
     
     def expand_node(self, node):
         if node.is_group:
+            node.is_expanded = True
             self.document.expand_group(node.group)
     
     def make_account_node(self, account):
@@ -301,6 +303,24 @@ class Node(tree.Node):
         self.is_total = False
         self.is_type = False
         self.is_excluded = False
+        self.is_expanded = False
+    
+    #XXX use this in cocoa
+    @property
+    def is_subtotal(self):
+        if not (self.is_account or self.is_group):
+            return False
+        if len(self) and self.is_expanded: # an expanded group can't be considered a subtotal
+            return False
+        path = self._root.get_path(self)
+        if not path:
+            return False
+        prefix, last_index = path[:-1], path[-1]
+        try:
+            next_node = self._root.get_node(prefix + [last_index+1])
+            return next_node.is_total
+        except IndexError:
+            return False
     
     @property
     def can_edit_name(self):
