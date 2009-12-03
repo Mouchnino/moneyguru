@@ -11,7 +11,7 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect
-from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle
+from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QItemSelection, QItemSelectionModel
 
 from qtlib.tree_model import TreeNode, TreeModel
 
@@ -37,33 +37,42 @@ class AccountSheetDelegate(QStyledItemDelegate):
         self._model = model
         self._columns = columns
     
-    def _indexDrawsArrow(self, index):
+    def handleClick(self, index, pos, itemRect):
         column = self._columns[index.column()]
         if column.attrname == 'name':
             node = index.internalPointer()
+            currentRight = itemRect.right()
             if node.ref.is_account:
-                return True
-        return False
-    
-    def handleClick(self, index, pos, itemRect):
-        if self._indexDrawsArrow(index):
-            if pos.x() >= itemRect.right()-12:
-                self._model.show_selected_account()
+                if pos.x() >= currentRight-12:
+                    self._model.show_selected_account()
+                currentRight -= 12
+            if not (node.ref.is_total or node.ref.is_blank):
+                if (currentRight-16) <= pos.x() < currentRight:
+                    self._model.toggle_excluded()
     
     def paint(self, painter, option, index):
-        if self._indexDrawsArrow(index):
-            arrowImageName = ':/right_arrow_gray_12'
+        column = self._columns[index.column()]
+        if column.attrname == 'name':
+            node = index.internalPointer()
             if option.state & QStyle.State_Selected:
                 painter.fillRect(option.rect, option.palette.highlight())
-                arrowImageName = ':/right_arrow_white_12'
-            arrowRect = QRect(0, 0, 12, 12)
-            arrowRect.moveCenter(option.rect.center()) # centered vertically
-            arrowRect.moveRight(option.rect.right())
-            option.rect.setRight(arrowRect.left()-1)
-            painter.drawPixmap(arrowRect, QPixmap(arrowImageName))
-            QStyledItemDelegate.paint(self, painter, option, index)
-        else:
-            QStyledItemDelegate.paint(self, painter, option, index)
+            if node.ref.is_account:
+                arrowImageName = ':/right_arrow_white_12' if option.state & QStyle.State_Selected else ':/right_arrow_gray_12'
+                pixmap = QPixmap(arrowImageName)
+                arrowRect = QRect(0, 0, pixmap.width(), pixmap.height())
+                arrowRect.moveCenter(option.rect.center()) # centered vertically
+                arrowRect.moveRight(option.rect.right())
+                option.rect.setRight(arrowRect.left()-1)
+                painter.drawPixmap(arrowRect, pixmap)
+            if option.state & QStyle.State_Selected and not (node.ref.is_total or node.ref.is_blank):
+                excludeImageName = ':/account_in_16' if node.ref.is_excluded else ':/account_out_16'
+                pixmap = QPixmap(excludeImageName)
+                excludeRect = QRect(0, 0, pixmap.width(), pixmap.height())
+                excludeRect.moveCenter(option.rect.center()) # centered vertically
+                excludeRect.moveRight(option.rect.right())
+                option.rect.setRight(excludeRect.left()-1)
+                painter.drawPixmap(excludeRect, pixmap)
+        QStyledItemDelegate.paint(self, painter, option, index)
     
 
 class AccountSheet(TreeModel, ColumnBearer):
@@ -86,6 +95,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.collapsed.connect(self.nodeCollapsed)
         self.view.expanded.connect(self.nodeExpanded)
         self.view.deletePressed.connect(self.model.delete)
+        self.view.spacePressed.connect(self.model.toggle_excluded)
         self.app.willSavePrefs.connect(self._saveNodeExpansionState)
     
     #--- TreeModel overrides
@@ -110,6 +120,14 @@ class AccountSheet(TreeModel, ColumnBearer):
                 paths.append(self.pathForIndex(index))
             index = self.view.indexBelow(index)
         setattr(self.app.prefs, self.EXPANDED_NODE_PREF_NAME, paths)
+    
+    def _updateViewSelection(self):
+        # Takes the selection on the model's side and update the view with it.
+        selectedPath = self.model.selected_path
+        if selectedPath is None:
+            return
+        modelIndex = self.findIndex(selectedPath)
+        self.view.setCurrentIndex(modelIndex)
     
     #--- Data Model methods
     def columnCount(self, parent):
@@ -210,6 +228,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.reset()
         self._restoreNodeExpansionState()
         self._wasRestored = True
+        self._updateViewSelection()
     
     def start_editing(self):
         self.view.editSelected()
@@ -218,7 +237,5 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.setFocus() # enough to stop editing
     
     def update_selection(self):
-        selectedPath = self.model.selected_path
-        modelIndex = self.findIndex(selectedPath)
-        self.view.setCurrentIndex(modelIndex)
+        self._updateViewSelection()
     
