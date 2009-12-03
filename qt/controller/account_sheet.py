@@ -11,7 +11,8 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect
-from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QItemSelection, QItemSelectionModel
+from PyQt4.QtGui import (QStyledItemDelegate, QPixmap, QStyle, QItemSelection, QItemSelectionModel,
+    QPalette)
 
 from qtlib.tree_model import TreeNode, TreeModel
 
@@ -59,9 +60,9 @@ class AccountSheetDelegate(QStyledItemDelegate):
         isBold = False
         isItalic = False
         column = self._columns[index.column()]
+        node = index.internalPointer()
+        ref = node.ref
         if column.attrname == 'name':
-            node = index.internalPointer()
-            ref = node.ref
             if ref.is_group or ref.is_total or ref.is_type:
                 isBold = True
             if ref.is_total:
@@ -87,12 +88,12 @@ class AccountSheetDelegate(QStyledItemDelegate):
                 painter.drawPixmap(excludeRect, pixmap)
         elif column.attrname in self.BOLD_ATTRS:
             isBold = True
+        if ref.is_excluded:
+            option.palette.setColor(QPalette.Text, Qt.gray)
         option.font.setBold(isBold)
         option.font.setItalic(isItalic)
         QStyledItemDelegate.paint(self, painter, option, index)
         if column.attrname in self.AMOUNT_ATTRS:
-            node = index.internalPointer()
-            ref = node.ref
             if ref.is_total or ref.is_subtotal:
                 p1 = option.rect.bottomLeft()
                 p2 = option.rect.bottomRight()
