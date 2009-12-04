@@ -41,6 +41,11 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.doc.app.prefs.networthColumnWidths = widths
     
     #--- Public
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fit(self.apiechart.view, 150, 150)
+        viewPrinter.fit(self.lpiechart.view, 150, 150)
+        viewPrinter.fit(self.nwgraph.view, 300, 150)
+    
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
         self.nwsheet.setHiddenColumns(prefs.networthHiddenColumns)

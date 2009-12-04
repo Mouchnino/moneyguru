@@ -8,10 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import QSize
 from PyQt4.QtGui import QWidget
-
-from support.view_printer import ViewPrinter
 
 class BaseView(QWidget):
     def __init__(self):
@@ -26,8 +23,6 @@ class BaseView(QWidget):
         for child in self.children:
             child.model.disconnect()
     
-    def print_(self, printer, painter):
-        viewPrinter = ViewPrinter(printer, painter)
-        viewPrinter.fit(self, QSize(42, 42), expandH=True, expandV=True)
-        viewPrinter.render()
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fit(self, 42, 42, expandH=True, expandV=True)
     

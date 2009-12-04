@@ -8,7 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, QRect, QPoint
+from itertools import combinations
+
+from PyQt4.QtCore import Qt, QRect, QSize, QPoint
 from PyQt4.QtGui import QPixmap, QPainter
 
 from hsutil.misc import first
@@ -63,28 +65,31 @@ class LayoutPage(object):
                     continue # This available rect has been entirely eaten up
                 inter = rect & previous
                 if inter:
-                    if inter.bottom() < previous.bottom():
-                        # We still have some space left under the element
-                        available = QRect(previous.left(), inter.bottom(), previous.width(), 
-                            previous.bottom()-inter.bottom())
-                        newAvailableRects.append(available)
                     if inter.right() < previous.right():
                         # We still have some space left next to the element
-                        available = QRect(inter.right(), previous.top(), 
-                            previous.right()-inter.right(), previous.height())
+                        available = QRect(inter.right()+1, previous.top(), 
+                            previous.right()-inter.right()-1, previous.height())
+                        newAvailableRects.append(available)
+                    if inter.bottom() < previous.bottom():
+                        # We still have some space left under the element
+                        available = QRect(previous.left(), inter.bottom()+1, previous.width(), 
+                            previous.bottom()-inter.bottom()-1)
                         newAvailableRects.append(available)
                 else:
                     newAvailableRects.append(previous)
-            availableRects = newAvailableRects
+            # At this point, we might have "duplicate" available rects (some rects are contained)
+            # in others. We want to eliminate them.
+            duplicates = set(r1 for r1, r2 in combinations(newAvailableRects, 2) if r2.contains(r1))
+            availableRects = [r for r in newAvailableRects if r not in duplicates]
         self.availableRects = availableRects
     
-    def fit(self, view, minSize, expandH=False, expandV=False):
+    def fit(self, view, minWidth, minHeight, expandH=False, expandV=False):
         # Go through all available rects and take the first one that fits.
-        fits = lambda rect: rect.width() >= minSize.width() and rect.height() >= minSize.height()
+        fits = lambda rect: rect.width() >= minWidth and rect.height() >= minHeight
         fittingRect = first(r for r in self.availableRects if fits(r))
         if fittingRect is None:
             return False
-        rect = QRect(fittingRect.topLeft(), minSize)
+        rect = QRect(fittingRect.topLeft(), QSize(minWidth, minHeight))
         if expandH:
             rect.setWidth(fittingRect.width())
         if expandV:
@@ -99,21 +104,23 @@ class LayoutPage(object):
     
 
 class ViewPrinter(object):
-    def __init__(self, printer, painter):
+    def __init__(self, printer):
         self.printer = printer
-        self.painter = painter
         self.layoutPages = [LayoutPage(printer.pageRect().size())]
     
-    def fit(self, view, minSize, expandH=False, expandV=False):
+    def fit(self, view, minWidth, minHeight, expandH=False, expandV=False):
         for page in self.layoutPages:
-            if page.fit(view, minSize, expandH, expandV):
+            if page.fit(view, minWidth, minHeight, expandH, expandV):
                 break
         else:
             self.layoutPages.append(LayoutPage(self.printer.pageRect().size()))
     
     def render(self):
+        painter = QPainter()
+        painter.begin(self.printer)
         for page in self.layoutPages[:-1]:
-            page.render(self.painter)
+            page.render(painter)
             self.printer.newPage()
-        self.layoutPages[-1].render(self.painter)
+        self.layoutPages[-1].render(painter)
+        painter.end()
     

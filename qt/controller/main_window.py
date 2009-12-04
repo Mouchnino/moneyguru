@@ -8,11 +8,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDialog, QPainter
+from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDialog
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
 from support.recent import Recent
+from support.view_printer import ViewPrinter
 from .account.view import EntryView
 from .budget.view import BudgetView
 from .networth.view import NetWorthView
@@ -162,10 +163,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec_() != QPrintDialog.Accepted:
             return
         printer = dialog.printer()
-        painter = QPainter()
-        painter.begin(printer)
-        self.mainView.currentWidget().print_(printer, painter)
-        painter.end()
+        viewPrinter = ViewPrinter(printer)
+        self.mainView.currentWidget().fitViewsForPrint(viewPrinter)
+        viewPrinter.render()
     
     def _savePrefs(self):
         self.app.prefs.mainWindowRect = self.geometry()
