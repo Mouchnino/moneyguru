@@ -181,6 +181,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
     <addaction name="actionExportToQIF"/>
+    <addaction name="actionPrint"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -585,6 +586,14 @@
   <action name="actionShowPreferences">
    <property name="text">
     <string>Preferences...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>

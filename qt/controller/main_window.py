@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit
+from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDialog, QPainter
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -122,6 +122,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionShowPreferences.triggered.connect(self.app.showPreferences)
         self.actionShowViewOptions.triggered.connect(self.app.showViewOptions)
+        self.actionPrint.triggered.connect(self._print)
         self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
     
@@ -156,6 +157,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             event.ignore()
     
     #--- Private
+    def _print(self):
+        dialog = QPrintDialog(self)
+        if dialog.exec_() != QPrintDialog.Accepted:
+            return
+        printer = dialog.printer()
+        painter = QPainter()
+        painter.begin(printer)
+        self.mainView.currentWidget().print_(printer, painter)
+        painter.end()
+    
     def _savePrefs(self):
         self.app.prefs.mainWindowRect = self.geometry()
     
