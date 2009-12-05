@@ -13,6 +13,8 @@ from .table import ScheduleTable
 from ui.schedule_view_ui import Ui_ScheduleView
 
 class ScheduleView(BaseView, Ui_ScheduleView):
+    PRINT_TITLE_FORMAT = "Schedules from {startDate} to {endDate}"
+    
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc

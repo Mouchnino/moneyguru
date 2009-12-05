@@ -14,6 +14,8 @@ from .table import TransactionTable
 from ui.transaction_view_ui import Ui_TransactionView
 
 class TransactionView(BaseView, Ui_TransactionView):
+    PRINT_TITLE_FORMAT = "Transactions from {startDate} to {endDate}"
+    
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc

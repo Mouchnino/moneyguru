@@ -16,6 +16,8 @@ from .expense_pie_chart import ExpensePieChart
 from ui.profit_view_ui import Ui_ProfitView
 
 class ProfitView(BaseView, Ui_ProfitView):
+    PRINT_TITLE_FORMAT = "Profit and loss from {startDate} to {endDate}"
+    
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc

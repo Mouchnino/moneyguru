@@ -163,8 +163,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec_() != QPrintDialog.Accepted:
             return
         printer = dialog.printer()
-        viewPrinter = ViewPrinter(printer)
-        self.mainView.currentWidget().fitViewsForPrint(viewPrinter)
+        currentView = self.mainView.currentWidget()
+        viewPrinter = ViewPrinter(printer, self.doc, currentView.PRINT_TITLE_FORMAT)
+        currentView.fitViewsForPrint(viewPrinter)
         viewPrinter.render()
     
     def _savePrefs(self):

@@ -11,6 +11,8 @@
 from PyQt4.QtGui import QWidget
 
 class BaseView(QWidget):
+    PRINT_TITLE_FORMAT = "Some Title {startDate} - {endDate}"
+    
     def __init__(self):
         QWidget.__init__(self, None)
         self.children = []

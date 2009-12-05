@@ -16,6 +16,8 @@ from .liability_pie_chart import LiabilityPieChart
 from ui.networth_view_ui import Ui_NetWorthView
 
 class NetWorthView(BaseView, Ui_NetWorthView):
+    PRINT_TITLE_FORMAT = "Net Worth at {endDate}, starting from {startDate}"
+    
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc

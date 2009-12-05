@@ -11,23 +11,24 @@
 from itertools import combinations
 
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint
-from PyQt4.QtGui import QPixmap, QPainter
+from PyQt4.QtGui import QPixmap, QPainter, QApplication, QFont, QFontMetrics
 
 from hsutil.misc import first
+
+from moneyguru.gui.print_view import PrintView as PrintViewModel
 
 # The PDF preview is all blurry, I don't know how it looks on a real printer. This guy seems to have
 # the same problem:
 #http://lists.trolltech.com/pipermail/qt-interest/2009-November/015375.html
 
 class LayoutElement(object):
-    def __init__(self, page, rect):
-        self.page = page
+    def __init__(self, rect):
         self.rect = rect
     
 
 class LayoutViewElement(LayoutElement):
-    def __init__(self, view, page, rect):
-        LayoutElement.__init__(self, page, rect)
+    def __init__(self, view, rect):
+        LayoutElement.__init__(self, rect)
         self.view = view
     
     def render(self, painter):
@@ -41,12 +42,31 @@ class LayoutViewElement(LayoutElement):
         painter.drawPixmap(drawRect, scaledPixmap)
     
 
+class LayoutTitleElement(LayoutElement):
+    def __init__(self, page):
+        font = QFont(QApplication.font())
+        font.setBold(True)
+        fm = QFontMetrics(font)
+        rect = QRect(page.pageRect.topLeft(), QSize(page.pageRect.width(), fm.height()))
+        LayoutElement.__init__(self, rect)
+        self.page = page
+        self.font = font
+    
+    def render(self, painter):
+        text = self.page.title
+        painter.save()
+        painter.setFont(self.font)
+        painter.drawText(self.rect, Qt.AlignCenter, text)
+        painter.restore()
+    
+
 class LayoutPage(object):
-    def __init__(self, size):
-        self.size = size
-        self.pageRect = QRect(QPoint(0, 0), size)
+    def __init__(self, viewPrinter):
+        self.viewPrinter = viewPrinter
+        self.pageRect = QRect(QPoint(0, 0), viewPrinter.pageSize)
         self.elements = []
         self.availableRects = [self.pageRect]
+        self.fit(LayoutTitleElement(self))
     
     def _computeAvailableRects(self):
         # For each element, we end up with potentially 2 available rects: 
@@ -83,18 +103,18 @@ class LayoutPage(object):
             availableRects = [r for r in newAvailableRects if r not in duplicates]
         self.availableRects = availableRects
     
-    def fit(self, view, minWidth, minHeight, expandH=False, expandV=False):
+    def fit(self, element, expandH=False, expandV=False):
         # Go through all available rects and take the first one that fits.
-        fits = lambda rect: rect.width() >= minWidth and rect.height() >= minHeight
+        fits = lambda rect: rect.width() >= element.rect.width() and rect.height() >= element.rect.height()
         fittingRect = first(r for r in self.availableRects if fits(r))
         if fittingRect is None:
             return False
-        rect = QRect(fittingRect.topLeft(), QSize(minWidth, minHeight))
+        element.rect.moveTopLeft(fittingRect.topLeft())
         if expandH:
-            rect.setWidth(fittingRect.width())
+            element.rect.setWidth(fittingRect.width())
         if expandV:
-            rect.setHeight(fittingRect.height())
-        self.elements.append(LayoutViewElement(view, self, rect))
+            element.rect.setHeight(fittingRect.height())
+        self.elements.append(element)
         self._computeAvailableRects()
         return True
     
@@ -102,18 +122,36 @@ class LayoutPage(object):
         for element in self.elements:
             element.render(painter)
     
+    @property
+    def title(self):
+        pageNumber = self.viewPrinter.layoutPages.index(self) + 1
+        pageCount = len(self.viewPrinter.layoutPages)
+        title = self.viewPrinter.title
+        return "{title} (Page {pageNumber} of {pageCount})".format(**locals())
+    
 
 class ViewPrinter(object):
-    def __init__(self, printer):
+    def __init__(self, printer, document, titleFormat):
+        # title format has 2 placeholders, {startDate} and {endDate}
+        # hack, see moneyguru.gui.print_view
+        self.document = document.model
+        self.app = document.app.model
+        self.model = PrintViewModel(self)
+        self.title = titleFormat.format(startDate=self.model.start_date, endDate=self.model.end_date)
         self.printer = printer
-        self.layoutPages = [LayoutPage(printer.pageRect().size())]
+        self.pageSize = printer.pageRect().size()
+        self.layoutPages = [LayoutPage(self)]
     
     def fit(self, view, minWidth, minHeight, expandH=False, expandV=False):
+        rect = QRect(0, 0, minWidth, minHeight)
+        element = LayoutViewElement(view, rect)
         for page in self.layoutPages:
-            if page.fit(view, minWidth, minHeight, expandH, expandV):
+            if page.fit(element, expandH, expandV):
                 break
         else:
-            self.layoutPages.append(LayoutPage(self.printer.pageRect().size()))
+            page = LayoutPage(self)
+            page.fit(element, expandH, expandV)
+            self.layoutPages.append(page)
     
     def render(self):
         painter = QPainter()

@@ -7,6 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+# XXX take directly a document as an argument
 class PrintView(object):
     def __init__(self, parent):
         self.parent = parent

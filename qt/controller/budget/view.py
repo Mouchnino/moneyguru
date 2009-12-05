@@ -13,6 +13,8 @@ from .table import BudgetTable
 from ui.budget_view_ui import Ui_BudgetView
 
 class BudgetView(BaseView, Ui_BudgetView):
+    PRINT_TITLE_FORMAT = "Budgets from {startDate} to {endDate}"
+    
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc

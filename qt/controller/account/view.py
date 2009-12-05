@@ -16,6 +16,8 @@ from .line_graph import AccountLineGraph
 from ui.entry_view_ui import Ui_EntryView
 
 class EntryView(BaseView, Ui_EntryView):
+    PRINT_TITLE_FORMAT = "Entries from {startDate} to {endDate}"
+    
     def __init__(self, doc):
         BaseView.__init__(self)
         self.doc = doc
