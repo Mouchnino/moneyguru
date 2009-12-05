@@ -42,6 +42,9 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         self.doc.app.prefs.scheduleColumnOrder = order
     
     #--- Public
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fitTable(self.sctable)
+    
     def updateOptionalWidgetsVisibility(self):
         self.sctable.setHiddenColumns(self.doc.app.prefs.scheduleHiddenColumns)
     

@@ -41,3 +41,7 @@ class BudgetView(BaseView, Ui_BudgetView):
         order = [h.logicalIndex(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnOrder = order
     
+    #--- Public
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fitTable(self.btable)
+    

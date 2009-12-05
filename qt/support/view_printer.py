@@ -8,9 +8,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import division
+
+from collections import namedtuple
 from itertools import combinations
 
-from PyQt4.QtCore import Qt, QRect, QSize, QPoint
+from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
 from PyQt4.QtGui import QPixmap, QPainter, QApplication, QFont, QFontMetrics
 
 from hsutil.misc import first
@@ -24,6 +27,13 @@ from moneyguru.gui.print_view import PrintView as PrintViewModel
 class LayoutElement(object):
     def __init__(self, rect):
         self.rect = rect
+    
+    def render(self, painter):
+        raise NotImplementedError()
+    
+    def placed(self):
+        # Called after the element has been placed on a page layout
+        pass
     
 
 class LayoutViewElement(LayoutElement):
@@ -58,6 +68,51 @@ class LayoutTitleElement(LayoutElement):
         painter.setFont(self.font)
         painter.drawText(self.rect, Qt.AlignCenter, text)
         painter.restore()
+    
+
+class LayoutTableElement(LayoutElement):
+    def __init__(self, table, stats, width, startRow):
+        # We start with a minimal rect (`width` and enough height to fit the header and 1 row),
+        # and then we let the element be placed. Afterwards, we can know what will be the endRow
+        # value (so that the ViewPrinter can know if we need another page).
+        height = stats.headerHeight + stats.rowHeight
+        rect = QRect(QPoint(), QSize(width, height)) 
+        LayoutElement.__init__(self, rect)
+        self.table = table
+        self.stats = stats
+        self.startRow = startRow
+        self.endRow = startRow
+    
+    def placed(self):
+        height = self.rect.height()
+        height -= self.stats.headerHeight
+        rowToFit = height // self.stats.rowHeight
+        self.endRow = min(self.startRow+rowToFit-1, self.stats.rowCount-1)
+    
+    def render(self, painter):
+        painter.drawRect(self.rect)
+        delegate = self.table.view.itemDelegate()
+        options = self.table.view.viewOptions()
+        columnWidths = self.stats.columnWidths(self.rect.width())
+        rowHeight = self.stats.rowHeight
+        headerHeight = self.stats.headerHeight
+        startRow = self.startRow
+        left = self.rect.left()
+        for colIndex, colWidth in enumerate(columnWidths):
+            title = self.stats.columns[colIndex].title
+            headerRect = QRect(left, self.rect.top(), colWidth, headerHeight)
+            painter.drawText(headerRect, Qt.AlignLeft|Qt.AlignTop, title)
+            left += colWidth
+        painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
+        for rowIndex in xrange(startRow, self.endRow+1):
+            top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
+            left = self.rect.left()
+            for colIndex, colWidth in enumerate(columnWidths):
+                index = self.table.index(rowIndex, colIndex)
+                itemRect = QRect(left, top, colWidth, rowHeight)
+                options.rect = itemRect
+                delegate.paint(painter, options, index)
+                left += colWidth
     
 
 class LayoutPage(object):
@@ -97,8 +152,8 @@ class LayoutPage(object):
                         newAvailableRects.append(available)
                 else:
                     newAvailableRects.append(previous)
-            # At this point, we might have "duplicate" available rects (some rects are contained)
-            # in others. We want to eliminate them.
+            # At this point, we might have "duplicate" available rects (some rects are contained
+            # in others). We want to eliminate them.
             duplicates = set(r1 for r1, r2 in combinations(newAvailableRects, 2) if r2.contains(r1))
             availableRects = [r for r in newAvailableRects if r not in duplicates]
         self.availableRects = availableRects
@@ -115,6 +170,7 @@ class LayoutPage(object):
         if expandV:
             element.rect.setHeight(fittingRect.height())
         self.elements.append(element)
+        element.placed()
         self._computeAvailableRects()
         return True
     
@@ -123,11 +179,54 @@ class LayoutPage(object):
             element.render(painter)
     
     @property
+    def maxAvailableWidth(self):
+        return max(rect.width() for rect in self.availableRects)
+    
+    @property
     def title(self):
         pageNumber = self.viewPrinter.layoutPages.index(self) + 1
         pageCount = len(self.viewPrinter.layoutPages)
         title = self.viewPrinter.title
         return "{title} (Page {pageNumber} of {pageCount})".format(**locals())
+    
+
+class TablePrintStats(object):
+    def __init__(self, table):
+        ColumnStats = namedtuple('ColumnStats', 'title avgWidth maxWidth')
+        font = table.view.font()
+        fm = QFontMetrics(font)
+        self.rowCount = table.rowCount(QModelIndex())
+        self.rowHeight = fm.height() + 2
+        self.headerHeight = self.rowHeight + 4
+        self.columns = []
+        for column in table.COLUMNS:
+            colIndex = column.index
+            sumWidth = 0
+            maxWidth = 0
+            
+            for rowIndex in xrange(self.rowCount):
+                index = table.index(rowIndex, colIndex)
+                data = table.data(index, Qt.DisplayRole)
+                if data:
+                    width = fm.width(data)
+                    sumWidth += width
+                    maxWidth = max(maxWidth, width)
+            avgWidth = sumWidth // self.rowCount
+            self.columns.append(ColumnStats(column.title, avgWidth, maxWidth))
+        self.maxWidth = sum(cs.maxWidth for cs in self.columns)
+    
+    def columnWidths(self, maxWidth):
+        # Returns a list of recommended widths for columns if the table has `maxWidth` for
+        # rendering. If it's possible to have maxWidth everywhere, each column will get it. If not
+        # the relative weight of each column's avgWidth will be used.
+        if self.maxWidth <= maxWidth:
+            return [cs.maxWidth for cs in self.columns]
+        sumAvgs = sum(cs.avgWidth for cs in self.columns)
+        ratios = [(cs.avgWidth/sumAvgs) for cs in self.columns]
+        result = [int(ratio*maxWidth) for ratio in ratios[:-1]]
+        # Last column gets the rounding error
+        result.append(maxWidth-sum(result))
+        return result
     
 
 class ViewPrinter(object):
@@ -151,6 +250,23 @@ class ViewPrinter(object):
         else:
             page = LayoutPage(self)
             page.fit(element, expandH, expandV)
+            self.layoutPages.append(page)
+    
+    def fitTable(self, table):
+        # It is currently assumed that the current page's width availability is going to be the same
+        # as possible additonnal pages (in other words, place it first).
+        stats = TablePrintStats(table)
+        page = self.layoutPages[-1]
+        currentRow = 0
+        while True:
+            maxPageWidth = page.maxAvailableWidth
+            elementWidth = min(maxPageWidth, stats.maxWidth)
+            element = LayoutTableElement(table, stats, elementWidth, currentRow)
+            page.fit(element, expandV=True)
+            currentRow = element.endRow+1
+            if currentRow >= stats.rowCount:
+                break
+            page = LayoutPage(self)
             self.layoutPages.append(page)
     
     def render(self):

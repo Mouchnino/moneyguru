@@ -49,6 +49,9 @@ class EntryView(BaseView, Ui_EntryView):
         self.doc.app.prefs.entryColumnOrder = order
     
     #--- Public
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fitTable(self.etable)
+    
     def showBarGraph(self):
         self.lgraph.model.disconnect()
         self.bgraph.model.connect()

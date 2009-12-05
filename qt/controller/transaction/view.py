@@ -44,6 +44,9 @@ class TransactionView(BaseView, Ui_TransactionView):
         self.doc.app.prefs.transactionColumnOrder = order
     
     #--- Public
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fitTable(self.ttable)
+    
     def updateOptionalWidgetsVisibility(self):
         self.ttable.setHiddenColumns(self.doc.app.prefs.transactionHiddenColumns)
     
