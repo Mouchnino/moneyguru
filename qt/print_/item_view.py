@@ -27,15 +27,73 @@ def applyMargin(rect, margin):
     result.setBottom(result.bottom()-margin)
     return result
 
+class ItemPrintDatasource(object):
+    # If we want to print tables and trees with a good code re-use, we've got to abstract away the
+    # fact that trees have nodes and stuff and start treating it as rows and columns, with some
+    # cells having more indentation than others. That's what this class is about.:
+    def columnCount(self):
+        """Returns the number of columns *to print*."""
+        raise NotImplementedError()
+    
+    def rowCount(self):
+        """Returns the number of rows *to print*."""
+        raise NotImplementedError()
+    
+    def data(self, rowIndex, colIndex, role):
+        """Returns model data for the index at the *printable* (rowIndex, colIndex) cell."""
+        raise NotImplementedError()
+    
+    def header(self, colIndex):
+        """Returns the *printable* column header at index `colIndex`"""
+        raise NotImplementedError()
+    
+    def rowFont(self):
+        raise NotImplementedError()
+    
+    def headerFont(self):
+        raise NotImplementedError()
+    
+
+class TablePrintDatasource(ItemPrintDatasource):
+    def __init__(self, table):
+        ItemPrintDatasource.__init__(self)
+        self.table = table
+        h = table.view.horizontalHeader()
+        self.columns = [col for col in table.COLUMNS if not h.isSectionHidden(col.index)]
+        self.columns.sort(key=lambda c: h.visualIndex(c.index))
+        self._rowFont = QFont(table.view.font())
+        self._headerFont = QFont(self._rowFont)
+        self._headerFont.setBold(True)
+    
+    def columnCount(self):
+        return len(self.columns)
+    
+    def rowCount(self):
+        return self.table.rowCount(QModelIndex())
+    
+    def data(self, rowIndex, colIndex, role):
+        index = self.table.index(rowIndex, self.columns[colIndex].index)
+        return self.table.data(index, role)
+    
+    def header(self, colIndex):
+        return self.columns[colIndex].title
+    
+    def rowFont(self):
+        return self._rowFont
+    
+    def headerFont(self):
+        return self._headerFont
+    
+
 class LayoutTableElement(LayoutElement):
-    def __init__(self, table, stats, width, startRow):
+    def __init__(self, ds, stats, width, startRow):
         # We start with a minimal rect (`width` and enough height to fit the header and 1 row),
         # and then we let the element be placed. Afterwards, we can know what will be the endRow
         # value (so that the ViewPrinter can know if we need another page).
         height = stats.headerHeight + stats.rowHeight
         rect = QRect(QPoint(), QSize(width, height)) 
         LayoutElement.__init__(self, rect)
-        self.table = table
+        self.ds = ds
         self.stats = stats
         self.startRow = startRow
         self.endRow = startRow
@@ -44,10 +102,10 @@ class LayoutTableElement(LayoutElement):
         height = self.rect.height()
         height -= self.stats.headerHeight
         rowToFit = height // self.stats.rowHeight
-        self.endRow = min(self.startRow+rowToFit-1, self.stats.rowCount-1)
+        self.endRow = min(self.startRow+rowToFit-1, self.ds.rowCount()-1)
     
     def render(self, painter):
-        # We used to re-use table.view.itemDelegate() for cell drawing, but it turned out to me more
+        # We used to re-use itemDelegate() for cell drawing, but it turned out to me more
         # complex than anything (with margins being too wide and all...)
         painter.drawRect(self.rect)
         columnWidths = self.stats.columnWidths(self.rect.width())
@@ -56,7 +114,7 @@ class LayoutTableElement(LayoutElement):
         startRow = self.startRow
         left = self.rect.left()
         painter.save()
-        painter.setFont(self.stats.headerFont)
+        painter.setFont(self.ds.headerFont())
         for col, colWidth in zip(self.stats.columns, columnWidths):
             title = col.title
             headerRect = QRect(left, self.rect.top(), colWidth, headerHeight)
@@ -66,23 +124,22 @@ class LayoutTableElement(LayoutElement):
         painter.restore()
         painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
         painter.save()
-        painter.setFont(self.stats.rowFont)
-        rowFM = QFontMetrics(self.stats.rowFont)
+        painter.setFont(self.ds.rowFont())
+        rowFM = QFontMetrics(self.ds.rowFont())
         for rowIndex in xrange(startRow, self.endRow+1):
             top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
             left = self.rect.left()
-            for col, colWidth in zip(self.stats.columns, columnWidths):
+            for colIndex, colWidth in enumerate(columnWidths):
                 itemRect = QRect(left, top, colWidth, rowHeight)
                 itemRect = applyMargin(itemRect, CELL_MARGIN)
-                index = self.table.index(rowIndex, col.index)
-                pixmap = self.table.data(index, Qt.DecorationRole)
+                pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
                 if pixmap:
                     painter.drawPixmap(itemRect.topLeft(), pixmap)
                 else:
                     # we don't support drawing pixmap and text in the same cell (don't need it)
-                    text = self.table.data(index, Qt.DisplayRole)
+                    text = self.ds.data(rowIndex, colIndex, Qt.DisplayRole)
                     if text:
-                        alignment = self.table.data(index, Qt.TextAlignmentRole)
+                        alignment = self.ds.data(rowIndex, colIndex, Qt.TextAlignmentRole)
                         if not alignment:
                             alignment = Qt.AlignLeft|Qt.AlignVCenter
                         # elidedText has a tendency to "over-elide" that's why we have "+1"
@@ -93,39 +150,32 @@ class LayoutTableElement(LayoutElement):
     
 
 class TablePrintStats(object):
-    def __init__(self, table):
+    def __init__(self, ds):
         ColumnStats = namedtuple('ColumnStats', 'index title avgWidth maxWidth maxPixWidth headerWidth')
-        self.rowFont = QFont(table.view.font())
-        rowFM = QFontMetrics(self.rowFont)
-        self.headerFont = QFont(self.rowFont)
-        self.headerFont.setBold(True)
-        headerFM = QFontMetrics(self.headerFont)
-        self.rowCount = table.rowCount(QModelIndex())
+        rowFM = QFontMetrics(ds.rowFont())
+        headerFM = QFontMetrics(ds.headerFont())
         self.rowHeight = rowFM.height() + CELL_MARGIN * 2
         self.headerHeight = headerFM.height() + CELL_MARGIN * 2
         self.columns = []
-        for column in table.COLUMNS:
-            if table.view.horizontalHeader().isSectionHidden(column.index):
-                continue
-            colIndex = column.index
+        for colIndex in xrange(ds.columnCount()):
+            colTitle = ds.header(colIndex)
             sumWidth = 0
             maxWidth = 0
             maxPixWidth = 0
-            headerWidth = headerFM.width(column.title) + CELL_MARGIN * 2
-            for rowIndex in xrange(self.rowCount):
-                index = table.index(rowIndex, colIndex)
-                data = table.data(index, Qt.DisplayRole)
+            headerWidth = headerFM.width(colTitle) + CELL_MARGIN * 2
+            for rowIndex in xrange(ds.rowCount()):
+                data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
                     width = rowFM.width(data) + CELL_MARGIN * 2
                     sumWidth += width
                     maxWidth = max(maxWidth, width)
-                pixmap = table.data(index, Qt.DecorationRole)
+                pixmap = ds.data(rowIndex, colIndex, Qt.DecorationRole)
                 if pixmap is not None:
                     width = pixmap.width() + CELL_MARGIN * 2
                     maxPixWidth = max(maxPixWidth, width)
-            avgWidth = sumWidth // self.rowCount
+            avgWidth = sumWidth // ds.rowCount()
             maxWidth = max(maxWidth, maxPixWidth, headerWidth)
-            cs = ColumnStats(column.index, column.title, avgWidth, maxWidth, maxPixWidth, headerWidth)
+            cs = ColumnStats(colIndex, colTitle, avgWidth, maxWidth, maxPixWidth, headerWidth)
             self.columns.append(cs)
         self.maxWidth = sum(cs.maxWidth for cs in self.columns)
         # When pictures are involved, they get priority

@@ -15,7 +15,7 @@ from PyQt4.QtGui import QPainter
 
 from moneyguru.gui.print_view import PrintView as PrintViewModel
 from .layout import LayoutPage, LayoutViewElement
-from .item_view import LayoutTableElement, TablePrintStats
+from .item_view import LayoutTableElement, TablePrintStats, TablePrintDatasource
 
 # Yes, this unit is messy, but then again, so is printing. Maybe it's my lack of Qt knowledge, but
 # writing this unit felt like fighting against the Qt framework.
@@ -53,16 +53,17 @@ class ViewPrinter(object):
     def fitTable(self, table):
         # It is currently assumed that the current page's width availability is going to be the same
         # as possible additonnal pages (in other words, place it first).
-        stats = TablePrintStats(table)
+        ds = TablePrintDatasource(table)
+        stats = TablePrintStats(ds)
         page = self.layoutPages[-1]
         currentRow = 0
         while True:
             maxPageWidth = page.maxAvailableWidth
             elementWidth = min(maxPageWidth, stats.maxWidth)
-            element = LayoutTableElement(table, stats, elementWidth, currentRow)
+            element = LayoutTableElement(ds, stats, elementWidth, currentRow)
             page.fit(element, expandV=True)
             currentRow = element.endRow+1
-            if currentRow >= stats.rowCount:
+            if currentRow >= ds.rowCount():
                 break
             page = LayoutPage(self)
             self.layoutPages.append(page)
