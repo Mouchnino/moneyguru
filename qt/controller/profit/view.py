@@ -43,6 +43,12 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.doc.app.prefs.profitColumnWidths = widths
     
     #--- Public
+    def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fitTree(self.psheet)
+        viewPrinter.fit(self.ipiechart.view, 150, 150)
+        viewPrinter.fit(self.epiechart.view, 150, 150)
+        viewPrinter.fit(self.pgraph.view, 300, 150)
+    
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
         self.psheet.setHiddenColumns(prefs.profitHiddenColumns)

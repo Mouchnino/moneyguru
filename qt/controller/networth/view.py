@@ -44,6 +44,7 @@ class NetWorthView(BaseView, Ui_NetWorthView):
     
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
+        viewPrinter.fitTree(self.nwsheet)
         viewPrinter.fit(self.apiechart.view, 150, 150)
         viewPrinter.fit(self.lpiechart.view, 150, 150)
         viewPrinter.fit(self.nwgraph.view, 300, 150)

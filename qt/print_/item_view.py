@@ -47,6 +47,10 @@ class ItemPrintDatasource(object):
         """Returns the *printable* column header at index `colIndex`"""
         raise NotImplementedError()
     
+    def indentation(self, rowIndex, colIndex):
+        """Returns the indentation pixels for the (rowIndex, colIndex)."""
+        return 0
+    
     def rowFont(self):
         raise NotImplementedError()
     
@@ -85,7 +89,59 @@ class TablePrintDatasource(ItemPrintDatasource):
         return self._headerFont
     
 
-class LayoutTableElement(LayoutElement):
+class TreePrintDatasource(ItemPrintDatasource):
+    def __init__(self, tree):
+        ItemPrintDatasource.__init__(self)
+        self.tree = tree
+        h = tree.view.header()
+        self.columns = [col for col in tree.COLUMNS if not h.isSectionHidden(col.index)]
+        self.columns.sort(key=lambda c: h.visualIndex(c.index))
+        self._rowFont = QFont(tree.view.font())
+        self._headerFont = QFont(self._rowFont)
+        self._headerFont.setBold(True)
+        
+        self._mapRows()
+    
+    def _mapRows(self):
+        self.rows = []
+        index = self.tree.index(0, 0, QModelIndex())
+        while index.isValid():
+            self.rows.append(index)
+            index = self.tree.view.indexBelow(index)
+    
+    def columnCount(self):
+        return len(self.columns)
+    
+    def rowCount(self):
+        return len(self.rows)
+    
+    def data(self, rowIndex, colIndex, role):
+        index = self.rows[rowIndex]
+        # `index` is for the column 0 of the row, now we have to get the correct cell
+        index = index.sibling(index.row(), self.columns[colIndex].index)
+        return self.tree.data(index, role)
+    
+    def header(self, colIndex):
+        return self.columns[colIndex].title
+    
+    def indentation(self, rowIndex, colIndex):
+        if colIndex != 0:
+            return 0
+        index = self.rows[rowIndex]
+        result = 0
+        while index.parent().isValid():
+            result += self.tree.view.indentation()
+            index = index.parent()
+        return result
+    
+    def rowFont(self):
+        return self._rowFont
+    
+    def headerFont(self):
+        return self._headerFont
+    
+
+class ItemViewLayoutElement(LayoutElement):
     def __init__(self, ds, stats, width, startRow):
         # We start with a minimal rect (`width` and enough height to fit the header and 1 row),
         # and then we let the element be placed. Afterwards, we can know what will be the endRow
@@ -132,6 +188,7 @@ class LayoutTableElement(LayoutElement):
             for colIndex, colWidth in enumerate(columnWidths):
                 itemRect = QRect(left, top, colWidth, rowHeight)
                 itemRect = applyMargin(itemRect, CELL_MARGIN)
+                itemRect.setLeft(itemRect.left()+self.ds.indentation(rowIndex, colIndex))
                 pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
                 if pixmap:
                     painter.drawPixmap(itemRect.topLeft(), pixmap)
@@ -149,7 +206,7 @@ class LayoutTableElement(LayoutElement):
         painter.restore()
     
 
-class TablePrintStats(object):
+class ItemViewPrintStats(object):
     def __init__(self, ds):
         ColumnStats = namedtuple('ColumnStats', 'index title avgWidth maxWidth maxPixWidth headerWidth')
         rowFM = QFontMetrics(ds.rowFont())
@@ -167,6 +224,7 @@ class TablePrintStats(object):
                 data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
                     width = rowFM.width(data) + CELL_MARGIN * 2
+                    width += ds.indentation(rowIndex, colIndex)
                     sumWidth += width
                     maxWidth = max(maxWidth, width)
                 pixmap = ds.data(rowIndex, colIndex, Qt.DecorationRole)
