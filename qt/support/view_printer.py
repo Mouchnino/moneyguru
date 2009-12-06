@@ -14,7 +14,7 @@ from collections import namedtuple
 from itertools import combinations
 
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
-from PyQt4.QtGui import QPixmap, QPainter, QApplication, QFont, QFontMetrics, QStyle
+from PyQt4.QtGui import QPixmap, QPainter, QApplication, QFont, QFontMetrics
 
 from hsutil.misc import first
 
@@ -29,6 +29,16 @@ from moneyguru.gui.print_view import PrintView as PrintViewModel
 # The PDF preview is all blurry, I don't know how it looks on a real printer. This guy seems to have
 # the same problem:
 #http://lists.trolltech.com/pipermail/qt-interest/2009-November/015375.html
+
+CELL_MARGIN = 2
+
+def applyMargin(rect, margin):
+    result = QRect(rect)
+    result.setLeft(result.left()+margin)
+    result.setRight(result.right()-margin)
+    result.setTop(result.top()+margin)
+    result.setBottom(result.bottom()-margin)
+    return result
 
 class LayoutElement(object):
     def __init__(self, rect):
@@ -96,10 +106,9 @@ class LayoutTableElement(LayoutElement):
         self.endRow = min(self.startRow+rowToFit-1, self.stats.rowCount-1)
     
     def render(self, painter):
-        CELL_HMARGIN = QApplication.style().pixelMetric(QStyle.PM_FocusFrameHMargin)
+        # We used to re-use table.view.itemDelegate() for cell drawing, but it turned out to me more
+        # complex than anything (with margins being too wide and all...)
         painter.drawRect(self.rect)
-        delegate = self.table.view.itemDelegate()
-        options = self.table.view.viewOptions()
         columnWidths = self.stats.columnWidths(self.rect.width())
         rowHeight = self.stats.rowHeight
         headerHeight = self.stats.headerHeight
@@ -110,22 +119,36 @@ class LayoutTableElement(LayoutElement):
         for col, colWidth in zip(self.stats.columns, columnWidths):
             title = col.title
             headerRect = QRect(left, self.rect.top(), colWidth, headerHeight)
-            headerRect.setLeft(headerRect.left()+CELL_HMARGIN)
-            headerRect.setRight(headerRect.right()+CELL_HMARGIN)
-            painter.drawText(headerRect, Qt.AlignLeft|Qt.AlignVCenter, title)
+            headerRect = applyMargin(headerRect, CELL_MARGIN)
+            painter.drawText(headerRect, Qt.AlignLeft, title)
             left += colWidth
         painter.restore()
         painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
+        painter.save()
+        painter.setFont(self.stats.rowFont)
+        rowFM = QFontMetrics(self.stats.rowFont)
         for rowIndex in xrange(startRow, self.endRow+1):
             top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
             left = self.rect.left()
             for col, colWidth in zip(self.stats.columns, columnWidths):
-                index = self.table.index(rowIndex, col.index)
                 itemRect = QRect(left, top, colWidth, rowHeight)
-                options.rect = itemRect
-                options.font = self.stats.rowFont
-                delegate.paint(painter, options, index)
+                itemRect = applyMargin(itemRect, CELL_MARGIN)
+                index = self.table.index(rowIndex, col.index)
+                pixmap = self.table.data(index, Qt.DecorationRole)
+                if pixmap:
+                    painter.drawPixmap(itemRect.topLeft(), pixmap)
+                else:
+                    # we don't support drawing pixmap and text in the same cell (don't need it)
+                    text = self.table.data(index, Qt.DisplayRole)
+                    if text:
+                        alignment = self.table.data(index, Qt.TextAlignmentRole)
+                        if not alignment:
+                            alignment = Qt.AlignLeft|Qt.AlignVCenter
+                        # elidedText has a tendency to "over-elide" that's why we have "+1"
+                        text = rowFM.elidedText(text, Qt.ElideRight, itemRect.width()+1)
+                        painter.drawText(itemRect, alignment, text)
                 left += colWidth
+        painter.restore()
     
 
 class LayoutPage(object):
@@ -205,8 +228,6 @@ class LayoutPage(object):
 
 class TablePrintStats(object):
     def __init__(self, table):
-        CELL_HMARGIN = QApplication.style().pixelMetric(QStyle.PM_FocusFrameHMargin)
-        CELL_VMARGIN = QApplication.style().pixelMetric(QStyle.PM_FocusFrameVMargin)
         ColumnStats = namedtuple('ColumnStats', 'index title avgWidth maxWidth maxPixWidth headerWidth')
         self.rowFont = QFont(table.view.font())
         rowFM = QFontMetrics(self.rowFont)
@@ -214,8 +235,8 @@ class TablePrintStats(object):
         self.headerFont.setBold(True)
         headerFM = QFontMetrics(self.headerFont)
         self.rowCount = table.rowCount(QModelIndex())
-        self.rowHeight = rowFM.height() + CELL_VMARGIN * 2
-        self.headerHeight = headerFM.height() + CELL_VMARGIN * 2
+        self.rowHeight = rowFM.height() + CELL_MARGIN * 2
+        self.headerHeight = headerFM.height() + CELL_MARGIN * 2
         self.columns = []
         for column in table.COLUMNS:
             if table.view.horizontalHeader().isSectionHidden(column.index):
@@ -224,19 +245,17 @@ class TablePrintStats(object):
             sumWidth = 0
             maxWidth = 0
             maxPixWidth = 0
-            headerWidth = headerFM.width(column.title) + CELL_HMARGIN * 2
+            headerWidth = headerFM.width(column.title) + CELL_MARGIN * 2
             for rowIndex in xrange(self.rowCount):
                 index = table.index(rowIndex, colIndex)
                 data = table.data(index, Qt.DisplayRole)
                 if data:
-                    # The +4 below is arbitrary. If it's not there, we end up not having enough
-                    # space for all data (even if the page is wide enough).
-                    width = rowFM.width(data) + (CELL_HMARGIN * 2) + 4
+                    width = rowFM.width(data) + CELL_MARGIN * 2
                     sumWidth += width
                     maxWidth = max(maxWidth, width)
                 pixmap = table.data(index, Qt.DecorationRole)
                 if pixmap is not None:
-                    width = pixmap.width()+CELL_HMARGIN*2
+                    width = pixmap.width() + CELL_MARGIN * 2
                     maxPixWidth = max(maxPixWidth, width)
             avgWidth = sumWidth // self.rowCount
             maxWidth = max(maxWidth, maxPixWidth, headerWidth)
