@@ -192,41 +192,50 @@ class LayoutPage(object):
 
 class TablePrintStats(object):
     def __init__(self, table):
-        ColumnStats = namedtuple('ColumnStats', 'title avgWidth maxWidth')
-        font = table.view.font()
-        fm = QFontMetrics(font)
+        ColumnStats = namedtuple('ColumnStats', 'title avgWidth maxWidth headerWidth')
+        self.rowFont = QFont(table.view.font())
+        rowFM = QFontMetrics(self.rowFont)
+        self.headerFont = QFont(self.rowFont)
+        self.headerFont.setBold(True)
+        headerFM = QFontMetrics(self.headerFont)
         self.rowCount = table.rowCount(QModelIndex())
-        self.rowHeight = fm.height() + 2
+        self.rowHeight = rowFM.height() + 2
         self.headerHeight = self.rowHeight + 4
         self.columns = []
         for column in table.COLUMNS:
             colIndex = column.index
             sumWidth = 0
             maxWidth = 0
-            
+            headerWidth = headerFM.width(column.title)
             for rowIndex in xrange(self.rowCount):
                 index = table.index(rowIndex, colIndex)
                 data = table.data(index, Qt.DisplayRole)
                 if data:
-                    width = fm.width(data)
+                    width = rowFM.width(data)
                     sumWidth += width
                     maxWidth = max(maxWidth, width)
             avgWidth = sumWidth // self.rowCount
-            self.columns.append(ColumnStats(column.title, avgWidth, maxWidth))
+            self.columns.append(ColumnStats(column.title, avgWidth, maxWidth, headerWidth))
         self.maxWidth = sum(cs.maxWidth for cs in self.columns)
+        self.headersWidth = sum(cs.headerWidth for cs in self.columns)
     
     def columnWidths(self, maxWidth):
         # Returns a list of recommended widths for columns if the table has `maxWidth` for
-        # rendering. If it's possible to have maxWidth everywhere, each column will get it. If not
-        # the relative weight of each column's avgWidth will be used.
+        # rendering. If it's possible to have maxWidth everywhere, each column will get it. If not,
+        # We try to get at least `headerWidth` for each column. Then, the rest of the width is split
+        # between the columns depending on the relative weight of avgWidth.
         if self.maxWidth <= maxWidth:
             return [cs.maxWidth for cs in self.columns]
         sumAvgs = sum(cs.avgWidth for cs in self.columns)
         ratios = [(cs.avgWidth/sumAvgs) for cs in self.columns]
-        result = [int(ratio*maxWidth) for ratio in ratios[:-1]]
+        if self.headersWidth <= maxWidth:
+            leftOver = maxWidth - self.headersWidth
+        else:
+            leftOver = 0 # Don't bother considering the headerWidths, we're screwed anyway
+        toAdd = [int(ratio*leftOver) for ratio in ratios[:-1]]
         # Last column gets the rounding error
-        result.append(maxWidth-sum(result))
-        return result
+        toAdd.append(leftOver-sum(toAdd))
+        return [col.headerWidth+width for col, width in zip(self.columns, toAdd)]
     
 
 class ViewPrinter(object):
