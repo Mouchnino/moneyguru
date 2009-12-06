@@ -12,8 +12,8 @@ from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDia
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
+from print_ import ViewPrinter
 from support.recent import Recent
-from support.view_printer import ViewPrinter
 from .account.view import EntryView
 from .budget.view import BudgetView
 from .networth.view import NetWorthView
