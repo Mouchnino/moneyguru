@@ -12,10 +12,6 @@ from moneyguru.gui.income_statement import IncomeStatement as IncomeStatementMod
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 from ..column import Column
 
-class ProfitSheetDelegate(AccountSheetDelegate):
-    BOLD_ATTRS = set(['cash_flow'])
-    AMOUNT_ATTRS = set(['cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'])
-
 class ProfitSheet(AccountSheet):
     COLUMNS = [
         Column('name', 'Account', 120),
@@ -26,7 +22,8 @@ class ProfitSheet(AccountSheet):
         Column('budgeted', 'Budgeted', 100),
     ]
     EXPANDED_NODE_PREF_NAME = 'profitLossExpandedPaths'
-    DELEGATE_CLASS = ProfitSheetDelegate
+    AMOUNT_ATTRS = set(['cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'])
+    BOLD_ATTRS = set(['cash_flow'])
     
     def __init__(self, doc, view):
         model = IncomeStatementModel(view=self, document=doc.model)

@@ -15,6 +15,7 @@ from collections import namedtuple
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
 from PyQt4.QtGui import QFont, QFontMetrics
 
+from const import INDENTATION_OFFSET_ROLE
 from .layout import LayoutElement
 
 CELL_MARGIN = 2
@@ -102,6 +103,12 @@ class TreePrintDatasource(ItemPrintDatasource):
         
         self._mapRows()
     
+    def _getIndex(self, rowIndex, colIndex):
+        index = self.rows[rowIndex]
+        # `index` is for the column 0 of the row, now we have to get the correct cell
+        index = index.sibling(index.row(), self.columns[colIndex].index)
+        return index
+    
     def _mapRows(self):
         self.rows = []
         index = self.tree.index(0, 0, QModelIndex())
@@ -116,9 +123,7 @@ class TreePrintDatasource(ItemPrintDatasource):
         return len(self.rows)
     
     def data(self, rowIndex, colIndex, role):
-        index = self.rows[rowIndex]
-        # `index` is for the column 0 of the row, now we have to get the correct cell
-        index = index.sibling(index.row(), self.columns[colIndex].index)
+        index = self._getIndex(rowIndex, colIndex)
         return self.tree.data(index, role)
     
     def header(self, colIndex):
@@ -127,11 +132,14 @@ class TreePrintDatasource(ItemPrintDatasource):
     def indentation(self, rowIndex, colIndex):
         if colIndex != 0:
             return 0
-        index = self.rows[rowIndex]
+        index = self._getIndex(rowIndex, colIndex)
+        indentationOffset = self.tree.data(index, INDENTATION_OFFSET_ROLE)
         result = 0
         while index.parent().isValid():
             result += self.tree.view.indentation()
             index = index.parent()
+        if indentationOffset:
+            result += indentationOffset
         return result
     
     def rowFont(self):
@@ -181,14 +189,13 @@ class ItemViewLayoutElement(LayoutElement):
         painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
         painter.save()
         painter.setFont(self.ds.rowFont())
-        rowFM = QFontMetrics(self.ds.rowFont())
         for rowIndex in xrange(startRow, self.endRow+1):
             top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
             left = self.rect.left()
             for colIndex, colWidth in enumerate(columnWidths):
-                itemRect = QRect(left, top, colWidth, rowHeight)
+                indentation = self.ds.indentation(rowIndex, colIndex)
+                itemRect = QRect(left+indentation, top, colWidth, rowHeight)
                 itemRect = applyMargin(itemRect, CELL_MARGIN)
-                itemRect.setLeft(itemRect.left()+self.ds.indentation(rowIndex, colIndex))
                 pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
                 if pixmap:
                     painter.drawPixmap(itemRect.topLeft(), pixmap)
@@ -199,9 +206,16 @@ class ItemViewLayoutElement(LayoutElement):
                         alignment = self.ds.data(rowIndex, colIndex, Qt.TextAlignmentRole)
                         if not alignment:
                             alignment = Qt.AlignLeft|Qt.AlignVCenter
+                        font = self.ds.data(rowIndex, colIndex, Qt.FontRole)
+                        if font is None:
+                            font = self.ds.rowFont()
+                        fm = QFontMetrics(font)
                         # elidedText has a tendency to "over-elide" that's why we have "+1"
-                        text = rowFM.elidedText(text, Qt.ElideRight, itemRect.width()+1)
+                        text = fm.elidedText(text, Qt.ElideRight, itemRect.width()+1)
+                        painter.save()
+                        painter.setFont(font)
                         painter.drawText(itemRect, alignment, text)
+                        painter.restore()
                 left += colWidth
         painter.restore()
     
@@ -223,7 +237,9 @@ class ItemViewPrintStats(object):
             for rowIndex in xrange(ds.rowCount()):
                 data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
-                    width = rowFM.width(data) + CELL_MARGIN * 2
+                    font = ds.data(rowIndex, colIndex, Qt.FontRole)
+                    fm = QFontMetrics(font) if font is not None else rowFM
+                    width = fm.width(data) + CELL_MARGIN * 2
                     width += ds.indentation(rowIndex, colIndex)
                     sumWidth += width
                     maxWidth = max(maxWidth, width)

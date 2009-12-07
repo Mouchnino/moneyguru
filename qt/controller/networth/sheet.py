@@ -12,10 +12,6 @@ from moneyguru.gui.balance_sheet import BalanceSheet as BalanceSheetModel
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 from ..column import Column
 
-class NetWorthSheetDelegate(AccountSheetDelegate):
-    BOLD_ATTRS = set(['end'])
-    AMOUNT_ATTRS = set(['end', 'start', 'delta', 'delta_perc', 'budgeted'])
-
 class NetWorthSheet(AccountSheet):
     COLUMNS = [
         Column('name', 'Account', 120),
@@ -26,7 +22,8 @@ class NetWorthSheet(AccountSheet):
         Column('budgeted', 'Budgeted', 100),
     ]
     EXPANDED_NODE_PREF_NAME = 'netWorthExpandedPaths'
-    DELEGATE_CLASS = NetWorthSheetDelegate
+    AMOUNT_ATTRS = set(['end', 'start', 'delta', 'delta_perc', 'budgeted'])
+    BOLD_ATTRS = set(['end'])
     
     def __init__(self, doc, view):
         model = BalanceSheetModel(view=self, document=doc.model)

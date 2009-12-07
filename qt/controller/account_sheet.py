@@ -11,14 +11,12 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect
-from PyQt4.QtGui import (QStyledItemDelegate, QPixmap, QStyle, QItemSelection, QItemSelectionModel,
-    QPalette)
+from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont
 
 from qtlib.tree_model import TreeNode, TreeModel
 
+from const import MIME_NODEPATH, INDENTATION_OFFSET_ROLE
 from .column import ColumnBearer
-
-MIME_PATH = 'application/moneyguru.nodepath'
 
 class Node(TreeNode):
     def __init__(self, model, parent, ref, row):
@@ -33,41 +31,29 @@ class Node(TreeNode):
     
 
 class AccountSheetDelegate(QStyledItemDelegate):
-    BOLD_ATTRS = set()
-    AMOUNT_ATTRS = set()
-    
-    def __init__(self, model, view, columns):
+    def __init__(self, model):
         QStyledItemDelegate.__init__(self)
         self._model = model
-        self._view = view
-        self._columns = columns
     
     def handleClick(self, index, pos, itemRect):
-        column = self._columns[index.column()]
+        column = self._model.COLUMNS[index.column()]
         if column.attrname == 'name':
             node = index.internalPointer()
             currentRight = itemRect.right()
             if node.ref.is_account:
                 if pos.x() >= currentRight-12:
-                    self._model.show_selected_account()
+                    self._model.model.show_selected_account()
                 currentRight -= 12
             if not (node.ref.is_total or node.ref.is_blank):
                 if (currentRight-16) <= pos.x() < currentRight:
-                    self._model.toggle_excluded()
+                    self._model.model.toggle_excluded()
     
     def paint(self, painter, option, index):
         self.initStyleOption(option, index)
-        isBold = False
-        isItalic = False
-        column = self._columns[index.column()]
+        column = self._model.COLUMNS[index.column()]
         node = index.internalPointer()
         ref = node.ref
         if column.attrname == 'name':
-            if ref.is_group or ref.is_total or ref.is_type:
-                isBold = True
-            if ref.is_total:
-                isItalic = True
-                option.rect.setLeft(option.rect.left()-self._view.indentation())
             if option.state & QStyle.State_Selected:
                 painter.fillRect(option.rect, option.palette.highlight())
             if ref.is_account:
@@ -86,14 +72,13 @@ class AccountSheetDelegate(QStyledItemDelegate):
                 excludeRect.moveRight(option.rect.right())
                 option.rect.setRight(excludeRect.left()-1)
                 painter.drawPixmap(excludeRect, pixmap)
-        elif column.attrname in self.BOLD_ATTRS:
-            isBold = True
         if ref.is_excluded:
             option.palette.setColor(QPalette.Text, Qt.gray)
-        option.font.setBold(isBold)
-        option.font.setItalic(isItalic)
+        indentationOffset = self._model.data(index, INDENTATION_OFFSET_ROLE)
+        if indentationOffset:
+            option.rect.setLeft(option.rect.left()+indentationOffset)
         QStyledItemDelegate.paint(self, painter, option, index)
-        if column.attrname in self.AMOUNT_ATTRS:
+        if column.attrname in self._model.AMOUNT_ATTRS:
             if ref.is_total or ref.is_subtotal:
                 p1 = option.rect.bottomLeft()
                 p2 = option.rect.bottomRight()
@@ -108,7 +93,8 @@ class AccountSheetDelegate(QStyledItemDelegate):
 
 class AccountSheet(TreeModel, ColumnBearer):
     EXPANDED_NODE_PREF_NAME = None # must set in subclass
-    DELEGATE_CLASS = AccountSheetDelegate
+    AMOUNT_ATTRS = set()
+    BOLD_ATTRS = set()
     
     def __init__(self, doc, model, view):
         TreeModel.__init__(self)
@@ -119,7 +105,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self._wasRestored = False
         self.model = model
         self.view.setModel(self)
-        self.accountSheetDelegate = self.DELEGATE_CLASS(self.model, self.view, self.COLUMNS)
+        self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)
         self._restoreNodeExpansionState()
         
@@ -168,10 +154,29 @@ class AccountSheet(TreeModel, ColumnBearer):
     def data(self, index, role):
         if not index.isValid():
             return None
+        node = index.internalPointer()
+        ref = node.ref
+        rowattr = self.COLUMNS[index.column()].attrname
         if role in (Qt.DisplayRole, Qt.EditRole):
-            node = index.internalPointer()
-            rowattr = self.COLUMNS[index.column()].attrname
             return getattr(node.ref, rowattr)
+        elif role == Qt.FontRole:
+            isBold = False
+            isItalic = False
+            if rowattr == 'name':
+                if ref.is_group or ref.is_total or ref.is_type:
+                    isBold = True
+                if ref.is_total:
+                    isItalic = True
+            elif rowattr in self.BOLD_ATTRS:
+                isBold = True
+            font = QFont(self.view.font())
+            font.setBold(isBold)
+            font.setItalic(isItalic)
+            return font
+        elif role == INDENTATION_OFFSET_ROLE:
+            # index.parent().isValid(): we don't want the grand total line to be unindented
+            if rowattr == 'name' and ref.is_total and index.parent().isValid():
+                return -self.view.indentation()
         return None
     
     def flags(self, index):
@@ -213,11 +218,11 @@ class AccountSheet(TreeModel, ColumnBearer):
     
     #--- Drag & Drop
     def dropMimeData(self, mimeData, action, row, column, parentIndex):
-        if not mimeData.hasFormat(MIME_PATH):
+        if not mimeData.hasFormat(MIME_NODEPATH):
             return False
         if not parentIndex.isValid():
             return False
-        path = map(int, unicode(mimeData.data(MIME_PATH)).split(','))
+        path = map(int, unicode(mimeData.data(MIME_NODEPATH)).split(','))
         destPath = self.pathForIndex(parentIndex)
         if not self.model.can_move(path, destPath):
             return False
@@ -229,11 +234,11 @@ class AccountSheet(TreeModel, ColumnBearer):
         path = self.pathForIndex(index)
         data = ','.join(map(unicode, path))
         mimeData = QMimeData()
-        mimeData.setData(MIME_PATH, QByteArray(data))
+        mimeData.setData(MIME_NODEPATH, QByteArray(data))
         return mimeData
     
     def mimeTypes(self):
-        return [MIME_PATH]
+        return [MIME_NODEPATH]
     
     def supportedDropActions(self):
         return Qt.MoveAction
