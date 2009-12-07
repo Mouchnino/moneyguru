@@ -13,3 +13,7 @@ from PyQt4.QtCore import Qt
 MIME_NODEPATH = 'application/moneyguru.nodepath'
 
 INDENTATION_OFFSET_ROLE = Qt.UserRole # Returns an offset for the item's indentation
+
+EXTRA_ROLE = Qt.UserRole + 1 # Returns bitwise extra flags defined below
+EXTRA_UNDERLINED = 0x01
+EXTRA_UNDERLINED_DOUBLE = 0x02

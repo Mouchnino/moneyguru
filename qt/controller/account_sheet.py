@@ -13,9 +13,11 @@ from __future__ import unicode_literals
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect
 from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont
 
+from hsutil.misc import nonone
 from qtlib.tree_model import TreeNode, TreeModel
 
-from const import MIME_NODEPATH, INDENTATION_OFFSET_ROLE
+from const import (MIME_NODEPATH, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
+    EXTRA_UNDERLINED_DOUBLE)
 from .column import ColumnBearer
 
 class Node(TreeNode):
@@ -53,6 +55,8 @@ class AccountSheetDelegate(QStyledItemDelegate):
         column = self._model.COLUMNS[index.column()]
         node = index.internalPointer()
         ref = node.ref
+        indentationOffset = self._model.data(index, INDENTATION_OFFSET_ROLE)
+        extraFlags = nonone(self._model.data(index, EXTRA_ROLE), 0)
         if column.attrname == 'name':
             if option.state & QStyle.State_Selected:
                 painter.fillRect(option.rect, option.palette.highlight())
@@ -74,21 +78,19 @@ class AccountSheetDelegate(QStyledItemDelegate):
                 painter.drawPixmap(excludeRect, pixmap)
         if ref.is_excluded:
             option.palette.setColor(QPalette.Text, Qt.gray)
-        indentationOffset = self._model.data(index, INDENTATION_OFFSET_ROLE)
         if indentationOffset:
             option.rect.setLeft(option.rect.left()+indentationOffset)
         QStyledItemDelegate.paint(self, painter, option, index)
-        if column.attrname in self._model.AMOUNT_ATTRS:
-            if ref.is_total or ref.is_subtotal:
-                p1 = option.rect.bottomLeft()
-                p2 = option.rect.bottomRight()
-                p1.setX(p1.x()+1)
-                p2.setX(p2.x()-1)
+        if extraFlags & (EXTRA_UNDERLINED | EXTRA_UNDERLINED_DOUBLE):
+            p1 = option.rect.bottomLeft()
+            p2 = option.rect.bottomRight()
+            p1.setX(p1.x()+1)
+            p2.setX(p2.x()-1)
+            painter.drawLine(p1, p2)
+            if extraFlags & EXTRA_UNDERLINED_DOUBLE:
+                p1.setY(p1.y()-2)
+                p2.setY(p2.y()-2)
                 painter.drawLine(p1, p2)
-                if ref.is_total:
-                    p1.setY(p1.y()-2)
-                    p2.setY(p2.y()-2)
-                    painter.drawLine(p1, p2)
     
 
 class AccountSheet(TreeModel, ColumnBearer):
@@ -177,6 +179,14 @@ class AccountSheet(TreeModel, ColumnBearer):
             # index.parent().isValid(): we don't want the grand total line to be unindented
             if rowattr == 'name' and ref.is_total and index.parent().isValid():
                 return -self.view.indentation()
+        elif role == EXTRA_ROLE:
+            flags = 0
+            if rowattr in self.AMOUNT_ATTRS:
+                if ref.is_subtotal:
+                    flags |= EXTRA_UNDERLINED
+                elif ref.is_total:
+                    flags |= EXTRA_UNDERLINED_DOUBLE
+            return flags
         return None
     
     def flags(self, index):

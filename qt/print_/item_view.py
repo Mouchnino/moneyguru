@@ -15,7 +15,7 @@ from collections import namedtuple
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
 from PyQt4.QtGui import QFont, QFontMetrics
 
-from const import INDENTATION_OFFSET_ROLE
+from const import INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE
 from .layout import LayoutElement
 
 CELL_MARGIN = 2
@@ -194,6 +194,7 @@ class ItemViewLayoutElement(LayoutElement):
             left = self.rect.left()
             for colIndex, colWidth in enumerate(columnWidths):
                 indentation = self.ds.indentation(rowIndex, colIndex)
+                extraFlags = self.ds.data(rowIndex, colIndex, EXTRA_ROLE)
                 itemRect = QRect(left+indentation, top, colWidth, rowHeight)
                 itemRect = applyMargin(itemRect, CELL_MARGIN)
                 pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
@@ -216,6 +217,18 @@ class ItemViewLayoutElement(LayoutElement):
                         painter.setFont(font)
                         painter.drawText(itemRect, alignment, text)
                         painter.restore()
+                if extraFlags & (EXTRA_UNDERLINED | EXTRA_UNDERLINED_DOUBLE):
+                    p1 = itemRect.bottomLeft()
+                    p2 = itemRect.bottomRight()
+                    # Things get crowded with double lines and we have to cheat a little bit on 
+                    # item rects.
+                    p1.setY(p1.y()+2)
+                    p2.setY(p2.y()+2)
+                    painter.drawLine(p1, p2)
+                    if extraFlags & EXTRA_UNDERLINED_DOUBLE:
+                        p1.setY(p1.y()-3)
+                        p2.setY(p2.y()-3)
+                        painter.drawLine(p1, p2)
                 left += colWidth
         painter.restore()
     
