@@ -45,9 +45,9 @@ class ProfitView(BaseView, Ui_ProfitView):
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTree(self.psheet)
-        viewPrinter.fit(self.ipiechart.view, 150, 150)
-        viewPrinter.fit(self.epiechart.view, 150, 150)
-        viewPrinter.fit(self.pgraph.view, 300, 150)
+        viewPrinter.fit(self.ipiechart.view, 150, 150, expandH=True)
+        viewPrinter.fit(self.epiechart.view, 150, 150, expandH=True)
+        viewPrinter.fit(self.pgraph.view, 300, 150, expandH=True, expandV=True)
     
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs

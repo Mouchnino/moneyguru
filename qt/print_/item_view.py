@@ -167,11 +167,14 @@ class ItemViewLayoutElement(LayoutElement):
         height -= self.stats.headerHeight
         rowToFit = height // self.stats.rowHeight
         self.endRow = min(self.startRow+rowToFit-1, self.ds.rowCount()-1)
+        rowCount = self.endRow - self.startRow + 1
+        # If it's the last page, we want to adjust the height of the rect so it's possible to fit
+        # stuff under it.
+        self.rect.setHeight(self.stats.headerHeight+(self.stats.rowHeight*rowCount))
     
     def render(self, painter):
         # We used to re-use itemDelegate() for cell drawing, but it turned out to me more
         # complex than anything (with margins being too wide and all...)
-        painter.drawRect(self.rect)
         columnWidths = self.stats.columnWidths(self.rect.width())
         rowHeight = self.stats.rowHeight
         headerHeight = self.stats.headerHeight
