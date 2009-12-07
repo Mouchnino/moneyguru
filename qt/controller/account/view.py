@@ -51,6 +51,7 @@ class EntryView(BaseView, Ui_EntryView):
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTable(self.etable)
+        viewPrinter.fit(self.graphView.currentWidget(), 300, 150, expandH=True, expandV=True)
     
     def showBarGraph(self):
         self.lgraph.model.disconnect()

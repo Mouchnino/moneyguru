@@ -15,6 +15,8 @@ from collections import namedtuple
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
 from PyQt4.QtGui import QFont, QFontMetrics
 
+from hsutil.misc import nonone
+
 from const import INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE
 from .layout import LayoutElement
 
@@ -197,7 +199,7 @@ class ItemViewLayoutElement(LayoutElement):
             left = self.rect.left()
             for colIndex, colWidth in enumerate(columnWidths):
                 indentation = self.ds.indentation(rowIndex, colIndex)
-                extraFlags = self.ds.data(rowIndex, colIndex, EXTRA_ROLE)
+                extraFlags = nonone(self.ds.data(rowIndex, colIndex, EXTRA_ROLE), 0)
                 itemRect = QRect(left+indentation, top, colWidth, rowHeight)
                 itemRect = applyMargin(itemRect, CELL_MARGIN)
                 pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
