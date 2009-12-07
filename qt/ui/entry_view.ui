@@ -25,15 +25,8 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>25</height>
+       <height>20</height>
       </size>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="totalsLabel">
-     <property name="text">
-      <string/>
      </property>
     </widget>
    </item>
@@ -87,6 +80,13 @@
      </property>
      <widget class="LineGraphView" name="lineGraphView"/>
      <widget class="BarGraphView" name="barGraphView"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="totalsLabel">
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>
