@@ -48,6 +48,10 @@ class EntryView(BaseView, Ui_EntryView):
         order = [h.logicalIndex(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnOrder = order
     
+    #--- QWidget override
+    def setFocus(self):
+        self.etable.view.setFocus()
+    
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTable(self.etable)

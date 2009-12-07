@@ -41,6 +41,10 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         order = [h.logicalIndex(index) for index in xrange(len(self.sctable.COLUMNS))]
         self.doc.app.prefs.scheduleColumnOrder = order
     
+    #--- QWidget override
+    def setFocus(self):
+        self.sctable.view.setFocus()
+    
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTable(self.sctable)

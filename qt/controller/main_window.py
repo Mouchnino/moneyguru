@@ -176,6 +176,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.setCurrentIndex(index)
         self.mainView.currentWidget().connect()
         self._updateActionsState()
+        self.mainView.currentWidget().setFocus()
     
     def _updateActionsState(self):
         # Updates enable/disable checked/unchecked state of all actions. These state can change

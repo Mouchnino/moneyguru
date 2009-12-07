@@ -42,6 +42,10 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         widths = [h.sectionSize(index) for index in xrange(len(self.nwsheet.COLUMNS))]
         self.doc.app.prefs.networthColumnWidths = widths
     
+    #--- QWidget override
+    def setFocus(self):
+        self.nwsheet.view.setFocus()
+    
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTree(self.nwsheet)

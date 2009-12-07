@@ -42,6 +42,10 @@ class ProfitView(BaseView, Ui_ProfitView):
         widths = [h.sectionSize(index) for index in xrange(len(self.psheet.COLUMNS))]
         self.doc.app.prefs.profitColumnWidths = widths
     
+    #--- QWidget override
+    def setFocus(self):
+        self.psheet.view.setFocus()
+    
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTree(self.psheet)

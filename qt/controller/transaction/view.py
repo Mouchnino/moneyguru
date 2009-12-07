@@ -43,6 +43,10 @@ class TransactionView(BaseView, Ui_TransactionView):
         order = [h.logicalIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnOrder = order
     
+    #--- QWidget override
+    def setFocus(self):
+        self.ttable.view.setFocus()
+    
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTable(self.ttable)
