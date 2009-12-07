@@ -8,6 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox
 
 from support.completable_edit import CompletableEdit
@@ -100,4 +101,8 @@ class Panel(QDialog):
             self._connectSignals()
         self._loadFields()
         self.show()
+        focus = self.nextInFocusChain()
+        while focus.focusPolicy() == Qt.NoFocus:
+            focus = focus.nextInFocusChain()
+        focus.setFocus()
     
