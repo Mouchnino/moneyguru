@@ -101,8 +101,11 @@ class Panel(QDialog):
             self._connectSignals()
         self._loadFields()
         self.show()
+        # For initial text edits to have their text selected, we *have to* first select the dialog,
+        # then setFocus on it with qt.TabFocusReason. Don't ask, I don't know why either...
+        self.setFocus()
         focus = self.nextInFocusChain()
         while focus.focusPolicy() == Qt.NoFocus:
             focus = focus.nextInFocusChain()
-        focus.setFocus()
+        focus.setFocus(Qt.TabFocusReason)
     
