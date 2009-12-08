@@ -1,6 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file alias="example.moneyguru">data/example.moneyguru</file>
+    <file alias="stylesheet_win">data/stylesheet_win.css</file>
     <file alias="logo_big">images/logo_big.png</file>
     <file alias="logo_small">images/logo_small.png</file>
     <file alias="balance_sheet_48">images/balance_sheet_48.png</file>
@@ -22,5 +23,7 @@
     <file alias="right_arrow_white_12">images/right_arrow_white_12.png</file>
     <file alias="account_in_12">images/account_in_12.png</file>
     <file alias="account_out_12">images/account_out_12.png</file>
+    <file alias="tree_minus_9">images/tree_minus_9.png</file>
+    <file alias="tree_plus_9">images/tree_plus_9.png</file>
 </qresource>
 </RCC>

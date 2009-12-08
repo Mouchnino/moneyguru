@@ -11,7 +11,7 @@
 
 import sys
 
-from PyQt4.QtCore import QCoreApplication
+from PyQt4.QtCore import QFile, QTextStream
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
 from qtlib.error_report_dialog import install_excepthook
@@ -20,9 +20,15 @@ from app import MoneyGuru
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(QPixmap(":/logo_small")))
-    QCoreApplication.setOrganizationName('Hardcoded Software')
-    QCoreApplication.setApplicationName('moneyGuru')
-    QCoreApplication.setApplicationVersion(MoneyGuru.VERSION)
+    app.setOrganizationName('Hardcoded Software')
+    app.setApplicationName('moneyGuru')
+    app.setApplicationVersion(MoneyGuru.VERSION)
+    stylesheetFile = QFile(':/stylesheet_win')
+    stylesheetFile.open(QFile.ReadOnly)
+    textStream = QTextStream(stylesheetFile)
+    style = textStream.readAll()
+    stylesheetFile.close()
+    app.setStyleSheet(style)
     mgapp = MoneyGuru()
     install_excepthook()
     sys.exit(app.exec_())

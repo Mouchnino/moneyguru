@@ -88,8 +88,11 @@ class AccountSheetDelegate(QStyledItemDelegate):
             p2.setX(p2.x()-1)
             painter.drawLine(p1, p2)
             if extraFlags & EXTRA_UNDERLINED_DOUBLE:
-                p1.setY(p1.y()-2)
-                p2.setY(p2.y()-2)
+                # Yes, yes, we step over the item's bounds, but we have no choice because under
+                # Windows, there's not enough height for double lines. Moreover, the line under
+                # a total line is a blank line, so we have plenty of space.
+                p1.setY(p1.y()+2)
+                p2.setY(p2.y()+2)
                 painter.drawLine(p1, p2)
     
 

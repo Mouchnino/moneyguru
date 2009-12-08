@@ -1,0 +1,14 @@
+/* We have to remove all branches from treeviews because the blank
+lines and the de-indented lines make the tree look all weird.
+*/
+QTreeView::branch:!has-children {
+    image: none;
+}
+
+QTreeView::branch:has-children:closed {
+    image: url(:/tree_plus_9);
+}
+
+QTreeView::branch:has-children:open {
+    image: url(:/tree_minus_9);
+}
