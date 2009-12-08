@@ -166,17 +166,13 @@ class AccountSheet(TreeModel, ColumnBearer):
             return getattr(node.ref, rowattr)
         elif role == Qt.FontRole:
             isBold = False
-            isItalic = False
             if rowattr == 'name':
                 if ref.is_group or ref.is_total or ref.is_type:
                     isBold = True
-                if ref.is_total:
-                    isItalic = True
             elif rowattr in self.BOLD_ATTRS:
                 isBold = True
             font = QFont(self.view.font())
             font.setBold(isBold)
-            font.setItalic(isItalic)
             return font
         elif role == INDENTATION_OFFSET_ROLE:
             # index.parent().isValid(): we don't want the grand total line to be unindented

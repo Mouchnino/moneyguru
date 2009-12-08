@@ -14,7 +14,8 @@ from itertools import combinations
 from math import radians, sin
 
 from PyQt4.QtCore import Qt, QPointF, QRectF, QSizeF
-from PyQt4.QtGui import QWidget, QPainter, QFont, QPen, QColor, QBrush, QLinearGradient
+from PyQt4.QtGui import (QApplication, QWidget, QPainter, QFont, QPen, QColor, QBrush,
+    QLinearGradient)
 
 def pointInCircle(center, radius, angle):
     # Returns the point at the edge of a circle with specified center/radius/angle
@@ -79,10 +80,8 @@ class Legend(object):
 
 class PieChartView(QWidget):
     PADDING = 4
-    TITLE_FONT_FAMILY = "Lucida Grande"
-    TITLE_FONT_SIZE = 15
-    LEGEND_FONT_FAMILY = "Lucida Grande"
-    LEGEND_FONT_SIZE = 11
+    TITLE_FONT_SIZE = 12
+    LEGEND_FONT_SIZE = 8
     LINE_WIDTH = 1
     
     def __init__(self, parent):
@@ -107,8 +106,11 @@ class PieChartView(QWidget):
             gradients.append(gradient)
         self.gradients = gradients
         
-        self.titleFont = QFont(self.TITLE_FONT_FAMILY, self.TITLE_FONT_SIZE, QFont.Bold)
-        self.legendFont = QFont(self.LEGEND_FONT_FAMILY, self.LEGEND_FONT_SIZE, QFont.Normal)
+        self.titleFont = QFont(QApplication.font())
+        self.titleFont.setPointSize(self.TITLE_FONT_SIZE)
+        self.titleFont.setBold(True)
+        self.legendFont = QFont(QApplication.font())
+        self.legendFont.setPointSize(self.LEGEND_FONT_SIZE)
     
     def paintEvent(self, event):
         QWidget.paintEvent(self, event)

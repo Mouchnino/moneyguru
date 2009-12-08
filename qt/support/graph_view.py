@@ -16,7 +16,8 @@ from PyQt4.QtGui import QWidget, QPainter, QFont, QFontMetrics, QPen, QColor, QB
 class GraphView(QWidget):
     PADDING = 16
     LINE_WIDTH = 2
-    LABEL_FONT_SIZE = 10
+    LABEL_FONT_SIZE = 8
+    TITLE_FONT_SIZE = 12
     TICKMARKS_LENGTH = 5
     XLABELS_PADDING = 3
     YLABELS_PADDING = 8
@@ -59,20 +60,20 @@ class GraphView(QWidget):
         viewHeight = self.height()
         middleX = viewWidth // 2
         dataWidth = ds.xmax - ds.xmin
-    	dataHeight = ds.ymax - ds.ymin
+        dataHeight = ds.ymax - ds.ymin
         yLabelsWidth = max(labelsFontM.width(label['text']) for label in ds.ylabels)
-    	labelsHeight = labelsFontM.height()
-    	graphWidth = viewWidth - yLabelsWidth - (self.PADDING * 2)
-    	graphHeight = viewHeight - labelsHeight - (self.PADDING * 2)
-    	xFactor = graphWidth / dataWidth
-    	yFactor = graphHeight / dataHeight
-    	graphLeft = round(ds.xmin * xFactor)
-    	graphRight = round(ds.xmax * xFactor)
-    	graphBottom = round(ds.ymin * yFactor)
-    	if graphBottom < 0:
-    	    # We have a graph with negative values and we need some extra space to draw the lowest values
-    	    graphBottom -= 2 * self.LINE_WIDTH
-    	graphTop = round(ds.ymax * yFactor)
+        labelsHeight = labelsFontM.height()
+        graphWidth = viewWidth - yLabelsWidth - (self.PADDING * 2)
+        graphHeight = viewHeight - labelsHeight - (self.PADDING * 2)
+        xFactor = graphWidth / dataWidth
+        yFactor = graphHeight / dataHeight
+        graphLeft = round(ds.xmin * xFactor)
+        graphRight = round(ds.xmax * xFactor)
+        graphBottom = round(ds.ymin * yFactor)
+        if graphBottom < 0:
+            # We have a graph with negative values and we need some extra space to draw the lowest values
+            graphBottom -= 2 * self.LINE_WIDTH
+        graphTop = round(ds.ymax * yFactor)
 
         painter.save()
         shiftX = yLabelsWidth + self.PADDING - graphLeft
@@ -127,14 +128,19 @@ class GraphView(QWidget):
             painter.scale(1, -1)
             painter.drawText(QPoint(labelX, 0), labelText)
             painter.restore()
-        
         painter.restore()
         
         # title
+        painter.save()
+        titleFont = QFont(painter.font())
+        titleFont.setPointSize(self.TITLE_FONT_SIZE)
+        titleFont.setBold(True)
+        painter.setFont(titleFont)
         title = "{0} ({1})".format(self.dataSource.title, self.dataSource.currency.code)
         titleWidth = painter.fontMetrics().width(title)
         titleHeight = painter.fontMetrics().height()
         titleX = middleX - (titleWidth // 2)
         titleY = self.PADDING
         painter.drawText(QPoint(titleX, titleY), title)
+        painter.restore()
     
