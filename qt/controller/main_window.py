@@ -8,7 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDialog
+from PyQt4.QtGui import (QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDialog,
+    QLabel, QFont)
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -146,8 +147,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         menu.addAction(self.actionChangeDateRangeCustom)
         self.dateRangeButton.setMenu(menu)
         
-        # Filter field
+        # Toolbar setup. We have to do it manually because it's tricky to insert the view title
+        # label otherwise.
+        self.toolBar.addAction(self.actionShowNetWorth)
+        self.toolBar.addAction(self.actionShowProfitLoss)
+        self.toolBar.addAction(self.actionShowTransactions)
+        self.toolBar.addAction(self.actionShowAccount)
+        self.toolBar.addAction(self.actionShowSchedules)
+        self.toolBar.addAction(self.actionShowBudgets)
+        self.viewTitleLabel = QLabel()
+        font = QFont(self.viewTitleLabel.font())
+        font.setBold(True)
+        self.viewTitleLabel.setFont(font)
+        self.viewTitleLabel.setMinimumWidth(82) # just enough for the widest title
+        self.viewTitleLabel.setMargin(4)
+        self.toolBar.addWidget(self.viewTitleLabel)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionToggleReconciliationModeToolbar)
+        self.toolBar.addSeparator()
         self.searchLineEdit = QLineEdit()
+        self.searchLineEdit.setMaximumWidth(240)
         self.toolBar.addWidget(self.searchLineEdit)
     
     #--- QWidget overrides
@@ -194,8 +213,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ]
         viewIndex = self.mainView.currentIndex()
         for index, action in enumerate(actionsInOrder):
-            action.setCheckable(viewIndex == index)
-            action.setChecked(viewIndex == index)
+            checked = viewIndex == index
+            action.setCheckable(checked)
+            action.setChecked(checked)
+            if checked:
+                self.viewTitleLabel.setText(action.text())
         
         # Determine what actions are enabled
         isSheet = viewIndex in (NETWORTH_INDEX, PROFIT_INDEX)

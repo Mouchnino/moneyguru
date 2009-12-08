@@ -254,15 +254,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionShowNetWorth"/>
-   <addaction name="actionShowProfitLoss"/>
-   <addaction name="actionShowTransactions"/>
-   <addaction name="actionShowAccount"/>
-   <addaction name="actionShowSchedules"/>
-   <addaction name="actionShowBudgets"/>
-   <addaction name="separator"/>
-   <addaction name="actionToggleReconciliationModeToolbar"/>
-   <addaction name="separator"/>
   </widget>
   <action name="actionOpenDocument">
    <property name="text">
