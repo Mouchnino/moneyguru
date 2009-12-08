@@ -775,8 +775,8 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         self.clear_gui_calls()
         self.etable.save_edits()
         self.assertEqual(self.document.date_range, YearRange(date(2008, 1, 1)))
-        self.check_gui_calls(self.mainwindow_gui, animate_date_range_forward=1, 
-                             refresh_date_range_selector=1)
+        self.check_gui_calls_partial(self.mainwindow_gui, animate_date_range_forward=1, 
+            refresh_date_range_selector=1)
     
 
 class EntryWithoutTransfer(TestCase):

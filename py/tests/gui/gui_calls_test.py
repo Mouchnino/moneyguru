@@ -23,7 +23,22 @@ class Pristine(TestCase):
     def test_add_group(self):
         # Adding a group refreshes the view and goes into edit mode.
         self.bsheet.add_account_group()
-        self.check_gui_calls(self.bsheet_gui, stop_editing=1, start_editing=1, refresh=1, update_selection=1)
+        self.check_gui_calls(self.bsheet_gui, stop_editing=1, start_editing=1, refresh=1,
+            update_selection=1)
+        # When doing an action that modifies the undo stack, refresh_undo_actions is called
+        # (we're not testing all actions on this one because it's just tiresome and, frankly, a
+        # little silly, but assume that all events broadcasted when the undo stack is changed
+        # have been connected)
+        self.check_gui_calls(self.mainwindow_gui, refresh_undo_actions=1)
+    
+    def test_add_transaction(self):
+        # Adding a transaction causes a refresh_undo_actions() gui call
+        self.mainwindow.select_transaction_table()
+        self.clear_gui_calls()
+        self.ttable.add()
+        self.ttable[0].description = 'foobar'
+        self.ttable.save_edits()
+        self.check_gui_calls(self.mainwindow_gui, refresh_undo_actions=1)
     
     def test_new_schedule(self):
         # Repeat options must be updated upon panel load

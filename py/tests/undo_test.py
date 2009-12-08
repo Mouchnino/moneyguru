@@ -205,7 +205,7 @@ class OneNamedAccount(TestCase):
         self.clear_gui_calls()
         self.document.redo()
         self.assertTrue(self.document.selected_account is None)
-        self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1)
+        self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1, refresh_undo_actions=1)
     
     @save_state_then_verify
     def test_undo_add_entry(self):
@@ -249,7 +249,7 @@ class OneNamedAccount(TestCase):
         self.clear_gui_calls()
         self.document.undo()
         self.assertTrue(self.document.selected_account is None)
-        self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1)
+        self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1, refresh_undo_actions=1)
     
     def test_undo_twice(self):
         """Undoing a new_account() just after having undone a change_account works"""

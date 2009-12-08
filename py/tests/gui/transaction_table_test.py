@@ -52,7 +52,6 @@ class Pristine(TestCase):
         row.amount = '42'
         self.clear_gui_calls()
         self.ttable.save_edits()
-        self.check_gui_calls(self.mainwindow_gui) # No changes in the main window
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
@@ -272,7 +271,8 @@ class OneEntry(TestCase, CommonSetup):
         self.ttable[0].date = '12/07/2008'
         self.clear_gui_calls()
         self.ttable.save_edits()
-        self.check_gui_calls(self.mainwindow_gui)
+        self.check_gui_calls_partial(self.mainwindow_gui, animate_date_range_backward=0,
+            animate_date_range_forward=0, refresh_date_range_selector=0)
     
     def test_set_date_out_of_range(self):
         """Setting the date out of range makes the app's date range change accordingly"""
@@ -281,8 +281,8 @@ class OneEntry(TestCase, CommonSetup):
         self.clear_gui_calls()
         self.ttable.save_edits()
         self.assertEqual(self.document.date_range, MonthRange(date(2008, 8, 1)))
-        self.check_gui_calls(self.mainwindow_gui, animate_date_range_forward=1,
-                             refresh_date_range_selector=1)
+        self.check_gui_calls_partial(self.mainwindow_gui, animate_date_range_forward=1,
+            refresh_date_range_selector=1)
     
     def test_set_invalid_amount(self):
         # setting an invalid amount reverts to the old amount

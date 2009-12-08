@@ -67,6 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.connect()
         self.sfield = SearchField(doc=doc, view=self.searchLineEdit)
         self.sfield.model.connect()
+        self._updateUndoActions()
         
         # Recent Menu
         self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
@@ -255,6 +256,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionPreviousDateRange.setEnabled(canNavigateDateRange)
         self.actionTodayDateRange.setEnabled(canNavigateDateRange)
     
+    def _updateUndoActions(self):
+        if self.doc.model.can_undo():
+            self.actionUndo.setEnabled(True)
+            self.actionUndo.setText("Undo {0}".format(self.doc.model.undo_description()))
+        else:
+            self.actionUndo.setEnabled(False)
+            self.actionUndo.setText("Undo")
+        if self.doc.model.can_redo():
+            self.actionRedo.setEnabled(True)
+            self.actionRedo.setText("Redo {0}".format(self.doc.model.redo_description()))
+        else:
+            self.actionRedo.setEnabled(False)
+            self.actionRedo.setText("Redo")
+    
     #--- Public
     def updateOptionalWidgetsVisibility(self):
         self.nwview.updateOptionalWidgetsVisibility()
@@ -378,6 +393,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
         self._updateActionsState()
+    
+    def refresh_undo_actions(self):
+        self._updateUndoActions()
     
     def show_account_reassign_panel(self):
         self.arpanel.load()

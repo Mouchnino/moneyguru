@@ -189,11 +189,22 @@ class MainWindow(DocumentGUIObject):
             self.select_schedule_table()
     
     #--- Event callbacks
+    def _undo_stack_changed(self):
+        # XXX support this on cocoa (put a no-op)
+        self.view.refresh_undo_actions()
+    
+    account_added = _undo_stack_changed
+    account_changed = _undo_stack_changed
+    account_deleted = _undo_stack_changed
+    
     def account_must_be_shown(self):
         self.select_entry_table()
     
     def account_needs_reassignment(self):
         self.view.show_account_reassign_panel()
+    
+    budget_changed = _undo_stack_changed
+    budget_deleted = _undo_stack_changed
     
     def custom_date_range_selected(self):
         self.view.show_custom_date_range_panel()
@@ -215,8 +226,17 @@ class MainWindow(DocumentGUIObject):
         if self.document.filter_string and self.top not in (self.ttable, self.etable):
             self.show_transaction_table()
     
+    def performed_undo_or_redo(self):
+        if self.document.selected_account is None and self.top is self.etable:
+            self.select_balance_sheet()
+        self._undo_stack_changed()
+    document_changed = performed_undo_or_redo
+    
     def reconciliation_changed(self):
         self.view.refresh_reconciliation_button()
+    
+    schedule_changed = _undo_stack_changed
+    schedule_deleted = _undo_stack_changed
     
     def schedule_table_must_be_shown(self):
         self.select_schedule_table()
@@ -224,7 +244,6 @@ class MainWindow(DocumentGUIObject):
     def selected_must_be_edited(self):
         self.edit_item()
     
-    def performed_undo_or_redo(self):
-        if self.document.selected_account is None and self.top is self.etable:
-            self.select_balance_sheet()
-    document_changed = performed_undo_or_redo
+    transaction_changed = _undo_stack_changed
+    transaction_deleted = _undo_stack_changed
+    transaction_imported = _undo_stack_changed
