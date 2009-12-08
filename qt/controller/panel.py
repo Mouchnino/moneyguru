@@ -17,7 +17,8 @@ class Panel(QDialog):
     # A list of two-sized tuples (QWidget's name, model field name).
     FIELDS = []
     def __init__(self):
-        QDialog.__init__(self, None)
+        # The flags we pass are that so we don't get the "What's this" button in the title bar
+        QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
         self._widget2ModelAttr = {}
     
     def _changeComboBoxItems(self, comboBox, newItems):

@@ -143,14 +143,22 @@
         <item>
          <widget class="QPushButton" name="addSplitButton">
           <property name="text">
-           <string>+</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../mg.qrc">
+            <normaloff>:/plus_8</normaloff>:/plus_8</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="removeSplitButton">
           <property name="text">
-           <string>-</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../mg.qrc">
+            <normaloff>:/minus_8</normaloff>:/minus_8</iconset>
           </property>
          </widget>
         </item>
@@ -193,7 +201,9 @@
    <header>support.item_view</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../mg.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
