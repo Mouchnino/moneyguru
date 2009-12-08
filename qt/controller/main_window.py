@@ -230,6 +230,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             shownAccount.is_balance_sheet_account()
         canNavigateDateRange = self.doc.model.date_range.can_navigate
         
+        newItemLabel = {
+            NETWORTH_INDEX: "New Account",
+            PROFIT_INDEX: "New Account",
+            TRANSACTION_INDEX: "New Transaction",
+            ACCOUNT_INDEX: "New Transaction",
+            SCHEDULE_INDEX: "New Schedule",
+            BUDGET_INDEX: "New Budget",
+        }[viewIndex]
+        self.actionNewItem.setText(newItemLabel)
         self.actionNewAccountGroup.setEnabled(isSheet)
         self.actionMoveDown.setEnabled(isTransactionOrEntryTable)
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
