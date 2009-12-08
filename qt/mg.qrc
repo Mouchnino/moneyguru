@@ -20,7 +20,7 @@
     <file alias="forward_16">images/forward_16.png</file>
     <file alias="right_arrow_gray_12">images/right_arrow_gray_12.png</file>
     <file alias="right_arrow_white_12">images/right_arrow_white_12.png</file>
-    <file alias="account_in_16">images/account_in_16.png</file>
-    <file alias="account_out_16">images/account_out_16.png</file>
+    <file alias="account_in_12">images/account_in_12.png</file>
+    <file alias="account_out_12">images/account_out_12.png</file>
 </qresource>
 </RCC>

@@ -47,7 +47,7 @@ class AccountSheetDelegate(QStyledItemDelegate):
                     self._model.model.show_selected_account()
                 currentRight -= 12
             if not (node.ref.is_total or node.ref.is_blank):
-                if (currentRight-16) <= pos.x() < currentRight:
+                if (currentRight-12) <= pos.x() < currentRight:
                     self._model.model.toggle_excluded()
     
     def paint(self, painter, option, index):
@@ -69,7 +69,7 @@ class AccountSheetDelegate(QStyledItemDelegate):
                 option.rect.setRight(arrowRect.left()-1)
                 painter.drawPixmap(arrowRect, pixmap)
             if option.state & QStyle.State_Selected and not (ref.is_total or ref.is_blank):
-                excludeImageName = ':/account_in_16' if ref.is_excluded else ':/account_out_16'
+                excludeImageName = ':/account_in_12' if ref.is_excluded else ':/account_out_12'
                 pixmap = QPixmap(excludeImageName)
                 excludeRect = QRect(0, 0, pixmap.width(), pixmap.height())
                 excludeRect.moveCenter(option.rect.center()) # centered vertically
