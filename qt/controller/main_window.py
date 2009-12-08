@@ -105,6 +105,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionEditItem.triggered.connect(self.editItemTriggered)
         self.actionMoveUp.triggered.connect(self.moveUpTriggered)
         self.actionMoveDown.triggered.connect(self.moveDownTriggered)
+        self.actionUndo.triggered.connect(self.doc.model.undo)
+        self.actionRedo.triggered.connect(self.doc.model.redo)
         
         # Open / Save / Import / Export / New
         self.actionNewDocument.triggered.connect(self.doc.new)
@@ -127,6 +129,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionPrint.triggered.connect(self._print)
         self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
+        self.actionQuit.triggered.connect(self.close)
     
     def _setupUi(self):
         self.setupUi(self)
