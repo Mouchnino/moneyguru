@@ -14,7 +14,7 @@ from ..column import Column
 
 class ProfitSheet(AccountSheet):
     COLUMNS = [
-        Column('name', 'Account', 120),
+        Column('name', 'Account', 150),
         Column('cash_flow', 'Current', 100),
         Column('last_cash_flow', 'Last', 100),
         Column('delta', 'Change', 100),

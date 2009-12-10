@@ -14,7 +14,7 @@ from ..column import Column
 
 class NetWorthSheet(AccountSheet):
     COLUMNS = [
-        Column('name', 'Account', 120),
+        Column('name', 'Account', 150),
         Column('end', 'End', 100),
         Column('start', 'Start', 100),
         Column('delta', 'Change', 100),

@@ -14,13 +14,13 @@ from ..table import Table
 
 class BudgetTable(Table):
     COLUMNS = [
-        Column('start_date', 'Start Date', 120),
-        Column('stop_date', 'Stop Date', 120),
-        Column('repeat_type', 'Repeat Type', 120),
-        Column('interval', 'Interval', 80),
-        Column('account', 'Account', 120),
-        Column('target', 'Target', 120),
-        Column('amount', 'Amount', 120),
+        Column('start_date', 'Start Date', 90),
+        Column('stop_date', 'Stop Date', 90),
+        Column('repeat_type', 'Repeat Type', 80),
+        Column('interval', 'Interval', 50),
+        Column('account', 'Account', 144),
+        Column('target', 'Target', 144),
+        Column('amount', 'Amount', 100),
     ]
     
     def __init__(self, doc, view):

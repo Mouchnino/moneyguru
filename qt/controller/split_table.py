@@ -14,8 +14,8 @@ from .table import Table
 
 class SplitTable(Table):
     COLUMNS = [
-        Column('account', 'Account', 50),
-        Column('memo', 'Memo', 50),
+        Column('account', 'Account', 88),
+        Column('memo', 'Memo', 70),
         Column('debit', 'Debit', 70),
         Column('credit', 'Credit', 70),
     ]
@@ -23,4 +23,6 @@ class SplitTable(Table):
     def __init__(self, transactionPanel, view):
         model = SplitTableModel(view=self, transaction_panel=transactionPanel.model)
         Table.__init__(self, model, view)
+        self.setColumnsWidth(None)
     
+

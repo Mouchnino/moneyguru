@@ -14,16 +14,16 @@ from ..table import Table
 
 class ScheduleTable(Table):
     COLUMNS = [
-        Column('start_date', 'Start Date', 120),
-        Column('stop_date', 'Stop Date', 120),
-        Column('repeat_type', 'Repeat Type', 120),
-        Column('interval', 'Interval', 80),
-        Column('description', 'Description', 150),
-        Column('payee', 'Payee', 150),
-        Column('checkno', 'Check #', 100),
-        Column('from_', 'From', 120),
-        Column('to', 'To', 120),
-        Column('amount', 'Amount', 120),
+        Column('start_date', 'Start Date', 80),
+        Column('stop_date', 'Stop Date', 80),
+        Column('repeat_type', 'Repeat Type', 80),
+        Column('interval', 'Interval', 50),
+        Column('description', 'Description', 110),
+        Column('payee', 'Payee', 110),
+        Column('checkno', 'Check #', 70),
+        Column('from_', 'From', 100),
+        Column('to', 'To', 100),
+        Column('amount', 'Amount', 97),
     ]
     
     def __init__(self, doc, view):

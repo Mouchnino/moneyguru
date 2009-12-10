@@ -20,14 +20,14 @@ from ..table_with_transactions import TableWithTransactions
 
 class TransactionTable(TableWithTransactions):
     COLUMNS = [
-        Column('status', '', 28),
-        Column('date', 'Date', 120, editor=DATE_EDIT),
-        Column('description', 'Description', 150, editor=DESCRIPTION_EDIT),
+        Column('status', '', 25),
+        Column('date', 'Date', 87, editor=DATE_EDIT),
+        Column('description', 'Description', 230, editor=DESCRIPTION_EDIT),
         Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
-        Column('checkno', 'Check #', 100),
+        Column('checkno', 'Check #', 80),
         Column('from_', 'From', 120, editor=ACCOUNT_EDIT),
         Column('to', 'To', 120, editor=ACCOUNT_EDIT),
-        Column('amount', 'Amount', 120),
+        Column('amount', 'Amount', 100),
     ]
     
     def __init__(self, doc, view, totalsLabel):

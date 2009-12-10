@@ -16,15 +16,15 @@ from ..table_with_transactions import TableWithTransactions
 
 class EntryTable(TableWithTransactions):
     COLUMNS = [
-        Column('status', '', 28),
-        Column('date', 'Date', 120, editor=DATE_EDIT),
+        Column('status', '', 25),
+        Column('date', 'Date', 87, editor=DATE_EDIT),
         Column('description', 'Description', 150, editor=DESCRIPTION_EDIT),
         Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
         Column('checkno', 'Check #', 100),
         Column('transfer', 'Transfer', 120, editor=ACCOUNT_EDIT),
-        Column('increase', 'Increase', 120),
-        Column('decrease', 'Decrease', 120),
-        Column('balance', 'Balance', 120),
+        Column('increase', 'Increase', 95),
+        Column('decrease', 'Decrease', 95),
+        Column('balance', 'Balance', 110),
     ]
     
     def __init__(self, doc, view, totalsLabel):

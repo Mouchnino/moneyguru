@@ -8,6 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
+
 DATE_EDIT = 'date_edit'
 DESCRIPTION_EDIT = 'description_edit'
 PAYEE_EDIT = 'payee_edit'
@@ -31,6 +33,7 @@ class ColumnBearer(object):
             col.index = index
         # A map attrname:column is useful sometimes, so we create it here
         self.ATTR2COLUMN = dict((col.attrname, col) for col in self.COLUMNS)
+        self._headerView.setDefaultAlignment(Qt.AlignLeft)
     
     #--- Public
     def setColumnsWidth(self, widths):
