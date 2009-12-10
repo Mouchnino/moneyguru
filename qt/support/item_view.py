@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect
+from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect, QEvent
 from PyQt4.QtGui import (QAbstractItemView, QTableView, QTreeView, QItemSelectionModel,
     QAbstractItemDelegate)
 
@@ -56,18 +56,12 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         if hasattr(delegate, 'handleClick'):
             delegate.handleClick(index, relativePos, QRect(0, 0, rect.width(), rect.height()))
     
-    def _shouldEditFromKeyPress(self, trigger):
+    def _shouldEditFromKeyPress(self, trigger, event):
+        if event is None or event.type() != QEvent.KeyPress:
+            return False # not a key press
         # Returns True if the trigger is a key press and that this type of trigger is allowed in
         # the edit triggers. Moreover, this only returns True if we're not already in edition state.
         if self.state() == QAbstractItemView.EditingState:
-            return False
-        # It turns out that the view's state reverts to NoState between field shifting (tab backtab)
-        # So, in fact, even if we're editing, we might be in NoState mode. Unfortunately, although
-        # QAbstractItemMode has submit()/revert(), we have no interface for querying the model about
-        # it's edition state. Eventually, maybe that I should make my own one, but for now, one
-        # special behavior I observed about tabbing/backtabbing during edition is that the trigger
-        # passed is AllEditTriggers. So what we can do is to return False when the trigger is this.
-        if trigger == QAbstractItemView.AllEditTriggers:
             return False
         if not (trigger & (QAbstractItemView.EditKeyPressed | QAbstractItemView.AnyKeyPressed)):
             return False
@@ -91,7 +85,7 @@ class TableView(QTableView, ItemViewMixIn):
     def edit(self, index, trigger, event):
         # When an edit is triggered by a key, rather than editing the selected cell (default
         # behavior), we want to look at the row and edit the first editable cell in it.
-        if self._shouldEditFromKeyPress(trigger):
+        if self._shouldEditFromKeyPress(trigger, event):
             editableIndex = self._firstEditableIndex(index)
             if editableIndex is not None:
                 return QTableView.edit(self, editableIndex, trigger, event)
@@ -119,13 +113,12 @@ class TableView(QTableView, ItemViewMixIn):
     
     #--- Public
     def editSelected(self):
-        # By overriding edit(), we lose the PyQt ability to do method overloading, so the simple
-        # edit(index) slot is not reachable anymore. We can use this one instead.
         selectedRows = self.selectionModel().selectedRows()
         if not selectedRows:
             return
         selectedIndex = selectedRows[0]
-        QTableView.edit(self, selectedIndex)
+        editableIndex = self._firstEditableIndex(selectedIndex)
+        QTableView.edit(self, editableIndex)
     
     #--- Signals
     deletePressed = pyqtSignal()
