@@ -92,6 +92,14 @@ class Table(QAbstractTableModel, ColumnBearer):
     def _setData(self, row, rowattr, value, role):
         if role == Qt.EditRole:
             value = unicode(value.toString())
+            # When auto-completion is involved, we want to fix the case of the value before it goes
+            # down to the model.
+            # XXX push this logic down to the model
+            if hasattr(self.model, 'current_completion'):
+                completion = self.model.current_completion()
+                if completion and completion.lower() == value.lower():
+                    # use completion's case
+                    value = completion
             setattr(row, rowattr, value)
             return True
         return False

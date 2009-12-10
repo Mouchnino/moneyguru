@@ -46,6 +46,7 @@ class CompletableEdit(QLineEdit):
         self.setText(newText)
         self.setSelection(selectionStart, len(newText) - selectionStart)
     
+    #--- QLineEdit overrides
     def keyPressEvent(self, event):
         key = event.key()
         if key == Qt.Key_Up:
@@ -56,10 +57,14 @@ class CompletableEdit(QLineEdit):
             oldPrefix = self._prefix()
             QLineEdit.keyPressEvent(self, event)
             newPrefix = self._prefix()
-            if oldPrefix != newPrefix: # text changed, do completion
+            # We only want to complete when text has been *added* by the user
+            if len(newPrefix) > len(oldPrefix):
                 completion = self.model.complete(newPrefix, self.ATTRNAME)
                 if completion:
-                    self.setText(completion)
+                    # We don't use `completion` directly because we don't want to mess with the
+                    # user's case.
+                    newText = newPrefix + completion[len(newPrefix):]
+                    self.setText(newText)
                     self.setSelection(len(newPrefix), len(completion) - len(newPrefix))
     
 
