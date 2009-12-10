@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import pyqtSignal, Qt
 from PyQt4.QtGui import (QToolButton, QLineEdit, QIcon, QPixmap, QStyle, QStyleOptionFrameV2,
     QPainter, QPalette)
 
@@ -28,16 +28,25 @@ class SearchEdit(QLineEdit):
     def __init__(self, parent=None):
         QLineEdit.__init__(self, parent)
         self._clearButton = LineEditButton(self)
-        self._clearButton.clicked.connect(self.clear)
-        self.textChanged.connect(self._updateClearButton)
         frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
         paddingRight = self._clearButton.sizeHint().width() + frameWidth + 1
         stylesheet = "QLineEdit {{ padding-right:{0}px; }}".format(paddingRight)
         self.setStyleSheet(stylesheet)
         self.inactiveText = "Search..."
         self._updateClearButton(self.text())
+        
+        self._clearButton.clicked.connect(self._clearSearch)
+        self.returnPressed.connect(self._returnPressed)
+        self.textChanged.connect(self._updateClearButton)
     
     #--- Private
+    def _clearSearch(self):
+        self.clear()
+        self.searchChanged.emit()
+    
+    def _returnPressed(self):
+        self.searchChanged.emit()
+    
     def _updateClearButton(self, text):
         self._clearButton.setVisible(bool(text))
     
@@ -47,7 +56,7 @@ class SearchEdit(QLineEdit):
         rect = self.rect()
         rightHint = self._clearButton.sizeHint()
         rightX = rect.right() - frameWidth - rightHint.width()
-        rightY = (rect.bottom() + 1 - rightHint.height()) // 2
+        rightY = (rect.bottom() - rightHint.height()) // 2
         self._clearButton.move(rightX, rightY)
     
     def paintEvent(self, event):
@@ -64,3 +73,5 @@ class SearchEdit(QLineEdit):
             painter.setPen(disabledColor)
             painter.drawText(textRect, Qt.AlignLeft|Qt.AlignVCenter, self.inactiveText)
     
+    #--- Signals
+    searchChanged = pyqtSignal() # Emitted when return is pressed or when the test is cleared

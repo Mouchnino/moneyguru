@@ -19,10 +19,10 @@ class SearchField(QObject):
         self.view = view
         self.model = SearchFieldModel(document=doc.model, view=self)
         
-        self.view.returnPressed.connect(self.returnPressed)
+        self.view.searchChanged.connect(self.searchChanged)
     
     #--- Event Handling
-    def returnPressed(self):
+    def searchChanged(self):
         self.model.query = unicode(self.view.text())
     
     #--- model --> view
