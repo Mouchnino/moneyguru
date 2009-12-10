@@ -11,10 +11,12 @@
 import os.path as op
 import tempfile
 
-from PyQt4.QtCore import pyqtSignal, QObject, QFile
-from PyQt4.QtGui import QFileDialog, QMessageBox
+from PyQt4.QtCore import pyqtSignal, Qt, QObject, QFile
+from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
 from moneyguru.document import Document as DocumentModel
+
+from controller.schedule_scope_dialog import ScheduleScopeDialog
 
 class Document(QObject):
     def __init__(self, app):
@@ -121,7 +123,12 @@ class Document(QObject):
         return 2 # continue, don't reconcile
     
     def query_for_schedule_scope(self):
-        return False
+        if QApplication.keyboardModifiers() & Qt.ShiftModifier:
+            return True
+        if not self.app.prefs.showScheduleScopeDialog:
+            return False
+        dialog = ScheduleScopeDialog(self.app.mainWindow)
+        return dialog.exec_() == ScheduleScopeDialog.Accepted
     
     #--- Signals
     documentOpened = pyqtSignal(unicode)
