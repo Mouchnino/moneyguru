@@ -132,7 +132,7 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
         QTreeView.closeEditor(self, edit, hint)
     
     def edit(self, index, trigger, event):
-        if self._shouldEditFromKeyPress(trigger):
+        if self._shouldEditFromKeyPress(trigger, event):
             editableIndex = self._firstEditableIndex(index)
             if editableIndex is not None:
                 return QTreeView.edit(self, editableIndex, trigger, event)
