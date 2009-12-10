@@ -15,6 +15,7 @@ from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
 from print_ import ViewPrinter
 from support.recent import Recent
+from support.search_edit import SearchEdit
 from .account.view import EntryView
 from .budget.view import BudgetView
 from .networth.view import NetWorthView
@@ -169,7 +170,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionToggleReconciliationModeToolbar)
         self.toolBar.addSeparator()
-        self.searchLineEdit = QLineEdit()
+        self.searchLineEdit = SearchEdit()
         self.searchLineEdit.setMaximumWidth(240)
         self.toolBar.addWidget(self.searchLineEdit)
     
