@@ -84,4 +84,7 @@ class EntryTable(TableWithTransactions):
     def refresh(self):
         TableWithTransactions.refresh(self)
         self.totalsLabel.setText(self.model.totals)
+        balanceColumn = self.ATTR2COLUMN['balance']
+        shouldShow = self.model.should_show_balance_column()
+        self._headerView.setSectionHidden(balanceColumn.index, not shouldShow)
     
