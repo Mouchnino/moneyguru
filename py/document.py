@@ -1346,6 +1346,9 @@ class Document(Broadcaster, Listener):
         if isinstance(self.date_range, RunningYearRange):
             self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
     
+    def default_currency_changed(self):
+        self.notify('document_changed')
+    
     def first_weekday_changed(self):
         self.notify('first_weekday_changed')
     

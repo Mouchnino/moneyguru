@@ -11,6 +11,8 @@
 from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString
 from PyQt4.QtGui import QDialog, QDesktopServices
 
+from hsutil.currency import Currency
+
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
 from qtlib.reg import Registration
@@ -31,15 +33,19 @@ class MoneyGuru(ApplicationBase):
     
     def __init__(self):
         ApplicationBase.__init__(self)
+        self.prefs = Preferences()
+        self.prefs.load()
         locale = QLocale.system()
         dateFormat = unicode(locale.dateFormat(QLocale.ShortFormat))
         decimalSep = unicode(QString(locale.decimalPoint()))
         groupingSep = unicode(QString(locale.groupSeparator()))
+        try:
+            defaultCurrency = Currency(self.prefs.nativeCurrency)
+        except ValueError:
+            defaultCurrency = Currency('USD')
         cachePath = unicode(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
-        self.prefs = Preferences()
-        self.prefs.load()
         self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,
-            grouping_sep=groupingSep, cache_path=cachePath)
+            grouping_sep=groupingSep, default_currency=defaultCurrency, cache_path=cachePath)
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
         self.doc.model.connect()
@@ -87,6 +93,7 @@ class MoneyGuru(ApplicationBase):
     def applicationWillTerminate(self):
         self.doc.close()
         self.willSavePrefs.emit()
+        self.prefs.nativeCurrency = self.model.default_currency.code
         self.prefs.save()
     
     #--- Signals

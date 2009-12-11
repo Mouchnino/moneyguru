@@ -12,6 +12,8 @@
 # in every test unit can get tedious, so this test unit is a "theme based" unit which tests calls
 # made to GUIs' view.
 
+from hsutil.currency import EUR
+
 from ..base import TestCase
 
 class Pristine(TestCase):
@@ -39,6 +41,17 @@ class Pristine(TestCase):
         self.ttable[0].description = 'foobar'
         self.ttable.save_edits()
         self.check_gui_calls(self.mainwindow_gui, refresh_undo_actions=1)
+    
+    def test_change_default_currency(self):
+        # When the default currency is changed, all gui refresh themselves
+        self.app.default_currency = EUR
+        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls(self.nwgraph_gui, refresh=1)
+        self.check_gui_calls(self.apie_gui, refresh=1)
+        self.check_gui_calls(self.lpie_gui, refresh=1)
+        # but not if it stays the same
+        self.app.default_currency = EUR
+        self.check_gui_calls(self.bsheet_gui, refresh=0)
     
     def test_new_schedule(self):
         # Repeat options must be updated upon panel load

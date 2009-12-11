@@ -10,6 +10,8 @@
 
 from PyQt4.QtGui import QDialog
 
+from hsutil.currency import Currency
+
 from ui.preferences_panel_ui import Ui_PreferencesPanel
 
 class PreferencesPanel(QDialog, Ui_PreferencesPanel):
@@ -20,6 +22,8 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
     
     def _setupUi(self):
         self.setupUi(self)
+        availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
+        self.nativeCurrencyComboBox.addItems(availableCurrencies)
     
     def load(self):
         appm = self.app.model
@@ -27,6 +31,7 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         self.aheadMonthsSpinBox.setValue(appm.ahead_months)
         self.yearStartComboBox.setCurrentIndex(appm.year_start_month)
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
+        self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.dereconciliationWarningCheckBox.setChecked(appm.dont_unreconcile)
     
@@ -36,6 +41,8 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         appm.ahead_months = self.aheadMonthsSpinBox.value()
         appm.year_start_month = self.yearStartComboBox.currentIndex()
         appm.autosave_interval = self.autoSaveIntervalSpinBox.value()
+        if self.nativeCurrencyComboBox.currentIndex() >= 0:
+            appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
         appm.dont_unreconcile = self.dereconciliationWarningCheckBox.isChecked()
     

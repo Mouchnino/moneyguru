@@ -7,7 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import logging
 import threading
 
 from hsutil import io
@@ -45,7 +44,7 @@ class Application(Broadcaster, RegistrableApplication):
         else:
             db_path = ':memory:'
         currency.initialize_db(db_path)
-        self.default_currency = default_currency
+        self._default_currency = default_currency
         self._date_format = date_format
         self._decimal_sep = decimal_sep
         self._grouping_sep = grouping_sep
@@ -80,14 +79,14 @@ class Application(Broadcaster, RegistrableApplication):
     
     #--- Public
     def format_amount(self, amount, **kw):
-        return format_amount(amount, self.default_currency, decimal_sep=self._decimal_sep,
+        return format_amount(amount, self._default_currency, decimal_sep=self._decimal_sep,
                              grouping_sep=self._grouping_sep, **kw)
     
     def format_date(self, date):
         return format_date(date, self._date_format)
     
     def parse_amount(self, amount):
-        return parse_amount(amount, self.default_currency)
+        return parse_amount(amount, self._default_currency)
     
     def parse_date(self, date):
         return parse_date(date, self._date_format)
@@ -167,4 +166,15 @@ class Application(Broadcaster, RegistrableApplication):
             return
         self._dont_unreconcile = value
         self.set_default(DONT_UNRECONCILE_PREFERENCE, value)
+    
+    @property
+    def default_currency(self):
+        return self._default_currency
+    
+    @default_currency.setter
+    def default_currency(self, value):
+        if value == self._default_currency:
+            return
+        self._default_currency = value
+        self.notify('default_currency_changed')
     
