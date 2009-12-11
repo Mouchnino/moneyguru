@@ -22,12 +22,12 @@ There are 6 types of date ranges:
 1. **Running year:** This date range <i>follows</i> today. It displays exactly <i>one year</i>, but instead of displaying full years, it uses the "Ahead months in Running year" preference to determine when the date range ends, and then starts exactly one year before that date.
 1. **Custom date range:** When you select this date range, moneyGuru will prompt you for a start date and an end date. Afterwards, the date range will be the dates you chose.
 
-For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's &#8984;&#8997;[ and &#8984;&#8997;]). There are also shortcuts to select date range types (&#8984;&#8997;1-6). You can also press &#8984;&#8997;T to return to the today's date range.
+For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's ${cmd_opt}[ and ${cmd_opt}]). There are also shortcuts to select date range types (${cmd_opt}1-6). You can also press ${cmd_opt}T to return to the today's date range.
 
 The thin red line
 -----
 
-All information in moneyGuru is displayed according to the currently selected date range. Things get interesting when the date range ends at a future date. If you have scheduled transactions or budget set up, the numbers you will see and the chart you will look at will include them. In the graphs, there is a sharp distinction between the past and the future. The past is displayed in green, and the future is displayed in gray, a thin red line separating both. So when you look at the grey part of graphs, you are looking at stuff that has not happened yet. Your net worth in your balance sheet will count the yet-to-happen scheduled transactions as well as budgets. Sometimes, you just want to know about your current financial situation. This is what the "Year to date" (&#8984;&#8997;4) date range is for.
+All information in moneyGuru is displayed according to the currently selected date range. Things get interesting when the date range ends at a future date. If you have scheduled transactions or budget set up, the numbers you will see and the chart you will look at will include them. In the graphs, there is a sharp distinction between the past and the future. The past is displayed in green, and the future is displayed in gray, a thin red line separating both. So when you look at the grey part of graphs, you are looking at stuff that has not happened yet. Your net worth in your balance sheet will count the yet-to-happen scheduled transactions as well as budgets. Sometimes, you just want to know about your current financial situation. This is what the "Year to date" (${cmd_opt}4) date range is for.
 
 The toolbar
 -----
@@ -47,7 +47,7 @@ The Net Worth and Profit &amp; Loss views are where you do account management an
 
 **Sheet:** At the top left, there is the "sheet", listing accounts, gives totals account groups. Totals are always given in your native currency. You can also [add, change and remove](edition.htm) accounts from this sheets.
 
-**Show Account:** Next to each account, there is a little ![](images/basics_show_account_arrow.png). You can click on it to show this account in the Account view. You can also select it and press &#8984;&#8594;.
+**Show Account:** Next to each account, there is a little ![](images/basics_show_account_arrow.png). You can click on it to show this account in the Account view. You can also select it and press ${cmd}&#8594;.
 
 **Account Exclusion:** You can also "exclude" accounts by clicking on the little ![](images/basics_account_out.png) icon, or by pressing space. Excluded accounts are not counted in the sheet's totals or in the charts.
 
@@ -55,7 +55,7 @@ The Net Worth and Profit &amp; Loss views are where you do account management an
 
 **Graph:** The graph at the bottom of the view shows the progression of the primary view statistic (net worth or profit) over time.
 
-**Columns:** The sheets each have a different set of columns (customizable with &#8984;J).
+**Columns:** The sheets each have a different set of columns (customizable with ${cmd}J).
 
 - **Balance Sheet:**
     - **Start:** The balance of the account at the beginning of the date range. It includes scheduled transactions, but not budgets.
@@ -110,9 +110,9 @@ View Options
 
 ![](images/basics_view_options.png)
 
-moneyGuru has a View options panel allowing you to hide some elements (such as charts). You can toggle its visibility with &#8984;J.
+moneyGuru has a View options panel allowing you to hide some elements (such as charts). You can toggle its visibility with ${cmd}J.
 
 What You See Is What You Print (Kinda)
 -----
 
-In moneyGuru, you can print whatever is currently shown in any of the four views. You want to report a transaction listing for last year? Just set the current date range to last year, go to the Transactions view, and press &#8984;P. moneyGuru automatically sizes the columns according to their content (columns with longer data are larger), trying to fit the most data in the page. You can also print in Landscape mode through the Print Setup panel (&#8984;&#8679;P).
+In moneyGuru, you can print whatever is currently shown in any of the four views. You want to report a transaction listing for last year? Just set the current date range to last year, go to the Transactions view, and press ${cmd}P. moneyGuru automatically sizes the columns according to their content (columns with longer data are larger), trying to fit the most data in the page.

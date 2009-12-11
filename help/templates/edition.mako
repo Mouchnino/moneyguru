@@ -13,18 +13,18 @@ There are a few keystrokes and clicks that work the same way for everything in m
 
 The + button creates a new thing, the - button removes the selected thing and the "i" button shows info about the selected thing. The "thing" depends on the current view. In the Balance Sheet and the Income Statement, it is an account. In the Transactions and Account views, it is a transaction. Also, if you select more than one transaction and click on the "i" button, the Mass Edition panel will show up rather than the transaction details panel.
 
-Of course, it's also possible to do the same thing with the keyboard. &#8984;N creates a new thing, Delete or Backspace remove the selected thing and &#8984;I shows info about the selected thing.
+Of course, it's also possible to do the same thing with the keyboard. ${cmd}N creates a new thing, Delete or Backspace remove the selected thing and ${cmd}I shows info about the selected thing.
 
 It's possible to edit things by double clicking on a cell that is editable (for example, the name cell of an account). It is also possible to start editing a thing by selecting it and pressing Return. The first editable cell will be in edit mode.
 
-When in edit mode, Tab and &#8679;-Tab can be used to navigate editable cells. When there is no more editable cell in a row, edition ends. It's also possible to end edition by pressing Return again. You can cancel edition by pressing Escape. When doing so, everything you edited in the currently edited row will be reverted to its old value.
+When in edit mode, Tab and Shift-Tab can be used to navigate editable cells. When there is no more editable cell in a row, edition ends. It's also possible to end edition by pressing Return again. You can cancel edition by pressing Escape. When doing so, everything you edited in the currently edited row will be reverted to its old value.
 
 Accounts
 -----
 
-Accounts are edited from the Balance Sheet and the Income Statement. When you create a new account, it will be created under the type of account that currently contains the selection. For example, if I have "Credit Card" selected and press &#8984;N, a new liability will be created. New accounts are automatically created in edition mode. Type a new name then press Return to end edition.
+Accounts are edited from the Balance Sheet and the Income Statement. When you create a new account, it will be created under the type of account that currently contains the selection. For example, if I have "Credit Card" selected and press ${cmd}N, a new liability will be created. New accounts are automatically created in edition mode. Type a new name then press Return to end edition.
 
-You can also use drag & drop to change an account type or group (yeah, account group. use &#8984;&#8679;N to create one).
+You can also use drag & drop to change an account type or group (yeah, account group. use ${cmd_shift}N to create one).
 
 ![](images/edition_account_panel.png)
 
@@ -34,7 +34,7 @@ Transactions
 
 Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (speaking of which, see the "Date Edition" section below). The Description, Payee and Account (From, To Transfer) columns are auto-completed. This means that as soon as you type something in them, moneyGuru will look in the other transactions and give you a completion proposition. You can cycle through the propositions with the up and down arrows. To accept a proposition, just tab out. You can also, of course, just continue to type.
 
-It's possible to re-order a transaction within other transactions of the same date. To do so, you can use drag & drop, or you can use &#8984;+ and &#8984;-.
+It's possible to re-order a transaction within other transactions of the same date. To do so, you can use drag & drop, or you can use ${cmd}+ and ${cmd}-.
 
 If you type the name of an account that doesn't exist in an Account column, this account will automatically be created as an income or expense account (depending on the amount of the transaction). Don't worry about typos creating tons of accounts that you'll have to clean up. If you fix a typo in a transaction, the automatically created account will automatically be removed.
 
