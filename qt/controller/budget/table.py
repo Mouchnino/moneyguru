@@ -8,6 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
+
 from moneyguru.gui.budget_table import BudgetTable as BudgetTableModel
 from ..column import Column
 from ..table import Table
@@ -20,7 +22,7 @@ class BudgetTable(Table):
         Column('interval', 'Interval', 50),
         Column('account', 'Account', 144),
         Column('target', 'Target', 144),
-        Column('amount', 'Amount', 100),
+        Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, doc, view):

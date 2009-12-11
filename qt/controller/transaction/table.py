@@ -27,7 +27,7 @@ class TransactionTable(TableWithTransactions):
         Column('checkno', 'Check #', 80),
         Column('from_', 'From', 120, editor=ACCOUNT_EDIT),
         Column('to', 'To', 120, editor=ACCOUNT_EDIT),
-        Column('amount', 'Amount', 100),
+        Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, doc, view, totalsLabel):

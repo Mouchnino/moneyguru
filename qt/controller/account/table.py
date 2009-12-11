@@ -22,9 +22,9 @@ class EntryTable(TableWithTransactions):
         Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
         Column('checkno', 'Check #', 100),
         Column('transfer', 'Transfer', 120, editor=ACCOUNT_EDIT),
-        Column('increase', 'Increase', 95),
-        Column('decrease', 'Decrease', 95),
-        Column('balance', 'Balance', 110),
+        Column('increase', 'Increase', 95, alignment=Qt.AlignRight),
+        Column('decrease', 'Decrease', 95, alignment=Qt.AlignRight),
+        Column('balance', 'Balance', 110, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, doc, view, totalsLabel):
@@ -52,22 +52,22 @@ class EntryTable(TableWithTransactions):
         else:
             return TableWithTransactions._getStatusData(self, row, role)
     
-    def _getFlags(self, row, rowattr):
-        flags = TableWithTransactions._getFlags(self, row, rowattr)
-        if rowattr == 'status':
+    def _getFlags(self, row, column):
+        flags = TableWithTransactions._getFlags(self, row, column)
+        if column.attrname == 'status':
             if row.can_reconcile() and not row.reconciled:
                 flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
         return flags
     
-    def _setData(self, row, rowattr, value, role):
-        if rowattr == 'status':
+    def _setData(self, row, column, value, role):
+        if column.attrname == 'status':
             if role == Qt.CheckStateRole:
                 row.toggle_reconciled()
                 return True
             else:
                 return False
         else:
-            return TableWithTransactions._setData(self, row, rowattr, value, role)
+            return TableWithTransactions._setData(self, row, column, value, role)
     
     #--- Event Handling
     def cellClicked(self, index):

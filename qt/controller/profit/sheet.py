@@ -8,6 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
+
 from moneyguru.gui.income_statement import IncomeStatement as IncomeStatementModel
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 from ..column import Column
@@ -15,11 +17,11 @@ from ..column import Column
 class ProfitSheet(AccountSheet):
     COLUMNS = [
         Column('name', 'Account', 150),
-        Column('cash_flow', 'Current', 100),
-        Column('last_cash_flow', 'Last', 100),
-        Column('delta', 'Change', 100),
+        Column('cash_flow', 'Current', 100, alignment=Qt.AlignRight),
+        Column('last_cash_flow', 'Last', 100, alignment=Qt.AlignRight),
+        Column('delta', 'Change', 100, alignment=Qt.AlignRight),
         Column('delta_perc', 'Change %', 100),
-        Column('budgeted', 'Budgeted', 100),
+        Column('budgeted', 'Budgeted', 100, alignment=Qt.AlignRight),
     ]
     EXPANDED_NODE_PREF_NAME = 'profitLossExpandedPaths'
     AMOUNT_ATTRS = set(['cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'])

@@ -161,7 +161,8 @@ class AccountSheet(TreeModel, ColumnBearer):
             return None
         node = index.internalPointer()
         ref = node.ref
-        rowattr = self.COLUMNS[index.column()].attrname
+        column = self.COLUMNS[index.column()]
+        rowattr = column.attrname
         if role in (Qt.DisplayRole, Qt.EditRole):
             return getattr(node.ref, rowattr)
         elif role == Qt.FontRole:
@@ -174,6 +175,8 @@ class AccountSheet(TreeModel, ColumnBearer):
             font = QFont(self.view.font())
             font.setBold(isBold)
             return font
+        elif role == Qt.TextAlignmentRole:
+            return column.alignment
         elif role == INDENTATION_OFFSET_ROLE:
             # index.parent().isValid(): we don't want the grand total line to be unindented
             if rowattr == 'name' and ref.is_total and index.parent().isValid():

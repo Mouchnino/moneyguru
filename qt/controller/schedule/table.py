@@ -8,6 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
+
 from moneyguru.gui.schedule_table import ScheduleTable as ScheduleTableModel
 from ..column import Column
 from ..table import Table
@@ -23,7 +25,7 @@ class ScheduleTable(Table):
         Column('checkno', 'Check #', 70),
         Column('from_', 'From', 100),
         Column('to', 'To', 100),
-        Column('amount', 'Amount', 97),
+        Column('amount', 'Amount', 97, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, doc, view):

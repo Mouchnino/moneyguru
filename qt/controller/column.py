@@ -16,12 +16,13 @@ PAYEE_EDIT = 'payee_edit'
 ACCOUNT_EDIT = 'account_edit'
 
 class Column(object):
-    def __init__(self, attrname, title, defaultWidth, editor=None):
+    def __init__(self, attrname, title, defaultWidth, editor=None, alignment=Qt.AlignLeft):
         self.index = None # Is set when the column list is read
         self.attrname = attrname
         self.title = title
         self.defaultWidth = defaultWidth
         self.editor = editor
+        self.alignment = alignment
     
 
 class ColumnBearer(object):

@@ -76,20 +76,22 @@ class Table(QAbstractTableModel, ColumnBearer):
     
     #--- Data Model methods
     # Virtual
-    def _getData(self, row, rowattr, role):
+    def _getData(self, row, column, role):
         if role in (Qt.DisplayRole, Qt.EditRole):
-            return getattr(row, rowattr)
+            return getattr(row, column.attrname)
+        elif role == Qt.TextAlignmentRole:
+            return column.alignment
         return None
     
     # Virtual
-    def _getFlags(self, row, rowattr):
+    def _getFlags(self, row, column):
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
-        if row.can_edit_cell(rowattr):
+        if row.can_edit_cell(column.attrname):
             flags |= Qt.ItemIsEditable
         return flags
     
     # Virtual
-    def _setData(self, row, rowattr, value, role):
+    def _setData(self, row, column, value, role):
         if role == Qt.EditRole:
             value = unicode(value.toString())
             # When auto-completion is involved, we want to fix the case of the value before it goes
@@ -100,7 +102,7 @@ class Table(QAbstractTableModel, ColumnBearer):
                 if completion and completion.lower() == value.lower():
                     # use completion's case
                     value = completion
-            setattr(row, rowattr, value)
+            setattr(row, column.attrname, value)
             return True
         return False
     
@@ -111,15 +113,15 @@ class Table(QAbstractTableModel, ColumnBearer):
         if not index.isValid():
             return None
         row = self.model[index.row()]
-        rowattr = self.COLUMNS[index.column()].attrname
-        return self._getData(row, rowattr, role)
+        column = self.COLUMNS[index.column()]
+        return self._getData(row, column, role)
     
     def flags(self, index):
         if not index.isValid():
             return self.INVALID_INDEX_FLAGS
         row = self.model[index.row()]
-        rowattr = self.COLUMNS[index.column()].attrname
-        return self._getFlags(row, rowattr)
+        column = self.COLUMNS[index.column()]
+        return self._getFlags(row, column)
     
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.COLUMNS):
@@ -138,8 +140,8 @@ class Table(QAbstractTableModel, ColumnBearer):
         if not index.isValid():
             return False
         row = self.model[index.row()]
-        rowattr = self.COLUMNS[index.column()].attrname
-        return self._setData(row, rowattr, value, role)
+        column = self.COLUMNS[index.column()]
+        return self._setData(row, column, value, role)
     
     def submit(self):
         self.model.save_edits()

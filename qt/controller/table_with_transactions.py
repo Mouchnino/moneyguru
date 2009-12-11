@@ -41,14 +41,14 @@ class TableWithTransactions(Table):
         else:
             return None
     
-    def _getData(self, row, rowattr, role):
-        if rowattr == 'status':
+    def _getData(self, row, column, role):
+        if column.attrname == 'status':
             return self._getStatusData(row, role)
         else:
-            return Table._getData(self, row, rowattr, role)
+            return Table._getData(self, row, column, role)
     
-    def _getFlags(self, row, rowattr):
-        flags = Table._getFlags(self, row, rowattr)
+    def _getFlags(self, row, column):
+        flags = Table._getFlags(self, row, column)
         return flags | Qt.ItemIsDragEnabled
     
     #--- Drag & Drop
