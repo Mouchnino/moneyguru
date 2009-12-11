@@ -8,8 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtGui import (QMainWindow, QMenu, QIcon, QPixmap, QLineEdit, QPrintDialog,
-    QLabel, QFont)
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QPrintDialog, QLabel, QFont
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
 
@@ -180,6 +180,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             event.accept()
         else:
             event.ignore()
+    
+    def keyPressEvent(self, event):
+        key = event.key()
+        modifiers = event.modifiers() & (Qt.ControlModifier|Qt.AltModifier|Qt.ShiftModifier|Qt.MetaModifier)
+        if modifiers == Qt.ControlModifier|Qt.ShiftModifier:
+            if key == Qt.Key_Left:
+                self.actionShowPreviousView.trigger()
+                return
+            elif key == Qt.Key_Right:
+                self.actionShowNextView.trigger()
+                return
+        elif modifiers == Qt.ControlModifier|Qt.AltModifier:
+            if key == Qt.Key_Left:
+                self.actionPreviousDateRange.trigger()
+                return
+            elif key == Qt.Key_Right:
+                self.actionNextDateRange.trigger()
+                return
+        QMainWindow.keyPressEvent(self, event)
     
     #--- Private
     def _print(self):
