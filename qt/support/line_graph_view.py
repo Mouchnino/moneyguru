@@ -26,12 +26,35 @@ class LineGraphView(GraphView):
         painter.setPen(self.linePen)
         painter.drawPolyline(*points)
         
-        # close the polygon and fill it.
-        firstPoint = points[0]
-        lastPoint = points[-1]
-        points.append(QPointF(lastPoint.x(), 0))
-        points.append(QPointF(firstPoint.x(), 0))
+        # close the polygons and fill them.
         painter.setPen(QPen(Qt.NoPen))
-        painter.setBrush(self.graphBrush)
-        painter.drawPolygon(*points)
+        xTodayFactored = ds.xtoday * xFactor;
+        pastPoints = [p for p in points if p.x() <= xTodayFactored]
+        futurePoints = [p for p in points if p.x() > xTodayFactored]
+        if pastPoints and futurePoints:
+            meetingPoint = QPointF(xTodayFactored, pastPoints[-1].y())
+            pastPoints.append(meetingPoint)
+            futurePoints.insert(0, meetingPoint)
+        else:
+            meetingPoint = None
+        # start with past
+        if pastPoints:
+            firstPoint = pastPoints[0]
+            lastPoint = pastPoints[-1]
+            pastPoints.append(QPointF(lastPoint.x(), 0))
+            pastPoints.append(QPointF(firstPoint.x(), 0))
+            painter.setBrush(self.graphBrush)
+            painter.drawPolygon(*pastPoints)
+        if futurePoints:
+            firstPoint = futurePoints[0]
+            lastPoint = futurePoints[-1]
+            futurePoints.append(QPointF(lastPoint.x(), 0))
+            futurePoints.append(QPointF(firstPoint.x(), 0))
+            painter.setBrush(self.graphFutureBrush)
+            painter.drawPolygon(*futurePoints)
+        if meetingPoint is not None:
+            pen = QPen(self.linePen)
+            pen.setColor(Qt.red)
+            painter.setPen(pen)
+            painter.drawLine(QPointF(xTodayFactored, 0), meetingPoint)
     
