@@ -8,8 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication
-from PyQt4.QtGui import QDialog
+from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString
+from PyQt4.QtGui import QDialog, QDesktopServices
 
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
@@ -31,9 +31,15 @@ class MoneyGuru(ApplicationBase):
     
     def __init__(self):
         ApplicationBase.__init__(self)
+        locale = QLocale.system()
+        dateFormat = unicode(locale.dateFormat(QLocale.ShortFormat))
+        decimalSep = unicode(QString(locale.decimalPoint()))
+        groupingSep = unicode(QString(locale.groupSeparator()))
+        cachePath = unicode(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
         self.prefs = Preferences()
         self.prefs.load()
-        self.model = MoneyGuruModel(view=self)
+        self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,
+            grouping_sep=groupingSep, cache_path=cachePath)
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
         self.doc.model.connect()
