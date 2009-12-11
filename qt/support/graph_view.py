@@ -35,6 +35,11 @@ class GraphView(QWidget):
         gradient.setColorAt(0, QColor(93, 188, 86)) # dark green
         gradient.setColorAt(1, QColor(164, 216, 158)) # light green
         self.graphBrush = QBrush(gradient)
+        gradient = QLinearGradient(0, 0, 0, 1)
+        gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
+        gradient.setColorAt(0, Qt.darkGray)
+        gradient.setColorAt(1, Qt.lightGray)
+        self.graphFutureBrush = QBrush(gradient)
     
     def _drawGraph(self, painter, xFactor, yFactor):
         raise NotImplementedError()
@@ -89,6 +94,8 @@ class GraphView(QWidget):
         # X/Y axis
         painter.drawLine(graphLeft, graphBottom, graphRight, graphBottom)
         painter.drawLine(graphLeft, graphBottom, graphLeft, graphTop)
+        if graphBottom < 0:
+            painter.drawLine(graphLeft, 0, graphRight, 0)
         
         # X tickmarks
         tickBottomY = graphBottom - self.TICKMARKS_LENGTH
