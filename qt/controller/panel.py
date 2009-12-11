@@ -66,6 +66,10 @@ class Panel(QDialog):
         pass
     
     def accept(self):
+        # The setFocus() call is to force the last edited field to "commit". When the save button
+        # is clicked, accept() is called before the last field to have focus has a chance to emit
+        # its edition signal.
+        self.setFocus()
         self.model.save()
         QDialog.accept(self)
     
