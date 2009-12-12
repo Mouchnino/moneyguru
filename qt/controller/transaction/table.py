@@ -21,7 +21,7 @@ from ..table_with_transactions import TableWithTransactions
 class TransactionTable(TableWithTransactions):
     COLUMNS = [
         Column('status', '', 25),
-        Column('date', 'Date', 87, editor=DATE_EDIT),
+        Column('date', 'Date', 85, editor=DATE_EDIT),
         Column('description', 'Description', 230, editor=DESCRIPTION_EDIT),
         Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
         Column('checkno', 'Check #', 80),

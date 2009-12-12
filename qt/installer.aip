@@ -222,8 +222,8 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="Check_for_Update" Directory_="SHORTCUTDIR" Name="Checkf~1|Check for Update" Component_="updater.exe" Target="[#updater.exe]" Arguments="/checknow" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="Uninstall_moneyGuru" Directory_="SHORTCUTDIR" Name="Uninst~1|Uninstall moneyGuru" Component_="SHORTCUTDIR" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFolder_msiexec.exe" IconIndex="0" ShowCmd="1"/>
-    <ROW Shortcut="moneyGuru.exe" Directory_="SHORTCUTDIR" Name="moneyG~1.exe|moneyGuru.exe" Component_="moneyGuru.exe" Target="[#moneyGuru.exe]" Description="moneyGuru.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="moneyGuru.exe_1" Directory_="DesktopFolder" Name="moneyG~1.exe|moneyGuru.exe" Component_="moneyGuru.exe" Target="[#moneyGuru.exe]" Description="moneyGuru.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="moneyGuru.exe" Directory_="SHORTCUTDIR" Name="moneyG~1|moneyGuru" Component_="moneyGuru.exe" Target="[#moneyGuru.exe]" Description="moneyGuru" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="moneyGuru.exe_1" Directory_="DesktopFolder" Name="moneyG~1|moneyGuru" Component_="moneyGuru.exe" Target="[#moneyGuru.exe]" Description="moneyGuru" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMax="[|ProductVersion]" Attributes="1025" ActionProperty="OLDPRODUCTS"/>
