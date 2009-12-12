@@ -181,25 +181,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             event.ignore()
     
-    def keyPressEvent(self, event):
-        key = event.key()
-        modifiers = event.modifiers() & (Qt.ControlModifier|Qt.AltModifier|Qt.ShiftModifier|Qt.MetaModifier)
-        if modifiers == Qt.ControlModifier|Qt.ShiftModifier:
-            if key == Qt.Key_Left:
-                self.actionShowPreviousView.trigger()
-                return
-            elif key == Qt.Key_Right:
-                self.actionShowNextView.trigger()
-                return
-        elif modifiers == Qt.ControlModifier|Qt.AltModifier:
-            if key == Qt.Key_Left:
-                self.actionPreviousDateRange.trigger()
-                return
-            elif key == Qt.Key_Right:
-                self.actionNextDateRange.trigger()
-                return
-        QMainWindow.keyPressEvent(self, event)
-    
     #--- Private
     def _print(self):
         dialog = QPrintDialog(self)
