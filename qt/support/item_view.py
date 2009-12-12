@@ -100,6 +100,10 @@ class TableView(QTableView, ItemViewMixIn):
             self.spacePressed.emit()
         elif key in (Qt.Key_Backspace, Qt.Key_Delete):
             self.deletePressed.emit()
+        elif key == Qt.Key_Return:
+            # I have no freaking idea why, but under Windows, somehow, the Return key doesn't
+            # trigger edit() calls (even in Qt demos...). Gotta do it manually.
+            self.edit(self.currentIndex(), QAbstractItemView.EditKeyPressed, event)
         else:
             QTableView.keyPressEvent(self, event)
     
@@ -147,6 +151,8 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
             self.spacePressed.emit()
         elif key in (Qt.Key_Backspace, Qt.Key_Delete):
             self.deletePressed.emit()
+        elif key == Qt.Key_Return:
+            self.edit(self.currentIndex(), QAbstractItemView.EditKeyPressed, event)
         else:
             QTreeView.keyPressEvent(self, event)
     
