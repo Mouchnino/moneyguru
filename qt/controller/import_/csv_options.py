@@ -19,8 +19,8 @@ RENAME_LAYOUT = 'rename_layout'
 DELETE_LAYOUT = 'delete_layout'
 
 class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
-    def __init__(self, doc):
-        QWidget.__init__(self, None)
+    def __init__(self, parent, doc):
+        QWidget.__init__(self, parent, Qt.Window)
         self.setupUi(self)
         self.doc = doc
         self.model = CSVOptionsModel(view=self, document=doc.model)

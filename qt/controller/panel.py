@@ -16,9 +16,9 @@ from support.completable_edit import CompletableEdit
 class Panel(QDialog):
     # A list of two-sized tuples (QWidget's name, model field name).
     FIELDS = []
-    def __init__(self):
+    def __init__(self, parent=None):
         # The flags we pass are that so we don't get the "What's this" button in the title bar
-        QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
+        QDialog.__init__(self, parent, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
         self._widget2ModelAttr = {}
     
     def _changeComboBoxItems(self, comboBox, newItems):

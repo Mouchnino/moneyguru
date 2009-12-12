@@ -24,8 +24,8 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         ('checkNoEdit', 'checkno'),
     ]
     
-    def __init__(self, doc):
-        Panel.__init__(self)
+    def __init__(self, parent, doc):
+        Panel.__init__(self, parent)
         self._setupUi()
         self.doc = doc
         self.model = TransactionPanelModel(view=self, document=doc.model)

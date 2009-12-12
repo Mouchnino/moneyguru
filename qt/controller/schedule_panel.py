@@ -25,8 +25,8 @@ class SchedulePanel(Panel, Ui_SchedulePanel):
         ('checkNoEdit', 'checkno'),
     ]
     
-    def __init__(self, doc):
-        Panel.__init__(self)
+    def __init__(self, parent, doc):
+        Panel.__init__(self, parent)
         self._setupUi()
         self.doc = doc
         self.model = SchedulePanelModel(view=self, document=doc.model)

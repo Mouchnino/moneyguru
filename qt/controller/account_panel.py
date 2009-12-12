@@ -22,8 +22,8 @@ class AccountPanel(Panel, Ui_AccountPanel):
         ('currencyComboBox', 'currency_index'),
     ]
     
-    def __init__(self, doc):
-        Panel.__init__(self)
+    def __init__(self, parent, doc):
+        Panel.__init__(self, parent)
         self._setupUi()
         self.doc = doc
         self.model = AccountPanelModel(view=self, document=doc.model)

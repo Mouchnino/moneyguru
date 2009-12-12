@@ -43,9 +43,9 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
         'schChecknoCheckBox': ('scheduleHiddenColumns', 'checkno'),
     }
     
-    def __init__(self, app):
+    def __init__(self, parent, app):
         # The flags we pass are that so we don't get the "What's this" button in the title bar
-        QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
+        QDialog.__init__(self, parent, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
         self.app = app
         self._setupUi()
     

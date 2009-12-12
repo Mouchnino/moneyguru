@@ -19,8 +19,8 @@ from ui.custom_date_range_panel_ui import Ui_CustomDateRangePanel
 # to do a hack to make it work. However, converting the panel would break the cocoa side, which I
 # don't want to do at this time. But it has to be done at some point.
 class CustomDateRangePanel(Panel, Ui_CustomDateRangePanel):
-    def __init__(self, doc):
-        Panel.__init__(self)
+    def __init__(self, parent, doc):
+        Panel.__init__(self, parent)
         self._setupUi()
         self.doc = doc
         self.model = CustomDateRangePanelModel(view=self, document=doc.model)

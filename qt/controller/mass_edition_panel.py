@@ -35,8 +35,8 @@ class MassEditionPanel(Panel, Ui_MassEditionPanel):
         ('currencyComboBox', 'currency_index'),
     ]
     
-    def __init__(self, doc):
-        Panel.__init__(self)
+    def __init__(self, parent, doc):
+        Panel.__init__(self, parent)
         self._setupUi()
         self.doc = doc
         self.model = MassEditionPanelModel(view=self, document=doc.model)

@@ -16,9 +16,9 @@ from hsutil.currency import Currency
 from ui.preferences_panel_ui import Ui_PreferencesPanel
 
 class PreferencesPanel(QDialog, Ui_PreferencesPanel):
-    def __init__(self, app):
+    def __init__(self, parent, app):
         # The flags we pass are that so we don't get the "What's this" button in the title bar
-        QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
+        QDialog.__init__(self, parent, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
         self.app = app
         self._setupUi()
     

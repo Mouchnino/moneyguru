@@ -21,8 +21,8 @@ class AccountReassignPanel(Panel, Ui_AccountReassignPanel):
         ('accountComboBox', 'account_index'),
     ]
     
-    def __init__(self, doc):
-        Panel.__init__(self)
+    def __init__(self, parent, doc):
+        Panel.__init__(self, parent)
         self.setupUi(self)
         self.doc = doc
         self.model = AccountReassignPanelModel(view=self, document=doc.model)

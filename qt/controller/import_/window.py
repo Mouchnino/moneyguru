@@ -16,8 +16,8 @@ from .table import ImportTable
 from ui.import_window_ui import Ui_ImportWindow
 
 class ImportWindow(QWidget, Ui_ImportWindow):
-    def __init__(self, doc):
-        QWidget.__init__(self, None)
+    def __init__(self, parent, doc):
+        QWidget.__init__(self, parent, Qt.Window)
         self._setupUi()
         self.doc = doc
         self.model = ImportWindowModel(view=self, document=doc.model)
