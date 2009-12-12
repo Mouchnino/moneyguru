@@ -10,8 +10,8 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect
-from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont
+from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect, QSize
+from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont, QStyleOptionViewItemV4
 
 from hsutil.misc import nonone
 from qtlib.tree_model import TreeNode, TreeModel
@@ -52,35 +52,42 @@ class AccountSheetDelegate(QStyledItemDelegate):
     
     def paint(self, painter, option, index):
         self.initStyleOption(option, index)
+        # I don't know why I have to do this. option.version returns 4, but still, when I try to
+        # access option.features, boom-crash. The workaround is to force a V4.
+        option = QStyleOptionViewItemV4(option)
         column = self._model.COLUMNS[index.column()]
         node = index.internalPointer()
         ref = node.ref
         indentationOffset = self._model.data(index, INDENTATION_OFFSET_ROLE)
         extraFlags = nonone(self._model.data(index, EXTRA_ROLE), 0)
+        decorations = []
         if column.attrname == 'name':
-            if option.state & QStyle.State_Selected:
-                painter.fillRect(option.rect, option.palette.highlight())
             if ref.is_account:
                 arrowImageName = ':/right_arrow_white_12' if option.state & QStyle.State_Selected else ':/right_arrow_gray_12'
                 pixmap = QPixmap(arrowImageName)
-                arrowRect = QRect(0, 0, pixmap.width(), pixmap.height())
-                arrowRect.moveCenter(option.rect.center()) # centered vertically
-                arrowRect.moveRight(option.rect.right())
-                option.rect.setRight(arrowRect.left()-1)
-                painter.drawPixmap(arrowRect, pixmap)
+                decorations.append(pixmap)
             if option.state & QStyle.State_Selected and not (ref.is_total or ref.is_blank):
                 excludeImageName = ':/account_in_12' if ref.is_excluded else ':/account_out_12'
                 pixmap = QPixmap(excludeImageName)
-                excludeRect = QRect(0, 0, pixmap.width(), pixmap.height())
-                excludeRect.moveCenter(option.rect.center()) # centered vertically
-                excludeRect.moveRight(option.rect.right())
-                option.rect.setRight(excludeRect.left()-1)
-                painter.drawPixmap(excludeRect, pixmap)
+                decorations.append(pixmap)
+        if decorations:
+            option.decorationPosition = QStyleOptionViewItemV4.Right
+            decorationWidth = sum(pix.width() for pix in decorations)
+            decorationHeight = max(pix.height() for pix in decorations)
+            option.decorationSize = QSize(decorationWidth, decorationHeight)
+            option.features |= QStyleOptionViewItemV4.HasDecoration
         if ref.is_excluded:
             option.palette.setColor(QPalette.Text, Qt.gray)
         if indentationOffset:
             option.rect.setLeft(option.rect.left()+indentationOffset)
         QStyledItemDelegate.paint(self, painter, option, index)
+        xOffset = 0
+        for pixmap in decorations:
+            x = option.rect.right() - pixmap.width() - xOffset
+            y = option.rect.center().y() - (pixmap.height() // 2)
+            rect = QRect(x, y, pixmap.width(), pixmap.height())
+            painter.drawPixmap(rect, pixmap)
+            xOffset += pixmap.width()
         if extraFlags & (EXTRA_UNDERLINED | EXTRA_UNDERLINED_DOUBLE):
             p1 = option.rect.bottomLeft()
             p2 = option.rect.bottomRight()
