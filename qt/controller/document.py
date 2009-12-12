@@ -69,7 +69,7 @@ class Document(QObject):
     
     def importDocument(self):
         title = "Select a document to import"
-        filters = "moneyGuru Documents (*.moneyguru);;OFX Files (*.ofx *.qfx);;QIF Files (*.qif);;CSV Files (*.csv *.txt)"
+        filters = "Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
         docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             self.model.parse_file_for_import(docpath)
