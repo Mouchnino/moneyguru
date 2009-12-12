@@ -22,6 +22,7 @@ class DateEdit(QLineEdit):
         Qt.Key_Backspace: 'backspace',
         Qt.Key_Delete: 'backspace',
     }
+    ACCEPTED_KEYS = set([Qt.Key_Escape, Qt.Key_Tab, Qt.Key_Backtab, Qt.Key_Return, Qt.Key_Enter])
     
     def __init__(self, parent):
         QLineEdit.__init__(self, parent)
@@ -37,14 +38,14 @@ class DateEdit(QLineEdit):
         if key in self.KEY2METHOD:
             getattr(self.widget, self.KEY2METHOD[key])()
             self._refresh()
+        elif key in self.ACCEPTED_KEYS:
+            # We want keypresses like Escape to go through.
+            QLineEdit.keyPressEvent(self, event)
         else:
             text = unicode(event.text())
             if text in "0123456789/-.":
                 self.widget.type(text)
                 self._refresh()
-            else:
-                # We want keypresses like Escape to go through.
-                QLineEdit.keyPressEvent(self, event)
     
     def focusInEvent(self, event):
         QLineEdit.focusInEvent(self, event)
