@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, QProcess
 from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QPrintDialog, QLabel, QFont
 
 from moneyguru.gui.main_window import MainWindow as MainWindowModel
@@ -129,7 +129,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionShowPreferences.triggered.connect(self.app.showPreferences)
         self.actionShowViewOptions.triggered.connect(self.app.showViewOptions)
         self.actionPrint.triggered.connect(self._print)
+        self.actionShowHelp.triggered.connect(self.app.showHelp)
         self.actionRegister.triggered.connect(self.registerTriggered)
+        self.actionCheckForUpdate.triggered.connect(self.checkForUpdateTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
         self.actionQuit.triggered.connect(self.close)
     
@@ -370,6 +372,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def registerTriggered(self):
         self.app.askForRegCode()
+    
+    def checkForUpdateTriggered(self):
+        QProcess.execute('updater.exe', ['/checknow'])
     
     def aboutTriggered(self):
         self.app.showAboutBox()

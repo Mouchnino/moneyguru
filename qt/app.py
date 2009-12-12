@@ -8,7 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString
+import os.path as op
+
+from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString, QUrl
 from PyQt4.QtGui import QDialog, QDesktopServices
 
 from hsutil.currency import Currency
@@ -72,6 +74,10 @@ class MoneyGuru(ApplicationBase):
     
     def showAboutBox(self):
         self.aboutBox.show()
+    
+    def showHelp(self):
+        url = QUrl.fromLocalFile(op.abspath('help/intro.htm'))
+        QDesktopServices.openUrl(url)
     
     def showPreferences(self):
         self.preferencesPanel.load()
