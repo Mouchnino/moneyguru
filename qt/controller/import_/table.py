@@ -19,20 +19,18 @@ MIME_INDEXES = 'application/moneyguru.rowindexes'
 
 class ImportTable(Table):
     COLUMNS = [
-        Column('will_import', '', 28),
-        Column('date', 'Date', 120),
-        Column('description', 'Description', 150),
-        Column('amount', 'Amount', 120),
-        Column('bound', '', 28),
-        Column('date_import', 'Date', 120),
-        Column('description_import', 'Description', 150),
-        Column('payee_import', 'Payee', 150),
-        Column('checkno_import', 'Check #', 100),
-        Column('transfer_import', 'Transfer', 100),
-        Column('amount_import', 'Amount', 120),
+        Column('will_import', '', 20),
+        Column('date', 'Date', 80),
+        Column('description', 'Description', 90),
+        Column('amount', 'Amount', 90, alignment=Qt.AlignRight),
+        Column('bound', '', 22),
+        Column('date_import', 'Date', 80),
+        Column('description_import', 'Description', 90),
+        Column('payee_import', 'Payee', 90),
+        Column('checkno_import', 'Check #', 57),
+        Column('transfer_import', 'Transfer', 90),
+        Column('amount_import', 'Amount', 90, alignment=Qt.AlignRight),
     ]
-    HEADER = ['', 'Date', 'Description', 'Amount', '', 'Date', 'Description', 'Payee', 'Check #',
-        'Transfer', 'Amount']
         
     def __init__(self, importWindow, view):
         model = ImportTableModel(view=self, import_window=importWindow.model)
