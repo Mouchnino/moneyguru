@@ -8,6 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog
 
 from ui.view_options_dialog_ui import Ui_ViewOptionsDialog
@@ -43,7 +44,8 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
     }
     
     def __init__(self, app):
-        QDialog.__init__(self, None)
+        # The flags we pass are that so we don't get the "What's this" button in the title bar
+        QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
         self.app = app
         self._setupUi()
     

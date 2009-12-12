@@ -41,23 +41,23 @@ class ImportTable(Table):
         self.view.spacePressed.connect(self.spacePressed)
     
     #--- Data methods override
-    def _getData(self, row, rowattr, role):
-        if rowattr == 'will_import':
+    def _getData(self, row, column, role):
+        if column.attrname == 'will_import':
             if role == Qt.CheckStateRole:
                 return Qt.Checked if row.will_import else Qt.Unchecked
             else:
                 return None
-        elif rowattr == 'bound':
+        elif column.attrname == 'bound':
             if role == Qt.DecorationRole:
                 return QPixmap(':/lock_12') if row.bound else None
             else:
                 return None
         else:
-            return Table._getData(self, row, rowattr, role)
+            return Table._getData(self, row, column, role)
     
-    def _getFlags(self, row, rowattr):
-        flags = Table._getFlags(self, row, rowattr)
-        if rowattr == 'will_import':
+    def _getFlags(self, row, column):
+        flags = Table._getFlags(self, row, column)
+        if column.attrname == 'will_import':
             flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
             if not row.can_edit_will_import:
                 flags &= ~Qt.ItemIsEnabled
@@ -65,15 +65,15 @@ class ImportTable(Table):
             flags |= Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
         return flags
     
-    def _setData(self, row, rowattr, value, role):
-        if rowattr == 'will_import':
+    def _setData(self, row, column, value, role):
+        if column.attrname == 'will_import':
             if role == Qt.CheckStateRole:
                 row.will_import = value.toBool()
                 return True
             else:
                 return False
         else:
-            return Table._setData(self, row, rowattr, value, role)
+            return Table._setData(self, row, column, value, role)
     
     #--- Drag & Drop
     def dropMimeData(self, mimeData, action, row, column, parentIndex):

@@ -8,6 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog
 
 from hsutil.currency import Currency
@@ -16,7 +17,8 @@ from ui.preferences_panel_ui import Ui_PreferencesPanel
 
 class PreferencesPanel(QDialog, Ui_PreferencesPanel):
     def __init__(self, app):
-        QDialog.__init__(self, None)
+        # The flags we pass are that so we don't get the "What's this" button in the title bar
+        QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
         self.app = app
         self._setupUi()
     
