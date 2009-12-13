@@ -8,6 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import sys
 import os.path as op
 
 from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString, QUrl
@@ -62,7 +63,9 @@ class MoneyGuru(ApplicationBase):
         self.reg = Registration(self.model)
         self.model.set_registration(self.prefs.registration_code, self.prefs.registration_email)
         self.mainWindow.updateOptionalWidgetsVisibility()
-        if self.prefs.recentDocuments:
+        if sys.argv[1:] and op.exists(sys.argv[1]):
+            self.doc.open(sys.argv[1])
+        elif self.prefs.recentDocuments:
             self.doc.open(self.prefs.recentDocuments[0])
         
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)

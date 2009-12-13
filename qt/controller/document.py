@@ -86,6 +86,7 @@ class Document(QObject):
         self.close()
         self.model.load_from_xml(docpath)
         self.documentPath = docpath
+        self.documentOpened.emit(docpath)
     
     def openDocument(self):
         title = "Select a document to load"
@@ -93,9 +94,10 @@ class Document(QObject):
         docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             self.open(docpath)
-            self.documentOpened.emit(docpath)
     
     def openExampleDocument(self):
+        if not self.confirmDestructiveAction():
+            return
         self.close()
         dirpath = tempfile.mkdtemp()
         destpath = op.join(dirpath, 'example.moneyguru')

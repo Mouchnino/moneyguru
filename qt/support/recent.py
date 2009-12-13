@@ -59,7 +59,6 @@ class Recent(QObject):
         if action is not None:
             item = action.data().toString()
             self.mustOpenItem.emit(item)
-            self._insertItem(unicode(item))
             self._refreshMenu()
     
     #--- Signals
