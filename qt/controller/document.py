@@ -51,8 +51,8 @@ class Document(QObject):
         buttons = QMessageBox.Save | QMessageBox.Cancel | QMessageBox.Discard
         result = QMessageBox.question(self.app.mainWindow, title, msg, buttons)
         if result == QMessageBox.Save:
-            self.doc.save()
-            if self.doc.model.is_dirty(): # "save as" was cancelled
+            self.save()
+            if self.model.is_dirty(): # "save as" was cancelled
                 return False
             else:
                 return True
@@ -66,7 +66,7 @@ class Document(QObject):
         filters = "QIF Files (*.qif)"
         docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', '', filters))
         if docpath:
-            self.doc.model.save_to_qif(docpath)
+            self.model.save_to_qif(docpath)
     
     def importDocument(self):
         title = "Select a document to import"
