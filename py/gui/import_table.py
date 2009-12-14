@@ -15,6 +15,7 @@ class ImportTable(ImportWindowGUIObject, GUITable):
         ImportWindowGUIObject.__init__(self, view, import_window)
         GUITable.__init__(self)
         self.document = self.window.document
+        self._is_two_sided = False
     
     #--- Override
     def connect(self):
@@ -43,11 +44,14 @@ class ImportTable(ImportWindowGUIObject, GUITable):
     
     def refresh(self):
         del self[:]
+        self._is_two_sided = False
         self.pane = self.window.selected_pane
         if not self.pane:
             return
-        for exisiting, imported in self.pane.matches:
-            self.append(ImportTableRow(self, exisiting, imported))
+        for existing, imported in self.pane.matches:
+            if existing is not None:
+                self._is_two_sided = True
+            self.append(ImportTableRow(self, existing, imported))
     
     def unbind(self, index):
         row = self[index]
@@ -56,6 +60,14 @@ class ImportTable(ImportWindowGUIObject, GUITable):
         row.unbind()
         self.refresh()
         self.view.refresh()
+    
+    #--- Properties
+    #XXX Use this in cocoa
+    @property
+    def is_two_sided(self):
+        """Returns whether the table should show columns to display matches from the target account.
+        """
+        return self._is_two_sided
     
     #--- Events
     def fields_switched(self):

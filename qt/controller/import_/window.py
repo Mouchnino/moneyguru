@@ -46,27 +46,6 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         l.setAlignment(self.targetAccountLabel, Qt.AlignTop)
         l.setAlignment(self.targetAccountComboBox, Qt.AlignTop)
     
-    #--- Private
-    def _updateTableColumnsVisibility(self):
-        if self.model.selected_target_account_index == 0: # New account, go one sided
-            self._switchToOneSidedMode()
-        else:
-            self._switchToTwoSidedMode()
-    
-    def _switchToOneSidedMode(self):
-        h = self.tableView.horizontalHeader()
-        if h.isSectionHidden(1):
-            return # already in one sided mode
-        for i in [1, 2, 3, 4]:
-            h.hideSection(i)
-    
-    def _switchToTwoSidedMode(self):
-        h = self.tableView.horizontalHeader()
-        if not h.isSectionHidden(1):
-            return # already in two sided mode
-        for i in [1, 2, 3, 4]:
-            h.showSection(i)
-    
     #--- Event Handlers
     def currentTabChanged(self, index):
         self.model.selected_pane_index = index
@@ -90,7 +69,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
     
     def targetAccountChanged(self, index):
         self.model.selected_target_account_index = index
-        self._updateTableColumnsVisibility()
+        self.table.updateColumnsVisibility()
     
     #--- model --> view
     def close(self):
@@ -122,5 +101,5 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         if index != self.tabView.currentIndex(): # this prevents infinite loops
             self.tabView.setCurrentIndex(index)
         self.targetAccountComboBox.setCurrentIndex(self.model.selected_target_account_index)
-        self._updateTableColumnsVisibility()
+        self.table.updateColumnsVisibility()
     

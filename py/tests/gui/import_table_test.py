@@ -29,6 +29,10 @@ class ImportCheckbookQIF(TestCase):
         self.assertFalse(self.itable[3].will_import)
         self.assertFalse(self.itable[4].will_import)
     
+    def test_is_two_sided(self):
+        # There is no target account, we only have one side
+        assert not self.itable.is_two_sided
+    
     def test_rows(self):
         """The shown rows are the imported txns from the first account. The target account is a new 
         file, so we don't have any 'left side' entries.
@@ -112,6 +116,11 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.assertTrue(self.itable.can_bind(3, 2)) # import --> existing
         self.assertFalse(self.itable.can_bind(1, 3)) # import --> import
     
+    def test_is_two_sided(self):
+        # We have a target account, and some transactions can be bound in it. The table is 
+        # two-sided.
+        assert self.itable.is_two_sided
+    
     def test_rows(self):
         """Imported rows are mixed with existing rows"""
         self.assertEqual(len(self.itable), 6) # only unreconciled entries
@@ -130,7 +139,19 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.assertFalse(self.itable[2].will_import)
     
 
-class LoadThemImportWithReference(TestCase):
+class ImportWithEmptyTargetAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account_legacy('foo')
+        self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
+        self.iwin.selected_target_account_index = 1 # foo
+    
+    def test_is_two_sided(self):
+        # We have a target account, but no bindable txns to show. The table is one-sided.
+        assert not self.itable.is_two_sided
+    
+
+class LoadThenImportWithReference(TestCase):
     # with_reference1 and 2 have references that overlap. This is supposed to cause matching in the
     # import dialog.
     def setUp(self):

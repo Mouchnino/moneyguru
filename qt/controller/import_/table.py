@@ -101,6 +101,28 @@ class ImportTable(Table):
     def supportedDropActions(self):
         return Qt.MoveAction
     
+    #--- Private
+    def _switchToOneSidedMode(self):
+        h = self._headerView
+        if h.isSectionHidden(1):
+            return # already in one sided mode
+        for i in [1, 2, 3, 4]:
+            h.hideSection(i)
+    
+    def _switchToTwoSidedMode(self):
+        h = self._headerView
+        if not h.isSectionHidden(1):
+            return # already in two sided mode
+        for i in [1, 2, 3, 4]:
+            h.showSection(i)
+    
+    #--- Public
+    def updateColumnsVisibility(self):
+        if self.model.is_two_sided:
+            self._switchToTwoSidedMode()
+        else:
+            self._switchToOneSidedMode()
+    
     #--- Event Handling
     def cellClicked(self, index):
         rowattr = self.COLUMNS[index.column()].attrname
