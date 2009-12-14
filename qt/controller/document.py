@@ -14,6 +14,7 @@ import tempfile
 from PyQt4.QtCore import pyqtSignal, Qt, QObject, QFile
 from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
+from moneyguru.exception import FileFormatError
 from moneyguru.document import Document as DocumentModel
 
 from controller.reconciliation_warning_dialog import ReconciliationWarningDialog
@@ -72,7 +73,10 @@ class Document(QObject):
         filters = "Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
         docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
-            self.model.parse_file_for_import(docpath)
+            try:
+                self.model.parse_file_for_import(docpath)
+            except FileFormatError as e:
+                QMessageBox.warning(self.app.mainWindow, "Cannot import file", unicode(e))
     
     def new(self):
         if not self.confirmDestructiveAction():
@@ -84,8 +88,11 @@ class Document(QObject):
         if not self.confirmDestructiveAction():
             return
         self.close()
-        self.model.load_from_xml(docpath)
-        self.documentPath = docpath
+        try:
+            self.model.load_from_xml(docpath)
+            self.documentPath = docpath
+        except FileFormatError as e:
+            QMessageBox.warning(self.app.mainWindow, "Cannot load file", unicode(e))
         self.documentOpened.emit(docpath)
     
     def openDocument(self):
