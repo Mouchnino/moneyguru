@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>393</width>
-    <height>362</height>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,7 +140,7 @@
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QTableView" name="splitTableView">
+      <widget class="TableView" name="splitTableView">
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>40</number>
        </attribute>
@@ -175,7 +175,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="addSplitButton">
           <property name="icon">
            <iconset resource="../mg.qrc">
             <normaloff>:/plus_8</normaloff>:/plus_8</iconset>
@@ -183,7 +183,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="removeSplitButton">
           <property name="icon">
            <iconset resource="../mg.qrc">
             <normaloff>:/minus_8</normaloff>:/minus_8</iconset>
@@ -258,6 +258,11 @@
    <extends>QLineEdit</extends>
    <header>support.completable_edit</header>
   </customwidget>
+  <customwidget>
+   <class>TableView</class>
+   <extends>QTableView</extends>
+   <header>support.item_view</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>startDateEdit</tabstop>
@@ -268,8 +273,8 @@
   <tabstop>payeeEdit</tabstop>
   <tabstop>checkNoEdit</tabstop>
   <tabstop>splitTableView</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>addSplitButton</tabstop>
+  <tabstop>removeSplitButton</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>

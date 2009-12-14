@@ -33,6 +33,9 @@ class SchedulePanel(Panel, Ui_SchedulePanel):
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
         self.splitTable.model.connect()
         
+        self.addSplitButton.clicked.connect(self.splitTable.model.add)
+        self.removeSplitButton.clicked.connect(self.splitTable.model.delete)
+        
     def _setupUi(self):
         self.setupUi(self)
     
