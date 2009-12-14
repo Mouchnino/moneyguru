@@ -56,7 +56,7 @@ class EntryTable(TableWithTransactions):
         flags = TableWithTransactions._getFlags(self, row, column)
         if column.attrname == 'status':
             if row.can_reconcile() and not row.reconciled:
-                flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
+                flags |= Qt.ItemIsUserCheckable
         return flags
     
     def _setData(self, row, column, value, role):
