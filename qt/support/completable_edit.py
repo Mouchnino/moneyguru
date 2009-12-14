@@ -47,6 +47,17 @@ class CompletableEdit(QLineEdit):
         self.setSelection(selectionStart, len(newText) - selectionStart)
     
     #--- QLineEdit overrides
+    def focusOutEvent(self, event):
+        # On focus out, we want to see if the text we have is exactly the same as the completion,
+        # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
+        # THIS DOESN'T WORK IN ITEM VIEW EDITION. When item views use this class as an editor,
+        # the value of the editor is pushed down to the model *before* the focus out event. The
+        # logic for completion replacement in these cases is in controller.table._setData.
+        completion = self.model.current_completion()
+        if completion is not None and completion.lower() == unicode(self.text()).lower():
+            self.setText(completion)
+        QLineEdit.focusOutEvent(self, event)
+    
     def keyPressEvent(self, event):
         key = event.key()
         if key == Qt.Key_Up:
