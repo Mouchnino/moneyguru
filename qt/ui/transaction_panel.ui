@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>385</width>
-    <height>302</height>
+    <width>455</width>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,6 +100,12 @@
      </item>
      <item row="4" column="1">
       <widget class="TableView" name="splitTableView">
+       <property name="editTriggers">
+        <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>40</number>
        </attribute>
