@@ -62,7 +62,6 @@ class ImportTable(ImportWindowGUIObject, GUITable):
         self.view.refresh()
     
     #--- Properties
-    #XXX Use this in cocoa
     @property
     def is_two_sided(self):
         """Returns whether the table should show columns to display matches from the target account.

@@ -40,9 +40,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)updateVisibleTable
 {
+    // Ok, this code below is a quite hackish. I guess that importTable and importTableOneSided
+    // should be a single class that hides columns (like in the PyQt side) rather than doing this
+    // kind of fuss around
     MGTable *neededtable = importTableOneSided;
-    int selectedIndex = [targetAccountsPopup indexOfSelectedItem];
-    if (selectedIndex > 0)
+    if ([(PyImportTable *)[visibleTable py] isTwoSided])
         neededtable = importTable;
     if (neededtable == visibleTable)
         return;

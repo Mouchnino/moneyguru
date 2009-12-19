@@ -14,4 +14,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)canBindRow:(int)source to:(int)dest;
 - (void)bindRow:(int)source to:(int)dest;
 - (void)unbindRow:(int)row;
+- (BOOL)isTwoSided;
 @end

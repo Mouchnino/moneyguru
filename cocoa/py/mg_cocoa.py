@@ -1385,6 +1385,10 @@ class PyImportTable(PyTable):
     def canBindRow_to_(self, source_index, dest_index):
         return self.py.can_bind(source_index, dest_index)
     
+    @objc.signature('i@:')
+    def isTwoSided(self):
+        return self.py.is_two_sided
+    
     @objc.signature('v@:i')
     def unbindRow_(self, index):
         self.py.unbind(index)
