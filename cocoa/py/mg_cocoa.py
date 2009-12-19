@@ -160,6 +160,10 @@ class PyMoneyGuruApp(NSObject):
     def setRegisteredCode_andEmail_(self, code, email):
         self.py.set_registration(code, email)
     
+    #--- Python -> Cocoa
+    def setup_as_registered(self):
+        self.cocoa.setupAsRegistered()
+    
 
 class PyDocument(NSObject):
     def initWithCocoa_pyParent_(self, cocoa, pyparent):

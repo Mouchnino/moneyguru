@@ -57,7 +57,6 @@ class Application(Broadcaster, RegistrableApplication):
         self._dont_unreconcile = self.get_default(DONT_UNRECONCILE_PREFERENCE, False)
     
     #--- Override
-    #XXX Implement setup_as_registered in the Cocoa codebase!
     def _setup_as_registered(self):
         self.view.setup_as_registered()
     

@@ -124,8 +124,7 @@ http://www.hardcoded.net/licenses/hs_license
     if ([[self py] isRegistered])
         return;
     RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC];
-    if ([ri enterCode] == NSOKButton)
-        [unlockMenuItem setTitle:@"Thanks for buying moneyGuru!"];
+    [ri enterCode];    
     [ri release];
 }
 
@@ -138,8 +137,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    if ([RegistrationInterface showNagWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC])
-        [unlockMenuItem setTitle:@"Thanks for buying moneyGuru!"];
+    [RegistrationInterface showNagWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if ([ud boolForKey:@"MGHadFirstLaunch"])
     {
@@ -177,5 +175,11 @@ http://www.hardcoded.net/licenses/hs_license
     [yearStartMonthPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.yearStartMonth" options:nil];
     [autoSaveIntervalField bind:@"value" toObject:self withKeyPath:@"py.autoSaveInterval" options:nil];
     [dontUnreconcileButton bind:@"value" toObject:self withKeyPath:@"py.dontUnreconcile" options:nil];
+}
+
+// Python -> Cocoa
+- (void)setupAsRegistered
+{
+    [unlockMenuItem setTitle:@"Thanks for buying moneyGuru!"];
 }
 @end
