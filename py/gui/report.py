@@ -36,7 +36,7 @@ class Report(DocumentGUIObject, tree.Tree):
         pass
     
     def _make_node(self, name):
-        return Node(self, name)
+        return Node(name)
     
     def _refresh(self):
         pass
@@ -294,9 +294,8 @@ class Report(DocumentGUIObject, tree.Tree):
     
 
 class Node(tree.Node):
-    def __init__(self, root, name):
+    def __init__(self, name):
         tree.Node.__init__(self, name)
-        self._root = root
         self.is_account = False
         self.is_blank = False
         self.is_group = False
@@ -311,12 +310,12 @@ class Node(tree.Node):
             return False
         if len(self) and self.is_expanded: # an expanded group can't be considered a subtotal
             return False
-        path = self._root.get_path(self)
-        if not path:
+        parent = self.parent
+        if parent is None:
             return False
-        prefix, last_index = path[:-1], path[-1]
+        index = parent.index(self)
         try:
-            next_node = self._root.get_node(prefix + [last_index+1])
+            next_node = parent[index+1]
             return next_node.is_total
         except IndexError:
             return False
@@ -327,9 +326,10 @@ class Node(tree.Node):
     
     @tree.Node.name.setter
     def name(self, value):
-        assert self._root.edited is None or self._root.edited is self
+        root = self.root
+        assert root.edited is None or root.edited is self
         if not value:
             return
         self._name = value
-        self._root.edited = self
+        root.edited = self
     

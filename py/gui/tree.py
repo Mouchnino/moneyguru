@@ -9,7 +9,9 @@ class Node(list):
     def __init__(self, name):
         list.__init__(self)
         self._name = name
-
+        self._parent = None
+        self._path = None
+    
     def __eq__(self, other):
         return self is other
     
@@ -18,6 +20,11 @@ class Node(list):
     
     def __repr__(self):
         return '<Node %r>' % self.name
+    
+    def append(self, node):
+        list.append(self, node)
+        node._parent = self
+        node._path = None
     
     def clear(self):
         del self[:]
@@ -29,7 +36,7 @@ class Node(list):
             found = child.find(predicate)
             if found is not None:
                 return found
-
+    
     def get_node(self, index_path):
         result = self
         if index_path:
@@ -37,16 +44,10 @@ class Node(list):
                 result = result[index]
         return result
     
-    #XXX Make this more efficient. This is called rather often, and it's really inefficient
     def get_path(self, target_node):
         if target_node is None:
             return None
-        for index, item in enumerate(self):
-            if item == target_node:
-                return [index]
-            path = item.get_path(target_node)
-            if path:
-                return [index] + path
+        return target_node.path
     
     @property
     def children_count(self):
@@ -55,6 +56,26 @@ class Node(list):
     @property
     def name(self):
         return self._name
+    
+    @property
+    def parent(self):
+        return self._parent
+    
+    @property
+    def path(self):
+        if self._path is None:
+            if self._parent is None:
+                self._path = []
+            else:
+                self._path = self._parent.path + [self._parent.index(self)]
+        return self._path
+    
+    @property
+    def root(self):
+        if self._parent is None:
+            return self
+        else:
+            return self._parent.root
     
 
 class Tree(Node):

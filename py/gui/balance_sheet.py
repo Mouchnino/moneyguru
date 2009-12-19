@@ -58,7 +58,7 @@ class BalanceSheet(Report):
         self.clear()
         self.assets = self.make_type_node('ASSETS', ASSET)
         self.liabilities = self.make_type_node('LIABILITIES', LIABILITY)
-        self.net_worth = Node(self, 'NET WORTH')
+        self.net_worth = Node('NET WORTH')
         net_worth_start = self.assets.start_amount - self.liabilities.start_amount
         net_worth_end = self.assets.end_amount - self.liabilities.end_amount
         budget_date_range = DateRange(date.today(), self.document.date_range.end)

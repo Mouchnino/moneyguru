@@ -51,7 +51,7 @@ class IncomeStatement(Report):
         self.clear()
         self.income = self.make_type_node('INCOME', INCOME)
         self.expenses = self.make_type_node('EXPENSES', EXPENSE)
-        self.net_income = Node(self, 'NET INCOME')
+        self.net_income = Node('NET INCOME')
         net_income = self.income.cash_flow_amount - self.expenses.cash_flow_amount
         last_net_income = self.income.last_cash_flow_amount - self.expenses.last_cash_flow_amount
         net_budgeted = self.income.budgeted_amount - self.expenses.budgeted_amount
