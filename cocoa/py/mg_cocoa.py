@@ -27,7 +27,7 @@ from moneyguru.gui.balance_graph import BalanceGraph
 from moneyguru.gui.balance_sheet import BalanceSheet
 from moneyguru.gui.budget_table import BudgetTable
 from moneyguru.gui.budget_panel import BudgetPanel
-from moneyguru.gui.csv_options import CSVOptions
+from moneyguru.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
 from moneyguru.gui.custom_date_range_panel import CustomDateRangePanel
 from moneyguru.gui.date_widget import DateWidget
 from moneyguru.gui.entry_print import EntryPrint
@@ -48,8 +48,6 @@ from moneyguru.gui.split_table import SplitTable
 from moneyguru.gui.transaction_panel import TransactionPanel
 from moneyguru.gui.transaction_print import TransactionPrint
 from moneyguru.gui.transaction_table import TransactionTable
-from moneyguru.loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE)
 from moneyguru.model.date import clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
@@ -1289,8 +1287,6 @@ class PyImportWindow(PyListener):
     
 
 class PyCSVImportOptions(PyWindowController):
-    FIELD_ORDER = [None, CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-        CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE]
     py_class = CSVOptions
     
     @objc.signature('@@:i')
@@ -1336,7 +1332,7 @@ class PyCSVImportOptions(PyWindowController):
     
     @objc.signature('v@:ii')
     def setColumn_fieldForTag_(self, index, tag):
-        field = self.FIELD_ORDER[tag]
+        field = CSV_FIELD_ORDER[tag]
         self.py.set_column_field(index, field)
     
     @objc.signature('v@:i')
