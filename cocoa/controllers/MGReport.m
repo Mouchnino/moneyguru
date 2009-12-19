@@ -183,12 +183,12 @@ http://www.hardcoded.net/licenses/hs_license
     else
     {
         MGAmountCell *cell = theCell;
-        BOOL isNextRowTotal = (row > -1 && row + 1 < [outlineView numberOfRows] &&
-            [self boolProperty:@"is_total" valueAtPath:[outlineView itemAtRow:row + 1]]);
+        BOOL isSubtotal = [self boolProperty:@"is_subtotal" valueAtPath:path];
     
         // Add total lines
         [cell setTotal:isTotal && level < 2];
-        [cell setSubtotal:(isTotal && level == 2) || isNextRowTotal];
+        // We also want subtotal lines for group totals (level==2)
+        [cell setSubtotal:(isTotal && level == 2) || isSubtotal];
     }
 }
 

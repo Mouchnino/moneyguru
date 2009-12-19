@@ -305,7 +305,6 @@ class Node(tree.Node):
         self.is_excluded = False
         self.is_expanded = False
     
-    #XXX use this in cocoa
     @property
     def is_subtotal(self):
         if not (self.is_account or self.is_group):
