@@ -190,7 +190,6 @@ class MainWindow(DocumentGUIObject):
     
     #--- Event callbacks
     def _undo_stack_changed(self):
-        # XXX support this on cocoa (put a no-op)
         self.view.refresh_undo_actions()
     
     account_added = _undo_stack_changed

@@ -1172,6 +1172,9 @@ class PyMainWindow(PyListener):
     def refresh_reconciliation_button(self):
         self.cocoa.refreshReconciliationButton()
     
+    def refresh_undo_actions(self):
+        pass # We don't need this on the Cocoa side
+    
     def show_account_reassign_panel(self):
         self.cocoa.showAccountReassignPanel()
     
