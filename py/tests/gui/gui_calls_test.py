@@ -14,6 +14,7 @@
 
 from hsutil.currency import EUR
 
+from ...model.account import INCOME
 from ..base import TestCase
 
 class Pristine(TestCase):
@@ -52,6 +53,13 @@ class Pristine(TestCase):
         # but not if it stays the same
         self.app.default_currency = EUR
         self.check_gui_calls(self.bsheet_gui, refresh=0)
+    
+    def test_new_budget(self):
+        # Repeat options must be updated upon panel load
+        self.add_account('income', account_type=INCOME) # we need an account for the panel to load
+        self.mainwindow.select_budget_table()
+        self.mainwindow.new_item()
+        self.check_gui_calls_partial(self.bpanel_gui, refresh_repeat_options=1)
     
     def test_new_schedule(self):
         # Repeat options must be updated upon panel load

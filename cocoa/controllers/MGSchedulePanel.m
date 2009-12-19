@@ -64,7 +64,6 @@ http://www.hardcoded.net/licenses/hs_license
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
     [splitTable refresh];
-    [self refreshRepeatOptions];
 }
 
 - (void)saveFields
@@ -108,6 +107,7 @@ http://www.hardcoded.net/licenses/hs_license
         [[self py] setRepeatEvery:[repeatEveryField intValue]];
     else if (control == startDateField) // must be edited right away to update the repeat options
         [[self py] setStartDate:[startDateField stringValue]];
+    // for the repeatType field, it's handled in repeatTypeSelected:
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker

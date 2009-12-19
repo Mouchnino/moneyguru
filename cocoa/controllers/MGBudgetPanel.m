@@ -48,7 +48,6 @@ http://www.hardcoded.net/licenses/hs_license
     [accountSelector selectItemAtIndex:[[self py] accountIndex]];
     [targetSelector selectItemAtIndex:[[self py] targetIndex]];
     [amountField setStringValue:[[self py] amount]];
-    [self refreshRepeatOptions];
 }
 
 - (void)saveFields

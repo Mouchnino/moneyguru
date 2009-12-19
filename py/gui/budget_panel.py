@@ -52,6 +52,7 @@ class BudgetPanel(GUIPanel, PanelWithScheduleMixIn):
         self.target_options = [(a.name if a is not None else 'None') for a in self._targets]
         self.account_index = self._accounts.index(budget.account) if budget.account is not None else 0
         self.target_index = self._targets.index(budget.target)
+        self.view.refresh_repeat_options()
         self.view.refresh_repeat_every()
     
     #--- Properties

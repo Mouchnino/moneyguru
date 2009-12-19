@@ -74,7 +74,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)selectTarget:(id)sender
 {
-    NSLog([NSString stringWithFormat:@"foobar%d",[targetSelector indexOfSelectedItem]]);
     [[self py] setSelectedTargetIndex:[targetSelector indexOfSelectedItem]];
 }
 
