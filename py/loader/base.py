@@ -113,6 +113,11 @@ class Loader(object):
             self.account_infos.append(self.account_info)
         self.account_info = AccountInfo()
     
+    def cancel_account(self):
+        self.account_info = AccountInfo()
+        self.transaction_info = TransactionInfo()
+        self.split_info = SplitInfo()
+    
     def start_transaction(self):
         self.flush_transaction() # Implicit
     

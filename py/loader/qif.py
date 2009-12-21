@@ -49,6 +49,7 @@ class Loader(base.Loader):
         content = content.replace('\r', '\n')
         lines = filter(None, content.split('\n'))
         blocks = [] # item structure: (block_type, [(header, data)])
+        autoswitch_blocks = [] # blocks in the middle of an AutoSwitch option
         block = []
         block_type = BLOCK_ENTRY
         autoswitch_mode = False
@@ -60,7 +61,12 @@ class Loader(base.Loader):
                     block_type = BLOCK_ACCOUNT
                 elif data in ENTRY_HEADERS:
                     block_type = BLOCK_ENTRY
-                    autoswitch_mode = False
+                    if autoswitch_mode:
+                        # We have a buggy qif that doesn't clear its autoswitch flag. The last block
+                        # we added to autoswitch actually belonged to normal blocks. move it.
+                        if autoswitch_blocks:
+                            blocks.append(autoswitch_blocks.pop())
+                        autoswitch_mode = False
                 elif data.startswith('Type:'): # if it doesn't, just ignore it
                     block_type = BLOCK_OTHER
                 elif data == 'Option:AutoSwitch':
@@ -69,11 +75,15 @@ class Loader(base.Loader):
                     autoswitch_mode = False
             elif header == '^':
                 if block_type != BLOCK_OTHER:
-                    blocks.append((block_type, block))
+                    if autoswitch_mode:
+                        autoswitch_blocks.append((block_type, block))
+                    else:
+                        blocks.append((block_type, block))
                 block = []
                 if block_type == BLOCK_ACCOUNT and not autoswitch_mode:
                     block_type = BLOCK_ENTRY
-            block.append((header, data))
+            if header != '^':
+                block.append((header, data))
         if not blocks:
             raise FileFormatError()
         logging.debug('This is a QIF file. {0} blocks'.format(len(blocks)))
@@ -83,6 +93,7 @@ class Loader(base.Loader):
         if self.date_format is None:
             raise FileFormatError()
         self.blocks = blocks
+        self.autoswitch_blocks = autoswitch_blocks
     
     def _load(self):
         seen_account_names = set()
@@ -90,7 +101,6 @@ class Loader(base.Loader):
         def parse_account_line(header, data):
             if header == 'N':
                 self.account_info.name = data
-                seen_account_names.add(data)
             if header == 'T' and data in ('Oth L', 'CCard'):
                 self.account_info.type = LIABILITY
         
@@ -116,6 +126,8 @@ class Loader(base.Loader):
             elif header == 'N':
                 self.transaction_info.checkno = data
             elif header == 'L':
+                if data.startswith('[') and data.endswith(']'):
+                    data = data[1:-1]
                 if data in seen_account_names:
                     # This transaction has already been added from the other account(s)
                     self.cancel_transaction()
@@ -132,6 +144,8 @@ class Loader(base.Loader):
                 self.start_account()
                 for header, data in block:
                     parse_account_line(header, data)
+                if self.account_info.name:
+                    seen_account_names.add(self.account_info.name)
             elif block_type == BLOCK_ENTRY:
                 if not seen_account_names:
                     self.account_info.name = 'Account' # If no account has been seen yet, add the txn to a defult 'Account' one
@@ -147,4 +161,16 @@ class Loader(base.Loader):
                     parse_entry_line(header, data)
                 self.flush_transaction()
         self.flush_account()
+        # For accounts that haven't been added in normal blocks, we complete the list with autoswitch
+        # blocks (so that we can have correct types for income/expense accounts)
+        for block_type, block in self.autoswitch_blocks:
+            if block_type == BLOCK_ACCOUNT:
+                self.start_account()
+                for header, data in block:
+                    parse_account_line(header, data)
+                if self.account_info.name in seen_account_names:
+                    self.cancel_account()
+                else:
+                    seen_account_names.add(self.account_info.name)
+                    self.flush_account()
     

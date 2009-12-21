@@ -10,6 +10,8 @@
 import os.path as op
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import USD
 
 from ..base import TestCase
@@ -251,15 +253,15 @@ class Pristine(TestCase):
         # autoswitch.qif has an autoswitch section with accounts containing "D" lines
         self.loader.parse(self.filepath('qif', 'autoswitch.qif'))
         self.loader.load()
-        self.assertEqual(len(self.loader.account_infos), 51)
-        self.assertEqual(len(self.loader.transaction_infos), 37)
+        eq_(len(self.loader.account_infos), 50)
+        eq_(len(self.loader.transaction_infos), 37)
     
     def test_autoswitch_buggy(self):
         # sp,eQIF exporter put another !Option:AutoSwitch after having cleared it
         self.loader.parse(self.filepath('qif', 'autoswitch_buggy.qif'))
         self.loader.load()
-        self.assertEqual(len(self.loader.account_infos), 51)
-        self.assertEqual(len(self.loader.transaction_infos), 37)
+        eq_(len(self.loader.account_infos), 50)
+        eq_(len(self.loader.transaction_infos), 37)
     
     def test_with_cat(self):
         # some file have a "!Type:Cat" section with buggy "D" lines
@@ -267,6 +269,14 @@ class Pristine(TestCase):
         self.loader.load()
         self.assertEqual(len(self.loader.account_infos), 1)
         self.assertEqual(len(self.loader.transaction_infos), 1)
+    
+    def test_transfer(self):
+        # Transfer happen with 2 entries putting [] brackets arround the account names of the 'L'
+        # sections.
+        self.loader.parse(self.filepath('qif', 'transfer.qif'))
+        self.loader.load()
+        eq_(len(self.loader.account_infos), 2)
+        eq_(len(self.loader.transaction_infos), 1)
     
 
 class TransferBetweenAssets(TestCase):
