@@ -343,7 +343,7 @@ class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
         self.setup_import_fortis()
         self.csvopt.new_layout('fortis')
         self.csvopt.set_column_field(6, CSV_TRANSFER) # out of range of the other
-        self.setup_lots_of_noise() # less columns
+        self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv')) # less columns (3)
     
     def test_access_last_column(self):
         # the columns are supposed to have been *reduced* so the gui doesn't try to access data that
@@ -360,6 +360,15 @@ class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
         self.setup_import_fortis()
         self.csvopt.select_layout('fortis')
         self.assertEqual(self.csvopt.columns[6], CSV_TRANSFER)
+    
+    def test_set_date_and_amount_then_import(self):
+        # The csv loading process must not crash either, even if out-of-range columns are fed to it.
+        self.csvopt.select_layout('fortis')
+        self.csvopt.set_column_field(0, CSV_DATE)
+        self.csvopt.set_column_field(1, CSV_INCREASE)
+        self.csvopt.set_column_field(2, CSV_DECREASE)
+        self.csvopt.continue_import() # no crash
+        eq_(len(self.itable), 3)
     
 
 class IncreaseDecrease(TestCase):

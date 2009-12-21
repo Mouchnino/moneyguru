@@ -65,12 +65,14 @@ class Loader(base.Loader):
     
     def _load(self):
         ci = self.column_indexes
+        colcount = len(self.lines[0]) if self.lines else 0
+        ci = dict((attr, index) for attr, index in ci.iteritems() if index < colcount)
         hasdate = CSV_DATE in ci
         hasamount = (CSV_AMOUNT in ci) or (CSV_INCREASE in ci and CSV_DECREASE in ci)
         if not (hasdate and hasamount):
             raise FileLoadError('The Date and Amount columns must be set')
         self.account_info.name = 'CSV Import'
-        date_index = self.column_indexes[CSV_DATE]
+        date_index = ci[CSV_DATE]
         for line in self.lines:
             cleaned_str_date = self.clean_date(line[date_index])
             if cleaned_str_date is None:
@@ -83,7 +85,7 @@ class Loader(base.Loader):
             raise FileLoadError('The Date column has been set on a column that doesn\'t contain dates')
         for line in self.lines:
             self.start_transaction()
-            for attr, index in self.column_indexes.items():
+            for attr, index in ci.items():
                 value = line[index]
                 if attr == CSV_DATE:
                     value = datetime.strptime(value, date_format).date()
