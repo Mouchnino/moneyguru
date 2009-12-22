@@ -29,6 +29,7 @@ CSV_CURRENCY = 'currency'
 CSV_REFERENCE = 'reference'
 
 class Loader(base.Loader):
+    FILE_OPEN_MODE = 'U' # universal line-ends. Deals with \r and \n
     def __init__(self, default_currency):
         base.Loader.__init__(self, default_currency)
         self.column_indexes = {}
@@ -41,7 +42,6 @@ class Loader(base.Loader):
         
         # Comment lines can confuse the sniffer. We remove them
         content = infile.read()
-        content = content.replace('\r\n', '\n').replace('\r', '\n')
         lines = content.split('\n')
         stripped_lines = [line.strip() for line in lines]
         stripped_lines = [line for line in lines if line and not line.startswith('#')]

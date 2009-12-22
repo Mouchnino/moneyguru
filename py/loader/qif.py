@@ -43,10 +43,10 @@ BLOCK_ACCOUNT, BLOCK_ENTRY, BLOCK_OTHER = range(3)
 ENTRY_HEADERS = set(['Type:Bank', 'Type:Invst', 'Type:Cash', 'Type:Oth A', 'Type:CCard', 'Type:Oth L'])
 
 class Loader(base.Loader):
+    FILE_OPEN_MODE = 'U' # universal line-ends. Deals with \r and \n
+    
     def _parse(self, infile):
         content = infile.read()
-        content = content.replace('\r\n', '\n')
-        content = content.replace('\r', '\n')
         lines = filter(None, content.split('\n'))
         blocks = [] # item structure: (block_type, [(header, data)])
         autoswitch_blocks = [] # blocks in the middle of an AutoSwitch option

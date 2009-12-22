@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 import datetime
 import logging
 import re
@@ -37,6 +39,8 @@ class Loader(object):
     To use it, just call load() and then fetch the accounts & transactions. This information is in
     the form of lists of dicts. The transactions are sorted in order of date.
     """
+    FILE_OPEN_MODE = 'r'
+    
     def __init__(self, default_currency):
         self.default_currency = default_currency
         self.groups = GroupList()
@@ -88,11 +92,11 @@ class Loader(object):
                     datetime.datetime.strptime(str_date, format)
                     found_at_least_one = True
                 except ValueError:
-                    logging.debug(u'Failed try to read the date {0} with the format {1}'.format(str_date, format))
+                    logging.debug("Failed try to read the date {0} with the format {1}".format(str_date, format))
                     break
             else:
                 if found_at_least_one:
-                    logging.debug(u'Correct date format: {0}'.format(format))
+                    logging.debug("Correct date format: {0}".format(format))
                     return format
         return None    
     
@@ -154,7 +158,7 @@ class Loader(object):
     def parse(self, filename):
         """Parses 'filename' and raises FileFormatError if appropriate."""
         try:
-            with open(filename, 'r') as infile:
+            with open(filename, self.FILE_OPEN_MODE) as infile:
                 self._parse(infile)
         except IOError:
             raise FileFormatError()
