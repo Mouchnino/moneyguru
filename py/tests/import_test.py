@@ -10,6 +10,8 @@
 from datetime import date
 import os.path as op
 
+from nose.tools import eq_
+
 from hsutil.currency import PLN, CAD
 
 from .base import ApplicationGUI, TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
@@ -281,6 +283,17 @@ class DoubleOFXImportWithASplitInTheMiddle(TestCase):
         into a split, bail out and don't touch the amounts"""
         self.assertEqual(len(self.stable), 3)
         self.assertEqual(self.stable[0].credit, '42.00')
+    
+
+class ImportAccountInGroup(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.importall(self.filepath('moneyguru', 'account_in_group.moneyguru'))
+        self.mainwindow.select_balance_sheet()
+    
+    def test_account_was_imported(self):
+        # The fact that the account was in a group didn't prevent it from being imported.
+        eq_(self.bsheet.assets[0].name, 'Some Asset')
     
 
 class LoadFile(TestCase):

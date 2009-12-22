@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<moneyguru-file>
+    <group name="Some Group" type="asset"/>
+    <account currency="CAD" group="Some Group" name="Some Asset" type="asset"/>
+    <account currency="CAD" name="Some Income" type="income"/>
+    <transaction checkno="" date="2009-12-22" description="Some Transaction" mtime="1261489018" payee="">
+        <split account="Some Asset" amount="CAD 42.00" memo="" reconciled="n"/>
+        <split account="Some Income" amount="CAD -42.00" memo="" reconciled="n"/>
+    </transaction>
+</moneyguru-file>

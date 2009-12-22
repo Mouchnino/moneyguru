@@ -1189,6 +1189,8 @@ class Document(Broadcaster, Listener):
         for split in to_unreconcile:
             split.reconciled = False
         for account in added_accounts:
+            # we don't import groups, and we don't want them to mess our document
+            account.group = None
             account.name = self.accounts.new_name(account.name)
             self.accounts.add(account)
         if target_account is not ref_account and ref_account.reference is not None:
