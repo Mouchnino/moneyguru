@@ -176,7 +176,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)validateAction:(SEL)action
 {
-    if (action == @selector(addGroup:))
+    if (action == @selector(newGroup:))
         return (top == balanceSheet) || (top == incomeStatement);
     else if ((action == @selector(moveUp:)) ||
              (action == @selector(moveDown:)) ||
@@ -544,7 +544,15 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if ([aItem tag] == MGNewItemMenuItem)
     {
-        NSString *title = (top == balanceSheet) || (top == incomeStatement) ? @"New Account" : @"New Transaction";
+        NSString *title = @"New Item";
+        if ((top == balanceSheet) || (top == incomeStatement))
+            title = @"New Account";
+        else if ((top == transactionTable) || (top == entryTable))
+            title = @"New Transaction";
+        else if (top == scheduleTable)
+            title = @"New Schedule";
+        else if (top == budgetTable)
+            title = @"New Budget";
         [aItem setTitle:title];
     }
     return [self validateUserInterfaceItem:aItem];
