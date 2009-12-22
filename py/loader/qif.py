@@ -9,6 +9,7 @@
 
 import logging
 import re
+from collections import namedtuple
 from datetime import datetime
 
 from hsutil.misc import flatten
@@ -42,25 +43,33 @@ BLOCK_ACCOUNT, BLOCK_ENTRY, BLOCK_OTHER = range(3)
 
 ENTRY_HEADERS = set(['Type:Bank', 'Type:Invst', 'Type:Cash', 'Type:Oth A', 'Type:CCard', 'Type:Oth L'])
 
+Line = namedtuple('Line', 'header data')
+
+class Block(object):
+    def __init__(self):
+        self.type = BLOCK_OTHER
+        self.lines = []
+    
+
 class Loader(base.Loader):
     FILE_OPEN_MODE = 'U' # universal line-ends. Deals with \r and \n
     
     def _parse(self, infile):
         content = infile.read()
         lines = filter(None, content.split('\n'))
-        blocks = [] # item structure: (block_type, [(header, data)])
+        blocks = []
         autoswitch_blocks = [] # blocks in the middle of an AutoSwitch option
-        block = []
-        block_type = BLOCK_ENTRY
+        block = Block()
+        current_block_type = BLOCK_ENTRY
         autoswitch_mode = False
         for line in lines:
             header, data = line[0], line[1:].strip()
             data = unicode(data, 'utf-8', 'ignore')
             if header == '!':
                 if data == 'Account':
-                    block_type = BLOCK_ACCOUNT
+                    current_block_type = BLOCK_ACCOUNT
                 elif data in ENTRY_HEADERS:
-                    block_type = BLOCK_ENTRY
+                    current_block_type = BLOCK_ENTRY
                     if autoswitch_mode:
                         # We have a buggy qif that doesn't clear its autoswitch flag. The last block
                         # we added to autoswitch actually belonged to normal blocks. move it.
@@ -68,27 +77,29 @@ class Loader(base.Loader):
                             blocks.append(autoswitch_blocks.pop())
                         autoswitch_mode = False
                 elif data.startswith('Type:'): # if it doesn't, just ignore it
-                    block_type = BLOCK_OTHER
+                    current_block_type = BLOCK_OTHER
                 elif data == 'Option:AutoSwitch':
                     autoswitch_mode = True
                 elif data == 'Clear:AutoSwitch':
                     autoswitch_mode = False
             elif header == '^':
-                if block_type != BLOCK_OTHER:
+                if current_block_type != BLOCK_OTHER:
+                    block.type = current_block_type
                     if autoswitch_mode:
-                        autoswitch_blocks.append((block_type, block))
+                        autoswitch_blocks.append(block)
                     else:
-                        blocks.append((block_type, block))
-                block = []
-                if block_type == BLOCK_ACCOUNT and not autoswitch_mode:
-                    block_type = BLOCK_ENTRY
+                        blocks.append(block)
+                block = Block()
+                if current_block_type == BLOCK_ACCOUNT and not autoswitch_mode:
+                    current_block_type = BLOCK_ENTRY
             if header != '^':
-                block.append((header, data))
+                block.lines.append(Line(header, data))
         if not blocks:
             raise FileFormatError()
         logging.debug('This is a QIF file. {0} blocks'.format(len(blocks)))
-        entry_blocks = [block for type, block in blocks if type == BLOCK_ENTRY]
-        str_dates = [data for header, data in flatten(entry_blocks) if header == 'D']
+        entry_blocks = [block for block in blocks if block.type == BLOCK_ENTRY]
+        entry_lines = flatten(block.lines for block in entry_blocks)
+        str_dates = [line.data for line in entry_lines if line.header == 'D']
         self.date_format = self.guess_date_format(str_dates)
         if self.date_format is None:
             raise FileFormatError()
@@ -139,10 +150,12 @@ class Loader(base.Loader):
                 if data in ('Type:CCard', 'Type:Oth L'):
                     self.account_info.type = LIABILITY
         
-        for block_type, block in self.blocks:
+        for block in self.blocks:
+            block_type = block.type
+            lines = block.lines
             if block_type == BLOCK_ACCOUNT:
                 self.start_account()
-                for header, data in block:
+                for header, data in lines:
                     parse_account_line(header, data)
                 if self.account_info.name:
                     seen_account_names.add(self.account_info.name)
@@ -150,7 +163,7 @@ class Loader(base.Loader):
                 if not seen_account_names:
                     self.account_info.name = 'Account' # If no account has been seen yet, add the txn to a defult 'Account' one
                 seen_split_fields = set()
-                for header, data in block:
+                for header, data in lines:
                     if header in ('S', 'E', '$'): # splits field
                         if header in seen_split_fields: #must flush the split
                             self.flush_split()
@@ -163,10 +176,12 @@ class Loader(base.Loader):
         self.flush_account()
         # For accounts that haven't been added in normal blocks, we complete the list with autoswitch
         # blocks (so that we can have correct types for income/expense accounts)
-        for block_type, block in self.autoswitch_blocks:
+        for block in self.autoswitch_blocks:
+            block_type = block.type
+            lines = block.lines
             if block_type == BLOCK_ACCOUNT:
                 self.start_account()
-                for header, data in block:
+                for header, data in lines:
                     parse_account_line(header, data)
                 if self.account_info.name in seen_account_names:
                     self.cancel_account()
