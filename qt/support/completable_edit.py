@@ -30,11 +30,11 @@ class CompletableEdit(QLineEdit):
         self.model = None
     
     def _prefix(self):
-        # Returns the text before the selection, lowered
+        # Returns the text before the selection
         if self.selectionStart() == -1:
-            return unicode(self.text()).lower()
+            return unicode(self.text())
         else:
-            return unicode(self.text()[:self.selectionStart()]).lower()
+            return unicode(self.text()[:self.selectionStart()])
     
     def _replaceText(self, newText):
         # Replaces self.text() with newText while keeping the selection intact (for up/down cycling)
