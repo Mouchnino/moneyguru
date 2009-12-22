@@ -12,6 +12,8 @@ from __future__ import unicode_literals
 import datetime
 import logging
 import re
+from itertools import groupby
+from operator import attrgetter
 
 from hsutil.currency import Currency
 from hsutil.misc import nonone, flatten
@@ -248,15 +250,13 @@ class Loader(object):
                 if split_info.amount:
                     currencies.add(split_info.amount.currency)
         
-        position = 1
-        last_date = None
-        for info in self.transaction_infos:
-            transaction = load_transaction_info(info)
-            if transaction.date != last_date:
-                position = 1
-            start_date = min(start_date, transaction.date)
-            self.transactions.add(transaction, position=position)
-            position += 1
+        self.transaction_infos.sort(key=attrgetter('date'))
+        for date, transaction_infos in groupby(self.transaction_infos, attrgetter('date')):
+            start_date = min(start_date, date)
+            for position, info in enumerate(transaction_infos, start=1):
+                transaction = load_transaction_info(info)
+                self.transactions.add(transaction, position=position)
+        
         # Scheduled
         for info in self.recurrence_infos:
             ref = load_transaction_info(info.transaction_info)

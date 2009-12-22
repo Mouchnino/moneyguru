@@ -1630,7 +1630,18 @@ class FourEntriesOnTheSameDate(TestCase):
         self.assertEqual(self.entry_descriptions(), ['entry 2', 'entry 1', 'entry 3', 'entry 4'])
         self.etable.move_up()
         self.assertEqual(self.entry_descriptions(), ['entry 2', 'entry 1', 'entry 3', 'entry 4'])
-
+    
+    def test_save_load_preserve_positions(self):
+        # After a save and load, moving entries around still works correctly (previously, all
+        # positions would be set to 1 open loading).
+        self.document = self.save_and_load() # no crash
+        self.create_instances()
+        self.document.date_range = MonthRange(date(2008, 1, 1))
+        self.mainwindow.select_transaction_table()
+        self.ttable.select([3])
+        self.ttable.move_up()
+        eq_(self.transaction_descriptions(), ['entry 1', 'entry 2', 'entry 4', 'entry 3'])
+    
 
 class EntrySelectionOnAccountChange(TestCase):
     """I couldn't find a better name for a setup with multiple accounts, some transactions having

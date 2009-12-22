@@ -8,8 +8,9 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from StringIO import StringIO
-import os.path as op
 from datetime import date
+
+from nose.tools import eq_
 
 from hsutil.currency import USD, PLN
 
@@ -72,42 +73,45 @@ class NativeLoader(TestCase):
         transactions = self.loader.transaction_infos
         self.assertEqual(len(transactions), 4)
         transaction = transactions[0]
-        self.assertEqual(transaction.date, date(2008, 2, 16))
-        self.assertEqual(transaction.description, 'Entry 2')
-        self.assertEqual(transaction.payee, 'Some Payee')
-        self.assertEqual(transaction.checkno, '42')
-        self.assertEqual(transaction.transfer, None)
-        self.assertEqual(transaction.mtime, 1203095456)
-        self.assertEqual(len(transaction.splits), 1)
+        eq_(transaction.date, date(2008, 2, 12))
+        eq_(transaction.description, 'Entry 3')
+        eq_(transaction.transfer, None)
+        eq_(transaction.mtime, 1203095473)
+        eq_(len(transaction.splits), 1)
+        split = transaction.splits[0]
+        eq_(split.account.name, 'Account 2')
+        eq_(split.amount, Amount(89, PLN))
+        
+        transaction = transactions[1]
+        eq_(transaction.date, date(2008, 2, 15))
+        eq_(transaction.description, 'Entry 1')
+        eq_(transaction.mtime, 1203095441)
+        eq_(len(transaction.splits), 2)
+        split = transaction.splits[0]
+        eq_(split.account.name, 'Account 1')
+        eq_(split.amount, Amount(42, USD))
+        split = transaction.splits[1]
+        eq_(split.account.name, 'foobar')
+        eq_(split.amount, Amount(-42, USD))
+        
+        transaction = transactions[2]
+        eq_(transaction.date, date(2008, 2, 16))
+        eq_(transaction.description, 'Entry 2')
+        eq_(transaction.payee, 'Some Payee')
+        eq_(transaction.checkno, '42')
+        eq_(transaction.transfer, None)
+        eq_(transaction.mtime, 1203095456)
+        eq_(len(transaction.splits), 1)
         split = transaction.splits[0]
         self.assertEqual(split.account.name, 'Account 1')
         self.assertEqual(split.amount, Amount(-14, USD))
-        transaction = transactions[1]
-        self.assertEqual(transaction.date, date(2008, 2, 15))
-        self.assertEqual(transaction.description, 'Entry 1')
-        self.assertEqual(transaction.mtime, 1203095441)
-        self.assertEqual(len(transaction.splits), 2)
-        split = transaction.splits[0]
-        self.assertEqual(split.account.name, 'Account 1')
-        self.assertEqual(split.amount, Amount(42, USD))
-        split = transaction.splits[1]
-        self.assertEqual(split.account.name, 'foobar')
-        self.assertEqual(split.amount, Amount(-42, USD))
-        transaction = transactions[2]
-        self.assertEqual(transaction.date, date(2008, 2, 12))
-        self.assertEqual(transaction.description, 'Entry 3')
-        self.assertEqual(transaction.transfer, None)
-        self.assertEqual(transaction.mtime, 1203095473)
-        self.assertEqual(len(transaction.splits), 1)
-        split = transaction.splits[0]
-        self.assertEqual(split.account.name, 'Account 2')
-        self.assertEqual(split.amount, Amount(89, PLN))
+        
         transaction = transactions[3]
-        self.assertEqual(transaction.date, date(2008, 2, 19))
-        self.assertEqual(transaction.description, 'Entry 4')
-        self.assertEqual(transaction.transfer, None)
-        self.assertEqual(transaction.mtime, 1203095497)
+        eq_(transaction.date, date(2008, 2, 19))
+        eq_(transaction.description, 'Entry 4')
+        eq_(transaction.transfer, None)
+        eq_(transaction.mtime, 1203095497)
         split = transaction.splits[0]
-        self.assertEqual(split.account.name, 'Account 2')
-        self.assertEqual(split.amount, Amount(-101, PLN))
+        eq_(split.account.name, 'Account 2')
+        eq_(split.amount, Amount(-101, PLN))
     
