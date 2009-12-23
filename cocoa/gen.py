@@ -10,6 +10,7 @@ sys.path.insert(0, 'py') # for hsutil and hsdocgen
 import os
 
 from help import gen
+from moneyguru.app import Application as MoneyGuruApp
 
 gen.generate()
 os.system('/Developer/Applications/Utilities/Help\\ Indexer.app/Contents/MacOS/Help\\ Indexer help/moneyguru_help')
@@ -17,3 +18,8 @@ os.system('/Developer/Applications/Utilities/Help\\ Indexer.app/Contents/MacOS/H
 os.chdir('py')
 os.system('python -u gen.py')
 os.chdir('..')
+
+print 'Generating Info.plist'
+contents = open('InfoTemplate.plist').read()
+contents = contents.replace('{version}', MoneyGuruApp.VERSION)
+open('Info.plist', 'w').write(contents)
