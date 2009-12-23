@@ -29,20 +29,79 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
     def _headerView(self):
         raise NotImplementedError()
     
-    def _firstEditableIndex(self, originalIndex):
+    def _firstEditableIndex(self, originalIndex, columnIndexes=None):
         # As a side effect, this method will change selection's currentIndex to the editableIndex
         model = self.model()
         h = self._headerView()
         editedRow = originalIndex.row()
-        columnIndexes = (h.logicalIndex(i) for i in xrange(h.count()))
+        if columnIndexes is None:
+            columnIndexes = (h.logicalIndex(i) for i in xrange(h.count()))
         create = lambda col: model.createIndex(editedRow, col, originalIndex.internalPointer())
         scannedIndexes = (create(i) for i in columnIndexes if not h.isSectionHidden(i))
         editableIndex = first(index for index in scannedIndexes if model.flags(index) & Qt.ItemIsEditable)
-        if editableIndex is not None:
-            # If we want the tabbing to be correct, we have to set the selection's currentIndex() as
-            # well.
-            self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.Current)
         return editableIndex
+    
+    def _previousEditableIndex(self, originalIndex):
+        h = self._headerView()
+        myCol = originalIndex.column()
+        columnIndexes = [h.logicalIndex(i) for i in xrange(h.count())]
+        # keep only columns before myCol
+        columnIndexes = columnIndexes[:columnIndexes.index(myCol)]
+        # We want the previous item, the columns have to be in reverse order
+        columnIndexes = reversed(columnIndexes)
+        return self._firstEditableIndex(originalIndex, columnIndexes)
+    
+    def _nextEditableIndex(self, originalIndex):
+        h = self._headerView()
+        myCol = originalIndex.column()
+        columnIndexes = [h.logicalIndex(i) for i in xrange(h.count())]
+        # keep only columns after myCol
+        columnIndexes = columnIndexes[columnIndexes.index(myCol)+1:]
+        return self._firstEditableIndex(originalIndex, columnIndexes)
+    
+    def _handleCloseEditor(self, editor, hint, superMethod):
+        # The problem we're trying to solve here is the edit-and-go-away problem. When ending the
+        # editing with submit or return, there's no problem, the model's submit()/revert() is
+        # correctly called. However, when ending editing by clicking away, submit() is never called.
+        # Fortunately, closeEditor is called, and AFAIK, it's the only case where it's called with
+        # NoHint (0). So, in these cases, we want to call model.submit()
+        if hint == QAbstractItemDelegate.NoHint:
+            self.model().submit()
+            superMethod(self, editor, hint)
+        
+        # And here, what we're trying to solve is the problem with editing next/previous lines.
+        # If there are no more editable indexes, stop edition right there.
+        elif hint in (QAbstractItemDelegate.EditNextItem, QAbstractItemDelegate.EditPreviousItem):
+            if hint == QAbstractItemDelegate.EditNextItem:
+                editableIndex = self._nextEditableIndex(self.currentIndex())
+            else:
+                editableIndex = self._previousEditableIndex(self.currentIndex())
+            if editableIndex is None:
+                self.model().submit()
+                superMethod(self, editor, 0)
+            else:
+                superMethod(self, editor, 0)
+                self.setCurrentIndex(editableIndex)
+                self.edit(editableIndex, QAbstractItemView.AllEditTriggers, None)
+        else:
+            superMethod(self, editor, hint)
+    
+    def _handleEdit(self, index, trigger, event, superMethod):
+        # The goal of this method is multiple. First, when we start edition through the edit keys,
+        # we want the first editable cell to be edited rather than the current cell.
+        # Second, when tabbing and back-tabbing during edition, we want to be able to skip over
+        # non-editable cells, and also, stop *and submit data* at the end/beginning of the line.
+        # Since this is a mixin, we need a reference to the superclass's method to call, 
+        # `superMethod`
+        startsEditingThroughKeys = (trigger & QAbstractItemView.EditKeyPressed) and \
+            (event is not None) and (event.type() == QEvent.KeyPress) and \
+            (self.state() != QAbstractItemView.EditingState)
+        if startsEditingThroughKeys:
+            editableIndex = self._firstEditableIndex(index)
+            if editableIndex is not None:
+                self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.Current)
+                return superMethod(self, editableIndex, trigger, event)
+        return superMethod(self, index, trigger, event)
     
     def _redirectMouseEventToDelegate(self, event):
         pos = event.pos()
@@ -56,43 +115,14 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         if hasattr(delegate, 'handleClick'):
             delegate.handleClick(index, relativePos, QRect(0, 0, rect.width(), rect.height()))
     
-    def _shouldEditFromKeyPress(self, trigger, event):
-        if event is None or event.type() != QEvent.KeyPress:
-            return False # not a key press
-        # Returns True if the trigger is a key press and that this type of trigger is allowed in
-        # the edit triggers. Moreover, this only returns True if we're not already in edition state.
-        if self.state() == QAbstractItemView.EditingState:
-            return False
-        if not (trigger & (QAbstractItemView.EditKeyPressed | QAbstractItemView.AnyKeyPressed)):
-            return False
-        if not (trigger & self.editTriggers()):
-            return False
-        return True
-    
 
 class TableView(QTableView, ItemViewMixIn):
     #--- QTableView override
-    def closeEditor(self, edit, hint):
-        # The problem we're trying to solve here is the edit-and-go-away problem. When ending the
-        # editing with submit or return, there's no problem, the model's submit()/revert() is
-        # correctly called. However, when ending editing by clicking away, submit() is never called.
-        # Fortunately, closeEditor is called, and AFAIK, it's the only case where it's called with
-        # NoHint (0). So, in these cases, we want to call model.submit()
-        if hint == QAbstractItemDelegate.NoHint:
-            self.model().submit()
-        QTableView.closeEditor(self, edit, hint)
+    def closeEditor(self, editor, hint):
+        self._handleCloseEditor(editor, hint, QTableView.closeEditor)
     
     def edit(self, index, trigger, event):
-        # When an edit is triggered by a key, rather than editing the selected cell (default
-        # behavior), we want to look at the row and edit the first editable cell in it.
-        if self._shouldEditFromKeyPress(trigger, event):
-            editableIndex = self._firstEditableIndex(index)
-            if editableIndex is not None:
-                return QTableView.edit(self, editableIndex, trigger, event)
-            else:
-                return False
-        else:
-            return QTableView.edit(self, index, trigger, event)
+        return self._handleEdit(index, trigger, event, QTableView.edit)
     
     def keyPressEvent(self, event):
         key = event.key()
@@ -130,20 +160,11 @@ class TableView(QTableView, ItemViewMixIn):
 
 class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments there
     #--- QTreeView override
-    def closeEditor(self, edit, hint):
-        if hint == QAbstractItemDelegate.NoHint:
-            self.model().submit()
-        QTreeView.closeEditor(self, edit, hint)
+    def closeEditor(self, editor, hint):
+        self._handleCloseEditor(editor, hint, QTreeView.closeEditor)
     
     def edit(self, index, trigger, event):
-        if self._shouldEditFromKeyPress(trigger, event):
-            editableIndex = self._firstEditableIndex(index)
-            if editableIndex is not None:
-                return QTreeView.edit(self, editableIndex, trigger, event)
-            else:
-                return False
-        else:
-            return QTreeView.edit(self, index, trigger, event)
+        return self._handleEdit(index, trigger, event, QTreeView.edit)
     
     def keyPressEvent(self, event):
         key = event.key()
