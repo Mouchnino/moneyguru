@@ -1,3 +1,14 @@
+- date: 2009-12-23
+  version: 1.6.9
+  description: |
+    * Fixed a bug with QIF import causing some transfer transactions to be duplicated. (#54)
+    * Fixed a bug with transaction drag & drop re-ordering where the transactions would be placed
+      wrongly. (#94)
+    * Fixed a bug in moneyGuru files import where account in groups would not be imported. (#96)
+    * Fixed a crash in csv imports when the layout would be too "wide" for the imported file. (#97)
+    * Fixed a mis-labeling of the "New Item" menu item for Schedules and Budgets. [OS X] (#102)
+    * Fixed a bug in auto-completion where typed-text would always be made lowercase. [Windows] (#103)
+    * Fixed nasty table edition glitches. [Windows] (#100)
 - date: 2009-12-14
   version: 1.6.8
   description: |
