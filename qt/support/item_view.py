@@ -86,22 +86,21 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         else:
             superMethod(self, editor, hint)
     
-    def _handleEdit(self, index, trigger, event, superMethod):
-        # The goal of this method is multiple. First, when we start edition through the edit keys,
-        # we want the first editable cell to be edited rather than the current cell.
-        # Second, when tabbing and back-tabbing during edition, we want to be able to skip over
-        # non-editable cells, and also, stop *and submit data* at the end/beginning of the line.
-        # Since this is a mixin, we need a reference to the superclass's method to call, 
-        # `superMethod`
-        startsEditingThroughKeys = (trigger & QAbstractItemView.EditKeyPressed) and \
-            (event is not None) and (event.type() == QEvent.KeyPress) and \
-            (self.state() != QAbstractItemView.EditingState)
-        if startsEditingThroughKeys:
-            editableIndex = self._firstEditableIndex(index)
+    def _handleKeyPressEvent(self, event, superMethod):
+        key = event.key()
+        if key == Qt.Key_Space:
+            self.spacePressed.emit()
+        elif key in (Qt.Key_Backspace, Qt.Key_Delete):
+            self.deletePressed.emit()
+        elif key == Qt.Key_Return:
+            # I have no freaking idea why, but under Windows, somehow, the Return key doesn't
+            # trigger edit() calls (even in Qt demos...). Gotta do it manually.
+            editableIndex = self._firstEditableIndex(self.currentIndex())
             if editableIndex is not None:
                 self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.Current)
-                return superMethod(self, editableIndex, trigger, event)
-        return superMethod(self, index, trigger, event)
+                self.edit(editableIndex, QAbstractItemView.EditKeyPressed, event)
+        else:
+            superMethod(self, event)
     
     def _redirectMouseEventToDelegate(self, event):
         pos = event.pos()
@@ -121,21 +120,8 @@ class TableView(QTableView, ItemViewMixIn):
     def closeEditor(self, editor, hint):
         self._handleCloseEditor(editor, hint, QTableView.closeEditor)
     
-    def edit(self, index, trigger, event):
-        return self._handleEdit(index, trigger, event, QTableView.edit)
-    
     def keyPressEvent(self, event):
-        key = event.key()
-        if key == Qt.Key_Space:
-            self.spacePressed.emit()
-        elif key in (Qt.Key_Backspace, Qt.Key_Delete):
-            self.deletePressed.emit()
-        elif key == Qt.Key_Return:
-            # I have no freaking idea why, but under Windows, somehow, the Return key doesn't
-            # trigger edit() calls (even in Qt demos...). Gotta do it manually.
-            self.edit(self.currentIndex(), QAbstractItemView.EditKeyPressed, event)
-        else:
-            QTableView.keyPressEvent(self, event)
+        self._handleKeyPressEvent(event, QTableView.keyPressEvent)
     
     def mouseReleaseEvent(self, event):
         QTableView.mouseReleaseEvent(self, event)
@@ -163,19 +149,8 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
     def closeEditor(self, editor, hint):
         self._handleCloseEditor(editor, hint, QTreeView.closeEditor)
     
-    def edit(self, index, trigger, event):
-        return self._handleEdit(index, trigger, event, QTreeView.edit)
-    
     def keyPressEvent(self, event):
-        key = event.key()
-        if key == Qt.Key_Space:
-            self.spacePressed.emit()
-        elif key in (Qt.Key_Backspace, Qt.Key_Delete):
-            self.deletePressed.emit()
-        elif key == Qt.Key_Return:
-            self.edit(self.currentIndex(), QAbstractItemView.EditKeyPressed, event)
-        else:
-            QTreeView.keyPressEvent(self, event)
+        self._handleKeyPressEvent(event, QTreeView.keyPressEvent)
     
     def mouseReleaseEvent(self, event):
         QTreeView.mouseReleaseEvent(self, event)
