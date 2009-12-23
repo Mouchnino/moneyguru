@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect, QEvent
+from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect
 from PyQt4.QtGui import (QAbstractItemView, QTableView, QTreeView, QItemSelectionModel,
     QAbstractItemDelegate)
 
@@ -66,8 +66,7 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         # Fortunately, closeEditor is called, and AFAIK, it's the only case where it's called with
         # NoHint (0). So, in these cases, we want to call model.submit()
         if hint == QAbstractItemDelegate.NoHint:
-            self.model().submit()
-            superMethod(self, editor, hint)
+            superMethod(self, editor, QAbstractItemDelegate.SubmitModelCache)
         
         # And here, what we're trying to solve is the problem with editing next/previous lines.
         # If there are no more editable indexes, stop edition right there.
@@ -77,8 +76,7 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             else:
                 editableIndex = self._previousEditableIndex(self.currentIndex())
             if editableIndex is None:
-                self.model().submit()
-                superMethod(self, editor, 0)
+                superMethod(self, editor, QAbstractItemDelegate.SubmitModelCache)
             else:
                 superMethod(self, editor, 0)
                 self.setCurrentIndex(editableIndex)
@@ -92,13 +90,10 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             self.spacePressed.emit()
         elif key in (Qt.Key_Backspace, Qt.Key_Delete):
             self.deletePressed.emit()
-        elif key == Qt.Key_Return:
+        elif (key == Qt.Key_Return) and (self.state() != QAbstractItemView.EditingState):
             # I have no freaking idea why, but under Windows, somehow, the Return key doesn't
             # trigger edit() calls (even in Qt demos...). Gotta do it manually.
-            editableIndex = self._firstEditableIndex(self.currentIndex())
-            if editableIndex is not None:
-                self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.Current)
-                self.edit(editableIndex, QAbstractItemView.EditKeyPressed, event)
+            self.editSelected()
         else:
             superMethod(self, event)
     
@@ -113,6 +108,16 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         # handleClick(index, relativePos, itemRect)
         if hasattr(delegate, 'handleClick'):
             delegate.handleClick(index, relativePos, QRect(0, 0, rect.width(), rect.height()))
+    
+    #--- Public
+    def editSelected(self):
+        selectedRows = self.selectionModel().selectedRows()
+        if not selectedRows:
+            return
+        selectedIndex = selectedRows[0]
+        editableIndex = self._firstEditableIndex(selectedIndex)
+        self.setCurrentIndex(editableIndex)
+        self.edit(editableIndex)
     
 
 class TableView(QTableView, ItemViewMixIn):
@@ -130,15 +135,6 @@ class TableView(QTableView, ItemViewMixIn):
     #--- ItemViewMixIn overrides
     def _headerView(self):
         return self.horizontalHeader()
-    
-    #--- Public
-    def editSelected(self):
-        selectedRows = self.selectionModel().selectedRows()
-        if not selectedRows:
-            return
-        selectedIndex = selectedRows[0]
-        editableIndex = self._firstEditableIndex(selectedIndex)
-        QTableView.edit(self, editableIndex)
     
     #--- Signals
     deletePressed = pyqtSignal()
@@ -159,14 +155,6 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
     #--- ItemViewMixIn overrides
     def _headerView(self):
         return self.header()
-    
-    #--- Public
-    def editSelected(self):
-        selectedRows = self.selectionModel().selectedRows()
-        if not selectedRows:
-            return
-        selectedIndex = selectedRows[0]
-        QTreeView.edit(self, selectedIndex)
     
     #--- Signals
     deletePressed = pyqtSignal()
