@@ -75,45 +75,9 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSDictionary *userInfo = [notification userInfo];
 	int textMovement = [[userInfo valueForKey:@"NSTextMovement"] intValue];
-	// Do we want to get out of edit mode?
-	bool getOutOfEditMode = NO;
-    if ([Utils isTiger]) // Tiger doesn't stop editing at the end of the line.
-    {
-        NSArray *columns = [self tableColumns];
-        int row = [self editedRow];
-        if (textMovement == NSTabTextMovement)
-    	{
-    		getOutOfEditMode = YES;
-    		for (int i=[self editedColumn]+1; i<[columns count]; i++)
-    		{
-    			NSTableColumn *column = [columns objectAtIndex:i];
-                if ([self shouldEditTableColumn:column row:row]) 
-    			{
-    				getOutOfEditMode = NO;
-    				break;
-    			}
-    		}
-    	}
-    	else if (textMovement == NSBacktabTextMovement)
-    	{
-    		getOutOfEditMode = YES;
-    		for (int i=[self editedColumn]-1; i>=0; i--)
-    		{
-    			NSTableColumn *column = [columns objectAtIndex:i];
-    			if ([self shouldEditTableColumn:column row:row])
-    			{
-    				getOutOfEditMode = NO;
-    				break;
-    			}
-    		}
-    	}
-    }
 	if (textMovement == NSReturnTextMovement)
 	{
-        getOutOfEditMode = YES;
-	}
-	if (getOutOfEditMode)
-	{
+	    // Stop editing
 		NSMutableDictionary *newInfo;
         newInfo = [NSMutableDictionary dictionaryWithDictionary:userInfo];
         [newInfo setObject:[NSNumber numberWithInt:NSIllegalTextMovement] forKey:@"NSTextMovement"];

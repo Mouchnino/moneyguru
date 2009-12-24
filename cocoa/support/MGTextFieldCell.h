@@ -20,7 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (void)setHasDarkBackground:(BOOL)value;
 - (void)setIndent:(int)value;
-// If we use the NSCell's target and action, that action is triggered wherever the cell is clicked on Tiger
 - (void)setHasArrow:(BOOL)value;
 - (void)setArrowTarget:(id)value;
 - (void)setArrowAction:(SEL)value;

@@ -13,6 +13,3 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGTransparentButtonCellWithLeftSide : NSButtonCell {}
 @end
-
-@interface MGTransparentPopUpButtonCell : NSPopUpButtonCell {}
-@end

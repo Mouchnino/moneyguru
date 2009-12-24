@@ -175,7 +175,6 @@
 		CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C410E5C622E006923EB /* transaction_table_48.png */; };
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
-		CECB8DDB0E62A12E00AE1845 /* nav_down_6.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8DDA0E62A12E00AE1845 /* nav_down_6.png */; };
 		CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */; };
 		CECE10EA0E5EA9B20080E298 /* ImportTableOneSided.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECE10E90E5EA9B20080E298 /* ImportTableOneSided.xib */; };
 		CEDD55A80F87B9F500474A9C /* MGPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD55A70F87B9F500474A9C /* MGPrintView.m */; };
@@ -509,7 +508,6 @@
 		CEC5CE580F45F8670042E33F /* MGDoubleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDoubleView.m; sourceTree = "<group>"; };
 		CEC6593E0FC9354A0045E4C8 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
-		CECB8DDA0E62A12E00AE1845 /* nav_down_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_down_6.png; sourceTree = "<group>"; };
 		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
 		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
 		CECE10E90E5EA9B20080E298 /* ImportTableOneSided.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportTableOneSided.xib; sourceTree = "<group>"; };
@@ -1019,7 +1017,6 @@
 				CEACD4FA0E73DCFA00E9A2AB /* account_out_16.png */,
 				CE16B0240E715B3F001290F7 /* backward_32.png */,
 				CE16B0250E715B3F001290F7 /* forward_32.png */,
-				CECB8DDA0E62A12E00AE1845 /* nav_down_6.png */,
 				CE3BD41C0E61C9570071559C /* reconcile_check_48.png */,
 				CE107C890E619F780064AF17 /* lock_12.png */,
 				CE107C710E619A8B0064AF17 /* info_gray_12.png */,
@@ -1115,7 +1112,6 @@
 				CE107C7A0E619A8B0064AF17 /* plus_8.png in Resources */,
 				CE107C8A0E619F780064AF17 /* lock_12.png in Resources */,
 				CE3BD41D0E61C9570071559C /* reconcile_check_48.png in Resources */,
-				CECB8DDB0E62A12E00AE1845 /* nav_down_6.png in Resources */,
 				CE4B8C120E656DB70017432D /* moneyguru_help in Resources */,
 				CE0C64ED0E6974BD007424CA /* ViewOptions.xib in Resources */,
 				CE16B0260E715B3F001290F7 /* backward_32.png in Resources */,

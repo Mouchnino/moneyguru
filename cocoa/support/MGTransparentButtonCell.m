@@ -20,22 +20,3 @@ http://www.hardcoded.net/licenses/hs_license
     [self drawTransparentBezelWithFrame:frame inView:controlView withLeftSide:YES];
 }
 @end
-
-@implementation MGTransparentPopUpButtonCell
-- (void)drawInteriorWithFrame:(NSRect)frame inView:(NSView *)controlView
-{
-    [super drawInteriorWithFrame:frame inView:controlView];
-    // This arrow drawing override below is because Tiger somehow draw the arrow all wrong, and
-    // flipped with the settings we have for the date range popup.
-    NSImage *i = [NSImage imageNamed:@"nav_down_6"];
-    [i setFlipped:YES];
-    float iw = [i size].width;
-    float ih = [i size].height;
-    float fx = frame.origin.x;
-    float fy = frame.origin.y;
-    float fw = frame.size.width;
-    float fh = frame.size.height;
-    NSRect arrowRect = NSMakeRect(fx + fw - iw - 6, fy + (fh - ih) / 2, iw, ih);
-    [i drawInRect:arrowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-}
-@end

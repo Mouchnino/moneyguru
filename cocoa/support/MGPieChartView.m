@@ -125,15 +125,6 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
     [super dealloc];
 }
 
-/* Override */
-// In Tiger, just calling setFrame: doesn't refresh the view correctly, causing drawing glitches
-// when toggling graph visibility.
-- (void)setFrame:(NSRect)newFrame
-{
-    [super setFrame:newFrame];
-    [self setNeedsDisplay:YES];
-}
-
 /* Private */
 - (void)fixLegends:(NSMutableArray *)legends withCenter:(NSPoint)center
 {
