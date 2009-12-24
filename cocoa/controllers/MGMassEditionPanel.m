@@ -98,7 +98,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [currencies count];
 }
 
-- (int)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
+- (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
 {
     aString = [aString lowercaseString];
     for (int i=0; i<[currencies count]; i++)

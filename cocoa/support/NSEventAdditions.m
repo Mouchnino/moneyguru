@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSString *characters = [self characters];
     if ([characters length] == 0)
     {
-        return nil;
+        return '\0';
     }
     return [characters characterAtIndex:0];
 }
