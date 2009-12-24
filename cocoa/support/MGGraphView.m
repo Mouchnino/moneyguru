@@ -15,10 +15,10 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super init];
     NSColor *darkGreen = [NSColor colorWithDeviceRed:0.365 green:0.737 blue:0.337 alpha:1.0];
     NSColor *lightGreen = [NSColor colorWithDeviceRed:0.643 green:0.847 blue:0.62 alpha:1.0];
-    fillGradient = [[MGGradient alloc] initWithStartingColor:darkGreen endingColor:lightGreen];
+    fillGradient = [[NSGradient alloc] initWithStartingColor:darkGreen endingColor:lightGreen];
     NSColor *darkGray = [NSColor lightGrayColor];
     NSColor *lightGray = [darkGray blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
-    futureGradient = [[MGGradient alloc] initWithStartingColor:darkGray endingColor:lightGray];
+    futureGradient = [[NSGradient alloc] initWithStartingColor:darkGray endingColor:lightGray];
     return self;
 }
 

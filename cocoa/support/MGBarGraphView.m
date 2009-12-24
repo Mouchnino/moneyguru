@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGBarGraphView.h"
-#import "MGGradient.h"
 #import "MGUtils.h"
 
 @implementation MGBarGraphView
@@ -50,11 +49,11 @@ http://www.hardcoded.net/licenses/hs_license
         }
         [NSGraphicsContext saveGraphicsState];
         [NSBezierPath clipRect:pastRect];
-        [self fillRect:graphBounds withGradient:fillGradient];
+        [fillGradient drawInRect:graphBounds angle:90];
         [NSGraphicsContext restoreGraphicsState];
         [NSGraphicsContext saveGraphicsState];
         [NSBezierPath clipRect:futureRect];
-        [self fillRect:graphBounds withGradient:futureGradient];
+        [futureGradient drawInRect:graphBounds angle:90];
         [NSGraphicsContext restoreGraphicsState];
         if (showRedLine)
         {

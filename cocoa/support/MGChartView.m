@@ -47,17 +47,6 @@ http://www.hardcoded.net/licenses/hs_license
 	return YES;
 }
 
-- (void)fillRect:(NSRect)aRect withGradient:(MGGradient *)aGradient
-{
-    if ([NSGraphicsContext currentContextDrawingToScreen])
-        [aGradient drawVerticallyInRect:aRect];
-    else
-    {   // Gradients don't work in a printing context
-        [[aGradient startingColor] setFill];
-        [NSBezierPath fillRect:aRect];
-    }
-}
-
 - (void)setData:(NSArray *)aData
 {
     [data autorelease];

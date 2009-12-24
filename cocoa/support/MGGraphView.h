@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
 #import "MGChartView.h"
-#import "MGGradient.h"
 
 #define GRAPH_PADDING 20.0
 #define GRAPH_LINE_WIDTH 2.0
@@ -34,8 +33,8 @@ http://www.hardcoded.net/licenses/hs_license
     float xFactor;
     float yFactor;
     NSRect graphBounds;
-    MGGradient *fillGradient;
-    MGGradient *futureGradient;
+    NSGradient *fillGradient;
+    NSGradient *futureGradient;
 }
 - (void)setMinX:(float)aMinX;
 - (void)setMaxX:(float)aMaxX;

@@ -34,11 +34,11 @@ http://www.hardcoded.net/licenses/hs_license
     [dataFillPath lineToPoint:NSMakePoint(point.x, 0)];
     [NSGraphicsContext saveGraphicsState];
     [dataFillPath addClip];
-    [self fillRect:graphBounds withGradient:fillGradient];
+    [fillGradient drawInRect:graphBounds angle:90];
     if ((xTodayFactored <= lastX) && (xTodayFactored < NSMaxX(graphBounds)))
     {
         NSRect futureBounds = NSMakeRect(xTodayFactored, graphBounds.origin.y, NSMaxX(graphBounds) - xTodayFactored, graphBounds.size.height);
-        [self fillRect:futureBounds withGradient:futureGradient];
+        [futureGradient drawInRect:futureBounds angle:90];
     }
     if ((xTodayFactored >= firstX) && (xTodayFactored <= lastX))
     {

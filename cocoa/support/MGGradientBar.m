@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGGradientBar.h"
-#import "MGGradient.h"
 
 @implementation MGGradientBar
 - (void)drawRect:(NSRect)rect
@@ -28,8 +27,8 @@ http://www.hardcoded.net/licenses/hs_license
     // Draw!
     [bottomColor setFill];
     [NSBezierPath fillRect:bottomRect];
-    MGGradient *gradient = [[[MGGradient alloc] initWithStartingColor:topColor endingColor:midColor] autorelease];
-    [gradient drawVerticallyInRect:topRect];
+    NSGradient *gradient = [[[NSGradient alloc] initWithStartingColor:topColor endingColor:midColor] autorelease];
+    [gradient drawInRect:topRect angle:90];
     [borderColor setFill];
     [NSBezierPath fillRect:borderRect];
 }

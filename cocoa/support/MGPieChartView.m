@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGPieChartView.h"
 #import "Utils.h"
-#import "MGGradient.h"
 #import "MGConst.h"
 #import <math.h>
 
@@ -114,7 +113,7 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
     while (c = [e nextObject])
     {
         NSColor *light = [c blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
-        MGGradient *g = [[MGGradient alloc] initWithStartingColor:c endingColor:light];
+        NSGradient *g = [[NSGradient alloc] initWithStartingColor:c endingColor:light];
         [gradients addObject:[g autorelease]];
     }
     return self;
@@ -215,7 +214,7 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
     for (int i=0; i<[data count]; i++)
     {
         pair = [data objectAtIndex:i];
-        MGGradient *gradient = [gradients objectAtIndex:i % [gradients count]];
+        NSGradient *gradient = [gradients objectAtIndex:i % [gradients count]];
         float fraction = n2f([pair objectAtIndex:1]) / total;
         float angle = fraction * 360;
         float endAngle = startAngle + angle;
@@ -226,7 +225,7 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
         [slice lineToPoint:center];
         [NSGraphicsContext saveGraphicsState];
         [slice addClip];
-        [self fillRect:circleRect withGradient:gradient];
+        [gradient drawInRect:circleRect angle:90];
         [NSGraphicsContext restoreGraphicsState];
         [slice setLineWidth:LINE_WIDTH];
         [slice stroke];
@@ -254,12 +253,13 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
         NSMutableArray *legend = [legends objectAtIndex:i];
         NSString *legendText = [legend objectAtIndex:0];
         NSRect legendRect = [[legend objectAtIndex:1] rectValue];
-        MGGradient *gradient = [legend objectAtIndex:2];
+        NSGradient *gradient = [legend objectAtIndex:2];
         
         NSBezierPath *path = [NSBezierPath bezierPathWithRect:legendRect];
         [path setLineWidth:LINE_WIDTH];
         [backgroundColor setFill];
-        [[gradient startingColor] setStroke];
+        NSColor *startingColor = [gradient interpolatedColorAtLocation:0.0];
+        [startingColor setStroke];
         [path fill];
         [path stroke];
         NSPoint legendPoint = NSMakePoint(NSMinX(legendRect) + LEGEND_SQUARE_PADDING, NSMinY(legendRect) + LEGEND_SQUARE_PADDING);
