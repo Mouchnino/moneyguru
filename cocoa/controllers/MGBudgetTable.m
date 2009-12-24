@@ -15,9 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyBudgetTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    // The 2 lines below are because of OS X Tiger, see MGEntryTable for details
-    [tableView setAutosaveName:@"BudgetTable"];
-    [tableView setAutosaveTableColumns:YES];
     return self;
 }
 

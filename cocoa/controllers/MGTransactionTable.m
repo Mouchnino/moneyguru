@@ -21,9 +21,6 @@ http://www.hardcoded.net/licenses/hs_license
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
     [tableView registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
-    // The 2 lines below are because of OS X Tiger, see MGEntryTable for details
-    [tableView setAutosaveName:@"TransactionTable"];
-    [tableView setAutosaveTableColumns:YES];
     [columnsManager linkColumn:@"description" toUserDefault:TransactionDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:TransactionPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:TransactionChecknoColumnVisible];

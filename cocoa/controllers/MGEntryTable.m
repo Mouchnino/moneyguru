@@ -21,15 +21,6 @@ http://www.hardcoded.net/licenses/hs_license
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
     [tableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
-    /* The 2 lines below are because of OS X Tiger
-    
-    When the autosavename is set in the XIB, the columns that were not present in the previous 
-    autosave are *removed* from the table, preventing the HSTableColumnManager to work properly, 
-    because its "columns" array doesn't contain all the columns. Therefore, we need to set the
-    autosave name after the HSTableColumnManager makes its copy of the columns.
-    */
-    [tableView setAutosaveName:@"EntryTable"];
-    [tableView setAutosaveTableColumns:YES];
     [columnsManager linkColumn:@"description" toUserDefault:AccountDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:AccountPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:AccountChecknoColumnVisible];
