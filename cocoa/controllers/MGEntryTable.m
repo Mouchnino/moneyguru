@@ -25,6 +25,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"payee" toUserDefault:AccountPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:AccountChecknoColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
+    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithDocument:aDocument pyClassName:@"PyBalanceGraph"];
     barGraph = [[MGBarGraph alloc] initWithDocument:aDocument pyClassName:@"PyBarGraph"];
@@ -236,8 +237,7 @@ http://www.hardcoded.net/licenses/hs_license
             NSString *name = [column identifier];
             isDate = [name isEqualTo:@"date"];
         }
-        [customFieldEditor setDateMode:isDate];
-        return customFieldEditor;
+        return isDate ? (id)customDateFieldEditor : (id)customFieldEditor;
     }
     return nil;
 }

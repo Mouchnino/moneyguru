@@ -15,6 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGFilterBar.h"
 #import "AMButtonBar.h"
 #import "MGFieldEditor.h"
+#import "MGDateFieldEditor.h"
 
 @interface MGTransactionTable : MGEditableTable 
 {
@@ -23,6 +24,7 @@ http://www.hardcoded.net/licenses/hs_license
 
     HSTableColumnManager *columnsManager;
     MGFieldEditor *customFieldEditor;
+    MGDateFieldEditor *customDateFieldEditor;
     MGFilterBar *filterBar;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;

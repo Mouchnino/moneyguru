@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBalanceGraph.h"
 #import "MGBarGraph.h"
 #import "MGFieldEditor.h"
+#import "MGDateFieldEditor.h"
 
 @interface MGEntryTable : MGEditableTable 
 {   
@@ -26,6 +27,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     HSTableColumnManager *columnsManager;
     MGFieldEditor *customFieldEditor;
+    MGDateFieldEditor *customDateFieldEditor;
     MGFilterBar *filterBar;
     MGBalanceGraph *balanceGraph;
     MGBarGraph *barGraph;

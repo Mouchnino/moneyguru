@@ -25,6 +25,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"payee" toUserDefault:TransactionPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:TransactionChecknoColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
+    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:NO];
     [self changeColumns]; // initial set
     return self;
@@ -131,8 +132,7 @@ http://www.hardcoded.net/licenses/hs_license
             NSString *name = [column identifier];
             isDate = [name isEqualTo:@"date"];
         }
-        [customFieldEditor setDateMode:isDate];
-        return customFieldEditor;
+        return isDate ? (id)customDateFieldEditor : (id)customFieldEditor;
     }
     return nil;
 }
