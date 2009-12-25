@@ -46,7 +46,8 @@ http://www.hardcoded.net/licenses/hs_license
 /* Python callbacks */
 - (void)close;
 - (void)closeSelectedTab;
-- (void)refresh;
+- (void)refreshTabs;
+- (void)refreshTargetAccounts;
 - (void)show;
 - (void)updateSelectedPane;
 @end

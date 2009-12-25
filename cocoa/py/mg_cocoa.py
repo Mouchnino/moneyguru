@@ -1279,6 +1279,12 @@ class PyImportWindow(PyListener):
     def close_selected_tab(self):
         self.cocoa.closeSelectedTab()
     
+    def refresh_tabs(self):
+        self.cocoa.refreshTabs()
+    
+    def refresh_target_accounts(self):
+        self.cocoa.refreshTargetAccounts()
+    
     def show(self):
         self.cocoa.show()
     

@@ -124,10 +124,8 @@ http://www.hardcoded.net/licenses/hs_license
     }
 }
 
-- (void)refresh
+- (void)refreshTabs
 {
-    [targetAccountsPopup removeAllItems];
-    [targetAccountsPopup addItemsWithTitles:[[self py] targetAccountNames]];
     while ([tabView numberOfTabViewItems])
     {
         [tabView removeTabViewItem:[tabView tabViewItemAtIndex:0]];
@@ -142,6 +140,12 @@ http://www.hardcoded.net/licenses/hs_license
         PSMTabBarCell *cell = [tabBar cellAtIndex:i];
         [cell setCount:[[self py] accountCountAtIndex:i]];
     }
+}
+
+- (void)refreshTargetAccounts
+{
+    [targetAccountsPopup removeAllItems];
+    [targetAccountsPopup addItemsWithTitles:[[self py] targetAccountNames]];
 }
 
 - (void)show
