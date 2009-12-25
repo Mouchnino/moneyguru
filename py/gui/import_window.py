@@ -247,14 +247,14 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
     #--- Events
     def file_loaded_for_import(self):
         self.refresh_panes()
-        self.view.refresh()
+        self.view.refresh_target_accounts()
+        self.view.refresh_tabs()
         self.view.show()
     
-    # XXX Why not a more precise refresh? (view.refresh() reloads all account tabs)
     def account_added(self):
         self.refresh_targets()
         self._refresh_target_selection()
-        self.view.refresh()
+        self.view.refresh_target_accounts()
     
     account_changed = account_added
     account_deleted = account_added

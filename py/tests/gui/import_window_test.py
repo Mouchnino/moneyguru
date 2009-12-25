@@ -18,7 +18,7 @@ class ImportCheckbookQIF(TestCase):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.document.parse_file_for_import(self.filepath('qif/checkbook.qif'))
-        self.check_gui_calls(self.iwin_gui, refresh=1, show=1)
+        self.check_gui_calls(self.iwin_gui, refresh_tabs=1, refresh_target_accounts=1, show=1)
     
     def test_account_tabs(self):
         """There is one account tab for each imported account, the first is selected, and each tab
@@ -122,15 +122,15 @@ class ImportCheckbookQIF(TestCase):
         self.assertEqual(self.iwin.target_account_names, ['< New Account >'])
         self.add_account_legacy('Foo')
         self.add_account_legacy('bar')
-        self.check_gui_calls(self.iwin_gui, refresh=4) # one for add, one for change
+        self.check_gui_calls(self.iwin_gui, refresh_target_accounts=4) # one for add, one for change
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # bar
         self.bsheet.delete()
-        self.check_gui_calls(self.iwin_gui, refresh=1)
+        self.check_gui_calls(self.iwin_gui, refresh_target_accounts=1)
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo'])
         self.add_account_legacy()
-        self.check_gui_calls(self.iwin_gui, refresh=1)
+        self.check_gui_calls(self.iwin_gui, refresh_target_accounts=1)
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
     
 

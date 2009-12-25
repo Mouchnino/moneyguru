@@ -104,7 +104,7 @@ class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
         # sets the columns in self.document.loader and continues importing
         self.csvopt.continue_import()
         self.check_gui_calls(self.csvopt_gui, hide=1)
-        self.check_gui_calls(self.iwin_gui, refresh=1, show=1)
+        self.check_gui_calls(self.iwin_gui, refresh_tabs=1, refresh_target_accounts=1, show=1)
         self.assertEqual(len(self.iwin.panes), 1)
         self.assertEqual(self.iwin.panes[0].name, 'CSV Import')
         self.assertEqual(self.iwin.panes[0].count, 18)
