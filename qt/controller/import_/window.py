@@ -78,13 +78,15 @@ class ImportWindow(QWidget, Ui_ImportWindow):
     def close_selected_tab(self):
         self.tabView.removeTab(self.tabView.currentIndex())
     
-    def refresh(self):
+    def refresh_target_accounts(self):
         # We disconnect the combobox because we don't want the clear() call to set the selected 
         # target index in the model.
         self.targetAccountComboBox.currentIndexChanged.disconnect(self.targetAccountChanged)
         self.targetAccountComboBox.clear()
         self.targetAccountComboBox.addItems(self.model.target_account_names)
         self.targetAccountComboBox.currentIndexChanged.connect(self.targetAccountChanged)
+    
+    def refresh_tabs(self):
         while self.tabView.count():
             self.tabView.removeTab(0)
         for pane in self.model.panes:
