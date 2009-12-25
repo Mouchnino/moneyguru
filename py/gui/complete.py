@@ -7,10 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from operator import attrgetter
-
-from hsutil.misc import flatten
-
 from ..model.completion import CompletionList
 
 class CompletionMixIn(object):
@@ -39,21 +35,17 @@ class CompletionMixIn(object):
         self._completions = None
     
 
-# XXX The _build_candidates method is called at each keystroke. Doing some kind of caching would be
-# wise because the number of entries/transactions involved can be big!
-
 class TransactionCompletionMixIn(CompletionMixIn):
     def _build_candidates(self, attrname):
         if attrname == 'description':
-            return [x.description for x in sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True)]
+            return self.document.transactions.descriptions
         elif attrname == 'payee':
-            return [x.payee for x in sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True)]
+            return self.document.transactions.payees
         elif attrname in ('from', 'to', 'account', 'transfer'):
-            candidates = []
-            for t in sorted(self.document.transactions, key=attrgetter('mtime'), reverse=True):
-                candidates += list(t.affected_accounts())
-            candidates += self.document.accounts[:]
+            result = self.document.transactions.account_names
+            # `result` doesn't contain empty accounts' name, so we'll add them.
+            result += [a.name for a in self.document.accounts]
             if attrname == 'transfer' and self.document.selected_account is not None:
-                candidates = [a for a in candidates if a is not self.document.selected_account]
-            return [a.name for a in candidates]
+                result = [name for name in result if name != self.document.selected_account.name]
+            return result
     

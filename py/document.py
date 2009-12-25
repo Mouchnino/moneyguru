@@ -137,6 +137,7 @@ class Document(Broadcaster, Listener):
                 self.transactions.add(transaction)
             elif date_changed:
                 self.transactions.move_last(transaction)
+        self.transactions.clear_cache()
     
     def _clean_empty_categories(self):
         for account in list(self.accounts.auto_created):
