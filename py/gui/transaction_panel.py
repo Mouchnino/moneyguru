@@ -16,9 +16,9 @@ from ..exception import OperationAborted
 from ..model.account import Account, INCOME, EXPENSE
 from ..model.transaction import Split, Transaction
 from .base import GUIPanel
-from .complete import TransactionCompletionMixIn
+from .complete import CompletionMixIn
 
-class PanelWithTransaction(GUIPanel, Broadcaster, TransactionCompletionMixIn):
+class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
     """Base class for panels working with a transaction"""
     def __init__(self, view, document):
         GUIPanel.__init__(self, view, document)

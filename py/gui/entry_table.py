@@ -13,10 +13,10 @@ from operator import attrgetter
 from ..model.amount import parse_amount, convert_amount
 from ..model.recurrence import Spawn
 from .base import DocumentGUIObject
-from .complete import TransactionCompletionMixIn
+from .complete import CompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit, RowWithDate, rowattr
 
-class EntryTable(GUITable, DocumentGUIObject, TransactionCompletionMixIn):
+class EntryTable(GUITable, DocumentGUIObject, CompletionMixIn):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         GUITable.__init__(self)

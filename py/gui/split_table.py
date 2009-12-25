@@ -8,14 +8,14 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from .base import TransactionPanelGUIObject
-from .complete import TransactionCompletionMixIn
+from .complete import CompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit
 
-class SplitTable(GUITable, TransactionPanelGUIObject, TransactionCompletionMixIn):
+class SplitTable(GUITable, TransactionPanelGUIObject, CompletionMixIn):
     def __init__(self, view, transaction_panel):
         TransactionPanelGUIObject.__init__(self, view, transaction_panel)
         GUITable.__init__(self)
-        self.document = transaction_panel.document # TransactionCompletionMixIn requires a document member
+        self.document = transaction_panel.document # CompletionMixIn requires a document member
     
     #--- Override
     def _do_add(self):

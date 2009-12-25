@@ -13,7 +13,17 @@ class CompletionMixIn(object):
     _completions = None
     
     def _build_candidates(self, attrname):
-        pass # virtual
+        if attrname == 'description':
+            return self.document.transactions.descriptions
+        elif attrname == 'payee':
+            return self.document.transactions.payees
+        elif attrname in ('from', 'to', 'account', 'transfer'):
+            result = self.document.transactions.account_names
+            # `result` doesn't contain empty accounts' name, so we'll add them.
+            result += [a.name for a in self.document.accounts]
+            if attrname == 'transfer' and self.document.selected_account is not None:
+                result = [name for name in result if name != self.document.selected_account.name]
+            return result
     
     def complete(self, value, attrname):
         candidates = self._build_candidates(attrname)
@@ -27,25 +37,10 @@ class CompletionMixIn(object):
     
     def next_completion(self):
         return self._completions.next() if self._completions else None
-
+    
     def prev_completion(self):
         return self._completions.prev() if self._completions else None
     
     def stop_completion(self):
         self._completions = None
-    
-
-class TransactionCompletionMixIn(CompletionMixIn):
-    def _build_candidates(self, attrname):
-        if attrname == 'description':
-            return self.document.transactions.descriptions
-        elif attrname == 'payee':
-            return self.document.transactions.payees
-        elif attrname in ('from', 'to', 'account', 'transfer'):
-            result = self.document.transactions.account_names
-            # `result` doesn't contain empty accounts' name, so we'll add them.
-            result += [a.name for a in self.document.accounts]
-            if attrname == 'transfer' and self.document.selected_account is not None:
-                result = [name for name in result if name != self.document.selected_account.name]
-            return result
     

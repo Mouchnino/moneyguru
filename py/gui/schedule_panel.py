@@ -7,19 +7,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from calendar import monthrange
 from datetime import date
-
-from hsutil.notify import Broadcaster
-from hsutil.misc import first
 
 from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY, 
                      REPEAT_WEEKDAY_LAST)
 from ..exception import OperationAborted
-from ..model.account import Account, INCOME, EXPENSE
 from ..model.recurrence import Recurrence
-from ..model.transaction import Split, Transaction
-from .complete import TransactionCompletionMixIn
+from ..model.transaction import Transaction
 from .transaction_panel import PanelWithTransaction
 
 REPEAT_OPTIONS_ORDER = [REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY,
