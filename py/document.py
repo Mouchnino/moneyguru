@@ -238,12 +238,6 @@ class Document(Broadcaster, Listener):
             pass
         return query
     
-    def _perform_action(self, prepare_func, perform_func):
-        # prepare_func must return an Action
-        action = prepare_func()
-        self._undoer.record(action)
-        perform_func()
-    
     def _restore_preferences(self):
         start_date = self.app.get_default(SELECTED_DATE_RANGE_START_PREFERENCE)
         if start_date:
@@ -452,113 +446,95 @@ class Document(Broadcaster, Listener):
     
     def change_transaction(self, original, new):
         date_changed = new.date != original.date
+        action = Action('Change transaction')
+        action.change_transactions([original])
+        # Here, we don't just look for splits to unreconcile, we prepare the splits as well
+        original_splits = set(s.original for s in new.splits if hasattr(s, 'original'))
+        deleted_splits = set(original.splits) - original_splits
+        for split in new.splits:
+            if split.account is not None:
+                # don't forget that account up here is an external instance. Even if an account of
+                # the same name exists in self.accounts, it's not gonna be the same instance.
+                split.account = self.accounts.find(split.account.name, split.account.type)
+            if hasattr(split, 'original'):
+                if split.original.amount != split.amount or split.original.account is not split.account:
+                    split.reconciled = False
+                    split.transaction = split.original.transaction
+                del split.original
+        self._undoer.record(action)
         
-        def prepare():
-            action = Action('Change transaction')
-            action.change_transactions([original])
-            # Here, we don't just look for splits to unreconcile, we prepare the splits as well
-            original_splits = set(s.original for s in new.splits if hasattr(s, 'original'))
-            deleted_splits = set(original.splits) - original_splits
-            for split in new.splits:
-                if split.account is not None:
-                    # don't forget that account up here is an external instance. Even if an account of
-                    # the same name exists in self.accounts, it's not gonna be the same instance.
-                    split.account = self.accounts.find(split.account.name, split.account.type)
-                if hasattr(split, 'original'):
-                    if split.original.amount != split.amount or split.original.account is not split.account:
-                        split.reconciled = False
-                        split.transaction = split.original.transaction
-                    del split.original
-            return action
-        
-        def perform():
-            min_date = min(original.date, new.date)
-            original.set_splits(new.splits)
-            self._change_transaction(original, date=new.date, description=new.description,
-                                     payee=new.payee, checkno=new.checkno)
-            self._cook(from_date=min_date)
-            self._clean_empty_categories()
-            if not self._adjust_date_range(original.date):
-                self.notify('transaction_changed')
-        
-        self._perform_action(prepare, perform)
+        min_date = min(original.date, new.date)
+        original.set_splits(new.splits)
+        self._change_transaction(original, date=new.date, description=new.description,
+            payee=new.payee, checkno=new.checkno)
+        self._cook(from_date=min_date)
+        self._clean_empty_categories()
+        if not self._adjust_date_range(original.date):
+            self.notify('transaction_changed')
     
     def change_transactions(self, transactions, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
-                            checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT):
+            checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT):
         if from_ is not NOEDIT:
             from_ = self.accounts.find(from_, INCOME) if from_ else None
         if to is not NOEDIT:
             to = self.accounts.find(to, EXPENSE) if to else None
-        
-        def prepare():
-            return self._get_action_from_changed_transactions(transactions)
-        
-        def perform():
-            min_date = date if date is not NOEDIT else datetime.date.max
-            force_local_scope = len(transactions) > 1
-            for transaction in transactions:
-                min_date = min(min_date, transaction.date)
-                self._change_transaction(transaction, date=date, description=description, 
-                                         payee=payee, checkno=checkno, from_=from_, to=to, 
-                                         amount=amount, currency=currency, 
-                                         force_local_scope=force_local_scope)
-            self._cook(from_date=min_date)
-            self._clean_empty_categories()
-            if not self._adjust_date_range(transaction.date):
-                self.notify('transaction_changed')
-            transaction = transactions[0]
-        
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             currencies_to_ensure = [amount.currency.code, self.app.default_currency.code]
             Currency.get_rates_db().ensure_rates(date, currencies_to_ensure)
-        self._perform_action(prepare, perform)
+        
+        action = self._get_action_from_changed_transactions(transactions)
+        self._undoer.record(action)
+
+        min_date = date if date is not NOEDIT else datetime.date.max
+        force_local_scope = len(transactions) > 1
+        for transaction in transactions:
+            min_date = min(min_date, transaction.date)
+            self._change_transaction(transaction, date=date, description=description, 
+                                     payee=payee, checkno=checkno, from_=from_, to=to, 
+                                     amount=amount, currency=currency, 
+                                     force_local_scope=force_local_scope)
+        self._cook(from_date=min_date)
+        self._clean_empty_categories()
+        if not self._adjust_date_range(transaction.date):
+            self.notify('transaction_changed')
     
     def delete_transactions(self, transactions):
-        def prepare():
-            action = Action('Remove transaction')
-            spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
-            schedules = set(spawn.recurrence for spawn in spawns)
-            action.deleted_transactions |= set(txns)
-            for schedule in schedules:
-                action.change_schedule(schedule)
-            return action
+        action = Action('Remove transaction')
+        spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
+        schedules = set(spawn.recurrence for spawn in spawns)
+        action.deleted_transactions |= set(txns)
+        for schedule in schedules:
+            action.change_schedule(schedule)
+        self._undoer.record(action)
         
-        def perform():
-            for txn in transactions:
-                if isinstance(txn, Spawn):
-                    global_scope = self.view.query_for_schedule_scope()
-                    if global_scope:
-                        txn.recurrence.stop_before(txn)
-                    else:
-                        txn.recurrence.delete(txn)
+        for txn in transactions:
+            if isinstance(txn, Spawn):
+                global_scope = self.view.query_for_schedule_scope()
+                if global_scope:
+                    txn.recurrence.stop_before(txn)
                 else:
-                    self.transactions.remove(txn)
-                if txn in self._explicitly_selected_transactions:
-                    self._explicitly_selected_transactions.remove(txn)
-            min_date = min(t.date for t in transactions)
-            self._cook(from_date=min_date)
-            self._clean_empty_categories()
-            self.notify('transaction_deleted')
-        
-        self._perform_action(prepare, perform)
+                    txn.recurrence.delete(txn)
+            else:
+                self.transactions.remove(txn)
+            if txn in self._explicitly_selected_transactions:
+                self._explicitly_selected_transactions.remove(txn)
+        min_date = min(t.date for t in transactions)
+        self._cook(from_date=min_date)
+        self._clean_empty_categories()
+        self.notify('transaction_deleted')
     
     def move_transactions(self, transactions, to_transaction):
         affected = set(transactions)
         affected_date = transactions[0].date
         affected |= set(self.transactions.transactions_at_date(affected_date))
+        action = Action('Move transaction')
+        action.change_transactions(affected)
+        self._undoer.record(action)
         
-        def prepare():
-            action = Action('Move transaction')
-            action.change_transactions(affected)
-            return action
-        
-        def perform():
-            for transaction in transactions:
-                self.transactions.move_before(transaction, to_transaction)
-            self._cook()
-            self.notify('transaction_changed')
-        
-        self._perform_action(prepare, perform)
+        for transaction in transactions:
+            self.transactions.move_before(transaction, to_transaction)
+        self._cook()
+        self.notify('transaction_changed')
     
     def new_transaction(self):
         date = self.selected_transaction.date if self.selected_transaction else datetime.date.today()
@@ -582,31 +558,28 @@ class Document(Broadcaster, Listener):
             Currency.get_rates_db().ensure_rates(date, [amount.currency.code, entry.account.currency.code])
         transfer_changed = len(entry.splits) == 1 and transfer is not NOEDIT and transfer != entry.transfer
         
-        def prepare():
-            return self._get_action_from_changed_transactions([entry.transaction])
+        action = self._get_action_from_changed_transactions([entry.transaction])
+        self._undoer.record(action)
         
-        def perform():
-            min_date = entry.date if date is NOEDIT else min(entry.date, date)
-            if amount is not NOEDIT:
-                entry.split.amount = amount
-            # if the entry is part of a Split entry, we don't need to balance, because the balancing
-            # occurs in set_split_amount()
-            if len(entry.splits) == 1:
-                entry.transaction.balance_two_way(entry.split)
-                if transfer_changed:
-                    auto_create_type = EXPENSE if entry.split.amount < 0 else INCOME
-                    transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
-                    entry.splits[0].account = transfer_account
-            if reconciliation_date is not NOEDIT:
-                entry.split.reconciliation_date = reconciliation_date
-            self._change_transaction(entry.transaction, date=date, description=description, 
-                payee=payee, checkno=checkno)
-            self._cook(from_date=min_date)
-            self._clean_empty_categories()
-            if not self._adjust_date_range(entry.date):
-                self.notify('transaction_changed')
-        
-        self._perform_action(prepare, perform)
+        min_date = entry.date if date is NOEDIT else min(entry.date, date)
+        if amount is not NOEDIT:
+            entry.split.amount = amount
+        # if the entry is part of a Split entry, we don't need to balance, because the balancing
+        # occurs in set_split_amount()
+        if len(entry.splits) == 1:
+            entry.transaction.balance_two_way(entry.split)
+            if transfer_changed:
+                auto_create_type = EXPENSE if entry.split.amount < 0 else INCOME
+                transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
+                entry.splits[0].account = transfer_account
+        if reconciliation_date is not NOEDIT:
+            entry.split.reconciliation_date = reconciliation_date
+        self._change_transaction(entry.transaction, date=date, description=description, 
+            payee=payee, checkno=checkno)
+        self._cook(from_date=min_date)
+        self._clean_empty_categories()
+        if not self._adjust_date_range(entry.date):
+            self.notify('transaction_changed')
     
     def delete_entries(self, entries):
         transactions = dedupe(e.transaction for e in entries)
@@ -641,39 +614,34 @@ class Document(Broadcaster, Listener):
         reconciled_entries = set(e for e in entries if e.reconciled)
         entries -= reconciled_entries
         all_reconciled = not entries or all(entry.reconciliation_pending for entry in entries)
-        newvalue = not all_reconciled
+        newvalue = not all_reconciled        
+        # if 'newvalue' is false, we want to unreconcile all reconciled entries.
+        # if it's true, since we are not changing any of the reconciled entries, we only want to
+        # unreconcile all reconciled entries that are after the first entry to be put in 'pending'
+        # state.
+        action = Action('Change reconciliation')
+        if newvalue:
+            entry = iter(entries).next()
+            account = entry.account
+            action.change_splits([e.split for e in dropwhile(lambda e: e not in entries, account.entries)])
+        else:
+            action.change_splits([e.split for e in reconciled_entries])
+        self._undoer.record(action)
         
-        def prepare():
-            # if 'newvalue' is false, we want to unreconcile all reconciled entries.
-            # if it's true, since we are not changing any of the reconciled entries, we only want to
-            # unreconcile all reconciled entries that are after the first entry to be put in 'pending'
-            # state.
-            action = Action('Change reconciliation')
-            if newvalue:
-                entry = iter(entries).next()
-                account = entry.account
-                action.change_splits([e.split for e in dropwhile(lambda e: e not in entries, account.entries)])
-            else:
-                action.change_splits([e.split for e in reconciled_entries])
-            return action
-        
-        def perform():
-            min_date = datetime.date.max
-            if entries:
-                for entry in entries:
-                    entry.split.reconciliation_pending = newvalue
-                    min_date = min(min_date, entry.date)
-            else: 
-                # a reconciled entry has been unreconciled, and the user chose "Continue, but don't 
-                # unreconcile", which means that _perform_action() didn't take care of unreconciliation
-                # We have to take care of it (but this only unreconciles selected entries, rather
-                # than all those that follow selected entries).
-                for entry in reconciled_entries:
-                    entry.split.reconciled = False
-            self._cook(from_date=min_date)
-            self.notify('transaction_changed')
-        
-        self._perform_action(prepare, perform)
+        min_date = datetime.date.max
+        if entries:
+            for entry in entries:
+                entry.split.reconciliation_pending = newvalue
+                min_date = min(min_date, entry.date)
+        else: 
+            # a reconciled entry has been unreconciled, and the user chose "Continue, but don't 
+            # unreconcile", which means that _perform_action() didn't take care of unreconciliation
+            # We have to take care of it (but this only unreconciles selected entries, rather
+            # than all those that follow selected entries).
+            for entry in reconciled_entries:
+                entry.split.reconciled = False
+        self._cook(from_date=min_date)
+        self.notify('transaction_changed')
     
     @property
     def previous_entry(self): # the entry just before the date range
