@@ -67,7 +67,6 @@
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
 		CE5CBBC5103834D8008AC465 /* SchedulePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5CBBC4103834D8008AC465 /* SchedulePanel.xib */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
-		CE6818DD0EEA9286007C5CDF /* MGUnreconciliationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6818DC0EEA9286007C5CDF /* MGUnreconciliationDialog.m */; };
 		CE6818DF0EEA945D007C5CDF /* UnreconciliationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D37DD0F93635F00FA8460 /* AMButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D37CC0F93635E00FA8460 /* AMButtonBar.m */; };
@@ -321,8 +320,6 @@
 		CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSchedulePanel.m; sourceTree = "<group>"; };
 		CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySchedulePanel.h; sourceTree = "<group>"; };
 		CE5CBBEC10383F51008AC465 /* PyPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanel.h; sourceTree = "<group>"; };
-		CE6818DB0EEA9286007C5CDF /* MGUnreconciliationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGUnreconciliationDialog.h; sourceTree = "<group>"; };
-		CE6818DC0EEA9286007C5CDF /* MGUnreconciliationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGUnreconciliationDialog.m; sourceTree = "<group>"; };
 		CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnreconciliationDialog.xib; sourceTree = "<group>"; };
 		CE6C6FEF0E74324B003B5062 /* MGChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChart.h; sourceTree = "<group>"; };
 		CE6C6FF00E74324B003B5062 /* MGChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChart.m; sourceTree = "<group>"; };
@@ -956,8 +953,6 @@
 				CEC5CE580F45F8670042E33F /* MGDoubleView.m */,
 				CE4CD3870F2B7B0D003F1738 /* MGCSVLayoutNameDialog.h */,
 				CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */,
-				CE6818DB0EEA9286007C5CDF /* MGUnreconciliationDialog.h */,
-				CE6818DC0EEA9286007C5CDF /* MGUnreconciliationDialog.m */,
 				CE41481F0EAA059400B8BF6A /* NSIndexPathAdditions.h */,
 				CE4148200EAA059400B8BF6A /* NSIndexPathAdditions.m */,
 				CE31C65B0E851CF400BBA82E /* MGRecurrenceScopeDialog.h */,
@@ -1220,7 +1215,6 @@
 				CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */,
 				CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */,
 				CE4148210EAA059400B8BF6A /* NSIndexPathAdditions.m in Sources */,
-				CE6818DD0EEA9286007C5CDF /* MGUnreconciliationDialog.m in Sources */,
 				CEB2FA1A0F223C4100A09E4C /* MGCSVImportOptions.m in Sources */,
 				CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */,
 				CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */,

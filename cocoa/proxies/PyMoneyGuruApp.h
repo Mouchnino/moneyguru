@@ -23,6 +23,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setYearStartMonth:(int)month;
 - (int)autoSaveInterval;
 - (void)setAutoSaveInterval:(int)minutes;
-- (BOOL)dontUnreconcile;
-- (void)setDontUnreconcile:(BOOL)flag;
 @end

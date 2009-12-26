@@ -14,7 +14,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGUndoManager.h"
 #import "MGUtils.h"
 #import "MGRecurrenceScopeDialog.h"
-#import "MGUnreconciliationDialog.h"
 #import "MGAppDelegate.h"
 #import "MGPrintView.h"
 
@@ -219,12 +218,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Python -> Cocoa */
-
-- (int)confirmUnreconciliation:(int)affectedSplitCount
-{
-    return [MGUnreconciliationDialog shouldUnreconcileWithAffectedSplitCount:affectedSplitCount];
-}
-
 // YES: affects the rest of the recurrence 
 // NO: affects just this instance
 - (BOOL)queryForScheduleScope

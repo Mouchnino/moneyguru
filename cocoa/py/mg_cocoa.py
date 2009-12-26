@@ -138,14 +138,6 @@ class PyMoneyGuruApp(NSObject):
     def setAutoSaveInterval_(self, minutes):
         self.py.autosave_interval = minutes
     
-    @objc.signature('i@:')
-    def dontUnreconcile(self):
-        return self.py.dont_unreconcile
-    
-    @objc.signature('v@:i')
-    def setDontUnreconcile_(self, flag):
-        self.py.dont_unreconcile = flag
-    
     #---Registration
     @objc.signature('i@:')
     def isRegistered(self):
@@ -282,9 +274,6 @@ class PyDocument(NSObject):
             del self.cocoa
     
     #--- Python -> Cocoa
-    def confirm_unreconciliation(self, affected_split_count):
-        return self.cocoa.confirmUnreconciliation_(affected_split_count)
-    
     def query_for_schedule_scope(self):
         return self.cocoa.queryForScheduleScope()
     

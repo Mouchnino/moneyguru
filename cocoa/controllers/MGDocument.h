@@ -30,7 +30,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setDefault:(id)aDefault forKey:(NSString *)aKey;
 
 /* Python -> Cocoa */
-
-- (int)confirmUnreconciliation:(int)affectedSplitCount;
 - (BOOL)queryForScheduleScope;
 @end

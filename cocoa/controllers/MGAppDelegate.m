@@ -174,7 +174,6 @@ http://www.hardcoded.net/licenses/hs_license
     [aheadMonthsPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.aheadMonths" options:nil];
     [yearStartMonthPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.yearStartMonth" options:nil];
     [autoSaveIntervalField bind:@"value" toObject:self withKeyPath:@"py.autoSaveInterval" options:nil];
-    [dontUnreconcileButton bind:@"value" toObject:self withKeyPath:@"py.dontUnreconcile" options:nil];
 }
 
 // Python -> Cocoa
