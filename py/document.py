@@ -18,7 +18,7 @@ from hsutil.notify import Broadcaster, Listener
 from hsutil.misc import nonone, flatten, allsame, dedupe, extract
 
 from .const import NOEDIT
-from .exception import FileFormatError, OperationAborted
+from .exception import FileFormatError
 from .loader import csv, qif, ofx, native
 from .model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
 from .model.budget import BudgetList
@@ -218,24 +218,6 @@ class Document(Broadcaster, Listener):
             action = Action('Change transaction')
             action.change_transactions(transactions)
         return action
-    
-    def _get_splits_to_unreconcile(self, changed_splits):
-        """Return a list of all the splits affected by the change in 'changed_splits'
-        """
-        # The goal is to unreconcile every *reconciled* split in 'splits' *as well as* the splits
-        # following it *but only in the same account*.
-        splits = set([s for s in changed_splits if s.reconciled])
-        if not splits:
-            return []
-        allsplits = flatten(t.splits for t in self.transactions)
-        found_accounts = set()
-        result = []
-        for split in allsplits:
-            if split in splits:
-                found_accounts.add(split.account)
-            if split.reconciled and split.account in found_accounts:
-                result.append(split)
-        return result
     
     def _parse_search_query(self, query_string):
         # Returns a dict of query arguments
@@ -1135,9 +1117,6 @@ class Document(Broadcaster, Listener):
                     split.account = account
             if target_account is not ref_account:
                 entry.split.account = target_account
-        to_unreconcile = self._get_splits_to_unreconcile(to_unreconcile)
-        if to_unreconcile and not self.view.confirm_unreconciliation(len(to_unreconcile)):
-            raise OperationAborted()
         action = Action('Import')
         action.added_accounts |= added_accounts
         action.added_transactions |= added_transactions
