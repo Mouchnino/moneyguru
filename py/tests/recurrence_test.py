@@ -23,8 +23,8 @@ class OneTransaction(TestCase, CommonSetup):
         # make_schedule_from_selected takes the selected transaction, create a monthly schedule out
         # of it, selects the schedule table, and pops the edition panel for it.
         self.mainwindow.make_schedule_from_selected()
-        self.check_gui_calls(self.mainwindow_gui, show_schedule_table=1)
-        self.check_gui_calls_partial(self.scpanel_gui, pre_load=1, post_load=1)
+        self.check_gui_calls(self.mainwindow_gui, ['show_schedule_table'])
+        self.check_gui_calls_partial(self.scpanel_gui, ['pre_load', 'post_load'])
         eq_(len(self.sctable), 0) # It's a *new* schedule, only added if we press save
         eq_(self.scpanel.start_date, '11/07/2008')
         eq_(self.scpanel.description, 'description')
@@ -199,8 +199,8 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.mepanel.load()
         self.mepanel.description = 'changed'
         self.mepanel.save()
-        self.assertEqual(self.ttable[3].description, 'foobar')
-        self.assertEqual(self.document_gui.calls, {}) # no query_for_schedule_scope calls
+        eq_(self.ttable[3].description, 'foobar')
+        self.check_gui_calls_partial(self.document_gui, not_expected=['query_for_schedule_scope'])
     
     def test_ttable_attrs(self):
         self.assertEqual(len(self.ttable), 6) # this txn happens 6 times this month

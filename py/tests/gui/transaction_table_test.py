@@ -31,15 +31,6 @@ class Pristine(TestCase):
         self.ttable.cancel_edits()
         self.assertEqual(len(self.ttable), 0)
     
-    def test_add_and_cancel_gui_calls(self):
-        """The right gui calls are made"""
-        self.ttable.add()
-        # We can't test the order of the gui calls, but stop_editing must happen first
-        self.check_gui_calls(self.ttable_gui, refresh=1, stop_editing=1, start_editing=1)
-        self.ttable.cancel_edits()
-        # We can't test the order of the gui calls, but stop_editing must happen first
-        self.check_gui_calls(self.ttable_gui, refresh=1, stop_editing=1)
-    
     def test_add_change_and_save(self):
         """The add mechanism works as expected"""
         self.ttable.add()
@@ -75,7 +66,7 @@ class Pristine(TestCase):
         self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
         self.sfield.query = 'foobar'
-        self.check_gui_calls(self.ttable_gui, refresh=1)
+        self.check_gui_calls(self.ttable_gui, ['refresh'])
     
     def test_refresh_on_import(self):
         # When entries are imported, ttable is refreshed
@@ -84,7 +75,7 @@ class Pristine(TestCase):
         self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
         self.iwin.import_selected_pane()
         self.assertNotEqual(len(self.ttable), 0)
-        self.check_gui_calls(self.ttable_gui, refresh=1)
+        self.check_gui_calls(self.ttable_gui, ['refresh'])
     
 
 class EditionMode(TestCase):
@@ -181,12 +172,11 @@ class OneEntry(TestCase, CommonSetup):
         self.assertEqual(row.date, '11/07/2008')
     
     def test_change_transaction_gui_calls(self):
-        """Changing a transaction results in a refresh and a show_selected_row call"""
+        # Changing a transaction results in a refresh and a show_selected_row call
         row = self.ttable[0]
         row.date = '12/07/2008'
-        self.clear_gui_calls()
         self.ttable.save_edits()
-        self.check_gui_calls(self.ttable_gui, refresh=1, show_selected_row=1)
+        self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row'])
     
     def test_edit_date_out_of_bounds(self):
         # when the date of the edited row is out of the date range, is_date_in_future() or
@@ -265,23 +255,24 @@ class OneEntry(TestCase, CommonSetup):
         self.assertEqual(row.increase, '0.42')
     
     def test_set_date_in_range(self):
-        """Setting the date in range doesn't cause useless notifications"""
+        # Setting the date in range doesn't cause useless notifications.
         self.mainwindow.select_transaction_table()
         self.ttable[0].date = '12/07/2008'
         self.clear_gui_calls()
         self.ttable.save_edits()
-        self.check_gui_calls_partial(self.mainwindow_gui, animate_date_range_backward=0,
-            animate_date_range_forward=0, refresh_date_range_selector=0)
+        not_expected = ['animate_date_range_backward', 'animate_date_range_forward',
+            'refresh_date_range_selector']
+        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=not_expected)
     
     def test_set_date_out_of_range(self):
-        """Setting the date out of range makes the app's date range change accordingly"""
+        # Setting the date out of range makes the app's date range change accordingly.
         self.mainwindow.select_transaction_table()
         self.ttable[0].date = '1/08/2008'
         self.clear_gui_calls()
         self.ttable.save_edits()
-        self.assertEqual(self.document.date_range, MonthRange(date(2008, 8, 1)))
-        self.check_gui_calls_partial(self.mainwindow_gui, animate_date_range_forward=1,
-            refresh_date_range_selector=1)
+        eq_(self.document.date_range, MonthRange(date(2008, 8, 1)))
+        expected = ['animate_date_range_forward', 'refresh_date_range_selector']
+        self.check_gui_calls_partial(self.mainwindow_gui, expected)
     
     def test_set_invalid_amount(self):
         # setting an invalid amount reverts to the old amount
@@ -558,8 +549,8 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
         # The transaction table refreshes itself on date range change
         self.document.select_prev_date_range()
         row = self.ttable[0]
-        self.assertEqual(row.description, 'first')
-        self.check_gui_calls_partial(self.ttable_gui, refresh=1, show_selected_row=1)
+        eq_(row.description, 'first')
+        self.check_gui_calls_partial(self.ttable_gui, ['refresh', 'show_selected_row'])
     
     def test_selection_after_date_range_change(self):
         """The selection in the document is correctly updated when the date range changes"""
@@ -644,14 +635,14 @@ class ThreeTransactionsInRange(TestCase):
         self.assertEqual(self.etable.selected_indexes, [1]) # explicit selection
     
     def test_selection(self):
-        """TransactionTable stays in sync with EntryTable"""
+        # TransactionTable stays in sync with EntryTable.
         self.ttable.disconnect() # this disconnect scheme will eventually be embedded in the main testcase
         self.etable.select([0, 1])
         self.clear_gui_calls()
         self.etable.disconnect()
         self.ttable.connect()
-        self.assertEqual(self.ttable.selected_indexes, [0, 1])
-        self.check_gui_calls(self.ttable_gui, refresh=1, show_selected_row=1)
+        eq_(self.ttable.selected_indexes, [0, 1])
+        self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row'])
     
     def test_selection_changed_when_filtering_out(self):
         # selected transactions becoming filtered out are not selected anymore. Also, the selection
@@ -1036,5 +1027,5 @@ class WithBudget(TestCase, CommonSetup):
         # Budget spawns can't be edited
         assert not self.ttable.can_edit_cell('date', 0)
         self.mainwindow.edit_item() # budget spawns can't be edited
-        self.check_gui_calls_partial(self.tpanel_gui, post_load=0)
+        self.check_gui_calls_partial(self.tpanel_gui, not_expected=['post_load'])
     

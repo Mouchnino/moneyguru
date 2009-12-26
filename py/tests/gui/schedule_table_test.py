@@ -42,11 +42,11 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         # (to default values) on refresh(), the selection was not updated in the document.
         # This caused item edition not to work until the user manually selected a schedule.
         self.mainwindow.edit_item()
-        self.check_gui_calls_partial(self.scpanel_gui, post_load=1)
+        self.check_gui_calls_partial(self.scpanel_gui, ['post_load'])
     
     def test_edition_must_stop(self):
         # When the edition_must_stop event is broadcasted, btable must ignore it because the objc
         # side doesn't have a stop_editing method.
         self.document.stop_edition()
-        self.check_gui_calls(self.sctable_gui, stop_editing=0)
+        self.check_gui_calls_partial(self.sctable_gui, not_expected=['stop_editing'])
     

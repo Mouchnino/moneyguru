@@ -7,7 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import os.path as op
 from datetime import date
 
 from hsutil.currency import CAD, USD
@@ -100,7 +99,7 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
             ('01/08/2008', '94.00'),
         ]
         self.assertEqual(self.nw_graph_data(), expected)
-        self.check_gui_calls(self.nwgraph_gui, refresh=1)
+        self.check_gui_calls(self.nwgraph_gui, ['refresh'])
     
     def test_net_worth_graph(self):
         # One interesting thing about this graph is that on the 14th of july, the CAD value changes,
@@ -128,7 +127,7 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.bsheet.delete()
         self.arpanel.ok() # continue deletion
         self.assertNotEqual(self.nw_graph_data()[0], ('01/07/2008', '10.00'))
-        self.check_gui_calls(self.nwgraph_gui, refresh=1)
+        self.check_gui_calls(self.nwgraph_gui, ['refresh'])
     
     def test_refresh_on_import(self):
         # When entries are imported, charts are refreshed
@@ -136,5 +135,5 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.iwin.import_selected_pane()
         # For the data itself, we just have to test that it changed. the QIF has data in 02/2008
         self.assertNotEqual(self.nw_graph_data()[0], ('01/07/2008', '10.00'))
-        self.check_gui_calls(self.nwgraph_gui, refresh=1)
+        self.check_gui_calls(self.nwgraph_gui, ['refresh'])
     

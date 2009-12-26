@@ -17,7 +17,7 @@ class ImportCheckbookQIF(TestCase):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.document.parse_file_for_import(self.filepath('qif/checkbook.qif'))
-        self.check_gui_calls(self.iwin_gui, refresh_tabs=1, refresh_target_accounts=1, show=1)
+        self.check_gui_calls(self.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
     
     def test_account_tabs(self):
         """There is one account tab for each imported account, the first is selected, and each tab
@@ -69,7 +69,7 @@ class ImportCheckbookQIF(TestCase):
         # The pane has been closed
         self.assertEqual(len(self.iwin.panes), 1)
         self.assertEqual(self.iwin.panes[0].name, 'Account 2')
-        self.check_gui_calls(self.iwin_gui, update_selected_pane=1, close_selected_tab=1)
+        self.check_gui_calls(self.iwin_gui, ['update_selected_pane', 'close_selected_tab'])
         # The account & entries has been added
         self.assertEqual(self.bsheet.assets[0].name, 'Account 1')
         self.bsheet.selected = self.bsheet.assets[0]
@@ -78,7 +78,7 @@ class ImportCheckbookQIF(TestCase):
         # When importing the last pane, the window should close
         self.clear_gui_calls()
         self.iwin.import_selected_pane()
-        self.check_gui_calls(self.iwin_gui, close_selected_tab=1, close=1)
+        self.check_gui_calls(self.iwin_gui, ['close_selected_tab', 'close'])
     
     def test_import_selected_pane_with_some_entries_disabled(self):
         # When the will_import checkbox is unchecked, don't import the entry
@@ -94,7 +94,7 @@ class ImportCheckbookQIF(TestCase):
         self.iwin.selected_target_account_index = 1
         self.clear_gui_calls()
         self.iwin.selected_pane_index = 1
-        self.check_gui_calls(self.iwin_gui, update_selected_pane=1)
+        self.check_gui_calls(self.iwin_gui, ['update_selected_pane'])
         self.assertEqual(self.iwin.selected_target_account_index, 0)
         self.iwin.selected_target_account_index = 1
         self.iwin.selected_pane_index = 0
@@ -119,17 +119,18 @@ class ImportCheckbookQIF(TestCase):
     def test_target_accounts(self):
         """Target accounts are updated when accounts are added/removed"""
         self.assertEqual(self.iwin.target_account_names, ['< New Account >'])
-        self.add_account_legacy('Foo')
-        self.add_account_legacy('bar')
-        self.check_gui_calls(self.iwin_gui, refresh_target_accounts=4) # one for add, one for change
+        self.add_account('Foo')
+        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
+        self.add_account('bar')
+        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # bar
         self.bsheet.delete()
-        self.check_gui_calls(self.iwin_gui, refresh_target_accounts=1)
+        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo'])
         self.add_account_legacy()
-        self.check_gui_calls(self.iwin_gui, refresh_target_accounts=1)
+        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
         self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
     
 
@@ -165,7 +166,7 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.document.parse_file_for_import(self.filepath('qif/checkbook.qif'))
         self.clear_gui_calls()
         self.iwin.selected_target_account_index = 1 # foo
-        self.check_gui_calls(self.itable_gui, refresh=1)
+        self.check_gui_calls(self.itable_gui, ['refresh'])
     
     def test_import(self):
         """Import happens in the selected target account"""

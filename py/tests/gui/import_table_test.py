@@ -8,7 +8,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from datetime import date
-import os.path as op
 
 from ..base import TestCase
 from ...model.date import YearRange
@@ -63,7 +62,7 @@ class ImportCheckbookQIF(TestCase):
     def test_select_account(self):
         """Selecting another accounts updates the table"""
         self.iwin.selected_pane_index = 1
-        self.check_gui_calls(self.itable_gui, refresh=1)
+        self.check_gui_calls(self.itable_gui, ['refresh'])
         self.assertEqual(len(self.itable), 3)
         self.assertEqual(self.itable[1].date, '')
         self.assertEqual(self.itable[1].description, '')
@@ -96,7 +95,7 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
         self.clear_gui_calls()
         self.iwin.selected_target_account_index = 1 # foo
-        self.check_gui_calls(self.itable_gui, refresh=1)
+        self.check_gui_calls(self.itable_gui, ['refresh'])
     
     def test_bind(self):
         """Binding 2 entries removes the imported entry and places it at the existing's row"""
@@ -108,7 +107,7 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.assertEqual(self.itable[2].date_import, '02/01/2007')
         self.assertEqual(self.itable[2].description_import, 'Power Bill')
         self.assertEqual(self.itable[2].amount_import, '-57.12')
-        self.check_gui_calls(self.itable_gui, refresh=1)
+        self.check_gui_calls(self.itable_gui, ['refresh'])
     
     def test_can_bind(self):
         """can_bind() returns True only when trying to bind 2 rows with opposite missing elements"""
@@ -215,7 +214,7 @@ class LoadThenImportWithReference(TestCase):
         self.assertEqual(self.itable[2].date_import, '16/02/2008')
         self.assertEqual(self.itable[2].description_import, 'txn2')
         self.assertEqual(self.itable[2].amount_import, 'CAD -14.00')
-        self.check_gui_calls(self.itable_gui, refresh=1)
+        self.check_gui_calls(self.itable_gui, ['refresh'])
     
     def test_unbind_unbound(self):
         """Trying to unbind an unbound match has no effect"""

@@ -16,12 +16,11 @@ from ...app import Application
 from ...model.account import INCOME, EXPENSE
 from ...model.date import MonthRange
 
-
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
         self.mainwindow.select_income_statement()
-        self.check_gui_calls(self.istatement_gui, refresh=1)
+        self.check_gui_calls(self.istatement_gui, ['refresh'])
     
     def test_add_account_in_other_groups(self):
         """When groups other than Assets are selected, new accounts go underneath it."""

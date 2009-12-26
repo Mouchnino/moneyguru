@@ -49,8 +49,9 @@ class ImportFortisCSV(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_import_fortis()
-        self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=1, refresh_columns=1, 
-            refresh_lines=1, refresh_targets=1, show=1)
+        expected_calls = ['refresh_layout_menu', 'refresh_columns', 'refresh_lines',
+            'refresh_targets', 'show']
+        self.check_gui_calls(self.csvopt_gui, expected_calls)
     
     def test_columns(self):
         self.assertEqual(self.csvopt.columns, [None] * 8)
@@ -59,8 +60,8 @@ class ImportFortisCSV(TestCase, CommonSetup):
         # because the columns haven't been set, the iwin is not supposed to be brought and an error
         # message is supposed to pop.
         self.csvopt.continue_import()
-        self.check_gui_calls(self.iwin_gui) # nothing
-        self.check_gui_calls(self.csvopt_gui, show_message=1)
+        self.check_gui_calls_partial(self.iwin_gui, not_expected=['show'])
+        self.check_gui_calls(self.csvopt_gui, ['show_message'])
     
     def test_delete_selected_layout(self):
         # There used to be an assert in delete_selected_layout to make sure the default layout was
@@ -82,7 +83,7 @@ class ImportFortisCSV(TestCase, CommonSetup):
     def test_set_column_field(self):
         self.csvopt.set_column_field(1, CSV_DATE)
         self.assertEqual(self.csvopt.get_column_name(1), 'Date')
-        self.check_gui_calls(self.csvopt_gui, refresh_columns_name=1)
+        self.check_gui_calls(self.csvopt_gui, ['refresh_columns_name'])
     
     def test_set_wrong_date_field(self):
         # if the field date is set to a non-date column, raise an appropriate error (with show_message)
@@ -90,7 +91,7 @@ class ImportFortisCSV(TestCase, CommonSetup):
         self.csvopt.set_column_field(3, CSV_AMOUNT)
         self.clear_gui_calls()
         self.csvopt.continue_import()
-        self.check_gui_calls(self.csvopt_gui, show_message=1)
+        self.check_gui_calls(self.csvopt_gui, ['show_message'])
     
 
 class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
@@ -103,8 +104,8 @@ class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
     def test_continue_import(self):
         # sets the columns in self.document.loader and continues importing
         self.csvopt.continue_import()
-        self.check_gui_calls(self.csvopt_gui, hide=1)
-        self.check_gui_calls(self.iwin_gui, refresh_tabs=1, refresh_target_accounts=1, show=1)
+        self.check_gui_calls(self.csvopt_gui, ['hide'])
+        self.check_gui_calls(self.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
         self.assertEqual(len(self.iwin.panes), 1)
         self.assertEqual(self.iwin.panes[0].name, 'CSV Import')
         self.assertEqual(self.iwin.panes[0].count, 18)
@@ -122,12 +123,12 @@ class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
     
     def test_layouts(self):
         self.csvopt.new_layout('foobar') # 'foobar' is selected
-        self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=1)
+        self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu'])
         self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar'])
         self.csvopt.set_column_field(5, CSV_PAYEE)
         self.clear_gui_calls()
         self.csvopt.select_layout(None) # default
-        self.check_gui_calls(self.csvopt_gui, refresh_columns_name=1, refresh_lines=1, refresh_targets=1)
+        self.check_gui_calls(self.csvopt_gui, ['refresh_columns_name', 'refresh_lines', 'refresh_targets'])
         self.assertEqual(self.csvopt.columns[5], CSV_DESCRIPTION)
         self.csvopt.select_layout('foobar')
         self.assertEqual(self.csvopt.columns[5], CSV_PAYEE)
@@ -234,7 +235,7 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
     
     def test_delete_selected_layout(self):
         self.csvopt.delete_selected_layout()
-        self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=1, refresh_columns_name=1, refresh_lines=1)
+        self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu', 'refresh_columns_name', 'refresh_lines'])
         self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar'])
         self.assertEqual(self.csvopt.layout.name, 'Default')
     
@@ -246,13 +247,13 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
     
     def test_rename_selected_layout(self):
         self.csvopt.rename_selected_layout('foobaz')
-        self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=1)
+        self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu'])
         self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
     
     def test_select_same_layout_doesnt_refresh_gui(self):
         # Selecting the layout that's already selected doesn't trigger gui refreshes
         self.csvopt.select_layout('foobaz')
-        self.check_gui_calls(self.csvopt_gui, refresh_layout_menu=0)
+        self.check_gui_calls_partial(self.csvopt_gui, not_expected=['refresh_layout_menu'])
     
 
 class FortisWithLoadedLayouts(TestCase, CommonSetup):

@@ -15,10 +15,10 @@ from nose.tools import eq_
 
 from hsutil.currency import EUR
 
-from .base import TestCase, CommonSetup, TestAppCompareMixin
-from ..model.date import MonthRange, YearRange
+from .base import TestCase as TestCaseBase, CommonSetup, TestAppCompareMixin
+from ..model.date import MonthRange
 
-class TestCase(TestCase, TestAppCompareMixin):
+class TestCase(TestCaseBase, TestAppCompareMixin):
     """Provides an easy way to test undo/redo
     
     Set your app up and then, just before you perform the step you want to
@@ -170,9 +170,9 @@ class OneNamedAccount(TestCase):
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
         self.document.undo()
-        self.check_gui_calls(self.bsheet_gui, refresh=1, stop_editing=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh', 'stop_editing'])
         self.document.redo()
-        self.check_gui_calls(self.bsheet_gui, refresh=1, stop_editing=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh', 'stop_editing'])
     
     def test_modified_status(self):
         filepath = unicode(self.tmppath() + 'foo.moneyguru')
@@ -204,8 +204,8 @@ class OneNamedAccount(TestCase):
         self.bsheet.show_selected_account()
         self.clear_gui_calls()
         self.document.redo()
-        self.assertTrue(self.document.selected_account is None)
-        self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1, refresh_undo_actions=1)
+        assert self.document.selected_account is None
+        self.check_gui_calls(self.mainwindow_gui, ['show_balance_sheet', 'refresh_undo_actions'])
     
     @save_state_then_verify
     def test_undo_add_entry(self):
@@ -248,8 +248,8 @@ class OneNamedAccount(TestCase):
         self.document.undo()
         self.clear_gui_calls()
         self.document.undo()
-        self.assertTrue(self.document.selected_account is None)
-        self.check_gui_calls(self.mainwindow_gui, show_balance_sheet=1, refresh_undo_actions=1)
+        assert self.document.selected_account is None
+        self.check_gui_calls(self.mainwindow_gui, ['show_balance_sheet', 'refresh_undo_actions'])
     
     def test_undo_twice(self):
         """Undoing a new_account() just after having undone a change_account works"""
@@ -392,15 +392,15 @@ class TwoAccountsTwoTransactions(TestCase):
     def test_etable_refreshes(self):
         self.clear_gui_calls()
         self.document.undo()
-        self.assertEqual(len(self.etable), 1)
-        self.check_gui_calls(self.etable_gui, refresh=1, stop_editing=1)
+        eq_(len(self.etable), 1)
+        self.check_gui_calls(self.etable_gui, ['refresh', 'stop_editing'])
     
     def test_ttable_refreshes(self):
         self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
         self.document.undo()
-        self.assertEqual(len(self.ttable), 1)
-        self.check_gui_calls(self.ttable_gui, refresh=1, stop_editing=1)
+        eq_(len(self.ttable), 1)
+        self.check_gui_calls(self.ttable_gui, ['refresh', 'stop_editing'])
     
     @save_state_then_verify
     def test_undo_change_transaction_from_etable(self):

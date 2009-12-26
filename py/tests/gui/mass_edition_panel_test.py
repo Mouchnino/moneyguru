@@ -9,9 +9,7 @@
 
 from datetime import date
 
-from nose.tools import eq_, assert_raises
-
-from hsutil.currency import EUR
+from nose.tools import assert_raises
 
 from ..base import TestCase
 from ...exception import OperationAborted
@@ -76,31 +74,31 @@ class TwoTransactionsDifferentValues(TestCase):
         self.assertEqual(self.mepanel.amount, '0.00')
     
     def test_change_field(self):
-        """Changing a field enables the associated checkbox"""
+        # Changing a field enables the associated checkbox
         self.clear_gui_calls()
         self.mepanel.date = '08/07/2008'
-        self.assertTrue(self.mepanel.date_enabled)
+        assert self.mepanel.date_enabled
         # just make sure they are not changed all at once
-        self.assertFalse(self.mepanel.description_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert not self.mepanel.description_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
         self.mepanel.description = 'foobar'
-        self.assertTrue(self.mepanel.description_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert self.mepanel.description_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
         self.mepanel.payee = 'foobar'
-        self.assertTrue(self.mepanel.payee_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert self.mepanel.payee_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
         self.mepanel.checkno = '44'
-        self.assertTrue(self.mepanel.checkno_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert self.mepanel.checkno_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
         self.mepanel.from_ = 'foobar'
-        self.assertTrue(self.mepanel.from_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert self.mepanel.from_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
         self.mepanel.to = 'foobar'
-        self.assertTrue(self.mepanel.to_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert self.mepanel.to_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
         self.mepanel.amount = '44'
-        self.assertTrue(self.mepanel.amount_enabled)
-        self.check_gui_calls(self.mepanel_gui, refresh=1)
+        assert self.mepanel.amount_enabled
+        self.check_gui_calls(self.mepanel_gui, ['refresh'])
     
     def test_change_field_to_none(self):
         """the mass panel considers replaces None values with ''"""

@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..base import TestCase
-from ..reconciliation_test import _ThreeEntriesOneReconciled
+from ..reconciliation_test import CommonSetup
 from ...document import (FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, FILTER_TRANSFER,
     FILTER_RECONCILED, FILTER_NOTRECONCILED)
 from ...model.account import LIABILITY
@@ -37,13 +37,13 @@ class TransactionsOfEachType(TestCase):
     def test_efbar_filter_expenses(self):
         #The etable's expense filter makes it only show entries with a decrease
         self.efbar.filter_type = FILTER_EXPENSE # decrease
-        self.check_gui_calls(self.etable_gui, refresh=1)
+        self.check_gui_calls(self.etable_gui, ['refresh'])
         self.assertEqual(len(self.etable), 2)
         self.assertEqual(self.etable[0].description, 'third')
         self.assertEqual(self.etable[1].description, 'fourth')
         #The ttable's expense filter makes it only show entries with a transfer to an expense.
         self.mainwindow.select_transaction_table()
-        self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
+        self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_EXPENSE)
         self.assertEqual(len(self.ttable), 1)
         self.assertEqual(self.ttable[0].description, 'third')
@@ -51,13 +51,13 @@ class TransactionsOfEachType(TestCase):
     def test_efbar_filter_income(self):
         #The etable's income filter makes it only show entries with an increase.
         self.efbar.filter_type = FILTER_INCOME
-        self.check_gui_calls(self.etable_gui, refresh=1)
+        self.check_gui_calls(self.etable_gui, ['refresh'])
         self.assertEqual(len(self.etable), 2)
         self.assertEqual(self.etable[0].description, 'first')
         self.assertEqual(self.etable[1].description, 'second')
         #The etable's income filter makes it only show entries with a transfer to an income.
         self.mainwindow.select_transaction_table()
-        self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
+        self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_INCOME)
         self.assertEqual(len(self.ttable), 1)
         self.assertEqual(self.ttable[0].description, 'first')
@@ -65,11 +65,11 @@ class TransactionsOfEachType(TestCase):
     def test_efbar_filter_transfer(self):
         #The etable's transfer filter makes it only show entries with a transfer to an asset/liability.
         self.efbar.filter_type = FILTER_TRANSFER
-        self.check_gui_calls(self.etable_gui, refresh=1)
+        self.check_gui_calls(self.etable_gui, ['refresh'])
         self.assertEqual(len(self.etable), 1)
         self.assertEqual(self.etable[0].description, 'fourth')
         self.mainwindow.select_transaction_table()
-        self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
+        self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_TRANSFER)
         self.assertEqual(len(self.ttable), 1)
         self.assertEqual(self.ttable[0].description, 'fourth')
@@ -79,11 +79,11 @@ class TransactionsOfEachType(TestCase):
         the filter on.
         """
         self.efbar.filter_type = FILTER_UNASSIGNED
-        self.check_gui_calls(self.etable_gui, refresh=1)
+        self.check_gui_calls(self.etable_gui, ['refresh'])
         self.assertEqual(len(self.etable), 1)
         self.assertEqual(self.etable[0].description, 'second')
         self.mainwindow.select_transaction_table()
-        self.check_gui_calls(self.tfbar_gui, refresh=1) # refreshes on connect()
+        self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         self.assertTrue(self.tfbar.filter_type is FILTER_UNASSIGNED)
         self.assertEqual(len(self.ttable), 1)
     
@@ -95,13 +95,13 @@ class TransactionsOfEachType(TestCase):
         self.clear_gui_calls()
         self.istatement.show_selected_account()
         self.assertTrue(self.efbar.filter_type is None)
-        self.check_gui_calls(self.efbar_gui, refresh=1, disable_transfers=1)
+        self.check_gui_calls(self.efbar_gui, ['refresh', 'disable_transfers'])
         self.mainwindow.select_transaction_table()
-        self.check_gui_calls(self.tfbar_gui, refresh=1) # no disable
+        self.check_gui_calls(self.tfbar_gui, ['refresh']) # no disable
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.check_gui_calls(self.efbar_gui, refresh=1, enable_transfers=1)
+        self.check_gui_calls(self.efbar_gui, ['refresh', 'enable_transfers'])
     
     def test_multiple_filters_at_the_same_time(self):
         """Having an unassigned filter at the same time as a search filter works as expected"""
@@ -111,9 +111,11 @@ class TransactionsOfEachType(TestCase):
         self.assertEqual(len(self.ttable), 0)
     
 
-class ThreeEntriesOneReconciled(_ThreeEntriesOneReconciled):
+class ThreeEntriesOneReconciled(TestCase, CommonSetup):
     def setUp(self):
-        _ThreeEntriesOneReconciled.setUp(self)
+        self.create_instances()
+        self.setup_three_entries_reconciliation_mode()
+        self.setup_reconcile_second_entry()
         self.document.toggle_reconciliation_mode() # commit reonciliation
     
     def test_efbar_not_reconciled(self):

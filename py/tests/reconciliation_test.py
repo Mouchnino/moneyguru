@@ -21,6 +21,11 @@ class CommonSetup(CommonSetupBase):
         self.add_entry('31/1/2008', 'three')
         self.document.toggle_reconciliation_mode()
     
+    def setup_reconcile_second_entry(self):
+        self.etable.select([1])
+        row = self.etable.selected_row
+        row.toggle_reconciled()
+    
 
 class Pristine(TestCase):
     def setUp(self):
@@ -31,7 +36,7 @@ class Pristine(TestCase):
         #Toggling reconciliation mode on and off
         self.assertFalse(self.document.in_reconciliation_mode())
         self.document.toggle_reconciliation_mode()
-        self.check_gui_calls(self.mainwindow_gui, refresh_reconciliation_button=1)
+        self.check_gui_calls(self.mainwindow_gui, ['refresh_reconciliation_button'])
         self.assertTrue(self.document.in_reconciliation_mode())
         self.document.toggle_reconciliation_mode()
         self.assertFalse(self.document.in_reconciliation_mode())
@@ -178,9 +183,7 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
         self.setup_three_entries_reconciliation_mode()
-        self.etable.select([1])
-        row = self.etable.selected_row
-        row.toggle_reconciled()
+        self.setup_reconcile_second_entry()
     
     def test_toggle_entries_reconciled_with_non_reconciled(self):
         """When none of the selected entries are reconciled, all selected entries get reconciled"""

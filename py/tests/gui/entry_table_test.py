@@ -23,7 +23,7 @@ class OneAccount(TestCase):
     def test_add_entry(self):
         """Before adding a new entry, make sure the entry table is not in edition mode. Then, start editing the new entry."""
         self.etable.add()
-        self.check_gui_calls(self.etable_gui, stop_editing=1, refresh=1, start_editing=1)
+        self.check_gui_calls(self.etable_gui, ['stop_editing', 'refresh', 'start_editing'])
     
     def test_add_twice_then_save(self):
         """Calling add() while in edition calls save_edits()"""
@@ -46,14 +46,13 @@ class OneEntryInEdition(TestCase):
         """cancel_edits() calls view.refresh() and stop_editing()"""
         self.etable.cancel_edits()
         # We can't test the order of the gui calls, but stop_editing must happen first
-        self.check_gui_calls(self.etable_gui, refresh=1, stop_editing=1)
+        self.check_gui_calls(self.etable_gui, ['refresh', 'stop_editing'])
     
     def test_save(self):
         # Saving the document ends the edition mode and save the edits
         filepath = unicode(self.tmppath() + 'foo')
         self.document.save_to_xml(filepath)
-        # there are 2 refreshes because we also commit reconciliation
-        self.check_gui_calls(self.etable_gui, stop_editing=1, refresh=2, show_selected_row=1)
+        self.check_gui_calls(self.etable_gui, ['stop_editing', 'refresh', 'show_selected_row'])
         self.assertTrue(self.etable.edited is None)
         self.assertEqual(len(self.etable), 1)
     
@@ -94,7 +93,7 @@ class OneEntry(TestCase, CommonSetup):
         row.date = '12/07/2008'
         self.clear_gui_calls()
         self.etable.save_edits()
-        self.check_gui_calls(self.etable_gui, refresh=1, show_selected_row=1)
+        self.check_gui_calls(self.etable_gui, ['refresh', 'show_selected_row'])
     
     def test_change_transfer(self):
         """Auto-creating an account refreshes the account tree."""
@@ -105,7 +104,7 @@ class OneEntry(TestCase, CommonSetup):
     def test_delete(self):
         """Before deleting an entry, make sure the entry table is not in edition mode."""
         self.etable.delete()
-        self.check_gui_calls(self.etable_gui, stop_editing=1, refresh=1) # Delete also refreshes.
+        self.check_gui_calls(self.etable_gui, ['stop_editing', 'refresh']) # Delete also refreshes.
     
     def test_set_invalid_amount(self):
         # setting an invalid amount reverts to the old amount
@@ -142,8 +141,7 @@ class TwoEntries(TestCase):
     def test_search(self):
         # Searching when on etable doesn't switch to the ttable, and shows the results in etable
         self.sfield.query = 'second'
-        # No show_transaction_table call
-        self.check_gui_calls(self.mainwindow_gui)
+        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=['show_transaction_table'])
         eq_(len(self.etable), 1)
         eq_(self.etable[0].description, 'second')
     
@@ -156,7 +154,7 @@ class TwoEntries(TestCase):
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.etable.selected_indexes, [0])
-        self.check_gui_calls(self.etable_gui, refresh=1, show_selected_row=1)
+        self.check_gui_calls(self.etable_gui, ['refresh', 'show_selected_row'])
     
     def test_totals(self):
         # the totals line shows the total amount of increases and decreases
@@ -222,10 +220,6 @@ class TwoEntriesInReconciliationMode(TestCase):
         self.clear_gui_calls()
         self.etable[0].toggle_reconciled()
         
-    def test_gui_calls(self):
-        """No split was unreconciled, so no confirmation should be asked"""
-        self.check_gui_calls(self.document_gui)
-    
     def test_reconciled(self):
         """An entry is not reconciled until reonciliation mode goes off"""
         self.assertFalse(self.etable[0].reconciled)

@@ -76,7 +76,7 @@ class SomeAccount(TestCase):
     def test_load_stops_edition(self):
         # edition must be stop on apanel load or else an account type change can result in a crash
         self.apanel.load()
-        self.check_gui_calls(self.istatement_gui, stop_editing=1)
+        self.check_gui_calls(self.istatement_gui, ['stop_editing'])
     
     def test_save(self):
         """save() calls document.change_account with the correct arguments and triggers a refresh on all GUI components."""

@@ -10,14 +10,13 @@
 
 import os.path as op
 import xmlrpclib
-from collections import defaultdict
 from datetime import date, datetime
 from operator import attrgetter
 
 from nose.tools import nottest, istest, eq_
 
 from hsutil.path import Path
-from hsutil.testcase import TestCase
+from hsutil.testcase import TestCase as TestCaseBase
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document
@@ -57,19 +56,24 @@ from .. import document as document_module
 class CallLogger(object):
     """This is a dummy object that logs all calls made to it.
     
-    It will be used to simulate the GUI layer."""
+    It is used to simulate the GUI layer.
+    """
     def __init__(self):
-        self.calls = defaultdict(int)
-
+        self.calls = []
+    
     def __getattr__(self, func_name):
         def func(*args, **kw):
-            self.calls[func_name] += 1
+            self.calls.append(func_name)
         return func
+    
+    def clear_calls(self):
+        del self.calls[:]
+    
 
 def log(method):
     def wrapper(self, *args, **kw):
         result = method(self, *args, **kw)
-        self.calls[method.func_name] += 1
+        self.calls.append(method.func_name)
         return result
     
     return wrapper
@@ -204,16 +208,8 @@ class DictLoader(base.Loader):
                 setattr(self.transaction_info, attr, value)
 
 @istest # nose is sometimes confused. This is to make sure that no test is ignored.
-class TestCase(TestCase):
+class TestCase(TestCaseBase):
     cls_tested_module = document_module # for mocks
-    
-    def assert_gui_calls_equal(self, guicalls, expected):
-        for callname, callcount in expected.items():
-            if callcount == 0: # This means we just want to make sure that `callname` hasn't been called
-                assert callname not in guicalls,\
-                    "'%s' was not supposed to be called, but was called %d times" % (callname, guicalls[callname])
-                del expected[callname]
-        eq_(guicalls, expected)
     
     @classmethod
     def datadirpath(cls):
@@ -227,24 +223,44 @@ class TestCase(TestCase):
             raise Exception('This is not supposed to be used in a test case')
         self.mock(xmlrpclib, 'ServerProxy', raise_if_called)
     
-    def check_gui_calls(self, gui, **expected):
-        """Checks that the expected calls have been made to 'gui', then clears the log."""
-        self.assert_gui_calls_equal(gui.calls, expected)
-        gui.calls.clear()
+    def check_gui_calls(self, gui, expected, verify_order=False):
+        """Checks that the expected calls have been made to 'gui', then clears the log.
+        
+        `expected` is an iterable of strings representing method names.
+        If `verify_order` is True, the order of the calls matters.
+        """
+        if verify_order:
+            eq_(gui.calls, expected)
+        else:
+            eq_(set(gui.calls), set(expected))
+        gui.clear_calls()
     
-    def check_gui_calls_partial(self, gui, **expected):
-        """Check that **expected has been called, but ignore other calls"""
-        calls = dict((k, v) for k, v in gui.calls.items() if k in expected)
-        self.assert_gui_calls_equal(calls, expected)
-        gui.calls.clear()
+    def check_gui_calls_partial(self, gui, expected=None, not_expected=None):
+        """Checks that the expected calls have been made to 'gui', then clears the log.
+        
+        `expected` is an iterable of strings representing method names. Order doesn't matter.
+        Moreover, if calls have been made that are not in expected, no failure occur.
+        `not_expected` can be used for a more explicit check (rather than calling `check_gui_calls`
+        with an empty `expected`) to assert that calls have *not* been made.
+        """
+        calls = set(gui.calls)
+        if expected is not None:
+            expected = set(expected)
+            not_called = expected - calls
+            assert not not_called, u"These calls haven't been made: {0}".format(not_called)
+        if not_expected is not None:
+            not_expected = set(not_expected)
+            called = not_expected & calls
+            assert not called, u"These calls shouldn't have been made: {0}".format(called)
+        gui.clear_calls()
     
     def clear_gui_calls(self):
         for attr in dir(self):
             if attr.endswith('_gui'):
                 gui = getattr(self, attr)
                 if hasattr(gui, 'calls'): # We might have test methods ending with '_gui'
-                    gui.calls.clear()
-
+                    gui.clear_calls()
+    
     def create_instances(self):
         """Creates a Document instance along with all gui layers attached to it.
         

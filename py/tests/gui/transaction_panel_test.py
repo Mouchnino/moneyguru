@@ -71,7 +71,7 @@ class OneEntry(TestCase):
     def test_load_refreshes_mct_button(self):
         # loading the panel refreshes the mct button
         self.tpanel.load()
-        self.check_gui_calls_partial(self.tpanel_gui, refresh_mct_button=1)
+        self.check_gui_calls_partial(self.tpanel_gui, ['refresh_mct_button'])
     
     def test_load_while_etable_is_editing(self):
         """loading the tpanel while etable is editing saves the edits and stops editing mode"""
@@ -80,9 +80,9 @@ class OneEntry(TestCase):
         row.date = '07/07/2008'
         self.clear_gui_calls()
         self.tpanel.load()
-        self.assertTrue(self.etable.edited is None)
-        self.assertEqual(len(self.etable), 2)
-        self.check_gui_calls(self.etable_gui, refresh=1, show_selected_row=1, stop_editing=1)
+        assert self.etable.edited is None
+        eq_(len(self.etable), 2)
+        self.check_gui_calls(self.etable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
     
     def test_load_while_ttable_is_editing(self):
         """loading the tpanel while ttable is editing saves the edits and stops editing mode"""
@@ -92,9 +92,9 @@ class OneEntry(TestCase):
         row.date = '07/07/2008'
         self.clear_gui_calls()
         self.tpanel.load()
-        self.assertTrue(self.ttable.edited is None)
-        self.assertEqual(len(self.ttable), 2)
-        self.check_gui_calls(self.ttable_gui, refresh=1, show_selected_row=1, stop_editing=1)
+        assert self.ttable.edited is None
+        eq_(len(self.ttable), 2)
+        self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
     
     def test_values(self):
         """The values of the panel are correct"""
@@ -143,7 +143,7 @@ class OneEntryPanelLoaded(TestCase):
         # Changing the date no longer calls refresh_repeat_options() on the view (this stuff is now
         # in schedules)
         self.tpanel.date = '17/07/2008'
-        self.check_gui_calls(self.tpanel_gui, refresh_repeat_options=0)
+        self.check_gui_calls_partial(self.tpanel_gui, not_expected=['refresh_repeat_options'])
     
 
 class TwoAmountlessEntries(TestCase):
@@ -207,9 +207,9 @@ class MultiCurrencyTransaction(TestCase):
         # difference on that side. For this example, the usd side is the weakest side (if they were
         # equal, it would be 52.50 usd).
         self.tpanel.mct_balance()
-        self.assertEqual(len(self.stable), 3)
-        self.assertEqual(self.stable[2].credit, 'CAD 6.80') # the selected split is the 2nd one
-        self.check_gui_calls_partial(self.stable_gui, refresh=1, stop_editing=1)
+        eq_(len(self.stable), 3)
+        eq_(self.stable[2].credit, 'CAD 6.80') # the selected split is the 2nd one
+        self.check_gui_calls_partial(self.stable_gui, ['refresh', 'stop_editing'])
     
     def test_mct_balance_select_null_split(self):
         # if the selected split has no amount, use the default currency
@@ -233,5 +233,5 @@ class MultiCurrencyTransaction(TestCase):
         # edition must stop before mct balance or else we end up with a crash
         self.stable[1].account = 'foo'
         self.tpanel.mct_balance()
-        self.check_gui_calls_partial(self.stable_gui, stop_editing=1)
+        self.check_gui_calls_partial(self.stable_gui, ['stop_editing'])
     

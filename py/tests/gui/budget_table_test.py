@@ -43,5 +43,5 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         # When the edition_must_stop event is broadcasted, btable must ignore it because the objc
         # side doesn't have a stop_editing method.
         self.document.stop_edition()
-        self.check_gui_calls(self.btable_gui, stop_editing=0)
+        self.check_gui_calls_partial(self.btable_gui, not_expected=['stop_editing'])
     

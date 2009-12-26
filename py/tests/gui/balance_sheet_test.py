@@ -170,7 +170,7 @@ class AccountHierarchy(TestCase):
         # is not stopped, the current buffer will be applied to the node under the deleted account)
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.delete()
-        self.check_gui_calls(self.bsheet_gui, refresh=1, stop_editing=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh', 'stop_editing'])
     
     def test_is_subtotal(self):
         # Node.is_subtotal is True when the node under it is a total node (is_total).
@@ -186,7 +186,7 @@ class AccountHierarchy(TestCase):
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.selected.name = 'foobar'
         self.bsheet.save_edits()
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh'])
     
     def test_show_selected_account(self):
         """show_selected_account() switches to the account view."""
@@ -194,7 +194,7 @@ class AccountHierarchy(TestCase):
         self.clear_gui_calls()
         self.bsheet.show_selected_account()
         # no show_line_graph because it was already selected in the etable view before
-        self.check_gui_calls(self.mainwindow_gui, show_entry_table=1)
+        self.check_gui_calls(self.mainwindow_gui, ['show_entry_table'])
         self.assertEqual(self.document.selected_account.name, 'Bank 1')
     
 
@@ -208,7 +208,7 @@ class OneEmptyAccount(TestCase):
         """The selection follows the newly added account"""
         self.bsheet.add_account()
         self.assertEqual(self.bsheet.selected, self.bsheet.assets[1])
-        self.check_gui_calls(self.bsheet_gui, update_selection=1, start_editing=1, stop_editing=1, refresh=1)
+        self.check_gui_calls(self.bsheet_gui, ['update_selection', 'start_editing', 'stop_editing', 'refresh'])
     
     def test_duplicate_account_name(self):
         # when the user enters a duplicate account name, show a dialog.
@@ -216,12 +216,12 @@ class OneEmptyAccount(TestCase):
         self.bsheet.selected.name = 'checking' # fails
         self.bsheet.save_edits()
         self.assertEqual(self.bsheet.selected.name, 'New account')
-        self.check_gui_calls_partial(self.bsheet_gui, show_message=1)
+        self.check_gui_calls_partial(self.bsheet_gui, ['show_message'])
     
     def test_make_account_liability(self):
         """Making the account a liability account refreshes all views."""
         self.bsheet.move(self.bsheet.get_path(self.bsheet.assets[0]), self.bsheet.get_path(self.bsheet.liabilities))
-        self.check_gui_calls(self.nwgraph_gui, refresh=1)
+        self.check_gui_calls(self.nwgraph_gui, ['refresh'])
     
 
 class OneAccountInEditionMode(TestCase):
@@ -265,7 +265,7 @@ class OnlyOneGroup(TestCase):
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.selected.name = 'foobar'
         self.bsheet.save_edits()
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh'])
     
     
 class OneGroupInEditionMode(TestCase):
@@ -549,7 +549,7 @@ class LoadFileBeforeCreatingInstances(TestCase):
         """the account tree refreshes itself and selects the first asset"""
         eq_(self.account_node_subaccount_count(self.bsheet.assets), 2)
         self.assertEqual(self.bsheet.selected, self.bsheet.assets[0])
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh'])
     
 
 class TwoAccountsInTwoReports(TestCase):
@@ -589,7 +589,7 @@ class OneExcludedAccount(_AccountsAndEntries):
     
     def test_gui_calls(self):
         # account exclusion refreshes the sheet
-        self.check_gui_calls(self.bsheet_gui, refresh=1)
+        self.check_gui_calls(self.bsheet_gui, ['refresh'])
     
     def test_save_and_load(self):
         # account exclusion is persistent

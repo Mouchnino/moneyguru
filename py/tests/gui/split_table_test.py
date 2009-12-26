@@ -18,11 +18,11 @@ class OneEntry(TestCase):
         self.add_entry(transfer='second', increase='42')
     
     def test_add_gui_calls(self):
-        """refresh() and start_editing() are called after a add()"""
+        # refresh() and start_editing() are called after a add()
         self.tpanel.load()
         self.clear_gui_calls()
         self.stable.add()
-        self.check_gui_calls(self.stable_gui, refresh=1, start_editing=1, stop_editing=1)
+        self.check_gui_calls(self.stable_gui, ['refresh', 'start_editing', 'stop_editing'])
     
     def test_cancel_edits(self):
         # cancel_edits() sets edited to None and makes the right gui calls
@@ -30,8 +30,8 @@ class OneEntry(TestCase):
         self.stable[0].account = 'foo'
         self.clear_gui_calls()
         self.stable.cancel_edits()
-        self.assertTrue(self.stable.edited is None)
-        self.check_gui_calls(self.stable_gui, refresh=1, stop_editing=1)
+        assert self.stable.edited is None
+        self.check_gui_calls(self.stable_gui, ['refresh', 'stop_editing'])
     
     def test_changes_split_buffer_only(self):
         """Changes made to the split table don't directly get to the model until tpanel.save()"""

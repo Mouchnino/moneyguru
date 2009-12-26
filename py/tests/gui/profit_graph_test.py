@@ -89,7 +89,7 @@ class IncomesAndExpensesInDifferentAccounts(TestCase, CommonSetup):
         # on 1/7/2008 is 7.04 USD
         expected = [32 + 22 - 7.04, -100, 54]
         self.assertEqual(amounts, expected)
-        self.check_gui_calls(self.pgraph_gui, refresh=1)
+        self.check_gui_calls(self.pgraph_gui, ['refresh'])
     
     def test_profit_graph(self):
         # We don't want to test the padding, so we only go for the amounts here

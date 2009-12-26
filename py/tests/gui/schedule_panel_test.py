@@ -41,7 +41,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         # When the panel loads, make the panel call its refresh_repeat_every() view method so that
         # the correct time unit escription shows up
         self.scpanel.load()
-        self.check_gui_calls_partial(self.scpanel_gui, refresh_repeat_every=1)
+        self.check_gui_calls_partial(self.scpanel_gui, ['refresh_repeat_every'])
     
     def test_repeat_every(self):
         # changing repeat every makes the desc plural if appropriate
@@ -53,7 +53,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.assertEqual(self.scpanel.repeat_every_desc, 'days')
         self.scpanel.repeat_every = 1
         self.assertEqual(self.scpanel.repeat_every_desc, 'day')
-        self.check_gui_calls(self.scpanel_gui, refresh_repeat_every=1)
+        self.check_gui_calls(self.scpanel_gui, ['refresh_repeat_every'])
         self.scpanel.repeat_type_index = 1
         self.assertEqual(self.scpanel.repeat_every_desc, 'week')
         self.scpanel.repeat_type_index = 2
@@ -76,7 +76,7 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every fifth Tuesday of the month',
                     'Every last Tuesday of the month']
         self.assertEqual(self.scpanel.repeat_options, expected)
-        self.check_gui_calls(self.scpanel_gui, refresh_repeat_options=1)
+        self.check_gui_calls(self.scpanel_gui, ['refresh_repeat_options'])
     
 
 class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
@@ -117,7 +117,7 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         self.scsplittable.add()
         self.scsplittable.edited.memo = 'foo'
         self.scsplittable.save_edits()
-        self.check_gui_calls(self.scpanel_gui, refresh_mct_button=0)
+        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_mct_button'])
         self.scsplittable.delete()
-        self.check_gui_calls(self.scpanel_gui, refresh_mct_button=0)
+        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_mct_button'])
     

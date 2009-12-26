@@ -11,6 +11,8 @@ from __future__ import division
 
 from datetime import date
 
+from nose.tools import eq_
+
 from hsutil.currency import Currency, USD, CAD
 
 from ..base import TestCase, ApplicationGUI, CommonSetup
@@ -76,7 +78,7 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
             ('a3 22.2%', 2),
         ]
         self.assertEqual(self.apie.data, expected)
-        self.check_gui_calls(self.apie_gui, refresh=1)
+        self.check_gui_calls(self.apie_gui, ['refresh'])
     
     def test_liabilities_pie(self):
         # the lpie also works
@@ -184,8 +186,8 @@ class SomeIncomeAndExpenses(TestCase, CommonSetup):
             ('e4 28.6%', 2),
             ('e2 14.3%', 1),
         ]
-        self.assertEqual(self.epie.data, expected)
-        self.check_gui_calls(self.epie_gui, refresh=1)
+        eq_(self.epie.data, expected)
+        self.check_gui_calls(self.epie_gui, ['refresh'])
     
     def test_income_pie(self):
         # the ipie also works
@@ -213,20 +215,20 @@ class DifferentDateRanges(TestCase, CommonSetup):
     
     def test_balance_pie_chart(self):
         # the data in the balance pie chart reflects the currencly selected date range
-        self.assertEqual(self.apie.data, [('foo 100.0%', 2)])
+        eq_(self.apie.data, [('foo 100.0%', 2)])
         self.document.select_prev_date_range()
-        self.assertEqual(self.apie.data, [('foo 100.0%', 4)])
-        self.check_gui_calls(self.apie_gui, refresh=1)
+        eq_(self.apie.data, [('foo 100.0%', 4)])
+        self.check_gui_calls(self.apie_gui, ['refresh'])
     
     def test_cash_flow_pie_chart(self):
         # the data in the cash flow pie chart reflects the currencly selected date range
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.clear_gui_calls()
-        self.assertEqual(self.epie.data, [('bar 100.0%', 2)])
+        eq_(self.epie.data, [('bar 100.0%', 2)])
         self.document.select_prev_date_range()
-        self.assertEqual(self.epie.data, [('bar 100.0%', 1)])
-        self.check_gui_calls(self.epie_gui, refresh=1)
+        eq_(self.epie.data, [('bar 100.0%', 1)])
+        self.check_gui_calls(self.epie_gui, ['refresh'])
     
 
 class MultipleCurrencies(TestCase):
@@ -296,23 +298,23 @@ class AccountGroup(TestCase):
         self.bsheet.collapse_node(self.bsheet.assets[0])
         # we must not refresh the bsheet. group collapsing is called in the middle of an outline
         # view event, refreshing the outline during that call causes a crash
-        self.check_gui_calls(self.bsheet_gui)
+        self.check_gui_calls_partial(self.bsheet_gui, not_expected=['refresh'])
         expected = [
             ('baz 70.0%', 7),
             ('group 30.0%', 3),
         ]
-        self.assertEqual(self.apie.data, expected)
+        eq_(self.apie.data, expected)
     
     def test_expand_group(self):
         # when we expand the group again, 'foo' and 'bar' go back to separate
         self.bsheet.expand_node(self.bsheet.assets[0])
-        self.check_gui_calls(self.bsheet_gui) # see test_collapse_group
+        self.check_gui_calls_partial(self.bsheet_gui, not_expected=['refresh']) # see test_collapse_group
         expected = [
             ('baz 70.0%', 7),
             ('bar 20.0%', 2),
             ('foo 10.0%', 1),
         ]
-        self.assertEqual(self.apie.data, expected)
+        eq_(self.apie.data, expected)
     
     def test_pie_chart_data(self):
         # when the group is expanded, show all accounts individually

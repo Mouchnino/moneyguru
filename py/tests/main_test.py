@@ -197,14 +197,14 @@ class RangeOnOctober2007(TestCase):
     
     def test_select_custom_date_range(self):
         self.document.select_custom_date_range()
-        self.check_gui_calls(self.mainwindow_gui, show_custom_date_range_panel=1)
+        self.check_gui_calls(self.mainwindow_gui, ['show_custom_date_range_panel'])
         self.cdrpanel.start_date = '09/12/2008'
         self.cdrpanel.end_date = '18/02/2009'
         self.cdrpanel.ok() # changes the date range
-        self.assertEqual(self.document.date_range.start, date(2008, 12, 9))
-        self.assertEqual(self.document.date_range.end, date(2009, 2, 18))
-        self.assertEqual(self.document.date_range.display, '09/12/2008 - 18/02/2009')
-        self.assertFalse(self.document.date_range.can_navigate)
+        eq_(self.document.date_range.start, date(2008, 12, 9))
+        eq_(self.document.date_range.end, date(2009, 2, 18))
+        eq_(self.document.date_range.display, '09/12/2008 - 18/02/2009')
+        assert not self.document.date_range.can_navigate
     
     def test_select_custom_date_range_without_changing_the_dates(self):
         # When selecting a custom date range that has the same start/end as the previous one, it
@@ -228,11 +228,11 @@ class RangeOnOctober2007(TestCase):
         self.assertTrue(dr.start <= date.today() <= dr.end)
     
     def test_select_year_range(self):
-        """Verify that the range changes"""
+        # Verify that the range changes.
         self.document.select_year_range()
-        self.assertEqual(self.document.date_range, YearRange(date(2007, 1, 1)))
+        eq_(self.document.date_range, YearRange(date(2007, 1, 1)))
         # We don't ask the GUI to perform any animation
-        self.check_gui_calls(self.mainwindow_gui, refresh_date_range_selector=1)
+        self.check_gui_calls(self.mainwindow_gui, ['refresh_date_range_selector'])
     
     def test_select_year_to_date_range(self):
         # Year-to-date starts at the first day of this year and ends today.
@@ -400,7 +400,7 @@ class OneEmptyAccountRangeOnOctober2007(TestCase):
         self.app.cache_path = cache_path
         self.document.must_autosave()
         eq_(len(io.listdir(cache_path)), 1)
-        self.check_gui_calls(self.etable_gui) # no stop_edition call
+        self.check_gui_calls_partial(self.etable_gui, not_expected=['stop_edition'])
         assert self.document.is_dirty
         # test that the autosave file rotation works
         for i in range(AUTOSAVE_BUFFER_COUNT):
@@ -757,22 +757,24 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         self.assertEqual(self.document.date_range, QuarterRange(date(2007, 10, 1)))
     
     def test_set_date_in_range(self):
-        """Setting the date in range doesn't cause useless notifications"""
+        # Setting the date in range doesn't cause useless notifications.
         row = self.etable.selected_row
         row.dat = '11/10/2007'
         self.clear_gui_calls()
         self.etable.save_edits()
-        self.check_gui_calls(self.mainwindow_gui)
+        not_expected = ['animate_date_range_backward', 'animate_date_range_forward',
+            'refresh_date_range_selector']
+        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=not_expected)
     
     def test_set_date_out_of_range(self):
-        """Setting the date out of range makes the app's date range change accordingly"""
+        # Setting the date out of range makes the app's date range change accordingly.
         row = self.etable.selected_row
         row.date = '1/1/2008'
         self.clear_gui_calls()
         self.etable.save_edits()
-        self.assertEqual(self.document.date_range, YearRange(date(2008, 1, 1)))
-        self.check_gui_calls_partial(self.mainwindow_gui, animate_date_range_forward=1, 
-            refresh_date_range_selector=1)
+        eq_(self.document.date_range, YearRange(date(2008, 1, 1)))
+        expected = ['animate_date_range_forward', 'refresh_date_range_selector']
+        self.check_gui_calls_partial(self.mainwindow_gui, expected)
     
 
 class EntryWithoutTransfer(TestCase):
@@ -915,7 +917,7 @@ class TwoBoundEntries(TestCase):
         # in the main window is kicked back to the bsheet.
         self.clear_gui_calls()
         self.document.clear()
-        self.check_gui_calls_partial(self.mainwindow_gui, show_balance_sheet=1)
+        self.check_gui_calls_partial(self.mainwindow_gui, ['show_balance_sheet'])
         eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 0)
@@ -1420,12 +1422,12 @@ class ThreeEntriesInTheSameExpenseAccount(TestCase):
         # The month conveniently starts on a tuesday, so the data now starts from the 1st of the month
         expected = [('01/01/2008', '08/01/2008', '100.00', '0.00'), 
                     ('15/01/2008', '22/01/2008', '200.00', '0.00')]
-        self.assertEqual(self.bar_graph_data(), expected)
-        self.check_gui_calls(self.bargraph_gui, refresh=1)
+        eq_(self.bar_graph_data(), expected)
+        self.check_gui_calls(self.bargraph_gui, ['refresh'])
         self.app.first_weekday = 6 # sunday
         expected = [('30/12/2007', '06/01/2008', '142.00', '0.00'), 
                     ('20/01/2008', '27/01/2008', '200.00', '0.00')]
-        self.assertEqual(self.bar_graph_data(), expected)
+        eq_(self.bar_graph_data(), expected)
     
     def test_delete_multiple_selection(self):
         """delete_entries() when having multiple entries selected delete all selected entries"""
