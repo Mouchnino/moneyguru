@@ -9,8 +9,18 @@
 
 from datetime import date, timedelta
 
-from .base import TestCase, TestSaveLoadMixin, CommonSetup
+from .base import TestCase, TestSaveLoadMixin, CommonSetup as CommonSetupBase
 from ..model.account import LIABILITY
+
+class CommonSetup(CommonSetupBase):
+    def setup_three_entries_reconciliation_mode(self):
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry('1/1/2008', 'one')
+        self.add_entry('20/1/2008', 'two')
+        self.add_entry('31/1/2008', 'three')
+        self.document.toggle_reconciliation_mode()
+    
 
 class Pristine(TestCase):
     def setUp(self):
@@ -145,17 +155,11 @@ class TwoEntries(TestCase):
         row.toggle_reconciled()
     
 
-class _ThreeEntries(TestCase):
+class ThreeEntries(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy()
-        self.add_entry('1/1/2008', 'one')
-        self.add_entry('20/1/2008', 'two')
-        self.add_entry('31/1/2008', 'three')
-        self.document.toggle_reconciliation_mode()
+        self.setup_three_entries_reconciliation_mode()
     
-
-class ThreeEntries(_ThreeEntries):
     def test_toggle_reconcile_then_save(self):
         # saving the file commits reconciliation
         self.etable[1].toggle_reconciled()
@@ -170,15 +174,14 @@ class ThreeEntries(_ThreeEntries):
         self.assertEqual(len(self.etable), 3) # no adjustment created
     
 
-class _ThreeEntriesOneReconciled(_ThreeEntries):
-    """Three entries with the middle one being reconciled"""
+class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
-        _ThreeEntries.setUp(self)
+        self.create_instances()
+        self.setup_three_entries_reconciliation_mode()
         self.etable.select([1])
         row = self.etable.selected_row
         row.toggle_reconciled()
     
-class ThreeEntriesOneReconciled(_ThreeEntriesOneReconciled, TestSaveLoadMixin):
     def test_toggle_entries_reconciled_with_non_reconciled(self):
         """When none of the selected entries are reconciled, all selected entries get reconciled"""
         self.etable.select([0, 2])
