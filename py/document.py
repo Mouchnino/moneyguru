@@ -17,7 +17,7 @@ from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
 from hsutil.misc import nonone, flatten, allsame, dedupe, extract
 
-from .const import NOEDIT, UNRECONCILIATION_CONTINUE, UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE
+from .const import NOEDIT
 from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
 from .model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
@@ -258,20 +258,7 @@ class Document(Broadcaster, Listener):
     def _perform_action(self, prepare_func, perform_func):
         # prepare_func must return an Action
         action = prepare_func()
-        if self.app.dont_unreconcile:
-            to_unreconcile = set()
-        else:
-            to_unreconcile = self._get_splits_to_unreconcile(action.will_unreconcile)
-        result = UNRECONCILIATION_CONTINUE
-        if to_unreconcile:
-            result = self.view.confirm_unreconciliation(len(to_unreconcile))
-        if result not in (UNRECONCILIATION_CONTINUE, UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE):
-            return # Abort
-        action.change_splits(to_unreconcile)
         self._undoer.record(action)
-        if result != UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE:
-            for split in to_unreconcile:
-                split.reconciled = False
         perform_func()
     
     def _restore_preferences(self):
@@ -486,12 +473,9 @@ class Document(Broadcaster, Listener):
         def prepare():
             action = Action('Change transaction')
             action.change_transactions([original])
-            if date_changed:
-                action.will_unreconcile |= set(original.splits)
             # Here, we don't just look for splits to unreconcile, we prepare the splits as well
             original_splits = set(s.original for s in new.splits if hasattr(s, 'original'))
             deleted_splits = set(original.splits) - original_splits
-            action.will_unreconcile |= set(deleted_splits)
             for split in new.splits:
                 if split.account is not None:
                     # don't forget that account up here is an external instance. Even if an account of
@@ -501,7 +485,6 @@ class Document(Broadcaster, Listener):
                     if split.original.amount != split.amount or split.original.account is not split.account:
                         split.reconciled = False
                         split.transaction = split.original.transaction
-                        action.will_unreconcile.add(split.original)
                     del split.original
             return action
         
@@ -525,25 +508,7 @@ class Document(Broadcaster, Listener):
             to = self.accounts.find(to, EXPENSE) if to else None
         
         def prepare():
-            action = self._get_action_from_changed_transactions(transactions)
-            for transaction in transactions:
-                if date is not NOEDIT and date != transaction.date:
-                    action.will_unreconcile |= set(transaction.splits)
-                if any(x is not NOEDIT for x in [from_, to, amount]):
-                    fsplits, tsplits = transaction.splitted_splits()
-                    fsplit = fsplits[0] if len(fsplits) == 1 else None
-                    tsplit = tsplits[0] if len(tsplits) == 1 else None
-                    if from_ is not NOEDIT and fsplit is not None and from_ is not fsplit.account:
-                        action.will_unreconcile.add(fsplit)
-                    if to is not NOEDIT and tsplit is not None and to is not tsplit.account:
-                        action.will_unreconcile.add(tsplit)
-                    if amount is not NOEDIT and fsplit is not None and tsplit is not None and amount != tsplit.amount:
-                        action.will_unreconcile.add(fsplit)
-                        action.will_unreconcile.add(tsplit)
-                if currency is not NOEDIT:
-                    tochange = (s for s in transaction.splits if s.amount and s.amount.currency != currency)
-                    action.will_unreconcile |= set(tochange)
-            return action
+            return self._get_action_from_changed_transactions(transactions)
         
         def perform():
             min_date = date if date is not NOEDIT else datetime.date.max
@@ -573,7 +538,6 @@ class Document(Broadcaster, Listener):
             action.deleted_transactions |= set(txns)
             for schedule in schedules:
                 action.change_schedule(schedule)
-            action.will_unreconcile |= set(flatten(t.splits for t in transactions))
             return action
         
         def perform():
@@ -603,7 +567,6 @@ class Document(Broadcaster, Listener):
         def prepare():
             action = Action('Move transaction')
             action.change_transactions(affected)
-            action.will_unreconcile |= set(flatten(t.splits for t in affected))
             return action
         
         def perform():
@@ -639,12 +602,7 @@ class Document(Broadcaster, Listener):
         transfer_changed = len(entry.splits) == 1 and transfer is not NOEDIT and transfer != entry.transfer
         
         def prepare():
-            action = self._get_action_from_changed_transactions([entry.transaction])
-            if date_changed or amount_changed or transfer_changed:
-                action.will_unreconcile = set(entry.splits)
-                if date_changed or amount_changed:
-                    action.will_unreconcile.add(entry.split)
-            return action
+            return self._get_action_from_changed_transactions([entry.transaction])
         
         def perform():
             min_date = entry.date if date is NOEDIT else min(entry.date, date)
@@ -711,9 +669,9 @@ class Document(Broadcaster, Listener):
             if newvalue:
                 entry = iter(entries).next()
                 account = entry.account
-                action.will_unreconcile = [e.split for e in dropwhile(lambda e: e not in entries, account.entries)]
+                action.change_splits([e.split for e in dropwhile(lambda e: e not in entries, account.entries)])
             else:
-                action.will_unreconcile = [e.split for e in reconciled_entries]
+                action.change_splits([e.split for e in reconciled_entries])
             return action
         
         def perform():

@@ -12,7 +12,6 @@ from nose.tools import eq_
 from hsutil.currency import EUR
 
 from ..base import TestCase, CommonSetup
-from ...const import UNRECONCILIATION_ABORT, UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE
 from ...document import FILTER_RECONCILED
 
 class OneAccount(TestCase):
@@ -235,9 +234,11 @@ class TwoEntriesInReconciliationMode(TestCase):
     
 
 class TwoEntriesInReconciliationModeOneReconciled(TestCase):
+    #Two entries with committed reconciliation.
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.add_entry(increase='1')
         self.add_entry(increase='2')
         self.document.toggle_reconciliation_mode()
@@ -263,197 +264,10 @@ class TwoEntriesInReconciliationModeOneReconciled(TestCase):
         self.etable.select([0, 1])
         self.etable.toggle_reconciled()
         self.etable.toggle_reconciled() # now, both entries are unreconciled
-        self.assertFalse(self.etable[0].reconciled)
-        self.assertFalse(self.etable[0].reconciliation_pending)
-        self.assertFalse(self.etable[1].reconciliation_pending)
-    
-
-class ThreeEntriesInReconciliationModeTwoReconciled(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy()
-        self.add_entry('19/07/2008', increase='1')
-        self.add_entry('20/07/2008', increase='2')
-        self.add_entry('20/07/2008', increase='3')
-        self.document.toggle_reconciliation_mode()
-        self.etable[1].toggle_reconciled()
-        self.etable[2].toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit reconciliation
-        self.document.toggle_reconciliation_mode()
-    
-    def test_toggle_first(self):
-        """As soon as an entry is toggled, all entries following it are unreconciled"""
-        self.etable[0].toggle_reconciled()
-        self.assertFalse(self.etable[1].reconciled)
-        self.assertFalse(self.etable[2].reconciled)
-    
-    
-class ThreeEntriesInReconciliationModeAllReconciled(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('first')
-        self.add_account_legacy('second')
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.add_entry('19/07/2008', increase='1')
-        self.add_entry('20/07/2008', transfer='second', increase='2')
-        self.add_entry('20/07/2008', increase='3')
-        self.document.toggle_reconciliation_mode()
-        self.etable[0].toggle_reconciled()
-        self.etable[1].toggle_reconciled()
-        self.etable[2].toggle_reconciled()
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1]
-        self.bsheet.show_selected_account()
-        self.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.document.toggle_reconciliation_mode() # commit reconciliation
-        self.document.toggle_reconciliation_mode()
-    
-    def test_cancel_reconcile(self):
-        """It's possible to cancel the reconciliation"""
-        self.document_gui.confirm_unreconciliation_result = UNRECONCILIATION_ABORT
-        self.etable[0].toggle_reconciled()
-        # The action was cancelled
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled)
-        self.assertTrue(self.etable[2].reconciled)
-    
-    def test_continue_reconcile_but_dont_unreconcile(self):
-        # when unreconciling a split and choosing the "continue but don't unreconcile action", actually
-        # unreconcile the selected entries
-        self.document_gui.confirm_unreconciliation_result = UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE
-        self.etable[0].toggle_reconciled()
-        # The action was cancelled
-        self.assertFalse(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled)
-        self.assertTrue(self.etable[2].reconciled)
-    
-    def test_cancel_change(self):
-        """It's possible to cancel the entry change"""
-        self.document_gui.confirm_unreconciliation_result = UNRECONCILIATION_ABORT
-        self.etable.select([1])
-        self.etable[1].increase = '12'
-        self.etable.save_edits()
-        # The action was cancelled
-        self.assertEqual(self.etable[1].increase, '2.00')
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled)
-        self.assertTrue(self.etable[2].reconciled)
-    
-    def test_continue_change_but_dont_unreconcile(self):
-        # It's possible to continue the entry change without causing unreconciliation
-        self.document_gui.confirm_unreconciliation_result = UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE
-        self.etable.select([1])
-        self.etable[1].increase = '12'
-        self.etable.save_edits()
-        # The action continued, but no unreconciliation took place
-        self.assertEqual(self.etable[1].increase, '12.00')
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled)
-        self.assertTrue(self.etable[2].reconciled)
-    
-    def test_change_entry_amount(self):
-        """Changing an entry's amount unreconciles it and the following entries"""
-        self.etable.select([1])
-        self.etable[1].increase = '12'
-        self.etable.save_edits()
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertFalse(self.etable[1].reconciled)
-        self.assertFalse(self.etable[2].reconciled)
-        # Verify that the correct confirmation has taken place
-        self.check_gui_calls(self.document_gui, confirm_unreconciliation=1)
-        self.assertEqual(self.document_gui.last_affected_split_count, 3)
-    
-    def test_change_entry_date(self):
-        """Changing an entry's date unreconciles it and the following entries"""
-        self.etable.select([1])
-        self.etable[1].date = '18/07/2008' # puts the second entry first
-        self.etable.save_edits()
-        self.assertFalse(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled) # wasn't touched
-        self.assertFalse(self.etable[2].reconciled)
-    
-    def test_change_other_side_amount(self):
-        """Changing an entry's amount for which the 'other side' is reconciled unreconciles it"""
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1]
-        self.bsheet.show_selected_account()
-        self.etable[0].decrease = '12'
-        self.etable.save_edits()
-        self.assertFalse(self.etable[0].reconciled)
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertFalse(self.etable[1].reconciled)
-        self.assertFalse(self.etable[2].reconciled)
-    
-    def test_change_other_side_date(self):
-        """Changing an entry's date for which the 'other side' is reconciled unreconciles it"""
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1]
-        self.bsheet.show_selected_account()
-        self.etable[0].date = '18/07/2008'
-        self.etable.save_edits()
-        self.assertFalse(self.etable[0].reconciled)
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertFalse(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled) # wasn't touched
-        self.assertFalse(self.etable[2].reconciled)
-    
-    def test_change_other_side_transfer(self):
-        """Changing an entry's transfer for which the 'other side' is reconciled unreconciles it.
-        However, it does *not* unreconcile the changed entry.
-        """
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1]
-        self.bsheet.show_selected_account()
-        self.etable[0].transfer = 'foobaz'
-        self.etable.save_edits()
-        self.assertTrue(self.etable[0].reconciled) # stays reconciled
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertFalse(self.etable[1].reconciled)
-        # Verify that the correct confirmation has taken place
-        self.check_gui_calls(self.document_gui, confirm_unreconciliation=1)
-        self.assertEqual(self.document_gui.last_affected_split_count, 2)
-    
-    def test_dont_unreconcile_preference(self):
-        # with the dont_unreconcile pereference ON, just never unreconcile.
-        self.app.dont_unreconcile = True
-        self.etable.select([1])
-        self.etable[1].increase = '12'
-        self.etable.save_edits()
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertTrue(self.etable[1].reconciled)
-        self.assertTrue(self.etable[2].reconciled)
-        self.check_gui_calls(self.document_gui) # no confirm_unreconciliation
-    
-    def test_move_second(self):
-        """Moving an entry unreconciles every following entry (and the moved entry)"""
-        self.etable.move([1], 3)
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertFalse(self.etable[1].reconciled)
-        self.assertFalse(self.etable[2].reconciled)
-    
-    def test_toggle_second(self):
-        """Unreconciling an entry unreconciles every reconciled entries following it"""
-        self.clear_gui_calls()
-        self.etable[1].toggle_reconciled()
-        self.assertTrue(self.etable[0].reconciled)
-        self.assertFalse(self.etable[1].reconciled)
-        self.assertFalse(self.etable[2].reconciled)
-        # Verify that the correct confirmation has taken place
-        self.check_gui_calls(self.document_gui, confirm_unreconciliation=1)
-        self.assertEqual(self.document_gui.last_affected_split_count, 2)
+        # We haven't committed reconciliation yet so we're still reconciled
+        assert self.etable[0].reconciled
+        assert not self.etable[0].reconciliation_pending
+        assert not self.etable[1].reconciliation_pending
     
 
 class TwoEntriesTwoCurrencies(TestCase):

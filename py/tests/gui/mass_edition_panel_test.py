@@ -300,23 +300,3 @@ class TwoForeignTransactions(TestCase):
         self.assertEqual(self.ttable[0].amount, 'CAD 42.00')
         self.assertEqual(self.ttable[1].amount, 'CAD 42.00')
     
-class TwoForeignReconciledTransactions(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('account1', EUR)
-        self.add_entry(increase='42 eur')
-        self.add_entry(increase='42 eur')
-        self.document.toggle_reconciliation_mode()
-        self.etable.select([0, 1])
-        self.etable.toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
-        self.mepanel.load()
-    
-    def test_change_currency(self):
-        # Warnings and unreconciliation happen as expected when a currency is mass changed
-        self.mepanel.currency_index = 3 # CAD
-        self.mepanel.save()
-        self.assertFalse(self.etable[0].reconciled)
-        self.assertFalse(self.etable[1].reconciled)
-        self.check_gui_calls(self.document_gui, confirm_unreconciliation=1)
-    

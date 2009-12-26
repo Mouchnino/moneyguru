@@ -20,7 +20,6 @@ from hsutil.path import Path
 from hsutil.testcase import TestCase
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
-from ..const import UNRECONCILIATION_CONTINUE
 from ..document import Document
 from ..exception import FileFormatError
 from ..gui.account_panel import AccountPanel
@@ -92,14 +91,7 @@ class ApplicationGUI(CallLogger):
 class DocumentGUI(CallLogger):
     def __init__(self):
         CallLogger.__init__(self)
-        self.confirm_unreconciliation_result = UNRECONCILIATION_CONTINUE
         self.query_for_schedule_scope_result = False
-    
-    @log
-    def confirm_unreconciliation(self, affected_split_count):
-        # We usually only care about the last call
-        self.last_affected_split_count = affected_split_count
-        return self.confirm_unreconciliation_result
     
     @log
     def query_for_schedule_scope(self):

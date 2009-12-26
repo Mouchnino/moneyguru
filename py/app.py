@@ -23,7 +23,6 @@ FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
 AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
 YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
-DONT_UNRECONCILE_PREFERENCE = 'DontUnreconcile'
 
 class Application(Broadcaster, RegistrableApplication):
     VERSION = '1.6.9'
@@ -54,7 +53,6 @@ class Application(Broadcaster, RegistrableApplication):
         self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
         self._update_autosave_timer()
-        self._dont_unreconcile = self.get_default(DONT_UNRECONCILE_PREFERENCE, False)
     
     #--- Override
     def _setup_as_registered(self):
@@ -154,17 +152,6 @@ class Application(Broadcaster, RegistrableApplication):
         self._autosave_interval = value
         self.set_default(AUTOSAVE_INTERVAL_PREFERENCE, value)
         self._update_autosave_timer()
-    
-    @property
-    def dont_unreconcile(self):
-        return self._dont_unreconcile
-        
-    @dont_unreconcile.setter
-    def dont_unreconcile(self, value):
-        if value == self._dont_unreconcile:
-            return
-        self._dont_unreconcile = value
-        self.set_default(DONT_UNRECONCILE_PREFERENCE, value)
     
     @property
     def default_currency(self):

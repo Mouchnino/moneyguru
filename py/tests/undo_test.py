@@ -601,39 +601,6 @@ class TransactionWithAutoCreatedTransfer(TestCase):
         self.etable.delete()
     
 
-class ReconciledSplitsWithTransfersAndReferences(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.load_from_xml(self.filepath('moneyguru', 'with_references1.moneyguru'))
-        self.document.date_range = YearRange(date(2008, 1, 1))
-        self.bsheet.selected = self.bsheet.assets[0] # Account 1
-        self.bsheet.show_selected_account()
-        self.etable[0].transfer = 'Account 2'
-        self.etable.save_edits()
-        self.etable[1].transfer = 'Account 2'
-        self.etable.save_edits()
-        self.document.toggle_reconciliation_mode()
-        self.etable[0].toggle_reconciled()
-        self.etable[1].toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1] # Account 2
-        self.bsheet.show_selected_account()
-        self.document.toggle_reconciliation_mode()
-        self.etable[0].toggle_reconciled()
-        self.etable[1].toggle_reconciled()
-        self.etable[2].toggle_reconciled()
-        self.etable[3].toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
-    
-    @save_state_then_verify
-    def test_undo_import_with_match_causing_unreconciliation(self):
-        # When importing a file that causes unreconciliation to cascade through transfers, it is undoable
-        self.document.parse_file_for_import(self.filepath('moneyguru', 'with_references2.moneyguru'))
-        self.itable[0].will_import = True
-        self.iwin.import_selected_pane()
-    
-
 class ScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

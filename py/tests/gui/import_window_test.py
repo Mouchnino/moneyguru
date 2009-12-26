@@ -10,7 +10,6 @@
 from datetime import date
 
 from ..base import TestCase, DictLoader
-from ...const import UNRECONCILIATION_ABORT
 from ...model.date import YearRange
 
 class ImportCheckbookQIF(TestCase):
@@ -207,52 +206,11 @@ class LoadWithReference(TestCase):
 
 class LoadThemImportWithReference(TestCase):
     def setUp(self):
+        self.mock_today(2008, 1, 1)
         self.create_instances()
         self.document.load_from_xml(self.filepath('moneyguru/with_references1.moneyguru'))
-        self.document.date_range = YearRange(date(2008, 1, 1))
-        self.bsheet.selected = self.bsheet.assets[0] # Account 1
-        self.bsheet.show_selected_account()
-        self.etable[0].transfer = 'Account 2'
-        self.etable.save_edits()
-        self.etable[1].transfer = 'Account 2'
-        self.etable.save_edits()
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1] # Account 2
-        self.bsheet.show_selected_account()
-        self.document.toggle_reconciliation_mode()
-        self.etable[0].toggle_reconciled()
-        self.etable[1].toggle_reconciled()
-        self.etable[2].toggle_reconciled()
-        self.etable[3].toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
-        self.mainwindow.select_balance_sheet()
         self.document.parse_file_for_import(self.filepath('moneyguru/with_references2.moneyguru'))
         self.clear_gui_calls()
-    
-    def test_cancel_unreconciliation(self):
-        # if unreconciliation is cancelled, the pane is not closed, the entries are not imported
-        self.document_gui.confirm_unreconciliation_result = UNRECONCILIATION_ABORT
-        self.itable[1].will_import = True # txn2
-        self.iwin.import_selected_pane()
-        self.assertEqual(len(self.iwin.panes), 3)
-        self.check_gui_calls(self.iwin_gui)
-    
-    def test_confirm_unreconciliation(self):
-        # If forcing the import of a matched *and* reconciled entry, an unreconciliation warning 
-        # pops up
-        self.itable[1].will_import = True # txn2
-        self.iwin.import_selected_pane()
-        self.check_gui_calls(self.document_gui, confirm_unreconciliation=1)
-        self.assertEqual(self.document_gui.last_affected_split_count, 3)
-        self.bsheet.selected = self.bsheet.assets[0] # Account 1
-        self.bsheet.show_selected_account()
-        self.assertFalse(self.etable[1].reconciled)
-        # unreconciliation has cascaded in Account 2
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1] # Account 2
-        self.bsheet.show_selected_account()
-        self.assertFalse(self.etable[2].reconciled)
-        self.assertFalse(self.etable[3].reconciled)
     
     def test_selected_target_account(self):
         """If a target account's reference matched the imported account, select it"""

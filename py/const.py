@@ -15,8 +15,3 @@ REPEAT_MONTHLY = 'monthly'
 REPEAT_YEARLY = 'yearly'
 REPEAT_WEEKDAY = 'weekday'
 REPEAT_WEEKDAY_LAST = 'weekday_last'
-
-# synced with the gui side, don't change the values
-UNRECONCILIATION_ABORT = 0
-UNRECONCILIATION_CONTINUE = 1
-UNRECONCILIATION_CONTINUE_DONT_UNRECONCILE = 2

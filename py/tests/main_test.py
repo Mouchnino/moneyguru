@@ -37,25 +37,23 @@ class NoSetup(TestCase):
         gui.defaults = {
             app.FIRST_WEEKDAY_PREFERENCE: 'not an int',
             app.AHEAD_MONTHS_PREFERENCE: 'not an int',
-            app.DONT_UNRECONCILE_PREFERENCE: 'not a bool',
         }
         self.app = Application(gui)
         self.create_instances()
         # because none of the prefs are of the correct type, use default values
         eq_(self.app.first_weekday, 0)
         eq_(self.app.ahead_months, 2)
-        assert isinstance(self.app.dont_unreconcile, bool)
     
     def test_app_tries_to_convert_different_types(self):
         # The prefs might be stored as a different, but compatible type (for example, an int instead
         # of a bool. Try to convert the value before falling back to the default value.
         gui = ApplicationGUI()
         gui.defaults = {
-            app.DONT_UNRECONCILE_PREFERENCE: 42,
+            app.AHEAD_MONTHS_PREFERENCE: '6',
         }
         self.app = Application(gui)
         self.create_instances()
-        assert self.app.dont_unreconcile
+        eq_(self.app.ahead_months, 6)
     
     def test_can_use_another_amount_format(self):
         self.app = Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' ')
@@ -93,7 +91,6 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         self.app.ahead_months = 5
         self.app.year_start_month = 4
         self.app.autosave_interval = 8
-        self.app.dont_unreconcile = True
         self.document.close()
         newapp = Application(self.app_gui)
         newdoc = Document(self.document_gui, newapp)
@@ -102,7 +99,6 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         eq_(newapp.ahead_months, 5)
         eq_(newapp.year_start_month, 4)
         eq_(newapp.autosave_interval, 8)
-        assert newapp.dont_unreconcile
     
     def test_date_range(self):
         """By default, the date range is a yearly range for today"""

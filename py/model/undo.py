@@ -44,7 +44,6 @@ class Action(object):
         self.added_budgets = set()
         self.changed_budgets = set()
         self.deleted_budgets = set()
-        self.will_unreconcile = set() # unused in Undoer, but it's a placeholder for Document._perform_action()
     
     def change_accounts(self, accounts):
         self.changed_accounts |= set((a, copy.copy(a)) for a in accounts)
