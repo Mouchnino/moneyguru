@@ -198,8 +198,8 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
         self.etable.select([0, 2])
         self.etable.toggle_reconciled() # Both reconciled now
         self.etable.toggle_reconciled()
-        assert not self.etable[0].reconciled
-        assert not self.etable[2].reconciled
+        assert not self.etable[0].reconciliation_pending
+        assert not self.etable[2].reconciliation_pending
     
     def test_toggle_entries_reconciled_with_some_reconciled(self):
         # When some of the selected entries are reconciled, all selected entries get reconciled
