@@ -241,13 +241,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="dereconciliationWarningCheckBox">
-     <property name="text">
-      <string>Never trigger de-reconciliation warnings</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

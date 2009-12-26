@@ -17,7 +17,6 @@ from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 from moneyguru.exception import FileFormatError
 from moneyguru.document import Document as DocumentModel
 
-from controller.reconciliation_warning_dialog import ReconciliationWarningDialog
 from controller.schedule_scope_dialog import ScheduleScopeDialog
 
 class Document(QObject):
@@ -129,10 +128,6 @@ class Document(QObject):
                 self.documentSavedAs.emit(docpath)
     
     # model --> view
-    def confirm_unreconciliation(self, affectedSplitCount):
-        dialog = ReconciliationWarningDialog(affectedSplitCount, self.app.mainWindow)
-        return dialog.askForResolution()
-    
     def query_for_schedule_scope(self):
         if QApplication.keyboardModifiers() & Qt.ShiftModifier:
             return True
