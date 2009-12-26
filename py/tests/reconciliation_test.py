@@ -72,37 +72,37 @@ class OneEntryWithAmountInReconciliationMode(TestCase, CommonSetup):
         assert not self.etable[0].can_reconcile()
     
     def test_reconcile(self):
-        """The entry's reconciled state can be written and read"""
-        self.assertFalse(self.etable[0].reconciled)
+        # The entry's reconciled state can be written and read.
+        assert not self.etable[0].reconciled
         row = self.etable.selected_row
         row.toggle_reconciled()
-        self.assertTrue(self.etable[0].reconciliation_pending)
+        assert self.etable[0].reconciliation_pending
     
     def test_reconciling_sets_dirty_flag(self):
-        """Reconciling an entry sets the dirty flag"""
+        # Reconciling an entry sets the dirty flag.
         self.save_file()
         row = self.etable.selected_row
         row.toggle_reconciled()
-        self.assertTrue(self.document.is_dirty())
+        assert self.document.is_dirty()
     
     def test_reconciliation_balance(self):
-        """Unreconcilied entries return a None balance, and reconciled entries return a 
-        reconciliation balance"""
-        self.assertEqual(self.etable[0].balance, '')
+        # Unreconcilied entries return a None balance, and reconciled entries return a 
+        # reconciliation balance
+        eq_(self.etable[0].balance, '')
         row = self.etable.selected_row
         row.toggle_reconciled()
-        self.assertEqual(self.etable[0].balance, '-42.00')
+        eq_(self.etable[0].balance, '-42.00')
     
     def test_toggle_entries_reconciled_balance(self):
-        """Balance is cooked when toggling reconciliation"""
+        # Balance is cooked when toggling reconciliation.
         self.etable.toggle_reconciled()
-        self.assertEqual(self.etable[0].balance, '-42.00')
+        eq_(self.etable[0].balance, '-42.00')
     
     def test_toggle_entries_reconciled_sets_dirty_flag(self):
-        """Toggling reconciliation sets the dirty flag"""
+        # Toggling reconciliation sets the dirty flag.
         self.save_file()
         self.etable.toggle_reconciled()
-        self.assertTrue(self.document.is_dirty())
+        assert self.document.is_dirty()
     
 
 class OneEntryInTheFuture(TestCase):
@@ -135,16 +135,6 @@ class OneEntryInLiability(TestCase):
         # The balance of the entry is empty.
         # Previously, it would crash because it would try to negate None
         eq_(self.etable[0].balance, '')
-    
-
-class TwoEntries(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry(increase='42')
-        self.add_entry(increase='21')
-        self.document.toggle_reconciliation_mode()
     
 
 class ThreeEntries(TestCase, CommonSetup):
