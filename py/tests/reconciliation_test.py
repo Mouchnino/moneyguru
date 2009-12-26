@@ -180,33 +180,32 @@ class ThreeEntries(TestCase, CommonSetup):
     
 
 class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
+    # 3 entries, in reconciliation mode, with the entry at index 1 having its reconciliation pending.
     def setUp(self):
         self.create_instances()
         self.setup_three_entries_reconciliation_mode()
         self.setup_reconcile_second_entry()
     
-    def test_toggle_entries_reconciled_with_non_reconciled(self):
-        """When none of the selected entries are reconciled, all selected entries get reconciled"""
+    def test_toggle_entries_reconciled_with_none_reconciled(self):
+        # When none of the selected entries are reconciled, all selected entries get reconciled.
         self.etable.select([0, 2])
         self.etable.toggle_reconciled()
-        self.assertTrue(self.etable[0].reconciliation_pending)
-        self.assertTrue(self.etable[2].reconciliation_pending)
+        assert self.etable[0].reconciliation_pending
+        assert self.etable[2].reconciliation_pending
     
     def test_toggle_entries_reconciled_with_all_reconciled(self):
-        """When all of the selected entries are reconciled, all selected entries get un-reconciled"""
+        # When all of the selected entries are reconciled, all selected entries get de-reconciled
         self.etable.select([0, 2])
         self.etable.toggle_reconciled() # Both reconciled now
         self.etable.toggle_reconciled()
-        self.assertFalse(self.etable[0].reconciled)
-        self.assertFalse(self.etable[2].reconciled)
+        assert not self.etable[0].reconciled
+        assert not self.etable[2].reconciled
     
     def test_toggle_entries_reconciled_with_some_reconciled(self):
-        """When some of the selected entries are reconciled, all selected entries get reconciled"""
-        self.etable.select([2])
-        row = self.etable.selected_row
-        row.toggle_reconciled()
-        self.etable.select([0, 2])
+        # When some of the selected entries are reconciled, all selected entries get reconciled
+        self.etable.select([0, 1, 2]) # entry at index 1 is pending reconciliation
         self.etable.toggle_reconciled()
-        self.assertTrue(self.etable[0].reconciliation_pending)
-        self.assertTrue(self.etable[2].reconciliation_pending)
+        assert self.etable[0].reconciliation_pending
+        assert self.etable[1].reconciliation_pending
+        assert self.etable[2].reconciliation_pending
     
