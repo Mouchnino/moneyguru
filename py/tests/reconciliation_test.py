@@ -45,7 +45,22 @@ class Pristine(TestCase):
 class OneEntry(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_one_entry()
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry('11/07/2008', decrease='42')
+    
+    def test_initial_attrs(self):
+        # initially, an entry is not reconciled
+        assert not self.etable[0].reconciliation_pending
+        assert not self.etable[0].reconciled
+        eq_(self.etable[0].reconciliation_date, '')
+    
+    def test_set_reconciliation_date(self):
+        # It's possible to set any date as a reconciliation date (even when not in reconciliation
+        # mode).
+        self.etable[0].reconciliation_date = '12/07/2008'
+        self.etable.save_edits()
+        eq_(self.etable[0].reconciliation_date, '12/07/2008')
     
     def test_toggle_entries_reconciled(self):
         # When reconciliation mode is off, doesn't do anything.
@@ -54,35 +69,36 @@ class OneEntry(TestCase, CommonSetup):
         assert not self.etable[0].reconciled
     
 
-class OneEntryWithAmountInReconciliationMode(TestCase, CommonSetup):
+class OneEntryInReconciliationMode(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.setup_one_entry()
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry('11/07/2008', decrease='42')
         self.document.toggle_reconciliation_mode()
     
     def test_can_reconcile_entry(self):
         # An entry today is reconciliable.
+        assert not self.etable[0].reconciled
         assert self.etable[0].can_reconcile()
     
-    def test_can_reconcile_previous_balance_entry(self):
+    def test_cant_reconcile_previous_balance_entry(self):
         # It's not possible to reconcile a previous balance entry.
         self.document.select_next_date_range()
         # The first entry is not a "Previous Balance" entry
         assert not self.etable[0].can_reconcile()
     
-    def test_reconcile(self):
-        # The entry's reconciled state can be written and read.
-        assert not self.etable[0].reconciled
-        row = self.etable.selected_row
-        row.toggle_reconciled()
-        assert self.etable[0].reconciliation_pending
+    def test_commit_reconciliation(self):
+        # committing reconciliation sets the entry's reconciliation date to the txn's date
+        self.etable.selected_row.toggle_reconciled()
+        self.document.toggle_reconciliation_mode()
+        assert self.etable[0].reconciled
+        eq_(self.etable[0].reconciliation_date, '11/07/2008')
     
     def test_reconciling_sets_dirty_flag(self):
         # Reconciling an entry sets the dirty flag.
         self.save_file()
-        row = self.etable.selected_row
-        row.toggle_reconciled()
+        self.etable.selected_row.toggle_reconciled()
         assert self.document.is_dirty()
     
     def test_reconciliation_balance(self):
@@ -93,9 +109,11 @@ class OneEntryWithAmountInReconciliationMode(TestCase, CommonSetup):
         row.toggle_reconciled()
         eq_(self.etable[0].balance, '-42.00')
     
-    def test_toggle_entries_reconciled_balance(self):
-        # Balance is cooked when toggling reconciliation.
-        self.etable.toggle_reconciled()
+    def test_toggle_reconciled(self):
+        # calling toggle_reconciled() on a row toggles reconciliation_pending and shows a
+        # reconciliation balance.
+        self.etable.selected_row.toggle_reconciled()
+        assert self.etable[0].reconciliation_pending
         eq_(self.etable[0].balance, '-42.00')
     
     def test_toggle_entries_reconciled_sets_dirty_flag(self):

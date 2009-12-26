@@ -219,21 +219,34 @@ class Transaction(object):
     
 
 class Split(object):
-    def __init__(self, transaction, account, amount, memo='', reconciled=False):
+    def __init__(self, transaction, account, amount):
         self.transaction = transaction
         self.account = account
-        self.memo = memo
+        self.memo = ''
         self.amount = amount
-        self.reconciled = reconciled
+        self.reconciliation_date = None
         self.reconciliation_pending = False
         self.reference = None
-
+    
     def __repr__(self):
-        return '<Split %r %s>' % (self.account.name if self.account else None, self.amount)
+        return '<Split %r %s>' % (self.account_name, self.amount)
     
     @property
     def account_name(self):
         return self.account.name if self.account is not None else ''
+    
+    @property
+    def reconciled(self):
+        return self.reconciliation_date is not None
+    
+    @reconciled.setter
+    def reconciled(self, value):
+        if value == self.reconciled:
+            return
+        if value:
+            self.reconciliation_date = self.transaction.date
+        else:
+            self.reconciliation_date = None
     
 
 class Entry(object):
@@ -293,6 +306,10 @@ class Entry(object):
     @property
     def reconciled(self):
         return self.split.reconciled
+    
+    @property
+    def reconciliation_date(self):
+        return self.split.reconciliation_date
     
     @property
     def reconciliation_pending(self):

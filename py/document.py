@@ -162,6 +162,7 @@ class Document(Broadcaster, Listener):
         splits = [split for split in splits if split.reconciliation_pending]
         for split in splits:
             split.reconciled = True
+            split.reconciliation_date = split.transaction.date
             split.reconciliation_pending = False
         spawns = set(s.transaction for s in splits if isinstance(s.transaction, Spawn))
         for spawn in spawns:
@@ -574,13 +575,11 @@ class Document(Broadcaster, Listener):
         return self._visible_unfiltered_transaction_count
     
     #--- Entry
-    def change_entry(self, entry, date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT, 
-                     transfer=NOEDIT, amount=NOEDIT):
+    def change_entry(self, entry, date=NOEDIT, reconciliation_date=NOEDIT, description=NOEDIT, 
+            payee=NOEDIT, checkno=NOEDIT, transfer=NOEDIT, amount=NOEDIT):
         assert entry is not None
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             Currency.get_rates_db().ensure_rates(date, [amount.currency.code, entry.account.currency.code])
-        date_changed = date is not NOEDIT and date != entry.date
-        amount_changed = amount is not NOEDIT and amount != entry.amount
         transfer_changed = len(entry.splits) == 1 and transfer is not NOEDIT and transfer != entry.transfer
         
         def prepare():
@@ -598,8 +597,10 @@ class Document(Broadcaster, Listener):
                     auto_create_type = EXPENSE if entry.split.amount < 0 else INCOME
                     transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
                     entry.splits[0].account = transfer_account
+            if reconciliation_date is not NOEDIT:
+                entry.split.reconciliation_date = reconciliation_date
             self._change_transaction(entry.transaction, date=date, description=description, 
-                                     payee=payee, checkno=checkno)
+                payee=payee, checkno=checkno)
             self._cook(from_date=min_date)
             self._clean_empty_categories()
             if not self._adjust_date_range(entry.date):

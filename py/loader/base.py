@@ -187,7 +187,9 @@ class Loader(object):
                     amount = -amount
                 memo = nonone(split_info.memo, '')
                 reconciled = split_info.reconciled
-                split = Split(transaction, account, amount, memo=memo, reconciled=reconciled)
+                split = Split(transaction, account, amount)
+                split.memo = memo
+                split.reconciled = reconciled
                 split.reference = split_info.reference
                 transaction.splits.append(split)
             transaction.balance()

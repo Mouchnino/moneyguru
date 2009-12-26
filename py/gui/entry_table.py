@@ -226,6 +226,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         self._balance = 0
         self._reconciled_balance = 0
         self._reconciled = False
+        self._reconciliation_date = None
         self._reconciliation_pending = False
         self._recurrent = False
         self._is_budget = False
@@ -285,6 +286,13 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     @property
     def reconciled(self):
         return self._reconciled
+    
+    @property
+    def reconciliation_date(self):
+        if self._reconciliation_date is not None:
+            return self.table.document.app.format_date(self._reconciliation_date)
+        else:
+            return ''
     
     @property
     def reconciliation_pending(self):
@@ -354,14 +362,16 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self._balance = entry.balance_with_budget
         self._reconciled_balance = entry.reconciled_balance if entry.reconciled or entry.reconciliation_pending else None
         self._reconciled = entry.reconciled
+        self._reconciliation_date = entry.reconciliation_date
         self._reconciliation_pending = entry.reconciliation_pending
         self._recurrent = isinstance(entry.transaction, Spawn)
         self._is_budget = getattr(entry.transaction, 'is_budget', False)
     
     def save(self):
         change = self.table.document.change_entry
-        change(self.entry, date=self._date, description=self._description, payee=self._payee, 
-               checkno=self._checkno, transfer=self._transfer, amount=self._amount)
+        change(self.entry, date=self._date, reconciliation_date=self._reconciliation_date, 
+            description=self._description, payee=self._payee, checkno=self._checkno,
+            transfer=self._transfer, amount=self._amount)
         self.load()
     
     def toggle_reconciled(self):
@@ -371,6 +381,14 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self.table.toggle_reconciled()
     
     #--- Properties
+    @BaseEntryTableRow.reconciliation_date.setter
+    def reconciliation_date(self, value):
+        parsed = self.table.document.app.parse_date(value)
+        if parsed == self._reconciliation_date:
+            return
+        self._edit()
+        self._reconciliation_date = parsed
+    
     description = rowattr('_description', 'description')
     payee = rowattr('_payee', 'payee')
     checkno = rowattr('_checkno')
@@ -378,7 +396,6 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @property
     def can_edit_transfer(self):
         return len(self.entry.splits) == 1
-    
     
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
