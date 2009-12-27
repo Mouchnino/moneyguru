@@ -56,7 +56,7 @@ class NativeLoader(TestCase):
 
     def test_account_and_entry_values(self):
         """Make sure loaded values are correct"""
-        self.loader.parse(self.filepath('xml', 'moneyguru.xml'))
+        self.loader.parse(self.filepath('moneyguru', 'simple.moneyguru'))
         self.loader.load()
         accounts = self.loader.accounts
         self.assertEqual(len(accounts), 3)

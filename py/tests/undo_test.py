@@ -326,12 +326,12 @@ class AccountInGroup(TestCase):
     
 
 class LoadFile(TestCase):
-    """Loads 'moneyguru.xml', a file with 2 accounts and 2 entries in each. Select the first entry"""
+    # Loads 'simple.moneyguru', a file with 2 accounts and 2 entries in each. Select the first entry.
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
         # we have to cheat here because the first save state is articifially
         # different than the second save state because the second state has
         # the currency rates fetched. So what we do here is wait a little bit

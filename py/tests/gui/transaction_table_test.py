@@ -726,7 +726,7 @@ class LoadFile(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
         self.mainwindow.select_transaction_table()
     
     def test_add_txn(self):

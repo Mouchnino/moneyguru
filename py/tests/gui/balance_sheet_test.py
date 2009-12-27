@@ -542,7 +542,7 @@ class LoadFileBeforeCreatingInstances(TestCase):
         self.app = Application(ApplicationGUI())
         self.document = Document(DocumentGUI(), self.app)
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('xml/moneyguru.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
         self.create_instances()
     
     def test_refresh_on_connect(self):

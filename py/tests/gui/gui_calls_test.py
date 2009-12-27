@@ -87,7 +87,7 @@ class LoadFileWithBalanceSheetSelected(TestCase):
         self.create_instances()
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
     
     def test_views_are_refreshed(self):
         # view.refresh() is called on file load

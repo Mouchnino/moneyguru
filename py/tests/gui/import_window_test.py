@@ -222,7 +222,7 @@ class ImportMoneyguruFileWithExpenseAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2008, 1, 1))
-        self.document.parse_file_for_import(self.filepath('xml/moneyguru.xml'))
+        self.document.parse_file_for_import(self.filepath('moneyguru', 'simple.moneyguru'))
     
     def test_account_panes(self):
         # There are only 2 account panes (one for each asset account). the expense account is not there

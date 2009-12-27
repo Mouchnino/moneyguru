@@ -48,8 +48,8 @@ class Pristine(TestCase):
         self.assertRaises(FileFormatError, self.document.parse_file_for_import, filename)
     
     def test_import_moneyguru_file(self):
-        """Importing a moneyguru file works"""
-        self.importall(self.filepath('xml', 'moneyguru.xml'))
+        # Importing a moneyguru file works.
+        self.importall(self.filepath('moneyguru', 'simple.moneyguru'))
         # 2 assets, 1 expense
         self.assertEqual(self.bsheet.assets.children_count, 4)
         self.mainwindow.select_income_statement()
@@ -297,12 +297,12 @@ class ImportAccountInGroup(TestCase):
     
 
 class LoadFile(TestCase):
-    """Loads 'moneyguru.xml', a file with 2 accounts and 2 entries in each. Select the first entry"""
+    # Loads 'simple.moneyguru', a file with 2 accounts and 2 entries in each. Select the first entry.
     def setUp(self):
         self.mock_today(2008, 2, 20) # so that the entries are shown
         self.create_instances()
-        self.add_account_legacy() # This is to set the modified flag to true so we can make sure it has been put back to false
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
+        self.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -378,11 +378,11 @@ class LoadFile(TestCase):
     
 
 class LoadMultiCurrency(TestCase):
-    """Loads 'moneyguru2.xml', a file with 2 accounts and a multi-currency transaction."""
+    # Loads 'multi_currency.moneyguru', a file with 2 accounts and a multi-currency transaction.
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru2.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'multi_currency.moneyguru'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -442,21 +442,21 @@ class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase, TestSaveLoadMixin,
     
 
 class LoadTwice(TestCase, TestSaveLoadMixin):
-    """Loads 'moneyguru.xml' twice. Mixed in with TestSaveLoadMixin to make sure that loading 
-    completely wipes out previous transactions (If it doesn't, old transaction end up in the save 
-    file, making them being re-added to the account in the next load)."""
+    # Loads 'simple.moneyguru' twice. Mixed in with TestSaveLoadMixin to make sure that loading 
+    # completely wipes out previous transactions (If it doesn't, old transaction end up in the save 
+    # file, making them being re-added to the account in the next load).
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
     
 
 class InvalidAccountType(TestCase):
-    """Loads 'moneyguru_invalid_account_type.xml' which contains a single account with an invalid type."""
+    #Loads 'invalid_account_type.moneyguru' which contains a single account with an invalid type.
     def setUp(self):
         self.create_instances()
-        self.document.load_from_xml(self.filepath('xml', 'moneyguru_invalid_account_type.xml'))
+        self.document.load_from_xml(self.filepath('moneyguru', 'invalid_account_type.moneyguru'))
     
     def test_account_type(self):
         """The account with the invalid type is imported as an asset account."""
@@ -516,7 +516,7 @@ class LoadImportWithTransactionInTheFuture(TestCase):
     def setUp(self):
         self.mock_today(2008, 2, 1) # before any txn date
         self.create_instances()
-        self.document.parse_file_for_import(unicode(self.filepath('xml/moneyguru.xml')))
+        self.document.parse_file_for_import(unicode(self.filepath('moneyguru', 'simple.moneyguru')))
     
     def test_transactions_show_up(self):
         # even when there are txns in the future, they show up in the import panel
