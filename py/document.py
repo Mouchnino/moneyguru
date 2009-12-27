@@ -161,7 +161,6 @@ class Document(Broadcaster, Listener):
         splits = flatten(t.splits for t in self.oven.transactions)
         splits = [split for split in splits if split.reconciliation_pending]
         for split in splits:
-            split.reconciled = True
             split.reconciliation_date = split.transaction.date
             split.reconciliation_pending = False
         spawns = set(s.transaction for s in splits if isinstance(s.transaction, Spawn))
@@ -458,7 +457,7 @@ class Document(Broadcaster, Listener):
                 split.account = self.accounts.find(split.account.name, split.account.type)
             if hasattr(split, 'original'):
                 if split.original.amount != split.amount or split.original.account is not split.account:
-                    split.reconciled = False
+                    split.reconciliation_date = None
                     split.transaction = split.original.transaction
                 del split.original
         self._undoer.record(action)
@@ -639,7 +638,7 @@ class Document(Broadcaster, Listener):
             # We have to take care of it (but this only unreconciles selected entries, rather
             # than all those that follow selected entries).
             for entry in reconciled_entries:
-                entry.split.reconciled = False
+                entry.split.reconciliation_date = None
         self._cook(from_date=min_date)
         self.notify('transaction_changed')
     
@@ -925,7 +924,8 @@ class Document(Broadcaster, Listener):
                 attrib['memo'] = split.memo
                 if split.reference is not None:
                     attrib['reference'] = split.reference
-                attrib['reconciled'] = 'y' if split.reconciled else 'n'
+                if split.reconciliation_date is not None:
+                    attrib['reconciliation_date'] = date2str(split.reconciliation_date)
         
         if not autosave:
             self.stop_edition()
@@ -1092,9 +1092,8 @@ class Document(Broadcaster, Listener):
         action.change_splits(to_unreconcile)
         self._undoer.record(action)
         
-        # PERFORM
         for split in to_unreconcile:
-            split.reconciled = False
+            split.reconciliation_date = None
         for account in added_accounts:
             # we don't import groups, and we don't want them to mess our document
             account.group = None

@@ -189,3 +189,19 @@ class LoadImportWithTransactionInTheFuture(TestCase):
         # even when there are txns in the future, they show up in the import panel
         eq_(len(self.itable), 2)
     
+
+class LoadWithReferences1(TestCase):
+    # Loads 'with_references1.moneyguru' which also have boolean (y/n) reconciliation attributes.
+    def setUp(self):
+        self.mock_today(2008, 2, 1) # before any txn date
+        self.create_instances()
+        self.document.load_from_xml(self.filepath('moneyguru', 'with_references1.moneyguru'))
+    
+    def test_reconciliation(self):
+        # legacy boolean reconciliation was correctly loaded
+        self.bsheet.selected = self.bsheet.assets[0] # Account 1
+        self.document.show_selected_account()
+        # 2 entries, first is not reconciled, second is.
+        assert not self.etable[0].reconciled
+        assert self.etable[1].reconciled
+    

@@ -155,6 +155,26 @@ class OneEntryInLiability(TestCase):
         eq_(self.etable[0].balance, '')
     
 
+class OneEntryReconciledDifferentDate(TestCase):
+    # 1 entry, reconciled at a different date than its own date
+    def setUp(self):
+        self.mock_today(2008, 7, 1)
+        self.create_instances()
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry('11/07/2008', decrease='42')
+        self.etable[0].reconciliation_date = '12/07/2008'
+        self.etable.save_edits()
+    
+    def test_save_and_load(self):
+        # reconciliation date is correctly saved and loaded
+        self.document = self.save_and_load()
+        self.create_instances()
+        self.bsheet.selected = self.bsheet.assets[0]
+        self.document.show_selected_account()
+        eq_(self.etable[0].reconciliation_date, '12/07/2008')
+    
+
 class ThreeEntries(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()

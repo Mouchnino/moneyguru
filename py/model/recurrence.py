@@ -65,8 +65,9 @@ class Spawn(Transaction):
         self.recurrence = recurrence
         self.set_splits(ref.splits)
         for split in self.splits:
-            split.reconciled = False
+            split.reconciliation_date = None
     
+
 class Recurrence(object):
     def __init__(self, ref, repeat_type, repeat_every):
         if repeat_type not in RTYPE2INCFUNC:

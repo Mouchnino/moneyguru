@@ -239,15 +239,6 @@ class Split(object):
     def reconciled(self):
         return self.reconciliation_date is not None
     
-    @reconciled.setter
-    def reconciled(self, value):
-        if value == self.reconciled:
-            return
-        if value:
-            self.reconciliation_date = self.transaction.date
-        else:
-            self.reconciliation_date = None
-    
 
 class Entry(object):
     def __init__(self, split, amount, balance, reconciled_balance, balance_with_budget):

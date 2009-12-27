@@ -55,7 +55,10 @@ class Loader(base.Loader):
                 split_info.amount = split_element.attrib.get('amount')
                 split_info.memo = split_element.attrib.get('memo')
                 split_info.reference = split_element.attrib.get('reference')
-                split_info.reconciled = split_element.attrib.get('reconciled') == 'y'
+                if 'reconciled' in split_element.attrib: # legacy
+                    split_info.reconciled = split_element.attrib['reconciled'] == 'y'
+                if 'reconciliation_date' in split_element.attrib:
+                    split_info.reconciliation_date = str2date(split_element.attrib['reconciliation_date'])
                 info.splits.append(split_info)
             return info
         

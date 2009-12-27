@@ -186,10 +186,12 @@ class Loader(object):
                 if split_info.amount_reversed:
                     amount = -amount
                 memo = nonone(split_info.memo, '')
-                reconciled = split_info.reconciled
                 split = Split(transaction, account, amount)
                 split.memo = memo
-                split.reconciled = reconciled
+                if split_info.reconciliation_date is not None:
+                    split.reconciliation_date = split_info.reconciliation_date                    
+                elif split_info.reconciled: # legacy
+                    split.reconciliation_date = transaction.date
                 split.reference = split_info.reference
                 transaction.splits.append(split)
             transaction.balance()
@@ -344,6 +346,7 @@ class SplitInfo(object):
         self.currency = currency
         self.memo = None
         self.reconciled = False
+        self.reconciliation_date = None
         self.reference = None
         self.amount_reversed = amount_reversed
     
