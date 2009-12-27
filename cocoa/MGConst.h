@@ -58,6 +58,7 @@ http://www.hardcoded.net/licenses/hs_license
 #define AccountDescriptionColumnVisible @"AccountDescriptionColumnVisible"
 #define AccountPayeeColumnVisible @"AccountPayeeColumnVisible"
 #define AccountChecknoColumnVisible @"AccountChecknoColumnVisible"
+#define AccountReconciliationDateColumnVisible @"AccountReconciliationDateColumnVisible"
 #define AccountGraphVisible @"AccountGraphVisible"
 #define ScheduleDescriptionColumnVisible @"ScheduleDescriptionColumnVisible"
 #define SchedulePayeeColumnVisible @"SchedulePayeeColumnVisible"

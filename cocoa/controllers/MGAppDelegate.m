@@ -44,6 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
     [d setObject:b2n(YES) forKey:AccountDescriptionColumnVisible];
     [d setObject:b2n(NO) forKey:AccountPayeeColumnVisible];
     [d setObject:b2n(NO) forKey:AccountChecknoColumnVisible];
+    [d setObject:b2n(NO) forKey:AccountReconciliationDateColumnVisible];
     [d setObject:b2n(YES) forKey:AccountGraphVisible];
     [d setObject:b2n(YES) forKey:ScheduleDescriptionColumnVisible];
     [d setObject:b2n(NO) forKey:SchedulePayeeColumnVisible];

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -56,13 +56,13 @@
 									<object class="NSTableView" id="558485539">
 										<reference key="NSNextResponder" ref="366367301"/>
 										<int key="NSvFlags">4352</int>
-										<string key="NSFrameSize">{924, 244}</string>
+										<string key="NSFrameSize">{1037, 244}</string>
 										<reference key="NSSuperview" ref="366367301"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTableHeaderView" key="NSHeaderView" id="500729335">
 											<reference key="NSNextResponder" ref="337770899"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{924, 17}</string>
+											<string key="NSFrameSize">{1037, 17}</string>
 											<reference key="NSSuperview" ref="337770899"/>
 											<reference key="NSTableView" ref="558485539"/>
 										</object>
@@ -171,6 +171,33 @@
 														<string key="NSColorName">controlTextColor</string>
 														<reference key="NSColor" ref="369310141"/>
 													</object>
+												</object>
+												<int key="NSResizingMask">2</int>
+												<bool key="NSIsResizeable">YES</bool>
+												<bool key="NSIsEditable">YES</bool>
+												<reference key="NSTableView" ref="558485539"/>
+											</object>
+											<object class="NSTableColumn" id="38134342">
+												<string key="NSIdentifier">reconciliation_date</string>
+												<double key="NSWidth">110</double>
+												<double key="NSMinWidth">10</double>
+												<double key="NSMaxWidth">3.4028234663852886e+38</double>
+												<object class="NSTableHeaderCell" key="NSHeaderCell">
+													<int key="NSCellFlags">75628096</int>
+													<int key="NSCellFlags2">2048</int>
+													<string key="NSContents">Reconciliation Date</string>
+													<reference key="NSSupport" ref="26"/>
+													<reference key="NSBackgroundColor" ref="930174830"/>
+													<reference key="NSTextColor" ref="405612679"/>
+												</object>
+												<object class="NSTextFieldCell" key="NSDataCell" id="559259276">
+													<int key="NSCellFlags">337772096</int>
+													<int key="NSCellFlags2">133120</int>
+													<string key="NSContents">Text Cell</string>
+													<reference key="NSSupport" ref="26"/>
+													<reference key="NSControlView" ref="558485539"/>
+													<reference key="NSBackgroundColor" ref="478832766"/>
+													<reference key="NSTextColor" ref="692949191"/>
 												</object>
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
@@ -417,7 +444,7 @@
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="208941840"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSPercent">0.72510822510822515</double>
+								<double key="NSPercent">0.64609450337512053</double>
 							</object>
 							<object class="NSClipView" id="337770899">
 								<reference key="NSNextResponder" ref="208941840"/>
@@ -782,6 +809,7 @@
 							<reference ref="1030465516"/>
 							<reference ref="138057658"/>
 							<reference ref="491414851"/>
+							<reference ref="38134342"/>
 						</object>
 						<reference key="parent" ref="208941840"/>
 					</object>
@@ -959,6 +987,20 @@
 						<reference key="object" ref="341655984"/>
 						<reference key="parent" ref="339498769"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">54</int>
+						<reference key="object" ref="38134342"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="559259276"/>
+						</object>
+						<reference key="parent" ref="558485539"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="559259276"/>
+						<reference key="parent" ref="38134342"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1118,7 +1160,7 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">53</int>
+			<int key="maxID">55</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

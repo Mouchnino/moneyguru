@@ -24,6 +24,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"description" toUserDefault:AccountDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:AccountPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:AccountChecknoColumnVisible];
+    [columnsManager linkColumn:@"reconciliation_date" toUserDefault:AccountReconciliationDateColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:YES];
@@ -235,7 +236,7 @@ http://www.hardcoded.net/licenses/hs_license
         {
             NSTableColumn *column = [[tableView tableColumns] objectAtIndex:editedColumn];
             NSString *name = [column identifier];
-            isDate = [name isEqualTo:@"date"];
+            isDate = [name isEqualTo:@"date"] || [name isEqualTo:@"reconciliation_date"];
         }
         return isDate ? (id)customDateFieldEditor : (id)customFieldEditor;
     }
