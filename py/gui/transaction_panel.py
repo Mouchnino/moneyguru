@@ -79,7 +79,7 @@ class TransactionPanel(PanelWithTransaction):
         if original is None:
             raise OperationAborted()
         self.document.stop_edition()
-        self.transaction = original.replicate(link_splits=True)
+        self.transaction = original.replicate()
         self.original = original
         self.view.refresh_mct_button()
         self.notify('panel_loaded')

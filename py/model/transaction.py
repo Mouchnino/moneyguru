@@ -34,7 +34,7 @@ class Transaction(object):
         return '<%s %r %r>' % (self.__class__.__name__, self.date, self.description)
     
     @classmethod
-    def from_transaction(cls, transaction, link_splits=False):
+    def from_transaction(cls, transaction):
         # The goal here is to have a deepcopy of self, but *without copying the accounts*. We want
         # the splits to link to the same account instances.
         txn = transaction
@@ -44,8 +44,6 @@ class Transaction(object):
         for split in txn.splits:
             newsplit = copy(split)
             newsplit.transaction = result
-            if link_splits:
-                newsplit.original = split
             result.splits.append(newsplit)
         return result
     
@@ -178,8 +176,8 @@ class Transaction(object):
         if converted_total != 0:
             self.splits.append(Split(self, None, -converted_total))
     
-    def replicate(self, link_splits=False):
-        return Transaction.from_transaction(self, link_splits=link_splits)
+    def replicate(self):
+        return Transaction.from_transaction(self)
     
     def set_splits(self, splits):
         self.splits = []

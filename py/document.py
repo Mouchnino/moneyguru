@@ -447,23 +447,15 @@ class Document(Broadcaster, Listener):
         date_changed = new.date != original.date
         action = Action('Change transaction')
         action.change_transactions([original])
-        # Here, we don't just look for splits to unreconcile, we prepare the splits as well
-        original_splits = set(s.original for s in new.splits if hasattr(s, 'original'))
-        deleted_splits = set(original.splits) - original_splits
-        for split in new.splits:
-            if split.account is not None:
-                # don't forget that account up here is an external instance. Even if an account of
-                # the same name exists in self.accounts, it's not gonna be the same instance.
-                split.account = self.accounts.find(split.account.name, split.account.type)
-            if hasattr(split, 'original'):
-                if split.original.amount != split.amount or split.original.account is not split.account:
-                    split.reconciliation_date = None
-                    split.transaction = split.original.transaction
-                del split.original
         self._undoer.record(action)
         
-        min_date = min(original.date, new.date)
+        # don't forget that account up here is an external instance. Even if an account of
+        # the same name exists in self.accounts, it's not gonna be the same instance.
+        for split in new.splits:
+            if split.account is not None:
+                split.account = self.accounts.find(split.account.name, split.account.type)
         original.set_splits(new.splits)
+        min_date = min(original.date, new.date)
         self._change_transaction(original, date=new.date, description=new.description,
             payee=new.payee, checkno=new.checkno)
         self._cook(from_date=min_date)
@@ -628,17 +620,9 @@ class Document(Broadcaster, Listener):
         self._undoer.record(action)
         
         min_date = datetime.date.max
-        if entries:
-            for entry in entries:
-                entry.split.reconciliation_pending = newvalue
-                min_date = min(min_date, entry.date)
-        else: 
-            # a reconciled entry has been unreconciled, and the user chose "Continue, but don't 
-            # unreconcile", which means that _perform_action() didn't take care of unreconciliation
-            # We have to take care of it (but this only unreconciles selected entries, rather
-            # than all those that follow selected entries).
-            for entry in reconciled_entries:
-                entry.split.reconciliation_date = None
+        for entry in entries:
+            entry.split.reconciliation_pending = newvalue
+            min_date = min(min_date, entry.date)
         self._cook(from_date=min_date)
         self.notify('transaction_changed')
     
