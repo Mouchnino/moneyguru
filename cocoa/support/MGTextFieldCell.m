@@ -17,7 +17,6 @@ http://www.hardcoded.net/licenses/hs_license
 #define BUTTON_PADDING 4.0
 
 @implementation MGTextFieldCell
-
 /* Private */
 - (NSRect)textRectForBounds:(NSRect)bounds
 {
@@ -56,20 +55,6 @@ http://www.hardcoded.net/licenses/hs_license
     float offsetY = (NSHeight(bounds) - 1.0 - BUTTON_HEIGHT) / 2.0;
     float offsetX = BUTTON_WIDTH + BUTTON_PADDING;
     return NSMakeRect(maxX - offsetX, NSMinY(bounds) + offsetY, BUTTON_WIDTH, BUTTON_HEIGHT);
-}
-
-- (BOOL)mouseEvent:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView hitRect:(NSRect)targetRect
-{
-    NSPoint point = [controlView convertPoint:[event locationInWindow] fromView:nil];
-    if (NSMouseInRect(point, targetRect, [controlView isFlipped]))
-    {
-        // We're in the target. Track until mouse is up.
-        NSEvent *mouseUpEvent = [[controlView window] nextEventMatchingMask:NSLeftMouseUpMask];
-        NSPoint mouseUpPoint = [controlView convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
-        // If YES, We're still on the target. Trigger the action.
-        return NSMouseInRect(mouseUpPoint, targetRect, [controlView isFlipped]);
-    }
-    return NO;
 }
 
 /* Public */
@@ -130,6 +115,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* NSCell */
 
++ (BOOL)prefersTrackingUntilMouseUp {
+    // We want to have trackMouse:inRect:ofView:untilMouseUp: always track until the mouse is up
+    return YES;
+}
+
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
     [super drawInteriorWithFrame:[self textRectForBounds:cellFrame] inView:controlView];
@@ -152,14 +142,29 @@ http://www.hardcoded.net/licenses/hs_license
     }    
 }
 
-// Yeah, this whole tracking business is very hacky
+- (NSUInteger)hitTestForEvent:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView
+{
+    NSPoint point = [controlView convertPoint:[event locationInWindow] fromView:nil];
+    if (hasArrow) {
+        NSRect arrowRect = [self arrowRectForBounds:cellFrame];
+        if (NSMouseInRect(point, arrowRect, [controlView isFlipped]))
+            return NSCellHitTrackableArea;
+    }
+    if (buttonImageName != nil) {
+        NSRect buttonRect = [self buttonRectForBounds:cellFrame];
+        if (NSMouseInRect(point, buttonRect, [controlView isFlipped]))
+            return NSCellHitTrackableArea;
+    }
+    return [super hitTestForEvent:event inRect:cellFrame ofView:controlView];
+}
 
 - (BOOL)trackMouse:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView untilMouseUp:(BOOL)untilMouseUp
 {
+    NSPoint point = [controlView convertPoint:[event locationInWindow] fromView:nil];
     if (hasArrow)
     {
         NSRect arrowRect = [self arrowRectForBounds:cellFrame];
-        if ([self mouseEvent:event inRect:cellFrame ofView:controlView hitRect:arrowRect])
+        if (NSPointInRect(point, arrowRect))
         {
             if ([arrowTarget respondsToSelector:arrowAction])
                 [arrowTarget performSelector:arrowAction withObject:controlView];
@@ -171,7 +176,7 @@ http://www.hardcoded.net/licenses/hs_license
     if (buttonImageName != nil)
     {
         NSRect buttonRect = [self buttonRectForBounds:cellFrame];
-        if ([self mouseEvent:event inRect:cellFrame ofView:controlView hitRect:buttonRect])
+        if (NSPointInRect(point, buttonRect))
         {
             if ([buttonTarget respondsToSelector:buttonAction])
                 [buttonTarget performSelector:buttonAction withObject:controlView];
