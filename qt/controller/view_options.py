@@ -38,6 +38,7 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
         'accDescriptionCheckBox': ('entryHiddenColumns', 'description'),
         'accPayeeCheckBox': ('entryHiddenColumns', 'payee'),
         'accChecknoCheckBox': ('entryHiddenColumns', 'checkno'),
+        'accReconciliationDateCheckBox': ('entryHiddenColumns', 'reconciliation_date'),
         'schDescriptionCheckBox': ('scheduleHiddenColumns', 'description'),
         'schPayeeCheckBox': ('scheduleHiddenColumns', 'payee'),
         'schChecknoCheckBox': ('scheduleHiddenColumns', 'checkno'),
