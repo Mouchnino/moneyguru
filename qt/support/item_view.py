@@ -30,7 +30,11 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         raise NotImplementedError()
     
     def _firstEditableIndex(self, originalIndex, columnIndexes=None):
-        # As a side effect, this method will change selection's currentIndex to the editableIndex
+        """Returns the first editable index in `originalIndex`'s row or None.
+        
+        If `columnIndexes` is not None, the scan for an editable index will be limited to these
+        columns.
+        """
         model = self.model()
         h = self._headerView()
         editedRow = originalIndex.row()
@@ -42,6 +46,8 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         return editableIndex
     
     def _previousEditableIndex(self, originalIndex):
+        """Returns the first editable index at the left of `originalIndex` or None.
+        """
         h = self._headerView()
         myCol = originalIndex.column()
         columnIndexes = [h.logicalIndex(i) for i in xrange(h.count())]
@@ -52,6 +58,8 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         return self._firstEditableIndex(originalIndex, columnIndexes)
     
     def _nextEditableIndex(self, originalIndex):
+        """Returns the first editable index at the right of `originalIndex` or None.
+        """
         h = self._headerView()
         myCol = originalIndex.column()
         columnIndexes = [h.logicalIndex(i) for i in xrange(h.count())]
@@ -61,7 +69,7 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
     
     def _handleCloseEditor(self, editor, hint, superMethod):
         # The problem we're trying to solve here is the edit-and-go-away problem. When ending the
-        # editing with submit or return, there's no problem, the model's submit()/revert() is
+        # editing with escape or return, there's no problem, the model's submit()/revert() is
         # correctly called. However, when ending editing by clicking away, submit() is never called.
         # Fortunately, closeEditor is called, and AFAIK, it's the only case where it's called with
         # NoHint (0). So, in these cases, we want to call model.submit()
@@ -69,7 +77,8 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             superMethod(self, editor, QAbstractItemDelegate.SubmitModelCache)
         
         # And here, what we're trying to solve is the problem with editing next/previous lines.
-        # If there are no more editable indexes, stop edition right there.
+        # If there are no more editable indexes, stop edition right there. Additionally, we are
+        # making tabbing step over non-editable cells
         elif hint in (QAbstractItemDelegate.EditNextItem, QAbstractItemDelegate.EditPreviousItem):
             if hint == QAbstractItemDelegate.EditNextItem:
                 editableIndex = self._nextEditableIndex(self.currentIndex())
