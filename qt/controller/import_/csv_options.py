@@ -11,7 +11,7 @@
 from PyQt4.QtCore import Qt, QAbstractTableModel
 from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog, QMessageBox
 
-from moneyguru.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER
+from core.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER
 from ui.csv_options_ui import Ui_CSVOptionsWindow
 
 NEW_LAYOUT = 'new_layout'

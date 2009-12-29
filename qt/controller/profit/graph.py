@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.profit_graph import ProfitGraph as ProfitGraphModel
+from core.gui.profit_graph import ProfitGraph as ProfitGraphModel
 
 from ..chart import Chart
 

@@ -11,7 +11,7 @@
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
-from moneyguru.gui.import_table import ImportTable as ImportTableModel
+from core.gui.import_table import ImportTable as ImportTableModel
 from ..column import Column
 from ..table import Table
 

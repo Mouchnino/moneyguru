@@ -13,7 +13,7 @@ from __future__ import division
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QPainter
 
-from moneyguru.gui.print_view import PrintView as PrintViewModel
+from core.gui.print_view import PrintView as PrintViewModel
 from .layout import LayoutPage, LayoutViewElement
 from .item_view import (ItemViewLayoutElement, ItemViewPrintStats, TablePrintDatasource,
     TreePrintDatasource)

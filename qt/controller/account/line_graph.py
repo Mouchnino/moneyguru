@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.balance_graph import BalanceGraph as BalanceGraphModel
+from core.gui.balance_graph import BalanceGraph as BalanceGraphModel
 
 from ..chart import Chart
 

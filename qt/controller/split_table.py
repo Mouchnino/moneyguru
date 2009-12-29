@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import Qt
 
-from moneyguru.gui.split_table import SplitTable as SplitTableModel
+from core.gui.split_table import SplitTable as SplitTableModel
 from .column import Column, ACCOUNT_EDIT
 from .table import Table
 

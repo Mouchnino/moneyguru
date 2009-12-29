@@ -10,7 +10,7 @@
 
 from PyQt4.QtGui import QDialog
 
-from moneyguru.gui.custom_date_range_panel import CustomDateRangePanel as CustomDateRangePanelModel
+from core.gui.custom_date_range_panel import CustomDateRangePanel as CustomDateRangePanelModel
 
 from .panel import Panel
 from ui.custom_date_range_panel_ui import Ui_CustomDateRangePanel

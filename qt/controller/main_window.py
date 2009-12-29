@@ -11,7 +11,7 @@
 from PyQt4.QtCore import Qt, QProcess
 from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QPrintDialog, QLabel, QFont
 
-from moneyguru.gui.main_window import MainWindow as MainWindowModel
+from core.gui.main_window import MainWindow as MainWindowModel
 
 from print_ import ViewPrinter
 from support.recent import Recent

@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.schedule_panel import SchedulePanel as SchedulePanelModel
+from core.gui.schedule_panel import SchedulePanel as SchedulePanelModel
 
 from .panel import Panel
 from .split_table import SplitTable

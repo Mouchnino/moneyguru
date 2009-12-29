@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import QObject
 
-from moneyguru.gui.search_field import SearchField as SearchFieldModel
+from core.gui.search_field import SearchField as SearchFieldModel
 
 class SearchField(QObject):
     def __init__(self, doc, view):

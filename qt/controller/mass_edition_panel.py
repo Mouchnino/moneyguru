@@ -10,7 +10,7 @@
 
 from hsutil.currency import Currency
 
-from moneyguru.gui.mass_edition_panel import MassEditionPanel as MassEditionPanelModel
+from core.gui.mass_edition_panel import MassEditionPanel as MassEditionPanelModel
 
 from .panel import Panel
 from ui.mass_edition_panel_ui import Ui_MassEditionPanel

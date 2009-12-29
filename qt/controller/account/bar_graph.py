@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.bar_graph import BarGraph as BarGraphModel
+from core.gui.bar_graph import BarGraph as BarGraphModel
 
 from ..chart import Chart
 

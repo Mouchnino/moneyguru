@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import Qt
 
-from moneyguru.gui.entry_table import EntryTable as EntryTableModel
+from core.gui.entry_table import EntryTable as EntryTableModel
 from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions
 

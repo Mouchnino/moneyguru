@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import Qt
 
-from moneyguru.gui.schedule_table import ScheduleTable as ScheduleTableModel
+from core.gui.schedule_table import ScheduleTable as ScheduleTableModel
 from ..column import Column
 from ..table import Table
 

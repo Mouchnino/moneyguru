@@ -14,8 +14,8 @@ import tempfile
 from PyQt4.QtCore import pyqtSignal, Qt, QObject, QFile
 from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
-from moneyguru.exception import FileFormatError
-from moneyguru.document import Document as DocumentModel
+from core.exception import FileFormatError
+from core.document import Document as DocumentModel
 
 from controller.schedule_scope_dialog import ScheduleScopeDialog
 

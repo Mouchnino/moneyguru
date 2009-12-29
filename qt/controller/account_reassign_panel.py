@@ -10,7 +10,7 @@
 
 from PyQt4.QtGui import QDialog
 
-from moneyguru.gui.account_reassign_panel import AccountReassignPanel as AccountReassignPanelModel
+from core.gui.account_reassign_panel import AccountReassignPanel as AccountReassignPanelModel
 
 from .panel import Panel
 from ui.account_reassign_panel_ui import Ui_AccountReassignPanel

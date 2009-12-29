@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.net_worth_graph import NetWorthGraph as NetWorthGraphModel
+from core.gui.net_worth_graph import NetWorthGraph as NetWorthGraphModel
 
 from ..chart import Chart
 

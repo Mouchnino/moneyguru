@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import Qt
 
-from moneyguru.gui.budget_table import BudgetTable as BudgetTableModel
+from core.gui.budget_table import BudgetTable as BudgetTableModel
 from ..column import Column
 from ..table import Table
 

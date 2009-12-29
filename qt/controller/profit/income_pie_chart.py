@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.gui.account_pie_chart import IncomePieChart as IncomePieChartModel
+from core.gui.account_pie_chart import IncomePieChart as IncomePieChartModel
 
 from ..chart import Chart
 

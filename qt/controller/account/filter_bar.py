@@ -8,9 +8,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from moneyguru.document import (FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, FILTER_TRANSFER,
+from core.document import (FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, FILTER_TRANSFER,
     FILTER_RECONCILED, FILTER_NOTRECONCILED)
-from moneyguru.gui.filter_bar import EntryFilterBar as EntryFilterBarModel
+from core.gui.filter_bar import EntryFilterBar as EntryFilterBarModel
 
 from ..filter_bar import FilterBar
 

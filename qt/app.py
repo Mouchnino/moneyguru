@@ -20,7 +20,7 @@ from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
 from qtlib.reg import Registration
 
-from moneyguru.app import Application as MoneyGuruModel
+from core.app import Application as MoneyGuruModel
 
 from controller.document import Document
 from controller.main_window import MainWindow

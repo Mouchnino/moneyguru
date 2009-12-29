@@ -11,7 +11,7 @@
 from PyQt4.QtCore import Qt, QTimer
 from PyQt4.QtGui import QLineEdit
 
-from moneyguru.gui.date_widget import DateWidget
+from core.gui.date_widget import DateWidget
 
 class DateEdit(QLineEdit):
     KEY2METHOD = {

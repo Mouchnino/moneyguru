@@ -10,7 +10,7 @@
 
 from hsutil.currency import Currency
 
-from moneyguru.gui.account_panel import AccountPanel as AccountPanelModel
+from core.gui.account_panel import AccountPanel as AccountPanelModel
 
 from .panel import Panel
 from ui.account_panel_ui import Ui_AccountPanel

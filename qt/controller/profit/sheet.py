@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import Qt
 
-from moneyguru.gui.income_statement import IncomeStatement as IncomeStatementModel
+from core.gui.income_statement import IncomeStatement as IncomeStatementModel
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 from ..column import Column
 

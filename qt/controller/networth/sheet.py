@@ -10,7 +10,7 @@
 
 from PyQt4.QtCore import Qt
 
-from moneyguru.gui.balance_sheet import BalanceSheet as BalanceSheetModel
+from core.gui.balance_sheet import BalanceSheet as BalanceSheetModel
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 from ..column import Column
 

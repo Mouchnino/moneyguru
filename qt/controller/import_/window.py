@@ -11,7 +11,7 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget
 
-from moneyguru.gui.import_window import ImportWindow as ImportWindowModel, DAY, MONTH, YEAR
+from core.gui.import_window import ImportWindow as ImportWindowModel, DAY, MONTH, YEAR
 from .table import ImportTable
 from ui.import_window_ui import Ui_ImportWindow
 
