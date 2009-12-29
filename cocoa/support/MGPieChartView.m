@@ -11,12 +11,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 #import <math.h>
 
-#define LEGEND_SQUARE_PADDING 4.0
+#define LEGEND_PADDING 4.0
 #define TITLE_FONT_SIZE 15.0
 #define LINE_WIDTH 1.0
-
-// The fraction consts are expressed in a fraction of the total view's height
-#define CHART_PADDING_FRACTION 1 / 60
+#define CHART_PADDING 6.0
 
 #define RADIANS( degrees ) ( degrees * M_PI / 180 )
 
@@ -89,13 +87,6 @@ NSPoint rectCenter(NSRect r)
     return NSMakePoint(r.origin.x + NSWidth(r) / 2, r.origin.y + NSHeight(r) / 2);
 }
 
-int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
-{
-    NSRect r1 = [(NSValue *)[legend1 objectAtIndex:1] rectValue];
-    NSRect r2 = [(NSValue *)[legend2 objectAtIndex:1] rectValue];
-    return r1.origin.y - r2.origin.y;
-}
-
 @implementation MGPieChartView
 - (id)init
 {
@@ -108,10 +99,7 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
     [colors addObject:[NSColor colorWithDeviceRed:0.584 green:0.129 blue:0.914 alpha:1.0]];
     [colors addObject:[NSColor darkGrayColor]];
     gradients = [[NSMutableArray array] retain];
-    NSEnumerator *e = [colors objectEnumerator];
-    NSColor *c;
-    while (c = [e nextObject])
-    {
+    for (NSColor *c in colors) {
         NSColor *light = [c blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
         NSGradient *g = [[NSGradient alloc] initWithStartingColor:c endingColor:light];
         [gradients addObject:[g autorelease]];
@@ -125,49 +113,16 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
     [super dealloc];
 }
 
-/* Private */
-- (void)fixLegends:(NSMutableArray *)legends withCenter:(NSPoint)center
-{
-    // Fix legendRects overlaps. To get minimal ajustment, we must make sure that the rect that is
-    // the closest to the center is moved.
-    [legends sortUsingFunction:&sortLegends context:&center]; // from the highest to the lowest (on the Y axis)
-    // So now, what we do to be sure we don't have overlap is that we do a double loop for the inner
-    // loop, items before the current item have priority, the opposite for items after.
-    for (int i=0; i<[legends count]; i++)
-    {
-        NSMutableArray *legend = [legends objectAtIndex:i];
-        NSRect initialRect = [(NSValue *)[legend objectAtIndex:1] rectValue];
-        NSRect rect = initialRect;
-        for (int j=0; j<i; j++) // we move rect here
-        {
-            NSMutableArray *otherLegend = [legends objectAtIndex:j];
-            NSRect otherRect = [(NSValue *)[otherLegend objectAtIndex:1] rectValue];
-            rect = ensureOutside(rect, otherRect);
-        }
-        if (!NSEqualRects(rect, initialRect))
-            [legend replaceObjectAtIndex:1 withObject:[NSValue valueWithRect:rect]];
-        for (int j=i+1; j<[legends count]; j++) // we move otherRect here
-        {
-            NSMutableArray *otherLegend = [legends objectAtIndex:j];
-            NSRect otherRect = [(NSValue *)[otherLegend objectAtIndex:1] rectValue];
-            NSRect newOtherRect = ensureOutside(otherRect, rect);
-            if (!NSEqualRects(newOtherRect, otherRect))
-                [otherLegend replaceObjectAtIndex:1 withObject:[NSValue valueWithRect:newOtherRect]];
-        }
-    }
-}
-
 /* Drawing */
 - (void)drawRect:(NSRect)rect 
 {	
     [super drawRect:rect];
 	// Calculate the graph dimensions
 	NSSize viewSize = [self bounds].size;
-    float chartPadding = viewSize.height * CHART_PADDING_FRACTION;
-    float chartX = chartPadding;
-    float chartY = chartPadding;
-    float chartWidth = viewSize.width - chartPadding * 2;
-    float chartHeight = viewSize.height - chartPadding * 2;
+    float chartX = CHART_PADDING;
+    float chartY = CHART_PADDING;
+    float chartWidth = viewSize.width - CHART_PADDING * 2;
+    float chartHeight = viewSize.height - CHART_PADDING * 2;
     
     NSFont *titleFont = [NSFont boldSystemFontOfSize:TITLE_FONT_SIZE];
     NSDictionary *titleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:titleFont, NSFontAttributeName, titleColor, NSForegroundColorAttributeName, nil];
@@ -183,11 +138,11 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
 	// Draw the title
     [title drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];
     
-    float maxWidth = viewSize.width - (chartPadding * 2);
-    float maxHeight = titleY - chartPadding;
+    float maxWidth = viewSize.width - (CHART_PADDING * 2);
+    float maxHeight = titleY - CHART_PADDING;
     float circleSize = maxWidth > maxHeight ? maxHeight : maxWidth;
     float radius = circleSize / 2;
-    NSPoint center = NSMakePoint(viewSize.width / 2, titleY - chartPadding - radius);
+    NSPoint center = NSMakePoint(viewSize.width / 2, titleY - CHART_PADDING - radius);
     float circleX = center.x - radius;
     float circleY = center.y - radius;
     NSColor *lineColor = [NSColor blackColor];
@@ -222,29 +177,40 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
         [slice stroke];
         
         NSString *legendText = [pair objectAtIndex:0];
-        NSPoint legendPoint = pointInCircle(center, radius, startAngle + (angle / 2));
+        NSPoint baseLegendPoint = pointInCircle(center, radius, startAngle + (angle / 2));
         NSSize legendSize = [legendText sizeWithAttributes:legendAttributes];
-        legendPoint.x -= legendSize.width / 2;
-        if (legendPoint.y > center.y)
-            legendPoint.y -= legendSize.height;
+        NSPoint legendPoint = NSMakePoint(baseLegendPoint.x - (legendSize.width / 2), baseLegendPoint.y);
         NSRect legendRect = NSMakeRect(legendPoint.x, legendPoint.y, legendSize.width, legendSize.height);
-        legendRect = padRect(legendRect, LEGEND_SQUARE_PADDING);
+        legendRect = padRect(legendRect, LEGEND_PADDING);
         legendRect = ensureWithin(legendRect, [self bounds]);
-        NSMutableArray *legend = [NSMutableArray arrayWithObjects:legendText,[NSValue valueWithRect:legendRect],gradient,nil];
+        NSMutableArray *legend = [NSMutableArray arrayWithObjects:legendText,
+            [NSValue valueWithPoint:baseLegendPoint], [NSValue valueWithRect:legendRect],gradient,nil];
         [legends addObject:legend];
         
         startAngle = endAngle;
     }
     
-    [self fixLegends:legends withCenter:center];
+    // Fix legend rects
+    NSRect previousRect = NSMakeRect(0, 0, 0, 0);
+    for (NSMutableArray *legend in legends)
+    {
+        NSRect r = [(NSValue *)[legend objectAtIndex:2] rectValue];
+        if (rectCenter(r).x < center.x) // send left
+            r = NSMakeRect(chartX, NSMinY(r), NSWidth(r), NSHeight(r));
+        else // send right
+            r = NSMakeRect(chartX + chartWidth - NSWidth(r), NSMinY(r), NSWidth(r), NSHeight(r));
+        r = ensureOutside(r, previousRect);
+        previousRect = r;
+        [legend replaceObjectAtIndex:2 withObject:[NSValue valueWithRect:r]];
+    }
     
     // Draw the legend rects
-    for (int i=0; i<[legends count]; i++)
+    for (NSArray *legend in legends)
     {
-        NSMutableArray *legend = [legends objectAtIndex:i];
         NSString *legendText = [legend objectAtIndex:0];
-        NSRect legendRect = [[legend objectAtIndex:1] rectValue];
-        NSGradient *gradient = [legend objectAtIndex:2];
+        NSPoint baseLegendPoint = [[legend objectAtIndex:1] pointValue];
+        NSRect legendRect = [[legend objectAtIndex:2] rectValue];
+        NSGradient *gradient = [legend objectAtIndex:3];
         
         NSBezierPath *path = [NSBezierPath bezierPathWithRect:legendRect];
         [path setLineWidth:LINE_WIDTH];
@@ -253,8 +219,24 @@ int sortLegends(NSMutableArray *legend1, NSMutableArray *legend2, void *context)
         [startingColor setStroke];
         [path fill];
         [path stroke];
-        NSPoint legendPoint = NSMakePoint(NSMinX(legendRect) + LEGEND_SQUARE_PADDING, NSMinY(legendRect) + LEGEND_SQUARE_PADDING);
+        NSPoint legendPoint = NSMakePoint(NSMinX(legendRect) + LEGEND_PADDING, NSMinY(legendRect) + LEGEND_PADDING);
         [legendText drawAtPoint:legendPoint withAttributes:legendAttributes];
+        
+        // We don't use NSPointInRect and only verify if baseLegendPoint is within the *X* bounds
+        // of the rect. This is because a legend rect might have been displaced vertically because
+        // of its proximity with another legend. When that happens, a line is drawn and this line
+        // is ugly.
+        if ((baseLegendPoint.x < NSMinX(legendRect)) || (baseLegendPoint.x > NSMaxX(legendRect))) {
+            path = [NSBezierPath bezierPath];
+            if (baseLegendPoint.x < center.x)
+                [path moveToPoint:NSMakePoint(NSMaxX(legendRect), NSMidY(legendRect))];
+            else
+                [path moveToPoint:NSMakePoint(NSMinX(legendRect), NSMidY(legendRect))];
+            [path lineToPoint:baseLegendPoint];
+            [path setLineWidth:LINE_WIDTH];
+            [startingColor setStroke];
+            [path stroke];
+        }
     }
 }
 @end
