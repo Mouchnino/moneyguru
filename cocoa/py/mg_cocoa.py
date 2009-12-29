@@ -15,47 +15,47 @@ import hsutil.cocoa
 from hsutil.path import Path
 from hsutil.currency import Currency, USD
 
-from moneyguru.app import Application
-from moneyguru.document import (Document, FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, 
+from core.app import Application
+from core.document import (Document, FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, 
     FILTER_TRANSFER, FILTER_RECONCILED, FILTER_NOTRECONCILED)
-from moneyguru.exception import FileFormatError
-from moneyguru.gui.account_panel import AccountPanel
-from moneyguru.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
-from moneyguru.gui.account_reassign_panel import AccountReassignPanel
-from moneyguru.gui.bar_graph import BarGraph
-from moneyguru.gui.balance_graph import BalanceGraph
-from moneyguru.gui.balance_sheet import BalanceSheet
-from moneyguru.gui.budget_table import BudgetTable
-from moneyguru.gui.budget_panel import BudgetPanel
-from moneyguru.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
-from moneyguru.gui.custom_date_range_panel import CustomDateRangePanel
-from moneyguru.gui.date_widget import DateWidget
-from moneyguru.gui.entry_print import EntryPrint
-from moneyguru.gui.entry_table import EntryTable
-from moneyguru.gui.filter_bar import FilterBar, EntryFilterBar
-from moneyguru.gui.income_statement import IncomeStatement
-from moneyguru.gui.import_table import ImportTable
-from moneyguru.gui.import_window import ImportWindow, DAY, MONTH, YEAR
-from moneyguru.gui.main_window import MainWindow
-from moneyguru.gui.mass_edition_panel import MassEditionPanel
-from moneyguru.gui.net_worth_graph import NetWorthGraph
-from moneyguru.gui.print_view import PrintView
-from moneyguru.gui.profit_graph import ProfitGraph
-from moneyguru.gui.schedule_panel import SchedulePanel
-from moneyguru.gui.schedule_table import ScheduleTable
-from moneyguru.gui.search_field import SearchField
-from moneyguru.gui.split_table import SplitTable
-from moneyguru.gui.transaction_panel import TransactionPanel
-from moneyguru.gui.transaction_print import TransactionPrint
-from moneyguru.gui.transaction_table import TransactionTable
-from moneyguru.model.date import clean_format
+from core.exception import FileFormatError
+from core.gui.account_panel import AccountPanel
+from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
+from core.gui.account_reassign_panel import AccountReassignPanel
+from core.gui.bar_graph import BarGraph
+from core.gui.balance_graph import BalanceGraph
+from core.gui.balance_sheet import BalanceSheet
+from core.gui.budget_table import BudgetTable
+from core.gui.budget_panel import BudgetPanel
+from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
+from core.gui.custom_date_range_panel import CustomDateRangePanel
+from core.gui.date_widget import DateWidget
+from core.gui.entry_print import EntryPrint
+from core.gui.entry_table import EntryTable
+from core.gui.filter_bar import FilterBar, EntryFilterBar
+from core.gui.income_statement import IncomeStatement
+from core.gui.import_table import ImportTable
+from core.gui.import_window import ImportWindow, DAY, MONTH, YEAR
+from core.gui.main_window import MainWindow
+from core.gui.mass_edition_panel import MassEditionPanel
+from core.gui.net_worth_graph import NetWorthGraph
+from core.gui.print_view import PrintView
+from core.gui.profit_graph import ProfitGraph
+from core.gui.schedule_panel import SchedulePanel
+from core.gui.schedule_table import ScheduleTable
+from core.gui.search_field import SearchField
+from core.gui.split_table import SplitTable
+from core.gui.transaction_panel import TransactionPanel
+from core.gui.transaction_print import TransactionPrint
+from core.gui.transaction_table import TransactionTable
+from core.model.date import clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
 import csv
-from moneyguru import const
-from moneyguru.gui import base, chart, graph, report, table, tree
-from moneyguru.loader import base, csv, native, ofx, qif
-from moneyguru.model import (account, amount, currency, date, oven, recurrence, transaction,
+from core import const
+from core.gui import base, chart, graph, report, table, tree
+from core.loader import base, csv, native, ofx, qif
+from core.model import (account, amount, currency, date, oven, recurrence, transaction,
     transaction_list, completion, undo)
 
 class PyMoneyGuruApp(NSObject):

@@ -10,7 +10,7 @@ sys.path.insert(0, 'py') # for hsutil and hsdocgen
 import os
 
 from help import gen
-from moneyguru.app import Application as MoneyGuruApp
+from core.app import Application as MoneyGuruApp
 
 gen.generate()
 os.system('/Developer/Applications/Utilities/Help\\ Indexer.app/Contents/MacOS/Help\\ Indexer help/moneyguru_help')
