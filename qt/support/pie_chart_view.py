@@ -77,6 +77,9 @@ class Legend(object):
         padding = self.PADDING
         self.textRect = self.labelRect.adjusted(padding, padding, -padding*2, -padding*2)
     
+    def shouldDrawLine(self):
+        return not self.labelRect.contains(self.basePoint)
+    
 
 class PieChartView(QWidget):
     PADDING = 4
@@ -183,14 +186,14 @@ class PieChartView(QWidget):
         for legend in legends:
             pullRectIn(legend.labelRect, circleBounds)
         
-        # now, the tricky part: Make sure the labels are not over one another. It's not always
-        # possible, and doing it properly can get very complicated. What we're doing here is to 
-        # first to compare every rect with the next one, and if they intersect, we move the highest
-        # one further up. After that, it's possible that intersects still exist, but they'd me more
-        # on the X axis, so we compare each rect with every other, and we move them apart on the X
-        # axis as much as we can (within circleBounds). This is not perfect because in some cases
-        # it moves labels on the Y axis when it would be prettier to move them on the X axis, but
-        # handling those cases would likely make the code significantly more complex.
+        # send to the sides of the chart
+        for legend in legends:
+            if legend.basePoint.x() < center.x():
+                legend.labelRect.moveLeft(self.PADDING)
+            else:
+                legend.labelRect.moveRight(self.PADDING + maxWidth)
+        
+        # Make sure the labels are not one over another
         for legend1, legend2 in zip(legends, legends[1:]):
             rect1, rect2 = legend1.labelRect, legend2.labelRect
             if not rect1.intersects(rect2):
@@ -202,24 +205,14 @@ class PieChartView(QWidget):
             highest, lowest = (rect1, rect2) if p1.y() < p2.y() else (rect2, rect1)
             highest.moveBottom(lowest.top()-1)
         
-        for legend1, legend2 in combinations(legends, 2):
-            rect1, rect2 = legend1.labelRect, legend2.labelRect
-            if not rect1.intersects(rect2):
-                continue
-            leftr, rightr = (rect1, rect2) if rect1.left() < rect2.left() else (rect2, rect1)
-            leftr.moveRight(rightr.left()-1)
-            pullRectIn(leftr, circleBounds)
-            if not leftr.intersects(rightr):
-                continue
-            rightr.moveLeft(leftr.right()+1)
-            pullRectIn(rightr, circleBounds) # at this point, if we still have inter, we don't care
-        
         # draw legends
         painter.setBrush(QBrush(Qt.white))
         for legend in legends:
             pen = QPen(legend.color)
             pen.setWidth(self.LINE_WIDTH)
             painter.setPen(pen)
+            if (len(legends) > 1) and legend.shouldDrawLine():
+                painter.drawLine(legend.labelRect.center(), legend.basePoint)
             painter.drawRect(legend.labelRect) # The label behind the text
             painter.setPen(QPen(Qt.black))
             legend.computeTextRect()
