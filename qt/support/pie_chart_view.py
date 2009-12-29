@@ -207,12 +207,19 @@ class PieChartView(QWidget):
         
         # draw legends
         painter.setBrush(QBrush(Qt.white))
+        # draw lines before legends because we don't want them being drawn over other legends
+        if len(legends) > 1:
+            for legend in legends:
+                if not legend.shouldDrawLine():
+                    continue
+                pen = QPen(legend.color)
+                pen.setWidth(self.LINE_WIDTH)
+                painter.setPen(pen)
+                painter.drawLine(legend.labelRect.center(), legend.basePoint)
         for legend in legends:
             pen = QPen(legend.color)
             pen.setWidth(self.LINE_WIDTH)
             painter.setPen(pen)
-            if (len(legends) > 1) and legend.shouldDrawLine():
-                painter.drawLine(legend.labelRect.center(), legend.basePoint)
             painter.drawRect(legend.labelRect) # The label behind the text
             painter.setPen(QPen(Qt.black))
             legend.computeTextRect()
