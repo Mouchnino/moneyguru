@@ -5,6 +5,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import os.path as op
+import sys
+sys.path.insert(0, op.abspath('../..')) # for all cross-toolkit modules
+
 from setuptools import setup
 
 from hsutil.build import move_testdata_out, put_testdata_back

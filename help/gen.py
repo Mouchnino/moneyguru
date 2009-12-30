@@ -9,7 +9,7 @@ import os.path as op
 
 from hsdocgen import generate_help, filters
 
-def generate(windows=False):
+def generate(windows=False, force_render=True):
     tix = filters.tixgen("https://hardcoded.lighthouseapp.com/projects/31473-moneyguru/tickets/{0}")
     basepath = op.dirname(__file__)
-    generate_help.main(basepath, op.join(basepath, 'moneyguru_help'), force_render=True, tix=tix, windows=windows)
+    generate_help.main(basepath, op.join(basepath, 'moneyguru_help'), force_render=force_render, tix=tix, windows=windows)

@@ -282,8 +282,8 @@
 		CE16B0240E715B3F001290F7 /* backward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward_32.png; sourceTree = "<group>"; };
 		CE16B0250E715B3F001290F7 /* forward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward_32.png; sourceTree = "<group>"; };
 		CE170E370E2202C50017C389 /* PyTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTable.h; sourceTree = "<group>"; };
-		CE1BD3DE0FDE4DE1005FB7B9 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
-		CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
+		CE1BD3DE0FDE4DE1005FB7B9 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
+		CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
 		CE2848E20E84FB7200FF7EA2 /* RecurrenceScopeDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecurrenceScopeDialog.xib; sourceTree = "<group>"; };
 		CE2B00630E5462E7000F0C9B /* MGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGWindowController.h; sourceTree = "<group>"; };
 		CE2B00640E5462E7000F0C9B /* MGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGWindowController.m; sourceTree = "<group>"; };
@@ -304,8 +304,8 @@
 		CE4148200EAA059400B8BF6A /* NSIndexPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSIndexPathAdditions.m; sourceTree = "<group>"; };
 		CE41C98E0E2B52CD006D3BEA /* MGTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTable.h; sourceTree = "<group>"; };
 		CE41C98F0E2B52CD006D3BEA /* MGTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTable.m; sourceTree = "<group>"; };
-		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = data/example.moneyguru; sourceTree = "<group>"; };
-		CE4B8C000E656DB70017432D /* moneyguru_help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = moneyguru_help; path = help/moneyguru_help; sourceTree = "<group>"; };
+		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = ../data/example.moneyguru; sourceTree = "<group>"; };
+		CE4B8C000E656DB70017432D /* moneyguru_help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = moneyguru_help; path = ../help/moneyguru_help; sourceTree = "<group>"; };
 		CE4C22940F7FB37D00845640 /* MGGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraphic.h; sourceTree = "<group>"; };
 		CE4CD3800F2B78B6003F1738 /* CSVLayoutName.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CSVLayoutName.xib; sourceTree = "<group>"; };
 		CE4CD3870F2B7B0D003F1738 /* MGCSVLayoutNameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVLayoutNameDialog.h; sourceTree = "<group>"; };
@@ -362,18 +362,18 @@
 		CE6D37F90F93637200FA8460 /* PSMTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMTabStyle.h; sourceTree = "<group>"; };
 		CE6D37FA0F93637200FA8460 /* PSMUnifiedTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMUnifiedTabStyle.h; sourceTree = "<group>"; };
 		CE6D37FB0F93637200FA8460 /* PSMUnifiedTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMUnifiedTabStyle.m; sourceTree = "<group>"; };
-		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
-		CE6D38070F93648E00FA8460 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
-		CE6D38080F93648E00FA8460 /* HSErrorReportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSErrorReportWindow.h; path = cocoalib/HSErrorReportWindow.h; sourceTree = SOURCE_ROOT; };
-		CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSErrorReportWindow.m; path = cocoalib/HSErrorReportWindow.m; sourceTree = SOURCE_ROOT; };
-		CE6D380A0F93648E00FA8460 /* HSTableColumnManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSTableColumnManager.h; path = cocoalib/HSTableColumnManager.h; sourceTree = SOURCE_ROOT; };
-		CE6D380B0F93648E00FA8460 /* HSTableColumnManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSTableColumnManager.m; path = cocoalib/HSTableColumnManager.m; sourceTree = SOURCE_ROOT; };
-		CE6D380C0F93648E00FA8460 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
-		CE6D380D0F93648E00FA8460 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
-		CE6D380E0F93648E00FA8460 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
-		CE6D380F0F93648E00FA8460 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
-		CE6D38100F93648E00FA8460 /* ValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValueTransformers.h; path = cocoalib/ValueTransformers.h; sourceTree = SOURCE_ROOT; };
-		CE6D38110F93648E00FA8460 /* ValueTransformers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValueTransformers.m; path = cocoalib/ValueTransformers.m; sourceTree = SOURCE_ROOT; };
+		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
+		CE6D38070F93648E00FA8460 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = ../cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
+		CE6D38080F93648E00FA8460 /* HSErrorReportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSErrorReportWindow.h; path = ../cocoalib/HSErrorReportWindow.h; sourceTree = SOURCE_ROOT; };
+		CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSErrorReportWindow.m; path = ../cocoalib/HSErrorReportWindow.m; sourceTree = SOURCE_ROOT; };
+		CE6D380A0F93648E00FA8460 /* HSTableColumnManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSTableColumnManager.h; path = ../cocoalib/HSTableColumnManager.h; sourceTree = SOURCE_ROOT; };
+		CE6D380B0F93648E00FA8460 /* HSTableColumnManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSTableColumnManager.m; path = ../cocoalib/HSTableColumnManager.m; sourceTree = SOURCE_ROOT; };
+		CE6D380C0F93648E00FA8460 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = ../cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
+		CE6D380D0F93648E00FA8460 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = ../cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
+		CE6D380E0F93648E00FA8460 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
+		CE6D380F0F93648E00FA8460 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
+		CE6D38100F93648E00FA8460 /* ValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValueTransformers.h; path = ../cocoalib/ValueTransformers.h; sourceTree = SOURCE_ROOT; };
+		CE6D38110F93648E00FA8460 /* ValueTransformers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValueTransformers.m; path = ../cocoalib/ValueTransformers.m; sourceTree = SOURCE_ROOT; };
 		CE6D38190F9364AD00FA8460 /* AquaTabClose_Front.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AquaTabClose_Front.tif; sourceTree = "<group>"; };
 		CE6D381A0F9364AD00FA8460 /* AquaTabClose_Front_Pressed.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AquaTabClose_Front_Pressed.tif; sourceTree = "<group>"; };
 		CE6D381B0F9364AD00FA8460 /* AquaTabClose_Front_Rollover.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = AquaTabClose_Front_Rollover.tif; sourceTree = "<group>"; };
@@ -397,8 +397,8 @@
 		CE6D382D0F9364AD00FA8460 /* TabNewMetal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetal.png; sourceTree = "<group>"; };
 		CE6D382E0F9364AD00FA8460 /* TabNewMetalPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetalPressed.png; sourceTree = "<group>"; };
 		CE6D382F0F9364AD00FA8460 /* TabNewMetalRollover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetalRollover.png; sourceTree = "<group>"; };
-		CE6D38490F9364EE00FA8460 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = cocoalib/English.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
-		CE6D384B0F9364EE00FA8460 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = cocoalib/English.lproj/registration.nib; sourceTree = SOURCE_ROOT; };
+		CE6D38490F9364EE00FA8460 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ../cocoalib/English.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
+		CE6D384B0F9364EE00FA8460 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../cocoalib/English.lproj/registration.nib; sourceTree = SOURCE_ROOT; };
 		CE6E000D0F4ECD0B00FE7628 /* MGChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChartView.h; sourceTree = "<group>"; };
 		CE6E000E0F4ECD0B00FE7628 /* MGChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChartView.m; sourceTree = "<group>"; };
 		CE6E00140F4ED61800FE7628 /* MGGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraph.h; sourceTree = "<group>"; };
@@ -503,7 +503,7 @@
 		CEC5CE4F0F45D8060042E33F /* MGPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPieChart.m; sourceTree = "<group>"; };
 		CEC5CE570F45F8670042E33F /* MGDoubleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDoubleView.h; sourceTree = "<group>"; };
 		CEC5CE580F45F8670042E33F /* MGDoubleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDoubleView.m; sourceTree = "<group>"; };
-		CEC6593E0FC9354A0045E4C8 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
+		CEC6593E0FC9354A0045E4C8 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = ../cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
 		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
 		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
@@ -641,7 +641,7 @@
 				CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */,
 			);
 			name = brsinglelineformatter;
-			path = cocoalib/brsinglelineformatter;
+			path = ../cocoalib/brsinglelineformatter;
 			sourceTree = SOURCE_ROOT;
 		};
 		CE6D37C90F93633F00FA8460 /* cocoalib */ = {
@@ -666,7 +666,7 @@
 				CE6D38100F93648E00FA8460 /* ValueTransformers.h */,
 				CE6D38110F93648E00FA8460 /* ValueTransformers.m */,
 			);
-			name = cocoalib;
+			name = ../cocoalib;
 			sourceTree = "<group>";
 		};
 		CE6D37CA0F93635E00FA8460 /* AMButtonBar */ = {
@@ -692,7 +692,7 @@
 				CE6D37DC0F93635F00FA8460 /* NSShadow_AMAdditions.m */,
 			);
 			name = AMButtonBar;
-			path = cocoalib/AMButtonBar;
+			path = ../cocoalib/AMButtonBar;
 			sourceTree = SOURCE_ROOT;
 		};
 		CE6D37E60F93637200FA8460 /* PSMTabBarControl */ = {
@@ -721,7 +721,7 @@
 				CE6D37FB0F93637200FA8460 /* PSMUnifiedTabStyle.m */,
 			);
 			name = PSMTabBarControl;
-			path = cocoalib/PSMTabBarControl;
+			path = ../cocoalib/PSMTabBarControl;
 			sourceTree = SOURCE_ROOT;
 		};
 		CE6D38180F9364AD00FA8460 /* images */ = {
@@ -752,7 +752,7 @@
 				CE6D382F0F9364AD00FA8460 /* TabNewMetalRollover.png */,
 			);
 			name = images;
-			path = cocoalib/images;
+			path = ../cocoalib/images;
 			sourceTree = SOURCE_ROOT;
 		};
 		CE6D38470F9364D200FA8460 /* xib */ = {
@@ -1029,7 +1029,7 @@
 				07FDA2D90E41231C006709EA /* right_arrow_white_12.png */,
 				CEEED1D40E3F763100BBA154 /* check_16.png */,
 			);
-			path = images;
+			path = ../images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
