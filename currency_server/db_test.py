@@ -9,16 +9,19 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import unittest
 from datetime import date
 import threading
 
-from hs.const import TESTDIR
-from hs.path import Path
-from hs.testcase import TestCase
+from hsutil.path import Path
+from hsutil.testcase import TestCase as TestCaseBase
 
-from db import RatesDB
+from .db import RatesDB
 
+class TestCase(TestCaseBase):
+    @classmethod
+    def datadirpath(cls):
+        return Path(__file__)[:-1] + 'testdata'
+    
 
 class BOCDailyImport(TestCase):
     """testdata/xml/bankofcanada_daily_rates_1_week.xml contains daily rates for a USD, EUR and PLN
@@ -28,7 +31,7 @@ class BOCDailyImport(TestCase):
     """
     def setUp(self):
         self.db = RatesDB(':memory:')
-        xmlpath = Path(TESTDIR) + ('xml', 'bankofcanada_daily_rates_1_week.xml')
+        xmlpath = self.filepath('bankofcanada_daily_rates_1_week.xml')
         self.db.import_bank_of_canada_rates(unicode(xmlpath))
     
     def test_get_rates(self):
@@ -72,6 +75,3 @@ class DBWithDailyAndMeanRate(TestCase):
         threading.Thread(target=do).start()
         self.jointhreads()
     
-
-if __name__ == '__main__':
-    unittest.main()
