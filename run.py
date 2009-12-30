@@ -23,7 +23,10 @@ def main():
     if ui == 'cocoa':
         os.system('open cocoa/build/Release/moneyGuru.app')
     elif ui == 'qt':
-        os.environ['PYTHONPATH'] = '{0}:$PYTHONPATH'.format(op.abspath('.'))
+        pythonpath = os.environ.get('PYTHONPATH', '')
+        pathsep = ';' if sys.platform == 'win32' else ':'
+        pythonpath = pathsep.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
+        os.environ['PYTHONPATH'] = pythonpath
         os.chdir('qt')
         os.system('python start.py')
         os.chdir('..')
