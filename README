@@ -59,4 +59,7 @@ Then, just build the thing and then run it with:
 
 	python build.py
 	python run.py
-	
+
+If you want to create ready-to-upload package, run:
+
+	python package.py

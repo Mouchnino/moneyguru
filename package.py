@@ -14,19 +14,27 @@ import os.path as op
 
 import yaml
 
+from hsutil.build import build_dmg
+
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
-    print "Running moneyGuru with UI {0}".format(ui)
+    dev = conf['dev']
+    if dev:
+        print "You can't package in dev mode"
+        return
+    print "Packaging moneyGuru with UI {0}".format(ui)
     if ui == 'cocoa':
-        os.system('open cocoa/build/Release/moneyGuru.app')
+        build_dmg('cocoa/build/Release/moneyGuru.app', '.')
     elif ui == 'qt':
+        if sys.platform != "win32":
+            print "Qt packaging only works under Windows."
+            return
         pythonpath = os.environ.get('PYTHONPATH', '')
-        pathsep = ';' if sys.platform == 'win32' else ':'
-        pythonpath = pathsep.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
+        pythonpath = ';'.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
         os.environ['PYTHONPATH'] = pythonpath
         os.chdir('qt')
-        os.system('python start.py')
+        os.system('python build.py')
         os.chdir('..')
 
 if __name__ == '__main__':
