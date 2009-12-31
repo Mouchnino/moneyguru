@@ -14,7 +14,7 @@ import os.path as op
 
 import yaml
 
-import help.gen
+from hsdocgen import generate_help, filters
 
 def main():
     conf = yaml.load(open('conf.yaml'))
@@ -24,7 +24,11 @@ def main():
     if dev:
         print "Building in Dev mode"
     print "Generating Help"
-    help.gen.generate(windows=sys.platform=='win32', force_render=not dev)
+    windows = sys.platform == 'win32'
+    tix = filters.tixgen("https://hardcoded.lighthouseapp.com/projects/31473-moneyguru/tickets/{0}")
+    basepath = op.abspath('help')
+    destpath = op.abspath(op.join('help', 'moneyguru_help'))
+    generate_help.main(basepath, destpath, force_render=not dev, tix=tix, windows=windows)
     if ui == 'cocoa':
         os.chdir('cocoa')
         if dev:

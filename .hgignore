@@ -1,0 +1,11 @@
+syntax: glob
+
+*.pyc
+conf.yaml
+cocoa/Info.plist
+cocoa/build
+cocoa/py/build
+cocoa/py/dist
+qt/*_rc.py
+qt/ui/*_ui.py
+help/moneyguru_help
