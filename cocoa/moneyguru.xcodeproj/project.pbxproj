@@ -225,7 +225,7 @@
 		07373CDA0E313BD50082D3E8 /* PyOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline.h; sourceTree = "<group>"; };
 		0761B95B0E547CE800E99B31 /* MGAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAmountCell.h; sourceTree = "<group>"; };
 		0761B95C0E547CE800E99B31 /* MGAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAmountCell.m; sourceTree = "<group>"; };
-		0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mg_cocoa.plugin; path = py/dist/mg_cocoa.plugin; sourceTree = "<group>"; };
+		0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mg_cocoa.plugin; path = mg_cocoa.plugin; sourceTree = "<group>"; };
 		077FBF2B0E27B053001DC57D /* EntryTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntryTable.xib; sourceTree = "<group>"; };
 		0795A42B0E4217970053F2FC /* right_arrow_gray_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow_gray_12.png; sourceTree = "<group>"; };
 		07D049F00E2A676500DA8698 /* MGBalanceGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBalanceGraph.h; sourceTree = "<group>"; };

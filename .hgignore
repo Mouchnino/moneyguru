@@ -1,11 +1,11 @@
 syntax: glob
 
 *.pyc
+build
 conf.yaml
 cocoa/Info.plist
 cocoa/build
-cocoa/py/build
-cocoa/py/dist
+cocoa/mg_cocoa.plugin
 qt/*_rc.py
 qt/ui/*_ui.py
 help/moneyguru_help
