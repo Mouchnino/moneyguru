@@ -18,6 +18,7 @@ import yaml
 
 from hsdocgen import generate_help, filters
 from hsutil.build import add_to_pythonpath, print_and_do, build_all_qt_ui, copy_packages
+from core.app import Application as MoneyGuruApp
 
 def main():
     conf = yaml.load(open('conf.yaml'))
@@ -63,6 +64,10 @@ def main():
             pthpath = op.join(pluginpath, 'Contents/Resources/dev.pth')
             open(pthpath, 'w').write(op.abspath('.'))
         os.chdir('cocoa')
+        print 'Generating Info.plist'
+        contents = open('InfoTemplate.plist').read()
+        contents = contents.replace('{version}', MoneyGuruApp.VERSION)
+        open('Info.plist', 'w').write(contents)
         print "Building the XCode project"
         os.system('xcodebuild')
         os.chdir('..')
