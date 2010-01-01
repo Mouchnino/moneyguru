@@ -46,7 +46,7 @@
 	<key>CFBundleVersion</key>
 	<string>{version}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© Hardcoded Software, 2009</string>
+	<string>© Hardcoded Software, 2010</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
