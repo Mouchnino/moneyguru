@@ -3,7 +3,6 @@
 # I have not yet figured how to fetch more than one currency from a single request.
 # Created By: Virgil Dupras
 # Created On: 2008-11-08
-# $Id$
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
 # 
 # This software is licensed under the "HS" License as described in the "LICENSE" file, 

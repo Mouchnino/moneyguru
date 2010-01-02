@@ -2,7 +2,6 @@
 # This script fetches today's rates from the Bank of Canada website
 # Created By: Eric Mc Sween
 # Created On: 2008-05-19
-# $Id$
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
 # 
 # This software is licensed under the "HS" License as described in the "LICENSE" file, 
