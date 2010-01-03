@@ -29,7 +29,7 @@ class IncomeStatement(Report):
         # Amounts for display are kept in the account's currency
         node.cash_flow = self.app.format_amount(cash_flow)
         node.last_cash_flow = self.app.format_amount(last_cash_flow)
-        node.budgeted = self.app.format_amount(max(remaining, 0))
+        node.budgeted = self.app.format_amount(remaining)
         node.delta = self.app.format_amount(delta)
         node.delta_perc = get_delta_perc(delta, last_cash_flow)
     

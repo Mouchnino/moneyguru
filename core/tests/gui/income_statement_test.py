@@ -228,3 +228,19 @@ class EntriesSpreadOverAYear(TestCase):
         # 'Last' is 01/03/2007-28/02/2008, which means 2 + 3 + 4 + 5 (14)
         self.assertEqual(self.istatement.income[0].last_cash_flow, '14.00')
     
+
+class BustedBudget(TestCase):
+    def setUp(self):
+        self.mock_today(2010, 1, 3)
+        self.create_instances()
+        self.document.select_month_range()
+        self.add_account('account', account_type=INCOME)
+        self.document.show_selected_account()
+        self.add_entry('01/01/2010', increase='112')
+        self.add_budget('account', None, '100')
+        self.mainwindow.select_income_statement()
+    
+    def test_budget_column_display(self):
+        # The budget column displays 0
+        eq_(self.istatement.income[0].budgeted, '0.00')
+    
