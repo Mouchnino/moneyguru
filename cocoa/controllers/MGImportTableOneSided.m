@@ -22,4 +22,10 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return (PyImportTable *)py;
 }
+
+- (BOOL)tableViewHadSpacePressed:(NSTableView *)tableView
+{
+    [[self py] toggleImportStatus];
+    return YES;
+}
 @end

@@ -1,6 +1,9 @@
 syntax: glob
 
 *.pyc
+*.pbxuser
+*.mode1v3
+*.tm_build_errors
 build
 conf.yaml
 cocoa/Info.plist

@@ -71,6 +71,15 @@ class ImportCheckbookQIF(TestCase):
         self.assertEqual(self.itable[1].amount_import, '8.92')
         self.assertEqual(self.itable[1].bound, False)
     
+    def test_toggle_import_status(self):
+        # It's possible to toggle the import status of all selected rows at once.
+        self.itable.select([1, 2, 3])
+        self.itable.toggle_import_status()
+        assert not self.itable[1].will_import
+        assert not self.itable[2].will_import
+        assert not self.itable[3].will_import
+        self.check_gui_calls(self.itable_gui, ['refresh'])
+    
     def test_will_import_value_is_kept(self):
         # When changing the selected pane around, the will_import values are kept
         self.itable[4].will_import = False

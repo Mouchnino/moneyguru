@@ -225,7 +225,7 @@
 		07373CDA0E313BD50082D3E8 /* PyOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline.h; sourceTree = "<group>"; };
 		0761B95B0E547CE800E99B31 /* MGAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAmountCell.h; sourceTree = "<group>"; };
 		0761B95C0E547CE800E99B31 /* MGAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAmountCell.m; sourceTree = "<group>"; };
-		0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mg_cocoa.plugin; path = mg_cocoa.plugin; sourceTree = "<group>"; };
+		0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mg_cocoa.plugin; sourceTree = "<group>"; };
 		077FBF2B0E27B053001DC57D /* EntryTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntryTable.xib; sourceTree = "<group>"; };
 		0795A42B0E4217970053F2FC /* right_arrow_gray_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow_gray_12.png; sourceTree = "<group>"; };
 		07D049F00E2A676500DA8698 /* MGBalanceGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBalanceGraph.h; sourceTree = "<group>"; };
@@ -666,7 +666,7 @@
 				CE6D38100F93648E00FA8460 /* ValueTransformers.h */,
 				CE6D38110F93648E00FA8460 /* ValueTransformers.m */,
 			);
-			name = ../cocoalib;
+			name = cocoalib;
 			sourceTree = "<group>";
 		};
 		CE6D37CA0F93635E00FA8460 /* AMButtonBar */ = {
@@ -769,7 +769,7 @@
 			children = (
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
-				CEEED1D30E3F763100BBA154 /* images */,
+				CEEED1D30E3F763100BBA154 /* ../images */,
 				CE873A620E21621F004F63E9 /* xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */,
@@ -999,7 +999,7 @@
 			path = support;
 			sourceTree = "<group>";
 		};
-		CEEED1D30E3F763100BBA154 /* images */ = {
+		CEEED1D30E3F763100BBA154 /* ../images */ = {
 			isa = PBXGroup;
 			children = (
 				CE8CD7AC1042E340004B30E0 /* budget_16.png */,

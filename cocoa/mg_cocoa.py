@@ -1383,6 +1383,10 @@ class PyImportTable(PyTable):
     def isTwoSided(self):
         return self.py.is_two_sided
     
+    @objc.signature('v@:')
+    def toggleImportStatus(self):
+        self.py.toggle_import_status()
+    
     @objc.signature('v@:i')
     def unbindRow_(self, index):
         self.py.unbind(index)

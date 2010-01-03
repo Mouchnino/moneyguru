@@ -15,4 +15,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)bindRow:(int)source to:(int)dest;
 - (void)unbindRow:(int)row;
 - (BOOL)isTwoSided;
+- (void)toggleImportStatus;
 @end

@@ -52,6 +52,11 @@ class ImportTable(ImportWindowGUIObject, GUITable):
                 self._is_two_sided = True
             self.append(ImportTableRow(self, existing, imported))
     
+    def toggle_import_status(self):
+        for row in self.selected_rows:
+            row.will_import = not row.will_import
+        self.view.refresh()
+    
     def unbind(self, index):
         row = self[index]
         if not row.bound:
