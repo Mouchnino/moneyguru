@@ -6,32 +6,105 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from datetime import date
+
 from nose.tools import eq_
 
 from hsutil.currency import EUR
 
-from ..base import TestCase, CommonSetup
+from ..base import TestCase, CommonSetup, TestQIFExportImportMixin
 from ...document import FILTER_RECONCILED
+from ...model.account import LIABILITY, INCOME, EXPENSE
+from ...model.date import YearRange
 
 class OneAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.clear_gui_calls()
-
+    
+    def test_add_empty_entry_and_save(self):
+        # An empty entry really gets saved.
+        self.etable.add()
+        self.etable.save_edits()
+        self.document.select_prev_date_range()
+        self.document.select_next_date_range()
+        eq_(len(self.etable), 1)
+    
     def test_add_entry(self):
-        """Before adding a new entry, make sure the entry table is not in edition mode. Then, start editing the new entry."""
+        # Before adding a new entry, make sure the entry table is not in edition mode. Then, start 
+        # editing the new entry.
         self.etable.add()
         self.check_gui_calls(self.etable_gui, ['stop_editing', 'refresh', 'start_editing'])
     
     def test_add_twice_then_save(self):
-        """Calling add() while in edition calls save_edits()"""
+        # Calling add() while in edition calls save_edits().
         # etable didn't have the same problem as ttable, but it did have this coverage missing
         # (commenting out the code didn't make tests fail)
         self.etable.add()
         self.etable.add()
         self.etable.save_edits()
-        self.assertEqual(len(self.etable), 2)
+        eq_(len(self.etable), 2)
+    
+    def test_delete(self):
+        # Don't crash when trying to remove a transaction from an empty list.
+        self.etable.delete() # no crash
+    
+    def test_selected_entry_index(self):
+        # selected_indexes is empty when there is no entry.
+        eq_(self.etable.selected_indexes, [])
+    
+    def test_should_show_balance_column(self):
+        # When an asset account is selected, we show the balance column.
+        assert self.etable.should_show_balance_column()
+    
+
+class ThreeAccounts(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_accounts('one', 'two', 'three') # three is the selected account (in second position)
+    
+    def test_add_transfer_entry(self):
+        # Add a balancing entry to the account of the entry's transfer.
+        self.add_entry(transfer='one', increase='42.00')
+        self.mainwindow.select_balance_sheet()
+        self.bsheet.selected = self.bsheet.assets[0]
+        self.bsheet.show_selected_account()
+        eq_(len(self.etable), 1)
+    
+
+class LiabilityAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account(account_type=LIABILITY)
+        self.document.show_selected_account()
+    
+    def test_should_show_balance_column(self):
+        # When a liability account is selected, we show the balance column.
+        assert self.etable.should_show_balance_column()
+    
+
+class IncomeAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account(account_type=INCOME)
+        self.document.show_selected_account()
+    
+    def test_should_show_balance_column(self):
+        # When an income account is selected, we don't show the balance column.
+        assert not self.etable.should_show_balance_column()
+    
+
+class ExpenseAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account(account_type=EXPENSE)
+        self.document.show_selected_account()
+    
+    def test_should_show_balance_column(self):
+        # When an expense account is selected, we don't show the balance column.
+        assert not self.etable.should_show_balance_column()
     
 
 class OneEntryInEdition(TestCase):
@@ -113,6 +186,58 @@ class OneEntry(TestCase, CommonSetup):
         self.etable[0].decrease = 'foo' # no exception
         self.assertEqual(self.etable[0].increase, '')
         self.assertEqual(self.etable[0].decrease, '42.00')
+    
+
+class EntryWithoutTransfer(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry(description='foobar', decrease='130')
+    
+    def test_entry_transfer(self):
+        # Instead of showing 'Imbalance', the transfer column shows nothing.
+        eq_(self.etable[0].transfer, '')
+    
+
+class EntryWithCredit(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry(decrease='42.00')
+    
+    def test_set_decrease_to_zero_with_zero_increase(self):
+        # Setting decrease to zero when the increase is already zero sets the amount to zero.
+        row = self.etable.selected_row
+        row.decrease = ''
+        eq_(self.etable[0].decrease, '')
+        
+    def test_set_increase_to_zero_with_non_zero_decrease(self):
+        # Setting increase to zero when the decrease being non-zero does nothing.
+        row = self.etable.selected_row
+        row.increase = ''
+        eq_(self.etable[0].decrease, '42.00')
+    
+    def test_amount(self):
+        # The amount attribute is correct.
+        eq_(self.etable[0].decrease, '42.00')
+    
+
+class EntryInLiabilities(TestCase, TestQIFExportImportMixin):
+    # An entry in a liability account.
+    # TestQIFExportImportMixin: make sure liability accounts are exported/imported correctly.
+    def setUp(self):
+        self.create_instances()
+        self.document.date_range = YearRange(date(2008, 1, 1))
+        self.add_account('Credit card', account_type=LIABILITY)
+        self.document.show_selected_account()
+        self.add_entry('1/1/2008', 'Payment', increase='10')
+    
+    def test_amount(self):
+        # The amount attribute is correct.
+        eq_(self.etable[0].increase, '10.00')
+    
 
 class EURAccountEUREntries(TestCase):
     def setUp(self):

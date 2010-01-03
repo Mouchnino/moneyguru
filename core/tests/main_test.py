@@ -11,7 +11,7 @@ import os.path as op
 import sys
 from datetime import date
 
-from nose.tools import eq_
+from nose.tools import eq_, assert_raises
 
 from hsutil import io
 from hsutil.currency import EUR
@@ -23,7 +23,7 @@ from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError
 from ..gui.entry_table import EntryTable
 from ..loader import base
-from ..model.account import LIABILITY, INCOME, EXPENSE
+from ..model.account import LIABILITY, INCOME
 from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
 
 #--- Transactions: 0
@@ -75,13 +75,6 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         self.create_instances()
         self.clear_gui_calls()
     
-    def test_add_entry(self):
-        """When we have no account selected, we want a 0 length entries that can't have anything 
-        added.
-        """
-        self.etable.add()
-        self.assertEqual(len(self.etable), 0)
-    
     def test_close_document(self):
         # when the document is closed, the date range type and the first weekday are saved to 
         # preferences.
@@ -100,38 +93,33 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         eq_(newapp.autosave_interval, 8)
     
     def test_date_range(self):
-        """By default, the date range is a yearly range for today"""
-        self.assertEqual(self.document.date_range, YearRange(date.today()))
-    
-    def test_delete_entries(self):
-        """Don't crash when trying to remove an entry from an empty list"""
-        self.etable.delete()
+        # By default, the date range is a yearly range for today.
+        eq_(self.document.date_range, YearRange(date.today()))
     
     def test_graph_yaxis(self):
-        self.assertEqual(self.nwgraph.ymin, 0)
-        self.assertEqual(self.nwgraph.ymax, 100)
-        self.assertEqual(list(self.nwgraph.ytickmarks), range(0, 101, 20))
-        self.assertEqual(list(self.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
+        eq_(self.nwgraph.ymin, 0)
+        eq_(self.nwgraph.ymax, 100)
+        eq_(list(self.nwgraph.ytickmarks), range(0, 101, 20))
+        eq_(list(self.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
     
     def test_load_inexistant(self):
         # Raise FileFormatError when filename doesn't exist
         filename = op.join(self.tmpdir(), 'does_not_exist.xml')
-        self.assertRaises(FileFormatError, self.document.load_from_xml, filename)
+        assert_raises(FileFormatError, self.document.load_from_xml, filename)
     
     def test_load_invalid(self):
-        """Raises FileFormatError, which gives a message kind of like: <filename> is not a 
-        moneyGuru file.
-        """
+        # Raises FileFormatError, which gives a message kind of like: <filename> is not a moneyGuru
+        # file.
         filename = self.filepath('randomfile')
         try:
             self.document.load_from_xml(filename)
         except FileFormatError as e:
-            self.assert_(filename in str(e))
+            assert filename in str(e)
         else:
-            self.fail()
+            raise AssertionError()
     
     def test_load_empty(self):
-        """When loading an empty file (we mock it here), make sure no exception occur"""
+        # When loading an empty file (we mock it here), make sure no exception occur.
         self.mock(base.Loader, 'parse', lambda self, filename: None)
         self.mock(base.Loader, 'load', lambda self: None)
         self.document.load_from_xml('filename does not matter here')
@@ -144,18 +132,15 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         self.document.load_from_xml(filename) # no crash
     
     def test_modified_flag(self):
-        """The modified flag is initially False"""
-        self.assertFalse(self.document.is_dirty())
-    
-    def test_selected_entry_index(self):
-        """entries.selected_index is None when there is no entry"""
-        self.assertEqual(self.etable.selected_indexes, [])
+        # The modified flag is initially False.
+        assert not self.document.is_dirty()
     
     def test_set_ahead_months(self):
         # setting the ahead_months preference doesn't change the current date range type
         self.app.ahead_months = 5
-        self.assertTrue(isinstance(self.document.date_range, YearRange))
+        assert isinstance(self.document.date_range, YearRange)
     
+
 class RangeOnOctober2007(TestCase):
     def setUp(self):
         self.mock_today(2007, 10, 1)
@@ -166,33 +151,31 @@ class RangeOnOctober2007(TestCase):
     def test_close_and_load(self):
         # the date range start is remembered in preference
         self.close_and_load()
-        self.assertEqual(self.document.date_range, MonthRange(date(2007, 10, 1)))
+        eq_(self.document.date_range, MonthRange(date(2007, 10, 1)))
     
     def test_graph_xaxis(self):
-        self.assertEqual(self.nwgraph.xmax - self.nwgraph.xmin, 31)
-        self.assertEqual(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x - 1 for x in [1, 32]])
+        eq_(self.nwgraph.xmax - self.nwgraph.xmin, 31)
+        eq_(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x - 1 for x in [1, 32]])
         [label] = self.nwgraph.xlabels # there is only one
-        self.assertEqual(label['text'], 'October')
+        eq_(label['text'], 'October')
         self.document.date_range = QuarterRange(self.document.date_range)
-        self.assertEqual(self.nwgraph.xmax - self.nwgraph.xmin, 92)
-        self.assertEqual(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x for x in [0, 31, 61, 92]])
-        self.assertEqual(
-            self.nwgraph.xlabels, 
-            [dict(text=text, pos=self.nwgraph.xmin + pos) 
-             for (text, pos) in [('October', 15.5), ('November', 31 + 15), ('December', 61 + 15.5)]]
-        )
+        eq_(self.nwgraph.xmax - self.nwgraph.xmin, 92)
+        eq_(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x for x in [0, 31, 61, 92]])
+        expected = [dict(text=text, pos=self.nwgraph.xmin + pos) 
+            for (text, pos) in [('October', 15.5), ('November', 31 + 15), ('December', 61 + 15.5)]]
+        eq_(self.nwgraph.xlabels, expected)
         self.document.date_range = YearRange(self.document.date_range)
-        self.assertEqual([d['text'] for d in self.nwgraph.xlabels], 
-            ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        expected = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        eq_([d['text'] for d in self.nwgraph.xlabels], expected)
     
     def test_modified_flag(self):
-        """Changing the date range does not change the modified flag"""
-        self.assertFalse(self.document.is_dirty())
+        # Changing the date range does not change the modified flag.
+        assert not self.document.is_dirty()
     
     def test_quarter_range(self):
-        """When there is no selected entry, the selected range is based on the current date range"""
+        # When there is no selected entry, the selected range is based on the current date range.
         self.document.select_quarter_range()
-        self.assertEqual(self.document.date_range, QuarterRange(date(2007, 10, 1)))
+        eq_(self.document.date_range, QuarterRange(date(2007, 10, 1)))
     
     def test_select_custom_date_range(self):
         self.document.select_custom_date_range()
@@ -210,21 +193,21 @@ class RangeOnOctober2007(TestCase):
         # still causes the change notification (so the DR display changes.
         self.document.select_custom_date_range()
         self.cdrpanel.ok()
-        self.assertEqual(self.document.date_range.display, '01/10/2007 - 31/10/2007')
+        eq_(self.document.date_range.display, '01/10/2007 - 31/10/2007')
     
     def test_select_prev_date_range(self):
-        """If no account is selected, the range is not limited"""
+        # If no account is selected, the range is not limited.
         try:
             self.document.select_prev_date_range()
         except Exception:
-            self.fail()
-        self.assertEqual(self.document.date_range, MonthRange(date(2007, 9, 1)))
+            raise AssertionError()
+        eq_(self.document.date_range, MonthRange(date(2007, 9, 1)))
     
     def test_select_today_date_range(self):
         # the document's date range wraps around today's date
         self.document.select_today_date_range()
         dr = self.document.date_range
-        self.assertTrue(dr.start <= date.today() <= dr.end)
+        assert dr.start <= date.today() <= dr.end
     
     def test_select_year_range(self):
         # Verify that the range changes.
@@ -247,8 +230,8 @@ class RangeOnJuly2006(TestCase):
         self.document.date_range = MonthRange(date(2006, 7, 1))
     
     def test_graph_xaxis(self):
-        self.assertEqual(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x - 1 for x in [1, 32]])
-
+        eq_(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x - 1 for x in [1, 32]])
+    
 
 class RangeOnYear2007(TestCase):
     def setUp(self):
@@ -256,9 +239,9 @@ class RangeOnYear2007(TestCase):
         self.document.date_range = YearRange(date(2007, 1, 1))
     
     def test_month_range(self):
-        """When there is no selected entry, the selected range is based on the current date range"""
+        # When there is no selected entry, the selected range is based on the current date range.
         self.document.select_month_range()
-        self.assertEqual(self.document.date_range, MonthRange(date(2007, 1, 1)))
+        eq_(self.document.date_range, MonthRange(date(2007, 1, 1)))
     
 
 class RangeOnYearStartsOnApril(TestCase):
@@ -297,21 +280,21 @@ class RangeOnYearToDate(TestCase):
     def test_close_and_load(self):
         # The date range preference is correctly restored
         self.close_and_load()
-        self.assertEqual(self.document.date_range, YearToDateRange())
+        eq_(self.document.date_range, YearToDateRange())
     
     def test_graph_xaxis(self):
         # The graph xaxis shows abbreviated month names
         expected = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov']
-        self.assertEqual([d['text'] for d in self.nwgraph.xlabels], expected)
+        eq_([d['text'] for d in self.nwgraph.xlabels], expected)
     
     def test_select_next_prev_today_range(self):
         # next/prev/today do nothing in YTD
         self.document.select_next_date_range()
-        self.assertEqual(self.document.date_range.start, date(2008, 1, 1))
+        eq_(self.document.date_range.start, date(2008, 1, 1))
         self.document.select_prev_date_range()
-        self.assertEqual(self.document.date_range.start, date(2008, 1, 1))
+        eq_(self.document.date_range.start, date(2008, 1, 1))
         self.document.select_today_date_range()
-        self.assertEqual(self.document.date_range.start, date(2008, 1, 1))
+        eq_(self.document.date_range.start, date(2008, 1, 1))
     
     def test_year_start_month_at_4(self):
         # when setting year_start_month at 4, the year-to-date range will start on april 1st
@@ -335,8 +318,8 @@ class RangeOnRunningYear(TestCase):
     
     def test_11_ahead_months(self):
         self.app.ahead_months = 11
-        self.assertEqual(self.document.date_range.start, date(2009, 1, 1))
-        self.assertEqual(self.document.date_range.end, date(2009, 12, 31))
+        eq_(self.document.date_range.start, date(2009, 1, 1))
+        eq_(self.document.date_range.end, date(2009, 12, 31))
     
     def test_add_entry(self):
         # _adjust_date_range() on save_edits() caused a crash
@@ -354,7 +337,7 @@ class RangeOnRunningYear(TestCase):
     def test_prev_date_range(self):
         # prev_date_range() does nothing
         self.document.select_prev_date_range()
-        self.assertEqual(self.document.date_range.start, date(2008, 4, 1))
+        eq_(self.document.date_range.start, date(2008, 4, 1))
     
 
 class RangeOnRunningYearWithAheadMonths(TestCase):
@@ -367,7 +350,7 @@ class RangeOnRunningYearWithAheadMonths(TestCase):
     
     def test_date_range(self):
         # select_running_year_range() uses the ahead_months preference
-        self.assertEqual(self.document.date_range.start, date(2008, 7, 1))
+        eq_(self.document.date_range.start, date(2008, 7, 1))
     
 
 class CustomDateRange(TestCase):
@@ -381,7 +364,7 @@ class CustomDateRange(TestCase):
     def test_close_and_load(self):
         # the custom date range's end date is kept in preferences.
         self.close_and_load()
-        self.assertEqual(self.document.date_range.display, '09/12/2008 - 18/02/2009')
+        eq_(self.document.date_range.display, '09/12/2008 - 18/02/2009')
     
 
 class OneEmptyAccountRangeOnOctober2007(TestCase):
@@ -407,95 +390,26 @@ class OneEmptyAccountRangeOnOctober2007(TestCase):
         # The extra autosave file has been deleted
         eq_(len(io.listdir(cache_path)), AUTOSAVE_BUFFER_COUNT)
     
-    def test_add_empty_entry_and_save(self):
-        """An empty entry really gets saved"""
-        self.etable.add()
-        self.etable.save_edits()
-        self.document.select_prev_date_range()
-        self.document.select_next_date_range()
-        self.assertEqual(len(self.etable), 1)
-    
     def test_balance_recursion_limit(self):
-        """Balance calculation don't cause recursion errors when there's a lot of them"""
+        # Balance calculation don't cause recursion errors when there's a lot of them.
         sys.setrecursionlimit(100)
         for i in range(100):
             self.add_entry('1/10/2007')
         try:
             self.etable[-1].balance
         except RuntimeError:
-            self.fail()
+            raise AssertionError()
         finally:
             sys.setrecursionlimit(1000)
     
     def test_modified_flag(self):
-        """Adding an account is a modification"""
-        self.assertTrue(self.document.is_dirty())
+        # Adding an account is a modification.
+        assert self.document.is_dirty()
     
     def test_save(self):
-        """Saving puts the modified flag back to false"""
+        # Saving puts the modified flag back to false.
         self.document.save_to_xml(op.join(self.tmpdir(), 'foo.xml'))
-        self.assertFalse(self.document.is_dirty())
-    
-    def test_select_prev_date_range(self):
-        """If the selected account has absolutely no entry, the date range is not limited"""
-        self.document.select_prev_date_range()
-        self.assertEqual(self.document.date_range, MonthRange(date(2007, 9, 1)))
-    
-    def test_should_show_balance_column(self):
-        """When an asset account is selected, we show the balance column"""
-        self.assertTrue(self.etable.should_show_balance_column())
-    
-
-class ThreeEmptyAccounts(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_three_accounts()
-    
-    def test_add_entry(self):
-        """An entry is added in the selected account"""
-        self.etable.add()
-        self.assertEqual(len(self.etable), 1)
-    
-    def test_add_transfer_entry(self):
-        """Add a balancing entry to the account of the entry's transfer"""
-        self.add_entry(transfer='one', increase='42.00')
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
-    
-
-class LiabilityAccount(TestCase):
-    """One liability account, empty"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy(account_type=LIABILITY)
-    
-    def test_should_show_balance_column(self):
-        """When a liability account is selected, we show the balance column"""
-        self.assertTrue(self.etable.should_show_balance_column())
-    
-
-class IncomeAccount(TestCase):
-    """One income account, empty"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy(account_type=INCOME)
-    
-    def test_should_show_balance_column(self):
-        """When an income account is selected, we don't show the balance column"""
-        self.assertFalse(self.etable.should_show_balance_column())
-    
-
-class ExpenseAccount(TestCase):
-    """One expense account, empty"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy(account_type=EXPENSE)
-    
-    def test_should_show_balance_column(self):
-        """When an expense account is selected, we don't show the balance column"""
-        self.assertFalse(self.etable.should_show_balance_column())
+        assert not self.document.is_dirty()
     
 
 class OneGroup(TestCase):
@@ -504,9 +418,9 @@ class OneGroup(TestCase):
         self.add_group()
     
     def test_should_show_balance_column(self):
-        """When a group is selected, False is returned (not None)"""
-        self.assertFalse(self.etable.should_show_balance_column())
-        self.assertTrue(isinstance(self.etable.should_show_balance_column(), bool))
+        # When a group is selected, False is returned (not None).
+        assert not self.etable.should_show_balance_column()
+        assert isinstance(self.etable.should_show_balance_column(), bool)
     
 
 class AccountWithBudget(TestCase, TestSaveLoadMixin):
@@ -528,9 +442,8 @@ class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
         self.setup_three_accounts_one_entry()
     
     def test_bind_entry_to_income_expense_accounts(self):
-        """Adding an entry with a transfer named after an existing income creates a bound entry in
-        that account
-        """
+        # Adding an entry with a transfer named after an existing income creates a bound entry in
+        # that account.
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -538,11 +451,11 @@ class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        self.assertEqual(len(self.etable), 2)
+        eq_(len(self.etable), 2)
     
 
 class EntryInEditionMode(TestCase):
-    """An empty account, but an entry is in edit mode in october 2007."""
+    # An empty account, but an entry is in edit mode in october 2007.
     def setUp(self):
         self.create_instances()
         self.add_account_legacy()
@@ -555,60 +468,58 @@ class EntryInEditionMode(TestCase):
         row.increase = '42.00'
     
     def test_add_entry(self):
-        """Make sure that the currently edited entry is saved before another one is added"""
+        # Make sure that the currently edited entry is saved before another one is added.
         self.etable.add()
-        self.assertEqual(len(self.etable), 2)
-        self.assertEqual(self.etable[0].date, '01/10/2007')
-        self.assertEqual(self.etable[0].description, 'foobar')
-        self.assertEqual(self.etable[0].increase, '42.00')
+        eq_(len(self.etable), 2)
+        eq_(self.etable[0].date, '01/10/2007')
+        eq_(self.etable[0].description, 'foobar')
+        eq_(self.etable[0].increase, '42.00')
         
     def test_delete_entries(self):
-        """Calling delete_entries() while in edition mode removes the edited entry and put the app
-        out of edition mode.
-        """
+        # Calling delete_entries() while in edition mode removes the edited entry and put the app
+        # out of edition mode.
         self.etable.delete()
-        self.assertEqual(len(self.etable), 0)
+        eq_(len(self.etable), 0)
         self.etable.save_edits() # Shouldn't raise anything
     
     def test_increase_and_decrease(self):
-        """Test the increase/decrease amount mechanism"""
+        # Test the increase/decrease amount mechanism.
         row = self.etable.selected_row
-        self.assertEqual(row.increase, '42.00')
-        self.assertEqual(row.decrease, '')
+        eq_(row.increase, '42.00')
+        eq_(row.decrease, '')
         row.decrease = '50'
-        self.assertEqual(row.increase, '')
-        self.assertEqual(row.decrease, '50.00')
+        eq_(row.increase, '')
+        eq_(row.decrease, '50.00')
         row.increase = '-12.42'
-        self.assertEqual(row.increase, '')
-        self.assertEqual(row.decrease, '12.42')
+        eq_(row.increase, '')
+        eq_(row.decrease, '12.42')
     
     def test_revert_entry(self):
-        """Reverting a newly added entry deletes it"""
+        # Reverting a newly added entry deletes it.
         self.etable.cancel_edits()
-        self.assertEqual(len(self.etable), 0)
-        self.assertFalse(self.document.is_dirty())
+        eq_(len(self.etable), 0)
+        assert not self.document.is_dirty()
     
     def test_selected_entry_index(self):
-        """entries.selected_index follows every entry that is added."""
-        self.assertEqual(self.etable.selected_indexes[0], 0)
+        # entries.selected_index follows every entry that is added.
+        eq_(self.etable.selected_indexes, [0])
     
     def test_set_debit_to_zero_with_zero_credit(self):
-        """Setting debit to zero when the credit is already zero sets the amount to zero"""
+        # Setting debit to zero when the credit is already zero sets the amount to zero.
         row = self.etable.selected_row
         row.increase = ''
-        self.assertEqual(self.etable[0].increase, '')
+        eq_(self.etable[0].increase, '')
         
     def test_set_credit_to_zero_with_non_zero_debit(self):
-        """Setting credit to zero when the debit being non-zero does nothing"""
+        # Setting credit to zero when the debit being non-zero does nothing.
         row = self.etable.selected_row
         row.decrease = ''
-        self.assertEqual(self.etable[0].increase, '42.00')
+        eq_(self.etable[0].increase, '42.00')
     
 
 class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixin):
-    """One account, one entry, which is in the yearly date range (2007). The entry has a transfer
-    and a debit value set.
-    """
+    # One account, one entry, which is in the yearly date range (2007). The entry has a transfer
+    # and a debit value set.
     # TestSaveLoadMixin: Make sure that the payee and checkno field is saved/loaded
     # TestQIFExportImportMixin: the same
     def setUp(self):
@@ -618,75 +529,74 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         self.document.date_range = YearRange(date(2007, 1, 1))
     
     def _test_entry_attribute_get_set(self, column, value='some_value'):
-        """Test that the get/set mechanism works correctly (sets the edition flag appropriately and 
-        set the value underneath)"""
+        # Test that the get/set mechanism works correctly (sets the edition flag appropriately and 
+        # set the value underneath).
         row = self.etable.selected_row
         setattr(row, column, value) # Sets the flag
         self.etable.save_edits()
         # Make sure that the values really made it down in the model by using a spanking new gui
         etable = EntryTable(self.etable_gui, self.document)
         etable.connect()
-        self.assertEqual(getattr(etable[0], column), value)
+        eq_(getattr(etable[0], column), value)
         self.save_file()
         row = self.etable.selected_row
         setattr(row, column, value) # Doesn't set the flag
         self.etable.save_edits() # Shouldn't do anything
-        self.assertFalse(self.document.is_dirty())
+        assert not self.document.is_dirty()
     
     def test_change_transfer(self):
-        """The 'Salary' account must be deleted when the bound entry is deleted"""
+        # The 'Salary' account must be deleted when the bound entry is deleted.
         row = self.etable.selected_row
         row.transfer = 'foobar'
         self.etable.save_edits()
-        self.assertEqual(self.account_names(), ['Checking', 'foobar'])
+        eq_(self.account_names(), ['Checking', 'foobar'])
     
     def test_create_income_account(self):
-        """Adding an entry in the Salary transfer added a Salary income account with a bound entry
-        in it
-        """
-        self.assertEqual(self.account_names(), ['Checking', 'Salary'])
-        self.assertEqual(self.bsheet.assets.children_count, 3)
-        self.assertEqual(self.bsheet.liabilities.children_count, 2)
+        # Adding an entry in the Salary transfer added a Salary income account with a bound entry
+        # in it.
+        eq_(self.account_names(), ['Checking', 'Salary'])
+        eq_(self.bsheet.assets.children_count, 3)
+        eq_(self.bsheet.liabilities.children_count, 2)
         self.mainwindow.select_income_statement()
-        self.assertEqual(self.istatement.income.children_count, 3)
+        eq_(self.istatement.income.children_count, 3)
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
-        self.assertEqual(self.etable[0].description, 'Deposit')
+        eq_(len(self.etable), 1)
+        eq_(self.etable[0].description, 'Deposit')
     
     def test_delete_entries(self):
-        """Deleting an entry updates the graph and makes the Salary account go away"""
+        # Deleting an entry updates the graph and makes the Salary account go away.
         self.etable.delete()
-        self.assertEqual(list(self.balgraph.data), [])
-        self.assertEqual(self.account_names(), ['Checking'])
+        eq_(list(self.balgraph.data), [])
+        eq_(self.account_names(), ['Checking'])
     
     def test_delete_entries_with_Salary_selected(self):
-        """Deleting the last entry of an income account does not remove that account"""
+        # Deleting the last entry of an income account does not remove that account.
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.etable.delete()
-        self.assertEqual(self.account_names(), ['Checking', 'Salary'])
+        eq_(self.account_names(), ['Checking', 'Salary'])
     
     def test_edit_then_revert(self):
-        """Reverting an existing entry put the old values back"""
+        # Reverting an existing entry put the old values back.
         row = self.etable.selected_row
         row.date = '11/10/2007'
         row.description = 'edited'
         row.transfer = 'edited'
         row.increase = '43'
         self.etable.cancel_edits()
-        self.assertEqual(self.etable[0].date, '10/10/2007')
-        self.assertEqual(self.etable[0].description, 'Deposit')
-        self.assertEqual(self.etable[0].transfer, 'Salary')
-        self.assertEqual(self.etable[0].increase, '42.00')
+        eq_(self.etable[0].date, '10/10/2007')
+        eq_(self.etable[0].description, 'Deposit')
+        eq_(self.etable[0].transfer, 'Salary')
+        eq_(self.etable[0].increase, '42.00')
     
     def test_entry_checkno_get_set(self):
         self._test_entry_attribute_get_set('checkno')
     
     def test_entry_debit(self):
-        """The entry is a debit"""
-        self.assertEqual(self.etable[0].increase, '42.00')
+        # The entry is a debit.
+        eq_(self.etable[0].increase, '42.00')
     
     def test_entry_decrease_get_set(self):
         self._test_entry_attribute_get_set('decrease', '12.00')
@@ -695,7 +605,7 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         self._test_entry_attribute_get_set('increase', '12.00')
     
     def test_entry_is_editable(self):
-        """An Entry has everything but balance editable"""
+        # An Entry has everything but balance editable.
         editable_columns = ['date', 'description', 'payee', 'transfer', 'increase', 'decrease', 'checkno']
         for colname in editable_columns:
             assert self.etable.can_edit_cell(colname, 0)
@@ -703,7 +613,7 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         assert not self.etable[0].can_reconcile() # Only in reconciliation mode
     
     def test_entry_is_editable_of_opposite(self):
-        """The other side of an Entry has the same edition rights as the Entry"""
+        # The other side of an Entry has the same edition rights as the Entry.
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
@@ -720,40 +630,38 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         self._test_entry_attribute_get_set('transfer')
     
     def test_graph(self):
-        """The 'Checking' account has a line graph. The 'Salary' account has a bar graph."""
+        # The 'Checking' account has a line graph. The 'Salary' account has a bar graph.
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        self.assertEqual(self.bar_graph_data(), [('01/10/2007', '01/11/2007', '42.00', '0.00')])
-        self.assertEqual(self.bargraph.title, 'Salary')
+        eq_(self.bar_graph_data(), [('01/10/2007', '01/11/2007', '42.00', '0.00')])
+        eq_(self.bargraph.title, 'Salary')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(self.graph_data(), [('11/10/2007', '42.00'), ('01/01/2008', '42.00')])
+        eq_(self.graph_data(), [('11/10/2007', '42.00'), ('01/01/2008', '42.00')])
     
     def test_new_entry_balance(self):
-        """A newly added entry has a correct balance"""
+        # A newly added entry has a correct balance.
         self.etable.add()
-        self.assertEqual(self.etable[1].balance, '42.00')
+        eq_(self.etable[1].balance, '42.00')
     
     def test_new_entry_date(self):
-        """A newly added entry has the same date as the selected entry"""
+        # A newly added entry has the same date as the selected entry.
         self.etable.add()
-        self.assertEqual(self.etable[1].date, '10/10/2007')
+        eq_(self.etable[1].date, '10/10/2007')
 
     def test_select_month_range(self):
-        """Make sure that the month range selection will be the first valid (contains at least one 
-        entry) range.
-        """
+        # Make sure that the month range selection will be the first valid (contains at least one 
+        # entry) range.
         self.document.select_month_range()
-        self.assertEqual(self.document.date_range, MonthRange(date(2007, 10, 1)))
+        eq_(self.document.date_range, MonthRange(date(2007, 10, 1)))
     
     def test_select_quarter_range(self):
-        """Make sure that the quarter range selection will be the first valid (contains at least one 
-        entry) range.
-        """
+        # Make sure that the quarter range selection will be the first valid (contains at least one 
+        # entry) range.
         self.document.select_quarter_range()
-        self.assertEqual(self.document.date_range, QuarterRange(date(2007, 10, 1)))
+        eq_(self.document.date_range, QuarterRange(date(2007, 10, 1)))
     
     def test_set_date_in_range(self):
         # Setting the date in range doesn't cause useless notifications.
@@ -775,58 +683,6 @@ class OneEntryYearRange2007(TestCase, TestSaveLoadMixin, TestQIFExportImportMixi
         expected = ['animate_date_range_forward', 'refresh_date_range_selector']
         self.check_gui_calls_partial(self.mainwindow_gui, expected)
     
-
-class EntryWithoutTransfer(TestCase):
-    """An entry without a transfer account set"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy()
-        self.add_entry(description='foobar', decrease='130')
-    
-    def test_entry_transfer(self):
-        """Instead of showing 'Imbalance', the transfer column shows nothing"""
-        self.assertEqual(self.etable[0].transfer, '')
-    
-
-class EntryWithCredit(TestCase):
-    """An entry with a credit"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy()
-        self.add_entry(decrease='42.00')
-    
-    def test_set_decrease_to_zero_with_zero_increase(self):
-        """Setting decrease to zero when the increase is already zero sets the amount to zero"""
-        row = self.etable.selected_row
-        row.decrease = ''
-        self.assertEqual(self.etable[0].decrease, '')
-        
-    def test_set_increase_to_zero_with_non_zero_decrease(self):
-        """Setting increase to zero when the decrease being non-zero does nothing"""
-        row = self.etable.selected_row
-        row.increase = ''
-        self.assertEqual(self.etable[0].decrease, '42.00')
-    
-    def test_amount(self):
-        """The amount attribute is correct."""
-        self.assertEqual(self.etable[0].decrease, '42.00')
-
-
-class EntryInLiabilities(TestCase, TestQIFExportImportMixin):
-    """An entry in a liability account.
-    
-    TestQIFExportImportMixin: make sure liability accounts are exported/imported correctly.
-    """
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2008, 1, 1))
-        self.add_account_legacy('Credit card', account_type=LIABILITY)
-        self.add_entry('1/1/2008', 'Payment', increase='10')
-
-    def test_amount(self):
-        """The amount attribute is correct."""
-        self.assertEqual(self.etable[0].increase, '10.00')
-        
 
 class TwoBoundEntries(TestCase):
     """2 entries in 2 accounts 'first' and 'second' that are part of the same transaction. There is 
