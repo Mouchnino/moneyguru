@@ -13,6 +13,7 @@ from nose.tools import eq_
 
 from hsutil.currency import PLN, CAD
 
+from ..model.account import INCOME
 from ..model.date import MonthRange
 from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
 
@@ -203,4 +204,26 @@ class LoadWithReferences1(TestCase):
         # 2 entries, first is not reconciled, second is.
         assert not self.etable[0].reconciled
         assert self.etable[1].reconciled
+    
+
+class AccountWithBudget(TestCase, TestSaveLoadMixin):
+    # TestSaveLoadMixin: Budgets are correctly saved/loaded
+    def setUp(self):
+        # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
+        self.create_instances()
+        self.add_account_legacy('asset')
+        self.add_account_legacy('income', account_type=INCOME)
+        self.apanel.load()
+        self.apanel.budget = '400'
+        self.apanel.save()
+    
+
+class TransactionWithPayeeAndChackno(TestCase, TestSaveLoadMixin, TestQIFExportImportMixin):
+    # TestSaveLoadMixin: Make sure that the payee and checkno field is saved/loaded
+    # TestQIFExportImportMixin: the same
+    def setUp(self):
+        self.create_instances()
+        self.add_account('Checking')
+        self.document.show_selected_account()
+        self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
     

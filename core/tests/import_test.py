@@ -13,7 +13,7 @@ from nose.tools import eq_
 
 from hsutil.currency import PLN, CAD
 
-from .base import ApplicationGUI, TestCase as TestCaseBase
+from .base import ApplicationGUI, TestCase as TestCaseBase, TestQIFExportImportMixin
 from ..app import Application
 from ..exception import FileFormatError
 from ..model.date import MonthRange, YearRange
@@ -25,7 +25,8 @@ class TestCase(TestCaseBase):
             self.iwin.import_selected_pane()
     
 
-class Pristine(TestCase):
+class Pristine(TestCase, TestQIFExportImportMixin):
+    # TestQIFExportImportMixin: Make sure nothing is wrong when the file is empty
     def setUp(self):
         self.create_instances()
     
