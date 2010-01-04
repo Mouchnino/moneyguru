@@ -26,7 +26,7 @@ AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 DONT_UNRECONCILE_PREFERENCE = 'DontUnreconcile'
 
 class Application(Broadcaster, RegistrableApplication):
-    VERSION = '1.6.9'
+    VERSION = '1.6.10'
     DEMO_LIMIT_DESC = "In the demo version, documents with more than 100 transactions cannot be saved."
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
