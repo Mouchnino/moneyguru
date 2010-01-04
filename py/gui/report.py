@@ -212,7 +212,8 @@ class Report(DocumentGUIObject, tree.Tree):
                 self.document.change_group(node.group, name=node.name)
         except DuplicateAccountNameError:
             msg = "The account '{0}' already exists.".format(node.name)
-            node.name = node.account.name if node.is_account else node.group.name
+            # we use _name because we don't want to change self.edited
+            node._name = node.account.name if node.is_account else node.group.name
             self.view.show_message(msg)
     
     def show_selected_account(self):

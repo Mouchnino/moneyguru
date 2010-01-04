@@ -215,8 +215,9 @@ class OneEmptyAccount(TestCase):
         self.bsheet.add_account()
         self.bsheet.selected.name = 'checking' # fails
         self.bsheet.save_edits()
-        self.assertEqual(self.bsheet.selected.name, 'New account')
+        eq_(self.bsheet.selected.name, 'New account')
         self.check_gui_calls_partial(self.bsheet_gui, show_message=1)
+        assert self.bsheet.edited is None
     
     def test_make_account_liability(self):
         """Making the account a liability account refreshes all views."""
