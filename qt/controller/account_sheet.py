@@ -11,7 +11,8 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect, QSize
-from PyQt4.QtGui import QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont, QStyleOptionViewItemV4
+from PyQt4.QtGui import (QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont, QStyleOptionViewItemV4,
+    QMessageBox)
 
 from hsutil.misc import nonone
 from qtlib.tree_model import TreeNode, TreeModel
@@ -285,6 +286,10 @@ class AccountSheet(TreeModel, ColumnBearer):
         self._restoreNodeExpansionState()
         self._wasRestored = True
         self._updateViewSelection()
+    
+    def show_message(self, msg):
+        title = "Warning"
+        QMessageBox.warning(self.view, title, msg)
     
     def start_editing(self):
         self.view.editSelected()
