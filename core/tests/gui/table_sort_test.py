@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 
 from nose.tools import eq_
 
+from ...model.account import EXPENSE
 from ..base import TestCase
 
 class TransactionsWithInfoFilledUp(TestCase):
@@ -71,4 +72,48 @@ class TransactionsWithAccents(TestCase):
         eq_(self.ttable[1].description, 'éa')
         eq_(self.ttable[2].description, 'ez')
         eq_(self.ttable[3].description, 'ZZZ')
+    
+
+class EntriesWithReconciliationDate(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account()
+        self.document.show_selected_account()
+        self.add_entry('05/01/2010')
+        self.add_entry('05/01/2010')
+        self.etable[1].reconciliation_date = '05/01/2010'
+        self.etable.save_edits()
+    
+    def test_sort_by_reconciliation_date(self):
+        # Don't crash because some dates are None.
+        self.etable.sort_by('reconciliation_date') # no crash
+        eq_(self.etable[0].reconciliation_date, '')
+        eq_(self.etable[1].reconciliation_date, '05/01/2010')
+    
+
+class TwoBudgetsWithOneNoneStopDate(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('expense', account_type=EXPENSE)
+        self.add_budget('expense', None, '42', stop_date=None)
+        self.add_budget('expense', None, '42', stop_date='21/12/2012')
+    
+    def test_sort_by_stop_date(self):
+        # Don't crash because some dates are None.
+        self.btable.sort_by('stop_date') # no crash
+        eq_(self.btable[0].stop_date, '')
+        eq_(self.btable[1].stop_date, '21/12/2012')
+    
+
+class TwoSchedulesWithOneNoneStopDate(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_schedule(stop_date=None)
+        self.add_schedule(stop_date='21/12/2012')
+    
+    def test_sort_by_stop_date(self):
+        # Don't crash because some dates are None.
+        self.sctable.sort_by('stop_date') # no crash
+        eq_(self.sctable[0].stop_date, '')
+        eq_(self.sctable[1].stop_date, '21/12/2012')
     

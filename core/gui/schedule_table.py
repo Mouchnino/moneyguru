@@ -6,11 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import datetime
+
 from ..model.amount import convert_amount
-from ..model.recurrence import Spawn
 from .base import DocumentGUIObject
 from .table import GUITable, Row, rowattr
-from .transaction_table import TransactionTableRow
 
 class ScheduleTable(GUITable, DocumentGUIObject):
     def __init__(self, view, document):
@@ -58,6 +58,7 @@ class ScheduleTableRow(Row):
         self.transaction = schedule.ref
         self.load()
     
+    #--- Public
     def load(self):
         schedule = self.schedule
         txn = schedule.ref
@@ -82,12 +83,19 @@ class ScheduleTableRow(Row):
             self._amount = sum(s.amount for s in tos)
         except ValueError: # currency coercing problem
             currency = self.document.app.default_currency
-            self._amount = sum(convert_amount(s.amount, currency, transaction.date) for s in tos)
+            self._amount = sum(convert_amount(s.amount, currency, s.transaction.date) for s in tos)
         self._amount_fmt = self.document.app.format_amount(self._amount)
     
     def save(self):
         pass # read-only
     
+    def sort_key_for_column(self, column_name):
+        if column_name == 'stop_date' and self._stop_date is None:
+            return datetime.date.min
+        else:
+            return Row.sort_key_for_column(self, column_name)
+    
+    #--- Properties
     start_date = rowattr('_start_date_fmt')
     stop_date = rowattr('_stop_date_fmt')
     repeat_type = rowattr('_repeat_type')

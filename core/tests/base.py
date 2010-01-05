@@ -438,6 +438,28 @@ class TestCase(TestCaseBase):
         if name is not None:
             self.document.change_group(group, name=name)
     
+    def add_schedule(self, start_date=None, description='', account=None, amount=0, 
+            repeat_type_index=0, repeat_every=1, stop_date=None):
+        if start_date is None:
+            start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
+        self.mainwindow.select_schedule_table()
+        self.scpanel.new()
+        self.scpanel.start_date = start_date
+        self.scpanel.description = description
+        self.scpanel.repeat_type_index = repeat_type_index
+        self.scpanel.repeat_every = repeat_every
+        if stop_date is not None:
+            self.scpanel.stop_date = stop_date
+        if account:
+            self.scsplittable.add()
+            self.scsplittable.edited.account = account
+            if amount >= 0:
+                self.scsplittable.edited.debit = amount
+            else:
+                self.scsplittable.edited.credit = amount
+            self.scsplittable.save_edits()
+        self.scpanel.save()
+    
     def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
                 checkno=None):
         self.mainwindow.select_transaction_table()

@@ -239,6 +239,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
             balance = -balance
         return balance
     
+    #--- Public
     def can_edit(self):
         return False
     
@@ -248,6 +249,13 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     def is_balance_negative(self):
         return self._the_balance() < 0
     
+    def sort_key_for_column(self, column_name):
+        if column_name == 'reconciliation_date' and self._reconciliation_date is None:
+            return datetime.date.min
+        else:
+            return RowWithDebitAndCredit.sort_key_for_column(self, column_name)
+    
+    #--- Properties
     @property
     def date(self):
         return self.table.document.app.format_date(self._date)
