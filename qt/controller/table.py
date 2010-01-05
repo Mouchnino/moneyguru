@@ -144,7 +144,10 @@ class Table(QAbstractTableModel, ColumnBearer):
     
     def sort(self, section, order):
         column = self.COLUMNS[section]
-        self.model.sort_by(column.attrname)
+        attrname = column.attrname
+        if attrname == 'from_':
+            attrname = 'from'
+        self.model.sort_by(attrname, desc=order==Qt.DescendingOrder)
     
     def submit(self):
         self.model.save_edits()

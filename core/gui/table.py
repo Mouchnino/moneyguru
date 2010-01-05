@@ -40,9 +40,9 @@ class Table(list):
         list.remove(self, row)
         self._check_selection_range()
     
-    def sort_by(self, column_name):
+    def sort_by(self, column_name, desc=False):
         key = lambda row: row.sort_key_for_column(column_name)
-        self.sort(key=key)
+        self.sort(key=key, reverse=desc)
     
     @property
     def selected_row(self):
@@ -176,8 +176,8 @@ class GUITable(Table):
         self.selected_indexes = row_indexes
         self._update_selection()
     
-    def sort_by(self, column_name):
-        Table.sort_by(self, column_name)
+    def sort_by(self, *args, **kwargs):
+        Table.sort_by(self, *args, **kwargs)
         self.view.refresh()
     
     #--- Event handlers

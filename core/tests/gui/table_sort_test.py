@@ -36,6 +36,13 @@ class TransactionsWithInfoFilledUp(TestCase):
         eq_(self.ttable[1].description, 'desc')
         eq_(self.ttable[2].description, 'zzz')
     
+    def test_sort_by_description_desc(self):
+        # When `desc` is True, the sort order is inverted
+        self.ttable.sort_by('description', desc=True)
+        eq_(self.ttable[0].description, 'zzz')
+        eq_(self.ttable[1].description, 'desc')
+        eq_(self.ttable[2].description, 'aaa')
+    
     def test_sort_by_from(self):
         # we deal with the from --> from_ escaping. At the time this test was written, it didn't
         # fail because the we're just fetching '_from', but it's still a case that can very likely

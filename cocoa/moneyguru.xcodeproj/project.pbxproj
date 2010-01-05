@@ -769,7 +769,7 @@
 			children = (
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
-				CEEED1D30E3F763100BBA154 /* ../images */,
+				CEEED1D30E3F763100BBA154 /* images */,
 				CE873A620E21621F004F63E9 /* xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */,
@@ -999,7 +999,7 @@
 			path = support;
 			sourceTree = "<group>";
 		};
-		CEEED1D30E3F763100BBA154 /* ../images */ = {
+		CEEED1D30E3F763100BBA154 /* images */ = {
 			isa = PBXGroup;
 			children = (
 				CE8CD7AC1042E340004B30E0 /* budget_16.png */,
@@ -1029,6 +1029,7 @@
 				07FDA2D90E41231C006709EA /* right_arrow_white_12.png */,
 				CEEED1D40E3F763100BBA154 /* check_16.png */,
 			);
+			name = images;
 			path = ../images;
 			sourceTree = "<group>";
 		};

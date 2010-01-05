@@ -21,6 +21,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectRows:(NSArray *)rows;
 - (NSArray *)selectedRows;
 - (void)setValue:(id)value forColumn:(NSString *)column row:(int)row;
-- (void)sortByColumn:(NSString *)column;
+- (void)sortByColumn:(NSString *)column desc:(BOOL)desc;
 - (id)valueForColumn:(NSString *)column row:(int)row;
 @end

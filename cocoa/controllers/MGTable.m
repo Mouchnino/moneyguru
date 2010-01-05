@@ -41,9 +41,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* NSTableView Delegate */
 
-- (void)tableView:(NSTableView *)outlineView didClickTableColumn:(NSTableColumn *)column
+- (void)tableView:(NSTableView *)aTableView didClickTableColumn:(NSTableColumn *)column
 {
-    [[self py] sortByColumn:[column identifier]];
+    if ([[aTableView sortDescriptors] count] == 0)
+        return;
+    NSSortDescriptor *sd = [[aTableView sortDescriptors] objectAtIndex:0];
+    [[self py] sortByColumn:[sd key] desc:![sd ascending]];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
