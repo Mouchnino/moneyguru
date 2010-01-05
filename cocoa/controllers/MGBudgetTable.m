@@ -15,6 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyBudgetTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
+    [tableView setSortDescriptors:[NSArray array]];
     return self;
 }
 

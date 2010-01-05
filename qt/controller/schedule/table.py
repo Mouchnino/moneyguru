@@ -30,6 +30,7 @@ class ScheduleTable(Table):
     def __init__(self, doc, view):
         model = ScheduleTableModel(view=self, document=doc.model)
         Table.__init__(self, model, view)
+        self.view.sortByColumn(0, Qt.AscendingOrder) # sorted by start_date by default
         self.view.deletePressed.connect(self.model.delete)
         self.view.doubleClicked.connect(self.model.edit)
     

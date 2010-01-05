@@ -20,6 +20,9 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super initWithPyClassName:@"PyEntryTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
     [tableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
+    // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
+    NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
+    [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
     [columnsManager linkColumn:@"description" toUserDefault:AccountDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:AccountPayeeColumnVisible];

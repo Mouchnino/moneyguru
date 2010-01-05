@@ -31,6 +31,7 @@ class EntryTable(TableWithTransactions):
         model = EntryTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
         self.totalsLabel = totalsLabel
+        self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.clicked.connect(self.cellClicked)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.spacePressed.connect(self.model.toggle_reconciled)

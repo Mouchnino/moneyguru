@@ -131,6 +131,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">start_date</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 											<object class="NSTableColumn" id="638528252">
 												<string key="NSIdentifier">stop_date</string>
@@ -160,6 +165,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">stop_date</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 											<object class="NSTableColumn" id="542562379">
 												<string key="NSIdentifier">repeat_type</string>
@@ -189,6 +199,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">repeat_type</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 											<object class="NSTableColumn" id="462100226">
 												<string key="NSIdentifier">interval</string>
@@ -218,6 +233,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">interval</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 											<object class="NSTableColumn" id="677296856">
 												<string key="NSIdentifier">account</string>
@@ -252,6 +272,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">account</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 											<object class="NSTableColumn" id="696403463">
 												<string key="NSIdentifier">target</string>
@@ -278,6 +303,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">target</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 											<object class="NSTableColumn" id="51568825">
 												<string key="NSIdentifier">amount</string>
@@ -304,6 +334,11 @@
 												<int key="NSResizingMask">2</int>
 												<bool key="NSIsResizeable">YES</bool>
 												<reference key="NSTableView" ref="920014116"/>
+												<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+													<string key="NSKey">amount</string>
+													<bool key="NSAscending">YES</bool>
+													<string key="NSSelector">compare:</string>
+												</object>
 											</object>
 										</object>
 										<double key="NSIntercellSpacingWidth">3</double>
@@ -883,14 +918,14 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">cocoalib/AMButtonBar/AMButtonBar.h</string>
+						<string key="minorKey">AMButtonBar/AMButtonBar.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">cocoalib/PSMTabBarControl/PSMTabBarControl.h</string>
+						<string key="minorKey">PSMTabBarControl/PSMTabBarControl.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

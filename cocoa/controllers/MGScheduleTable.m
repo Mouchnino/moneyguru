@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
+    [tableView setSortDescriptors:[NSArray array]];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
     [columnsManager linkColumn:@"description" toUserDefault:ScheduleDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:SchedulePayeeColumnVisible];

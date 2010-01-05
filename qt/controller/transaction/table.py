@@ -33,6 +33,7 @@ class TransactionTable(TableWithTransactions):
         model = TransactionTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
         self.totalsLabel = totalsLabel
+        self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.deletePressed.connect(self.model.delete)
     
