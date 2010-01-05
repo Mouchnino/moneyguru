@@ -8,6 +8,8 @@
 
 import datetime
 
+from ..model.sort import sort_string
+
 class Table(list):
     def __init__(self):
         list.__init__(self)
@@ -272,7 +274,10 @@ class Row(object):
         # Most of the time, the adequate sort key for a column is the column name with '_' prepended
         # to it. This member usually corresponds to the unformated version of the column.
         # Of course, override for exceptions.
-        return getattr(self, '_' + column_name)
+        value = getattr(self, '_' + column_name)
+        if isinstance(value, basestring):
+            value = sort_string(value)
+        return value
     
     #--- Public
     def can_edit_cell(self, column_name):

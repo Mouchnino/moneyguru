@@ -9,16 +9,13 @@
 from __future__ import division
 
 import bisect
-import re
-import unicodedata
-from datetime import date
 from functools import partial
 from itertools import takewhile
 
 from hsutil.misc import flatten
 
 from .amount import convert_amount
-from .date import MonthRange
+from .sort import sort_string
 from ..exception import DuplicateAccountNameError
 
 # Account types
@@ -31,16 +28,10 @@ TYPE_ORDER = [ASSET, LIABILITY, INCOME, EXPENSE]
 # Placeholder when an argument is not given
 NOT_GIVEN = object()
 
-# The range of diacritics in Unicode
-diacritics = re.compile(u'[\u0300-\u036f\u1dc0-\u1dff]')
-
-def sort_key(s):
-    """Returns a normalized version of 's' to be used for sorting."""
-    return diacritics.sub('', unicodedata.normalize('NFD', unicode(s)).lower())
-
 def sort_accounts(accounts):
-    """Sort accounts according first to their type, then to their name"""
-    accounts.sort(key=lambda a: (TYPE_ORDER.index(a.type), sort_key(a.name)))
+    """Sort accounts according first to their type, then to their name.
+    """
+    accounts.sort(key=lambda a: (TYPE_ORDER.index(a.type), sort_string(a.name)))
 
 class Account(object):
     def __init__(self, name, currency, type):
@@ -67,7 +58,7 @@ class Account(object):
     def __cmp__(self, other):
         # This will be called only for inequalities because __eq__() and
         # __ne__() are defined for this class too.
-        return cmp(sort_key(self.name), sort_key(other.name))
+        return cmp(sort_string(self.name), sort_string(other.name))
     
     #--- Private
     def _balance(self, balance_attr, date=None, currency=None):
@@ -192,7 +183,7 @@ class Group(object):
     def __cmp__(self, other):
         # This will be called only for inequalities because __eq__() and
         # __ne__() are defined for this class too.
-        return cmp(sort_key(self.name), sort_key(other.name))
+        return cmp(sort_string(self.name), sort_string(other.name))
     
 
 def new_name(base_name, search_func):

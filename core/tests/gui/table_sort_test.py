@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from nose.tools import eq_
 
 from ..base import TestCase
@@ -52,4 +54,21 @@ class TransactionsWithInfoFilledUp(TestCase):
         eq_(self.ttable[1].from_, 'from')
         eq_(self.ttable[2].from_, 'zzz')
     
+
+class TransactionsWithAccents(TestCase):
+    # Transactions with accented letters in their descriptions
+    def setUp(self):
+        self.create_instances()
+        self.add_txn(description='aaa')
+        self.add_txn(description='ZZZ')
+        self.add_txn(description='ez')
+        self.add_txn(description='éa')
+    
+    def test_sort_by_description(self):
+        # Letters with accents are treated as if they didn't have their accent.
+        self.ttable.sort_by('description')
+        eq_(self.ttable[0].description, 'aaa')
+        eq_(self.ttable[1].description, 'éa')
+        eq_(self.ttable[2].description, 'ez')
+        eq_(self.ttable[3].description, 'ZZZ')
     
