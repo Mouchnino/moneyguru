@@ -375,6 +375,9 @@ class PyTable(PyCompletion):
         except IndexError:
             logging.warning("Trying to set an out of bounds row ({0} / {1})".format(row, len(self.py)))
     
+    def sortByColumn_(self, column):
+        self.py.sort_by(column)
+    
     @objc.signature('@@:@i')
     def valueForColumn_row_(self, column, row):
         if column == 'from':

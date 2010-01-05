@@ -142,6 +142,11 @@ class Table(QAbstractTableModel, ColumnBearer):
         column = self.COLUMNS[index.column()]
         return self._setData(row, column, value, role)
     
+    def sort(self, section, order):
+        column = self.COLUMNS[section]
+        self.model.sort_by(column.attrname)
+        self.reset()
+    
     def submit(self):
         self.model.save_edits()
         return True

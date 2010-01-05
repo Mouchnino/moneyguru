@@ -41,6 +41,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* NSTableView Delegate */
 
+- (void)tableView:(NSTableView *)outlineView didClickTableColumn:(NSTableColumn *)column
+{
+    [[self py] sortByColumn:[column identifier]];
+    [[self tableView] reloadData];
+}
+
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
     NSArray *selection = [Utils indexSet2Array:[[self tableView] selectedRowIndexes]];

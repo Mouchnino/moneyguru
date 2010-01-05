@@ -40,8 +40,9 @@ class Table(list):
         list.remove(self, row)
         self._check_selection_range()
     
-    def sort(self, *args, **kwargs):
-        raise NotImplementedError()
+    def sort_by(self, column_name):
+        key = lambda row: row.sort_key_for_column(column_name)
+        self.sort(key=key)
     
     @property
     def selected_row(self):
@@ -262,6 +263,12 @@ class Row(object):
     
     def save(self):
         raise NotImplementedError()
+    
+    def sort_key_for_column(self, column_name):
+        # Most of the time, the adequate sort key for a column is the column name with '_' prepended
+        # to it. This member usually corresponds to the unformated version of the column.
+        # Of course, override for exceptions.
+        return getattr(self, '_' + column_name)
     
     #--- Public
     def can_edit_cell(self, column_name):
