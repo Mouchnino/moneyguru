@@ -67,6 +67,13 @@ class Pristine(TestCase):
         self.mainwindow.new_item()
         self.check_gui_calls_partial(self.scpanel_gui, ['refresh_repeat_options'])
     
+    def test_sort_table(self):
+        # sorting a table refreshes it.
+        self.mainwindow.select_transaction_table()
+        self.clear_gui_calls()
+        self.ttable.sort_by('description')
+        self.check_gui_calls(self.ttable_gui, ['refresh'])
+    
     def test_ttable_add_and_cancel(self):
         # gui calls on the ttable are correctly made
         self.mainwindow.select_transaction_table()

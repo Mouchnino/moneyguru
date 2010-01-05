@@ -44,7 +44,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)tableView:(NSTableView *)outlineView didClickTableColumn:(NSTableColumn *)column
 {
     [[self py] sortByColumn:[column identifier]];
-    [[self tableView] reloadData];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification

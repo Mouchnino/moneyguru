@@ -145,7 +145,6 @@ class Table(QAbstractTableModel, ColumnBearer):
     def sort(self, section, order):
         column = self.COLUMNS[section]
         self.model.sort_by(column.attrname)
-        self.reset()
     
     def submit(self):
         self.model.save_edits()

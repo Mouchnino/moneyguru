@@ -176,6 +176,10 @@ class GUITable(Table):
         self.selected_indexes = row_indexes
         self._update_selection()
     
+    def sort_by(self, column_name):
+        Table.sort_by(self, column_name)
+        self.view.refresh()
+    
     #--- Event handlers
     def edition_must_stop(self):
         self.view.stop_editing()
