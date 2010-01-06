@@ -130,3 +130,38 @@ class TwoTransactionsWithDifferentCurrencies(TestCase):
         eq_(self.ttable[0].amount, 'GBP 42.00')
         eq_(self.ttable[1].amount, 'CAD 43.00')
     
+
+class MixedUpReconciledScheduleAndBudget(TestCase):
+    # A mix of 4 txns. One reconciled, one normal, one schedule spawn and one budget spawn.
+    def setUp(self):
+        self.mock_today(2010, 1, 1)
+        self.create_instances()
+        self.document.select_month_range() # we just want 4 transactions
+        self.add_account('expense', account_type=EXPENSE)
+        self.add_account('asset')
+        self.document.show_selected_account()
+        self.add_entry('02/01/2010', description='reconciled')
+        self.etable[0].reconciliation_date = '02/01/2010'
+        self.etable.save_edits()
+        self.add_txn('01/01/2010', description='plain', from_='asset')
+        self.add_schedule(repeat_type_index=2, description='schedule', account='asset', amount='42') # monthly
+        self.add_budget('expense', 'asset', '500', start_date='01/01/2010')
+    
+    def test_sort_etable_by_status(self):
+        # Reconciled are first, then plain, then schedules, then budgets
+        self.mainwindow.select_entry_table() # 'asset' is already selected from setup
+        self.etable.sort_by('status')
+        eq_(self.etable[0].description, 'reconciled')
+        eq_(self.etable[1].description, 'plain')
+        eq_(self.etable[2].description, 'schedule')
+        assert self.etable[3].is_budget
+    
+    def test_sort_ttable_by_status(self):
+        # Reconciled are first, then plain, then schedules, then budgets
+        self.mainwindow.select_transaction_table()
+        self.ttable.sort_by('status')
+        eq_(self.ttable[0].description, 'reconciled')
+        eq_(self.ttable[1].description, 'plain')
+        eq_(self.ttable[2].description, 'schedule')
+        assert self.ttable[3].is_budget
+    

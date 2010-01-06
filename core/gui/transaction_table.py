@@ -159,6 +159,7 @@ class TransactionTableRow(RowWithDate):
                 continue
             yield TransactionTableRow(self.table, transaction)
     
+    #--- Public
     def can_edit(self):
         return not self.is_budget
     
@@ -198,6 +199,20 @@ class TransactionTableRow(RowWithDate):
             kw['amount'] = self._amount
         self.document.change_transactions([self.transaction], **kw)
         self.load()
+    
+    def sort_key_for_column(self, column_name):
+        if column_name == 'status':
+            # First reconciled, then plain ones, then schedules, then budgets
+            if self.reconciled:
+                return 0
+            elif self.recurrent:
+                return 2
+            elif self.is_budget:
+                return 3
+            else:
+                return 1
+        else:
+            return RowWithDate.sort_key_for_column(self, column_name)
     
     #--- Properties
     # The "get" part of those properies below are called *very* often, hence, the format caching
