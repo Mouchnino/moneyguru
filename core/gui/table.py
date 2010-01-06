@@ -8,6 +8,7 @@
 
 import datetime
 
+from ..model.amount import Amount
 from ..model.sort import sort_string
 
 class Table(list):
@@ -277,6 +278,8 @@ class Row(object):
         value = getattr(self, '_' + column_name)
         if isinstance(value, basestring):
             value = sort_string(value)
+        elif isinstance(value, Amount):
+            value = value.value
         return value
     
     #--- Public

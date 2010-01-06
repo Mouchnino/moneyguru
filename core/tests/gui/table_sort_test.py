@@ -117,3 +117,16 @@ class TwoSchedulesWithOneNoneStopDate(TestCase):
         eq_(self.sctable[0].stop_date, '')
         eq_(self.sctable[1].stop_date, '21/12/2012')
     
+
+class TwoTransactionsWithDifferentCurrencies(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_txn(amount='42 GBP')
+        self.add_txn(amount='43 CAD')
+    
+    def test_sort_by_amount(self):
+        # When sorting by amount, just use the raw number as a sort key. Ignore currencies.
+        self.ttable.sort_by('amount') # no crash
+        eq_(self.ttable[0].amount, 'GBP 42.00')
+        eq_(self.ttable[1].amount, 'CAD 43.00')
+    
