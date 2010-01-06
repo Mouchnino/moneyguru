@@ -124,7 +124,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if ([[self py] isRegistered])
         return;
-    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC];
+    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:[self py]];
     [ri enterCode];    
     [ri release];
 }
@@ -138,7 +138,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [RegistrationInterface showNagWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC];
+    [RegistrationInterface showNagWithApp:[self py]];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if ([ud boolForKey:@"MGHadFirstLaunch"])
     {

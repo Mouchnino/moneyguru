@@ -67,8 +67,3 @@ http://www.hardcoded.net/licenses/hs_license
 // Others
 #define ShowRecurrenceScopeDialog @"ShowRecurrenceScopeDialog"
 #define TableFontSize @"TableFontSize"
-
-/* Registration */
-
-#define APPNAME @"moneyGuru"
-#define LIMIT_DESC @"In the demo version, documents with more than 100 transactions cannot be saved."

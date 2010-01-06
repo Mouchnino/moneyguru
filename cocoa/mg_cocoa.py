@@ -138,6 +138,12 @@ class PyMoneyGuruApp(NSObject):
         self.py.autosave_interval = minutes
     
     #---Registration
+    def appName(self):
+        return self.py.APP_NAME
+    
+    def demoLimitDescription(self):
+        return self.py.DEMO_LIMIT_DESC
+    
     @objc.signature('i@:')
     def isRegistered(self):
         return self.py.registered

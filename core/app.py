@@ -24,6 +24,7 @@ YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 
 class Application(Broadcaster, RegistrableApplication):
+    APP_NAME = "moneyGuru"
     VERSION = '1.6.10'
     DEMO_LIMIT_DESC = "In the demo version, documents with more than 100 transactions cannot be saved."
     
