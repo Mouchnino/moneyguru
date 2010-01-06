@@ -217,6 +217,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     def __init__(self, table):
         super(BaseEntryTableRow, self).__init__(table)
         self._date = datetime.date.today()
+        self._position = 0
         self._description = ''
         self._payee = ''
         self._checkno = ''
@@ -250,7 +251,9 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         return self._the_balance() < 0
     
     def sort_key_for_column(self, column_name):
-        if column_name == 'reconciliation_date' and self._reconciliation_date is None:
+        if column_name == 'date':
+            return (self._date, self._position)
+        elif column_name == 'reconciliation_date' and self._reconciliation_date is None:
             return datetime.date.min
         elif column_name == 'status':
             # First reconciled, then plain ones, then schedules, then budgets
@@ -371,6 +374,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     def load(self):
         entry = self.entry
         self._date = entry.date
+        self._position = entry.transaction.position
         self._description = entry.description
         self._payee = entry.payee
         self._checkno = entry.checkno

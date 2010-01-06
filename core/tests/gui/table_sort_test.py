@@ -14,21 +14,6 @@ from nose.tools import eq_
 from ...model.account import EXPENSE
 from ..base import TestCase
 
-class SortedByDescription(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_transaction_table()
-        self.ttable.sort_by('description')
-    
-    def test_sort_order_persistent(self):
-        # When changing transactions, the table is re-sorted automatically according to the current
-        # sorting.
-        self.add_txn(description='foo')
-        self.add_txn(description='bar')
-        eq_(self.ttable[0].description, 'bar')
-        eq_(self.ttable[1].description, 'foo')
-    
-
 class TransactionsWithInfoFilledUp(TestCase):
     # Transactions with all kinds of info filled up (desc, payee, checkno...)
     def setUp(self):
@@ -179,4 +164,34 @@ class MixedUpReconciledScheduleAndBudget(TestCase):
         eq_(self.ttable[1].description, 'plain')
         eq_(self.ttable[2].description, 'schedule')
         assert self.ttable[3].is_budget
+    
+
+class TwoTransactionsAddedWhenSortedByDescription(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.mainwindow.select_transaction_table()
+        self.ttable.sort_by('description')
+        self.add_txn(description='foo', from_='asset')
+        self.add_txn(description='bar', from_='asset')
+    
+    def test_sort_etable_by_description_then_by_date(self):
+        # Like with ttable, etable doesn't ignore txn position when sorting by date.
+        self.show_account('asset')
+        self.etable.sort_by('description')
+        self.etable.sort_by('date')
+        eq_(self.etable[0].description, 'foo')
+        eq_(self.etable[1].description, 'bar')
+    
+    def test_sort_ttable_by_date(self):
+        # When sorting by date, the "position" attribute of the transaction is taken into account
+        # when transactions have the same date.
+        self.ttable.sort_by('date')
+        eq_(self.ttable[0].description, 'foo')
+        eq_(self.ttable[1].description, 'bar')
+    
+    def test_sort_order_persistent(self):
+        # When changing transactions, the table is re-sorted automatically according to the current
+        # sorting.
+        eq_(self.ttable[0].description, 'bar')
+        eq_(self.ttable[1].description, 'foo')
     

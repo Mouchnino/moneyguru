@@ -543,6 +543,24 @@ class TestCase(TestCaseBase):
         self.document._cook() # Make sure the balances have been converted using the latest fetched rates
         return newdoc
     
+    def show_account(self, account_name):
+        # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
+        predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
+        self.mainwindow.select_balance_sheet()
+        node = self.bsheet.find(predicate)
+        if node is not None:
+            self.bsheet.selected = node
+            self.document.show_selected_account()
+            return
+        self.mainwindow.select_income_statement()
+        node = self.istatement.find(predicate)
+        if node is not None:
+            self.istatement.selected = node
+            self.document.show_selected_account()
+            return
+        else:
+            raise LookupError("Trying to show an account that doesn't exist")
+    
     def transaction_descriptions(self):
         return [row.description for row in self.ttable]
     

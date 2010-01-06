@@ -167,6 +167,7 @@ class TransactionTableRow(RowWithDate):
         transaction = self.transaction
         self._date = self.transaction.date
         self._date_fmt = None
+        self._position = transaction.position
         self._description = self.transaction.description
         self._payee = self.transaction.payee
         self._checkno = self.transaction.checkno
@@ -201,7 +202,9 @@ class TransactionTableRow(RowWithDate):
         self.load()
     
     def sort_key_for_column(self, column_name):
-        if column_name == 'status':
+        if column_name == 'date':
+            return (self._date, self._position)
+        elif column_name == 'status':
             # First reconciled, then plain ones, then schedules, then budgets
             if self.reconciled:
                 return 0
