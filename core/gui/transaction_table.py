@@ -60,6 +60,8 @@ class TransactionTable(GUITable, DocumentGUIObject, CompletionMixIn):
     
     #--- Public
     def can_move(self, row_indexes, position):
+        if self._sort_descriptor is not None and self._sort_descriptor != ('date', False):
+            return False
         if not GUITable.can_move(self, row_indexes, position):
             return False
         transactions = [self[index].transaction for index in row_indexes]

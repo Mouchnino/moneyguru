@@ -91,6 +91,8 @@ class EntryTable(GUITable, DocumentGUIObject, CompletionMixIn):
         GUITable.add(self)
     
     def can_move(self, row_indexes, position):
+        if self._sort_descriptor is not None and self._sort_descriptor != ('date', False):
+            return False
         if not GUITable.can_move(self, row_indexes, position):
             return False
         if not all(self[index].can_edit() for index in row_indexes):

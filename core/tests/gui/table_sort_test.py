@@ -174,6 +174,20 @@ class TwoTransactionsAddedWhenSortedByDescription(TestCase):
         self.add_txn(description='foo', from_='asset')
         self.add_txn(description='bar', from_='asset')
     
+    def test_can_move_etable_row(self):
+        # a row in etable can only be moved when the sort descriptor is ('date', False)
+        self.show_account('asset')
+        self.etable.sort_by('description')
+        assert not self.etable.can_move([1], 0)
+        self.etable.sort_by('date')
+        assert self.etable.can_move([1], 0)
+    
+    def test_can_move_ttable_row(self):
+        # a row in ttable can only be moved when the sort descriptor is ('date', False)
+        assert not self.ttable.can_move([1], 0)
+        self.ttable.sort_by('date')
+        assert self.ttable.can_move([1], 0)
+    
     def test_sort_etable_by_description_then_by_date(self):
         # Like with ttable, etable doesn't ignore txn position when sorting by date.
         self.show_account('asset')
