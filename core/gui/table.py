@@ -7,6 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import datetime
+from collections import namedtuple
 
 from ..model.amount import Amount
 from ..model.sort import sort_string
@@ -81,11 +82,13 @@ class Table(list):
         self._check_selection_range()
     
 
+SortDescriptor = namedtuple('SortDescriptor', 'column desc')
 # Subclasses of this class must have a "view" and a "document" attribute
 class GUITable(Table):
     def __init__(self):
         Table.__init__(self)
         self.edited = None
+        self._sort_descriptor = None
     
     #--- Virtual
     def _do_add(self):
@@ -163,6 +166,9 @@ class GUITable(Table):
         selected_indexes = self.selected_indexes
         del self[:]
         self._fill()
+        sd = self._sort_descriptor
+        if sd is not None:
+            Table.sort_by(self, column_name=sd.column, desc=sd.desc)
         if not self.selected_indexes:
             if not selected_indexes:
                 selected_indexes = [len(self) - 1]
@@ -179,8 +185,9 @@ class GUITable(Table):
         self.selected_indexes = row_indexes
         self._update_selection()
     
-    def sort_by(self, *args, **kwargs):
-        Table.sort_by(self, *args, **kwargs)
+    def sort_by(self, column_name, desc=False):
+        Table.sort_by(self, column_name=column_name, desc=desc)
+        self._sort_descriptor = SortDescriptor(column_name, desc)
         self.view.refresh()
     
     #--- Event handlers

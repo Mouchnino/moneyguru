@@ -14,6 +14,21 @@ from nose.tools import eq_
 from ...model.account import EXPENSE
 from ..base import TestCase
 
+class SortedByDescription(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.mainwindow.select_transaction_table()
+        self.ttable.sort_by('description')
+    
+    def test_sort_order_persistent(self):
+        # When changing transactions, the table is re-sorted automatically according to the current
+        # sorting.
+        self.add_txn(description='foo')
+        self.add_txn(description='bar')
+        eq_(self.ttable[0].description, 'bar')
+        eq_(self.ttable[1].description, 'foo')
+    
+
 class TransactionsWithInfoFilledUp(TestCase):
     # Transactions with all kinds of info filled up (desc, payee, checkno...)
     def setUp(self):
