@@ -451,6 +451,12 @@ class TwoAccountsTwoTransactions(TestCase):
         self.arpanel.ok() # continue deletion
     
     @save_state_then_verify
+    def test_undo_duplicate_transaction(self):
+        self.mainwindow.select_transaction_table()
+        self.ttable.select([0, 1])
+        self.ttable.duplicate_selected()
+    
+    @save_state_then_verify
     def test_undo_mass_edition(self):
         """Mass edition can be undone"""
         self.etable.select([0, 1])

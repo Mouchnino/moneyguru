@@ -88,6 +88,10 @@ class MainWindow(DocumentGUIObject):
         if self.top in (self.bsheet, self.istatement, self.ttable, self.etable, self.sctable, self.btable):
             self.top.delete()
     
+    def duplicate_item(self):
+        if self.top in (self.ttable, self.etable):
+            self.top.duplicate_selected()
+    
     def make_schedule_from_selected(self):
         if self.top in (self.ttable, self.etable):
             self.document.make_schedule_from_selected()

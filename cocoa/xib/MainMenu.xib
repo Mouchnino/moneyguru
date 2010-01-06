@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1306"/>
-			<integer value="1148"/>
+			<integer value="169"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -437,6 +437,15 @@
 									<reference key="NSMenu" ref="1042300880"/>
 									<string key="NSTitle">Delete</string>
 									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+								</object>
+								<object class="NSMenuItem" id="659184237">
+									<reference key="NSMenu" ref="1042300880"/>
+									<string key="NSTitle">Duplicate</string>
+									<string key="NSKeyEquiv">d</string>
+									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
@@ -2381,6 +2390,14 @@
 					</object>
 					<int key="connectionID">1413</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">duplicateItem:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="659184237"/>
+					</object>
+					<int key="connectionID">1416</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2686,6 +2703,7 @@
 							<reference ref="369064012"/>
 							<reference ref="736004736"/>
 							<reference ref="109812201"/>
+							<reference ref="659184237"/>
 						</object>
 						<reference key="parent" ref="988614903"/>
 					</object>
@@ -3523,6 +3541,11 @@
 						<reference key="object" ref="337427705"/>
 						<reference key="parent" ref="685349008"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1414</int>
+						<reference key="object" ref="659184237"/>
+						<reference key="parent" ref="1042300880"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3679,6 +3702,7 @@
 					<string>1410.IBPluginDependency</string>
 					<string>1411.IBNumberFormatterLocalizesFormatMetadataKey</string>
 					<string>1411.IBPluginDependency</string>
+					<string>1414.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -3786,7 +3810,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{290, 591}, {294, 223}}</string>
+					<string>{{290, 591}, {291, 223}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{570, 487}, {285, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3926,6 +3950,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -3952,7 +3977,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{246, 621}, {161, 193}}</string>
+					<string>{{246, 601}, {160, 213}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{526, 497}, {161, 193}}</string>
@@ -3981,7 +4006,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{428, 741}, {197, 73}}</string>
+					<string>{{428, 741}, {194, 73}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{708, 617}, {197, 73}}</string>
@@ -4008,7 +4033,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{204, 571}, {267, 243}}</string>
+					<string>{{204, 571}, {264, 243}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{484, 477}, {267, 213}}</string>
@@ -4036,7 +4061,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1413</int>
+			<int key="maxID">1416</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4048,6 +4073,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>duplicateItem:</string>
 							<string>editItemInfo:</string>
 							<string>import:</string>
 							<string>makeScheduleFromSelected:</string>
@@ -4082,6 +4108,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4201,6 +4228,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>delete:</string>
+							<string>duplicateItem:</string>
 							<string>editItemInfo:</string>
 							<string>makeScheduleFromSelected:</string>
 							<string>moveDown:</string>
@@ -4232,6 +4260,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4335,14 +4364,14 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">cocoalib/AMButtonBar/AMButtonBar.h</string>
+						<string key="minorKey">AMButtonBar/AMButtonBar.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">cocoalib/PSMTabBarControl/PSMTabBarControl.h</string>
+						<string key="minorKey">PSMTabBarControl/PSMTabBarControl.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

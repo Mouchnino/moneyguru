@@ -180,6 +180,7 @@ http://www.hardcoded.net/licenses/hs_license
         return (top == balanceSheet) || (top == incomeStatement);
     else if ((action == @selector(moveUp:)) ||
              (action == @selector(moveDown:)) ||
+             (action == @selector(duplicateItem:)) ||
              (action == @selector(makeScheduleFromSelected:)))
         return (top == transactionTable) || (top == entryTable);
     else if (action == @selector(toggleEntriesReconciled:))
@@ -208,6 +209,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)delete:(id)sender
 {
     [py deleteItem];
+}
+
+- (IBAction)duplicateItem:(id)sender
+{
+    [py duplicateItem];
 }
 
 - (IBAction)editItemInfo:(id)sender

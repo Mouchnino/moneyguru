@@ -1137,6 +1137,9 @@ class PyMainWindow(PyListener):
     def deleteItem(self):
         self.py.delete_item()
     
+    def duplicateItem(self):
+        self.py.duplicate_item()
+    
     def editItem(self):
         self.py.edit_item()
     

@@ -56,6 +56,9 @@ class TransactionTableBase(GUITable, DocumentGUIObject, CompletionMixIn):
         """Call this when the order or the visibility of the columns change"""
         self._columns = columns
     
+    def duplicate_selected(self):
+        self.document.duplicate_transactions(self.selected_transactions)
+    
     def move(self, row_indexes, to_index):
         try:
             to_row = self[to_index]

@@ -106,6 +106,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionEditItem.triggered.connect(self.editItemTriggered)
         self.actionMoveUp.triggered.connect(self.moveUpTriggered)
         self.actionMoveDown.triggered.connect(self.moveDownTriggered)
+        self.actionDuplicateTransaction.triggered.connect(self.model.duplicate_item)
         self.actionUndo.triggered.connect(self.doc.model.undo)
         self.actionRedo.triggered.connect(self.doc.model.redo)
         
@@ -245,6 +246,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNewAccountGroup.setEnabled(isSheet)
         self.actionMoveDown.setEnabled(isTransactionOrEntryTable)
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
+        self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
         self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and self.doc.model.in_reconciliation_mode())
         self.actionShowNextView.setEnabled(viewIndex != BUDGET_INDEX)

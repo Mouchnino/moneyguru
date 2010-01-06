@@ -29,6 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 // Item Management
 - (void)deleteItem;
+- (void)duplicateItem;
 - (void)editItem;
 - (void)makeScheduleFromSelected;
 - (void)moveDown;

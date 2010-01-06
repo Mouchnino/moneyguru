@@ -64,6 +64,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Actions */
 - (IBAction)delete:(id)sender;
+- (IBAction)duplicateItem:(id)sender;
 - (IBAction)editItemInfo:(id)sender;
 - (IBAction)makeScheduleFromSelected:(id)sender;
 - (IBAction)moveDown:(id)sender;

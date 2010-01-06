@@ -221,6 +221,7 @@
     <addaction name="separator"/>
     <addaction name="actionMoveUp"/>
     <addaction name="actionMoveDown"/>
+    <addaction name="actionDuplicateTransaction"/>
     <addaction name="actionMakeScheduleFromSelected"/>
     <addaction name="actionReconcileSelected"/>
     <addaction name="actionToggleReconciliationMode"/>
@@ -623,6 +624,14 @@
   <action name="actionCheckForUpdate">
    <property name="text">
     <string>Check for update</string>
+   </property>
+  </action>
+  <action name="actionDuplicateTransaction">
+   <property name="text">
+    <string>Duplicate Transaction</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

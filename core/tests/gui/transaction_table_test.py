@@ -103,6 +103,12 @@ class EditionMode(TestCase):
         self.assertEqual(len(self.ttable), 0)
         self.ttable.save_edits() # Shouldn't raise anything
     
+    def test_duplicate_selected(self):
+        # When duplicating a transaction, make sure to stop editing so that we don't get an
+        # assertion exception later.
+        self.ttable.duplicate_selected()
+        assert self.ttable.edited is None
+    
 
 class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
     # TestSaveLoadMixin: Make sure that unassigned transactions are loaded
@@ -123,6 +129,16 @@ class OneTransaction(TestCase):
             checkno='24')
         self.clear_gui_calls()
     
+    def assert_row_has_original_attrs(self, row):
+        eq_(row.date, '11/07/2008')
+        eq_(row.description, 'description')
+        eq_(row.payee, 'payee')
+        eq_(row.checkno, '24')
+        eq_(row.from_, 'first')
+        eq_(row.to, 'second')
+        eq_(row.amount, '42.00')
+        assert not row.reconciled
+    
     def test_add_then_delete(self):
         # calling delete() while being in edition mode just cancels the current edit. it does *not*
         # delete the other txn as well.
@@ -133,15 +149,7 @@ class OneTransaction(TestCase):
     
     def test_attributes(self):
         eq_(len(self.ttable), 1)
-        row = self.ttable[0]
-        eq_(row.date, '11/07/2008')
-        eq_(row.description, 'description')
-        eq_(row.payee, 'payee')
-        eq_(row.checkno, '24')
-        eq_(row.from_, 'first')
-        eq_(row.to, 'second')
-        eq_(row.amount, '42.00')
-        assert not row.reconciled
+        self.assert_row_has_original_attrs(self.ttable[0])
     
     def test_autofill_amount_format_cache(self):
         # The amount field is correctly autofilled and the cache correctly invalidated
@@ -177,6 +185,20 @@ class OneTransaction(TestCase):
         row.date = '12/07/2008'
         self.ttable.save_edits()
         self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row'])
+    
+    def test_duplicate_transaction(self):
+        # calling duplicate_selected() duplicates the selected transactions
+        self.ttable.duplicate_selected()
+        eq_(len(self.ttable), 2)
+        self.assert_row_has_original_attrs(self.ttable[0])
+        self.assert_row_has_original_attrs(self.ttable[1])
+    
+    def test_duplicate_transactions(self):
+        # duplication works when more than one transaction is selected
+        self.ttable.duplicate_selected()
+        self.ttable.select([0, 1])
+        self.ttable.duplicate_selected()
+        eq_(len(self.ttable), 4)
     
     def test_edit_date_out_of_bounds(self):
         # when the date of the edited row is out of the date range, is_date_in_future() or
@@ -311,14 +333,7 @@ class OneTransaction(TestCase):
         # the changes didn't go down to Transaction
         table = TransactionTable(self.ttable_gui, self.document)
         table.connect()
-        refrow = table[0]
-        eq_(refrow.date, '11/07/2008')
-        eq_(refrow.description, 'description')
-        eq_(refrow.payee, 'payee')
-        eq_(refrow.checkno, '24')
-        eq_(refrow.from_, 'first')
-        eq_(refrow.to, 'second')
-        eq_(refrow.amount, '42.00')
+        self.assert_row_has_original_attrs(table[0])
     
     def test_totals(self):
         # The totals line is correctly pluralized

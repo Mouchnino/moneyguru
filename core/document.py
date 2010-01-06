@@ -513,6 +513,20 @@ class Document(Broadcaster, Listener):
         self._clean_empty_categories()
         self.notify('transaction_deleted')
     
+    def duplicate_transactions(self, transactions):
+        if not transactions:
+            return
+        action = Action('Duplicate transactions')
+        duplicated = [txn.replicate() for txn in transactions]
+        action.added_transactions |= set(duplicated)
+        self._undoer.record(action)
+        
+        for txn in duplicated:
+            self.transactions.add(txn)
+        min_date = min(t.date for t in transactions)
+        self._cook(from_date=min_date)
+        self.notify('transaction_changed')
+    
     def move_transactions(self, transactions, to_transaction):
         affected = set(transactions)
         affected_date = transactions[0].date
