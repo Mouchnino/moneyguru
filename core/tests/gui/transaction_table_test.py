@@ -114,40 +114,41 @@ class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
         self.ttable.save_edits()
     
 
-class OneEntry(TestCase, CommonSetup):
+class OneTransaction(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.setup_one_entry()
-        self.mainwindow.select_transaction_table()
+        self.document.select_month_range()
+        self.add_account('first')
+        self.add_txn('11/07/2008', 'description', 'payee', from_='first', to='second', amount='42',
+            checkno='24')
         self.clear_gui_calls()
     
     def test_add_then_delete(self):
-        """calling delete() while being in edition mode just cancels the current edit. it does *not*
-        delete the other txn as well"""
+        # calling delete() while being in edition mode just cancels the current edit. it does *not*
+        # delete the other txn as well.
         self.ttable.add()
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 1)
-        self.assertTrue(self.ttable.edited is None)
+        eq_(len(self.ttable), 1)
+        assert self.ttable.edited is None
     
     def test_attributes(self):
-        self.assertEqual(len(self.ttable), 1)
+        eq_(len(self.ttable), 1)
         row = self.ttable[0]
-        self.assertEqual(row.date, '11/07/2008')
-        self.assertEqual(row.description, 'description')
-        self.assertEqual(row.payee, 'payee')
-        self.assertEqual(row.checkno, '24')
-        self.assertEqual(row.from_, 'first')
-        self.assertEqual(row.to, 'second')
-        self.assertEqual(row.amount, '42.00')
-        self.assertFalse(row.reconciled)
+        eq_(row.date, '11/07/2008')
+        eq_(row.description, 'description')
+        eq_(row.payee, 'payee')
+        eq_(row.checkno, '24')
+        eq_(row.from_, 'first')
+        eq_(row.to, 'second')
+        eq_(row.amount, '42.00')
+        assert not row.reconciled
     
     def test_autofill_amount_format_cache(self):
         # The amount field is correctly autofilled and the cache correctly invalidated
         self.ttable.add()
         self.ttable.edited.amount # cache the format
         self.ttable.edited.description = 'description'
-        self.assertEqual(self.ttable.edited.amount, '42.00')
+        eq_(self.ttable.edited.amount, '42.00')
     
     def test_can_edit(self):
         # All columns can be edited, except unknown ones
@@ -161,14 +162,14 @@ class OneEntry(TestCase, CommonSetup):
         assert not self.ttable[0].can_edit_cell('unknown')
     
     def test_cancel_edits(self):
-        """cancel_edits() reverts the edited row back to it's old values"""
+        # cancel_edits() reverts the edited row back to it's old values.
         self.ttable.cancel_edits() # does nothing
         row = self.ttable[0]
         row.date = '12/07/2008'
         self.ttable.cancel_edits()
         # The current implementation keeps the same row instance, but the tests shouldn't require it
         row = self.ttable[0]
-        self.assertEqual(row.date, '11/07/2008')
+        eq_(row.date, '11/07/2008')
     
     def test_change_transaction_gui_calls(self):
         # Changing a transaction results in a refresh and a show_selected_row call
@@ -181,45 +182,45 @@ class OneEntry(TestCase, CommonSetup):
         # when the date of the edited row is out of the date range, is_date_in_future() or
         # is_date_in_past() return True
         # (range is 07/2008)
-        self.assertFalse(self.ttable[0].is_date_in_past())
-        self.assertFalse(self.ttable[0].is_date_in_future())
+        assert not self.ttable[0].is_date_in_past()
+        assert not self.ttable[0].is_date_in_future()
         self.ttable[0].date = '01/08/2008'
-        self.assertTrue(self.ttable.edited.is_date_in_future())
-        self.assertFalse(self.ttable.edited.is_date_in_past())
+        assert self.ttable.edited.is_date_in_future()
+        assert not self.ttable.edited.is_date_in_past()
         self.ttable[0].date = '30/06/2008'
-        self.assertFalse(self.ttable.edited.is_date_in_future())
-        self.assertTrue(self.ttable.edited.is_date_in_past())
+        assert not self.ttable.edited.is_date_in_future()
+        assert self.ttable.edited.is_date_in_past()
     
     def test_delete(self):
-        """Deleting a transaction updates the graph and makes the 'second' account go away"""
+        # Deleting a transaction updates the graph and makes the 'second' account go away.
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 0)
+        eq_(len(self.ttable), 0)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(list(self.balgraph.data), [])
-        self.assertEqual(self.account_names(), ['first'])
+        eq_(list(self.balgraph.data), [])
+        eq_(self.account_names(), ['first'])
     
     def test_delete_while_filtered(self):
         # Deleting a txn while a filter is applied correctly refreshes the ttable
         self.sfield.query = 'description'
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 0)
+        eq_(len(self.ttable), 0)
     
     def test_edition_mode(self):
-        """Initially, no row is edited. setting a row's attr sets the edition mode."""
-        self.assertTrue(self.ttable.edited is None)
+        # Initially, no row is edited. setting a row's attr sets the edition mode.
+        assert self.ttable.edited is None
         row = self.ttable[0]
         row.date = '12/07/2008'
-        self.assertTrue(self.ttable.edited is row)
+        assert self.ttable.edited is row
         self.ttable.cancel_edits()
-        self.assertTrue(self.ttable.edited is None)
+        assert self.ttable.edited is None
         row.date = '12/07/2008'
         self.ttable.save_edits()
-        self.assertTrue(self.ttable.edited is None)
+        assert self.ttable.edited is None
     
     def test_save_edits(self):
-        """save_edits() puts the changes in the buffer down to the model"""
+        # save_edits() puts the changes in the buffer down to the model.
         self.mainwindow.select_transaction_table()
         self.ttable.save_edits() # does nothing
         row = self.ttable[0]
@@ -234,24 +235,24 @@ class OneEntry(TestCase, CommonSetup):
         # This way, we can make sure that what we have in ttable is from the model, not the row buffer
         self.ttable.refresh()
         row = self.ttable[0]
-        self.assertEqual(row.date, '12/07/2008')
-        self.assertEqual(row.description, 'foo')
-        self.assertEqual(row.payee, 'bar')
-        self.assertEqual(row.checkno, 'baz')
-        self.assertEqual(row.from_, 'newfrom')
-        self.assertEqual(row.to, 'newto')
-        self.assertEqual(row.amount, '0.42')
+        eq_(row.date, '12/07/2008')
+        eq_(row.description, 'foo')
+        eq_(row.payee, 'bar')
+        eq_(row.checkno, 'baz')
+        eq_(row.from_, 'newfrom')
+        eq_(row.to, 'newto')
+        eq_(row.amount, '0.42')
         # 'newfrom' has been created as an income, and 'newto' as an expense. 'second' has been cleaned
         self.mainwindow.select_income_statement()
-        self.assertEqual(self.istatement.income.children_count, 3)
-        self.assertEqual(self.istatement.expenses.children_count, 3)
-        self.assertEqual(self.istatement.income[0].name, 'newfrom')
-        self.assertEqual(self.istatement.expenses[0].name, 'newto')
+        eq_(self.istatement.income.children_count, 3)
+        eq_(self.istatement.expenses.children_count, 3)
+        eq_(self.istatement.income[0].name, 'newfrom')
+        eq_(self.istatement.expenses[0].name, 'newto')
         # now we want to verify that cooking has taken place
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.show_selected_account()
         row = self.etable[0]
-        self.assertEqual(row.increase, '0.42')
+        eq_(row.increase, '0.42')
     
     def test_set_date_in_range(self):
         # Setting the date in range doesn't cause useless notifications.
@@ -276,21 +277,21 @@ class OneEntry(TestCase, CommonSetup):
     def test_set_invalid_amount(self):
         # setting an invalid amount reverts to the old amount
         self.ttable[0].amount = 'foo' # no exception
-        self.assertEqual(self.ttable[0].amount, '42.00')
+        eq_(self.ttable[0].amount, '42.00')
     
     def test_set_negative_amount(self):
-        """When you set a negative amount, the 'from' and 'to' columns are switched"""
+        # When you set a negative amount, the 'from' and 'to' columns are switched.
         self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         row.amount = '-42'
         self.ttable.save_edits()
-        self.assertEqual(row.from_, 'second')
-        self.assertEqual(row.to, 'first')
-        self.assertEqual(row.amount, '42.00')
+        eq_(row.from_, 'second')
+        eq_(row.to, 'first')
+        eq_(row.amount, '42.00')
     
     def test_set_row_attr(self):
-        """Setting a row's attr puts the table in edition mode, changes the row's buffer, but doesn't
-        touch the transaction"""
+        # Setting a row's attr puts the table in edition mode, changes the row's buffer, but doesn't
+        # touch the transaction.
         self.mainwindow.select_transaction_table()
         row = self.ttable[0]
         row.date = '12/07/2008'
@@ -300,38 +301,38 @@ class OneEntry(TestCase, CommonSetup):
         row.from_ = 'newfrom'
         row.to = 'newto'
         row.amount = '.42'
-        self.assertEqual(row.date, '12/07/2008')
-        self.assertEqual(row.description, 'foo')
-        self.assertEqual(row.payee, 'bar')
-        self.assertEqual(row.checkno, 'baz')
-        self.assertEqual(row.from_, 'newfrom')
-        self.assertEqual(row.to, 'newto')
-        self.assertEqual(row.amount, '0.42')
+        eq_(row.date, '12/07/2008')
+        eq_(row.description, 'foo')
+        eq_(row.payee, 'bar')
+        eq_(row.checkno, 'baz')
+        eq_(row.from_, 'newfrom')
+        eq_(row.to, 'newto')
+        eq_(row.amount, '0.42')
         # the changes didn't go down to Transaction
         table = TransactionTable(self.ttable_gui, self.document)
         table.connect()
         refrow = table[0]
-        self.assertEqual(refrow.date, '11/07/2008')
-        self.assertEqual(refrow.description, 'description')
-        self.assertEqual(refrow.payee, 'payee')
-        self.assertEqual(refrow.checkno, '24')
-        self.assertEqual(refrow.from_, 'first')
-        self.assertEqual(refrow.to, 'second')
-        self.assertEqual(refrow.amount, '42.00')
+        eq_(refrow.date, '11/07/2008')
+        eq_(refrow.description, 'description')
+        eq_(refrow.payee, 'payee')
+        eq_(refrow.checkno, '24')
+        eq_(refrow.from_, 'first')
+        eq_(refrow.to, 'second')
+        eq_(refrow.amount, '42.00')
     
     def test_totals(self):
         # The totals line is correctly pluralized
         expected = "Showing 1 out of 1." # no "s"
-        self.assertEqual(self.ttable.totals, expected)
+        eq_(self.ttable.totals, expected)
     
     def test_undo_redo_while_filtered(self):
         # undo/redo while a filter is applied correctly refreshes the ttable
         self.sfield.query = 'description'
         self.ttable.delete()
         self.document.undo()
-        self.assertEqual(len(self.ttable), 1)
+        eq_(len(self.ttable), 1)
         self.document.redo()
-        self.assertEqual(len(self.ttable), 0)
+        eq_(len(self.ttable), 0)
     
 
 class OneTwoWayTransactionOtherWay(TestCase):
