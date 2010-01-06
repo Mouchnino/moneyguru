@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-01-18
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -13,10 +13,9 @@ from nose.tools import eq_
 
 from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, CommonSetup
 from ...app import Application
-from ...exception import FileLoadError
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
-from ...loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_REFERENCE)
+from ...loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_TRANSFER, CSV_AMOUNT, 
+    CSV_INCREASE, CSV_DECREASE, CSV_REFERENCE)
 from ...model.date import YearRange
 
 class CommonSetup(CommonSetup):
@@ -248,6 +247,16 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
         self.csvopt.rename_selected_layout('foobaz')
         self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu'])
         self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
+    
+    def test_rename_target_account(self):
+        # When renaming an account targeted by a layout doesn't cause a crash next time this layout
+        # is loaded.
+        self.bsheet.selected = self.bsheet.assets[0] # 'one', the target account
+        self.bsheet.assets[0].name = 'renamed'
+        self.bsheet.save_edits()
+        self.csvopt.select_layout('foobar') # no crash
+        # the account doesn't exist, fallback to <New Account>
+        eq_(self.csvopt.selected_target_index, 0)
     
     def test_select_same_layout_doesnt_refresh_gui(self):
         # Selecting the layout that's already selected doesn't trigger gui refreshes

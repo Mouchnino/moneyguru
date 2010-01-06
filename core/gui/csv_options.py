@@ -215,8 +215,8 @@ class CSVOptions(DocumentGUIObject):
         target_name = self.layout.target_account_name
         if not target_name:
             return 0
-        index, _ = first((i, t) for i, t in enumerate(self._target_accounts) if t.name == target_name)
-        return index + 1
+        index = first(i for i, t in enumerate(self._target_accounts) if t.name == target_name)
+        return index + 1 if index is not None else 0
     
     @selected_target_index.setter
     def selected_target_index(self, value):
