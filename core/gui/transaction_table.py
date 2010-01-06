@@ -10,16 +10,10 @@ from operator import attrgetter
 
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
-from .base import DocumentGUIObject
-from .complete import CompletionMixIn
-from .table import GUITable, Row, RowWithDate, rowattr
+from .table import Row, RowWithDate, rowattr
+from .transaction_table_base import TransactionTableBase
 
-class TransactionTable(GUITable, DocumentGUIObject, CompletionMixIn):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
-        GUITable.__init__(self)
-        self._columns = [] # empty columns == unrestricted autofill
-    
+class TransactionTable(TransactionTableBase):
     #--- Override
     def _do_add(self):
         transaction = self.document.new_transaction()
@@ -45,81 +39,11 @@ class TransactionTable(GUITable, DocumentGUIObject, CompletionMixIn):
         if self.document.explicitly_selected_transactions:
             self.select_transactions(self.document.explicitly_selected_transactions)
     
-    def _is_edited_new(self):
-        return self.edited.transaction not in self.document.transactions
-    
-    def _update_selection(self):
-        self.document.explicitly_select_transactions(self.selected_transactions)
-    
-    def connect(self):
-        DocumentGUIObject.connect(self)
-        self.refresh()
-        self.document.select_transactions(self.selected_transactions)
-        self.view.refresh()
-        self.view.show_selected_row()
-    
     #--- Public
-    def can_move(self, row_indexes, position):
-        if self._sort_descriptor is not None and self._sort_descriptor != ('date', False):
-            return False
-        if not GUITable.can_move(self, row_indexes, position):
-            return False
-        transactions = [self[index].transaction for index in row_indexes]
-        before = self[position - 1].transaction if position > 0 else None
-        after = self[position].transaction if position < len(self) else None
-        return self.document.can_move_transactions(transactions, before, after)
-    
-    def change_columns(self, columns):
-        """Call this when the order or the visibility of the columns change"""
-        self._columns = columns
-    
-    def move(self, row_indexes, to_index):
-        try:
-            to_row = self[to_index]
-            to_transaction = to_row.transaction
-        except IndexError:
-            to_transaction = None
-        # we can use any from_index, let's use the first
-        transactions = [self[index].transaction for index in row_indexes]
-        self.document.move_transactions(transactions, to_transaction)
-    
-    def move_down(self):
-        if len(self.selected_indexes) != 1:
-            return
-        position = self.selected_indexes[0] + 2
-        if self.can_move(self.selected_indexes, position):
-            self.move(self.selected_indexes, position)
-
-    def move_up(self):
-        if len(self.selected_indexes) != 1:
-            return
-        position = self.selected_indexes[0] - 1
-        if self.can_move(self.selected_indexes, position):
-            self.move(self.selected_indexes, position)
-    
     def select_transactions(self, transactions):
-        self.selected_indexes = []
-        for index, row in enumerate(self):
-            if row.transaction in transactions:
-                self.selected_indexes.append(index)
+        TransactionTableBase.select_transactions(self, transactions)
         if self and not self.selected_indexes:
             self.selected_indexes = [len(self) - 1]
-    
-    #--- Event handlers
-    def date_range_changed(self):
-        self.refresh()
-        self._update_selection()
-        self.view.refresh()
-        self.view.show_selected_row()
-    
-    filter_applied = GUITable._filter_applied
-    transaction_changed = GUITable._item_changed
-    transaction_deleted = GUITable._item_deleted
-    
-    def transactions_imported(self):
-        self.refresh()
-        self._update_selection()
-        self.view.refresh()
     
     #--- Properties
     @property
@@ -132,6 +56,18 @@ class TransactionTable(GUITable, DocumentGUIObject, CompletionMixIn):
         total = self.document.visible_unfiltered_transaction_count
         msg = u"Showing {0} out of {1}."
         return msg.format(shown, total)
+    
+    #--- Event handlers
+    def date_range_changed(self):
+        self.refresh()
+        self._update_selection()
+        self.view.refresh()
+        self.view.show_selected_row()
+    
+    def transactions_imported(self):
+        self.refresh()
+        self._update_selection()
+        self.view.refresh()
     
 
 AUTOFILL_ATTRS = frozenset(['description', 'payee', 'from', 'to', 'amount'])

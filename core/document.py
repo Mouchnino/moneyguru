@@ -575,11 +575,6 @@ class Document(Broadcaster, Listener):
         transactions = dedupe(e.transaction for e in entries)
         self.delete_transactions(transactions)
     
-    def move_entries(self, entries, to_entry):
-        transactions = [e.transaction for e in entries]
-        to_transaction = to_entry.transaction if to_entry is not None else None
-        self.move_transactions(transactions, to_transaction)
-    
     def new_entry(self):
         account = self.selected_account
         date = self.selected_transaction.date if self.selected_transaction else datetime.date.today()
