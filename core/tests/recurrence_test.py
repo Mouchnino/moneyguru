@@ -38,7 +38,7 @@ class OneTransaction(TestCase, CommonSetup):
         eq_(len(self.ttable), 1)
     
 
-class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
+class OneDailyRecurrentTransaction(TestCase, TestSaveLoadMixin):
     def setUp(self):
         self.mock_today(2008, 9, 13)
         self.create_instances()
@@ -47,6 +47,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.add_schedule(start_date='13/09/2008', description='foobar', account='account', 
             amount='1', repeat_every=3)
         self.mainwindow.select_transaction_table()
+        self.clear_gui_calls()
     
     def test_change_schedule_transaction(self):
         # when modifying a schedule's transaction through the scpanel, make sure that this change
@@ -76,6 +77,18 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         eq_(self.ttable[2].date, '20/09/2008')
         eq_(self.ttable[2].description, 'changed')
     
+    def test_change_spawn_cancel(self):
+        # When cancelling a spawn change, nothing happens
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Cancel
+        self.ttable.select([1])
+        self.ttable[1].description = 'changed'
+        self.ttable.save_edits()
+        eq_(self.ttable[1].description, 'foobar')
+        # The schedule scoping logic used to take place after the under had recorded. What we're
+        # testing here is that the undoer, due to the cancellation, has *not* recorded anything
+        self.document.undo()
+        eq_(len(self.ttable), 0) # the schedule creation has been undone
+    
     def test_change_spawn_then_delete_it(self):
         # The correct spawn is deleted when a changed spawn is deleted
         self.ttable.select([1])
@@ -84,6 +97,21 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.delete()
         eq_(len(self.ttable), 5)
         eq_(self.ttable[1].date, '19/09/2008')
+    
+    def test_change_spawn_through_etable(self):
+        # Changing a spawn through etable queries for a scope.
+        self.show_account('account')
+        self.etable[1].description = 'changed'
+        self.etable.save_edits()
+        self.check_gui_calls(self.document_gui, ['query_for_schedule_scope'])
+    
+    def test_change_spawn_through_etable_globally(self):
+        # When the user selects a global change through the etable, we listen
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
+        self.show_account('account')
+        self.etable[1].description = 'changed'
+        self.etable.save_edits()
+        eq_(self.etable[2].description, 'changed')
     
     def test_change_spawn_through_tpanel(self):
         # Previously, each edition of a spawn through tpanel would result in a new schedule being
@@ -95,6 +123,8 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         eq_(self.ttable[1].description, 'changed')
         eq_(self.ttable[2].description, 'foobar')
         eq_(self.ttable[3].description, 'foobar')
+        # We were queried for a scope
+        self.check_gui_calls(self.document_gui, ['query_for_schedule_scope'])
     
     def test_change_spawn_with_global_scope(self):
         # changing a spawn with a global scope makes every following spawn like it.
@@ -151,6 +181,13 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.delete()
         eq_(len(self.ttable), 5)
         eq_(self.ttable[1].date, '19/09/2008')
+    
+    def test_delete_spawn_cancel(self):
+        # When the user cancels a spawn deletion, nothing happens
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Cancel
+        self.ttable.select([1])
+        self.ttable.delete()
+        eq_(len(self.ttable), 6)
     
     def test_delete_spawn_with_global_scope(self):
         # when deleting a spawn and query_for_global_scope returns True, we stop the recurrence 

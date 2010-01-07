@@ -22,6 +22,11 @@ http://www.hardcoded.net/licenses/hs_license
     return result;
 }
 
+- (IBAction)cancel:(id)sender
+{
+    [NSApp stopModalWithCode:ScheduleScopeCancel];
+}
+
 - (IBAction)chooseGlobalScope:(id)sender
 {
     [NSApp stopModalWithCode:ScheduleScopeGlobal];

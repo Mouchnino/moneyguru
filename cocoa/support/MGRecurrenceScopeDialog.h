@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGRecurrenceScopeDialog : NSWindowController {}
 + (int)shouldUseGlobalScope;
 
+- (IBAction)cancel:(id)sender;
 - (IBAction)chooseGlobalScope:(id)sender;
 - (IBAction)chooseLocalScope:(id)sender;
 @end

@@ -17,7 +17,7 @@ from hsutil.notify import Broadcaster, Listener
 from hsutil.misc import nonone, flatten, allsame, dedupe, extract
 
 from .const import NOEDIT
-from .exception import FileFormatError
+from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
 from .model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
 from .model.budget import BudgetList
@@ -56,6 +56,15 @@ class ScheduleScope(object):
     Cancel = 2 # not used yet
 
 AUTOSAVE_BUFFER_COUNT = 10 # Number of autosave files that will be kept in the cache.
+
+def handle_abort(method):
+    def wrapper(self, *args, **kwargs):
+        try:
+            return method(self, *args, **kwargs)
+        except OperationAborted:
+            pass
+    
+    return wrapper
 
 class Document(Broadcaster, Listener):
     def __init__(self, view, app):
@@ -126,20 +135,18 @@ class Document(Broadcaster, Listener):
     
     def _change_transaction(self, transaction, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
                             checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT,
-                            force_local_scope=False):
+                            global_scope=False):
         date_changed = date is not NOEDIT and date != transaction.date
         transaction.change(date=date, description=description, payee=payee, checkno=checkno,
                            from_=from_, to=to, amount=amount, currency=currency)
         if isinstance(transaction, Spawn):
-            if force_local_scope:
-                global_scope = False
-            else:
-                global_scope = self.view.query_for_schedule_scope() == ScheduleScope.Global
             if global_scope:
                 transaction.recurrence.change_globally(transaction)
             else:
                 transaction.recurrence.add_exception(transaction)
         else:
+            transaction.change(date=date, description=description, payee=payee, checkno=checkno,
+                               from_=from_, to=to, amount=amount, currency=currency)
             if transaction not in self.transactions:
                 self.transactions.add(transaction)
             elif date_changed:
@@ -243,6 +250,20 @@ class Document(Broadcaster, Listener):
         except ValueError:
             pass
         return query
+    
+    def _query_for_scope_if_needed(self, transactions):
+        """Queries the UI for change scope if there's any Spawn among transactions.
+        
+        Returns whether the chosen scope is global
+        Raises OperationAborted if the user cancels the operation.
+        """
+        if any(isinstance(txn, Spawn) for txn in transactions):
+            scope = self.view.query_for_schedule_scope()
+            if scope == ScheduleScope.Cancel:
+                raise OperationAborted()
+            return scope == ScheduleScope.Global
+        else:
+            return False
     
     def _restore_preferences(self):
         start_date = self.app.get_default(SELECTED_DATE_RANGE_START_PREFERENCE)
@@ -450,8 +471,10 @@ class Document(Broadcaster, Listener):
         after_date = after.date if after else None
         return from_date in (before_date, after_date)
     
+    @handle_abort
     def change_transaction(self, original, new):
         date_changed = new.date != original.date
+        global_scope = self._query_for_scope_if_needed([original])
         action = Action('Change transaction')
         action.change_transactions([original])
         self._undoer.record(action)
@@ -464,12 +487,13 @@ class Document(Broadcaster, Listener):
         original.set_splits(new.splits)
         min_date = min(original.date, new.date)
         self._change_transaction(original, date=new.date, description=new.description,
-            payee=new.payee, checkno=new.checkno)
+            payee=new.payee, checkno=new.checkno, global_scope=global_scope)
         self._cook(from_date=min_date)
         self._clean_empty_categories()
         if not self._adjust_date_range(original.date):
             self.notify('transaction_changed')
     
+    @handle_abort
     def change_transactions(self, transactions, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
             checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT):
         if from_ is not NOEDIT:
@@ -479,26 +503,29 @@ class Document(Broadcaster, Listener):
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             currencies_to_ensure = [amount.currency.code, self.app.default_currency.code]
             Currency.get_rates_db().ensure_rates(date, currencies_to_ensure)
-        
+        if len(transactions) == 1:
+            global_scope = self._query_for_scope_if_needed(transactions)
+        else:
+            global_scope = False
         action = self._get_action_from_changed_transactions(transactions)
         self._undoer.record(action)
 
         min_date = date if date is not NOEDIT else datetime.date.max
-        force_local_scope = len(transactions) > 1
         for transaction in transactions:
             min_date = min(min_date, transaction.date)
             self._change_transaction(transaction, date=date, description=description, 
-                                     payee=payee, checkno=checkno, from_=from_, to=to, 
-                                     amount=amount, currency=currency, 
-                                     force_local_scope=force_local_scope)
+                payee=payee, checkno=checkno, from_=from_, to=to, amount=amount, currency=currency, 
+                global_scope=global_scope)
         self._cook(from_date=min_date)
         self._clean_empty_categories()
         if not self._adjust_date_range(transaction.date):
             self.notify('transaction_changed')
     
+    @handle_abort
     def delete_transactions(self, transactions):
         action = Action('Remove transaction')
         spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
+        global_scope = self._query_for_scope_if_needed(spawns)
         schedules = set(spawn.recurrence for spawn in spawns)
         action.deleted_transactions |= set(txns)
         for schedule in schedules:
@@ -507,7 +534,6 @@ class Document(Broadcaster, Listener):
         
         for txn in transactions:
             if isinstance(txn, Spawn):
-                global_scope = self.view.query_for_schedule_scope() == ScheduleScope.Global
                 if global_scope:
                     txn.recurrence.stop_before(txn)
                 else:
@@ -563,13 +589,14 @@ class Document(Broadcaster, Listener):
         return self._visible_unfiltered_transaction_count
     
     #--- Entry
+    @handle_abort
     def change_entry(self, entry, date=NOEDIT, reconciliation_date=NOEDIT, description=NOEDIT, 
             payee=NOEDIT, checkno=NOEDIT, transfer=NOEDIT, amount=NOEDIT):
         assert entry is not None
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             Currency.get_rates_db().ensure_rates(date, [amount.currency.code, entry.account.currency.code])
         transfer_changed = len(entry.splits) == 1 and transfer is not NOEDIT and transfer != entry.transfer
-        
+        global_scope = self._query_for_scope_if_needed([entry.transaction])
         action = self._get_action_from_changed_transactions([entry.transaction])
         self._undoer.record(action)
         
@@ -587,7 +614,7 @@ class Document(Broadcaster, Listener):
         if reconciliation_date is not NOEDIT:
             entry.split.reconciliation_date = reconciliation_date
         self._change_transaction(entry.transaction, date=date, description=description, 
-            payee=payee, checkno=checkno)
+            payee=payee, checkno=checkno, global_scope=global_scope)
         self._cook(from_date=min_date)
         self._clean_empty_categories()
         if not self._adjust_date_range(entry.date):

@@ -133,7 +133,7 @@ class Document(QObject):
         if not self.app.prefs.showScheduleScopeDialog:
             return ScheduleScope.Local
         dialog = ScheduleScopeDialog(self.app.mainWindow)
-        return ScheduleScope.Global if dialog.exec_() == ScheduleScopeDialog.Accepted else ScheduleScope.Local
+        return dialog.queryForScope()
     
     #--- Signals
     documentOpened = pyqtSignal(unicode)
