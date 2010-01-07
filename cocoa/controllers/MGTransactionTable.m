@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 #import "MGFieldEditor.h"
 #import "MGReconciliationCell.h"
+#import "MGTextFieldCell.h"
 #import "MGTransactionPrint.h"
 
 @implementation MGTransactionTable
@@ -140,8 +141,18 @@ http://www.hardcoded.net/licenses/hs_license
     return nil;
 }
 
+- (void)showFromAccount:(id)sender
+{
+    [[self py] showFromAccount];
+}
+
+- (void)showToAccount:(id)sender
+{
+    [[self py] showToAccount];
+}
+
 /* Delegate */
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)column row:(int)row
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(int)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
     if (row >= [[self py] numberOfRows])
@@ -150,20 +161,33 @@ http://www.hardcoded.net/licenses/hs_license
     }
     if ([[column identifier] isEqualToString:@"status"])
     {
-        MGReconciliationCell *rcell = cell;
+        MGReconciliationCell *cell = aCell;
         if (row == [tableView editedRow])
         {
-            [rcell setIsInFuture:[[self py] isEditedRowInTheFuture]];
-            [rcell setIsInPast:[[self py] isEditedRowInThePast]];
+            [cell setIsInFuture:[[self py] isEditedRowInTheFuture]];
+            [cell setIsInPast:[[self py] isEditedRowInThePast]];
         }
         else
         {
-            [rcell setIsInFuture:NO];
-            [rcell setIsInPast:NO];
+            [cell setIsInFuture:NO];
+            [cell setIsInPast:NO];
         }
-        [rcell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
-        [rcell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
-        [rcell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
+        [cell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
+        [cell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
+        [cell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
+    }
+    if (([[column identifier] isEqualToString:@"from"]) || ([[column identifier] isEqualToString:@"to"]))
+    {
+        MGTextFieldCell *cell = aCell;
+        BOOL isFocused = aTableView == [[aTableView window] firstResponder] && [[aTableView window] isKeyWindow];
+        BOOL isSelected = row == [aTableView selectedRow];
+        [cell setHasArrow:YES];
+        [cell setArrowTarget:self];
+        if ([[column identifier] isEqualToString:@"from"])
+            [cell setArrowAction:@selector(showFromAccount:)];
+        else
+            [cell setArrowAction:@selector(showToAccount:)];
+        [cell setHasDarkBackground:isSelected && isFocused];
     }
 }
 

@@ -13,5 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)canMoveRows:(NSArray *)rows to:(int)position;
 - (void)moveRows:(NSArray *)rows to:(int)position;
+- (void)showFromAccount;
+- (void)showToAccount;
 - (NSString *)totals;
 @end

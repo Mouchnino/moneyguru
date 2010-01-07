@@ -8,16 +8,17 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
-from PyQt4.QtGui import QItemSelectionModel, QItemSelection, QStyledItemDelegate
+from PyQt4.QtGui import QItemSelectionModel, QItemSelection
 
 from .column import ColumnBearer, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 
-from support.date_edit import DateEdit
 from support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
+from support.date_edit import DateEdit
+from support.item_delegate import ItemDelegate
 
-class TableDelegate(QStyledItemDelegate):
+class TableDelegate(ItemDelegate):
     def __init__(self, model, columns):
-        QStyledItemDelegate.__init__(self)
+        ItemDelegate.__init__(self)
         self._model = model
         self._columns = columns
     
@@ -25,7 +26,7 @@ class TableDelegate(QStyledItemDelegate):
         column = self._columns[index.column()]
         editType = column.editor
         if editType is None:
-            return QStyledItemDelegate.createEditor(self, parent, option, index)
+            return ItemDelegate.createEditor(self, parent, option, index)
         elif editType == DATE_EDIT:
             return DateEdit(parent)
         elif editType in (DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT):

@@ -809,11 +809,14 @@ class Document(Broadcaster, Listener):
     def shown_account(self):
         return self._shown_account
     
-    def show_selected_account(self):
-        if self._selected_account is not self._shown_account:
+    def show_account(self, account):
+        if account is not self._shown_account:
             self._visible_entries = None
-        self._shown_account = self._selected_account
+        self._shown_account = account
         self.notify('account_must_be_shown')
+    
+    def show_selected_account(self):
+        self.show_account(self._selected_account)
     
     @property
     def selected_transactions(self):

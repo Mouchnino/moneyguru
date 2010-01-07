@@ -76,6 +76,11 @@ class Pristine(TestCase):
         self.assertNotEqual(len(self.ttable), 0)
         self.check_gui_calls(self.ttable_gui, ['refresh'])
     
+    def test_show_from_account(self):
+        # show_from_account() when the selected txn has no assigned account does nothing
+        self.ttable.show_from_account() # no crash
+        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=['show_entry_table'])
+    
 
 class EditionMode(TestCase):
     def setUp(self):
@@ -118,6 +123,11 @@ class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
         self.ttable.add()
         self.ttable[0].amount = '42'
         self.ttable.save_edits()
+    
+    def test_show_from_account(self):
+        # show_from_account() when the selected txn has no assigned account does nothing
+        self.ttable.show_from_account() # no crash
+        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=['show_entry_table'])
     
 
 class OneTransaction(TestCase):
@@ -334,6 +344,18 @@ class OneTransaction(TestCase):
         table = TransactionTable(self.ttable_gui, self.document)
         table.connect()
         self.assert_row_has_original_attrs(table[0])
+    
+    def test_show_from_account(self):
+        # show_from_account() takes the first account in the From column and shows it in etable.
+        self.ttable.show_from_account()
+        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
+        eq_(self.document.shown_account.name, 'first')
+    
+    def test_show_to_account(self):
+        # show_two_account() takes the first account in the To column and shows it in etable.
+        self.ttable.show_to_account()
+        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
+        eq_(self.document.shown_account.name, 'second')
     
     def test_totals(self):
         # The totals line is correctly pluralized

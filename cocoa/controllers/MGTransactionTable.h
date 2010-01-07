@@ -30,7 +30,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 /* Public */
-
 - (PyTransactionTable *)py;
 - (id)fieldEditorForObject:(id)asker;
+- (void)showFromAccount:(id)sender;
+- (void)showToAccount:(id)sender;
 @end

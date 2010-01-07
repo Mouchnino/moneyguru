@@ -39,11 +39,28 @@ class TransactionTable(TransactionTableBase):
         if self.document.explicitly_selected_transactions:
             self.select_transactions(self.document.explicitly_selected_transactions)
     
+    #--- Private
+    def _show_account(self, use_to_column=False):
+        # if `use_to_column` is True, use the To column, else, use the From column
+        if not self.selected_transactions:
+            return
+        txn = self.selected_transactions[0]
+        froms, tos = txn.splitted_splits()
+        splits = tos if use_to_column else froms
+        account_to_show = splits[0].account
+        self.document.show_account(account_to_show)
+    
     #--- Public
     def select_transactions(self, transactions):
         TransactionTableBase.select_transactions(self, transactions)
         if self and not self.selected_indexes:
             self.selected_indexes = [len(self) - 1]
+    
+    def show_from_account(self):
+        self._show_account(use_to_column=False)
+    
+    def show_to_account(self):
+        self._show_account(use_to_column=True)
     
     #--- Properties
     @property

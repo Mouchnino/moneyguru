@@ -605,7 +605,13 @@ class PyTransactionTable(PyTableWithDate):
     @objc.signature('v@:@i')
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
-
+    
+    def showFromAccount(self):
+        self.py.show_from_account()
+    
+    def showToAccount(self):
+        self.py.show_to_account()
+    
     def totals(self):
         return self.py.totals
     

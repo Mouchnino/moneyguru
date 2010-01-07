@@ -9,15 +9,15 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray, QRect, QSize
-from PyQt4.QtGui import (QStyledItemDelegate, QPixmap, QStyle, QPalette, QFont, QStyleOptionViewItemV4,
-    QMessageBox)
+from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
+from PyQt4.QtGui import QPixmap, QPalette, QFont, QMessageBox
 
 from hsutil.misc import nonone
 from qtlib.tree_model import TreeNode, TreeModel
 
 from const import (MIME_NODEPATH, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
     EXTRA_UNDERLINED_DOUBLE)
+from support.item_delegate import ItemDelegate, ItemDecoration
 from .column import ColumnBearer
 
 class Node(TreeNode):
@@ -32,62 +32,47 @@ class Node(TreeNode):
         return self.ref[:]
     
 
-class AccountSheetDelegate(QStyledItemDelegate):
+class AccountSheetDelegate(ItemDelegate):
     def __init__(self, model):
-        QStyledItemDelegate.__init__(self)
+        ItemDelegate.__init__(self)
         self._model = model
+        arrow = QPixmap(':/right_arrow_gray_12')
+        arrowSelected = QPixmap(':/right_arrow_white_12')
+        accountOut = QPixmap(':/account_out_12')
+        accountIn = QPixmap(':/account_in_12')
+        self._decoArrow = ItemDecoration(arrow, self._model.model.show_selected_account)
+        self._decoArrowSelected = ItemDecoration(arrowSelected, self._model.model.show_selected_account)
+        self._decoAccountOut = ItemDecoration(accountOut, self._model.model.toggle_excluded)
+        self._decoAccountIn = ItemDecoration(accountIn, self._model.model.toggle_excluded)
     
-    def handleClick(self, index, pos, itemRect):
+    def _get_decorations(self, index, isSelected):
         column = self._model.COLUMNS[index.column()]
-        if column.attrname == 'name':
-            node = index.internalPointer()
-            currentRight = itemRect.right()
-            if node.ref.is_account:
-                if pos.x() >= currentRight-12:
-                    self._model.model.show_selected_account()
-                currentRight -= 12
-            if not (node.ref.is_total or node.ref.is_blank):
-                if (currentRight-12) <= pos.x() < currentRight:
-                    self._model.model.toggle_excluded()
+        if column.attrname != 'name':
+            return []
+        result = []
+        node = index.internalPointer()
+        ref = node.ref
+        if ref.is_account:
+            deco = self._decoArrowSelected if isSelected else self._decoArrow
+            result.append(deco)
+        if isSelected and not (ref.is_total or ref.is_blank):
+            deco = self._decoAccountIn if ref.is_excluded else self._decoAccountOut
+            result.append(deco)
+        return result
     
-    def paint(self, painter, option, index):
-        self.initStyleOption(option, index)
-        # I don't know why I have to do this. option.version returns 4, but still, when I try to
-        # access option.features, boom-crash. The workaround is to force a V4.
-        option = QStyleOptionViewItemV4(option)
+    def _prepare_paint_options(self, option, index):
         column = self._model.COLUMNS[index.column()]
         node = index.internalPointer()
         ref = node.ref
-        indentationOffset = self._model.data(index, INDENTATION_OFFSET_ROLE)
-        extraFlags = nonone(self._model.data(index, EXTRA_ROLE), 0)
-        decorations = []
-        if column.attrname == 'name':
-            if ref.is_account:
-                arrowImageName = ':/right_arrow_white_12' if option.state & QStyle.State_Selected else ':/right_arrow_gray_12'
-                pixmap = QPixmap(arrowImageName)
-                decorations.append(pixmap)
-            if option.state & QStyle.State_Selected and not (ref.is_total or ref.is_blank):
-                excludeImageName = ':/account_in_12' if ref.is_excluded else ':/account_out_12'
-                pixmap = QPixmap(excludeImageName)
-                decorations.append(pixmap)
-        if decorations:
-            option.decorationPosition = QStyleOptionViewItemV4.Right
-            decorationWidth = sum(pix.width() for pix in decorations)
-            decorationHeight = max(pix.height() for pix in decorations)
-            option.decorationSize = QSize(decorationWidth, decorationHeight)
-            option.features |= QStyleOptionViewItemV4.HasDecoration
         if ref.is_excluded:
             option.palette.setColor(QPalette.Text, Qt.gray)
+        indentationOffset = self._model.data(index, INDENTATION_OFFSET_ROLE)
         if indentationOffset:
             option.rect.setLeft(option.rect.left()+indentationOffset)
-        QStyledItemDelegate.paint(self, painter, option, index)
-        xOffset = 0
-        for pixmap in decorations:
-            x = option.rect.right() - pixmap.width() - xOffset
-            y = option.rect.center().y() - (pixmap.height() // 2)
-            rect = QRect(x, y, pixmap.width(), pixmap.height())
-            painter.drawPixmap(rect, pixmap)
-            xOffset += pixmap.width()
+    
+    def paint(self, painter, option, index):
+        ItemDelegate.paint(self, painter, option, index)
+        extraFlags = nonone(self._model.data(index, EXTRA_ROLE), 0)
         if extraFlags & (EXTRA_UNDERLINED | EXTRA_UNDERLINED_DOUBLE):
             p1 = option.rect.bottomLeft()
             p2 = option.rect.bottomRight()

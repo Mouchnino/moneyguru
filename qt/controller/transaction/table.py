@@ -8,14 +8,37 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QPixmap
 
 from core.gui.transaction_table import TransactionTable as TransactionTableModel
+from support.item_delegate import ItemDecoration
 from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
+from ..table import TableDelegate
 from ..table_with_transactions import TableWithTransactions
 
 # XXX The totals label is tied to the table, even in the model. This is a design flaw. The totals
 # label should be an independent gui element (or be a part of an eventual new transaction_view gui
 # element).
+
+class TransactionTableDelegate(TableDelegate):
+    def __init__(self, model, columns):
+        TableDelegate.__init__(self, model, columns)
+        arrow = QPixmap(':/right_arrow_gray_12')
+        arrowSelected = QPixmap(':/right_arrow_white_12')
+        self._decoFromArrow = ItemDecoration(arrow, self._model.show_from_account)
+        self._decoFromArrowSelected = ItemDecoration(arrowSelected, self._model.show_from_account)
+        self._decoToArrow = ItemDecoration(arrow, self._model.show_to_account)
+        self._decoToArrowSelected = ItemDecoration(arrowSelected, self._model.show_to_account)
+    
+    def _get_decorations(self, index, isSelected):
+        column = self._columns[index.column()]
+        if column.attrname == 'from_':
+            return [self._decoFromArrowSelected if isSelected else self._decoFromArrow]
+        elif column.attrname == 'to':
+            return [self._decoToArrowSelected if isSelected else self._decoToArrow]
+        else:
+            return []
+    
 
 class TransactionTable(TableWithTransactions):
     COLUMNS = [
@@ -32,6 +55,8 @@ class TransactionTable(TableWithTransactions):
     def __init__(self, doc, view, totalsLabel):
         model = TransactionTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
+        self.tableDelegate = TransactionTableDelegate(self.model, self.COLUMNS)
+        self.view.setItemDelegate(self.tableDelegate)
         self.totalsLabel = totalsLabel
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
