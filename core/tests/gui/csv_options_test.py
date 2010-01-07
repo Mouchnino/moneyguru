@@ -14,8 +14,7 @@ from nose.tools import eq_
 from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
-from ...loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_TRANSFER, CSV_AMOUNT, 
-    CSV_INCREASE, CSV_DECREASE, CSV_REFERENCE)
+from ...loader.csv import CsvField
 from ...model.date import YearRange
 
 class CommonSetup(CommonSetup):
@@ -29,10 +28,10 @@ class CommonSetup(CommonSetup):
     
     def setup_ready_fortis(self):
         self.csvopt.set_line_excluded(0, True)
-        self.csvopt.set_column_field(0, CSV_REFERENCE)
-        self.csvopt.set_column_field(1, CSV_DATE)
-        self.csvopt.set_column_field(3, CSV_AMOUNT)
-        self.csvopt.set_column_field(5, CSV_DESCRIPTION)
+        self.csvopt.set_column_field(0, CsvField.Reference)
+        self.csvopt.set_column_field(1, CsvField.Date)
+        self.csvopt.set_column_field(3, CsvField.Amount)
+        self.csvopt.set_column_field(5, CsvField.Description)
     
 
 class NoSetup(TestCase):
@@ -52,7 +51,7 @@ class ImportFortisCSV(TestCase, CommonSetup):
         self.check_gui_calls(self.csvopt_gui, expected_calls)
     
     def test_columns(self):
-        self.assertEqual(self.csvopt.columns, [None] * 8)
+        eq_(self.csvopt.columns, [None] * 8)
     
     def test_continue_import(self):
         # because the columns haven't been set, the iwin is not supposed to be brought and an error
@@ -70,23 +69,23 @@ class ImportFortisCSV(TestCase, CommonSetup):
     
     def test_exclude_first_line(self):
         self.csvopt.set_line_excluded(0, True)
-        self.assertTrue(self.csvopt.line_is_excluded(0))
+        assert self.csvopt.line_is_excluded(0)
     
     def test_get_column_name(self):
-        self.assertEqual(self.csvopt.get_column_name(3), 'None')
+        eq_(self.csvopt.get_column_name(3), 'None')
     
     def test_lines(self):
-        self.assertEqual(len(self.csvopt.lines), 19)
+        eq_(len(self.csvopt.lines), 19)
     
     def test_set_column_field(self):
-        self.csvopt.set_column_field(1, CSV_DATE)
-        self.assertEqual(self.csvopt.get_column_name(1), 'Date')
+        self.csvopt.set_column_field(1, CsvField.Date)
+        eq_(self.csvopt.get_column_name(1), 'Date')
         self.check_gui_calls(self.csvopt_gui, ['refresh_columns_name'])
     
     def test_set_wrong_date_field(self):
         # if the field date is set to a non-date column, raise an appropriate error (with show_message)
-        self.csvopt.set_column_field(5, CSV_DATE) #description
-        self.csvopt.set_column_field(3, CSV_AMOUNT)
+        self.csvopt.set_column_field(5, CsvField.Date) #description
+        self.csvopt.set_column_field(3, CsvField.Amount)
         self.clear_gui_calls()
         self.csvopt.continue_import()
         self.check_gui_calls(self.csvopt_gui, ['show_message'])
@@ -104,50 +103,50 @@ class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
         self.csvopt.continue_import()
         self.check_gui_calls(self.csvopt_gui, ['hide'])
         self.check_gui_calls(self.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
-        self.assertEqual(len(self.iwin.panes), 1)
-        self.assertEqual(self.iwin.panes[0].name, 'CSV Import')
-        self.assertEqual(self.iwin.panes[0].count, 18)
-        self.assertEqual(len(self.itable), 18)
-        self.assertEqual(self.itable[0].date_import, '01/12/2008')
-        self.assertEqual(self.itable[0].description_import, 'RETRAIT A UN DISTRIBUTEUR FORTIS')
-        self.assertEqual(self.itable[0].amount_import, '-100.00')
+        eq_(len(self.iwin.panes), 1)
+        eq_(self.iwin.panes[0].name, 'CSV Import')
+        eq_(self.iwin.panes[0].count, 18)
+        eq_(len(self.itable), 18)
+        eq_(self.itable[0].date_import, '01/12/2008')
+        eq_(self.itable[0].description_import, 'RETRAIT A UN DISTRIBUTEUR FORTIS')
+        eq_(self.itable[0].amount_import, '-100.00')
     
     def test_continue_import_without_the_first_line_being_excluded(self):
         # When the user forgets to exclude a header line, just ignore that line in guess_date_format()
         self.csvopt.set_line_excluded(0, False)
         self.csvopt.continue_import()
-        self.assertEqual(len(self.itable), 18)
-        self.assertEqual(self.itable[0].date_import, '01/12/2008')
+        eq_(len(self.itable), 18)
+        eq_(self.itable[0].date_import, '01/12/2008')
     
     def test_layouts(self):
         self.csvopt.new_layout('foobar') # 'foobar' is selected
         self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu'])
-        self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar'])
-        self.csvopt.set_column_field(5, CSV_PAYEE)
+        eq_(self.csvopt.layout_names, ['Default', 'foobar'])
+        self.csvopt.set_column_field(5, CsvField.Payee)
         self.clear_gui_calls()
         self.csvopt.select_layout(None) # default
         self.check_gui_calls(self.csvopt_gui, ['refresh_columns_name', 'refresh_lines', 'refresh_targets'])
-        self.assertEqual(self.csvopt.columns[5], CSV_DESCRIPTION)
+        eq_(self.csvopt.columns[5], CsvField.Description)
         self.csvopt.select_layout('foobar')
-        self.assertEqual(self.csvopt.columns[5], CSV_PAYEE)
+        eq_(self.csvopt.columns[5], CsvField.Payee)
     
     def test_new_layout_with_empty_name(self):
         # when trying to add a layout with an empty name, do nothing
         self.csvopt.new_layout('')
         self.csvopt.new_layout(None)
-        self.assertEqual(len(self.csvopt.layout_names), 1)
+        eq_(len(self.csvopt.layout_names), 1)
     
     def test_rename_layout_with_empty_name(self):
         # when trying to add a layout with an empty name, do nothing
         self.csvopt.rename_selected_layout('')
         self.csvopt.rename_selected_layout(None)
-        self.assertEqual(self.csvopt.layout.name, 'Default')
+        eq_(self.csvopt.layout.name, 'Default')
     
     def test_set_same_field_on_another_column(self):
         # if a field is already set somewhere and that another column sets the same field elsewhere,
         # clear the other column
-        self.csvopt.set_column_field(2, CSV_DATE)
-        self.assertEqual(self.csvopt.get_column_name(1), 'None')
+        self.csvopt.set_column_field(2, CsvField.Date)
+        eq_(self.csvopt.get_column_name(1), 'None')
     
 
 class LotsOfNoise(TestCase, CommonSetup):
@@ -158,8 +157,8 @@ class LotsOfNoise(TestCase, CommonSetup):
     def test_use_latin1_encoding(self):
         # This file contains umlauts encoded in latin-1. Make sure they are correctly decoded
         s = self.csvopt.lines[0][0]
-        self.assertTrue(isinstance(s, unicode))
-        self.assertTrue(u'ä' in s)
+        assert isinstance(s, unicode)
+        assert u'ä' in s
     
 
 class LotsOfNoiseReadyToImport(TestCase, CommonSetup):
@@ -172,17 +171,17 @@ class LotsOfNoiseReadyToImport(TestCase, CommonSetup):
         self.csvopt.set_line_excluded(3, True)
         self.csvopt.set_line_excluded(4, True)
         self.csvopt.set_line_excluded(7, True)
-        self.csvopt.set_column_field(0, CSV_DATE)
-        self.csvopt.set_column_field(2, CSV_DESCRIPTION)
-        self.csvopt.set_column_field(3, CSV_AMOUNT)
+        self.csvopt.set_column_field(0, CsvField.Date)
+        self.csvopt.set_column_field(2, CsvField.Description)
+        self.csvopt.set_column_field(3, CsvField.Amount)
         self.clear_gui_calls()
     
     def test_continue_import(self):
         self.csvopt.continue_import()
-        self.assertEqual(len(self.itable), 2)
-        self.assertEqual(self.itable[0].date_import, '14/01/2009')
-        self.assertEqual(self.itable[0].description_import, '1234512345123451 AMAZON.SER VICES S. 090114P3TX4612XG AMAZON.SERVICES S.A.R.L - E U-DE DR. THOMAS ECKHOLD')
-        self.assertEqual(self.itable[0].amount_import, '-99.99')
+        eq_(len(self.itable), 2)
+        eq_(self.itable[0].date_import, '14/01/2009')
+        eq_(self.itable[0].description_import, '1234512345123451 AMAZON.SER VICES S. 090114P3TX4612XG AMAZON.SERVICES S.A.R.L - E U-DE DR. THOMAS ECKHOLD')
+        eq_(self.itable[0].amount_import, '-99.99')
     
     def test_load_fortis(self):
         # when loading another CSV, keep line exclusions that happen to be last *last*
@@ -190,16 +189,16 @@ class LotsOfNoiseReadyToImport(TestCase, CommonSetup):
         self.csvopt.new_layout('fortis') # let's save it
         self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         self.csvopt.select_layout('fortis')
-        self.assertFalse(self.csvopt.line_is_excluded(6))
-        self.assertFalse(self.csvopt.line_is_excluded(7))
-        self.assertTrue(self.csvopt.line_is_excluded(17))
-        self.assertTrue(self.csvopt.line_is_excluded(18))
+        assert not self.csvopt.line_is_excluded(6)
+        assert not self.csvopt.line_is_excluded(7)
+        assert self.csvopt.line_is_excluded(17)
+        assert self.csvopt.line_is_excluded(18)
     
     def test_reinclude_last_line(self):
         # it's possible to re-include the last line. Previously, due to the negative index scheme,
         # it wouldn't be possible.
         self.csvopt.set_line_excluded(7, False)
-        self.assertFalse(self.csvopt.line_is_excluded(7))
+        assert not self.csvopt.line_is_excluded(7)
     
 
 class FortisWithTwoLayouts(TestCase, CommonSetup):
@@ -211,7 +210,7 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
         self.csvopt.new_layout('foobar') # 'foobar' is selected
         self.csvopt.selected_target_index = 1 # one
         self.csvopt.new_layout('foobaz') # 'foobaz' is selected
-        self.csvopt.set_column_field(5, CSV_PAYEE)
+        self.csvopt.set_column_field(5, CsvField.Payee)
         self.clear_gui_calls()
     
     def test_close_document(self):
@@ -220,33 +219,33 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
         # None values can't be in the preferences. They have to be replaced by empty strings.
         default = {
             'name': 'foobar',
-            'columns': [CSV_REFERENCE, CSV_DATE, '', CSV_AMOUNT, '', CSV_DESCRIPTION],
+            'columns': [CsvField.Reference, CsvField.Date, '', CsvField.Amount, '', CsvField.Description],
             'excluded_lines': [0],
             'target_account': 'one',
         }
         foobar = {
             'name': 'foobaz',
-            'columns': [CSV_REFERENCE, CSV_DATE, '', CSV_AMOUNT, '', CSV_PAYEE],
+            'columns': [CsvField.Reference, CsvField.Date, '', CsvField.Amount, '', CsvField.Payee],
             'excluded_lines': [0]
         }
-        self.assertEqual(self.app_gui.get_default(LAYOUT_PREFERENCE_NAME), [default, foobar])
+        eq_(self.app_gui.get_default(LAYOUT_PREFERENCE_NAME), [default, foobar])
     
     def test_delete_selected_layout(self):
         self.csvopt.delete_selected_layout()
         self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu', 'refresh_columns_name', 'refresh_lines'])
-        self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar'])
-        self.assertEqual(self.csvopt.layout.name, 'Default')
+        eq_(self.csvopt.layout_names, ['Default', 'foobar'])
+        eq_(self.csvopt.layout.name, 'Default')
     
     def test_load_another_import(self):
         # when a file is loaded, select the default layout, and reset it
         self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
-        self.assertEqual(self.csvopt.layout.name, 'Default')
-        self.assertTrue(self.csvopt.columns[5] is None)
+        eq_(self.csvopt.layout.name, 'Default')
+        assert self.csvopt.columns[5] is None
     
     def test_rename_selected_layout(self):
         self.csvopt.rename_selected_layout('foobaz')
         self.check_gui_calls(self.csvopt_gui, ['refresh_layout_menu'])
-        self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
+        eq_(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
     
     def test_rename_target_account(self):
         # When renaming an account targeted by a layout doesn't cause a crash next time this layout
@@ -273,13 +272,13 @@ class FortisWithLoadedLayouts(TestCase, CommonSetup):
         # None values can't be in the preferences. They have to be replaced by empty strings.
         default = {
             'name': 'foobar',
-            'columns': [CSV_REFERENCE, CSV_DATE, '', CSV_AMOUNT, '', CSV_DESCRIPTION],
+            'columns': [CsvField.Reference, CsvField.Date, '', CsvField.Amount, '', CsvField.Description],
             'excluded_lines': [0],
             'target_account': 'one',
         }
         foobar = {
             'name': 'foobaz',
-            'columns': [CSV_REFERENCE, CSV_DATE, '', CSV_AMOUNT, '', CSV_PAYEE],
+            'columns': [CsvField.Reference, CsvField.Date, '', CsvField.Amount, '', CsvField.Payee],
             'excluded_lines': [0]
         }
         self.app_gui.set_default(LAYOUT_PREFERENCE_NAME, [default, foobar])
@@ -289,14 +288,14 @@ class FortisWithLoadedLayouts(TestCase, CommonSetup):
     
     def test_layouts(self):
         # The layouts have been correctly loaded
-        self.assertEqual(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
+        eq_(self.csvopt.layout_names, ['Default', 'foobar', 'foobaz'])
         self.csvopt.select_layout('foobar')
-        self.assertEqual(self.csvopt.columns[5], CSV_DESCRIPTION)
-        self.assertTrue(self.csvopt.line_is_excluded(0))
-        self.assertEqual(self.csvopt.selected_target_index, 1)
+        eq_(self.csvopt.columns[5], CsvField.Description)
+        assert self.csvopt.line_is_excluded(0)
+        eq_(self.csvopt.selected_target_index, 1)
         self.csvopt.select_layout('foobaz')
-        self.assertEqual(self.csvopt.columns[5], CSV_PAYEE)
-        self.assertEqual(self.csvopt.columns[6], None) # columns for *all* layout have been adjusted
+        eq_(self.csvopt.columns[5], CsvField.Payee)
+        eq_(self.csvopt.columns[6], None) # columns for *all* layout have been adjusted
     
 
 class DateFieldWithGarbage(TestCase):
@@ -304,15 +303,15 @@ class DateFieldWithGarbage(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.parse_file_for_import(self.filepath('csv/date_field_with_garbage.csv'))
-        self.csvopt.set_column_field(0, CSV_DATE)
-        self.csvopt.set_column_field(2, CSV_DESCRIPTION)
-        self.csvopt.set_column_field(3, CSV_AMOUNT)
+        self.csvopt.set_column_field(0, CsvField.Date)
+        self.csvopt.set_column_field(2, CsvField.Description)
+        self.csvopt.set_column_field(3, CsvField.Amount)
     
     def test_continue_import(self):
         # the date with garbage is correctly parsed
         self.csvopt.continue_import()
-        self.assertEqual(len(self.itable), 2)
-        self.assertEqual(self.itable[0].date_import, '14/01/2009')
+        eq_(len(self.itable), 2)
+        eq_(self.itable[0].date_import, '14/01/2009')
     
 
 class FortisThreeEmptyAccounts(TestCase, CommonSetup):
@@ -326,10 +325,10 @@ class FortisThreeEmptyAccounts(TestCase, CommonSetup):
         self.csvopt.new_layout('foobar')
         self.csvopt.selected_target_index = 1
         self.csvopt.select_layout(None) # default
-        self.assertEqual(self.csvopt.selected_target_index, 2)
+        eq_(self.csvopt.selected_target_index, 2)
     
     def test_target_account_names(self):
-        self.assertEqual(self.csvopt.target_account_names, ['< New Account >', 'one', 'three', 'two'])
+        eq_(self.csvopt.target_account_names, ['< New Account >', 'one', 'three', 'two'])
     
 
 class FortisImportedThreeEmptyAccounts(TestCase, CommonSetup):
@@ -343,7 +342,7 @@ class FortisImportedThreeEmptyAccounts(TestCase, CommonSetup):
         # the selected target account is carried in the iwin
         self.csvopt.selected_target_index = 2 # three
         self.csvopt.continue_import()
-        self.assertEqual(self.iwin.selected_target_account_index, 2)
+        eq_(self.iwin.selected_target_account_index, 2)
     
 
 class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
@@ -351,7 +350,7 @@ class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
         self.create_instances()
         self.setup_import_fortis()
         self.csvopt.new_layout('fortis')
-        self.csvopt.set_column_field(6, CSV_TRANSFER) # out of range of the other
+        self.csvopt.set_column_field(6, CsvField.Transfer) # out of range of the other
         self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv')) # less columns (3)
     
     def test_access_last_column(self):
@@ -368,14 +367,14 @@ class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
         self.csvopt.select_layout('fortis')
         self.setup_import_fortis()
         self.csvopt.select_layout('fortis')
-        self.assertEqual(self.csvopt.columns[6], CSV_TRANSFER)
+        eq_(self.csvopt.columns[6], CsvField.Transfer)
     
     def test_set_date_and_amount_then_import(self):
         # The csv loading process must not crash either, even if out-of-range columns are fed to it.
         self.csvopt.select_layout('fortis')
-        self.csvopt.set_column_field(0, CSV_DATE)
-        self.csvopt.set_column_field(1, CSV_INCREASE)
-        self.csvopt.set_column_field(2, CSV_DECREASE)
+        self.csvopt.set_column_field(0, CsvField.Date)
+        self.csvopt.set_column_field(1, CsvField.Increase)
+        self.csvopt.set_column_field(2, CsvField.Decrease)
         self.csvopt.continue_import() # no crash
         eq_(len(self.itable), 3)
     
@@ -386,9 +385,9 @@ class IncreaseDecrease(TestCase):
         # it has a negative value in the decrease column, which must be ignored
         self.create_instances()
         self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv'))
-        self.csvopt.set_column_field(0, CSV_DATE)
-        self.csvopt.set_column_field(1, CSV_INCREASE)
-        self.csvopt.set_column_field(2, CSV_DECREASE)
+        self.csvopt.set_column_field(0, CsvField.Date)
+        self.csvopt.set_column_field(1, CsvField.Increase)
+        self.csvopt.set_column_field(2, CsvField.Decrease)
         self.csvopt.set_line_excluded(0, True)
     
     def test_continue_import(self):

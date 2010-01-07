@@ -11,27 +11,27 @@ from itertools import dropwhile
 from hsutil.misc import first, nonone
 
 from ..exception import FileLoadError
-from ..loader.csv import (CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE)
+from ..loader.csv import CsvField
 from .base import DocumentGUIObject
 
 LAYOUT_PREFERENCE_NAME = 'CSVLayouts'
 FIELD_NAMES = {
     None: 'None',
-    CSV_DATE: 'Date',
-    CSV_DESCRIPTION: 'Description',
-    CSV_PAYEE: 'Payee',
-    CSV_CHECKNO: 'Check #',
-    CSV_TRANSFER: 'Transfer',
-    CSV_AMOUNT: 'Amount',
-    CSV_INCREASE: 'Increase',
-    CSV_DECREASE: 'Decrease',
-    CSV_CURRENCY: 'Currency',
-    CSV_REFERENCE: 'Transaction ID',
+    CsvField.Date: 'Date',
+    CsvField.Description: 'Description',
+    CsvField.Payee: 'Payee',
+    CsvField.Checkno: 'Check #',
+    CsvField.Transfer: 'Transfer',
+    CsvField.Amount: 'Amount',
+    CsvField.Increase: 'Increase',
+    CsvField.Decrease: 'Decrease',
+    CsvField.Currency: 'Currency',
+    CsvField.Reference: 'Transaction ID',
 }
 
-FIELD_ORDER = [None, CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_INCREASE, CSV_DECREASE, CSV_CURRENCY, CSV_REFERENCE]
+FIELD_ORDER = [None, CsvField.Date, CsvField.Description, CsvField.Payee, CsvField.Checkno, 
+    CsvField.Transfer, CsvField.Amount, CsvField.Increase, CsvField.Decrease, CsvField.Currency,
+    CsvField.Reference]
 
 class Layout(object):
     def __init__(self, name):

@@ -14,8 +14,7 @@ from hsutil.currency import USD, EUR
 
 from ..base import TestCase
 from ...exception import FileFormatError
-from ...loader.csv import (Loader, CSV_DATE, CSV_DESCRIPTION, CSV_PAYEE, CSV_CHECKNO, CSV_TRANSFER, 
-    CSV_AMOUNT, CSV_CURRENCY, CSV_REFERENCE)
+from ...loader.csv import Loader, CsvField
 from ...model.amount import Amount
 
 class Pristine(TestCase):
@@ -30,11 +29,11 @@ class Pristine(TestCase):
         eq_(len(self.loader.lines[0]), 8)
         # the lines below until the load() are the equivalent of the user linking columns with fields
         # and removing the first line.
-        self.loader.column_indexes[CSV_DATE] = 1
-        self.loader.column_indexes[CSV_DESCRIPTION] = 5
-        self.loader.column_indexes[CSV_AMOUNT] = 3
-        self.loader.column_indexes[CSV_CURRENCY] = 4
-        self.loader.column_indexes[CSV_REFERENCE] = 0
+        self.loader.column_indexes[CsvField.Date] = 1
+        self.loader.column_indexes[CsvField.Description] = 5
+        self.loader.column_indexes[CsvField.Amount] = 3
+        self.loader.column_indexes[CsvField.Currency] = 4
+        self.loader.column_indexes[CsvField.Reference] = 0
         self.loader.lines = self.loader.lines[1:]
         self.loader.load()
         eq_(len(self.loader.accounts), 1)

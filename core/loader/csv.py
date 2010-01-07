@@ -16,16 +16,17 @@ from StringIO import StringIO
 from . import base
 from ..exception import FileFormatError, FileLoadError
 
-CSV_DATE = 'date'
-CSV_DESCRIPTION = 'description'
-CSV_PAYEE = 'payee'
-CSV_CHECKNO = 'checkno'
-CSV_TRANSFER = 'transfer'
-CSV_AMOUNT = 'amount'
-CSV_INCREASE = 'increase'
-CSV_DECREASE = 'decrease'
-CSV_CURRENCY = 'currency'
-CSV_REFERENCE = 'reference'
+class CsvField(object):
+    Date = 'date'
+    Description = 'description'
+    Payee = 'payee'
+    Checkno = 'checkno'
+    Transfer = 'transfer'
+    Amount = 'amount'
+    Increase = 'increase'
+    Decrease = 'decrease'
+    Currency = 'currency'
+    Reference = 'reference'
 
 class Loader(base.Loader):
     FILE_OPEN_MODE = 'U' # universal line-ends. Deals with \r and \n
@@ -66,12 +67,12 @@ class Loader(base.Loader):
         ci = self.column_indexes
         colcount = len(self.lines[0]) if self.lines else 0
         ci = dict((attr, index) for attr, index in ci.iteritems() if index < colcount)
-        hasdate = CSV_DATE in ci
-        hasamount = (CSV_AMOUNT in ci) or (CSV_INCREASE in ci and CSV_DECREASE in ci)
+        hasdate = CsvField.Date in ci
+        hasamount = (CsvField.Amount in ci) or (CsvField.Increase in ci and CsvField.Decrease in ci)
         if not (hasdate and hasamount):
             raise FileLoadError('The Date and Amount columns must be set')
         self.account_info.name = 'CSV Import'
-        date_index = ci[CSV_DATE]
+        date_index = ci[CsvField.Date]
         for line in self.lines:
             cleaned_str_date = self.clean_date(line[date_index])
             if cleaned_str_date is None:
@@ -86,12 +87,12 @@ class Loader(base.Loader):
             self.start_transaction()
             for attr, index in ci.items():
                 value = line[index]
-                if attr == CSV_DATE:
+                if attr == CsvField.Date:
                     value = datetime.strptime(value, date_format).date()
-                elif attr == CSV_INCREASE:
-                    attr = CSV_AMOUNT
-                elif attr == CSV_DECREASE:
-                    attr = CSV_AMOUNT
+                elif attr == CsvField.Increase:
+                    attr = CsvField.Amount
+                elif attr == CsvField.Decrease:
+                    attr = CsvField.Amount
                     if value.strip() and not value.startswith('-'):
                         value = '-' + value
                 if isinstance(value, basestring):
