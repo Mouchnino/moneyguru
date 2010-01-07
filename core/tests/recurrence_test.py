@@ -40,9 +40,13 @@ class OneTransaction(TestCase, CommonSetup):
 
 class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
+        self.mock_today(2008, 9, 13)
         self.create_instances()
-        self.add_account_legacy('account')
-        self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
+        self.document.select_month_range()
+        self.add_account('account')
+        self.add_schedule(start_date='13/09/2008', description='foobar', account='account', 
+            amount='1', repeat_every=3)
+        self.mainwindow.select_transaction_table()
     
     def test_change_schedule_transaction(self):
         # when modifying a schedule's transaction through the scpanel, make sure that this change
@@ -61,16 +65,16 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable[1].date = '17/09/2008'
         self.ttable[1].description = 'changed'
         self.ttable.save_edits()
-        self.assertEqual(len(self.ttable), 6) # the spawn wasn't added to the tlist as a normal txn
-        self.assertTrue(self.ttable[1].recurrent)
-        self.assertEqual(self.ttable[1].date, '17/09/2008')
-        self.assertEqual(self.ttable[1].description, 'changed')
+        eq_(len(self.ttable), 6) # the spawn wasn't added to the tlist as a normal txn
+        assert self.ttable[1].recurrent
+        eq_(self.ttable[1].date, '17/09/2008')
+        eq_(self.ttable[1].description, 'changed')
         # change again
         self.ttable[1].date = '20/09/2008'
         self.ttable.save_edits()
-        self.assertEqual(self.ttable[1].date, '19/09/2008')
-        self.assertEqual(self.ttable[2].date, '20/09/2008')
-        self.assertEqual(self.ttable[2].description, 'changed')
+        eq_(self.ttable[1].date, '19/09/2008')
+        eq_(self.ttable[2].date, '20/09/2008')
+        eq_(self.ttable[2].description, 'changed')
     
     def test_change_spawn_then_delete_it(self):
         # The correct spawn is deleted when a changed spawn is deleted
@@ -78,8 +82,8 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable[1].date = '17/09/2008'
         self.ttable.save_edits()
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 5)
-        self.assertEqual(self.ttable[1].date, '19/09/2008')
+        eq_(len(self.ttable), 5)
+        eq_(self.ttable[1].date, '19/09/2008')
     
     def test_change_spawn_through_tpanel(self):
         # Previously, each edition of a spawn through tpanel would result in a new schedule being
@@ -88,9 +92,9 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.tpanel.load()
         self.tpanel.description = 'changed'
         self.tpanel.save()
-        self.assertEqual(self.ttable[1].description, 'changed')
-        self.assertEqual(self.ttable[2].description, 'foobar')
-        self.assertEqual(self.ttable[3].description, 'foobar')
+        eq_(self.ttable[1].description, 'changed')
+        eq_(self.ttable[2].description, 'foobar')
+        eq_(self.ttable[3].description, 'foobar')
     
     def test_change_spawn_with_global_scope(self):
         # changing a spawn with a global scope makes every following spawn like it.
@@ -101,11 +105,11 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
         # the explcitely changed one, however, keeps its date
-        self.assertEqual(self.ttable[2].date, '17/09/2008')
-        self.assertEqual(self.ttable[3].date, '22/09/2008')
-        self.assertEqual(self.ttable[3].description, 'changed')
-        self.assertEqual(self.ttable[4].date, '25/09/2008')
-        self.assertEqual(self.ttable[4].description, 'changed')
+        eq_(self.ttable[2].date, '17/09/2008')
+        eq_(self.ttable[3].date, '22/09/2008')
+        eq_(self.ttable[3].description, 'changed')
+        eq_(self.ttable[4].date, '25/09/2008')
+        eq_(self.ttable[4].description, 'changed')
     
     def test_change_spawn_with_global_scope_then_with_local_scope(self):
         # Previously, the same instance was used in the previous recurrence exception as well as
@@ -118,7 +122,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable[2].description = 'changed again'
         self.document_gui.query_for_schedule_scope_result = ScheduleScope.Local
         self.ttable.save_edits()
-        self.assertEqual(self.ttable[3].description, 'changed')
+        eq_(self.ttable[3].description, 'changed')
     
     def test_change_spawn_with_global_scope_twice(self):
         # Previously, the second change would result in schedule duplicating
@@ -129,8 +133,8 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.save_edits()
         self.ttable[2].description = 'changed again'
         self.ttable.save_edits()
-        self.assertEqual(self.ttable[3].date, '22/09/2008')
-        self.assertEqual(self.ttable[3].description, 'changed again')
+        eq_(self.ttable[3].date, '22/09/2008')
+        eq_(self.ttable[3].description, 'changed again')
     
     def test_delete_account(self):
         # Deleting an account affecting a schedule properly update that schedule
@@ -145,8 +149,8 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         # deleting a spawn only deletes this instance
         self.ttable.select([1])
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 5)
-        self.assertEqual(self.ttable[1].date, '19/09/2008')
+        eq_(len(self.ttable), 5)
+        eq_(self.ttable[1].date, '19/09/2008')
     
     def test_delete_spawn_with_global_scope(self):
         # when deleting a spawn and query_for_global_scope returns True, we stop the recurrence 
@@ -154,8 +158,8 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.select([2])
         self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 2)
-        self.assertEqual(self.ttable[1].date, '16/09/2008')
+        eq_(len(self.ttable), 2)
+        eq_(self.ttable[1].date, '16/09/2008')
     
     def test_delete_spawn_with_global_scope_after_change(self):
         # A bug would cause the stop_date to be ineffective if a change had been made at a later date
@@ -165,15 +169,15 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.select([2])
         self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 2)
+        eq_(len(self.ttable), 2)
     
     def test_etable_attrs(self):
-        self.mainwindow.select_entry_table()
-        self.assertEqual(len(self.etable), 6) # same thing in etable
-        self.assertTrue(self.etable[0].recurrent)
-        self.assertEqual(self.ttable[0].date, '13/09/2008')
-        self.assertTrue(self.ttable[5].recurrent)
-        self.assertEqual(self.ttable[5].date, '28/09/2008')
+        self.show_account('account')
+        eq_(len(self.etable), 6) # same thing in etable
+        assert self.etable[0].recurrent
+        eq_(self.ttable[0].date, '13/09/2008')
+        assert self.ttable[5].recurrent
+        eq_(self.ttable[5].date, '28/09/2008')
     
     def test_exceptions_are_always_spawned(self):
         # When an exception has a smaller date than the "spawn date", enough to be in another range,
@@ -185,12 +189,12 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.save_edits() # date range now on 09/2008
         self.document._cook() # little hack to invalidate previously spawned txns
         self.ttable.refresh() # a manual refresh is required
-        self.assertEqual(len(self.ttable), 7) # The changed spawn must be there.
+        eq_(len(self.ttable), 7) # The changed spawn must be there.
     
     def test_filter(self):
         # scheduled transactions are included in the filters
         self.sfield.query = 'foobar'
-        self.assertEqual(len(self.ttable), 6)
+        eq_(len(self.ttable), 6)
     
     def test_mass_edition(self):
         # When a mass edition has a spawn in it, don't ask for scope, just perform the change in the
@@ -203,19 +207,19 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.check_gui_calls_partial(self.document_gui, not_expected=['query_for_schedule_scope'])
     
     def test_ttable_attrs(self):
-        self.assertEqual(len(self.ttable), 6) # this txn happens 6 times this month
-        self.assertTrue(self.ttable[0].recurrent) # original is not recurrent
-        self.assertEqual(self.ttable[0].date, '13/09/2008')
-        self.assertTrue(self.ttable[1].recurrent)
-        self.assertEqual(self.ttable[1].date, '16/09/2008')
-        self.assertTrue(self.ttable[2].recurrent)
-        self.assertEqual(self.ttable[2].date, '19/09/2008')
-        self.assertTrue(self.ttable[3].recurrent)
-        self.assertEqual(self.ttable[3].date, '22/09/2008')
-        self.assertTrue(self.ttable[4].recurrent)
-        self.assertEqual(self.ttable[4].date, '25/09/2008')
-        self.assertTrue(self.ttable[5].recurrent)
-        self.assertEqual(self.ttable[5].date, '28/09/2008')
+        eq_(len(self.ttable), 6) # this txn happens 6 times this month
+        assert self.ttable[0].recurrent # original is not recurrent
+        eq_(self.ttable[0].date, '13/09/2008')
+        assert self.ttable[1].recurrent
+        eq_(self.ttable[1].date, '16/09/2008')
+        assert self.ttable[2].recurrent
+        eq_(self.ttable[2].date, '19/09/2008')
+        assert self.ttable[3].recurrent
+        eq_(self.ttable[3].date, '22/09/2008')
+        assert self.ttable[4].recurrent
+        eq_(self.ttable[4].date, '25/09/2008')
+        assert self.ttable[5].recurrent
+        eq_(self.ttable[5].date, '28/09/2008')
     
 
 class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSaveLoadMixin):
