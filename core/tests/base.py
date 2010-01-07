@@ -1,4 +1,4 @@
-# coding: utf-8 
+# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-06-04
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -18,7 +18,7 @@ from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
-from ..document import Document
+from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
 from ..gui.account_panel import AccountPanel
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
@@ -94,7 +94,7 @@ class ApplicationGUI(CallLogger):
 class DocumentGUI(CallLogger):
     def __init__(self):
         CallLogger.__init__(self)
-        self.query_for_schedule_scope_result = False
+        self.query_for_schedule_scope_result = ScheduleScope.Local
     
     @log
     def query_for_schedule_scope(self):

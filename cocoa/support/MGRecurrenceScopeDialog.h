@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 
 @interface MGRecurrenceScopeDialog : NSWindowController {}
-+ (BOOL)shouldUseGlobalScope;
++ (int)shouldUseGlobalScope;
 
 - (IBAction)chooseGlobalScope:(id)sender;
 - (IBAction)chooseLocalScope:(id)sender;

@@ -223,7 +223,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)queryForScheduleScope
 {
     if (([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) == NSShiftKeyMask)
-        return YES;
+        return ScheduleScopeGlobal;
     else
         return [MGRecurrenceScopeDialog shouldUseGlobalScope];
 }

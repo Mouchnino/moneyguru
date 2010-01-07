@@ -14,7 +14,7 @@ from PyQt4.QtCore import pyqtSignal, Qt, QObject, QFile
 from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
 from core.exception import FileFormatError
-from core.document import Document as DocumentModel
+from core.document import Document as DocumentModel, ScheduleScope
 
 from controller.schedule_scope_dialog import ScheduleScopeDialog
 
@@ -129,11 +129,11 @@ class Document(QObject):
     # model --> view
     def query_for_schedule_scope(self):
         if QApplication.keyboardModifiers() & Qt.ShiftModifier:
-            return True
+            return ScheduleScope.Global
         if not self.app.prefs.showScheduleScopeDialog:
-            return False
+            return ScheduleScope.Local
         dialog = ScheduleScopeDialog(self.app.mainWindow)
-        return dialog.exec_() == ScheduleScopeDialog.Accepted
+        return ScheduleScope.Global if dialog.exec_() == ScheduleScopeDialog.Accepted else ScheduleScope.Local
     
     #--- Signals
     documentOpened = pyqtSignal(unicode)

@@ -50,6 +50,11 @@ FILTER_TRANSFER = object()
 FILTER_RECONCILED = object()
 FILTER_NOTRECONCILED = object()
 
+class ScheduleScope(object):
+    Local = 0
+    Global = 1
+    Cancel = 2 # not used yet
+
 AUTOSAVE_BUFFER_COUNT = 10 # Number of autosave files that will be kept in the cache.
 
 class Document(Broadcaster, Listener):
@@ -126,7 +131,10 @@ class Document(Broadcaster, Listener):
         transaction.change(date=date, description=description, payee=payee, checkno=checkno,
                            from_=from_, to=to, amount=amount, currency=currency)
         if isinstance(transaction, Spawn):
-            global_scope = False if force_local_scope else self.view.query_for_schedule_scope()
+            if force_local_scope:
+                global_scope = False
+            else:
+                global_scope = self.view.query_for_schedule_scope() == ScheduleScope.Global
             if global_scope:
                 transaction.recurrence.change_globally(transaction)
             else:
@@ -499,7 +507,7 @@ class Document(Broadcaster, Listener):
         
         for txn in transactions:
             if isinstance(txn, Spawn):
-                global_scope = self.view.query_for_schedule_scope()
+                global_scope = self.view.query_for_schedule_scope() == ScheduleScope.Global
                 if global_scope:
                     txn.recurrence.stop_before(txn)
                 else:

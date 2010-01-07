@@ -8,6 +8,7 @@
 
 from nose.tools import eq_
 
+from ..document import ScheduleScope
 from .base import TestCase, TestSaveLoadMixin, CommonSetup
 
 class OneTransaction(TestCase, CommonSetup):
@@ -97,7 +98,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.select([2])
         self.ttable[2].date = '17/09/2008'
         self.ttable[2].description = 'changed'
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
         # the explcitely changed one, however, keeps its date
         self.assertEqual(self.ttable[2].date, '17/09/2008')
@@ -112,10 +113,10 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.select([2])
         self.ttable[2].date = '17/09/2008'
         self.ttable[2].description = 'changed'
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
         self.ttable[2].description = 'changed again'
-        self.document_gui.query_for_schedule_scope_result = False
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Local
         self.ttable.save_edits()
         self.assertEqual(self.ttable[3].description, 'changed')
     
@@ -124,7 +125,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable.select([2])
         self.ttable[2].date = '17/09/2008'
         self.ttable[2].description = 'changed'
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
         self.ttable[2].description = 'changed again'
         self.ttable.save_edits()
@@ -151,7 +152,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         # when deleting a spawn and query_for_global_scope returns True, we stop the recurrence 
         # right there
         self.ttable.select([2])
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.delete()
         self.assertEqual(len(self.ttable), 2)
         self.assertEqual(self.ttable[1].date, '16/09/2008')
@@ -162,7 +163,7 @@ class OneDailyRecurrentTransaction(TestCase, CommonSetup, TestSaveLoadMixin):
         self.ttable[3].description = 'changed'
         self.ttable.save_edits()
         self.ttable.select([2])
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.delete()
         self.assertEqual(len(self.ttable), 2)
     
@@ -282,14 +283,14 @@ class OneDailyRecurrentTransactionWithGlobalChange(TestCase, CommonSetup, TestSa
         self.ttable.select([2])
         self.ttable[2].date = '17/09/2008'
         self.ttable[2].description = 'changed'
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
     
     def test_perform_another_global_change_before(self):
         # Previously, the second global change would not override the first
         self.ttable.select([1])
         self.ttable[1].description = 'changed again'
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
         self.assertEqual(self.ttable[2].description, 'changed again')
     
@@ -306,7 +307,7 @@ class OneDailyRecurrentTransactionWithLocalDeletion(TestCase, CommonSetup, TestS
         # Don't remove the local deletion
         self.ttable.select([1])
         self.ttable[1].description = 'changed'
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
         self.assertEqual(self.ttable[2].date, '22/09/2008')
     
@@ -316,7 +317,7 @@ class OneDailyRecurrentTransactionWithStopDate(TestCase, CommonSetup):
         self.create_instances()
         self.setup_scheduled_transaction(repeat_every=3)
         self.ttable.select([3])
-        self.document_gui.query_for_schedule_scope_result = True
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.delete()
     
     def test_perform_global_change(self):

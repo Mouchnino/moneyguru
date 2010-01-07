@@ -9,17 +9,14 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGRecurrenceScopeDialog.h"
 #import "MGConst.h"
 
-#define MGLocalScopeChosen 1
-#define MGGlobalScopeChosen 2
-
 @implementation MGRecurrenceScopeDialog
-+ (BOOL)shouldUseGlobalScope
++ (int)shouldUseGlobalScope
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if (![ud boolForKey:ShowRecurrenceScopeDialog])
-        return NO;
+        return ScheduleScopeLocal;
     MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] initWithWindowNibName:@"RecurrenceScopeDialog"];
-    BOOL result = [NSApp runModalForWindow:[dialog window]] == MGGlobalScopeChosen;
+    int result = [NSApp runModalForWindow:[dialog window]];
     [[dialog window] close];
     [dialog release];
     return result;
@@ -27,12 +24,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)chooseGlobalScope:(id)sender
 {
-    [NSApp stopModalWithCode:MGGlobalScopeChosen];
+    [NSApp stopModalWithCode:ScheduleScopeGlobal];
 }
 
 - (IBAction)chooseLocalScope:(id)sender
 {
-    [NSApp stopModalWithCode:MGLocalScopeChosen];
+    [NSApp stopModalWithCode:ScheduleScopeLocal];
 }
 
 @end
