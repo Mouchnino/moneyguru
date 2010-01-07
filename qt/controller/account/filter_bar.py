@@ -7,8 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from core.document import (FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, FILTER_TRANSFER,
-    FILTER_RECONCILED, FILTER_NOTRECONCILED)
+from core.document import FilterType
 from core.gui.filter_bar import EntryFilterBar as EntryFilterBarModel
 
 from ..filter_bar import FilterBar
@@ -16,12 +15,12 @@ from ..filter_bar import FilterBar
 class EntryFilterBar(FilterBar):
     BUTTONS = [
         ("All", None),
-        ("Increase", FILTER_INCOME),
-        ("Decrease", FILTER_EXPENSE),
-        ("Transfers", FILTER_TRANSFER),
-        ("Unassigned", FILTER_UNASSIGNED),
-        ("Reconciled", FILTER_RECONCILED),
-        ("Not Reconciled", FILTER_NOTRECONCILED),
+        ("Increase", FilterType.Income),
+        ("Decrease", FilterType.Expense),
+        ("Transfers", FilterType.Transfer),
+        ("Unassigned", FilterType.Unassigned),
+        ("Reconciled", FilterType.Reconciled),
+        ("Not Reconciled", FilterType.NotReconciled),
     ]
     
     def __init__(self, doc, view):

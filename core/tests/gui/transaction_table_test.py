@@ -13,7 +13,7 @@ from nose.tools import eq_
 from hsutil.currency import USD, CAD
 
 from ..base import TestCase, TestSaveLoadMixin, CommonSetup
-from ...document import FILTER_RECONCILED
+from ...document import FilterType
 from ...gui.transaction_table import TransactionTable
 from ...model.amount import Amount, format_amount, convert_amount
 from ...model.date import MonthRange, YearRange
@@ -675,9 +675,9 @@ class ThreeTransactionsInRange(TestCase):
     
     def test_totals_with_filter(self):
         # when a filter is applied, the number of transaction shown is smaller than the total amount
-        self.tfbar.filter_type = FILTER_RECONCILED
+        self.tfbar.filter_type = FilterType.Reconciled
         expected = "Showing 0 out of 3."
-        self.assertEqual(self.ttable.totals, expected)
+        eq_(self.ttable.totals, expected)
 
 class ThreeTransactionsEverythingReconciled(TestCase):
     def setUp(self):

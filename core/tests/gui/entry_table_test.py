@@ -13,7 +13,7 @@ from nose.tools import eq_
 from hsutil.currency import EUR
 
 from ..base import TestCase, CommonSetup, TestQIFExportImportMixin
-from ...document import FILTER_RECONCILED
+from ...document import FilterType
 from ...model.account import LIABILITY, INCOME, EXPENSE
 from ...model.date import YearRange
 
@@ -287,9 +287,9 @@ class TwoEntries(TestCase):
     
     def test_totals_with_filter(self):
         # when a filter is applied, the number of transaction shown is smaller than the total amount
-        self.efbar.filter_type = FILTER_RECONCILED
+        self.efbar.filter_type = FilterType.Reconciled
         expected = "Showing 0 out of 2. Total increase: 0.00 Total decrease: 0.00"
-        self.assertEqual(self.etable.totals, expected)
+        eq_(self.etable.totals, expected)
     
     def test_totals_with_unicode_amount_format(self):
         # it seems that some people have some weird separator in their settings, and there was a

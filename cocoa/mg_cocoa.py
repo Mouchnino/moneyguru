@@ -15,8 +15,7 @@ from hsutil.path import Path
 from hsutil.currency import Currency, USD
 
 from core.app import Application
-from core.document import (Document, FILTER_UNASSIGNED, FILTER_INCOME, FILTER_EXPENSE, 
-    FILTER_TRANSFER, FILTER_RECONCILED, FILTER_NOTRECONCILED)
+from core.document import Document, FilterType
 from core.exception import FileFormatError
 from core.gui.account_panel import AccountPanel
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
@@ -640,34 +639,34 @@ class PyFilterBar(PyListener):
     
     def filterType(self):
         result = 'all'
-        if self.py.filter_type is FILTER_UNASSIGNED:
+        if self.py.filter_type is FilterType.Unassigned:
             result = 'unassigned'
-        elif self.py.filter_type is FILTER_INCOME:
+        elif self.py.filter_type is FilterType.Income:
             result = 'income'
-        elif self.py.filter_type is FILTER_EXPENSE:
+        elif self.py.filter_type is FilterType.Expense:
             result = 'expense'
-        elif self.py.filter_type is FILTER_TRANSFER:
+        elif self.py.filter_type is FilterType.Transfer:
             result = 'transfer'
-        elif self.py.filter_type is FILTER_RECONCILED:
+        elif self.py.filter_type is FilterType.Reconciled:
             result = 'reconciled'
-        elif self.py.filter_type is FILTER_NOTRECONCILED:
+        elif self.py.filter_type is FilterType.NotReconciled:
             result = 'not_reconciled'
         return result
     
     def setFilterType_(self, filter_type):
         value = None
         if filter_type == 'unassigned':
-            value = FILTER_UNASSIGNED
+            value = FilterType.Unassigned
         elif filter_type == 'income':
-            value = FILTER_INCOME
+            value = FilterType.Income
         elif filter_type == 'expense':
-            value = FILTER_EXPENSE
+            value = FilterType.Expense
         elif filter_type == 'transfer':
-            value = FILTER_TRANSFER
+            value = FilterType.Transfer
         elif filter_type == 'reconciled':
-            value = FILTER_RECONCILED
+            value = FilterType.Reconciled
         elif filter_type == 'not_reconciled':
-            value = FILTER_NOTRECONCILED
+            value = FilterType.NotReconciled
         self.py.filter_type = value
     
 

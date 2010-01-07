@@ -43,12 +43,13 @@ DATE_RANGE_CUSTOM = 'custom'
 
 DATE_FORMAT_FOR_PREFERENCES = '%d/%m/%Y'
 
-FILTER_UNASSIGNED = object()
-FILTER_INCOME = object() # in etable, the filter is for increase
-FILTER_EXPENSE = object() # in etable, the filter is for decrease
-FILTER_TRANSFER = object()
-FILTER_RECONCILED = object()
-FILTER_NOTRECONCILED = object()
+class FilterType(object):
+    Unassigned = object()
+    Income = object() # in etable, the filter is for increase
+    Expense = object() # in etable, the filter is for decrease
+    Transfer = object()
+    Reconciled = object()
+    NotReconciled = object()
 
 class ScheduleScope(object):
     Local = 0
@@ -326,22 +327,22 @@ class Document(Broadcaster, Listener):
         if query_string:
             query = self._parse_search_query(query_string)
             entries = [e for e in entries if e.transaction.matches(query)]
-        if filter_type is FILTER_UNASSIGNED:
+        if filter_type is FilterType.Unassigned:
             entries = [e for e in entries if not e.transfer]
-        elif (filter_type is FILTER_INCOME) or (filter_type is FILTER_EXPENSE):
+        elif (filter_type is FilterType.Income) or (filter_type is FilterType.Expense):
             if account.is_credit_account():
-                want_positive = self.filter_type is FILTER_EXPENSE
+                want_positive = self.filter_type is FilterType.Expense
             else:
-                want_positive = self.filter_type is FILTER_INCOME
+                want_positive = self.filter_type is FilterType.Income
             if want_positive:
                 entries = [e for e in entries if e.amount > 0]
             else:
                 entries = [e for e in entries if e.amount < 0]
-        elif filter_type is FILTER_TRANSFER:
+        elif filter_type is FilterType.Transfer:
             entries = [e for e in entries if any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
-        elif filter_type is FILTER_RECONCILED:
+        elif filter_type is FilterType.Reconciled:
             entries = [e for e in entries if e.reconciled]
-        elif filter_type is FILTER_NOTRECONCILED:
+        elif filter_type is FilterType.NotReconciled:
             entries = [e for e in entries if not e.reconciled]
         self._visible_entries = entries
     
@@ -357,19 +358,19 @@ class Document(Broadcaster, Listener):
         if query_string:
             query = self._parse_search_query(query_string)
             txns = [t for t in txns if t.matches(query)]
-        if filter_type is FILTER_UNASSIGNED:
+        if filter_type is FilterType.Unassigned:
             txns = [t for t in txns if t.has_unassigned_split]
-        elif filter_type is FILTER_INCOME:
+        elif filter_type is FilterType.Income:
             txns = [t for t in txns if any(getattr(s.account, 'type', '') == INCOME for s in t.splits)]
-        elif filter_type is FILTER_EXPENSE:
+        elif filter_type is FilterType.Expense:
             txns = [t for t in txns if any(getattr(s.account, 'type', '') == EXPENSE for s in t.splits)]
-        elif filter_type is FILTER_TRANSFER:
+        elif filter_type is FilterType.Transfer:
             def is_transfer(t):
                 return len([s for s in t.splits if s.account is not None and s.account.is_balance_sheet_account()]) >= 2
             txns = filter(is_transfer, txns)
-        elif filter_type is FILTER_RECONCILED:
+        elif filter_type is FilterType.Reconciled:
             txns = [t for t in txns if any(s.reconciled for s in t.splits)]
-        elif filter_type is FILTER_NOTRECONCILED:
+        elif filter_type is FilterType.NotReconciled:
             txns = [t for t in txns if all(not s.reconciled for s in t.splits)]
         self._visible_transactions = txns
     
@@ -1262,7 +1263,7 @@ class Document(Broadcaster, Listener):
         self._visible_entries = None
         self.notify('filter_applied')
     
-    # use FILTER_* consts or None
+    # use FilterType.* consts or None
     @property
     def filter_type(self):
         return self._filter_type
