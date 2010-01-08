@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super init];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    entryTable = [[MGEntryTable alloc] initWithDocument:aDocument view:tableView];
+    entryTable = [[MGEntryTable alloc] initWithDocument:aDocument view:tableView totalsLabel:totalsLabel];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithDocument:aDocument pyClassName:@"PyBalanceGraph"];
     barGraph = [[MGBarGraph alloc] initWithDocument:aDocument pyClassName:@"PyBarGraph"];

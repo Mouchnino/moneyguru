@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super init];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    transactionTable = [[MGTransactionTable alloc] initWithDocument:aDocument view:tableView];
+    transactionTable = [[MGTransactionTable alloc] initWithDocument:aDocument view:tableView totalsLabel:totalsLabel];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:NO];
     return self;
 }
