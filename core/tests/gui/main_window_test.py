@@ -8,6 +8,8 @@
 
 from datetime import date
 
+from nose.tools import eq_
+
 from ..base import TestCase
 from ...model.date import YearRange
 
@@ -48,18 +50,18 @@ class Pristine(TestCase):
         self.check_gui_calls(self.mainwindow_gui, ['show_income_statement'])
     
     def test_select_ttable_on_sfield_query(self):
-        """Setting a value in the search field selects the ttable"""
+        # Setting a value in the search field selects the ttable.
         self.sfield.query = 'foobar'
         self.check_gui_calls(self.mainwindow_gui, ['show_transaction_table'])
     
 
 class AssetAccountAndIncomeAccount(TestCase):
-    """One empty account."""
     def setUp(self):
         self.create_instances()
         self.clear_gui_calls()
-        self.add_account_legacy('Checking')
-        self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
+        self.add_account('Checking')
+        self.document.show_selected_account()
+        self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00')
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.clear_gui_calls()
     
@@ -97,8 +99,19 @@ class AssetAccountAndIncomeAccount(TestCase):
         self.mainwindow.select_previous_view()
         self.check_gui_calls(self.mainwindow_gui, ['show_entry_table'])
     
+    def test_show_account_when_in_sheet(self):
+        # When a sheet is selected, show_account() shows the selected account.
+        self.mainwindow.select_balance_sheet()
+        self.clear_gui_calls()
+        self.mainwindow.show_account()
+        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
+        self.mainwindow.select_income_statement()
+        self.clear_gui_calls()
+        self.mainwindow.show_account()
+        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
+    
     def test_switch_views(self):
-        """Views shown in the main window depend on what's selected in the account tree."""
+        # Views shown in the main window depend on what's selected in the account tree.
         self.mainwindow.select_income_statement()
         self.check_gui_calls(self.mainwindow_gui, ['show_income_statement'])
         self.istatement.selected = self.istatement.income[0]
@@ -111,4 +124,22 @@ class AssetAccountAndIncomeAccount(TestCase):
         self.check_gui_calls(self.mainwindow_gui, ['show_entry_table', 'show_line_graph'])
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.mainwindow_gui, ['show_transaction_table'])
+    
+
+class OneTransaction(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('first')
+        self.add_txn(from_='first', to='second', amount='42')
+        self.clear_gui_calls()
+    
+    def test_show_account_when_in_etable(self):
+        self.show_account('first')
+        self.mainwindow.show_account()
+        eq_(self.document.shown_account.name, 'second')
+    
+    def test_show_account_when_in_ttable(self):
+        self.mainwindow.show_account()
+        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
+        eq_(self.document.shown_account.name, 'first')
     

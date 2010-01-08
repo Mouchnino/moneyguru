@@ -191,6 +191,20 @@ class MainWindow(DocumentGUIObject):
         elif self.top is self.btable:
             self.select_schedule_table()
     
+    def show_account(self):
+        """Shows the currently selected account in the Account view.
+        
+        If a sheet is selected, the selected account will be shown.
+        If the Transaction or Account view is selected, the related account (From, To, Transfer)
+        of the selected transaction will be shown.
+        """
+        if self.top in (self.bsheet, self.istatement):
+            self.top.show_selected_account()
+        elif self.top is self.ttable:
+            self.top.show_from_account()
+        elif self.top is self.etable:
+            self.top.show_transfer_account()
+    
     #--- Event callbacks
     def _undo_stack_changed(self):
         self.view.refresh_undo_actions()

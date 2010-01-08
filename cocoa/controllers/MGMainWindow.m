@@ -192,7 +192,12 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(showEntryTable:))
         return [py canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:))
-        return [top respondsToSelector:@selector(canShowSelectedAccount)] && [(id)top canShowSelectedAccount];
+    {
+        if ((top == balanceSheet) || (top == incomeStatement))
+            return [(id)top canShowSelectedAccount];
+        else
+            return (top == transactionTable) || (top == entryTable);
+    }
     else if (action == @selector(navigateBack:))
         return (top == entryTable);
     else if (action == @selector(toggleReconciliationMode:))
@@ -343,7 +348,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showSelectedAccount:(id)sender
 {
-    [(id)[self top] showSelectedAccount:self];
+    [py showAccount];
 }
 
 - (IBAction)toggleEntriesReconciled:(id)sender

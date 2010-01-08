@@ -120,7 +120,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionExportToQIF.triggered.connect(self.doc.exportToQIF)
         
         # Misc
-        self.actionShowSelectedAccount.triggered.connect(self.showSelectedAccountTriggered)
+        self.actionShowSelectedAccount.triggered.connect(self.model.show_account)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
         self.actionMakeScheduleFromSelected.triggered.connect(self.makeScheduleFromSelectedTriggered)
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
@@ -252,7 +252,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionShowNextView.setEnabled(viewIndex != BUDGET_INDEX)
         self.actionShowPreviousView.setEnabled(viewIndex != NETWORTH_INDEX)
         self.actionShowAccount.setEnabled(shownAccount is not None)
-        self.actionShowSelectedAccount.setEnabled(isSheet)
+        self.actionShowSelectedAccount.setEnabled(isSheet or isTransactionOrEntryTable)
         self.actionNavigateBack.setEnabled(viewIndex == ACCOUNT_INDEX)
         self.actionToggleReconciliationMode.setEnabled(canToggleReconciliation)
         self.actionToggleReconciliationModeToolbar.setEnabled(canToggleReconciliation)
@@ -356,9 +356,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.move_down()
     
     # Misc
-    def showSelectedAccountTriggered(self):
-        self.doc.model.show_selected_account()
-    
     def navigateBackTriggered(self):
         self.model.navigate_back()
     

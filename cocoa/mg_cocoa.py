@@ -1134,6 +1134,9 @@ class PyMainWindow(PyListener):
     def selectPreviousView(self):
         self.py.select_previous_view()
     
+    def showAccount(self):
+        self.py.show_account()
+    
     @objc.signature('i@:')
     def canNavigateDateRange(self):
         return self.py.document.date_range.can_navigate
