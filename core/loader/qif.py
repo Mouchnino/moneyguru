@@ -14,7 +14,7 @@ from datetime import datetime
 from hsutil.misc import flatten
 
 from ..exception import FileFormatError
-from ..model.account import LIABILITY
+from ..model.account import AccountType
 from . import base
 
 # LITTLE NOTE ON QIF AND SPLITS
@@ -112,7 +112,7 @@ class Loader(base.Loader):
             if header == 'N':
                 self.account_info.name = data
             if header == 'T' and data in ('Oth L', 'CCard'):
-                self.account_info.type = LIABILITY
+                self.account_info.type = AccountType.Liability
         
         def parse_split_line(header, data):
             if header == 'S':
@@ -147,7 +147,7 @@ class Loader(base.Loader):
                 self.transaction_info.amount = re_not_amount.sub('', data)
             elif header == '!': # yeah, this thing is in the entry data...
                 if data in ('Type:CCard', 'Type:Oth L'):
-                    self.account_info.type = LIABILITY
+                    self.account_info.type = AccountType.Liability
         
         for block in self.blocks:
             block_type = block.type

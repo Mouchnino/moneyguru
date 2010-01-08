@@ -9,7 +9,7 @@
 
 from nose.tools import eq_
 
-from ...model.account import INCOME, LIABILITY
+from ...model.account import AccountType
 from ..base import TestCase, CommonSetup
 
 class OneAssetAccount(TestCase):
@@ -31,9 +31,9 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         self.setup_account_with_budget()
         # The accounts' name and order in which they are created is important, as it tests that
         # the budget panel sorts them correctly.
-        self.add_account_legacy('liability', account_type=LIABILITY)
+        self.add_account_legacy('liability', account_type=AccountType.Liability)
         self.add_account_legacy('asset')
-        self.add_account_legacy('Some Income', account_type=INCOME)
+        self.add_account_legacy('Some Income', account_type=AccountType.Income)
         self.mainwindow.select_budget_table()
         self.btable.select([0])
         self.mainwindow.edit_item()

@@ -9,7 +9,7 @@
 from hsutil.currency import USD, CAD
 
 from .base import TestCase, TestQIFExportImportMixin
-from ..model.account import INCOME
+from ..model.account import AccountType
 
 class OneEmptyAccount(TestCase):
     def setUp(self):
@@ -252,7 +252,7 @@ class CADAssetAndUSDIncome(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account_legacy('CAD Account', CAD)
-        self.add_account_legacy('USD Income', USD, account_type=INCOME)
+        self.add_account_legacy('USD Income', USD, account_type=AccountType.Income)
         self.add_entry(transfer='CAD Account', increase='42')
     
     def test_set_split_amount(self):

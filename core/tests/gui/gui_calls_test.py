@@ -13,7 +13,7 @@
 
 from hsutil.currency import EUR
 
-from ...model.account import ASSET, LIABILITY, INCOME, EXPENSE
+from ...model.account import AccountType
 from ..base import TestCase
 
 class Pristine(TestCase):
@@ -56,7 +56,7 @@ class Pristine(TestCase):
     
     def test_new_budget(self):
         # Repeat options must be updated upon panel load
-        self.add_account('income', account_type=INCOME) # we need an account for the panel to load
+        self.add_account('income', account_type=AccountType.Income) # we need an account for the panel to load
         self.mainwindow.select_budget_table()
         self.mainwindow.new_item()
         self.check_gui_calls_partial(self.bpanel_gui, ['refresh_repeat_options'])
@@ -104,8 +104,8 @@ class LoadFileWithBalanceSheetSelected(TestCase):
 class TransactionBetweenIncomeAndExpense(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('income', account_type=INCOME)
-        self.add_account('expense', account_type=EXPENSE)
+        self.add_account('income', account_type=AccountType.Income)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_txn(from_='income', to='expense', amount='42')
         self.clear_gui_calls()
     
@@ -121,8 +121,8 @@ class TransactionBetweenIncomeAndExpense(TestCase):
 class TransactionBetweenAssetAndLiability(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('asset', account_type=ASSET)
-        self.add_account('liability', account_type=LIABILITY)
+        self.add_account('asset', account_type=AccountType.Asset)
+        self.add_account('liability', account_type=AccountType.Liability)
         self.add_txn(from_='liability', to='asset', amount='42')
         self.clear_gui_calls()
     

@@ -9,7 +9,7 @@
 from hsutil.currency import Currency
 
 from ..exception import DuplicateAccountNameError, OperationAborted
-from ..model.account import ASSET, TYPE_ORDER
+from ..model.account import AccountType
 from .base import GUIPanel
 
 class AccountPanel(GUIPanel):
@@ -27,7 +27,7 @@ class AccountPanel(GUIPanel):
         self.name = account.name
         self.type = account.type
         self.currency = account.currency
-        self.type_index = TYPE_ORDER.index(self.type)
+        self.type_index = AccountType.InOrder.index(self.type)
         self.currency_index = Currency.all.index(self.currency)
         self.account = account # for the save() assert
     
@@ -41,7 +41,7 @@ class AccountPanel(GUIPanel):
     
     #--- Private
     def _init_fields(self):
-        self.type = ASSET
+        self.type = AccountType.Asset
         self._type_index = 0
         self.currency = None
     
@@ -66,7 +66,7 @@ class AccountPanel(GUIPanel):
     @type_index.setter
     def type_index(self, index):
         try:
-            self.type = TYPE_ORDER[index]
+            self.type = AccountType.InOrder[index]
         except IndexError:
             pass
         else:

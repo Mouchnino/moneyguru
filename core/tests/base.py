@@ -46,7 +46,7 @@ from ..gui.split_table import SplitTable
 from ..gui.transaction_panel import TransactionPanel
 from ..gui.transaction_table import TransactionTable
 from ..loader import base
-from ..model.account import ASSET, LIABILITY, INCOME, EXPENSE
+from ..model.account import AccountType
 from ..model.currency import RatesDB
 from ..model.date import MonthRange
 from ..model import currency as currency_module
@@ -351,12 +351,17 @@ class TestCase(TestCaseBase):
         self.scpanel.connect()
     
     def account_names(self): # doesn't include Imbalance
-        account_sort = {ASSET:0, LIABILITY: 1, INCOME: 2, EXPENSE: 3}
+        account_sort = {
+            AccountType.Asset:0,
+            AccountType.Liability: 1,
+            AccountType.Income: 2,
+            AccountType.Expense: 3,
+        }
         accounts = list(self.document.accounts)
         accounts.sort(key=lambda a: (account_sort[a.type], a))
         return [a.name for a in accounts]
     
-    def add_account(self, name=None, currency=None, account_type=ASSET, group_name=None):
+    def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None):
         # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
         group = self.document.groups.find(group_name, account_type) if group_name else None
         account = self.document.new_account(account_type, group)
@@ -433,7 +438,7 @@ class TestCase(TestCaseBase):
             row.checkno = checkno
         self.etable.save_edits()
 
-    def add_group(self, name=None, account_type=ASSET):
+    def add_group(self, name=None, account_type=AccountType.Asset):
         group = self.document.new_group(account_type)
         if name is not None:
             self.document.change_group(group, name=name)
@@ -538,7 +543,7 @@ class TestCase(TestCaseBase):
         else:
             newapp = self.app
         newdoc = Document(DocumentGUI(), newapp)
-        newdoc.new_account(ASSET, None) # shouldn't be there after the load
+        newdoc.new_account(AccountType.Asset, None) # shouldn't be there after the load
         newdoc.load_from_xml(filepath)
         self.document._cook() # Make sure the balances have been converted using the latest fetched rates
         return newdoc
@@ -729,7 +734,7 @@ class CommonSetup(object):
         # 4 days left to the month, 100$ monthly budget
         self.mock_today(2008, 1, 27)
         self.document.select_today_date_range()
-        account_type = EXPENSE if is_expense else INCOME
+        account_type = AccountType.Expense if is_expense else AccountType.Income
         self.add_account_legacy(account_name, account_type=account_type)
         self.add_budget(account_name, target_name, '100')
         self.mainwindow.select_income_statement()

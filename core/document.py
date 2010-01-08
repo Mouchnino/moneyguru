@@ -19,7 +19,7 @@ from hsutil.misc import nonone, flatten, allsame, dedupe, extract
 from .const import NOEDIT
 from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
-from .model.account import (Account, Group, AccountList, GroupList, INCOME, EXPENSE, LIABILITY)
+from .model.account import Account, Group, AccountList, GroupList, AccountType
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     CustomDateRange, format_date, inc_month)
@@ -361,9 +361,9 @@ class Document(Broadcaster, Listener):
         if filter_type is FilterType.Unassigned:
             txns = [t for t in txns if t.has_unassigned_split]
         elif filter_type is FilterType.Income:
-            txns = [t for t in txns if any(getattr(s.account, 'type', '') == INCOME for s in t.splits)]
+            txns = [t for t in txns if any(getattr(s.account, 'type', '') == AccountType.Income for s in t.splits)]
         elif filter_type is FilterType.Expense:
-            txns = [t for t in txns if any(getattr(s.account, 'type', '') == EXPENSE for s in t.splits)]
+            txns = [t for t in txns if any(getattr(s.account, 'type', '') == AccountType.Expense for s in t.splits)]
         elif filter_type is FilterType.Transfer:
             def is_transfer(t):
                 return len([s for s in t.splits if s.account is not None and s.account.is_balance_sheet_account()]) >= 2
@@ -498,9 +498,9 @@ class Document(Broadcaster, Listener):
     def change_transactions(self, transactions, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
             checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT):
         if from_ is not NOEDIT:
-            from_ = self.accounts.find(from_, INCOME) if from_ else None
+            from_ = self.accounts.find(from_, AccountType.Income) if from_ else None
         if to is not NOEDIT:
-            to = self.accounts.find(to, EXPENSE) if to else None
+            to = self.accounts.find(to, AccountType.Expense) if to else None
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             currencies_to_ensure = [amount.currency.code, self.app.default_currency.code]
             Currency.get_rates_db().ensure_rates(date, currencies_to_ensure)
@@ -609,7 +609,7 @@ class Document(Broadcaster, Listener):
         if len(entry.splits) == 1:
             entry.transaction.balance_two_way(entry.split)
             if transfer_changed:
-                auto_create_type = EXPENSE if entry.split.amount < 0 else INCOME
+                auto_create_type = AccountType.Expense if entry.split.amount < 0 else AccountType.Income
                 transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
                 entry.splits[0].account = transfer_account
         if reconciliation_date is not NOEDIT:
@@ -1025,7 +1025,7 @@ class Document(Broadcaster, Listener):
         txns_seen = set()
         lines = []
         for account in accounts:
-            qif_account_type = 'Oth L' if account.type == LIABILITY else 'Bank'
+            qif_account_type = 'Oth L' if account.type == AccountType.Liability else 'Bank'
             lines.append('!Account')
             lines.append('N%s' % account.name)
             lines.append('B%s' % format_amount_for_qif(account.balance()))

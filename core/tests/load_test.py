@@ -13,7 +13,7 @@ from nose.tools import eq_
 
 from hsutil.currency import PLN, CAD
 
-from ..model.account import INCOME
+from ..model.account import AccountType
 from ..model.date import MonthRange
 from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
 
@@ -212,7 +212,7 @@ class AccountWithBudget(TestCase, TestSaveLoadMixin):
         # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
         self.create_instances()
         self.add_account_legacy('asset')
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
         self.apanel.load()
         self.apanel.budget = '400'
         self.apanel.save()

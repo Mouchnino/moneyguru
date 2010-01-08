@@ -12,7 +12,7 @@ from hsutil.notify import Broadcaster
 from hsutil.misc import first
 
 from ..exception import OperationAborted
-from ..model.account import Account, INCOME, EXPENSE
+from ..model.account import Account, AccountType
 from ..model.transaction import Split, Transaction
 from .base import GUIPanel
 from .complete import CompletionMixIn
@@ -26,7 +26,10 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:
-            account_type = split.account.type if split.account else EXPENSE if split.amount < 0 else INCOME
+            if split.account:
+                account_type = split.account.type
+            else:
+                account_type = AccountType.Expense if split.amount < 0 else AccountType.Income
             split.account = Account(account_name, self.app.default_currency, account_type)
         else:
             split.account = None

@@ -17,7 +17,7 @@ from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, Applica
 from ...app import Application
 from ...document import Document
 from ...gui.balance_sheet import BalanceSheet
-from ...model.account import LIABILITY, INCOME, EXPENSE
+from ...model.account import AccountType
 from ...model.amount import Amount
 from ...model.date import MonthRange
 
@@ -28,8 +28,8 @@ class _AccountsAndEntries(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account_legacy('income', account_type=INCOME)
-        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('income', account_type=AccountType.Income)
+        self.add_account_legacy('expense', account_type=AccountType.Expense)
         self.add_account_legacy('Account 1')
         self.add_entry('10/01/2008', 'Entry 1', transfer='income', increase='100.00')
         self.add_entry('13/01/2008', 'Entry 2', transfer='income', increase='150.00')
@@ -129,9 +129,9 @@ class AccountHierarchy(TestCase):
         self.add_account_legacy('Asset 1')
         self.add_group('Bank')
         self.add_account_legacy('Bank 1', group_name='Bank')
-        self.add_account_legacy('Liability 1', account_type=LIABILITY)
-        self.add_group('Loans', account_type=LIABILITY)
-        self.add_account_legacy('Loan 1', account_type=LIABILITY, group_name='Loans')
+        self.add_account_legacy('Liability 1', account_type=AccountType.Liability)
+        self.add_group('Loans', account_type=AccountType.Liability)
+        self.add_account_legacy('Loan 1', account_type=AccountType.Liability, group_name='Loans')
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
 
@@ -381,7 +381,7 @@ class AccountsAndEntries(_AccountsAndEntries):
     def test_budget_target_liability(self):
         # The budgeted amount must be normalized before being added to a liability amount
         self.mock_today(2008, 1, 15)
-        self.add_account_legacy('foo', account_type=LIABILITY)
+        self.add_account_legacy('foo', account_type=AccountType.Liability)
         self.add_budget('income', 'foo', '400')
         self.mainwindow.select_balance_sheet()
         eq_(self.bsheet.liabilities[0].end, '0.00')
@@ -517,8 +517,8 @@ class MultipleCurrencies(TestCase):
 class Liability(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_group('foo', account_type=LIABILITY)
-        self.add_account_legacy('Credit card', account_type=LIABILITY, group_name='foo')
+        self.add_group('foo', account_type=AccountType.Liability)
+        self.add_account_legacy('Credit card', account_type=AccountType.Liability, group_name='foo')
         self.add_entry(date='31/12/2007', description='Starting balance', decrease='100.00')
         self.add_entry(date='1/1/2008', description='Expensive jewel', increase='1200.00')
         self.mainwindow.select_balance_sheet()
@@ -556,7 +556,7 @@ class TwoAccountsInTwoReports(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account_legacy('asset')
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
     
     def test_show_account_then_select_other_report(self):
         # If the shown account is not in the shown report, select the first account
@@ -570,7 +570,7 @@ class TwoAccountsInTwoReports(TestCase):
 class NegativeNetworthStart(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('Loan', account_type=LIABILITY)
+        self.add_account_legacy('Loan', account_type=AccountType.Liability)
         self.add_entry(date='31/12/2007', description='Starting balance', increase='1000')
         self.add_account_legacy('Checking')
         self.add_entry(date='1/1/2008', description='Salary', increase='1500.00')

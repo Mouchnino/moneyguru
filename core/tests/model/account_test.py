@@ -1,4 +1,4 @@
-# coding: utf-8 
+# -*- coding: utf-8 -*-
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
 # 
 # This software is licensed under the "HS" License as described in the "LICENSE" file, 
@@ -12,7 +12,7 @@ from hsutil.currency import USD, CAD
 
 from ..base import TestCase
 from ...model import currency
-from ...model.account import Account, Group, AccountList, ASSET
+from ...model.account import Account, Group, AccountList, AccountType
 from ...model.amount import Amount
 from ...model.date import MonthRange
 from ...model.oven import Oven
@@ -22,17 +22,17 @@ from ...model.transaction_list import TransactionList
 class AccountComparison(TestCase):
     def test_comparison(self):
         """Accounts are sorted by name. The sort is insensitive to case and accents."""
-        bell = Account(u'Bell', USD, ASSET)
-        belarus = Account(u'Bélarus', USD, ASSET)
-        achigan = Account(u'achigan', USD, ASSET)
+        bell = Account(u'Bell', USD, AccountType.Asset)
+        belarus = Account(u'Bélarus', USD, AccountType.Asset)
+        achigan = Account(u'achigan', USD, AccountType.Asset)
         accounts = [bell, belarus, achigan]
         self.assertEqual(sorted(accounts), [achigan, belarus, bell])
 
     def test_equality(self):
         """Two different account objects are never equal."""
-        zoo1 = Account(u'Zoo', USD, ASSET)
-        zoo2 = Account(u'Zoo', USD, ASSET)
-        zoo3 = Account(u'Zoö', USD, ASSET)
+        zoo1 = Account(u'Zoo', USD, AccountType.Asset)
+        zoo2 = Account(u'Zoo', USD, AccountType.Asset)
+        zoo3 = Account(u'Zoö', USD, AccountType.Asset)
         self.assertEqual(zoo1, zoo1)
         self.assertNotEqual(zoo1, zoo2)
         self.assertNotEqual(zoo1, zoo3)
@@ -40,17 +40,17 @@ class AccountComparison(TestCase):
 class GroupComparison(TestCase):
     def test_comparison(self):
         """Groups are sorted by name. The sort is insensitive to case and accents."""
-        bell = Group(u'Bell', ASSET)
-        belarus = Group(u'Bélarus', ASSET)
-        achigan = Group(u'achigan', ASSET)
+        bell = Group(u'Bell', AccountType.Asset)
+        belarus = Group(u'Bélarus', AccountType.Asset)
+        achigan = Group(u'achigan', AccountType.Asset)
         groups = [bell, belarus, achigan]
         self.assertEqual(sorted(groups), [achigan, belarus, bell])
 
     def test_equality(self):
         """Two different group objects are never equal."""
-        zoo1 = Group(u'Zoo', ASSET)
-        zoo2 = Group(u'Zoo', ASSET)
-        zoo3 = Group(u'Zoö', ASSET)
+        zoo1 = Group(u'Zoo', AccountType.Asset)
+        zoo2 = Group(u'Zoo', AccountType.Asset)
+        zoo3 = Group(u'Zoö', AccountType.Asset)
         self.assertEqual(zoo1, zoo1)
         self.assertNotEqual(zoo1, zoo2)
         self.assertNotEqual(zoo1, zoo3)
@@ -62,7 +62,7 @@ class OneAccount(TestCase):
         USD.set_CAD_value(0.9, date(2008, 1, 1))
         USD.set_CAD_value(0.8, date(2008, 1, 2))
         USD.set_CAD_value(0.7, date(2008, 1, 3))
-        self.account = Account('Checking', USD, ASSET)
+        self.account = Account('Checking', USD, AccountType.Asset)
         accounts = AccountList(CAD)
         accounts.add(self.account)
         transactions = TransactionList([

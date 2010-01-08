@@ -21,7 +21,7 @@ from .base import ApplicationGUI, TestCase, TestSaveLoadMixin
 from .model.currency_test import FakeServer
 from ..app import Application
 from ..model import currency
-from ..model.account import INCOME, LIABILITY
+from ..model.account import AccountType
 from ..model.currency import RatesDB
 from ..model.date import MonthRange
 
@@ -132,8 +132,8 @@ class CADAssetAndUSDAsset(TestCase):
 class CADLiabilityAndUSDLiability(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('CAD Account', CAD, account_type=LIABILITY)
-        self.add_account_legacy('USD Account', USD, account_type=LIABILITY)
+        self.add_account_legacy('CAD Account', CAD, account_type=AccountType.Liability)
+        self.add_account_legacy('USD Account', USD, account_type=AccountType.Liability)
     
     def test_make_amount_native(self):
         # Making an amount native when the both sides are asset/liability creates a MCT
@@ -163,7 +163,7 @@ class EntryWithForeignCurrencyAmount(TestCase):
         EUR.set_CAD_value(1.42, date(2007, 10, 1))
         PLN.set_CAD_value(0.42, date(2007, 10, 1))
         self.add_account_legacy('first', CAD)
-        self.add_account_legacy('second', PLN, account_type=INCOME)
+        self.add_account_legacy('second', PLN, account_type=AccountType.Income)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -205,7 +205,7 @@ class CADAssetAndUSDIncome(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account_legacy('CAD Account', CAD)
-        self.add_account_legacy('USD Income', USD, account_type=INCOME)
+        self.add_account_legacy('USD Income', USD, account_type=AccountType.Income)
         self.add_entry(transfer='CAD Account', increase='42 usd')
     
     def test_make_amount_native(self):

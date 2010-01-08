@@ -12,22 +12,22 @@ from hsutil.currency import Currency, CAD
 
 from ..base import TestCase, CommonSetup
 from ...exception import OperationAborted
-from ...model.account import ASSET, LIABILITY, INCOME, EXPENSE
+from ...model.account import AccountType
 
 class CommonSetup(CommonSetup):
     def setup_accounts_of_all_types(self):
         # liability created first to force a sorting on the panel side
-        self.add_account_legacy('liability', account_type=LIABILITY)
-        self.add_account_legacy('asset', account_type=ASSET)
-        self.add_account_legacy('income', account_type=INCOME)
-        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('liability', account_type=AccountType.Liability)
+        self.add_account_legacy('asset', account_type=AccountType.Asset)
+        self.add_account_legacy('income', account_type=AccountType.Income)
+        self.add_account_legacy('expense', account_type=AccountType.Expense)
         self.mainwindow.select_income_statement()
     
 
 class SomeAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('foobar', CAD, account_type=EXPENSE)
+        self.add_account_legacy('foobar', CAD, account_type=AccountType.Expense)
         self.mainwindow.select_income_statement()
         self.clear_gui_calls()
     
@@ -50,20 +50,20 @@ class SomeAccount(TestCase):
     def test_change_type_index(self):
         """Changing type_index correctly updates the type"""
         self.apanel.type_index = 0
-        self.assertEqual(self.apanel.type, ASSET)
+        self.assertEqual(self.apanel.type, AccountType.Asset)
         self.apanel.type_index = 1
-        self.assertEqual(self.apanel.type, LIABILITY)
+        self.assertEqual(self.apanel.type, AccountType.Liability)
         self.apanel.type_index = 2
-        self.assertEqual(self.apanel.type, INCOME)
+        self.assertEqual(self.apanel.type, AccountType.Income)
         self.apanel.type_index = 4 # doesn't do anything
-        self.assertEqual(self.apanel.type, INCOME)
+        self.assertEqual(self.apanel.type, AccountType.Income)
         self.assertEqual(self.apanel.type_index, 2)
     
     def test_fields(self):
         """The base field values"""
         self.apanel.load()
         self.assertEqual(self.apanel.name, 'foobar')
-        self.assertEqual(self.apanel.type, EXPENSE)
+        self.assertEqual(self.apanel.type, AccountType.Expense)
         self.assertEqual(self.apanel.currency, CAD)
         self.assertEqual(self.apanel.type_index, 3) # Expense type is last in the list
         self.assertEqual(self.apanel.currency_index, Currency.all.index(CAD))
@@ -89,7 +89,7 @@ class SomeAccount(TestCase):
         self.istatement.selected = self.istatement.income[0]
         self.apanel.load()
         self.assertEqual(self.apanel.currency, Currency.all[42])
-        self.assertEqual(self.apanel.type, INCOME)
+        self.assertEqual(self.apanel.type, AccountType.Income)
         self.assertEqual(self.apanel.name, 'foobaz')
     
 

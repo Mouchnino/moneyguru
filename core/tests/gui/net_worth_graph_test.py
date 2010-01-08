@@ -11,7 +11,7 @@ from datetime import date
 from hsutil.currency import CAD, USD
 
 from ..base import TestCase, CommonSetup
-from ...model.account import LIABILITY, INCOME, EXPENSE
+from ...model.account import AccountType
 
 class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
     def setUp(self):
@@ -28,9 +28,9 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.add_account_legacy('asset2')
         self.add_entry('1/7/2008', increase='32')
         self.add_entry('5/7/2008', increase='22')
-        self.add_account_legacy('liability1', CAD, account_type=LIABILITY)
+        self.add_account_legacy('liability1', CAD, account_type=AccountType.Liability)
         self.add_entry('1/7/2008', increase='10')
-        self.add_account_legacy('liability2', account_type=LIABILITY)
+        self.add_account_legacy('liability2', account_type=AccountType.Liability)
         self.add_entry('8/7/2008', increase='100')
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
@@ -45,8 +45,8 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
     def test_budget(self):
         # when we add a budget, the balance graph will show a regular progression throughout date range
         self.mock_today(2008, 7, 27)
-        self.add_account_legacy('income', account_type=INCOME)
-        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('income', account_type=AccountType.Income)
+        self.add_account_legacy('expense', account_type=AccountType.Expense)
         self.add_budget('income', 'asset1', '300')
         self.add_budget('expense', 'asset1', '100')
         self.mainwindow.select_balance_sheet()
@@ -75,7 +75,7 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
         self.mainwindow.select_balance_sheet() # refresh graph
         without_budget = self.nw_graph_data()
         self.add_account_legacy('asset3')
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_budget('income', 'asset3', '300')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # asset3

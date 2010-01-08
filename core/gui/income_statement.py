@@ -4,7 +4,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from ..model.account import INCOME, EXPENSE
+from ..model.account import AccountType
 from .report import Report, Node, get_delta_perc
 
 class IncomeStatement(Report):
@@ -48,8 +48,8 @@ class IncomeStatement(Report):
     
     def _refresh(self):
         self.clear()
-        self.income = self.make_type_node('INCOME', INCOME)
-        self.expenses = self.make_type_node('EXPENSES', EXPENSE)
+        self.income = self.make_type_node('INCOME', AccountType.Income)
+        self.expenses = self.make_type_node('EXPENSES', AccountType.Expense)
         self.net_income = Node('NET INCOME')
         net_income = self.income.cash_flow_amount - self.expenses.cash_flow_amount
         last_net_income = self.income.last_cash_flow_amount - self.expenses.last_cash_flow_amount

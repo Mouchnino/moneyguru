@@ -18,12 +18,13 @@ from .amount import convert_amount
 from .sort import sort_string
 from ..exception import DuplicateAccountNameError
 
-# Account types
-ASSET = 'asset'
-LIABILITY = 'liability'
-INCOME = 'income'
-EXPENSE = 'expense'
-TYPE_ORDER = [ASSET, LIABILITY, INCOME, EXPENSE]
+class AccountType(object):
+    Asset = 'asset'
+    Liability = 'liability'
+    Income = 'income'
+    Expense = 'expense'
+    InOrder = [Asset, Liability, Income, Expense]
+    All = set(InOrder)
 
 # Placeholder when an argument is not given
 NOT_GIVEN = object()
@@ -31,7 +32,7 @@ NOT_GIVEN = object()
 def sort_accounts(accounts):
     """Sort accounts according first to their type, then to their name.
     """
-    accounts.sort(key=lambda a: (TYPE_ORDER.index(a.type), sort_string(a.name)))
+    accounts.sort(key=lambda a: (AccountType.InOrder.index(a.type), sort_string(a.name)))
 
 class Account(object):
     def __init__(self, name, currency, type):
@@ -128,16 +129,16 @@ class Account(object):
             del self._sorted_entry_dates[index:]
     
     def is_balance_sheet_account(self):
-        return self.type in (ASSET, LIABILITY)
+        return self.type in (AccountType.Asset, AccountType.Liability)
     
     def is_credit_account(self):
-        return self.type in (LIABILITY, INCOME)
+        return self.type in (AccountType.Liability, AccountType.Income)
     
     def is_debit_account(self):
-        return self.type in (ASSET, EXPENSE)
+        return self.type in (AccountType.Asset, AccountType.Expense)
     
     def is_income_statement_account(self):
-        return self.type in (INCOME, EXPENSE)
+        return self.type in (AccountType.Income, AccountType.Expense)
     
     def last_entry(self, date=None):
         if self.entries:

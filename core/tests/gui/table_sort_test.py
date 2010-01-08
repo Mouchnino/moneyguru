@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 
 from nose.tools import eq_
 
-from ...model.account import EXPENSE
+from ...model.account import AccountType
 from ..base import TestCase
 
 class TransactionsWithInfoFilledUp(TestCase):
@@ -94,7 +94,7 @@ class EntriesWithReconciliationDate(TestCase):
 class TwoBudgetsWithOneNoneStopDate(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('expense', account_type=EXPENSE)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_budget('expense', None, '42', stop_date=None)
         self.add_budget('expense', None, '42', stop_date='21/12/2012')
     
@@ -137,7 +137,7 @@ class MixedUpReconciledScheduleAndBudget(TestCase):
         self.mock_today(2010, 1, 1)
         self.create_instances()
         self.document.select_month_range() # we just want 4 transactions
-        self.add_account('expense', account_type=EXPENSE)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_account('asset')
         self.document.show_selected_account()
         self.add_entry('02/01/2010', description='reconciled')

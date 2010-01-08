@@ -11,20 +11,20 @@ from nose.tools import eq_
 from hsutil.currency import CAD
 
 from ..base import TestCase, CommonSetup
-from ...model.account import LIABILITY, EXPENSE, INCOME
+from ...model.account import AccountType
 
 class TwoLiabilityTransactions(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account_legacy('Visa', account_type=LIABILITY)
+        self.add_account_legacy('Visa', account_type=AccountType.Liability)
         self.add_entry('3/1/2008', increase='120.00')
         self.add_entry('5/1/2008', decrease='40.00')
     
     def test_budget(self):
         # when we add a budget, the balance graph will show a regular progression throughout date range
         self.mock_today(2008, 1, 27)
-        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('expense', account_type=AccountType.Expense)
         self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
@@ -38,7 +38,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
     def test_budget_on_last_day_of_the_range(self):
         # don't raise a ZeroDivizionError
         self.mock_today(2008, 1, 31)
-        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('expense', account_type=AccountType.Expense)
         self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.document.select_next_date_range()
@@ -47,7 +47,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         # when there's a future txn, we want the amount of that txn to be "sharply" displayed
         self.mock_today(2008, 1, 15)
         self.add_entry('20/1/2008', decrease='10')
-        self.add_account_legacy('expense', account_type=EXPENSE)
+        self.add_account_legacy('expense', account_type=AccountType.Expense)
         self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
@@ -81,7 +81,7 @@ class BudgetAndNoTranaction(TestCase, CommonSetup):
         self.document.select_month_range()
         self.document.select_today_date_range()
         self.add_account_legacy('asset')
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_budget('income', 'asset', '100')
     
     def test_future_date_range(self):

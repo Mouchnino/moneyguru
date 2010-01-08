@@ -13,7 +13,7 @@ from copy import copy
 from hsutil.misc import allsame, first
 
 from ..const import NOEDIT
-from .account import ASSET, LIABILITY
+from .account import AccountType
 from .amount import Amount, convert_amount
 
 class Transaction(object):
@@ -62,7 +62,8 @@ class Transaction(object):
         if strong_split.account and weak_split.account and strong_split.amount and weak_split.amount:
             weak_type = weak_split.account.type
             strong_type = strong_split.account.type
-            asset_liability = weak_type in (ASSET, LIABILITY) and strong_type in (ASSET, LIABILITY)
+            asset_liability = weak_type in (AccountType.Asset, AccountType.Liability) \
+                and strong_type in (AccountType.Asset, AccountType.Liability)
             weak_native = weak_split.amount.currency == weak_split.account.currency
             strong_native = strong_split.amount.currency == strong_split.account.currency
             different_currency = weak_split.amount.currency != strong_split.amount.currency

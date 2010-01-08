@@ -23,7 +23,7 @@ from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError
 from ..gui.entry_table import EntryTable
 from ..loader import base
-from ..model.account import LIABILITY, INCOME
+from ..model.account import AccountType
 from ..model.date import MonthRange, QuarterRange, YearRange
 
 class NoSetup(TestCase):
@@ -543,7 +543,7 @@ class NegativeBoundEntry(TestCase):
     """Account with one credit entry, bound to another account"""
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('visa', account_type=LIABILITY)
+        self.add_account_legacy('visa', account_type=AccountType.Liability)
         self.add_entry(transfer='clothes', increase='42')
     
     def test_make_balance_positive(self):
@@ -864,7 +864,7 @@ class LiabilityExpenseWithDecrease(TestCase):
     """An asset and income account with a transaction decreasing them both"""
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('Visa', account_type=LIABILITY)
+        self.add_account_legacy('Visa', account_type=AccountType.Liability)
         self.document.date_range = MonthRange(date(2008, 3, 1))
         # Visa is a liabilies, so increase/decrease are inverted
         # Clothes is created as an expense
@@ -954,7 +954,7 @@ class ThreeEntriesInTwoAccountTypes(TestCase):
         self.add_account_legacy()
         self.add_entry(description='first')
         self.add_entry(description='second')
-        self.add_account_legacy(account_type=INCOME)
+        self.add_account_legacy(account_type=AccountType.Income)
         self.add_entry(description='third') # selected
     
     def test_delete_entries(self):

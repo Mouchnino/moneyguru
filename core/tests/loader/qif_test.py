@@ -15,7 +15,7 @@ from hsutil.currency import USD
 
 from ..base import TestCase
 from ...loader.qif import Loader
-from ...model.account import LIABILITY
+from ...model.account import AccountType
 from ...model.amount import Amount
 
 class Pristine(TestCase):
@@ -246,7 +246,7 @@ class Pristine(TestCase):
         accounts = self.loader.account_infos
         self.assertEqual(len(accounts), 1)
         account = accounts[0]
-        self.assertEqual(account.type, LIABILITY)
+        self.assertEqual(account.type, AccountType.Liability)
     
     def test_autoswitch(self):
         # autoswitch.qif has an autoswitch section with accounts containing "D" lines

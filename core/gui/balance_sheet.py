@@ -7,7 +7,7 @@
 from __future__ import division
 from datetime import timedelta, date
 
-from ..model.account import ASSET, LIABILITY
+from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange, ONE_DAY
 from .report import Report, Node, get_delta_perc
@@ -55,8 +55,8 @@ class BalanceSheet(Report):
     
     def _refresh(self):
         self.clear()
-        self.assets = self.make_type_node('ASSETS', ASSET)
-        self.liabilities = self.make_type_node('LIABILITIES', LIABILITY)
+        self.assets = self.make_type_node('ASSETS', AccountType.Asset)
+        self.liabilities = self.make_type_node('LIABILITIES', AccountType.Liability)
         self.net_worth = Node('NET WORTH')
         net_worth_start = self.assets.start_amount - self.liabilities.start_amount
         net_worth_end = self.assets.end_amount - self.liabilities.end_amount

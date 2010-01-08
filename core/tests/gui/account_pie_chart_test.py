@@ -17,7 +17,7 @@ from hsutil.currency import Currency, USD, CAD
 from ..base import TestCase, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...gui.pie_chart import SLICE_COUNT
-from ...model.account import LIABILITY, INCOME
+from ...model.account import AccountType
 
 class _SomeAssetsAndLiabilities(TestCase, CommonSetup):
     def setUp(self):
@@ -33,9 +33,9 @@ class _SomeAssetsAndLiabilities(TestCase, CommonSetup):
         self.add_account_legacy('a4')
         self.add_entry(increase='3')
         self.add_account_legacy('empty') # doesn't show
-        self.add_account_legacy('l1', account_type=LIABILITY)
+        self.add_account_legacy('l1', account_type=AccountType.Liability)
         self.add_entry(increase='3')
-        self.add_account_legacy('l2', account_type=LIABILITY)
+        self.add_account_legacy('l2', account_type=AccountType.Liability)
         self.add_entry(increase='5')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets
@@ -63,7 +63,7 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
         self.apanel.load()
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_budget('income', None, '5')
         self.mainwindow.select_balance_sheet() # don't crash
     
@@ -93,7 +93,7 @@ class SomeAssetsAndLiabilitiesWithBudget(_SomeAssetsAndLiabilities):
     def setUp(self):
         _SomeAssetsAndLiabilities.setUp(self)
         self.document.select_today_date_range()
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_budget('income', 'a3', '5')
         self.mainwindow.select_balance_sheet()
     
@@ -235,8 +235,8 @@ class MultipleCurrencies(TestCase):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
-        self.add_account_legacy('USD income', account_type=INCOME, currency=USD)
-        self.add_account_legacy('CAD income', account_type=INCOME, currency=CAD)
+        self.add_account_legacy('USD income', account_type=AccountType.Income, currency=USD)
+        self.add_account_legacy('CAD income', account_type=AccountType.Income, currency=CAD)
         self.add_account_legacy('USD asset', currency=USD)
         self.add_entry('1/1/2008', 'USD entry', transfer='USD income', increase='1')
         self.add_account_legacy('CAD asset', currency=CAD)

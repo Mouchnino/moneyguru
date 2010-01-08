@@ -16,7 +16,7 @@ from hsutil.currency import USD, PLN
 from ..base import TestCase
 from ...exception import FileFormatError
 from ...loader import native
-from ...model.account import EXPENSE
+from ...model.account import AccountType
 from ...model.amount import Amount
 
 
@@ -68,7 +68,7 @@ class NativeLoader(TestCase):
         account = accounts[2]
         self.assertEqual(account.name, 'foobar')
         self.assertEqual(account.currency, USD)
-        self.assertEqual(account.type, EXPENSE)
+        self.assertEqual(account.type, AccountType.Expense)
         transactions = self.loader.transaction_infos
         self.assertEqual(len(transactions), 4)
         transaction = transactions[0]

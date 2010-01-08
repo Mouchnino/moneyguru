@@ -9,7 +9,7 @@
 from nose.tools import eq_
 
 from .base import TestCase, TestSaveLoadMixin, CommonSetup as CommonSetupBase
-from ..model.account import LIABILITY
+from ..model.account import AccountType
 
 class CommonSetup(CommonSetupBase):
     def setup_three_entries_reconciliation_mode(self):
@@ -143,7 +143,7 @@ class OneEntryInTheFuture(TestCase):
 class OneEntryInLiability(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=LIABILITY)
+        self.add_account(account_type=AccountType.Liability)
         self.document.show_selected_account()
         self.add_entry(increase='42')
         self.document.toggle_reconciliation_mode()

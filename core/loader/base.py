@@ -18,8 +18,7 @@ from hsutil.currency import Currency
 from hsutil.misc import nonone, flatten
 
 from ..exception import FileFormatError
-from ..model.account import (Account, Group, AccountList, GroupList, ASSET, LIABILITY, INCOME,
-    EXPENSE)
+from ..model.account import Account, Group, AccountList, GroupList, AccountType
 from ..model.amount import parse_amount
 from ..model.budget import Budget
 from ..model.oven import Oven
@@ -213,8 +212,8 @@ class Loader(object):
             self.groups.append(group)
         for info in self.account_infos:
             account_type = info.type
-            if account_type not in (ASSET, LIABILITY, INCOME, EXPENSE):
-                account_type = ASSET
+            if account_type not in AccountType.All:
+                account_type = AccountType.Asset
             account_currency = self.default_currency
             try:
                 if info.currency:
@@ -246,7 +245,7 @@ class Loader(object):
                 if split_info.currency:
                     str_amount += split_info.currency
                 amount = self.parse_amount(str_amount, self.default_currency)
-                auto_create_type = INCOME if amount >= 0 else EXPENSE
+                auto_create_type = AccountType.Income if amount >= 0 else AccountType.Expense
                 split_info.account = self.accounts.find(split_info.account, auto_create_type) if split_info.account else None
                 currency = split_info.account.currency if split_info.account is not None else self.default_currency
                 split_info.amount = self.parse_amount(str_amount, currency)
@@ -299,7 +298,7 @@ class Loader(object):
 class GroupInfo(object):
     def __init__(self):
         self.name = None
-        self.type = ASSET
+        self.type = AccountType.Asset
     
     def is_valid(self):
         return bool(self.name)
@@ -309,7 +308,7 @@ class AccountInfo(object):
     def __init__(self):
         self.name = None
         self.currency = None
-        self.type = ASSET
+        self.type = AccountType.Asset
         self.group = None
         self.budget = None
         self.budget_target = None

@@ -14,7 +14,7 @@ from hsutil.currency import EUR
 
 from ..base import TestCase, CommonSetup, TestQIFExportImportMixin
 from ...document import FilterType
-from ...model.account import LIABILITY, INCOME, EXPENSE
+from ...model.account import AccountType
 from ...model.date import YearRange
 
 class OneAccount(TestCase):
@@ -81,7 +81,7 @@ class ThreeAccounts(TestCase):
 class LiabilityAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=LIABILITY)
+        self.add_account(account_type=AccountType.Liability)
         self.document.show_selected_account()
     
     def test_should_show_balance_column(self):
@@ -92,7 +92,7 @@ class LiabilityAccount(TestCase):
 class IncomeAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=INCOME)
+        self.add_account(account_type=AccountType.Income)
         self.document.show_selected_account()
     
     def test_should_show_balance_column(self):
@@ -103,7 +103,7 @@ class IncomeAccount(TestCase):
 class ExpenseAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account(account_type=EXPENSE)
+        self.add_account(account_type=AccountType.Expense)
         self.document.show_selected_account()
     
     def test_should_show_balance_column(self):
@@ -248,7 +248,7 @@ class EntryInLiabilities(TestCase, TestQIFExportImportMixin):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2008, 1, 1))
-        self.add_account('Credit card', account_type=LIABILITY)
+        self.add_account('Credit card', account_type=AccountType.Liability)
         self.document.show_selected_account()
         self.add_entry('1/1/2008', 'Payment', increase='10')
     

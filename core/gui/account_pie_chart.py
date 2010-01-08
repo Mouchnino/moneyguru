@@ -12,7 +12,7 @@
 from collections import defaultdict
 from datetime import date
 
-from ..model.account import ASSET, LIABILITY, INCOME, EXPENSE
+from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange
 from .pie_chart import PieChart
@@ -73,12 +73,12 @@ class _BalancePieChart(_AccountPieChart):
 
 class AssetsPieChart(_BalancePieChart):
     def __init__(self, view, document):
-        _BalancePieChart.__init__(self, view, document, ASSET, 'Assets')
+        _BalancePieChart.__init__(self, view, document, AccountType.Asset, 'Assets')
     
 
 class LiabilitiesPieChart(_BalancePieChart):
     def __init__(self, view, document):
-        _BalancePieChart.__init__(self, view, document, LIABILITY, 'Liabilities')
+        _BalancePieChart.__init__(self, view, document, AccountType.Liability, 'Liabilities')
     
 
 class _CashFlowPieChart(_AccountPieChart):
@@ -96,10 +96,10 @@ class _CashFlowPieChart(_AccountPieChart):
 
 class IncomePieChart(_CashFlowPieChart):
     def __init__(self, view, document):
-        _CashFlowPieChart.__init__(self, view, document, INCOME, 'Income')
+        _CashFlowPieChart.__init__(self, view, document, AccountType.Income, 'Income')
     
 
 class ExpensesPieChart(_CashFlowPieChart):
     def __init__(self, view, document):
-        _CashFlowPieChart.__init__(self, view, document, EXPENSE, 'Expenses')
+        _CashFlowPieChart.__init__(self, view, document, AccountType.Expense, 'Expenses')
     

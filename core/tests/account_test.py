@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2008-06-15
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,15 +7,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import os.path as op
-
 from nose.tools import eq_
 
 from hsutil.currency import EUR
 
 from .base import TestCase, TestSaveLoadMixin
 from ..exception import FileFormatError
-from ..model.account import ASSET, LIABILITY, INCOME
+from ..model.account import AccountType
 
 class Pristine(TestCase):
     def setUp(self):
@@ -73,7 +71,7 @@ class OneEmptyAccount(TestCase):
         self.apanel.load()
         self.assertEqual(self.apanel.name, 'Checking')
         self.assertEqual(self.apanel.currency, EUR)
-        self.assertEqual(self.apanel.type, ASSET)
+        self.assertEqual(self.apanel.type, AccountType.Asset)
     
     def test_keep_old_accounts_on_load_failure(self):
         """When a load result in a failure, keep the data that was there previously"""
@@ -290,7 +288,7 @@ class TwoGroupsInTwoBaseTypes(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_group()
-        self.add_group(account_type=LIABILITY)
+        self.add_group(account_type=AccountType.Liability)
         self.mainwindow.select_balance_sheet()
     
     def test_new_group_name(self):
@@ -436,7 +434,7 @@ class TwoEntriesWithTransfer(TestCase):
 class ManuallyCreatedIncome(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('income', account_type=INCOME)
+        self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_account_legacy('asset')
     
     def test_auto_clean_doesnt_clean_manually_created(self):

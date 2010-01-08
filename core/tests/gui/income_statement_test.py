@@ -12,7 +12,7 @@ from hsutil.currency import CAD, USD
 
 from ..base import TestCase, CommonSetup, ApplicationGUI
 from ...app import Application
-from ...model.account import INCOME, EXPENSE
+from ...model.account import AccountType
 from ...model.date import MonthRange
 
 class Pristine(TestCase):
@@ -50,10 +50,10 @@ class AccountsAndEntries(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account_legacy('Account 1', account_type=INCOME)
+        self.add_account_legacy('Account 1', account_type=AccountType.Income)
         self.add_entry('10/01/2008', 'Entry 1', increase='100.00')
         self.add_entry('13/01/2008', 'Entry 2', increase='150.00')
-        self.add_account_legacy('Account 2', account_type=INCOME)
+        self.add_account_legacy('Account 2', account_type=AccountType.Income)
         self.add_entry('11/12/2007', 'Entry 3', increase='100.00')
         self.add_entry('12/01/2008', 'Entry 4', decrease='20.00')
         self.mainwindow.select_income_statement()
@@ -137,10 +137,10 @@ class MultipleCurrencies(TestCase):
         self.document.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         USD.set_CAD_value(0.9, date(2008, 1, 31))
-        self.add_group('Group', account_type=INCOME)
-        self.add_account_legacy('CAD account', currency=CAD, account_type=INCOME, group_name='Group')
+        self.add_group('Group', account_type=AccountType.Income)
+        self.add_account_legacy('CAD account', currency=CAD, account_type=AccountType.Income, group_name='Group')
         self.add_entry('1/1/2008', 'USD entry', increase='100.00')
-        self.add_account_legacy('USD account', currency=USD, account_type=INCOME, group_name='Group')
+        self.add_account_legacy('USD account', currency=USD, account_type=AccountType.Income, group_name='Group')
         self.add_entry('1/1/2007', 'USD entry', increase='50.00')
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
@@ -172,10 +172,10 @@ class MultipleCurrenciesOverTwoMonths(TestCase):
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         USD.set_CAD_value(0.9, date(2008, 1, 31))
         USD.set_CAD_value(0.9, date(2008, 2, 10))
-        self.add_account_legacy('CAD account', currency=CAD, account_type=INCOME)
+        self.add_account_legacy('CAD account', currency=CAD, account_type=AccountType.Income)
         self.add_entry('1/1/2008', 'CAD entry', increase='200.00')
         self.add_entry('1/2/2008', 'CAD entry', increase='190.00')
-        self.add_account_legacy('USD account', currency=USD, account_type=EXPENSE)
+        self.add_account_legacy('USD account', currency=USD, account_type=AccountType.Expense)
         self.add_entry('1/1/2008', 'USD entry', increase='50.00')
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
@@ -205,7 +205,7 @@ class MultipleCurrenciesOverTwoMonths(TestCase):
 class EntriesSpreadOverAYear(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('Account', account_type=INCOME)
+        self.add_account_legacy('Account', account_type=AccountType.Income)
         self.add_entry('01/01/2007', 'Entry', increase='1')
         self.add_entry('01/04/2007', 'Entry', increase='2')
         self.add_entry('01/08/2007', 'Entry', increase='3')
@@ -234,7 +234,7 @@ class BustedBudget(TestCase):
         self.mock_today(2010, 1, 3)
         self.create_instances()
         self.document.select_month_range()
-        self.add_account('account', account_type=INCOME)
+        self.add_account('account', account_type=AccountType.Income)
         self.document.show_selected_account()
         self.add_entry('01/01/2010', increase='112')
         self.add_budget('account', None, '100')

@@ -11,7 +11,7 @@ from nose.tools import eq_
 from ..base import TestCase
 from ..reconciliation_test import CommonSetup
 from ...document import FilterType
-from ...model.account import LIABILITY
+from ...model.account import AccountType
 
 class Pristine(TestCase):
     def setUp(self):
@@ -139,7 +139,7 @@ class SplitExpenseFromAssetAndLiability(TestCase):
     # liability
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('liability', account_type=LIABILITY)
+        self.add_account_legacy('liability', account_type=AccountType.Liability)
         self.add_account_legacy('asset')
         self.add_entry(transfer='expense', decrease='100')
         self.tpanel.load()
