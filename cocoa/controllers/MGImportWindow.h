@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PSMTabBarControl.h"
 #import "MGGUIController.h"
 #import "MGDocument.h"
+#import "MGTableView.h"
 #import "MGImportTable.h"
 #import "MGImportTableOneSided.h"
 #import "PyImportWindow.h"
@@ -28,6 +29,10 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSMenuItem *switchDayYearMenuItem;
     IBOutlet NSMenuItem *switchDescriptionPayeeMenuItem;
     IBOutlet NSButton *applySwapToAllCheckbox;
+    IBOutlet MGTableView *importTableView;
+    IBOutlet MGTableView *importTableOneSidedView;
+    IBOutlet NSScrollView *importTableScrollView;
+    IBOutlet NSScrollView *importTableOneSidedScrollView;
     
     MGImportTable *importTable;
     MGImportTableOneSided *importTableOneSided;
@@ -39,6 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyImportWindow *)py;
 - (void)updateVisibleTable;
 /* Actions */
+- (IBAction)bindLockClick:(id)sender;
 - (IBAction)changeTargetAccount:(id)sender;
 - (IBAction)importSelectedPane:(id)sender;
 - (IBAction)switchDateFields:(id)sender;

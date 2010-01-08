@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">MGScheduleTable</string>
+				<string key="NSClassName">MGScheduleView</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -460,7 +460,6 @@
 									</object>
 								</object>
 								<string key="NSFrame">{{0, 17}, {789, 200}}</string>
-								<string key="NSBounds">{{369, 0}, {789, 200}}</string>
 								<reference key="NSSuperview" ref="87066603"/>
 								<reference key="NSNextKeyView" ref="920014116"/>
 								<reference key="NSDocView" ref="920014116"/>
@@ -486,7 +485,6 @@
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="87066603"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSCurValue">1</double>
 								<double key="NSPercent">0.68134715025906734</double>
 							</object>
 							<object class="NSClipView" id="337598580">
@@ -497,7 +495,6 @@
 									<reference ref="351455471"/>
 								</object>
 								<string key="NSFrameSize">{789, 17}</string>
-								<string key="NSBounds">{{369, 0}, {789, 17}}</string>
 								<reference key="NSSuperview" ref="87066603"/>
 								<reference key="NSNextKeyView" ref="351455471"/>
 								<reference key="NSDocView" ref="351455471"/>
@@ -529,22 +526,6 @@
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">dataSource</string>
-						<reference key="source" ref="920014116"/>
-						<reference key="destination" ref="1001"/>
-					</object>
-					<int key="connectionID">22</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="920014116"/>
-						<reference key="destination" ref="1001"/>
-					</object>
-					<int key="connectionID">23</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">tableView</string>
@@ -1057,24 +1038,16 @@
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">MGGUIController</string>
+					<string key="className">MGGUIControllerBase</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">controllers/MGGUIController.h</string>
+						<string key="minorKey">controllers/MGGUIControllerBase.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MGScheduleTable</string>
-					<string key="superclassName">MGTable</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">controllers/MGScheduleTable.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGTable</string>
-					<string key="superclassName">MGGUIController</string>
+					<string key="className">MGScheduleView</string>
+					<string key="superclassName">MGGUIControllerBase</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -1090,7 +1063,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">controllers/MGTable.h</string>
+						<string key="minorKey">controllers/schedule/MGScheduleView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

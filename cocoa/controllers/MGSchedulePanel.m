@@ -19,7 +19,8 @@ http://www.hardcoded.net/licenses/hs_license
     [self window]; // Initialize the window
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
-    [splitTable setTransactionPanel:[self py]];
+    splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
+    [splitTable connect];
     return self;
 }
 
@@ -27,6 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [customDateFieldEditor release];
     [customFieldEditor release];
+    [splitTable release];
     [super dealloc];
 }
 
@@ -78,6 +80,16 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Actions */
+- (IBAction)addSplit:(id)sender
+{
+    [[splitTable py] add];
+}
+
+- (IBAction)deleteSplit:(id)sender
+{
+    [[splitTable py] deleteSelectedRows];
+}
+
 - (IBAction)repeatTypeSelected:(id)sender
 {
     // The label next to the "every" field has to be updated as soon as the popup selection changes

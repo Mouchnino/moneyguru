@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGTextField.h"
+#import "MGTableView.h"
 #import "MGSplitTable.h"
 #import "MGWindowController.h"
 #import "PySchedulePanel.h"
@@ -23,13 +24,16 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGTextField *descriptionField;
     IBOutlet MGTextField *payeeField;
     IBOutlet MGTextField *checknoField;
-    IBOutlet MGSplitTable *splitTable;
+    IBOutlet MGTableView *splitTableView;
     
+    MGSplitTable *splitTable;
     NSTextView *customFieldEditor;
     NSTextView *customDateFieldEditor;
 }
 - (PySchedulePanel *)py;
 /* Actions */
+- (IBAction)addSplit:(id)sender;
+- (IBAction)deleteSplit:(id)sender;
 - (IBAction)repeatTypeSelected:(id)sender;
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery;

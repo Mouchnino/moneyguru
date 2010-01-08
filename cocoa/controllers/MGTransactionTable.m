@@ -16,28 +16,25 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGTransactionTable
 
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyTransactionTable" pyParent:[aDocument py]];
-    [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    [tableView registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
+    self = [super initWithPyClassName:@"PyTransactionTable" pyParent:[aDocument py] view:aTableView];
+    [[self tableView] registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
-    [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
+    [[self tableView] setSortDescriptors:[NSArray arrayWithObject:sd]];
+    columnsManager = [[HSTableColumnManager alloc] initWithTable:[self tableView]];
     [columnsManager linkColumn:@"description" toUserDefault:TransactionDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:TransactionPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:TransactionChecknoColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
-    filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:NO];
     [self changeColumns]; // initial set
     return self;
 }
         
 - (void)dealloc
 {
-    [filterBar release];
     [customFieldEditor release];
     [columnsManager release];
     [super dealloc];
@@ -48,18 +45,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyTransactionTable *)py
 {
     return (PyTransactionTable *)py;
-}
-
-- (void)connect
-{
-    [super connect];
-    [filterBar connect];
-}
-
-- (void)disconnect
-{
-    [super disconnect];
-    [filterBar disconnect];
 }
 
 - (NSView *)viewToPrint
@@ -126,13 +111,13 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (id)fieldEditorForObject:(id)asker
 {
-    if (asker == tableView)
+    if (asker == [self tableView])
     {
         BOOL isDate = NO;
-        int editedColumn = [tableView editedColumn];
+        int editedColumn = [[self tableView] editedColumn];
         if (editedColumn > -1)
         {
-            NSTableColumn *column = [[tableView tableColumns] objectAtIndex:editedColumn];
+            NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
             NSString *name = [column identifier];
             isDate = [name isEqualTo:@"date"];
         }
@@ -162,7 +147,7 @@ http://www.hardcoded.net/licenses/hs_license
     if ([[column identifier] isEqualToString:@"status"])
     {
         MGReconciliationCell *cell = aCell;
-        if (row == [tableView editedRow])
+        if (row == [[self tableView] editedRow])
         {
             [cell setIsInFuture:[[self py] isEditedRowInTheFuture]];
             [cell setIsInPast:[[self py] isEditedRowInThePast]];
@@ -196,7 +181,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)refresh
 {
     [super refresh];
-    [totalsLabel setStringValue:[[self py] totals]];
+    // [totalsLabel setStringValue:[[self py] totals]];
 }
 
 

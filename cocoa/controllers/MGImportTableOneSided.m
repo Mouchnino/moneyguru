@@ -11,10 +11,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 
 @implementation MGImportTableOneSided
-- (id)initWithImportWindow:(PyImportWindow *)aWindow
+- (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow];
-    [NSBundle loadNibNamed:@"ImportTableOneSided" owner:self];
+    self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow view:aTableView];
     return self;
 }
 

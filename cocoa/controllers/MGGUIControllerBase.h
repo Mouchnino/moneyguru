@@ -6,18 +6,18 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
+/*
+TEMPORARY UNIT
+This unit is created as a temporary hack for the basic view migration. Will disappear when views
+have correspondant classes down in the core.
+*/
+
 #import <Cocoa/Cocoa.h>
-#import "MGGUIControllerBase.h"
-#import "PyGUI.h"
 #import "MGPrintView.h"
 
-@interface MGGUIController : MGGUIControllerBase
-{
-    PyGUI *py;
-}
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent;
-// - (NSView *)view;
-// - (MGPrintView *)viewToPrint;
-// - (void)connect;
-// - (void)disconnect;
+@interface MGGUIControllerBase : NSObject {}
+- (NSView *)view;
+- (MGPrintView *)viewToPrint;
+- (void)connect;
+- (void)disconnect;
 @end

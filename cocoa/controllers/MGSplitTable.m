@@ -7,44 +7,11 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGSplitTable.h"
-#import "Utils.h"
-#import "MGConst.h"
-#import "MGUtils.h"
 
 @implementation MGSplitTable
-
-- (void)setTransactionPanel:(PyPanel *)aPanel;
+- (id)initWithTransactionPanel:(PyPanel *)aPanel view:(MGTableView *)aTableView
 {
-    if (py != nil)
-    {
-        [py free];
-        [py release];
-        py = nil;
-    }
-    if (aPanel != nil)
-    {
-        Class pyClass = [MGUtils classNamed:@"PySplitTable"];
-        py = [[pyClass alloc] initWithCocoa:self pyParent:aPanel];
-        [py connect];
-    }
+    self = [super initWithPyClassName:@"PySplitTable" pyParent:aPanel view:aTableView];
+    return self;
 }
-
-- (void)dealloc
-{
-    [self setTransactionPanel:nil];
-    [super dealloc];
-}
-
-/* Actions */
-
-- (IBAction)addSplit:(id)sender
-{
-    [[self py] add];
-}
-
-- (IBAction)deleteSplit:(id)sender
-{
-    [[self py] deleteSelectedRows];
-}
-
 @end

@@ -32,10 +32,10 @@ http://www.hardcoded.net/licenses/hs_license
     [budgetPanel connect];
     balanceSheet = [[MGBalanceSheet alloc] initWithDocument:document];
     incomeStatement = [[MGIncomeStatement alloc] initWithDocument:document];
-    transactionTable = [[MGTransactionTable alloc] initWithDocument:document];
-    entryTable = [[MGEntryTable alloc] initWithDocument:document];
-    scheduleTable = [[MGScheduleTable alloc] initWithDocument:document];
-    budgetTable = [[MGBudgetTable alloc] initWithDocument:document];
+    transactionView = [[MGTransactionView alloc] initWithDocument:document];
+    accountView = [[MGAccountView alloc] initWithDocument:document];
+    scheduleView = [[MGScheduleView alloc] initWithDocument:document];
+    budgetView = [[MGBudgetView alloc] initWithDocument:document];
     searchField = [[MGSearchField alloc] initWithDocument:document];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -50,9 +50,9 @@ http://www.hardcoded.net/licenses/hs_license
     [[self window] setToolbar:toolbar];
     
     NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [incomeStatement py], 
-        [transactionTable py], [entryTable py], [scheduleTable py], [budgetTable py], 
-        [accountProperties py], [transactionPanel py], [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], nil];
+        [[transactionView transactionTable] py], [[accountView entryTable] py], [[scheduleView scheduleTable] py], 
+        [[budgetView budgetTable] py], [accountProperties py], [transactionPanel py], 
+        [massEditionPanel py], [schedulePanel py], [budgetPanel py], nil];
     Class PyMainWindow = [MGUtils classNamed:@"PyMainWindow"];
     py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];
     [py connect];
@@ -67,10 +67,10 @@ http://www.hardcoded.net/licenses/hs_license
     [accountProperties release];
     [balanceSheet release];
     [incomeStatement release];
-    [entryTable release];
-    [transactionTable release];
-    [scheduleTable release];
-    [budgetTable release];
+    [accountView release];
+    [transactionView release];
+    [scheduleView release];
+    [budgetView release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -115,12 +115,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[self window] makeFirstResponder:[[top view] nextKeyView]];
 }
 
-- (MGGUIController *)top
+- (MGGUIControllerBase *)top
 {
     return top;
 }
 
-- (void)setTop:(MGGUIController *)aTop
+- (void)setTop:(MGGUIControllerBase *)aTop
 {
     [top disconnect];
     top = aTop;
@@ -182,11 +182,11 @@ http://www.hardcoded.net/licenses/hs_license
              (action == @selector(moveDown:)) ||
              (action == @selector(duplicateItem:)) ||
              (action == @selector(makeScheduleFromSelected:)))
-        return (top == transactionTable) || (top == entryTable);
+        return (top == transactionView) || (top == accountView);
     else if (action == @selector(toggleEntriesReconciled:))
-        return (top == entryTable) && [[[self document] py] inReconciliationMode];
+        return (top == accountView) && [[[self document] py] inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return (top != budgetTable);
+        return (top != budgetView);
     else if (action == @selector(showPreviousView:))
         return (top != balanceSheet);
     else if (action == @selector(showEntryTable:))
@@ -196,12 +196,12 @@ http://www.hardcoded.net/licenses/hs_license
         if ((top == balanceSheet) || (top == incomeStatement))
             return [(id)top canShowSelectedAccount];
         else
-            return (top == transactionTable) || (top == entryTable);
+            return (top == transactionView) || (top == accountView);
     }
     else if (action == @selector(navigateBack:))
-        return (top == entryTable);
+        return (top == accountView);
     else if (action == @selector(toggleReconciliationMode:))
-        return (top == entryTable) && [[[self document] py] shownAccountIsBalanceSheet];
+        return (top == accountView) && [[[self document] py] shownAccountIsBalanceSheet];
     else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
         || (action == @selector(selectTodayDateRange:)))
         return [py canNavigateDateRange];
@@ -355,7 +355,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if ([[[self document] py] inReconciliationMode])
     {
-        [[entryTable py] toggleReconciled];
+        [[[accountView entryTable] py] toggleReconciled];
     }
 }
 
@@ -416,10 +416,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
-    if (top == entryTable)
-        return [entryTable fieldEditorForObject:asker];
-    else if (top == transactionTable)
-        return [transactionTable fieldEditorForObject:asker];
+    if (top == accountView)
+        return [[accountView entryTable] fieldEditorForObject:asker];
+    else if (top == transactionView)
+        return [[transactionView transactionTable] fieldEditorForObject:asker];
     return nil;
 }
 
@@ -558,11 +558,11 @@ http://www.hardcoded.net/licenses/hs_license
         NSString *title = @"New Item";
         if ((top == balanceSheet) || (top == incomeStatement))
             title = @"New Account";
-        else if ((top == transactionTable) || (top == entryTable))
+        else if ((top == transactionView) || (top == accountView))
             title = @"New Transaction";
-        else if (top == scheduleTable)
+        else if (top == scheduleView)
             title = @"New Schedule";
-        else if (top == budgetTable)
+        else if (top == budgetView)
             title = @"New Budget";
         [aItem setTitle:title];
     }
@@ -616,7 +616,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showBarGraph
 {
-    [entryTable showBarGraph];
+    [accountView showBarGraph];
 }
 
 - (void)showCustomDateRangePanel
@@ -628,7 +628,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showEntryTable
 {
-    [self setTop:entryTable];
+    [self setTop:accountView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGEntriesToolbarItemIdentifier];
 }
 
@@ -640,7 +640,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showLineGraph
 {
-    [entryTable showBalanceGraph];
+    [accountView showBalanceGraph];
 }
 
 - (void)showMessage:(NSString *)aMessage
@@ -652,19 +652,19 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showScheduleTable
 {
-    [self setTop:scheduleTable];
+    [self setTop:scheduleView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGSchedulesToolbarItemIdentifier];
 }
 
 - (void)showBudgetTable
 {
-    [self setTop:budgetTable];
+    [self setTop:budgetView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGBudgetToolbarItemIdentifier];
 }
 
 - (void)showTransactionTable
 {
-    [self setTop:transactionTable];
+    [self setTop:transactionView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGTransactionsToolbarItemIdentifier];
 }
 

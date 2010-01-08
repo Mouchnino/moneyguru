@@ -8,26 +8,20 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSTableColumnManager.h"
-#import "MGTableView.h"
 #import "MGDocument.h"
 #import "PyTransactionTable.h"
 #import "MGEditableTable.h"
-#import "MGFilterBar.h"
-#import "AMButtonBar.h"
+#import "MGTableView.h"
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
 
 @interface MGTransactionTable : MGEditableTable 
 {
-    IBOutlet AMButtonBar *filterBarView;
-    IBOutlet NSTextField *totalsLabel;
-
     HSTableColumnManager *columnsManager;
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
-    MGFilterBar *filterBar;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
 
 /* Public */
 - (PyTransactionTable *)py;

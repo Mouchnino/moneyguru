@@ -12,29 +12,16 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGImportTable
 
-- (id)initWithImportWindow:(PyImportWindow *)aWindow
+- (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow];
-    [NSBundle loadNibNamed:@"ImportTable" owner:self];
-    [tableView registerForDraggedTypes:[NSArray arrayWithObject:MGImportEntryPasteboardType]];
+    self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow view:aTableView];
+    [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGImportEntryPasteboardType]];
     return self;
 }
 
 - (PyImportTable *)py
 {
     return (PyImportTable *)py;
-}
-
-/* About NSTableView and NSActionCell
-
-From what I can understand, actions from an action cell is a tableview happen *after* the selectedRow
-has changed, but *before* tableViewSelectionDidChange. At first, I had a unbindSelectedRow, but it
-didn't work. We have to use [tableView selectedRow] to know which row to unbind.
-*/
-
-- (IBAction)bindLockClick:(id)sender
-{
-    [[self py] unbindRow:[tableView selectedRow]];
 }
 
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(int)row

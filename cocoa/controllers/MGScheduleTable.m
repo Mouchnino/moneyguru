@@ -12,12 +12,11 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGSchedulePrint.h"
 
 @implementation MGScheduleTable
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py]];
-    [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    [tableView setSortDescriptors:[NSArray array]];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
+    self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py] view:aTableView];
+    [aTableView setSortDescriptors:[NSArray array]];
+    columnsManager = [[HSTableColumnManager alloc] initWithTable:aTableView];
     [columnsManager linkColumn:@"description" toUserDefault:ScheduleDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:SchedulePayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:ScheduleChecknoColumnVisible];

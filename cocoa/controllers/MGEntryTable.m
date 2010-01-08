@@ -12,87 +12,32 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTableView.h"
 #import "MGReconciliationCell.h"
 #import "MGTextFieldCell.h"
-#import "MGEntryPrint.h"
 
 @implementation MGEntryTable
 
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyEntryTable" pyParent:[aDocument py]];
-    [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    [tableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
+    self = [super initWithPyClassName:@"PyEntryTable" pyParent:[aDocument py] view:aTableView];
+    [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
-    [tableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:tableView];
+    [aTableView setSortDescriptors:[NSArray arrayWithObject:sd]];
+    columnsManager = [[HSTableColumnManager alloc] initWithTable:aTableView];
     [columnsManager linkColumn:@"description" toUserDefault:AccountDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:AccountPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:AccountChecknoColumnVisible];
     [columnsManager linkColumn:@"reconciliation_date" toUserDefault:AccountReconciliationDateColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
-    filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:YES];
-    balanceGraph = [[MGBalanceGraph alloc] initWithDocument:aDocument pyClassName:@"PyBalanceGraph"];
-    barGraph = [[MGBarGraph alloc] initWithDocument:aDocument pyClassName:@"PyBarGraph"];
-    // We have to put one of the graph in there before e link the prefs
-    NSView *graphView = [balanceGraph view];
-    [graphView setFrame:[graphPlaceholder frame]];
-    [graphView setAutoresizingMask:[graphPlaceholder autoresizingMask]];
-    [wholeView replaceSubview:graphPlaceholder with:graphView];
-    currentGraph = balanceGraph;
-    
-    [self updateVisibility];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud addObserver:self forKeyPath:AccountGraphVisible options:NSKeyValueObservingOptionNew context:NULL];
     [self changeColumns]; // initial set
     return self;
 }
         
 - (void)dealloc
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud removeObserver:self forKeyPath:AccountGraphVisible];
-    [barGraph release];
-    [balanceGraph release];
-    [filterBar release];
     [customFieldEditor release];
     [columnsManager release];
     [super dealloc];
-}
-
-/* Private */
-- (void)updateVisibility
-{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    BOOL graphVisible = [ud boolForKey:AccountGraphVisible];
-    // Let's set initial rects
-    NSRect mainRect = [mainView frame];
-    NSRect graphRect = [[balanceGraph view] frame];
-    if (graphVisible)
-    {
-        mainRect.size.height = NSMaxY(mainRect) - NSMaxY(graphRect);
-        mainRect.origin.y = NSMaxY(graphRect);
-    }
-    else
-    {
-        mainRect.size.height = NSMaxY(mainRect) - NSMinY(graphRect);
-        mainRect.origin.y = NSMinY(graphRect);
-    }
-    [[balanceGraph view] setHidden:!graphVisible];
-    [[barGraph view] setHidden:!graphVisible];
-    [mainView setFrame:mainRect];
-}
-
-- (void)showGraph:(MGGUIController *)graph
-{
-    NSView *oldView = [currentGraph view];
-    [currentGraph disconnect];
-    NSView *graphView = [graph view];
-    [graphView setFrame:[oldView frame]];
-    [graphView setAutoresizingMask:[oldView autoresizingMask]];
-    [wholeView replaceSubview:oldView with:graphView];
-    [graph connect];
-    currentGraph = graph;
 }
 
 /* Override */
@@ -100,28 +45,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyEntryTable *)py
 {
     return (PyEntryTable *)py;
-}
-
-- (void)connect
-{
-    [super connect];
-    [filterBar connect];
-    if (currentGraph != nil)
-        [currentGraph connect];
-}
-
-- (void)disconnect
-{
-    [super disconnect];
-    [filterBar disconnect];
-    if (currentGraph != nil)
-        [currentGraph disconnect];
-}
-
-- (NSView *)viewToPrint
-{
-    return [[[MGEntryPrint alloc] initWithPyParent:py tableView:[self tableView] 
-        graphView:[currentGraph view]] autorelease];
 }
 
 /* Data source */
@@ -199,7 +122,7 @@ http://www.hardcoded.net/licenses/hs_license
     else if ([[column identifier] isEqualToString:@"status"])
     {
         MGReconciliationCell *cell = aCell;
-        if (row == [tableView editedRow])
+        if (row == [[self tableView] editedRow])
         {
             [cell setIsInFuture:[[self py] isEditedRowInTheFuture]];
             [cell setIsInPast:[[self py] isEditedRowInThePast]];
@@ -233,22 +156,17 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    [self updateVisibility];
-}
-
 /* Public */
 
 - (id)fieldEditorForObject:(id)asker
 {
-    if (asker == tableView)
+    if (asker == [self tableView])
     {   
         BOOL isDate = NO;
-        int editedColumn = [tableView editedColumn];
+        int editedColumn = [[self tableView] editedColumn];
         if (editedColumn > -1)
         {
-            NSTableColumn *column = [[tableView tableColumns] objectAtIndex:editedColumn];
+            NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
             NSString *name = [column identifier];
             isDate = [name isEqualTo:@"date"] || [name isEqualTo:@"reconciliation_date"];
         }
@@ -262,24 +180,13 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] showTransferAccount];
 }
 
-- (void)showBalanceGraph
-{
-    [self showGraph:balanceGraph];
-}
-
-- (void)showBarGraph
-{
-    [self showGraph:barGraph];
-}
-
-
 /* Callbacks for python */
 
 - (void)refresh
 {
     [columnsManager setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
     [super refresh];
-    [totalsLabel setStringValue:[[self py] totals]];
+    // [totalsLabel setStringValue:[[self py] totals]];
 }
 
 @end

@@ -13,12 +13,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGTable : MGGUIController
 {
-    IBOutlet MGTableView *tableView;
-    IBOutlet NSView *wholeView;
+    MGTableView *tableView;
 }
+- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView;
 
 /* Virtual */
-
 - (PyTable *)py;
 
 /* Public */
@@ -28,5 +27,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)refresh;
 - (void)showSelectedRow;
 - (void)updateSelection;
-
 @end

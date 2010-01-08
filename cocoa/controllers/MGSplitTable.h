@@ -14,9 +14,5 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGEditableTable.h"
 
 @interface MGSplitTable : MGEditableTable {}
-
-- (void)setTransactionPanel:(PyPanel *)aPanel;
-
-- (IBAction)addSplit:(id)sender;
-- (IBAction)deleteSplit:(id)sender;
+- (id)initWithTransactionPanel:(PyPanel *)aPanel view:(MGTableView *)aTableView;
 @end

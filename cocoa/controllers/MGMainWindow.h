@@ -12,12 +12,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGMassEditionPanel.h"
 #import "MGSchedulePanel.h"
 #import "MGBudgetPanel.h"
-#import "MGEntryTable.h"
+#import "MGAccountView.h"
 #import "MGBalanceSheet.h"
 #import "MGIncomeStatement.h"
-#import "MGTransactionTable.h"
-#import "MGScheduleTable.h"
-#import "MGBudgetTable.h"
+#import "MGTransactionView.h"
+#import "MGScheduleView.h"
+#import "MGBudgetView.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
 #import "MGCSVImportOptions.h"
@@ -41,23 +41,23 @@ http://www.hardcoded.net/licenses/hs_license
     MGBudgetPanel *budgetPanel;
     MGBalanceSheet *balanceSheet;
     MGIncomeStatement *incomeStatement;
-    MGTransactionTable *transactionTable;
-    MGEntryTable *entryTable;
-    MGScheduleTable *scheduleTable;
-    MGBudgetTable *budgetTable;
+    MGTransactionView *transactionView;
+    MGAccountView *accountView;
+    MGScheduleView *scheduleView;
+    MGBudgetView *budgetView;
     MGSearchField *searchField;
     MGImportWindow *importWindow;
     MGCSVImportOptions *csvOptionsWindow;
     MGCustomDateRangePanel *customDateRangePanel;
     MGAccountReassignPanel *accountReassignPanel;
-    MGGUIController *top;
+    MGGUIControllerBase *top;
     NSToolbarItem *reconciliationToolbarItem;
 }
 
 /* Private */
 - (void)arrangeViews;
-- (MGGUIController *)top;
-- (void)setTop:(MGGUIController *)top;
+- (MGGUIControllerBase *)top;
+- (void)setTop:(MGGUIControllerBase *)top;
 - (void)animateDateRange:(BOOL)forward;
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;

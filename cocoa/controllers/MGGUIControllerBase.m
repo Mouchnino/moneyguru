@@ -6,13 +6,25 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
-#import "PyBudgetTable.h"
-#import "MGTable.h"
+#import "MGGUIControllerBase.h"
 
-@interface MGBudgetTable : MGTable {}
+@implementation MGGUIControllerBase
+- (NSView *)view
+{
+    // abstract
+    return nil;
+}
 
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
-- (PyBudgetTable *)py;
+- (MGPrintView *)viewToPrint
+{
+    return nil;
+}
+
+- (void)connect
+{
+}
+
+- (void)disconnect
+{
+}
 @end

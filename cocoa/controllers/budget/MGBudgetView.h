@@ -8,16 +8,19 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGGUIControllerBase.h"
-#import "PyGUI.h"
-#import "MGPrintView.h"
+#import "MGDocument.h"
+#import "MGTableView.h"
+#import "MGBudgetTable.h"
 
-@interface MGGUIController : MGGUIControllerBase
+@interface MGBudgetView : MGGUIControllerBase
 {
-    PyGUI *py;
+    IBOutlet MGTableView *tableView;
+    IBOutlet NSView *wholeView;
+    
+    MGBudgetTable *budgetTable;
 }
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent;
-// - (NSView *)view;
-// - (MGPrintView *)viewToPrint;
-// - (void)connect;
-// - (void)disconnect;
+- (id)initWithDocument:(MGDocument *)aDocument;
+
+// Temporary
+- (MGBudgetTable *)budgetTable;
 @end

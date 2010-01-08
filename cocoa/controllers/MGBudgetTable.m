@@ -11,11 +11,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBudgetPrint.h"
 
 @implementation MGBudgetTable
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyBudgetTable" pyParent:[aDocument py]];
-    [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    [tableView setSortDescriptors:[NSArray array]];
+    self = [super initWithPyClassName:@"PyBudgetTable" pyParent:[aDocument py] view:aTableView];
+    [aTableView setSortDescriptors:[NSArray array]];
     return self;
 }
 

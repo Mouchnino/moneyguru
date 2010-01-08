@@ -10,8 +10,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyImportTable.h"
 #import "PyImportWindow.h"
 #import "MGEditableTable.h"
+#import "MGTableView.h"
 
 @interface MGImportTableOneSided : MGEditableTable {}
-- (id)initWithImportWindow:(PyImportWindow *)aWindow;
+- (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView;
 - (PyImportTable *)py;
 @end

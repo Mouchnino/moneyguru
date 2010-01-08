@@ -10,8 +10,16 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGTable
-/* MGGUIController */
+- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
+{
+    self = [super initWithPyClassName:aClassName pyParent:aPyParent];
+    tableView = aTableView;
+    [tableView setDataSource:self];
+    [tableView setDelegate:self];
+    return self;
+}
 
+/* MGGUIController */
 - (PyTable *)py
 {
     return (PyTable *)py;
@@ -19,7 +27,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSView *)view
 {
-    return wholeView;
+    return tableView;
 }
 
 /* Data source */

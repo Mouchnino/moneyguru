@@ -11,37 +11,19 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDocument.h"
 #import "PyEntryTable.h"
 #import "MGEditableTable.h"
-#import "MGFilterBar.h"
-#import "AMButtonBar.h"
-#import "MGBalanceGraph.h"
-#import "MGBarGraph.h"
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
 
 @interface MGEntryTable : MGEditableTable 
 {   
-    IBOutlet NSView *mainView;
-    IBOutlet NSView *graphPlaceholder;
-    IBOutlet AMButtonBar *filterBarView;
-    IBOutlet NSTextField *totalsLabel;
-    
     HSTableColumnManager *columnsManager;
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
-    MGFilterBar *filterBar;
-    MGBalanceGraph *balanceGraph;
-    MGBarGraph *barGraph;
-    MGGUIController *currentGraph;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
-
-/* Private */
-- (void)updateVisibility;
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
 
 /* Public */
 - (PyEntryTable *)py;
 - (id)fieldEditorForObject:(id)asker;
 - (void)showTransferAccount:(id)sender;
-- (void)showBalanceGraph;
-- (void)showBarGraph;
 @end

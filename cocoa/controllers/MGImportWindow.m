@@ -17,12 +17,12 @@ http://www.hardcoded.net/licenses/hs_license
     [NSBundle loadNibNamed:@"ImportWindow" owner:self];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
-    importTable = [[MGImportTable alloc] initWithImportWindow:[self py]];
-    importTableOneSided = [[MGImportTableOneSided alloc] initWithImportWindow:[self py]];
+    importTable = [[MGImportTable alloc] initWithImportWindow:[self py] view:importTableView];
+    importTableOneSided = [[MGImportTableOneSided alloc] initWithImportWindow:[self py] view:importTableOneSidedView];
     [importTableOneSided connect];
     visibleTable = importTableOneSided;
-    [[visibleTable view] setFrame:[importTablePlaceholder frame]]; 
-    [mainView replaceSubview:importTablePlaceholder with:[visibleTable view]];
+    [importTableOneSidedScrollView setFrame:[importTablePlaceholder frame]]; 
+    [mainView replaceSubview:importTablePlaceholder with:importTableOneSidedScrollView];
     return self;
 }
 
@@ -43,19 +43,40 @@ http://www.hardcoded.net/licenses/hs_license
     // Ok, this code below is a quite hackish. I guess that importTable and importTableOneSided
     // should be a single class that hides columns (like in the PyQt side) rather than doing this
     // kind of fuss around
-    MGTable *neededtable = importTableOneSided;
-    if ([(PyImportTable *)[visibleTable py] isTwoSided])
-        neededtable = importTable;
-    if (neededtable == visibleTable)
-        return;
-    [visibleTable disconnect];
-    [neededtable connect];
-    [[neededtable view] setFrame:[[visibleTable view] frame]]; 
-    [mainView replaceSubview:[visibleTable view] with:[neededtable view]];
-    visibleTable = neededtable;
+    if ([(PyImportTable *)[visibleTable py] isTwoSided]) {
+        // Show the two sided table
+        if (visibleTable == importTable)
+            return;
+        [importTableOneSided disconnect];
+        [importTable connect];
+        [importTableScrollView setFrame:[importTableOneSidedScrollView frame]]; 
+        [mainView replaceSubview:importTableOneSidedScrollView with:importTableScrollView];
+        visibleTable = importTable;
+    } else {
+        // Show the one sided table
+        if (visibleTable == importTableOneSided)
+            return;
+        [importTable disconnect];
+        [importTableOneSided connect];
+        [importTableOneSidedScrollView setFrame:[importTableScrollView frame]]; 
+        [mainView replaceSubview:importTableScrollView with:importTableOneSidedScrollView];
+        visibleTable = importTableOneSided;
+    }
 }
 
 /* Actions */
+/* About NSTableView and NSActionCell
+
+From what I can understand, actions from an action cell is a tableview happen *after* the selectedRow
+has changed, but *before* tableViewSelectionDidChange. At first, I had a unbindSelectedRow, but it
+didn't work. We have to use [tableView selectedRow] to know which row to unbind.
+*/
+- (IBAction)bindLockClick:(id)sender
+{
+    NSLog(@"foo");
+    [[importTable py] unbindRow:[[importTable tableView] selectedRow]];
+}
+
 - (IBAction)changeTargetAccount:(id)sender
 {
     [[self py] setSelectedTargetAccountIndex:[targetAccountsPopup indexOfSelectedItem]];
