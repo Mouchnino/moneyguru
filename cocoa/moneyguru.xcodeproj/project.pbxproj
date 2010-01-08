@@ -12,7 +12,6 @@
 		0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0714240B0E2A797800AC27AC /* MGGraphView.m */; };
 		071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0714240D0E2A797800AC27AC /* MGLineGraphView.m */; };
 		0726B2B40E49E1260059E8A7 /* MGReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0726B2B30E49E1260059E8A7 /* MGReport.m */; };
-		0726B3BD0E4A00A80059E8A7 /* MGIncomeStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0726B3BC0E4A00A80059E8A7 /* MGIncomeStatement.m */; };
 		0726B3C50E4A02C30059E8A7 /* IncomeStatement.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0726B3C40E4A02C30059E8A7 /* IncomeStatement.xib */; };
 		07373CB20E3130050082D3E8 /* MGOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = 07373CB10E3130050082D3E8 /* MGOutline.m */; };
 		0761B95D0E547CE800E99B31 /* MGAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0761B95C0E547CE800E99B31 /* MGAmountCell.m */; };
@@ -130,7 +129,6 @@
 		CE873A6E0E21621F004F63E9 /* TransactionInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE873A680E21621F004F63E9 /* TransactionInspector.xib */; };
 		CE873AB30E21622F004F63E9 /* MGAccountProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A710E21622F004F63E9 /* MGAccountProperties.m */; };
 		CE873AB50E21622F004F63E9 /* MGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A750E21622F004F63E9 /* MGAppDelegate.m */; };
-		CE873AB60E21622F004F63E9 /* MGBalanceSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A770E21622F004F63E9 /* MGBalanceSheet.m */; };
 		CE873AB90E21622F004F63E9 /* MGDateFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A7D0E21622F004F63E9 /* MGDateFieldEditor.m */; };
 		CE873ABA0E21622F004F63E9 /* MGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A7F0E21622F004F63E9 /* MGDocument.m */; };
 		CE873ABC0E21622F004F63E9 /* MGFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A830E21622F004F63E9 /* MGFieldEditor.m */; };
@@ -179,6 +177,8 @@
 		CED1FC7C10F7853700634D72 /* MGBudgetTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC7B10F7853700634D72 /* MGBudgetTable.m */; };
 		CED1FC8A10F7903800634D72 /* MGNetWorthView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC8610F7903800634D72 /* MGNetWorthView.m */; };
 		CED1FC8B10F7903800634D72 /* MGProfitView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC8910F7903800634D72 /* MGProfitView.m */; };
+		CED1FC9510F7958A00634D72 /* MGBalanceSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC9410F7958A00634D72 /* MGBalanceSheet.m */; };
+		CED1FC9810F7959200634D72 /* MGIncomeStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC9710F7959200634D72 /* MGIncomeStatement.m */; };
 		CEDD55A80F87B9F500474A9C /* MGPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD55A70F87B9F500474A9C /* MGPrintView.m */; };
 		CEDD98D50E25054300747F64 /* MGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD98D40E25054300747F64 /* MGUtils.m */; };
 		CEE223410F893D1C00E7FE12 /* MGTableWithSplitsPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE223400F893D1C00E7FE12 /* MGTableWithSplitsPrint.m */; };
@@ -222,8 +222,6 @@
 		0726B2B30E49E1260059E8A7 /* MGReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGReport.m; sourceTree = "<group>"; };
 		0726B3260E49E7A50059E8A7 /* PyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReport.h; sourceTree = "<group>"; };
 		0726B32B0E49E83B0059E8A7 /* PyIncomeStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyIncomeStatement.h; sourceTree = "<group>"; };
-		0726B3BB0E4A002F0059E8A7 /* MGIncomeStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGIncomeStatement.h; sourceTree = "<group>"; };
-		0726B3BC0E4A00A80059E8A7 /* MGIncomeStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGIncomeStatement.m; sourceTree = "<group>"; };
 		0726B3C40E4A02C30059E8A7 /* IncomeStatement.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomeStatement.xib; sourceTree = "<group>"; };
 		07373CB00E3130050082D3E8 /* MGOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGOutline.h; sourceTree = "<group>"; };
 		07373CB10E3130050082D3E8 /* MGOutline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGOutline.m; sourceTree = "<group>"; };
@@ -424,8 +422,6 @@
 		CE873A710E21622F004F63E9 /* MGAccountProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountProperties.m; sourceTree = "<group>"; };
 		CE873A740E21622F004F63E9 /* MGAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAppDelegate.h; sourceTree = "<group>"; };
 		CE873A750E21622F004F63E9 /* MGAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAppDelegate.m; sourceTree = "<group>"; };
-		CE873A760E21622F004F63E9 /* MGBalanceSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBalanceSheet.h; sourceTree = "<group>"; };
-		CE873A770E21622F004F63E9 /* MGBalanceSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBalanceSheet.m; sourceTree = "<group>"; };
 		CE873A7C0E21622F004F63E9 /* MGDateFieldEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDateFieldEditor.h; sourceTree = "<group>"; };
 		CE873A7D0E21622F004F63E9 /* MGDateFieldEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateFieldEditor.m; sourceTree = "<group>"; };
 		CE873A7E0E21622F004F63E9 /* MGDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDocument.h; sourceTree = "<group>"; };
@@ -522,6 +518,10 @@
 		CED1FC8610F7903800634D72 /* MGNetWorthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGNetWorthView.m; sourceTree = "<group>"; };
 		CED1FC8810F7903800634D72 /* MGProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGProfitView.h; sourceTree = "<group>"; };
 		CED1FC8910F7903800634D72 /* MGProfitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGProfitView.m; sourceTree = "<group>"; };
+		CED1FC9310F7958A00634D72 /* MGBalanceSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBalanceSheet.h; sourceTree = "<group>"; };
+		CED1FC9410F7958A00634D72 /* MGBalanceSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBalanceSheet.m; sourceTree = "<group>"; };
+		CED1FC9610F7959200634D72 /* MGIncomeStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGIncomeStatement.h; sourceTree = "<group>"; };
+		CED1FC9710F7959200634D72 /* MGIncomeStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGIncomeStatement.m; sourceTree = "<group>"; };
 		CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMoneyGuruApp.h; sourceTree = "<group>"; };
 		CED43ECB0D3F679A004B73AA /* MGConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGConst.h; sourceTree = "<group>"; };
 		CEDD55A60F87B9F500474A9C /* MGPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGPrintView.h; path = print/MGPrintView.h; sourceTree = "<group>"; };
@@ -876,10 +876,6 @@
 				CE1453450E4AFE1D009517B6 /* MGImportWindow.m */,
 				CE873A740E21622F004F63E9 /* MGAppDelegate.h */,
 				CE873A750E21622F004F63E9 /* MGAppDelegate.m */,
-				CE873A760E21622F004F63E9 /* MGBalanceSheet.h */,
-				CE873A770E21622F004F63E9 /* MGBalanceSheet.m */,
-				0726B3BB0E4A002F0059E8A7 /* MGIncomeStatement.h */,
-				0726B3BC0E4A00A80059E8A7 /* MGIncomeStatement.m */,
 				CE873A7C0E21622F004F63E9 /* MGDateFieldEditor.h */,
 				CE873A7D0E21622F004F63E9 /* MGDateFieldEditor.m */,
 				CE873A7E0E21622F004F63E9 /* MGDocument.h */,
@@ -1050,6 +1046,8 @@
 		CED1FC8410F7903800634D72 /* networth */ = {
 			isa = PBXGroup;
 			children = (
+				CED1FC9310F7958A00634D72 /* MGBalanceSheet.h */,
+				CED1FC9410F7958A00634D72 /* MGBalanceSheet.m */,
 				CED1FC8510F7903800634D72 /* MGNetWorthView.h */,
 				CED1FC8610F7903800634D72 /* MGNetWorthView.m */,
 			);
@@ -1059,6 +1057,8 @@
 		CED1FC8710F7903800634D72 /* profit */ = {
 			isa = PBXGroup;
 			children = (
+				CED1FC9610F7959200634D72 /* MGIncomeStatement.h */,
+				CED1FC9710F7959200634D72 /* MGIncomeStatement.m */,
 				CED1FC8810F7903800634D72 /* MGProfitView.h */,
 				CED1FC8910F7903800634D72 /* MGProfitView.m */,
 			);
@@ -1244,7 +1244,6 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				CE873AB30E21622F004F63E9 /* MGAccountProperties.m in Sources */,
 				CE873AB50E21622F004F63E9 /* MGAppDelegate.m in Sources */,
-				CE873AB60E21622F004F63E9 /* MGBalanceSheet.m in Sources */,
 				CE873AB90E21622F004F63E9 /* MGDateFieldEditor.m in Sources */,
 				CE873ABA0E21622F004F63E9 /* MGDocument.m in Sources */,
 				CE873ABC0E21622F004F63E9 /* MGFieldEditor.m in Sources */,
@@ -1274,7 +1273,6 @@
 				CEEED1CF0E3F5FD100BBA154 /* MGReconciliationCell.m in Sources */,
 				CEFCB6EA0E44899B00F5D379 /* MGFilterBar.m in Sources */,
 				0726B2B40E49E1260059E8A7 /* MGReport.m in Sources */,
-				0726B3BD0E4A00A80059E8A7 /* MGIncomeStatement.m in Sources */,
 				CE1453460E4AFE1D009517B6 /* MGImportWindow.m in Sources */,
 				CE1453800E4B40B3009517B6 /* MGEditableTable.m in Sources */,
 				CE2DD6300E4C684000AB107B /* MGImportTable.m in Sources */,
@@ -1348,6 +1346,8 @@
 				CED1FC7C10F7853700634D72 /* MGBudgetTable.m in Sources */,
 				CED1FC8A10F7903800634D72 /* MGNetWorthView.m in Sources */,
 				CED1FC8B10F7903800634D72 /* MGProfitView.m in Sources */,
+				CED1FC9510F7958A00634D72 /* MGBalanceSheet.m in Sources */,
+				CED1FC9810F7959200634D72 /* MGIncomeStatement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
