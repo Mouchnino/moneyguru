@@ -10,25 +10,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "HSTableColumnManager.h"
 #import "MGDocument.h"
 #import "MGReport.h"
-#import "MGPieChart.h"
-#import "MGBalanceGraph.h"
-#import "MGDoubleView.h"
 #import "PyBalanceSheet.h"
 
 @interface MGBalanceSheet : MGReport
 {
-    IBOutlet NSView *mainView;
-    IBOutlet MGDoubleView *pieChartsView;
-    IBOutlet NSView *netWorthGraphPlaceholder;
-    
     HSTableColumnManager *columnsManager;
-    MGPieChart *assetsPieChart;
-    MGPieChart *liabilitiesPieChart;
-    MGBalanceGraph *netWorthGraph;
 }
-- (id)initWithDocument:(MGDocument *)document;
+- (id)initWithDocument:(MGDocument *)document view:(MGOutlineView *)aOutlineView;
 - (PyBalanceSheet *)py;
-
-/* Private */
-- (void)updateVisibility;
 @end

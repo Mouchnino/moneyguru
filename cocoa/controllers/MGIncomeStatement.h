@@ -17,18 +17,8 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGIncomeStatement : MGReport
 {
-    IBOutlet NSView *mainView;
-    IBOutlet MGDoubleView *pieChartsView;
-    IBOutlet NSView *profitGraphPlaceholder;
-    
     HSTableColumnManager *columnsManager;
-    MGPieChart *incomePieChart;
-    MGPieChart *expensesPieChart;
-    MGBarGraph *profitGraph;
 }
-- (id)initWithDocument:(MGDocument *)document;
+- (id)initWithDocument:(MGDocument *)document view:(MGOutlineView *)aOutlineView;
 - (PyIncomeStatement *)py;
-
-/* Private */
-- (void)updateVisibility;
 @end

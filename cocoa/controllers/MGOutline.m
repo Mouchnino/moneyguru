@@ -13,11 +13,14 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGOutline
 
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName
+- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(MGOutlineView *)aOutlineView
 {
     self = [super initWithPyClassName:aClassName pyParent:[aDocument py]];
     document = [aDocument retain];
     itemData = [[NSMutableDictionary dictionary] retain];
+    outlineView = aOutlineView;
+    [outlineView setDataSource:self];
+    [outlineView setDelegate:self];
     autosaveName = nil;
     stateRestored = NO;
     return self;
@@ -42,11 +45,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyOutline *)py
 {
     return (PyOutline *)py;
-}
-
-- (NSView *)view
-{
-    return wholeView;
 }
 
 /* Private */

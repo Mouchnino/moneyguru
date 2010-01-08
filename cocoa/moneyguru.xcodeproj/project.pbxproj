@@ -177,6 +177,8 @@
 		CED1FC7610F7852000634D72 /* MGEntryTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC7310F7852000634D72 /* MGEntryTable.m */; };
 		CED1FC7910F7852B00634D72 /* MGScheduleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC7810F7852B00634D72 /* MGScheduleTable.m */; };
 		CED1FC7C10F7853700634D72 /* MGBudgetTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC7B10F7853700634D72 /* MGBudgetTable.m */; };
+		CED1FC8A10F7903800634D72 /* MGNetWorthView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC8610F7903800634D72 /* MGNetWorthView.m */; };
+		CED1FC8B10F7903800634D72 /* MGProfitView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC8910F7903800634D72 /* MGProfitView.m */; };
 		CEDD55A80F87B9F500474A9C /* MGPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD55A70F87B9F500474A9C /* MGPrintView.m */; };
 		CEDD98D50E25054300747F64 /* MGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD98D40E25054300747F64 /* MGUtils.m */; };
 		CEE223410F893D1C00E7FE12 /* MGTableWithSplitsPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE223400F893D1C00E7FE12 /* MGTableWithSplitsPrint.m */; };
@@ -516,6 +518,10 @@
 		CED1FC7810F7852B00634D72 /* MGScheduleTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScheduleTable.m; sourceTree = "<group>"; };
 		CED1FC7A10F7853700634D72 /* MGBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBudgetTable.h; sourceTree = "<group>"; };
 		CED1FC7B10F7853700634D72 /* MGBudgetTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBudgetTable.m; sourceTree = "<group>"; };
+		CED1FC8510F7903800634D72 /* MGNetWorthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGNetWorthView.h; sourceTree = "<group>"; };
+		CED1FC8610F7903800634D72 /* MGNetWorthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGNetWorthView.m; sourceTree = "<group>"; };
+		CED1FC8810F7903800634D72 /* MGProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGProfitView.h; sourceTree = "<group>"; };
+		CED1FC8910F7903800634D72 /* MGProfitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGProfitView.m; sourceTree = "<group>"; };
 		CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMoneyGuruApp.h; sourceTree = "<group>"; };
 		CED43ECB0D3F679A004B73AA /* MGConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGConst.h; sourceTree = "<group>"; };
 		CEDD55A60F87B9F500474A9C /* MGPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGPrintView.h; path = print/MGPrintView.h; sourceTree = "<group>"; };
@@ -821,6 +827,8 @@
 		CE873A6F0E21622F004F63E9 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CED1FC8410F7903800634D72 /* networth */,
+				CED1FC8710F7903800634D72 /* profit */,
 				CEEDCEE610F75FF9003BC1BA /* transaction */,
 				CE95AFC810F769D2007AC512 /* account */,
 				CEBB300210F76E3600FC4C7A /* schedule */,
@@ -1037,6 +1045,24 @@
 				CEBB300410F76E3600FC4C7A /* MGScheduleView.m */,
 			);
 			path = schedule;
+			sourceTree = "<group>";
+		};
+		CED1FC8410F7903800634D72 /* networth */ = {
+			isa = PBXGroup;
+			children = (
+				CED1FC8510F7903800634D72 /* MGNetWorthView.h */,
+				CED1FC8610F7903800634D72 /* MGNetWorthView.m */,
+			);
+			path = networth;
+			sourceTree = "<group>";
+		};
+		CED1FC8710F7903800634D72 /* profit */ = {
+			isa = PBXGroup;
+			children = (
+				CED1FC8810F7903800634D72 /* MGProfitView.h */,
+				CED1FC8910F7903800634D72 /* MGProfitView.m */,
+			);
+			path = profit;
 			sourceTree = "<group>";
 		};
 		CEEDCEE610F75FF9003BC1BA /* transaction */ = {
@@ -1320,6 +1346,8 @@
 				CED1FC7610F7852000634D72 /* MGEntryTable.m in Sources */,
 				CED1FC7910F7852B00634D72 /* MGScheduleTable.m in Sources */,
 				CED1FC7C10F7853700634D72 /* MGBudgetTable.m in Sources */,
+				CED1FC8A10F7903800634D72 /* MGNetWorthView.m in Sources */,
+				CED1FC8B10F7903800634D72 /* MGProfitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,8 +30,8 @@ http://www.hardcoded.net/licenses/hs_license
     [schedulePanel connect];
     budgetPanel = [[MGBudgetPanel alloc] initWithDocument:document];
     [budgetPanel connect];
-    balanceSheet = [[MGBalanceSheet alloc] initWithDocument:document];
-    incomeStatement = [[MGIncomeStatement alloc] initWithDocument:document];
+    netWorthView = [[MGNetWorthView alloc] initWithDocument:document];
+    profitView = [[MGProfitView alloc] initWithDocument:document];
     transactionView = [[MGTransactionView alloc] initWithDocument:document];
     accountView = [[MGAccountView alloc] initWithDocument:document];
     scheduleView = [[MGScheduleView alloc] initWithDocument:document];
@@ -49,7 +49,7 @@ http://www.hardcoded.net/licenses/hs_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
-    NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [incomeStatement py], 
+    NSArray *children = [NSArray arrayWithObjects:[[netWorthView balanceSheet] py], [[profitView incomeStatement] py], 
         [[transactionView transactionTable] py], [[accountView entryTable] py], [[scheduleView scheduleTable] py], 
         [[budgetView budgetTable] py], [accountProperties py], [transactionPanel py], 
         [massEditionPanel py], [schedulePanel py], [budgetPanel py], nil];
@@ -65,8 +65,8 @@ http://www.hardcoded.net/licenses/hs_license
     [massEditionPanel release];
     [schedulePanel release];
     [accountProperties release];
-    [balanceSheet release];
-    [incomeStatement release];
+    [netWorthView release];
+    [profitView release];
     [accountView release];
     [transactionView release];
     [scheduleView release];
@@ -177,7 +177,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)validateAction:(SEL)action
 {
     if (action == @selector(newGroup:))
-        return (top == balanceSheet) || (top == incomeStatement);
+        return (top == netWorthView) || (top == profitView);
     else if ((action == @selector(moveUp:)) ||
              (action == @selector(moveDown:)) ||
              (action == @selector(duplicateItem:)) ||
@@ -188,12 +188,12 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(showNextView:))
         return (top != budgetView);
     else if (action == @selector(showPreviousView:))
-        return (top != balanceSheet);
+        return (top != netWorthView);
     else if (action == @selector(showEntryTable:))
         return [py canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:))
     {
-        if ((top == balanceSheet) || (top == incomeStatement))
+        if ((top == netWorthView) || (top == profitView))
             return [(id)top canShowSelectedAccount];
         else
             return (top == transactionView) || (top == accountView);
@@ -556,7 +556,7 @@ http://www.hardcoded.net/licenses/hs_license
     if ([aItem tag] == MGNewItemMenuItem)
     {
         NSString *title = @"New Item";
-        if ((top == balanceSheet) || (top == incomeStatement))
+        if ((top == netWorthView) || (top == profitView))
             title = @"New Account";
         else if ((top == transactionView) || (top == accountView))
             title = @"New Transaction";
@@ -610,7 +610,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showBalanceSheet
 {
-    [self setTop:balanceSheet];
+    [self setTop:netWorthView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGBalanceSheetToolbarItemIdentifier];
 }
 
@@ -634,7 +634,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showIncomeStatement
 {
-    [self setTop:incomeStatement];
+    [self setTop:profitView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGIncomeStatementToolbarItemIdentifier];
 }
 

@@ -14,15 +14,13 @@ http://www.hardcoded.net/licenses/hs_license
 #import "NSIndexPathAdditions.h"
 
 @interface MGOutline : MGGUIController {
-    IBOutlet MGOutlineView *outlineView;
-    IBOutlet NSView *wholeView;
-    
+    MGOutlineView *outlineView;
     NSMutableDictionary *itemData;
     MGDocument *document;
     NSString *autosaveName;
     BOOL stateRestored;
 }
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName;
+- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(MGOutlineView *)aOutlineView;
 
 - (MGOutlineView *)outlineView;
 - (PyOutline *)py;

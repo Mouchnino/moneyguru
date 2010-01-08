@@ -13,8 +13,8 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGSchedulePanel.h"
 #import "MGBudgetPanel.h"
 #import "MGAccountView.h"
-#import "MGBalanceSheet.h"
-#import "MGIncomeStatement.h"
+#import "MGNetWorthView.h"
+#import "MGProfitView.h"
 #import "MGTransactionView.h"
 #import "MGScheduleView.h"
 #import "MGBudgetView.h"
@@ -39,8 +39,8 @@ http://www.hardcoded.net/licenses/hs_license
     MGMassEditionPanel *massEditionPanel;
     MGSchedulePanel *schedulePanel;
     MGBudgetPanel *budgetPanel;
-    MGBalanceSheet *balanceSheet;
-    MGIncomeStatement *incomeStatement;
+    MGNetWorthView *netWorthView;
+    MGProfitView *profitView;
     MGTransactionView *transactionView;
     MGAccountView *accountView;
     MGScheduleView *scheduleView;
