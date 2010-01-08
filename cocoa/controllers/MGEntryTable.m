@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 #import "MGTableView.h"
 #import "MGReconciliationCell.h"
+#import "MGTextFieldCell.h"
 #import "MGEntryPrint.h"
 
 @implementation MGEntryTable
@@ -183,7 +184,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Delegate */
 
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)column row:(int)row
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(int)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
     if (row >= [[self py] numberOfRows])
@@ -193,26 +194,36 @@ http://www.hardcoded.net/licenses/hs_license
     if ([[column identifier] isEqualToString:@"balance"])
     {
         NSColor *color = [[self py] isBalanceNegativeAtRow:row] ? [NSColor redColor] : [NSColor blackColor];
-        [cell setTextColor:color];
+        [aCell setTextColor:color];
     }
     else if ([[column identifier] isEqualToString:@"status"])
     {
-        MGReconciliationCell *rcell = cell;
+        MGReconciliationCell *cell = aCell;
         if (row == [tableView editedRow])
         {
-            [rcell setIsInFuture:[[self py] isEditedRowInTheFuture]];
-            [rcell setIsInPast:[[self py] isEditedRowInThePast]];
+            [cell setIsInFuture:[[self py] isEditedRowInTheFuture]];
+            [cell setIsInPast:[[self py] isEditedRowInThePast]];
         }
         else
         {
-            [rcell setIsInFuture:NO];
-            [rcell setIsInPast:NO];
+            [cell setIsInFuture:NO];
+            [cell setIsInPast:NO];
         }
-        [rcell setCanReconcile:[[self py] canReconcileEntryAtRow:row]];
-        [rcell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
-        [rcell setReconciliationPending:n2b([[self py] valueForColumn:@"reconciliation_pending" row:row])];
-        [rcell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
-        [rcell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
+        [cell setCanReconcile:[[self py] canReconcileEntryAtRow:row]];
+        [cell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
+        [cell setReconciliationPending:n2b([[self py] valueForColumn:@"reconciliation_pending" row:row])];
+        [cell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
+        [cell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
+    }
+    else if ([[column identifier] isEqualToString:@"transfer"])
+    {
+        MGTextFieldCell *cell = aCell;
+        BOOL isFocused = aTableView == [[aTableView window] firstResponder] && [[aTableView window] isKeyWindow];
+        BOOL isSelected = row == [aTableView selectedRow];
+        [cell setHasArrow:YES];
+        [cell setArrowTarget:self];
+        [cell setArrowAction:@selector(showTransferAccount:)];
+        [cell setHasDarkBackground:isSelected && isFocused];
     }
 }
 
@@ -244,6 +255,11 @@ http://www.hardcoded.net/licenses/hs_license
         return isDate ? (id)customDateFieldEditor : (id)customFieldEditor;
     }
     return nil;
+}
+
+- (void)showTransferAccount:(id)sender
+{
+    [[self py] showTransferAccount];
 }
 
 - (void)showBalanceGraph

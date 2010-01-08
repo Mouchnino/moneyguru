@@ -41,6 +41,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Public */
 - (PyEntryTable *)py;
 - (id)fieldEditorForObject:(id)asker;
+- (void)showTransferAccount:(id)sender;
 - (void)showBalanceGraph;
 - (void)showBarGraph;
 @end

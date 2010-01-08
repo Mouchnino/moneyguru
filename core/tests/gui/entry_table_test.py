@@ -59,6 +59,10 @@ class OneAccount(TestCase):
         # When an asset account is selected, we show the balance column.
         assert self.etable.should_show_balance_column()
     
+    def test_show_transfer_account(self):
+        # show_transfer_account() when the table is empty doesn't do anything
+        self.etable.show_transfer_account() # no crash
+    
 
 class ThreeAccounts(TestCase):
     def setUp(self):
@@ -129,11 +133,13 @@ class OneEntryInEdition(TestCase):
         self.assertEqual(len(self.etable), 1)
     
 
-class OneEntry(TestCase, CommonSetup):
+class OneEntry(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.setup_one_entry()
+        self.document.select_month_range()
+        self.add_account('first')
+        self.document.show_selected_account()
+        self.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42')
         self.clear_gui_calls()
     
     def test_autofill_only_the_right_side(self):
@@ -186,6 +192,18 @@ class OneEntry(TestCase, CommonSetup):
         self.etable[0].decrease = 'foo' # no exception
         self.assertEqual(self.etable[0].increase, '')
         self.assertEqual(self.etable[0].decrease, '42.00')
+    
+    def test_show_transfer_account(self):
+        # show_transfer_account() changes the shown account to 'second'
+        self.etable.show_transfer_account()
+        eq_(self.document.shown_account.name, 'second')
+    
+    def test_show_transfer_account_twice(self):
+        # calling show_transfer_account() again brings the account view on 'first'
+        self.etable.show_transfer_account()
+        self.clear_gui_calls()
+        self.etable.show_transfer_account()
+        eq_(self.document.shown_account.name, 'first')
     
 
 class EntryWithoutTransfer(TestCase):
@@ -447,6 +465,14 @@ class SplitTransaction(TestCase):
         self.etable.edited.description = 'foobar'
         self.assertEqual(self.etable.edited.transfer, '')
     
+    def test_show_transfer_account(self):
+        # show_transfer_account() cycles through all splits of the entry
+        self.etable.show_transfer_account()
+        eq_(self.document.shown_account.name, 'second')
+        self.etable.show_transfer_account()
+        eq_(self.document.shown_account.name, 'third')
+        self.etable.show_transfer_account()
+        eq_(self.document.shown_account.name, 'first')
 
 class TwoSplitsInTheSameAccount(TestCase):
     def setUp(self):

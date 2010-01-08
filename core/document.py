@@ -314,7 +314,7 @@ class Document(Broadcaster, Listener):
         self.app.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
     
     def _set_visible_entries(self):
-        account = self.selected_account
+        account = self.shown_account
         if account is None:
             self._visible_entries = []
             self._visible_unfiltered_entry_count = 0

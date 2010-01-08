@@ -95,8 +95,5 @@ class BarGraph(Graph):
         return self._currency()
     
     #--- Event Handlers
-    def first_weekday_changed(self):
-        self.compute()
-        self.view.refresh()
-    
-
+    account_must_be_shown = Graph._data_changed
+    first_weekday_changed = Graph._data_changed

@@ -39,12 +39,12 @@ class EntryTable(TransactionTableBase):
         return row
     
     def _do_delete(self):
-        entries = self.selected_entries()
+        entries = self.selected_entries
         if entries:
             self.document.delete_entries(entries)
     
     def _fill(self):
-        account = self.document.selected_account
+        account = self.document.shown_account
         if account is None:
             return
         date_range = self.document.date_range
@@ -87,11 +87,20 @@ class EntryTable(TransactionTableBase):
         else:
             self.selected_index = len(self) - 1
     
-    def selected_entries(self):
-        return [row.entry for row in self.selected_rows if hasattr(row, 'entry')]
-    
     def should_show_balance_column(self):
         return bool(self.document.selected_account) and self.document.selected_account.is_balance_sheet_account()
+    
+    def show_transfer_account(self):
+        if not self.selected_entries:
+            return
+        entry = self.selected_entries[0]
+        splits = entry.transaction.splits
+        index = splits.index(entry.split)
+        if index < len(splits) - 1:
+            account_to_show = splits[index+1].account
+        else:
+            account_to_show = splits[0].account
+        self.document.show_account(account_to_show)
     
     def toggle_reconciled(self):
         """Toggle the reconcile flag of selected entries"""
@@ -100,8 +109,12 @@ class EntryTable(TransactionTableBase):
     
     #--- Properties
     @property
+    def selected_entries(self):
+        return [row.entry for row in self.selected_rows if hasattr(row, 'entry')]
+    
+    @property
     def selected_transactions(self):
-        return [entry.transaction for entry in self.selected_entries()]
+        return [entry.transaction for entry in self.selected_entries]
     
     @property
     def totals(self):
@@ -133,12 +146,12 @@ class EntryTable(TransactionTableBase):
     def reconciliation_changed(self):
         self.refresh()
         self.view.refresh()
+    account_must_be_shown = reconciliation_changed
     
     def transactions_imported(self):
         self.refresh()
         self.document.select_transactions(self.selected_transactions)
         self.view.refresh()
-    
 
 class BaseEntryTableRow(RowWithDebitAndCredit):
     def __init__(self, table):

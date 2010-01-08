@@ -83,3 +83,5 @@ class BalanceGraph(Graph):
         """The X value representing today"""
         return date.today().toordinal() + 1
     
+    #--- Event Handlers
+    account_must_be_shown = Graph._data_changed

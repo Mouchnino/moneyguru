@@ -15,6 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)isBalanceNegativeAtRow:(int)row;
 - (void)moveRows:(NSArray *)rows to:(int)position;
 - (BOOL)shouldShowBalanceColumn;
+- (void)showTransferAccount;
 - (void)toggleReconciled;
 - (void)toggleReconciledAtRow:(int)row;
 - (NSString *)totals;

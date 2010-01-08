@@ -13,7 +13,7 @@
 
 from hsutil.currency import EUR
 
-from ...model.account import INCOME
+from ...model.account import ASSET, LIABILITY, INCOME, EXPENSE
 from ..base import TestCase
 
 class Pristine(TestCase):
@@ -99,4 +99,38 @@ class LoadFileWithBalanceSheetSelected(TestCase):
         # view.refresh() is called on file load
         self.check_gui_calls_partial(self.bsheet_gui, ['refresh'])
         self.check_gui_calls_partial(self.nwgraph_gui, ['refresh'])
+    
+
+class TransactionBetweenIncomeAndExpense(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('income', account_type=INCOME)
+        self.add_account('expense', account_type=EXPENSE)
+        self.add_txn(from_='income', to='expense', amount='42')
+        self.clear_gui_calls()
+    
+    def test_etable_show_transfer_account(self):
+        # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
+        self.show_account('income')
+        self.clear_gui_calls()
+        self.etable.show_transfer_account()
+        self.check_gui_calls(self.etable_gui, ['refresh'])
+        self.check_gui_calls(self.bargraph_gui, ['refresh'])
+    
+
+class TransactionBetweenAssetAndLiability(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('asset', account_type=ASSET)
+        self.add_account('liability', account_type=LIABILITY)
+        self.add_txn(from_='liability', to='asset', amount='42')
+        self.clear_gui_calls()
+    
+    def test_etable_show_transfer_account(self):
+        # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
+        self.show_account('asset')
+        self.clear_gui_calls()
+        self.etable.show_transfer_account()
+        self.check_gui_calls(self.etable_gui, ['refresh'])
+        self.check_gui_calls(self.balgraph_gui, ['refresh'])
     
