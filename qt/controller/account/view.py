@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from core.gui.account_view import AccountView as AccountViewModel
+
 from ..base_view import BaseView
 from .filter_bar import EntryFilterBar
 from .table import EntryTable
@@ -21,12 +23,12 @@ class EntryView(BaseView, Ui_EntryView):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
-        self.etable = EntryTable(doc=doc, view=self.tableView, totalsLabel=self.totalsLabel)
+        self.etable = EntryTable(doc=doc, view=self.tableView)
         self.efbar = EntryFilterBar(doc=doc, view=self.filterBar)
         self.bgraph = AccountBarGraph(doc=doc, view=self.barGraphView)
         self.lgraph = AccountLineGraph(doc=doc, view=self.lineGraphView)
-        # We don't add the graphs to self.children because connection/disconnection occur separately for them
-        self.children = [self.etable, self.efbar]
+        children = [self.etable.model, self.lgraph.model, self.bgraph.model, self.efbar.model]
+        self.model = AccountViewModel(view=self, document=doc.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -47,6 +49,13 @@ class EntryView(BaseView, Ui_EntryView):
         order = [h.logicalIndex(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnOrder = order
     
+    # Temporary
+    def connect(self):
+        self.model.connect()
+    
+    def disconnect(self):
+        self.model.disconnect()
+    
     #--- QWidget override
     def setFocus(self):
         self.etable.view.setFocus()
@@ -56,18 +65,18 @@ class EntryView(BaseView, Ui_EntryView):
         viewPrinter.fitTable(self.etable)
         viewPrinter.fit(self.graphView.currentWidget(), 300, 150, expandH=True, expandV=True)
     
-    def showBarGraph(self):
-        self.lgraph.model.disconnect()
-        self.bgraph.model.connect()
-        self.graphView.setCurrentIndex(1)
-    
-    def showLineGraph(self):
-        self.bgraph.model.disconnect()
-        self.lgraph.model.connect()
-        self.graphView.setCurrentIndex(0)
-    
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
         self.etable.setHiddenColumns(prefs.entryHiddenColumns)
         self.graphView.setHidden(not prefs.entryGraphVisible)
+    
+    #--- model --> view
+    def refresh_totals(self):
+        self.totalsLabel.setText(self.model.totals)
+    
+    def show_bar_graph(self):
+        self.graphView.setCurrentIndex(1)
+    
+    def show_line_graph(self):
+        self.graphView.setCurrentIndex(0)
     

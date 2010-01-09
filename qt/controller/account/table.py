@@ -16,10 +16,6 @@ from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_ED
 from ..table import TableDelegate
 from ..table_with_transactions import TableWithTransactions
 
-# XXX The totals label is tied to the table, even in the model. This is a design flaw. The totals
-# label should be an independent gui element (or be a part of an eventual new transaction_view gui
-# element).
-
 class EntryTableDelegate(TableDelegate):
     def __init__(self, model, columns):
         TableDelegate.__init__(self, model, columns)
@@ -50,12 +46,11 @@ class EntryTable(TableWithTransactions):
         Column('balance', 'Balance', 110, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, doc, view, totalsLabel):
+    def __init__(self, doc, view):
         model = EntryTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
         self.tableDelegate = EntryTableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
-        self.totalsLabel = totalsLabel
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.clicked.connect(self.cellClicked)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
@@ -109,7 +104,6 @@ class EntryTable(TableWithTransactions):
     #--- model --> view
     def refresh(self):
         TableWithTransactions.refresh(self)
-        self.totalsLabel.setText(self.model.totals)
         balanceColumn = self.ATTR2COLUMN['balance']
         shouldShow = self.model.should_show_balance_column()
         self._headerView.setSectionHidden(balanceColumn.index, not shouldShow)

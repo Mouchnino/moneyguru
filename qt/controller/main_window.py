@@ -59,8 +59,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._setupUi()
         if self.app.prefs.mainWindowRect is not None:
             self.setGeometry(self.app.prefs.mainWindowRect)
-        children = [self.tview.model, self.nwview.nwsheet.model, self.pview.psheet.model,
-            self.eview.etable.model, self.scview.sctable.model, self.bview.btable.model,
+        children = [self.tview.model, self.eview.model, self.nwview.nwsheet.model,
+            self.pview.psheet.model, self.scview.sctable.model, self.bview.btable.model,
             self.apanel.model, self.tpanel.model, self.mepanel.model, self.scpanel.model,
             self.bpanel.model]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
@@ -199,8 +199,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def _setMainWidgetIndex(self, index):
         self.mainView.currentWidget().disconnect()
+        self.mainView.widget(index).connect()
         self.mainView.setCurrentIndex(index)
-        self.mainView.currentWidget().connect()
         self._updateActionsState()
         self.mainView.currentWidget().setFocus()
     
@@ -407,9 +407,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_balance_sheet(self):
         self._setMainWidgetIndex(NETWORTH_INDEX)
     
-    def show_bar_graph(self):
-        self.eview.showBarGraph()
-    
     def show_budget_table(self):
         self._setMainWidgetIndex(BUDGET_INDEX)
     
@@ -418,9 +415,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def show_entry_table(self):
         self._setMainWidgetIndex(ACCOUNT_INDEX)
-    
-    def show_line_graph(self):
-        self.eview.showLineGraph()
     
     def show_income_statement(self):
         self._setMainWidgetIndex(PROFIT_INDEX)

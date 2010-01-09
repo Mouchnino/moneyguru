@@ -116,15 +116,6 @@ class EntryTable(TransactionTableBase):
     def selected_transactions(self):
         return [entry.transaction for entry in self.selected_entries]
     
-    @property
-    def totals(self):
-        shown = len(self.document.visible_entries)
-        total = self.document.visible_unfiltered_entry_count
-        increase = self.app.format_amount(self._total_increase)
-        decrease = self.app.format_amount(self._total_decrease)
-        msg = u"Showing {shown} out of {total}. Total increase: {increase} Total decrease: {decrease}"
-        return msg.format(shown=shown, total=total, increase=increase, decrease=decrease)
-    
     #--- Event Handlers
     def date_range_changed(self):
         date_range = self.document.date_range
@@ -146,7 +137,6 @@ class EntryTable(TransactionTableBase):
     def reconciliation_changed(self):
         self.refresh()
         self.view.refresh()
-    account_must_be_shown = reconciliation_changed
     
     def transactions_imported(self):
         self.refresh()

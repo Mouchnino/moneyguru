@@ -10,12 +10,10 @@ from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from .base import DocumentGUIObject
 
-LINE_GRAPH, BAR_GRAPH = range(2)
-
 class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
-        (self.tview, self.bsheet, self.istatement, self.etable, self.sctable, self.btable,
+        (self.tview, self.aview, self.bsheet, self.istatement, self.sctable, self.btable,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel) = children
         self.top = None
         self.bottom = None
@@ -31,30 +29,20 @@ class MainWindow(DocumentGUIObject):
             self.view.show_balance_sheet()
             self.top = self.bsheet
     
-    def show_bar_graph(self):
-        if self.bottom != BAR_GRAPH:
-            self.view.show_bar_graph()
-            self.bottom = BAR_GRAPH
-    
     def show_budget_table(self):
         if self.top is not self.btable:
             self.view.show_budget_table()
             self.top = self.btable
     
     def show_entry_table(self):
-        if self.top is not self.etable:
+        if self.top is not self.aview:
             self.view.show_entry_table()
-            self.top = self.etable
+            self.top = self.aview
     
     def show_income_statement(self):
         if self.top is not self.istatement:
             self.view.show_income_statement()
             self.top = self.istatement
-    
-    def show_line_graph(self):
-        if self.bottom != LINE_GRAPH:
-            self.view.show_line_graph()
-            self.bottom = LINE_GRAPH
     
     def show_schedule_table(self):
         if self.top is not self.sctable:
@@ -71,7 +59,7 @@ class MainWindow(DocumentGUIObject):
         try:
             if self.top in (self.bsheet, self.istatement):
                 self.apanel.load()
-            elif self.top in (self.etable, self.tview):
+            elif self.top in (self.aview, self.tview):
                 editable_txns = [txn for txn in self.document.selected_transactions if not isinstance(txn, BudgetSpawn)]
                 if len(editable_txns) > 1:
                     self.mepanel.load()
@@ -85,32 +73,30 @@ class MainWindow(DocumentGUIObject):
             pass
     
     def delete_item(self):
-        if self.top in (self.bsheet, self.istatement, self.etable, self.sctable, self.btable):
+        if self.top in (self.bsheet, self.istatement, self.sctable, self.btable):
             self.top.delete()
-        elif self.top is self.tview:
+        elif self.top in (self.tview, self.aview):
             self.top.delete_item()
     
     def duplicate_item(self):
-        if self.top is self.etable:
-            self.top.duplicate_selected()
-        elif self.top is self.tview:
+        if self.top in (self.tview, self.aview):
             self.top.duplicate_item()
     
     def make_schedule_from_selected(self):
-        if self.top in (self.tview, self.etable):
+        if self.top in (self.tview, self.aview):
             self.document.make_schedule_from_selected()
     
     def move_down(self):
-        if self.top in (self.tview, self.etable):
+        if self.top in (self.tview, self.aview):
             self.top.move_down()
     
     def move_up(self):
-        if self.top in (self.tview, self.etable):
+        if self.top in (self.tview, self.aview):
             self.top.move_up()
     
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
-        assert self.top is self.etable # not supposed to be called outside the entry_table context
+        assert self.top is self.aview # not supposed to be called outside the entry_table context
         if self.document.shown_account.is_balance_sheet_account():
             self.select_balance_sheet()
         else:
@@ -120,9 +106,7 @@ class MainWindow(DocumentGUIObject):
         try:
             if self.top in (self.bsheet, self.istatement):
                 self.top.add_account()
-            elif self.top is self.etable:
-                self.top.add()
-            elif self.top is self.tview:
+            elif self.top in (self.tview, self.aview):
                 self.top.new_item()
             elif self.top is self.sctable:
                 self.scpanel.new()
@@ -154,10 +138,6 @@ class MainWindow(DocumentGUIObject):
         self.document.select_account(self.document.shown_account)
         self.document.filter_string = ''
         self.show_entry_table()
-        if self.document.shown_account.is_balance_sheet_account():
-            self.show_line_graph()
-        else:
-            self.show_bar_graph()
     
     def select_schedule_table(self):
         self.document.filter_string = ''
@@ -177,7 +157,7 @@ class MainWindow(DocumentGUIObject):
                 self.select_entry_table()
             else:
                 self.select_schedule_table()
-        elif self.top is self.etable:
+        elif self.top is self.aview:
             self.select_schedule_table()
         elif self.top is self.sctable:
             self.select_budget_table()
@@ -187,7 +167,7 @@ class MainWindow(DocumentGUIObject):
             self.select_balance_sheet()
         elif self.top is self.tview:
             self.select_income_statement()
-        elif self.top is self.etable:
+        elif self.top is self.aview:
             self.select_transaction_table()
         elif self.top is self.sctable:
             if self.document.shown_account is not None:
@@ -206,10 +186,8 @@ class MainWindow(DocumentGUIObject):
         """
         if self.top in (self.bsheet, self.istatement):
             self.top.show_selected_account()
-        elif self.top is self.tview:
+        elif self.top in (self.tview, self.aview):
             self.top.show_account()
-        elif self.top is self.etable:
-            self.top.show_transfer_account()
     
     #--- Event callbacks
     def _undo_stack_changed(self):
@@ -245,11 +223,11 @@ class MainWindow(DocumentGUIObject):
                 self.view.animate_date_range_backward()
     
     def filter_applied(self):
-        if self.document.filter_string and self.top not in (self.tview, self.etable):
+        if self.document.filter_string and self.top not in (self.tview, self.aview):
             self.show_transaction_table()
     
     def performed_undo_or_redo(self):
-        if self.document.selected_account is None and self.top is self.etable:
+        if self.document.selected_account is None and self.top is self.aview:
             self.select_balance_sheet()
         self._undo_stack_changed()
     document_changed = performed_undo_or_redo

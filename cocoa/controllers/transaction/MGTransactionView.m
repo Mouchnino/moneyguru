@@ -37,11 +37,6 @@ http://www.hardcoded.net/licenses/hs_license
     [super release];
 }
 
-- (PyTransactionView *)py
-{
-    return (PyTransactionView *)py;
-}
-
 - (NSView *)view
 {
     return wholeView;
@@ -55,15 +50,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)connect
 {
     [py connect];
-    [transactionTable connect];
-    [filterBar connect];
 }
 
 - (void)disconnect
 {
     [py disconnect];
-    [transactionTable disconnect];
-    [filterBar disconnect];
 }
 
 - (MGTransactionTable *)transactionTable
@@ -74,6 +65,6 @@ http://www.hardcoded.net/licenses/hs_license
 // Python --> Cocoa
 -(void)refreshTotals
 {
-    [totalsLabel setStringValue:[[self py] totals]];
+    [totalsLabel setStringValue:[py totals]];
 }
 @end

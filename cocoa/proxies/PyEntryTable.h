@@ -18,5 +18,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)showTransferAccount;
 - (void)toggleReconciled;
 - (void)toggleReconciledAtRow:(int)row;
-- (NSString *)totals;
 @end

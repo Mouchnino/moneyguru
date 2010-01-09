@@ -15,10 +15,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGEntryTable
 
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView totalsLabel:aTotalsLabel
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyEntryTable" pyParent:[aDocument py] view:aTableView];
-    totalsLabel = aTotalsLabel;
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
@@ -187,7 +186,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [columnsManager setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
     [super refresh];
-    [totalsLabel setStringValue:[[self py] totals]];
 }
 
 @end

@@ -298,24 +298,6 @@ class TwoEntries(TestCase):
         self.assertEqual(self.etable.selected_indexes, [0])
         self.check_gui_calls(self.etable_gui, ['refresh', 'show_selected_row'])
     
-    def test_totals(self):
-        # the totals line shows the total amount of increases and decreases
-        expected = "Showing 2 out of 2. Total increase: 42.00 Total decrease: 12.00"
-        self.assertEqual(self.etable.totals, expected)
-    
-    def test_totals_with_filter(self):
-        # when a filter is applied, the number of transaction shown is smaller than the total amount
-        self.efbar.filter_type = FilterType.Reconciled
-        expected = "Showing 0 out of 2. Total increase: 0.00 Total decrease: 0.00"
-        eq_(self.etable.totals, expected)
-    
-    def test_totals_with_unicode_amount_format(self):
-        # it seems that some people have some weird separator in their settings, and there was a
-        # UnicodeEncodeError in the totals formatting.
-        self.app._decimal_sep = u'\xa0'
-        expected = u"Showing 2 out of 2. Total increase: 42\xa000 Total decrease: 12\xa000"
-        self.assertEqual(self.etable.totals, expected)
-    
 
 class TwoEntriesOneOutOfRange(TestCase, CommonSetup):
     def setUp(self):
@@ -493,17 +475,6 @@ class TwoSplitsInTheSameAccount(TestCase):
         self.etable.select([0, 1])
         self.etable.delete() # no crash
         eq_(len(self.etable), 0)
-    
-
-class WithPreviousEntry(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_one_entry_in_previous_range()
-    
-    def test_totals(self):
-        # the totals line ignores the previous entry line
-        expected = "Showing 0 out of 0. Total increase: 0.00 Total decrease: 0.00"
-        self.assertEqual(self.etable.totals, expected)
     
 
 class WithBudget(TestCase, CommonSetup):

@@ -96,6 +96,31 @@ class Pristine(TestCase):
         self.check_gui_calls(self.ttable_gui, expected, verify_order=True)
     
 
+class OneAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account()
+        self.clear_gui_calls()
+        self.mainwindow.show_account()
+        self.check_gui_calls_partial(self.aview_gui, ['refresh_totals'])
+        self.clear_gui_calls()
+    
+    def test_add_entry(self):
+        self.add_entry()
+        self.check_gui_calls_partial(self.aview_gui, ['refresh_totals'])
+    
+    def test_change_aview_filter(self):
+        # Changing aview's filter type updates the totals
+        self.efbar.filter_type = FilterType.Reconciled
+        self.check_gui_calls(self.aview_gui, ['refresh_totals'])
+    
+    def test_delete_entry(self):
+        self.add_entry()
+        self.clear_gui_calls()
+        self.mainwindow.delete_item()
+        self.check_gui_calls_partial(self.aview_gui, ['refresh_totals'])
+    
+
 class OneTransaction(TestCase):
     def setUp(self):
         self.create_instances()
@@ -139,7 +164,7 @@ class TransactionBetweenIncomeAndExpense(TestCase):
         self.show_account('income')
         self.clear_gui_calls()
         self.etable.show_transfer_account()
-        self.check_gui_calls(self.etable_gui, ['refresh'])
+        self.check_gui_calls(self.etable_gui, ['show_selected_row', 'refresh'])
         self.check_gui_calls(self.bargraph_gui, ['refresh'])
     
 
@@ -156,6 +181,6 @@ class TransactionBetweenAssetAndLiability(TestCase):
         self.show_account('asset')
         self.clear_gui_calls()
         self.etable.show_transfer_account()
-        self.check_gui_calls(self.etable_gui, ['refresh'])
+        self.check_gui_calls(self.etable_gui, ['show_selected_row', 'refresh'])
         self.check_gui_calls(self.balgraph_gui, ['refresh'])
     

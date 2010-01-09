@@ -23,7 +23,6 @@ http://www.hardcoded.net/licenses/hs_license
 /* Python callbacks */
 - (void)refresh
 {
-    
     [view setData:[[self py] data]];
     [view setTitle:[[self py] title]];
     [view setCurrency:[[self py] currency]];

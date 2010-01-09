@@ -23,6 +23,7 @@ from ..exception import FileFormatError
 from ..gui.account_panel import AccountPanel
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from ..gui.account_reassign_panel import AccountReassignPanel
+from ..gui.account_view import AccountView
 from ..gui.balance_graph import BalanceGraph
 from ..gui.balance_sheet import BalanceSheet
 from ..gui.bar_graph import BarGraph
@@ -104,22 +105,18 @@ class DocumentGUI(CallLogger):
 
 class MainWindowGUI(CallLogger):
     """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, tview, etable, sctable, btable, bsheet, istatement, balgraph,
-            bargraph, nwgraph, pgraph, efbar, apie, lpie, ipie, epie, cdrpanel, arpanel):
+    def __init__(self, tview, aview, sctable, btable, bsheet, istatement, nwgraph, pgraph, apie,
+            lpie, ipie, epie, cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.messages = []
         self.tview = tview
-        self.etable = etable
+        self.aview = aview
         self.sctable = sctable
         self.btable = btable
         self.bsheet = bsheet
         self.istatement = istatement
-        self.balgraph = balgraph
-        self.bargraph = bargraph
-        self._last_shown = balgraph # we need to remember it, the GUI side remembers
         # In the real GUI, it is not MainWindow's responsibility to connect/disconnect those, but
         # for the sake of the test suite simplicity, we do it here.
-        self.efbar = efbar
         self.apie = apie
         self.lpie = lpie
         self.ipie = ipie
@@ -128,8 +125,8 @@ class MainWindowGUI(CallLogger):
         self.pgraph = pgraph
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [tview, etable, sctable, btable, bsheet, istatement, efbar, apie,
-            lpie, ipie, epie, nwgraph, pgraph, balgraph, bargraph]
+        self.views = [tview, aview, sctable, btable, bsheet, istatement, apie, lpie, ipie, epie,
+            nwgraph, pgraph]
     
     def connect_views(self, views):
         for candidate in self.views:
@@ -147,28 +144,16 @@ class MainWindowGUI(CallLogger):
         self.connect_views([self.bsheet, self.apie, self.lpie, self.nwgraph])
     
     @log
-    def show_bar_graph(self):
-        self.balgraph.disconnect()
-        self.bargraph.connect()
-        self._last_shown = self.bargraph
-    
-    @log
     def show_custom_date_range_panel(self):
         self.cdrpanel.load()
     
     @log
     def show_entry_table(self):
-        self.connect_views([self.etable, self.efbar, self._last_shown])
+        self.connect_views([self.aview])
     
     @log
     def show_income_statement(self):
         self.connect_views([self.istatement, self.ipie, self.epie, self.pgraph])
-    
-    @log
-    def show_line_graph(self):
-        self.bargraph.disconnect()
-        self.balgraph.connect()
-        self._last_shown = self.balgraph
     
     @log
     def show_message(self, message):
@@ -334,11 +319,13 @@ class TestCase(TestCaseBase):
         self.tview_gui = CallLogger()
         children = [self.ttable, self.tfbar]
         self.tview = TransactionView(self.tview_gui, self.document, children)
-        self.mainwindow_gui = MainWindowGUI(self.tview, self.etable, self.sctable,
-            self.btable, self.bsheet, self.istatement, self.balgraph, self.bargraph, self.nwgraph,
-            self.pgraph, self.efbar, self.apie, self.lpie, self.ipie, self.epie,
-            self.cdrpanel, self.arpanel)
-        children = [self.tview, self.bsheet, self.istatement, self.etable, self.sctable,
+        self.aview_gui = CallLogger()
+        children = [self.etable, self.balgraph, self.bargraph, self.efbar]
+        self.aview = AccountView(self.aview_gui, self.document, children)
+        self.mainwindow_gui = MainWindowGUI(self.tview, self.aview, self.sctable, self.btable,
+            self.bsheet, self.istatement, self.nwgraph, self.pgraph, self.apie, self.lpie,
+            self.ipie, self.epie, self.cdrpanel, self.arpanel)
+        children = [self.tview, self.aview, self.bsheet, self.istatement, self.sctable,
             self.btable, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()

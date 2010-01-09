@@ -614,11 +614,6 @@ http://www.hardcoded.net/licenses/hs_license
     [[[self window] toolbar] setSelectedItemIdentifier:MGBalanceSheetToolbarItemIdentifier];
 }
 
-- (void)showBarGraph
-{
-    [accountView showBarGraph];
-}
-
 - (void)showCustomDateRangePanel
 {
     [customDateRangePanel load];
@@ -636,11 +631,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [self setTop:profitView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGIncomeStatementToolbarItemIdentifier];
-}
-
-- (void)showLineGraph
-{
-    [accountView showBalanceGraph];
 }
 
 - (void)showMessage:(NSString *)aMessage

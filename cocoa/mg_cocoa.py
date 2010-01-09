@@ -20,6 +20,7 @@ from core.exception import FileFormatError
 from core.gui.account_panel import AccountPanel
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from core.gui.account_reassign_panel import AccountReassignPanel
+from core.gui.account_view import AccountView
 from core.gui.bar_graph import BarGraph
 from core.gui.balance_graph import BalanceGraph
 from core.gui.balance_sheet import BalanceSheet
@@ -575,6 +576,23 @@ class PyTransactionView(PyGUIContainer):
         self.cocoa.refreshTotals()
     
 
+class PyAccountView(PyGUIContainer):
+    py_class = AccountView
+    
+    def totals(self):
+        return self.py.totals
+    
+    #Python --> Cocoa
+    def refresh_totals(self):
+        self.cocoa.refreshTotals()
+    
+    def show_bar_graph(self):
+        self.cocoa.showBarGraph()
+    
+    def show_line_graph(self):
+        self.cocoa.showLineGraph()
+    
+
 #--- GUI layer classes
 
 class PyBalanceSheet(PyReport):
@@ -615,9 +633,6 @@ class PyEntryTable(PyTableWithDate):
     @objc.signature('v@:i')
     def toggleReconciledAtRow_(self, row_index):
         self.py[row_index].toggle_reconciled()
-    
-    def totals(self):
-        return self.py.totals
     
 
 class PyTransactionTable(PyTableWithDate):
@@ -1205,9 +1220,6 @@ class PyMainWindow(PyGUIContainer):
     def show_balance_sheet(self):
         self.cocoa.showBalanceSheet()
 
-    def show_bar_graph(self):
-        self.cocoa.showBarGraph()
-    
     def show_budget_table(self):
         self.cocoa.showBudgetTable()
     
@@ -1217,9 +1229,6 @@ class PyMainWindow(PyGUIContainer):
     def show_entry_table(self):
         self.cocoa.showEntryTable()
 
-    def show_line_graph(self):
-        self.cocoa.showLineGraph()
-    
     def show_income_statement(self):
         self.cocoa.showIncomeStatement()
     

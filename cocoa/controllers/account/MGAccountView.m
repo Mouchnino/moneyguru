@@ -9,13 +9,14 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGAccountView.h"
 #import "MGConst.h"
 #import "MGEntryPrint.h"
+#import "MGUtils.h"
 
 @implementation MGAccountView
 - (id)initWithDocument:(MGDocument *)aDocument
 {
     self = [super init];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    entryTable = [[MGEntryTable alloc] initWithDocument:aDocument view:tableView totalsLabel:totalsLabel];
+    entryTable = [[MGEntryTable alloc] initWithDocument:aDocument view:tableView];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithDocument:aDocument pyClassName:@"PyBalanceGraph"];
     barGraph = [[MGBarGraph alloc] initWithDocument:aDocument pyClassName:@"PyBarGraph"];
@@ -24,7 +25,12 @@ http://www.hardcoded.net/licenses/hs_license
     [graphView setFrame:[graphPlaceholder frame]];
     [graphView setAutoresizingMask:[graphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:graphPlaceholder with:graphView];
-    currentGraph = balanceGraph;
+    currentGraphView = [balanceGraph view];
+    
+    NSArray *children = [NSArray arrayWithObjects:[entryTable py], [balanceGraph py], [barGraph py],
+        [filterBar py], nil];
+    Class pyClass = [MGUtils classNamed:@"PyAccountView"];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
     
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -40,7 +46,15 @@ http://www.hardcoded.net/licenses/hs_license
     [barGraph release];
     [balanceGraph release];
     [filterBar release];
+    [py release];
     [super dealloc];
+}
+
+- (oneway void)release
+{
+    if ([self retainCount] == 2)
+        [py free];
+    [super release];
 }
 
 - (NSView *)view
@@ -51,23 +65,17 @@ http://www.hardcoded.net/licenses/hs_license
 - (MGPrintView *)viewToPrint
 {
     return [[[MGEntryPrint alloc] initWithPyParent:[entryTable py] tableView:tableView
-        graphView:[currentGraph view]] autorelease];
+        graphView:currentGraphView] autorelease];
 }
 
 - (void)connect
 {
-    [entryTable connect];
-    [filterBar connect];
-    if (currentGraph != nil)
-        [currentGraph connect];
+    [py connect];
 }
 
 - (void)disconnect
 {
-    [entryTable disconnect];
-    [filterBar disconnect];
-    if (currentGraph != nil)
-        [currentGraph disconnect];
+    [py disconnect];
 }
 
 - (MGEntryTable *)entryTable
@@ -100,18 +108,27 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)showGraph:(MGGUIController *)graph
 {
-    NSView *oldView = [currentGraph view];
-    [currentGraph disconnect];
+    NSView *oldView = currentGraphView;
     NSView *graphView = [graph view];
     [graphView setFrame:[oldView frame]];
     [graphView setAutoresizingMask:[oldView autoresizingMask]];
     [wholeView replaceSubview:oldView with:graphView];
-    [graph connect];
-    currentGraph = graph;
+    currentGraphView = [graph view];
 }
 
-/* Public */
-- (void)showBalanceGraph
+/* Delegate */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [self updateVisibility];
+}
+
+/* Core --> Cocoa */
+-(void)refreshTotals
+{
+    [totalsLabel setStringValue:[py totals]];
+}
+
+- (void)showLineGraph
 {
     [self showGraph:balanceGraph];
 }
@@ -119,11 +136,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)showBarGraph
 {
     [self showGraph:barGraph];
-}
-
-/* Delegate */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    [self updateVisibility];
 }
 @end

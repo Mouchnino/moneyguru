@@ -13,10 +13,10 @@ from hsutil.currency import CAD
 from ..base import TestCase, CommonSetup
 from ...model.account import AccountType
 
-class Pristine(TestCase, CommonSetup):
+class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
     
     def test_cook_bar_overflow(self):
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
