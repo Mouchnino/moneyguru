@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGProfitView.h"
 #import "MGProfitPrint.h"
 #import "MGConst.h"
+#import "MGUtils.h"
 
 @implementation MGProfitView
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -26,6 +27,11 @@ http://www.hardcoded.net/licenses/hs_license
     [graphView setAutoresizingMask:[profitGraphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:profitGraphPlaceholder with:graphView];
     
+    NSArray *children = [NSArray arrayWithObjects:[incomeStatement py], [profitGraph py],
+        [incomePieChart py], [expensesPieChart py], nil];
+    Class pyClass = [MGUtils classNamed:@"PyProfitView"];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud addObserver:self forKeyPath:ProfitGraphVisible options:NSKeyValueObservingOptionNew context:NULL];
@@ -42,7 +48,20 @@ http://www.hardcoded.net/licenses/hs_license
     [profitGraph release];
     [incomePieChart release];
     [expensesPieChart release];
+    [py release];
     [super dealloc];
+}
+
+- (oneway void)release
+{
+    if ([self retainCount] == 2)
+        [py free];
+    [super release];
+}
+
+- (PyProfitView *)py
+{
+    return (PyProfitView *)py;
 }
 
 - (NSView *)view
@@ -59,18 +78,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)connect
 {
-    [incomeStatement connect];
-    [incomePieChart connect];
-    [expensesPieChart connect];
-    [profitGraph connect];
+    [py connect];
 }
 
 - (void)disconnect
 {
-    [incomeStatement disconnect];
-    [incomePieChart disconnect];
-    [expensesPieChart disconnect];
-    [profitGraph disconnect];
+    [py disconnect];
 }
 
 - (MGIncomeStatement *)incomeStatement

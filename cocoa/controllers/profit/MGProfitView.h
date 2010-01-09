@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyProfitView.h"
 #import "MGGUIControllerBase.h"
 #import "MGDocument.h"
 #import "MGOutlineView.h"
@@ -23,12 +24,14 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGDoubleView *pieChartsView;
     IBOutlet NSView *profitGraphPlaceholder;
     
+    PyProfitView *py;
     MGIncomeStatement *incomeStatement;
     MGPieChart *incomePieChart;
     MGPieChart *expensesPieChart;
     MGBarGraph *profitGraph;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
+- (PyProfitView *)py;
 
 /* Private */
 - (void)updateVisibility;

@@ -13,7 +13,7 @@ from .base import DocumentGUIObject
 class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
-        (self.nwview, self.tview, self.aview, self.scview, self.bview, self.istatement,
+        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel) = children
         self.top = None
         self.bottom = None
@@ -40,9 +40,9 @@ class MainWindow(DocumentGUIObject):
             self.top = self.aview
     
     def show_income_statement(self):
-        if self.top is not self.istatement:
+        if self.top is not self.pview:
             self.view.show_income_statement()
-            self.top = self.istatement
+            self.top = self.pview
     
     def show_schedule_table(self):
         if self.top is not self.scview:
@@ -57,7 +57,7 @@ class MainWindow(DocumentGUIObject):
     #--- Public
     def edit_item(self):
         try:
-            if self.top in (self.nwview, self.istatement):
+            if self.top in (self.nwview, self.pview):
                 self.apanel.load()
             elif self.top in (self.aview, self.tview):
                 editable_txns = [txn for txn in self.document.selected_transactions if not isinstance(txn, BudgetSpawn)]
@@ -73,9 +73,7 @@ class MainWindow(DocumentGUIObject):
             pass
     
     def delete_item(self):
-        if self.top is self.istatement:
-            self.top.delete()
-        elif self.top in (self.nwview, self.tview, self.aview, self.scview, self.bview):
+        if self.top in (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview):
             self.top.delete_item()
     
     def duplicate_item(self):
@@ -104,9 +102,7 @@ class MainWindow(DocumentGUIObject):
     
     def new_item(self):
         try:
-            if self.top is self.istatement:
-                self.top.add_account()
-            elif self.top in (self.nwview, self.tview, self.aview):
+            if self.top in (self.nwview, self.pview, self.tview, self.aview):
                 self.top.new_item()
             elif self.top is self.scview:
                 self.scpanel.new()
@@ -117,9 +113,7 @@ class MainWindow(DocumentGUIObject):
                 self.view.show_message(e.message)
     
     def new_group(self):
-        if self.top is self.istatement:
-            self.top.add_account_group()
-        elif self.top is self.nwview:
+        if self.top in (self.nwview, self.pview):
             self.top.new_group()
     
     def select_balance_sheet(self):
@@ -152,7 +146,7 @@ class MainWindow(DocumentGUIObject):
     def select_next_view(self):
         if self.top is self.nwview:
             self.select_income_statement()
-        elif self.top is self.istatement:
+        elif self.top is self.pview:
             self.select_transaction_table()
         elif self.top is self.tview:
             if self.document.shown_account is not None:
@@ -165,7 +159,7 @@ class MainWindow(DocumentGUIObject):
             self.select_budget_table()
     
     def select_previous_view(self):
-        if self.top is self.istatement:
+        if self.top is self.pview:
             self.select_balance_sheet()
         elif self.top is self.tview:
             self.select_income_statement()
@@ -186,9 +180,7 @@ class MainWindow(DocumentGUIObject):
         If the Transaction or Account view is selected, the related account (From, To, Transfer)
         of the selected transaction will be shown.
         """
-        if self.top is self.istatement:
-            self.top.show_selected_account()
-        elif self.top in (self.nwview, self.tview, self.aview):
+        if self.top in (self.nwview, self.pview, self.tview, self.aview):
             self.top.show_account()
     
     #--- Event callbacks

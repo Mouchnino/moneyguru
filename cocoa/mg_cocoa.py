@@ -42,6 +42,7 @@ from core.gui.net_worth_graph import NetWorthGraph
 from core.gui.networth_view import NetWorthView
 from core.gui.print_view import PrintView
 from core.gui.profit_graph import ProfitGraph
+from core.gui.profit_view import ProfitView
 from core.gui.schedule_panel import SchedulePanel
 from core.gui.schedule_table import ScheduleTable
 from core.gui.schedule_view import ScheduleView
@@ -570,6 +571,9 @@ class PyPanel(PyCompletion):
 #--- Views
 class PyNetWorthView(PyGUIContainer):
     py_class = NetWorthView
+
+class PyProfitView(PyGUIContainer):
+    py_class = ProfitView
 
 class PyTransactionView(PyGUIContainer):
     py_class = TransactionView

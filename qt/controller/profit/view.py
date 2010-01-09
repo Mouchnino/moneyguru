@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from core.gui.profit_view import ProfitView as ProfitViewModel
+
 from ..base_view import BaseView
 from .sheet import ProfitSheet
 from .graph import ProfitGraph
@@ -25,7 +27,8 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.pgraph = ProfitGraph(doc=doc, view=self.graphView)
         self.ipiechart = IncomePieChart(doc=doc, view=self.incomePieChart)
         self.epiechart = ExpensePieChart(doc=doc, view=self.expensePieChart)
-        self.children = [self.psheet, self.pgraph, self.ipiechart, self.epiechart]
+        children = [self.psheet.model, self.pgraph.model, self.ipiechart.model, self.epiechart.model]
+        self.model = ProfitViewModel(view=self, document=doc.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -43,6 +46,13 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.doc.app.prefs.profitColumnWidths = widths
         order = [h.logicalIndex(index) for index in xrange(len(self.psheet.COLUMNS))]
         self.doc.app.prefs.profitColumnOrder = order
+    
+    # Temporary
+    def connect(self):
+        self.model.connect()
+    
+    def disconnect(self):
+        self.model.disconnect()
     
     #--- QWidget override
     def setFocus(self):

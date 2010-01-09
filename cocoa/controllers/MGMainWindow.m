@@ -49,8 +49,8 @@ http://www.hardcoded.net/licenses/hs_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
-    NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [transactionView py],
-        [accountView py], [scheduleView py], [budgetView py], [[profitView incomeStatement] py],
+    NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
+        [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
         [budgetPanel py], nil];
     Class PyMainWindow = [MGUtils classNamed:@"PyMainWindow"];
