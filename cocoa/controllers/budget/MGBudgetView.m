@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGBudgetView.h"
+#import "MGUtils.h"
 
 @implementation MGBudgetView
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -14,13 +15,24 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super init];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
     budgetTable = [[MGBudgetTable alloc] initWithDocument:aDocument view:tableView];
+    NSArray *children = [NSArray arrayWithObjects:[budgetTable py], nil];
+    Class pyClass = [MGUtils classNamed:@"PyBudgetView"];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
     return self;
 }
         
 - (void)dealloc
 {
+    [py release];
     [budgetTable release];
     [super dealloc];
+}
+
+- (oneway void)release
+{
+    if ([self retainCount] == 2)
+        [py free];
+    [super release];
 }
 
 - (NSView *)view
@@ -35,12 +47,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)connect
 {
-    [budgetTable connect];
+    [py connect];
 }
 
 - (void)disconnect
 {
-    [budgetTable disconnect];
+    [py disconnect];
 }
 
 - (MGBudgetTable *)budgetTable

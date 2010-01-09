@@ -29,6 +29,7 @@ from ..gui.balance_sheet import BalanceSheet
 from ..gui.bar_graph import BarGraph
 from ..gui.budget_panel import BudgetPanel
 from ..gui.budget_table import BudgetTable
+from ..gui.budget_view import BudgetView
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.entry_table import EntryTable
@@ -105,14 +106,14 @@ class DocumentGUI(CallLogger):
 
 class MainWindowGUI(CallLogger):
     """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, tview, aview, sctable, btable, bsheet, istatement, nwgraph, pgraph, apie,
+    def __init__(self, tview, aview, bview, sctable, bsheet, istatement, nwgraph, pgraph, apie,
             lpie, ipie, epie, cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.messages = []
         self.tview = tview
         self.aview = aview
+        self.bview = bview
         self.sctable = sctable
-        self.btable = btable
         self.bsheet = bsheet
         self.istatement = istatement
         # In the real GUI, it is not MainWindow's responsibility to connect/disconnect those, but
@@ -125,7 +126,7 @@ class MainWindowGUI(CallLogger):
         self.pgraph = pgraph
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [tview, aview, sctable, btable, bsheet, istatement, apie, lpie, ipie, epie,
+        self.views = [tview, aview, bview, sctable, bsheet, istatement, apie, lpie, ipie, epie,
             nwgraph, pgraph]
     
     def connect_views(self, views):
@@ -165,7 +166,7 @@ class MainWindowGUI(CallLogger):
     
     @log
     def show_budget_table(self):
-        self.connect_views([self.btable])
+        self.connect_views([self.bview])
     
     @log
     def show_transaction_table(self):
@@ -322,11 +323,14 @@ class TestCase(TestCaseBase):
         self.aview_gui = CallLogger()
         children = [self.etable, self.balgraph, self.bargraph, self.efbar]
         self.aview = AccountView(self.aview_gui, self.document, children)
-        self.mainwindow_gui = MainWindowGUI(self.tview, self.aview, self.sctable, self.btable,
+        self.bview_gui = CallLogger()
+        children = [self.btable]
+        self.bview = BudgetView(self.bview_gui, self.document, children)
+        self.mainwindow_gui = MainWindowGUI(self.tview, self.aview, self.bview, self.sctable,
             self.bsheet, self.istatement, self.nwgraph, self.pgraph, self.apie, self.lpie,
             self.ipie, self.epie, self.cdrpanel, self.arpanel)
-        children = [self.tview, self.aview, self.bsheet, self.istatement, self.sctable,
-            self.btable, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
+        children = [self.tview, self.aview, self.bview, self.bsheet, self.istatement, self.sctable,
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()
         self.mainwindow.connect()

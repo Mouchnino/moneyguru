@@ -9,23 +9,16 @@
 
 from __future__ import unicode_literals
 
-from .base import DocumentGUIObject
+from .base import BaseView
 
-class TransactionView(DocumentGUIObject):
+class TransactionView(BaseView):
     def __init__(self, view, document, children):
-        DocumentGUIObject.__init__(self, view, document)
+        BaseView.__init__(self, view, document, children)
         self.ttable, self.tfbar = children
     
     def connect(self):
-        DocumentGUIObject.connect(self)
-        self.ttable.connect()
-        self.tfbar.connect()
+        BaseView.connect(self)
         self.view.refresh_totals()
-    
-    def disconnect(self):
-        DocumentGUIObject.disconnect(self)
-        self.ttable.disconnect()
-        self.tfbar.disconnect()
     
     #--- Public
     def delete_item(self):

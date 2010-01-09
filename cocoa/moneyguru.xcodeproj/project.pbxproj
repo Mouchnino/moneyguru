@@ -495,6 +495,7 @@
 		CEBB300310F76E3600FC4C7A /* MGScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScheduleView.h; sourceTree = "<group>"; };
 		CEBB300410F76E3600FC4C7A /* MGScheduleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScheduleView.m; sourceTree = "<group>"; };
 		CEBD4E2C10F8CD6600B00BBF /* PyAccountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountView.h; sourceTree = "<group>"; };
+		CEBD4E2D10F8DE2300B00BBF /* PyBudgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetView.h; sourceTree = "<group>"; };
 		CEC1C8D00F88AB5600953BDB /* PyPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPrintView.h; sourceTree = "<group>"; };
 		CEC5CE4E0F45D8060042E33F /* MGPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPieChart.h; sourceTree = "<group>"; };
 		CEC5CE4F0F45D8060042E33F /* MGPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPieChart.m; sourceTree = "<group>"; };
@@ -907,6 +908,7 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CEBD4E2D10F8DE2300B00BBF /* PyBudgetView.h */,
 				CEBD4E2C10F8CD6600B00BBF /* PyAccountView.h */,
 				CE1E88D910F8A295003BB329 /* PyGUIContainer.h */,
 				CE1E88D810F89FB1003BB329 /* PyTransactionView.h */,

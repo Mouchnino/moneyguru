@@ -26,6 +26,7 @@ from core.gui.balance_graph import BalanceGraph
 from core.gui.balance_sheet import BalanceSheet
 from core.gui.budget_table import BudgetTable
 from core.gui.budget_panel import BudgetPanel
+from core.gui.budget_view import BudgetView
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
 from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_widget import DateWidget
@@ -592,6 +593,9 @@ class PyAccountView(PyGUIContainer):
     def show_line_graph(self):
         self.cocoa.showLineGraph()
     
+
+class PyBudgetView(PyGUIContainer):
+    py_class = BudgetView
 
 #--- GUI layer classes
 

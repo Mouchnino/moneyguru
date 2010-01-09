@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from core.gui.budget_view import BudgetView as BudgetViewModel
+
 from ..base_view import BaseView
 from .table import BudgetTable
 from ui.budget_view_ui import Ui_BudgetView
@@ -19,7 +21,8 @@ class BudgetView(BaseView, Ui_BudgetView):
         self.doc = doc
         self._setupUi()
         self.btable = BudgetTable(doc=doc, view=self.tableView)
-        self.children = [self.btable]
+        children = [self.btable.model]
+        self.model = BudgetViewModel(view=self, document=doc.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -39,6 +42,13 @@ class BudgetView(BaseView, Ui_BudgetView):
         self.doc.app.prefs.budgetColumnWidths = widths
         order = [h.logicalIndex(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnOrder = order
+    
+    # Temporary
+    def connect(self):
+        self.model.connect()
+    
+    def disconnect(self):
+        self.model.disconnect()
     
     #--- QWidget override
     def setFocus(self):

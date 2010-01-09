@@ -9,18 +9,17 @@
 
 from __future__ import unicode_literals
 
-from .base import DocumentGUIObject
+from .base import BaseView
 
-class AccountView(DocumentGUIObject):
+class AccountView(BaseView):
     def __init__(self, view, document, children):
-        DocumentGUIObject.__init__(self, view, document)
         self.etable, self.balgraph, self.bargraph, self.efbar = children
+        # we count the graphs separately because the connect/disconnect rules for them are special
+        BaseView.__init__(self, view, document, [self.etable, self.efbar])
         self._shown_graph = self.balgraph
     
     def connect(self):
-        DocumentGUIObject.connect(self)
-        self.etable.connect()
-        self.efbar.connect()
+        BaseView.connect(self)
         if self.document.shown_account.is_balance_sheet_account():
             self._shown_graph = self.balgraph
             self.view.show_line_graph()
@@ -31,10 +30,8 @@ class AccountView(DocumentGUIObject):
         self.view.refresh_totals()
     
     def disconnect(self):
-        DocumentGUIObject.disconnect(self)
-        self.etable.disconnect()
+        BaseView.disconnect(self)
         self._shown_graph.disconnect()
-        self.efbar.disconnect()
     
     #--- Public
     def delete_item(self):

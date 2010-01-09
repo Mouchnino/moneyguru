@@ -161,3 +161,19 @@ class GUIPanel(DocumentGUIObject):
         self.view.pre_save()
         self._save()
     
+
+class BaseView(DocumentGUIObject):
+    def __init__(self, view, document, children):
+        DocumentGUIObject.__init__(self, view, document)
+        self._children = children
+    
+    def connect(self):
+        DocumentGUIObject.connect(self)
+        for child in self._children:
+            child.connect()
+    
+    def disconnect(self):
+        DocumentGUIObject.disconnect(self)
+        for child in self._children:
+            child.disconnect()
+    
