@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from core.gui.networth_view import NetWorthView as NetWorthViewModel
+
 from ..base_view import BaseView
 from .sheet import NetWorthSheet
 from .graph import NetWorthGraph
@@ -26,6 +28,8 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.apiechart = AssetPieChart(doc=doc, view=self.assetPieChart)
         self.lpiechart = LiabilityPieChart(doc=doc, view=self.liabilityPieChart)
         self.children = [self.nwsheet, self.nwgraph, self.apiechart, self.lpiechart]
+        children = [self.nwsheet.model, self.nwgraph.model, self.apiechart.model, self.lpiechart.model]
+        self.model = NetWorthViewModel(view=self, document=doc.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -43,6 +47,13 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.doc.app.prefs.networthColumnWidths = widths
         order = [h.logicalIndex(index) for index in xrange(len(self.nwsheet.COLUMNS))]
         self.doc.app.prefs.networthColumnOrder = order
+    
+    # Temporary
+    def connect(self):
+        self.model.connect()
+    
+    def disconnect(self):
+        self.model.disconnect()
     
     #--- QWidget override
     def setFocus(self):

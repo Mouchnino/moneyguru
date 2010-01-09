@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGNetWorthView.h"
 #import "MGBalancePrint.h"
 #import "MGConst.h"
+#import "MGUtils.h"
 
 @implementation MGNetWorthView
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -26,6 +27,11 @@ http://www.hardcoded.net/licenses/hs_license
     [graphView setAutoresizingMask:[netWorthGraphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:netWorthGraphPlaceholder with:graphView];
     
+    NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [netWorthGraph py],
+        [assetsPieChart py], [liabilitiesPieChart py], nil];
+    Class pyClass = [MGUtils classNamed:@"PyNetWorthView"];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud addObserver:self forKeyPath:AssetLiabilityPieChartVisible options:NSKeyValueObservingOptionNew context:NULL];
@@ -42,7 +48,20 @@ http://www.hardcoded.net/licenses/hs_license
     [netWorthGraph release];
     [assetsPieChart release];
     [liabilitiesPieChart release];
+    [py release];
     [super dealloc];
+}
+
+- (oneway void)release
+{
+    if ([self retainCount] == 2)
+        [py free];
+    [super release];
+}
+
+- (PyNetWorthView *)py
+{
+    return (PyNetWorthView *)py;
 }
 
 - (NSView *)view
@@ -59,18 +78,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)connect
 {
-    [balanceSheet connect];
-    [assetsPieChart connect];
-    [liabilitiesPieChart connect];
-    [netWorthGraph connect];
+    [py connect];
 }
 
 - (void)disconnect
 {
-    [balanceSheet disconnect];
-    [assetsPieChart disconnect];
-    [liabilitiesPieChart disconnect];
-    [netWorthGraph disconnect];
+    [py disconnect];
 }
 
 - (MGBalanceSheet *)balanceSheet

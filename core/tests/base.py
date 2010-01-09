@@ -40,6 +40,7 @@ from ..gui.import_window import ImportWindow
 from ..gui.main_window import MainWindow
 from ..gui.mass_edition_panel import MassEditionPanel
 from ..gui.net_worth_graph import NetWorthGraph
+from ..gui.networth_view import NetWorthView
 from ..gui.profit_graph import ProfitGraph
 from ..gui.schedule_panel import SchedulePanel
 from ..gui.schedule_table import ScheduleTable
@@ -107,28 +108,24 @@ class DocumentGUI(CallLogger):
 
 class MainWindowGUI(CallLogger):
     """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, tview, aview, scview, bview, bsheet, istatement, nwgraph, pgraph, apie,
-            lpie, ipie, epie, cdrpanel, arpanel):
+    def __init__(self, nwview, tview, aview, scview, bview, istatement, pgraph, ipie, epie,
+            cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.messages = []
+        self.nwview = nwview
         self.tview = tview
         self.aview = aview
         self.scview = scview
         self.bview = bview
-        self.bsheet = bsheet
         self.istatement = istatement
         # In the real GUI, it is not MainWindow's responsibility to connect/disconnect those, but
         # for the sake of the test suite simplicity, we do it here.
-        self.apie = apie
-        self.lpie = lpie
         self.ipie = ipie
         self.epie = epie
-        self.nwgraph = nwgraph
         self.pgraph = pgraph
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [tview, aview, scview, bview, bsheet, istatement, apie, lpie, ipie, epie,
-            nwgraph, pgraph]
+        self.views = [nwview, tview, aview, scview, bview, istatement, ipie, epie, pgraph]
     
     def connect_views(self, views):
         for candidate in self.views:
@@ -143,7 +140,7 @@ class MainWindowGUI(CallLogger):
     
     @log
     def show_balance_sheet(self):
-        self.connect_views([self.bsheet, self.apie, self.lpie, self.nwgraph])
+        self.connect_views([self.nwview])
     
     @log
     def show_custom_date_range_panel(self):
@@ -318,6 +315,9 @@ class TestCase(TestCaseBase):
         self.itable = ImportTable(self.itable_gui, self.iwin)
         self.cdrpanel_gui = CallLogger()
         self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.document)
+        self.nwview_gui = CallLogger()
+        children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
+        self.nwview = NetWorthView(self.nwview_gui, self.document, children)
         self.tview_gui = CallLogger()
         children = [self.ttable, self.tfbar]
         self.tview = TransactionView(self.tview_gui, self.document, children)
@@ -330,10 +330,9 @@ class TestCase(TestCaseBase):
         self.bview_gui = CallLogger()
         children = [self.btable]
         self.bview = BudgetView(self.bview_gui, self.document, children)
-        self.mainwindow_gui = MainWindowGUI(self.tview, self.aview, self.scview, self.bview,
-            self.bsheet, self.istatement, self.nwgraph, self.pgraph, self.apie, self.lpie,
-            self.ipie, self.epie, self.cdrpanel, self.arpanel)
-        children = [self.tview, self.aview, self.scview, self.bview, self.bsheet, self.istatement,
+        self.mainwindow_gui = MainWindowGUI(self.nwview, self.tview, self.aview, self.scview,
+            self.bview, self.istatement, self.pgraph, self.ipie, self.epie, self.cdrpanel, self.arpanel)
+        children = [self.nwview, self.tview, self.aview, self.scview, self.bview, self.istatement,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()
