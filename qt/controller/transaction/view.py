@@ -49,11 +49,9 @@ class TransactionView(BaseView, Ui_TransactionView):
     # Temporary
     def connect(self):
         self.model.connect()
-        BaseView.connect(self)
     
     def disconnect(self):
         self.model.disconnect()
-        BaseView.disconnect(self)
     
     #--- QWidget override
     def setFocus(self):
