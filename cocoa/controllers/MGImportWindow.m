@@ -65,18 +65,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Actions */
-/* About NSTableView and NSActionCell
-
-From what I can understand, actions from an action cell is a tableview happen *after* the selectedRow
-has changed, but *before* tableViewSelectionDidChange. At first, I had a unbindSelectedRow, but it
-didn't work. We have to use [tableView selectedRow] to know which row to unbind.
-*/
-- (IBAction)bindLockClick:(id)sender
-{
-    NSLog(@"foo");
-    [[importTable py] unbindRow:[[importTable tableView] selectedRow]];
-}
-
 - (IBAction)changeTargetAccount:(id)sender
 {
     [[self py] setSelectedTargetAccountIndex:[targetAccountsPopup indexOfSelectedItem]];

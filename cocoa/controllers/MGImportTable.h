@@ -15,4 +15,5 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGImportTable : MGEditableTable {}
 - (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView;
 - (PyImportTable *)py;
+- (void)bindLockClick:(id)sender;
 @end

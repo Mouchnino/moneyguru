@@ -11,11 +11,14 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 
 @implementation MGImportTable
-
 - (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow view:aTableView];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGImportEntryPasteboardType]];
+    NSTableColumn *boundColumn = [[aTableView tableColumns] objectAtIndex:4];
+    NSActionCell *cell = [boundColumn dataCell];
+    [cell setTarget:self];
+    [cell setAction:@selector(bindLockClick:)];
     return self;
 }
 
@@ -24,16 +27,32 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyImportTable *)py;
 }
 
-- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(int)row
+/* About NSTableView and NSActionCell
+
+From what I can understand, actions from an action cell is a tableview happen *after* the selectedRow
+has changed, but *before* tableViewSelectionDidChange. At first, I had a unbindSelectedRow, but it
+didn't work. We have to use [tableView selectedRow] to know which row to unbind.
+*/
+- (void)bindLockClick:(id)sender
+{
+    [[self py] unbindRow:[[self tableView] selectedRow]];
+}
+
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+    NSString *colname = [column identifier];
+    if ([colname isEqualToString:@"bound"])
+        return; // Don't send any value down to the model.
+    [super tableView:aTableView setObjectValue:value forTableColumn:column row:row];
+}
+
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
     if (row >= [[self py] numberOfRows])
-    {
         return;
-    }
     NSString *colname = [column identifier];
-    if ([colname isEqualToString:@"will_import"])
-    {
+    if ([colname isEqualToString:@"will_import"]) {
         BOOL canEdit = [[self py] canEditColumn:@"will_import" atRow:row];
         [aCell setEnabled:canEdit];
         return;
@@ -48,7 +67,7 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row 
+- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row 
        proposedDropOperation:(NSTableViewDropOperation)op
 {
     if (op == NSTableViewDropOn)
@@ -66,7 +85,7 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info
-              row:(int)row dropOperation:(NSTableViewDropOperation)operation
+              row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
     NSPasteboard* pboard = [info draggingPasteboard];
     NSData* rowData = [pboard dataForType:MGImportEntryPasteboardType];
@@ -81,5 +100,4 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] toggleImportStatus];
     return YES;
 }
-
 @end

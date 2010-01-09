@@ -44,7 +44,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyImportWindow *)py;
 - (void)updateVisibleTable;
 /* Actions */
-- (IBAction)bindLockClick:(id)sender;
 - (IBAction)changeTargetAccount:(id)sender;
 - (IBAction)importSelectedPane:(id)sender;
 - (IBAction)switchDateFields:(id)sender;
