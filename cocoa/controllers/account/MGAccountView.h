@@ -38,6 +38,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Private */
 - (void)updateVisibility;
 
+- (PyAccountView *)py;
 // Temporary
 - (MGEntryTable *)entryTable;
 @end

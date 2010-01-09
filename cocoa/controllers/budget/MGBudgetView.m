@@ -35,6 +35,11 @@ http://www.hardcoded.net/licenses/hs_license
     [super release];
 }
 
+- (PyBudgetView *)py
+{
+    return (PyBudgetView *)py;
+}
+
 - (NSView *)view
 {
     return wholeView;

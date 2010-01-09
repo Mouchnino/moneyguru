@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
+- (PyBudgetView *)py;
 // Temporary
 - (MGBudgetTable *)budgetTable;
 @end

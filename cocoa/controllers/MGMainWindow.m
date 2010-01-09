@@ -49,9 +49,9 @@ http://www.hardcoded.net/licenses/hs_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
-    NSArray *children = [NSArray arrayWithObjects:[[netWorthView balanceSheet] py], [[profitView incomeStatement] py], 
-        [[transactionView transactionTable] py], [[accountView entryTable] py], [[scheduleView scheduleTable] py], 
-        [[budgetView budgetTable] py], [accountProperties py], [transactionPanel py], 
+    NSArray *children = [NSArray arrayWithObjects:[transactionView py], [accountView py],
+        [scheduleView py], [budgetView py], [[netWorthView balanceSheet] py],
+        [[profitView incomeStatement] py], [accountProperties py], [transactionPanel py], 
         [massEditionPanel py], [schedulePanel py], [budgetPanel py], nil];
     Class PyMainWindow = [MGUtils classNamed:@"PyMainWindow"];
     py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];

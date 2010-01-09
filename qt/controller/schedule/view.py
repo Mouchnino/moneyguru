@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from core.gui.schedule_view import ScheduleView as ScheduleViewModel
+
 from ..base_view import BaseView
 from .table import ScheduleTable
 from ui.schedule_view_ui import Ui_ScheduleView
@@ -19,7 +21,8 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         self.doc = doc
         self._setupUi()
         self.sctable = ScheduleTable(doc=doc, view=self.tableView)
-        self.children = [self.sctable]
+        children = [self.sctable.model]
+        self.model = ScheduleViewModel(view=self, document=doc.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -39,6 +42,13 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         self.doc.app.prefs.scheduleColumnWidths = widths
         order = [h.logicalIndex(index) for index in xrange(len(self.sctable.COLUMNS))]
         self.doc.app.prefs.scheduleColumnOrder = order
+    
+    # Temporary
+    def connect(self):
+        self.model.connect()
+    
+    def disconnect(self):
+        self.model.disconnect()
     
     #--- QWidget override
     def setFocus(self):

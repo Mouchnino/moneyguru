@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyScheduleView.h"
 #import "MGGUIControllerBase.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
@@ -17,10 +18,12 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGTableView *tableView;
     IBOutlet NSView *wholeView;
     
+    PyScheduleView *py;
     MGScheduleTable *scheduleTable;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
+- (PyScheduleView *)py;
 // Temporary
 - (MGScheduleTable *)scheduleTable;
 @end

@@ -37,6 +37,11 @@ http://www.hardcoded.net/licenses/hs_license
     [super release];
 }
 
+- (PyTransactionView *)py
+{
+    return (PyTransactionView *)py;
+}
+
 - (NSView *)view
 {
     return wholeView;

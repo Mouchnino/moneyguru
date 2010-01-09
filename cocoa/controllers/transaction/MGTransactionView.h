@@ -28,6 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
+- (PyTransactionView *)py;
 // Temporary
 - (MGTransactionTable *)transactionTable;
 @end

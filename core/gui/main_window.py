@@ -13,7 +13,7 @@ from .base import DocumentGUIObject
 class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
-        (self.tview, self.aview, self.bview, self.bsheet, self.istatement, self.sctable,
+        (self.tview, self.aview, self.scview, self.bview, self.bsheet, self.istatement,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel) = children
         self.top = None
         self.bottom = None
@@ -45,9 +45,9 @@ class MainWindow(DocumentGUIObject):
             self.top = self.istatement
     
     def show_schedule_table(self):
-        if self.top is not self.sctable:
+        if self.top is not self.scview:
             self.view.show_schedule_table()
-            self.top = self.sctable
+            self.top = self.scview
     
     def show_transaction_table(self):
         if self.top is not self.tview:
@@ -65,7 +65,7 @@ class MainWindow(DocumentGUIObject):
                     self.mepanel.load()
                 elif len(editable_txns) == 1:
                     self.tpanel.load()
-            elif self.top is self.sctable:
+            elif self.top is self.scview:
                 self.scpanel.load()
             elif self.top is self.bview:
                 self.bpanel.load()
@@ -73,9 +73,9 @@ class MainWindow(DocumentGUIObject):
             pass
     
     def delete_item(self):
-        if self.top in (self.bsheet, self.istatement, self.sctable):
+        if self.top in (self.bsheet, self.istatement):
             self.top.delete()
-        elif self.top in (self.tview, self.aview, self.bview):
+        elif self.top in (self.tview, self.aview, self.scview, self.bview):
             self.top.delete_item()
     
     def duplicate_item(self):
@@ -108,7 +108,7 @@ class MainWindow(DocumentGUIObject):
                 self.top.add_account()
             elif self.top in (self.tview, self.aview):
                 self.top.new_item()
-            elif self.top is self.sctable:
+            elif self.top is self.scview:
                 self.scpanel.new()
             elif self.top is self.bview:
                 self.bpanel.new()
@@ -159,7 +159,7 @@ class MainWindow(DocumentGUIObject):
                 self.select_schedule_table()
         elif self.top is self.aview:
             self.select_schedule_table()
-        elif self.top is self.sctable:
+        elif self.top is self.scview:
             self.select_budget_table()
     
     def select_previous_view(self):
@@ -169,7 +169,7 @@ class MainWindow(DocumentGUIObject):
             self.select_income_statement()
         elif self.top is self.aview:
             self.select_transaction_table()
-        elif self.top is self.sctable:
+        elif self.top is self.scview:
             if self.document.shown_account is not None:
                 self.select_entry_table()
             else:

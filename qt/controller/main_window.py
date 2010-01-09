@@ -59,8 +59,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._setupUi()
         if self.app.prefs.mainWindowRect is not None:
             self.setGeometry(self.app.prefs.mainWindowRect)
-        children = [self.tview.model, self.eview.model, self.bview.model, self.nwview.nwsheet.model,
-            self.pview.psheet.model, self.scview.sctable.model, self.apanel.model,
+        children = [self.tview.model, self.eview.model, self.scview.model, self.bview.model,
+            self.nwview.nwsheet.model, self.pview.psheet.model, self.apanel.model,
             self.tpanel.model, self.mepanel.model, self.scpanel.model, self.bpanel.model]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()

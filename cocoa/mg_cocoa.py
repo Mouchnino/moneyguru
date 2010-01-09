@@ -43,6 +43,7 @@ from core.gui.print_view import PrintView
 from core.gui.profit_graph import ProfitGraph
 from core.gui.schedule_panel import SchedulePanel
 from core.gui.schedule_table import ScheduleTable
+from core.gui.schedule_view import ScheduleView
 from core.gui.search_field import SearchField
 from core.gui.split_table import SplitTable
 from core.gui.transaction_panel import TransactionPanel
@@ -596,6 +597,9 @@ class PyAccountView(PyGUIContainer):
 
 class PyBudgetView(PyGUIContainer):
     py_class = BudgetView
+
+class PyScheduleView(PyGUIContainer):
+    py_class = ScheduleView
 
 #--- GUI layer classes
 
