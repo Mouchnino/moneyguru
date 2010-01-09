@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyTransactionView.h"
 #import "MGGUIControllerBase.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
@@ -21,6 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet AMButtonBar *filterBarView;
     IBOutlet NSTextField *totalsLabel;
     
+    PyTransactionView *py;
     MGTransactionTable *transactionTable;
     MGFilterBar *filterBar;
 }

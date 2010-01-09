@@ -7,13 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
+#import "PyGUIContainer.h"
 
-@interface PyMainWindow : PyGUI {}
-// Rather than having a 3km long method name (this is objc, remember), we're passing a list of
-// instances here. However, they *have* to be in the right order. See gui.mainwindow.
-- (id)initWithCocoa:(id)cocoa pyParent:(id)pyParent children:(NSArray *)children;
-
+@interface PyMainWindow : PyGUIContainer {}
 // Navigation
 - (void)selectBalanceSheet;
 - (void)selectIncomeStatement;

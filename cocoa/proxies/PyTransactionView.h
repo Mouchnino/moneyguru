@@ -7,12 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTableWithDate.h"
+#import "PyGUIContainer.h"
 
-@interface PyTransactionTable : PyTableWithDate {}
-
-- (BOOL)canMoveRows:(NSArray *)rows to:(int)position;
-- (void)moveRows:(NSArray *)rows to:(int)position;
-- (void)showFromAccount;
-- (void)showToAccount;
+@interface PyTransactionView : PyGUIContainer {}
+- (NSString *)totals;
 @end

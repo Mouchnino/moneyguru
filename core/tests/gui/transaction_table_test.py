@@ -357,11 +357,6 @@ class OneTransaction(TestCase):
         self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
         eq_(self.document.shown_account.name, 'second')
     
-    def test_totals(self):
-        # The totals line is correctly pluralized
-        expected = "Showing 1 out of 1." # no "s"
-        eq_(self.ttable.totals, expected)
-    
     def test_undo_redo_while_filtered(self):
         # undo/redo while a filter is applied correctly refreshes the ttable
         self.sfield.query = 'description'
@@ -596,11 +591,6 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
         self.tpanel.load()
         self.assertEqual(self.tpanel.description, 'first')
     
-    def test_totals(self):
-        # The total number of txns don't include out of range transactions
-        expected = "Showing 1 out of 1."
-        self.assertEqual(self.ttable.totals, expected)
-    
 
 class ThreeTransactionsInRange(TestCase):
     def setUp(self):
@@ -690,16 +680,6 @@ class ThreeTransactionsInRange(TestCase):
         self.mainwindow.edit_item()
         eq_(self.tpanel.description, 'second')
     
-    def test_totals(self):
-        # the totals line shows the number of shown transactions
-        expected = "Showing 3 out of 3."
-        self.assertEqual(self.ttable.totals, expected)
-    
-    def test_totals_with_filter(self):
-        # when a filter is applied, the number of transaction shown is smaller than the total amount
-        self.tfbar.filter_type = FilterType.Reconciled
-        expected = "Showing 0 out of 3."
-        eq_(self.ttable.totals, expected)
 
 class ThreeTransactionsEverythingReconciled(TestCase):
     def setUp(self):

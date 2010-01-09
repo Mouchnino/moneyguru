@@ -59,7 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._setupUi()
         if self.app.prefs.mainWindowRect is not None:
             self.setGeometry(self.app.prefs.mainWindowRect)
-        children = [self.nwview.nwsheet.model, self.pview.psheet.model, self.tview.ttable.model,
+        children = [self.tview.model, self.nwview.nwsheet.model, self.pview.psheet.model,
             self.eview.etable.model, self.scview.sctable.model, self.bview.btable.model,
             self.apanel.model, self.tpanel.model, self.mepanel.model, self.scpanel.model,
             self.bpanel.model]

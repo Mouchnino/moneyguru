@@ -46,6 +46,7 @@ from core.gui.split_table import SplitTable
 from core.gui.transaction_panel import TransactionPanel
 from core.gui.transaction_print import TransactionPrint
 from core.gui.transaction_table import TransactionTable
+from core.gui.transaction_view import TransactionView
 from core.model.date import clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
@@ -320,6 +321,15 @@ class PyListener(GUIProxy):
         GUIProxy.free(self)
     
 
+class PyGUIContainer(PyListener):
+    def initWithCocoa_pyParent_children_(self, cocoa, pyparent, children):
+        self = NSObject.init(self)
+        self.cocoa = cocoa
+        pychildren = [child.py for child in children]
+        self.py = self.py_class(self, pyparent.py, pychildren)
+        return self
+    
+
 class PyWindowController(PyListener):
     pass
 
@@ -553,6 +563,18 @@ class PyPanel(PyCompletion):
         self.cocoa.preSave()
     
 
+#--- Views
+class PyTransactionView(PyGUIContainer):
+    py_class = TransactionView
+    
+    def totals(self):
+        return self.py.totals
+    
+    #Python --> Cocoa
+    def refresh_totals(self):
+        self.cocoa.refreshTotals()
+    
+
 #--- GUI layer classes
 
 class PyBalanceSheet(PyReport):
@@ -614,9 +636,6 @@ class PyTransactionTable(PyTableWithDate):
     
     def showToAccount(self):
         self.py.show_to_account()
-    
-    def totals(self):
-        return self.py.totals
     
 
 class PyScheduleTable(PyTable):
@@ -1098,13 +1117,8 @@ class PyIncomePieChart(PyChart):
 class PyExpensesPieChart(PyChart):
     py_class = ExpensesPieChart
 
-class PyMainWindow(PyListener):
-    def initWithCocoa_pyParent_children_(self, cocoa, pyparent, children):
-        self = NSObject.init(self)
-        self.cocoa = cocoa
-        pychildren = [child.py for child in children]
-        self.py = MainWindow(self, pyparent.py, pychildren)
-        return self
+class PyMainWindow(PyGUIContainer):
+    py_class = MainWindow
     
     def selectBalanceSheet(self):
         self.py.select_balance_sheet()

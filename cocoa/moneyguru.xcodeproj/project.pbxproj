@@ -282,6 +282,8 @@
 		CE170E370E2202C50017C389 /* PyTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTable.h; sourceTree = "<group>"; };
 		CE1BD3DE0FDE4DE1005FB7B9 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
 		CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
+		CE1E88D810F89FB1003BB329 /* PyTransactionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionView.h; sourceTree = "<group>"; };
+		CE1E88D910F8A295003BB329 /* PyGUIContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGUIContainer.h; sourceTree = "<group>"; };
 		CE2848E20E84FB7200FF7EA2 /* RecurrenceScopeDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecurrenceScopeDialog.xib; sourceTree = "<group>"; };
 		CE2B00630E5462E7000F0C9B /* MGWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGWindowController.h; sourceTree = "<group>"; };
 		CE2B00640E5462E7000F0C9B /* MGWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGWindowController.m; sourceTree = "<group>"; };
@@ -904,6 +906,8 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CE1E88D910F8A295003BB329 /* PyGUIContainer.h */,
+				CE1E88D810F89FB1003BB329 /* PyTransactionView.h */,
 				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
 				CE83CE1E0E220EA70095BA6A /* PyDocument.h */,
 				CE5CBBEC10383F51008AC465 /* PyPanel.h */,

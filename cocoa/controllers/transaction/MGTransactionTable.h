@@ -20,11 +20,8 @@ http://www.hardcoded.net/licenses/hs_license
     HSTableColumnManager *columnsManager;
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
-    // The presence of totalsLabel here is a temporary hack around the design flaw on the core side
-    // It will be removed when proper View classes will have been added there.
-    NSTextField *totalsLabel;
 }
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView totalsLabel:aTotalsLabel;
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
 
 /* Public */
 - (PyTransactionTable *)py;

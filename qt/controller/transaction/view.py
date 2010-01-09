@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from core.gui.transaction_view import TransactionView as TransactionViewModel
+
 from ..base_view import BaseView
 from .filter_bar import TransactionFilterBar
 from .table import TransactionTable
@@ -19,9 +21,11 @@ class TransactionView(BaseView, Ui_TransactionView):
         BaseView.__init__(self)
         self.doc = doc
         self._setupUi()
-        self.ttable = TransactionTable(doc=doc, view=self.tableView, totalsLabel=self.totalsLabel)
+        self.ttable = TransactionTable(doc=doc, view=self.tableView)
         self.tfbar = TransactionFilterBar(doc=doc, view=self.filterBar)
         self.children = [self.ttable, self.tfbar]
+        core_children = [self.ttable.model, self.tfbar.model]
+        self.model = TransactionViewModel(view=self, document=doc.model, children=core_children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -42,6 +46,15 @@ class TransactionView(BaseView, Ui_TransactionView):
         order = [h.logicalIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnOrder = order
     
+    # Temporary
+    def connect(self):
+        self.model.connect()
+        BaseView.connect(self)
+    
+    def disconnect(self):
+        self.model.disconnect()
+        BaseView.disconnect(self)
+    
     #--- QWidget override
     def setFocus(self):
         self.ttable.view.setFocus()
@@ -52,4 +65,8 @@ class TransactionView(BaseView, Ui_TransactionView):
     
     def updateOptionalWidgetsVisibility(self):
         self.ttable.setHiddenColumns(self.doc.app.prefs.transactionHiddenColumns)
+    
+    #--- model --> view
+    def refresh_totals(self):
+        self.totalsLabel.setText(self.model.totals)
     

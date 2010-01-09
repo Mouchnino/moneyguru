@@ -16,10 +16,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGTransactionTable
 
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView totalsLabel:aTotalsLabel
+- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyTransactionTable" pyParent:[aDocument py] view:aTableView];
-    totalsLabel = aTotalsLabel;
     [[self tableView] registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
@@ -176,14 +175,4 @@ http://www.hardcoded.net/licenses/hs_license
         [cell setHasDarkBackground:isSelected && isFocused];
     }
 }
-
-/* Callbacks for python */
-
-- (void)refresh
-{
-    [super refresh];
-    [totalsLabel setStringValue:[[self py] totals]];
-}
-
-
 @end

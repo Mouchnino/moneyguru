@@ -16,10 +16,6 @@ from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_ED
 from ..table import TableDelegate
 from ..table_with_transactions import TableWithTransactions
 
-# XXX The totals label is tied to the table, even in the model. This is a design flaw. The totals
-# label should be an independent gui element (or be a part of an eventual new transaction_view gui
-# element).
-
 class TransactionTableDelegate(TableDelegate):
     def __init__(self, model, columns):
         TableDelegate.__init__(self, model, columns)
@@ -52,12 +48,11 @@ class TransactionTable(TableWithTransactions):
         Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, doc, view, totalsLabel):
+    def __init__(self, doc, view):
         model = TransactionTableModel(view=self, document=doc.model)
         TableWithTransactions.__init__(self, model, view)
         self.tableDelegate = TransactionTableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
-        self.totalsLabel = totalsLabel
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.deletePressed.connect(self.model.delete)
@@ -72,9 +67,4 @@ class TransactionTable(TableWithTransactions):
     #--- Event Handling
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         self.model.change_columns(self.visibleRowAttrs())
-    
-    #--- model --> view
-    def refresh(self):
-        TableWithTransactions.refresh(self)
-        self.totalsLabel.setText(self.model.totals)
     

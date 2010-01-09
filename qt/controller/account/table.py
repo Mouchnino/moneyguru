@@ -16,6 +16,10 @@ from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_ED
 from ..table import TableDelegate
 from ..table_with_transactions import TableWithTransactions
 
+# XXX The totals label is tied to the table, even in the model. This is a design flaw. The totals
+# label should be an independent gui element (or be a part of an eventual new transaction_view gui
+# element).
+
 class EntryTableDelegate(TableDelegate):
     def __init__(self, model, columns):
         TableDelegate.__init__(self, model, columns)

@@ -67,13 +67,6 @@ class TransactionTable(TransactionTableBase):
     def selected_transactions(self):
         return [row.transaction for row in self.selected_rows]
     
-    @property
-    def totals(self):
-        shown = len(self)
-        total = self.document.visible_unfiltered_transaction_count
-        msg = u"Showing {0} out of {1}."
-        return msg.format(shown, total)
-    
     #--- Event handlers
     def date_range_changed(self):
         self.refresh()

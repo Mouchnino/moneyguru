@@ -13,6 +13,7 @@
 
 from hsutil.currency import EUR
 
+from ...document import FilterType
 from ...model.account import AccountType
 from ..base import TestCase
 
@@ -35,13 +36,15 @@ class Pristine(TestCase):
         self.check_gui_calls(self.mainwindow_gui, ['refresh_undo_actions'])
     
     def test_add_transaction(self):
-        # Adding a transaction causes a refresh_undo_actions() gui call
+        # Adding a transaction causes a refresh_undo_actions() gui call and the tview's totals to
+        # be updated.
         self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
         self.ttable.add()
         self.ttable[0].description = 'foobar'
         self.ttable.save_edits()
         self.check_gui_calls(self.mainwindow_gui, ['refresh_undo_actions'])
+        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
     
     def test_change_default_currency(self):
         # When the default currency is changed, all gui refresh themselves
@@ -67,6 +70,11 @@ class Pristine(TestCase):
         self.mainwindow.new_item()
         self.check_gui_calls_partial(self.scpanel_gui, ['refresh_repeat_options'])
     
+    def test_show_transaction_table(self):
+        # tview's totals label is refreshed upon connecting.
+        self.mainwindow.show_transaction_table()
+        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
+    
     def test_sort_table(self):
         # sorting a table refreshes it.
         self.mainwindow.select_transaction_table()
@@ -86,6 +94,23 @@ class Pristine(TestCase):
         # again, stop_editing must happen first
         expected = ['stop_editing', 'refresh']
         self.check_gui_calls(self.ttable_gui, expected, verify_order=True)
+    
+
+class OneTransaction(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_txn()
+        self.clear_gui_calls()
+    
+    def test_delete_transaction(self):
+        # Deleting a transaction refreshes the totals label
+        self.mainwindow.delete_item()
+        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
+    
+    def test_change_tview_filter(self):
+        # Changing tview's filter type updates the totals
+        self.tfbar.filter_type = FilterType.Reconciled
+        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
     
 
 class LoadFileWithBalanceSheetSelected(TestCase):

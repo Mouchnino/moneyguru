@@ -45,6 +45,7 @@ from ..gui.search_field import SearchField
 from ..gui.split_table import SplitTable
 from ..gui.transaction_panel import TransactionPanel
 from ..gui.transaction_table import TransactionTable
+from ..gui.transaction_view import TransactionView
 from ..loader import base
 from ..model.account import AccountType
 from ..model.currency import RatesDB
@@ -103,12 +104,12 @@ class DocumentGUI(CallLogger):
 
 class MainWindowGUI(CallLogger):
     """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, etable, ttable, sctable, btable, bsheet, istatement, balgraph, bargraph, nwgraph, pgraph, 
-                 efbar, tfbar, apie, lpie, ipie, epie, cdrpanel, arpanel):
+    def __init__(self, tview, etable, sctable, btable, bsheet, istatement, balgraph,
+            bargraph, nwgraph, pgraph, efbar, apie, lpie, ipie, epie, cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.messages = []
+        self.tview = tview
         self.etable = etable
-        self.ttable = ttable
         self.sctable = sctable
         self.btable = btable
         self.bsheet = bsheet
@@ -119,7 +120,6 @@ class MainWindowGUI(CallLogger):
         # In the real GUI, it is not MainWindow's responsibility to connect/disconnect those, but
         # for the sake of the test suite simplicity, we do it here.
         self.efbar = efbar
-        self.tfbar = tfbar
         self.apie = apie
         self.lpie = lpie
         self.ipie = ipie
@@ -128,8 +128,8 @@ class MainWindowGUI(CallLogger):
         self.pgraph = pgraph
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [etable, ttable, sctable, btable, bsheet, istatement, efbar, tfbar, apie, lpie,
-            ipie, epie, nwgraph, pgraph, balgraph, bargraph]
+        self.views = [tview, etable, sctable, btable, bsheet, istatement, efbar, apie,
+            lpie, ipie, epie, nwgraph, pgraph, balgraph, bargraph]
     
     def connect_views(self, views):
         for candidate in self.views:
@@ -184,7 +184,7 @@ class MainWindowGUI(CallLogger):
     
     @log
     def show_transaction_table(self):
-        self.connect_views([self.ttable, self.tfbar])
+        self.connect_views([self.tview])
     
 
 class DictLoader(base.Loader):
@@ -331,11 +331,14 @@ class TestCase(TestCaseBase):
         self.itable = ImportTable(self.itable_gui, self.iwin)
         self.cdrpanel_gui = CallLogger()
         self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.document)
-        self.mainwindow_gui = MainWindowGUI(self.etable, self.ttable, self.sctable, self.btable, 
-            self.bsheet, self.istatement, self.balgraph, self.bargraph, self.nwgraph, self.pgraph, 
-            self.efbar, self.tfbar, self.apie, self.lpie, self.ipie, self.epie, self.cdrpanel, 
-            self.arpanel)
-        children = [self.bsheet, self.istatement, self.ttable, self.etable, self.sctable,
+        self.tview_gui = CallLogger()
+        children = [self.ttable, self.tfbar]
+        self.tview = TransactionView(self.tview_gui, self.document, children)
+        self.mainwindow_gui = MainWindowGUI(self.tview, self.etable, self.sctable,
+            self.btable, self.bsheet, self.istatement, self.balgraph, self.bargraph, self.nwgraph,
+            self.pgraph, self.efbar, self.apie, self.lpie, self.ipie, self.epie,
+            self.cdrpanel, self.arpanel)
+        children = [self.tview, self.bsheet, self.istatement, self.etable, self.sctable,
             self.btable, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
         self.document.connect()
