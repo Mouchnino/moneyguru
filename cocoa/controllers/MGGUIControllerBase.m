@@ -19,12 +19,4 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return nil;
 }
-
-- (void)connect
-{
-}
-
-- (void)disconnect
-{
-}
 @end

@@ -18,6 +18,4 @@ have correspondant classes down in the core.
 @interface MGGUIControllerBase : NSObject {}
 - (NSView *)view;
 - (MGPrintView *)viewToPrint;
-- (void)connect;
-- (void)disconnect;
 @end

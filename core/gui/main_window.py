@@ -15,8 +15,7 @@ class MainWindow(DocumentGUIObject):
         DocumentGUIObject.__init__(self, view, document)
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel) = children
-        self.top = None
-        self.bottom = None
+        self._current_view = None
         self.show_balance_sheet()
     
     def connect(self):
@@ -24,77 +23,80 @@ class MainWindow(DocumentGUIObject):
         self.view.refresh_date_range_selector()
     
     #--- Private
+    def _change_current_view(self, view):
+        if self._current_view is view:
+            return False
+        if self._current_view is not None:
+            self._current_view.disconnect()
+        self._current_view = view
+        self._current_view.connect()
+        return True
+    
     def show_balance_sheet(self):
-        if self.top is not self.nwview:
+        if self._change_current_view(self.nwview):
             self.view.show_balance_sheet()
-            self.top = self.nwview
     
     def show_budget_table(self):
-        if self.top is not self.bview:
+        if self._change_current_view(self.bview):
             self.view.show_budget_table()
-            self.top = self.bview
     
     def show_entry_table(self):
-        if self.top is not self.aview:
+        if self._change_current_view(self.aview):
             self.view.show_entry_table()
-            self.top = self.aview
     
     def show_income_statement(self):
-        if self.top is not self.pview:
+        if self._change_current_view(self.pview):
             self.view.show_income_statement()
-            self.top = self.pview
     
     def show_schedule_table(self):
-        if self.top is not self.scview:
+        if self._change_current_view(self.scview):
             self.view.show_schedule_table()
-            self.top = self.scview
     
     def show_transaction_table(self):
-        if self.top is not self.tview:
+        if self._change_current_view(self.tview):
             self.view.show_transaction_table()
-            self.top = self.tview
     
     #--- Public
     def edit_item(self):
         try:
-            if self.top in (self.nwview, self.pview):
+            if self._current_view in (self.nwview, self.pview):
                 self.apanel.load()
-            elif self.top in (self.aview, self.tview):
+            elif self._current_view in (self.aview, self.tview):
                 editable_txns = [txn for txn in self.document.selected_transactions if not isinstance(txn, BudgetSpawn)]
                 if len(editable_txns) > 1:
                     self.mepanel.load()
                 elif len(editable_txns) == 1:
                     self.tpanel.load()
-            elif self.top is self.scview:
+            elif self._current_view is self.scview:
                 self.scpanel.load()
-            elif self.top is self.bview:
+            elif self._current_view is self.bview:
                 self.bpanel.load()
         except OperationAborted:
             pass
     
     def delete_item(self):
-        if self.top in (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview):
-            self.top.delete_item()
+        if self._current_view in (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview):
+            self._current_view.delete_item()
     
     def duplicate_item(self):
-        if self.top in (self.tview, self.aview):
-            self.top.duplicate_item()
+        if self._current_view in (self.tview, self.aview):
+            self._current_view.duplicate_item()
     
     def make_schedule_from_selected(self):
-        if self.top in (self.tview, self.aview):
+        if self._current_view in (self.tview, self.aview):
             self.document.make_schedule_from_selected()
     
     def move_down(self):
-        if self.top in (self.tview, self.aview):
-            self.top.move_down()
+        if self._current_view in (self.tview, self.aview):
+            self._current_view.move_down()
     
     def move_up(self):
-        if self.top in (self.tview, self.aview):
-            self.top.move_up()
+        if self._current_view in (self.tview, self.aview):
+            self._current_view.move_up()
     
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
-        assert self.top is self.aview # not supposed to be called outside the entry_table context
+        assert self._current_view is self.aview # not supposed to be called outside the entry_table context
         if self.document.shown_account.is_balance_sheet_account():
             self.select_balance_sheet()
         else:
@@ -102,19 +104,19 @@ class MainWindow(DocumentGUIObject):
     
     def new_item(self):
         try:
-            if self.top in (self.nwview, self.pview, self.tview, self.aview):
-                self.top.new_item()
-            elif self.top is self.scview:
+            if self._current_view in (self.nwview, self.pview, self.tview, self.aview):
+                self._current_view.new_item()
+            elif self._current_view is self.scview:
                 self.scpanel.new()
-            elif self.top is self.bview:
+            elif self._current_view is self.bview:
                 self.bpanel.new()
         except OperationAborted as e:
             if e.message:
                 self.view.show_message(e.message)
     
     def new_group(self):
-        if self.top in (self.nwview, self.pview):
-            self.top.new_group()
+        if self._current_view in (self.nwview, self.pview):
+            self._current_view.new_group()
     
     def select_balance_sheet(self):
         self.document.filter_string = ''
@@ -144,33 +146,33 @@ class MainWindow(DocumentGUIObject):
         self.show_budget_table()
     
     def select_next_view(self):
-        if self.top is self.nwview:
+        if self._current_view is self.nwview:
             self.select_income_statement()
-        elif self.top is self.pview:
+        elif self._current_view is self.pview:
             self.select_transaction_table()
-        elif self.top is self.tview:
+        elif self._current_view is self.tview:
             if self.document.shown_account is not None:
                 self.select_entry_table()
             else:
                 self.select_schedule_table()
-        elif self.top is self.aview:
+        elif self._current_view is self.aview:
             self.select_schedule_table()
-        elif self.top is self.scview:
+        elif self._current_view is self.scview:
             self.select_budget_table()
     
     def select_previous_view(self):
-        if self.top is self.pview:
+        if self._current_view is self.pview:
             self.select_balance_sheet()
-        elif self.top is self.tview:
+        elif self._current_view is self.tview:
             self.select_income_statement()
-        elif self.top is self.aview:
+        elif self._current_view is self.aview:
             self.select_transaction_table()
-        elif self.top is self.scview:
+        elif self._current_view is self.scview:
             if self.document.shown_account is not None:
                 self.select_entry_table()
             else:
                 self.select_transaction_table()
-        elif self.top is self.bview:
+        elif self._current_view is self.bview:
             self.select_schedule_table()
     
     def show_account(self):
@@ -180,8 +182,8 @@ class MainWindow(DocumentGUIObject):
         If the Transaction or Account view is selected, the related account (From, To, Transfer)
         of the selected transaction will be shown.
         """
-        if self.top in (self.nwview, self.pview, self.tview, self.aview):
-            self.top.show_account()
+        if self._current_view in (self.nwview, self.pview, self.tview, self.aview):
+            self._current_view.show_account()
     
     #--- Event callbacks
     def _undo_stack_changed(self):
@@ -217,11 +219,11 @@ class MainWindow(DocumentGUIObject):
                 self.view.animate_date_range_backward()
     
     def filter_applied(self):
-        if self.document.filter_string and self.top not in (self.tview, self.aview):
+        if self.document.filter_string and self._current_view not in (self.tview, self.aview):
             self.show_transaction_table()
     
     def performed_undo_or_redo(self):
-        if self.document.selected_account is None and self.top is self.aview:
+        if self.document.selected_account is None and self._current_view is self.aview:
             self.select_balance_sheet()
         self._undo_stack_changed()
     document_changed = performed_undo_or_redo

@@ -45,13 +45,6 @@ class TransactionView(BaseView, Ui_TransactionView):
         order = [h.logicalIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnOrder = order
     
-    # Temporary
-    def connect(self):
-        self.model.connect()
-    
-    def disconnect(self):
-        self.model.disconnect()
-    
     #--- QWidget override
     def setFocus(self):
         self.ttable.view.setFocus()

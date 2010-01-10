@@ -48,13 +48,6 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         order = [h.logicalIndex(index) for index in xrange(len(self.nwsheet.COLUMNS))]
         self.doc.app.prefs.networthColumnOrder = order
     
-    # Temporary
-    def connect(self):
-        self.model.connect()
-    
-    def disconnect(self):
-        self.model.disconnect()
-    
     #--- QWidget override
     def setFocus(self):
         self.nwsheet.view.setFocus()

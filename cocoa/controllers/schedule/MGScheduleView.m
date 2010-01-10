@@ -50,16 +50,6 @@ http://www.hardcoded.net/licenses/hs_license
     return [scheduleTable viewToPrint];
 }
 
-- (void)connect
-{
-    [py connect];
-}
-
-- (void)disconnect
-{
-    [py disconnect];
-}
-
 - (MGScheduleTable *)scheduleTable
 {
     return scheduleTable;

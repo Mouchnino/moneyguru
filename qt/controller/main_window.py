@@ -197,8 +197,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.prefs.mainWindowRect = self.geometry()
     
     def _setMainWidgetIndex(self, index):
-        self.mainView.currentWidget().disconnect()
-        self.mainView.widget(index).connect()
         self.mainView.setCurrentIndex(index)
         self._updateActionsState()
         self.mainView.currentWidget().setFocus()

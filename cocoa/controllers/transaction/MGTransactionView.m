@@ -52,16 +52,6 @@ http://www.hardcoded.net/licenses/hs_license
     return [transactionTable viewToPrint];
 }
 
-- (void)connect
-{
-    [py connect];
-}
-
-- (void)disconnect
-{
-    [py disconnect];
-}
-
 - (MGTransactionTable *)transactionTable
 {
     return transactionTable;

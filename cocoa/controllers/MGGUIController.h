@@ -18,6 +18,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent;
 // - (NSView *)view;
 // - (MGPrintView *)viewToPrint;
-// - (void)connect;
-// - (void)disconnect;
+- (void)connect;
+- (void)disconnect;
 @end

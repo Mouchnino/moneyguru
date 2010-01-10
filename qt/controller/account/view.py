@@ -49,13 +49,6 @@ class EntryView(BaseView, Ui_EntryView):
         order = [h.logicalIndex(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnOrder = order
     
-    # Temporary
-    def connect(self):
-        self.model.connect()
-    
-    def disconnect(self):
-        self.model.disconnect()
-    
     #--- QWidget override
     def setFocus(self):
         self.etable.view.setFocus()

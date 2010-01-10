@@ -43,13 +43,6 @@ class BudgetView(BaseView, Ui_BudgetView):
         order = [h.logicalIndex(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnOrder = order
     
-    # Temporary
-    def connect(self):
-        self.model.connect()
-    
-    def disconnect(self):
-        self.model.disconnect()
-    
     #--- QWidget override
     def setFocus(self):
         self.btable.view.setFocus()

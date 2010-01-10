@@ -76,16 +76,6 @@ http://www.hardcoded.net/licenses/hs_license
     return [p autorelease];
 }
 
-- (void)connect
-{
-    [py connect];
-}
-
-- (void)disconnect
-{
-    [py disconnect];
-}
-
 - (MGIncomeStatement *)incomeStatement
 {
     return incomeStatement;

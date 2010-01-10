@@ -108,62 +108,23 @@ class DocumentGUI(CallLogger):
     
 
 class MainWindowGUI(CallLogger):
-    """A mock window gui that connects/disconnects its children guis as the real interface does"""
-    def __init__(self, nwview, pview, tview, aview, scview, bview, cdrpanel, arpanel):
+    def __init__(self, cdrpanel, arpanel):
         CallLogger.__init__(self)
         self.messages = []
-        self.nwview = nwview
-        self.pview = pview
-        self.tview = tview
-        self.aview = aview
-        self.scview = scview
-        self.bview = bview
         self.cdrpanel = cdrpanel
         self.arpanel = arpanel
-        self.views = [nwview, pview, tview, aview, scview, bview]
-    
-    def connect_view(self, view):
-        for candidate in self.views:
-            if candidate is view:
-                candidate.connect()
-            else:
-                candidate.disconnect()
     
     @log
     def show_account_reassign_panel(self):
         self.arpanel.load()
     
     @log
-    def show_balance_sheet(self):
-        self.connect_view(self.nwview)
-    
-    @log
     def show_custom_date_range_panel(self):
         self.cdrpanel.load()
     
     @log
-    def show_entry_table(self):
-        self.connect_view(self.aview)
-    
-    @log
-    def show_income_statement(self):
-        self.connect_view(self.pview)
-    
-    @log
     def show_message(self, message):
         self.messages.append(message)
-    
-    @log
-    def show_schedule_table(self):
-        self.connect_view(self.scview)
-    
-    @log
-    def show_budget_table(self):
-        self.connect_view(self.bview)
-    
-    @log
-    def show_transaction_table(self):
-        self.connect_view(self.tview)
     
 
 class DictLoader(base.Loader):
@@ -328,8 +289,7 @@ class TestCase(TestCaseBase):
         self.bview_gui = CallLogger()
         children = [self.btable]
         self.bview = BudgetView(self.bview_gui, self.document, children)
-        self.mainwindow_gui = MainWindowGUI(self.nwview, self.pview, self.tview, self.aview,
-            self.scview, self.bview, self.cdrpanel, self.arpanel)
+        self.mainwindow_gui = MainWindowGUI(self.cdrpanel, self.arpanel)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)

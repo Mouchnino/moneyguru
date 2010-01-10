@@ -122,9 +122,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)setTop:(MGGUIControllerBase *)aTop
 {
-    [top disconnect];
     top = aTop;
-    [top connect];
     [self arrangeViews];
 }
 

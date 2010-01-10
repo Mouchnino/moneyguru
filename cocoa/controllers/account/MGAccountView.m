@@ -73,16 +73,6 @@ http://www.hardcoded.net/licenses/hs_license
         graphView:currentGraphView] autorelease];
 }
 
-- (void)connect
-{
-    [py connect];
-}
-
-- (void)disconnect
-{
-    [py disconnect];
-}
-
 - (MGEntryTable *)entryTable
 {
     return entryTable;

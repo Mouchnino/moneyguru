@@ -50,16 +50,6 @@ http://www.hardcoded.net/licenses/hs_license
     return [budgetTable viewToPrint];
 }
 
-- (void)connect
-{
-    [py connect];
-}
-
-- (void)disconnect
-{
-    [py disconnect];
-}
-
 - (MGBudgetTable *)budgetTable
 {
     return budgetTable;
