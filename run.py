@@ -13,6 +13,8 @@ import os.path as op
 
 import yaml
 
+from hsutil.build import add_to_pythonpath
+
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
@@ -20,10 +22,7 @@ def main():
     if ui == 'cocoa':
         os.system('open cocoa/build/Release/moneyGuru.app')
     elif ui == 'qt':
-        pythonpath = os.environ.get('PYTHONPATH', '')
-        pathsep = ';' if sys.platform == 'win32' else ':'
-        pythonpath = pathsep.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
-        os.environ['PYTHONPATH'] = pythonpath
+        add_to_pythonpath('.')
         os.chdir('qt')
         os.system('python start.py')
         os.chdir('..')
