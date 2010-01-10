@@ -22,7 +22,7 @@ from .loader import csv, qif, ofx, native
 from .model.account import Account, Group, AccountList, GroupList, AccountType
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
-    CustomDateRange, format_date, inc_month)
+    AllTransactionsRange, CustomDateRange, format_date, inc_month)
 from .model.oven import Oven
 from .model.recurrence import Recurrence, Spawn, REPEAT_MONTHLY
 from .model.transaction import Transaction, Entry
@@ -39,6 +39,7 @@ DATE_RANGE_QUARTER = 'quarter'
 DATE_RANGE_YEAR = 'year'
 DATE_RANGE_YTD = 'ytd'
 DATE_RANGE_RUNNING_YEAR = 'running_year'
+DATE_RANGE_ALL_TRANSACTIONS = 'all_transactions'
 DATE_RANGE_CUSTOM = 'custom'
 
 DATE_FORMAT_FOR_PREFERENCES = '%d/%m/%Y'
@@ -102,10 +103,15 @@ class Document(Broadcaster, Listener):
     
     #--- Private
     def _adjust_date_range(self, new_date):
-        if not self.date_range.can_navigate:
-            return False
-        new_date_range = self.date_range.around(new_date)
-        if new_date_range == self.date_range:
+        if self.date_range.can_navigate:
+            new_date_range = self.date_range.around(new_date)
+            if new_date_range == self.date_range:
+                return False
+        elif isinstance(self.date_range, AllTransactionsRange):
+            if new_date >= self.date_range.start:
+                return False
+            new_date_range = AllTransactionsRange(start=new_date, ahead_months=self.app.ahead_months)
+        else:
             return False
         # We have to manually set the date range and send notifications because ENTRY_CHANGED
         # must happen between DATE_RANGE_WILL_CHANGE and DATE_RANGE_CHANGED
@@ -291,6 +297,9 @@ class Document(Broadcaster, Listener):
         # some preference need the file loaded before attempting a restore
         excluded_account_names = set(nonone(self.app.get_default(EXCLUDED_ACCOUNTS_PREFERENCE), []))
         self.excluded_accounts = set(a for a in self.accounts if a.name in excluded_account_names)
+        selected_range = self.app.get_default(SELECTED_DATE_RANGE_PREFERENCE)
+        if selected_range == DATE_RANGE_ALL_TRANSACTIONS: # only works after load
+            self.select_all_transactions_range()
     
     def _save_preferences(self):
         dr = self.date_range
@@ -303,6 +312,8 @@ class Document(Broadcaster, Listener):
             selected_range = DATE_RANGE_YTD
         elif isinstance(dr, RunningYearRange):
             selected_range = DATE_RANGE_RUNNING_YEAR
+        elif isinstance(dr, AllTransactionsRange):
+            selected_range = DATE_RANGE_ALL_TRANSACTIONS
         elif isinstance(dr, CustomDateRange):
             selected_range = DATE_RANGE_CUSTOM
         self.app.set_default(SELECTED_DATE_RANGE_PREFERENCE, selected_range)
@@ -1168,6 +1179,12 @@ class Document(Broadcaster, Listener):
     def select_running_year_range(self):
         self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
     
+    def select_all_transactions_range(self):
+        if not self.transactions:
+            return
+        start_date = self.transactions[0].date
+        self.date_range = AllTransactionsRange(start=start_date, ahead_months=self.app.ahead_months)
+    
     def select_custom_date_range(self, start_date=None, end_date=None):
         if start_date is not None and end_date is not None:
             self.date_range = CustomDateRange(start_date, end_date, self.app.format_date)
@@ -1283,7 +1300,9 @@ class Document(Broadcaster, Listener):
     #--- Events
     def ahead_months_changed(self):
         if isinstance(self.date_range, RunningYearRange):
-            self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
+            self.select_running_year_range()
+        elif isinstance(self.date_range, AllTransactionsRange):
+            self.select_all_transactions_range()
     
     def default_currency_changed(self):
         self.notify('document_changed')

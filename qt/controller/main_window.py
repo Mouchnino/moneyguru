@@ -86,6 +86,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionChangeDateRangeYear.triggered.connect(self.changeDateRangeYearTriggered)
         self.actionChangeDateRangeYearToDate.triggered.connect(self.changeDateRangeYearToDateTriggered)
         self.actionChangeDateRangeRunningYear.triggered.connect(self.changeDateRangeRunningYearTriggered)
+        self.actionChangeDateRangeAllTransactions.triggered.connect(self.doc.model.select_all_transactions_range)
         self.actionChangeDateRangeCustom.triggered.connect(self.changeDateRangeCustomTriggered)
         
         # Views
@@ -150,6 +151,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         menu.addAction(self.actionChangeDateRangeYear)
         menu.addAction(self.actionChangeDateRangeYearToDate)
         menu.addAction(self.actionChangeDateRangeRunningYear)
+        menu.addAction(self.actionChangeDateRangeAllTransactions)
         menu.addAction(self.actionChangeDateRangeCustom)
         self.dateRangeButton.setMenu(menu)
         

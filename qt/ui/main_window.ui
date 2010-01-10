@@ -193,6 +193,7 @@
      <addaction name="actionChangeDateRangeYear"/>
      <addaction name="actionChangeDateRangeYearToDate"/>
      <addaction name="actionChangeDateRangeRunningYear"/>
+     <addaction name="actionChangeDateRangeAllTransactions"/>
      <addaction name="actionChangeDateRangeCustom"/>
      <addaction name="actionPreviousDateRange"/>
      <addaction name="actionNextDateRange"/>
@@ -329,7 +330,7 @@
     <string>Custom...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+6</string>
+    <string>Ctrl+Alt+7</string>
    </property>
   </action>
   <action name="actionShowNetWorth">
@@ -632,6 +633,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionChangeDateRangeAllTransactions">
+   <property name="text">
+    <string>All Transactions</string>
+   </property>
+   <property name="toolTip">
+    <string>All Transactions</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+6</string>
    </property>
   </action>
  </widget>

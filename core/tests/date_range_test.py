@@ -29,6 +29,10 @@ class Pristine(TestCase):
         filename = self.filepath('moneyguru/payee_description.moneyguru')
         self.document.load_from_xml(filename) # no crash
     
+    def test_all_transactions_range(self):
+        # Selecting the All Transactions range when there's no transaction doesn't do anything.
+        self.document.select_all_transactions_range() # no crash
+    
     def test_set_ahead_months(self):
         # setting the ahead_months preference doesn't change the current date range type
         self.app.ahead_months = 5
@@ -321,4 +325,44 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
         # app.select_prev_date_range() makes the date range go one month earlier.
         self.document.select_prev_date_range()
         eq_(self.document.date_range, MonthRange(date(2007, 9, 1)))
+    
+
+class AllTransactionsRangeWithOneTransactionFarInThePast(TestCase):
+    def setUp(self):
+        self.mock_today(2010, 01, 10)
+        self.create_instances()
+        self.add_txn('01/10/1981', from_='foo', to='bar', amount='42')
+        self.add_txn('10/01/2010')
+        self.document.select_all_transactions_range()
+    
+    def test_add_earlier_transaction(self):
+        # Adding a transactions that's earlier than the current start date adjusts the range.
+        self.add_txn('30/09/1981')
+        eq_(len(self.ttable), 3)
+    
+    def test_includes_ahead_months(self):
+        # All Transactions range end_date is computed using the ahead_months pref
+        self.app.ahead_months = 3 # triggers a date range update
+        self.add_txn('30/04/2010')
+        eq_(len(self.ttable), 3)
+        # but not further...
+        self.add_txn('01/05/2010')
+        eq_(len(self.ttable), 3)
+    
+    def test_income_statement_last_column(self):
+        # the Last column of the income statement must show 0 (there's nothing before).
+        self.mainwindow.select_income_statement()
+        eq_(self.istatement.expenses.last_cash_flow, '0.00')
+    
+    def test_save_and_load(self):
+        # When reloading a document, if the all transactions range was selected, it must be brought
+        # back *after* transactions have been loaded.
+        self.document = self.save_and_load(newapp=False)
+        self.create_instances()
+        self.mainwindow.show_transaction_table()
+        eq_(len(self.ttable), 2)
+    
+    def test_transactions_are_shown(self):
+        # When under All Transactions range, the range is big enough to contain all txns.
+        eq_(len(self.ttable), 2)
     

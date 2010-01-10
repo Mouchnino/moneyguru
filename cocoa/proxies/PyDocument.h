@@ -19,6 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectYearRange;
 - (void)selectYearToDateRange;
 - (void)selectRunningYearRange;
+- (void)selectAllTransactionsRange;
 - (void)selectCustomDateRange;
 - (NSString *)dateRangeDisplay;
 

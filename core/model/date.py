@@ -69,14 +69,14 @@ class DateRange(object):
     
     @property
     def days(self):
-        '''The number of days in the date range
-        '''
+        """The number of days in the date range.
+        """
         return (self.end - self.start).days + 1
     
     @property
     def future(self):
-        '''The future part of the date range
-        '''
+        """The future part of the date range.
+        """
         today = date.today()
         if self.start > today:
             return self
@@ -85,8 +85,8 @@ class DateRange(object):
     
     @property
     def past(self):
-        '''The past part of the date range
-        '''
+        """The past part of the date range.
+        """
         today = date.today()
         if self.end < today:
             return self
@@ -186,15 +186,18 @@ class YearToDateRange(DateRange):
         return '{0} - Now'.format(self.start.strftime('%b %Y'))
     
 
+def compute_ahead_months(ahead_months):
+    assert ahead_months < 12
+    month_range = MonthRange(date.today())
+    for _ in xrange(ahead_months):
+        month_range = month_range.next()
+    return month_range.end
+
 class RunningYearRange(DateRange):
     def __init__(self, ahead_months):
-        assert ahead_months < 12
-        month_range = MonthRange(date.today())
-        for _ in range(ahead_months):
-            month_range = month_range.next()
-        end = month_range.end
-        month_range = month_range.next()
-        start = month_range.start.replace(year=month_range.start.year - 1)
+        end = compute_ahead_months(ahead_months)
+        end_plus_one = end + ONE_DAY
+        start = end_plus_one.replace(year=end_plus_one.year-1)
         DateRange.__init__(self, start, end)
     
     def prev(self): # for income statement's Last column
@@ -205,6 +208,20 @@ class RunningYearRange(DateRange):
     @property
     def display(self):
         return 'Running year ({0} - {1})'.format(self.start.strftime('%b'), self.end.strftime('%b'))
+    
+
+class AllTransactionsRange(DateRange):
+    def __init__(self, start, ahead_months):
+        end = compute_ahead_months(ahead_months)
+        DateRange.__init__(self, start, end)
+    
+    def prev(self): # for income statement's Last column
+        start = self.start - ONE_DAY
+        return DateRange(start, start) # whatever, as long as there's nothing in it
+    
+    @property
+    def display(self):
+        return "All Transactions"
     
 
 class CustomDateRange(DateRange):

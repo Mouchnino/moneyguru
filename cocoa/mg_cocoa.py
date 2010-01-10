@@ -198,6 +198,9 @@ class PyDocument(NSObject):
     def selectRunningYearRange(self):
         self.py.select_running_year_range()
     
+    def selectAllTransactionsRange(self):
+        self.py.select_all_transactions_range()
+    
     def selectCustomDateRange(self):
         self.py.select_custom_date_range()
     

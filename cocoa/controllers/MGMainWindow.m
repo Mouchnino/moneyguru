@@ -299,6 +299,11 @@ http://www.hardcoded.net/licenses/hs_license
     [[[self document] py] selectRunningYearRange];
 }
 
+- (IBAction)selectAllTransactionsRange:(id)sender
+{
+    [[[self document] py] selectAllTransactionsRange];
+}
+
 - (IBAction)selectCustomDateRange:(id)sender
 {
     [[[self document] py] selectCustomDateRange];
