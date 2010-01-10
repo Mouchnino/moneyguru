@@ -15,7 +15,10 @@ have correspondant classes down in the core.
 #import <Cocoa/Cocoa.h>
 #import "MGPrintView.h"
 
-@interface MGGUIControllerBase : NSObject {}
+@interface MGBaseView : NSObject
+{
+    IBOutlet NSView *wholeView;
+}
 - (NSView *)view;
 - (MGPrintView *)viewToPrint;
 @end

@@ -115,12 +115,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[self window] makeFirstResponder:[[top view] nextKeyView]];
 }
 
-- (MGGUIControllerBase *)top
+- (MGBaseView *)top
 {
     return top;
 }
 
-- (void)setTop:(MGGUIControllerBase *)aTop
+- (void)setTop:(MGBaseView *)aTop
 {
     top = aTop;
     [self arrangeViews];
@@ -352,9 +352,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)toggleEntriesReconciled:(id)sender
 {
     if ([[[self document] py] inReconciliationMode])
-    {
-        [[[accountView entryTable] py] toggleReconciled];
-    }
+        [accountView toggleReconciled];
 }
 
 - (IBAction)toggleReconciliationMode:(id)sender
@@ -415,9 +413,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
     if (top == accountView)
-        return [[accountView entryTable] fieldEditorForObject:asker];
+        return [accountView fieldEditorForObject:asker];
     else if (top == transactionView)
-        return [[transactionView transactionTable] fieldEditorForObject:asker];
+        return [transactionView fieldEditorForObject:asker];
     return nil;
 }
 

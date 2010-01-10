@@ -7,8 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGGUIControllerBase.h"
 #import "PyAccountView.h"
+#import "MGBaseView.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
@@ -17,11 +17,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBalanceGraph.h"
 #import "MGBarGraph.h"
 
-@interface MGAccountView : MGGUIControllerBase
+@interface MGAccountView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
-    IBOutlet NSView *wholeView;
-    IBOutlet NSView *mainView;
+    IBOutlet NSScrollView *tableScrollView;
     IBOutlet NSView *graphPlaceholder;
     IBOutlet AMButtonBar *filterBarView;
     IBOutlet NSTextField *totalsLabel;
@@ -34,11 +33,12 @@ http://www.hardcoded.net/licenses/hs_license
     NSView *currentGraphView;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
+- (PyAccountView *)py;
 
 /* Private */
 - (void)updateVisibility;
 
-- (PyAccountView *)py;
-// Temporary
-- (MGEntryTable *)entryTable;
+/* Public */
+- (id)fieldEditorForObject:(id)asker;
+- (void)toggleReconciled;
 @end

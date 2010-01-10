@@ -6,13 +6,12 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import "MGGUIControllerBase.h"
+#import "MGBaseView.h"
 
-@implementation MGGUIControllerBase
+@implementation MGBaseView
 - (NSView *)view
 {
-    // abstract
-    return nil;
+    return wholeView;
 }
 
 - (MGPrintView *)viewToPrint

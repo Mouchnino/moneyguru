@@ -45,16 +45,11 @@ http://www.hardcoded.net/licenses/hs_license
     [super dealloc];
 }
 
-// - (NSView *)view
-// {
-//     // abstract
-//     return nil;
-// }
-// 
-// - (MGPrintView *)viewToPrint
-// {
-//     return nil;
-// }
+- (NSView *)view
+{
+    // abstract
+    return nil;
+}
 
 - (void)connect
 {

@@ -64,21 +64,11 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyNetWorthView *)py;
 }
 
-- (NSView *)view
-{
-    return wholeView;
-}
-
 - (MGPrintView *)viewToPrint
 {
     MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[balanceSheet py] outlineView:outlineView
         graphView:[netWorthGraph view] pieViews:pieChartsView];
     return [p autorelease];
-}
-
-- (MGBalanceSheet *)balanceSheet
-{
-    return balanceSheet;
 }
 
 /* Private */

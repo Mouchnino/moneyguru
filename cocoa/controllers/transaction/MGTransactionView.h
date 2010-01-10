@@ -8,17 +8,16 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTransactionView.h"
-#import "MGGUIControllerBase.h"
+#import "MGBaseView.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
 #import "MGTransactionTable.h"
 #import "MGFilterBar.h"
 
-@interface MGTransactionView : MGGUIControllerBase
+@interface MGTransactionView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
-    IBOutlet NSView *wholeView;
     IBOutlet AMButtonBar *filterBarView;
     IBOutlet NSTextField *totalsLabel;
     
@@ -29,6 +28,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 - (PyTransactionView *)py;
-// Temporary
-- (MGTransactionTable *)transactionTable;
+
+- (id)fieldEditorForObject:(id)asker;
 @end

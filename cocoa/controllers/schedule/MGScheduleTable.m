@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGScheduleTable.h"
 #import "MGConst.h"
 #import "MGTableView.h"
-#import "MGSchedulePrint.h"
 
 @implementation MGScheduleTable
 - (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
@@ -27,11 +26,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyScheduleTable *)py
 {
     return (PyScheduleTable *)py;
-}
-
-- (NSView *)viewToPrint
-{
-    return [[[MGSchedulePrint alloc] initWithPyParent:py tableView:[self tableView]] autorelease];
 }
 
 /* Delegate */

@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyProfitView.h"
-#import "MGGUIControllerBase.h"
+#import "MGBaseView.h"
 #import "MGDocument.h"
 #import "MGOutlineView.h"
 #import "MGIncomeStatement.h"
@@ -16,9 +16,8 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBarGraph.h"
 #import "MGDoubleView.h"
 
-@interface MGProfitView : MGGUIControllerBase
+@interface MGProfitView : MGBaseView
 {
-    IBOutlet NSView *wholeView;
     IBOutlet MGOutlineView *outlineView;
     IBOutlet NSScrollView *outlineScrollView;
     IBOutlet MGDoubleView *pieChartsView;
@@ -35,7 +34,4 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Private */
 - (void)updateVisibility;
-
-// Temporary
-- (MGIncomeStatement *)incomeStatement;
 @end

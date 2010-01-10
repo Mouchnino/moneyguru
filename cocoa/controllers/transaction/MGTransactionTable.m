@@ -12,7 +12,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGFieldEditor.h"
 #import "MGReconciliationCell.h"
 #import "MGTextFieldCell.h"
-#import "MGTransactionPrint.h"
 
 @implementation MGTransactionTable
 
@@ -45,12 +44,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyTransactionTable *)py
 {
     return (PyTransactionTable *)py;
-}
-
-- (NSView *)viewToPrint
-{
-    return [[[MGTransactionPrint alloc] initWithPyParent:py tableView:[self tableView]] 
-        autorelease];
 }
 
 /* Data source */

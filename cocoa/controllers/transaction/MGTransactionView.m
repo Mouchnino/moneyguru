@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGTransactionView.h"
+#import "MGTransactionPrint.h"
 #import "MGUtils.h"
 
 @implementation MGTransactionView
@@ -42,19 +43,14 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyTransactionView *)py;
 }
 
-- (NSView *)view
-{
-    return wholeView;
-}
-
 - (MGPrintView *)viewToPrint
 {
-    return [transactionTable viewToPrint];
+    return [[[MGTransactionPrint alloc] initWithPyParent:py tableView:[transactionTable tableView]] autorelease];
 }
 
-- (MGTransactionTable *)transactionTable
+- (id)fieldEditorForObject:(id)asker
 {
-    return transactionTable;
+    return [transactionTable fieldEditorForObject:asker];
 }
 
 // Python --> Cocoa

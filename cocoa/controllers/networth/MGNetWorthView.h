@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyNetWorthView.h"
-#import "MGGUIControllerBase.h"
+#import "MGBaseView.h"
 #import "MGDocument.h"
 #import "MGOutlineView.h"
 #import "MGBalanceSheet.h"
@@ -16,9 +16,8 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBalanceGraph.h"
 #import "MGDoubleView.h"
 
-@interface MGNetWorthView : MGGUIControllerBase
+@interface MGNetWorthView : MGBaseView
 {
-    IBOutlet NSView *wholeView;
     IBOutlet MGOutlineView *outlineView;
     IBOutlet NSScrollView *outlineScrollView;
     IBOutlet MGDoubleView *pieChartsView;
@@ -35,7 +34,4 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Private */
 - (void)updateVisibility;
-
-// Temporary
-- (MGBalanceSheet *)balanceSheet;
 @end

@@ -8,22 +8,18 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyBudgetView.h"
-#import "MGGUIControllerBase.h"
+#import "MGBaseView.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
 #import "MGBudgetTable.h"
 
-@interface MGBudgetView : MGGUIControllerBase
+@interface MGBudgetView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
-    IBOutlet NSView *wholeView;
     
     PyBudgetView *py;
     MGBudgetTable *budgetTable;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
-
 - (PyBudgetView *)py;
-// Temporary
-- (MGBudgetTable *)budgetTable;
 @end

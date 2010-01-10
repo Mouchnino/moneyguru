@@ -64,21 +64,11 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyProfitView *)py;
 }
 
-- (NSView *)view
-{
-    return wholeView;
-}
-
 - (MGPrintView *)viewToPrint
 {
     MGProfitPrint *p = [[MGProfitPrint alloc] initWithPyParent:[incomeStatement py] outlineView:outlineView
         graphView:[profitGraph view] pieViews:pieChartsView];
     return [p autorelease];
-}
-
-- (MGIncomeStatement *)incomeStatement
-{
-    return incomeStatement;
 }
 
 /* Private */

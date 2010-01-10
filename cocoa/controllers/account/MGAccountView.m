@@ -62,20 +62,10 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyAccountView *)py;
 }
 
-- (NSView *)view
-{
-    return wholeView;
-}
-
 - (MGPrintView *)viewToPrint
 {
     return [[[MGEntryPrint alloc] initWithPyParent:[entryTable py] tableView:tableView
         graphView:currentGraphView] autorelease];
-}
-
-- (MGEntryTable *)entryTable
-{
-    return entryTable;
 }
 
 /* Private */
@@ -84,7 +74,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     BOOL graphVisible = [ud boolForKey:AccountGraphVisible];
     // Let's set initial rects
-    NSRect mainRect = [mainView frame];
+    NSRect mainRect = [tableScrollView frame];
     NSRect graphRect = [[balanceGraph view] frame];
     if (graphVisible)
     {
@@ -98,7 +88,7 @@ http://www.hardcoded.net/licenses/hs_license
     }
     [[balanceGraph view] setHidden:!graphVisible];
     [[barGraph view] setHidden:!graphVisible];
-    [mainView setFrame:mainRect];
+    [tableScrollView setFrame:mainRect];
 }
 
 - (void)showGraph:(MGGUIController *)graph
@@ -109,6 +99,17 @@ http://www.hardcoded.net/licenses/hs_license
     [graphView setAutoresizingMask:[oldView autoresizingMask]];
     [wholeView replaceSubview:oldView with:graphView];
     currentGraphView = [graph view];
+}
+
+/* Public */
+- (id)fieldEditorForObject:(id)asker
+{
+    return [entryTable fieldEditorForObject:asker];
+}
+
+- (void)toggleReconciled
+{
+    [[entryTable py] toggleReconciled];
 }
 
 /* Delegate */

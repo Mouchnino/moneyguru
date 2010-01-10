@@ -23,7 +23,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGCSVImportOptions.h"
 #import "MGCustomDateRangePanel.h"
 #import "MGAccountReassignPanel.h"
-#import "MGGUIController.h"
+#import "MGBaseView.h"
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
 
@@ -50,14 +50,14 @@ http://www.hardcoded.net/licenses/hs_license
     MGCSVImportOptions *csvOptionsWindow;
     MGCustomDateRangePanel *customDateRangePanel;
     MGAccountReassignPanel *accountReassignPanel;
-    MGGUIControllerBase *top;
+    MGBaseView *top;
     NSToolbarItem *reconciliationToolbarItem;
 }
 
 /* Private */
 - (void)arrangeViews;
-- (MGGUIControllerBase *)top;
-- (void)setTop:(MGGUIControllerBase *)top;
+- (MGBaseView *)top;
+- (void)setTop:(MGBaseView *)top;
 - (void)animateDateRange:(BOOL)forward;
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;

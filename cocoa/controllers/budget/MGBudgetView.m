@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGBudgetView.h"
+#import "MGBudgetPrint.h"
 #import "MGUtils.h"
 
 @implementation MGBudgetView
@@ -40,18 +41,8 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyBudgetView *)py;
 }
 
-- (NSView *)view
-{
-    return wholeView;
-}
-
 - (MGPrintView *)viewToPrint
 {
-    return [budgetTable viewToPrint];
-}
-
-- (MGBudgetTable *)budgetTable
-{
-    return budgetTable;
+    return [[[MGBudgetPrint alloc] initWithPyParent:py tableView:[budgetTable tableView]] autorelease];
 }
 @end
