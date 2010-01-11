@@ -28,7 +28,7 @@ class SomeAccount(TestCase):
         assert_raises(OperationAborted, self.apanel.load)
     
     def test_change_currency_index(self):
-        """Changing currency_index correctly updates the currency"""
+        # Changing currency_index correctly updates the currency.
         self.apanel.currency_index = 0
         eq_(self.apanel.currency, Currency.all[0])
         self.apanel.currency_index = 42
@@ -38,7 +38,7 @@ class SomeAccount(TestCase):
         eq_(self.apanel.currency_index, 42)
     
     def test_change_type_index(self):
-        """Changing type_index correctly updates the type"""
+        # Changing type_index correctly updates the type.
         self.apanel.type_index = 0
         eq_(self.apanel.type, AccountType.Asset)
         self.apanel.type_index = 1
@@ -50,7 +50,7 @@ class SomeAccount(TestCase):
         eq_(self.apanel.type_index, 2)
     
     def test_fields(self):
-        """The base field values"""
+        # The base field values.
         self.apanel.load()
         eq_(self.apanel.name, 'foobar')
         eq_(self.apanel.type, AccountType.Expense)
@@ -68,12 +68,12 @@ class SomeAccount(TestCase):
         self.check_gui_calls(self.istatement_gui, ['stop_editing'])
     
     def test_save(self):
-        """save() calls document.change_account with the correct arguments and triggers a refresh on all GUI components."""
+        # save() calls document.change_account with the correct arguments and triggers a refresh on
+        # all GUI components.
         self.apanel.load()
         self.apanel.type_index = 2
         self.apanel.currency_index = 42
         self.apanel.name = 'foobaz'
-        self.apanel.budget = '42'
         self.apanel.save()
         # To test the currency, we have to load again
         self.istatement.selected = self.istatement.income[0]
