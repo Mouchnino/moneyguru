@@ -34,34 +34,44 @@ class Loader(base.Loader):
         base.Loader.__init__(self, default_currency)
         self.column_indexes = {}
         self.lines = []
+        self.dialect = None # last used dialect
+        self.csvfile = None # last prepared file
     
-    #--- Override
-    def _parse(self, infile):
-        def decode_line(line):
-            return [unicode(cell, 'latin-1') for cell in line]
-        
+    #--- Private
+    def _prepare(self, infile):
         # Comment lines can confuse the sniffer. We remove them
         content = infile.read()
         lines = content.split('\n')
         stripped_lines = [line.strip() for line in lines]
         stripped_lines = [line for line in lines if line and not line.startswith('#')]
         try:
-            dialect = csv.Sniffer().sniff('\n'.join(stripped_lines))
+            self.dialect = csv.Sniffer().sniff('\n'.join(stripped_lines))
         except csv.Error:
             # sometimes, it's the footer that plays trick with the sniffer. Let's try again, with
             # the last line removed
             try:
-                dialect = csv.Sniffer().sniff('\n'.join(stripped_lines[:-1]))
+                self.dialect = csv.Sniffer().sniff('\n'.join(stripped_lines[:-1]))
             except csv.Error:
                 raise FileFormatError()
-        fp = StringIO('\n'.join(lines))
-        reader = csv.reader(fp, dialect)
+        self.csvfile = StringIO('\n'.join(lines))
+    
+    def _scan_lines(self):
+        def decode_line(line):
+            return [unicode(cell, 'latin-1') for cell in line]
+        
+        self.csvfile.seek(0)
+        reader = csv.reader(self.csvfile, self.dialect)
         lines = [decode_line(line) for line in reader if line]
         # complete smaller lines and strip whitespaces
         maxlen = max(len(line) for line in lines)
         for line in (l for l in lines if len(l) < maxlen):
             line += [''] * (maxlen - len(line))
         self.lines = lines
+    
+    #--- Override
+    def _parse(self, infile):
+        self._prepare(infile)
+        self._scan_lines()
     
     def _load(self):
         ci = self.column_indexes
@@ -99,4 +109,8 @@ class Loader(base.Loader):
                     value = value.strip()
                 if value:
                     setattr(self.transaction_info, attr, value)
+    
+    #--- Public
+    def rescan(self):
+        self._scan_lines()
     

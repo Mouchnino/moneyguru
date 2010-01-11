@@ -63,6 +63,12 @@ http://www.hardcoded.net/licenses/hs_license
         [layoutSelector selectItemWithTitle:[[self py] selectedLayoutName]];
 }
 
+- (IBAction)rescan:(id)sender
+{
+    [[self py] setFieldSeparator:[delimiterTextField stringValue]];
+    [[self py] rescan];
+}
+
 - (IBAction)selectLayout:(id)sender
 {
     NSMenuItem *item = sender;
@@ -171,6 +177,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)refreshLines
 {
     [csvDataTable reloadData];
+    [delimiterTextField setStringValue:[[self py] fieldSeparator]];
 }
 
 - (void)refreshTargets

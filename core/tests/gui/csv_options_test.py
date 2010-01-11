@@ -397,3 +397,41 @@ class IncreaseDecrease(TestCase):
         eq_(self.itable[1].amount_import, '-10.00')
         eq_(self.itable[2].amount_import, '-10.00')
     
+
+class WeirdSep(TestCase):
+    def setUp(self):
+        # This file has mixed up field separators (, and ;). The sniffer will auto-detect the comma
+        # as a field sep, but through the csv options panel, it should be possible to specify
+        # another field sep.
+        self.create_instances()
+        self.document.parse_file_for_import(self.filepath('csv/weird_sep.csv'))
+    
+    def test_field_separator(self):
+        # the field_separator member contains the currently used field sep.
+        eq_(self.csvopt.field_separator, ',')
+    
+    def test_rescan(self):
+        # It's possible to specify a new field sep and then rescan the csv.
+        # unicode separator is used because we must test that ew automatically encode the delimiter.
+        # (csv.Reader only accepts strings instances)
+        self.csvopt.field_separator = u';'
+        self.csvopt.rescan()
+        eq_(self.csvopt.lines[0], ['foo,bar', 'foo,baz'])
+    
+    def test_set_long_separator(self):
+        # csv dialect requires a char of 1 in length. If the input is bigger, just use the first char
+        self.csvopt.field_separator = u';foo'
+        self.csvopt.rescan()
+        eq_(self.csvopt.lines[0], ['foo,bar', 'foo,baz'])
+    
+    def test_set_non_latin_separator(self):
+        # a csv dialect requires a string delimiter, not a unicode one. encode unicode automatically,
+        # an abort on errors.
+        self.csvopt.field_separator = u'ł'
+        self.csvopt.rescan() # no crash
+    
+    def test_set_null_separator(self):
+        # ignore attemps to set an empty separator
+        self.csvopt.field_separator = ''
+        self.csvopt.rescan() # no crash
+    

@@ -174,6 +174,11 @@ class CSVOptions(DocumentGUIObject):
         self.layout.name = newname
         self.view.refresh_layout_menu()
     
+    def rescan(self):
+        self.document.loader.rescan()
+        self._refresh_columns()
+        self._refresh_lines()
+    
     def select_layout(self, name):
         if not name:
             new_layout = self._default_layout
@@ -205,6 +210,18 @@ class CSVOptions(DocumentGUIObject):
     @property
     def excluded_lines(self):
         return self.layout.excluded_lines
+    
+    @property
+    def field_separator(self):
+        return self.document.loader.dialect.delimiter
+    
+    @field_separator.setter
+    def field_separator(self, value):
+        try:
+            delimiter = value[0].encode('latin-1')
+            self.document.loader.dialect.delimiter = delimiter
+        except (UnicodeEncodeError, IndexError):
+            pass
     
     @property
     def layout_names(self):

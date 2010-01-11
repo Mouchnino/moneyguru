@@ -17,6 +17,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSMenu *columnMenu;
     IBOutlet NSPopUpButton *layoutSelector;
     IBOutlet NSPopUpButton *targetSelector;
+    IBOutlet NSTextField *delimiterTextField;
     
     int lastClickedColumnIndex;
 }
@@ -29,6 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)deleteSelectedLayout:(id)sender;
 - (IBAction)newLayout:(id)sender;
 - (IBAction)renameSelectedLayout:(id)sender;
+- (IBAction)rescan:(id)sender;
 - (IBAction)selectLayout:(id)sender;
 - (IBAction)selectTarget:(id)sender;
 - (IBAction)setColumnField:(id)sender;

@@ -1359,6 +1359,9 @@ class PyCSVImportOptions(PyWindowController):
     def deleteSelectedLayout(self):
         self.py.delete_selected_layout()
     
+    def fieldSeparator(self):
+        return self.py.field_separator
+    
     def layoutNames(self):
         return self.py.layout_names
     
@@ -1380,6 +1383,9 @@ class PyCSVImportOptions(PyWindowController):
     def renameSelectedLayout_(self, newname):
         self.py.rename_selected_layout(newname)
     
+    def rescan(self):
+        self.py.rescan()
+    
     def selectedLayoutName(self):
         return self.py.layout.name
     
@@ -1394,6 +1400,9 @@ class PyCSVImportOptions(PyWindowController):
     def setColumn_fieldForTag_(self, index, tag):
         field = CSV_FIELD_ORDER[tag]
         self.py.set_column_field(index, field)
+    
+    def setFieldSeparator_(self, fieldSep):
+        self.py.field_separator = fieldSep
     
     @objc.signature('v@:i')
     def setSelectedTargetIndex_(self, index):

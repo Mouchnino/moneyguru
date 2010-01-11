@@ -29,6 +29,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         self.continueButton.clicked.connect(self.model.continue_import)
         self.targetComboBox.currentIndexChanged.connect(self.targetIndexChanged)
         self.layoutComboBox.currentIndexChanged.connect(self.layoutIndexChanged)
+        self.rescanButton.clicked.connect(self.rescanClicked)
     
     #--- Private
     def _newLayout(self):
@@ -65,6 +66,10 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
             elif data == DELETE_LAYOUT:
                 self.model.delete_selected_layout()
     
+    def rescanClicked(self):
+        self.model.field_separator = unicode(self.fieldSeparatorEdit.text())
+        self.model.rescan()
+    
     def targetIndexChanged(self, index):
         self.model.selected_target_index = index
     
@@ -89,6 +94,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
     
     def refresh_lines(self):
         self.tableModel.reset()
+        self.fieldSeparatorEdit.setText(self.model.field_separator)
     
     def refresh_targets(self):
         self.targetComboBox.currentIndexChanged.disconnect(self.targetIndexChanged)
