@@ -367,10 +367,25 @@ class OneTransaction(TestCase):
         eq_(len(self.ttable), 0)
     
 
+class TransactionLinkedToNumberedAccounts(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('account1', account_number='4242')
+        self.add_account('account2', account_number='4241')
+        # when entering the transactions, accounts are correctly found if their number is found
+        self.add_txn(from_='4242 - account1', to='4241', amount='42')
+    
+    def test_from_to_column(self):
+        # When an account is numbered, the from and to column display those numbers with the name.
+        eq_(self.ttable[0].from_, '4242 - account1')
+        eq_(self.ttable[0].to, '4241 - account2')
+    
+
 class OneTwoWayTransactionOtherWay(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
+        self.add_account('first')
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', transfer='second', increase='42')
     
     def test_attributes(self):
@@ -385,7 +400,8 @@ class OneTwoWayTransactionOtherWay(TestCase):
 class OneThreeWayTransaction(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
+        self.add_account('first')
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', description='foobar', transfer='second', decrease='42')
         self.tpanel.load()
         self.stable.select([1])
@@ -440,7 +456,8 @@ class OneThreeWayTransaction(TestCase):
 class OneThreeWayTransactionMultipleCurrencies(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
+        self.add_account('first')
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', transfer='second', decrease='42')
         self.tpanel.load()
         self.stable.select([1])
@@ -466,7 +483,8 @@ class OneThreeWayTransactionMultipleCurrencies(TestCase):
 class OneFourWayTransactionWithUnassigned(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
+        self.add_account('first')
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', transfer='second', decrease='42')
         self.tpanel.load()
         self.stable.add()
@@ -516,7 +534,8 @@ class EmptyTransaction(TestCase):
 class TwoWayNullAmounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
+        self.add_account('first')
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', transfer='second')
         self.mainwindow.select_transaction_table()
     
@@ -535,7 +554,8 @@ class TwoWayNullAmounts(TestCase):
 class ThreeWayNullAmounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
+        self.add_account('first')
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', transfer='second')
         self.tpanel.load()
         self.stable.add()
@@ -567,7 +587,8 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_monthly_range()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.add_entry('11/06/2008', description='first')
         self.add_entry('11/07/2008', description='second') # The month range has now changed to July 2008
         self.mainwindow.select_transaction_table()
@@ -595,7 +616,8 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
 class ThreeTransactionsInRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.add_entry('11/07/2008', description='first', transfer='first')
         self.add_entry('11/07/2008', description='second', transfer='second')
         self.add_entry('12/07/2008', description='third', transfer='third') 
@@ -684,8 +706,8 @@ class ThreeTransactionsInRange(TestCase):
 class ThreeTransactionsEverythingReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('first')
-        self.add_account_legacy('second')
+        self.add_account('first')
+        self.add_account('second')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -760,7 +782,8 @@ class LoadFile(TestCase):
 class AutoFill(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('Checking')
+        self.add_account('Checking')
+        self.document.show_selected_account()
         self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
     
     def test_autofill_after_column_change(self):
@@ -880,7 +903,8 @@ class AutoFill(TestCase):
 class SevenEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.document.date_range = MonthRange(date(2008, 1, 1))
         self.add_entry('1/1/2008', description='txn 1')
         self.add_entry('2/1/2008', description='txn 2')
@@ -991,7 +1015,8 @@ class FourEntriesOnTheSameDate(TestCase):
     """Four entries in the same account on the same date"""
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.document.date_range = MonthRange(date(2008, 1, 1))
         self.add_entry('1/1/2008', description='txn 1')
         self.add_entry('1/1/2008', description='txn 2')

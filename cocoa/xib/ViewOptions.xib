@@ -41,7 +41,7 @@
 			<object class="NSWindowTemplate" id="937315869">
 				<int key="NSWindowStyleMask">19</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{196, 196}, {419, 314}}</string>
+				<string key="NSWindowRect">{{196, 196}, {471, 314}}</string>
 				<int key="NSWTFlags">1677721600</int>
 				<string key="NSWindowTitle">View Options</string>
 				<string key="NSWindowClass">NSPanel</string>
@@ -435,6 +435,28 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
+						<object class="NSButton" id="1019717434">
+							<reference key="NSNextResponder" ref="45188462"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{366, 192}, {87, 18}}</string>
+							<reference key="NSSuperview" ref="45188462"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="72795768">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">131072</int>
+								<string key="NSContents">Account #</string>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="1019717434"/>
+								<int key="NSButtonFlags">1211912703</int>
+								<int key="NSButtonFlags2">2</int>
+								<reference key="NSNormalImage" ref="329833725"/>
+								<reference key="NSAlternateImage" ref="141542944"/>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
 						<object class="NSButton" id="661529464">
 							<reference key="NSNextResponder" ref="45188462"/>
 							<int key="NSvFlags">268</int>
@@ -469,6 +491,28 @@
 								<string key="NSContents">Budgeted</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="256661265"/>
+								<int key="NSButtonFlags">1211912703</int>
+								<int key="NSButtonFlags2">2</int>
+								<reference key="NSNormalImage" ref="329833725"/>
+								<reference key="NSAlternateImage" ref="141542944"/>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
+						<object class="NSButton" id="898302584">
+							<reference key="NSNextResponder" ref="45188462"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{366, 256}, {87, 18}}</string>
+							<reference key="NSSuperview" ref="45188462"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="80791410">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">131072</int>
+								<string key="NSContents">Account #</string>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="898302584"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
 								<reference key="NSNormalImage" ref="329833725"/>
@@ -675,7 +719,7 @@
 							</object>
 						</object>
 					</object>
-					<string key="NSFrameSize">{419, 314}</string>
+					<string key="NSFrameSize">{471, 314}</string>
 					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -684,7 +728,8 @@
 			<object class="NSUserDefaultsController" id="763883162">
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>AccountReconciliationDateColumnVisible</string>
+					<string>BalanceSheetAccountNumberColumnVisible</string>
+					<string>IncomeStatementAccountNumberColumnVisible</string>
 				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
@@ -1068,6 +1113,38 @@
 					</object>
 					<int key="connectionID">94</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.BalanceSheetAccountNumberColumnVisible</string>
+						<reference key="source" ref="898302584"/>
+						<reference key="destination" ref="763883162"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="898302584"/>
+							<reference key="NSDestination" ref="763883162"/>
+							<string key="NSLabel">value: values.BalanceSheetAccountNumberColumnVisible</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.BalanceSheetAccountNumberColumnVisible</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">101</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.IncomeStatementAccountNumberColumnVisible</string>
+						<reference key="source" ref="1019717434"/>
+						<reference key="destination" ref="763883162"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1019717434"/>
+							<reference key="NSDestination" ref="763883162"/>
+							<string key="NSLabel">value: values.IncomeStatementAccountNumberColumnVisible</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.IncomeStatementAccountNumberColumnVisible</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">105</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1138,6 +1215,8 @@
 							<reference ref="386946478"/>
 							<reference ref="732213890"/>
 							<reference ref="661529464"/>
+							<reference ref="898302584"/>
+							<reference ref="1019717434"/>
 						</object>
 						<reference key="parent" ref="937315869"/>
 					</object>
@@ -1538,6 +1617,34 @@
 						<reference key="object" ref="702628302"/>
 						<reference key="parent" ref="661529464"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">98</int>
+						<reference key="object" ref="898302584"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="80791410"/>
+						</object>
+						<reference key="parent" ref="45188462"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">99</int>
+						<reference key="object" ref="80791410"/>
+						<reference key="parent" ref="898302584"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">102</int>
+						<reference key="object" ref="1019717434"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="72795768"/>
+						</object>
+						<reference key="parent" ref="45188462"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">103</int>
+						<reference key="object" ref="72795768"/>
+						<reference key="parent" ref="1019717434"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1548,6 +1655,8 @@
 					<string>-2.IBPluginDependency</string>
 					<string>-3.IBPluginDependency</string>
 					<string>10.IBPluginDependency</string>
+					<string>102.IBPluginDependency</string>
+					<string>103.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>12.IBPluginDependency</string>
 					<string>18.IBPluginDependency</string>
@@ -1609,6 +1718,8 @@
 					<string>9.IBPluginDependency</string>
 					<string>91.IBPluginDependency</string>
 					<string>92.IBPluginDependency</string>
+					<string>98.IBPluginDependency</string>
+					<string>99.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1626,11 +1737,15 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{86, 537}, {419, 314}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{86, 537}, {419, 314}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{86, 537}, {471, 314}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{86, 537}, {471, 314}}</string>
 					<integer value="0"/>
 					<string>{{492, 370}, {334, 273}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1695,7 +1810,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">94</int>
+			<int key="maxID">105</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1711,14 +1826,14 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">cocoalib/AMButtonBar/AMButtonBar.h</string>
+						<string key="minorKey">AMButtonBar/AMButtonBar.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">cocoalib/PSMTabBarControl/PSMTabBarControl.h</string>
+						<string key="minorKey">PSMTabBarControl/PSMTabBarControl.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

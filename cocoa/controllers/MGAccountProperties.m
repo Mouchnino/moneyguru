@@ -40,14 +40,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
-    // When we change the values in the py side, it doesn't work with KVO mechanism.
-    // Notifications of a "py" change is enough to refresh all bound controls.
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
-    [self willChangeValueForKey:@"typeIndex"];
-    [self didChangeValueForKey:@"typeIndex"];
     [nameTextField setStringValue:[[self py] name]];
+    [typeSelector selectItemAtIndex:[[self py] typeIndex]];
     [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
+    [accountNumberTextField setStringValue:[[self py] accountNumber]];
 }
 
 - (void)saveFields
@@ -56,19 +52,8 @@ http://www.hardcoded.net/licenses/hs_license
     int currencyIndex = [currencySelector indexOfSelectedItem];
     if (currencyIndex >= 0)
         [[self py] setCurrencyIndex:currencyIndex];
-}
-
-/* Properties */
-- (int)typeIndex
-{
-    return [[self py] typeIndex];
-}
-
-- (void)setTypeIndex:(int)typeIndex
-{
-    [self willChangeValueForKey:@"py"];
-    [[self py] setTypeIndex:typeIndex];
-    [self didChangeValueForKey:@"py"];
+    [[self py] setTypeIndex:[typeSelector indexOfSelectedItem]];
+    [[self py] setAccountNumber:[accountNumberTextField stringValue]];
 }
 
 /* Delegate */
@@ -114,12 +99,4 @@ http://www.hardcoded.net/licenses/hs_license
     }
     return nil;
 }
-
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
-{
-    // This is so the budget field is updated as soon as the field is left
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
-}
-
 @end

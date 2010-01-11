@@ -16,6 +16,7 @@ from ..column import Column
 class NetWorthSheet(AccountSheet):
     COLUMNS = [
         Column('name', 'Account', 133),
+        Column('account_number', 'Account #', 80),
         Column('end', 'End', 100, alignment=Qt.AlignRight),
         Column('start', 'Start', 100, alignment=Qt.AlignRight),
         Column('delta', 'Change', 100, alignment=Qt.AlignRight),

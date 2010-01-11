@@ -8,7 +8,6 @@
 
 import datetime
 import time
-import xml.etree.cElementTree as ET
 from itertools import dropwhile
 
 from hsutil import io
@@ -22,12 +21,14 @@ from .loader import csv, qif, ofx, native
 from .model.account import Account, Group, AccountList, GroupList, AccountType
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
-    AllTransactionsRange, CustomDateRange, format_date, inc_month)
+    AllTransactionsRange, CustomDateRange, inc_month)
 from .model.oven import Oven
 from .model.recurrence import Recurrence, Spawn, REPEAT_MONTHLY
 from .model.transaction import Transaction, Entry
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
+from .saver.native import save as save_native
+from .saver.qif import save as save_qif
 
 SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
 SELECTED_DATE_RANGE_START_PREFERENCE = 'SelectedDateRangeStart'
@@ -55,7 +56,7 @@ class FilterType(object):
 class ScheduleScope(object):
     Local = 0
     Global = 1
-    Cancel = 2 # not used yet
+    Cancel = 2
 
 AUTOSAVE_BUFFER_COUNT = 10 # Number of autosave files that will be kept in the cache.
 
@@ -232,7 +233,8 @@ class Document(Broadcaster, Listener):
         self.notify('account_deleted')
     
     def _get_action_from_changed_transactions(self, transactions):
-        if len(transactions) == 1 and not isinstance(transactions[0], Spawn) and transactions[0] not in self.transactions:
+        if len(transactions) == 1 and not isinstance(transactions[0], Spawn) \
+                and transactions[0] not in self.transactions:
             action = Action('Add transaction')
             action.added_transactions.add(transactions[0])
         else:
@@ -350,7 +352,8 @@ class Document(Broadcaster, Listener):
             else:
                 entries = [e for e in entries if e.amount < 0]
         elif filter_type is FilterType.Transfer:
-            entries = [e for e in entries if any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
+            entries = [e for e in entries if
+                any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
         elif filter_type is FilterType.Reconciled:
             entries = [e for e in entries if e.reconciled]
         elif filter_type is FilterType.NotReconciled:
@@ -386,7 +389,8 @@ class Document(Broadcaster, Listener):
         self._visible_transactions = txns
     
     #--- Account
-    def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT):
+    def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
+            account_number=NOEDIT):
         assert account is not None
         action = Action('Change account')
         action.change_accounts([account])
@@ -399,6 +403,8 @@ class Document(Broadcaster, Listener):
             account.currency = currency
         if group is not NOEDIT:
             account.group = group
+        if account_number is not NOEDIT:
+            account.account_number = account_number
         self._undoer.record(action)
         self._cook()
         self.notify('account_changed')
@@ -947,133 +953,17 @@ class Document(Broadcaster, Listener):
     def save_to_xml(self, filename, autosave=False):
         # When called from _async_autosave, it should not disrupt the user: no stop edition, no
         # change in the save state.
-        def date2str(date):
-            return date.strftime('%Y-%m-%d')
-        
-        def write_transaction_element(parent_element, transaction):
-            transaction_element = ET.SubElement(parent_element, 'transaction')
-            attrib = transaction_element.attrib
-            attrib['date'] = date2str(transaction.date)
-            attrib['description'] = transaction.description
-            attrib['payee'] = transaction.payee
-            attrib['checkno'] = transaction.checkno
-            attrib['mtime'] = str(int(transaction.mtime))
-            for split in transaction.splits:
-                split_element = ET.SubElement(transaction_element, 'split')
-                attrib = split_element.attrib
-                attrib['account'] = split.account_name
-                attrib['amount'] = str(split.amount)
-                attrib['memo'] = split.memo
-                if split.reference is not None:
-                    attrib['reference'] = split.reference
-                if split.reconciliation_date is not None:
-                    attrib['reconciliation_date'] = date2str(split.reconciliation_date)
-        
         if not autosave:
             self.stop_edition()
             self._commit_reconciliation()
             self.notify('reconciliation_changed')
-        root = ET.Element('moneyguru-file')
-        for group in self.groups:
-            group_element = ET.SubElement(root, 'group')
-            attrib = group_element.attrib
-            attrib['name'] = group.name
-            attrib['type'] = group.type
-        for account in self.accounts:
-            account_element = ET.SubElement(root, 'account')
-            attrib = account_element.attrib
-            attrib['name'] = account.name
-            attrib['currency'] = account.currency.code
-            attrib['type'] = account.type
-            if account.group:
-                attrib['group'] = account.group.name
-            if account.reference is not None:
-                attrib['reference'] = account.reference
-        for transaction in self.transactions:
-            write_transaction_element(root, transaction)
-        # the functionality of the line below is untested because it's an optimisation
-        scheduled = [s for s in self.schedules if s.is_alive]
-        for recurrence in scheduled:
-            recurrence_element = ET.SubElement(root, 'recurrence')
-            attrib = recurrence_element.attrib
-            attrib['type'] = recurrence.repeat_type
-            attrib['every'] = str(recurrence.repeat_every)
-            if recurrence.stop_date is not None:
-                attrib['stop_date'] = date2str(recurrence.stop_date)
-            for date, change in recurrence.date2globalchange.items():
-                change_element = ET.SubElement(recurrence_element, 'change')
-                change_element.attrib['date'] = date2str(date)
-                if change is not None:
-                    write_transaction_element(change_element, change)
-            for date, exception in recurrence.date2exception.items():
-                exception_element = ET.SubElement(recurrence_element, 'exception')
-                exception_element.attrib['date'] = date2str(date)
-                if exception is not None:
-                    write_transaction_element(exception_element, exception)
-            write_transaction_element(recurrence_element, recurrence.ref)
-        for budget in self.budgets:
-            budget_element = ET.SubElement(root, 'budget')
-            attrib = budget_element.attrib
-            attrib['account'] = budget.account.name
-            attrib['type'] = budget.repeat_type
-            attrib['every'] = unicode(budget.repeat_every)
-            attrib['amount'] = unicode(budget.amount)
-            if budget.target is not None:
-                attrib['target'] = budget.target.name
-            attrib['start_date'] = date2str(budget.start_date)
-            if budget.stop_date is not None:
-                attrib['stop_date'] = date2str(budget.stop_date)
-        tree = ET.ElementTree(root)
-        tree.write(filename, 'utf-8')
+        save_native(filename, self.accounts, self.groups, self.transactions, self.schedules,
+            self.budgets)
         if not autosave:
             self._undoer.set_save_point()
     
     def save_to_qif(self, filename):
-        def format_amount_for_qif(amount):
-            return '%1.2f' % amount.value if amount else '0.00'
-        
-        accounts = [a for a in self.accounts if a.is_balance_sheet_account()]
-        txns_seen = set()
-        lines = []
-        for account in accounts:
-            qif_account_type = 'Oth L' if account.type == AccountType.Liability else 'Bank'
-            lines.append('!Account')
-            lines.append('N%s' % account.name)
-            lines.append('B%s' % format_amount_for_qif(account.balance()))
-            lines.append('T%s' % qif_account_type)
-            lines.append('^')
-            lines.append('!Type:%s' % qif_account_type)
-            for entry in account.entries:
-                if entry.transaction in txns_seen:
-                    continue
-                txns_seen.add(entry.transaction)
-                lines.append('D%s' % format_date(entry.date, 'MM/dd/yy'))
-                lines.append('T%s' % format_amount_for_qif(entry.amount))
-                if entry.description:
-                    lines.append('M%s' % entry.description)
-                if entry.payee:
-                    lines.append('P%s' % entry.payee)
-                if entry.checkno:
-                    lines.append('N%s' % entry.checkno)
-                if len(entry.splits) > 1 or any(s.memo for s in entry.transaction.splits):
-                    for split in entry.splits:
-                        if split.account is not None:
-                            lines.append('S%s' % split.account.name)
-                        if split.memo:
-                            lines.append('E%s' % split.memo)
-                        if split.reconciled:
-                            lines.append('CR')
-                        lines.append('$%s' % format_amount_for_qif(-split.amount))
-                else:
-                    if entry.transfer:
-                        lines.append('L%s' % entry.transfer[0].name)
-                    if entry.reconciled:
-                        lines.append('CR')
-                lines.append('^')
-        fd = open(filename, 'w')
-        data = u'\n'.join(lines)
-        fd.write(data.encode('utf-8'))
-        fd.close()
+        save_qif(filename, self.accounts)
     
     def parse_file_for_import(self, filename):
         for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv.Loader):

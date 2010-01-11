@@ -124,9 +124,11 @@ class TransactionTableRow(RowWithDate):
         self._from_count = len(froms)
         self._to_count = len(tos)
         UNASSIGNED = 'Unassigned' if len(froms) > 1 else ''
-        self._from = ', '.join(s.account.name if s.account is not None else UNASSIGNED for s in froms)
+        get_display = lambda s: s.account.combined_display if s.account is not None else UNASSIGNED
+        self._from = ', '.join(map(get_display, froms))
         UNASSIGNED = 'Unassigned' if len(tos) > 1 else ''
-        self._to = ', '.join(s.account.name if s.account is not None else UNASSIGNED for s in tos)
+        get_display = lambda s: s.account.combined_display if s.account is not None else UNASSIGNED
+        self._to = ', '.join(map(get_display, tos))
         try:
             self._amount = sum(s.amount for s in tos)
         except ValueError: # currency coercing problem

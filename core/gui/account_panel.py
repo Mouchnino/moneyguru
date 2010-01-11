@@ -27,6 +27,7 @@ class AccountPanel(GUIPanel):
         self.name = account.name
         self.type = account.type
         self.currency = account.currency
+        self.account_number = account.account_number
         self.type_index = AccountType.InOrder.index(self.type)
         self.currency_index = Currency.all.index(self.currency)
         self.account = account # for the save() assert
@@ -35,7 +36,7 @@ class AccountPanel(GUIPanel):
         assert self.account is self.document.selected_account
         try:
             self.document.change_account(self.account, name=self.name, type=self.type, 
-                currency=self.currency)
+                currency=self.currency, account_number=self.account_number)
         except DuplicateAccountNameError:
             pass
     
@@ -44,6 +45,7 @@ class AccountPanel(GUIPanel):
         self.type = AccountType.Asset
         self._type_index = 0
         self.currency = None
+        self.account_number = ''
     
     #--- Properties
     @property

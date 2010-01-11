@@ -78,6 +78,7 @@ class Loader(base.Loader):
             self.account_info.budget = attrib.get('budget')
             self.account_info.budget_target = attrib.get('budget_target')
             self.account_info.reference = attrib.get('reference')
+            self.account_info.account_number = attrib.get('account_number', '')
             self.flush_account()
         elements = [e for e in root if e.tag == 'transaction'] # we only want transaction element *at the root*
         for transaction_element in elements:

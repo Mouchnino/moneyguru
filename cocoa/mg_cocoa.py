@@ -768,6 +768,12 @@ class PyAccountPanel(PyPanel):
     def setCurrencyIndex_(self, index):
         self.py.currency_index = index
     
+    def accountNumber(self):
+        return self.py.account_number
+    
+    def setAccountNumber_(self, accountNumber):
+        self.py.account_number = accountNumber
+    
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     

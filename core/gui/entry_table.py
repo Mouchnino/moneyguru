@@ -311,7 +311,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self._payee = entry.payee
         self._checkno = entry.checkno
         self._amount = entry.amount
-        self._transfer = ', '.join(s.name for s in entry.transfer)
+        self._transfer = ', '.join(s.combined_display for s in entry.transfer)
         self._balance = entry.balance_with_budget
         self._reconciled_balance = entry.reconciled_balance if entry.reconciled or entry.reconciliation_pending else None
         self._reconciled = entry.reconciled

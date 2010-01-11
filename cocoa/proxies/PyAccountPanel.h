@@ -17,6 +17,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setTypeIndex:(int)index;
 - (int)currencyIndex;
 - (void)setCurrencyIndex:(int)index;
+- (NSString *)accountNumber;
+- (void)setAccountNumber:(NSString *)accountNumber;
 
 - (NSArray *)availableCurrencies;
 - (void)savePanel;

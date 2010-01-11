@@ -127,7 +127,7 @@ class Pristine(TestCase):
 class AccountHierarchy(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Asset 1')
+        self.add_account('Asset 1', account_number='4242')
         self.add_group('Bank')
         self.add_account('Bank 1', group_name='Bank')
         self.add_account('Liability 1', account_type=AccountType.Liability)
@@ -138,11 +138,14 @@ class AccountHierarchy(TestCase):
     
     def test_balance_sheet(self):
         # The balance sheet shows the hierarchy correctly.
+        eq_(self.bsheet.assets.account_number, '') # all nodes have an account_number property
+        eq_(self.bsheet.net_worth.account_number, '')
         eq_(self.bsheet.assets[0].name, 'Bank')
         eq_(self.bsheet.assets[0][0].name, 'Bank 1')
         eq_(self.bsheet.assets[0][1].name, 'Total Bank')
         eq_(self.bsheet.assets[0][2].name, None)
         eq_(self.bsheet.assets[1].name, 'Asset 1')
+        eq_(self.bsheet.assets[1].account_number, '4242')
         eq_(self.bsheet.assets[2].name, 'TOTAL ASSETS')
         eq_(self.bsheet.assets[3].name, None)
         eq_(self.bsheet.liabilities[0].name, 'Loans')
@@ -198,7 +201,7 @@ class AccountHierarchy(TestCase):
         eq_(self.document.selected_account.name, 'Bank 1')
     
 
-class OneEmptyAccount(TestCase):
+class OneAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('Checking')

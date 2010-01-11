@@ -257,6 +257,20 @@ class EntryInLiabilities(TestCase, TestQIFExportImportMixin):
         eq_(self.etable[0].increase, '10.00')
     
 
+class TransactionLinkedToNumberedAccounts(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('account1', account_number='4242')
+        self.add_account('account2', account_number='4241')
+        self.show_account('account1')
+        # when entering the transactions, accounts are correctly found if their number is found
+        self.add_entry(transfer='4241', decrease='42')
+    
+    def test_transfer_column(self):
+        # When an account is numbered, the from and to column display those numbers with the name.
+        eq_(self.etable[0].transfer, '4241 - account2')
+    
+
 class EURAccountEUREntries(TestCase):
     def setUp(self):
         self.create_instances()

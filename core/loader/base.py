@@ -225,7 +225,8 @@ class Loader(object):
                 account.group = self.groups.find(info.group, account_type)
             if info.budget:
                 self.budget_infos.append(BudgetInfo(info.name, info.budget_target, info.budget))
-            account.reference = info.reference                    
+            account.reference = info.reference
+            account.account_number = info.account_number
             currencies.add(account.currency)
             self.accounts.add(account)
         
@@ -314,7 +315,8 @@ class AccountInfo(object):
         self.budget_target = None
         self.reference = None
         self.balance = None
-
+        self.account_number = ''
+    
     def is_valid(self):
         return bool(self.name)
     

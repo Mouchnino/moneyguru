@@ -19,6 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"delta_perc" toUserDefault:BalanceSheetDeltaPercColumnVisible];
     [columnsManager linkColumn:@"start" toUserDefault:BalanceSheetStartColumnVisible];
     [columnsManager linkColumn:@"budgeted" toUserDefault:BalanceSheetBudgetedColumnVisible];
+    [columnsManager linkColumn:@"account_number" toUserDefault:BalanceSheetAccountNumberColumnVisible];
     return self;
 }
 

@@ -20,6 +20,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"delta_perc" toUserDefault:IncomeStatementDeltaPercColumnVisible];
     [columnsManager linkColumn:@"last_cash_flow" toUserDefault:IncomeStatementLastColumnVisible];
     [columnsManager linkColumn:@"budgeted" toUserDefault:IncomeStatementBudgetedColumnVisible];
+    [columnsManager linkColumn:@"account_number" toUserDefault:IncomeStatementAccountNumberColumnVisible];
     return self;
 }
 

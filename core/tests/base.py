@@ -316,14 +316,20 @@ class TestCase(TestCaseBase):
         accounts.sort(key=lambda a: (account_sort[a.type], a))
         return [a.name for a in accounts]
     
-    def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None):
+    def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None,
+            account_number=None):
         # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
         group = self.document.groups.find(group_name, account_type) if group_name else None
         account = self.document.new_account(account_type, group)
+        attrs = {}
         if name is not None:
-            self.document.change_account(account, name=name)
+            attrs['name'] = name
         if currency is not None:
-            self.document.change_account(account, currency=currency)
+            attrs['currency'] = currency
+        if account_number is not None:
+            attrs['account_number'] = account_number
+        if attrs:
+            self.document.change_account(account, **attrs)
         self.document.select_account(account)
     
     def add_account_legacy(self, *args, **kwargs):

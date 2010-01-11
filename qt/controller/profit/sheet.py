@@ -16,6 +16,7 @@ from ..column import Column
 class ProfitSheet(AccountSheet):
     COLUMNS = [
         Column('name', 'Account', 133),
+        Column('account_number', 'Account #', 80),
         Column('cash_flow', 'Current', 100, alignment=Qt.AlignRight),
         Column('last_cash_flow', 'Last', 100, alignment=Qt.AlignRight),
         Column('delta', 'Change', 100, alignment=Qt.AlignRight),

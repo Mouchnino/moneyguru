@@ -35,7 +35,9 @@ class Report(DocumentGUIObject, tree.Tree):
         pass
     
     def _make_node(self, name):
-        return Node(name)
+        node = Node(name)
+        node.account_number = ''
+        return node
     
     def _refresh(self):
         pass
@@ -140,6 +142,7 @@ class Report(DocumentGUIObject, tree.Tree):
         node = self._make_node(account.name)
         node.account = account
         node.is_account = True
+        node.account_number = account.account_number
         node.is_excluded = account in self.document.excluded_accounts
         if not node.is_excluded:
             self._compute_account_node(node)

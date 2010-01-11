@@ -16,12 +16,10 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *nameTextField;
     IBOutlet NSPopUpButton *typeSelector;
     IBOutlet NSComboBox *currencySelector;
+    IBOutlet NSTextField *accountNumberTextField;
     
     NSArray *currencies;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyAccountPanel *)py;
-/* Properties */
-- (int)typeIndex;
-- (void)setTypeIndex:(int)typeIndex;
 @end

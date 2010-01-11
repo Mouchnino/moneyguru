@@ -40,7 +40,7 @@ class Pristine(TestCase):
 class OneEmptyAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account('Checking', EUR)
+        self.add_account('Checking', EUR, account_number='4242')
     
     def test_accounts_count(self):
         # Check that the account is put in the assets section.
@@ -97,6 +97,13 @@ class OneEmptyAccount(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.move([0, 0], [1])
         assert self.document.is_dirty()
+    
+    def test_save_and_load(self):
+        # account_number is kept when saving and reloading
+        self.document = self.save_and_load()
+        self.create_instances()
+        self.mainwindow.select_balance_sheet()
+        eq_(self.bsheet.assets[0].account_number, '4242')
     
 
 class ThreeEmptyAccounts(TestCase):

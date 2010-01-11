@@ -180,7 +180,7 @@ http://www.hardcoded.net/licenses/hs_license
         // Dark background
         [cell setHasDarkBackground:isSelected && isFocused && !isPrinting];
     }
-    else
+    else if (![column isEqualToString:@"account_number"])
     {
         MGAmountCell *cell = theCell;
         BOOL isSubtotal = [self boolProperty:@"is_subtotal" valueAtPath:path];

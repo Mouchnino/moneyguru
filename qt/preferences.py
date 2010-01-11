@@ -86,8 +86,8 @@ class Preferences(PreferencesBase):
         self.scheduleColumnOrder = None
         self.budgetColumnOrder = None
         
-        self.networthHiddenColumns = set(['delta', 'delta_perc'])
-        self.profitHiddenColumns = set(['delta', 'delta_perc'])
+        self.networthHiddenColumns = set(['delta', 'delta_perc', 'account_number'])
+        self.profitHiddenColumns = set(['delta', 'delta_perc', 'account_number'])
         self.transactionHiddenColumns = set(['payee', 'checkno'])
         self.entryHiddenColumns = set(['payee', 'checkno', 'reconciliation_date'])
         self.scheduleHiddenColumns = set(['payee', 'checkno'])

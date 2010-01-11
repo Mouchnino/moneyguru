@@ -42,6 +42,7 @@ class Account(object):
         self.type = type
         self.reference = None
         self.group = None
+        self.account_number = ''
         self._date2entries = {}
         self._sorted_entry_dates = []
         # the key for this dict is (date_range, currency)
@@ -165,6 +166,14 @@ class Account(object):
         cash_flow = self.cash_flow(date_range, currency)
         return self._normalize_amount(cash_flow)
     
+    #--- Properties
+    @property
+    def combined_display(self):
+        if self.account_number:
+            return "{0} - {1}".format(self.account_number, self.name)
+        else:
+            return self.name
+    
 
 class Group(object):
     def __init__(self, name, type):
@@ -223,9 +232,11 @@ class AccountList(list):
         'auto_create_type' and return it.
         """
         lowered = name.lower()
-        for item in self:
-            if item.name.lower() == lowered:
-                return item
+        for account in self:
+            if account.name.lower() == lowered:
+                return account
+            elif account.account_number and lowered.startswith(account.account_number):
+                return account
         if auto_create_type:
             account = Account(name, self.default_currency, type=auto_create_type)
             self.add(account)

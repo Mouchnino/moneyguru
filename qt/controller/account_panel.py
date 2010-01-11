@@ -19,6 +19,7 @@ class AccountPanel(Panel, Ui_AccountPanel):
         ('nameEdit', 'name'),
         ('typeComboBox', 'type_index'),
         ('currencyComboBox', 'currency_index'),
+        ('accountNumberEdit', 'account_number'),
     ]
     
     def __init__(self, parent, doc):
