@@ -8,6 +8,8 @@
 
 import copy
 
+from hsutil.misc import extract
+
 from ..model.recurrence import Spawn
 
 ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group']
@@ -58,7 +60,10 @@ class Action(object):
         self.changed_budgets.add((budget, budget.replicate()))
     
     def change_transactions(self, transactions):
-        self.changed_transactions |= set((t, t.replicate()) for t in transactions)
+        spawns, normal = extract(lambda t: isinstance(t, Spawn), transactions)
+        self.changed_transactions |= set((t, t.replicate()) for t in normal)
+        for schedule in set(spawn.recurrence for spawn in spawns):
+            self.change_schedule(schedule)
     
     def change_splits(self, splits):
         self.changed_splits |= set((s, copy.copy(s)) for s in splits)
@@ -192,3 +197,4 @@ class Undoer(object):
     def modified(self):
         return self._save_point is not self._actions[self._index] if self.can_undo() else self._save_point is not None
     
+

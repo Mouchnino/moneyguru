@@ -404,7 +404,7 @@ class TestCase(TestCaseBase):
         if name is not None:
             self.document.change_group(group, name=name)
     
-    def add_schedule(self, start_date=None, description='', account=None, amount=0, 
+    def add_schedule(self, start_date=None, description='', account=None, amount='0',
             repeat_type_index=0, repeat_every=1, stop_date=None):
         if start_date is None:
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
@@ -419,7 +419,7 @@ class TestCase(TestCaseBase):
         if account:
             self.scsplittable.add()
             self.scsplittable.edited.account = account
-            if amount >= 0:
+            if self.app.parse_amount(amount) >= 0:
                 self.scsplittable.edited.debit = amount
             else:
                 self.scsplittable.edited.credit = amount

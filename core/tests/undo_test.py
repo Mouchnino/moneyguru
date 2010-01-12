@@ -14,8 +14,9 @@ from nose.tools import eq_
 
 from hsutil.currency import EUR
 
-from .base import TestCase as TestCaseBase, CommonSetup, TestAppCompareMixin
+from ..document import ScheduleScope
 from ..model.date import MonthRange
+from .base import TestCase as TestCaseBase, CommonSetup, TestAppCompareMixin
 
 class TestCase(TestCaseBase, TestAppCompareMixin):
     """Provides an easy way to test undo/redo
@@ -595,11 +596,11 @@ class TransactionWithAutoCreatedTransfer(TestCase):
         self.etable.delete()
     
 
-class ScheduledTransaction(TestCase, CommonSetup):
+class ScheduledTransaction(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('account')
-        self.setup_scheduled_transaction(account='account')
+        self.add_schedule(description='foobar', account='account')
         self.mainwindow.select_schedule_table()
         self.sctable.select([0])
     
@@ -609,6 +610,17 @@ class ScheduledTransaction(TestCase, CommonSetup):
         self.scpanel.description = 'changed'
         self.scpanel.repeat_every = 12
         self.scpanel.save()
+    
+    def test_change_spawn_globally(self):
+        # Changing a spawn globally then undoing correcty updates the spawns. Old values would
+        # previously linger around even though the schedule had been un-changed.
+        self.mainwindow.select_transaction_table()
+        self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
+        self.ttable.select([0])
+        self.ttable[0].description = 'changed'
+        self.ttable.save_edits()
+        self.document.undo()
+        eq_(self.ttable[1].description, 'foobar')
     
     @save_state_then_verify
     def test_delete_account(self):
