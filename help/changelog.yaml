@@ -1,3 +1,19 @@
+- date: 2010-01-12
+  version: 1.7.0
+  description: |
+    * Allow tables' column sorting to be modified. (#48)
+    * Added the "All Transactions" date range. (#52)
+    * Added account jump arrows to Transaction and Account views. (#56)
+    * Added the "Account #" field to accounts. (#81)
+    * Significantly changed the way reconciliation works. (#99)
+    * It's now possible to manually rescan a CSV file with a specific field delimiter. (#72)
+    * Added a transaction duplication feature. (#83)
+    * Improved pie charts legend placing. (#34)
+    * Allow multiple selection in the import window. (#47)
+    * Allow operation cancellation in schedule scoping dialog. (#82)
+    * Fixed a crash in CSV options dialog. (#107)
+    * Fixed a crash during account name edition. (#106)
+    * Dropped OS X Tiger support.
 - date: 2010-01-04
   version: 1.6.10
   description: |
