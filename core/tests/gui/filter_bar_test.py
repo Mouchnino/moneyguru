@@ -18,16 +18,17 @@ class Pristine(TestCase):
         self.create_instances()
     
     def test_attributes(self):
-        """the filter bars start out as unfiltered, and both etable and ttable have one"""
-        self.assertTrue(self.tfbar.filter_type is None)
-        self.assertTrue(self.efbar.filter_type is None)
+        # the filter bars start out as unfiltered, and both etable and ttable have one.
+        assert self.tfbar.filter_type is None
+        assert self.efbar.filter_type is None
     
 
 class TransactionsOfEachType(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('asset 1')
-        self.add_account_legacy('asset 2')
+        self.add_account('asset 1')
+        self.add_account('asset 2')
+        self.document.show_selected_account()
         self.add_entry(description='first', transfer='Income', increase='1')
         self.add_entry(description='second', increase='2')
         self.add_entry(description='third', transfer='Expense', decrease='3')
@@ -139,8 +140,9 @@ class SplitExpenseFromAssetAndLiability(TestCase):
     # liability
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('liability', account_type=AccountType.Liability)
-        self.add_account_legacy('asset')
+        self.add_account('liability', account_type=AccountType.Liability)
+        self.add_account('asset')
+        self.document.show_selected_account()
         self.add_entry(transfer='expense', decrease='100')
         self.tpanel.load()
         self.stable.select([0]) # the liability split
