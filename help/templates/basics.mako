@@ -13,13 +13,14 @@ The currently selected date range affects the whole application. Everything you 
 
 ![](images/basics_date_range.png)
 
-There are 6 types of date ranges:
+There are 7 types of date ranges:
 
 1. **Month:** It starts on the first day of a month and ends on the last day of the same month.
 1. **Quarter:** It starts on the first day of a quarter (3 months) and ends on the last day of the same quarter.
 1. **Year:** It starts on the first day of a year and ends on the last day of the same year.
 1. **Year to date:** It starts on the first day of a <i>today's</i> year and ends <i>today</i>. Use this date range if you want moneyGuru to show you your current situation (without any budgeting or scheduled transactions) thrown in the mix.
 1. **Running year:** This date range <i>follows</i> today. It displays exactly <i>one year</i>, but instead of displaying full years, it uses the "Ahead months in Running year" preference to determine when the date range ends, and then starts exactly one year before that date.
+1. **All Transactions:** This date range starts at the date of the earliest transaction in your document and ends at now + ahead months (see Running Year).
 1. **Custom date range:** When you select this date range, moneyGuru will prompt you for a start date and an end date. Afterwards, the date range will be the dates you chose.
 
 For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's ${cmd_opt}[ and ${cmd_opt}]). There are also shortcuts to select date range types (${cmd_opt}1-6). You can also press ${cmd_opt}T to return to the today's date range.
@@ -58,12 +59,14 @@ The Net Worth and Profit &amp; Loss views are where you do account management an
 **Columns:** The sheets each have a different set of columns (customizable with ${cmd}J).
 
 - **Balance Sheet:**
+    - **Account #:** An optional account number reference tied to the account. See the [edition page](edition.htm) for more info.
     - **Start:** The balance of the account at the beginning of the date range. It includes scheduled transactions, but not budgets.
     - **End:** The balance of the account at the end of the date range.
     - **Change:** The difference between Start and End.
     - **Change %:** The difference in percentage between Start and End
     - **Budgeted:** The amount of budget (for which this account is a **target**) left to allocate in this current date range. This means that, if your budgets correctly reflect reality, End + Budgeted should be your actual balance at the end of the date range.
 - **Profit & Loss:**
+    - **Account #:** Same as in the Balance sheet.
     - **Current:** The cash flow of the account for the current date range.
     - **Last:** The cash flow of the account for the last date range. For example, if in a month range, the Last column shows the cash flow for the month prior to the current one. Year-to-date is a special case and under it, the Last column displays the last year's cash flow.
     - **Change and Change %:** Same as in the balance sheet.
@@ -87,12 +90,16 @@ Above the transactions list, there is a **filter bar** allowing you to see only 
 
 The filter bar also contains a **status line** showing the number of transactions shown compared to the total number of transactions in the current date range.
 
+**From** and **To** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the Net Worth and Profit views, you can click on it to show the account displayed in the cell (if, for transactions having more than 2 splits, there's more than one account in the cell, the first account is shown).
+
 Account
 -----
 
 ![](images/basics_account.png)
 
-When you show an account from the Net Worth view or the Profit & Loss view, it opens this view. It lists transactions similarly to the Transactions view, but it only lists transactions that affect the shown account. It also list those transactions from the point of view of the account. Therefore, instead of a **From** and a **To** column, there is only a **Transfer** column. However, the **Amount** column is split into an **Increase** and a **Decrease** column. For example, if I have Checking shown and the **Transfer** is "Groceries" and the **Decrease** is "42", it means that 42$ are taken from Checking and sent to Groceries. If the shown account is an asset or liability, there is also a **Balance** column, which shows the running balance of the account. The graph below shows the balance of the account for each day of the date range. If the shown account is an income or an expense, a bar chart similar to the Profit & Loss chart will be shown.
+This view displays transactions *from the perspective of a specific account*. It lists transactions similarly to the Transactions view, but it only lists transactions that affect the shown account. Instead of a **From** and a **To** column, there is only a **Transfer** column (the *other side(s)* of the transaction). However, the **Amount** column is split into an **Increase** and a **Decrease** column. For example, if I have Checking shown and the **Transfer** is "Groceries" and the **Decrease** is "42", it means that 42$ are taken from Checking and sent to Groceries. If the shown account is an asset or liability, there is also a **Balance** column, which shows the running balance of the account. The graph below shows the balance of the account for each day of the date range. If the shown account is an income or an expense, a bar chart similar to the Profit & Loss chart will be shown.
+
+This view is initially disabled because it needs a target account to show. That is why you must first select an account to show with the ![](images/basics_show_account_arrow.png) arrows. Afterwards, the Account view button in the toolbar will become enabled because moneyGuru will remember the account that was last shown.
 
 The Account view also has a filter bar, which behaves similarly to the one in the Transactions view, but with slight differences.
 
@@ -104,6 +111,8 @@ The Account view also has a filter bar, which behaves similarly to the one in th
 * **Not Reconciled:** Show only un-reconciled entries.
 
 The Account view's filter bar also has a status line, which additionally shows the total amounts in the "Increase" and "Decrease" columns.
+
+**Transfer** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the other views, you can click on it to show the account displayed in the cell. Unlike arrows from the Transaction view, this only *cycles through* the transaction's split. Therefore, even when a transaction has more than 2 splits, continually clicking on that arrow will show all affected accounts, not just the first 2.
 
 View Options
 -----

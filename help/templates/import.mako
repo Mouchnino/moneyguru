@@ -29,7 +29,7 @@ By default, transactions are imported in a new account. However, if you want, yo
 
 The reason why the table changes like this is because when you import in an existing account, it is possible that you import transactions that already exist in your account. You must tell moneyGuru which transactions go with which. If you import an OFX file, all of this is done automatically, but you still can change the matching manually if you want.
 
-On the left side of the table (the 3 first columns) are the [unreconciled](reconciliation.htm) transactions from the target account. On the right side are the transactions to be imported. Unmatched transactions have one of their side empty. Matched transaction have both their side filled, and a lock icon in the middle. You can break up matched transactions by clicking on the lock. You can match transactions together by drag &amp; dropping a transaction on another one.
+On the left side of the table (the 3 first columns) are the [unreconciled](reconciliation.htm) transactions from the target account. On the right side are the transactions to be imported. Unmatched transactions have one of their side empty. Matched transaction have both their side filled, and a lock icon in the middle. You can break up matched transactions by clicking on the lock. You can match transactions together by drag & dropping a transaction on another one.
 
 If you import a OFX file for an account that already received an OFX import before, all of this matching happen automatically. This bring up an exception to the rule that only unreconciled transactions are shown in the left side. If a transaction in the imported OFX file matches with a reconciled transaction from the target account, this transaction will be brought up. However, the "import" checkbox will be automatically unchecked (it's normally checked by default). The reason for this is that if it's reconciled, you probably don't want to change it.
 
@@ -43,6 +43,8 @@ Importing CSV files is the same thing as importing another type of file, but bef
 The problem with CSV is that there is absolutely no standard as to how the file is structured. This window lets you tell moneyGuru what column is what. To use it, look at the data displayed, and when you figured out what one column is about (for example, the date), click on that column's header and select the appropriate transaction field for it. The Date and Amount columns are mandatory.
 
 CSV files also often have header (and even sometimes, footer!) lines. moneyGuru has no clue, beforehand, which lines are what. Therefore, it is you who must uncheck the Import column for each line that does not represent a transaction.
+
+Sometimes, CSV files are so weird that moneyGuru won't be able to correctly detect the delimiter that separates fields in it. If that happens, you'll have all kinds of weird data in your column, with half a value in one column and the other half in another column. In those cases, you can use the **Delimiter** field to manually specify a field delimiter for a CSV file. After you do that, press Rescan to reload the columns using that delimiter.
 
 moneyGuru remembers about columns and header lines between running sessions. If you have more than one type of CSV to regularly import, you can use the Layouts. Each layout store its own column/header configuration.
 

@@ -28,7 +28,10 @@ You can also use drag & drop to change an account type or group (yeah, account g
 
 ![](images/edition_account_panel.png)
 
-Using Show Info on an account will bring the account edition panel shown above. From there, you can edit an account name, but also change its type, its [currency](currencies.htm) and its [budget](forecast.htm) if it's an income or expense. Note that changing an account's currency does **not** change the currency of the transactions it contains.
+Using Show Info on an account will bring the account edition panel shown above. From there, you can edit an account name, but also change its type, its [currency](currencies.htm) and its account number. An account number is a numerical reference to an account. Use this if your accounting has account number (you know, 1000-1999 is for assets, 8000-8999 is for expenses, stuff like that). When an account has an account number, that number will be displayed along with the name in the Transaction and Account views. Moreover, you can type the number instead of the name to reference to that account (if you know the numbers by heart, it will make typing much faster).
+
+Little aside note: Changing an account's currency does **not** change the currency of the transactions it contains.
+
 Transactions
 -----
 
