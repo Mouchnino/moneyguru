@@ -336,7 +336,10 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     #--- Properties
     @BaseEntryTableRow.reconciliation_date.setter
     def reconciliation_date(self, value):
-        parsed = self.table.document.app.parse_date(value)
+        try:
+            parsed = self.table.document.app.parse_date(value)
+        except ValueError:
+            parsed = None
         if parsed == self._reconciliation_date:
             return
         self._edit()

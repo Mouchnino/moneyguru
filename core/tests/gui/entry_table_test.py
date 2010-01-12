@@ -193,6 +193,12 @@ class OneEntry(TestCase):
         eq_(self.etable[0].increase, '')
         eq_(self.etable[0].decrease, '42.00')
     
+    def test_set_invalid_reconciliation_date(self):
+        # Setting an invalid reconciliation date, instead of causing an error, just sets the value
+        # to None
+        self.etable[0].reconciliation_date = 'invalid' # no crash
+        eq_(self.etable[0].reconciliation_date, '')
+    
     def test_show_transfer_account(self):
         # show_transfer_account() changes the shown account to 'second'
         self.etable.show_transfer_account()
