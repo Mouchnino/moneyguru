@@ -103,6 +103,15 @@ class TransactionsOfEachType(TestCase):
         self.bsheet.show_selected_account()
         self.check_gui_calls(self.efbar_gui, ['refresh', 'enable_transfers'])
     
+    def test_enable_disable_buttons_through_etable_cycling(self):
+        # filter bar's enable/disable actions are correctly triggered when cycling through transfer
+        # accounts in etable. Previously, selected_account would be used instead of shown_account.
+        self.etable.select([0]) # entry with transfer to income
+        self.etable.show_transfer_account() # showing Income
+        self.check_gui_calls(self.efbar_gui, ['refresh', 'disable_transfers'])
+        self.etable.show_transfer_account() # showing asset 2
+        self.check_gui_calls(self.efbar_gui, ['refresh', 'enable_transfers'])
+    
     def test_multiple_filters_at_the_same_time(self):
         # Having an unassigned filter at the same time as a search filter works as expected.
         self.mainwindow.select_transaction_table()

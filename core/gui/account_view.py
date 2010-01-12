@@ -31,7 +31,8 @@ class AccountView(BaseView):
     
     def disconnect(self):
         BaseView.disconnect(self)
-        self._shown_graph.disconnect()
+        self.balgraph.disconnect()
+        self.bargraph.disconnect()
     
     #--- Public
     def delete_item(self):

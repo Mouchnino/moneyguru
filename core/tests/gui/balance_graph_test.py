@@ -8,10 +8,10 @@ from nose.tools import eq_
 
 from hsutil.currency import CAD
 
-from ..base import TestCase, CommonSetup
+from ..base import TestCase
 from ...model.account import AccountType
 
-class TwoLiabilityTransactions(TestCase, CommonSetup):
+class TwoLiabilityTransactions(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.select_month_range()
@@ -74,7 +74,7 @@ class ForeignAccount(TestCase):
         eq_(self.balgraph.currency, CAD)
     
 
-class BudgetAndNoTranaction(TestCase, CommonSetup):
+class BudgetAndNoTranaction(TestCase):
     def setUp(self):
         self.mock_today(2008, 1, 1)
         self.create_instances()
@@ -91,4 +91,20 @@ class BudgetAndNoTranaction(TestCase, CommonSetup):
         # Now, we're supposed to see a graph starting at 100 and ending at 200
         expected = [('01/02/2008', '100.00'), ('01/03/2008', '200.00')]
         eq_(self.nw_graph_data(), expected)
+    
+
+class TwoAccountsOneTransaction(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account('account1')
+        self.add_account('account2')
+        self.add_txn('12/01/2010', to='account1', amount='42')
+    
+    def test_show_to_account(self):
+        # The data shown in the balgraph when showing account1 is accurate. Previously, the balgraph
+        # would use data from the *selected* account, not the *shown* account.
+        self.ttable.show_to_account()
+        # No account is selected now
+        eq_(self.graph_data()[0], ('13/01/2010', '42.00'))
+        eq_(self.balgraph.title, 'account1')
     

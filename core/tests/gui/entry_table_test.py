@@ -197,6 +197,8 @@ class OneEntry(TestCase):
         # show_transfer_account() changes the shown account to 'second'
         self.etable.show_transfer_account()
         eq_(self.document.shown_account.name, 'second')
+        # Previously, this was based on selected_account rather than shown_account
+        assert not self.etable.should_show_balance_column()
     
     def test_show_transfer_account_twice(self):
         # calling show_transfer_account() again brings the account view on 'first'

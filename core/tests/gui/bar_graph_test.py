@@ -107,6 +107,16 @@ class RunningYearWithSomeIncome(TestCase):
         self.add_entry('24/09/2008', transfer='Income', increase='44')
         self.document.select_running_year_range()
     
+    def test_data_is_taken_from_shown_account(self):
+        # Ensure that bargraph's data is taken from shown_account, *not* selected_account
+        self.mainwindow.select_transaction_table()
+        self.add_txn('23/09/2008', from_='something else', to='Checking', amount='1')
+        self.ttable.select([0])
+        self.ttable.show_from_account()
+        # shown: Income selected: Checking
+        eq_(self.bargraph.title, 'Income')
+        eq_(self.bar_graph_data()[0][2], '86.00') # *not* 87, like what would show with Checking
+    
     def test_monthly_bars(self):
         # with the running year range, the bars are monthly
         self.mainwindow.select_income_statement()

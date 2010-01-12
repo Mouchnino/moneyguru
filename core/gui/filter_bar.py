@@ -31,7 +31,7 @@ class EntryFilterBar(FilterBar): # disables buttons
     
     #--- Override
     def connect(self):
-        account = self.document.selected_account
+        account = self.document.shown_account
         if account is not None and account.is_income_statement_account():
             self.document.filter_type = None
             if not self._disabled_buttons:

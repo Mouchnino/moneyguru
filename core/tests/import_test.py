@@ -285,13 +285,15 @@ class TwoEntriesInRangeSaveThenLoad(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2007, 10, 1))
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.add_entry('1/10/2007', description='first')
         self.add_entry('1/10/2007', description='second')
         self.filename = op.join(self.tmpdir(), 'foo.xml')
         self.document.save_to_xml(self.filename)
         self.document.load_from_xml(self.filename)
         # have been kicked back to bsheet. Select the account again
+        self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.etable.select([0])
     

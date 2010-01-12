@@ -514,7 +514,8 @@ class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
         self.document.save_to_xml(filepath)
         del self.document
         self.create_instances()
-        self.add_account_legacy()
+        self.add_account()
+        self.document.show_selected_account()
         self.etable.add()
         row = self.etable.selected_row
         row.description = 'Duh, that shouldn\'t be here!'
@@ -524,4 +525,18 @@ class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assert_completion_order_changed()
+    
+
+class AccountCreatedThroughTransactionTable(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.mainwindow.show_transaction_table()
+        self.add_txn(from_='foo', to='bar', amount='42')
+        self.ttable.show_from_account()
+    
+    def test_complete_transfer(self):
+        # Completion correctly excludes shown account on the transfer column. Previously, 
+        # selected_account was used instead of shown_account
+        assert self.etable.complete('f', 'transfer') is None
+    
     

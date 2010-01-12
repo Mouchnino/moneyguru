@@ -32,7 +32,7 @@ class BalanceGraph(Graph):
     # rather than calculating the budget every day, they are only calculated when the balance without
     # budget changes. this is what the algorithm below reflects.
     def compute_data(self):
-        self._account = self.document.selected_account
+        self._account = self.document.shown_account
         date_range = self.document.date_range
         TODAY = date.today()
         date2value = {}
@@ -72,7 +72,7 @@ class BalanceGraph(Graph):
     
     @property
     def title(self):
-        return self.document.selected_account.name
+        return self.document.shown_account.name
     
     @property
     def currency(self):

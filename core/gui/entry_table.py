@@ -88,7 +88,7 @@ class EntryTable(TransactionTableBase):
             self.selected_index = len(self) - 1
     
     def should_show_balance_column(self):
-        return bool(self.document.selected_account) and self.document.selected_account.is_balance_sheet_account()
+        return bool(self.document.shown_account) and self.document.shown_account.is_balance_sheet_account()
     
     def show_transfer_account(self):
         if not self.selected_entries:
@@ -166,7 +166,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
             balance = self._reconciled_balance
         else:
             balance = self._balance
-        if balance and self.table.document.selected_account.is_credit_account():
+        if balance and self.table.document.shown_account.is_credit_account():
             balance = -balance
         return balance
     
@@ -353,7 +353,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
         try:
-            increase = parse_amount(value, self.table.document.selected_account.currency)
+            increase = parse_amount(value, self.table.document.shown_account.currency)
         except ValueError:
             return
         if increase == self._increase:
@@ -363,7 +363,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @BaseEntryTableRow.decrease.setter
     def decrease(self, value):
         try:
-            decrease = parse_amount(value, self.table.document.selected_account.currency)
+            decrease = parse_amount(value, self.table.document.shown_account.currency)
         except ValueError:
             return
         if decrease == self._decrease:

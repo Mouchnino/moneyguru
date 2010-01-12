@@ -169,7 +169,8 @@ class Document(Broadcaster, Listener):
                 self.accounts.remove(account)
     
     def _clear(self):
-        self.select_account(None)
+        self._selected_account = None
+        self._shown_account = None
         self.accounts.clear()
         self.transactions.clear()
         self.groups.clear()
@@ -689,7 +690,7 @@ class Document(Broadcaster, Listener):
     
     @property
     def previous_entry(self): # the entry just before the date range
-        account = self.selected_account
+        account = self.shown_account
         if account is None:
             return None
         date_range = self.date_range
@@ -1120,7 +1121,9 @@ class Document(Broadcaster, Listener):
         self.stop_edition()
         self._undoer.undo()
         if self.selected_account is not None and self.selected_account not in self.accounts:
-            self.select_account(None)
+            self._selected_account = None
+        if self.shown_account is not None and self.shown_account not in self.accounts:
+            self._shown_account = None
         self._cook()
         self.notify('performed_undo_or_redo')
     
@@ -1134,7 +1137,9 @@ class Document(Broadcaster, Listener):
         self.stop_edition()
         self._undoer.redo()
         if self.selected_account is not None and self.selected_account not in self.accounts:
-            self.select_account(None)
+            self._selected_account = None
+        if self.shown_account is not None and self.shown_account not in self.accounts:
+            self._shown_account = None
         self._cook()
         self.notify('performed_undo_or_redo')
     

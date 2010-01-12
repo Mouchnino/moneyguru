@@ -20,8 +20,8 @@ class CompletionMixIn(object):
             result = self.document.transactions.account_names
             # `result` doesn't contain empty accounts' name, so we'll add them.
             result += [a.name for a in self.document.accounts]
-            if attrname == 'transfer' and self.document.selected_account is not None:
-                result = [name for name in result if name != self.document.selected_account.name]
+            if attrname == 'transfer' and self.document.shown_account is not None:
+                result = [name for name in result if name != self.document.shown_account.name]
             return result
     
     def complete(self, value, attrname):

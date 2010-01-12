@@ -133,7 +133,6 @@ class MainWindow(DocumentGUIObject):
     def select_entry_table(self):
         if self.document.shown_account is None:
             return
-        self.document.select_account(self.document.shown_account)
         self.document.filter_string = ''
         self.show_entry_table()
     
@@ -223,7 +222,7 @@ class MainWindow(DocumentGUIObject):
             self.show_transaction_table()
     
     def performed_undo_or_redo(self):
-        if self.document.selected_account is None and self._current_view is self.aview:
+        if self.document.shown_account is None and self._current_view is self.aview:
             self.select_balance_sheet()
         self._undo_stack_changed()
     document_changed = performed_undo_or_redo
