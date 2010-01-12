@@ -4,8 +4,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from datetime import date
-
 from nose.tools import eq_
 
 from hsutil.currency import CAD
@@ -16,29 +14,30 @@ from ...model.account import AccountType
 class TwoLiabilityTransactions(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
-        self.add_account_legacy('Visa', account_type=AccountType.Liability)
+        self.document.select_month_range()
+        self.add_account('Visa', account_type=AccountType.Liability)
+        self.document.show_selected_account()
         self.add_entry('3/1/2008', increase='120.00')
         self.add_entry('5/1/2008', decrease='40.00')
     
     def test_budget(self):
         # when we add a budget, the balance graph will show a regular progression throughout date range
         self.mock_today(2008, 1, 27)
-        self.add_account_legacy('expense', account_type=AccountType.Expense)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
         self.bsheet.show_selected_account()
         expected = [('04/01/2008', '120.00'), ('05/01/2008', '120.00'), ('06/01/2008', '80.00'), 
             ('28/01/2008', '80.00'), ('01/02/2008', '180.00')]
-        self.assertEqual(self.graph_data(), expected)
+        eq_(self.graph_data(), expected)
         self.document.select_next_date_range()
-        self.assertEqual(self.graph_data()[0], ('01/02/2008', '180.00'))
+        eq_(self.graph_data()[0], ('01/02/2008', '180.00'))
     
     def test_budget_on_last_day_of_the_range(self):
         # don't raise a ZeroDivizionError
         self.mock_today(2008, 1, 31)
-        self.add_account_legacy('expense', account_type=AccountType.Expense)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.document.select_next_date_range()
@@ -47,7 +46,7 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         # when there's a future txn, we want the amount of that txn to be "sharply" displayed
         self.mock_today(2008, 1, 15)
         self.add_entry('20/1/2008', decrease='10')
-        self.add_account_legacy('expense', account_type=AccountType.Expense)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_budget('expense', 'Visa', '100')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.liabilities[0]
@@ -56,32 +55,32 @@ class TwoLiabilityTransactions(TestCase, CommonSetup):
         # has to include budget for the 21st
         expected = [('04/01/2008', '120.00'), ('05/01/2008', '120.00'), ('06/01/2008', '80.00'), 
             ('16/01/2008', '80.00'), ('20/01/2008', '105.00'), ('21/01/2008', '101.25'), ('01/02/2008', '170.00')]
-        self.assertEqual(self.graph_data(), expected)
+        eq_(self.graph_data(), expected)
     
     def test_graph(self):
         expected = [('04/01/2008', '120.00'), ('05/01/2008', '120.00'), 
                     ('06/01/2008', '80.00'), ('01/02/2008', '80.00')]
-        self.assertEqual(self.graph_data(), expected)
-        self.assertEqual(self.balgraph.title, 'Visa')
+        eq_(self.graph_data(), expected)
+        eq_(self.balgraph.title, 'Visa')
     
 
 class ForeignAccount(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account_legacy('Visa', currency=CAD)
+        self.add_account('Visa', currency=CAD)
+        self.document.show_selected_account()
     
     def test_graph(self):
-        self.assertEqual(self.balgraph.currency, CAD)
+        eq_(self.balgraph.currency, CAD)
     
 
 class BudgetAndNoTranaction(TestCase, CommonSetup):
     def setUp(self):
-        self.create_instances()
         self.mock_today(2008, 1, 1)
+        self.create_instances()
         self.document.select_month_range()
-        self.document.select_today_date_range()
-        self.add_account_legacy('asset')
-        self.add_account_legacy('income', account_type=AccountType.Income)
+        self.add_account('asset')
+        self.add_account('income', account_type=AccountType.Income)
         self.add_budget('income', 'asset', '100')
     
     def test_future_date_range(self):
