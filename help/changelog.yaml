@@ -12,7 +12,6 @@
     * Allow multiple selection in the import window. (#47)
     * Allow operation cancellation in schedule scoping dialog. (#82)
     * Fixed a crash in CSV options dialog. (#107)
-    * Fixed a crash during account name edition. (#106)
     * Dropped OS X Tiger support.
 - date: 2010-01-04
   version: 1.6.10
