@@ -34,4 +34,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Private */
 - (void)updateVisibility;
+
+/* Public */
+- (BOOL)canShowSelectedAccount;
 @end

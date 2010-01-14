@@ -109,6 +109,12 @@ http://www.hardcoded.net/licenses/hs_license
     [pieChartsView setFrame:pieRect];
 }
 
+/* Public */
+- (BOOL)canShowSelectedAccount
+{
+    return [balanceSheet canShowSelectedAccount];
+}
+
 /* Delegate */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
