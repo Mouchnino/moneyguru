@@ -1,3 +1,10 @@
+- date: 2010-01-14
+  version: 1.7.1
+  description: |
+    * Fixed a crash with Show Account in the Account view. (#109)
+    * Fixed a bug preventing the Cmd-Left and Cmd-Right keybindings from working. [Mac OS X] (#109)
+    * Fixed a bug sometimes preventing moneyGuru from saving documents before auto-updating. 
+      [Mac OS X] (#110)
 - date: 2010-01-12
   version: 1.7.0
   description: |
