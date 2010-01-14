@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import "Dialogs.h"
 #import "ValueTransformers.h"
+#import <Sparkle/SUUpdater.h>
 
 @implementation MGAppDelegate
 
@@ -177,6 +178,26 @@ http://www.hardcoded.net/licenses/hs_license
     [aheadMonthsPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.aheadMonths" options:nil];
     [yearStartMonthPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.yearStartMonth" options:nil];
     [autoSaveIntervalField bind:@"value" toObject:self withKeyPath:@"py.autoSaveInterval" options:nil];
+}
+
+/* SUUpdater delegate */
+
+- (BOOL)updater:(SUUpdater *)updater shouldPostponeRelaunchForUpdate:(SUAppcastItem *)update untilInvoking:(NSInvocation *)invocation;
+{
+    [[NSDocumentController sharedDocumentController] 
+        reviewUnsavedDocumentsWithAlertTitle:@"moneyGuru is about to restart"
+        cancellable:NO delegate:self didReviewAllSelector:@selector(documentController:didReviewAll:contextInfo:)
+        contextInfo:nil];
+    continueUpdate = [invocation retain];
+    return YES;
+}
+
+- (void)documentController:(NSDocumentController *)docController didReviewAll:(BOOL)didReviewAll contextInfo:(void *)contextInfo
+{
+    if (didReviewAll) {
+        [continueUpdate invoke];
+        [continueUpdate release];
+    }
 }
 
 // Python -> Cocoa

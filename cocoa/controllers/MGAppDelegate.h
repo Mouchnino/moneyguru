@@ -18,6 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *autoSaveIntervalField;
     
     NSWindowController *viewOptionsWindow;
+    NSInvocation *continueUpdate;
     PyMoneyGuruApp *py;
 }
 
