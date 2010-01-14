@@ -217,13 +217,18 @@ class OneEntry(TestCase):
 class EntryWithoutTransfer(TestCase):
     def setUp(self):
         self.create_instances()
-        self.add_account()
+        self.add_account('account')
         self.document.show_selected_account()
         self.add_entry(description='foobar', decrease='130')
     
     def test_entry_transfer(self):
         # Instead of showing 'Imbalance', the transfer column shows nothing.
         eq_(self.etable[0].transfer, '')
+    
+    def test_show_transfer_account(self):
+        # show_transfer_account() does nothing when an entry has no transfer
+        self.etable.show_transfer_account() # no crash
+        eq_(self.document.shown_account.name, 'account')
     
 
 class EntryWithCredit(TestCase):
@@ -485,6 +490,17 @@ class SplitTransaction(TestCase):
         eq_(self.document.shown_account.name, 'third')
         self.etable.show_transfer_account()
         eq_(self.document.shown_account.name, 'first')
+    
+    def test_show_transfer_account_with_unassigned_split(self):
+        # If there's an unassigned split among the splits, just skip over it
+        self.mainwindow.edit_item()
+        self.stable.select([1]) # second
+        self.stable.selected_row.account = ''
+        self.stable.save_edits()
+        self.tpanel.save()
+        self.etable.show_transfer_account() # skip unassigned, and to to third
+        eq_(self.document.shown_account.name, 'third')
+    
 
 class TwoSplitsInTheSameAccount(TestCase):
     def setUp(self):

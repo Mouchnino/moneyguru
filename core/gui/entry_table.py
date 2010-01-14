@@ -95,11 +95,14 @@ class EntryTable(TransactionTableBase):
             return
         entry = self.selected_entries[0]
         splits = entry.transaction.splits
-        index = splits.index(entry.split)
-        if index < len(splits) - 1:
-            account_to_show = splits[index+1].account
+        accounts = [split.account for split in splits if split.account is not None]
+        if len(accounts) < 2:
+            return # no transfer
+        index = accounts.index(entry.account)
+        if index < len(accounts) - 1:
+            account_to_show = accounts[index+1]
         else:
-            account_to_show = splits[0].account
+            account_to_show = accounts[0]
         self.document.show_account(account_to_show)
     
     def toggle_reconciled(self):
