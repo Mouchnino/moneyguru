@@ -125,7 +125,10 @@ http://www.hardcoded.net/licenses/hs_license
     if ([url isFileURL])
     {
         NSString *error = nil;
-        if (![[self py] isRegistered])
+        // Eventually, it might be a good idea to make core.document raise RegistrationRequired,
+        // which would then be caught in mg_cocoa and which would return a proper NSError to use here.
+        MGAppDelegate *app = [NSApp delegate];
+        if (![[app py] isRegistered])
         {
             if ([py transactionCount] > 100)
             {

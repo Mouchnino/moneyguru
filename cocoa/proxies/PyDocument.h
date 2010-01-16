@@ -47,7 +47,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSInteger)transactionCount;
 - (BOOL)shownAccountIsBalanceSheet;
 - (void)close;
-
-// Temporary
-- (BOOL)isRegistered;
 @end;
