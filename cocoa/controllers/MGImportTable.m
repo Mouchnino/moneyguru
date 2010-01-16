@@ -75,7 +75,7 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
         NSPasteboard* pboard = [info draggingPasteboard];
         NSData* rowData = [pboard dataForType:MGImportEntryPasteboardType];
         NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-        int source = [rowIndexes firstIndex];
+        NSInteger source = [rowIndexes firstIndex];
         if ([[self py] canBindRow:source to:row])
         {
             return NSDragOperationMove;
@@ -90,7 +90,7 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
     NSPasteboard* pboard = [info draggingPasteboard];
     NSData* rowData = [pboard dataForType:MGImportEntryPasteboardType];
     NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-    int source = [rowIndexes firstIndex];
+    NSInteger source = [rowIndexes firstIndex];
     [[self py] bindRow:source to:row];
     return YES;
 }

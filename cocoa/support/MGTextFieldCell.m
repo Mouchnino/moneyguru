@@ -35,8 +35,8 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if (hasArrow)
     {
-        float y_offset = (NSHeight(bounds) - 1.0 - ARROW_HEIGHT) / 2.0;
-        float x_offset = ARROW_WIDTH + ARROW_PADDING;
+        CGFloat y_offset = (NSHeight(bounds) - 1.0 - ARROW_HEIGHT) / 2.0;
+        CGFloat x_offset = ARROW_WIDTH + ARROW_PADDING;
         return NSMakeRect(NSMaxX(bounds) - x_offset, NSMinY(bounds) + y_offset, ARROW_WIDTH, ARROW_HEIGHT);
     }
     else
@@ -49,16 +49,16 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if (buttonImageName == nil)
         return NSZeroRect;
-    float maxX = NSMaxX(bounds);
+    CGFloat maxX = NSMaxX(bounds);
     if (hasArrow)
         maxX = NSMinX([self arrowRectForBounds:bounds]);
-    float offsetY = (NSHeight(bounds) - 1.0 - BUTTON_HEIGHT) / 2.0;
-    float offsetX = BUTTON_WIDTH + BUTTON_PADDING;
+    CGFloat offsetY = (NSHeight(bounds) - 1.0 - BUTTON_HEIGHT) / 2.0;
+    CGFloat offsetX = BUTTON_WIDTH + BUTTON_PADDING;
     return NSMakeRect(maxX - offsetX, NSMinY(bounds) + offsetY, BUTTON_WIDTH, BUTTON_HEIGHT);
 }
 
 /* Public */
-- (void)setIndent:(int)value
+- (void)setIndent:(NSInteger)value
 {
     indent = value;
 }

@@ -64,12 +64,12 @@ from core.model import (account, amount, currency, date, oven, recurrence, trans
 
 class PyMoneyGuruApp(NSObject):
     def initWithCocoa_(self, cocoa):
-        self = NSObject.init(self)
+        super(PyMoneyGuruApp, self).init()
         self.cocoa = cocoa
         LOGGING_LEVEL = logging.DEBUG if NSUserDefaults.standardUserDefaults().boolForKey_('debug') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
         logging.debug('started in debug mode')
-        hsutil.cocoa.install_exception_hook()
+        # hsutil.cocoa.install_exception_hook()
         std_caches_path = Path(NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, True)[0])
         cache_path = std_caches_path + 'moneyGuru'
         currency_code = NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode)
@@ -167,7 +167,7 @@ class PyMoneyGuruApp(NSObject):
 
 class PyDocument(NSObject):
     def initWithCocoa_pyParent_(self, cocoa, pyparent):
-        self = NSObject.init(self)
+        super(PyDocument, self).init()
         self.cocoa = cocoa
         self.py = Document(self, pyparent.py)
         self.py.connect()
@@ -296,7 +296,7 @@ class PyDocument(NSObject):
 class GUIProxy(NSObject):
     def initWithCocoa_pyParent_(self, cocoa, pyparent):
         # In most cases, pyparent is a PyDocument
-        self = NSObject.init(self)
+        super(GUIProxy, self).init()
         self.cocoa = cocoa
         self.py = self.py_class(self, pyparent.py)
         return self
@@ -331,7 +331,7 @@ class PyListener(GUIProxy):
 
 class PyGUIContainer(PyListener):
     def initWithCocoa_pyParent_children_(self, cocoa, pyparent, children):
-        self = NSObject.init(self)
+        super(PyGUIContainer, self).init()
         self.cocoa = cocoa
         pychildren = [child.py for child in children]
         self.py = self.py_class(self, pyparent.py, pychildren)
@@ -1475,7 +1475,7 @@ class PyImportTable(PyTable):
 
 class PyDateWidget(NSObject):
     def init(self):
-        self = NSObject.init(self)
+        super(PyDateWidget, self).init()
         NSDateFormatter.setDefaultFormatterBehavior_(NSDateFormatterBehavior10_4)
         f = NSDateFormatter.alloc().init()
         f.setDateStyle_(NSDateFormatterShortStyle)
@@ -1522,7 +1522,7 @@ class PyPrintView(NSObject):
     
     # The parent of the PyPrintView is a Document GUI object (*not* the document itself!)
     def initWithPyParent_(self, pyparent):
-        self = NSObject.init(self)
+        super(PyPrintView, self).init()
         self.py = self.py_class(pyparent.py)
         return self
     

@@ -20,10 +20,10 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setPayee:(NSString *)payee;
 - (NSString *)checkno;
 - (void)setCheckno:(NSString *)checkno;
-- (int)repeatEvery;
-- (void)setRepeatEvery:(int)value;
+- (NSInteger)repeatEvery;
+- (void)setRepeatEvery:(NSInteger)value;
 - (NSString *)repeatEveryDesc;
-- (int)repeatTypeIndex;
-- (void)setRepeatTypeIndex:(int)value;
+- (NSInteger)repeatTypeIndex;
+- (void)setRepeatTypeIndex:(NSInteger)value;
 - (NSArray *)repeatOptions;
 @end

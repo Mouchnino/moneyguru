@@ -65,14 +65,14 @@ http://www.hardcoded.net/licenses/hs_license
     return [NSArray arrayWithObjects:@"transfer",nil];
 }
 
-- (int)splitCountThreshold
+- (NSInteger)splitCountThreshold
 {
     return 2;
 }
 
 - (void)drawRect:(NSRect)rect
 {
-    int pageNumber = [[NSPrintOperation currentOperation] currentPage];
+    NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
     BOOL shouldShowGraph = graphVisible && pageNumber == pageCount;
     [graphView setHidden:!shouldShowGraph];
     [super drawRect:rect];

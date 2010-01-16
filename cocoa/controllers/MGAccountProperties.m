@@ -49,7 +49,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)saveFields
 {
     [[self py] setName:[nameTextField stringValue]];
-    int currencyIndex = [currencySelector indexOfSelectedItem];
+    NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
     if (currencyIndex >= 0)
         [[self py] setCurrencyIndex:currencyIndex];
     [[self py] setTypeIndex:[typeSelector indexOfSelectedItem]];
@@ -58,7 +58,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Delegate */
 
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(int)index
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
 {
     if (index < 0)
     {
@@ -67,7 +67,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [currencies objectAtIndex:index];
 }
 
-- (int)numberOfItemsInComboBox:(NSComboBox *)aComboBox
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
 {
     return [currencies count];
 }

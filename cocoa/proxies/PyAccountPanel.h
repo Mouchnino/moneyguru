@@ -13,10 +13,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)name;
 - (void)setName:(NSString *)name;
-- (int)typeIndex;
-- (void)setTypeIndex:(int)index;
-- (int)currencyIndex;
-- (void)setCurrencyIndex:(int)index;
+- (NSInteger)typeIndex;
+- (void)setTypeIndex:(NSInteger)index;
+- (NSInteger)currencyIndex;
+- (void)setCurrencyIndex:(NSInteger)index;
 - (NSString *)accountNumber;
 - (void)setAccountNumber:(NSString *)accountNumber;
 

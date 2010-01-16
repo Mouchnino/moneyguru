@@ -176,7 +176,7 @@ http://www.hardcoded.net/licenses/hs_license
     [self setProperty:property value:[NSNumber numberWithBool:value] atPath:path];
 }
 
-- (int)intProperty:(NSString *)property valueAtPath:(NSIndexPath *)path
+- (NSInteger)intProperty:(NSString *)property valueAtPath:(NSIndexPath *)path
 {
     NSNumber *value = [self property:property valueAtPath:path];
     return [value intValue];
@@ -195,12 +195,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* NSOutlineView data source */
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
     return [self intProperty:CHILDREN_COUNT_PROPERTY valueAtPath:(NSIndexPath *)item];
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
     NSIndexPath *parent = item;
     NSIndexPath *child = parent == nil ? [NSIndexPath indexPathWithIndex:index] : [parent indexPathByAddingIndex:index];

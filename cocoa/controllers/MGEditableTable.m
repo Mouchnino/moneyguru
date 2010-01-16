@@ -27,14 +27,14 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Data source */
 
-- (void)tableView:(NSTableView *)tableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(int)row
+- (void)tableView:(NSTableView *)tableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    [[self py] setValue:value forColumn:[column identifier] row:(int)row];
+    [[self py] setValue:value forColumn:[column identifier] row:row];
 }
 
 /* NSTableView Delegate */
 
-- (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(int)row
+- (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     return [[self py] canEditColumn:[column identifier] atRow:row];
 }

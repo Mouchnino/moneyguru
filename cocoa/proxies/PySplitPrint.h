@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyPrintView.h"
 
 @interface PySplitPrint : PyPrintView {}
-- (int)splitCountAtRow:(int)aRow;
+- (int)splitCountAtRow:(NSInteger)aRow;
 // returns [account, memo, amount]
-- (NSArray *)splitValuesAtRow:(int)row splitRow:(int)splitRow;
+- (NSArray *)splitValuesAtRow:(NSInteger)row splitRow:(NSInteger)splitRow;
 @end

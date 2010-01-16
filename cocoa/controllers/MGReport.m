@@ -74,7 +74,7 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 - (NSDragOperation)outlineView:(NSOutlineView *)aOutlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item 
-            proposedChildIndex:(int)index
+            proposedChildIndex:(NSInteger)index
 {
     NSIndexPath *destPath = item;
     NSPasteboard *pboard = [info draggingPasteboard];
@@ -94,7 +94,7 @@ http://www.hardcoded.net/licenses/hs_license
     return NSDragOperationNone;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)aOutlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(int)index
+- (BOOL)outlineView:(NSOutlineView *)aOutlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
     NSPasteboard *pboard = [info draggingPasteboard];
     NSIndexPath *destPath = item;
@@ -115,8 +115,8 @@ http://www.hardcoded.net/licenses/hs_license
     NSString *column = [tableColumn identifier];
     NSIndexPath *path = item;
     BOOL isTotal = [self boolProperty:@"is_total" valueAtPath:path];
-    int level = [outlineView levelForItem:item];
-    int row = [outlineView rowForItem:item];
+    NSInteger level = [outlineView levelForItem:item];
+    NSInteger row = [outlineView rowForItem:item];
     BOOL isPrinting = [NSPrintOperation currentOperation] != nil;
 
     if ([column isEqualToString:@"name"])

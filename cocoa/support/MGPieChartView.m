@@ -18,25 +18,25 @@ http://www.hardcoded.net/licenses/hs_license
 
 #define RADIANS( degrees ) ( degrees * M_PI / 180 )
 
-float distance(NSPoint p1, NSPoint p2)
+CGFloat distance(NSPoint p1, NSPoint p2)
 {
-    float dX = p1.x - p2.x;
-    float dY = p1.y - p2.y;
+    CGFloat dX = p1.x - p2.x;
+    CGFloat dY = p1.y - p2.y;
     return sqrt(dX * dX + dY * dY);
 }
 
-NSPoint pointInCircle(NSPoint center, float radius, float angle)
+NSPoint pointInCircle(NSPoint center, CGFloat radius, CGFloat angle)
 {
     // a/sin(A) = b/sin(B) = c/sin(C) = 2R
     // the start point it (center.x + radius, center.y) and goes counterclockwise
     angle = fmod(angle, 360);
-    float C = RADIANS(90);
-    float A = RADIANS(fmod(angle, 90));
-    float B = C - A;
-    float c = radius;
-    float ratio = c / sin(C);
-    float b = ratio * sin(B);
-    float a = ratio * sin(A);
+    CGFloat C = RADIANS(90);
+    CGFloat A = RADIANS(fmod(angle, 90));
+    CGFloat B = C - A;
+    CGFloat c = radius;
+    CGFloat ratio = c / sin(C);
+    CGFloat b = ratio * sin(B);
+    CGFloat a = ratio * sin(A);
     if (angle > 270)
         return NSMakePoint(center.x + a, center.y - b);
     else if (angle > 180)
@@ -50,8 +50,8 @@ NSPoint pointInCircle(NSPoint center, float radius, float angle)
 // Ensures that r1 is within r2. Returns a modified r1;
 NSRect ensureWithin(NSRect r1, NSRect r2)
 {
-    float X = r1.origin.x;
-    float Y = r1.origin.y;
+    CGFloat X = r1.origin.x;
+    CGFloat Y = r1.origin.y;
     if (NSMaxX(r1) > NSMaxX(r2))
         X = NSMaxX(r2) - NSWidth(r1);
     if (NSMaxY(r1) > NSMaxY(r2))
@@ -66,7 +66,7 @@ NSRect ensureWithin(NSRect r1, NSRect r2)
 // Ensures that r1 does not intersect with r2. Returns a modified r1;
 NSRect ensureOutside(NSRect r1, NSRect r2)
 {
-    float Y = r1.origin.y;
+    CGFloat Y = r1.origin.y;
     NSRect intersect = NSIntersectionRect(r1, r2);
     if (intersect.size.width)
     {
@@ -77,7 +77,7 @@ NSRect ensureOutside(NSRect r1, NSRect r2)
         return r1;
 }
 
-NSRect padRect(NSRect r, float padding)
+NSRect padRect(NSRect r, CGFloat padding)
 {
     return NSMakeRect(NSMinX(r)-padding, NSMinY(r)-padding, NSWidth(r)+padding*2, NSHeight(r)+padding*2);
 }
@@ -119,16 +119,16 @@ NSPoint rectCenter(NSRect r)
     [super drawRect:rect];
 	// Calculate the graph dimensions
 	NSSize viewSize = [self bounds].size;
-    float chartX = CHART_PADDING;
-    float chartY = CHART_PADDING;
-    float chartWidth = viewSize.width - CHART_PADDING * 2;
-    float chartHeight = viewSize.height - CHART_PADDING * 2;
+    CGFloat chartX = CHART_PADDING;
+    CGFloat chartY = CHART_PADDING;
+    CGFloat chartWidth = viewSize.width - CHART_PADDING * 2;
+    CGFloat chartHeight = viewSize.height - CHART_PADDING * 2;
     
     NSFont *titleFont = [NSFont boldSystemFontOfSize:TITLE_FONT_SIZE];
     NSDictionary *titleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:titleFont, NSFontAttributeName, titleColor, NSForegroundColorAttributeName, nil];
     NSSize titleSize = [title sizeWithAttributes:titleAttributes];
-    float titleX = chartX + (chartWidth - titleSize.width) / 2;
-    float titleY = chartY + chartHeight - titleSize.height;
+    CGFloat titleX = chartX + (chartWidth - titleSize.width) / 2;
+    CGFloat titleY = chartY + chartHeight - titleSize.height;
     
     NSColor *legendColor = [NSColor blackColor];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -138,13 +138,13 @@ NSPoint rectCenter(NSRect r)
 	// Draw the title
     [title drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];
     
-    float maxWidth = viewSize.width - (CHART_PADDING * 2);
-    float maxHeight = titleY - CHART_PADDING;
-    float circleSize = maxWidth > maxHeight ? maxHeight : maxWidth;
-    float radius = circleSize / 2;
+    CGFloat maxWidth = viewSize.width - (CHART_PADDING * 2);
+    CGFloat maxHeight = titleY - CHART_PADDING;
+    CGFloat circleSize = maxWidth > maxHeight ? maxHeight : maxWidth;
+    CGFloat radius = circleSize / 2;
     NSPoint center = NSMakePoint(viewSize.width / 2, titleY - CHART_PADDING - radius);
-    float circleX = center.x - radius;
-    float circleY = center.y - radius;
+    CGFloat circleX = center.x - radius;
+    CGFloat circleY = center.y - radius;
     NSColor *lineColor = [NSColor blackColor];
     [lineColor setStroke];
     NSRect circleRect = NSMakeRect(circleX, circleY, circleSize, circleSize);
@@ -152,18 +152,18 @@ NSPoint rectCenter(NSRect r)
     // Draw the pie
     NSEnumerator *e = [data objectEnumerator];
     NSArray *pair;
-    float total = 0;
+    CGFloat total = 0;
     while (pair = [e nextObject])
         total += n2f([pair objectAtIndex:1]);
     NSMutableArray *legends = [NSMutableArray array];
-    float startAngle = 0;
+    CGFloat startAngle = 0;
     for (int i=0; i<[data count]; i++)
     {
         pair = [data objectAtIndex:i];
         NSGradient *gradient = [gradients objectAtIndex:i % [gradients count]];
-        float fraction = n2f([pair objectAtIndex:1]) / total;
-        float angle = fraction * 360;
-        float endAngle = startAngle + angle;
+        CGFloat fraction = n2f([pair objectAtIndex:1]) / total;
+        CGFloat angle = fraction * 360;
+        CGFloat endAngle = startAngle + angle;
         
         NSBezierPath *slice = [NSBezierPath bezierPath];
         [slice moveToPoint:center];

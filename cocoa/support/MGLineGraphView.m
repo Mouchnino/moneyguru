@@ -8,17 +8,18 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGLineGraphView.h"
 #import "MGUtils.h"
+#import "Utils.h"
 
 @implementation MGLineGraphView
 - (void)drawGraph
 {
     if ([data count] <= 1)
         return;
-    float xTodayFactored = xToday * xFactor;
+    CGFloat xTodayFactored = xToday * xFactor;
     NSEnumerator *dataEnumerator = [data objectEnumerator];
     NSArray *dataPoint = [dataEnumerator nextObject];
-    NSPoint point = NSMakePoint([[dataPoint objectAtIndex:0] floatValue] * xFactor, [[dataPoint objectAtIndex:1] floatValue] * yFactor);
-    float firstX = point.x;
+    NSPoint point = NSMakePoint(n2f([dataPoint objectAtIndex:0]) * xFactor, n2f([dataPoint objectAtIndex:1]) * yFactor);
+    CGFloat firstX = point.x;
     NSBezierPath *dataPath = [NSBezierPath bezierPath];
     NSBezierPath *dataFillPath = [NSBezierPath bezierPath];
     [dataPath moveToPoint:point];
@@ -26,11 +27,11 @@ http://www.hardcoded.net/licenses/hs_license
     [dataFillPath lineToPoint:point];
     while (dataPoint = [dataEnumerator nextObject])
     {
-        point = NSMakePoint([[dataPoint objectAtIndex:0] floatValue] * xFactor, [[dataPoint objectAtIndex:1] floatValue] * yFactor);
+        point = NSMakePoint(n2f([dataPoint objectAtIndex:0]) * xFactor, n2f([dataPoint objectAtIndex:1]) * yFactor);
         [dataPath lineToPoint:point];
         [dataFillPath lineToPoint:point];
     }
-    float lastX = point.x;
+    CGFloat lastX = point.x;
     [dataFillPath lineToPoint:NSMakePoint(point.x, 0)];
     [NSGraphicsContext saveGraphicsState];
     [dataFillPath addClip];

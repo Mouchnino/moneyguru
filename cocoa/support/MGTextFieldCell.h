@@ -11,7 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGTextFieldCell : NSTextFieldCell {
     BOOL hasArrow;
     BOOL hasDarkBackground;
-    int indent;
+    NSInteger indent;
     id arrowTarget;
     SEL arrowAction;
     NSString *buttonImageName;
@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     SEL buttonAction;
 }
 - (void)setHasDarkBackground:(BOOL)value;
-- (void)setIndent:(int)value;
+- (void)setIndent:(NSInteger)value;
 - (void)setHasArrow:(BOOL)value;
 - (void)setArrowTarget:(id)value;
 - (void)setArrowAction:(SEL)value;

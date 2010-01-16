@@ -64,12 +64,12 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)drawRect:(NSRect)rect
 {
     [super drawRect:rect];
-    int pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    float titleY = 0;
+    NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
+    CGFloat titleY = 0;
     NSString *title = [self pageTitle];
     title = [NSString stringWithFormat:@"%@ (Page %d of %d)",title,pageNumber,pageCount];
-    float titleWidth = [title sizeWithAttributes:headerAttributes].width;
-    float titleX = (pageWidth - titleWidth) / 2;
+    CGFloat titleWidth = [title sizeWithAttributes:headerAttributes].width;
+    CGFloat titleX = (pageWidth - titleWidth) / 2;
     
     [title drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:headerAttributes];
 }

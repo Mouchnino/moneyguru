@@ -57,7 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row 
+- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row 
        proposedDropOperation:(NSTableViewDropOperation)op
 {
     if (op == NSTableViewDropAbove)
@@ -74,7 +74,7 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info
-              row:(int)row dropOperation:(NSTableViewDropOperation)operation
+              row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
     NSPasteboard* pboard = [info draggingPasteboard];
     NSData* rowData = [pboard dataForType:MGEntryPasteboardType];
@@ -83,7 +83,7 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)column row:(int)row
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if ([[column identifier] isEqualToString:@"status"])
     {
@@ -92,7 +92,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [super tableView:aTableView objectValueForTableColumn:column row:row];
 }
 
-- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(int)row
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if ([[column identifier] isEqualToString:@"status"])
     {
@@ -107,7 +107,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Delegate */
 
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(int)row
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
     if (row >= [[self py] numberOfRows])
@@ -163,7 +163,7 @@ http://www.hardcoded.net/licenses/hs_license
     if (asker == [self tableView])
     {   
         BOOL isDate = NO;
-        int editedColumn = [[self tableView] editedColumn];
+        NSInteger editedColumn = [[self tableView] editedColumn];
         if (editedColumn > -1)
         {
             NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];

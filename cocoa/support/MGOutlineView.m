@@ -31,7 +31,7 @@ http://www.hardcoded.net/licenses/hs_license
     }
 }
 
-- (BOOL)shouldEditTableColumn:(NSTableColumn *)column row:(int)row
+- (BOOL)shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     BOOL result = [super shouldEditTableColumn:column row:row];
     if (!result)
@@ -125,7 +125,7 @@ of the event that caused the click, and don't go in edit mode if it happens.
     eventToIgnore = aEvent;
 }
 
-- (void)editColumn:(int)columnIndex row:(int)rowIndex withEvent:(NSEvent *)theEvent select:(BOOL)flag
+- (void)editColumn:(NSInteger)columnIndex row:(NSInteger)rowIndex withEvent:(NSEvent *)theEvent select:(BOOL)flag
 {
     if ((theEvent != nil) && (theEvent == eventToIgnore))
         return;

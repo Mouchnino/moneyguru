@@ -128,7 +128,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)animateDateRange:(BOOL)forward
 {
-    float PADDING = 3;
+    CGFloat PADDING = 3;
     NSRect convertedFrame = [dateRangePopUp convertRect:[dateRangePopUp bounds] toView:[[self window] contentView]];
     convertedFrame.size.width -= PADDING *2;
     convertedFrame.size.height -= PADDING *2;

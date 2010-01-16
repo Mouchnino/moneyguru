@@ -84,7 +84,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Delegate */
 
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(int)index
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
 {
     if (index < 0)
     {
@@ -93,7 +93,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [currencies objectAtIndex:index];
 }
 
-- (int)numberOfItemsInComboBox:(NSComboBox *)aComboBox
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
 {
     return [currencies count];
 }
@@ -128,14 +128,14 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification
 {
-    int currencyIndex = [currencySelector indexOfSelectedItem];
+    NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
     [[self py] setCurrencyIndex:currencyIndex];
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
     // When the popup list is never popped (when only typing is used), this is what is called on tabbing out.
-    int currencyIndex = [currencySelector indexOfSelectedItem];
+    NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
     [[self py] setCurrencyIndex:currencyIndex];
 }
 

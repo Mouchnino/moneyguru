@@ -20,14 +20,14 @@ http://www.hardcoded.net/licenses/hs_license
     return [characters characterAtIndex:0];
 }
 
-- (unsigned int)flags
+- (NSUInteger)flags
 {
     // get flags and strip the lower 16 (device dependant) bits
     // See modifierFlags's doc for details
     return [self modifierFlags] & NSDeviceIndependentModifierFlagsMask;
 }
 
-- (unsigned int)modifierKeysFlags
+- (NSUInteger)modifierKeysFlags
 {
     // This is modifierFlags with only Command, Opt, Ctrl and Shift, without the rest of the flags
     // to pollute.

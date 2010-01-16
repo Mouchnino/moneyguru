@@ -16,16 +16,16 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *dataPoint;
     while (dataPoint = [dataEnumerator nextObject])
     {
-        float x1 = [[dataPoint objectAtIndex:0] floatValue] * xFactor;
-        float x2 = [[dataPoint objectAtIndex:1] floatValue] * xFactor;
-        float h1 = [[dataPoint objectAtIndex:2] floatValue] * yFactor;
-        float h2 = [[dataPoint objectAtIndex:3] floatValue] * yFactor;
-        float lowH = 0;
-        float highH = 0;
+        CGFloat x1 = [[dataPoint objectAtIndex:0] floatValue] * xFactor;
+        CGFloat x2 = [[dataPoint objectAtIndex:1] floatValue] * xFactor;
+        CGFloat h1 = [[dataPoint objectAtIndex:2] floatValue] * yFactor;
+        CGFloat h2 = [[dataPoint objectAtIndex:3] floatValue] * yFactor;
+        CGFloat lowH = 0;
+        CGFloat highH = 0;
         BOOL showRedLine = (h1 != 0) && (h2 != 0);
-        float redLineY = 0;
-        NSRect pastRect = NSMakeRect(x1, 0.0, x2-x1, abs(h1));
-        NSRect futureRect = NSMakeRect(x1, 0.0, x2-x1, abs(h2));
+        CGFloat redLineY = 0;
+        NSRect pastRect = NSMakeRect(x1, 0.0, x2-x1, ABS(h1));
+        NSRect futureRect = NSMakeRect(x1, 0.0, x2-x1, ABS(h2));
         if (h1 >= 0)
         {
             highH = h1;

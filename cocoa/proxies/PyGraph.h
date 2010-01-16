@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyChart.h"
 
 @interface PyGraph : PyChart {}
-
+// I'm not sure how to have a CGFloat like signature on the py side or if it's possible.
 - (float)xMin;
 - (float)xMax;
 - (float)yMin;

@@ -14,8 +14,8 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSView *graphView;
     MGDoubleView *pieViews;
-    int piePage;
-    int graphPage;
+    NSInteger piePage;
+    NSInteger graphPage;
     BOOL graphVisible;
     BOOL pieVisible;
 }

@@ -42,6 +42,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setTo:(NSString *)checkno;
 - (NSString *)amount;
 - (void)setAmount:(NSString *)checkno;
-- (int)currencyIndex;
-- (void)setCurrencyIndex:(int)index;
+- (NSInteger)currencyIndex;
+- (void)setCurrencyIndex:(NSInteger)index;
 @end

@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGGraphView.h"
+#import "Utils.h"
 
 @implementation MGGraphView
 
@@ -67,8 +68,8 @@ http://www.hardcoded.net/licenses/hs_license
 	NSNumber *tickMark;
 	
 	// Calculate the space taken by labels
-	float labelsHeight = [labelFont pointSize];
-	float yLabelsWidth = 0;
+	CGFloat labelsHeight = [labelFont pointSize];
+	CGFloat yLabelsWidth = 0;
 	labelsEnumerator = [yLabels objectEnumerator];
 	while (label = [labelsEnumerator nextObject])
 	{
@@ -81,27 +82,27 @@ http://www.hardcoded.net/licenses/hs_license
 	}
 	
 	// Calculate the graph dimensions
-	float dataWidth = maxX - minX;
-	float dataHeight = maxY - minY;
+	CGFloat dataWidth = maxX - minX;
+	CGFloat dataHeight = maxY - minY;
 	NSSize viewSize = [self bounds].size;
-	float graphWidth = viewSize.width - yLabelsWidth - GRAPH_PADDING * 2;
-	float graphHeight = viewSize.height - labelsHeight - GRAPH_PADDING * 2; 
+	CGFloat graphWidth = viewSize.width - yLabelsWidth - GRAPH_PADDING * 2;
+	CGFloat graphHeight = viewSize.height - labelsHeight - GRAPH_PADDING * 2; 
 	xFactor = graphWidth / dataWidth;
 	yFactor = graphHeight / dataHeight;
-	float graphLeft = round(minX * xFactor);
-	float graphRight = round(maxX * xFactor);
-	float graphBottom = round(minY * yFactor);
+	CGFloat graphLeft = roundf((float)(minX * xFactor));
+	CGFloat graphRight = roundf((float)(maxX * xFactor));
+	CGFloat graphBottom = roundf((float)(minY * yFactor));
     if (graphBottom < 0)
     {
         // Leave some space at the bottom of the graph
         graphBottom -= 2 * GRAPH_LINE_WIDTH;
     }
-	float graphTop = round(maxY * yFactor);
+	CGFloat graphTop = roundf((float)(maxY * yFactor));
     graphBounds = NSMakeRect(graphLeft, graphBottom, graphRight - graphLeft, graphTop - graphBottom);
 	
 	// Change the coordinates so that the drawing origin corresponds to the graph origin.
 	NSAffineTransform *moveOrigin = [NSAffineTransform transform];
-	[moveOrigin translateXBy:(ceil(yLabelsWidth) + GRAPH_PADDING - graphLeft) yBy:(ceil(labelsHeight) + GRAPH_PADDING - graphBottom)];
+	[moveOrigin translateXBy:(ceilf((float)yLabelsWidth) + GRAPH_PADDING - graphLeft) yBy:(ceilf((float)labelsHeight) + GRAPH_PADDING - graphBottom)];
 	[moveOrigin concat];
 
     // Draw the graph
@@ -128,7 +129,7 @@ http://www.hardcoded.net/licenses/hs_license
 	tickMarksEnumerator = [xTickMarks objectEnumerator];
 	while (tickMark = [tickMarksEnumerator nextObject])
 	{
-		float tickMarkPos = round([tickMark floatValue] * xFactor);
+		CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * xFactor));
 		[xTickMarksPath moveToPoint:NSMakePoint(tickMarkPos, graphBottom)];
 		[xTickMarksPath lineToPoint:NSMakePoint(tickMarkPos, graphBottom - GRAPH_TICKMARKS_LENGTH)];
 	}
@@ -140,7 +141,7 @@ http://www.hardcoded.net/licenses/hs_license
 	tickMarksEnumerator = [yTickMarks objectEnumerator];
 	while (tickMark = [tickMarksEnumerator nextObject])
 	{
-		float tickMarkPos = round([tickMark floatValue] * yFactor);
+		CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * yFactor));
 		[yTickMarksPath moveToPoint:NSMakePoint(graphLeft, tickMarkPos)];
 		[yTickMarksPath lineToPoint:NSMakePoint(graphLeft - GRAPH_TICKMARKS_LENGTH, tickMarkPos)];
 	}
@@ -151,7 +152,7 @@ http://www.hardcoded.net/licenses/hs_license
 	while (label = [labelsEnumerator nextObject])
 	{
 		NSString *labelText = [label objectForKey:@"text"];
-		float labelPos = [[label objectForKey:@"pos"] floatValue] * xFactor;
+		CGFloat labelPos = n2f([label objectForKey:@"pos"]) * xFactor;
 		NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
 		[labelText drawAtPoint:NSMakePoint(labelPos - labelSize.width / 2, graphBottom - labelsHeight - GRAPH_X_LABELS_PADDING) withAttributes:labelAttributes];
 	}
@@ -161,7 +162,7 @@ http://www.hardcoded.net/licenses/hs_license
 	while (label = [labelsEnumerator nextObject])
 	{
 		NSString *labelText = [label objectForKey:@"text"];
-		float labelPos = [[label objectForKey:@"pos"] floatValue] * yFactor;
+		CGFloat labelPos = n2f([label objectForKey:@"pos"]) * yFactor;
 		NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
 		[labelText drawAtPoint:NSMakePoint(graphLeft - GRAPH_Y_LABELS_PADDING - labelSize.width, labelPos - labelsHeight / 2) withAttributes:labelAttributes];
 	}
@@ -172,33 +173,33 @@ http://www.hardcoded.net/licenses/hs_license
     // Draw the title
     NSString *titleToDraw = [NSString stringWithFormat:@"%@ (%@)",title,currency];
     NSSize titleSize = [titleToDraw sizeWithAttributes:titleAttributes];
-    float titlePos = viewSize.width / 2;
-    float titleX = titlePos - titleSize.width / 2;
-    float titleY = viewSize.height - titleSize.height - GRAPH_Y_TITLE_PADDING;
+    CGFloat titlePos = viewSize.width / 2;
+    CGFloat titleX = titlePos - titleSize.width / 2;
+    CGFloat titleY = viewSize.height - titleSize.height - GRAPH_Y_TITLE_PADDING;
     [titleToDraw drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];    
 }
 
-- (void)setMinX:(float)aMinX
+- (void)setMinX:(CGFloat)aMinX
 {
     minX = aMinX;
 }
 
-- (void)setMaxX:(float)aMaxX
+- (void)setMaxX:(CGFloat)aMaxX
 {
     maxX = aMaxX;
 }
 
-- (void)setMinY:(float)aMinY
+- (void)setMinY:(CGFloat)aMinY
 {
     minY = aMinY;
 }
 
-- (void)setMaxY:(float)aMaxY
+- (void)setMaxY:(CGFloat)aMaxY
 {
     maxY = aMaxY;
 }
 
-- (void)setXToday:(float)aXToday
+- (void)setXToday:(CGFloat)aXToday
 {
     xToday = aXToday;
 }

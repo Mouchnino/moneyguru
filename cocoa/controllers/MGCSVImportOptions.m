@@ -102,12 +102,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Datasource */
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     return [[self py] numberOfLines];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
     id identifier = [tableColumn identifier];
     if ([@"import" isEqualTo:identifier])
@@ -141,12 +141,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refreshColumns
 {
-    int columnCount = [[self py] numberOfColumns] + 1; // we have to count the "import" column
+    NSInteger columnCount = [[self py] numberOfColumns] + 1; // we have to count the "import" column
     while ([[csvDataTable tableColumns] count] > columnCount)
         [csvDataTable removeTableColumn:[[csvDataTable tableColumns] objectAtIndex:columnCount]];
     while ([[csvDataTable tableColumns] count] < columnCount)
     {
-        int colId = [[csvDataTable tableColumns] count] - 1;
+        NSInteger colId = [[csvDataTable tableColumns] count] - 1;
         NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:i2n(colId)] autorelease];
         [column setWidth:80];
         NSFont *font = [[column dataCell] font];

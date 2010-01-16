@@ -15,12 +15,12 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)free;
 
 /* Preferences */
-- (int)firstWeekday; // 0 = monday, 6 = sunday
-- (void)setFirstWeekday:(int)weekday;
-- (int)aheadMonths;
-- (void)setAheadMonths:(int)months;
-- (int)yearStartMonth; // 0 = Jan 11 = Dec
-- (void)setYearStartMonth:(int)month;
-- (int)autoSaveInterval;
-- (void)setAutoSaveInterval:(int)minutes;
+- (NSInteger)firstWeekday; // 0 = monday, 6 = sunday
+- (void)setFirstWeekday:(NSInteger)weekday;
+- (NSInteger)aheadMonths;
+- (void)setAheadMonths:(NSInteger)months;
+- (NSInteger)yearStartMonth; // 0 = Jan 11 = Dec
+- (void)setYearStartMonth:(NSInteger)month;
+- (NSInteger)autoSaveInterval;
+- (void)setAutoSaveInterval:(NSInteger)minutes;
 @end

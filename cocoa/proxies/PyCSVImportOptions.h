@@ -10,24 +10,24 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyCSVImportOptions : PyGUI {}
-- (NSString *)columnNameAtIndex:(int)index;
+- (NSString *)columnNameAtIndex:(NSInteger)index;
 - (void)continueImport;
 - (void)deleteSelectedLayout;
 - (NSString *)fieldSeparator;
 - (NSArray *)layoutNames;
-- (BOOL)lineIsImported:(int)index;
-- (int)numberOfColumns;
-- (int)numberOfLines;
+- (BOOL)lineIsImported:(NSInteger)index;
+- (NSInteger)numberOfColumns;
+- (NSInteger)numberOfLines;
 - (void)newLayout:(NSString *)name;
 - (void)renameSelectedLayout:(NSString *)name;
 - (void)rescan;
 - (NSString *)selectedLayoutName;
-- (int)selectedTargetIndex;
+- (NSInteger)selectedTargetIndex;
 - (void)selectLayout:(NSString *)name;
-- (void)setColumn:(int)index fieldForTag:(int)tag;
+- (void)setColumn:(NSInteger)index fieldForTag:(NSInteger)tag;
 - (void)setFieldSeparator:(NSString *)fieldSep;
-- (void)setSelectedTargetIndex:(int)aIndex;
+- (void)setSelectedTargetIndex:(NSInteger)aIndex;
 - (NSArray *)targetAccountNames;
-- (void)toggleLineExclusion:(int)index;
-- (NSString *)valueForRow:(int)row column:(int)column;
+- (void)toggleLineExclusion:(NSInteger)index;
+- (NSString *)valueForRow:(NSInteger)row column:(NSInteger)column;
 @end

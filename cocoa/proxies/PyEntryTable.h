@@ -10,12 +10,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyTableWithDate.h"
 
 @interface PyEntryTable : PyTableWithDate {}
-- (BOOL)canMoveRows:(NSArray *)rows to:(int)position;
-- (BOOL)canReconcileEntryAtRow:(int)row;
-- (BOOL)isBalanceNegativeAtRow:(int)row;
-- (void)moveRows:(NSArray *)rows to:(int)position;
+- (BOOL)canMoveRows:(NSArray *)rows to:(NSInteger)position;
+- (BOOL)canReconcileEntryAtRow:(NSInteger)row;
+- (BOOL)isBalanceNegativeAtRow:(NSInteger)row;
+- (void)moveRows:(NSArray *)rows to:(NSInteger)position;
 - (BOOL)shouldShowBalanceColumn;
 - (void)showTransferAccount;
 - (void)toggleReconciled;
-- (void)toggleReconciledAtRow:(int)row;
+- (void)toggleReconciledAtRow:(NSInteger)row;
 @end

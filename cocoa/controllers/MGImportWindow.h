@@ -37,7 +37,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGImportTable *importTable;
     MGImportTableOneSided *importTableOneSided;
     id visibleTable;
-    int tabToRemoveIndex;
+    NSInteger tabToRemoveIndex;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 

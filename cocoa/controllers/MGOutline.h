@@ -44,7 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setStringProperty:(NSString *)property value:(NSString *)value atPath:(NSIndexPath *)path;
 - (BOOL)boolProperty:(NSString *)property valueAtPath:(NSIndexPath *)path;
 - (void)setBoolProperty:(NSString *)property value:(BOOL)value atPath:(NSIndexPath *)path;
-- (int)intProperty:(NSString *)property valueAtPath:(NSIndexPath *)path;
+- (NSInteger)intProperty:(NSString *)property valueAtPath:(NSIndexPath *)path;
 - (void)setIntProperty:(NSString *)property value:(int)value atPath:(NSIndexPath *)path;
 - (void)refreshItemAtPath:(NSIndexPath *)path;
 @end

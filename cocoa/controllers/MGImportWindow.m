@@ -105,7 +105,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
 {
-    int index = [tabView indexOfTabViewItem:aTabViewItem];
+    NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
     if (index >= 0)
     {
         [[self py] setSelectedAccountIndex:index];
@@ -139,7 +139,7 @@ http://www.hardcoded.net/licenses/hs_license
     {
         [tabView removeTabViewItem:[tabView tabViewItemAtIndex:0]];
     }
-    for (int i=0; i<[[self py] numberOfAccounts]; i++)
+    for (NSInteger i=0; i<[[self py] numberOfAccounts]; i++)
     {
         NSString *name = [[self py] accountNameAtIndex:i];
         NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:name] autorelease];

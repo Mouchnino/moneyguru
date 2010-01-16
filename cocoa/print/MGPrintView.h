@@ -14,15 +14,15 @@ http://www.hardcoded.net/licenses/hs_license
 {
     PyPrintView *py;
     
-    int pageCount;
-    float pageWidth;
-    float pageHeight;
+    NSInteger pageCount;
+    CGFloat pageWidth;
+    CGFloat pageHeight;
     
-    int fontSize;
+    NSInteger fontSize;
     NSFont *headerFont;
     NSDictionary *headerAttributes;
-    float headerTextHeight;
-    float headerHeight;
+    CGFloat headerTextHeight;
+    CGFloat headerHeight;
 }
 - (id)initWithPyParent:(id)pyParent;
 

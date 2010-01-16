@@ -44,7 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSString *)import:(NSString *)path;
 - (BOOL)isDirty;
 - (void)stopEdition;
-- (int)transactionCount;
+- (NSInteger)transactionCount;
 - (BOOL)shownAccountIsBalanceSheet;
 - (void)close;
 

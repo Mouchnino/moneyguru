@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSPopUpButton *targetSelector;
     IBOutlet NSTextField *delimiterTextField;
     
-    int lastClickedColumnIndex;
+    NSInteger lastClickedColumnIndex;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyCSVImportOptions *)py;

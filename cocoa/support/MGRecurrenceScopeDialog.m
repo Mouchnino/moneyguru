@@ -10,13 +10,13 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 
 @implementation MGRecurrenceScopeDialog
-+ (int)shouldUseGlobalScope
++ (NSInteger)shouldUseGlobalScope
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if (![ud boolForKey:ShowRecurrenceScopeDialog])
         return ScheduleScopeLocal;
     MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] initWithWindowNibName:@"RecurrenceScopeDialog"];
-    int result = [NSApp runModalForWindow:[dialog window]];
+    NSInteger result = [NSApp runModalForWindow:[dialog window]];
     [[dialog window] close];
     [dialog release];
     return result;

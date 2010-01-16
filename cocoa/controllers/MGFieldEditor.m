@@ -75,7 +75,7 @@ http://www.hardcoded.net/licenses/hs_license
         return;
     }
     NSString *current = [self string];
-    int insertionPoint = [current length];
+    NSInteger insertionPoint = [current length];
     NSString *suffix = [proposition substringFromIndex:[current length]];
     [self setString:[current stringByAppendingString:suffix]];    // don't use insertText here: infinite loop hazard.
     [self setSelectedRange:NSMakeRange(insertionPoint, [suffix length])];
@@ -89,7 +89,7 @@ http://www.hardcoded.net/licenses/hs_license
         return;
     }
     NSRange selection = [self selectedRange];
-    int selectionStart = selection.length == 0 ? 0 : selection.location;
+    NSInteger selectionStart = selection.length == 0 ? 0 : selection.location;
     NSString *oldPrefix = [[[self string] substringToIndex:selectionStart] lowercaseString];
     NSString *newPrefix = [[text substringToIndex:selectionStart] lowercaseString];
     if (![oldPrefix isEqualToString:newPrefix])

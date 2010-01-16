@@ -21,26 +21,26 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGGraphView : MGChartView 
 {
-    float minX;
-    float maxX;
-    float minY;
-    float maxY;
-    float xToday;
+    CGFloat minX;
+    CGFloat maxX;
+    CGFloat minY;
+    CGFloat maxY;
+    CGFloat xToday;
     NSArray *xLabels;
     NSArray *yLabels;
     NSArray *xTickMarks;
     NSArray *yTickMarks;
-    float xFactor;
-    float yFactor;
+    CGFloat xFactor;
+    CGFloat yFactor;
     NSRect graphBounds;
     NSGradient *fillGradient;
     NSGradient *futureGradient;
 }
-- (void)setMinX:(float)aMinX;
-- (void)setMaxX:(float)aMaxX;
-- (void)setMinY:(float)aMinY;
-- (void)setMaxY:(float)aMaxY;
-- (void)setXToday:(float)aXToday;
+- (void)setMinX:(CGFloat)aMinX;
+- (void)setMaxX:(CGFloat)aMaxX;
+- (void)setMinY:(CGFloat)aMinY;
+- (void)setMaxY:(CGFloat)aMaxY;
+- (void)setXToday:(CGFloat)aXToday;
 - (void)setXLabels:(NSArray *)aXLabels;
 - (void)setYLabels:(NSArray *)aYLabels;
 - (void)setXTickMarks:(NSArray *)aXTickMarks;

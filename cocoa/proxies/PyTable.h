@@ -13,14 +13,14 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)add;
 - (void)cancelEdits;
-- (BOOL)canEditColumn:(NSString *)column atRow:(int)row;
+- (BOOL)canEditColumn:(NSString *)column atRow:(NSInteger)row;
 - (void)changeColumns:(NSArray *)columns;
 - (void)deleteSelectedRows;
-- (int)numberOfRows;
+- (NSInteger)numberOfRows;
 - (void)saveEdits;
 - (void)selectRows:(NSArray *)rows;
 - (NSArray *)selectedRows;
-- (void)setValue:(id)value forColumn:(NSString *)column row:(int)row;
+- (void)setValue:(id)value forColumn:(NSString *)column row:(NSInteger)row;
 - (void)sortByColumn:(NSString *)column desc:(BOOL)desc;
-- (id)valueForColumn:(NSString *)column row:(int)row;
+- (id)valueForColumn:(NSString *)column row:(NSInteger)row;
 @end

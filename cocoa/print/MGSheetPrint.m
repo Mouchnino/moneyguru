@@ -32,12 +32,12 @@ http://www.hardcoded.net/licenses/hs_license
 {
     // subclasses must set graphVisible and pieVisible before calling [super setUpWithPrintInfo:pi]
     [super setUpWithPrintInfo:pi];
-    float columnsTotalWidth = [self columnsTotalWidth];
-    float bottomY = lastRowYOnLastPage;
-    float pieX = columnsTotalWidth;
-    float pieY = headerHeight;
-    float pieWidth = pageWidth - columnsTotalWidth;
-    float pieHeight = pageHeight - pieY;
+    CGFloat columnsTotalWidth = [self columnsTotalWidth];
+    CGFloat bottomY = lastRowYOnLastPage;
+    CGFloat pieX = columnsTotalWidth;
+    CGFloat pieY = headerHeight;
+    CGFloat pieWidth = pageWidth - columnsTotalWidth;
+    CGFloat pieHeight = pageHeight - pieY;
     piePage = 1;
     BOOL isPieOnSide = pieWidth >= PIE_GRAPH_MIN_WIDTH;
     if (pieVisible && !isPieOnSide)
@@ -55,8 +55,8 @@ http://www.hardcoded.net/licenses/hs_license
         }
         piePage = pageCount;
     }
-    float graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;
-    float graphY = pageHeight - graphHeight;
+    CGFloat graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;
+    CGFloat graphY = pageHeight - graphHeight;
     if (graphVisible && (bottomY > graphY))
     {
         pageCount++;
@@ -81,7 +81,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)drawRect:(NSRect)rect
 {
-    int pageNumber = [[NSPrintOperation currentOperation] currentPage];
+    NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
     BOOL showGraph = graphVisible && pageNumber == graphPage;
     [graphView setHidden:!showGraph];
     BOOL showPie = pieVisible && pageNumber == piePage;

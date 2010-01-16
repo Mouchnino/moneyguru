@@ -29,7 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     if (i != nil)
     {
-        float rectSize = MIN(cellFrame.size.width, cellFrame.size.height);
+        CGFloat rectSize = MIN(cellFrame.size.width, cellFrame.size.height);
         NSRect drawRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, rectSize, rectSize);
         [i setFlipped:YES];
         [i drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];

@@ -107,8 +107,8 @@ http://www.hardcoded.net/licenses/hs_license
     }
     [self setString:new];
     NSArray *sel = [py selection];
-    int start = n2i([sel objectAtIndex:0]);
-    int end = n2i([sel objectAtIndex:1]);
+    NSInteger start = n2i([sel objectAtIndex:0]);
+    NSInteger end = n2i([sel objectAtIndex:1]);
     [self setSelectedRange:NSMakeRange(start, end - start + 1)];
     if (changed)
     {

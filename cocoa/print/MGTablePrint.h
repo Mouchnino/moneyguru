@@ -13,13 +13,13 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSTableView *tableView;
     
-    float columnHeaderY;
+    CGFloat columnHeaderY;
     NSFont *rowFont;
     NSDictionary *rowAttributes;
-    float rowTextHeight;
-    float typicalRowHeight;
-    float lastRowYOnLastPage;
-    int rowCount;
+    CGFloat rowTextHeight;
+    CGFloat typicalRowHeight;
+    CGFloat lastRowYOnLastPage;
+    NSInteger rowCount;
     NSMutableArray *cellData;
     NSMutableArray *columnWidths;
     NSMutableArray *rowHeights;
@@ -27,11 +27,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView;
 
-- (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(int)aRow;
-- (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(int)aRow;
-- (float)indentForTableColumn:(NSTableColumn *)aColumn row:(int)aRow;
-- (float)heightForRow:(int)aRow;
+- (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow;
+- (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow;
+- (CGFloat)indentForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow;
+- (CGFloat)heightForRow:(NSInteger)aRow;
 - (NSArray *)unresizableColumns;
-- (void)drawRow:(int)aRow inRect:(NSRect)aRect;
-- (float)columnsTotalWidth;
+- (void)drawRow:(NSInteger)aRow inRect:(NSRect)aRect;
+- (CGFloat)columnsTotalWidth;
 @end

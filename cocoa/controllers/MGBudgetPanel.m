@@ -44,7 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
     [targetSelector addItemsWithTitles:[[self py] targetOptions]];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
-    [repeatEveryField setIntValue:[[self py] repeatEvery]];
+    [repeatEveryField setIntegerValue:[[self py] repeatEvery]];
     [accountSelector selectItemAtIndex:[[self py] accountIndex]];
     [targetSelector selectItemAtIndex:[[self py] targetIndex]];
     [amountField setStringValue:[[self py] amount]];

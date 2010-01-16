@@ -57,7 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
     // Fetch all data
     [cellData removeAllObjects];
     [rowHeights removeAllObjects];
-    for (int i=0; i<rowCount; i++)
+    for (NSInteger i=0; i<rowCount; i++)
     {
         NSMutableArray *row = [NSMutableArray array];
         NSEnumerator *e = [[tableView tableColumns] objectEnumerator];
@@ -75,12 +75,12 @@ http://www.hardcoded.net/licenses/hs_license
     
     // Figure out the page count
     pageCount = 1;
-    float bottomY = headerHeight;
+    CGFloat bottomY = headerHeight;
     NSEnumerator *e = [rowHeights objectEnumerator];
     NSNumber *n;
     while (n = [e nextObject])
     {
-        float h = n2f(n);
+        CGFloat h = n2f(n);
         if (h + bottomY > pageHeight)
         {
             pageCount++;
@@ -95,27 +95,27 @@ http://www.hardcoded.net/licenses/hs_license
     NSMutableArray *maxWidths = [NSMutableArray array];
     NSMutableArray *avgWidths = [NSMutableArray array];
     [columnWidths removeAllObjects];
-    float totalWidths = 0;
-    float removableWidth = 0; // difference between max and avg for columns going over the threshold
-    for (int i=0; i<[[tableView tableColumns] count]; i++)
+    CGFloat totalWidths = 0;
+    CGFloat removableWidth = 0; // difference between max and avg for columns going over the threshold
+    for (NSInteger i=0; i<[[tableView tableColumns] count]; i++)
     {
         NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
         NSString *headerTitle = [[c headerCell] stringValue];
-        float maxWidth = [headerTitle sizeWithAttributes:headerAttributes].width;
-        float totalWidth = 0;
-        for (int j=0; j<rowCount; j++)
+        CGFloat maxWidth = [headerTitle sizeWithAttributes:headerAttributes].width;
+        CGFloat totalWidth = 0;
+        for (NSInteger j=0; j<rowCount; j++)
         {
             NSArray *row = [cellData objectAtIndex:j];
             id value = [row objectAtIndex:i];
             NSString *stringValue = value;
-            float width = 0;
+            CGFloat width = 0;
             if (![stringValue isEqualTo:@""])
                 width = [stringValue sizeWithAttributes:rowAttributes].width + CELL_PADDING;
             width += [self indentForTableColumn:c row:j];
             maxWidth = MAX(maxWidth, width);
             totalWidth += width;
         }
-        float avgWidth = 0;
+        CGFloat avgWidth = 0;
         if (maxWidth == 0) // A column with no value. keep the NSTableColumn's width
         {
             maxWidth = [c width];
@@ -134,44 +134,44 @@ http://www.hardcoded.net/licenses/hs_license
     // Fitting column widths to the page width
     if (totalWidths > pageWidth)
     {
-        float togain = totalWidths - pageWidth;
-        for (int i=0; i<[maxWidths count]; i++)
+        CGFloat togain = totalWidths - pageWidth;
+        for (NSInteger i=0; i<[maxWidths count]; i++)
         {
             NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
-            float maxWidth = n2f([maxWidths objectAtIndex:i]);
-            float avgWidth = n2f([avgWidths objectAtIndex:i]);
-            float diff = maxWidth - avgWidth;
+            CGFloat maxWidth = n2f([maxWidths objectAtIndex:i]);
+            CGFloat avgWidth = n2f([avgWidths objectAtIndex:i]);
+            CGFloat diff = maxWidth - avgWidth;
             if (![cantResize containsObject:[c identifier]])
             {
                 // This column has to be trimmed. Use removableWidth to figure out our share of the
                 // width to remove
-                float proportion = diff / removableWidth;
-                float toremove = togain * proportion;
+                CGFloat proportion = diff / removableWidth;
+                CGFloat toremove = togain * proportion;
                 [columnWidths replaceObjectAtIndex:i withObject:f2n(maxWidth-toremove)];
             }
         }
     }
 }
 
-- (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(int)aRow
+- (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
     id d = [tableView delegate];
     return [d tableView:tableView objectValueForTableColumn:aColumn row:aRow];
 }
 
-- (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(int)aRow
+- (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
     id d = [tableView delegate];
     if ([d respondsToSelector:@selector(tableView:willDisplayCell:forTableColumn:row:)])
         [d tableView:tableView willDisplayCell:aCell forTableColumn:aColumn row:aRow];
 }
 
-- (float)indentForTableColumn:(NSTableColumn *)aColumn row:(int)aRow
+- (CGFloat)indentForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
     return 0;
 }
 
-- (float)heightForRow:(int)aRow
+- (CGFloat)heightForRow:(NSInteger)aRow
 {
     return typicalRowHeight;
 }
@@ -181,18 +181,18 @@ http://www.hardcoded.net/licenses/hs_license
     return [NSArray array];
 }
 
-- (void)drawRow:(int)aRow inRect:(NSRect)aRect
+- (void)drawRow:(NSInteger)aRow inRect:(NSRect)aRect
 {
     NSArray *row = [cellData objectAtIndex:aRow];
-    float cumulativeHeaderX = NSMinX(aRect);
-    for (int i=0; i<[[tableView tableColumns] count]; i++)
+    CGFloat cumulativeHeaderX = NSMinX(aRect);
+    for (NSInteger i=0; i<[[tableView tableColumns] count]; i++)
     {
         NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
         NSString *valueToDraw = [row objectAtIndex:i];
-        float colWidth = n2f([columnWidths objectAtIndex:i]);
-        float indent = [self indentForTableColumn:c row:aRow];
-        float cellX = cumulativeHeaderX + indent;
-        float cellWidth = colWidth - indent;
+        CGFloat colWidth = n2f([columnWidths objectAtIndex:i]);
+        CGFloat indent = [self indentForTableColumn:c row:aRow];
+        CGFloat cellX = cumulativeHeaderX + indent;
+        CGFloat cellWidth = colWidth - indent;
         NSRect drawRect = NSMakeRect(cellX, NSMinY(aRect), cellWidth, rowTextHeight);
         NSCell *cell = [c dataCellForRow:aRow];
         [cell setFont:rowFont];
@@ -210,9 +210,9 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (float)columnsTotalWidth
+- (CGFloat)columnsTotalWidth
 {
-    float result = 0.0;
+    CGFloat result = 0.0;
     NSEnumerator *e = [columnWidths objectEnumerator];
     NSNumber *n;
     while (n = [e nextObject])
@@ -229,7 +229,7 @@ http://www.hardcoded.net/licenses/hs_license
 }
  
 // Return the drawing rectangle for a particular page number
-- (NSRect)rectForPage:(int)page
+- (NSRect)rectForPage:(NSInteger)page
 {
     return [self bounds];
 }
@@ -237,16 +237,16 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)drawRect:(NSRect)rect
 {
     [super drawRect:rect];
-    int pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    float headerY = columnHeaderY;
-    float lineY = headerY + headerTextHeight + 2;
-    int page = 1;
-    int startRow = pageNumber == 1 ? 0 : -1;
-    int endRow = -1;
-    float bottomY = headerHeight;
-    for (int i=0; i<[rowHeights count]; i++)
+    NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
+    CGFloat headerY = columnHeaderY;
+    CGFloat lineY = headerY + headerTextHeight + 2;
+    NSInteger page = 1;
+    NSInteger startRow = pageNumber == 1 ? 0 : -1;
+    NSInteger endRow = -1;
+    CGFloat bottomY = headerHeight;
+    for (NSInteger i=0; i<[rowHeights count]; i++)
     {
-        float h = n2f([rowHeights objectAtIndex:i]);
+        CGFloat h = n2f([rowHeights objectAtIndex:i]);
         if (h + bottomY > pageHeight)
         {
             if (page == pageNumber)
@@ -272,11 +272,11 @@ http://www.hardcoded.net/licenses/hs_license
         return;
     
     // Header Columns
-    float cumulativeHeaderX = 0;
-    for (int i=0; i<[[tableView tableColumns] count]; i++)
+    CGFloat cumulativeHeaderX = 0;
+    for (NSInteger i=0; i<[[tableView tableColumns] count]; i++)
     {
         NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
-        float colWidth = n2f([columnWidths objectAtIndex:i]);
+        CGFloat colWidth = n2f([columnWidths objectAtIndex:i]);
         NSString *headerToDraw = [[c headerCell] stringValue];
         NSRect drawRect = NSMakeRect(cumulativeHeaderX, headerY, colWidth, headerTextHeight);
         [headerToDraw drawInRect:drawRect withAttributes:headerAttributes];
@@ -284,10 +284,10 @@ http://www.hardcoded.net/licenses/hs_license
     }
     
     // Rows
-    float rowY = headerHeight;
-    for (int i=startRow; i<=endRow; i++)
+    CGFloat rowY = headerHeight;
+    for (NSInteger i=startRow; i<=endRow; i++)
     {
-        float rowHeight = n2f([rowHeights objectAtIndex:i]);
+        CGFloat rowHeight = n2f([rowHeights objectAtIndex:i]);
         NSRect drawRect = NSMakeRect(0, rowY, pageWidth, rowHeight);
         [self drawRow:i inRect:drawRect];
         rowY += rowHeight;

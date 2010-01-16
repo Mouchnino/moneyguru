@@ -9,12 +9,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGHorizontalSplitViewDelegate.h"
 
 @implementation MGHorizontalSplitViewDelegate
-- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset
+- (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset
 {
     return proposedMax - 150.0;
 }
 
-- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset
 {
     return proposedMin + 100.0;
 }

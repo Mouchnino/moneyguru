@@ -14,12 +14,12 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSFont *splitFont;
     NSDictionary *splitAttributes;
-    float splitTextHeight;
-    float splitHeight;
+    CGFloat splitTextHeight;
+    CGFloat splitHeight;
 }
 
 - (PySplitPrint *)py;
 
 - (NSArray *)accountColumnNames;
-- (int)splitCountThreshold;
+- (NSInteger)splitCountThreshold;
 @end

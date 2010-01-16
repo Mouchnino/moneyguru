@@ -34,7 +34,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [NSArray arrayWithObjects:@"from",@"to",nil];
 }
 
-- (int)splitCountThreshold
+- (NSInteger)splitCountThreshold
 {
     return 3;
 }

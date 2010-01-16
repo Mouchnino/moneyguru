@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGOutlinePrint.h"
 
 @implementation MGOutlinePrint
-- (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(int)aRow
+- (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
     NSOutlineView *o = (NSOutlineView *)tableView;
     id d = [o delegate];
@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/hs_license
     return [d outlineView:o objectValueForTableColumn:aColumn byItem:item];
 }
 
-- (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(int)aRow
+- (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
     NSOutlineView *o = (NSOutlineView *)tableView;
     id d = [o delegate];
@@ -25,12 +25,12 @@ http://www.hardcoded.net/licenses/hs_license
     [d outlineView:o willDisplayCell:aCell forTableColumn:aColumn item:item];
 }
 
-- (float)indentForTableColumn:(NSTableColumn *)aColumn row:(int)aRow
+- (CGFloat)indentForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
     NSOutlineView *o = (NSOutlineView *)tableView;
     if ([[o tableColumns] indexOfObject:aColumn] == 0)
     {
-        int level = [o levelForRow:aRow];
+        NSInteger level = [o levelForRow:aRow];
         return level * [o indentationPerLevel];
     }
     else

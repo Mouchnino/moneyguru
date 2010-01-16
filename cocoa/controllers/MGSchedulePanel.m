@@ -61,7 +61,7 @@ http://www.hardcoded.net/licenses/hs_license
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
     [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
-    [repeatEveryField setIntValue:[[self py] repeatEvery]];
+    [repeatEveryField setIntegerValue:[[self py] repeatEvery]];
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
@@ -104,7 +104,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refreshRepeatOptions
 {
-    int index = [repeatOptionsPopUp indexOfSelectedItem];
+    NSInteger index = [repeatOptionsPopUp indexOfSelectedItem];
     [repeatOptionsPopUp removeAllItems];
     NSArray *options = [[self py] repeatOptions];
     [repeatOptionsPopUp addItemsWithTitles:options];

@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/hs_license
 // Alright, this is a hack. It has been added to put in common some table and outline code, but the
 // thing is an outline view delegate doesn't use tableView:shouldEditTableColumn:row:. Anyway, for 
 // the outline, just using [column isEditable] works in moneyGuru for now, so we can keep it that way.
-- (BOOL)shouldEditTableColumn:(NSTableColumn *)column row:(int)row
+- (BOOL)shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if (![column isEditable])
         return NO;
@@ -95,7 +95,7 @@ http://www.hardcoded.net/licenses/hs_license
     }
     
     // We only want to edit columns that are editable. If there aren't any, don't edit.
-    for (int i=0;i<[[self tableColumns] count];i++)
+    for (NSInteger i=0;i<[[self tableColumns] count];i++)
     {
         NSTableColumn *col = [[self tableColumns] objectAtIndex:i];
         if ([self shouldEditTableColumn:col row:[self selectedRow]])

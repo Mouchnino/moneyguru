@@ -13,6 +13,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)loadPanel;
 - (void)ok;
 - (NSArray *)availableAccounts;
-- (int)accountIndex;
-- (void)setAccountIndex:(int)index;
+- (NSInteger)accountIndex;
+- (void)setAccountIndex:(NSInteger)index;
 @end

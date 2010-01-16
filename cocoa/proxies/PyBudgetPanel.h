@@ -14,16 +14,16 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setStartDate:(NSString *)startDate;
 - (NSString *)stopDate;
 - (void)setStopDate:(NSString *)stopDate;
-- (int)repeatEvery;
-- (void)setRepeatEvery:(int)value;
+- (NSInteger)repeatEvery;
+- (void)setRepeatEvery:(NSInteger)value;
 - (NSString *)repeatEveryDesc;
-- (int)repeatTypeIndex;
-- (void)setRepeatTypeIndex:(int)value;
+- (NSInteger)repeatTypeIndex;
+- (void)setRepeatTypeIndex:(NSInteger)value;
 - (NSArray *)repeatOptions;
-- (int)accountIndex;
-- (void)setAccountIndex:(int)index;
-- (int)targetIndex;
-- (void)setTargetIndex:(int)index;
+- (NSInteger)accountIndex;
+- (void)setAccountIndex:(NSInteger)index;
+- (NSInteger)targetIndex;
+- (void)setTargetIndex:(NSInteger)index;
 - (NSString *)amount;
 - (void)setAmount:(NSString *)amount;
 

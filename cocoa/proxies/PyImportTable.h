@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyImportWindow.h"
 
 @interface PyImportTable : PyTable {}
-- (BOOL)canBindRow:(int)source to:(int)dest;
-- (void)bindRow:(int)source to:(int)dest;
-- (void)unbindRow:(int)row;
+- (BOOL)canBindRow:(NSInteger)source to:(NSInteger)dest;
+- (void)bindRow:(NSInteger)source to:(NSInteger)dest;
+- (void)unbindRow:(NSInteger)row;
 - (BOOL)isTwoSided;
 - (void)toggleImportStatus;
 @end
