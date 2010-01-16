@@ -45,7 +45,8 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGTransactionPrint alloc] initWithPyParent:py tableView:[transactionTable tableView]] autorelease];
+    return [[[MGTransactionPrint alloc] initWithPyParent:[transactionTable py] 
+        tableView:[transactionTable tableView]] autorelease];
 }
 
 - (id)fieldEditorForObject:(id)asker

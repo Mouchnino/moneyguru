@@ -28,6 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
     cellData = [[NSMutableArray array] retain];
     columnWidths = [[NSMutableArray array] retain];
     rowHeights = [[NSMutableArray array] retain];
+    visibleColumns = [[NSMutableArray array] retain];
     
     return self;
 }
@@ -40,6 +41,7 @@ http://www.hardcoded.net/licenses/hs_license
     [cellData release];
     [columnWidths release];
     [rowHeights release];
+    [visibleColumns release];
     [super dealloc];
 }
 
@@ -54,16 +56,20 @@ http://www.hardcoded.net/licenses/hs_license
     typicalRowHeight = rowTextHeight + 2;
     rowCount = [tableView numberOfRows];
     
+    // Process only vivible columns
+    [visibleColumns removeAllObjects];
+    for (NSTableColumn *c in [tableView tableColumns]) {
+        if (![c isHidden])
+            [visibleColumns addObject:c];
+    }
+    
     // Fetch all data
     [cellData removeAllObjects];
     [rowHeights removeAllObjects];
     for (NSInteger i=0; i<rowCount; i++)
     {
         NSMutableArray *row = [NSMutableArray array];
-        NSEnumerator *e = [[tableView tableColumns] objectEnumerator];
-        NSTableColumn *c;
-        while (c = [e nextObject])
-        {
+        for (NSTableColumn *c in visibleColumns) {
             NSString *value = [self objectValueForTableColumn:c row:i];
             if (value == nil)
                 value = @"";
@@ -97,9 +103,9 @@ http://www.hardcoded.net/licenses/hs_license
     [columnWidths removeAllObjects];
     CGFloat totalWidths = 0;
     CGFloat removableWidth = 0; // difference between max and avg for columns going over the threshold
-    for (NSInteger i=0; i<[[tableView tableColumns] count]; i++)
+    for (NSInteger i=0; i<[visibleColumns count]; i++)
     {
-        NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
+        NSTableColumn *c = [visibleColumns objectAtIndex:i];
         NSString *headerTitle = [[c headerCell] stringValue];
         CGFloat maxWidth = [headerTitle sizeWithAttributes:headerAttributes].width;
         CGFloat totalWidth = 0;
@@ -137,7 +143,7 @@ http://www.hardcoded.net/licenses/hs_license
         CGFloat togain = totalWidths - pageWidth;
         for (NSInteger i=0; i<[maxWidths count]; i++)
         {
-            NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
+            NSTableColumn *c = [visibleColumns objectAtIndex:i];
             CGFloat maxWidth = n2f([maxWidths objectAtIndex:i]);
             CGFloat avgWidth = n2f([avgWidths objectAtIndex:i]);
             CGFloat diff = maxWidth - avgWidth;
@@ -185,9 +191,9 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSArray *row = [cellData objectAtIndex:aRow];
     CGFloat cumulativeHeaderX = NSMinX(aRect);
-    for (NSInteger i=0; i<[[tableView tableColumns] count]; i++)
+    for (NSInteger i=0; i<[visibleColumns count]; i++)
     {
-        NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
+        NSTableColumn *c = [visibleColumns objectAtIndex:i];
         NSString *valueToDraw = [row objectAtIndex:i];
         CGFloat colWidth = n2f([columnWidths objectAtIndex:i]);
         CGFloat indent = [self indentForTableColumn:c row:aRow];
@@ -213,9 +219,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (CGFloat)columnsTotalWidth
 {
     CGFloat result = 0.0;
-    NSEnumerator *e = [columnWidths objectEnumerator];
-    NSNumber *n;
-    while (n = [e nextObject])
+    for (NSNumber *n in columnWidths)
         result += n2f(n);
     return result;
 }
@@ -273,9 +277,9 @@ http://www.hardcoded.net/licenses/hs_license
     
     // Header Columns
     CGFloat cumulativeHeaderX = 0;
-    for (NSInteger i=0; i<[[tableView tableColumns] count]; i++)
+    for (NSInteger i=0; i<[visibleColumns count]; i++)
     {
-        NSTableColumn *c = [[tableView tableColumns] objectAtIndex:i];
+        NSTableColumn *c = [visibleColumns objectAtIndex:i];
         CGFloat colWidth = n2f([columnWidths objectAtIndex:i]);
         NSString *headerToDraw = [[c headerCell] stringValue];
         NSRect drawRect = NSMakeRect(cumulativeHeaderX, headerY, colWidth, headerTextHeight);

@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSMutableArray *cellData;
     NSMutableArray *columnWidths;
     NSMutableArray *rowHeights;
+    NSMutableArray *visibleColumns;
 }
 
 - (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView;

@@ -159,13 +159,18 @@ http://www.hardcoded.net/licenses/hs_license
         MGTextFieldCell *cell = aCell;
         BOOL isFocused = aTableView == [[aTableView window] firstResponder] && [[aTableView window] isKeyWindow];
         BOOL isSelected = row == [aTableView selectedRow];
-        [cell setHasArrow:YES];
-        [cell setArrowTarget:self];
-        if ([[column identifier] isEqualToString:@"from"])
-            [cell setArrowAction:@selector(showFromAccount:)];
-        else
-            [cell setArrowAction:@selector(showToAccount:)];
-        [cell setHasDarkBackground:isSelected && isFocused];
+        BOOL isPrinting = [NSPrintOperation currentOperation] != nil;
+        if (isPrinting) {
+            [cell setHasArrow:NO];
+        } else {
+            [cell setHasArrow:YES];
+            [cell setArrowTarget:self];
+            if ([[column identifier] isEqualToString:@"from"])
+                [cell setArrowAction:@selector(showFromAccount:)];
+            else
+                [cell setArrowAction:@selector(showToAccount:)];
+            [cell setHasDarkBackground:isSelected && isFocused];
+        }
     }
 }
 @end

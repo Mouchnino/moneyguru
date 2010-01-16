@@ -43,6 +43,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGBudgetPrint alloc] initWithPyParent:py tableView:[budgetTable tableView]] autorelease];
+    return [[[MGBudgetPrint alloc] initWithPyParent:[budgetTable py] tableView:[budgetTable tableView]] autorelease];
 }
 @end
