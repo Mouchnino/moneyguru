@@ -24,11 +24,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)refresh
 {
     [super refresh];
-    [[self view] setMinX:(CGFloat)[[self py] xMin]];
-    [[self view] setMaxX:(CGFloat)[[self py] xMax]];
-    [[self view] setMinY:(CGFloat)[[self py] yMin]];
-    [[self view] setMaxY:(CGFloat)[[self py] yMax]];
-    [[self view] setXToday:(CGFloat)[[self py] xToday]];
+    [[self view] setMinX:[[self py] xMin]];
+    [[self view] setMaxX:[[self py] xMax]];
+    [[self view] setMinY:[[self py] yMin]];
+    [[self view] setMaxY:[[self py] yMax]];
+    [[self view] setXToday:[[self py] xToday]];
     [[self view] setXLabels:[[self py] xLabels]];
     [[self view] setYLabels:[[self py] yLabels]];
     [[self view] setXTickMarks:[[self py] xTickMarks]];

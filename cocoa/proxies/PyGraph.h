@@ -11,11 +11,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface PyGraph : PyChart {}
 // I'm not sure how to have a CGFloat like signature on the py side or if it's possible.
-- (float)xMin;
-- (float)xMax;
-- (float)yMin;
-- (float)yMax;
-- (float)xToday;
+- (CGFloat)xMin;
+- (CGFloat)xMax;
+- (CGFloat)yMin;
+- (CGFloat)yMax;
+- (CGFloat)xToday;
 - (NSArray *)xLabels;
 - (NSArray *)xTickMarks;
 - (NSArray *)yLabels;

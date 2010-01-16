@@ -62,6 +62,13 @@ from core.loader import base, csv, native, ofx, qif
 from core.model import (account, amount, currency, date, oven, recurrence, transaction,
     transaction_list, completion, undo)
 
+def signature(signature):
+    """Returns an objc.signature with 'i' and 'f' letters changed to correct NSInteger and CGFloat
+    values.
+    """
+    signature = signature.replace('i', objc._C_NSInteger).replace('f', objc._C_CGFloat)
+    return objc.signature(signature)
+
 class PyMoneyGuruApp(NSObject):
     def initWithCocoa_(self, cocoa):
         super(PyMoneyGuruApp, self).init()
@@ -109,36 +116,36 @@ class PyMoneyGuruApp(NSObject):
         NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key_name)
     
     #--- Preferences
-    @objc.signature('i@:')
+    @signature('i@:')
     def firstWeekday(self):
         return self.py.first_weekday
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setFirstWeekday_(self, weekday):
         self.py.first_weekday = weekday
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def aheadMonths(self):
         return self.py.ahead_months
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setAheadMonths_(self, months):
         self.py.ahead_months = months
     
     # The selector in the pref pane is 0-based, the py side's pref is 1-based
-    @objc.signature('i@:')
+    @signature('i@:')
     def yearStartMonth(self):
         return self.py.year_start_month - 1
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setYearStartMonth_(self, month):
         self.py.year_start_month = month + 1
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def autoSaveInterval(self):
         return self.py.autosave_interval
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setAutoSaveInterval_(self, minutes):
         self.py.autosave_interval = minutes
     
@@ -149,11 +156,11 @@ class PyMoneyGuruApp(NSObject):
     def demoLimitDescription(self):
         return self.py.DEMO_LIMIT_DESC
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def isRegistered(self):
         return self.py.registered
     
-    @objc.signature('i@:@@')
+    @signature('i@:@@')
     def isCodeValid_withEmail_(self, code, email):
         return self.py.is_code_valid(code, email)
     
@@ -211,12 +218,12 @@ class PyDocument(NSObject):
     def toggleReconciliationMode(self):
         self.py.toggle_reconciliation_mode()
 
-    @objc.signature('i@:')
+    @signature('i@:')
     def inReconciliationMode(self):
         return self.py.in_reconciliation_mode()
     
     #--- Undo
-    @objc.signature('i@:')
+    @signature('i@:')
     def canUndo(self):
         return self.py.can_undo()
     
@@ -226,7 +233,7 @@ class PyDocument(NSObject):
     def undo(self):
         self.py.undo()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canRedo(self):
         return self.py.can_redo()
     
@@ -258,18 +265,18 @@ class PyDocument(NSObject):
         except FileFormatError, e:
             return unicode(e)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def isDirty(self):
         return self.py.is_dirty()
     
     def stopEdition(self):
         self.py.stop_edition()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def transactionCount(self):
         return len(self.py.transactions)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def shownAccountIsBalanceSheet(self):
         return self.py.shown_account is not None and self.py.shown_account.is_balance_sheet_account()
     
@@ -278,7 +285,7 @@ class PyDocument(NSObject):
         self.py.disconnect()
     
     # temporary
-    @objc.signature('i@:')
+    @signature('i@:')
     def isRegistered(self):
         return self.py.app.registered
     
@@ -364,7 +371,7 @@ class PyTable(PyCompletion):
     def cancelEdits(self):
         self.py.cancel_edits()
     
-    @objc.signature('i@:@i')
+    @signature('i@:@i')
     def canEditColumn_atRow_(self, column, row):
         return self.py.can_edit_cell(column, row)
     
@@ -374,7 +381,7 @@ class PyTable(PyCompletion):
     def deleteSelectedRows(self):
         self.py.delete()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def numberOfRows(self):
         return len(self.py)
 
@@ -387,7 +394,7 @@ class PyTable(PyCompletion):
     def selectedRows(self):
         return self.py.selected_indexes
     
-    @objc.signature('v@:@@i')
+    @signature('v@:@@i')
     def setValue_forColumn_row_(self, value, column, row):
         if column == 'from':
             column = 'from_'
@@ -398,11 +405,11 @@ class PyTable(PyCompletion):
         except IndexError:
             logging.warning("Trying to set an out of bounds row ({0} / {1})".format(row, len(self.py)))
     
-    @objc.signature('v@:@i')
+    @signature('v@:@i')
     def sortByColumn_desc_(self, column, desc):
         self.py.sort_by(column, desc=desc)
     
-    @objc.signature('@@:@i')
+    @signature('@@:@i')
     def valueForColumn_row_(self, column, row):
         if column == 'from':
             column = 'from_'
@@ -426,13 +433,13 @@ class PyTable(PyCompletion):
     
 
 class PyTableWithDate(PyTable):
-    @objc.signature('i@:')
+    @signature('i@:')
     def isEditedRowInTheFuture(self):
         if self.py.edited is None:
             return False
         return self.py.edited.is_date_in_future()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def isEditedRowInThePast(self):
         if self.py.edited is None:
             return False
@@ -451,23 +458,23 @@ class PyChart(PyListener):
     
 
 class PyGraph(PyChart):
-    @objc.signature('f@:')
+    @signature('f@:')
     def xMin(self):
         return self.py.xmin
 
-    @objc.signature('f@:')
+    @signature('f@:')
     def xMax(self):
         return self.py.xmax
     
-    @objc.signature('f@:')
+    @signature('f@:')
     def yMin(self):
         return self.py.ymin
     
-    @objc.signature('f@:')
+    @signature('f@:')
     def yMax(self):
         return self.py.ymax
     
-    @objc.signature('f@:')
+    @signature('f@:')
     def xToday(self):
         return getattr(self.py, 'xtoday', 0) # bar charts don't have a xtoday attr
     
@@ -488,7 +495,7 @@ class PyOutline(PyListener):
     def cancelEdits(self):
         self.py.cancel_edits()
     
-    @objc.signature('i@:@@')
+    @signature('i@:@@')
     def canEditProperty_atPath_(self, property, path):
         node = self.py.get_node(path)
         assert node is self.py.selected
@@ -525,14 +532,14 @@ class PyOutline(PyListener):
     
 
 class PyReport(PyOutline):
-    @objc.signature('i@:')
+    @signature('i@:')
     def canDeleteSelected(self):
         return self.py.can_delete()
     
     def deleteSelected(self):
         self.py.delete()
     
-    @objc.signature('i@:@@')
+    @signature('i@:@@')
     def canMovePath_toPath_(self, source_path, dest_path):
         return self.py.can_move(source_path, dest_path)
     
@@ -542,7 +549,7 @@ class PyReport(PyOutline):
     def showSelectedAccount(self):
         self.py.show_selected_account()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canShowSelectedAccount(self):
         return self.py.can_show_selected_account
     
@@ -623,23 +630,23 @@ class PyIncomeStatement(PyReport):
 class PyEntryTable(PyTableWithDate):
     py_class = EntryTable
 
-    @objc.signature('i@:@i')
+    @signature('i@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
 
-    @objc.signature('i@:i')
+    @signature('i@:i')
     def canReconcileEntryAtRow_(self, row):
         return self.py[row].can_reconcile()
     
-    @objc.signature('i@:i')
+    @signature('i@:i')
     def isBalanceNegativeAtRow_(self, row):
         return self.py[row].is_balance_negative()
     
-    @objc.signature('v@:@i')
+    @signature('v@:@i')
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
 
-    @objc.signature('i@:')
+    @signature('i@:')
     def shouldShowBalanceColumn(self):
         return self.py.should_show_balance_column()
     
@@ -649,7 +656,7 @@ class PyEntryTable(PyTableWithDate):
     def toggleReconciled(self):
         self.py.toggle_reconciled()
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def toggleReconciledAtRow_(self, row_index):
         self.py[row_index].toggle_reconciled()
     
@@ -657,11 +664,11 @@ class PyEntryTable(PyTableWithDate):
 class PyTransactionTable(PyTableWithDate):
     py_class = TransactionTable
 
-    @objc.signature('i@:@i')
+    @signature('i@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
     
-    @objc.signature('v@:@i')
+    @signature('v@:@i')
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
     
@@ -752,19 +759,19 @@ class PyAccountPanel(PyPanel):
     def setName_(self, name):
         self.py.name = name
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def typeIndex(self):
         return self.py.type_index
     
-    @objc.signature('@@:i')
+    @signature('@@:i')
     def setTypeIndex_(self, index):
         self.py.type_index = index
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def currencyIndex(self):
         return self.py.currency_index
     
-    @objc.signature('@@:i')
+    @signature('@@:i')
     def setCurrencyIndex_(self, index):
         self.py.currency_index = index
     
@@ -788,7 +795,7 @@ class PyTransactionPanel(PyPanel):
     def mctBalance(self):
         self.py.mct_balance()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canDoMCTBalance(self):
         return self.py.can_do_mct_balance
     
@@ -827,128 +834,128 @@ class PyMassEditionPanel(PyPanel):
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canChangeAccountsAndAmount(self):
         return self.py.can_change_accounts_and_amount
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def dateEnabled(self):
         return self.py.date_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setDateEnabled_(self, value):
         self.py.date_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def descriptionEnabled(self):
         return self.py.description_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setDescriptionEnabled_(self, value):
         self.py.description_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def payeeEnabled(self):
         return self.py.payee_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setPayeeEnabled_(self, value):
         self.py.payee_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def checknoEnabled(self):
         return self.py.checkno_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setChecknoEnabled_(self, value):
         self.py.checkno_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def fromEnabled(self):
         return self.py.from_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setFromEnabled_(self, value):
         self.py.from_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def toEnabled(self):
         return self.py.to_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setToEnabled_(self, value):
         self.py.to_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def amountEnabled(self):
         return self.py.amount_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setAmountEnabled_(self, value):
         self.py.amount_enabled = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def currencyEnabled(self):
         return self.py.currency_enabled
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setCurrencyEnabled_(self, value):
         self.py.currency_enabled = value
     
     def date(self):
         return self.py.date
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setDate_(self, value):
         self.py.date = value
     
     def description(self):
         return self.py.description
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setDescription_(self, value):
         self.py.description = value
     
     def payee(self):
         return self.py.payee
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setPayee_(self, value):
         self.py.payee = value
     
     def checkno(self):
         return self.py.checkno
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setCheckno_(self, value):
         self.py.checkno = value
     
     def fromAccount(self): # We cannot use the underscore to escape the kw. It messes with pyobjc
         return self.py.from_
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setFromAccount_(self, value):
         self.py.from_ = value
     
     def to(self):
         return self.py.to
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setTo_(self, value):
         self.py.to = value
     
     def amount(self):
         return self.py.amount
     
-    @objc.signature('v@:@')
+    @signature('v@:@')
     def setAmount_(self, value):
         self.py.amount = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def currencyIndex(self):
         return self.py.currency_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setCurrencyIndex_(self, value):
         self.py.currency_index = value
     
@@ -986,22 +993,22 @@ class PySchedulePanel(PyPanel):
     def setCheckno_(self, value):
         self.py.checkno = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def repeatEvery(self):
         return self.py.repeat_every
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setRepeatEvery_(self, value):
         self.py.repeat_every = value
     
     def repeatEveryDesc(self):
         return self.py.repeat_every_desc
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def repeatTypeIndex(self):
         return self.py.repeat_type_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setRepeatTypeIndex_(self, value):
         self.py.repeat_type_index = value
     
@@ -1031,38 +1038,38 @@ class PyBudgetPanel(PyPanel):
     def setStopDate_(self, value):
         self.py.stop_date = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def repeatEvery(self):
         return self.py.repeat_every
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setRepeatEvery_(self, value):
         self.py.repeat_every = value
     
     def repeatEveryDesc(self):
         return self.py.repeat_every_desc
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def repeatTypeIndex(self):
         return self.py.repeat_type_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setRepeatTypeIndex_(self, value):
         self.py.repeat_type_index = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def accountIndex(self):
         return self.py.account_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setAccountIndex_(self, value):
         self.py.account_index = value
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def targetIndex(self):
         return self.py.target_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setTargetIndex_(self, value):
         self.py.target_index = value
     
@@ -1124,11 +1131,11 @@ class PyAccountReassignPanel(PyListener):
     def availableAccounts(self):
         return self.py.available_accounts
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def accountIndex(self):
         return self.py.account_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setAccountIndex_(self, value):
         self.py.account_index = value
     
@@ -1172,7 +1179,7 @@ class PyMainWindow(PyGUIContainer):
     def selectEntryTable(self):
         self.py.select_entry_table()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canSelectEntryTable(self):
         return self.py.document.shown_account is not None
     
@@ -1191,7 +1198,7 @@ class PyMainWindow(PyGUIContainer):
     def showAccount(self):
         self.py.show_account()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canNavigateDateRange(self):
         return self.py.document.date_range.can_navigate
     
@@ -1270,62 +1277,62 @@ class PyMainWindow(PyGUIContainer):
 class PyImportWindow(PyListener):
     py_class = ImportWindow
     
-    @objc.signature('i@:i')
+    @signature('i@:i')
     def accountCountAtIndex_(self, index):
         return self.py.panes[index].count
     
-    @objc.signature('@@:i')
+    @signature('@@:i')
     def accountNameAtIndex_(self, index):
         return self.py.panes[index].name
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canSwitchDayMonth(self):
         return self.py.can_switch_date_fields(DAY, MONTH)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canSwitchDayYear(self):
         return self.py.can_switch_date_fields(DAY, YEAR)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def canSwitchMonthYear(self):
         return self.py.can_switch_date_fields(MONTH, YEAR)
     
-    @objc.signature('@@:i')
+    @signature('@@:i')
     def closePaneAtIndex_(self, index):
         self.py.close_pane(index)
     
     def importSelectedPane(self):
         self.py.import_selected_pane()
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def numberOfAccounts(self):
         return len(self.py.panes)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def selectedTargetAccountIndex(self):
         return self.py.selected_target_account_index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setSelectedAccountIndex_(self, index):
         self.py.selected_pane_index = index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setSelectedTargetAccountIndex_(self, index):
         self.py.selected_target_account_index = index
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def switchDayMonth_(self, applyToAll):
         return self.py.switch_date_fields(DAY, MONTH, apply_to_all=applyToAll)
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def switchDayYear_(self, applyToAll):
         return self.py.switch_date_fields(DAY, YEAR, apply_to_all=applyToAll)
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def switchMonthYear_(self, applyToAll):
         return self.py.switch_date_fields(MONTH, YEAR, apply_to_all=applyToAll)
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def switchDescriptionPayee_(self, applyToAll):
         return self.py.switch_description_payee(apply_to_all=applyToAll)
     
@@ -1355,7 +1362,7 @@ class PyImportWindow(PyListener):
 class PyCSVImportOptions(PyWindowController):
     py_class = CSVOptions
     
-    @objc.signature('@@:i')
+    @signature('@@:i')
     def columnNameAtIndex_(self, index):
         return self.py.get_column_name(index)
     
@@ -1371,15 +1378,15 @@ class PyCSVImportOptions(PyWindowController):
     def layoutNames(self):
         return self.py.layout_names
     
-    @objc.signature('i@:i')
+    @signature('i@:i')
     def lineIsImported_(self, index):
         return not self.py.line_is_excluded(index)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def numberOfColumns(self):
         return len(self.py.columns)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def numberOfLines(self):
         return len(self.py.lines)
     
@@ -1395,14 +1402,14 @@ class PyCSVImportOptions(PyWindowController):
     def selectedLayoutName(self):
         return self.py.layout.name
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def selectedTargetIndex(self):
         return self.py.selected_target_index
     
     def selectLayout_(self, name):
         self.py.select_layout(name)
     
-    @objc.signature('v@:ii')
+    @signature('v@:ii')
     def setColumn_fieldForTag_(self, index, tag):
         field = CSV_FIELD_ORDER[tag]
         self.py.set_column_field(index, field)
@@ -1410,18 +1417,18 @@ class PyCSVImportOptions(PyWindowController):
     def setFieldSeparator_(self, fieldSep):
         self.py.field_separator = fieldSep
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def setSelectedTargetIndex_(self, index):
         self.py.selected_target_index = index
     
     def targetAccountNames(self):
         return self.py.target_account_names
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def toggleLineExclusion_(self, index):
         self.py.set_line_excluded(index, not self.py.line_is_excluded(index))
     
-    @objc.signature('@@:ii')
+    @signature('@@:ii')
     def valueForRow_column_(self, row, column):
         return self.py.lines[row][column]
     
@@ -1452,23 +1459,23 @@ class PyImportTable(PyTable):
     py_class = ImportTable
     
     # pyparent is a PyImportWindow
-    @objc.signature('v@:ii')
+    @signature('v@:ii')
     def bindRow_to_(self, source_index, dest_index):
         self.py.bind(source_index, dest_index)
     
-    @objc.signature('i@:ii')
+    @signature('i@:ii')
     def canBindRow_to_(self, source_index, dest_index):
         return self.py.can_bind(source_index, dest_index)
     
-    @objc.signature('i@:')
+    @signature('i@:')
     def isTwoSided(self):
         return self.py.is_two_sided
     
-    @objc.signature('v@:')
+    @signature('v@:')
     def toggleImportStatus(self):
         self.py.toggle_import_status()
     
-    @objc.signature('v@:i')
+    @signature('v@:i')
     def unbindRow_(self, index):
         self.py.unbind(index)
     
@@ -1534,11 +1541,11 @@ class PyPrintView(NSObject):
     
 
 class PySplitPrint(PyPrintView):
-    @objc.signature('i@:i')
+    @signature('i@:i')
     def splitCountAtRow_(self, row):
         return self.py.split_count_at_row(row)
     
-    @objc.signature('@@:ii')
+    @signature('@@:ii')
     def splitValuesAtRow_splitRow_(self, row, split_row):
         return self.py.split_values(row, split_row)
     
