@@ -218,12 +218,12 @@ class PyDocument(NSObject):
     def toggleReconciliationMode(self):
         self.py.toggle_reconciliation_mode()
 
-    @signature('i@:')
+    @signature('c@:')
     def inReconciliationMode(self):
         return self.py.in_reconciliation_mode()
     
     #--- Undo
-    @signature('i@:')
+    @signature('c@:')
     def canUndo(self):
         return self.py.can_undo()
     
@@ -233,7 +233,7 @@ class PyDocument(NSObject):
     def undo(self):
         self.py.undo()
     
-    @signature('i@:')
+    @signature('c@:')
     def canRedo(self):
         return self.py.can_redo()
     
@@ -265,7 +265,7 @@ class PyDocument(NSObject):
         except FileFormatError, e:
             return unicode(e)
     
-    @signature('i@:')
+    @signature('c@:')
     def isDirty(self):
         return self.py.is_dirty()
     
@@ -276,7 +276,7 @@ class PyDocument(NSObject):
     def transactionCount(self):
         return len(self.py.transactions)
     
-    @signature('i@:')
+    @signature('c@:')
     def shownAccountIsBalanceSheet(self):
         return self.py.shown_account is not None and self.py.shown_account.is_balance_sheet_account()
     
@@ -371,7 +371,7 @@ class PyTable(PyCompletion):
     def cancelEdits(self):
         self.py.cancel_edits()
     
-    @signature('i@:@i')
+    @signature('c@:@i')
     def canEditColumn_atRow_(self, column, row):
         return self.py.can_edit_cell(column, row)
     
@@ -405,7 +405,7 @@ class PyTable(PyCompletion):
         except IndexError:
             logging.warning("Trying to set an out of bounds row ({0} / {1})".format(row, len(self.py)))
     
-    @signature('v@:@i')
+    @signature('v@:@c')
     def sortByColumn_desc_(self, column, desc):
         self.py.sort_by(column, desc=desc)
     
@@ -433,13 +433,13 @@ class PyTable(PyCompletion):
     
 
 class PyTableWithDate(PyTable):
-    @signature('i@:')
+    @signature('c@:')
     def isEditedRowInTheFuture(self):
         if self.py.edited is None:
             return False
         return self.py.edited.is_date_in_future()
     
-    @signature('i@:')
+    @signature('c@:')
     def isEditedRowInThePast(self):
         if self.py.edited is None:
             return False
@@ -495,7 +495,7 @@ class PyOutline(PyListener):
     def cancelEdits(self):
         self.py.cancel_edits()
     
-    @signature('i@:@@')
+    @signature('c@:@@')
     def canEditProperty_atPath_(self, property, path):
         node = self.py.get_node(path)
         assert node is self.py.selected
@@ -532,14 +532,14 @@ class PyOutline(PyListener):
     
 
 class PyReport(PyOutline):
-    @signature('i@:')
+    @signature('c@:')
     def canDeleteSelected(self):
         return self.py.can_delete()
     
     def deleteSelected(self):
         self.py.delete()
     
-    @signature('i@:@@')
+    @signature('c@:@@')
     def canMovePath_toPath_(self, source_path, dest_path):
         return self.py.can_move(source_path, dest_path)
     
@@ -549,7 +549,7 @@ class PyReport(PyOutline):
     def showSelectedAccount(self):
         self.py.show_selected_account()
     
-    @signature('i@:')
+    @signature('c@:')
     def canShowSelectedAccount(self):
         return self.py.can_show_selected_account
     
@@ -630,15 +630,15 @@ class PyIncomeStatement(PyReport):
 class PyEntryTable(PyTableWithDate):
     py_class = EntryTable
 
-    @signature('i@:@i')
+    @signature('c@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
 
-    @signature('i@:i')
+    @signature('c@:i')
     def canReconcileEntryAtRow_(self, row):
         return self.py[row].can_reconcile()
     
-    @signature('i@:i')
+    @signature('c@:i')
     def isBalanceNegativeAtRow_(self, row):
         return self.py[row].is_balance_negative()
     
@@ -646,7 +646,7 @@ class PyEntryTable(PyTableWithDate):
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
 
-    @signature('i@:')
+    @signature('c@:')
     def shouldShowBalanceColumn(self):
         return self.py.should_show_balance_column()
     
@@ -664,7 +664,7 @@ class PyEntryTable(PyTableWithDate):
 class PyTransactionTable(PyTableWithDate):
     py_class = TransactionTable
 
-    @signature('i@:@i')
+    @signature('c@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
     
@@ -795,7 +795,7 @@ class PyTransactionPanel(PyPanel):
     def mctBalance(self):
         self.py.mct_balance()
     
-    @signature('i@:')
+    @signature('c@:')
     def canDoMCTBalance(self):
         return self.py.can_do_mct_balance
     
@@ -834,71 +834,71 @@ class PyMassEditionPanel(PyPanel):
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
-    @signature('i@:')
+    @signature('c@:')
     def canChangeAccountsAndAmount(self):
         return self.py.can_change_accounts_and_amount
     
-    @signature('i@:')
+    @signature('c@:')
     def dateEnabled(self):
         return self.py.date_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setDateEnabled_(self, value):
         self.py.date_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def descriptionEnabled(self):
         return self.py.description_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setDescriptionEnabled_(self, value):
         self.py.description_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def payeeEnabled(self):
         return self.py.payee_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setPayeeEnabled_(self, value):
         self.py.payee_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def checknoEnabled(self):
         return self.py.checkno_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setChecknoEnabled_(self, value):
         self.py.checkno_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def fromEnabled(self):
         return self.py.from_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setFromEnabled_(self, value):
         self.py.from_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def toEnabled(self):
         return self.py.to_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setToEnabled_(self, value):
         self.py.to_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def amountEnabled(self):
         return self.py.amount_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setAmountEnabled_(self, value):
         self.py.amount_enabled = value
     
-    @signature('i@:')
+    @signature('c@:')
     def currencyEnabled(self):
         return self.py.currency_enabled
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setCurrencyEnabled_(self, value):
         self.py.currency_enabled = value
     
@@ -1179,7 +1179,7 @@ class PyMainWindow(PyGUIContainer):
     def selectEntryTable(self):
         self.py.select_entry_table()
     
-    @signature('i@:')
+    @signature('c@:')
     def canSelectEntryTable(self):
         return self.py.document.shown_account is not None
     
@@ -1198,7 +1198,7 @@ class PyMainWindow(PyGUIContainer):
     def showAccount(self):
         self.py.show_account()
     
-    @signature('i@:')
+    @signature('c@:')
     def canNavigateDateRange(self):
         return self.py.document.date_range.can_navigate
     
@@ -1285,15 +1285,15 @@ class PyImportWindow(PyListener):
     def accountNameAtIndex_(self, index):
         return self.py.panes[index].name
     
-    @signature('i@:')
+    @signature('c@:')
     def canSwitchDayMonth(self):
         return self.py.can_switch_date_fields(DAY, MONTH)
     
-    @signature('i@:')
+    @signature('c@:')
     def canSwitchDayYear(self):
         return self.py.can_switch_date_fields(DAY, YEAR)
     
-    @signature('i@:')
+    @signature('c@:')
     def canSwitchMonthYear(self):
         return self.py.can_switch_date_fields(MONTH, YEAR)
     
@@ -1320,19 +1320,19 @@ class PyImportWindow(PyListener):
     def setSelectedTargetAccountIndex_(self, index):
         self.py.selected_target_account_index = index
     
-    @signature('v@:i')
+    @signature('v@:c')
     def switchDayMonth_(self, applyToAll):
         return self.py.switch_date_fields(DAY, MONTH, apply_to_all=applyToAll)
     
-    @signature('v@:i')
+    @signature('v@:c')
     def switchDayYear_(self, applyToAll):
         return self.py.switch_date_fields(DAY, YEAR, apply_to_all=applyToAll)
     
-    @signature('v@:i')
+    @signature('v@:c')
     def switchMonthYear_(self, applyToAll):
         return self.py.switch_date_fields(MONTH, YEAR, apply_to_all=applyToAll)
     
-    @signature('v@:i')
+    @signature('v@:c')
     def switchDescriptionPayee_(self, applyToAll):
         return self.py.switch_description_payee(apply_to_all=applyToAll)
     
@@ -1378,7 +1378,7 @@ class PyCSVImportOptions(PyWindowController):
     def layoutNames(self):
         return self.py.layout_names
     
-    @signature('i@:i')
+    @signature('c@:i')
     def lineIsImported_(self, index):
         return not self.py.line_is_excluded(index)
     
@@ -1463,11 +1463,11 @@ class PyImportTable(PyTable):
     def bindRow_to_(self, source_index, dest_index):
         self.py.bind(source_index, dest_index)
     
-    @signature('i@:ii')
+    @signature('c@:ii')
     def canBindRow_to_(self, source_index, dest_index):
         return self.py.can_bind(source_index, dest_index)
     
-    @signature('i@:')
+    @signature('c@:')
     def isTwoSided(self):
         return self.py.is_two_sided
     
