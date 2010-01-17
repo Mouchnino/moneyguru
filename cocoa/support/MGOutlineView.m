@@ -9,25 +9,24 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGOutlineView.h"
 
 @implementation MGOutlineView
-
-- (void)awakeFromNib
-{
-    /* Respond to double-clicks */
-    id delegate = [self delegate];
-    if ([delegate respondsToSelector:@selector(outlineViewWasDoubleClicked:)])
-    {
-        [self setTarget:[self delegate]];
-        [self setDoubleAction:@selector(outlineViewWasDoubleClicked:)];
-    }
-}
-
-/* Overrides */
+/* NSOutlineView overrides */
 
 - (void)keyDown:(NSEvent *)event 
 {
     if (![self dispatchSpecialKeys:event])
     {
         [super keyDown:event];
+    }
+}
+
+- (void)setDelegate:(id)aDelegate
+{
+    [super setDelegate:aDelegate];
+    id delegate = [self delegate];
+    if ([delegate respondsToSelector:@selector(outlineViewWasDoubleClicked:)])
+    {
+        [self setTarget:[self delegate]];
+        [self setDoubleAction:@selector(outlineViewWasDoubleClicked:)];
     }
 }
 
