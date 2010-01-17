@@ -13,10 +13,11 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGReport
-
-- (void)awakeFromNib
+- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(MGOutlineView *)aOutlineView
 {
+    self = [super initWithDocument:aDocument pyClassName:aClassName view:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
+    return self;
 }
 
 - (PyReport *)py
