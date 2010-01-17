@@ -111,6 +111,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.expanded.connect(self.nodeExpanded)
         self.view.deletePressed.connect(self.model.delete)
         self.view.spacePressed.connect(self.model.toggle_excluded)
+        self.view.doubleClicked.connect(self.model.show_selected_account)
         self.app.willSavePrefs.connect(self._saveNodeExpansionState)
     
     #--- TreeModel overrides
