@@ -62,12 +62,16 @@ from core.loader import base, csv, native, ofx, qif
 from core.model import (account, amount, currency, date, oven, recurrence, transaction,
     transaction_list, completion, undo)
 
-def signature(signature):
-    """Returns an objc.signature with 'i' and 'f' letters changed to correct NSInteger and CGFloat
-    values.
-    """
-    signature = signature.replace('i', objc._C_NSInteger).replace('f', objc._C_CGFloat)
-    return objc.signature(signature)
+if objc.__version__ == '1.4':
+    # we're 32 bit and the _C_NSInteger and _C_CGFloat consts aint there.
+    signature = objc.signature
+else:
+    def signature(signature):
+        """Returns an objc.signature with 'i' and 'f' letters changed to correct NSInteger and
+        CGFloat values.
+        """
+        signature = signature.replace('i', objc._C_NSInteger).replace('f', objc._C_CGFloat)
+        return objc.signature(signature)
 
 class PyMoneyGuruApp(NSObject):
     def initWithCocoa_(self, cocoa):
