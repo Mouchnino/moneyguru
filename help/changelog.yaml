@@ -1,3 +1,10 @@
+- date: 2010-01-17
+  version: 1.7.2
+  description: |
+    * Fixed printing which had been broken in 1.7. [Mac OS X] (#112)
+    * Fixed account group assignment through drag & drop (also broken in 1.7). [Mac OS X] (#114)
+    * Fixed double-clicking in account sheets which now correctly shows the clicked account in the
+      Account view.
 - date: 2010-01-14
   version: 1.7.1
   description: |

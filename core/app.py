@@ -25,7 +25,7 @@ AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
-    VERSION = '1.7.1'
+    VERSION = '1.7.2'
     DEMO_LIMIT_DESC = "In the demo version, documents with more than 100 transactions cannot be saved."
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
