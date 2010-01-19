@@ -12,7 +12,7 @@ from Foundation import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDo
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
 import logging
 
-import hsutil.cocoa
+from hsutil.cocoa import signature, install_exception_hook, pythonify
 from hsutil.path import Path
 from hsutil.currency import Currency, USD
 
@@ -64,17 +64,6 @@ from core.loader import base, csv, native, ofx, qif
 from core.model import (account, amount, currency, date, oven, recurrence, transaction,
     transaction_list, completion, undo)
 
-if objc.__version__ == '1.4':
-    # we're 32 bit and the _C_NSInteger and _C_CGFloat consts aint there.
-    signature = objc.signature
-else:
-    def signature(signature):
-        """Returns an objc.signature with 'i' and 'f' letters changed to correct NSInteger and
-        CGFloat values.
-        """
-        signature = signature.replace('i', objc._C_NSInteger).replace('f', objc._C_CGFloat)
-        return objc.signature(signature)
-
 class PyMoneyGuruApp(NSObject):
     def initWithCocoa_(self, cocoa):
         super(PyMoneyGuruApp, self).init()
@@ -82,7 +71,7 @@ class PyMoneyGuruApp(NSObject):
         LOGGING_LEVEL = logging.DEBUG if NSUserDefaults.standardUserDefaults().boolForKey_('debug') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
         logging.debug('started in debug mode')
-        # hsutil.cocoa.install_exception_hook()
+        install_exception_hook()
         std_caches_path = Path(NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, True)[0])
         cache_path = std_caches_path + 'moneyGuru'
         currency_code = NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode)
@@ -115,7 +104,7 @@ class PyMoneyGuruApp(NSObject):
     
     def get_default(self, key_name):
         raw = NSUserDefaults.standardUserDefaults().objectForKey_(key_name)
-        result = hsutil.cocoa.pythonify(raw)
+        result = pythonify(raw)
         return result
     
     def set_default(self, key_name, value):
