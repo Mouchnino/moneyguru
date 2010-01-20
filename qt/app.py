@@ -96,7 +96,10 @@ class MoneyGuru(ApplicationBase):
     def applicationFinishedLaunching(self):
         if not self.model.registered:
             self.reg.show_nag()
-        self.mainWindow.show()
+        if self.prefs.mainWindowIsMaximized:
+            self.mainWindow.showMaximized()
+        else:
+            self.mainWindow.show()
     
     def applicationWillTerminate(self):
         self.doc.close()

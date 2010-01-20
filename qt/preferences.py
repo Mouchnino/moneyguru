@@ -19,7 +19,7 @@ from qtlib.preferences import Preferences as PreferencesBase
 # visible, or only store information about hidden columns. The second way is simpler, so that's
 # what we do.
 
-# About QRect onversion:
+# About QRect conversion:
 # I think Qt supports putting basic structures like QRect directly in QSettings, but I prefer not
 # to rely on it and stay with generic structures.
 
@@ -61,6 +61,7 @@ class Preferences(PreferencesBase):
         self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
         
+        self.mainWindowIsMaximized = get('MainWindowIsMaximized', self.mainWindowIsMaximized)
         self.mainWindowRect = get('MainWindowRect', self.mainWindowRect)
         if self.mainWindowRect is not None: # a list of 4 values
             self.mainWindowRect = QRect(*self.mainWindowRect)
@@ -101,6 +102,7 @@ class Preferences(PreferencesBase):
         self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
         self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
         
+        self.mainWindowIsMaximized = False
         self.mainWindowRect = None
     
     def _save_values(self, settings, set_):
@@ -139,6 +141,7 @@ class Preferences(PreferencesBase):
         set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
         
+        set_('MainWindowIsMaximized', self.mainWindowIsMaximized)
         r = self.mainWindowRect
         rectAsList = [r.x(), r.y(), r.width(), r.height()]
         set_('MainWindowRect', rectAsList)

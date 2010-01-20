@@ -196,6 +196,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         viewPrinter.render()
     
     def _savePrefs(self):
+        self.app.prefs.mainWindowIsMaximized = self.isMaximized()
         self.app.prefs.mainWindowRect = self.geometry()
     
     def _setMainWidgetIndex(self, index):
