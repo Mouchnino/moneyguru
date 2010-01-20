@@ -23,7 +23,10 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
+    build64 = conf['build64']
     print "Building moneyGuru with UI {0}".format(ui)
+    if build64:
+        print "If possible, 64-bit builds will be made"
     if dev:
         print "Building in Dev mode"
     print "Generating Help"
@@ -68,12 +71,19 @@ def main():
         contents = contents.replace('{version}', MoneyGuruApp.VERSION)
         open('Info.plist', 'w').write(contents)
         print "Building the XCode project"
-        os.system('xcodebuild')
+        args = []
+        if build64:
+            args.append('ARCHS="x86_64 i386 ppc"')
+        args = ' '.join(args)
+        os.system('xcodebuild {0}'.format(args))
         os.chdir('..')
     elif ui == 'qt':
-        os.chdir('qt')
-        os.system('python gen.py')
-        os.chdir('..')
+        print "Building UI units"
+        build_all_qt_ui(op.join('qtlib', 'ui'))
+        build_all_qt_ui(op.join('qt', 'ui'))
+        qrc_path = op.join('qt', 'mg.qrc')
+        pyrc_path = op.join('qt', 'mg_rc.py')
+        print_and_do("pyrcc4 {0} > {1}".format(qrc_path, pyrc_path))
 
 if __name__ == '__main__':
     main()
