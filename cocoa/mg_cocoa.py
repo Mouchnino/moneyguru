@@ -14,6 +14,7 @@ import logging
 from hsutil.cocoa import signature, install_exception_hook, pythonify
 from hsutil.path import Path
 from hsutil.currency import Currency, USD
+from hsutil.misc import nonone
 
 from core.app import Application
 from core.document import Document, FilterType
@@ -73,7 +74,7 @@ class PyMoneyGuruApp(NSObject):
         install_exception_hook()
         std_caches_path = Path(NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, True)[0])
         cache_path = std_caches_path + 'moneyGuru'
-        currency_code = NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode)
+        currency_code = nonone(NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode), 'USD')
         logging.info('Currency code: {0}'.format(currency_code))
         try:
             system_currency = Currency(currency_code)
