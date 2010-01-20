@@ -96,6 +96,18 @@ class Pristine(TestCase):
         self.check_gui_calls(self.ttable_gui, expected, verify_order=True)
     
 
+class PristineOnTransactionView(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.mainwindow.show_transaction_table()
+        self.clear_gui_calls()
+    
+    def test_change_date_range(self):
+        # totals label should be refreshed when the date range changes
+        self.document.select_quarter_range()
+        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
+    
+
 class OneAccount(TestCase):
     def setUp(self):
         self.create_instances()
@@ -112,6 +124,11 @@ class OneAccount(TestCase):
     def test_change_aview_filter(self):
         # Changing aview's filter type updates the totals
         self.efbar.filter_type = FilterType.Reconciled
+        self.check_gui_calls(self.aview_gui, ['refresh_totals'])
+    
+    def test_change_date_range(self):
+        # totals label should be refreshed when the date range changes
+        self.document.select_quarter_range()
         self.check_gui_calls(self.aview_gui, ['refresh_totals'])
     
     def test_delete_entry(self):

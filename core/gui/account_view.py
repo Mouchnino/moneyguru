@@ -73,3 +73,4 @@ class AccountView(BaseView):
         self.view.refresh_totals()
     transaction_deleted = transaction_changed
     filter_applied = transaction_changed
+    date_range_changed = transaction_changed
