@@ -16,6 +16,10 @@ with svn:externals):
 - hsutil: A collection of helpers used across HS applications.
 - hsdocgen: An ad-hoc document generation used across HS project (used for help files)
 - cocoalib: A collection of helpers used across Cocoa UI codebases of HS applications.
+- ambuttonbar: A fork of AMButtonBar with support for 64-bit
+- psmtabbarcontrol: A fork of PSMTabBarControl with support for 64-bit.
+- HSFoundation: A stripped down version of PyObjC's Foundation for decreased memory usage.
+- HSExceptionHandling: A stripped down version of PyObjC's ExceptionHandling for decreased memory usage.
 - qtlib: A collection of helpers used across Qt UI codebases of HS applications.
 
 moneyGuru Dependencies
@@ -36,8 +40,9 @@ OS X prerequisites
 
 - XCode 3.1 (http://developer.apple.com/TOOLS/xcode/)
 - Sparkle (http://sparkle.andymatuschak.org/)
-- PyObjC. Although Tiger support has been dropped with moneyGuru 1.7, I still use PyObjC 1.4 because funky stuff happens with newer releases. However, it's mostly related to packaging with py2app. (http://pyobjc.sourceforge.net/)
+- PyObjC 2.2. (http://pyobjc.sourceforge.net/)
 - py2app (http://svn.pythonmac.org/py2app/py2app/trunk/doc/index.html)
+	If you want to build moneyGuru in 64-bit, you'll have to use HS's own forks of py2app and macholib, available at http://hg.hardcoded.net/py2app and http://hg.hardcoded.net/py2app . More details about this at http://www.hardcoded.net/articles/building-64-bit-pyobjc-applications-with-py2app.htm
 
 Windows prerequisites
 ---
