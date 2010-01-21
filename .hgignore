@@ -12,4 +12,9 @@ cocoa/build
 cocoa/mg_cocoa.plugin
 qt/*_rc.py
 qt/ui/*_ui.py
+qt/build
+qt/dist
+qt/install
+qt/warnmg.txt
+qt/logdict*.log
 help/moneyguru_help

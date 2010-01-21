@@ -57,7 +57,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cdrpanel = CustomDateRangePanel(self, doc=doc)
         self.arpanel = AccountReassignPanel(self, doc=doc)
         self._setupUi()
-        if self.app.prefs.mainWindowRect is not None:
+        # We don't set geometry if the window was maximized so that if the user de-maximize the
+        # window, it actually shrinks.
+        if self.app.prefs.mainWindowRect is not None and not self.app.prefs.mainWindowIsMaximized:
             self.setGeometry(self.app.prefs.mainWindowRect)
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
