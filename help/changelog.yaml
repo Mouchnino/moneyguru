@@ -1,3 +1,7 @@
+- date: 2010-01-25
+  version: 1.7.4
+  description: |
+    * Fixed a crash on Duplicate Transaction. (#123)
 - date: 2010-01-21
   version: 1.7.3
   description: |
