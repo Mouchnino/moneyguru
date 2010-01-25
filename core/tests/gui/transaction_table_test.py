@@ -13,7 +13,6 @@ from nose.tools import eq_
 from hsutil.currency import USD, CAD
 
 from ..base import TestCase, TestSaveLoadMixin, CommonSetup
-from ...document import FilterType
 from ...gui.transaction_table import TransactionTable
 from ...model.amount import Amount, format_amount, convert_amount
 from ...model.date import MonthRange, YearRange
@@ -205,9 +204,9 @@ class OneTransaction(TestCase):
     
     def test_duplicate_transactions(self):
         # duplication works when more than one transaction is selected
-        self.ttable.duplicate_selected()
+        self.mainwindow.duplicate_item()
         self.ttable.select([0, 1])
-        self.ttable.duplicate_selected()
+        self.mainwindow.duplicate_item()
         eq_(len(self.ttable), 4)
     
     def test_edit_date_out_of_bounds(self):

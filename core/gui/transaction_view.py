@@ -25,7 +25,7 @@ class TransactionView(BaseView):
         self.ttable.delete()
     
     def duplicate_item(self):
-        self.ttable.delete_selected()
+        self.ttable.duplicate_selected()
     
     def move_down(self):
         self.ttable.move_down()

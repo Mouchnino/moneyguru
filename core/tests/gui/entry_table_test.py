@@ -184,6 +184,13 @@ class OneEntry(TestCase):
         self.etable.delete()
         self.check_gui_calls(self.etable_gui, ['stop_editing', 'refresh']) # Delete also refreshes.
     
+    def test_duplicate_transaction(self):
+        # duplicate_item() also works on the entry table.
+        self.mainwindow.duplicate_item()
+        eq_(len(self.etable), 2)
+        eq_(self.etable[0].description, 'description')
+        # assume the rest is correct, torough tests in transaction_table_test
+    
     def test_set_invalid_amount(self):
         # setting an invalid amount reverts to the old amount
         self.etable[0].increase = 'foo' # no exception

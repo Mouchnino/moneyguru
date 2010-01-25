@@ -39,7 +39,7 @@ class AccountView(BaseView):
         self.etable.delete()
     
     def duplicate_item(self):
-        self.etable.delete_selected()
+        self.etable.duplicate_selected()
     
     def move_down(self):
         self.etable.move_down()
