@@ -203,8 +203,9 @@ class ParseAmount(TestCase):
     
     def test_garbage_around(self):
         # Amounts with garbage around them can still be parsed.
-        eq_(parse_amount('$10.00', USD, False), Amount(10, USD))
-        eq_(parse_amount('foo10.00bar', USD, False), Amount(10, USD))
+        eq_(parse_amount('$10.42', USD, False), Amount(10.42, USD))
+        eq_(parse_amount('foo10bar', USD, False), Amount(10.00, USD))
+        eq_(parse_amount('$.42', USD, False), Amount(0.42, USD))
     
     def test_invalid(self):
         assert_raises(ValueError, parse_amount, 'asdf')

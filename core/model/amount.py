@@ -23,7 +23,7 @@ re_currency = re.compile(r'([a-zA-Z]{3})')
 # grouping separator. a [.\s,'] that has digit before and after *if* the right part is separated by a dot
 re_grouping_sep = re.compile(r"(?<=[\d.])[.\s,'](?=\d+?\.\d)")
 # A valid amount
-re_amount = re.compile(r"\d+|\d+\.\d+|\.\d+")
+re_amount = re.compile(r"\d+\.\d+|\.\d+|\d+")
 
 def cmp_wrap(op):
     def wrapper(self, other):
