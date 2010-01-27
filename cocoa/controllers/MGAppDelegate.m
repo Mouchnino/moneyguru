@@ -184,11 +184,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)updater:(SUUpdater *)updater shouldPostponeRelaunchForUpdate:(SUAppcastItem *)update untilInvoking:(NSInvocation *)invocation;
 {
+    continueUpdate = [invocation retain];
     [[NSDocumentController sharedDocumentController] 
         reviewUnsavedDocumentsWithAlertTitle:@"moneyGuru is about to restart"
         cancellable:NO delegate:self didReviewAllSelector:@selector(documentController:didReviewAll:contextInfo:)
         contextInfo:nil];
-    continueUpdate = [invocation retain];
     return YES;
 }
 
