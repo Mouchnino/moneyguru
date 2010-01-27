@@ -119,6 +119,3 @@ class Loader(base.Loader):
             self.budget_info.stop_date = str2date(attrib.get('stop_date'))
             self.flush_budget()
     
-    @staticmethod
-    def parse_amount(string, currency): # uses with_expression=False for faster loading
-        return parse_amount(string, currency, with_expression=False)
