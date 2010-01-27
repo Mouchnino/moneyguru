@@ -11,7 +11,6 @@ from __future__ import absolute_import
 import csv
 import logging
 from datetime import datetime
-from StringIO import StringIO
 
 from . import base
 from ..exception import FileFormatError, FileLoadError
@@ -35,7 +34,7 @@ class Loader(base.Loader):
         self.column_indexes = {}
         self.lines = []
         self.dialect = None # last used dialect
-        self.csvfile = None # last prepared file
+        self.rawlines = [] # last prepared file
     
     #--- Private
     def _prepare(self, infile):
@@ -53,14 +52,16 @@ class Loader(base.Loader):
                 self.dialect = csv.Sniffer().sniff('\n'.join(stripped_lines[:-1]))
             except csv.Error:
                 raise FileFormatError()
-        self.csvfile = StringIO('\n'.join(lines))
+        self.rawlines = lines
     
     def _scan_lines(self):
         def decode_line(line):
             return [unicode(cell, 'latin-1') for cell in line]
         
-        self.csvfile.seek(0)
-        reader = csv.reader(self.csvfile, self.dialect)
+        try:
+            reader = csv.reader(iter(self.rawlines), self.dialect)
+        except TypeError:
+            logging.warning(u"Invalid Dialect (strangely...). Delimiter: %r", self.dialect.delimiter)
         lines = [decode_line(line) for line in reader if line]
         # complete smaller lines and strip whitespaces
         maxlen = max(len(line) for line in lines)
