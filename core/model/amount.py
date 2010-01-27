@@ -22,6 +22,8 @@ re_octal_zero = re.compile(r'(?<![\d.,\w])0(?=\d)')
 re_currency = re.compile(r'([a-zA-Z]{3})')
 # grouping separator. a [.\s,'] that has digit before and after *if* the right part is separated by a dot
 re_grouping_sep = re.compile(r"(?<=[\d.])[.\s,'](?=\d+?\.\d)")
+# A valid amount
+re_amount = re.compile(r"\d+|\d+\.\d+|\.\d+")
 
 def cmp_wrap(op):
     def wrapper(self, other):
@@ -231,7 +233,14 @@ def parse_amount(string, default_currency=None, with_expression=True):
         except SyntaxError:
             raise ValueError('Invalid expression %r' % string)
     else:
-        value = float(string)
+        try:
+            value = float(string)
+        except ValueError:
+            # There might be some crap around the amount. Remove it and try again.
+            m = re_amount.search(string)
+            if m is None:
+                raise ValueError("'{0}' is not an amount".format(string))
+            value = float(string[m.start():m.end()])
     if value == 0:
         return 0
     elif currency is not None:

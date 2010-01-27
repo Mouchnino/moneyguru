@@ -165,7 +165,7 @@ class Loader(object):
     
     @staticmethod
     def parse_amount(string, currency):
-        return parse_amount(string, currency)
+        return parse_amount(string, currency, with_expression=False)
     
     def load(self):
         """Loads the parsed info into self.accounts and self.transactions.

@@ -435,3 +435,18 @@ class WeirdSep(TestCase):
         self.csvopt.field_separator = ''
         self.csvopt.rescan() # no crash
     
+
+class AmountWithDollarSign(TestCase):
+    def setUp(self):
+        # This file has a $ sign in its amount values.
+        self.create_instances()
+        self.document.parse_file_for_import(self.filepath('csv/amount_with_dollar_sign.csv'))
+        self.csvopt.set_column_field(0, CsvField.Date)
+        self.csvopt.set_column_field(1, CsvField.Amount)
+    
+    def test_import(self):
+        # No crash and the correct amounts are parsed
+        self.csvopt.continue_import() # no crash
+        eq_(self.itable[0].amount_import, '10.00')
+        eq_(self.itable[1].amount_import, '42.00')
+    
