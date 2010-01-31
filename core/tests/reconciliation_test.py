@@ -20,11 +20,6 @@ class CommonSetup(CommonSetupBase):
         self.add_entry('31/1/2008', 'three')
         self.document.toggle_reconciliation_mode()
     
-    def setup_reconcile_second_entry(self):
-        self.etable.select([1])
-        row = self.etable.selected_row
-        row.toggle_reconciled()
-    
 
 class Pristine(TestCase):
     def setUp(self):
@@ -157,13 +152,21 @@ class OneEntryInLiability(TestCase):
 class OneEntryReconciledDifferentDate(TestCase):
     # 1 entry, reconciled at a different date than its own date
     def setUp(self):
-        self.mock_today(2008, 7, 1)
+        self.mock_today(2008, 7, 20)
         self.create_instances()
         self.add_account()
         self.document.show_selected_account()
         self.add_entry('11/07/2008', decrease='42')
         self.etable[0].reconciliation_date = '12/07/2008'
         self.etable.save_edits()
+    
+    def test_dereconcile_entry(self):
+        # Setting reconciliation_pending to False and then committing de-reconciles an entry.
+        self.document.toggle_reconciliation_mode()
+        self.etable.select([0])
+        self.etable[0].toggle_reconciled()
+        self.document.toggle_reconciliation_mode()
+        assert not self.etable[0].reconciled
     
     def test_save_and_load(self):
         # reconciliation date is correctly saved and loaded
@@ -197,7 +200,9 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
     def setUp(self):
         self.create_instances()
         self.setup_three_entries_reconciliation_mode()
-        self.setup_reconcile_second_entry()
+        self.etable.select([1])
+        row = self.etable.selected_row
+        row.toggle_reconciled()
     
     def test_toggle_entries_reconciled_with_none_reconciled(self):
         # When none of the selected entries are reconciled, all selected entries get reconciled.

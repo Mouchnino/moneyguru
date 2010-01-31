@@ -66,7 +66,7 @@ class EntryTable(TableWithTransactions):
     def _getStatusData(self, row, role):
         # DecorationRole is handled in TableWithTransactions
         if role == Qt.CheckStateRole:
-            if row.can_reconcile() and not row.reconciled:
+            if row.can_reconcile():
                 return Qt.Checked if row.reconciliation_pending else Qt.Unchecked
             else:
                 return None

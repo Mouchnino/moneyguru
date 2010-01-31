@@ -405,16 +405,17 @@ class TwoEntriesInReconciliationModeOneReconciled(TestCase):
         self.document.toggle_reconciliation_mode()
     
     def test_reconciled(self):
-        # The first entry has been reconciled and its pending status put to False.
+        # The first entry has been reconciled and its pending status is the same as its reconciled
+        # status.
         assert self.etable[0].reconciled
-        assert not self.etable[0].reconciliation_pending
+        assert self.etable[0].reconciliation_pending
     
     def test_toggle_both(self):
         # reconciled entries count as 'pending' when comes the time to determine the new value.
         self.etable.select([0, 1])
         self.etable.toggle_reconciled() # we put the 2nd entry as "pending"
         assert self.etable[0].reconciled # haven't been touched
-        assert not self.etable[0].reconciliation_pending # haven't been touched
+        assert self.etable[0].reconciliation_pending # haven't been touched
         assert self.etable[1].reconciliation_pending
     
     def test_toggle_both_twice(self):

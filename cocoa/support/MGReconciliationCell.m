@@ -18,10 +18,10 @@ http://www.hardcoded.net/licenses/hs_license
         i = [NSImage imageNamed:@"forward_32"];
     else if (isInPast)
         i = [NSImage imageNamed:@"backward_32"];
-    else if (reconciled)
-        i = [NSImage imageNamed:@"check_16"];
     else if (canReconcile)
         [super drawInteriorWithFrame:cellFrame inView:controlView];
+    else if (reconciled)
+        i = [NSImage imageNamed:@"check_16"];
     else if (isBudget)
         i = [NSImage imageNamed:@"budget_16"];
     else if (recurrent)

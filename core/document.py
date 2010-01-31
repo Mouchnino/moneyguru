@@ -8,7 +8,6 @@
 
 import datetime
 import time
-from itertools import dropwhile
 
 from hsutil import io
 from hsutil.currency import Currency
@@ -182,16 +181,22 @@ class Document(Broadcaster, Listener):
     def _commit_reconciliation(self):
         # process pending reconciliation
         splits = flatten(t.splits for t in self.oven.transactions)
-        splits = [split for split in splits if split.reconciliation_pending]
+        splits = [split for split in splits if split.reconciliation_pending is not None]
+        spawns, splits = extract(lambda s: isinstance(s.transaction, Spawn), splits)
         for split in splits:
-            split.reconciliation_date = split.transaction.date
-            split.reconciliation_pending = False
-        spawns = set(s.transaction for s in splits if isinstance(s.transaction, Spawn))
+            if split.reconciliation_pending:
+                split.reconciliation_date = split.transaction.date
+            else:
+                split.reconciliation_date = None
+            split.reconciliation_pending = None
+        spawns = set(s for s in spawns if s.reconciliation_pending)
         for spawn in spawns:
-            spawn.recurrence.delete(spawn)
-            self.transactions.add(spawn.replicate())
+            #XXX update transaction selection
+            spawn.reconciliation_date = split.transaction.date
+            spawn.transaction.recurrence.delete(spawn.transaction)
+            self.transactions.add(spawn.transaction.replicate())
         if spawns:
-            self._cook(from_date=min(spawn.date for spawn in spawns))
+            self._cook(from_date=min(spawn.transaction.date for spawn in spawns))
     
     def _cook(self, from_date=None):
         self.oven.cook(from_date=from_date, until_date=self.date_range.end)
@@ -660,25 +665,14 @@ class Document(Broadcaster, Listener):
         return entry
     
     def toggle_entries_reconciled(self, entries):
-        """Toggle the reconcile flag of 'entries'"""
+        """Toggle the reconcile flag of `entries`.
+        """
         if not self._in_reconciliation_mode:
             return
-        entries = set(entries)
-        reconciled_entries = set(e for e in entries if e.reconciled)
-        entries -= reconciled_entries
         all_reconciled = not entries or all(entry.reconciliation_pending for entry in entries)
         newvalue = not all_reconciled        
-        # if 'newvalue' is false, we want to unreconcile all reconciled entries.
-        # if it's true, since we are not changing any of the reconciled entries, we only want to
-        # unreconcile all reconciled entries that are after the first entry to be put in 'pending'
-        # state.
         action = Action('Change reconciliation')
-        if newvalue:
-            entry = iter(entries).next()
-            account = entry.account
-            action.change_splits([e.split for e in dropwhile(lambda e: e not in entries, account.entries)])
-        else:
-            action.change_splits([e.split for e in reconciled_entries])
+        action.change_splits([e.split for e in entries])
         self._undoer.record(action)
         
         min_date = datetime.date.max

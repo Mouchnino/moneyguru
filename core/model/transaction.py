@@ -10,7 +10,7 @@ import time
 from collections import defaultdict
 from copy import copy
 
-from hsutil.misc import allsame, first
+from hsutil.misc import allsame, first, nonone
 
 from ..const import NOEDIT
 from .account import AccountType
@@ -223,7 +223,8 @@ class Split(object):
         self.memo = ''
         self.amount = amount
         self.reconciliation_date = None
-        self.reconciliation_pending = False
+        # reconciliation_pending is None until a value is specifically assigned to it.
+        self.reconciliation_pending = None
         self.reference = None
     
     def __repr__(self):
@@ -302,7 +303,7 @@ class Entry(object):
     
     @property
     def reconciliation_pending(self):
-        return self.split.reconciliation_pending
+        return nonone(self.split.reconciliation_pending, self.split.reconciled)
     
     @property
     def reference(self):

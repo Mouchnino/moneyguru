@@ -124,7 +124,9 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_three_entries_reconciliation_mode()
-        self.setup_reconcile_second_entry()
+        self.etable.select([1])
+        row = self.etable.selected_row
+        row.toggle_reconciled()
         self.document.toggle_reconciliation_mode() # commit reonciliation
     
     def test_efbar_not_reconciled(self):
