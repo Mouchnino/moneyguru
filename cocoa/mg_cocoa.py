@@ -15,6 +15,7 @@ from hsutil.cocoa import signature, install_exception_hook, pythonify
 from hsutil.path import Path
 from hsutil.currency import Currency, USD
 from hsutil.misc import nonone
+from hsutil.reg import InvalidCodeError
 
 from core.app import Application
 from core.document import Document, FilterType
@@ -155,9 +156,12 @@ class PyMoneyGuruApp(NSObject):
     def isRegistered(self):
         return self.py.registered
     
-    @signature('i@:@@')
     def isCodeValid_withEmail_(self, code, email):
-        return self.py.is_code_valid(code, email)
+        try:
+            self.py.validate_code(code, email)
+            return None
+        except InvalidCodeError as e:
+            return unicode(e)
     
     def setRegisteredCode_andEmail_(self, code, email):
         self.py.set_registration(code, email)
