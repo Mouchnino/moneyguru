@@ -7,32 +7,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from datetime import date
-
 from nose.tools import eq_
 
 from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, CommonSetup
 from ...app import Application
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
 from ...loader.csv import CsvField
-from ...model.date import YearRange
-
-class CommonSetup(CommonSetup):
-    def setup_import_fortis(self):
-        self.document.date_range = YearRange(date(2008, 1, 1))
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
-    
-    def setup_lots_of_noise(self):
-        self.document.date_range = YearRange(date(2009, 1, 1))
-        self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
-    
-    def setup_ready_fortis(self):
-        self.csvopt.set_line_excluded(0, True)
-        self.csvopt.set_column_field(0, CsvField.Reference)
-        self.csvopt.set_column_field(1, CsvField.Date)
-        self.csvopt.set_column_field(3, CsvField.Amount)
-        self.csvopt.set_column_field(5, CsvField.Description)
-    
 
 class NoSetup(TestCase):
     def test_invalid_default(self):
@@ -42,10 +22,10 @@ class NoSetup(TestCase):
         self.create_instances() # no crash when CSVOptions is created
     
 
-class ImportFortisCSV(TestCase, CommonSetup):
+class ImportFortisCSV(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_import_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         expected_calls = ['refresh_layout_menu', 'refresh_columns', 'refresh_lines',
             'refresh_targets', 'show']
         self.check_gui_calls(self.csvopt_gui, expected_calls)
@@ -82,20 +62,36 @@ class ImportFortisCSV(TestCase, CommonSetup):
         eq_(self.csvopt.get_column_name(1), 'Date')
         self.check_gui_calls(self.csvopt_gui, ['refresh_columns_name'])
     
-    def test_set_wrong_date_field(self):
-        # if the field date is set to a non-date column, raise an appropriate error (with show_message)
+
+class ImportFortisCSVWithWrongDateColumn(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         self.csvopt.set_column_field(5, CsvField.Date) #description
         self.csvopt.set_column_field(3, CsvField.Amount)
         self.clear_gui_calls()
+    
+    def test_dont_change_line_values(self):
+        # Continuing the import hasn't change the values of the lines.
+        previous_value = self.csvopt.lines[2][5]
+        self.csvopt.continue_import()
+        eq_(self.csvopt.lines[2][5], previous_value)
+    
+    def test_show_error_message(self):
+        # if the field date is set to a non-date column, raise an appropriate error (with show_message)
         self.csvopt.continue_import()
         self.check_gui_calls(self.csvopt_gui, ['show_message'])
     
 
-class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
+class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_import_fortis()
-        self.setup_ready_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.csvopt.set_line_excluded(0, True)
+        self.csvopt.set_column_field(0, CsvField.Reference)
+        self.csvopt.set_column_field(1, CsvField.Date)
+        self.csvopt.set_column_field(3, CsvField.Amount)
+        self.csvopt.set_column_field(5, CsvField.Description)
         self.clear_gui_calls()
     
     def test_continue_import(self):
@@ -149,10 +145,10 @@ class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase, CommonSetup):
         eq_(self.csvopt.get_column_name(1), 'None')
     
 
-class LotsOfNoise(TestCase, CommonSetup):
+class LotsOfNoise(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_lots_of_noise()
+        self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
     
     def test_use_latin1_encoding(self):
         # This file contains umlauts encoded in latin-1. Make sure they are correctly decoded
@@ -161,10 +157,10 @@ class LotsOfNoise(TestCase, CommonSetup):
         assert u'ä' in s
     
 
-class LotsOfNoiseReadyToImport(TestCase, CommonSetup):
+class LotsOfNoiseReadyToImport(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_lots_of_noise()
+        self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_line_excluded(1, True)
         self.csvopt.set_line_excluded(2, True)
@@ -205,8 +201,12 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_three_accounts()
-        self.setup_import_fortis()
-        self.setup_ready_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.csvopt.set_line_excluded(0, True)
+        self.csvopt.set_column_field(0, CsvField.Reference)
+        self.csvopt.set_column_field(1, CsvField.Date)
+        self.csvopt.set_column_field(3, CsvField.Amount)
+        self.csvopt.set_column_field(5, CsvField.Description)
         self.csvopt.new_layout('foobar') # 'foobar' is selected
         self.csvopt.selected_target_index = 1 # one
         self.csvopt.new_layout('foobaz') # 'foobaz' is selected
@@ -284,7 +284,7 @@ class FortisWithLoadedLayouts(TestCase, CommonSetup):
         self.app_gui.set_default(LAYOUT_PREFERENCE_NAME, [default, foobar])
         self.create_instances()
         self.setup_three_accounts()
-        self.setup_import_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
     
     def test_layouts(self):
         # The layouts have been correctly loaded
@@ -318,7 +318,7 @@ class FortisThreeEmptyAccounts(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_three_accounts()
-        self.setup_import_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
     
     def test_remember_selected_target_in_layout(self):
         self.csvopt.selected_target_index = 2
@@ -335,8 +335,12 @@ class FortisImportedThreeEmptyAccounts(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.setup_three_accounts()
-        self.setup_import_fortis()
-        self.setup_ready_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.csvopt.set_line_excluded(0, True)
+        self.csvopt.set_column_field(0, CsvField.Reference)
+        self.csvopt.set_column_field(1, CsvField.Date)
+        self.csvopt.set_column_field(3, CsvField.Amount)
+        self.csvopt.set_column_field(5, CsvField.Description)
     
     def test_select_target_then_continue(self):
         # the selected target account is carried in the iwin
@@ -345,10 +349,10 @@ class FortisImportedThreeEmptyAccounts(TestCase, CommonSetup):
         eq_(self.iwin.selected_target_account_index, 2)
     
 
-class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
+class ImportFortisThenAnotherWithLessColumns(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_import_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         self.csvopt.new_layout('fortis')
         self.csvopt.set_column_field(6, CsvField.Transfer) # out of range of the other
         self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv')) # less columns (3)
@@ -365,7 +369,7 @@ class ImportFortisThenAnotherWithLessColumns(TestCase, CommonSetup):
         # simply accessing a layout while having a csv with few columns loaded should not remove
         # columns from that layout
         self.csvopt.select_layout('fortis')
-        self.setup_import_fortis()
+        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         self.csvopt.select_layout('fortis')
         eq_(self.csvopt.columns[6], CsvField.Transfer)
     
