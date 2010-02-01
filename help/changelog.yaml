@@ -1,3 +1,10 @@
+- date: 2010-02-01
+  version: 1.7.6
+  description: |
+    * Fixed a bug preventing entries from being de-reconciled. (#127)
+    * Fixed a crash when showing certain accounts. [Windows]
+    * Fixed a crash during CSV imports. (#128)
+    * Fixed a crash when creating new entries. (#129)
 - date: 2010-01-27
   version: 1.7.5
   description: |
