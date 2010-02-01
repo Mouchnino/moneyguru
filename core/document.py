@@ -649,7 +649,7 @@ class Document(Broadcaster, Listener):
         self.delete_transactions(transactions)
     
     def new_entry(self):
-        account = self.selected_account
+        account = self.shown_account
         date = self.selected_transaction.date if self.selected_transaction else datetime.date.today()
         balance = 0
         reconciled_balance = 0
@@ -659,7 +659,7 @@ class Document(Broadcaster, Listener):
             balance = previous_entry.balance
             reconciled_balance = previous_entry.reconciled_balance
             balance_with_budget = previous_entry.balance_with_budget
-        transaction = Transaction(date, account=self.selected_account, amount=0)
+        transaction = Transaction(date, account=self.shown_account, amount=0)
         split = transaction.splits[0]
         entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
         return entry

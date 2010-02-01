@@ -213,6 +213,14 @@ class OneEntry(TestCase):
         # Previously, this was based on selected_account rather than shown_account
         assert not self.etable.should_show_balance_column()
     
+    def test_show_transfer_account_then_add_entry(self):
+        # When a new entry is created, it is created in the *shown* account, not the *selected*
+        # account.
+        self.etable.show_transfer_account()
+        self.mainwindow.new_item()
+        self.etable.save_edits()
+        eq_(len(self.etable), 2)
+    
     def test_show_transfer_account_twice(self):
         # calling show_transfer_account() again brings the account view on 'first'
         self.etable.show_transfer_account()
