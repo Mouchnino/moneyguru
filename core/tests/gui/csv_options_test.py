@@ -454,3 +454,18 @@ class AmountWithDollarSign(TestCase):
         eq_(self.itable[0].amount_import, '10.00')
         eq_(self.itable[1].amount_import, '42.00')
     
+
+class ShortDates(TestCase):
+    def setUp(self):
+        # This file has very short dates in m/d/y format
+        self.create_instances()
+        self.document.parse_file_for_import(self.filepath('csv/short_dates.csv'))
+        self.csvopt.set_column_field(0, CsvField.Date)
+        self.csvopt.set_column_field(1, CsvField.Amount)
+    
+    def test_import(self):
+        # No crash and the correct amounts are parsed
+        self.csvopt.continue_import() # no crash
+        eq_(self.itable[0].date_import, '04/01/2010')
+        eq_(self.itable[1].date_import, '29/01/2010')
+    

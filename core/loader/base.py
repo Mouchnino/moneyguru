@@ -31,7 +31,7 @@ from ..model.transaction_list import TransactionList
 DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%d.%m.%Y', '%d.%m.%y', '%m.%d.%y', 
     '%m.%d.%Y', '%m-%d-%y', '%m-%d-%Y', '%d-%m-%Y', '%d-%m-%y', '%Y%m%d']
 
-re_possibly_a_date = re.compile(r'[\d/.-]{8,10}')
+re_possibly_a_date = re.compile(r'[\d/.-]{6,10}')
 
 class Loader(object):
     """Base interface for loading files containing financial information to load into moneyGuru.
