@@ -5,13 +5,13 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
-from Foundation import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
-    NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
-    NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
-    NSNumberFormatter, NSNumberFormatterBehavior10_4)
 import logging
 
 from hsutil.cocoa import signature, install_exception_hook, pythonify
+from hsutil.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
+    NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
+    NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
+    NSNumberFormatter, NSNumberFormatterBehavior10_4)
 from hsutil.path import Path
 from hsutil.currency import Currency, USD
 from hsutil.misc import nonone
