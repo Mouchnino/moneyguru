@@ -20,7 +20,8 @@ def main():
     ui = conf['ui']
     print "Running moneyGuru with UI {0}".format(ui)
     if ui == 'cocoa':
-        os.system('open cocoa/build/Release/moneyGuru.app')
+        subfolder = 'dev' if dev else 'release'
+        os.system('open cocoa/build/{0}/moneyGuru.app'.format(subfolder))
     elif ui == 'qt':
         add_to_pythonpath('.')
         os.chdir('qt')

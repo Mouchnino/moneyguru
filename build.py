@@ -23,10 +23,7 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    build64 = conf['build64']
     print "Building moneyGuru with UI {0}".format(ui)
-    if build64:
-        print "If possible, 64-bit builds will be made"
     if dev:
         print "Building in Dev mode"
     print "Generating Help"
@@ -72,8 +69,10 @@ def main():
         open('Info.plist', 'w').write(contents)
         print "Building the XCode project"
         args = []
-        if build64:
-            args.append('ARCHS="x86_64 i386 ppc"')
+        if dev:
+            args.append('-configuration dev')
+        else:
+            args.append('-configuration release')
         args = ' '.join(args)
         os.system('xcodebuild {0}'.format(args))
         os.chdir('..')

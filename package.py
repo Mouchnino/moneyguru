@@ -24,7 +24,7 @@ def main():
         return
     print "Packaging moneyGuru with UI {0}".format(ui)
     if ui == 'cocoa':
-        build_dmg('cocoa/build/Release/moneyGuru.app', '.')
+        build_dmg('cocoa/build/release/moneyGuru.app', '.')
     elif ui == 'qt':
         if sys.platform != "win32":
             print "Qt packaging only works under Windows."
