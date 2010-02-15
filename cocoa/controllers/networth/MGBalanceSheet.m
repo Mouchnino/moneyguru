@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 
 @implementation MGBalanceSheet
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGOutlineView *)aOutlineView
+- (id)initWithDocument:(MGDocument *)aDocument view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithDocument:aDocument pyClassName:@"PyBalanceSheet" view:aOutlineView];
     [self setAutosaveName:@"BalanceSheet"];

@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyProfitView.h"
 #import "MGBaseView.h"
 #import "MGDocument.h"
-#import "MGOutlineView.h"
+#import "HSOutlineView.h"
 #import "MGIncomeStatement.h"
 #import "MGPieChart.h"
 #import "MGBarGraph.h"
@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGProfitView : MGBaseView
 {
-    IBOutlet MGOutlineView *outlineView;
+    IBOutlet HSOutlineView *outlineView;
     IBOutlet NSScrollView *outlineScrollView;
     IBOutlet MGDoubleView *pieChartsView;
     IBOutlet NSView *profitGraphPlaceholder;

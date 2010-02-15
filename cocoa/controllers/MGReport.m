@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGReport
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(MGOutlineView *)aOutlineView
+- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithDocument:aDocument pyClassName:aClassName view:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
@@ -234,7 +234,7 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (void)outlineViewWasDoubleClicked:(MGOutlineView *)sender
+- (void)outlineViewWasDoubleClicked:(HSOutlineView *)sender
 {
     if ([outlineView clickedRow] != -1)
     {

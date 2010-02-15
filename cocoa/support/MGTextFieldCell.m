@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGTextFieldCell.h"
-#import "MGOutlineView.h"
+#import "HSOutlineView.h"
 
 #define ARROW_WIDTH 12.0
 #define ARROW_HEIGHT 12.0

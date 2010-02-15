@@ -11,7 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGIncomeStatement
 
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGOutlineView *)aOutlineView
+- (id)initWithDocument:(MGDocument *)aDocument view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithDocument:aDocument pyClassName:@"PyIncomeStatement" view:aOutlineView];
     [self setAutosaveName:@"IncomeStatement"];

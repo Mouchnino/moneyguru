@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyNetWorthView.h"
 #import "MGBaseView.h"
 #import "MGDocument.h"
-#import "MGOutlineView.h"
+#import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
 #import "MGPieChart.h"
 #import "MGBalanceGraph.h"
@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGNetWorthView : MGBaseView
 {
-    IBOutlet MGOutlineView *outlineView;
+    IBOutlet HSOutlineView *outlineView;
     IBOutlet NSScrollView *outlineScrollView;
     IBOutlet MGDoubleView *pieChartsView;
     IBOutlet NSView *netWorthGraphPlaceholder;

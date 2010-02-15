@@ -45,13 +45,16 @@
 		CE1BD3E20FDE4DE2005FB7B9 /* BRSingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */; };
 		CE2848E30E84FB7200FF7EA2 /* RecurrenceScopeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2848E20E84FB7200FF7EA2 /* RecurrenceScopeDialog.xib */; };
 		CE2DD6300E4C684000AB107B /* MGImportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DD62F0E4C684000AB107B /* MGImportTable.m */; };
+		CE2F0BF411295E1A00F6FB55 /* HSOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */; };
+		CE2F0BF511295E1A00F6FB55 /* NSIndexPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BF111295E1A00F6FB55 /* NSIndexPathAdditions.m */; };
+		CE2F0BF611295E1A00F6FB55 /* NSTableViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BF311295E1A00F6FB55 /* NSTableViewAdditions.m */; };
+		CE2F0C081129606D00F6FB55 /* HSOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0C071129606D00F6FB55 /* HSOutline.m */; };
 		CE3040DA0F86094400884424 /* MGEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D70F86094400884424 /* MGEntryPrint.m */; };
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
 		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
 		CE3BD41D0E61C9570071559C /* reconcile_check_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BD41C0E61C9570071559C /* reconcile_check_48.png */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
-		CE4148210EAA059400B8BF6A /* NSIndexPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4148200EAA059400B8BF6A /* NSIndexPathAdditions.m */; };
 		CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41C98F0E2B52CD006D3BEA /* MGTable.m */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
 		CE4B8C120E656DB70017432D /* moneyguru_help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* moneyguru_help */; };
@@ -92,13 +95,11 @@
 		CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8F0E21622F004F63E9 /* MGUndoManager.m */; };
 		CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA00E21622F004F63E9 /* MGGradientBar.m */; };
 		CE873AC50E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA20E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m */; };
-		CE873AC60E21622F004F63E9 /* MGOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA40E21622F004F63E9 /* MGOutlineView.m */; };
 		CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA60E21622F004F63E9 /* MGScrollView.m */; };
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
 		CE873AC90E21622F004F63E9 /* MGTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAA0E21622F004F63E9 /* MGTextField.m */; };
 		CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */; };
 		CE873ACC0E21622F004F63E9 /* NSEventAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AB00E21622F004F63E9 /* NSEventAdditions.m */; };
-		CE873ACD0E21622F004F63E9 /* NSTableViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AB20E21622F004F63E9 /* NSTableViewAdditions.m */; };
 		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
 		CE95AFCB10F769D2007AC512 /* MGAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AFCA10F769D2007AC512 /* MGAccountView.m */; };
 		CE98C6A90E6294A900DEE6BA /* NSCellAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */; };
@@ -285,6 +286,14 @@
 		CE2DD62E0E4C684000AB107B /* MGImportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTable.h; sourceTree = "<group>"; };
 		CE2DD62F0E4C684000AB107B /* MGImportTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTable.m; sourceTree = "<group>"; };
 		CE2DD6310E4C684C00AB107B /* PyImportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyImportTable.h; sourceTree = "<group>"; };
+		CE2F0BEE11295E1A00F6FB55 /* HSOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSOutlineView.h; sourceTree = "<group>"; };
+		CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSOutlineView.m; sourceTree = "<group>"; };
+		CE2F0BF011295E1A00F6FB55 /* NSIndexPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSIndexPathAdditions.h; sourceTree = "<group>"; };
+		CE2F0BF111295E1A00F6FB55 /* NSIndexPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSIndexPathAdditions.m; sourceTree = "<group>"; };
+		CE2F0BF211295E1A00F6FB55 /* NSTableViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTableViewAdditions.h; sourceTree = "<group>"; };
+		CE2F0BF311295E1A00F6FB55 /* NSTableViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewAdditions.m; sourceTree = "<group>"; };
+		CE2F0C061129606D00F6FB55 /* HSOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSOutline.h; sourceTree = "<group>"; };
+		CE2F0C071129606D00F6FB55 /* HSOutline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSOutline.m; sourceTree = "<group>"; };
 		CE3040D60F86094400884424 /* MGEntryPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGEntryPrint.h; path = print/MGEntryPrint.h; sourceTree = "<group>"; };
 		CE3040D70F86094400884424 /* MGEntryPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGEntryPrint.m; path = print/MGEntryPrint.m; sourceTree = "<group>"; };
 		CE3040D80F86094400884424 /* MGTransactionPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTransactionPrint.h; path = print/MGTransactionPrint.h; sourceTree = "<group>"; };
@@ -296,8 +305,6 @@
 		CE3BD41C0E61C9570071559C /* reconcile_check_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reconcile_check_48.png; sourceTree = "<group>"; };
 		CE3F6A7610F903640046B2D2 /* PyProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitView.h; sourceTree = "<group>"; };
 		CE40239E0F4C737D0083BAD2 /* doc_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_icon.icns; sourceTree = "<group>"; };
-		CE41481F0EAA059400B8BF6A /* NSIndexPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSIndexPathAdditions.h; sourceTree = "<group>"; };
-		CE4148200EAA059400B8BF6A /* NSIndexPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSIndexPathAdditions.m; sourceTree = "<group>"; };
 		CE41C98E0E2B52CD006D3BEA /* MGTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTable.h; sourceTree = "<group>"; };
 		CE41C98F0E2B52CD006D3BEA /* MGTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTable.m; sourceTree = "<group>"; };
 		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = ../data/example.moneyguru; sourceTree = "<group>"; };
@@ -384,8 +391,6 @@
 		CE873AA00E21622F004F63E9 /* MGGradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGradientBar.m; sourceTree = "<group>"; };
 		CE873AA10E21622F004F63E9 /* MGHorizontalSplitViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGHorizontalSplitViewDelegate.h; sourceTree = "<group>"; };
 		CE873AA20E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGHorizontalSplitViewDelegate.m; sourceTree = "<group>"; };
-		CE873AA30E21622F004F63E9 /* MGOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGOutlineView.h; sourceTree = "<group>"; };
-		CE873AA40E21622F004F63E9 /* MGOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGOutlineView.m; sourceTree = "<group>"; };
 		CE873AA50E21622F004F63E9 /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
 		CE873AA60E21622F004F63E9 /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
 		CE873AA70E21622F004F63E9 /* MGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableView.h; sourceTree = "<group>"; };
@@ -396,8 +401,6 @@
 		CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransparentButtonCell.m; sourceTree = "<group>"; };
 		CE873AAF0E21622F004F63E9 /* NSEventAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEventAdditions.h; sourceTree = "<group>"; };
 		CE873AB00E21622F004F63E9 /* NSEventAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEventAdditions.m; sourceTree = "<group>"; };
-		CE873AB10E21622F004F63E9 /* NSTableViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTableViewAdditions.h; sourceTree = "<group>"; };
-		CE873AB20E21622F004F63E9 /* NSTableViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewAdditions.m; sourceTree = "<group>"; };
 		CE8CD7AC1042E340004B30E0 /* budget_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_16.png; sourceTree = "<group>"; };
 		CE95AFC910F769D2007AC512 /* MGAccountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAccountView.h; sourceTree = "<group>"; };
 		CE95AFCA10F769D2007AC512 /* MGAccountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountView.m; sourceTree = "<group>"; };
@@ -671,9 +674,24 @@
 			path = ../cocoalib/brsinglelineformatter;
 			sourceTree = SOURCE_ROOT;
 		};
+		CE2F0BED11295E1A00F6FB55 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				CE2F0BEE11295E1A00F6FB55 /* HSOutlineView.h */,
+				CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */,
+				CE2F0BF011295E1A00F6FB55 /* NSIndexPathAdditions.h */,
+				CE2F0BF111295E1A00F6FB55 /* NSIndexPathAdditions.m */,
+				CE2F0BF211295E1A00F6FB55 /* NSTableViewAdditions.h */,
+				CE2F0BF311295E1A00F6FB55 /* NSTableViewAdditions.m */,
+			);
+			name = views;
+			path = ../cocoalib/views;
+			sourceTree = "<group>";
+		};
 		CE6D37C90F93633F00FA8460 /* cocoalib */ = {
 			isa = PBXGroup;
 			children = (
+				CE2F0BED11295E1A00F6FB55 /* views */,
 				CEBA331711294DE5009C782F /* controllers */,
 				CEBA330A11294D2B009C782F /* xib */,
 				CEBA330711294D09009C782F /* proxies */,
@@ -875,8 +893,6 @@
 				CEC5CE580F45F8670042E33F /* MGDoubleView.m */,
 				CE4CD3870F2B7B0D003F1738 /* MGCSVLayoutNameDialog.h */,
 				CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */,
-				CE41481F0EAA059400B8BF6A /* NSIndexPathAdditions.h */,
-				CE4148200EAA059400B8BF6A /* NSIndexPathAdditions.m */,
 				CE31C65B0E851CF400BBA82E /* MGRecurrenceScopeDialog.h */,
 				CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */,
 				CE14AF770E6FB3B500E75B76 /* MGPieChartView.h */,
@@ -897,8 +913,6 @@
 				CE873AA20E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m */,
 				0714240C0E2A797800AC27AC /* MGLineGraphView.h */,
 				0714240D0E2A797800AC27AC /* MGLineGraphView.m */,
-				CE873AA30E21622F004F63E9 /* MGOutlineView.h */,
-				CE873AA40E21622F004F63E9 /* MGOutlineView.m */,
 				CEEED1CD0E3F5FD100BBA154 /* MGReconciliationCell.h */,
 				CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */,
 				CE873AA50E21622F004F63E9 /* MGScrollView.h */,
@@ -915,8 +929,6 @@
 				CEDD98D40E25054300747F64 /* MGUtils.m */,
 				CE873AAF0E21622F004F63E9 /* NSEventAdditions.h */,
 				CE873AB00E21622F004F63E9 /* NSEventAdditions.m */,
-				CE873AB10E21622F004F63E9 /* NSTableViewAdditions.h */,
-				CE873AB20E21622F004F63E9 /* NSTableViewAdditions.m */,
 			);
 			path = support;
 			sourceTree = "<group>";
@@ -1045,6 +1057,8 @@
 		CEBA331711294DE5009C782F /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE2F0C061129606D00F6FB55 /* HSOutline.h */,
+				CE2F0C071129606D00F6FB55 /* HSOutline.m */,
 				CEBA332311294E55009C782F /* HSWindowController.h */,
 				CEBA332411294E55009C782F /* HSWindowController.m */,
 				CEBA331811294DE5009C782F /* HSGUIController.h */,
@@ -1288,13 +1302,11 @@
 				CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */,
 				CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */,
 				CE873AC50E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m in Sources */,
-				CE873AC60E21622F004F63E9 /* MGOutlineView.m in Sources */,
 				CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */,
 				CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */,
 				CE873AC90E21622F004F63E9 /* MGTextField.m in Sources */,
 				CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */,
 				CE873ACC0E21622F004F63E9 /* NSEventAdditions.m in Sources */,
-				CE873ACD0E21622F004F63E9 /* NSTableViewAdditions.m in Sources */,
 				CEDD98D50E25054300747F64 /* MGUtils.m in Sources */,
 				0714240E0E2A797800AC27AC /* MGBarGraphView.m in Sources */,
 				0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */,
@@ -1317,7 +1329,6 @@
 				CE14AF790E6FB3B500E75B76 /* MGPieChartView.m in Sources */,
 				CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */,
 				CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */,
-				CE4148210EAA059400B8BF6A /* NSIndexPathAdditions.m in Sources */,
 				CEB2FA1A0F223C4100A09E4C /* MGCSVImportOptions.m in Sources */,
 				CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */,
 				CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */,
@@ -1382,6 +1393,10 @@
 				CEA6DE9C1101E6970028E125 /* PSMUnifiedTabStyle.m in Sources */,
 				CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */,
 				CEBA332511294E55009C782F /* HSWindowController.m in Sources */,
+				CE2F0BF411295E1A00F6FB55 /* HSOutlineView.m in Sources */,
+				CE2F0BF511295E1A00F6FB55 /* NSIndexPathAdditions.m in Sources */,
+				CE2F0BF611295E1A00F6FB55 /* NSTableViewAdditions.m in Sources */,
+				CE2F0C081129606D00F6FB55 /* HSOutline.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

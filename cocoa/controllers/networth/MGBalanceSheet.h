@@ -16,6 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     HSTableColumnManager *columnsManager;
 }
-- (id)initWithDocument:(MGDocument *)document view:(MGOutlineView *)aOutlineView;
+- (id)initWithDocument:(MGDocument *)document view:(HSOutlineView *)aOutlineView;
 - (PyBalanceSheet *)py;
 @end
