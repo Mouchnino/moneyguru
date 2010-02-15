@@ -7,11 +7,11 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGGUIController.h"
+#import "HSGUIController.h"
 #import "MGChartView.h"
 #import "PyChart.h"
 
-@interface MGChart : MGGUIController {
+@interface MGChart : HSGUIController {
     MGChartView *view;
 }
 - (MGChartView *)view;

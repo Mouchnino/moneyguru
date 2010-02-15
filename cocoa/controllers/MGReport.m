@@ -253,4 +253,13 @@ http://www.hardcoded.net/licenses/hs_license
     NSIndexPath *p = [[notification userInfo] objectForKey:@"NSObject"];
     [[self py] collapsePath:p2a(p)];
 }
+
+/* Python --> Cocoa */
+- (void)showMessage:(NSString *)msg
+{
+    NSAlert *a = [NSAlert alertWithMessageText:msg defaultButton:nil alternateButton:nil 
+        otherButton:nil informativeTextWithFormat:@""];
+    [a beginSheetModalForWindow:[[self view] window] modalDelegate:self didEndSelector:nil 
+        contextInfo:nil];
+}
 @end

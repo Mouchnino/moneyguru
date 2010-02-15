@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0700EE060E2FA93200515978 /* MGGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0700EE050E2FA93200515978 /* MGGUIController.m */; };
 		0714240E0E2A797800AC27AC /* MGBarGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 071424090E2A797800AC27AC /* MGBarGraphView.m */; };
 		0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0714240B0E2A797800AC27AC /* MGGraphView.m */; };
 		071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0714240D0E2A797800AC27AC /* MGLineGraphView.m */; };
@@ -213,8 +212,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0700EE040E2FA93200515978 /* MGGUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGUIController.h; sourceTree = "<group>"; };
-		0700EE050E2FA93200515978 /* MGGUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGUIController.m; sourceTree = "<group>"; };
 		071424080E2A797800AC27AC /* MGBarGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBarGraphView.h; sourceTree = "<group>"; };
 		071424090E2A797800AC27AC /* MGBarGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBarGraphView.m; sourceTree = "<group>"; };
 		0714240A0E2A797800AC27AC /* MGGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraphView.h; sourceTree = "<group>"; };
@@ -804,8 +801,6 @@
 				CE873A830E21622F004F63E9 /* MGFieldEditor.m */,
 				CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */,
 				CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */,
-				0700EE040E2FA93200515978 /* MGGUIController.h */,
-				0700EE050E2FA93200515978 /* MGGUIController.m */,
 				CE873A880E21622F004F63E9 /* MGMainWindow.h */,
 				CE873A890E21622F004F63E9 /* MGMainWindow.m */,
 				07373CB00E3130050082D3E8 /* MGOutline.h */,
@@ -1310,7 +1305,6 @@
 				0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */,
 				071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */,
 				CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */,
-				0700EE060E2FA93200515978 /* MGGUIController.m in Sources */,
 				07373CB20E3130050082D3E8 /* MGOutline.m in Sources */,
 				CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */,
 				07D99F260E37D5A70009142B /* MGTextFieldCell.m in Sources */,

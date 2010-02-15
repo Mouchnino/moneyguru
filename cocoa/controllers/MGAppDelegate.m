@@ -81,7 +81,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (oneway void)release
 {
-    // See MGGUIController
+    // See HSGUIController
     if ([self retainCount] == 2)
     {
         [py free];

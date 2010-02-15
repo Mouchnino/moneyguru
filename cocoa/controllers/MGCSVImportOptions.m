@@ -196,4 +196,12 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [[self window] orderOut:self];
 }
+
+- (void)showMessage:(NSString *)msg
+{
+    NSAlert *a = [NSAlert alertWithMessageText:msg defaultButton:nil alternateButton:nil 
+        otherButton:nil informativeTextWithFormat:@""];
+    [a beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:nil 
+        contextInfo:nil];
+}
 @end

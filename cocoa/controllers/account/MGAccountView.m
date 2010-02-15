@@ -91,7 +91,7 @@ http://www.hardcoded.net/licenses/hs_license
     [tableScrollView setFrame:mainRect];
 }
 
-- (void)showGraph:(MGGUIController *)graph
+- (void)showGraph:(HSGUIController *)graph
 {
     NSView *oldView = currentGraphView;
     NSView *graphView = [graph view];

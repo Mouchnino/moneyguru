@@ -7,11 +7,11 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGGUIController.h"
+#import "HSGUIController.h"
 #import "MGDocument.h"
 #import "PySearchField.h"
 
-@interface MGSearchField : MGGUIController
+@interface MGSearchField : HSGUIController
 {   
     IBOutlet NSSearchField *view;
 }

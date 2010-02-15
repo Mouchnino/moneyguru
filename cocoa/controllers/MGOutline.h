@@ -7,13 +7,13 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGGUIController.h"
+#import "HSGUIController.h"
 #import "MGOutlineView.h"
 #import "PyOutline.h"
 #import "MGDocument.h"
 #import "NSIndexPathAdditions.h"
 
-@interface MGOutline : MGGUIController {
+@interface MGOutline : HSGUIController {
     MGOutlineView *outlineView;
     NSMutableDictionary *itemData;
     MGDocument *document;

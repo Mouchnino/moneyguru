@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
     return self;
 }
 
-/* MGGUIController */
+/* HSGUIController */
 
 - (PySearchField *)py
 {

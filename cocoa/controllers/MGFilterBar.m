@@ -56,7 +56,7 @@ http://www.hardcoded.net/licenses/hs_license
     [super dealloc];
 }
 
-/* MGGUIController */
+/* HSGUIController */
 
 - (PyFilterBar *)py
 {

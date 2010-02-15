@@ -8,7 +8,7 @@
 import logging
 
 from hsutil.cocoa import install_exception_hook, pythonify
-from hsutil.cocoa.inter import signature, PyGUIObject as PyGUIObjectBase, PyOutline, PyRegistrable
+from hsutil.cocoa.inter import signature, PyGUIObject, PyOutline as PyOutlineBase, PyRegistrable
 from hsutil.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
@@ -100,7 +100,7 @@ class PyMoneyGuruApp(PyRegistrable):
             grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path)
         return self
     
-    def free(self): # see GUIProxy
+    def free(self): # see PyGUIObject
         if hasattr(self, 'cocoa'):
             del self.cocoa
     
@@ -272,7 +272,7 @@ class PyDocument(NSObject):
     def isRegistered(self):
         return self.py.app.registered
     
-    def free(self): # see GUIProxy
+    def free(self): # see PyGUIObject
         if hasattr(self, 'cocoa'):
             del self.cocoa
     
@@ -282,13 +282,7 @@ class PyDocument(NSObject):
     
 
 #--- Root classes
-
-class GUIProxy(PyGUIObjectBase):
-    #--- Python -> Cocoa
-    def show_message(self, msg):
-        self.cocoa.showMessage_(msg)
-
-class PyListener(GUIProxy):
+class PyListener(PyGUIObject):
     def connect(self):
         self.py.connect()
     
@@ -297,7 +291,7 @@ class PyListener(GUIProxy):
     
     def free(self):
         self.disconnect()
-        GUIProxy.free(self)
+        PyGUIObject.free(self)
     
 
 class PyGUIContainer(PyListener):
@@ -408,6 +402,12 @@ class PyTableWithDate(PyTable):
         if self.py.edited is None:
             return False
         return self.py.edited.is_date_in_past()
+    
+
+class PyOutline(PyOutlineBase):
+    #--- Python --> Cocoa
+    def show_message(self, msg):
+        self.cocoa.showMessage_(msg)
     
 
 class PyChart(PyListener):
@@ -1377,6 +1377,9 @@ class PyCSVImportOptions(PyWindowController):
     
     def hide(self):
         self.cocoa.hide()
+    
+    def show_message(self, msg):
+        self.cocoa.showMessage_(msg)
     
 
 class PyImportTable(PyTable):

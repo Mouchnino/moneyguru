@@ -8,10 +8,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGTableView.h"
-#import "MGGUIController.h"
+#import "HSGUIController.h"
 #import "PyTable.h"
 
-@interface MGTable : MGGUIController
+@interface MGTable : HSGUIController
 {
     MGTableView *tableView;
 }

@@ -8,14 +8,14 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "PSMTabBarControl.h"
-#import "MGGUIController.h"
+#import "HSGUIController.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
 #import "MGImportTable.h"
 #import "MGImportTableOneSided.h"
 #import "PyImportWindow.h"
 
-@interface MGImportWindow : MGGUIController
+@interface MGImportWindow : HSGUIController
 {
     IBOutlet NSWindow *window;
     IBOutlet PSMTabBarControl *tabBar;

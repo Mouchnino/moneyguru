@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     return self;
 }
 
-/* MGGUIController */
+/* HSGUIController */
 - (PyTable *)py
 {
     return (PyTable *)py;
