@@ -7,7 +7,8 @@
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
 
-from hsutil.cocoa import signature, install_exception_hook, pythonify
+from hsutil.cocoa import install_exception_hook, pythonify
+from hsutil.cocoa.inter import signature, PyGUIObject as PyGUIObjectBase, PyOutline, PyRegistrable
 from hsutil.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
@@ -60,12 +61,12 @@ from core.model.date import clean_format
 # These imports below are a workaround for py2app, which doesn't like relative imports
 import csv
 from core import const
-from core.gui import base, chart, graph, report, table, tree
+from core.gui import base, chart, graph, report, table
 from core.loader import base, csv, native, ofx, qif
 from core.model import (account, amount, currency, date, oven, recurrence, transaction,
     transaction_list, completion, undo)
 
-class PyMoneyGuruApp(NSObject):
+class PyMoneyGuruApp(PyRegistrable):
     def initWithCocoa_(self, cocoa):
         super(PyMoneyGuruApp, self).init()
         self.cocoa = cocoa
@@ -148,23 +149,6 @@ class PyMoneyGuruApp(NSObject):
     #---Registration
     def appName(self):
         return self.py.APP_NAME
-    
-    def demoLimitDescription(self):
-        return self.py.DEMO_LIMIT_DESC
-    
-    @signature('i@:')
-    def isRegistered(self):
-        return self.py.registered
-    
-    def isCodeValid_withEmail_(self, code, email):
-        try:
-            self.py.validate_code(code, email)
-            return None
-        except InvalidCodeError as e:
-            return unicode(e)
-    
-    def setRegisteredCode_andEmail_(self, code, email):
-        self.py.set_registration(code, email)
     
     #--- Python -> Cocoa
     def setup_as_registered(self):
@@ -299,27 +283,8 @@ class PyDocument(NSObject):
 
 #--- Root classes
 
-class GUIProxy(NSObject):
-    def initWithCocoa_pyParent_(self, cocoa, pyparent):
-        # In most cases, pyparent is a PyDocument
-        super(GUIProxy, self).init()
-        self.cocoa = cocoa
-        self.py = self.py_class(self, pyparent.py)
-        return self
-    
-    def free(self):
-        # call this method only when you don't need to use this proxy anymore. you need to call this
-        # if you want to release the cocoa side (self.cocoa is holding a refcount)
-        # We don't delete py, it might be called after the free. It will be garbage collected anyway.
-        # The if is because there is something happening giving a new ref to cocoa right after
-        # the free, and then the ref gets to 1 again, free is called again.
-        if hasattr(self, 'cocoa'):
-            del self.cocoa
-    
+class GUIProxy(PyGUIObjectBase):
     #--- Python -> Cocoa
-    def refresh(self):
-        self.cocoa.refresh()
-    
     def show_message(self, msg):
         self.cocoa.showMessage_(msg)
 
@@ -488,46 +453,6 @@ class PyGraph(PyChart):
     
     def yTickMarks(self):
         return self.py.ytickmarks
-    
-
-class PyOutline(PyListener):
-    def cancelEdits(self):
-        self.py.cancel_edits()
-    
-    @signature('c@:@@')
-    def canEditProperty_atPath_(self, property, path):
-        node = self.py.get_node(path)
-        assert node is self.py.selected
-        return getattr(node, 'can_edit_' + property, False)
-    
-    def saveEdits(self):
-        self.py.save_edits()
-    
-    def selectedPath(self):
-        return self.py.get_path(self.py.selected)
-
-    def setSelectedPath_(self, path):
-        self.py.selected_path = path
-
-    def property_valueAtPath_(self, property, path):
-        try:
-            return getattr(self.py.get_node(path), property)
-        except IndexError:
-            logging.warning(u"%r doesn't have a node at path %r", self.py, path)
-            return u''
-    
-    def setProperty_value_atPath_(self, property, value, path):
-        setattr(self.py.get_node(path), property, value)
-    
-    #--- Python -> Cocoa
-    def start_editing(self):
-        self.cocoa.startEditing()
-    
-    def stop_editing(self):
-        self.cocoa.stopEditing()
-    
-    def update_selection(self):
-        self.cocoa.updateSelection()
     
 
 class PyReport(PyOutline):
