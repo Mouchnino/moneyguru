@@ -7,128 +7,14 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import datetime
-from collections import namedtuple
+
+from hsgui.table import Table, GUITable as GUITableBase, Row as RowBase
 
 from ..model.amount import Amount
 from ..model.sort import sort_string
 
-class Table(list):
-    def __init__(self):
-        list.__init__(self)
-        self._selected_indexes = []
-    
-    def __delitem__(self, key):
-        list.__delitem__(self, key)
-        self._check_selection_range()
-    
-    # this method is deprecated, but when subclassing list, we *have* to override it.
-    def __delslice__(self, i, j):
-        self.__delitem__(slice(i, j))
-    
-    def __eq__(self, other):
-        # object doesn't have __eq__ and __cmp__ doesn't work
-        return self is other
-    
-    def __hash__(self):
-        return object.__hash__(self)
-    
-    def _check_selection_range(self):
-        if not self:
-            self._selected_indexes = []
-        had_selection = bool(self._selected_indexes)
-        self._selected_indexes = [index for index in self._selected_indexes if index < len(self)]
-        if had_selection and not self._selected_indexes:
-            self._selected_indexes.append(len(self) - 1)
-    
-    def remove(self, row):
-        list.remove(self, row)
-        self._check_selection_range()
-    
-    def sort_by(self, column_name, desc=False):
-        key = lambda row: row.sort_key_for_column(column_name)
-        self.sort(key=key, reverse=desc)
-    
-    @property
-    def selected_row(self):
-        return self[self.selected_index] if self.selected_index is not None else None
-    
-    @selected_row.setter
-    def selected_row(self, value):
-        try:
-            self.selected_index = self.index(value)
-        except ValueError:
-            pass
-    
-    @property
-    def selected_rows(self):
-        return [self[index] for index in self.selected_indexes]
-    
-    @property
-    def selected_index(self):
-        return self._selected_indexes[0] if self._selected_indexes else None
-    
-    @selected_index.setter
-    def selected_index(self, value):
-        self.selected_indexes = [value]
-    
-    @property
-    def selected_indexes(self):
-        return self._selected_indexes
-    
-    @selected_indexes.setter
-    def selected_indexes(self, value):
-        self._selected_indexes = value
-        self._selected_indexes.sort()
-        self._check_selection_range()
-    
-
-SortDescriptor = namedtuple('SortDescriptor', 'column desc')
 # Subclasses of this class must have a "view" and a "document" attribute
-class GUITable(Table):
-    def __init__(self):
-        Table.__init__(self)
-        self.edited = None
-        self._sort_descriptor = None
-    
-    #--- Virtual
-    def _do_add(self):
-        # Creates a new row, adds it in the table and returns it.
-        return None
-    
-    def _do_delete(self):
-        # Delete the selected rows
-        pass
-    
-    def _fill(self):
-        # Called by refresh()
-        # Fills the table with all the rows that this table is supposed to have.
-        pass
-    
-    def _is_edited_new(self):
-        return False
-    
-    def _update_selection(self):
-        # Takes the table's selection and does appropriates updates on the Document's side.
-        pass
-    
-    #--- Public
-    def add(self):
-        self.view.stop_editing()
-        if self.edited is not None:
-            self.save_edits()
-        row = self._do_add()
-        assert row is not None
-        self.edited = row
-        self.view.refresh()
-        self.view.start_editing()
-    
-    def can_edit_cell(self, column_name, row_index):
-        # A row is, by default, editable as soon as it has an attr with the same name as `column`.
-        # If can_edit() returns False, the row is not editable at all. You can set editability of
-        # rows at the attribute level with can_edit_* properties
-        row = self[row_index]
-        return row.can_edit_cell(column_name)
-    
+class GUITable(GUITableBase):
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):
             return False
@@ -140,55 +26,6 @@ class GUITable(Table):
         if not has_gap and position in (row_indexes + [last_index + 1]):
             return False
         return True
-    
-    def cancel_edits(self):
-        if self.edited is None:
-            return
-        self.view.stop_editing()
-        if self._is_edited_new():
-            self.remove(self.edited)
-            self._update_selection()
-        else:
-            self.edited.load()
-        self.edited = None
-        self.view.refresh()
-    
-    def delete(self):
-        self.view.stop_editing()
-        if self.edited is not None:
-            self.cancel_edits()
-            return
-        if self:
-            self._do_delete()
-    
-    def refresh(self):
-        self.cancel_edits()
-        selected_indexes = self.selected_indexes
-        del self[:]
-        self._fill()
-        sd = self._sort_descriptor
-        if sd is not None:
-            Table.sort_by(self, column_name=sd.column, desc=sd.desc)
-        if not self.selected_indexes:
-            if not selected_indexes:
-                selected_indexes = [len(self) - 1]
-            self.select(selected_indexes)
-    
-    def save_edits(self):
-        if self.edited is None:
-            return
-        row = self.edited
-        self.edited = None
-        row.save()
-    
-    def select(self, row_indexes):
-        self.selected_indexes = row_indexes
-        self._update_selection()
-    
-    def sort_by(self, column_name, desc=False):
-        Table.sort_by(self, column_name=column_name, desc=desc)
-        self._sort_descriptor = SortDescriptor(column_name, desc)
-        self.view.refresh()
     
     #--- Event handlers
     def edition_must_stop(self):
@@ -220,11 +57,7 @@ class GUITable(Table):
         self.view.refresh()
     
 
-class Row(object):
-    def __init__(self, table):
-        super(Row, self).__init__()
-        self.table = table
-    
+class Row(RowBase):
     def _autofill(self, key_value, key_attr):
         if not key_value:
             return # we never autofill on blank values
@@ -262,41 +95,14 @@ class Row(object):
         # generator
         raise NotImplementedError()
     
-    def _edit(self):
-        if self.table.edited is self:
-            return
-        assert self.table.edited is None
-        self.table.edited = self
-    
-    #--- Virtual
-    def can_edit(self):
-        return True
-    
-    def load(self):
-        raise NotImplementedError()
-    
-    def save(self):
-        raise NotImplementedError()
-    
+    #--- Override
     def sort_key_for_column(self, column_name):
-        # Most of the time, the adequate sort key for a column is the column name with '_' prepended
-        # to it. This member usually corresponds to the unformated version of the column.
-        # Of course, override for exceptions.
-        value = getattr(self, '_' + column_name)
+        value = RowBase.sort_key_for_column(self, column_name)
         if isinstance(value, basestring):
             value = sort_string(value)
         elif isinstance(value, Amount):
             value = value.value
         return value
-    
-    #--- Public
-    def can_edit_cell(self, column_name):
-        if not self.can_edit():
-            return False
-        # '_' is in case column is a python keyword
-        if not (hasattr(self, column_name) or hasattr(self, column_name + '_')):
-            return False
-        return getattr(self, 'can_edit_' + column_name, True)
     
 
 class RowWithDebitAndCredit(Row):
