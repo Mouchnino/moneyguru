@@ -166,6 +166,7 @@
 		CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C410E5C622E006923EB /* transaction_table_48.png */; };
 		CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */; };
 		CEBA331011294D2B009C782F /* registration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330D11294D2B009C782F /* registration.xib */; };
+		CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA331911294DE5009C782F /* HSGUIController.m */; };
 		CEBB2FFD10F76BD100FC4C7A /* MGBudgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB2FFC10F76BD100FC4C7A /* MGBudgetView.m */; };
 		CEBB300510F76E3600FC4C7A /* MGScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB300410F76E3600FC4C7A /* MGScheduleView.m */; };
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
@@ -496,6 +497,8 @@
 		CEBA330911294D09009C782F /* PyOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline.h; sourceTree = "<group>"; };
 		CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorReportWindow.xib; sourceTree = "<group>"; };
 		CEBA330D11294D2B009C782F /* registration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = registration.xib; sourceTree = "<group>"; };
+		CEBA331811294DE5009C782F /* HSGUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSGUIController.h; sourceTree = "<group>"; };
+		CEBA331911294DE5009C782F /* HSGUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSGUIController.m; sourceTree = "<group>"; };
 		CEBB2FFB10F76BD100FC4C7A /* MGBudgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBudgetView.h; sourceTree = "<group>"; };
 		CEBB2FFC10F76BD100FC4C7A /* MGBudgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBudgetView.m; sourceTree = "<group>"; };
 		CEBB300310F76E3600FC4C7A /* MGScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScheduleView.h; sourceTree = "<group>"; };
@@ -674,6 +677,7 @@
 		CE6D37C90F93633F00FA8460 /* cocoalib */ = {
 			isa = PBXGroup;
 			children = (
+				CEBA331711294DE5009C782F /* controllers */,
 				CEBA330A11294D2B009C782F /* xib */,
 				CEBA330711294D09009C782F /* proxies */,
 				CE1BD3DD0FDE4DE1005FB7B9 /* brsinglelineformatter */,
@@ -1045,6 +1049,16 @@
 			path = ../cocoalib/xib;
 			sourceTree = "<group>";
 		};
+		CEBA331711294DE5009C782F /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEBA331811294DE5009C782F /* HSGUIController.h */,
+				CEBA331911294DE5009C782F /* HSGUIController.m */,
+			);
+			name = controllers;
+			path = ../cocoalib/controllers;
+			sourceTree = "<group>";
+		};
 		CEBB2FFA10F76BD100FC4C7A /* budget */ = {
 			isa = PBXGroup;
 			children = (
@@ -1373,6 +1387,7 @@
 				CEA6DE9A1101E6970028E125 /* PSMTabBarControl.m in Sources */,
 				CEA6DE9B1101E6970028E125 /* PSMTabDragAssistant.m in Sources */,
 				CEA6DE9C1101E6970028E125 /* PSMUnifiedTabStyle.m in Sources */,
+				CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

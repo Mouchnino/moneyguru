@@ -7,15 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
-#import "MGPrintView.h"
+#import "HSGUIController.h"
 
-@interface MGGUIController : NSObject
-{
-    PyGUI *py;
-}
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent;
-- (NSView *)view;
-- (void)connect;
-- (void)disconnect;
+@interface MGGUIController : HSGUIController {}
 @end
