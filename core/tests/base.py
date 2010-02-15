@@ -487,6 +487,24 @@ class TestCase(TestCaseBase):
     def graph_data(self):
         return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.balgraph.data]
     
+    def notify_first(self, listener, broadcaster):
+        """Changes `broadcaster` listeners to make sure `listener` is notified first.
+        
+        Sometimes, we have to re-create situations where a listener is notified of an event before
+        another. The Broadcaster doesn't guarantee any order. Therefore, to perform such test we
+        have to fiddle with the broadcaster's listener collection, which is what we do here.
+        """
+        class MySet(set):
+            notify_first = listener
+            def __iter__(self):
+                yield self.notify_first
+                for item in set.__iter__(self):
+                    if item is not self.notify_first:
+                        yield item
+        
+        assert listener in broadcaster.listeners
+        broadcaster.listeners = MySet(broadcaster.listeners)
+    
     def nw_graph_data(self):
         return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.nwgraph.data]
     

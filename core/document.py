@@ -1114,11 +1114,11 @@ class Document(Broadcaster, Listener):
     def undo(self):
         self.stop_edition()
         self._undoer.undo()
-        if self.selected_account is not None and self.selected_account not in self.accounts:
-            self._selected_account = None
-        if self.shown_account is not None and self.shown_account not in self.accounts:
-            self._shown_account = None
         self._cook()
+        if self.selected_account is not None and self.selected_account not in self.accounts:
+            self.select_account(None)
+        if self.shown_account is not None and self.shown_account not in self.accounts:
+            self.show_account(None)
         self.notify('performed_undo_or_redo')
     
     def can_redo(self):
@@ -1130,11 +1130,11 @@ class Document(Broadcaster, Listener):
     def redo(self):
         self.stop_edition()
         self._undoer.redo()
-        if self.selected_account is not None and self.selected_account not in self.accounts:
-            self._selected_account = None
-        if self.shown_account is not None and self.shown_account not in self.accounts:
-            self._shown_account = None
         self._cook()
+        if self.selected_account is not None and self.selected_account not in self.accounts:
+            self.select_account(None)
+        if self.shown_account is not None and self.shown_account not in self.accounts:
+            self.show_account(None)
         self.notify('performed_undo_or_redo')
     
     #--- Misc

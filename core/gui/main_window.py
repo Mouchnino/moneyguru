@@ -193,7 +193,10 @@ class MainWindow(DocumentGUIObject):
     account_deleted = _undo_stack_changed
     
     def account_must_be_shown(self):
-        self.select_entry_table()
+        if self.document.shown_account is not None:
+            self.select_entry_table()
+        elif self._current_view is self.aview:
+            self.select_balance_sheet()
     
     def account_needs_reassignment(self):
         self.view.show_account_reassign_panel()
@@ -217,15 +220,16 @@ class MainWindow(DocumentGUIObject):
             else:
                 self.view.animate_date_range_backward()
     
+    def document_changed(self):
+        if self.document.shown_account is None and self._current_view is self.aview:
+            self.select_balance_sheet()
+        self._undo_stack_changed()
+    
     def filter_applied(self):
         if self.document.filter_string and self._current_view not in (self.tview, self.aview):
             self.show_transaction_table()
     
-    def performed_undo_or_redo(self):
-        if self.document.shown_account is None and self._current_view is self.aview:
-            self.select_balance_sheet()
-        self._undo_stack_changed()
-    document_changed = performed_undo_or_redo
+    performed_undo_or_redo = _undo_stack_changed
     
     def reconciliation_changed(self):
         self.view.refresh_reconciliation_button()

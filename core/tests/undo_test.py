@@ -96,6 +96,15 @@ class Pristine(TestCase):
         self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
         self.iwin.import_selected_pane()
     
+    def test_undo_shown_account(self):
+        # Undoing the creation of a new account when shown sets makes the main window go back to
+        # the net worth sheet *before* triggering a refresh (otherwise, we crash).
+        self.mainwindow.select_income_statement()
+        self.mainwindow.new_item()
+        self.mainwindow.show_account()
+        self.notify_first(self.bargraph, self.document)
+        self.document.undo() # no crash
+    
 
 class OneNamedAccount(TestCase):
     def setUp(self):

@@ -67,7 +67,8 @@ class AccountView(BaseView):
     #--- Event Handlers
     def account_must_be_shown(self):
         self.disconnect()
-        self.connect()
+        if self.document.shown_account is not None:
+            self.connect()
     
     def transaction_changed(self):
         self.view.refresh_totals()
