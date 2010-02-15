@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGMassEditionPanel.h"
 #import "MGDateFieldEditor.h"
-#import "MGUtils.h"
 
 @implementation MGMassEditionPanel
 - (id)initWithDocument:(MGDocument *)aDocument

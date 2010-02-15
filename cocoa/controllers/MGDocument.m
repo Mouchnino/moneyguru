@@ -12,7 +12,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import "Dialogs.h"
 #import "MGUndoManager.h"
-#import "MGUtils.h"
 #import "MGRecurrenceScopeDialog.h"
 #import "MGAppDelegate.h"
 #import "MGPrintView.h"
@@ -23,7 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super init];
     MGAppDelegate *app = [NSApp delegate];
-    Class pyClass = [MGUtils classNamed:@"PyDocument"];
+    Class pyClass = [Utils classNamed:@"PyDocument"];
     py = [[pyClass alloc] initWithCocoa:self pyParent:[app py]];
     [self setUndoManager:[[[MGUndoManager alloc] initWithPy:[self py]] autorelease]];
     [self registerDefaults]; // register new file defaults

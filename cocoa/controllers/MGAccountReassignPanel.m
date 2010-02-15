@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGAccountReassignPanel.h"
 #import "Utils.h"
-#import "MGUtils.h"
 
 @implementation MGAccountReassignPanel
 - (id)initWithDocument:(MGDocument *)aDocument

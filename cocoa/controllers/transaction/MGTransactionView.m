@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGTransactionView.h"
 #import "MGTransactionPrint.h"
-#import "MGUtils.h"
+#import "Utils.h"
 
 @implementation MGTransactionView
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
     transactionTable = [[MGTransactionTable alloc] initWithDocument:aDocument view:tableView];
     filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:NO];
     NSArray *children = [NSArray arrayWithObjects:[transactionTable py], [filterBar py], nil];
-    Class pyClass = [MGUtils classNamed:@"PyTransactionView"];
+    Class pyClass = [Utils classNamed:@"PyTransactionView"];
     py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
     return self;
 }

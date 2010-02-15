@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGBarGraphView.h"
-#import "MGUtils.h"
 
 @implementation MGBarGraphView
 - (void)drawGraph

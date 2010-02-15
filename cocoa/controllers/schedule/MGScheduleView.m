@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGScheduleView.h"
 #import "MGSchedulePrint.h"
-#import "MGUtils.h"
+#import "Utils.h"
 
 @implementation MGScheduleView
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/hs_license
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
     scheduleTable = [[MGScheduleTable alloc] initWithDocument:aDocument view:tableView];
     NSArray *children = [NSArray arrayWithObjects:[scheduleTable py], nil];
-    Class pyClass = [MGUtils classNamed:@"PyScheduleView"];
+    Class pyClass = [Utils classNamed:@"PyScheduleView"];
     py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
     return self;
 }

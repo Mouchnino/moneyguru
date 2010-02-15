@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGAppDelegate.h"
 #import "MGDocument.h"
 #import "MGConst.h"
-#import "MGUtils.h"
+#import "Utils.h"
 #import "RegistrationInterface.h"
 #import "Utils.h"
 #import "Dialogs.h"
@@ -62,7 +62,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)awakeFromNib
 {
-    Class pyClass = [MGUtils classNamed:@"PyMoneyGuruApp"];
+    Class pyClass = [Utils classNamed:@"PyMoneyGuruApp"];
     py = [[pyClass alloc] initWithCocoa:self];
     viewOptionsWindow = [[NSWindowController alloc] initWithWindowNibName:@"ViewOptions"];
     // Some weird bug showed up, and the first document instance (which get access to MGAppDelegate)

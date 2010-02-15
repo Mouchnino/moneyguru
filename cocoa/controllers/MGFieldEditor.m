@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGFieldEditor.h"
 #import "Utils.h"
-#import "MGUtils.h"
 
 @implementation MGFieldEditor
 - (id)init

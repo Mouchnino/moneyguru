@@ -7,14 +7,14 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGPrintView.h"
-#import "MGUtils.h"
+#import "Utils.h"
 #import "MGConst.h"
 
 @implementation MGPrintView
 - (id)initWithPyParent:(id)pyParent
 {
     self = [super initWithFrame:NSZeroRect];
-    Class pyClass = [MGUtils classNamed:[[self class] pyClassName]];
+    Class pyClass = [Utils classNamed:[[self class] pyClassName]];
     py = [[pyClass alloc] initWithPyParent:pyParent];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     fontSize = [ud integerForKey:TableFontSize];

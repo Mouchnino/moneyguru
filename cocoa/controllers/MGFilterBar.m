@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGFilterBar.h"
-#import "MGUtils.h"
 #import "AMButtonBarItem.h"
 
 #define MGALL @"all"

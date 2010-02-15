@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGAccountProperties.h"
 #import "MGConst.h"
-#import "MGUtils.h"
 
 @implementation MGAccountProperties
 - (id)initWithDocument:(MGDocument *)aDocument

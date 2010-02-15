@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGLineGraphView.h"
-#import "MGUtils.h"
 #import "Utils.h"
 
 @implementation MGLineGraphView

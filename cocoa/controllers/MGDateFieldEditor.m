@@ -8,13 +8,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGDateFieldEditor.h"
 #import "Utils.h"
-#import "MGUtils.h"
 
 @implementation MGDateFieldEditor
 - (id)init
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
-    Class pyClass = [MGUtils classNamed:@"PyDateWidget"];
+    Class pyClass = [Utils classNamed:@"PyDateWidget"];
     py = [[pyClass alloc] init];
     [self setEditable:YES];
     [self setFieldEditor:YES];

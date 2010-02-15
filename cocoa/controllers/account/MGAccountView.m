@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGAccountView.h"
 #import "MGConst.h"
 #import "MGEntryPrint.h"
-#import "MGUtils.h"
+#import "Utils.h"
 
 @implementation MGAccountView
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -29,7 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *children = [NSArray arrayWithObjects:[entryTable py], [balanceGraph py], [barGraph py],
         [filterBar py], nil];
-    Class pyClass = [MGUtils classNamed:@"PyAccountView"];
+    Class pyClass = [Utils classNamed:@"PyAccountView"];
     py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
     
     [self updateVisibility];

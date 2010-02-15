@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGCustomDateRangePanel.h"
 #import "Utils.h"
 #import "MGDateFieldEditor.h"
-#import "MGUtils.h"
 
 @implementation MGCustomDateRangePanel
 - (id)initWithDocument:(MGDocument *)aDocument

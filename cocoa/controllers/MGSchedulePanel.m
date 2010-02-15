@@ -10,7 +10,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
-#import "MGUtils.h"
 
 @implementation MGSchedulePanel
 - (id)initWithDocument:(MGDocument *)aDocument

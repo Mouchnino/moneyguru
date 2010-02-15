@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGMainWindow.h"
 #import "Utils.h"
 #import "MGConst.h"
-#import "MGUtils.h"
 #import "NSEventAdditions.h"
 
 @implementation MGMainWindow
@@ -53,7 +52,7 @@ http://www.hardcoded.net/licenses/hs_license
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
         [budgetPanel py], nil];
-    Class PyMainWindow = [MGUtils classNamed:@"PyMainWindow"];
+    Class PyMainWindow = [Utils classNamed:@"PyMainWindow"];
     py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];
     [py connect];
     [searchField connect];

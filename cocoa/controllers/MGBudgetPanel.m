@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGBudgetPanel.h"
 #import "MGDateFieldEditor.h"
-#import "MGUtils.h"
 
 @implementation MGBudgetPanel
 - (id)initWithDocument:(MGDocument *)aDocument

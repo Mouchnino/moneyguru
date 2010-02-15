@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGImportWindow.h"
-#import "MGUtils.h"
 #import "PSMTabBarCell.h"
 
 @implementation MGImportWindow

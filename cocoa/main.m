@@ -7,8 +7,12 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "Utils.h"
 
 int main(int argc, char *argv[])
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [Utils setPluginName:@"mg_cocoa"];
+    [pool release];
     return NSApplicationMain(argc,  (const char **) argv);
 }
