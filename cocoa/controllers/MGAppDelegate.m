@@ -11,7 +11,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 #import "Utils.h"
 #import "RegistrationInterface.h"
-#import "Utils.h"
 #import "Dialogs.h"
 #import "ValueTransformers.h"
 #import <Sparkle/SUUpdater.h>
