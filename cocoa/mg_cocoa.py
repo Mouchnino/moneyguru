@@ -8,7 +8,7 @@
 import logging
 
 from hsutil.cocoa import install_exception_hook, pythonify
-from hsutil.cocoa.inter import signature, PyGUIObject, PyOutline as PyOutlineBase, PyRegistrable
+from hsutil.cocoa.inter import signature, PyGUIObject, PyOutline, PyRegistrable
 from hsutil.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
@@ -404,12 +404,6 @@ class PyTableWithDate(PyTable):
         return self.py.edited.is_date_in_past()
     
 
-class PyOutline(PyOutlineBase):
-    #--- Python --> Cocoa
-    def show_message(self, msg):
-        self.cocoa.showMessage_(msg)
-    
-
 class PyChart(PyListener):
     def data(self):
         return self.py.data
@@ -485,6 +479,10 @@ class PyReport(PyOutline):
         
     def collapsePath_(self, path):
         self.py.collapse_node(self.py.get_node(path))
+    
+    #--- Python --> Cocoa
+    def show_message(self, msg):
+        self.cocoa.showMessage_(msg)
     
 
 class PyPanel(PyCompletion):
