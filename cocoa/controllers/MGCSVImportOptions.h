@@ -7,11 +7,11 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGWindowController.h"
+#import "HSWindowController.h"
 #import "MGDocument.h"
 #import "PyCSVImportOptions.h"
 
-@interface MGCSVImportOptions : MGWindowController
+@interface MGCSVImportOptions : HSWindowController
 {
     IBOutlet NSTableView *csvDataTable;
     IBOutlet NSMenu *columnMenu;

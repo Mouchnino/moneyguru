@@ -12,7 +12,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTextField.h"
 #import "MGTableView.h"
 #import "MGSplitTable.h"
-#import "MGWindowController.h"
 #import "PySchedulePanel.h"
 
 @interface MGSchedulePanel : MGPanel {

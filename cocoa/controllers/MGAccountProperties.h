@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
 #import "MGDocument.h"
-#import "MGWindowController.h"
 #import "PyAccountPanel.h"
 
 @interface MGAccountProperties : MGPanel {

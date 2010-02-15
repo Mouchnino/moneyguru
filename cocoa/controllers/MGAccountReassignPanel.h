@@ -8,10 +8,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGDocument.h"
-#import "MGWindowController.h"
+#import "HSWindowController.h"
 #import "PyAccountReassignPanel.h"
 
-@interface MGAccountReassignPanel : MGWindowController {
+@interface MGAccountReassignPanel : HSWindowController {
     IBOutlet NSPopUpButton *accountSelector;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;

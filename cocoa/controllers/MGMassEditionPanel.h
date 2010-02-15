@@ -10,7 +10,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPanel.h"
 #import "MGDocument.h"
 #import "MGTextField.h"
-#import "MGWindowController.h"
 #import "PyMassEditionPanel.h"
 
 @interface MGMassEditionPanel : MGPanel {

@@ -8,10 +8,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGDocument.h"
-#import "MGWindowController.h"
+#import "HSWindowController.h"
 #import "PyPanel.h"
 
-@interface MGPanel : MGWindowController {
+@interface MGPanel : HSWindowController {
     NSWindow *parentWindow;
 }
 - (id)initWithNibName:aNibName pyClassName:aClassName document:aDocument;

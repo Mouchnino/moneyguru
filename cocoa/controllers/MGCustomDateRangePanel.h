@@ -9,10 +9,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGDocument.h"
 #import "MGTextField.h"
-#import "MGWindowController.h"
+#import "HSWindowController.h"
 #import "PyCustomDateRangePanel.h"
 
-@interface MGCustomDateRangePanel : MGWindowController {
+@interface MGCustomDateRangePanel : HSWindowController {
     IBOutlet MGTextField *startDateField;
     IBOutlet MGTextField *endDateField;
     
