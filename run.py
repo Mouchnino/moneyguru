@@ -18,6 +18,7 @@ from hsutil.build import add_to_pythonpath
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
+    dev = conf['dev']
     print "Running moneyGuru with UI {0}".format(ui)
     if ui == 'cocoa':
         subfolder = 'dev' if dev else 'release'
