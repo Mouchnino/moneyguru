@@ -49,6 +49,7 @@
 		CE2F0BF511295E1A00F6FB55 /* NSIndexPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BF111295E1A00F6FB55 /* NSIndexPathAdditions.m */; };
 		CE2F0BF611295E1A00F6FB55 /* NSTableViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BF311295E1A00F6FB55 /* NSTableViewAdditions.m */; };
 		CE2F0C081129606D00F6FB55 /* HSOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0C071129606D00F6FB55 /* HSOutline.m */; };
+		CE2F0C20112965C600F6FB55 /* NSEventAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0C1F112965C600F6FB55 /* NSEventAdditions.m */; };
 		CE3040DA0F86094400884424 /* MGEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D70F86094400884424 /* MGEntryPrint.m */; };
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
@@ -99,7 +100,6 @@
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
 		CE873AC90E21622F004F63E9 /* MGTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAA0E21622F004F63E9 /* MGTextField.m */; };
 		CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */; };
-		CE873ACC0E21622F004F63E9 /* NSEventAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AB00E21622F004F63E9 /* NSEventAdditions.m */; };
 		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
 		CE95AFCB10F769D2007AC512 /* MGAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AFCA10F769D2007AC512 /* MGAccountView.m */; };
 		CE98C6A90E6294A900DEE6BA /* NSCellAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */; };
@@ -293,6 +293,8 @@
 		CE2F0BF311295E1A00F6FB55 /* NSTableViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewAdditions.m; sourceTree = "<group>"; };
 		CE2F0C061129606D00F6FB55 /* HSOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSOutline.h; sourceTree = "<group>"; };
 		CE2F0C071129606D00F6FB55 /* HSOutline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSOutline.m; sourceTree = "<group>"; };
+		CE2F0C1E112965C600F6FB55 /* NSEventAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSEventAdditions.h; path = ../cocoalib/NSEventAdditions.h; sourceTree = "<group>"; };
+		CE2F0C1F112965C600F6FB55 /* NSEventAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSEventAdditions.m; path = ../cocoalib/NSEventAdditions.m; sourceTree = "<group>"; };
 		CE3040D60F86094400884424 /* MGEntryPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGEntryPrint.h; path = print/MGEntryPrint.h; sourceTree = "<group>"; };
 		CE3040D70F86094400884424 /* MGEntryPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGEntryPrint.m; path = print/MGEntryPrint.m; sourceTree = "<group>"; };
 		CE3040D80F86094400884424 /* MGTransactionPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTransactionPrint.h; path = print/MGTransactionPrint.h; sourceTree = "<group>"; };
@@ -398,8 +400,6 @@
 		CE873AAA0E21622F004F63E9 /* MGTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTextField.m; sourceTree = "<group>"; };
 		CE873AAD0E21622F004F63E9 /* MGTransparentButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransparentButtonCell.h; sourceTree = "<group>"; };
 		CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransparentButtonCell.m; sourceTree = "<group>"; };
-		CE873AAF0E21622F004F63E9 /* NSEventAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEventAdditions.h; sourceTree = "<group>"; };
-		CE873AB00E21622F004F63E9 /* NSEventAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEventAdditions.m; sourceTree = "<group>"; };
 		CE8CD7AC1042E340004B30E0 /* budget_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_16.png; sourceTree = "<group>"; };
 		CE95AFC910F769D2007AC512 /* MGAccountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAccountView.h; sourceTree = "<group>"; };
 		CE95AFCA10F769D2007AC512 /* MGAccountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountView.m; sourceTree = "<group>"; };
@@ -699,6 +699,8 @@
 				CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */,
 				CE6D380A0F93648E00FA8460 /* HSTableColumnManager.h */,
 				CE6D380B0F93648E00FA8460 /* HSTableColumnManager.m */,
+				CE2F0C1E112965C600F6FB55 /* NSEventAdditions.h */,
+				CE2F0C1F112965C600F6FB55 /* NSEventAdditions.m */,
 				CEC6593E0FC9354A0045E4C8 /* PyRegistrable.h */,
 				CE6D380C0F93648E00FA8460 /* RegistrationInterface.h */,
 				CE6D380D0F93648E00FA8460 /* RegistrationInterface.m */,
@@ -922,8 +924,6 @@
 				07D99F250E37D5A70009142B /* MGTextFieldCell.m */,
 				CE873AAD0E21622F004F63E9 /* MGTransparentButtonCell.h */,
 				CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */,
-				CE873AAF0E21622F004F63E9 /* NSEventAdditions.h */,
-				CE873AB00E21622F004F63E9 /* NSEventAdditions.m */,
 			);
 			path = support;
 			sourceTree = "<group>";
@@ -1301,7 +1301,6 @@
 				CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */,
 				CE873AC90E21622F004F63E9 /* MGTextField.m in Sources */,
 				CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */,
-				CE873ACC0E21622F004F63E9 /* NSEventAdditions.m in Sources */,
 				0714240E0E2A797800AC27AC /* MGBarGraphView.m in Sources */,
 				0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */,
 				071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */,
@@ -1391,6 +1390,7 @@
 				CE2F0BF511295E1A00F6FB55 /* NSIndexPathAdditions.m in Sources */,
 				CE2F0BF611295E1A00F6FB55 /* NSTableViewAdditions.m in Sources */,
 				CE2F0C081129606D00F6FB55 /* HSOutline.m in Sources */,
+				CE2F0C20112965C600F6FB55 /* NSEventAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
