@@ -167,6 +167,7 @@
 		CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */; };
 		CEBA331011294D2B009C782F /* registration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330D11294D2B009C782F /* registration.xib */; };
 		CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA331911294DE5009C782F /* HSGUIController.m */; };
+		CEBA332511294E55009C782F /* HSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA332411294E55009C782F /* HSWindowController.m */; };
 		CEBB2FFD10F76BD100FC4C7A /* MGBudgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB2FFC10F76BD100FC4C7A /* MGBudgetView.m */; };
 		CEBB300510F76E3600FC4C7A /* MGScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB300410F76E3600FC4C7A /* MGScheduleView.m */; };
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
@@ -499,6 +500,8 @@
 		CEBA330D11294D2B009C782F /* registration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = registration.xib; sourceTree = "<group>"; };
 		CEBA331811294DE5009C782F /* HSGUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSGUIController.h; sourceTree = "<group>"; };
 		CEBA331911294DE5009C782F /* HSGUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSGUIController.m; sourceTree = "<group>"; };
+		CEBA332311294E55009C782F /* HSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSWindowController.h; sourceTree = "<group>"; };
+		CEBA332411294E55009C782F /* HSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSWindowController.m; sourceTree = "<group>"; };
 		CEBB2FFB10F76BD100FC4C7A /* MGBudgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBudgetView.h; sourceTree = "<group>"; };
 		CEBB2FFC10F76BD100FC4C7A /* MGBudgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBudgetView.m; sourceTree = "<group>"; };
 		CEBB300310F76E3600FC4C7A /* MGScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScheduleView.h; sourceTree = "<group>"; };
@@ -1052,6 +1055,8 @@
 		CEBA331711294DE5009C782F /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CEBA332311294E55009C782F /* HSWindowController.h */,
+				CEBA332411294E55009C782F /* HSWindowController.m */,
 				CEBA331811294DE5009C782F /* HSGUIController.h */,
 				CEBA331911294DE5009C782F /* HSGUIController.m */,
 			);
@@ -1388,6 +1393,7 @@
 				CEA6DE9B1101E6970028E125 /* PSMTabDragAssistant.m in Sources */,
 				CEA6DE9C1101E6970028E125 /* PSMUnifiedTabStyle.m in Sources */,
 				CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */,
+				CEBA332511294E55009C782F /* HSWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
