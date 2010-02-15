@@ -6,9 +6,11 @@
 
 from __future__ import unicode_literals
 
+from hsgui import tree
+from hsutil.misc import first
+
 from ..exception import DuplicateAccountNameError
 from .base import DocumentGUIObject
-from . import tree
 
 # used in both bsheet and istatement
 def get_delta_perc(delta_amount, start_amount):
@@ -24,6 +26,12 @@ class Report(DocumentGUIObject, tree.Tree):
         self.edited = None
     
     #--- Override
+    def _select_nodes(self, nodes):
+        tree.Tree._select_nodes(self, nodes)
+        node = first(nodes)
+        account = node.account if isinstance(node, Node) and node.is_account else None
+        self.document.select_account(account)
+    
     def connect(self):
         DocumentGUIObject.connect(self)
         self.refresh()
@@ -285,15 +293,7 @@ class Report(DocumentGUIObject, tree.Tree):
     def can_show_selected_account(self):
         return self.document.selected_account is not None
     
-    @property
-    def selected(self):
-        return self._selected
-    
-    @selected.setter
-    def selected(self, node):
-        self._selected = node
-        account = node.account if isinstance(node, Node) and node.is_account else None
-        self.document.select_account(account)
+    selected = tree.Tree.selected_node
     
 
 class Node(tree.Node):
