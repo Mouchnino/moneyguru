@@ -68,6 +68,7 @@ http://www.hardcoded.net/licenses/hs_license
    }
    NSString *key = [NSString stringWithFormat:@"%@.ExpandedItems",autosaveName];
    [document setDefault:expandedPaths forKey:key];
+   [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 /* Public */
