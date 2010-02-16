@@ -82,13 +82,9 @@ http://www.hardcoded.net/licenses/hs_license
     // Figure out the page count
     pageCount = 1;
     CGFloat bottomY = headerHeight;
-    NSEnumerator *e = [rowHeights objectEnumerator];
-    NSNumber *n;
-    while (n = [e nextObject])
-    {
+    for (NSNumber *n in rowHeights) {
         CGFloat h = n2f(n);
-        if (h + bottomY > pageHeight)
-        {
+        if (h + bottomY > pageHeight) {
             pageCount++;
             bottomY = headerHeight;
         }
@@ -107,7 +103,7 @@ http://www.hardcoded.net/licenses/hs_license
     {
         NSTableColumn *c = [visibleColumns objectAtIndex:i];
         NSString *headerTitle = [[c headerCell] stringValue];
-        CGFloat maxWidth = [headerTitle sizeWithAttributes:headerAttributes].width;
+        CGFloat maxWidth = [headerTitle sizeWithAttributes:headerAttributes].width + (CELL_PADDING*2);
         CGFloat totalWidth = 0;
         for (NSInteger j=0; j<rowCount; j++)
         {
