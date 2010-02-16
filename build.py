@@ -43,7 +43,7 @@ def main():
             shutil.rmtree('build')
         os.mkdir('build')
         if not dev:
-            copy_packages(['core', 'hsutil'], 'build')
+            copy_packages(['core', 'hsutil', 'hsgui'], 'build')
         shutil.copy('cocoa/mg_cocoa.py', 'build')
         os.chdir('build')
         script_args = ['py2app', '-A'] if dev else ['py2app']
