@@ -124,8 +124,9 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             return
         selectedIndex = selectedRows[0]
         editableIndex = self._firstEditableIndex(selectedIndex)
-        self.setCurrentIndex(editableIndex)
-        self.edit(editableIndex)
+        if editableIndex is not None:
+            self.setCurrentIndex(editableIndex)
+            self.edit(editableIndex)
     
 
 class TableView(QTableView, ItemViewMixIn):
