@@ -60,7 +60,7 @@ class Oven(object):
         balance_with_budget += converted_amount
         if not isinstance(split.transaction, BudgetSpawn):
             balance += converted_amount
-            if split.reconciled or split.reconciliation_pending:
+            if split.reconciled:
                 reconciled_balance += split.amount
         account.add_entry(Entry(split, amount, balance, reconciled_balance, balance_with_budget))
     

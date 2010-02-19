@@ -381,23 +381,6 @@ class TwoEntriesInTwoAccounts(TestCase):
         self.tpanel.load()
         eq_(self.tpanel.description, 'second')
     
-class TwoEntriesInReconciliationMode(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry(increase='1')
-        self.add_entry(increase='2')
-        self.document.toggle_reconciliation_mode()
-        self.clear_gui_calls()
-        self.etable[0].toggle_reconciled()
-        
-    def test_reconciled(self):
-        # An entry is not reconciled until reonciliation mode goes off.
-        assert not self.etable[0].reconciled
-        self.document.toggle_reconciliation_mode()
-        assert self.etable[0].reconciled
-    
 
 class TwoEntriesInReconciliationModeOneReconciled(TestCase):
     #Two entries with committed reconciliation.
@@ -409,32 +392,27 @@ class TwoEntriesInReconciliationModeOneReconciled(TestCase):
         self.add_entry(increase='2')
         self.document.toggle_reconciliation_mode()
         self.etable[0].toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit reconciliation
-        self.document.toggle_reconciliation_mode()
     
     def test_reconciled(self):
         # The first entry has been reconciled and its pending status is the same as its reconciled
         # status.
         assert self.etable[0].reconciled
-        assert self.etable[0].reconciliation_pending
     
     def test_toggle_both(self):
-        # reconciled entries count as 'pending' when comes the time to determine the new value.
+        # When reconciling two entries at once, as soon as one of the entries is not reconciled, the
+        # new value is True
         self.etable.select([0, 1])
-        self.etable.toggle_reconciled() # we put the 2nd entry as "pending"
+        self.etable.toggle_reconciled()
         assert self.etable[0].reconciled # haven't been touched
-        assert self.etable[0].reconciliation_pending # haven't been touched
-        assert self.etable[1].reconciliation_pending
+        assert self.etable[1].reconciled
     
     def test_toggle_both_twice(self):
         # reconciled entries can be unreconciled through toggle_reconciled().
         self.etable.select([0, 1])
         self.etable.toggle_reconciled()
         self.etable.toggle_reconciled() # now, both entries are unreconciled
-        # We haven't committed reconciliation yet so we're still reconciled
-        assert self.etable[0].reconciled
-        assert not self.etable[0].reconciliation_pending
-        assert not self.etable[1].reconciliation_pending
+        assert not self.etable[0].reconciled
+        assert not self.etable[1].reconciled
     
 
 class TwoEntriesTwoCurrencies(TestCase):
@@ -456,8 +434,8 @@ class TwoEntriesTwoCurrencies(TestCase):
         self.document.toggle_reconciliation_mode()
         self.etable.select([0, 1])
         self.etable.toggle_reconciled()
-        assert self.etable[0].reconciliation_pending
-        assert not self.etable[1].reconciliation_pending
+        assert self.etable[0].reconciled
+        assert not self.etable[1].reconciled
     
 
 class ThreeEntriesDifferentDate(TestCase):

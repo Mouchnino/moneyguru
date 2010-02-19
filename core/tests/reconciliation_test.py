@@ -45,7 +45,6 @@ class OneEntry(TestCase, CommonSetup):
     
     def test_initial_attrs(self):
         # initially, an entry is not reconciled
-        assert not self.etable[0].reconciliation_pending
         assert not self.etable[0].reconciled
         eq_(self.etable[0].reconciliation_date, '')
     
@@ -59,7 +58,6 @@ class OneEntry(TestCase, CommonSetup):
     def test_toggle_entries_reconciled(self):
         # When reconciliation mode is off, doesn't do anything.
         self.etable.toggle_reconciled()
-        assert not self.etable[0].reconciliation_pending
         assert not self.etable[0].reconciled
     
 
@@ -104,10 +102,10 @@ class OneEntryInReconciliationMode(TestCase):
         eq_(self.etable[0].balance, '-42.00')
     
     def test_toggle_reconciled(self):
-        # calling toggle_reconciled() on a row toggles reconciliation_pending and shows a
-        # reconciliation balance.
+        # calling toggle_reconciled() on a row toggles reconciliation and shows a reconciliation
+        # balance.
         self.etable.selected_row.toggle_reconciled()
-        assert self.etable[0].reconciliation_pending
+        assert self.etable[0].reconciled
         eq_(self.etable[0].balance, '-42.00')
     
     def test_toggle_entries_reconciled_sets_dirty_flag(self):
@@ -160,14 +158,6 @@ class OneEntryReconciledDifferentDate(TestCase):
         self.etable[0].reconciliation_date = '12/07/2008'
         self.etable.save_edits()
     
-    def test_dereconcile_entry(self):
-        # Setting reconciliation_pending to False and then committing de-reconciles an entry.
-        self.document.toggle_reconciliation_mode()
-        self.etable.select([0])
-        self.etable[0].toggle_reconciled()
-        self.document.toggle_reconciliation_mode()
-        assert not self.etable[0].reconciled
-    
     def test_save_and_load(self):
         # reconciliation date is correctly saved and loaded
         self.document = self.save_and_load()
@@ -208,22 +198,22 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
         # When none of the selected entries are reconciled, all selected entries get reconciled.
         self.etable.select([0, 2])
         self.etable.toggle_reconciled()
-        assert self.etable[0].reconciliation_pending
-        assert self.etable[2].reconciliation_pending
+        assert self.etable[0].reconciled
+        assert self.etable[2].reconciled
     
     def test_toggle_entries_reconciled_with_all_reconciled(self):
         # When all of the selected entries are reconciled, all selected entries get de-reconciled
         self.etable.select([0, 2])
         self.etable.toggle_reconciled() # Both reconciled now
         self.etable.toggle_reconciled()
-        assert not self.etable[0].reconciliation_pending
-        assert not self.etable[2].reconciliation_pending
+        assert not self.etable[0].reconciled
+        assert not self.etable[2].reconciled
     
     def test_toggle_entries_reconciled_with_some_reconciled(self):
         # When some of the selected entries are reconciled, all selected entries get reconciled
         self.etable.select([0, 1, 2]) # entry at index 1 is pending reconciliation
         self.etable.toggle_reconciled()
-        assert self.etable[0].reconciliation_pending
-        assert self.etable[1].reconciliation_pending
-        assert self.etable[2].reconciliation_pending
+        assert self.etable[0].reconciled
+        assert self.etable[1].reconciled
+        assert self.etable[2].reconciled
     

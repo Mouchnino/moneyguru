@@ -178,26 +178,6 @@ class Document(Broadcaster, Listener):
         self._undoer.clear()
         self._cook()
     
-    def _commit_reconciliation(self):
-        # process pending reconciliation
-        splits = flatten(t.splits for t in self.oven.transactions)
-        splits = [split for split in splits if split.reconciliation_pending is not None]
-        spawns, splits = extract(lambda s: isinstance(s.transaction, Spawn), splits)
-        for split in splits:
-            if split.reconciliation_pending:
-                split.reconciliation_date = split.transaction.date
-            else:
-                split.reconciliation_date = None
-            split.reconciliation_pending = None
-        spawns = set(s for s in spawns if s.reconciliation_pending)
-        for spawn in spawns:
-            #XXX update transaction selection
-            spawn.reconciliation_date = split.transaction.date
-            spawn.transaction.recurrence.delete(spawn.transaction)
-            self.transactions.add(spawn.transaction.replicate())
-        if spawns:
-            self._cook(from_date=min(spawn.transaction.date for spawn in spawns))
-    
     def _cook(self, from_date=None):
         self.oven.cook(from_date=from_date, until_date=self.date_range.end)
         self._visible_transactions = None
@@ -669,16 +649,26 @@ class Document(Broadcaster, Listener):
         """
         if not self._in_reconciliation_mode:
             return
-        all_reconciled = not entries or all(entry.reconciliation_pending for entry in entries)
-        newvalue = not all_reconciled        
+        all_reconciled = not entries or all(entry.reconciled for entry in entries)
+        newvalue = not all_reconciled
         action = Action('Change reconciliation')
         action.change_splits([e.split for e in entries])
         self._undoer.record(action)
         
-        min_date = datetime.date.max
-        for entry in entries:
-            entry.split.reconciliation_pending = newvalue
-            min_date = min(min_date, entry.date)
+        min_date = min(entry.date for entry in entries)
+        splits = [entry.split for entry in entries]
+        spawns, splits = extract(lambda s: isinstance(s.transaction, Spawn), splits)
+        if newvalue:
+            for split in splits:
+                split.reconciliation_date = split.transaction.date
+            for spawn in spawns:
+                #XXX update transaction selection
+                spawn.reconciliation_date = spawn.transaction.date
+                spawn.transaction.recurrence.delete(spawn.transaction)
+                self.transactions.add(spawn.transaction.replicate())
+        else:
+            for split in splits:
+                split.reconciliation_date = None
         self._cook(from_date=min_date)
         self.notify('transaction_changed')
     
@@ -950,8 +940,6 @@ class Document(Broadcaster, Listener):
         # change in the save state.
         if not autosave:
             self.stop_edition()
-            self._commit_reconciliation()
-            self.notify('reconciliation_changed')
         save_native(filename, self.accounts, self.groups, self.transactions, self.schedules,
             self.budgets)
         if not autosave:
@@ -1146,8 +1134,6 @@ class Document(Broadcaster, Listener):
         return self._in_reconciliation_mode
     
     def toggle_reconciliation_mode(self):
-        if self._in_reconciliation_mode:
-            self._commit_reconciliation()
         self._in_reconciliation_mode = not self._in_reconciliation_mode
         self.notify('reconciliation_changed')
     

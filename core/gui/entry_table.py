@@ -160,7 +160,6 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         self._reconciled_balance = 0
         self._reconciled = False
         self._reconciliation_date = None
-        self._reconciliation_pending = False
         self._recurrent = False
         self._is_budget = False
     
@@ -248,10 +247,6 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
             return ''
     
     @property
-    def reconciliation_pending(self):
-        return self._reconciliation_pending
-    
-    @property
     def recurrent(self):
         return self._recurrent
     
@@ -316,10 +311,9 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self._amount = entry.amount
         self._transfer = ', '.join(s.combined_display for s in entry.transfer)
         self._balance = entry.balance_with_budget
-        self._reconciled_balance = entry.reconciled_balance if entry.reconciled or entry.reconciliation_pending else None
+        self._reconciled_balance = entry.reconciled_balance if entry.reconciled else None
         self._reconciled = entry.reconciled
         self._reconciliation_date = entry.reconciliation_date
-        self._reconciliation_pending = entry.reconciliation_pending
         self._recurrent = isinstance(entry.transaction, Spawn)
         self._is_budget = getattr(entry.transaction, 'is_budget', False)
     
@@ -386,5 +380,4 @@ class PreviousBalanceRow(BaseEntryTableRow):
         self._reconciled_balance = reconciled_balance
         self._description = 'Previous Balance'
         self._reconciled = False
-        self._reconciliation_pending = False
     

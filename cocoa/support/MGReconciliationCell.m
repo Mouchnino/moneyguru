@@ -20,20 +20,19 @@ http://www.hardcoded.net/licenses/hs_license
         i = [NSImage imageNamed:@"backward_32"];
     else if (canReconcile)
         [super drawInteriorWithFrame:cellFrame inView:controlView];
-    else if (reconciled)
+    else if ([self integerValue])
         i = [NSImage imageNamed:@"check_16"];
     else if (isBudget)
         i = [NSImage imageNamed:@"budget_16"];
     else if (recurrent)
         i = [NSImage imageNamed:@"recurrent_16"];
     
-    if (i != nil)
-    {
+    if (i != nil) {
         CGFloat rectSize = MIN(cellFrame.size.width, cellFrame.size.height);
         NSRect drawRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, rectSize, rectSize);
         [i setFlipped:YES];
         [i drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-    }    
+    }
 }
 /* Public */
 
@@ -45,7 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)setReconciled:(BOOL)aReconciled
 {
-    reconciled = aReconciled;
+    [self setIntegerValue:aReconciled ? 1 : 0];
 }
 
 - (void)setRecurrent:(BOOL)aRecurrent
@@ -56,11 +55,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setIsBudget:(BOOL)aIsBudget
 {
     isBudget = aIsBudget;
-}
-
-- (void)setReconciliationPending:(BOOL)aReconciliationPending
-{
-    [self setIntValue:aReconciliationPending ? 1 : 0];
 }
 
 - (void)setIsInFuture:(BOOL)aIsInFuture

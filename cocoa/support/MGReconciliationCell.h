@@ -11,7 +11,6 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGReconciliationCell : NSButtonCell 
 {
     BOOL canReconcile;
-    BOOL reconciled;
     BOOL recurrent;
     BOOL isBudget;
     BOOL isInFuture;
@@ -20,7 +19,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)setCanReconcile:(BOOL)aCanReconcile;
 - (void)setReconciled:(BOOL)aReconciled;
-- (void)setReconciliationPending:(BOOL)aReconciliationPending;
 - (void)setRecurrent:(BOOL)aRecurrent;
 - (void)setIsBudget:(BOOL)aIsBudget;
 - (void)setIsInFuture:(BOOL)aIsInFuture;

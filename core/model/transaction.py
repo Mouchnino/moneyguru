@@ -223,8 +223,6 @@ class Split(object):
         self.memo = ''
         self.amount = amount
         self.reconciliation_date = None
-        # reconciliation_pending is None until a value is specifically assigned to it.
-        self.reconciliation_pending = None
         self.reference = None
     
     def __repr__(self):
@@ -300,10 +298,6 @@ class Entry(object):
     @property
     def reconciliation_date(self):
         return self.split.reconciliation_date
-    
-    @property
-    def reconciliation_pending(self):
-        return nonone(self.split.reconciliation_pending, self.split.reconciled)
     
     @property
     def reference(self):

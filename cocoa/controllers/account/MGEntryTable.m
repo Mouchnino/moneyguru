@@ -134,7 +134,6 @@ http://www.hardcoded.net/licenses/hs_license
         }
         [cell setCanReconcile:[[self py] canReconcileEntryAtRow:row]];
         [cell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
-        [cell setReconciliationPending:n2b([[self py] valueForColumn:@"reconciliation_pending" row:row])];
         [cell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
         [cell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
     }
