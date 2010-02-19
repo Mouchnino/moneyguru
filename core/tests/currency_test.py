@@ -17,20 +17,22 @@ from hsutil import io
 from hsutil.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil.decorators import log_calls
 
-from .base import ApplicationGUI, TestCase, TestSaveLoadMixin
-from .model.currency_test import FakeServer
 from ..app import Application
 from ..model import currency
 from ..model.account import AccountType
 from ..model.currency import RatesDB
 from ..model.date import MonthRange
+from . import get_original_rates_db_ensure_rates
+from .base import ApplicationGUI, TestCase, TestSaveLoadMixin
+from .model.currency_test import FakeServer
 
 class TestCase(TestCase):
     def superSetUp(self):
-        # For these tests, we actually want the rates db to hit a fake server, so we override superSetUp
-        # During tests, we don't want the rates db to hit the currency server
+        # The package-level setup patched RatesDB.ensure_rates so that it does nothing. We have to
+        # unpatch it now.
+        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
         self.mock(xmlrpclib, 'ServerProxy', FakeServer)
-        Currency.set_rates_db(RatesDB(':memory:', False)) # async
+        self.mock(Currency, 'rates_db', RatesDB(':memory:', False)) # async
         self.mock(currency, 'initialize_db', lambda path: None)
     
 

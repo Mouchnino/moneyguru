@@ -16,6 +16,7 @@ from hsutil.currency import Currency, USD, CAD
 from ...model.amount import convert_amount
 from ...model.currency import RatesDB
 from ...model.amount import Amount
+from .. import get_original_rates_db_ensure_rates
 
 #--- ServerProxy mock
 # We have to mock xmlrpclib.ServerProxy for every single test because if we don't, a xmlrpc call will
@@ -60,6 +61,7 @@ class CurrencyTest(TestCase):
 
 class AsyncRatesDB(TestCase):
     def setUp(self):
+        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
         self.mock(xmlrpclib, 'ServerProxy', FakeServer)
         self.db = RatesDB(':memory:', True)
     
@@ -78,6 +80,7 @@ class AsyncRatesDB(TestCase):
 
 class NotAsyncRatesDB(TestCase):
     def setUp(self):
+        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
         self.mock(xmlrpclib, 'ServerProxy', FakeServer)
         self.db = RatesDB(':memory:', False)
     
@@ -134,6 +137,7 @@ class NotAsyncRatesDB(TestCase):
 
 class NotAsyncRatesDBWithRates(TestCase):
     def setUp(self):
+        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
         self.mock(xmlrpclib, 'ServerProxy', FakeServer)
         Currency.set_rates_db(RatesDB(':memory:', False))
         USD.set_CAD_value(0.98, date(2008, 5, 20))

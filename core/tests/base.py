@@ -8,7 +8,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import os.path as op
-import xmlrpclib
 from datetime import date, datetime
 from operator import attrgetter
 
@@ -53,9 +52,7 @@ from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
 from ..loader import base
 from ..model.account import AccountType
-from ..model.currency import RatesDB
 from ..model.date import MonthRange
-from ..model import currency as currency_module
 from .. import document as document_module
 
 class CallLogger(object):
@@ -153,14 +150,6 @@ class TestCase(TestCaseBase):
     @classmethod
     def datadirpath(cls):
         return Path(__file__)[:-1] + 'testdata'
-    
-    def superSetUp(self):
-        # During tests, we don't want the rates db to hit the currency server
-        self.mock(RatesDB, 'ensure_rates', lambda *a, **kw: None)
-        currency_module.initialize_db(':memory:')
-        def raise_if_called(*args, **kwargs):
-            raise Exception('This is not supposed to be used in a test case')
-        self.mock(xmlrpclib, 'ServerProxy', raise_if_called)
     
     def check_gui_calls(self, gui, expected, verify_order=False):
         """Checks that the expected calls have been made to 'gui', then clears the log.
