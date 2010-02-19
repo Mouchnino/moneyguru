@@ -247,19 +247,8 @@ class TestApp(object):
         # code, the sctable is responsible for connecting it.
         self.scpanel.connect()
     
-
-# TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
-# now, not all convenience methods have been moved to TestApp, but if you need one, just move it
-# from TestCase to there and make the old method call the one in TestApp.
-@istest # nose is sometimes confused. This is to make sure that no test is ignored.
-class TestCase(TestCaseBase):
-    cls_tested_module = document_module # for mocks
-    
-    @classmethod
-    def datadirpath(cls):
-        return Path(__file__)[:-1] + 'testdata'
-    
-    def check_gui_calls(self, gui, expected, verify_order=False):
+    @staticmethod
+    def check_gui_calls(gui, expected, verify_order=False):
         """Checks that the expected calls have been made to 'gui', then clears the log.
         
         `expected` is an iterable of strings representing method names.
@@ -271,7 +260,8 @@ class TestCase(TestCaseBase):
             eq_(set(gui.calls), set(expected))
         gui.clear_calls()
     
-    def check_gui_calls_partial(self, gui, expected=None, not_expected=None):
+    @staticmethod
+    def check_gui_calls_partial(gui, expected=None, not_expected=None):
         """Checks that the expected calls have been made to 'gui', then clears the log.
         
         `expected` is an iterable of strings representing method names. Order doesn't matter.
@@ -297,15 +287,74 @@ class TestCase(TestCaseBase):
                 if hasattr(gui, 'calls'): # We might have test methods ending with '_gui'
                     gui.clear_calls()
     
+    def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None,
+            account_number=None):
+        # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
+        group = self.doc.groups.find(group_name, account_type) if group_name else None
+        account = self.doc.new_account(account_type, group)
+        attrs = {}
+        if name is not None:
+            attrs['name'] = name
+        if currency is not None:
+            attrs['currency'] = currency
+        if account_number is not None:
+            attrs['account_number'] = account_number
+        if attrs:
+            self.doc.change_account(account, **attrs)
+        self.doc.select_account(account)
+    
+    def add_entry(self, date=None, description=None, payee=None, transfer=None, increase=None, 
+            decrease=None, checkno=None):
+        # This whole "if not None" thing allows to simulate a user tabbing over fields leaving the
+        # default value.
+        self.etable.add()
+        row = self.etable.edited
+        if date is not None:
+            row.date = date
+        if description is not None:
+            row.description = description
+        if payee is not None:
+            row.payee = payee
+        if transfer is not None:
+            row.transfer = transfer
+        if increase is not None:
+            row.increase = increase
+        if decrease is not None:
+            row.decrease = decrease
+        if checkno is not None:
+            row.checkno = checkno
+        self.etable.save_edits()
+    
+
+# TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
+# now, not all convenience methods have been moved to TestApp, but if you need one, just move it
+# from TestCase to there and make the old method call the one in TestApp.
+@istest # nose is sometimes confused. This is to make sure that no test is ignored.
+class TestCase(TestCaseBase):
+    cls_tested_module = document_module # for mocks
+    
+    @classmethod
+    def datadirpath(cls):
+        return Path(__file__)[:-1] + 'testdata'
+    
+    def check_gui_calls(self, *args, **kw):
+        self.ta.check_gui_calls(*args, **kw)
+    
+    def check_gui_calls_partial(self, *args, **kw):
+        self.ta.check_gui_calls_partial(*args, **kw)
+    
+    def clear_gui_calls(self, *args, **kw):
+        self.ta.clear_gui_calls(*args, **kw)
+    
     def create_instances(self):
         """Creates a Document instance along with all gui layers attached to it.
         
         If you want to create an Application or a Document instance with non-blank args, create it 
         first then call create_instance.
         """
-        ta = TestApp(app=getattr(self, 'app', None), doc=getattr(self, 'document', None))
-        self.document = ta.doc
-        self.document_gui = ta.doc_gui
+        self.ta = TestApp(app=getattr(self, 'app', None), doc=getattr(self, 'document', None))
+        self.document = self.ta.doc
+        self.document_gui = self.ta.doc_gui
         names = ['app', 'apanel', 'arpanel', 'etable', 'ttable', 'sctable', 'btable', 'scpanel',
             'tpanel', 'mepanel', 'bpanel', 'stable', 'scsplittable', 'balgraph', 'bargraph',
             'nwgraph', 'pgraph', 'bsheet', 'apie', 'lpie', 'ipie', 'epie', 'istatement', 'sfield',
@@ -313,8 +362,8 @@ class TestCase(TestCaseBase):
             'aview', 'scview', 'bview', 'mainwindow']
         for name in names:
             guiname = name + '_gui'
-            setattr(self, name, getattr(ta, name))
-            setattr(self, guiname, getattr(ta, guiname))
+            setattr(self, name, getattr(self.ta, name))
+            setattr(self, guiname, getattr(self.ta, guiname))
     
     def account_names(self): # doesn't include Imbalance
         account_sort = {
@@ -327,21 +376,8 @@ class TestCase(TestCaseBase):
         accounts.sort(key=lambda a: (account_sort[a.type], a))
         return [a.name for a in accounts]
     
-    def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None,
-            account_number=None):
-        # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
-        group = self.document.groups.find(group_name, account_type) if group_name else None
-        account = self.document.new_account(account_type, group)
-        attrs = {}
-        if name is not None:
-            attrs['name'] = name
-        if currency is not None:
-            attrs['currency'] = currency
-        if account_number is not None:
-            attrs['account_number'] = account_number
-        if attrs:
-            self.document.change_account(account, **attrs)
-        self.document.select_account(account)
+    def add_account(self, *args, **kw):
+        self.ta.add_account(*args, **kw)
     
     def add_account_legacy(self, *args, **kwargs):
         # In the early development stages, moneyGuru's account were on a left section and when an
@@ -390,26 +426,9 @@ class TestCase(TestCaseBase):
         self.bpanel.amount = str_amount
         self.bpanel.save()
     
-    def add_entry(self, date=None, description=None, payee=None, transfer=None, increase=None, decrease=None, checkno=None):
-        # This whole "if not None" thing allows to simulate a user tabbing over fields leaving the default value.
-        self.etable.add()
-        row = self.etable.edited
-        if date is not None:
-            row.date = date
-        if description is not None:
-            row.description = description
-        if payee is not None:
-            row.payee = payee
-        if transfer is not None:
-            row.transfer = transfer
-        if increase is not None:
-            row.increase = increase
-        if decrease is not None:
-            row.decrease = decrease
-        if checkno is not None:
-            row.checkno = checkno
-        self.etable.save_edits()
-
+    def add_entry(self, *args, **kw):
+        self.ta.add_entry(*args, **kw)
+    
     def add_group(self, name=None, account_type=AccountType.Asset):
         group = self.document.new_group(account_type)
         if name is not None:

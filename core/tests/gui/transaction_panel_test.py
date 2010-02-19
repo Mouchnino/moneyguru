@@ -13,7 +13,7 @@ from nose.tools import eq_, assert_raises
 from hsutil.currency import USD
 
 from ...exception import OperationAborted
-from ..base import TestCase
+from ..base import TestCase, TestApp
 
 class Pristine(TestCase):
     def setUp(self):
@@ -28,86 +28,96 @@ class Pristine(TestCase):
         assert_raises(OperationAborted, self.tpanel.load)
     
 
-class OneEntry(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy()
-        self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
-    
-    def test_add_cancel_then_load(self):
-        # when loading the tpanel right after cancelling a txn addition, the wrong txn is loaded
-        self.etable.add()
-        self.etable.cancel_edits()
-        self.tpanel.load()
-        self.assertEqual(self.tpanel.description, 'description')
-    
-    def test_buffer(self):
-        """tpanel's edition is buffered"""
-        self.tpanel.load()
-        self.tpanel.date = '07/07/2008'
-        self.tpanel.description = 'foo'
-        self.tpanel.payee = 'bar'
-        self.tpanel.checkno = 'baz'
-        self.tpanel.load()
-        self.assertEqual(self.tpanel.date, '06/07/2008')
-        self.assertEqual(self.tpanel.description, 'description')
-        self.assertEqual(self.tpanel.payee, 'payee')
-        self.assertEqual(self.tpanel.checkno, '42')
-    
-    def test_can_load_selected_transaction(self):
-        # Whether load() is possible is based on the last selection of either the etable ot the ttable
-        self.etable.select([])
-        self.mainwindow.select_transaction_table()
-        self.ttable.select([0])
-        self.tpanel.load() # no OperationAborted
-    
-    def test_completion(self):
-        """Here, we just want to make sure that complete() responds. We don't want to re-test 
-        completion, we just want to make sure that the transaction panel is of the right subclass"""
-        self.add_account_legacy() # the tpanel's completion must not be ependant on the selected account (like entries)
-        self.assertEqual(self.tpanel.complete('d', 'description'), 'description')
-    
-    def test_load_refreshes_mct_button(self):
-        # loading the panel refreshes the mct button
-        self.tpanel.load()
-        self.check_gui_calls_partial(self.tpanel_gui, ['refresh_mct_button'])
-    
-    def test_load_while_etable_is_editing(self):
-        """loading the tpanel while etable is editing saves the edits and stops editing mode"""
-        self.etable.add()
-        row = self.etable.edited
-        row.date = '07/07/2008'
-        self.clear_gui_calls()
-        self.tpanel.load()
-        assert self.etable.edited is None
-        eq_(len(self.etable), 2)
-        self.check_gui_calls(self.etable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
-    
-    def test_load_while_ttable_is_editing(self):
-        """loading the tpanel while ttable is editing saves the edits and stops editing mode"""
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-        row = self.ttable.edited
-        row.date = '07/07/2008'
-        self.clear_gui_calls()
-        self.tpanel.load()
-        assert self.ttable.edited is None
-        eq_(len(self.ttable), 2)
-        self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
-    
-    def test_values(self):
-        """The values of the panel are correct"""
-        self.tpanel.load() # no OperationAborted
-        self.assertEqual(self.tpanel.date, '06/07/2008')
-        self.assertEqual(self.tpanel.description, 'description')
-        self.assertEqual(self.tpanel.payee, 'payee')
-        self.assertEqual(self.tpanel.checkno, '42')
-    
-    def test_values_after_deselect(self):
-        # When there is no selection, load() is not possible
-        self.etable.select([])
-        assert_raises(OperationAborted, self.tpanel.load)
-    
+def app_with_one_entry():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
+    return app
+
+def test_add_cancel_then_load():
+    # when loading the tpanel right after cancelling a txn addition, the wrong txn is loaded
+    app = app_with_one_entry()
+    app.etable.add()
+    app.etable.cancel_edits()
+    app.tpanel.load()
+    eq_(app.tpanel.description, 'description')
+
+def test_buffer():
+    # tpanel's edition is buffered.
+    app = app_with_one_entry()
+    app.tpanel.load()
+    app.tpanel.date = '07/07/2008'
+    app.tpanel.description = 'foo'
+    app.tpanel.payee = 'bar'
+    app.tpanel.checkno = 'baz'
+    app.tpanel.load()
+    eq_(app.tpanel.date, '06/07/2008')
+    eq_(app.tpanel.description, 'description')
+    eq_(app.tpanel.payee, 'payee')
+    eq_(app.tpanel.checkno, '42')
+
+def test_can_load_selected_transaction():
+    # Whether load() is possible is based on the last selection of either the etable ot the ttable
+    app = app_with_one_entry()
+    app.etable.select([])
+    app.mainwindow.select_transaction_table()
+    app.ttable.select([0])
+    app.tpanel.load() # no OperationAborted
+
+def test_completion():
+    # Here, we just want to make sure that complete() responds. We don't want to re-test completion,
+    # we just want to make sure that the transaction panel is of the right subclass
+    app = app_with_one_entry()
+    app.add_account() # the tpanel's completion must not be ependant on the selected account (like entries)
+    app.doc.show_selected_account()
+    eq_(app.tpanel.complete('d', 'description'), 'description')
+
+def test_load_refreshes_mct_button():
+    # loading the panel refreshes the mct button
+    app = app_with_one_entry()
+    app.tpanel.load()
+    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_mct_button'])
+
+def test_load_while_etable_is_editing():
+    # loading the tpanel while etable is editing saves the edits and stops editing mode.
+    app = app_with_one_entry()
+    app.etable.add()
+    row = app.etable.edited
+    row.date = '07/07/2008'
+    app.clear_gui_calls()
+    app.tpanel.load()
+    assert app.etable.edited is None
+    eq_(len(app.etable), 2)
+    app.check_gui_calls(app.etable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
+
+def test_load_while_ttable_is_editing():
+    # loading the tpanel while ttable is editing saves the edits and stops editing mode.
+    app = app_with_one_entry()
+    app.mainwindow.select_transaction_table()
+    app.ttable.add()
+    row = app.ttable.edited
+    row.date = '07/07/2008'
+    app.clear_gui_calls()
+    app.tpanel.load()
+    assert app.ttable.edited is None
+    eq_(len(app.ttable), 2)
+    app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
+
+def test_values():
+    # The values of the panel are correct.
+    app = app_with_one_entry()
+    app.tpanel.load() # no OperationAborted
+    eq_(app.tpanel.date, '06/07/2008')
+    eq_(app.tpanel.description, 'description')
+    eq_(app.tpanel.payee, 'payee')
+    eq_(app.tpanel.checkno, '42')
+
+def test_values_after_deselect():
+    # When there is no selection, load() is not possible
+    app = app_with_one_entry()
+    app.etable.select([])
+    assert_raises(OperationAborted, app.tpanel.load)
 
 class OneAmountlessEntryPanelLoaded(TestCase):
     def setUp(self):
