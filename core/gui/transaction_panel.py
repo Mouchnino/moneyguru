@@ -73,6 +73,18 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
     def checkno(self, value):
         self.transaction.checkno = value
     
+    @property
+    def amount(self):
+        froms, tos = self.transaction.splitted_splits()
+        amount = sum(s.amount for s in tos)
+        return self.document.app.format_amount(amount)
+    
+    @amount.setter
+    def amount(self, value):
+        amount = self.document.app.parse_amount(value)
+        self.transaction.change(amount=amount)
+        self.notify('split_changed')
+    
 
 class TransactionPanel(PanelWithTransaction):
     #--- Override

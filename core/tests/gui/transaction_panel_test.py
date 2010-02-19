@@ -142,6 +142,19 @@ def app_entry_with_amount_panel_loaded():
     app.clear_gui_calls()
     return app
 
+def test_amount_field():
+    # The transaction panel has an amount field corresponding to the transaction amount.
+    app = app_entry_with_amount_panel_loaded()
+    eq_(app.tpanel.amount, '42.00')
+
+def test_amount_field_set():
+    # Setting the amount field refreshes the split table
+    app = app_entry_with_amount_panel_loaded()
+    app.tpanel.amount = '43'
+    eq_(app.stable[0].debit, '43.00')
+    eq_(app.stable[1].credit, '43.00')
+    app.check_gui_calls_partial(app.stable_gui, ['refresh'])
+
 def test_change_date():
     # Changing the date no longer calls refresh_repeat_options() on the view (this stuff is now
     # in schedules)
