@@ -143,6 +143,114 @@ class DictLoader(base.Loader):
                     value = datetime.strptime(value, '%d/%m/%Y').date()
                 setattr(self.transaction_info, attr, value)
 
+@nottest
+class TestApp(object):
+    def __init__(self, app=None, doc=None):
+        if app is None:
+            app = Application(ApplicationGUI())
+        self.app = app
+        self.app_gui = app.view
+        if doc is None:
+            doc = Document(DocumentGUI(), self.app)
+        self.doc = doc
+        self.doc_gui = doc.view
+        self.apanel_gui = CallLogger()
+        self.apanel = AccountPanel(self.apanel_gui, self.doc)
+        self.arpanel_gui = CallLogger()
+        self.arpanel = AccountReassignPanel(self.arpanel_gui, self.doc)
+        self.etable_gui = CallLogger()
+        self.etable = EntryTable(self.etable_gui, self.doc)
+        self.ttable_gui = CallLogger()
+        self.ttable = TransactionTable(self.ttable_gui, self.doc)
+        self.sctable_gui = CallLogger()
+        self.sctable = ScheduleTable(self.sctable_gui, self.doc)
+        self.btable_gui = CallLogger()
+        self.btable = BudgetTable(self.btable_gui, self.doc)
+        self.scpanel_gui = CallLogger()
+        self.scpanel = SchedulePanel(self.scpanel_gui, self.doc)
+        self.tpanel_gui = CallLogger()
+        self.tpanel = TransactionPanel(self.tpanel_gui, self.doc)
+        self.mepanel_gui = CallLogger()
+        self.mepanel = MassEditionPanel(self.mepanel_gui, self.doc)
+        self.bpanel_gui = CallLogger()
+        self.bpanel = BudgetPanel(self.bpanel_gui, self.doc)
+        self.stable_gui = CallLogger()
+        self.stable = SplitTable(self.stable_gui, self.tpanel)
+        self.scsplittable_gui = CallLogger()
+        self.scsplittable = SplitTable(self.scsplittable_gui, self.scpanel)
+        self.balgraph_gui = CallLogger()
+        self.balgraph = BalanceGraph(self.balgraph_gui, self.doc)
+        self.bargraph_gui = CallLogger()
+        self.bargraph = BarGraph(self.bargraph_gui, self.doc)
+        self.nwgraph_gui = CallLogger()
+        self.nwgraph = NetWorthGraph(self.nwgraph_gui, self.doc)
+        self.pgraph_gui = CallLogger()
+        self.pgraph = ProfitGraph(self.pgraph_gui, self.doc)
+        self.bsheet_gui = CallLogger()
+        self.bsheet = BalanceSheet(self.bsheet_gui, self.doc)
+        self.apie_gui = CallLogger()
+        self.apie = AssetsPieChart(self.apie_gui, self.doc)
+        self.lpie_gui = CallLogger()
+        self.lpie = LiabilitiesPieChart(self.lpie_gui, self.doc)
+        self.ipie_gui = CallLogger()
+        self.ipie = IncomePieChart(self.ipie_gui, self.doc)
+        self.epie_gui = CallLogger()
+        self.epie = ExpensesPieChart(self.epie_gui, self.doc)
+        self.istatement_gui = CallLogger()
+        self.istatement = IncomeStatement(self.istatement_gui, self.doc)
+        self.sfield_gui = CallLogger()
+        self.sfield = SearchField(self.sfield_gui, self.doc)
+        # There are 2 filter bars: one for etable, one for ttable
+        self.efbar_gui = CallLogger()
+        self.efbar = EntryFilterBar(self.efbar_gui, self.doc)
+        self.tfbar_gui = CallLogger()
+        self.tfbar = FilterBar(self.tfbar_gui, self.doc)
+        self.csvopt_gui = CallLogger()
+        self.csvopt = CSVOptions(self.csvopt_gui, self.doc)
+        self.iwin_gui = CallLogger()
+        self.iwin = ImportWindow(self.iwin_gui, self.doc)
+        self.itable_gui = CallLogger()
+        self.itable = ImportTable(self.itable_gui, self.iwin)
+        self.cdrpanel_gui = CallLogger()
+        self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.doc)
+        self.nwview_gui = CallLogger()
+        children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
+        self.nwview = NetWorthView(self.nwview_gui, self.doc, children)
+        self.pview_gui = CallLogger()
+        children = [self.istatement, self.pgraph, self.ipie, self.epie]
+        self.pview = ProfitView(self.pview_gui, self.doc, children)
+        self.tview_gui = CallLogger()
+        children = [self.ttable, self.tfbar]
+        self.tview = TransactionView(self.tview_gui, self.doc, children)
+        self.aview_gui = CallLogger()
+        children = [self.etable, self.balgraph, self.bargraph, self.efbar]
+        self.aview = AccountView(self.aview_gui, self.doc, children)
+        self.scview_gui = CallLogger()
+        children = [self.sctable]
+        self.scview = ScheduleView(self.scview_gui, self.doc, children)
+        self.bview_gui = CallLogger()
+        children = [self.btable]
+        self.bview = BudgetView(self.bview_gui, self.doc, children)
+        self.mainwindow_gui = MainWindowGUI(self.cdrpanel, self.arpanel)
+        children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
+        self.mainwindow = MainWindow(self.mainwindow_gui, self.doc, children)
+        self.doc.connect()
+        self.mainwindow.connect()
+        self.stable.connect()
+        self.sfield.connect()
+        self.iwin.connect()
+        self.itable.connect()
+        self.csvopt.connect()
+        self.cdrpanel.connect()
+        # For the sake of simplicity, the scpanel is permanently connected, but in the real cocoa
+        # code, the sctable is responsible for connecting it.
+        self.scpanel.connect()
+    
+
+# TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
+# now, not all convenience methods have been moved to TestApp, but if you need one, just move it
+# from TestCase to there and make the old method call the one in TestApp.
 @istest # nose is sometimes confused. This is to make sure that no test is ignored.
 class TestCase(TestCaseBase):
     cls_tested_module = document_module # for mocks
@@ -195,104 +303,18 @@ class TestCase(TestCaseBase):
         If you want to create an Application or a Document instance with non-blank args, create it 
         first then call create_instance.
         """
-        if not hasattr(self, 'app'):
-            self.app_gui = ApplicationGUI()
-            self.app = Application(self.app_gui)
-        if not hasattr(self, 'document'):
-            self.document_gui = DocumentGUI()
-            self.document = Document(self.document_gui, self.app)
-        self.apanel_gui = CallLogger()
-        self.apanel = AccountPanel(self.apanel_gui, self.document)
-        self.arpanel_gui = CallLogger()
-        self.arpanel = AccountReassignPanel(self.arpanel_gui, self.document)
-        self.etable_gui = CallLogger()
-        self.etable = EntryTable(self.etable_gui, self.document)
-        self.ttable_gui = CallLogger()
-        self.ttable = TransactionTable(self.ttable_gui, self.document)
-        self.sctable_gui = CallLogger()
-        self.sctable = ScheduleTable(self.sctable_gui, self.document)
-        self.btable_gui = CallLogger()
-        self.btable = BudgetTable(self.btable_gui, self.document)
-        self.scpanel_gui = CallLogger()
-        self.scpanel = SchedulePanel(self.scpanel_gui, self.document)
-        self.tpanel_gui = CallLogger()
-        self.tpanel = TransactionPanel(self.tpanel_gui, self.document)
-        self.mepanel_gui = CallLogger()
-        self.mepanel = MassEditionPanel(self.mepanel_gui, self.document)
-        self.bpanel_gui = CallLogger()
-        self.bpanel = BudgetPanel(self.bpanel_gui, self.document)
-        self.stable_gui = CallLogger()
-        self.stable = SplitTable(self.stable_gui, self.tpanel)
-        self.scsplittable_gui = CallLogger()
-        self.scsplittable = SplitTable(self.scsplittable_gui, self.scpanel)
-        self.balgraph_gui = CallLogger()
-        self.balgraph = BalanceGraph(self.balgraph_gui, self.document)
-        self.bargraph_gui = CallLogger()
-        self.bargraph = BarGraph(self.bargraph_gui, self.document)
-        self.nwgraph_gui = CallLogger()
-        self.nwgraph = NetWorthGraph(self.nwgraph_gui, self.document)
-        self.pgraph_gui = CallLogger()
-        self.pgraph = ProfitGraph(self.pgraph_gui, self.document)
-        self.bsheet_gui = CallLogger()
-        self.bsheet = BalanceSheet(self.bsheet_gui, self.document)
-        self.apie_gui = CallLogger()
-        self.apie = AssetsPieChart(self.apie_gui, self.document)
-        self.lpie_gui = CallLogger()
-        self.lpie = LiabilitiesPieChart(self.lpie_gui, self.document)
-        self.ipie_gui = CallLogger()
-        self.ipie = IncomePieChart(self.ipie_gui, self.document)
-        self.epie_gui = CallLogger()
-        self.epie = ExpensesPieChart(self.epie_gui, self.document)
-        self.istatement_gui = CallLogger()
-        self.istatement = IncomeStatement(self.istatement_gui, self.document)
-        self.sfield_gui = CallLogger()
-        self.sfield = SearchField(self.sfield_gui, self.document)
-        # There are 2 filter bars: one for etable, one for ttable
-        self.efbar_gui = CallLogger()
-        self.efbar = EntryFilterBar(self.efbar_gui, self.document)
-        self.tfbar_gui = CallLogger()
-        self.tfbar = FilterBar(self.tfbar_gui, self.document)
-        self.csvopt_gui = CallLogger()
-        self.csvopt = CSVOptions(self.csvopt_gui, self.document)
-        self.iwin_gui = CallLogger()
-        self.iwin = ImportWindow(self.iwin_gui, self.document)
-        self.itable_gui = CallLogger()
-        self.itable = ImportTable(self.itable_gui, self.iwin)
-        self.cdrpanel_gui = CallLogger()
-        self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.document)
-        self.nwview_gui = CallLogger()
-        children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
-        self.nwview = NetWorthView(self.nwview_gui, self.document, children)
-        self.pview_gui = CallLogger()
-        children = [self.istatement, self.pgraph, self.ipie, self.epie]
-        self.pview = ProfitView(self.pview_gui, self.document, children)
-        self.tview_gui = CallLogger()
-        children = [self.ttable, self.tfbar]
-        self.tview = TransactionView(self.tview_gui, self.document, children)
-        self.aview_gui = CallLogger()
-        children = [self.etable, self.balgraph, self.bargraph, self.efbar]
-        self.aview = AccountView(self.aview_gui, self.document, children)
-        self.scview_gui = CallLogger()
-        children = [self.sctable]
-        self.scview = ScheduleView(self.scview_gui, self.document, children)
-        self.bview_gui = CallLogger()
-        children = [self.btable]
-        self.bview = BudgetView(self.bview_gui, self.document, children)
-        self.mainwindow_gui = MainWindowGUI(self.cdrpanel, self.arpanel)
-        children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
-        self.mainwindow = MainWindow(self.mainwindow_gui, self.document, children)
-        self.document.connect()
-        self.mainwindow.connect()
-        self.stable.connect()
-        self.sfield.connect()
-        self.iwin.connect()
-        self.itable.connect()
-        self.csvopt.connect()
-        self.cdrpanel.connect()
-        # For the sake of simplicity, the scpanel is permanently connected, but in the real cocoa
-        # code, the sctable is responsible for connecting it.
-        self.scpanel.connect()
+        ta = TestApp(app=getattr(self, 'app', None), doc=getattr(self, 'document', None))
+        self.document = ta.doc
+        self.document_gui = ta.doc_gui
+        names = ['app', 'apanel', 'arpanel', 'etable', 'ttable', 'sctable', 'btable', 'scpanel',
+            'tpanel', 'mepanel', 'bpanel', 'stable', 'scsplittable', 'balgraph', 'bargraph',
+            'nwgraph', 'pgraph', 'bsheet', 'apie', 'lpie', 'ipie', 'epie', 'istatement', 'sfield',
+            'efbar', 'tfbar', 'csvopt', 'iwin', 'itable', 'cdrpanel', 'nwview', 'pview', 'tview',
+            'aview', 'scview', 'bview', 'mainwindow']
+        for name in names:
+            guiname = name + '_gui'
+            setattr(self, name, getattr(ta, name))
+            setattr(self, guiname, getattr(ta, guiname))
     
     def account_names(self): # doesn't include Imbalance
         account_sort = {
