@@ -609,6 +609,7 @@ class Document(Broadcaster, Listener):
             entry.split.amount = amount
         # if the entry is part of a Split entry, we don't need to balance, because the balancing
         # occurs in set_split_amount()
+        # XXX WTF??
         if len(entry.splits) == 1:
             entry.transaction.balance_two_way(entry.split)
             if transfer_changed:

@@ -75,9 +75,7 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
     
     @property
     def amount(self):
-        froms, tos = self.transaction.splitted_splits()
-        amount = sum(s.amount for s in tos)
-        return self.document.app.format_amount(amount)
+        return self.document.app.format_amount(self.transaction.amount)
     
     @amount.setter
     def amount(self, value):

@@ -6,6 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from nose.tools import eq_
+
 from hsutil.currency import USD, CAD
 
 from .base import TestCase, TestQIFExportImportMixin
@@ -73,7 +75,6 @@ class OneEntry(TestCase):
         self.stable.save_edits()
         self.tpanel.save()
         self.assertEqual(self.stable[0].credit, '100.00')
-        self.assertEqual(self.stable[1].debit, '')
         self.assertEqual(self.etable[0].decrease, '100.00')
         self.assertEqual(self.etable[0].balance, '-100.00')
     
@@ -138,9 +139,10 @@ class _SplitTransaction(TestCase):
         # income        0   1
         # Unassigned    0   9
         self.create_instances()
-        self.add_account_legacy()
-        self.add_entry(date='2/1/2007', description='Split', transfer='expense1', decrease='100')
-        self.add_entry(date='3/1/2007')   # That's to make sur the selection doesn't change on edits
+        self.add_account()
+        self.mainwindow.show_account()
+        self.add_entry(date='2/1/2007', description='Split', transfer='expense1', decrease='110')
+        self.add_entry(date='3/1/2007')   # That's to make sure the selection doesn't change on edits
         self.etable.select([0])
         self.tpanel.load()
         self.stable.add()
@@ -149,10 +151,14 @@ class _SplitTransaction(TestCase):
         row.memo = 'some memo'
         row.debit = '10'
         self.stable.save_edits()
-        self.stable.select([3])
+        self.stable.add()
         row = self.stable.selected_row
         row.account = 'income'
         row.credit = '1'
+        self.stable.save_edits()
+        self.stable.add()
+        row = self.stable.selected_row
+        row.credit = '9'
         self.stable.save_edits()
         self.tpanel.save()
     
@@ -173,10 +179,12 @@ class SplitTransaction(_SplitTransaction):
         self.tpanel.load()
         self.stable.select([2])
         self.stable.delete()
-        self.assertEqual(len(self.stable), 4)
-        self.assertEqual(self.stable[2].account, 'income')
-        self.assertEqual(self.stable[2].credit, '1.00')
-        self.assertEqual(self.stable[3].debit, '1.00')
+        eq_(len(self.stable), 4)
+        # The expense1 split took the adjustment
+        eq_(self.stable[1].debit, '110.00')
+        eq_(self.stable[2].account, 'income')
+        eq_(self.stable[2].credit, '1.00')
+        eq_(self.stable[3].credit, '9.00')
 
     def test_revert_split(self):
         """Reverting the edits works"""
@@ -206,18 +214,6 @@ class SplitTransaction(_SplitTransaction):
         self.etable.select([1])
         self.tpanel.load()
         self.assertEqual(self.stable.selected_index, 0)
-    
-    def test_set_unassigned_amount(self):
-        """When seeting the amount of an Unnasigned split, that amount is not touched by balance()
-        when needed, create a new Unassigned split."""
-        self.tpanel.load()
-        self.stable.select([4])
-        row = self.stable.selected_row
-        row.credit = '10'
-        self.stable.save_edits()
-        self.assertEqual(self.stable[4].credit, '10.00')
-        self.assertEqual(len(self.stable), 6)
-        self.assertEqual(self.stable[5].debit, '1.00')
     
     def test_split_count(self):
         """All splits are shown"""

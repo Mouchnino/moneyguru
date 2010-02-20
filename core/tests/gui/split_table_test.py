@@ -152,27 +152,3 @@ class OneTransactionWithMemos(TestCase, TestSaveLoadMixin, TestQIFExportImportMi
         self.stable.save_edits()
         self.tpanel.save()
     
-
-class OneTransactionWithUnassignedSplit(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('first')
-        self.add_entry(transfer='second', increase='42')
-        self.tpanel.load()
-        self.stable.select([1])
-        self.stable[1].credit = '22'
-        self.stable.save_edits()
-        # An unassigned split is created for 20
-        self.tpanel.save()
-    
-    def test_balance_first_split(self):
-        """Changing the amount of the first split so it balances the second will remove the
-        unassigned split.
-        """
-        self.tpanel.load()
-        self.stable[0].debit = '22'
-        self.stable.save_edits()
-        # An unassigned split is created for 20
-        self.tpanel.save()
-        self.assertEqual(len(self.stable), 2)
-    

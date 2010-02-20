@@ -310,16 +310,6 @@ class OneTransaction(TestCase):
         self.ttable[0].amount = 'foo' # no exception
         eq_(self.ttable[0].amount, '42.00')
     
-    def test_set_negative_amount(self):
-        # When you set a negative amount, the 'from' and 'to' columns are switched.
-        self.mainwindow.select_transaction_table()
-        row = self.ttable[0]
-        row.amount = '-42'
-        self.ttable.save_edits()
-        eq_(row.from_, 'second')
-        eq_(row.to, 'first')
-        eq_(row.amount, '42.00')
-    
     def test_set_row_attr(self):
         # Setting a row's attr puts the table in edition mode, changes the row's buffer, but doesn't
         # touch the transaction.
@@ -489,7 +479,11 @@ class OneFourWayTransactionWithUnassigned(TestCase):
         self.stable.add()
         row = self.stable.selected_row
         row.debit = '20'
-        self.stable.save_edits() # We two new unassigned splits balancing themselves
+        self.stable.save_edits()
+        self.stable.add()
+        row = self.stable.selected_row
+        row.credit = '20'
+        self.stable.save_edits()
         self.tpanel.save()
         self.mainwindow.select_transaction_table()
     

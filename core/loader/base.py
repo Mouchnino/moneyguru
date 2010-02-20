@@ -192,9 +192,9 @@ class Loader(object):
                     split.reconciliation_date = transaction.date
                 split.reference = split_info.reference
                 transaction.splits.append(split)
-            transaction.balance()
             while len(transaction.splits) < 2:
                 transaction.splits.append(Split(transaction, None, 0))
+            transaction.balance()
             transaction.mtime = info.mtime
             if info.reference is not None:
                 for split in transaction.splits:

@@ -325,6 +325,27 @@ class TestApp(object):
             row.checkno = checkno
         self.etable.save_edits()
     
+    def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
+            checkno=None):
+        self.mainwindow.select_transaction_table()
+        self.ttable.add()
+        row = self.ttable.edited
+        if date is not None:
+            row.date = date
+        if description is not None:
+            row.description = description
+        if payee is not None:
+            row.payee = payee
+        if from_ is not None:
+            row.from_ = from_
+        if to is not None:
+            row.to = to
+        if amount is not None:
+            row.amount = amount
+        if checkno is not None:
+            row.checkno = checkno
+        self.ttable.save_edits()
+    
 
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
 # now, not all convenience methods have been moved to TestApp, but if you need one, just move it
@@ -456,26 +477,8 @@ class TestCase(TestCaseBase):
             self.scsplittable.save_edits()
         self.scpanel.save()
     
-    def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
-                checkno=None):
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-        row = self.ttable.edited
-        if date is not None:
-            row.date = date
-        if description is not None:
-            row.description = description
-        if payee is not None:
-            row.payee = payee
-        if from_ is not None:
-            row.from_ = from_
-        if to is not None:
-            row.to = to
-        if amount is not None:
-            row.amount = amount
-        if checkno is not None:
-            row.checkno = checkno
-        self.ttable.save_edits()
+    def add_txn(self, *args, **kw):
+        self.ta.add_txn(*args, **kw)
     
     def account_node_subaccount_count(self, node):
         # In the balance sheet and the income statement testing for emptyness becomes cumbersome

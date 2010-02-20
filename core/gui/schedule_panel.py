@@ -95,7 +95,7 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
         self._load_schedule(self.document.selected_schedule)
     
     def _new(self):
-        self._load_schedule(Recurrence(Transaction(date.today()), REPEAT_MONTHLY, 1))
+        self._load_schedule(Recurrence(Transaction(date.today(), amount=0), REPEAT_MONTHLY, 1))
     
     def _save(self):
         repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]

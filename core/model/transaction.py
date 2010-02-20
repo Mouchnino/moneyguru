@@ -19,9 +19,10 @@ from .amount import Amount, convert_amount
 class Transaction(object):
     def __init__(self, date, description=None, payee=None, checkno=None, account=None, amount=None):
         self.date = date
-        self.description = description or ''
-        self.payee = payee or ''
-        self.checkno = checkno or ''
+        self.description = nonone(description, '')
+        self.payee = nonone(payee, '')
+        self.checkno = nonone(checkno, '')
+        self.amount = nonone(amount, 0)
         if amount is not None:
             self.splits = [Split(self, account, amount), Split(self, None, -amount)]
         else:
@@ -40,6 +41,7 @@ class Transaction(object):
         result = cls(txn.date, txn.description, txn.payee, txn.checkno)
         result.position = txn.position
         result.mtime = txn.mtime
+        result.amount = txn.amount
         for split in txn.splits:
             newsplit = copy(split)
             newsplit.transaction = result
@@ -74,12 +76,46 @@ class Transaction(object):
                     weak_split.amount = -weak_split.amount
                 return
         weak_split.amount = -strong_split.amount
+        self.amount = abs(strong_split.amount)
     
     def balance(self, strong_split=None):
-        """Balance the transaction
-        
-        strong_split: the split that initiated the imbalance. Will not be modified.
-        """
+        splits = self.splits
+        splits_with_amount = [s for s in splits if s.amount]
+        if splits_with_amount and not allsame(s.amount.currency for s in splits_with_amount):
+            self.balance_currencies(strong_split)
+            return
+        # When the transaction amount is 0, the existing splits then determine what this amount is
+        # going to be.
+        if not self.amount:
+            debits = sum(s.debit for s in splits)
+            credits = sum(s.credit for s in splits)
+            self.amount = max(debits, credits)
+        amount = self.amount
+        # For the special case where there is 2 splits on the same "side" and a strong split, we
+        # reverse the weak split
+        if len(splits) == 2 and strong_split is not None:
+            weak_split = splits[0] if splits[0] is not strong_split else splits[1]
+            if weak_split.debit == strong_split.debit: # on the same side
+                weak_split.amount *= -1
+        debits = sum(s.debit for s in splits)
+        credits = sum(s.credit for s in splits)
+        if debits == credits == amount:
+            return
+        main_debit, main_credit = self.main_splits()
+        if debits != amount:
+            diff = amount - debits
+            if main_debit is None or main_debit is strong_split:
+                self.splits.append(Split(self, None, diff))
+            else:
+                main_debit.amount += diff
+        if credits != amount:
+            diff = amount - credits
+            if main_credit is None or main_credit is strong_split:
+                self.splits.append(Split(self, None, -diff))
+            else:
+                main_credit.amount -= diff
+    
+    def balance_currencies(self, strong_split=None):
         currency2balance = defaultdict(int)
         splits_with_amount = (s for s in self.splits if s.amount != 0)
         for split in splits_with_amount:
@@ -111,27 +147,34 @@ class Transaction(object):
             self.payee = payee
         if checkno is not NOEDIT:
             self.checkno = checkno
-        if any(x is not NOEDIT for x in [from_, to, amount]):
-            fsplits, tsplits = self.splitted_splits()
-            fsplit = fsplits[0] if len(fsplits) == 1 else None
-            tsplit = tsplits[0] if len(tsplits) == 1 else None
-            if from_ is not NOEDIT and fsplit is not None and from_ is not fsplit.account:
+        if from_ is not NOEDIT:
+            fsplits, _ = self.splitted_splits()
+            if len(fsplits) == 1:
+                fsplit = fsplits[0]
                 fsplit.account = from_
-            if to is not NOEDIT and tsplit is not None and to != tsplit.account_name:
-                tsplit.account = to
-            if amount is not NOEDIT and fsplit is not None and tsplit is not None and amount != tsplit.amount:
-                fsplit.amount = -amount
-                tsplit.amount = amount
+        if to is not NOEDIT:
+            _, tsplits = self.splitted_splits()
+            if len(tsplits) == 1:
+                tsplits = tsplits[0]
+                tsplits.account = to
+        if amount is not NOEDIT:
+            self.amount = amount
+            self.balance()
         if currency is not NOEDIT:
             tochange = (s for s in self.splits if s.amount and s.amount.currency != currency)
             for split in tochange:
                 split.amount = Amount(split.amount.value, currency)
         self.mtime = time.time()
     
-    def reassign_account(self, account, reassign_to=None):
-        for split in self.splits:
-            if split.account is account:
-                split.account = reassign_to
+    def main_splits(self):
+        main_debit = first(s for s in self.splits if s.amount > 0)
+        main_credit = first(s for s in self.splits if s.amount < 0)
+        free_splits = (s for s in self.splits if not s.amount)
+        if main_debit is None:
+            main_debit = first(free_splits)
+        if main_credit is None:
+            main_credit = first(free_splits)
+        return main_debit, main_credit
     
     def matches(self, query):
         """Return whether 'self' is matching query, which is a dict containing various arguments,
@@ -175,6 +218,11 @@ class Transaction(object):
         converted_total = sum(converted_amounts)
         if converted_total != 0:
             self.splits.append(Split(self, None, -converted_total))
+    
+    def reassign_account(self, account, reassign_to=None):
+        for split in self.splits:
+            if split.account is account:
+                split.account = reassign_to
     
     def replicate(self):
         return Transaction.from_transaction(self)
@@ -231,6 +279,14 @@ class Split(object):
     @property
     def account_name(self):
         return self.account.name if self.account is not None else ''
+    
+    @property
+    def credit(self):
+        return -self.amount if self.amount < 0 else 0
+    
+    @property
+    def debit(self):
+        return self.amount if self.amount > 0 else 0
     
     @property
     def reconciled(self):
