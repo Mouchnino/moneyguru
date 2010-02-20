@@ -746,6 +746,12 @@ class PyTransactionPanel(PyPanel):
     def setCheckno_(self, value):
         self.py.checkno = value
     
+    def amount(self):
+        return self.py.amount
+    
+    def setAmount_(self, value):
+        self.py.amount = value
+    
     #--- Python -> Cocoa
     def refresh_mct_button(self):
         self.cocoa.refreshMCTButton()

@@ -60,6 +60,7 @@ http://www.hardcoded.net/licenses/hs_license
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
+    [amountField setStringValue:[[self py] amount]];
     [splitTable refresh];
 }
 
@@ -68,6 +69,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setDescription:[descriptionField stringValue]];
     [[self py] setPayee:[payeeField stringValue]];
     [[self py] setCheckno:[checknoField stringValue]];
+    [[self py] setAmount:[amountField stringValue]];
 }
 
 /* Python --> Cocoa */
@@ -93,6 +95,15 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+{
+    id control = [aNotification object];
+    if (control == amountField) { // must be edited right away to refresh the split table
+        [[self py] setAmount:[amountField stringValue]];
+        [amountField setStringValue:[[self py] amount]];
+    }
+}
+
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
     if (asker == dateField)

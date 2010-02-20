@@ -18,6 +18,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setPayee:(NSString *)payee;
 - (NSString *)checkno;
 - (void)setCheckno:(NSString *)checkno;
+- (NSString *)amount;
+- (void)setAmount:(NSString *)amount;
 - (void)mctBalance;
 - (BOOL)canDoMCTBalance;
 @end
