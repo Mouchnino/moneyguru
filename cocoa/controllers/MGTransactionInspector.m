@@ -73,9 +73,12 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Python --> Cocoa */
-- (void)refreshMCTButton
+- (void)refreshForMultiCurrency
 {
-    [mctBalanceButton setEnabled:[[self py] canDoMCTBalance]];
+    BOOL mct = [[self py] isMultiCurrency];
+    [mctBalanceButton setEnabled:mct];
+    [amountField setEnabled:!mct];
+    [mctNotice setHidden:!mct];
 }
 
 /* Actions */

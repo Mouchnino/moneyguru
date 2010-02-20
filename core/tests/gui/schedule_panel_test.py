@@ -116,7 +116,7 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         self.scsplittable.add()
         self.scsplittable.edited.memo = 'foo'
         self.scsplittable.save_edits()
-        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_mct_button'])
+        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_for_multi_currency'])
         self.scsplittable.delete()
-        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_mct_button'])
+        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_for_multi_currency'])
     

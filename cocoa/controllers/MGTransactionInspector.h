@@ -22,6 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *amountField;
     IBOutlet MGTableView *splitTableView;
     IBOutlet NSButton *mctBalanceButton;
+    IBOutlet NSTextField *mctNotice;
     
     MGSplitTable *splitTable;
     NSTextView *customFieldEditor;

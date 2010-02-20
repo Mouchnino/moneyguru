@@ -76,7 +76,7 @@ def test_load_refreshes_mct_button():
     # loading the panel refreshes the mct button
     app = app_one_entry()
     app.tpanel.load()
-    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_mct_button'])
+    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_for_multi_currency'])
 
 def test_load_while_etable_is_editing():
     # loading the tpanel while etable is editing saves the edits and stops editing mode.
@@ -275,10 +275,10 @@ def test_set_amount_without_currency():
     eq_(app.tpanel.amount, 'EUR 45.00')
 
 #--- Generators (tests with more than one setup)
-def test_can_do_mct_balance():
+def test_is_multi_currency():
     def check(setupfunc, expected):
         app = setupfunc()
-        eq_(app.tpanel.can_do_mct_balance, expected)
+        eq_(app.tpanel.is_multi_currency, expected)
     
     # doesn't crash if there is no split with amounts
     yield check, app_amountless_entry_panel_loaded, False

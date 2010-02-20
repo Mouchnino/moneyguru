@@ -665,6 +665,22 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
+						<object class="NSTextField" id="362310108">
+							<reference key="NSNextResponder" ref="651783136"/>
+							<int key="NSvFlags">-2147483380</int>
+							<string key="NSFrame">{{216, 230}, {212, 14}}</string>
+							<reference key="NSSuperview" ref="651783136"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="106764611">
+								<int key="NSCellFlags">68288064</int>
+								<int key="NSCellFlags2">272630784</int>
+								<string key="NSContents">Multiple currencies. Edit splits directly.</string>
+								<reference key="NSSupport" ref="438511893"/>
+								<reference key="NSControlView" ref="362310108"/>
+								<reference key="NSBackgroundColor" ref="459028066"/>
+								<reference key="NSTextColor" ref="1011264462"/>
+							</object>
+						</object>
 					</object>
 					<string key="NSFrameSize">{473, 390}</string>
 					<reference key="NSSuperview"/>
@@ -844,6 +860,14 @@
 					</object>
 					<int key="connectionID">286</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mctNotice</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="362310108"/>
+					</object>
+					<int key="connectionID">289</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -905,6 +929,7 @@
 							<reference ref="810841872"/>
 							<reference ref="962963534"/>
 							<reference ref="278007680"/>
+							<reference ref="362310108"/>
 						</object>
 						<reference key="parent" ref="290823991"/>
 					</object>
@@ -1241,6 +1266,20 @@
 						<reference key="object" ref="442057158"/>
 						<reference key="parent" ref="436040369"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">287</int>
+						<reference key="object" ref="362310108"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="106764611"/>
+						</object>
+						<reference key="parent" ref="651783136"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">288</int>
+						<reference key="object" ref="106764611"/>
+						<reference key="parent" ref="362310108"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1299,6 +1338,8 @@
 					<string>280.IBPluginDependency</string>
 					<string>281.IBPluginDependency</string>
 					<string>282.IBPluginDependency</string>
+					<string>287.IBPluginDependency</string>
+					<string>288.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>39.CustomClassName</string>
 					<string>39.IBPluginDependency</string>
@@ -1365,6 +1406,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>MGTextField</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1392,7 +1435,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">286</int>
+			<int key="maxID">289</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1490,6 +1533,7 @@
 							<string>dateField</string>
 							<string>descriptionField</string>
 							<string>mctBalanceButton</string>
+							<string>mctNotice</string>
 							<string>payeeField</string>
 							<string>splitTableView</string>
 						</object>
@@ -1500,6 +1544,7 @@
 							<string>MGTextField</string>
 							<string>MGTextField</string>
 							<string>NSButton</string>
+							<string>NSTextField</string>
 							<string>MGTextField</string>
 							<string>MGTableView</string>
 						</object>

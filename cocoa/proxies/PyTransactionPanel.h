@@ -21,5 +21,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSString *)amount;
 - (void)setAmount:(NSString *)amount;
 - (void)mctBalance;
-- (BOOL)canDoMCTBalance;
+- (BOOL)isMultiCurrency;
 @end

@@ -98,7 +98,7 @@ class TransactionPanel(PanelWithTransaction):
         self.document.stop_edition()
         self.transaction = original.replicate()
         self.original = original
-        self.view.refresh_mct_button()
+        self.view.refresh_for_multi_currency()
         self.notify('panel_loaded')
     
     def _save(self):
@@ -106,11 +106,11 @@ class TransactionPanel(PanelWithTransaction):
     
     def change_split(self, split, account_name, amount, memo):
         PanelWithTransaction.change_split(self, split, account_name, amount, memo)
-        self.view.refresh_mct_button()
+        self.view.refresh_for_multi_currency()
     
     def delete_split(self, split):
         PanelWithTransaction.delete_split(self, split)
-        self.view.refresh_mct_button()
+        self.view.refresh_for_multi_currency()
     
     #--- Public
     def mct_balance(self):
@@ -126,14 +126,14 @@ class TransactionPanel(PanelWithTransaction):
         self.notify('split_changed')
     
     @property
-    def can_do_mct_balance(self):
-        return self.transaction.is_mct
-    
-    @property
     def date(self):
         return self.app.format_date(self.transaction.date)
     
     @date.setter
     def date(self, value):
         self.transaction.date = self.app.parse_date(value)
+    
+    @property
+    def is_multi_currency(self):
+        return self.transaction.is_mct
     

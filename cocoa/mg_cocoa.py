@@ -719,8 +719,8 @@ class PyTransactionPanel(PyPanel):
         self.py.mct_balance()
     
     @signature('c@:')
-    def canDoMCTBalance(self):
-        return self.py.can_do_mct_balance
+    def isMultiCurrency(self):
+        return self.py.is_multi_currency
     
     def date(self):
         return self.py.date
@@ -753,8 +753,8 @@ class PyTransactionPanel(PyPanel):
         self.py.amount = value
     
     #--- Python -> Cocoa
-    def refresh_mct_button(self):
-        self.cocoa.refreshMCTButton()
+    def refresh_for_multi_currency(self):
+        self.cocoa.refreshForMultiCurrency()
     
 
 class PyMassEditionPanel(PyPanel):
