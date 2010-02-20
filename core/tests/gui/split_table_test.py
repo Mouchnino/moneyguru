@@ -6,9 +6,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from nose.tools import eq_
 from hsutil.currency import CAD, EUR
 
-from ..base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
+from ..base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, TestApp
 
 class OneEntry(TestCase):
     def setUp(self):
@@ -119,19 +120,28 @@ class OneTransactionBeingAdded(TestCase):
             self.fail("When the table is empty, don't try to delete")
     
 
-class EURAccountsEURTransfer(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('first', EUR)
-        self.add_account_legacy('second', EUR)
-        self.add_entry(transfer='first', increase='42') # EUR
-        self.tpanel.load()
-    
-    def test_amounts_display(self):
-        """The amounts' currency are explicitly displayed"""
-        self.assertEqual(self.stable[0].debit, 'EUR 42.00')
-        self.assertEqual(self.stable[1].credit, 'EUR 42.00')
-    
+#--- EUR account and EUR transfer
+def app_eur_account_and_eur_transfer():
+    app = TestApp()
+    app.add_account('first', EUR)
+    app.add_account('second', EUR)
+    app.doc.show_selected_account()
+    app.add_entry(transfer='first', increase='42') # EUR
+    app.tpanel.load()
+    return app
+
+def test_amounts_display():
+    # The amounts' currency are explicitly displayed.
+    app = app_eur_account_and_eur_transfer()
+    eq_(app.stable[0].debit, 'EUR 42.00')
+    eq_(app.stable[1].credit, 'EUR 42.00')
+
+def test_change_amount_implicit_currency():
+    # When typing a currency-less amount, the transaction amount's currency is used.
+    app = app_eur_account_and_eur_transfer()
+    app.stable[0].debit = '64'
+    eq_(app.stable[0].debit, 'EUR 64.00')
+
 class OneTransactionWithMemos(TestCase, TestSaveLoadMixin, TestQIFExportImportMixin):
     # TestSaveLoadMixin: Make sure memos are loaded/saved
     # same for TestQIFExportImportMixin

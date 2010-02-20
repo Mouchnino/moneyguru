@@ -6,6 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from ..model.amount import parse_amount
 from .base import TransactionPanelGUIObject
 from .complete import CompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit
@@ -52,6 +53,13 @@ class SplitTableRow(RowWithDebitAndCredit):
         self.split = split
         self.load()
     
+    def _parse_amount(self, value):
+        if self.split.transaction.amount:
+            currency = self.split.transaction.amount.currency
+        else:
+            currency = self.table.document.app.default_currency
+        return parse_amount(value, currency)
+    
     def load(self):
         self._account = self.split.account.name if self.split.account else ''
         self._memo = self.split.memo
@@ -85,7 +93,7 @@ class SplitTableRow(RowWithDebitAndCredit):
     @credit.setter
     def credit(self, value):
         try:
-            self._credit = self.table.document.app.parse_amount(value)
+            self._credit = self._parse_amount(value)
         except ValueError:
             pass
     
@@ -96,7 +104,7 @@ class SplitTableRow(RowWithDebitAndCredit):
     @debit.setter
     def debit(self, value):
         try:
-            self._debit = self.table.document.app.parse_amount(value)
+            self._debit = self._parse_amount(value)
         except ValueError:
             pass
     
