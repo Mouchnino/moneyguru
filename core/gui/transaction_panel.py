@@ -13,6 +13,7 @@ from hsutil.misc import first
 
 from ..exception import OperationAborted
 from ..model.account import Account, AccountType
+from ..model.amount import parse_amount
 from ..model.transaction import Split, Transaction
 from .base import GUIPanel
 from .complete import CompletionMixIn
@@ -79,7 +80,11 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
     
     @amount.setter
     def amount(self, value):
-        amount = self.document.app.parse_amount(value)
+        if self.transaction.amount:
+            currency = self.transaction.amount.currency
+        else:
+            currency = self.document.app.default_currency
+        amount = parse_amount(value, currency)
         self.transaction.change(amount=amount)
         self.notify('split_changed')
     

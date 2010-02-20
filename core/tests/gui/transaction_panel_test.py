@@ -257,6 +257,23 @@ def test_stop_edition_on_mct_balance():
     app.tpanel.mct_balance()
     app.check_gui_calls_partial(app.stable_gui, ['stop_editing'])
 
+#--- Transaction with foreign amount
+def app_transaction_with_foreign_amount():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry(date='06/07/2008', description='description', increase='42 eur')
+    app.mainwindow.select_transaction_table()
+    app.ttable.select([0])
+    app.tpanel.load()
+    return app
+
+def test_set_amount_without_currency():
+    # The value typed in the amount field is considered as the same currency as the previous amount.
+    app = app_transaction_with_foreign_amount()
+    app.tpanel.amount = '45'
+    eq_(app.tpanel.amount, 'EUR 45.00')
+
 #--- Generators (tests with more than one setup)
 def test_can_do_mct_balance():
     def check(setupfunc, expected):
