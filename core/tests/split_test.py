@@ -8,10 +8,7 @@
 
 from nose.tools import eq_
 
-from hsutil.currency import USD, CAD
-
 from .base import TestCase, TestQIFExportImportMixin
-from ..model.account import AccountType
 
 class OneEmptyAccount(TestCase):
     def setUp(self):
@@ -242,26 +239,6 @@ class SplitWithNoAccount(TestCase):
     def test_transfer(self):
         """The transfer column don't include splits with no account"""
         self.assertEqual(self.etable[0].transfer, 'expense1')
-    
-
-class CADAssetAndUSDIncome(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('CAD Account', CAD)
-        self.add_account_legacy('USD Income', USD, account_type=AccountType.Income)
-        self.add_entry(transfer='CAD Account', increase='42')
-    
-    def test_set_split_amount(self):
-        """When setting an amount through the split interface, currencies can be set at will."""
-        # USD Income: credit 42 USD
-        # CAD Account: debit 42 USD
-        self.tpanel.load()
-        self.stable.select([1])
-        row = self.stable.selected_row
-        row.debit = '40'
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.assertEqual(self.etable[0].increase, '42.00')
     
 
 class SplitWithZeroAmounts(TestCase, TestQIFExportImportMixin):

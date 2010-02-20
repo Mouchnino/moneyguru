@@ -13,16 +13,19 @@ from nose.tools import eq_
 
 from hsutil.currency import PLN, CAD
 
-from .base import ApplicationGUI, TestCase as TestCaseBase, TestQIFExportImportMixin
+from .base import ApplicationGUI, TestCase as TestCaseBase, TestQIFExportImportMixin, TestApp
 from ..app import Application
 from ..exception import FileFormatError
 from ..model.date import MonthRange, YearRange
 
+def importall(app, filename):
+    app.doc.parse_file_for_import(filename)
+    while app.iwin.panes:
+        app.iwin.import_selected_pane()
+
 class TestCase(TestCaseBase):
     def importall(self, filename):
-        self.document.parse_file_for_import(filename)
-        while self.iwin.panes:
-            self.iwin.import_selected_pane()
+        importall(self.ta, filename)
     
 
 class Pristine(TestCase, TestQIFExportImportMixin):
@@ -241,32 +244,33 @@ class TripleOFXImportAcrossSessions(TestCase):
         self.assertEqual(len(self.etable), 3)
     
 
-class DoubleOFXImportWithASplitInTheMiddle(TestCase):
-    """Import an OFX, change one entry into a split, and then re-import"""
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.etable.select([2]) #retrait
-        row = self.etable.selected_row
-        row.transfer = 'account1'
-        self.etable.save_edits()
-        self.tpanel.load()
-        row = self.stable.selected_row
-        row.credit = '42'
-        self.stable.save_edits() # This will balance out the rest into Imbalance
-        self.tpanel.save()
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
-    
-    def test_split_wasnt_touched(self):
-        """When matching transaction and encountering a case where the old transaction was changed
-        into a split, bail out and don't touch the amounts"""
-        self.assertEqual(len(self.stable), 3)
-        self.assertEqual(self.stable[0].credit, '42.00')
-    
+#--- Double OFX import with split in the middle
+# Import an OFX, change one entry into a split, and then re-import.
+def app_double_ofx_import_with_split_in_the_middle():
+    app = TestApp()
+    app.doc.date_range = MonthRange(date(2008, 2, 1))
+    importall(app, TestCase.filepath('ofx', 'desjardins.ofx'))
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    app.etable.select([2]) #retrait
+    row = app.etable.selected_row
+    row.transfer = 'account1'
+    app.etable.save_edits()
+    app.tpanel.load()
+    app.stable.add()
+    app.stable[2].credit = '1'
+    app.stable.save_edits()
+    app.tpanel.save()
+    importall(app, TestCase.filepath('ofx', 'desjardins.ofx'))
+    return app
+
+def test_split_wasnt_touched():
+    # When matching transaction and encountering a case where the old transaction was changed
+    # into a split, bail out and don't touch the amounts.
+    app = app_double_ofx_import_with_split_in_the_middle()
+    eq_(len(app.stable), 3)
+    eq_(app.stable[2].credit, '1.00')
 
 class ImportAccountInGroup(TestCase):
     def setUp(self):

@@ -600,23 +600,24 @@ class Document(Broadcaster, Listener):
         assert entry is not None
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             Currency.get_rates_db().ensure_rates(date, [amount.currency.code, entry.account.currency.code])
-        transfer_changed = len(entry.splits) == 1 and transfer is not NOEDIT and transfer != entry.transfer
         global_scope = self._query_for_scope_if_needed([entry.transaction])
         action = self._get_action_from_changed_transactions([entry.transaction])
         self._undoer.record(action)
         
         min_date = entry.date if date is NOEDIT else min(entry.date, date)
         if amount is not NOEDIT:
+            old_amount = entry.split.amount
             entry.split.amount = amount
-        # if the entry is part of a Split entry, we don't need to balance, because the balancing
-        # occurs in set_split_amount()
-        # XXX WTF??
-        if len(entry.splits) == 1:
-            entry.transaction.balance_two_way(entry.split)
-            if transfer_changed:
-                auto_create_type = AccountType.Expense if entry.split.amount < 0 else AccountType.Income
-                transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
-                entry.splits[0].account = transfer_account
+            currency_changed = amount and (not old_amount or (amount.currency != old_amount.currency))
+            if currency_changed and len(entry.splits) == 1:
+                other_split = entry.splits[0]
+                if not other_split.account or other_split.account.is_income_statement_account():
+                    other_split.amount = -amount
+            entry.transaction.balance(entry.split)
+        if transfer is not NOEDIT and len(entry.splits) == 1 and transfer != entry.transfer:
+            auto_create_type = AccountType.Expense if entry.split.amount < 0 else AccountType.Income
+            transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
+            entry.splits[0].account = transfer_account
         if reconciliation_date is not NOEDIT:
             entry.split.reconciliation_date = reconciliation_date
         self._change_transaction(entry.transaction, date=date, description=description, 

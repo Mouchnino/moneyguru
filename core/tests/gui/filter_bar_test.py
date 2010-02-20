@@ -8,7 +8,7 @@
 
 from nose.tools import eq_
 
-from ..base import TestCase
+from ..base import TestCase, TestApp
 from ..reconciliation_test import CommonSetup
 from ...document import FilterType
 from ...model.account import AccountType
@@ -146,37 +146,36 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
         eq_(self.ttable[0].description, 'two')
     
 
-class SplitExpenseFromAssetAndLiability(TestCase):
-    # A transaction going to an expense, half coming from an asset, the other half coming from a
-    # liability
-    def setUp(self):
-        self.create_instances()
-        self.add_account('liability', account_type=AccountType.Liability)
-        self.add_account('asset')
-        self.document.show_selected_account()
-        self.add_entry(transfer='expense', decrease='100')
-        self.tpanel.load()
-        self.stable.select([0]) # the liability split
-        self.stable[0].credit = '50' # lower it to 50, creating an unassigned 50.
-        self.stable.save_edits()
-        self.stable.select([2])
-        self.stable[2].account = 'liability'
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.clear_gui_calls()
-        # we're now on etable, looking at 'asset'
+#--- Expense split between asset and liability
+# A transaction going to an expense, half coming from an asset, the other half coming from a
+# liability.
+def app_expense_split_between_asset_and_liability():
+    app = TestApp()
+    app.add_account('liability', account_type=AccountType.Liability)
+    app.add_account('asset')
+    app.doc.show_selected_account()
+    app.add_entry(transfer='expense', decrease='100')
+    app.tpanel.load()
+    app.stable.add()
+    app.stable[2].account = 'liability'
+    app.stable[2].credit = '50'
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.clear_gui_calls()
+    # we're now on etable, looking at 'asset'
+    return app
     
-    def test_efbar_increase_decrease(self):
-        self.efbar.filter_type = FilterType.Income # increase
-        eq_(len(self.etable), 0)
-        self.efbar.filter_type = FilterType.Expense # decrease
-        eq_(len(self.etable), 1)
-        # now, let's go to the liability side
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.liabilities[0]
-        self.bsheet.show_selected_account()
-        # we're still on FilterType.Expense (decrease)
-        eq_(len(self.etable), 0)
-        self.efbar.filter_type = FilterType.Income # increase
-        eq_(len(self.etable), 1)
-    
+def test_efbar_increase_decrease():
+    app = app_expense_split_between_asset_and_liability()
+    app.efbar.filter_type = FilterType.Income # increase
+    eq_(len(app.etable), 0)
+    app.efbar.filter_type = FilterType.Expense # decrease
+    eq_(len(app.etable), 1)
+    # now, let's go to the liability side
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.liabilities[0]
+    app.bsheet.show_selected_account()
+    # we're still on FilterType.Expense (decrease)
+    eq_(len(app.etable), 0)
+    app.efbar.filter_type = FilterType.Income # increase
+    eq_(len(app.etable), 1)

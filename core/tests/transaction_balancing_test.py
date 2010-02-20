@@ -77,14 +77,14 @@ def app_transaction_with_splits():
     return app
 
 def test_change_main_split():
-    # Changing a main split creates an adjustment split rather than balancing by re-adjusting the
-    # split that has just been edited.
+    # Changing a main split changes the transaction amount
     app = app_transaction_with_splits()
     dindex, cindex = first_debit_credit_indexes(app)
     app.stable[cindex].credit = '43'
     app.stable.save_edits()
-    eq_(len(app.stable), 4)
-    eq_(app.stable[3].debit, '1.00')
+    eq_(app.tpanel.amount, '43.00')
+    eq_(len(app.stable), 3)
+    eq_(app.stable[dindex].debit, '38.00')
 
 def test_set_amount():
     # Setting the amount of the txn adjusts the main splits.

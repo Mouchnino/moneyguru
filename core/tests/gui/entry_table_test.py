@@ -12,7 +12,7 @@ from nose.tools import eq_
 
 from hsutil.currency import EUR
 
-from ..base import TestCase, CommonSetup, TestQIFExportImportMixin
+from ..base import TestCase, CommonSetup, TestQIFExportImportMixin, TestApp
 from ...model.account import AccountType
 from ...model.date import YearRange
 
@@ -455,46 +455,47 @@ class ThreeEntriesDifferentDate(TestCase):
         eq_(self.etable.selected_indexes, [1])
     
 
-class SplitTransaction(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('first')
-        self.document.show_selected_account()
-        self.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
-        self.tpanel.load()
-        self.stable.select([0])
-        self.stable.selected_row.debit = '20'
-        self.stable.save_edits()
-        self.stable.select([2])
-        self.stable.selected_row.account = 'third'
-        self.stable.save_edits()
-        self.tpanel.save()
+#--- Split transaction
+def app_split_transaction():
+    app = TestApp()
+    app.add_account('first')
+    app.doc.show_selected_account()
+    app.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
+    app.tpanel.load()
+    app.stable.add()
+    app.stable.selected_row.account = 'third'
+    app.stable.selected_row.debit = '20'
+    app.stable.save_edits()
+    app.tpanel.save()
+    return app
     
-    def test_autofill(self):
-        # when the entry is part of a split, don't autofill the transfer
-        self.etable.add()
-        self.etable.edited.description = 'foobar'
-        eq_(self.etable.edited.transfer, '')
-    
-    def test_show_transfer_account(self):
-        # show_transfer_account() cycles through all splits of the entry
-        self.etable.show_transfer_account()
-        eq_(self.document.shown_account.name, 'second')
-        self.etable.show_transfer_account()
-        eq_(self.document.shown_account.name, 'third')
-        self.etable.show_transfer_account()
-        eq_(self.document.shown_account.name, 'first')
-    
-    def test_show_transfer_account_with_unassigned_split(self):
-        # If there's an unassigned split among the splits, just skip over it
-        self.mainwindow.edit_item()
-        self.stable.select([1]) # second
-        self.stable.selected_row.account = ''
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.etable.show_transfer_account() # skip unassigned, and to to third
-        eq_(self.document.shown_account.name, 'third')
-    
+def test_autofill():
+    # when the entry is part of a split, don't autofill the transfer
+    app = app_split_transaction()
+    app.etable.add()
+    app.etable.edited.description = 'foobar'
+    eq_(app.etable.edited.transfer, '')
+
+def test_show_transfer_account():
+    # show_transfer_account() cycles through all splits of the entry
+    app = app_split_transaction()
+    app.etable.show_transfer_account()
+    eq_(app.doc.shown_account.name, 'second')
+    app.etable.show_transfer_account()
+    eq_(app.doc.shown_account.name, 'third')
+    app.etable.show_transfer_account()
+    eq_(app.doc.shown_account.name, 'first')
+
+def test_show_transfer_account_with_unassigned_split():
+    # If there's an unassigned split among the splits, just skip over it
+    app = app_split_transaction()
+    app.mainwindow.edit_item()
+    app.stable.select([1]) # second
+    app.stable.selected_row.account = ''
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.etable.show_transfer_account() # skip unassigned, and to to third
+    eq_(app.doc.shown_account.name, 'third')    
 
 class TwoSplitsInTheSameAccount(TestCase):
     def setUp(self):

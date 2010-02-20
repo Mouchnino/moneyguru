@@ -23,7 +23,7 @@ from ..model.account import AccountType
 from ..model.currency import RatesDB
 from ..model.date import MonthRange
 from . import get_original_rates_db_ensure_rates
-from .base import ApplicationGUI, TestCase, TestSaveLoadMixin
+from .base import ApplicationGUI, TestCase, TestSaveLoadMixin, TestApp
 from .model.currency_test import FakeServer
 
 class TestCase(TestCase):
@@ -317,55 +317,59 @@ class ThreeCurrenciesTwoEntriesSaveLoad(TestCase):
         self.assertEqual(rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD'), 1.42)
     
 
-class OneMCT(TestCase):
-    """Two asset accounts, one MCT between the 2"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('CAD Account', CAD)
-        self.add_account_legacy('USD Account', USD)
-        self.add_entry(transfer='CAD Account', increase='42 usd')
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        row = self.etable.selected_row
-        row.decrease = '40 cad'
-        self.etable.save_edits()
-    
-    def test_add_imbalancing_split(self):
-        """Adding a split making one of the two currencies balance, while leaving the rest all on 
-        the same side makes moneyGuru rebalance this"""
-        self.tpanel.load()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.credit = '42 usd'
-        self.stable.save_edits() # Now we have CAD standing all alone
-        self.assertEqual(len(self.stable), 4)
-        self.assertEqual(self.stable[3].debit, 'CAD 40.00')
-    
-    def test_set_entry_increase(self):
-        """If we set up the CAD side to be an increase, the USD side must switch to decrease"""
-        # It's not because we changed the amount here that the USD side will have something else than 42
-        row = self.etable.selected_row
-        row.increase = '12 cad'
-        self.etable.save_edits()
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1]
-        self.bsheet.show_selected_account()
-        self.assertEqual(self.etable[0].decrease, '42.00')
-    
-    def test_set_split_to_logical_imbalance(self):
-        """The first split is the USD entry (a debit). If we set it to be a credit instead, we end
-        up with both splits on the same side. We must create balancing splits.
-        """
-        self.tpanel.load()
-        row = self.stable.selected_row
-        row.credit = '12 usd'
-        self.stable.save_edits()
-        self.assertEqual(len(self.stable), 4)
-        expected = set(['12.00', 'CAD 40.00'])
-        self.assertTrue(self.stable[2].debit in expected)
-        self.assertTrue(self.stable[3].debit in expected)
-    
+#--- Multi-currency transaction
+def app_multi_currency_transaction():
+    app = TestApp()
+    app.add_account('CAD Account', CAD)
+    app.add_account('USD Account', USD)
+    app.doc.show_selected_account()
+    app.add_entry(transfer='CAD Account', increase='42 usd')
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    row = app.etable.selected_row
+    row.decrease = '40 cad'
+    app.etable.save_edits()
+    return app
+
+def test_add_imbalancing_split():
+    # Adding a split making one of the two currencies balance, while leaving the rest all on 
+    # the same side makes moneyGuru rebalance this.
+    app = app_multi_currency_transaction()
+    app.tpanel.load()
+    app.stable.add()
+    row = app.stable.selected_row
+    row.credit = '42 usd'
+    app.stable.save_edits() # Now we have CAD standing all alone
+    eq_(len(app.stable), 4)
+    eq_(app.stable[3].debit, 'CAD 40.00')
+
+def test_set_entry_increase():
+    # If we set up the CAD side to be an increase, the USD side must switch to decrease
+    # It's not because we changed the amount here that the USD side will have something else than 42
+    app = app_multi_currency_transaction()
+    row = app.etable.selected_row
+    row.increase = '12 cad'
+    app.etable.save_edits()
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[1]
+    app.bsheet.show_selected_account()
+    eq_(app.etable[0].decrease, '42.00')
+
+def test_set_split_to_logical_imbalance():
+    # The first split is the USD entry (a debit). If we set it to be a credit instead, we end
+    # up with both splits on the same side. We must create balancing splits.
+    app = app_multi_currency_transaction()
+    app.tpanel.load()
+    app.stable.add()
+    app.stable[2].credit = '1 usd'
+    app.stable.save_edits()
+    app.stable[0].credit = '12 usd'
+    app.stable.save_edits()
+    eq_(len(app.stable), 4)
+    expected = set(['12.00', 'CAD 40.00'])
+    assert app.stable[2].debit in expected
+    assert app.stable[3].debit in expected
 
 class EntryWithXPFAmount(TestCase):
     def setUp(self):

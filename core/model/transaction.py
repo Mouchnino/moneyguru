@@ -55,61 +55,41 @@ class Transaction(object):
     def affected_accounts(self):
         return set(s.account for s in self.splits if s.account is not None)
     
-    def balance_two_way(self, strong_split):
-        """Balance a 2-split transaction in a way that 'strong_split' impose itself on the other part"""
-        assert len(self.splits) == 2
-        weak_split = self.splits[0]
-        if weak_split is strong_split:
-            weak_split = self.splits[1]
-        if strong_split.account and weak_split.account and strong_split.amount and weak_split.amount:
-            weak_type = weak_split.account.type
-            strong_type = strong_split.account.type
-            asset_liability = weak_type in (AccountType.Asset, AccountType.Liability) \
-                and strong_type in (AccountType.Asset, AccountType.Liability)
-            weak_native = weak_split.amount.currency == weak_split.account.currency
-            strong_native = strong_split.amount.currency == strong_split.account.currency
-            different_currency = weak_split.amount.currency != strong_split.amount.currency
-            if asset_liability and weak_native and strong_native and different_currency:
-                # MCT
-                if (weak_split.amount > 0) == (strong_split.amount > 0):
-                    # logical imbalance, switch the weak split
-                    weak_split.amount = -weak_split.amount
-                return
-        weak_split.amount = -strong_split.amount
-        self.amount = abs(strong_split.amount)
-    
     def balance(self, strong_split=None):
-        splits = self.splits
-        splits_with_amount = [s for s in splits if s.amount]
+        # For the special case where there is 2 splits on the same "side" and a strong split, we
+        # reverse the weak split
+        if len(self.splits) == 2 and strong_split is not None:
+            weak_split = self.splits[0] if self.splits[0] is not strong_split else self.splits[1]
+            if (weak_split.amount > 0) == (strong_split.amount > 0): # on the same side
+                weak_split.amount *= -1
+        splits_with_amount = [s for s in self.splits if s.amount]
         if splits_with_amount and not allsame(s.amount.currency for s in splits_with_amount):
             self.balance_currencies(strong_split)
             return
         # When the transaction amount is 0, the existing splits then determine what this amount is
         # going to be.
         if not self.amount:
-            debits = sum(s.debit for s in splits)
-            credits = sum(s.credit for s in splits)
+            debits = sum(s.debit for s in self.splits)
+            credits = sum(s.credit for s in self.splits)
             self.amount = max(debits, credits)
-        amount = self.amount
-        # For the special case where there is 2 splits on the same "side" and a strong split, we
-        # reverse the weak split
-        if len(splits) == 2 and strong_split is not None:
-            weak_split = splits[0] if splits[0] is not strong_split else splits[1]
-            if weak_split.debit == strong_split.debit: # on the same side
-                weak_split.amount *= -1
-        debits = sum(s.debit for s in splits)
-        credits = sum(s.credit for s in splits)
-        if debits == credits == amount:
-            return
+        debits = sum(s.debit for s in self.splits)
+        credits = sum(s.credit for s in self.splits)
         main_debit, main_credit = self.main_splits()
-        if debits != amount:
-            diff = amount - debits
+        # when a main split is edited, the amount is adjusted
+        if strong_split is main_debit:
+            self.amount = debits
+        elif strong_split is main_credit:
+            self.amount = credits
+        if debits == credits == self.amount:
+            return
+        if debits != self.amount:
+            diff = self.amount - debits
             if main_debit is None or main_debit is strong_split:
                 self.splits.append(Split(self, None, diff))
             else:
                 main_debit.amount += diff
-        if credits != amount:
-            diff = amount - credits
+        if credits != self.amount:
+            diff = self.amount - credits
             if main_credit is None or main_credit is strong_split:
                 self.splits.append(Split(self, None, -diff))
             else:

@@ -10,11 +10,10 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import USD, CAD
+from hsutil.currency import USD
 
 from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp
 from ...gui.transaction_table import TransactionTable
-from ...model.amount import Amount, format_amount, convert_amount
 from ...model.date import MonthRange, YearRange
 
 class Pristine(TestCase):
@@ -386,61 +385,55 @@ class OneTwoWayTransactionOtherWay(TestCase):
         self.assertEqual(row.amount, '42.00')
     
 
-class OneThreeWayTransaction(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('first')
-        self.document.show_selected_account()
-        self.add_entry('11/07/2008', description='foobar', transfer='second', decrease='42')
-        self.tpanel.load()
-        self.stable.select([1])
-        row = self.stable.selected_row
-        row.debit = '20'
-        self.stable.save_edits() # We now have a third "Unassigned" for 22
-        self.stable.select([2])
-        row = self.stable.selected_row
-        row.account = 'third'
-        self.stable.save_edits() # the 22 is now assigned to the newly created 'third'
-        self.tpanel.save()
-        self.mainwindow.select_transaction_table()
-    
-    def test_attributes(self):
-        """Transactions with more than 2 splits are supported"""
-        row = self.ttable[0]
-        self.assertEqual(row.from_, 'first')
-        self.assertEqual(row.to, 'second, third')
-        self.assertEqual(row.amount, '42.00')
-    
-    def test_autofill(self):
-        # when the txn a split, don't autofill the from/to fields
-        self.ttable.add()
-        self.ttable.edited.description = 'foobar'
-        self.assertEqual(self.ttable.edited.from_, '')
-        self.assertEqual(self.ttable.edited.to, '')
-    
-    def test_can_edit(self):
-        """Can't edit from, to and amount"""
-        # There is only one item in From
-        editable_columns = ['date', 'description', 'payee', 'checkno', 'from']
-        for colname in editable_columns:
-            assert self.ttable.can_edit_cell(colname, 0)
-        assert not self.ttable.can_edit_cell('to', 0)
-        assert not self.ttable.can_edit_cell('amount', 0)
-    
-    def test_edit_description(self):
-        """save_edits() works for non-two-way splits"""
-        row = self.ttable[0]
-        row.description = 'foobar'
-        self.ttable.save_edits() # no crash
-        self.assertEqual(self.ttable[0].description, 'foobar')
-    
-    def test_edit_from(self):
-        """When edited, the From column is saved"""
-        row = self.ttable[0]
-        row.from_ = 'fourth'
-        self.ttable.save_edits()
-        self.assertEqual(self.ttable[0].from_, 'fourth')
-    
+#--- Three-way transaction
+def app_three_way_transaction():
+    app = TestApp()
+    app.add_account('first')
+    app.doc.show_selected_account()
+    app.add_entry('11/07/2008', description='foobar', transfer='second', decrease='42')
+    app.tpanel.load()
+    app.stable.add()
+    row = app.stable.selected_row
+    row.account = 'third'
+    row.debit = '20'
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.mainwindow.select_transaction_table()
+    return app
+
+def test_autofill():
+    # when the txn a split, don't autofill the from/to fields
+    app = app_three_way_transaction()
+    app.ttable.add()
+    app.ttable.edited.description = 'foobar'
+    eq_(app.ttable.edited.from_, '')
+    eq_(app.ttable.edited.to, '')
+
+def test_can_edit():
+    # Can't edit from, to and amount.
+    # There is only one item in From
+    app = app_three_way_transaction()
+    editable_columns = ['date', 'description', 'payee', 'checkno', 'from']
+    for colname in editable_columns:
+        assert app.ttable.can_edit_cell(colname, 0)
+    assert not app.ttable.can_edit_cell('to', 0)
+    assert not app.ttable.can_edit_cell('amount', 0)
+
+def test_edit_description():
+    # save_edits() works for non-two-way splits.
+    app = app_three_way_transaction()
+    row = app.ttable[0]
+    row.description = 'foobar'
+    app.ttable.save_edits() # no crash
+    eq_(app.ttable[0].description, 'foobar')
+
+def test_edit_from():
+    # When edited, the From column is saved.
+    app = app_three_way_transaction()
+    row = app.ttable[0]
+    row.from_ = 'fourth'
+    app.ttable.save_edits()
+    eq_(app.ttable[0].from_, 'fourth')
 
 #--- Three-way multi-currency transaction
 def app_three_way_multi_currency_transaction():
@@ -464,11 +457,21 @@ def app_three_way_multi_currency_transaction():
     app.mainwindow.select_transaction_table()
     return app
 
+#--- Generators
 def test_attributes():
+    def check(app, index, expected):
+        row = app.ttable[index]
+        for attrname, value in expected.items():
+            eq_(getattr(row, attrname), value)
+    
+    # Transactions with more than 2 splits are supported.
+    app = app_three_way_transaction()
+    yield check, app, 0, {'from_': 'first', 'to': 'second, third', 'amount': '42.00'}
+    
     # When the 'to' side has more than one currency, convert everything to the account's currency.
     app = app_three_way_multi_currency_transaction()
     # (42 + 22 + (20 / .8)) / 2
-    eq_(app.ttable[0].amount, '44.50')
+    yield check, app, 0, {'amount': '44.50'}
 
 class OneFourWayTransactionWithUnassigned(TestCase):
     def setUp(self):
