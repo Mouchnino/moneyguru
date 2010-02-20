@@ -489,6 +489,7 @@ class Document(Broadcaster, Listener):
             if split.account is not None:
                 split.account = self.accounts.find(split.account.name, split.account.type)
         original.set_splits(new.splits)
+        original.amount = new.amount
         min_date = min(original.date, new.date)
         self._change_transaction(original, date=new.date, description=new.description,
             payee=new.payee, checkno=new.checkno, global_scope=global_scope)

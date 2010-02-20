@@ -8,7 +8,6 @@
 
 from operator import attrgetter
 
-from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
@@ -129,11 +128,7 @@ class TransactionTableRow(RowWithDate):
         UNASSIGNED = 'Unassigned' if len(tos) > 1 else ''
         get_display = lambda s: s.account.combined_display if s.account is not None else UNASSIGNED
         self._to = ', '.join(map(get_display, tos))
-        try:
-            self._amount = sum(s.amount for s in tos)
-        except ValueError: # currency coercing problem
-            currency = self.document.app.default_currency
-            self._amount = sum(convert_amount(s.amount, currency, transaction.date) for s in tos)
+        self._amount = transaction.amount
         self._amount_fmt = None
         self._recurrent = isinstance(transaction, Spawn)
         self._reconciled = any(split.reconciled for split in splits)

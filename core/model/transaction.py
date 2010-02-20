@@ -116,25 +116,32 @@ class Transaction(object):
                 main_credit.amount -= diff
     
     def balance_currencies(self, strong_split=None):
+        splits_with_amount = [s for s in self.splits if s.amount != 0]
+        if not splits_with_amount:
+            return
         currency2balance = defaultdict(int)
-        splits_with_amount = (s for s in self.splits if s.amount != 0)
         for split in splits_with_amount:
             currency2balance[split.amount.currency] += split.amount
         imbalanced = filter(None, currency2balance.values()) # filters out zeros (balances currencies)
-        if not imbalanced:
-            return
-        if not allsame(amount > 0 for amount in imbalanced):
-            return # not all on the same side
-        unassigned = [s for s in self.splits if s.account is None and s is not strong_split]
-        for amount in imbalanced:
-            split = first(s for s in unassigned if s.amount == 0 or s.amount.currency == amount.currency)
-            if split is not None:
-                if split.amount == amount: # we end up with a null split, remove it
-                    self.splits.remove(split)
+        # For a logical imbalance to be possible, all imbalanced amounts must be on the same side
+        if imbalanced and allsame(amount > 0 for amount in imbalanced):
+            unassigned = [s for s in self.splits if s.account is None and s is not strong_split]
+            for amount in imbalanced:
+                split = first(s for s in unassigned if s.amount == 0 or s.amount.currency == amount.currency)
+                if split is not None:
+                    if split.amount == amount: # we end up with a null split, remove it
+                        self.splits.remove(split)
+                    else:
+                        split.amount -= amount # adjust
                 else:
-                    split.amount -= amount # adjust
-            else:
-                self.splits.append(Split(self, None, -amount))
+                    self.splits.append(Split(self, None, -amount))
+        # We need an approximation for the amount value. What we do is we take the currency of the
+        # first split and use it as a base currency. Then, we sum up all amounts, convert them, and
+        # divide the sum by 2.
+        currency = splits_with_amount[0].amount.currency
+        convert = lambda a: convert_amount(abs(a), currency, self.date)
+        amount_sum = sum(convert(s.amount) for s in splits_with_amount)
+        self.amount = amount_sum * 0.5
     
     def change(self, date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT, from_=NOEDIT, 
                to=NOEDIT, amount=NOEDIT, currency=NOEDIT):
@@ -164,6 +171,7 @@ class Transaction(object):
             tochange = (s for s in self.splits if s.amount and s.amount.currency != currency)
             for split in tochange:
                 split.amount = Amount(split.amount.value, currency)
+            self.amount = Amount(self.amount.value, currency)
         self.mtime = time.time()
     
     def main_splits(self):

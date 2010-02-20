@@ -7,7 +7,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from datetime import date
+
 from nose.tools import eq_
+from hsutil.currency import USD
 
 from .base import TestApp
 
@@ -90,3 +93,22 @@ def test_set_amount():
     debit, credit = first_debit_credit(app)
     eq_(debit, '38.00')
     eq_(credit, '43.00')
+
+#--- Multi-Currency Transaction
+def app_multi_currency_transaction():
+    app = TestApp()
+    USD.set_CAD_value(0.8, date(2008, 1, 1))
+    app.add_txn('20/02/2010')
+    app.tpanel.load()
+    app.stable[0].credit = '44 usd'
+    app.stable.save_edits()
+    app.stable.select([1])
+    app.stable[1].debit = '42 cad'
+    app.stable.save_edits()
+    return app
+
+def test_amount():
+    # The amount of a multi-currency transaction is a conversion to native currency of all splits.
+    app = app_multi_currency_transaction()
+    # (44 + (42 / .8)) / 2
+    eq_(app.tpanel.amount, '48.25')

@@ -12,7 +12,7 @@ from nose.tools import eq_
 
 from hsutil.currency import USD, CAD
 
-from ..base import TestCase, TestSaveLoadMixin, CommonSetup
+from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp
 from ...gui.transaction_table import TransactionTable
 from ...model.amount import Amount, format_amount, convert_amount
 from ...model.date import MonthRange, YearRange
@@ -442,32 +442,33 @@ class OneThreeWayTransaction(TestCase):
         self.assertEqual(self.ttable[0].from_, 'fourth')
     
 
-class OneThreeWayTransactionMultipleCurrencies(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('first')
-        self.document.show_selected_account()
-        self.add_entry('11/07/2008', transfer='second', decrease='42')
-        self.tpanel.load()
-        self.stable.select([1])
-        row = self.stable.selected_row
-        row.debit = '20 cad'
-        self.stable.save_edits() # We now have a third "Unassigned" for 22
-        self.stable.add()
-        row = self.stable.selected_row
-        row.account = 'third'
-        row.debit = '22 usd'
-        self.stable.save_edits() # the 22 is now assigned to the newly created 'third'
-        self.tpanel.save()
-        self.mainwindow.select_transaction_table()
-    
-    def test_attributes(self):
-        """When the 'to' side has more than one currency, convert everything to the account's curency"""
-        converted = convert_amount(Amount(20, CAD), USD, date(2008, 7, 11))
-        expected = Amount(22, USD) + converted
-        row = self.ttable[0]
-        self.assertEqual(row.amount, format_amount(expected, USD))
-    
+#--- Three-way multi-currency transaction
+def app_three_way_multi_currency_transaction():
+    app = TestApp()
+    USD.set_CAD_value(0.8, date(2008, 1, 1))
+    app.add_account('first')
+    app.doc.show_selected_account()
+    app.add_entry('11/07/2008', transfer='second', decrease='42')
+    app.tpanel.load()
+    app.stable.select([1])
+    row = app.stable.selected_row
+    row.debit = '20 cad'
+    app.stable.save_edits()
+    app.stable.add()
+    row = app.stable.selected_row
+    row.account = 'third'
+    row.debit = '22 usd'
+    app.stable.save_edits()
+    txn = app.tpanel.original
+    app.tpanel.save()
+    app.mainwindow.select_transaction_table()
+    return app
+
+def test_attributes():
+    # When the 'to' side has more than one currency, convert everything to the account's currency.
+    app = app_three_way_multi_currency_transaction()
+    # (42 + 22 + (20 / .8)) / 2
+    eq_(app.ttable[0].amount, '44.50')
 
 class OneFourWayTransactionWithUnassigned(TestCase):
     def setUp(self):
