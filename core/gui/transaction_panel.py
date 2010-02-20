@@ -106,6 +106,7 @@ class TransactionPanel(PanelWithTransaction):
     
     def change_split(self, split, account_name, amount, memo):
         PanelWithTransaction.change_split(self, split, account_name, amount, memo)
+        self.view.refresh_amount()
         self.view.refresh_for_multi_currency()
     
     def delete_split(self, split):

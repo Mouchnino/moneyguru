@@ -40,6 +40,9 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         self.setupUi(self)
     
     #--- model --> view
+    def refresh_amount(self):
+        self.amountEdit.setText(self.model.amount)
+    
     def refresh_for_multi_currency(self):
         self.mctButton.setEnabled(self.model.is_multi_currency)
         self.amountEdit.setEnabled(not self.model.is_multi_currency)

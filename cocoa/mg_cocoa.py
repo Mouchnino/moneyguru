@@ -753,6 +753,9 @@ class PyTransactionPanel(PyPanel):
         self.py.amount = value
     
     #--- Python -> Cocoa
+    def refresh_amount(self):
+        self.cocoa.refreshAmount()
+    
     def refresh_for_multi_currency(self):
         self.cocoa.refreshForMultiCurrency()
     

@@ -73,6 +73,11 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Python --> Cocoa */
+- (void)refreshAmount
+{
+    [amountField setStringValue:[[self py] amount]];
+}
+
 - (void)refreshForMultiCurrency
 {
     BOOL mct = [[self py] isMultiCurrency];

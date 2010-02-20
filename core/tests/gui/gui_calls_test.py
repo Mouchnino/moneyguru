@@ -15,7 +15,7 @@ from hsutil.currency import EUR
 
 from ...document import FilterType
 from ...model.account import AccountType
-from ..base import TestCase
+from ..base import TestCase, TestApp
 
 class Pristine(TestCase):
     def setUp(self):
@@ -201,3 +201,18 @@ class TransactionBetweenAssetAndLiability(TestCase):
         self.check_gui_calls(self.etable_gui, ['show_selected_row', 'refresh'])
         self.check_gui_calls(self.balgraph_gui, ['refresh'])
     
+
+#--- Transaction with panel loaded
+def app_transaction_with_panel_loaded():
+    app = TestApp()
+    app.add_txn('20/02/2010', from_='foo', to='bar', amount='42')
+    app.tpanel.load()
+    app.clear_gui_calls()
+    return app
+
+def test_change_txn_amount_through_splits():
+    # Changing the transaction's amount through the splits updates the Amount field.
+    app = app_transaction_with_panel_loaded()
+    app.stable[0].debit = '54'
+    app.stable.save_edits()
+    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
