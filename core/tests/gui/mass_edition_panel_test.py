@@ -60,7 +60,8 @@ def app_two_transactions_different_value():
 def test_attributes():
     # All fields are disabled and empty.
     app = app_two_transactions_different_value()
-    assert app.mepanel.can_change_accounts_and_amount
+    assert app.mepanel.can_change_accounts
+    assert app.mepanel.can_change_amount
     assert not app.mepanel.date_enabled
     assert not app.mepanel.description_enabled
     assert not app.mepanel.payee_enabled
@@ -281,9 +282,10 @@ def app_two_transactions_one_split():
     app.mepanel.load()
     return app
     
-def test_cant_change_accounts_and_amount():
+def test_cant_change_accounts():
     app = app_two_transactions_one_split()
-    assert not app.mepanel.can_change_accounts_and_amount
+    assert not app.mepanel.can_change_accounts
+
 
 class TwoForeignTransactions(TestCase):
     def setUp(self):
@@ -312,3 +314,32 @@ class TwoForeignTransactions(TestCase):
         self.assertEqual(self.ttable[0].amount, 'CAD 42.00')
         self.assertEqual(self.ttable[1].amount, 'CAD 42.00')
     
+
+#--- Two transactions with a multi-currency one
+def app_two_transactions_with_a_multi_currency_one():
+    app = TestApp()
+    app.add_txn('20/02/2010')
+    app.tpanel.load()
+    app.stable[0].credit = '44 usd'
+    app.stable.save_edits()
+    app.stable.select([1])
+    app.stable[1].debit = '42 cad'
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.add_txn('20/02/2010')
+    app.ttable.select([0, 1])
+    app.mepanel.load()
+    return app
+
+#--- Generators
+def test_can_change_amount():
+    def check(app, expected):
+        eq_(app.mepanel.can_change_amount, expected)
+    
+    # Splits don't prevent the Amount field from being enabled
+    app = app_two_transactions_one_split()
+    yield check, app, True
+    
+    # If a MCT is selected, amount is not editable
+    app = app_two_transactions_with_a_multi_currency_one()
+    yield check, app, False

@@ -26,7 +26,8 @@ class MassEditionPanel(GUIPanel, CompletionMixIn):
         if len(transactions) < 2:
             raise OperationAborted()
         self._init_fields()
-        self.can_change_accounts_and_amount = all(len(t.splits) == 2 for t in transactions)
+        self.can_change_accounts = all(len(t.splits) == 2 for t in transactions)
+        self.can_change_amount = all(not t.is_mct for t in transactions)
         first = transactions[0]
         if allsame(t.date for t in transactions):
             self._date = first.date
@@ -40,25 +41,25 @@ class MassEditionPanel(GUIPanel, CompletionMixIn):
         splits = [s for s in splits if s.amount]
         if splits and allsame(s.amount.currency for s in splits):
             self._currency_index = Currency.all.index(splits[0].amount.currency)
-        if not self.can_change_accounts_and_amount:
-            return
-        def get_from(t):
-            s1, s2 = t.splits
-            return s1 if s1.amount <=0 else s2
+        if self.can_change_accounts:
+            def get_from(t):
+                s1, s2 = t.splits
+                return s1 if s1.amount <=0 else s2
         
-        def get_to(t):
-            s1, s2 = t.splits
-            return s2 if s1.amount <=0 else s1
+            def get_to(t):
+                s1, s2 = t.splits
+                return s2 if s1.amount <=0 else s1
         
-        def get_name(split):
-            return split.account.name if split.account is not None else ''
+            def get_name(split):
+                return split.account.name if split.account is not None else ''
         
-        if allsame(get_name(get_from(t)) for t in transactions):
-            self._from = get_name(get_from(first))
-        if allsame(get_name(get_to(t)) for t in transactions):
-            self._to = get_name(get_to(first))
-        if allsame(abs(t.splits[0].amount) for t in transactions):
-            self._amount = abs(first.splits[0].amount)
+            if allsame(get_name(get_from(t)) for t in transactions):
+                self._from = get_name(get_from(first))
+            if allsame(get_name(get_to(t)) for t in transactions):
+                self._to = get_name(get_to(first))
+        if self.can_change_amount:
+            if allsame(t.amount for t in transactions):
+                self._amount = first.amount
     
     def _save(self):
         transactions = self.document.selected_transactions
@@ -83,7 +84,8 @@ class MassEditionPanel(GUIPanel, CompletionMixIn):
     
     #--- Private
     def _init_fields(self):
-        self.can_change_accounts_and_amount = False
+        self.can_change_accounts = False
+        self.can_change_amount = False
         self.date_enabled = False
         self.description_enabled = False
         self.payee_enabled = False

@@ -11,7 +11,8 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface PyMassEditionPanel : PyPanel {}
 - (NSArray *)availableCurrencies;
-- (BOOL)canChangeAccountsAndAmount;
+- (BOOL)canChangeAccounts;
+- (BOOL)canChangeAmount;
 - (BOOL)dateEnabled;
 - (void)setDateEnabled:(BOOL)enabled;
 - (BOOL)descriptionEnabled;

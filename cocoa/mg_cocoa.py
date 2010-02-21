@@ -772,8 +772,12 @@ class PyMassEditionPanel(PyPanel):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
     @signature('c@:')
-    def canChangeAccountsAndAmount(self):
-        return self.py.can_change_accounts_and_amount
+    def canChangeAccounts(self):
+        return self.py.can_change_accounts
+    
+    @signature('c@:')
+    def canChangeAmount(self):
+        return self.py.can_change_amount
     
     @signature('c@:')
     def dateEnabled(self):

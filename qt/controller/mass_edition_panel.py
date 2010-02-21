@@ -47,10 +47,12 @@ class MassEditionPanel(Panel, Ui_MassEditionPanel):
     
     def _loadFields(self):
         Panel._loadFields(self)
-        disableableWidgets = [self.fromCheckBox, self.fromEdit, self.toCheckBox, self.toEdit, 
-            self.amountCheckBox, self.amountEdit]
+        disableableWidgets = [self.fromCheckBox, self.fromEdit, self.toCheckBox, self.toEdit]
         for widget in disableableWidgets:
-            self.fromCheckBox.setEnabled(self.model.can_change_accounts_and_amount)
+            self.fromCheckBox.setEnabled(self.model.can_change_accounts)
+        disableableWidgets = [self.amountCheckBox, self.amountEdit]
+        for widget in disableableWidgets:
+            self.fromCheckBox.setEnabled(self.model.can_change_amount)
     
     #--- model --> view
     def refresh(self):
