@@ -75,6 +75,12 @@ def test_reverse_main_split():
     eq_(app.stable[cindex].debit, '42.00')
     eq_(app.stable[dindex].credit, '42.00')
 
+def test_set_negative_amount():
+    # When a negative amount is specified, we simply reverse it.
+    app = app_simple_transaction()
+    app.tpanel.amount = '-12'
+    eq_(app.tpanel.amount, '12.00')
+
 #--- Transaction With Splits
 def app_transaction_with_splits():
     app = TestApp()

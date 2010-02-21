@@ -147,7 +147,7 @@ class Transaction(object):
         if amount is not NOEDIT:
             if not same_currency(amount, self.amount):
                 self.change(currency=amount.currency)
-            self.amount = amount
+            self.amount = abs(amount)
             self.balance()
         if currency is not NOEDIT:
             tochange = (s for s in self.splits if s.amount and s.amount.currency != currency)
