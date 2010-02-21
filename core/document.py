@@ -18,6 +18,7 @@ from .const import NOEDIT
 from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
 from .model.account import Account, Group, AccountList, GroupList, AccountType
+from .model.amount import same_currency
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     AllTransactionsRange, CustomDateRange, inc_month)
@@ -605,21 +606,14 @@ class Document(Broadcaster, Listener):
         self._undoer.record(action)
         
         min_date = entry.date if date is NOEDIT else min(entry.date, date)
+        if reconciliation_date is not NOEDIT:
+            entry.split.reconciliation_date = reconciliation_date
         if amount is not NOEDIT:
-            old_amount = entry.split.amount
-            entry.split.amount = amount
-            currency_changed = amount and (not old_amount or (amount.currency != old_amount.currency))
-            if currency_changed and len(entry.splits) == 1:
-                other_split = entry.splits[0]
-                if not other_split.account or other_split.account.is_income_statement_account():
-                    other_split.amount = -amount
-            entry.transaction.balance(entry.split)
+            entry.change_amount(amount)
         if transfer is not NOEDIT and len(entry.splits) == 1 and transfer != entry.transfer:
             auto_create_type = AccountType.Expense if entry.split.amount < 0 else AccountType.Income
             transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
             entry.splits[0].account = transfer_account
-        if reconciliation_date is not NOEDIT:
-            entry.split.reconciliation_date = reconciliation_date
         self._change_transaction(entry.transaction, date=date, description=description, 
             payee=payee, checkno=checkno, global_scope=global_scope)
         self._cook(from_date=min_date)

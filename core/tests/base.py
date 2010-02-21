@@ -347,6 +347,17 @@ class TestApp(object):
             row.checkno = checkno
         self.ttable.save_edits()
     
+    def bar_graph_data(self):
+        result = []
+        for x1, x2, y1, y2 in self.bargraph.data:
+            # We have to account for the padding...
+            padding = (x2 - x1) / 3
+            x1 = int(round(x1 - padding))
+            x2 = int(round(x2 + padding))
+            convert = lambda i: date.fromordinal(i).strftime('%d/%m/%Y')
+            result.append((convert(x1), convert(x2), '%2.2f' % y1, '%2.2f' % y2))
+        return result
+    
     def save_file(self):
         assert self.tmppath is not None
         filename = self.tmppath + 'foo.xml'
@@ -495,16 +506,8 @@ class TestCase(TestCaseBase):
     def balances(self):
         return [self.etable[i].balance for i in range(len(self.etable))]
     
-    def bar_graph_data(self):
-        result = []
-        for x1, x2, y1, y2 in self.bargraph.data:
-            # We have to account for the padding...
-            padding = (x2 - x1) / 3
-            x1 = int(round(x1 - padding))
-            x2 = int(round(x2 + padding))
-            convert = lambda i: date.fromordinal(i).strftime('%d/%m/%Y')
-            result.append((convert(x1), convert(x2), '%2.2f' % y1, '%2.2f' % y2))
-        return result
+    def bar_graph_data(self, *args, **kw):
+        return self.ta.bar_graph_data(*args, **kw)
     
     def close_and_load(self):
         self.document.close()

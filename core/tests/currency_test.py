@@ -16,6 +16,7 @@ from nose.tools import eq_
 from hsutil import io
 from hsutil.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil.decorators import log_calls
+from hsutil.testutil import Patcher, with_tmpdir
 
 from ..app import Application
 from ..model import currency
@@ -25,6 +26,17 @@ from ..model.date import MonthRange
 from . import get_original_rates_db_ensure_rates
 from .base import ApplicationGUI, TestCase, TestSaveLoadMixin, TestApp
 from .model.currency_test import FakeServer
+
+def with_fake_server(func):
+    def wrapper(*args, **kwargs):
+        with Patcher() as p:
+            p.patch(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
+            p.patch(xmlrpclib, 'ServerProxy', FakeServer)
+            p.patch(Currency, 'rates_db', RatesDB(':memory:', False)) # async
+            p.patch(currency, 'initialize_db', lambda path: None)
+            func(*args, **kwargs)
+    
+    return wrapper
 
 class TestCase(TestCase):
     def superSetUp(self):
@@ -155,53 +167,68 @@ class CADLiabilityAndUSDLiability(TestCase):
         self.assertEqual(self.etable[0].increase, '42.00')
     
 
-class EntryWithForeignCurrencyAmount(TestCase):
-    """2 accounts (including one income), one entry. The entry has an amount that differs from the 
-    account's currency. The rates db is mocked.
-    """
-    def setUp(self):
-        self.create_instances()
-        Currency.set_rates_db(RatesDB())
-        EUR.set_CAD_value(1.42, date(2007, 10, 1))
-        PLN.set_CAD_value(0.42, date(2007, 10, 1))
-        self.add_account_legacy('first', CAD)
-        self.add_account_legacy('second', PLN, account_type=AccountType.Income)
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.add_entry(date='1/10/2007', transfer='second', increase='42 eur')
-        self.document.date_range = MonthRange(date(2007, 10, 1))
-    
-    def test_bar_graph_data(self):
-        """The amount shown in the bar graph is a converted amount"""
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.istatement.show_selected_account()
-        self.assertEqual(self.bar_graph_data(), [('01/10/2007', '08/10/2007', '%2.2f' % ((42 * 1.42) / 0.42), '0.00')])
-    
-    def test_ensures_rates(self):
-        """Upon calling save and load, rates are asked for both EUR and PLN"""
-        rates_db = Currency.get_rates_db()
-        self.mock(rates_db, 'ensure_rates', log_calls(rates_db.ensure_rates))
-        filename = op.join(self.tmpdir(), 'foo.xml')
-        self.document.save_to_xml(filename)
-        self.document.load_from_xml(filename)
+#--- Entry with foreign currency
+# 2 accounts (including one income), one entry. The entry has an amount that differs from the 
+# account's currency.
+def app_entry_with_foreign_currency():
+    app = TestApp()
+    EUR.set_CAD_value(1.42, date(2007, 10, 1))
+    PLN.set_CAD_value(0.42, date(2007, 10, 1))
+    app.add_account('first', CAD)
+    app.add_account('second', PLN, account_type=AccountType.Income)
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    app.add_entry(date='1/10/2007', transfer='second', increase='42 eur')
+    app.doc.date_range = MonthRange(date(2007, 10, 1))
+    return app
+
+def test_bar_graph_data():
+    # The amount shown in the bar graph is a converted amount.
+    app = app_entry_with_foreign_currency()
+    app.mainwindow.select_income_statement()
+    app.istatement.selected = app.istatement.income[0]
+    app.istatement.show_selected_account()
+    eq_(app.bar_graph_data(), [('01/10/2007', '08/10/2007', '%2.2f' % ((42 * 1.42) / 0.42), '0.00')])
+
+def test_change_currency_from_income_account():
+    # Changing an amount to another currency from the perspective of an income account doesn't
+    # create an MCT.
+    app = app_entry_with_foreign_currency()
+    app.mainwindow.show_account() # now on the other side
+    app.etable[0].increase = '12pln'
+    app.etable.save_edits()
+    app.mainwindow.show_account()
+    eq_(app.etable[0].increase, 'PLN 12.00')
+
+@with_fake_server
+@with_tmpdir
+def test_ensures_rates(tmppath):
+    # Upon calling save and load, rates are asked for both EUR and PLN.
+    app = app_entry_with_foreign_currency()
+    rates_db = Currency.get_rates_db()
+    with Patcher() as p:
+        p.patch(rates_db, 'ensure_rates', log_calls(rates_db.ensure_rates))
+        filename = unicode(tmppath + 'foo.xml')
+        app.doc.save_to_xml(filename)
+        app.doc.load_from_xml(filename)
         calls = rates_db.ensure_rates.calls
-        self.assertEqual(len(calls), 1)
-        self.assertEqual(set(calls[0]['currencies']), set(['PLN', 'EUR', 'CAD']))
-        self.assertEqual(calls[0]['start_date'], date(2007, 10, 1))
-    
-    def test_entry_balance(self):
-        """The entry's balance is correctly incremented (using the exchange rate)"""
-        self.assertEqual(self.etable[0].balance, 'CAD %2.2f' % (42 * 1.42))
-    
-    def test_opposite_entry_balance(self):
-        """The 'other side' of the entry also have its balance correctly computed"""
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.istatement.show_selected_account()
-        self.assertEqual(self.etable[0].balance, 'PLN %2.2f' % ((42 * 1.42) / 0.42))
-    
+        eq_(len(calls), 1)
+        eq_(set(calls[0]['currencies']), set(['PLN', 'EUR', 'CAD']))
+        eq_(calls[0]['start_date'], date(2007, 10, 1))
+
+def test_entry_balance():
+    # The entry's balance is correctly incremented (using the exchange rate).
+    app = app_entry_with_foreign_currency()
+    eq_(app.etable[0].balance, 'CAD %2.2f' % (42 * 1.42))
+
+def test_opposite_entry_balance():
+    # The 'other side' of the entry also have its balance correctly computed.
+    app = app_entry_with_foreign_currency()
+    app.mainwindow.select_income_statement()
+    app.istatement.selected = app.istatement.income[0]
+    app.istatement.show_selected_account()
+    eq_(app.etable[0].balance, 'PLN %2.2f' % ((42 * 1.42) / 0.42))
 
 class CADAssetAndUSDIncome(TestCase):
     def setUp(self):

@@ -153,6 +153,7 @@ class Transaction(object):
             tochange = (s for s in self.splits if s.amount and s.amount.currency != currency)
             for split in tochange:
                 split.amount = Amount(split.amount.value, currency)
+                split.reconciliation_date = None
             self.amount = Amount(self.amount.value, currency)
         self.mtime = time.time()
     
@@ -259,7 +260,7 @@ class Split(object):
         self.transaction = transaction
         self.account = account
         self.memo = ''
-        self.amount = amount
+        self._amount = amount
         self.reconciliation_date = None
         self.reference = None
     
@@ -271,12 +272,22 @@ class Split(object):
         return self.account.name if self.account is not None else ''
     
     @property
+    def amount(self):
+        return self._amount
+    
+    @amount.setter
+    def amount(self, value):
+        if not same_currency(value, self._amount):
+            self.reconciliation_date = None
+        self._amount = value
+    
+    @property
     def credit(self):
-        return -self.amount if self.amount < 0 else 0
+        return -self._amount if self._amount < 0 else 0
     
     @property
     def debit(self):
-        return self.amount if self.amount > 0 else 0
+        return self._amount if self._amount > 0 else 0
     
     @property
     def reconciled(self):
@@ -294,8 +305,16 @@ class Entry(object):
     def __repr__(self):
         return '<Entry %r %r>' % (self.date, self.description)
     
-    def change(self, date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT):
-        self.transaction.change(date=date, description=description, payee=payee, checkno=checkno)
+    def change_amount(self, amount):
+        old_amount = self.split.amount
+        self.split.amount = amount
+        if not same_currency(amount, old_amount) and len(self.splits) == 1:
+            other_split = self.splits[0]
+            is_asset = self.account is not None and self.account.is_balance_sheet_account()
+            other_is_asset = other_split.account is not None and other_split.account.is_balance_sheet_account()
+            if not (is_asset and other_is_asset): # if is_asset and other_is_asset, then we have a MCT
+                other_split.amount = -amount
+        self.transaction.balance(self.split)
     
     def normal_balance(self):
         is_credit = self.account is not None and self.account.is_credit_account()

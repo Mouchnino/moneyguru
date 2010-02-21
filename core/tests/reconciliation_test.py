@@ -8,7 +8,7 @@
 
 from nose.tools import eq_
 
-from .base import TestCase, TestSaveLoadMixin, CommonSetup as CommonSetupBase
+from .base import TestCase, TestSaveLoadMixin, CommonSetup as CommonSetupBase, TestApp
 from ..model.account import AccountType
 
 class CommonSetup(CommonSetupBase):
@@ -146,6 +146,33 @@ class OneEntryInLiability(TestCase):
         # Previously, it would crash because it would try to negate None
         eq_(self.etable[0].balance, '')
     
+
+#--- Reconciled entry
+def app_reconciled_entry():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('11/07/2008', transfer='foo', decrease='42')
+    app.doc.toggle_reconciliation_mode()
+    app.etable.selected_row.toggle_reconciled()
+    app.doc.toggle_reconciliation_mode()
+    return app
+
+def test_change_amount_currency_dereconciles_entry():
+    # Changing an antry's amount to another currency de-reconciles it.
+    app = app_reconciled_entry()
+    app.etable[0].decrease = '12eur'
+    app.etable.save_edits()
+    assert not app.etable[0].reconciled
+
+def test_change_amount_currency_from_other_side_dereconciles_entry():
+    # Changing an entry's amount from the "other side" also de-reconcile that entry
+    app = app_reconciled_entry()
+    app.mainwindow.show_account()
+    app.etable[0].increase = '12eur'
+    app.etable.save_edits()
+    app.mainwindow.show_account()
+    assert not app.etable[0].reconciled
 
 class OneEntryReconciledDifferentDate(TestCase):
     # 1 entry, reconciled at a different date than its own date

@@ -287,33 +287,36 @@ def test_cant_change_accounts():
     assert not app.mepanel.can_change_accounts
 
 
-class TwoForeignTransactions(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('account1')
-        self.add_entry(increase='42 eur')
-        self.add_entry(increase='42 eur')
-        self.mainwindow.select_transaction_table()
-        self.ttable.select([0, 1])
-        self.mepanel.load()
-    
-    def test_attributes(self):
-        #The amount is shown with a currency code and the selected currency is the correct one
-        self.assertEqual(self.mepanel.amount, 'EUR 42.00')
-        self.assertEqual(self.mepanel.currency_index, 1) # EUR
-    
-    def test_change_currency(self):
-        # It's possible to mass edit currency
-        self.mepanel.currency_index = 3 # CAD
-        self.assertTrue(self.mepanel.currency_enabled)
-        self.mepanel.currency_index = -1
-        self.assertFalse(self.mepanel.currency_enabled)
-        self.mepanel.currency_index = 3 # CAD
-        self.assertTrue(self.mepanel.currency_enabled)
-        self.mepanel.save()
-        self.assertEqual(self.ttable[0].amount, 'CAD 42.00')
-        self.assertEqual(self.ttable[1].amount, 'CAD 42.00')
-    
+#--- Two foreign transactions
+def app_two_foreign_transactions():
+    app = TestApp()
+    app.add_account('account1')
+    app.mainwindow.show_account()
+    app.add_entry(increase='42 eur')
+    app.add_entry(increase='42 eur')
+    app.mainwindow.select_transaction_table()
+    app.ttable.select([0, 1])
+    app.mepanel.load()
+    return app
+
+def test_amount_has_correct_currency():
+    #The amount is shown with a currency code and the selected currency is the correct one
+    app = app_two_foreign_transactions()
+    eq_(app.mepanel.amount, 'EUR 42.00')
+    eq_(app.mepanel.currency_index, 1) # EUR
+
+def test_change_currency():
+    # It's possible to mass edit currency
+    app = app_two_foreign_transactions()
+    app.mepanel.currency_index = 3 # CAD
+    assert app.mepanel.currency_enabled
+    app.mepanel.currency_index = -1
+    assert not app.mepanel.currency_enabled
+    app.mepanel.currency_index = 3 # CAD
+    assert app.mepanel.currency_enabled
+    app.mepanel.save()
+    eq_(app.ttable[0].amount, 'CAD 42.00')
+    eq_(app.ttable[1].amount, 'CAD 42.00')
 
 #--- Two transactions with a multi-currency one
 def app_two_transactions_with_a_multi_currency_one():
