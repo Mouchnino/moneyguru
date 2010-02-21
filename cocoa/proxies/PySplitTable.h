@@ -11,4 +11,5 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyTransactionPanel.h"
 
 @interface PySplitTable : PyTable {}
+- (BOOL)isRowMainAtIndex:(NSInteger)index;
 @end

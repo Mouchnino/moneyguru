@@ -14,4 +14,26 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super initWithPyClassName:@"PySplitTable" pyParent:aPanel view:aTableView];
     return self;
 }
+
+- (PySplitTable *)py
+{
+    return (PySplitTable *)py;
+}
+
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+    if ([aCell isKindOfClass:[NSTextFieldCell class]]) {
+        BOOL isMain = [[self py] isRowMainAtIndex:row];
+        NSTextFieldCell *cell = aCell;
+        NSFont *font = [cell font];
+        NSFontManager *fontManager = [NSFontManager sharedFontManager];
+        if (isMain) {
+            font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
+        }
+        else {
+            font = [fontManager convertFont:font toNotHaveTrait:NSFontBoldTrait];
+        }
+        [cell setFont:font];
+    }
+}
 @end

@@ -711,6 +711,11 @@ class PyAccountPanel(PyPanel):
 class PySplitTable(PyTable):
     py_class = SplitTable
     # pyparent is a PyTransactionPanel
+    
+    @signature('c@:i')
+    def isRowMainAtIndex_(self, index):
+        return self.py[index].is_main
+    
 
 class PyTransactionPanel(PyPanel):
     py_class = TransactionPanel

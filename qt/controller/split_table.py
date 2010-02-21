@@ -8,6 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QFont
 
 from core.gui.split_table import SplitTable as SplitTableModel
 from .column import Column, ACCOUNT_EDIT
@@ -25,5 +26,12 @@ class SplitTable(Table):
         model = SplitTableModel(view=self, transaction_panel=transactionPanel.model)
         Table.__init__(self, model, view)
         self.setColumnsWidth(None)
+    
+    def _getData(self, row, column, role):
+        if role == Qt.FontRole:
+            font = QFont(self.view.font())
+            font.setBold(row.is_main)
+            return font
+        return Table._getData(self, row, column, role)
     
 

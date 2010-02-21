@@ -120,6 +120,23 @@ class OneTransactionBeingAdded(TestCase):
             self.fail("When the table is empty, don't try to delete")
     
 
+#--- Transaction with splits
+def app_transaction_with_splits():
+    app = TestApp()
+    app.add_txn(from_='foo', to='bar', amount='42')
+    app.mainwindow.edit_item()
+    app.stable.add()
+    app.stable[2].credit = '3'
+    app.stable.save_edits()
+    return app
+
+def test_row_is_main():
+    # Row.is_main return True if the split is one of the main splits.
+    app = app_transaction_with_splits()
+    assert app.stable[0].is_main
+    assert app.stable[1].is_main
+    assert not app.stable[2].is_main
+
 #--- EUR account and EUR transfer
 def app_eur_account_and_eur_transfer():
     app = TestApp()
