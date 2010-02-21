@@ -80,6 +80,7 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
     
     @amount.setter
     def amount(self, value):
+        assert not self.transaction.is_mct
         if self.transaction.amount:
             currency = self.transaction.amount.currency
         else:

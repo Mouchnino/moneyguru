@@ -271,3 +271,6 @@ def prorate_amount(amount, spread_over_range, wanted_range):
         return 0
     rate = intersect.days / spread_over_range.days
     return amount * rate
+
+def same_currency(amount1, amount2):
+    return not (amount1 and amount2 and amount1.currency != amount2.currency)

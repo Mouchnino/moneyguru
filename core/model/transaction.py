@@ -14,7 +14,7 @@ from hsutil.misc import allsame, first, nonone
 
 from ..const import NOEDIT
 from .account import AccountType
-from .amount import Amount, convert_amount
+from .amount import Amount, convert_amount, same_currency
 
 class Transaction(object):
     def __init__(self, date, description=None, payee=None, checkno=None, account=None, amount=None):
@@ -145,6 +145,8 @@ class Transaction(object):
                 tsplits = tsplits[0]
                 tsplits.account = to
         if amount is not NOEDIT:
+            if not same_currency(amount, self.amount):
+                self.change(currency=amount.currency)
             self.amount = amount
             self.balance()
         if currency is not NOEDIT:

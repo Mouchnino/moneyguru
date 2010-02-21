@@ -55,6 +55,15 @@ def test_add_split_adjusts_main_splits():
     eq_(debit, '41.00')
     eq_(credit, '42.00')
 
+def test_change_amount_currency():
+    # Setting an amount of a different currency in the Amount field changes all splits' currency.
+    app = app_simple_transaction()
+    app.tpanel.amount = '12pln'
+    eq_(app.tpanel.amount, 'PLN 12.00')
+    debit, credit = first_debit_credit(app)
+    eq_(debit, 'PLN 12.00')
+    eq_(credit, 'PLN 12.00')
+
 def test_reverse_main_split():
     # Reversing (changing it from debit to credit or vice versa) a main split reverses the other
     # main split.
