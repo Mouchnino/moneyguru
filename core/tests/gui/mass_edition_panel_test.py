@@ -6,11 +6,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from datetime import date
+from nose.tools import eq_, assert_raises
+from hsutil.testutil import with_tmpdir, patch_today
 
-from nose.tools import assert_raises
-
-from ..base import TestCase
+from ..base import TestCase, TestApp
 from ...exception import OperationAborted
 
 class Pristine(TestCase):
@@ -43,145 +42,158 @@ class TwoTransactions(TestCase):
         self.mepanel.load() # No OperationAborted
     
 
-class TwoTransactionsDifferentValues(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('from1')
-        self.add_entry(date='06/07/2008', description='description1', payee='payee1', checkno='42', transfer='to1', decrease='42')
-        self.add_account_legacy('from2')
-        self.add_entry(date='07/07/2008', description='description2', payee='payee2', checkno='43', transfer='to2', decrease='43')
-        self.mainwindow.select_transaction_table()
-        self.ttable.select([0, 1])
-        self.mepanel.load()
-    
-    def test_attributes(self):
-        """All fields are disabled and empty"""
-        self.assertTrue(self.mepanel.can_change_accounts_and_amount)
-        self.assertFalse(self.mepanel.date_enabled)
-        self.assertFalse(self.mepanel.description_enabled)
-        self.assertFalse(self.mepanel.payee_enabled)
-        self.assertFalse(self.mepanel.checkno_enabled)
-        self.assertFalse(self.mepanel.from_enabled)
-        self.assertFalse(self.mepanel.to_enabled)
-        self.assertFalse(self.mepanel.amount_enabled)
-        self.assertEqual(self.mepanel.date, self.app.format_date(date.today()))
-        self.assertEqual(self.mepanel.description, '')
-        self.assertEqual(self.mepanel.payee, '')
-        self.assertEqual(self.mepanel.checkno, '')
-        self.assertEqual(self.mepanel.from_, '')
-        self.assertEqual(self.mepanel.to, '')
-        self.assertEqual(self.mepanel.amount, '0.00')
-    
-    def test_change_field(self):
-        # Changing a field enables the associated checkbox
-        self.clear_gui_calls()
-        self.mepanel.date = '08/07/2008'
-        assert self.mepanel.date_enabled
-        # just make sure they are not changed all at once
-        assert not self.mepanel.description_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-        self.mepanel.description = 'foobar'
-        assert self.mepanel.description_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-        self.mepanel.payee = 'foobar'
-        assert self.mepanel.payee_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-        self.mepanel.checkno = '44'
-        assert self.mepanel.checkno_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-        self.mepanel.from_ = 'foobar'
-        assert self.mepanel.from_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-        self.mepanel.to = 'foobar'
-        assert self.mepanel.to_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-        self.mepanel.amount = '44'
-        assert self.mepanel.amount_enabled
-        self.check_gui_calls(self.mepanel_gui, ['refresh'])
-    
-    def test_change_field_to_none(self):
-        """the mass panel considers replaces None values with ''"""
-        self.mepanel.description = None
-        self.mepanel.payee = None
-        self.mepanel.checkno = None
-        self.mepanel.from_ = None
-        self.mepanel.to = None
-        self.mepanel.amount = None
-        self.assertFalse(self.mepanel.description_enabled)
-        self.assertFalse(self.mepanel.payee_enabled)
-        self.assertFalse(self.mepanel.checkno_enabled)
-        self.assertFalse(self.mepanel.from_enabled)
-        self.assertFalse(self.mepanel.to_enabled)
-        self.assertFalse(self.mepanel.amount_enabled)
-        self.assertEqual(self.mepanel.description, '')
-        self.assertEqual(self.mepanel.payee, '')
-        self.assertEqual(self.mepanel.checkno, '')
-        self.assertEqual(self.mepanel.from_, '')
-        self.assertEqual(self.mepanel.to, '')
-        self.assertEqual(self.mepanel.amount, '0.00')
-    
-    def test_change_and_save(self):
-        """save() performs mass edits on selected transactions"""
-        self.save_file()
-        self.mepanel.date = '08/07/2008'
-        self.mepanel.description = 'description3'
-        self.mepanel.payee = 'payee3'
-        self.mepanel.checkno = '44'
-        self.mepanel.from_ = 'from3'
-        self.mepanel.to = 'to3'
-        self.mepanel.amount = '44'
-        self.mepanel.save()
-        self.assertTrue(self.document.is_dirty())
-        for row in self.ttable:
-            self.assertEqual(row.date, '08/07/2008')
-            self.assertEqual(row.description, 'description3')
-            self.assertEqual(row.payee, 'payee3')
-            self.assertEqual(row.checkno, '44')
-            self.assertEqual(row.from_, 'from3')
-            self.assertEqual(row.to, 'to3')
-            self.assertEqual(row.amount, '44.00')
-    
-    def test_change_date_only(self):
-        """Only change checked fields"""
-        self.mepanel.date = '08/07/2008'
-        self.mepanel.description = 'description3'
-        self.mepanel.payee = 'payee3'
-        self.mepanel.checkno = '44'
-        self.mepanel.from_ = 'from3'
-        self.mepanel.to = 'to3'
-        self.mepanel.amount = '44'
-        self.mepanel.description_enabled = False
-        self.mepanel.payee_enabled = False
-        self.mepanel.checkno_enabled = False
-        self.mepanel.from_enabled = False
-        self.mepanel.to_enabled = False
-        self.mepanel.amount_enabled = False
-        self.mepanel.save()
-        row = self.ttable[0]
-        self.assertEqual(row.date, '08/07/2008')
-        self.assertEqual(row.description, 'description1')
-        self.assertEqual(row.payee, 'payee1')
-        self.assertEqual(row.checkno, '42')
-        self.assertEqual(row.from_, 'from1')
-        self.assertEqual(row.to, 'to1')
-        self.assertEqual(row.amount, '42.00')
-    
-    def test_change_description_only(self):
-        """test_change_date_only is not enough for complete coverage"""
-        self.mepanel.date = '08/07/2008'
-        self.mepanel.description = 'description3'
-        self.mepanel.date_enabled = False
-        self.mepanel.save()
-        row = self.ttable[0]
-        self.assertEqual(row.date, '06/07/2008')
-        self.assertEqual(row.description, 'description3')
-    
-    def test_completion(self):
-        """Here, we just want to make sure that complete() responds. We don't want to re-test 
-        completion, we just want to make sure that the panel is of the right subclass"""
-        self.add_account_legacy() # the tpanel's completion must not be ependant on the selected account (like entries)
-        self.assertEqual(self.mepanel.complete('d', 'description'), 'description2')
-    
+#--- Two transactions different values
+def app_two_transactions_different_value():
+    app = TestApp()
+    app.add_account('from1')
+    app.mainwindow.show_account()
+    app.add_entry(date='06/07/2008', description='description1', payee='payee1', checkno='42', transfer='to1', decrease='42')
+    app.add_account('from2')
+    app.mainwindow.show_account()
+    app.add_entry(date='07/07/2008', description='description2', payee='payee2', checkno='43', transfer='to2', decrease='43')
+    app.mainwindow.select_transaction_table()
+    app.ttable.select([0, 1])
+    app.mepanel.load()
+    return app
+
+@patch_today(2010, 2, 20)
+def test_attributes():
+    # All fields are disabled and empty.
+    app = app_two_transactions_different_value()
+    assert app.mepanel.can_change_accounts_and_amount
+    assert not app.mepanel.date_enabled
+    assert not app.mepanel.description_enabled
+    assert not app.mepanel.payee_enabled
+    assert not app.mepanel.checkno_enabled
+    assert not app.mepanel.from_enabled
+    assert not app.mepanel.to_enabled
+    assert not app.mepanel.amount_enabled
+    eq_(app.mepanel.date, '20/02/2010')
+    eq_(app.mepanel.description, '')
+    eq_(app.mepanel.payee, '')
+    eq_(app.mepanel.checkno, '')
+    eq_(app.mepanel.from_, '')
+    eq_(app.mepanel.to, '')
+    eq_(app.mepanel.amount, '0.00')
+
+def test_change_field():
+    # Changing a field enables the associated checkbox
+    app = app_two_transactions_different_value()
+    app.clear_gui_calls()
+    app.mepanel.date = '08/07/2008'
+    assert app.mepanel.date_enabled
+    # just make sure they are not changed all at once
+    assert not app.mepanel.description_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.description = 'foobar'
+    assert app.mepanel.description_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.payee = 'foobar'
+    assert app.mepanel.payee_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.checkno = '44'
+    assert app.mepanel.checkno_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.from_ = 'foobar'
+    assert app.mepanel.from_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.to = 'foobar'
+    assert app.mepanel.to_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.amount = '44'
+    assert app.mepanel.amount_enabled
+    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+
+def test_change_field_to_none():
+    # the mass panel considers replaces None values with ''.
+    app = app_two_transactions_different_value()
+    app.mepanel.description = None
+    app.mepanel.payee = None
+    app.mepanel.checkno = None
+    app.mepanel.from_ = None
+    app.mepanel.to = None
+    app.mepanel.amount = None
+    assert not app.mepanel.description_enabled
+    assert not app.mepanel.payee_enabled
+    assert not app.mepanel.checkno_enabled
+    assert not app.mepanel.from_enabled
+    assert not app.mepanel.to_enabled
+    assert not app.mepanel.amount_enabled
+    eq_(app.mepanel.description, '')
+    eq_(app.mepanel.payee, '')
+    eq_(app.mepanel.checkno, '')
+    eq_(app.mepanel.from_, '')
+    eq_(app.mepanel.to, '')
+    eq_(app.mepanel.amount, '0.00')
+
+@with_tmpdir
+def test_change_and_save(tmppath):
+    # save() performs mass edits on selected transactions.
+    app = app_two_transactions_different_value()
+    app.tmppath = tmppath
+    app.save_file()
+    app.mepanel.date = '08/07/2008'
+    app.mepanel.description = 'description3'
+    app.mepanel.payee = 'payee3'
+    app.mepanel.checkno = '44'
+    app.mepanel.from_ = 'from3'
+    app.mepanel.to = 'to3'
+    app.mepanel.amount = '44'
+    app.mepanel.save()
+    assert app.doc.is_dirty()
+    for row in app.ttable:
+        eq_(row.date, '08/07/2008')
+        eq_(row.description, 'description3')
+        eq_(row.payee, 'payee3')
+        eq_(row.checkno, '44')
+        eq_(row.from_, 'from3')
+        eq_(row.to, 'to3')
+        eq_(row.amount, '44.00')
+
+def test_change_date_only():
+    # Only change checked fields.
+    app = app_two_transactions_different_value()
+    app.mepanel.date = '08/07/2008'
+    app.mepanel.description = 'description3'
+    app.mepanel.payee = 'payee3'
+    app.mepanel.checkno = '44'
+    app.mepanel.from_ = 'from3'
+    app.mepanel.to = 'to3'
+    app.mepanel.amount = '44'
+    app.mepanel.description_enabled = False
+    app.mepanel.payee_enabled = False
+    app.mepanel.checkno_enabled = False
+    app.mepanel.from_enabled = False
+    app.mepanel.to_enabled = False
+    app.mepanel.amount_enabled = False
+    app.mepanel.save()
+    row = app.ttable[0]
+    eq_(row.date, '08/07/2008')
+    eq_(row.description, 'description1')
+    eq_(row.payee, 'payee1')
+    eq_(row.checkno, '42')
+    eq_(row.from_, 'from1')
+    eq_(row.to, 'to1')
+    eq_(row.amount, '42.00')
+
+def test_change_description_only():
+    # test_change_date_only is not enough for complete coverage.
+    app = app_two_transactions_different_value()
+    app.mepanel.date = '08/07/2008'
+    app.mepanel.description = 'description3'
+    app.mepanel.date_enabled = False
+    app.mepanel.save()
+    row = app.ttable[0]
+    eq_(row.date, '06/07/2008')
+    eq_(row.description, 'description3')
+
+def test_completion():
+    # Here, we just want to make sure that complete() responds. We don't want to re-test 
+    # completion, we just want to make sure that the panel is of the right subclass.
+    app = app_two_transactions_different_value()
+    app.add_account() # the tpanel's completion must not be dependant on the selected account (like entries)
+    app.mainwindow.show_account()
+    eq_(app.mepanel.complete('d', 'description'), 'description2')
 
 class TwoTransactionsSameValues(TestCase):
     def setUp(self):
@@ -228,6 +240,7 @@ class TwoTransactionsSameValues(TestCase):
     
     def test_load_again(self):
         """load() blanks values when necessary"""
+        self.mock_today(2010, 2, 20)
         self.mepanel.date_enabled = True
         self.mepanel.description_enabled = True
         self.mepanel.payee_enabled = True
@@ -244,31 +257,33 @@ class TwoTransactionsSameValues(TestCase):
         self.assertFalse(self.mepanel.from_enabled)
         self.assertFalse(self.mepanel.to_enabled)
         self.assertFalse(self.mepanel.amount_enabled)
-        self.assertEqual(self.mepanel.date, self.app.format_date(date.today()))
+        self.assertEqual(self.mepanel.date, '20/02/2010')
         self.assertEqual(self.mepanel.description, '')
         self.assertEqual(self.mepanel.payee, '')
         self.assertEqual(self.mepanel.checkno, '')
         
 
-class TwoTransactionsOneSplit(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('account1')
-        self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
-        self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
-        self.tpanel.load()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.account = 'account3'
-        row.debit = '24'
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.etable.select([0, 1])
-        self.mepanel.load()
+#--- Two transactions one split
+def app_two_transactions_one_split():
+    app = TestApp()
+    app.add_account('account1')
+    app.mainwindow.show_account()
+    app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
+    app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
+    app.tpanel.load()
+    app.stable.add()
+    row = app.stable.selected_row
+    row.account = 'account3'
+    row.debit = '24'
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.etable.select([0, 1])
+    app.mepanel.load()
+    return app
     
-    def test_attributes(self):
-        self.assertFalse(self.mepanel.can_change_accounts_and_amount)
-    
+def test_cant_change_accounts_and_amount():
+    app = app_two_transactions_one_split()
+    assert not app.mepanel.can_change_accounts_and_amount
 
 class TwoForeignTransactions(TestCase):
     def setUp(self):

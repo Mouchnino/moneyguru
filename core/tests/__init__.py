@@ -9,7 +9,7 @@
 
 import xmlrpclib
 
-from hsutil.patcher import Patcher
+from hsutil.testutil import Patcher
 
 from ..model.currency import RatesDB
 from ..model import currency as currency_module

@@ -145,7 +145,8 @@ class DictLoader(base.Loader):
 
 @nottest
 class TestApp(object):
-    def __init__(self, app=None, doc=None):
+    def __init__(self, app=None, doc=None, tmppath=None):
+        self.tmppath = tmppath
         if app is None:
             app = Application(ApplicationGUI())
         self.app = app
@@ -345,6 +346,11 @@ class TestApp(object):
         if checkno is not None:
             row.checkno = checkno
         self.ttable.save_edits()
+    
+    def save_file(self):
+        assert self.tmppath is not None
+        filename = self.tmppath + 'foo.xml'
+        self.doc.save_to_xml(unicode(filename)) # reset the dirty flag
     
 
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
