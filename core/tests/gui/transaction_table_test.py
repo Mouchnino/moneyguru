@@ -409,16 +409,6 @@ def test_autofill():
     eq_(app.ttable.edited.from_, '')
     eq_(app.ttable.edited.to, '')
 
-def test_can_edit():
-    # Can't edit from, to and amount.
-    # There is only one item in From
-    app = app_three_way_transaction()
-    editable_columns = ['date', 'description', 'payee', 'checkno', 'from']
-    for colname in editable_columns:
-        assert app.ttable.can_edit_cell(colname, 0)
-    assert not app.ttable.can_edit_cell('to', 0)
-    assert not app.ttable.can_edit_cell('amount', 0)
-
 def test_edit_description():
     # save_edits() works for non-two-way splits.
     app = app_three_way_transaction()
@@ -434,6 +424,13 @@ def test_edit_from():
     row.from_ = 'fourth'
     app.ttable.save_edits()
     eq_(app.ttable[0].from_, 'fourth')
+
+def test_set_amount():
+    # Setting the amount value on a split transaction is possible.
+    app = app_three_way_transaction()
+    app.ttable[0].amount = '43'
+    app.ttable.save_edits()
+    eq_(app.ttable[0].amount, '43.00')
 
 #--- Three-way multi-currency transaction
 def app_three_way_multi_currency_transaction():
@@ -472,6 +469,23 @@ def test_attributes():
     app = app_three_way_multi_currency_transaction()
     # (42 + 22 + (20 / .8)) / 2
     yield check, app, 0, {'amount': '44.50'}
+
+def test_can_edit():
+    def check(app, index, uneditable_fields):
+        for colname in ['date', 'description', 'payee', 'checkno', 'from', 'to', 'amount']:
+            if colname in uneditable_fields:
+                assert not app.ttable.can_edit_cell(colname, index)
+            else:
+                assert app.ttable.can_edit_cell(colname, index)                
+    
+    # All fields are editable except "to" which contains 2 accounts (from has only one so it's
+    # editable).
+    app = app_three_way_transaction()
+    yield check, app, 0, ('to', )
+    
+    # When the transaction is multi-currency, the amount can't be edited.
+    app = app_three_way_multi_currency_transaction()
+    yield check, app, 0, ('to', 'amount')
 
 class OneFourWayTransactionWithUnassigned(TestCase):
     def setUp(self):

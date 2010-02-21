@@ -133,15 +133,16 @@ class TransactionTableRow(RowWithDate):
         self._recurrent = isinstance(transaction, Spawn)
         self._reconciled = any(split.reconciled for split in splits)
         self._is_budget = getattr(transaction, 'is_budget', False)
+        self._is_mct = transaction.is_mct
     
     def save(self):
         kw = {'date': self._date, 'description': self._description, 'payee': self._payee,
               'checkno': self._checkno}
-        if self._from_count == 1:
+        if self.can_edit_from:
             kw['from_'] = self._from
-        if self._to_count == 1:
+        if self.can_edit_to == 1:
             kw['to'] = self._to
-        if self._from_count == self._to_count == 1:
+        if self.can_edit_amount:
             kw['amount'] = self._amount
         self.document.change_transactions([self.transaction], **kw)
         self.load()
@@ -180,7 +181,7 @@ class TransactionTableRow(RowWithDate):
     
     @property
     def can_edit_amount(self):
-        return self._from_count == self._to_count == 1
+        return not self._is_mct
     
     @property
     def amount(self):
