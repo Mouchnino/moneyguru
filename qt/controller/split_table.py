@@ -18,10 +18,10 @@ MIME_INDEX = 'application/moneyguru.splitindex'
 
 class SplitTable(Table):
     COLUMNS = [
-        Column('account', 'Account', 88, editor=ACCOUNT_EDIT),
+        Column('account', 'Account', 100, editor=ACCOUNT_EDIT),
         Column('memo', 'Memo', 70),
-        Column('debit', 'Debit', 70, alignment=Qt.AlignRight),
-        Column('credit', 'Credit', 70, alignment=Qt.AlignRight),
+        Column('debit', 'Debit', 90, alignment=Qt.AlignRight),
+        Column('credit', 'Credit', 90, alignment=Qt.AlignRight),
     ]
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled | Qt.ItemIsDropEnabled
     
