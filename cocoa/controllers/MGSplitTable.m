@@ -8,10 +8,13 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGSplitTable.h"
 
+#define MGSplitPasteboardType @"MGSplitPasteboardType"
+
 @implementation MGSplitTable
 - (id)initWithTransactionPanel:(PyPanel *)aPanel view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PySplitTable" pyParent:aPanel view:aTableView];
+    [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGSplitPasteboardType]];
     return self;
 }
 
@@ -20,6 +23,35 @@ http://www.hardcoded.net/licenses/hs_license
     return (PySplitTable *)py;
 }
 
+/* Datasource */
+- (BOOL)tableView:(NSTableView *)tv writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard*)pboard
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+    [pboard declareTypes:[NSArray arrayWithObject:MGSplitPasteboardType] owner:self];
+    [pboard setData:data forType:MGSplitPasteboardType];
+    return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row 
+       proposedDropOperation:(NSTableViewDropOperation)op
+{
+    if (op == NSTableViewDropAbove) {
+        return NSDragOperationMove;
+    }
+    return NSDragOperationNone;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info
+              row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+    NSPasteboard *pboard = [info draggingPasteboard];
+    NSData *rowData = [pboard dataForType:MGSplitPasteboardType];
+    NSIndexSet *rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+    [[self py] moveSplitFromRow:[rowIndexes firstIndex] toRow:row];
+    return YES;
+}
+
+/* Delegate */
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     if ([aCell isKindOfClass:[NSTextFieldCell class]]) {

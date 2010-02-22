@@ -39,6 +39,14 @@ class SplitTable(GUITable, TransactionPanelGUIObject, CompletionMixIn):
     def _update_selection(self):
         self.document.select_splits([row.split for row in self.selected_rows])
     
+    #--- Public
+    def move_split(self, from_index, to_index):
+        row = self[from_index]
+        row.split.move_to_index(to_index)
+        self.refresh()
+        self.select([to_index])
+        self.view.refresh()
+    
     #--- Event Handlers
     def panel_loaded(self):
         self.refresh()

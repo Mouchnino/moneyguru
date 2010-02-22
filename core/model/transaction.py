@@ -267,6 +267,12 @@ class Split(object):
     def __repr__(self):
         return '<Split %r %s>' % (self.account_name, self.amount)
     
+    #--- Public
+    def move_to_index(self, index):
+        self.transaction.splits.remove(self)
+        self.transaction.splits.insert(index, self)
+    
+    #--- Properties
     @property
     def account_name(self):
         return self.account.name if self.account is not None else ''

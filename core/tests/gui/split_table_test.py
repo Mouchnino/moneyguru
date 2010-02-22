@@ -126,9 +126,23 @@ def app_transaction_with_splits():
     app.add_txn(from_='foo', to='bar', amount='42')
     app.mainwindow.edit_item()
     app.stable.add()
+    app.stable[2].account = 'baz'
     app.stable[2].credit = '3'
     app.stable.save_edits()
     return app
+
+def test_move_split():
+    # It's possible to move splits around
+    app = app_transaction_with_splits()
+    # order of first 2 splits is not defined
+    first_account = app.stable[0].account
+    second_account = app.stable[1].account
+    app.stable.move_split(1, 0)
+    eq_(app.stable[0].account, second_account)
+    eq_(app.stable.selected_indexes, [0])
+    app.stable.move_split(1, 2)
+    eq_(app.stable[2].account, first_account)
+    eq_(app.stable.selected_indexes, [2])
 
 def test_row_is_main():
     # Row.is_main return True if the split is one of the main splits.
