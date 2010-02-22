@@ -162,6 +162,12 @@ def test_change_date():
     app.tpanel.date = '17/07/2008'
     app.check_gui_calls_partial(app.tpanel_gui, not_expected=['refresh_repeat_options'])
 
+def test_set_invalid_amount():
+    # Invalid amounts are ignored and the old value is reverted
+    app = app_entry_with_amount_panel_loaded()
+    app.tpanel.amount = 'invalid' # no crash
+    eq_(app.tpanel.amount, '42.00')
+
 #--- Two Amountless Entries
 def app_two_amountless_entries():
     app = TestApp()

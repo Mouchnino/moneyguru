@@ -57,6 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
+    [tabView selectFirstTabViewItem:self];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
     [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
@@ -64,6 +65,8 @@ http://www.hardcoded.net/licenses/hs_license
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
+    [amountField setStringValue:[[self py] amount]];
+    [amountField2 setStringValue:[[self py] amount]];
     [splitTable refresh];
 }
 
@@ -76,6 +79,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setDescription:[descriptionField stringValue]];
     [[self py] setPayee:[payeeField stringValue]];
     [[self py] setCheckno:[checknoField stringValue]];
+    [[self py] setAmount:[amountField stringValue]];
 }
 
 /* Actions */
@@ -96,6 +100,21 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Python --> Cocoa */
+- (void)refreshAmount
+{
+    [amountField setStringValue:[[self py] amount]];
+    [amountField2 setStringValue:[[self py] amount]];
+}
+
+- (void)refreshForMultiCurrency
+{
+    BOOL mct = [[self py] isMultiCurrency];
+    [amountField setEnabled:!mct];
+    [amountField2 setEnabled:!mct];
+    [mctNotice setHidden:!mct];
+    [mctNotice2 setHidden:!mct];
+}
+
 - (void)refreshRepeatEvery
 {
     [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
@@ -114,10 +133,18 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
     id control = [aNotification object];
-    if (control == repeatEveryField) // must be edited right away to update the desc label
+    if (control == repeatEveryField) {
+        // must be edited right away to update the desc label
         [[self py] setRepeatEvery:[repeatEveryField intValue]];
-    else if (control == startDateField) // must be edited right away to update the repeat options
+    }
+    else if (control == startDateField) {
+        // must be edited right away to update the repeat options
         [[self py] setStartDate:[startDateField stringValue]];
+    }
+    else if ((control == amountField) || (control == amountField2)) {
+        // must be edited right away to refresh the split table
+        [[self py] setAmount:[(NSTextField *)control stringValue]];
+    }
     // for the repeatType field, it's handled in repeatTypeSelected:
 }
 

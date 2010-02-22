@@ -721,22 +721,7 @@ class PySplitTable(PyTable):
         return self.py[index].is_main
     
 
-class PyTransactionPanel(PyPanel):
-    py_class = TransactionPanel
-
-    def mctBalance(self):
-        self.py.mct_balance()
-    
-    @signature('c@:')
-    def isMultiCurrency(self):
-        return self.py.is_multi_currency
-    
-    def date(self):
-        return self.py.date
-    
-    def setDate_(self, value):
-        self.py.date = value
-    
+class PyPanelWithTransaction(PyPanel):
     def description(self):
         return self.py.description
     
@@ -761,12 +746,29 @@ class PyTransactionPanel(PyPanel):
     def setAmount_(self, value):
         self.py.amount = value
     
+    @signature('c@:')
+    def isMultiCurrency(self):
+        return self.py.is_multi_currency
+    
     #--- Python -> Cocoa
     def refresh_amount(self):
         self.cocoa.refreshAmount()
     
     def refresh_for_multi_currency(self):
         self.cocoa.refreshForMultiCurrency()
+    
+
+class PyTransactionPanel(PyPanelWithTransaction):
+    py_class = TransactionPanel
+
+    def mctBalance(self):
+        self.py.mct_balance()
+    
+    def date(self):
+        return self.py.date
+    
+    def setDate_(self, value):
+        self.py.date = value
     
 
 class PyMassEditionPanel(PyPanel):
@@ -905,7 +907,7 @@ class PyMassEditionPanel(PyPanel):
         self.py.currency_index = value
     
 
-class PySchedulePanel(PyPanel):
+class PySchedulePanel(PyPanelWithTransaction):
     py_class = SchedulePanel
     
     def startDate(self):
@@ -919,24 +921,6 @@ class PySchedulePanel(PyPanel):
     
     def setStopDate_(self, value):
         self.py.stop_date = value
-    
-    def description(self):
-        return self.py.description
-    
-    def setDescription_(self, value):
-        self.py.description = value
-    
-    def payee(self):
-        return self.py.payee
-    
-    def setPayee_(self, value):
-        self.py.payee = value
-    
-    def checkno(self):
-        return self.py.checkno
-    
-    def setCheckno_(self, value):
-        self.py.checkno = value
     
     @signature('i@:')
     def repeatEvery(self):

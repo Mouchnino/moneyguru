@@ -7,18 +7,13 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyPanel.h"
+#import "PyPanelWithTransaction.h"
 
-@interface PySchedulePanel : PyPanel {}
+@interface PySchedulePanel : PyPanelWithTransaction {}
 - (NSString *)startDate;
 - (void)setStartDate:(NSString *)startDate;
 - (NSString *)stopDate;
 - (void)setStopDate:(NSString *)stopDate;
-- (NSString *)description;
-- (void)setDescription:(NSString *)description;
-- (NSString *)payee;
-- (void)setPayee:(NSString *)payee;
-- (NSString *)checkno;
 - (void)setCheckno:(NSString *)checkno;
 - (NSInteger)repeatEvery;
 - (void)setRepeatEvery:(NSInteger)value;

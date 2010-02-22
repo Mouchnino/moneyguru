@@ -7,19 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyPanel.h"
+#import "PyPanelWithTransaction.h"
 
-@interface PyTransactionPanel : PyPanel {}
+@interface PyTransactionPanel : PyPanelWithTransaction {}
 - (NSString *)date;
 - (void)setDate:(NSString *)date;
-- (NSString *)description;
-- (void)setDescription:(NSString *)description;
-- (NSString *)payee;
-- (void)setPayee:(NSString *)payee;
-- (NSString *)checkno;
-- (void)setCheckno:(NSString *)checkno;
-- (NSString *)amount;
-- (void)setAmount:(NSString *)amount;
 - (void)mctBalance;
-- (BOOL)isMultiCurrency;
 @end

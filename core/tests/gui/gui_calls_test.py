@@ -17,84 +17,97 @@ from ...document import FilterType
 from ...model.account import AccountType
 from ..base import TestCase, TestApp
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.check_gui_calls(self.bsheet_gui, ['refresh'])
-        self.check_gui_calls(self.mainwindow_gui, ['refresh_date_range_selector', 'show_balance_sheet'])
-        self.clear_gui_calls()
-    
-    def test_add_group(self):
-        # Adding a group refreshes the view and goes into edit mode.
-        self.bsheet.add_account_group()
-        expected_calls = ['stop_editing', 'start_editing', 'refresh', 'update_selection']
-        self.check_gui_calls(self.bsheet_gui, expected_calls)
-        # When doing an action that modifies the undo stack, refresh_undo_actions is called
-        # (we're not testing all actions on this one because it's just tiresome and, frankly, a
-        # little silly, but assume that all events broadcasted when the undo stack is changed
-        # have been connected)
-        self.check_gui_calls(self.mainwindow_gui, ['refresh_undo_actions'])
-    
-    def test_add_transaction(self):
-        # Adding a transaction causes a refresh_undo_actions() gui call and the tview's totals to
-        # be updated.
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
-        self.ttable.add()
-        self.ttable[0].description = 'foobar'
-        self.ttable.save_edits()
-        self.check_gui_calls(self.mainwindow_gui, ['refresh_undo_actions'])
-        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
-    
-    def test_change_default_currency(self):
-        # When the default currency is changed, all gui refresh themselves
-        self.app.default_currency = EUR
-        self.check_gui_calls(self.bsheet_gui, ['refresh'])
-        self.check_gui_calls(self.nwgraph_gui, ['refresh'])
-        self.check_gui_calls(self.apie_gui, ['refresh'])
-        self.check_gui_calls(self.lpie_gui, ['refresh'])
-        # but not if it stays the same
-        self.app.default_currency = EUR
-        self.check_gui_calls_partial(self.bsheet_gui, not_expected=['refresh'])
-    
-    def test_new_budget(self):
-        # Repeat options must be updated upon panel load
-        self.add_account('income', account_type=AccountType.Income) # we need an account for the panel to load
-        self.mainwindow.select_budget_table()
-        self.mainwindow.new_item()
-        self.check_gui_calls_partial(self.bpanel_gui, ['refresh_repeat_options'])
-    
-    def test_new_schedule(self):
-        # Repeat options must be updated upon panel load
-        self.mainwindow.select_schedule_table()
-        self.mainwindow.new_item()
-        self.check_gui_calls_partial(self.scpanel_gui, ['refresh_repeat_options'])
-    
-    def test_show_transaction_table(self):
-        # tview's totals label is refreshed upon connecting.
-        self.mainwindow.show_transaction_table()
-        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
-    
-    def test_sort_table(self):
-        # sorting a table refreshes it.
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
-        self.ttable.sort_by('description')
-        self.check_gui_calls(self.ttable_gui, ['refresh'])
-    
-    def test_ttable_add_and_cancel(self):
-        # gui calls on the ttable are correctly made
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
-        self.ttable.add()
-        # stop_editing must happen first
-        expected = ['stop_editing', 'refresh', 'start_editing']
-        self.check_gui_calls(self.ttable_gui, expected, verify_order=True)
-        self.ttable.cancel_edits()
-        # again, stop_editing must happen first
-        expected = ['stop_editing', 'refresh']
-        self.check_gui_calls(self.ttable_gui, expected, verify_order=True)
-    
+#--- No Setup
+def test_initial_gui_calls():
+    app = TestApp()
+    app.check_gui_calls(app.bsheet_gui, ['refresh'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_date_range_selector', 'show_balance_sheet'])
+
+#--- Cleared GUI calls
+def app_cleared_gui_calls():
+    app = TestApp()
+    app.clear_gui_calls()
+    return app
+
+def test_add_group():
+    # Adding a group refreshes the view and goes into edit mode.
+    app = app_cleared_gui_calls()
+    app.bsheet.add_account_group()
+    expected_calls = ['stop_editing', 'start_editing', 'refresh', 'update_selection']
+    app.check_gui_calls(app.bsheet_gui, expected_calls)
+    # When doing an action that modifies the undo stack, refresh_undo_actions is called
+    # (we're not testing all actions on this one because it's just tiresome and, frankly, a
+    # little silly, but assume that all events broadcasted when the undo stack is changed
+    # have been connected)
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_undo_actions'])
+
+def test_add_transaction():
+    # Adding a transaction causes a refresh_undo_actions() gui call and the tview's totals to
+    # be updated.
+    app = app_cleared_gui_calls()
+    app.mainwindow.select_transaction_table()
+    app.clear_gui_calls()
+    app.ttable.add()
+    app.ttable[0].description = 'foobar'
+    app.ttable.save_edits()
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_undo_actions'])
+    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+
+def test_change_default_currency():
+    # When the default currency is changed, all gui refresh themselves
+    app = app_cleared_gui_calls()
+    app.app.default_currency = EUR
+    app.check_gui_calls(app.bsheet_gui, ['refresh'])
+    app.check_gui_calls(app.nwgraph_gui, ['refresh'])
+    app.check_gui_calls(app.apie_gui, ['refresh'])
+    app.check_gui_calls(app.lpie_gui, ['refresh'])
+    # but not if it stays the same
+    app.app.default_currency = EUR
+    app.check_gui_calls_partial(app.bsheet_gui, not_expected=['refresh'])
+
+def test_new_budget():
+    # Repeat options must be updated upon panel load
+    app = app_cleared_gui_calls()
+    app.add_account('income', account_type=AccountType.Income) # we need an account for the panel to load
+    app.mainwindow.select_budget_table()
+    app.mainwindow.new_item()
+    app.check_gui_calls_partial(app.bpanel_gui, ['refresh_repeat_options'])
+
+def test_new_schedule():
+    # Repeat options and mct notices must be updated upon panel load
+    app = app_cleared_gui_calls()
+    app.mainwindow.select_schedule_table()
+    app.mainwindow.new_item()
+    expected = ['refresh_for_multi_currency', 'refresh_repeat_options']
+    app.check_gui_calls_partial(app.scpanel_gui, expected)
+
+def test_show_transaction_table():
+    # tview's totals label is refreshed upon connecting.
+    app = app_cleared_gui_calls()
+    app.mainwindow.show_transaction_table()
+    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+
+def test_sort_table():
+    # sorting a table refreshes it.
+    app = app_cleared_gui_calls()
+    app.mainwindow.select_transaction_table()
+    app.clear_gui_calls()
+    app.ttable.sort_by('description')
+    app.check_gui_calls(app.ttable_gui, ['refresh'])
+
+def test_ttable_add_and_cancel():
+    # gui calls on the ttable are correctly made
+    app = app_cleared_gui_calls()
+    app.mainwindow.select_transaction_table()
+    app.clear_gui_calls()
+    app.ttable.add()
+    # stop_editing must happen first
+    expected = ['stop_editing', 'refresh', 'start_editing']
+    app.check_gui_calls(app.ttable_gui, expected, verify_order=True)
+    app.ttable.cancel_edits()
+    # again, stop_editing must happen first
+    expected = ['stop_editing', 'refresh']
+    app.check_gui_calls(app.ttable_gui, expected, verify_order=True)
 
 class PristineOnTransactionView(TestCase):
     def setUp(self):

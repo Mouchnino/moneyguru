@@ -72,7 +72,6 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setPayee:[payeeField stringValue]];
     [[self py] setCheckno:[checknoField stringValue]];
     [[self py] setAmount:[amountField stringValue]];
-    [[self py] setAmount:[amountField2 stringValue]];
 }
 
 /* Python --> Cocoa */

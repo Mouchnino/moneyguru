@@ -15,6 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PySchedulePanel.h"
 
 @interface MGSchedulePanel : MGPanel {
+    IBOutlet NSTabView *tabView;
     IBOutlet MGTextField *startDateField;
     IBOutlet MGTextField *repeatEveryField;
     IBOutlet NSTextField *repeatEveryDescLabel;
@@ -23,6 +24,10 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGTextField *descriptionField;
     IBOutlet MGTextField *payeeField;
     IBOutlet MGTextField *checknoField;
+    IBOutlet NSTextField *amountField;
+    IBOutlet NSTextField *amountField2;
+    IBOutlet NSTextField *mctNotice;
+    IBOutlet NSTextField *mctNotice2;
     IBOutlet MGTableView *splitTableView;
     
     MGSplitTable *splitTable;

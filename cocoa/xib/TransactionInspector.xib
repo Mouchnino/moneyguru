@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="167"/>
+			<integer value="294"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -47,6 +47,7 @@
 				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSWindowContentMinSize">{485, 289}</string>
 				<object class="NSView" key="NSWindowView" id="651783136">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -359,7 +360,7 @@
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="727354944">
 													<int key="NSCellFlags">67239488</int>
-													<int key="NSCellFlags2">4326400</int>
+													<int key="NSCellFlags2">138544128</int>
 													<string key="NSContents">You can navigate tabs with ⌘⌥→ and ⌘⌥←</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<string key="NSPlaceholderString">No entry selected</string>
@@ -828,6 +829,7 @@
 					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSMinSize">{485, 311}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 		</object>
@@ -1685,9 +1687,9 @@
 					<integer value="0"/>
 					<string>{{286, 322}, {473, 395}}</string>
 					<integer value="0"/>
-					<integer value="0"/>
+					<boolean value="YES"/>
 					<string>{473, 111}</string>
-					<string>{473, 111}</string>
+					<string>{485, 289}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

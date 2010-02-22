@@ -88,10 +88,13 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
             currency = self.transaction.amount.currency
         else:
             currency = self.document.app.default_currency
-        amount = parse_amount(value, currency)
-        self.transaction.change(amount=amount)
+        try:
+            amount = parse_amount(value, currency)
+            self.transaction.change(amount=amount)
+            self.notify('split_changed')
+        except ValueError:
+            pass
         self.view.refresh_amount()
-        self.notify('split_changed')
     
     @property
     def is_multi_currency(self):
