@@ -95,7 +95,6 @@
 		CE873AC10E21622F004F63E9 /* MGTransactionInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8D0E21622F004F63E9 /* MGTransactionInspector.m */; };
 		CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8F0E21622F004F63E9 /* MGUndoManager.m */; };
 		CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA00E21622F004F63E9 /* MGGradientBar.m */; };
-		CE873AC50E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA20E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m */; };
 		CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA60E21622F004F63E9 /* MGScrollView.m */; };
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
 		CE873AC90E21622F004F63E9 /* MGTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAA0E21622F004F63E9 /* MGTextField.m */; };
@@ -390,8 +389,6 @@
 		CE873A9B0E21622F004F63E9 /* PyTransactionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPanel.h; sourceTree = "<group>"; };
 		CE873A9F0E21622F004F63E9 /* MGGradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGradientBar.h; sourceTree = "<group>"; };
 		CE873AA00E21622F004F63E9 /* MGGradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGradientBar.m; sourceTree = "<group>"; };
-		CE873AA10E21622F004F63E9 /* MGHorizontalSplitViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGHorizontalSplitViewDelegate.h; sourceTree = "<group>"; };
-		CE873AA20E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGHorizontalSplitViewDelegate.m; sourceTree = "<group>"; };
 		CE873AA50E21622F004F63E9 /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
 		CE873AA60E21622F004F63E9 /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
 		CE873AA70E21622F004F63E9 /* MGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableView.h; sourceTree = "<group>"; };
@@ -908,8 +905,6 @@
 				CE873AA00E21622F004F63E9 /* MGGradientBar.m */,
 				0714240A0E2A797800AC27AC /* MGGraphView.h */,
 				0714240B0E2A797800AC27AC /* MGGraphView.m */,
-				CE873AA10E21622F004F63E9 /* MGHorizontalSplitViewDelegate.h */,
-				CE873AA20E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m */,
 				0714240C0E2A797800AC27AC /* MGLineGraphView.h */,
 				0714240D0E2A797800AC27AC /* MGLineGraphView.m */,
 				CEEED1CD0E3F5FD100BBA154 /* MGReconciliationCell.h */,
@@ -1296,7 +1291,6 @@
 				CE873AC10E21622F004F63E9 /* MGTransactionInspector.m in Sources */,
 				CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */,
 				CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */,
-				CE873AC50E21622F004F63E9 /* MGHorizontalSplitViewDelegate.m in Sources */,
 				CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */,
 				CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */,
 				CE873AC90E21622F004F63E9 /* MGTextField.m in Sources */,
