@@ -101,6 +101,18 @@ def test_change_main_split():
     eq_(len(app.stable), 3)
     eq_(app.stable[dindex].debit, '38.00')
 
+def test_delete_main_split():
+    # Deleting a main split doesn't affect the txn amount. It recreates an unassigned split at
+    # stable's bottom.
+    app = app_transaction_with_splits()
+    dindex, cindex = first_debit_credit_indexes(app)
+    app.stable.select([cindex])
+    app.stable.delete()
+    # an unassigned split has been created and the '5' split has been moved up.
+    eq_(app.tpanel.amount, '42.00')
+    eq_(app.stable[1].debit, '5.00')
+    eq_(app.stable[2].credit, '42.00')
+
 def test_set_amount():
     # Setting the amount of the txn adjusts the main splits.
     app = app_transaction_with_splits()

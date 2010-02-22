@@ -223,6 +223,12 @@ def test_change_txn_amount_through_splits():
     app.stable.save_edits()
     app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
 
+def test_delete_split():
+    # Deleting a split calls refresh_amount. This is in caste the txn is multi-currency.
+    app = app_transaction_with_panel_loaded()
+    app.stable.delete()
+    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
+
 def test_move_split():
     # The split table is refreshed after a move
     app = app_transaction_with_panel_loaded()

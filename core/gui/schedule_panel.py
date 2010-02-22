@@ -93,6 +93,7 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
     #--- Override
     def _load(self):
         self._load_schedule(self.document.selected_schedule)
+        self.view.refresh_for_multi_currency()
     
     def _new(self):
         self._load_schedule(Recurrence(Transaction(date.today(), amount=0), REPEAT_MONTHLY, 1))

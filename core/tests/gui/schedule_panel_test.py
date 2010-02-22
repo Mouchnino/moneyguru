@@ -111,12 +111,3 @@ class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 3) #stops 2 days after it starts
     
-    def test_change_and_delete_splits(self):
-        # Don't refesh the view's mct button on split change, it doesn't have such method!
-        self.scsplittable.add()
-        self.scsplittable.edited.memo = 'foo'
-        self.scsplittable.save_edits()
-        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_for_multi_currency'])
-        self.scsplittable.delete()
-        self.check_gui_calls_partial(self.scpanel_gui, not_expected=['refresh_for_multi_currency'])
-    

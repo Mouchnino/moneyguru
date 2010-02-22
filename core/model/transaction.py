@@ -76,9 +76,9 @@ class Transaction(object):
         credits = sum(s.credit for s in self.splits)
         main_debit, main_credit = self.main_splits()
         # when a main split is edited, the amount is adjusted
-        if strong_split is main_debit:
+        if strong_split is not None and strong_split is main_debit:
             self.amount = debits
-        elif strong_split is main_credit:
+        elif strong_split is not None and strong_split is main_credit:
             self.amount = credits
         if debits == credits == self.amount:
             return
@@ -271,6 +271,10 @@ class Split(object):
     def move_to_index(self, index):
         self.transaction.splits.remove(self)
         self.transaction.splits.insert(index, self)
+    
+    def remove(self):
+        self.transaction.splits.remove(self)
+        self.transaction.balance()
     
     #--- Properties
     @property
