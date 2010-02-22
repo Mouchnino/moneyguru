@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
+#import "NSEventAdditions.h"
 
 @implementation MGTransactionInspector
 - (id)initWithDocument:(MGDocument *)aDocument
@@ -36,7 +37,6 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyTransactionPanel *)py;
 }
 
-/* Override */
 - (NSString *)fieldOfTextField:(NSTextField *)textField
 {
     if (textField == descriptionField)
@@ -57,10 +57,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
+    [tabView selectFirstTabViewItem:self];
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
     [amountField setStringValue:[[self py] amount]];
+    [amountField2 setStringValue:[[self py] amount]];
     [splitTable refresh];
 }
 
@@ -70,12 +72,14 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setPayee:[payeeField stringValue]];
     [[self py] setCheckno:[checknoField stringValue]];
     [[self py] setAmount:[amountField stringValue]];
+    [[self py] setAmount:[amountField2 stringValue]];
 }
 
 /* Python --> Cocoa */
 - (void)refreshAmount
 {
     [amountField setStringValue:[[self py] amount]];
+    [amountField2 setStringValue:[[self py] amount]];
 }
 
 - (void)refreshForMultiCurrency
@@ -83,7 +87,9 @@ http://www.hardcoded.net/licenses/hs_license
     BOOL mct = [[self py] isMultiCurrency];
     [mctBalanceButton setEnabled:mct];
     [amountField setEnabled:!mct];
+    [amountField2 setEnabled:!mct];
     [mctNotice setHidden:!mct];
+    [mctNotice2 setHidden:!mct];
 }
 
 /* Actions */
@@ -106,9 +112,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
     id control = [aNotification object];
-    if (control == amountField) { // must be edited right away to refresh the split table
-        [[self py] setAmount:[amountField stringValue]];
-        [amountField setStringValue:[[self py] amount]];
+    if ((control == amountField) || (control == amountField2)) {
+        // must be edited right away to refresh the split table
+        [[self py] setAmount:[(NSTextField *)control stringValue]];
     }
 }
 

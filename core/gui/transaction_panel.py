@@ -87,6 +87,7 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
             currency = self.document.app.default_currency
         amount = parse_amount(value, currency)
         self.transaction.change(amount=amount)
+        self.view.refresh_amount()
         self.notify('split_changed')
     
 

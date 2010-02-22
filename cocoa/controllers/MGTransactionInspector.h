@@ -15,14 +15,17 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyTransactionPanel.h"
 
 @interface MGTransactionInspector : MGPanel {
+    IBOutlet NSTabView *tabView;
     IBOutlet MGTextField *dateField;
     IBOutlet MGTextField *descriptionField;
     IBOutlet MGTextField *payeeField;
     IBOutlet NSTextField *checknoField;
     IBOutlet NSTextField *amountField;
+    IBOutlet NSTextField *amountField2;
     IBOutlet MGTableView *splitTableView;
     IBOutlet NSButton *mctBalanceButton;
     IBOutlet NSTextField *mctNotice;
+    IBOutlet NSTextField *mctNotice2;
     
     MGSplitTable *splitTable;
     NSTextView *customFieldEditor;

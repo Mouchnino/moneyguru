@@ -210,6 +210,12 @@ def app_transaction_with_panel_loaded():
     app.clear_gui_calls()
     return app
 
+def test_change_txn_amount():
+    # Changing the panel's amount results in a refresh_amount call
+    app = app_transaction_with_panel_loaded()
+    app.tpanel.amount = '23'
+    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
+
 def test_change_txn_amount_through_splits():
     # Changing the transaction's amount through the splits updates the Amount field.
     app = app_transaction_with_panel_loaded()
