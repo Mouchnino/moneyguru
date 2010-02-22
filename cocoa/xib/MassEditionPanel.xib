@@ -554,7 +554,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="9289965">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">138412032</int>
-								<string key="NSContents">Mass Edition</string>
+								<string key="NSContents">Mass Editing</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">18</double>

@@ -11,7 +11,7 @@ There are a few keystrokes and clicks that work the same way for everything in m
 
 ![](images/edition_buttons.png)
 
-The + button creates a new thing, the - button removes the selected thing and the "i" button shows info about the selected thing. The "thing" depends on the current view. In the Balance Sheet and the Income Statement, it is an account. In the Transactions and Account views, it is a transaction. Also, if you select more than one transaction and click on the "i" button, the Mass Edition panel will show up rather than the transaction details panel.
+The + button creates a new thing, the - button removes the selected thing and the "i" button shows info about the selected thing. The "thing" depends on the current view. In the Balance Sheet and the Income Statement, it is an account. In the Transactions and Account views, it is a transaction. Also, if you select more than one transaction and click on the "i" button, the Mass Editing panel will show up rather than the transaction details panel.
 
 Of course, it's also possible to do the same thing with the keyboard. ${cmd}N creates a new thing, Delete or Backspace remove the selected thing and ${cmd}I shows info about the selected thing.
 

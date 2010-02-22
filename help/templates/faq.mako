@@ -35,7 +35,7 @@ Create a Starting Balance transaction at the earliest date possible and leave th
 
 ### I imported an account with a foreign currency from a QIF and the currency is wrong in moneyGuru. What do I do?
 
-QIF files don't contain currency information. Therefore, moneyGuru always import such account as your **native** currency. To fix this, first change the currency of the account through the Account Details. However, this will **not** touch your amounts' currency. To change these, you have to perform a mass edition. Go into your account and select all transactions (you will have to do that in more than one shot if your transactions span on more than one year) and Show Info (&#8984;I). This will bring the Mass Edition panel. In the currency field, select the currency of the account you imported, make sure the little checkbox is checked, and press Save.
+QIF files don't contain currency information. Therefore, moneyGuru always import such account as your **native** currency. To fix this, first change the currency of the account through the Account Details. However, this will **not** touch your amounts' currency. To change these, you have to perform a mass edition. Go into your account and select all transactions (you will have to do that in more than one shot if your transactions span on more than one year) and Show Info (&#8984;I). This will bring the Mass Editing panel. In the currency field, select the currency of the account you imported, make sure the little checkbox is checked, and press Save.
 
 ### I have another question. What can I do?
 

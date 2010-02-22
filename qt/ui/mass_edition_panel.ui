@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Mass Edition</string>
+   <string>Mass Editing</string>
   </property>
   <property name="modal">
    <bool>true</bool>
