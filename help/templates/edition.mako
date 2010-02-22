@@ -1,6 +1,6 @@
 <%!
 	title = 'Editing a moneyGuru document'
-	selected_menu_item = 'edition'
+	selected_menu_item = 'editing'
 %>
 <%inherit file="/base_mg.mako"/>
 
@@ -35,7 +35,7 @@ Little aside note: Changing an account's currency does **not** change the curren
 Transactions
 -----
 
-Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (speaking of which, see the "Date Edition" section below). The Description, Payee and Account (From, To Transfer) columns are auto-completed. This means that as soon as you type something in them, moneyGuru will look in the other transactions and give you a completion proposition. You can cycle through the propositions with the up and down arrows. To accept a proposition, just tab out. You can also, of course, just continue to type.
+Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (speaking of which, see the "Date Editing" section below). The Description, Payee and Account (From, To Transfer) columns are auto-completed. This means that as soon as you type something in them, moneyGuru will look in the other transactions and give you a completion proposition. You can cycle through the propositions with the up and down arrows. To accept a proposition, just tab out. You can also, of course, just continue to type.
 
 It's possible to re-order a transaction within other transactions of the same date. To do so, you can use drag & drop, or you can use ${cmd}+ and ${cmd}-.
 
@@ -43,31 +43,47 @@ If you type the name of an account that doesn't exist in an Account column, this
 
 ![](images/edition_transaction_panel.png)
 
-Using Show Info on a single transaction brings the panel above up. With it, you can edit everything that you can edit from the Transactions and Account views, and additionally, you can create and edit transaction with more than 2 entries (commonly called a "Split Transaction") with the table at the bottom.
+Using Show Info on a single transaction brings the panel above up. With it, you can edit everything that you can edit from the Transactions and Account views, and additionally, you can create and edit transaction with more than 2 entries (commonly called a "Split Transaction") with the table at the bottom. To do so, select the "Splits" tab.
 
-One thing to remember about this entry edition table is that it's constantly auto-balancing. Therefore, if you take a transaction and simply delete one of its entries, it will not disappear. It will instantly re-add an unassigned entry with the same amount. Changing the amount of an entry will also automatically add an unassigned entry with the amount difference. Therefore, if you want to add a split transaction like, for example, a roommate shared bill where you pay a 40$ bill (let's say internet) using direct banking transfer and your roommate gives you 20$ in cash, you would do the following:
+![](images/edition_transaction_panel_split.png)
 
-1. Add a normal 2 way Checking --> Utilities transaction.
-1. Show Info for the transaction.
-1. Change the Utilities debit to 20$. This will create a 3rd unassigned row with a 20$ debit.
-1. Change the 3rd row account to Cash.
+From this tab, you can add new splits to your transactions. When you add splits, the transaction constantly balances itself automatically. The rules for split balancing are a little complex (see "Transaction balancing" below), but using the split table is usually very simple. For example, to re-create the transaction shown in the picture above, you'd do the following:
 
-![](images/edition_three_way_split.png)
+1. Create a new transaction through the Transaction or Account table that transfers 1200$ from Salary to Checking.
+1. Click the Show Info button and select the Splits tab.
+1. Add a new split with the + button.
+1. Write down "Federal Taxes" in the Account column and "126.12" in the Debit column.
+1. Add a new split with the + button.
+1. Write down "State Taxes" in the Account column and "287.92" in the Debit column.
 
-Congratulations, you just made a 3 ways split transaction. This transaction correctly reflect reality where 40$ are out of your checking account, internet had a net cost of 20$ for you and you end up with 20 more dollars in your pocket.
+You'll notice that adding new splits automatically deduces the amount assigned to Checking.
 
 ![](images/edition_mass_edition_panel.png)
 
-Using Show Info with more than one transaction selected bring up the panel above. It allows you to perform mass edition. When you press on Save, all selected transactions will have the attributes that have the checkboxes next to them checked changed to the value of the field next to it.
+Using Show Info with more than one transaction selected bring up the panel above. It allows you to perform mass editing. When you press on Save, all selected transactions will have the attributes that have the checkboxes next to them checked changed to the value of the field next to it.
 
-Date Edition
+Date Editing
 -----
 
-Whenever a date is edited, it is edited using a special widget. This widget has 3 fields: day, month and year. Whenever an edition is initiated, it is always the **day** fields that starts out selected, whatever your date format is. You can navigate the fields with the left and right arrows. You can increment and decrement the currently selected field with the up and down arrows. You can of course type the date out. The widget automatically changes the selection when a date separator is typed or the maximum length of a field is reached. Here is a list of the rules that this widget follows, just to make it clear:
+Whenever a date is edited, it is edited using a special widget. This widget has 3 fields: day, month and year. Whenever an editing is initiated, it is always the **day** fields that starts out selected, whatever your date format is. You can navigate the fields with the left and right arrows. You can increment and decrement the currently selected field with the up and down arrows. You can of course type the date out. The widget automatically changes the selection when a date separator is typed or the maximum length of a field is reached. Here is a list of the rules that this widget follows, just to make it clear:
 
 * The display format is always your system's format.
 * The **input** format is always day --> month --> year.
 * Whatever your system date format is, you can type a date by padding your values with 0. For example, even if your date format is mm/dd/yy, you can enter the date "07/06/08" by typing "060708".
 * Whatever your system date format is, you can type a date by using separators. For example, even if your date format is yyyy-mm-dd, you can type "2008-07-06" by typing "6-7-08"
 
-While editing a transaction or entry, if you set the date to something outside the current date range, you will get a ![](images/backward_16.png) or a ![](images/forward_16.png) showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when edition ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when edition ends.
+While editing a transaction or entry, if you set the date to something outside the current date range, you will get a ![](images/backward_16.png) or a ![](images/forward_16.png) showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when editing ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when editing ends.
+
+Transaction Balancing
+-----
+
+Because moneyGuru follows double-entry accounting, splits in a transaction must always balance. To make moneyGuru easier to use, this balancing happens automatically and follow a couple of rules.
+
+* The Amount field of a transaction represents the sum of amounts on each side (debit side and credit side).
+* Most of the time, when moneyGuru balances splits, it tries to keep the Amount field unchanged.
+* When split amounts needs to be adjusted, moneyGuru always adjust them from the 2 **main splits** (see below). Amounts from other splits are never touched.
+* The 2 main splits in a transaction are the first split of each side.
+* Main splits are displayed in bold.
+* You can use drag and drop to re-order splits.
+* When one of the main splits is edited, the transaction's Amount value will be adjusted.
+* If the transaction is a [Multi-Currency Transaction](currencies.htm), the Amount field cannot be directly set. It can only be edited through splits directly. The read-only amount shown represents a conversion of all amounts of the transaction's splits in your native currency, divided by 2.
