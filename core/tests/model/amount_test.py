@@ -10,7 +10,7 @@ import operator as op
 
 from nose.tools import eq_, assert_raises
 
-from hsutil.currency import CAD, EUR, PLN, USD, CZK
+from hsutil.currency import CAD, EUR, PLN, USD, CZK, TND, JPY
 
 from ...model.amount import format_amount, parse_amount, Amount
 
@@ -237,6 +237,26 @@ def test_parse_zero_prefixed():
 def test_parse_zero_after_dot():
     # A 0 after a dot dot not get misinterpreted as an octal prefix.
     eq_(parse_amount('.02 EUR'), Amount(.02, EUR))
+
+def test_parse_auto_decimal_places():
+    # When auto_decimal_place is True, the decimal is automatically placed.
+    eq_(parse_amount('1234', default_currency=USD, auto_decimal_place=True), Amount(12.34, USD))
+
+def test_parse_auto_decimal_places_different_exponent():
+    # When the currency has a different exponent, the decimal is correctly placed.
+    # TND has 3 decimal places.
+    eq_(parse_amount('1234', default_currency=TND, auto_decimal_place=True), Amount(1.234, TND))
+    # JPY has 0 decimal places
+    eq_(parse_amount('1234', default_currency=JPY, auto_decimal_place=True), Amount(1234, JPY))
+
+def test_parse_auto_decimal_places_only_cents():
+    # Parsing correctly occurs when the amount of numbers typed is below the decimal places.
+    # TND has 3 decimal places.
+    eq_(parse_amount('123', default_currency=TND, auto_decimal_place=True), Amount(.123, TND))
+
+def test_parse_auto_decimal_places_with_space():
+    # Spaces are correctly trimmed when counting decimal places.
+    eq_(parse_amount('1234 ', default_currency=USD, auto_decimal_place=True), Amount(12.34, USD))
 
 #--- Format amount
 def test_format_blank_zero():

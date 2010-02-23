@@ -207,6 +207,8 @@ def format_amount(amount, default_currency=None, blank_zero=False, zero_currency
 
 def parse_amount(string, default_currency=None, with_expression=True, auto_decimal_place=False):
     # set 'with_expression' to False when you know 'string' doesn't contain any. It speeds up parsing
+    # Note that auto_decimal_place has no effect is the string is an expression (it would be too
+    # complicated to implement for nothing)
     if string is None or not string.strip():
         return 0
     
@@ -221,11 +223,14 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
         else:
             string = re_currency.sub('', string)
     currency = currency or default_currency
+    string = string.strip()
     string = string.replace(',', '.')
     string = re_grouping_sep.sub('', string)
     if auto_decimal_place:
         if '.' not in string:
-            string = string[:-2] + '.' + string[-2:]
+            place = currency.exponent if currency is not None else 2
+            if place:
+                string = string[:-place] + '.' + string[-place:]
     if with_expression:
         string = string.replace(' ', '')
         string = re_octal_zero.sub('', string)
