@@ -147,6 +147,14 @@ class PyMoneyGuruApp(PyRegistrable):
     def setAutoSaveInterval_(self, minutes):
         self.py.autosave_interval = minutes
     
+    @signature('c@:')
+    def autoDecimalPlace(self):
+        return self.py.auto_decimal_place
+    
+    @signature('v@:c')
+    def setAutoDecimalPlace_(self, value):
+        self.py.auto_decimal_place = value
+    
     #---Registration
     def appName(self):
         return self.py.APP_NAME

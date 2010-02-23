@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSPopUpButton *aheadMonthsPopup;
     IBOutlet NSPopUpButton *yearStartMonthPopup;
     IBOutlet NSTextField *autoSaveIntervalField;
+    IBOutlet NSButton *autoDecimalPlaceButton;
     
     NSWindowController *viewOptionsWindow;
     NSInvocation *continueUpdate;

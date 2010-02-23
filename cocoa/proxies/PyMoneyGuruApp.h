@@ -23,4 +23,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setYearStartMonth:(NSInteger)month;
 - (NSInteger)autoSaveInterval;
 - (void)setAutoSaveInterval:(NSInteger)minutes;
+- (BOOL)autoDecimalPlace;
+- (void)setAutoDecimalPlace:(BOOL)value;
 @end
