@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 # Created By: Eric Mc Sween
 # Created On: 2008-01-02
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -15,9 +15,10 @@ from nose.tools import eq_, assert_raises
 
 from hsutil import io
 from hsutil.currency import EUR
+from hsutil.testutil import Patcher, with_tmpdir
 
-from .base import TestCase, CommonSetup, ApplicationGUI
-from .. import app
+from .base import TestCase, CommonSetup, ApplicationGUI, TestApp
+from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError
@@ -26,101 +27,109 @@ from ..loader import base
 from ..model.account import AccountType
 from ..model.date import MonthRange, QuarterRange, YearRange
 
-class NoSetup(TestCase):
-    def test_app_loads_correct_pref_types(self):
-        # If the type loaded by Application from the prefs is not the correct one, we get a crash
-        # when the value goes back to the GUI, when it's depythonified.
-        gui = ApplicationGUI()
-        gui.defaults = {
-            app.FIRST_WEEKDAY_PREFERENCE: 'not an int',
-            app.AHEAD_MONTHS_PREFERENCE: 'not an int',
-        }
-        self.app = Application(gui)
-        self.create_instances()
-        # because none of the prefs are of the correct type, use default values
-        eq_(self.app.first_weekday, 0)
-        eq_(self.app.ahead_months, 2)
-    
-    def test_app_tries_to_convert_different_types(self):
-        # The prefs might be stored as a different, but compatible type (for example, an int instead
-        # of a bool. Try to convert the value before falling back to the default value.
-        gui = ApplicationGUI()
-        gui.defaults = {
-            app.AHEAD_MONTHS_PREFERENCE: '6',
-        }
-        self.app = Application(gui)
-        self.create_instances()
-        eq_(self.app.ahead_months, 6)
-    
-    def test_can_use_another_amount_format(self):
-        self.app = Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' ')
-        self.create_instances()
-        self.add_account_legacy()
-        self.add_entry(increase='1234567890.99')
-        self.assertEqual(self.etable[0].increase, '1 234 567 890,99')
-    
-    def test_can_use_another_date_format(self):
-        self.app = Application(ApplicationGUI(), date_format='MM-dd-yyyy')
-        self.create_instances()
-        self.add_account_legacy()
-        self.add_entry(date='2-15-2008')
-        self.assertEqual(self.etable[0].date, '02-15-2008')
-    
+#--- No Setup
+def test_app_loads_correct_pref_types():
+    # If the type loaded by Application from the prefs is not the correct one, we get a crash
+    # when the value goes back to the GUI, when it's depythonified.
+    gui = ApplicationGUI()
+    gui.defaults = {
+        FIRST_WEEKDAY_PREFERENCE: 'not an int',
+        AHEAD_MONTHS_PREFERENCE: 'not an int',
+    }
+    app = TestApp(app=Application(gui))
+    # because none of the prefs are of the correct type, use default values
+    eq_(app.app.first_weekday, 0)
+    eq_(app.app.ahead_months, 2)
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.clear_gui_calls()
-    
-    def test_close_document(self):
-        # when the document is closed, the date range type and the first weekday are saved to 
-        # preferences.
-        self.document.select_year_range()
-        self.app.first_weekday = 1
-        self.app.ahead_months = 5
-        self.app.year_start_month = 4
-        self.app.autosave_interval = 8
-        self.document.close()
-        newapp = Application(self.app_gui)
-        newdoc = Document(self.document_gui, newapp)
-        assert isinstance(newdoc.date_range, YearRange)
-        eq_(newapp.first_weekday, 1)
-        eq_(newapp.ahead_months, 5)
-        eq_(newapp.year_start_month, 4)
-        eq_(newapp.autosave_interval, 8)
-    
-    def test_graph_yaxis(self):
-        eq_(self.nwgraph.ymin, 0)
-        eq_(self.nwgraph.ymax, 100)
-        eq_(list(self.nwgraph.ytickmarks), range(0, 101, 20))
-        eq_(list(self.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
-    
-    def test_load_inexistant(self):
-        # Raise FileFormatError when filename doesn't exist
-        filename = op.join(self.tmpdir(), 'does_not_exist.xml')
-        assert_raises(FileFormatError, self.document.load_from_xml, filename)
-    
-    def test_load_invalid(self):
-        # Raises FileFormatError, which gives a message kind of like: <filename> is not a moneyGuru
-        # file.
-        filename = self.filepath('randomfile')
-        try:
-            self.document.load_from_xml(filename)
-        except FileFormatError as e:
-            assert filename in str(e)
-        else:
-            raise AssertionError()
-    
-    def test_load_empty(self):
-        # When loading an empty file (we mock it here), make sure no exception occur.
-        self.mock(base.Loader, 'parse', lambda self, filename: None)
-        self.mock(base.Loader, 'load', lambda self: None)
-        self.document.load_from_xml('filename does not matter here')
-    
-    def test_modified_flag(self):
-        # The modified flag is initially False.
-        assert not self.document.is_dirty()
-    
+def test_app_tries_to_convert_different_types():
+    # The prefs might be stored as a different, but compatible type (for example, an int instead
+    # of a bool. Try to convert the value before falling back to the default value.
+    gui = ApplicationGUI()
+    gui.defaults = {
+        AHEAD_MONTHS_PREFERENCE: '6',
+    }
+    app = TestApp(app=Application(gui))
+    eq_(app.app.ahead_months, 6)
+
+def test_can_use_another_amount_format():
+    app = TestApp(app=Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' '))
+    app.add_account()
+    app.mainwindow.show_account()
+    app.add_entry(increase='1234567890.99')
+    eq_(app.etable[0].increase, '1 234 567 890,99')
+
+def test_can_use_another_date_format():
+    app = TestApp(Application(ApplicationGUI(), date_format='MM-dd-yyyy'))
+    app.add_account()
+    app.mainwindow.show_account()
+    app.add_entry(date='2-15-2008')
+    eq_(app.etable[0].date, '02-15-2008')
+
+def test_auto_decimal_place_option():
+    # When auto_decimal_place is True, decimal point is automatically placed in an amount without it.
+    # This test is just there to makesure that the option correctly triggers the feature. The rest
+    # of the tests are directly in model.amount_test.
+    app = TestApp()
+    app.app.auto_decimal_place = True
+    app.add_txn(amount='1234')
+    eq_(app.ttable[0].amount, '12.34')
+
+def test_close_document():
+    # when the document is closed, the date range type and the first weekday are saved to 
+    # preferences.
+    app = TestApp()
+    app.doc.select_year_range()
+    app.app.first_weekday = 1
+    app.app.ahead_months = 5
+    app.app.year_start_month = 4
+    app.app.autosave_interval = 8
+    app.doc.close()
+    newapp = Application(app.app_gui)
+    newdoc = Document(app.doc_gui, newapp)
+    assert isinstance(newdoc.date_range, YearRange)
+    eq_(newapp.first_weekday, 1)
+    eq_(newapp.ahead_months, 5)
+    eq_(newapp.year_start_month, 4)
+    eq_(newapp.autosave_interval, 8)
+
+def test_graph_yaxis():
+    app = TestApp()
+    eq_(app.nwgraph.ymin, 0)
+    eq_(app.nwgraph.ymax, 100)
+    eq_(list(app.nwgraph.ytickmarks), range(0, 101, 20))
+    eq_(list(app.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
+
+@with_tmpdir
+def test_load_inexistant(tmppath):
+    # Raise FileFormatError when filename doesn't exist
+    app = TestApp()
+    filename = unicode(tmppath + 'does_not_exist.xml')
+    assert_raises(FileFormatError, app.doc.load_from_xml, filename)
+
+def test_load_invalid():
+    # Raises FileFormatError, which gives a message kind of like: <filename> is not a moneyGuru
+    # file.
+    app = TestApp()
+    filename = TestCase.filepath('randomfile')
+    try:
+        app.doc.load_from_xml(filename)
+    except FileFormatError as e:
+        assert filename in str(e)
+    else:
+        raise AssertionError()
+
+def test_load_empty():
+    # When loading an empty file (we mock it here), make sure no exception occur.
+    app = TestApp()
+    with Patcher() as p:
+        p.patch(base.Loader, 'parse', lambda self, filename: None)
+        p.patch(base.Loader, 'load', lambda self: None)
+        app.doc.load_from_xml('filename does not matter here')
+
+def test_modified_flag():
+    # The modified flag is initially False.
+    app = TestApp()
+    assert not app.doc.is_dirty()
 
 class RangeOnOctober2007(TestCase):
     def setUp(self):

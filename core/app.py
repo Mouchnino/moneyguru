@@ -52,6 +52,7 @@ class Application(Broadcaster, RegistrableApplication):
         self._ahead_months = self.get_default(AHEAD_MONTHS_PREFERENCE, 2)
         self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
+        self._auto_decimal_place = False
         self._update_autosave_timer()
     
     #--- Override
@@ -83,7 +84,8 @@ class Application(Broadcaster, RegistrableApplication):
         return format_date(date, self._date_format)
     
     def parse_amount(self, amount):
-        return parse_amount(amount, self._default_currency)
+        return parse_amount(amount, self._default_currency,
+            auto_decimal_place=self._auto_decimal_place)
     
     def parse_date(self, date):
         return parse_date(date, self._date_format)
@@ -163,4 +165,14 @@ class Application(Broadcaster, RegistrableApplication):
             return
         self._default_currency = value
         self.notify('default_currency_changed')
+    
+    @property
+    def auto_decimal_place(self):
+        return self._auto_decimal_place
+    
+    @auto_decimal_place.setter
+    def auto_decimal_place(self, value):
+        if value == self._auto_decimal_place:
+            return
+        self._auto_decimal_place = value
     
