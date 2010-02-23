@@ -34,6 +34,7 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
         self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
+        self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
     
     def save(self):
         appm = self.app.model
@@ -44,4 +45,5 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         if self.nativeCurrencyComboBox.currentIndex() >= 0:
             appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
+        appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
     
