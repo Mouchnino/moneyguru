@@ -16,52 +16,51 @@ from ..base import TestCase, CommonSetup, TestQIFExportImportMixin, TestApp
 from ...model.account import AccountType
 from ...model.date import YearRange
 
-class OneAccount(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.clear_gui_calls()
-    
-    def test_add_empty_entry_and_save(self):
-        # An empty entry really gets saved.
-        self.etable.add()
-        self.etable.save_edits()
-        self.document.select_prev_date_range()
-        self.document.select_next_date_range()
-        eq_(len(self.etable), 1)
-    
-    def test_add_entry(self):
-        # Before adding a new entry, make sure the entry table is not in edition mode. Then, start 
-        # editing the new entry.
-        self.etable.add()
-        self.check_gui_calls(self.etable_gui, ['stop_editing', 'refresh', 'start_editing'])
-    
-    def test_add_twice_then_save(self):
-        # Calling add() while in edition calls save_edits().
-        # etable didn't have the same problem as ttable, but it did have this coverage missing
-        # (commenting out the code didn't make tests fail)
-        self.etable.add()
-        self.etable.add()
-        self.etable.save_edits()
-        eq_(len(self.etable), 2)
-    
-    def test_delete(self):
-        # Don't crash when trying to remove a transaction from an empty list.
-        self.etable.delete() # no crash
-    
-    def test_selected_entry_index(self):
-        # selected_indexes is empty when there is no entry.
-        eq_(self.etable.selected_indexes, [])
-    
-    def test_should_show_balance_column(self):
-        # When an asset account is selected, we show the balance column.
-        assert self.etable.should_show_balance_column()
-    
-    def test_show_transfer_account(self):
-        # show_transfer_account() when the table is empty doesn't do anything
-        self.etable.show_transfer_account() # no crash
-    
+#--- One account
+def app_one_account():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    return app
+
+def test_add_empty_entry_and_save():
+    # An empty entry really gets saved.
+    app = app_one_account()
+    app.etable.add()
+    app.etable.save_edits()
+    app.doc.select_prev_date_range()
+    app.doc.select_next_date_range()
+    eq_(len(app.etable), 1)
+
+def test_add_twice_then_save():
+    # Calling add() while in edition calls save_edits().
+    # etable didn't have the same problem as ttable, but it did have this coverage missing
+    # (commenting out the code didn't make tests fail)
+    app = app_one_account()
+    app.etable.add()
+    app.etable.add()
+    app.etable.save_edits()
+    eq_(len(app.etable), 2)
+
+def test_delete():
+    # Don't crash when trying to remove a transaction from an empty list.
+    app = app_one_account()
+    app.etable.delete() # no crash
+
+def test_selected_entry_index():
+    # selected_indexes is empty when there is no entry.
+    app = app_one_account()
+    eq_(app.etable.selected_indexes, [])
+
+def test_should_show_balance_column():
+    # When an asset account is selected, we show the balance column.
+    app = app_one_account()
+    assert app.etable.should_show_balance_column()
+
+def test_show_transfer_account_on_empty_row_does_nothing():
+    # show_transfer_account() when the table is empty doesn't do anything
+    app = app_one_account()
+    app.etable.show_transfer_account() # no crash
 
 class ThreeAccounts(TestCase):
     def setUp(self):
