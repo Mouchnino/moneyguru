@@ -52,6 +52,20 @@ def test_selected_entry_index():
     app = app_one_account()
     eq_(app.etable.selected_indexes, [])
 
+def test_set_decrease_auto_decimal_place():
+    # When the auto decimal place option is set, amounts in the decrease column are correctly set.
+    app = app_one_account()
+    app.app.auto_decimal_place = True
+    app.add_entry(decrease='1234')
+    eq_(app.etable[0].decrease, '12.34')
+
+def test_set_increase_auto_decimal_place():
+    # When the auto decimal place option is set, amounts in the increase column are correctly set.
+    app = app_one_account()
+    app.app.auto_decimal_place = True
+    app.add_entry(increase='1234')
+    eq_(app.etable[0].increase, '12.34')
+
 def test_should_show_balance_column():
     # When an asset account is selected, we show the balance column.
     app = app_one_account()

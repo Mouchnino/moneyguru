@@ -11,80 +11,89 @@ from hsutil.currency import CAD, EUR
 
 from ..base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, TestApp
 
-class OneEntry(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('first', currency=CAD)
-        self.add_entry(transfer='second', increase='42')
-    
-    def test_add_gui_calls(self):
-        # refresh() and start_editing() are called after a add()
-        self.tpanel.load()
-        self.clear_gui_calls()
-        self.stable.add()
-        self.check_gui_calls(self.stable_gui, ['refresh', 'start_editing', 'stop_editing'])
-    
-    def test_cancel_edits(self):
-        # cancel_edits() sets edited to None and makes the right gui calls
-        self.tpanel.load()
-        self.stable[0].account = 'foo'
-        self.clear_gui_calls()
-        self.stable.cancel_edits()
-        assert self.stable.edited is None
-        self.check_gui_calls(self.stable_gui, ['refresh', 'stop_editing'])
-    
-    def test_changes_split_buffer_only(self):
-        """Changes made to the split table don't directly get to the model until tpanel.save()"""
-        self.tpanel.load()
-        row = self.stable.selected_row
-        row.debit = '40'
-        self.stable.save_edits()
-        # Now, let's force a refresh of etable
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertEqual(self.etable[0].increase, 'CAD 42.00')
-    
-    def test_completion(self):
-        """Just make sure it works. That is enough to know SplitTable is of the right subclass"""
-        self.assertEqual(self.stable.complete('s', 'account'), 'second')
-    
-    def test_completion_new_txn(self):
-        # When completing an account from a new txn, the completion wouldn't work at all
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-        self.tpanel.load()
-        self.assertEqual(self.stable.complete('f', 'account'), 'first')
-    
-    def test_load_tpanel_from_ttable(self):
-        """When the tpanel is loaded form the ttable, the system currency is used"""
-        self.mainwindow.select_transaction_table()
-        self.tpanel.load() # no crash
-        self.assertEqual(self.stable[0].debit, 'CAD 42.00')
-    
-    def test_memo(self):
-        """It's possible to set a different memo for each split"""
-        self.tpanel.load()
-        row = self.stable.selected_row
-        row.memo = 'memo1'
-        self.stable.save_edits()
-        self.stable.select([1])
-        row = self.stable.selected_row
-        row.memo = 'memo2'
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.tpanel.load()
-        self.assertEqual(self.stable[0].memo, 'memo1')
-        self.assertEqual(self.stable[1].memo, 'memo2')
-    
-    def test_set_wrong_values_for_attributes(self):
-        """set_attribute_avlue catches ValueError"""
-        self.tpanel.load()
-        row = self.stable.selected_row
-        row.debit = 'invalid'
-        row.credit = 'invalid'
-        # no crash occured
-    
+#--- One entry
+def app_one_entry():
+    app = TestApp()
+    app.add_account('first', currency=CAD)
+    app.mainwindow.show_account()
+    app.add_entry(transfer='second', increase='42')
+    return app
+
+def test_add_gui_calls():
+    # refresh() and start_editing() are called after a add()
+    app = app_one_entry()
+    app.tpanel.load()
+    app.clear_gui_calls()
+    app.stable.add()
+    app.check_gui_calls(app.stable_gui, ['refresh', 'start_editing', 'stop_editing'])
+
+def test_cancel_edits():
+    # cancel_edits() sets edited to None and makes the right gui calls
+    app = app_one_entry()
+    app.tpanel.load()
+    app.stable[0].account = 'foo'
+    app.clear_gui_calls()
+    app.stable.cancel_edits()
+    assert app.stable.edited is None
+    app.check_gui_calls(app.stable_gui, ['refresh', 'stop_editing'])
+
+def test_changes_split_buffer_only():
+    # Changes made to the split table don't directly get to the model until tpanel.save().
+    app = app_one_entry()
+    app.tpanel.load()
+    row = app.stable.selected_row
+    row.debit = '40'
+    app.stable.save_edits()
+    # Now, let's force a refresh of etable
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    eq_(app.etable[0].increase, 'CAD 42.00')
+
+def test_completion():
+    # Just make sure it works. That is enough to know SplitTable is of the right subclass.
+    app = app_one_entry()
+    eq_(app.stable.complete('s', 'account'), 'second')
+
+def test_completion_new_txn():
+    # When completing an account from a new txn, the completion wouldn't work at all
+    app = app_one_entry()
+    app.mainwindow.select_transaction_table()
+    app.ttable.add()
+    app.tpanel.load()
+    eq_(app.stable.complete('f', 'account'), 'first')
+
+def test_load_tpanel_from_ttable():
+    # When the tpanel is loaded form the ttable, the system currency is used.
+    app = app_one_entry()
+    app.mainwindow.select_transaction_table()
+    app.tpanel.load() # no crash
+    eq_(app.stable[0].debit, 'CAD 42.00')
+
+def test_memo():
+    # It's possible to set a different memo for each split.
+    app = app_one_entry()
+    app.tpanel.load()
+    row = app.stable.selected_row
+    row.memo = 'memo1'
+    app.stable.save_edits()
+    app.stable.select([1])
+    row = app.stable.selected_row
+    row.memo = 'memo2'
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.tpanel.load()
+    eq_(app.stable[0].memo, 'memo1')
+    eq_(app.stable[1].memo, 'memo2')
+
+def test_set_wrong_values_for_attributes():
+    # set_attribute_value catches ValueError.
+    app = app_one_entry()
+    app.tpanel.load()
+    row = app.stable.selected_row
+    app.debit = 'invalid'
+    app.credit = 'invalid'
+    # no crash occured
 
 class OneTransactionBeingAdded(TestCase):
     def setUp(self):
@@ -130,6 +139,13 @@ def app_transaction_with_splits():
     app.stable[2].credit = '3'
     app.stable.save_edits()
     return app
+
+def test_auto_decimal_place():
+    # the auto decimal place options affects the split table.
+    app = app_transaction_with_splits()
+    app.app.auto_decimal_place = True
+    app.stable[0].debit = '1234'
+    eq_(app.stable[0].debit, '12.34')
 
 def test_move_split():
     # It's possible to move splits around

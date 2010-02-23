@@ -162,6 +162,13 @@ def test_change_date():
     app.tpanel.date = '17/07/2008'
     app.check_gui_calls_partial(app.tpanel_gui, not_expected=['refresh_repeat_options'])
 
+def test_set_amount_with_auto_decimal_place():
+    # The auto decimal place option affects amount in the tpanel too.
+    app = app_entry_with_amount_panel_loaded()
+    app.app.auto_decimal_place = True
+    app.tpanel.amount = '1234'
+    eq_(app.tpanel.amount, '12.34')
+
 def test_set_invalid_amount():
     # Invalid amounts are ignored and the old value is reverted
     app = app_entry_with_amount_panel_loaded()

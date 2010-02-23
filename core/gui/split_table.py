@@ -66,7 +66,7 @@ class SplitTableRow(RowWithDebitAndCredit):
             currency = self.split.transaction.amount.currency
         else:
             currency = self.table.document.app.default_currency
-        return parse_amount(value, currency)
+        return self.table.document.app.parse_amount(value, default_currency=currency)
     
     def load(self):
         self._account = self.split.account.name if self.split.account else ''

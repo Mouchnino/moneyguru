@@ -84,9 +84,10 @@ class Application(Broadcaster, RegistrableApplication):
     def format_date(self, date):
         return format_date(date, self._date_format)
     
-    def parse_amount(self, amount):
-        return parse_amount(amount, self._default_currency,
-            auto_decimal_place=self._auto_decimal_place)
+    def parse_amount(self, amount, default_currency=None):
+        if default_currency is None:
+            default_currency = self._default_currency
+        return parse_amount(amount, default_currency, auto_decimal_place=self._auto_decimal_place)
     
     def parse_date(self, date):
         return parse_date(date, self._date_format)

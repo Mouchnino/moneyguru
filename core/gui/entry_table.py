@@ -9,7 +9,7 @@
 import datetime
 from operator import attrgetter
 
-from ..model.amount import parse_amount, convert_amount
+from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
@@ -353,7 +353,8 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
         try:
-            increase = parse_amount(value, self.table.document.shown_account.currency)
+            currency = self.table.document.shown_account.currency
+            increase = self.table.document.app.parse_amount(value, default_currency=currency)
         except ValueError:
             return
         if increase == self._increase:
@@ -363,7 +364,8 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @BaseEntryTableRow.decrease.setter
     def decrease(self, value):
         try:
-            decrease = parse_amount(value, self.table.document.shown_account.currency)
+            currency = self.table.document.shown_account.currency
+            decrease = self.table.document.app.parse_amount(value, default_currency=currency)
         except ValueError:
             return
         if decrease == self._decrease:
