@@ -22,6 +22,7 @@ FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
 AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
 YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
+AUTO_DECIMAL_PLACE_PREFERENCE = 'AutoDecimalPlace'
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
@@ -52,7 +53,7 @@ class Application(Broadcaster, RegistrableApplication):
         self._ahead_months = self.get_default(AHEAD_MONTHS_PREFERENCE, 2)
         self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
-        self._auto_decimal_place = False
+        self._auto_decimal_place = self.get_default(AUTO_DECIMAL_PLACE_PREFERENCE, False)
         self._update_autosave_timer()
     
     #--- Override
@@ -175,4 +176,5 @@ class Application(Broadcaster, RegistrableApplication):
         if value == self._auto_decimal_place:
             return
         self._auto_decimal_place = value
+        self.set_default(AUTO_DECIMAL_PLACE_PREFERENCE, value)
     

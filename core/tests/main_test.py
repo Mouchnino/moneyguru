@@ -83,6 +83,7 @@ def test_close_document():
     app.app.ahead_months = 5
     app.app.year_start_month = 4
     app.app.autosave_interval = 8
+    app.app.auto_decimal_place = True
     app.doc.close()
     newapp = Application(app.app_gui)
     newdoc = Document(app.doc_gui, newapp)
@@ -91,6 +92,7 @@ def test_close_document():
     eq_(newapp.ahead_months, 5)
     eq_(newapp.year_start_month, 4)
     eq_(newapp.autosave_interval, 8)
+    eq_(newapp.auto_decimal_place, True)
 
 def test_graph_yaxis():
     app = TestApp()
