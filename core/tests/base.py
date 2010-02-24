@@ -345,6 +345,28 @@ class TestApp(object):
             row.checkno = checkno
         self.etable.save_edits()
     
+    def add_schedule(self, start_date=None, description='', account=None, amount='0',
+            repeat_type_index=0, repeat_every=1, stop_date=None):
+        if start_date is None:
+            start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
+        self.mainwindow.select_schedule_table()
+        self.scpanel.new()
+        self.scpanel.start_date = start_date
+        self.scpanel.description = description
+        self.scpanel.repeat_type_index = repeat_type_index
+        self.scpanel.repeat_every = repeat_every
+        if stop_date is not None:
+            self.scpanel.stop_date = stop_date
+        if account:
+            self.scsplittable.add()
+            self.scsplittable.edited.account = account
+            if self.app.parse_amount(amount) >= 0:
+                self.scsplittable.edited.debit = amount
+            else:
+                self.scsplittable.edited.credit = amount
+            self.scsplittable.save_edits()
+        self.scpanel.save()
+    
     def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
             checkno=None):
         self.mainwindow.select_transaction_table()
@@ -381,6 +403,24 @@ class TestApp(object):
         assert self.tmppath is not None
         filename = self.tmppath + 'foo.xml'
         self.doc.save_to_xml(unicode(filename)) # reset the dirty flag
+    
+    def show_account(self, account_name):
+        # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
+        predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
+        self.mainwindow.select_balance_sheet()
+        node = self.bsheet.find(predicate)
+        if node is not None:
+            self.bsheet.selected = node
+            self.doc.show_selected_account()
+            return
+        self.mainwindow.select_income_statement()
+        node = self.istatement.find(predicate)
+        if node is not None:
+            self.istatement.selected = node
+            self.doc.show_selected_account()
+            return
+        else:
+            raise LookupError("Trying to show an account that doesn't exist")
     
 
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
@@ -475,27 +515,8 @@ class TestCase(TestCaseBase):
         if name is not None:
             self.document.change_group(group, name=name)
     
-    def add_schedule(self, start_date=None, description='', account=None, amount='0',
-            repeat_type_index=0, repeat_every=1, stop_date=None):
-        if start_date is None:
-            start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
-        self.mainwindow.select_schedule_table()
-        self.scpanel.new()
-        self.scpanel.start_date = start_date
-        self.scpanel.description = description
-        self.scpanel.repeat_type_index = repeat_type_index
-        self.scpanel.repeat_every = repeat_every
-        if stop_date is not None:
-            self.scpanel.stop_date = stop_date
-        if account:
-            self.scsplittable.add()
-            self.scsplittable.edited.account = account
-            if self.app.parse_amount(amount) >= 0:
-                self.scsplittable.edited.debit = amount
-            else:
-                self.scsplittable.edited.credit = amount
-            self.scsplittable.save_edits()
-        self.scpanel.save()
+    def add_schedule(self, *args, **kw):
+        self.ta.add_schedule(*args, **kw)
     
     def add_txn(self, *args, **kw):
         self.ta.add_txn(*args, **kw)
@@ -572,23 +593,8 @@ class TestCase(TestCaseBase):
         self.document._cook() # Make sure the balances have been converted using the latest fetched rates
         return newdoc
     
-    def show_account(self, account_name):
-        # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
-        predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
-        self.mainwindow.select_balance_sheet()
-        node = self.bsheet.find(predicate)
-        if node is not None:
-            self.bsheet.selected = node
-            self.document.show_selected_account()
-            return
-        self.mainwindow.select_income_statement()
-        node = self.istatement.find(predicate)
-        if node is not None:
-            self.istatement.selected = node
-            self.document.show_selected_account()
-            return
-        else:
-            raise LookupError("Trying to show an account that doesn't exist")
+    def show_account(self, *args, **kw):
+        self.ta.show_account(*args, **kw)
     
     def transaction_descriptions(self):
         return [row.description for row in self.ttable]
