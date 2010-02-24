@@ -178,6 +178,7 @@ class Loader(object):
             checkno = info.checkno
             date = info.date
             transaction = Transaction(date, description, payee, checkno)
+            transaction.notes = nonone(info.notes, '')
             for split_info in info.splits:
                 account = split_info.account
                 amount = split_info.amount
@@ -288,6 +289,7 @@ class Loader(object):
             amount = self.parse_amount(info.amount, account.currency)
             start_date = nonone(info.start_date, fallback_start_date)
             budget = Budget(account, target, amount, start_date, repeat_type=info.repeat_type)
+            budget.notes = nonone(info.notes, '')
             budget.stop_date = info.stop_date
             if info.repeat_every:
                 budget.repeat_every = info.repeat_every
@@ -327,6 +329,7 @@ class TransactionInfo(object):
         self.description = None
         self.payee = None
         self.checkno = None
+        self.notes = None
         self.account = None
         self.transfer = None
         self.amount = None
@@ -375,6 +378,7 @@ class BudgetInfo(object):
         self.account = account
         self.target = target
         self.amount = amount
+        self.notes = None
         self.repeat_type = None
         self.repeat_every = None
         self.start_date = None

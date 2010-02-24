@@ -214,6 +214,7 @@ def test_set_values():
     yield set_and_test, 'description', 'new', 'desc1'
     yield set_and_test, 'payee', 'new', 'payee1'
     yield set_and_test, 'checkno', '44', '42'
+    yield set_and_test, 'notes', 'foo\nbar', ''
 
 #--- Multi-Currency Transaction
 def app_multi_currency_transaction():

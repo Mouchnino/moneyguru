@@ -41,6 +41,7 @@ class Loader(base.Loader):
             info.description = attrib.get('description')
             info.payee = attrib.get('payee')
             info.checkno = attrib.get('checkno')
+            info.notes = attrib.get('notes')
             info.transfer = attrib.get('transfer')
             try:
                 info.mtime = int(attrib.get('mtime', 0))
@@ -115,6 +116,7 @@ class Loader(base.Loader):
             self.budget_info.repeat_every = tryint(attrib.get('every'), default=None)
             self.budget_info.target = attrib.get('target')
             self.budget_info.amount = attrib.get('amount')
+            self.budget_info.notes = attrib.get('notes')
             self.budget_info.start_date = str2date(attrib.get('start_date'))
             self.budget_info.stop_date = str2date(attrib.get('stop_date'))
             self.flush_budget()

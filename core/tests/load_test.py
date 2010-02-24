@@ -10,12 +10,12 @@
 from datetime import date
 
 from nose.tools import eq_
-
 from hsutil.currency import PLN, CAD
+from hsutil.testutil import with_tmpdir
 
 from ..model.account import AccountType
 from ..model.date import MonthRange
-from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin
+from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, compare_apps, TestApp
 
 class LoadFile(TestCase):
     # Loads 'simple.moneyguru', a file with 2 accounts and 2 entries in each. Select the first entry.
@@ -206,24 +206,60 @@ class LoadWithReferences1(TestCase):
         assert self.etable[1].reconciled
     
 
-class AccountWithBudget(TestCase, TestSaveLoadMixin):
-    # TestSaveLoadMixin: Budgets are correctly saved/loaded
-    def setUp(self):
-        # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
-        self.create_instances()
-        self.add_account_legacy('asset')
-        self.add_account_legacy('income', account_type=AccountType.Income)
-        self.apanel.load()
-        self.apanel.budget = '400'
-        self.apanel.save()
-    
+#--- Account with budget
+def app_account_with_budget():
+    app = TestApp()
+    app.add_account('asset')
+    app.add_account('income', account_type=AccountType.Income)
+    app.add_budget('income', 'asset', '400')
+    app.mainwindow.edit_item()
+    app.bpanel.notes = 'foobar'
+    app.bpanel.save()
+    return app
 
-class TransactionWithPayeeAndChackno(TestCase, TestSaveLoadMixin, TestQIFExportImportMixin):
-    # TestSaveLoadMixin: Make sure that the payee and checkno field is saved/loaded
-    # TestQIFExportImportMixin: the same
-    def setUp(self):
-        self.create_instances()
-        self.add_account('Checking')
-        self.document.show_selected_account()
-        self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
+#--- Transaction with payee and checkno
+def app_transaction_with_payee_and_checkno():
+    app = TestApp()
+    app.add_account('Checking')
+    app.add_txn('10/10/2007', 'Deposit', payee='Payee', from_='Salary', to='Checking',
+        amount='42.00', checkno='42')
+    app.mainwindow.edit_item()
+    app.tpanel.notes = 'foobar'
+    app.tpanel.save()
+    return app
+
+#--- Generators
+def test_save_load_foo():
+    @with_tmpdir
+    def check(app, tmppath):
+        filepath = unicode(tmppath + 'foo.xml')
+        app.doc.save_to_xml(filepath)
+        app.doc.close()
+        newapp = TestApp()
+        newapp.doc.load_from_xml(filepath)
+        newapp.doc.date_range = app.doc.date_range
+        newapp.doc._cook()
+        compare_apps(app.doc, newapp.doc)
     
+    app = app_account_with_budget()
+    yield check, app
+    
+    app = app_transaction_with_payee_and_checkno()
+    yield check, app
+
+def test_save_load_qif():
+    @with_tmpdir
+    def check(app, tmppath):
+        filepath = unicode(tmppath + 'foo.qif')
+        app.doc.save_to_qif(filepath)
+        app.doc.close()
+        newapp = TestApp()
+        newapp.doc.parse_file_for_import(filepath)
+        while newapp.iwin.panes:
+            newapp.iwin.import_selected_pane()
+        newapp.doc.date_range = app.doc.date_range
+        newapp.doc._cook()
+        compare_apps(app.doc, newapp.doc, qif_mode=True)
+    
+    app = app_transaction_with_payee_and_checkno()
+    yield check, app

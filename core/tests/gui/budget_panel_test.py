@@ -8,75 +8,101 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from nose.tools import eq_
+from hsutil.testutil import patch_today
 
 from ...model.account import AccountType
-from ..base import TestCase, CommonSetup
+from ..base import TestApp
 
-class OneAssetAccount(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('asset')
-    
-    def test_can_create_new(self):
-        # When trying to create a new budget in a document without income/expense accounts, an
-        # error message is displayed explaining that it's not possible.
-        self.mainwindow.select_budget_table()
-        self.mainwindow.new_item()
-        eq_(len(self.mainwindow_gui.messages), 1) # a message has been shown
-    
+#--- One asset account
+def app_one_asset_account():
+    app = TestApp()
+    app.add_account('asset')
+    app.mainwindow.show_account()
+    return app
 
-class OneExpenseWithBudget(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_account_with_budget()
-        # The accounts' name and order in which they are created is important, as it tests that
-        # the budget panel sorts them correctly.
-        self.add_account_legacy('liability', account_type=AccountType.Liability)
-        self.add_account_legacy('asset')
-        self.add_account_legacy('Some Income', account_type=AccountType.Income)
-        self.mainwindow.select_budget_table()
-        self.btable.select([0])
-        self.mainwindow.edit_item()
-    
-    def test_attrs(self):
-        eq_(self.bpanel.start_date, '01/01/2008')
-        eq_(self.bpanel.stop_date, '')
-        eq_(self.bpanel.repeat_type_index, 2) # monthly
-        eq_(self.bpanel.repeat_every, 1)
-        eq_(self.bpanel.account_options, ['Some Income', 'Some Expense'])
-        eq_(self.bpanel.account_index, 1)
-        eq_(self.bpanel.target_options, ['None', 'asset', 'liability'])
-        eq_(self.bpanel.target_index, 0)
-        eq_(self.bpanel.amount, '100.00')
-    
-    def test_edit_then_save(self):
-        # Saving edits on the panel actually updates the budget
-        self.bpanel.account_index = 0 # Some Income
-        self.bpanel.target_index = 2 # liability
-        self.bpanel.amount = '42'
-        self.bpanel.save()
-        row = self.btable[0]
-        eq_(row.account, 'Some Income')
-        eq_(row.target, 'liability')
-        eq_(row.amount, '42.00')
-        # To see if the save_edits() worked, we look if the spawns are correct in the ttable
-        self.mainwindow.select_transaction_table()
-        row = self.ttable[0]
-        eq_(row.to, 'liability')
-        eq_(row.from_, 'Some Income')
-        eq_(row.amount, '42.00')
-    
-    def test_edit_without_selection(self):
-        # Initiating a budget edition while none is selected doesn't crash
-        self.btable.select([])
-        self.mainwindow.edit_item() # no crash
-    
-    def test_new_budget(self):
-        self.mainwindow.new_item()
-        eq_(self.bpanel.start_date, '27/01/2008') # mocked date
-        eq_(self.bpanel.repeat_type_index, 2) # monthly
-        eq_(self.bpanel.account_index, 0)
-        eq_(self.bpanel.target_index, 0)
-        self.bpanel.save()
-        eq_(len(self.btable), 2) # has been added
-    
+def test_can_create_new():
+    # When trying to create a new budget in a document without income/expense accounts, an
+    # error message is displayed explaining that it's not possible.
+    app = app_one_asset_account()
+    app.mainwindow.select_budget_table()
+    app.mainwindow.new_item()
+    eq_(len(app.mainwindow_gui.messages), 1) # a message has been shown
+
+#--- One expense with budget
+def patch_one_expense_with_budget(func):
+    return patch_today(2008, 1, 27)(func)
+
+def app_one_expense_with_budget():
+    app = TestApp()
+    app.doc.select_today_date_range()
+    app.add_account('Some Expense', account_type=AccountType.Expense)
+    app.add_budget('Some Expense', None, '100')
+    app.mainwindow.select_income_statement()
+    # The accounts' name and order in which they are created is important, as it tests that
+    # the budget panel sorts them correctly.
+    app.add_account('liability', account_type=AccountType.Liability)
+    app.add_account('asset')
+    app.add_account('Some Income', account_type=AccountType.Income)
+    app.mainwindow.select_budget_table()
+    app.btable.select([0])
+    app.mainwindow.edit_item()
+    return app
+
+@patch_one_expense_with_budget
+def test_attrs():
+    app = app_one_expense_with_budget()
+    eq_(app.bpanel.start_date, '01/01/2008')
+    eq_(app.bpanel.stop_date, '')
+    eq_(app.bpanel.repeat_type_index, 2) # monthly
+    eq_(app.bpanel.repeat_every, 1)
+    eq_(app.bpanel.account_options, ['Some Income', 'Some Expense'])
+    eq_(app.bpanel.account_index, 1)
+    eq_(app.bpanel.target_options, ['None', 'asset', 'liability'])
+    eq_(app.bpanel.target_index, 0)
+    eq_(app.bpanel.amount, '100.00')
+
+@patch_one_expense_with_budget
+def test_edit_then_save():
+    # Saving edits on the panel actually updates the budget
+    app = app_one_expense_with_budget()
+    app.bpanel.account_index = 0 # Some Income
+    app.bpanel.target_index = 2 # liability
+    app.bpanel.amount = '42'
+    app.bpanel.notes = 'foobar'
+    app.bpanel.save()
+    # Set new values without saving
+    app.bpanel.amount = '43'
+    app.bpanel.notes = 'foobaz'
+    # Reload the panel and check the values
+    app.mainwindow.edit_item()
+    eq_(app.bpanel.amount, '42.00')
+    eq_(app.bpanel.notes, 'foobar')
+    # Check that the correct info is in the btable.
+    row = app.btable[0]
+    eq_(row.account, 'Some Income')
+    eq_(row.target, 'liability')
+    eq_(row.amount, '42.00')
+    # To see if the save_edits() worked, we look if the spawns are correct in the ttable
+    app.mainwindow.select_transaction_table()
+    row = app.ttable[0]
+    eq_(row.to, 'liability')
+    eq_(row.from_, 'Some Income')
+    eq_(row.amount, '42.00')
+
+@patch_one_expense_with_budget
+def test_edit_without_selection():
+    # Initiating a budget edition while none is selected doesn't crash
+    app = app_one_expense_with_budget()
+    app.btable.select([])
+    app.mainwindow.edit_item() # no crash
+
+@patch_one_expense_with_budget
+def test_new_budget():
+    app = app_one_expense_with_budget()
+    app.mainwindow.new_item()
+    eq_(app.bpanel.start_date, '27/01/2008') # mocked date
+    eq_(app.bpanel.repeat_type_index, 2) # monthly
+    eq_(app.bpanel.account_index, 0)
+    eq_(app.bpanel.target_index, 0)
+    app.bpanel.save()
+    eq_(len(app.btable), 2) # has been added

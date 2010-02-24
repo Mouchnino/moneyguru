@@ -304,6 +304,25 @@ class TestApp(object):
             self.doc.change_account(account, **attrs)
         self.doc.select_account(account)
     
+    def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
+            repeat_every=1, stop_date=None):
+        # if no target, set target_name to None
+        self.mainwindow.select_budget_table()
+        self.mainwindow.new_item()
+        if start_date is None:
+            start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
+        self.bpanel.start_date = start_date
+        self.bpanel.repeat_type_index = repeat_type_index
+        self.bpanel.repeat_every = repeat_every
+        if stop_date is not None:
+            self.bpanel.stop_date = stop_date
+        account_index = self.bpanel.account_options.index(account_name)
+        self.bpanel.account_index = account_index
+        target_index = self.bpanel.target_options.index(target_name) if target_name else 0
+        self.bpanel.target_index = target_index
+        self.bpanel.amount = str_amount
+        self.bpanel.save()
+    
     def add_entry(self, date=None, description=None, payee=None, transfer=None, increase=None, 
             decrease=None, checkno=None):
         # This whole "if not None" thing allows to simulate a user tabbing over fields leaving the
@@ -445,24 +464,8 @@ class TestCase(TestCaseBase):
         for name in names:
             self.add_account_legacy(name)
     
-    def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
-            repeat_every=1, stop_date=None):
-        # if no target, set target_name to None
-        self.mainwindow.select_budget_table()
-        self.mainwindow.new_item()
-        if start_date is None:
-            start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
-        self.bpanel.start_date = start_date
-        self.bpanel.repeat_type_index = repeat_type_index
-        self.bpanel.repeat_every = repeat_every
-        if stop_date is not None:
-            self.bpanel.stop_date = stop_date
-        account_index = self.bpanel.account_options.index(account_name)
-        self.bpanel.account_index = account_index
-        target_index = self.bpanel.target_options.index(target_name) if target_name else 0
-        self.bpanel.target_index = target_index
-        self.bpanel.amount = str_amount
-        self.bpanel.save()
+    def add_budget(self, *args, **kw):
+        self.ta.add_budget(*args, **kw)
     
     def add_entry(self, *args, **kw):
         self.ta.add_entry(*args, **kw)
@@ -591,95 +594,100 @@ class TestCase(TestCaseBase):
         return [row.description for row in self.ttable]
     
 
+def compare_apps(first, second, qif_mode=False):
+    def compare_txns(txn1, txn2):
+        try: # XXX Why is there a try/except here? To catch silently some exeptions?
+            eq_(txn1.date, txn2.date)
+            eq_(txn1.description, txn2.description)
+            eq_(txn1.payee, txn2.payee)
+            eq_(txn1.checkno, txn2.checkno)
+            if not qif_mode:
+                eq_(txn1.notes, txn2.notes)
+            eq_(len(txn1.splits), len(txn2.splits))
+        except AssertionError:
+            raise
+        splits1 = txn1.splits
+        splits2 = txn2.splits
+        splits1.sort(key=lambda s: getattr(s.account, 'name', ''))
+        splits2.sort(key=lambda s: getattr(s.account, 'name', ''))
+        for split1, split2 in zip(splits1, splits2):
+            try:
+                account1 = split1.account.name if split1.account else ''
+                account2 = split2.account.name if split2.account else ''
+                eq_(account1, account2)
+                if qif_mode:
+                    if split1.amount and split2.amount:
+                        eq_(split1.amount.value, split2.amount.value)
+                    else:
+                        eq_(split1.amount, split2.amount)
+                else:
+                    eq_(split1.memo, split2.memo)
+                    eq_(split1.amount, split2.amount)
+                eq_(split1.reconciled, split2.reconciled)
+            except AssertionError:
+                raise
+    
+    eq_(len(first.groups), len(second.groups))
+    group_pairs = zip(sorted(first.groups, key=attrgetter('name')),
+        sorted(second.groups, key=attrgetter('name')))
+    for group1, group2 in group_pairs:
+        try:
+            eq_(group1.name, group2.name)
+            eq_(group1.type, group2.type)
+        except AssertionError:
+            raise
+    eq_(len(first.accounts), len(second.accounts))
+    account_pairs = zip(sorted(first.accounts, key=attrgetter('name')),
+        sorted(second.accounts, key=attrgetter('name')))
+    for account1, account2 in account_pairs:
+        try:
+            eq_(account1.name, account2.name)
+            eq_(account1.type, account2.type)
+            if not qif_mode:
+                eq_(account1.currency, account2.currency)
+            eq_(len(account1.entries), len(account2.entries))
+        except AssertionError:
+            raise
+    eq_(len(first.transactions), len(second.transactions))
+    for txn1, txn2 in zip(first.transactions, second.transactions):
+        compare_txns(txn1, txn2)
+    eq_(len(first.schedules), len(second.schedules))
+    for rec1, rec2 in zip(first.schedules, second.schedules):
+        eq_(rec1.repeat_type, rec2.repeat_type)
+        eq_(rec1.repeat_every, rec2.repeat_every)
+        compare_txns(rec1.ref, rec2.ref)
+        eq_(rec1.stop_date, rec2.stop_date)
+        eq_(len(rec1.date2exception), len(rec2.date2exception))
+        for date in rec1.date2exception:
+            exc1 = rec1.date2exception[date]
+            exc2 = rec2.date2exception[date]
+            if exc1 is None:
+                assert exc2 is None
+            else:
+                compare_txns(exc1, exc2)
+        eq_(len(rec1.date2globalchange), len(rec2.date2globalchange))
+        for date in rec1.date2globalchange:
+            txn1 = rec1.date2globalchange[date]
+            txn2 = rec2.date2globalchange[date]
+            compare_txns(txn1, txn2)
+    for budget1, budget2 in zip(first.budgets, second.budgets):
+        eq_(budget1.account.name, budget2.account.name)
+        if budget1.target is None:
+            assert budget2.target is None
+        else:
+            eq_(budget1.target.name, budget2.target.name)
+        eq_(budget1.amount, budget2.amount)
+        eq_(budget1.notes, budget2.notes)
+        eq_(budget1.repeat_type, budget2.repeat_type)
+        eq_(budget1.start_date, budget2.start_date)
+        eq_(budget1.stop_date, budget2.stop_date)
+        eq_(budget1.repeat_every, budget2.repeat_every)
+
 @nottest
 class TestAppCompareMixin(object):
     # qif_mode: don't compare reconciliation status and, don't compare memos
     def _compareapps(self, first, second, qif_mode=False):
-        def compare_txns(txn1, txn2):
-            try: # XXX Why is there a try/except here? To catch silently some exeptions?
-                eq_(txn1.date, txn2.date)
-                eq_(txn1.description, txn2.description)
-                eq_(txn1.payee, txn2.payee)
-                eq_(txn1.checkno, txn2.checkno)
-                eq_(len(txn1.splits), len(txn2.splits))
-            except AssertionError:
-                raise
-            splits1 = txn1.splits
-            splits2 = txn2.splits
-            splits1.sort(key=lambda s: getattr(s.account, 'name', ''))
-            splits2.sort(key=lambda s: getattr(s.account, 'name', ''))
-            for split1, split2 in zip(splits1, splits2):
-                try:
-                    account1 = split1.account.name if split1.account else ''
-                    account2 = split2.account.name if split2.account else ''
-                    eq_(account1, account2)
-                    if qif_mode:
-                        if split1.amount and split2.amount:
-                            eq_(split1.amount.value, split2.amount.value)
-                        else:
-                            eq_(split1.amount, split2.amount)
-                    else:
-                        eq_(split1.memo, split2.memo)
-                        eq_(split1.amount, split2.amount)
-                    eq_(split1.reconciled, split2.reconciled)
-                except AssertionError:
-                    raise
-        
-        eq_(len(first.groups), len(second.groups))
-        group_pairs = zip(sorted(first.groups, key=attrgetter('name')),
-            sorted(second.groups, key=attrgetter('name')))
-        for group1, group2 in group_pairs:
-            try:
-                eq_(group1.name, group2.name)
-                eq_(group1.type, group2.type)
-            except AssertionError:
-                raise
-        eq_(len(first.accounts), len(second.accounts))
-        account_pairs = zip(sorted(first.accounts, key=attrgetter('name')),
-            sorted(second.accounts, key=attrgetter('name')))
-        for account1, account2 in account_pairs:
-            try:
-                eq_(account1.name, account2.name)
-                eq_(account1.type, account2.type)
-                if not qif_mode:
-                    eq_(account1.currency, account2.currency)
-                eq_(len(account1.entries), len(account2.entries))
-            except AssertionError:
-                raise
-        eq_(len(first.transactions), len(second.transactions))
-        for txn1, txn2 in zip(first.transactions, second.transactions):
-            compare_txns(txn1, txn2)
-        eq_(len(first.schedules), len(second.schedules))
-        for rec1, rec2 in zip(first.schedules, second.schedules):
-            eq_(rec1.repeat_type, rec2.repeat_type)
-            eq_(rec1.repeat_every, rec2.repeat_every)
-            compare_txns(rec1.ref, rec2.ref)
-            eq_(rec1.stop_date, rec2.stop_date)
-            eq_(len(rec1.date2exception), len(rec2.date2exception))
-            for date in rec1.date2exception:
-                exc1 = rec1.date2exception[date]
-                exc2 = rec2.date2exception[date]
-                if exc1 is None:
-                    assert exc2 is None
-                else:
-                    compare_txns(exc1, exc2)
-            eq_(len(rec1.date2globalchange), len(rec2.date2globalchange))
-            for date in rec1.date2globalchange:
-                txn1 = rec1.date2globalchange[date]
-                txn2 = rec2.date2globalchange[date]
-                compare_txns(txn1, txn2)
-        for budget1, budget2 in zip(first.budgets, second.budgets):
-            eq_(budget1.account.name, budget2.account.name)
-            if budget1.target is None:
-                assert budget2.target is None
-            else:
-                eq_(budget1.target.name, budget2.target.name)
-            eq_(budget1.amount, budget2.amount)
-            eq_(budget1.repeat_type, budget2.repeat_type)
-            eq_(budget1.start_date, budget2.start_date)
-            eq_(budget1.stop_date, budget2.stop_date)
-            eq_(budget1.repeat_every, budget2.repeat_every)
-    
+        compare_apps(first, second, qif_mode)
 
 class TestSaveLoadMixin(TestAppCompareMixin):
     def test_save_load(self):

@@ -142,17 +142,18 @@ class Document(Broadcaster, Listener):
             io.remove(self.app.cache_path + existing_names[0])
     
     def _change_transaction(self, transaction, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
-                            checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT,
-                            global_scope=False):
+            checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT, 
+            notes=NOEDIT, global_scope=False):
         date_changed = date is not NOEDIT and date != transaction.date
         transaction.change(date=date, description=description, payee=payee, checkno=checkno,
-                           from_=from_, to=to, amount=amount, currency=currency)
+            from_=from_, to=to, amount=amount, currency=currency, notes=notes)
         if isinstance(transaction, Spawn):
             if global_scope:
                 transaction.recurrence.change_globally(transaction)
             else:
                 transaction.recurrence.add_exception(transaction)
         else:
+            # XXX Removing this line below makes lots of tests fail, WTF???
             transaction.change(date=date, description=description, payee=payee, checkno=checkno,
                                from_=from_, to=to, amount=amount, currency=currency)
             if transaction not in self.transactions:
@@ -493,7 +494,7 @@ class Document(Broadcaster, Listener):
         original.amount = new.amount
         min_date = min(original.date, new.date)
         self._change_transaction(original, date=new.date, description=new.description,
-            payee=new.payee, checkno=new.checkno, global_scope=global_scope)
+            payee=new.payee, checkno=new.checkno, notes=new.notes, global_scope=global_scope)
         self._cook(from_date=min_date)
         self._clean_empty_categories()
         if not self._adjust_date_range(original.date):
@@ -726,6 +727,7 @@ class Document(Broadcaster, Listener):
         original.account = new.account
         original.target = new.target
         original.amount = new.amount
+        original.notes = new.notes
         original.reset_spawn_cache()
         if original not in self.budgets:
             self.budgets.append(original)

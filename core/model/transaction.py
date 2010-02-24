@@ -22,6 +22,7 @@ class Transaction(object):
         self.description = nonone(description, '')
         self.payee = nonone(payee, '')
         self.checkno = nonone(checkno, '')
+        self.notes = ''
         self.amount = nonone(amount, 0)
         if amount is not None:
             self.splits = [Split(self, account, amount), Split(self, None, -amount)]
@@ -39,6 +40,7 @@ class Transaction(object):
         # the splits to link to the same account instances.
         txn = transaction
         result = cls(txn.date, txn.description, txn.payee, txn.checkno)
+        result.notes = txn.notes
         result.position = txn.position
         result.mtime = txn.mtime
         result.amount = txn.amount
@@ -124,7 +126,7 @@ class Transaction(object):
         self.amount = amount_sum * 0.5
     
     def change(self, date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT, from_=NOEDIT, 
-               to=NOEDIT, amount=NOEDIT, currency=NOEDIT):
+            to=NOEDIT, amount=NOEDIT, currency=NOEDIT, notes=NOEDIT):
         # from_ and to are Account instances
         if date is not NOEDIT:
             self.date = date
@@ -134,6 +136,8 @@ class Transaction(object):
             self.payee = payee
         if checkno is not NOEDIT:
             self.checkno = checkno
+        if notes is not NOEDIT:
+            self.notes = notes
         if from_ is not NOEDIT:
             fsplits, _ = self.splitted_splits()
             if len(fsplits) == 1:

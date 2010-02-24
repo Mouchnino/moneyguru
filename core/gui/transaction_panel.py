@@ -77,6 +77,14 @@ class PanelWithTransaction(GUIPanel, Broadcaster, CompletionMixIn):
         self.transaction.checkno = value
     
     @property
+    def notes(self):
+        return self.transaction.notes
+    
+    @notes.setter
+    def notes(self, value):
+        self.transaction.notes = value
+    
+    @property
     def amount(self):
         return self.document.app.format_amount(self.transaction.amount)
     

@@ -20,6 +20,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         attrib['description'] = transaction.description
         attrib['payee'] = transaction.payee
         attrib['checkno'] = transaction.checkno
+        attrib['notes'] = transaction.notes
         attrib['mtime'] = str(int(transaction.mtime))
         for split in transaction.splits:
             split_element = ET.SubElement(transaction_element, 'split')
@@ -79,6 +80,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         attrib['type'] = budget.repeat_type
         attrib['every'] = unicode(budget.repeat_every)
         attrib['amount'] = unicode(budget.amount)
+        attrib['notes'] = budget.notes
         if budget.target is not None:
             attrib['target'] = budget.target.name
         attrib['start_date'] = date2str(budget.start_date)

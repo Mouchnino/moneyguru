@@ -66,3 +66,11 @@ class BudgetPanel(GUIPanel, PanelWithScheduleMixIn):
         except ValueError:
             pass
     
+    @property
+    def notes(self):
+        return self.budget.notes
+    
+    @notes.setter
+    def notes(self, value):
+        self.budget.notes = value
+    

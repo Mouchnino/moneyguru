@@ -33,6 +33,7 @@ class Budget(Recurrence):
         self.account = account
         self.target = target
         self.amount = amount
+        self.notes = ''
         self._previous_spawns = []
         ref = Transaction(ref_date)
         Recurrence.__init__(self, ref, repeat_type, 1)
