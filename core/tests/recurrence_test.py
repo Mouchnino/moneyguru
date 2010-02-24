@@ -7,10 +7,10 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from nose.tools import eq_
-from hsutil.testutil import patch_today
+from hsutil.testutil import Patcher
 
 from ..document import ScheduleScope
-from .base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp
+from .base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
 
 class OneTransaction(TestCase, CommonSetup):
     def setUp(self):
@@ -40,10 +40,9 @@ class OneTransaction(TestCase, CommonSetup):
     
 
 #--- Daily schedule
-def patch_daily_schedule(func):
-    return patch_today(2008, 9, 13)(func)
-
 def app_daily_schedule():
+    p = Patcher()
+    p.patch_today(2008, 9, 13)
     app = TestApp()
     app.doc.select_month_range()
     app.add_account('account')
@@ -51,13 +50,12 @@ def app_daily_schedule():
         repeat_every=3)
     app.mainwindow.select_transaction_table()
     app.clear_gui_calls()
-    return app
+    return app, p
 
-@patch_daily_schedule
-def test_change_schedule_transaction():
+@with_app(app_daily_schedule)
+def test_change_schedule_transaction(app):
     # when modifying a schedule's transaction through the scpanel, make sure that this change
     # is reflected among all spawns (in other words, reset spawn cache).
-    app = app_daily_schedule()
     app.mainwindow.select_schedule_table()
     app.sctable.select([0])
     app.scpanel.load()
@@ -66,10 +64,9 @@ def test_change_schedule_transaction():
     app.mainwindow.select_transaction_table()
     eq_(app.ttable[1].description, 'foobaz')
 
-@patch_daily_schedule
-def test_change_spawn():
+@with_app(app_daily_schedule)
+def test_change_spawn(app):
     # changing a spawn adds an exception to the recurrence (even if the date is changed)
-    app = app_daily_schedule()
     app.ttable.select([1])
     app.ttable[1].date = '17/09/2008'
     app.ttable[1].description = 'changed'
@@ -85,22 +82,9 @@ def test_change_spawn():
     eq_(app.ttable[2].date, '20/09/2008')
     eq_(app.ttable[2].description, 'changed')
 
-
-# class OneDailyRecurrentTransaction(TestCase, TestSaveLoadMixin):
-#     def setUp(self):
-#         self.mock_today(2008, 9, 13)
-#         self.create_instances()
-#         self.document.select_month_range()
-#         self.add_account('account')
-#         self.add_schedule(start_date='13/09/2008', description='foobar', account='account', 
-#             amount='1', repeat_every=3)
-#         self.mainwindow.select_transaction_table()
-#         self.clear_gui_calls()
-#     
-@patch_daily_schedule
-def test_change_spawn_cancel():
+@with_app(app_daily_schedule)
+def test_change_spawn_cancel(app):
     # When cancelling a spawn change, nothing happens
-    app = app_daily_schedule()
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Cancel
     app.ttable.select([1])
     app.ttable[1].description = 'changed'
@@ -111,10 +95,9 @@ def test_change_spawn_cancel():
     app.doc.undo()
     eq_(len(app.ttable), 0) # the schedule creation has been undone
 
-@patch_daily_schedule
-def test_change_spawn_then_delete_it():
+@with_app(app_daily_schedule)
+def test_change_spawn_then_delete_it(app):
     # The correct spawn is deleted when a changed spawn is deleted
-    app = app_daily_schedule()
     app.ttable.select([1])
     app.ttable[1].date = '17/09/2008'
     app.ttable.save_edits()
@@ -122,30 +105,27 @@ def test_change_spawn_then_delete_it():
     eq_(len(app.ttable), 5)
     eq_(app.ttable[1].date, '19/09/2008')
 
-@patch_daily_schedule
-def test_change_spawn_through_etable():
+@with_app(app_daily_schedule)
+def test_change_spawn_through_etable(app):
     # Changing a spawn through etable queries for a scope.
-    app = app_daily_schedule()
     app.show_account('account')
     app.etable[1].description = 'changed'
     app.etable.save_edits()
     app.check_gui_calls(app.doc_gui, ['query_for_schedule_scope'])
 
-@patch_daily_schedule
-def test_change_spawn_through_etable_globally():
+@with_app(app_daily_schedule)
+def test_change_spawn_through_etable_globally(app):
     # When the user selects a global change through the etable, we listen
-    app = app_daily_schedule()
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.show_account('account')
     app.etable[1].description = 'changed'
     app.etable.save_edits()
     eq_(app.etable[2].description, 'changed')
 
-@patch_daily_schedule
-def test_change_spawn_through_tpanel():
+@with_app(app_daily_schedule)
+def test_change_spawn_through_tpanel(app):
     # Previously, each edition of a spawn through tpanel would result in a new schedule being
     # added even if the recurrence itself didn't change
-    app = app_daily_schedule()
     app.ttable.select([1])
     app.tpanel.load()
     app.tpanel.description = 'changed'
@@ -156,11 +136,10 @@ def test_change_spawn_through_tpanel():
     # We were queried for a scope
     app.check_gui_calls(app.doc_gui, ['query_for_schedule_scope'])
 
-@patch_daily_schedule
-def test_change_spawn_with_global_scope():
+@with_app(app_daily_schedule)
+def test_change_spawn_with_global_scope(app):
     # changing a spawn with a global scope makes every following spawn like it.
     # The date progression, however, continues as it was
-    app = app_daily_schedule()
     app.ttable.select([2])
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
@@ -173,11 +152,10 @@ def test_change_spawn_with_global_scope():
     eq_(app.ttable[4].date, '25/09/2008')
     eq_(app.ttable[4].description, 'changed')
 
-@patch_daily_schedule
-def test_change_spawn_with_global_scope_then_with_local_scope():
+@with_app(app_daily_schedule)
+def test_change_spawn_with_global_scope_then_with_local_scope(app):
     # Previously, the same instance was used in the previous recurrence exception as well as
     # the new occurence base, making the second change, which is local, global.
-    app = app_daily_schedule()
     app.ttable.select([2])
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
@@ -188,10 +166,9 @@ def test_change_spawn_with_global_scope_then_with_local_scope():
     app.ttable.save_edits()
     eq_(app.ttable[3].description, 'changed')
 
-@patch_daily_schedule
-def test_change_spawn_with_global_scope_twice():
+@with_app(app_daily_schedule)
+def test_change_spawn_with_global_scope_twice(app):
     # Previously, the second change would result in schedule duplicating
-    app = app_daily_schedule()
     app.ttable.select([2])
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
@@ -202,10 +179,9 @@ def test_change_spawn_with_global_scope_twice():
     eq_(app.ttable[3].date, '22/09/2008')
     eq_(app.ttable[3].description, 'changed again')
 
-@patch_daily_schedule
-def test_delete_account():
+@with_app(app_daily_schedule)
+def test_delete_account(app):
     # Deleting an account affecting a schedule properly update that schedule
-    app = app_daily_schedule()
     app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
@@ -213,39 +189,35 @@ def test_delete_account():
     app.mainwindow.select_schedule_table()
     eq_(app.sctable[0].to, '')
 
-@patch_daily_schedule
-def test_delete_spawn():
+@with_app(app_daily_schedule)
+def test_delete_spawn(app):
     # deleting a spawn only deletes this instance
-    app = app_daily_schedule()
     app.ttable.select([1])
     app.ttable.delete()
     eq_(len(app.ttable), 5)
     eq_(app.ttable[1].date, '19/09/2008')
 
-@patch_daily_schedule
-def test_delete_spawn_cancel():
+@with_app(app_daily_schedule)
+def test_delete_spawn_cancel(app):
     # When the user cancels a spawn deletion, nothing happens
-    app = app_daily_schedule()
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Cancel
     app.ttable.select([1])
     app.ttable.delete()
     eq_(len(app.ttable), 6)
 
-@patch_daily_schedule
-def test_delete_spawn_with_global_scope():
+@with_app(app_daily_schedule)
+def test_delete_spawn_with_global_scope(app):
     # when deleting a spawn and query_for_global_scope returns True, we stop the recurrence 
     # right there
-    app = app_daily_schedule()
     app.ttable.select([2])
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.delete()
     eq_(len(app.ttable), 2)
     eq_(app.ttable[1].date, '16/09/2008')
 
-@patch_daily_schedule
-def test_delete_spawn_with_global_scope_after_change():
+@with_app(app_daily_schedule)
+def test_delete_spawn_with_global_scope_after_change(app):
     # A bug would cause the stop_date to be ineffective if a change had been made at a later date
-    app = app_daily_schedule()
     app.ttable.select([3])
     app.ttable[3].description = 'changed'
     app.ttable.save_edits()
@@ -254,9 +226,8 @@ def test_delete_spawn_with_global_scope_after_change():
     app.ttable.delete()
     eq_(len(app.ttable), 2)
 
-@patch_daily_schedule
-def test_etable_attrs():
-    app = app_daily_schedule()
+@with_app(app_daily_schedule)
+def test_etable_attrs(app):
     app.show_account('account')
     eq_(len(app.etable), 6) # same thing in etable
     assert app.etable[0].recurrent
@@ -264,12 +235,11 @@ def test_etable_attrs():
     assert app.ttable[5].recurrent
     eq_(app.ttable[5].date, '28/09/2008')
 
-@patch_daily_schedule
-def test_exceptions_are_always_spawned():
+@with_app(app_daily_schedule)
+def test_exceptions_are_always_spawned(app):
     # When an exception has a smaller date than the "spawn date", enough to be in another range,
     # when reloading the document, this exception would not be spawn until the date range
     # reached the "spawn date" rather than the exception date.
-    app = app_daily_schedule()
     app.doc.select_next_date_range()
     app.ttable.select([0])
     app.ttable[0].date = '30/09/2008'
@@ -278,18 +248,16 @@ def test_exceptions_are_always_spawned():
     app.ttable.refresh() # a manual refresh is required
     eq_(len(app.ttable), 7) # The changed spawn must be there.
 
-@patch_daily_schedule
-def test_filter():
+@with_app(app_daily_schedule)
+def test_filter(app):
     # scheduled transactions are included in the filters
-    app = app_daily_schedule()
     app.sfield.query = 'foobar'
     eq_(len(app.ttable), 6)
 
-@patch_daily_schedule
-def test_mass_edition():
+@with_app(app_daily_schedule)
+def test_mass_edition(app):
     # When a mass edition has a spawn in it, don't ask for scope, just perform the change in the
     # local scope
-    app = app_daily_schedule()
     app.ttable.select([1, 2])
     app.mepanel.load()
     app.mepanel.description = 'changed'
@@ -297,9 +265,8 @@ def test_mass_edition():
     eq_(app.ttable[3].description, 'foobar')
     app.check_gui_calls_partial(app.doc_gui, not_expected=['query_for_schedule_scope'])
 
-@patch_daily_schedule
-def test_ttable_attrs():
-    app = app_daily_schedule()
+@with_app(app_daily_schedule)
+def test_ttable_attrs(app):
     eq_(len(app.ttable), 6) # this txn happens 6 times this month
     assert app.ttable[0].recurrent # original is not recurrent
     eq_(app.ttable[0].date, '13/09/2008')

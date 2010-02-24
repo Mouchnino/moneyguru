@@ -423,6 +423,30 @@ class TestApp(object):
             raise LookupError("Trying to show an account that doesn't exist")
     
 
+def with_app(appfunc):
+    # This decorator sends the app resulting from the `appfunc` call as an argument to the decorated
+    # `func`. `appfunc` must return a TestApp instance. Additionally, `appfunc` can also return a
+    # tuple (app, patcher). In this case, the patcher will perform unpatching after having called
+    # the decorated func.
+    def decorator(func):
+        def wrapper(): # a test is not supposed to take args
+            appresult = appfunc()
+            if isinstance(appresult, tuple):
+                app, patcher = appresult
+            else:
+                app = appresult
+                patcher = None
+            assert isinstance(app, TestApp)
+            try:
+                func(app)
+            finally:
+                if patcher is not None:
+                    patcher.unpatch()
+        
+        wrapper.__name__ = func.__name__
+        return wrapper
+    return decorator
+
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
 # now, not all convenience methods have been moved to TestApp, but if you need one, just move it
 # from TestCase to there and make the old method call the one in TestApp.
