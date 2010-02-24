@@ -74,6 +74,15 @@ Whenever a date is edited, it is edited using a special widget. This widget has 
 
 While editing a transaction or entry, if you set the date to something outside the current date range, you will get a ![](images/backward_16.png) or a ![](images/forward_16.png) showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when editing ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when editing ends.
 
+Amount Editing
+-----
+
+Fields allowing you to enter amounts have a few hidden features. 
+
+* You can enter simple expressions like "2+4.35/2" and they will be automatically calculated.
+* If you enabled the "Automatically place decimals when typing" option, typing numbers without decimal point will result in it being automatically placed. For example, if your default currency is USD, typing "1234" will result in the amount "12.34".
+* You can always explicitly specify the currency of an amount by prepending or appending the 3-letters ISO code of that currency to that amount (see the [currencies help page](currencies.htm)).
+
 Transaction Balancing
 -----
 
