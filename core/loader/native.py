@@ -34,6 +34,13 @@ class Loader(base.Loader):
             except (ValueError, TypeError):
                 return default
         
+        def handle_newlines(s):
+            # etree doesn't correctly save newlines. During save, we escape them. Now's the time to
+            # restore them.
+            if not s:
+                return s
+            return s.replace('\\n', '\n')
+        
         def read_transaction_element(element, info):
             attrib = element.attrib
             info.account = attrib.get('account')
@@ -41,7 +48,7 @@ class Loader(base.Loader):
             info.description = attrib.get('description')
             info.payee = attrib.get('payee')
             info.checkno = attrib.get('checkno')
-            info.notes = attrib.get('notes')
+            info.notes = handle_newlines(attrib.get('notes'))
             info.transfer = attrib.get('transfer')
             try:
                 info.mtime = int(attrib.get('mtime', 0))

@@ -224,7 +224,7 @@ def app_transaction_with_payee_and_checkno():
     app.add_txn('10/10/2007', 'Deposit', payee='Payee', from_='Salary', to='Checking',
         amount='42.00', checkno='42')
     app.mainwindow.edit_item()
-    app.tpanel.notes = 'foobar'
+    app.tpanel.notes = 'foobar\nfoobaz'
     app.tpanel.save()
     return app
 

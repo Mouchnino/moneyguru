@@ -13,6 +13,13 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
     def date2str(date):
         return date.strftime('%Y-%m-%d')
     
+    def handle_newlines(s):
+        # etree doesn't correctly save newlines. In fields that allow it, we have to escape them so
+        # that we can restore them during load.
+        if not s:
+            return s
+        return s.replace('\n', '\\n')
+    
     def setattrib(attribs, attribname, value):
         if value:
             attribs[attribname] = value
@@ -24,7 +31,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         setattrib(attrib, 'description', transaction.description)
         setattrib(attrib, 'payee', transaction.payee)
         setattrib(attrib, 'checkno', transaction.checkno)
-        setattrib(attrib, 'notes', transaction.notes)
+        setattrib(attrib, 'notes', handle_newlines(transaction.notes))
         attrib['mtime'] = str(int(transaction.mtime))
         for split in transaction.splits:
             split_element = ET.SubElement(transaction_element, 'split')
