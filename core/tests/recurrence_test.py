@@ -280,6 +280,8 @@ def test_ttable_attrs(app):
     eq_(app.ttable[4].date, '25/09/2008')
     assert app.ttable[5].recurrent
     eq_(app.ttable[5].date, '28/09/2008')
+    # Also test amount. Previously, the spawns would have their amount attributes stuck at 0.
+    eq_(app.ttable[0].amount, '1.00')
 
 class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSaveLoadMixin):
     # TestSaveLoadMixin: The native loader was loading the wrong split element into the Recurrence's

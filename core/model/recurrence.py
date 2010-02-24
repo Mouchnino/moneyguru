@@ -65,6 +65,7 @@ class Spawn(Transaction):
         self.set_splits(ref.splits)
         for split in self.splits:
             split.reconciliation_date = None
+        self.balance()
     
 
 class Recurrence(object):
