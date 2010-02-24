@@ -253,10 +253,15 @@ def test_parse_auto_decimal_places_only_cents():
     # Parsing correctly occurs when the amount of numbers typed is below the decimal places.
     # TND has 3 decimal places.
     eq_(parse_amount('123', default_currency=TND, auto_decimal_place=True), Amount(.123, TND))
+    eq_(parse_amount('1', default_currency=TND, auto_decimal_place=True), Amount(.001, TND))
 
 def test_parse_auto_decimal_places_with_space():
     # Spaces are correctly trimmed when counting decimal places.
     eq_(parse_amount('1234 ', default_currency=USD, auto_decimal_place=True), Amount(12.34, USD))
+
+def test_parse_auto_decimal_places_expression():
+    # When there's an expression, the auto_decimal_place option is ignored
+    eq_(parse_amount('2+3', default_currency=USD, auto_decimal_place=True), Amount(5, USD))
 
 #--- Format amount
 def test_format_blank_zero():

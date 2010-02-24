@@ -226,11 +226,13 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
     string = string.strip()
     string = string.replace(',', '.')
     string = re_grouping_sep.sub('', string)
-    if auto_decimal_place:
-        if '.' not in string:
-            place = currency.exponent if currency is not None else 2
-            if place:
-                string = string[:-place] + '.' + string[-place:]
+    # isdigit means that it's not an expression and there's not '.' in it
+    if auto_decimal_place and string.isdigit():
+        place = currency.exponent if currency is not None else 2
+        if place:
+            string = string.rjust(place, '0')
+            string = string[:-place] + '.' + string[-place:]
+            with_expression = False
     if with_expression:
         string = string.replace(' ', '')
         string = re_octal_zero.sub('', string)
