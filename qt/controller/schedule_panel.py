@@ -22,6 +22,7 @@ class SchedulePanel(Panel, Ui_SchedulePanel):
         ('descriptionEdit', 'description'),
         ('payeeEdit', 'payee'),
         ('checkNoEdit', 'checkno'),
+        ('notesEdit', 'notes'),
         ('amountEdit', 'amount'),
         ('amountEdit2', 'amount'),
     ]

@@ -21,6 +21,7 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         ('descriptionEdit', 'description'),
         ('payeeEdit', 'payee'),
         ('checkNoEdit', 'checkno'),
+        ('notesEdit', 'notes'),
         ('amountEdit', 'amount'),
         ('amountEdit2', 'amount'),
     ]

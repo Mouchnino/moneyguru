@@ -21,6 +21,7 @@ class BudgetPanel(Panel, Ui_BudgetPanel):
         ('accountComboBox', 'account_index'),
         ('targetComboBox', 'target_index'),
         ('amountEdit', 'amount'),
+        ('notesEdit', 'notes'),
     ]
     
     def __init__(self, parent, doc):

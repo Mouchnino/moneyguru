@@ -350,6 +350,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Notes</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QPlainTextEdit" name="notesEdit"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>

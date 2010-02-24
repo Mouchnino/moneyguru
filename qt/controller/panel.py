@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox
+from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox, QPlainTextEdit
 
 from support.completable_edit import CompletableEdit
 
@@ -45,6 +45,8 @@ class Panel(QDialog):
                 widget.editingFinished.connect(self.lineEditEditingFinished)
                 if isinstance(widget, CompletableEdit):
                     widget.model = self.model
+            elif isinstance(widget, QPlainTextEdit):
+                widget.textChanged.connect(self.plainEditTextChanged)
             elif isinstance(widget, QCheckBox):
                 widget.stateChanged.connect(self.checkBoxStateChanged)
     
@@ -58,6 +60,8 @@ class Panel(QDialog):
                 widget.setValue(value)
             elif isinstance(widget, QLineEdit):
                 widget.setText(value)
+            elif isinstance(widget, QPlainTextEdit):
+                widget.setPlainText(value)
             elif isinstance(widget, QCheckBox):
                 widget.setChecked(value)
     
@@ -87,6 +91,11 @@ class Panel(QDialog):
         sender = self.sender()
         modelAttr = self._widget2ModelAttr[sender]
         setattr(self.model, modelAttr, unicode(sender.text()))
+    
+    def plainEditTextChanged(self):
+        sender = self.sender()
+        modelAttr = self._widget2ModelAttr[sender]
+        setattr(self.model, modelAttr, unicode(sender.toPlainText()))
     
     def spinBoxValueChanged(self):
         sender = self.sender()
