@@ -153,9 +153,6 @@ class Document(Broadcaster, Listener):
             else:
                 transaction.recurrence.add_exception(transaction)
         else:
-            # XXX Removing this line below makes lots of tests fail, WTF???
-            transaction.change(date=date, description=description, payee=payee, checkno=checkno,
-                               from_=from_, to=to, amount=amount, currency=currency)
             if transaction not in self.transactions:
                 self.transactions.add(transaction)
             elif date_changed:

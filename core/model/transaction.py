@@ -138,6 +138,13 @@ class Transaction(object):
             self.checkno = checkno
         if notes is not NOEDIT:
             self.notes = notes
+        # the amount field has to be set first so that splitted_splits() is not confused by splits
+        # with no amount.
+        if amount is not NOEDIT:
+            if not same_currency(amount, self.amount):
+                self.change(currency=amount.currency)
+            self.amount = abs(amount)
+            self.balance()
         if from_ is not NOEDIT:
             fsplits, _ = self.splitted_splits()
             if len(fsplits) == 1:
@@ -146,13 +153,8 @@ class Transaction(object):
         if to is not NOEDIT:
             _, tsplits = self.splitted_splits()
             if len(tsplits) == 1:
-                tsplits = tsplits[0]
-                tsplits.account = to
-        if amount is not NOEDIT:
-            if not same_currency(amount, self.amount):
-                self.change(currency=amount.currency)
-            self.amount = abs(amount)
-            self.balance()
+                tsplit = tsplits[0]
+                tsplit.account = to
         if currency is not NOEDIT:
             tochange = (s for s in self.splits if s.amount and s.amount.currency != currency)
             for split in tochange:
