@@ -13,23 +13,26 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
     def date2str(date):
         return date.strftime('%Y-%m-%d')
     
+    def setattrib(attribs, attribname, value):
+        if value:
+            attribs[attribname] = value
+    
     def write_transaction_element(parent_element, transaction):
         transaction_element = ET.SubElement(parent_element, 'transaction')
         attrib = transaction_element.attrib
         attrib['date'] = date2str(transaction.date)
-        attrib['description'] = transaction.description
-        attrib['payee'] = transaction.payee
-        attrib['checkno'] = transaction.checkno
-        attrib['notes'] = transaction.notes
+        setattrib(attrib, 'description', transaction.description)
+        setattrib(attrib, 'payee', transaction.payee)
+        setattrib(attrib, 'checkno', transaction.checkno)
+        setattrib(attrib, 'notes', transaction.notes)
         attrib['mtime'] = str(int(transaction.mtime))
         for split in transaction.splits:
             split_element = ET.SubElement(transaction_element, 'split')
             attrib = split_element.attrib
             attrib['account'] = split.account_name
             attrib['amount'] = str(split.amount)
-            attrib['memo'] = split.memo
-            if split.reference is not None:
-                attrib['reference'] = split.reference
+            setattrib(attrib, 'memo', split.memo)
+            setattrib(attrib, 'reference', split.reference)
             if split.reconciliation_date is not None:
                 attrib['reconciliation_date'] = date2str(split.reconciliation_date)
     
