@@ -9,7 +9,8 @@
 
 from nose.tools import eq_
 
-from ..base import TestCase, CommonSetup
+from ...model.date import MonthRange
+from ..base import TestCase, CommonSetup, TestApp
 
 class Pristine(TestCase):
     def setUp(self):
@@ -78,36 +79,47 @@ class OneDailyScheduledTransaction(TestCase, CommonSetup):
         self.check_gui_calls(self.scpanel_gui, ['refresh_repeat_options'])
     
 
-class OneDailyScheduledTransactionLoaded(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_scheduled_transaction(repeat_every=3)
-        self.mainwindow.select_schedule_table()
-        self.sctable.select([0])
-        self.scpanel.load()
-        self.clear_gui_calls()
+#--- Daily schedule loaded
+def app_daily_schedule_loaded():
+    app = TestApp()
+    app.doc.date_range = MonthRange(app.app.parse_date('13/09/2008'))
+    app.mainwindow.select_schedule_table()
+    app.scpanel.new()
+    app.scpanel.start_date = '13/09/2008'
+    app.scpanel.description = 'foobar'
+    app.scpanel.repeat_type_index = 0
+    app.scpanel.repeat_every = 3
+    app.scpanel.notes = 'some notes'
+    app.scpanel.save()
+    app.mainwindow.select_schedule_table()
+    app.sctable.select([0])
+    app.scpanel.load()
+    return app
     
-    def test_attrs(self):
-        # The attributes of the panel are correctly set
-        eq_(self.scpanel.start_date, '13/09/2008')
-        eq_(self.scpanel.stop_date, '')
-        eq_(self.scpanel.repeat_type_index, 0)
-        eq_(self.scpanel.repeat_every, 3)
-        eq_(self.scpanel.description, 'foobar')
-    
-    def test_edit_stop_date(self):
-        # When editing stop date with an invalid date, just abort the edition. stop date is one
-        # of those date field where a None value is possible.
-        self.scpanel.stop_date = 'invalid' # no crash
-        eq_(self.scpanel.stop_date, '') # None display value
-    
-    def test_edit_then_save(self):
-        # Saving edits on the panel actually updates the schedule
-        self.scpanel.stop_date = '15/09/2008'
-        self.scpanel.repeat_every = 1
-        self.scpanel.description = 'foobaz'
-        self.scpanel.save()
-        # To see if the save_edits() worked, we look if the spawns are correct in the ttable
-        self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 3) #stops 2 days after it starts
-    
+def test_attrs():
+    # The attributes of the panel are correctly set
+    app = app_daily_schedule_loaded()
+    eq_(app.scpanel.start_date, '13/09/2008')
+    eq_(app.scpanel.stop_date, '')
+    eq_(app.scpanel.repeat_type_index, 0)
+    eq_(app.scpanel.repeat_every, 3)
+    eq_(app.scpanel.description, 'foobar')
+    eq_(app.scpanel.notes, 'some notes')
+
+def test_edit_stop_date():
+    # When editing stop date with an invalid date, just abort the edition. stop date is one
+    # of those date field where a None value is possible.
+    app = app_daily_schedule_loaded()
+    app.scpanel.stop_date = 'invalid' # no crash
+    eq_(app.scpanel.stop_date, '') # None display value
+
+def test_edit_then_save():
+    # Saving edits on the panel actually updates the schedule
+    app = app_daily_schedule_loaded()
+    app.scpanel.stop_date = '15/09/2008'
+    app.scpanel.repeat_every = 1
+    app.scpanel.description = 'foobaz'
+    app.scpanel.save()
+    # To see if the save_edits() worked, we look if the spawns are correct in the ttable
+    app.mainwindow.select_transaction_table()
+    eq_(len(app.ttable), 3) #stops 2 days after it starts

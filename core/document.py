@@ -759,7 +759,8 @@ class Document(Broadcaster, Listener):
         original = schedule.ref
         min_date = min(original.date, new_ref.date)
         original.set_splits(new_ref.splits)
-        original.change(description=new_ref.description, payee=new_ref.payee, checkno=new_ref.checkno)
+        original.change(description=new_ref.description, payee=new_ref.payee,
+            checkno=new_ref.checkno, notes=new_ref.notes)
         schedule.start_date = new_ref.date
         schedule.repeat_type = repeat_type
         schedule.repeat_every = repeat_every
