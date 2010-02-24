@@ -65,6 +65,7 @@ http://www.hardcoded.net/licenses/hs_license
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
+    [notesField setStringValue:[[self py] notes]];
     [amountField setStringValue:[[self py] amount]];
     [amountField2 setStringValue:[[self py] amount]];
     [splitTable refresh];
@@ -79,6 +80,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setDescription:[descriptionField stringValue]];
     [[self py] setPayee:[payeeField stringValue]];
     [[self py] setCheckno:[checknoField stringValue]];
+    [[self py] setNotes:[notesField stringValue]];
     [[self py] setAmount:[amountField stringValue]];
 }
 

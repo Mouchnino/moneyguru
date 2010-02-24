@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSPopUpButton *accountSelector;
     IBOutlet NSPopUpButton *targetSelector;
     IBOutlet MGTextField *amountField;
+    IBOutlet NSTextField *notesField;
     
     NSTextView *customDateFieldEditor;
 }

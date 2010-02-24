@@ -748,6 +748,12 @@ class PyPanelWithTransaction(PyPanel):
     def setCheckno_(self, value):
         self.py.checkno = value
     
+    def notes(self):
+        return self.py.notes
+    
+    def setNotes_(self, value):
+        self.py.notes = value
+    
     def amount(self):
         return self.py.amount
     
@@ -1015,6 +1021,12 @@ class PyBudgetPanel(PyPanel):
     
     def setAmount_(self, value):
         self.py.amount = value
+    
+    def notes(self):
+        return self.py.notes
+    
+    def setNotes_(self, value):
+        self.py.notes = value
     
     #--- Lists
     def repeatOptions(self):

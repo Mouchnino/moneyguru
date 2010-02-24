@@ -23,7 +23,8 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGTextField *stopDateField;
     IBOutlet MGTextField *descriptionField;
     IBOutlet MGTextField *payeeField;
-    IBOutlet MGTextField *checknoField;
+    IBOutlet NSTextField *checknoField;
+    IBOutlet NSTextField *notesField;
     IBOutlet NSTextField *amountField;
     IBOutlet NSTextField *amountField2;
     IBOutlet NSTextField *mctNotice;

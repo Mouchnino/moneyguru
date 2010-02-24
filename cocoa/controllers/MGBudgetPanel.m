@@ -47,6 +47,7 @@ http://www.hardcoded.net/licenses/hs_license
     [accountSelector selectItemAtIndex:[[self py] accountIndex]];
     [targetSelector selectItemAtIndex:[[self py] targetIndex]];
     [amountField setStringValue:[[self py] amount]];
+    [notesField setStringValue:[[self py] notes]];
 }
 
 - (void)saveFields
@@ -58,6 +59,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setAccountIndex:[accountSelector indexOfSelectedItem]];
     [[self py] setTargetIndex:[targetSelector indexOfSelectedItem]];
     [[self py] setAmount:[amountField stringValue]];
+    [[self py] setNotes:[notesField stringValue]];
 }
 
 /* Actions */

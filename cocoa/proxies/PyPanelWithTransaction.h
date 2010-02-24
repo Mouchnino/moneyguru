@@ -16,6 +16,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setPayee:(NSString *)payee;
 - (NSString *)checkno;
 - (void)setCheckno:(NSString *)checkno;
+- (NSString *)notes;
+- (void)setNotes:(NSString *)checkno;
 - (NSString *)amount;
 - (void)setAmount:(NSString *)amount;
 - (BOOL)isMultiCurrency;

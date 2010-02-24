@@ -26,6 +26,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setTargetIndex:(NSInteger)index;
 - (NSString *)amount;
 - (void)setAmount:(NSString *)amount;
+- (NSString *)notes;
+- (void)setNotes:(NSString *)notes;
 
 - (NSArray *)accountOptions;
 - (NSArray *)targetOptions;
