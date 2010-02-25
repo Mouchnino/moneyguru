@@ -73,6 +73,18 @@ def test_search_then_jump_again(app):
     eq_(app.alookup.selected_index, 0)
 
 @with_app(app_accounts)
+def test_search_ignore_case(app):
+    # The matching is case-insensitive
+    app.alookup.search_query = 'z'
+    eq_(app.alookup.names, ['Zo-of'])
+
+@with_app(app_accounts)
+def test_search_puts_names_that_start_with_query_first(app):
+    # When 2 names have the whole query in them, give priority to names that start with that query.
+    app.alookup.search_query = 'f'
+    eq_(app.alookup.names, ['foo', 'bo--o-f', 'Zo-of'])
+
+@with_app(app_accounts)
 def test_select_and_go(app):
     # Selecting a name and pressing return (go()) shows the account.
     app.alookup.selected_index = 2

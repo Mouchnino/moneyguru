@@ -39,7 +39,7 @@ class AccountLookup(DocumentGUIObject):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         self._original_names = []
-        self.names = []
+        self._filtered_names = []
         self._search_query = ''
         self.selected_index = 0
     
@@ -48,18 +48,24 @@ class AccountLookup(DocumentGUIObject):
         # that contain all the letters, sorted in order of names that have query letters as close
         # to each other as possible.
         q = self._search_query
-        matches1, rest = extract(lambda n: q in n, self._original_names)
-        matches2, rest = extract(lambda n: has_letters(n, q), rest)
-        matches2.sort(key=lambda n: letters_distance(n, q))
-        self.names = matches1 + matches2
-        self.selected_index = min(self.selected_index, len(self.names)-1)
+        matches1, rest = extract(lambda n: n.startswith(q), self._original_names)
+        matches2, rest = extract(lambda n: q in n, rest)
+        matches3, rest = extract(lambda n: has_letters(n, q), rest)
+        matches3.sort(key=lambda n: letters_distance(n, q))
+        self._filtered_names = matches1 + matches2 + matches3
+        self.selected_index = min(self.selected_index, len(self._filtered_names)-1)
     
     def _refresh(self):
         self._search_query = ''
         self.selected_index = 0
         names = [a.combined_display for a in self.document.accounts]
-        self._original_names = sorted(names, key=sort_string)
-        self.names = self._original_names
+        names = sorted(names, key=sort_string)
+        normalized_names = [n.lower() for n in names]
+        self._normalized2original = {}
+        for normalized, original in zip(normalized_names, names):
+            self._normalized2original[normalized] = original
+        self._original_names = normalized_names
+        self._filtered_names = normalized_names
     
     def go(self):
         name = self.names[self.selected_index]
@@ -73,6 +79,10 @@ class AccountLookup(DocumentGUIObject):
         self.view.show()
     
     #--- Properties
+    @property
+    def names(self):
+        return [self._normalized2original[n] for n in self._filtered_names]
+    
     @property
     def search_query(self):
         return self._search_query
