@@ -165,6 +165,13 @@ def test_delete_entry():
     app.mainwindow.delete_item()
     app.check_gui_calls_partial(app.aview_gui, ['refresh_totals'])
 
+def test_jump_to_account():
+    app = app_one_account()
+    app.mainwindow.jump_to_account()
+    app.check_gui_calls(app.alookup_gui, ['refresh'])
+    app.alookup.search_query = 'foo'
+    app.check_gui_calls(app.alookup_gui, ['refresh'])
+
 class OneTransaction(TestCase):
     def setUp(self):
         self.create_instances()

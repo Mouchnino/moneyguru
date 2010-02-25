@@ -11,7 +11,9 @@ from ..base import TestCase, CommonSetup
 class DeletingSecondAccount(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_three_accounts_one_entry()
+        self.add_accounts('one', 'two')
+        self.mainwindow.show_account()
+        self.add_entry(transfer='three', increase='42')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # account 'two', the one with the entry
         self.bsheet.delete() # the panel shows up

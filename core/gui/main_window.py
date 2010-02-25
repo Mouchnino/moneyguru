@@ -14,7 +14,8 @@ class MainWindow(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel) = children
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
+            self.alookup) = children
         self._current_view = None
         self.show_balance_sheet()
     
@@ -81,6 +82,9 @@ class MainWindow(DocumentGUIObject):
     def duplicate_item(self):
         if self._current_view in (self.tview, self.aview):
             self._current_view.duplicate_item()
+    
+    def jump_to_account(self):
+        self.alookup.show()
     
     def make_schedule_from_selected(self):
         if self._current_view in (self.tview, self.aview):

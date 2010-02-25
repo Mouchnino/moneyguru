@@ -236,7 +236,9 @@ class OneGroup(TestCase):
 class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_three_accounts_one_entry()
+        self.add_accounts('one', 'two')
+        self.mainwindow.show_account()
+        self.add_entry(transfer='three', increase='42')
     
     def test_bind_entry_to_income_expense_accounts(self):
         # Adding an entry with a transfer named after an existing income creates a bound entry in

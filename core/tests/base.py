@@ -19,6 +19,7 @@ from hsutil.testcase import TestCase as TestCaseBase
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
+from ..gui.account_lookup import AccountLookup
 from ..gui.account_panel import AccountPanel
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from ..gui.account_reassign_panel import AccountReassignPanel
@@ -214,6 +215,8 @@ class TestApp(object):
         self.itable = ImportTable(self.itable_gui, self.iwin)
         self.cdrpanel_gui = CallLogger()
         self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.doc)
+        self.alookup_gui = CallLogger()
+        self.alookup = AccountLookup(self.alookup_gui, self.doc)
         self.nwview_gui = CallLogger()
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
         self.nwview = NetWorthView(self.nwview_gui, self.doc, children)
@@ -234,7 +237,7 @@ class TestApp(object):
         self.bview = BudgetView(self.bview_gui, self.doc, children)
         self.mainwindow_gui = MainWindowGUI(self.cdrpanel, self.arpanel)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel]
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.alookup]
         self.mainwindow = MainWindow(self.mainwindow_gui, self.doc, children)
         self.doc.connect()
         self.mainwindow.connect()
@@ -243,10 +246,6 @@ class TestApp(object):
         self.iwin.connect()
         self.itable.connect()
         self.csvopt.connect()
-        self.cdrpanel.connect()
-        # For the sake of simplicity, the scpanel is permanently connected, but in the real cocoa
-        # code, the sctable is responsible for connecting it.
-        self.scpanel.connect()
     
     @staticmethod
     def check_gui_calls(gui, expected, verify_order=False):
@@ -303,6 +302,11 @@ class TestApp(object):
         if attrs:
             self.doc.change_account(account, **attrs)
         self.doc.select_account(account)
+    
+    def add_accounts(self, *names):
+        # add a serie of simple accounts, *names being names for each account
+        for name in names:
+            self.add_account(name)
     
     def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
             repeat_every=1, stop_date=None):
@@ -523,10 +527,8 @@ class TestCase(TestCaseBase):
         self.add_account(*args, **kwargs)
         self.document.show_selected_account()
     
-    def add_accounts(self, *names):
-        # add a serie of simple accounts, *names being names for each account
-        for name in names:
-            self.add_account_legacy(name)
+    def add_accounts(self, *args, **kw):
+        self.ta.add_accounts(*args, **kw)
     
     def add_budget(self, *args, **kw):
         self.ta.add_budget(*args, **kw)
@@ -783,11 +785,6 @@ class CommonSetup(object):
     def setup_three_accounts(self):
         #Three accounts, empty
         self.add_accounts('one', 'two', 'three') # three is the selected account (in second position)
-    
-    def setup_three_accounts_one_entry(self):
-        # Two accounts of asset type, and one account of income type.
-        self.add_accounts('one', 'two')
-        self.add_entry(transfer='three', increase='42')
     
     def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_name=None):
         # 4 days left to the month, 100$ monthly budget

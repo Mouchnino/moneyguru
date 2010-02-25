@@ -80,6 +80,7 @@ class ThreeAccounts(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_accounts('one', 'two', 'three') # three is the selected account (in second position)
+        self.mainwindow.show_account()
     
     def test_add_transfer_entry(self):
         # Add a balancing entry to the account of the entry's transfer.
