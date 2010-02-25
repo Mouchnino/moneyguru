@@ -64,6 +64,15 @@ def test_search_then_search_something_else(app):
     eq_(app.alookup.names, ['foo', 'Zo-of', 'bo--o-f'])
 
 @with_app(app_accounts)
+def test_search_then_jump_again(app):
+    # Calling jump_to_account re-initialize fields and selected index
+    app.alookup.search_query = 'o'
+    app.alookup.selected_index = 1
+    app.mainwindow.jump_to_account()
+    eq_(app.alookup.search_query, '')
+    eq_(app.alookup.selected_index, 0)
+
+@with_app(app_accounts)
 def test_select_and_go(app):
     # Selecting a name and pressing return (go()) shows the account.
     app.alookup.selected_index = 2

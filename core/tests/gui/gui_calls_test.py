@@ -133,7 +133,7 @@ def test_changing_date_range_refreshes_transaction_totals():
 #--- One account
 def app_one_account():
     app = TestApp()
-    app.add_account()
+    app.add_account('foobar')
     app.mainwindow.show_account()
     app.clear_gui_calls()
     return app
@@ -168,9 +168,11 @@ def test_delete_entry():
 def test_jump_to_account():
     app = app_one_account()
     app.mainwindow.jump_to_account()
-    app.check_gui_calls(app.alookup_gui, ['refresh'])
+    app.check_gui_calls(app.alookup_gui, ['refresh', 'show'])
     app.alookup.search_query = 'foo'
     app.check_gui_calls(app.alookup_gui, ['refresh'])
+    app.alookup.go()
+    app.check_gui_calls(app.alookup_gui, ['hide'])
 
 class OneTransaction(TestCase):
     def setUp(self):

@@ -55,6 +55,8 @@ class AccountLookup(DocumentGUIObject):
         self.selected_index = min(self.selected_index, len(self.names)-1)
     
     def _refresh(self):
+        self._search_query = ''
+        self.selected_index = 0
         names = [a.combined_display for a in self.document.accounts]
         self._original_names = sorted(names, key=sort_string)
         self.names = self._original_names
@@ -63,10 +65,12 @@ class AccountLookup(DocumentGUIObject):
         name = self.names[self.selected_index]
         account = self.document.accounts.find(name)
         self.document.show_account(account)
+        self.view.hide()
     
     def show(self):
         self._refresh()
         self.view.refresh()
+        self.view.show()
     
     #--- Properties
     @property
