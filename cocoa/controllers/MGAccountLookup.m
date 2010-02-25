@@ -1,0 +1,106 @@
+/* 
+Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
+
+This software is licensed under the "HS" License as described in the "LICENSE" file, 
+which should be included with this package. The terms are also available at 
+http://www.hardcoded.net/licenses/hs_license
+*/
+
+#import "MGAccountLookup.h"
+#import "Utils.h"
+#import "NSEventAdditions.h"
+
+@implementation MGAccountLookup
+- (id)initWithDocument:(MGDocument *)aDocument
+{
+    self = [super initWithNibName:@"AccountLookup" pyClassName:@"PyAccountLookup" pyParent:[aDocument py]];
+    currentNames = [[NSArray array] retain];
+    [self window]; // Initialize the window
+    return self;
+}
+
+- (void)dealloc
+{
+    [currentNames release];
+    [super dealloc];
+}
+
+- (PyAccountLookup *)py
+{
+    return (PyAccountLookup *)py;
+}
+
+/* Private */
+- (void)restoreSelection
+{
+    [namesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:[[self py] selectedIndex]] byExtendingSelection:NO];
+}
+
+/* Actions */
+- (IBAction)updateQuery:(id)sender
+{
+    [[self py] setSearchQuery:[searchField stringValue]];
+}
+
+/* Data source */
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    return [currentNames count];
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+    return [currentNames objectAtIndex:row];
+}
+
+/* Delegate */
+- (BOOL)control:(NSControl*)control textView:(NSTextView*)textView doCommandBySelector:(SEL)commandSelector
+{
+    if (commandSelector == @selector(insertNewline:)) {
+        [[self py] go];
+        return YES;
+    }
+    else if(commandSelector == @selector(moveUp:)) {
+        NSInteger selected = [namesTable selectedRow];
+        if (selected > 0) {
+            [namesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selected-1] byExtendingSelection:NO];
+        }
+        return YES;
+    }
+    else if(commandSelector == @selector(moveDown:)) {
+        NSInteger selected = [namesTable selectedRow];
+        if (selected < [currentNames count]-1) {
+            [namesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selected+1] byExtendingSelection:NO];
+        }
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+    NSInteger selected = [namesTable selectedRow];
+    [[self py] setSelectedIndex:selected];
+}
+
+/* Python --> Cocoa */
+- (void)refresh
+{
+    [self showWindow:self];
+    [currentNames release];
+    currentNames = [[[self py] names] retain];
+    [namesTable reloadData];
+    [self restoreSelection];
+    [searchField setStringValue:[[self py] searchQuery]];
+}
+
+- (void)show
+{
+    [self showWindow:self];
+}
+
+- (void)hide
+{
+    [self close];
+}
+@end

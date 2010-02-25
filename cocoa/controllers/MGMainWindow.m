@@ -42,6 +42,7 @@ http://www.hardcoded.net/licenses/hs_license
     [csvOptionsWindow connect];
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithDocument:document];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
+    accountLookup = [[MGAccountLookup alloc] initWithDocument:document];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
@@ -51,7 +52,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], nil];
+        [budgetPanel py], [accountLookup py], nil];
     Class PyMainWindow = [Utils classNamed:@"PyMainWindow"];
     py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];
     [py connect];
@@ -75,6 +76,7 @@ http://www.hardcoded.net/licenses/hs_license
     [csvOptionsWindow release];
     [customDateRangePanel release];
     [accountReassignPanel release];
+    [accountLookup release];
     [reconciliationToolbarItem release];
     [super dealloc];
 }
@@ -221,6 +223,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)editItemInfo:(id)sender
 {
     [py editItem];
+}
+
+- (IBAction)jumpToAccount:(id)sender
+{
+    [py jumpToAccount];
 }
 
 - (IBAction)makeScheduleFromSelected:(id)sender

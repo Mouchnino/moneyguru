@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGCSVImportOptions.h"
 #import "MGCustomDateRangePanel.h"
 #import "MGAccountReassignPanel.h"
+#import "MGAccountLookup.h"
 #import "MGBaseView.h"
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
@@ -50,6 +51,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGCSVImportOptions *csvOptionsWindow;
     MGCustomDateRangePanel *customDateRangePanel;
     MGAccountReassignPanel *accountReassignPanel;
+    MGAccountLookup *accountLookup;
     MGBaseView *top;
     NSToolbarItem *reconciliationToolbarItem;
 }
@@ -66,6 +68,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)delete:(id)sender;
 - (IBAction)duplicateItem:(id)sender;
 - (IBAction)editItemInfo:(id)sender;
+- (IBAction)jumpToAccount:(id)sender;
 - (IBAction)makeScheduleFromSelected:(id)sender;
 - (IBAction)moveDown:(id)sender;
 - (IBAction)moveUp:(id)sender;

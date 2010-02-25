@@ -21,6 +21,7 @@ from hsutil.reg import InvalidCodeError
 from core.app import Application
 from core.document import Document, FilterType
 from core.exception import FileFormatError
+from core.gui.account_lookup import AccountLookup
 from core.gui.account_panel import AccountPanel
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from core.gui.account_reassign_panel import AccountReassignPanel
@@ -1154,6 +1155,9 @@ class PyMainWindow(PyGUIContainer):
     def navigateBack(self):
         self.py.navigate_back()
     
+    def jumpToAccount(self):
+        self.py.jump_to_account()
+    
     #--- Item Management
     def deleteItem(self):
         self.py.delete_item()
@@ -1430,6 +1434,37 @@ class PyImportTable(PyTable):
     @signature('v@:i')
     def unbindRow_(self, index):
         self.py.unbind(index)
+    
+
+class PyAccountLookup(PyGUIObject):
+    py_class = AccountLookup
+    
+    def go(self):
+        self.py.go()
+    
+    def names(self):
+        return self.py.names
+    
+    def searchQuery(self):
+        return self.py.search_query
+    
+    def setSearchQuery_(self, query):
+        self.py.search_query = query
+    
+    @signature('i@:')
+    def selectedIndex(self):
+        return self.py.selected_index
+    
+    @signature('v@:i')
+    def setSelectedIndex_(self, index):
+        self.py.selected_index = index
+    
+    #--- Python --> Cocoa
+    def show(self):
+        self.cocoa.show()
+    
+    def hide(self):
+        self.cocoa.hide()
     
 
 class PyDateWidget(NSObject):

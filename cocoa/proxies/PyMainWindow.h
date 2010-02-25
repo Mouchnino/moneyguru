@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)showAccount;
 - (BOOL)canNavigateDateRange;
 - (void)navigateBack;
+- (void)jumpToAccount;
 
 // Item Management
 - (void)deleteItem;

@@ -53,6 +53,7 @@
 		CE3040DA0F86094400884424 /* MGEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D70F86094400884424 /* MGEntryPrint.m */; };
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
+		CE37D4121136CDB0004B1B41 /* AccountLookup.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE37D4111136CDB0004B1B41 /* AccountLookup.xib */; };
 		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
 		CE3BD41D0E61C9570071559C /* reconcile_check_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BD41C0E61C9570071559C /* reconcile_check_48.png */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
@@ -102,6 +103,7 @@
 		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
 		CE95AFCB10F769D2007AC512 /* MGAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AFCA10F769D2007AC512 /* MGAccountView.m */; };
 		CE98C6A90E6294A900DEE6BA /* NSCellAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */; };
+		CE9912221136CD1300E006A5 /* MGAccountLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9912211136CD1300E006A5 /* MGAccountLookup.m */; };
 		CEA25A7A0E27774C0067AE58 /* TransactionTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA25A790E27774C0067AE58 /* TransactionTable.xib */; };
 		CEA6DDCE1101E6830028E125 /* AMButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA11101E6830028E125 /* AMButtonBar.m */; };
 		CEA6DDCF1101E6830028E125 /* AMButtonBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA31101E6830028E125 /* AMButtonBarCell.m */; };
@@ -301,6 +303,7 @@
 		CE31C65B0E851CF400BBA82E /* MGRecurrenceScopeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGRecurrenceScopeDialog.h; sourceTree = "<group>"; };
 		CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog.m; sourceTree = "<group>"; };
 		CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitGraph.h; sourceTree = "<group>"; };
+		CE37D4111136CDB0004B1B41 /* AccountLookup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountLookup.xib; sourceTree = "<group>"; };
 		CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		CE3BD41C0E61C9570071559C /* reconcile_check_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reconcile_check_48.png; sourceTree = "<group>"; };
 		CE3F6A7610F903640046B2D2 /* PyProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitView.h; sourceTree = "<group>"; };
@@ -403,6 +406,9 @@
 		CE98C2B110F8F77200EB1D21 /* PyNetWorthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyNetWorthView.h; sourceTree = "<group>"; };
 		CE98C6A70E6294A900DEE6BA /* NSCellAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCellAdditions.h; sourceTree = "<group>"; };
 		CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCellAdditions.m; sourceTree = "<group>"; };
+		CE99121F1136CD0700E006A5 /* PyAccountLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountLookup.h; sourceTree = "<group>"; };
+		CE9912201136CD1300E006A5 /* MGAccountLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAccountLookup.h; sourceTree = "<group>"; };
+		CE9912211136CD1300E006A5 /* MGAccountLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountLookup.m; sourceTree = "<group>"; };
 		CEA25A6B0E2776BD0067AE58 /* PyTransactionTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionTable.h; sourceTree = "<group>"; };
 		CEA25A790E27774C0067AE58 /* TransactionTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionTable.xib; sourceTree = "<group>"; };
 		CEA6DDA01101E6830028E125 /* AMButtonBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMButtonBar.h; sourceTree = "<group>"; };
@@ -736,6 +742,7 @@
 				CE7311D21040360A00DB8B30 /* BudgetTable.xib */,
 				CE873A630E21621F004F63E9 /* AccountProperties.xib */,
 				CEE46FB70F91E4E400D08E40 /* AccountReassignPanel.xib */,
+				CE37D4111136CDB0004B1B41 /* AccountLookup.xib */,
 				CE873A680E21621F004F63E9 /* TransactionInspector.xib */,
 				CE5CBBC4103834D8008AC465 /* SchedulePanel.xib */,
 				CE1031C510413365007882D5 /* BudgetPanel.xib */,
@@ -779,6 +786,8 @@
 				CE873A710E21622F004F63E9 /* MGAccountProperties.m */,
 				CEE46FC20F91E58500D08E40 /* MGAccountReassignPanel.h */,
 				CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */,
+				CE9912201136CD1300E006A5 /* MGAccountLookup.h */,
+				CE9912211136CD1300E006A5 /* MGAccountLookup.m */,
 				CEF674AD0F4C76F7003E5283 /* MGCustomDateRangePanel.h */,
 				CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */,
 				CE0F13920E39BC4A006B6982 /* MGMassEditionPanel.h */,
@@ -828,6 +837,7 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CE99121F1136CD0700E006A5 /* PyAccountLookup.h */,
 				CE3F6A7610F903640046B2D2 /* PyProfitView.h */,
 				CE98C2B110F8F77200EB1D21 /* PyNetWorthView.h */,
 				CE4DCE4910F8E1C00062DA0B /* PyScheduleView.h */,
@@ -1270,6 +1280,7 @@
 				CEA6DE9D1101E6970028E125 /* ReadMe.rtfd in Resources */,
 				CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */,
 				CEBA331011294D2B009C782F /* registration.xib in Resources */,
+				CE37D4121136CDB0004B1B41 /* AccountLookup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,6 +1396,7 @@
 				CE2F0BF611295E1A00F6FB55 /* NSTableViewAdditions.m in Sources */,
 				CE2F0C081129606D00F6FB55 /* HSOutline.m in Sources */,
 				CE2F0C20112965C600F6FB55 /* NSEventAdditions.m in Sources */,
+				CE9912221136CD1300E006A5 /* MGAccountLookup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
