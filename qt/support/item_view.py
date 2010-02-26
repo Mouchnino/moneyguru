@@ -8,8 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect
-from PyQt4.QtGui import (QAbstractItemView, QTableView, QTreeView, QItemSelectionModel,
-    QAbstractItemDelegate)
+from PyQt4.QtGui import QAbstractItemView, QTableView, QTreeView, QAbstractItemDelegate
 
 from hsutil.misc import first
 
@@ -105,17 +104,20 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         else:
             superMethod(self, event)
     
-    def _redirectMouseEventToDelegate(self, event):
+    def _handleMousePressEvent(self, event, superMethod):
         pos = event.pos()
         index = self.indexAt(pos)
+        selected = index in self.selectedIndexes()
+        superMethod(self, event)
         if not index.isValid():
             return
         rect = self.visualRect(index)
         relativePos = QPoint(pos.x()-rect.x(), pos.y()-rect.y())
         delegate = self.itemDelegate(index)
-        # handleClick(index, relativePos, itemRect)
+        # handleClick(index, relativePos, itemRect, selected)
         if hasattr(delegate, 'handleClick'):
-            delegate.handleClick(index, relativePos, QRect(0, 0, rect.width(), rect.height()))
+            rect = QRect(0, 0, rect.width(), rect.height())
+            delegate.handleClick(index, relativePos, rect, selected)
     
     #--- Public
     def editSelected(self):
@@ -137,9 +139,8 @@ class TableView(QTableView, ItemViewMixIn):
     def keyPressEvent(self, event):
         self._handleKeyPressEvent(event, QTableView.keyPressEvent)
     
-    def mouseReleaseEvent(self, event):
-        QTableView.mouseReleaseEvent(self, event)
-        self._redirectMouseEventToDelegate(event)
+    def mousePressEvent(self, event):
+        self._handleMousePressEvent(event, QTableView.mousePressEvent)
     
     #--- ItemViewMixIn overrides
     def _headerView(self):
@@ -157,9 +158,8 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
     def keyPressEvent(self, event):
         self._handleKeyPressEvent(event, QTreeView.keyPressEvent)
     
-    def mouseReleaseEvent(self, event):
-        QTreeView.mouseReleaseEvent(self, event)
-        self._redirectMouseEventToDelegate(event)
+    def mousePressEvent(self, event):
+        self._handleMousePressEvent(event, QTreeView.mousePressEvent)
     
     #--- ItemViewMixIn overrides
     def _headerView(self):

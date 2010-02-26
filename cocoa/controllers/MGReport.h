@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 
 @interface MGReport : MGOutline {
-
+    BOOL toggleExcludedIsEnabled;
 }
 - (PyReport *)py;
 
