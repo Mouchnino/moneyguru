@@ -21,6 +21,7 @@ from .networth.view import NetWorthView
 from .profit.view import ProfitView
 from .transaction.view import TransactionView
 from .schedule.view import ScheduleView
+from .account_lookup import AccountLookup
 from .account_panel import AccountPanel
 from .account_reassign_panel import AccountReassignPanel
 from .transaction_panel import TransactionPanel
@@ -56,6 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bpanel = BudgetPanel(self, doc=doc)
         self.cdrpanel = CustomDateRangePanel(self, doc=doc)
         self.arpanel = AccountReassignPanel(self, doc=doc)
+        self.alookup = AccountLookup(self, doc=doc)
         self._setupUi()
         # We don't set geometry if the window was maximized so that if the user de-maximize the
         # window, it actually shrinks.
@@ -63,7 +65,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.setGeometry(self.app.prefs.mainWindowRect)
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
-            self.mepanel.model, self.scpanel.model, self.bpanel.model]
+            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model]
         self.model = MainWindowModel(view=self, document=doc.model, children=children)
         self.model.connect()
         self.sfield = SearchField(doc=doc, view=self.searchLineEdit)
@@ -124,6 +126,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Misc
         self.actionShowSelectedAccount.triggered.connect(self.model.show_account)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
+        self.actionJumpToAccount.triggered.connect(self.jumpToAccountTriggered)
         self.actionMakeScheduleFromSelected.triggered.connect(self.makeScheduleFromSelectedTriggered)
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
@@ -360,6 +363,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Misc
     def navigateBackTriggered(self):
         self.model.navigate_back()
+    
+    def jumpToAccountTriggered(self):
+        self.model.jump_to_account()
     
     def makeScheduleFromSelectedTriggered(self):
         self.model.make_schedule_from_selected()

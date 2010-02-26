@@ -229,6 +229,7 @@
     <addaction name="separator"/>
     <addaction name="actionShowSelectedAccount"/>
     <addaction name="actionNavigateBack"/>
+    <addaction name="actionJumpToAccount"/>
     <addaction name="separator"/>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -644,6 +645,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+6</string>
+   </property>
+  </action>
+  <action name="actionJumpToAccount">
+   <property name="text">
+    <string>Jump to Account...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
    </property>
   </action>
  </widget>
