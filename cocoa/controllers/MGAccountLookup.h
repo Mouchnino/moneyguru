@@ -20,5 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyAccountLookup *)py;
 
+- (IBAction)go:(id)sender;
 - (IBAction)updateQuery:(id)sender;
 @end

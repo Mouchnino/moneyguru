@@ -16,6 +16,8 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super initWithNibName:@"AccountLookup" pyClassName:@"PyAccountLookup" pyParent:[aDocument py]];
     currentNames = [[NSArray array] retain];
     [self window]; // Initialize the window
+    [namesTable setTarget:self];
+    [namesTable setDoubleAction:@selector(go:)];
     return self;
 }
 
@@ -37,6 +39,11 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Actions */
+- (IBAction)go:(id)sender
+{
+    [[self py] go];
+}
+
 - (IBAction)updateQuery:(id)sender
 {
     [[self py] setSearchQuery:[searchField stringValue]];
@@ -97,6 +104,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)show
 {
     [self showWindow:self];
+    [[self window] makeFirstResponder:searchField];
 }
 
 - (void)hide
