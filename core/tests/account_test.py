@@ -7,11 +7,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from nose.tools import eq_
 
 from hsutil.currency import EUR
 
-from .base import TestCase, TestSaveLoadMixin
+from .base import TestCase, TestSaveLoadMixin, TestApp, with_app
 from ..exception import FileFormatError
 from ..model.account import AccountType
 
@@ -445,3 +447,14 @@ class ManuallyCreatedIncome(TestCase):
         self.mainwindow.select_income_statement()
         eq_(self.istatement.income[0].name, 'income')
     
+#--- Account with accents and number
+def app_account_with_accents_and_number():
+    app = TestApp()
+    app.add_account('fooé', account_number='123')
+    return app
+
+@with_app(app_account_with_accents_and_number)
+def test_add_txn(app):
+    # When the from/to columns are populated (using combined_display), don't crash because of unicode.
+    app.add_txn(from_='fooé', amount='42') # no crash
+    eq_(app.ttable[0].from_, '123 - fooé')
