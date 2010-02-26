@@ -32,7 +32,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)toggleExcluded:(id)sender
 {
-    [[self py] toggleExcluded];
+    if (toggleExcludedIsEnabled) {
+        [[self py] toggleExcluded];
+    }
 }
 
 - (BOOL)canShowSelectedAccount
@@ -157,7 +159,7 @@ http://www.hardcoded.net/licenses/hs_license
         {
             [cell setHasArrow:YES];
             [cell setArrowTarget:self];
-            [cell setArrowAction:@selector(showSelectedAccount:)];
+            [cell setArrowAction:@selector(showSelectedAccount:)];            
         }
         else
             [cell setHasArrow:NO];
@@ -208,7 +210,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* delegate */
-
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
     if ([[self py] canDeleteSelected])
@@ -252,6 +253,26 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSIndexPath *p = [[notification userInfo] objectForKey:@"NSObject"];
     [[self py] collapsePath:p2a(p)];
+}
+
+/* HACK WARNING
+ * The code below is hacky because, as always, I couldn't figure out how to do this
+ * properly. The problem we're trying to solve here is that the include/exlude button
+ * action would be triggered when an unselected row (and thus a row that doesn't display
+ * the button) was clicked in the area the button is when the row is selected. This
+ * could get pretty annoying. I looked into mouse tracking for a while, but I couldn't
+ * fix the problem. So, what I do here is that I disable the action during selection changes.
+**/
+- (void)outlineViewSelectionIsChanging:(NSNotification *)notification
+{
+    [super outlineViewSelectionIsChanging:notification];
+    toggleExcludedIsEnabled = NO;
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+    [super outlineViewSelectionDidChange:notification];
+    toggleExcludedIsEnabled = YES;
 }
 
 /* Python --> Cocoa */

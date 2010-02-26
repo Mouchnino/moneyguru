@@ -28,8 +28,8 @@ class ItemDelegate(QStyledItemDelegate):
         pass
     
     #--- Overrides
-    def handleClick(self, index, pos, itemRect):
-        decorations = self._get_decorations(index, True)
+    def handleClick(self, index, pos, itemRect, selected):
+        decorations = self._get_decorations(index, selected)
         currentRight = itemRect.right()
         for dec in decorations:
             pixmap = dec.pixmap
