@@ -93,7 +93,6 @@ http://www.hardcoded.net/licenses/hs_license
 /* Python --> Cocoa */
 - (void)refresh
 {
-    [self showWindow:self];
     [currentNames release];
     currentNames = [[[self py] names] retain];
     [namesTable reloadData];

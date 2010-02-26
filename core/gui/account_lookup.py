@@ -53,6 +53,7 @@ class AccountLookup(DocumentGUIObject):
         matches3, rest = extract(lambda n: has_letters(n, q), rest)
         matches3.sort(key=lambda n: letters_distance(n, q))
         self._filtered_names = matches1 + matches2 + matches3
+        self.selected_index = max(self.selected_index, 0)
         self.selected_index = min(self.selected_index, len(self._filtered_names)-1)
     
     def _refresh(self):
@@ -68,9 +69,12 @@ class AccountLookup(DocumentGUIObject):
         self._filtered_names = normalized_names
     
     def go(self):
-        name = self.names[self.selected_index]
-        account = self.document.accounts.find(name)
-        self.document.show_account(account)
+        try:
+            name = self.names[self.selected_index]
+            account = self.document.accounts.find(name)
+            self.document.show_account(account)
+        except IndexError:
+            pass # No result, do nothing
         self.view.hide()
     
     def show(self):

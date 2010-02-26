@@ -28,6 +28,20 @@ def test_adjust_selection_when_narrowing_results(app):
     eq_(app.alookup.selected_index, 1)
 
 @with_app(app_accounts)
+def test_adjust_selection_when_coming_back_from_no_result(app):
+    # When a query has no result and then another query has results, put back the selected_index to 0.
+    app.alookup.search_query = 'noresult'
+    app.alookup.search_query = 'f'
+    eq_(app.alookup.selected_index, 0)
+
+@with_app(app_accounts)
+def test_go_with_no_result_does_nothing(app):
+    # calling go() when there's no result does nothing (no crash)
+    app.alookup.search_query = 'noresult'
+    app.alookup.go() # no crash
+    assert app.doc.shown_account is None
+
+@with_app(app_accounts)
 def test_search_one_letter(app):
     # Setting the search query triggers a fuzzy search in the name list. Since we're looking for
     # only one letter, there's no result matching more than the other (except for those not matching
