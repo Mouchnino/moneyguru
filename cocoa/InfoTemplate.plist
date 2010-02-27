@@ -51,8 +51,6 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>SUCheckAtStartup</key>
-	<false/>
 	<key>SUFeedURL</key>
 	<string>http://www.hardcoded.net/updates/moneyguru.appcast</string>
 	<key>SUPublicDSAKeyFile</key>

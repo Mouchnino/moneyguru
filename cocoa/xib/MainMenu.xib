@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1138"/>
 			<integer value="1306"/>
+			<integer value="1138"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -996,13 +996,13 @@
 						<object class="NSButton" id="569786493">
 							<reference key="NSNextResponder" ref="127818566"/>
 							<int key="NSvFlags">256</int>
-							<string key="NSFrame">{{18, 28}, {193, 18}}</string>
+							<string key="NSFrame">{{18, 28}, {210, 18}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="89179289">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<string key="NSContents">Check for update on startup</string>
+								<string key="NSContents">Automatically check for updates</string>
 								<object class="NSFont" key="NSSupport" id="23706826">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">12</double>
@@ -2254,22 +2254,6 @@
 					<int key="connectionID">1304</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.SUCheckAtStartup</string>
-						<reference key="source" ref="569786493"/>
-						<reference key="destination" ref="158739690"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="569786493"/>
-							<reference key="NSDestination" ref="158739690"/>
-							<string key="NSLabel">value: values.SUCheckAtStartup</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.SUCheckAtStartup</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1310</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">makeKeyAndOrderFront:</string>
 						<reference key="source" ref="459769551"/>
@@ -2468,6 +2452,22 @@
 						<reference key="destination" ref="29985150"/>
 					</object>
 					<int key="connectionID">1426</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: automaticallyChecksForUpdates</string>
+						<reference key="source" ref="569786493"/>
+						<reference key="destination" ref="887140590"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="569786493"/>
+							<reference key="NSDestination" ref="887140590"/>
+							<string key="NSLabel">value: automaticallyChecksForUpdates</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">automaticallyChecksForUpdates</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1428</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4171,7 +4171,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1426</int>
+			<int key="maxID">1428</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
