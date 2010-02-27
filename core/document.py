@@ -12,13 +12,12 @@ import time
 from hsutil import io
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
-from hsutil.misc import nonone, flatten, allsame, dedupe, extract
+from hsutil.misc import nonone, allsame, dedupe, extract
 
 from .const import NOEDIT
 from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
 from .model.account import Account, Group, AccountList, GroupList, AccountType
-from .model.amount import same_currency
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     AllTransactionsRange, CustomDateRange, inc_month)
@@ -783,18 +782,10 @@ class Document(Broadcaster, Listener):
         self._cook(from_date=min_date)
         self.notify('schedule_deleted')
     
-    def make_schedule_from_selected(self):
-        if not self.selected_transactions:
-            return
-        # There's no test case for this, but this notification must happen before 
-        # self.select_schedules() or else the sctable's selection upon view switch will overwrite
-        # our selection
-        self.notify('schedule_table_must_be_shown')
-        ref = self.selected_transactions[0]
-        schedule = Recurrence(ref.replicate(), REPEAT_MONTHLY, 1)
-        schedule.delete_at(ref.date)
+    def new_schedule_from_transaction(self, transaction):
+        schedule = Recurrence(transaction.replicate(), REPEAT_MONTHLY, 1)
+        schedule.delete_at(transaction.date)
         self.select_schedules([schedule]) # yes, we select a schedule that ain't part of self.schedules
-        self.edit_selected()
     
     #--- Selection
     @property

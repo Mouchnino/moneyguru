@@ -88,7 +88,15 @@ class MainWindow(DocumentGUIObject):
     
     def make_schedule_from_selected(self):
         if self._current_view in (self.tview, self.aview):
-            self.document.make_schedule_from_selected()
+            if not self.document.selected_transactions:
+                return
+            # There's no test case for this, but select_schedule_table() must happen before 
+            # new_schedule_from_transaction() or else the sctable's selection upon view switch will
+            # overwrite our selection.
+            self.select_schedule_table()
+            ref = self.document.selected_transactions[0]
+            self.document.new_schedule_from_transaction(ref)
+            self.edit_item()
     
     def move_down(self):
         if self._current_view in (self.tview, self.aview):
@@ -240,9 +248,6 @@ class MainWindow(DocumentGUIObject):
     
     schedule_changed = _undo_stack_changed
     schedule_deleted = _undo_stack_changed
-    
-    def schedule_table_must_be_shown(self):
-        self.select_schedule_table()
     
     def selected_must_be_edited(self):
         self.edit_item()
