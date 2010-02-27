@@ -7,12 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
 #import "PyBudgetTable.h"
 #import "MGTable.h"
 
 @interface MGBudgetTable : MGTable {}
-
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
+- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 - (PyBudgetTable *)py;
 @end

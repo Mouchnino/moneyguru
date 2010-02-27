@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyScheduleView.h"
 #import "MGBaseView.h"
-#import "MGDocument.h"
 #import "MGTableView.h"
 #import "MGScheduleTable.h"
 
@@ -20,7 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     PyScheduleView *py;
     MGScheduleTable *scheduleTable;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 
 - (PyScheduleView *)py;
 @end

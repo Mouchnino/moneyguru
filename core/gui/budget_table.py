@@ -12,9 +12,10 @@ from .base import DocumentGUIObject
 from .table import GUITable, Row, rowattr
 
 class BudgetTable(GUITable, DocumentGUIObject):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
         GUITable.__init__(self)
+        self.mainwindow = mainwindow
     
     #--- Override
     def _update_selection(self):
@@ -33,9 +34,8 @@ class BudgetTable(GUITable, DocumentGUIObject):
     def delete(self):
         self.document.delete_budgets(self.selected_budgets)
     
-    # This is a temporary workaround so that double-clicks and pressing return works in the btable
     def edit(self):
-        self.document.edit_selected()
+        self.mainwindow.edit_item()
     
     #--- Properties
     @property

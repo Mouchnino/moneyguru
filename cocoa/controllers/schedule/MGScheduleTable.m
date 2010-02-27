@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTableView.h"
 
 @implementation MGScheduleTable
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
+- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyScheduleTable" pyParent:[aDocument py] view:aTableView];
+    self = [super initWithPyClassName:@"PyScheduleTable" pyParent:aPyParent view:aTableView];
     [aTableView setSortDescriptors:[NSArray array]];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:aTableView];
     [columnsManager linkColumn:@"description" toUserDefault:ScheduleDescriptionColumnVisible];

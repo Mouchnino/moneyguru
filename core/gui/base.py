@@ -89,9 +89,6 @@ class DocumentGUIObject(Listener):
     def schedule_deleted(self):
         pass
     
-    def selected_must_be_edited(self):
-        pass
-    
     def transaction_changed(self):
         pass
     

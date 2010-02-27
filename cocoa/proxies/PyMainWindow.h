@@ -7,9 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUIContainer.h"
+#import "PyGUI.h"
 
-@interface PyMainWindow : PyGUIContainer {}
+@interface PyMainWindow : PyGUI {}
+- (void)setChildren:(NSArray *)children;
 // Navigation
 - (void)selectBalanceSheet;
 - (void)selectIncomeStatement;

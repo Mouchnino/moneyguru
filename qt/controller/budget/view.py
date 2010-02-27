@@ -16,13 +16,13 @@ from ui.budget_view_ui import Ui_BudgetView
 class BudgetView(BaseView, Ui_BudgetView):
     PRINT_TITLE_FORMAT = "Budgets from {startDate} to {endDate}"
     
-    def __init__(self, doc):
+    def __init__(self, mainwindow):
         BaseView.__init__(self)
-        self.doc = doc
+        self.doc = mainwindow.doc
         self._setupUi()
-        self.btable = BudgetTable(doc=doc, view=self.tableView)
+        self.btable = BudgetTable(mainwindow=mainwindow, view=self.tableView)
         children = [self.btable.model]
-        self.model = BudgetViewModel(view=self, document=doc.model, children=children)
+        self.model = BudgetViewModel(view=self, mainwindow=mainwindow.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

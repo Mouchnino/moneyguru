@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
 #import "PyScheduleTable.h"
 #import "MGTable.h"
 #import "HSTableColumnManager.h"
@@ -16,7 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     HSTableColumnManager *columnsManager;
 }
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
+- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 
 /* Public */
 - (PyScheduleTable *)py;

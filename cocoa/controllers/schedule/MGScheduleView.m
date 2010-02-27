@@ -11,14 +11,14 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGScheduleView
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super init];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    scheduleTable = [[MGScheduleTable alloc] initWithDocument:aDocument view:tableView];
+    scheduleTable = [[MGScheduleTable alloc] initWithPyParent:aPyParent view:tableView];
     NSArray *children = [NSArray arrayWithObjects:[scheduleTable py], nil];
     Class pyClass = [Utils classNamed:@"PyScheduleView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
     return self;
 }
         

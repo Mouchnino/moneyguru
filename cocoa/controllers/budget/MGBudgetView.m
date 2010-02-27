@@ -11,14 +11,14 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGBudgetView
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super init];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    budgetTable = [[MGBudgetTable alloc] initWithDocument:aDocument view:tableView];
+    budgetTable = [[MGBudgetTable alloc] initWithPyParent:aPyParent view:tableView];
     NSArray *children = [NSArray arrayWithObjects:[budgetTable py], nil];
     Class pyClass = [Utils classNamed:@"PyBudgetView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
     return self;
 }
         

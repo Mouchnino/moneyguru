@@ -11,8 +11,9 @@ from ..model.budget import BudgetSpawn
 from .base import DocumentGUIObject
 
 class MainWindow(DocumentGUIObject):
-    def __init__(self, view, document, children):
-        DocumentGUIObject.__init__(self, view, document)
+    # After having created the main window, you *have* to call this method. This scheme is to allow
+    # children to have reference to the main window.
+    def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
             self.alookup) = children
@@ -248,10 +249,6 @@ class MainWindow(DocumentGUIObject):
     
     schedule_changed = _undo_stack_changed
     schedule_deleted = _undo_stack_changed
-    
-    def selected_must_be_edited(self):
-        self.edit_item()
-    
     transaction_changed = _undo_stack_changed
     transaction_deleted = _undo_stack_changed
     transaction_imported = _undo_stack_changed

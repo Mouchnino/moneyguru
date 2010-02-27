@@ -1114,8 +1114,11 @@ class PyIncomePieChart(PyChart):
 class PyExpensesPieChart(PyChart):
     py_class = ExpensesPieChart
 
-class PyMainWindow(PyGUIContainer):
+class PyMainWindow(PyListener):
     py_class = MainWindow
+    
+    def setChildren_(self, children):
+        self.py.set_children([child.py for child in children])
     
     def selectBalanceSheet(self):
         self.py.select_balance_sheet()

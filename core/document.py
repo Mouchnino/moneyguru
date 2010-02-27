@@ -856,10 +856,6 @@ class Document(Broadcaster, Listener):
     def select_budgets(self, budgets):
         self._selected_budgets = budgets
     
-    # Temporary workaround
-    def edit_selected(self):
-        self.notify('selected_must_be_edited')
-    
     #--- Load / Save / Import
     def adjust_example_file(self):
         def inc_month_overflow(refdate, count):

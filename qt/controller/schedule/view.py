@@ -16,13 +16,13 @@ from ui.schedule_view_ui import Ui_ScheduleView
 class ScheduleView(BaseView, Ui_ScheduleView):
     PRINT_TITLE_FORMAT = "Schedules from {startDate} to {endDate}"
     
-    def __init__(self, doc):
+    def __init__(self, mainwindow):
         BaseView.__init__(self)
-        self.doc = doc
+        self.doc = mainwindow.doc
         self._setupUi()
-        self.sctable = ScheduleTable(doc=doc, view=self.tableView)
+        self.sctable = ScheduleTable(mainwindow=mainwindow, view=self.tableView)
         children = [self.sctable.model]
-        self.model = ScheduleViewModel(view=self, document=doc.model, children=children)
+        self.model = ScheduleViewModel(view=self, mainwindow=mainwindow.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

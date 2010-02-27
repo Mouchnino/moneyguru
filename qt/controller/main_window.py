@@ -44,12 +44,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self, None)
         self.doc = doc
         self.app = doc.app
+        self.model = MainWindowModel(view=self, document=doc.model)
         self.nwview = NetWorthView(doc=doc)
         self.pview = ProfitView(doc=doc)
         self.tview = TransactionView(doc=doc)
         self.eview = EntryView(doc=doc)
-        self.scview = ScheduleView(doc=doc)
-        self.bview = BudgetView(doc=doc)
+        self.scview = ScheduleView(mainwindow=self)
+        self.bview = BudgetView(mainwindow=self)
         self.apanel = AccountPanel(self, doc=doc)
         self.tpanel = TransactionPanel(self, doc=doc)
         self.mepanel = MassEditionPanel(self, doc=doc)
@@ -66,7 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
             self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model]
-        self.model = MainWindowModel(view=self, document=doc.model, children=children)
+        self.model.set_children(children)
         self.model.connect()
         self.sfield = SearchField(doc=doc, view=self.searchLineEdit)
         self.sfield.model.connect()

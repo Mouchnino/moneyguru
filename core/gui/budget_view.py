@@ -10,8 +10,8 @@
 from .base import BaseView
 
 class BudgetView(BaseView):
-    def __init__(self, view, document, children):
-        BaseView.__init__(self, view, document, children)
+    def __init__(self, view, mainwindow, children):
+        BaseView.__init__(self, view, mainwindow.document, children)
         [self.btable] = children
     
     def delete_item(self):

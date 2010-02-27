@@ -21,7 +21,9 @@ http://www.hardcoded.net/licenses/hs_license
     MGDocument *document = [self document];
     [self restoreState];
     
-    // We need to instantiate the window components before the window.
+    Class PyMainWindow = [Utils classNamed:@"PyMainWindow"];
+    py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py]];
+    
     accountProperties = [[MGAccountProperties alloc] initWithDocument:document];
     transactionPanel = [[MGTransactionInspector alloc] initWithDocument:document];
     massEditionPanel = [[MGMassEditionPanel alloc] initWithDocument:document];
@@ -33,8 +35,8 @@ http://www.hardcoded.net/licenses/hs_license
     profitView = [[MGProfitView alloc] initWithDocument:document];
     transactionView = [[MGTransactionView alloc] initWithDocument:document];
     accountView = [[MGAccountView alloc] initWithDocument:document];
-    scheduleView = [[MGScheduleView alloc] initWithDocument:document];
-    budgetView = [[MGBudgetView alloc] initWithDocument:document];
+    scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
+    budgetView = [[MGBudgetView alloc] initWithPyParent:py];
     searchField = [[MGSearchField alloc] initWithDocument:document];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -53,8 +55,7 @@ http://www.hardcoded.net/licenses/hs_license
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
         [budgetPanel py], [accountLookup py], nil];
-    Class PyMainWindow = [Utils classNamed:@"PyMainWindow"];
-    py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py] children:children];
+    [py setChildren:children];
     [py connect];
     [searchField connect];
 }

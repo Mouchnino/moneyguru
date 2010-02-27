@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyBudgetView.h"
 #import "MGBaseView.h"
-#import "MGDocument.h"
 #import "MGTableView.h"
 #import "MGBudgetTable.h"
 
@@ -20,6 +19,6 @@ http://www.hardcoded.net/licenses/hs_license
     PyBudgetView *py;
     MGBudgetTable *budgetTable;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 - (PyBudgetView *)py;
 @end

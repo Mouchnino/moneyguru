@@ -10,8 +10,8 @@
 from .base import BaseView
 
 class ScheduleView(BaseView):
-    def __init__(self, view, document, children):
-        BaseView.__init__(self, view, document, children)
+    def __init__(self, view, mainwindow, children):
+        BaseView.__init__(self, view, mainwindow.document, children)
         [self.sctable] = children
     
     def delete_item(self):
