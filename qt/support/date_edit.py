@@ -22,10 +22,11 @@ class DateEdit(QLineEdit):
         Qt.Key_Delete: 'backspace',
     }
     ACCEPTED_KEYS = set([Qt.Key_Escape, Qt.Key_Tab, Qt.Key_Backtab, Qt.Key_Return, Qt.Key_Enter])
+    DATE_FORMAT = 'dd/MM/yyyy'
     
     def __init__(self, parent):
         QLineEdit.__init__(self, parent)
-        self.widget = DateWidget('dd/MM/yyyy')
+        self.widget = DateWidget(self.DATE_FORMAT)
     
     def _refresh(self):
         self.setText(self.widget.text)

@@ -27,6 +27,7 @@ from controller.import_.window import ImportWindow
 from controller.import_.csv_options import CSVOptionsWindow
 from controller.preferences_panel import PreferencesPanel
 from controller.view_options import ViewOptionsDialog
+from support.date_edit import DateEdit
 from preferences import Preferences
 
 class MoneyGuru(ApplicationBase):
@@ -46,6 +47,7 @@ class MoneyGuru(ApplicationBase):
         except ValueError:
             defaultCurrency = Currency('USD')
         cachePath = unicode(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
+        DateEdit.DATE_FORMAT = dateFormat
         self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,
             grouping_sep=groupingSep, default_currency=defaultCurrency, cache_path=cachePath)
         # on the Qt side, we're single document based, so it's one doc per app.
