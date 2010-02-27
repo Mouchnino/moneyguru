@@ -1,3 +1,9 @@
+- date: 2010-02-27
+  version: 1.7.8
+  description: |
+    * Fixed a crash with accounts with accented letters in their name. (#138)
+    * Fixed a glitch in account sheets making some clicks mistakenly exclude accounts. (#137)
+    * Fixed a crash during date editing. [Windows] (#139)
 - date: 2010-02-16
   version: 1.7.7
   description: |
