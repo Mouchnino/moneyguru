@@ -17,8 +17,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithNibName:@"TransactionInspector" pyClassName:@"PyTransactionPanel" document:aDocument];
     [self window]; // Initialize the window
-    customFieldEditor = [[MGFieldEditor alloc] init];
-    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
     [splitTable connect];
     return self;
@@ -26,8 +24,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)dealloc
 {
-    [customDateFieldEditor release];
-    [customFieldEditor release];
     [splitTable release];
     [super dealloc];
 }
@@ -39,15 +35,18 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)fieldOfTextField:(NSTextField *)textField
 {
-    if (textField == descriptionField)
-    {
+    if (textField == descriptionField) {
         return @"description";
     }
-    else if (textField == payeeField)
-    {
+    else if (textField == payeeField) {
         return @"payee";
     }
     return nil;
+}
+
+- (BOOL)isFieldDateField:(NSTextField *)textField
+{
+    return textField == dateField;
 }
 
 - (NSResponder *)firstField
@@ -117,14 +116,5 @@ http://www.hardcoded.net/licenses/hs_license
         // must be edited right away to refresh the split table
         [[self py] setAmount:[(NSTextField *)control stringValue]];
     }
-}
-
-- (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
-{
-    if (asker == dateField)
-    {
-        return customDateFieldEditor;
-    }
-    return customFieldEditor;
 }
 @end

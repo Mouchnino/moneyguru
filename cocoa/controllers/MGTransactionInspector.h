@@ -9,16 +9,15 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
 #import "MGDocument.h"
-#import "MGTextField.h"
 #import "MGTableView.h"
 #import "MGSplitTable.h"
 #import "PyTransactionPanel.h"
 
 @interface MGTransactionInspector : MGPanel {
     IBOutlet NSTabView *tabView;
-    IBOutlet MGTextField *dateField;
-    IBOutlet MGTextField *descriptionField;
-    IBOutlet MGTextField *payeeField;
+    IBOutlet NSTextField *dateField;
+    IBOutlet NSTextField *descriptionField;
+    IBOutlet NSTextField *payeeField;
     IBOutlet NSTextField *checknoField;
     IBOutlet NSTextField *notesField;
     IBOutlet NSTextField *amountField;
@@ -29,8 +28,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *mctNotice2;
     
     MGSplitTable *splitTable;
-    NSTextView *customFieldEditor;
-    NSTextView *customDateFieldEditor;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyTransactionPanel *)py;

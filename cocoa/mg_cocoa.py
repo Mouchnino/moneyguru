@@ -33,6 +33,7 @@ from core.gui.budget_table import BudgetTable
 from core.gui.budget_panel import BudgetPanel
 from core.gui.budget_view import BudgetView
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
+from core.gui.completable_edit import CompletableEdit
 from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_widget import DateWidget
 from core.gui.entry_print import EntryPrint
@@ -316,23 +317,7 @@ class PyGUIContainer(PyListener):
 class PyWindowController(PyListener):
     pass
 
-# I know, it's ugly, but pyobjc doesn't work with multiple inheritance
-
-class PyCompletion(PyListener):
-    def completeValue_forAttribute_(self, value, column):
-        return self.py.complete(value, column)
-    
-    def currentCompletion(self):
-        return self.py.current_completion()
-    
-    def nextCompletion(self):
-        return self.py.next_completion()
-    
-    def prevCompletion(self):
-        return self.py.prev_completion()
-    
-
-class PyTable(PyCompletion):
+class PyTable(PyListener):
     def add(self):
         self.py.add()
         
@@ -495,7 +480,7 @@ class PyReport(PyOutline):
         self.cocoa.showMessage_(msg)
     
 
-class PyPanel(PyCompletion):
+class PyPanel(PyListener):
     def savePanel(self):
         self.py.save()
     
@@ -1510,6 +1495,39 @@ class PyDateWidget(NSObject):
     
     def selection(self):
         return self.w.selection
+    
+
+class PyCompletableEdit(NSObject):
+    def init(self):
+        super(PyCompletableEdit, self).init()
+        self.py = CompletableEdit()
+        return self
+    
+    def setSource_(self, source):
+        self.py.source = source.py
+    
+    def setAttrname_(self, attrname):
+        self.py.attrname = attrname
+    
+    def text(self):
+        return self.py.text
+    
+    def setText_(self, value):
+        # Don't send value directly to the py side! NSString are mutable and weird stuff will
+        # happen if you do that!
+        self.py.text = unicode(value)
+    
+    def completion(self):
+        return self.py.completion
+    
+    def commit(self):
+        self.py.commit()
+    
+    def down(self):
+        self.py.down()
+    
+    def up(self):
+        self.py.up()
     
 
 #--- Printing

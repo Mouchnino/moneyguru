@@ -7,8 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyCompletion.h"
+#import "PyGUI.h"
 
-@interface PyPanel : PyCompletion {}
+@interface PyPanel : PyGUI {}
 - (void)savePanel;
 @end

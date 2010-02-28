@@ -27,6 +27,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"payee" toUserDefault:TransactionPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:TransactionChecknoColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
+    [customFieldEditor setSource:py];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     [self changeColumns]; // initial set
     return self;
@@ -106,15 +107,18 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if (asker == [self tableView])
     {
-        BOOL isDate = NO;
         NSInteger editedColumn = [[self tableView] editedColumn];
-        if (editedColumn > -1)
-        {
+        if (editedColumn > -1) {
             NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
             NSString *name = [column identifier];
-            isDate = [name isEqualTo:@"date"];
+            if ([name isEqualTo:@"date"]) {
+                return customDateFieldEditor;
+            }
+            else if ([name isEqualTo:@"description"] || [name isEqualTo:@"payee"] || [name isEqualTo:@"from"] || [name isEqualTo:@"to"]) {
+                [customFieldEditor setAttrname:name];
+                return customFieldEditor;
+            }
         }
-        return isDate ? (id)customDateFieldEditor : (id)customFieldEditor;
     }
     return nil;
 }

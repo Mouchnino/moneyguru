@@ -28,6 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"checkno" toUserDefault:AccountChecknoColumnVisible];
     [columnsManager linkColumn:@"reconciliation_date" toUserDefault:AccountReconciliationDateColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] init];
+    [customFieldEditor setSource:py];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     [self changeColumns]; // initial set
     return self;
@@ -36,6 +37,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)dealloc
 {
     [customFieldEditor release];
+    [customDateFieldEditor release];
     [columnsManager release];
     [super dealloc];
 }
@@ -161,20 +163,21 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Public */
-
 - (id)fieldEditorForObject:(id)asker
 {
-    if (asker == [self tableView])
-    {   
-        BOOL isDate = NO;
+    if (asker == [self tableView]) {   
         NSInteger editedColumn = [[self tableView] editedColumn];
-        if (editedColumn > -1)
-        {
+        if (editedColumn > -1) {
             NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
             NSString *name = [column identifier];
-            isDate = [name isEqualTo:@"date"] || [name isEqualTo:@"reconciliation_date"];
+            if ([name isEqualTo:@"date"] || [name isEqualTo:@"reconciliation_date"]) {
+                return customDateFieldEditor;
+            }
+            else if ([name isEqualTo:@"description"] || [name isEqualTo:@"payee"] || [name isEqualTo:@"transfer"]) {
+                [customFieldEditor setAttrname:name];
+                return customFieldEditor;
+            }
         }
-        return isDate ? (id)customDateFieldEditor : (id)customFieldEditor;
     }
     return nil;
 }

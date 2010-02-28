@@ -14,14 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" document:aDocument];
     [self window]; // Initialize the window
-    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
-}
-
-- (void)dealloc
-{
-    [customDateFieldEditor release];
-    [super dealloc];
 }
 
 - (PyBudgetPanel *)py
@@ -30,6 +23,11 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Override */
+- (BOOL)isFieldDateField:(NSTextField *)textField
+{
+    return (textField == startDateField) || (textField == stopDateField);
+}
+
 - (NSResponder *)firstField
 {
     return startDateField;

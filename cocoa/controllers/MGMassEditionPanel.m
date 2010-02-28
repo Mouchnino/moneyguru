@@ -7,22 +7,17 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGMassEditionPanel.h"
-#import "MGDateFieldEditor.h"
 
 @implementation MGMassEditionPanel
 - (id)initWithDocument:(MGDocument *)aDocument
 {
     self = [super initWithNibName:@"MassEditionPanel" pyClassName:@"PyMassEditionPanel" document:aDocument];
     currencies = [[[self py] availableCurrencies] retain];
-    customFieldEditor = [[MGFieldEditor alloc] init];
-    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }
 
 - (void)dealloc
 {
-    [customDateFieldEditor release];
-    [customFieldEditor release];
     [currencies release];
     [super dealloc];
 }
@@ -35,23 +30,24 @@ http://www.hardcoded.net/licenses/hs_license
 /* Override */
 - (NSString *)fieldOfTextField:(NSTextField *)textField
 {
-    if (textField == descriptionField)
-    {
+    if (textField == descriptionField) {
         return @"description";
     }
-    else if (textField == payeeField)
-    {
+    else if (textField == payeeField) {
         return @"payee";
     }
-    else if (textField == fromField)
-    {
+    else if (textField == fromField) {
         return @"from";
     }
-    else if (textField == toField)
-    {
+    else if (textField == toField) {
         return @"to";
     }
     return nil;
+}
+
+- (BOOL)isFieldDateField:(NSTextField *)textField
+{
+    return textField == dateField;
 }
 
 - (NSResponder *)firstField
@@ -68,17 +64,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)saveFields
 {
     // all fields are saved through bindings.
-}
-
-/* NSWindow delegate */
-
-- (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
-{
-    if (asker == dateField)
-    {
-        return customDateFieldEditor;
-    }
-    return customFieldEditor;
 }
 
 /* Delegate */

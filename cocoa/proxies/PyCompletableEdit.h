@@ -9,10 +9,16 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyGUI.h"
 
-@interface PyCompletion : PyGUI {}
+@interface PyCompletableEdit : NSObject {}
+- (id)init;
 
-- (NSString *)completeValue:(NSString *)value forAttribute:(NSString *)column;
-- (NSString *)currentCompletion;
-- (NSString *)nextCompletion;
-- (NSString *)prevCompletion;
+- (void)setSource:(PyGUI *)source;
+- (void)setAttrname:(NSString *)attrname;
+- (NSString *)text;
+- (void)setText:(NSString *)text;
+- (NSString *)completion;
+
+- (void)commit;
+- (void)up;
+- (void)down;
 @end

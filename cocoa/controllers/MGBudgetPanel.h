@@ -9,21 +9,18 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
 #import "MGDocument.h"
-#import "MGTextField.h"
 #import "PyBudgetPanel.h"
 
 @interface MGBudgetPanel : MGPanel {
-    IBOutlet MGTextField *startDateField;
-    IBOutlet MGTextField *repeatEveryField;
+    IBOutlet NSTextField *startDateField;
+    IBOutlet NSTextField *repeatEveryField;
     IBOutlet NSTextField *repeatEveryDescLabel;
     IBOutlet NSPopUpButton *repeatOptionsPopUp;
-    IBOutlet MGTextField *stopDateField;
+    IBOutlet NSTextField *stopDateField;
     IBOutlet NSPopUpButton *accountSelector;
     IBOutlet NSPopUpButton *targetSelector;
-    IBOutlet MGTextField *amountField;
+    IBOutlet NSTextField *amountField;
     IBOutlet NSTextField *notesField;
-    
-    NSTextView *customDateFieldEditor;
 }
 - (PyBudgetPanel *)py;
 /* Actions */

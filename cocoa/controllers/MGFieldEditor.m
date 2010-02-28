@@ -13,90 +13,88 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)init
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
+    Class pyClass = [Utils classNamed:@"PyCompletableEdit"];
+    py = [[pyClass alloc] init];
+    lastCompletion = nil;
     [self setEditable:YES];
     [self setFieldEditor:YES];
     [self setSelectable:YES];
     return self;
 }
 
+- (void)dealloc
+{
+    [lastCompletion release];
+    [py release];
+    [super dealloc];
+}
+
+- (void)refresh
+{
+    NSString *text = [py text];
+    NSString *completion = [py completion];
+    NSInteger insertionPoint = [text length];
+    // don't use insertText here: infinite loop hazard.
+    [self setString:[text stringByAppendingString:completion]];
+    [self setSelectedRange:NSMakeRange(insertionPoint, [completion length])];
+    [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
+    [lastCompletion release];
+    lastCompletion = [completion retain];
+}
+
+- (void)setSource:(PyGUI *)source
+{
+    [py setSource:source];
+    [lastCompletion release];
+    lastCompletion = nil;
+}
+
+- (void)setAttrname:(NSString *)attrname
+{
+    [py setAttrname:attrname];
+    [lastCompletion release];
+    lastCompletion = nil;
+}
+
 - (void)moveUp:(id)sender 
 {
-    id delegate = [self delegate];
-    if (delegate && [delegate respondsToSelector:@selector(fieldEditorWantsPrevValue:)]) {
-        [self replaceWith:[delegate fieldEditorWantsPrevValue:self]];
+    if ([[py text] length]) {
+        [py up];
+        [self refresh];
     }
 }
 
 - (void)moveDown:(id)sender
 {
-    id delegate = [self delegate];
-    if (delegate && [delegate respondsToSelector:@selector(fieldEditorWantsNextValue:)]) {
-        [self replaceWith:[delegate fieldEditorWantsNextValue:self]];
+    if ([[py text] length]) {
+        [py down];
+        [self refresh];
     }
 }
 
 - (void)insertText:(NSString *)text
 {
     [super insertText:text];
-    id delegate = [self delegate];
-    if ((delegate) && ([delegate respondsToSelector:@selector(fieldEditor:wantsCompletionFor:)]) &&
-        [self selectedRange].location == [[self string] length])  // only complete if we are at the end of the input
-    {
-        [self completeWith:[delegate fieldEditor:self wantsCompletionFor:[self string]]];
+    NSString *newText = [self string];
+    // Remove the completion part
+    if ((lastCompletion != nil) && ([newText hasSuffix:lastCompletion])) {
+        newText = [newText substringToIndex:([newText length] - [lastCompletion length])];
     }
+    [py setText:newText];
+    [self refresh];
 }
 
 - (BOOL)resignFirstResponder
 {
-    id delegate = [self delegate];
-    // We complete only if we are actually displaying a proposition.
-    // If the user typed out the proposition completely with a different case, it's an explicit
-    // statement that he doesn't want any replacement to occur. If the selection starts on the
-    // first character, the user didn't type anything in the field and no completion has been
-    // suggested yet.
-    if ([self selectedRange].length > 0 && [self selectedRange].location > 0 &&
-        delegate && [delegate respondsToSelector:@selector(fieldEditorWantsCurrentValue:)])
-    {
-        NSString *completion = [[self delegate] fieldEditorWantsCurrentValue:self];
-        if (completion != nil) {
-            [self setString:completion];
-        }
+    /* We only want to commit completion if we actually have one. The conditions below prevent 2
+     * bogus cases:
+     * 1. The user deleted the completion
+     * 2. No changes have been made to the text view, which was pre-populated and selected
+    */
+    if (([self selectedRange].length > 0) && (lastCompletion != nil)) {
+        [py commit];
+        [self refresh];
     }
     return [super resignFirstResponder];
-}
-
-/* Methods */
-
-- (void)completeWith:(NSString *)proposition
-{
-    if (proposition == nil)
-    {
-        return;
-    }
-    NSString *current = [self string];
-    NSInteger insertionPoint = [current length];
-    NSString *suffix = [proposition substringFromIndex:[current length]];
-    [self setString:[current stringByAppendingString:suffix]];    // don't use insertText here: infinite loop hazard.
-    [self setSelectedRange:NSMakeRange(insertionPoint, [suffix length])];
-    [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
-}
-
-- (void)replaceWith:(NSString *)text
-{
-    if (text == nil)
-    {
-        return;
-    }
-    NSRange selection = [self selectedRange];
-    NSInteger selectionStart = selection.length == 0 ? 0 : selection.location;
-    NSString *oldPrefix = [[[self string] substringToIndex:selectionStart] lowercaseString];
-    NSString *newPrefix = [[text substringToIndex:selectionStart] lowercaseString];
-    if (![oldPrefix isEqualToString:newPrefix])
-    {
-        selectionStart = 0;
-    }
-    [self setString:text];
-    [self setSelectedRange:NSMakeRange(selectionStart, [text length] - selectionStart)];
-    [self scrollRangeToVisible:NSMakeRange(selectionStart, 0)];
 }
 @end

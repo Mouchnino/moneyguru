@@ -36,7 +36,7 @@ class TableDelegate(ItemDelegate):
                 ACCOUNT_EDIT: AccountEdit
             }[editType]
             result = editClass(parent)
-            result.model = self._model
+            result.model.source = self._model
             return result
     
 

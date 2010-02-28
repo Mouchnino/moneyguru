@@ -7,14 +7,23 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGPanel.h"
-#import "MGTextField.h"
 
 @implementation MGPanel
 - (id)initWithNibName:aNibName pyClassName:aClassName document:aDocument
 {
     self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aDocument py]];
     parentWindow = [aDocument windowForSheet];
+    customFieldEditor = [[MGFieldEditor alloc] init];
+    [customFieldEditor setSource:py];
+    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
+}
+
+- (void)dealloc
+{
+    [customDateFieldEditor release];
+    [customFieldEditor release];
+    [super dealloc];
 }
 
 - (PyPanel *)py
@@ -27,6 +36,11 @@ http://www.hardcoded.net/licenses/hs_license
 {
     // if textField is a field to perform auto-complete on, return the name of the field for auto-completion
     return nil;
+}
+
+- (BOOL)isFieldDateField:(NSTextField *)textField
+{
+    return NO;
 }
 
 - (NSResponder *)firstField
@@ -50,7 +64,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Actions */
-
 - (IBAction)cancel:(id)sender
 {
     [NSApp endSheet:[self window]];
@@ -63,29 +76,19 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
-- (NSString *)autoCompletionForTextField:(MGTextField *)textField partialWord:(NSString *)text
+- (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
-    NSString *attr = [self fieldOfTextField:textField];
-    if (attr != nil)
-    {
-        return [[self py] completeValue:text forAttribute:attr];
+    if ([self isFieldDateField:asker]) {
+        return customDateFieldEditor;
+    }
+    else {
+        NSString *attrname = [self fieldOfTextField:asker];
+        if (attrname != nil) {
+            [customFieldEditor setAttrname:attrname];
+            return customFieldEditor;
+        }
     }
     return nil;
-}
-
-- (NSString *)currentValueForTextField:(MGTextField *)textField
-{
-    return [[self py] currentCompletion];
-}
-
-- (NSString *)prevValueForTextField:(MGTextField *)textField
-{
-    return [[self py] prevCompletion];
-}
-
-- (NSString *)nextValueForTextField:(MGTextField *)textField
-{
-    return [[self py] nextCompletion];
 }
 
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo

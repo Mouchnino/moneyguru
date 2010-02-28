@@ -69,26 +69,6 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] cancelEdits];
 }
 
-- (NSString *)autoCompletionForColumn:(NSTableColumn *)column partialWord:(NSString *)partialWord
-{
-    return [[self py] completeValue:partialWord forAttribute:[column identifier]];
-}
-
-- (NSString *)currentValueForColumn:(NSTableColumn *)column
-{
-    return [[self py] currentCompletion];
-}
-
-- (NSString *)nextValueForColumn:(NSTableColumn *)column
-{
-    return [[self py] nextCompletion];
-}
-
-- (NSString *)prevValueForColumn:(NSTableColumn *)column
-{
-    return [[self py] prevCompletion];
-}
-
 /* Public */
 - (void)startEditing
 {

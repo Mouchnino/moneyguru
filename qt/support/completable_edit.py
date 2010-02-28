@@ -10,6 +10,8 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QLineEdit
 
+from core.gui.completable_edit import CompletableEdit as CompletableEditModel
+
 # The QCompleter works by having access to a list of possible matches, but we already have that
 # logic implemented on the model side. It turns out subclassing the QCompleter to adapt it to our
 # case would have been more complex than subclassing a QLineEdit.
@@ -22,11 +24,16 @@ from PyQt4.QtGui import QLineEdit
 # prev_completion().
 
 class CompletableEdit(QLineEdit):
-    ATTRNAME = None # must be set
+    ATTRNAME = '' # must be set
     
     def __init__(self, parent):
         QLineEdit.__init__(self, parent)
-        self.model = None
+        self.model = CompletableEditModel()
+        self.model.attrname = self.ATTRNAME
+    
+    def _refresh(self):
+        self.setText(self.model.text + self.model.completion)
+        self.setSelection(len(self.model.text), len(self.model.completion))
     
     def _prefix(self):
         # Returns the text before the selection
@@ -35,47 +42,39 @@ class CompletableEdit(QLineEdit):
         else:
             return unicode(self.text()[:self.selectionStart()])
     
-    def _replaceText(self, newText):
-        # Replaces self.text() with newText while keeping the selection intact (for up/down cycling)
-        if not newText:
-            return
-        selectionStart = self.selectionStart()
-        if selectionStart == -1: # has been lost somehow, so it means the whole text is the prefix
-            selectionStart = len(self.text())
-        self.setText(newText)
-        self.setSelection(selectionStart, len(newText) - selectionStart)
-    
     #--- QLineEdit overrides
+    def focusInEvent(self, event):
+        QLineEdit.focusInEvent(self, event)
+        self.model.text = ''
+    
     def focusOutEvent(self, event):
         # On focus out, we want to see if the text we have is exactly the same as the completion,
         # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
         # THIS DOESN'T WORK IN ITEM VIEW EDITION. When item views use this class as an editor,
         # the value of the editor is pushed down to the model *before* the focus out event. The
         # logic for completion replacement in these cases is in controller.table._setData.
-        completion = self.model.current_completion()
-        if completion is not None and completion.lower() == unicode(self.text()).lower():
-            self.setText(completion)
+        if self.selectedText() and self.selectedText() == self.model.completion:
+            self.model.commit()
+            self._refresh()
         QLineEdit.focusOutEvent(self, event)
     
     def keyPressEvent(self, event):
         key = event.key()
         if key == Qt.Key_Up:
-            self._replaceText(self.model.prev_completion())
+            if self.model.text:
+                self.model.up()
+                self._refresh()
         elif key == Qt.Key_Down:
-            self._replaceText(self.model.next_completion())
+            if self.model.text:
+                self.model.down()
+                self._refresh()
         else:
             oldPrefix = self._prefix()
             QLineEdit.keyPressEvent(self, event)
-            newPrefix = self._prefix()
-            # We only want to complete when text has been *added* by the user
-            if len(newPrefix) > len(oldPrefix):
-                completion = self.model.complete(newPrefix, self.ATTRNAME)
-                if completion:
-                    # We don't use `completion` directly because we don't want to mess with the
-                    # user's case.
-                    newText = newPrefix + completion[len(newPrefix):]
-                    self.setText(newText)
-                    self.setSelection(len(newPrefix), len(completion) - len(newPrefix))
+            prefix = self._prefix()
+            if len(oldPrefix) < len(prefix):
+                self.model.text = prefix
+                self._refresh()
     
 
 class DescriptionEdit(CompletableEdit):

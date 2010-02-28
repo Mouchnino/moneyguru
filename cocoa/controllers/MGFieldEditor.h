@@ -7,15 +7,14 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyGUI.h"
+#import "PyCompletableEdit.h"
 
-@interface MGFieldEditor : NSTextView {}
-- (void)completeWith:(NSString *)proposition;
-- (void)replaceWith:(NSString *)text;
-@end
-
-@interface NSObject(MGFieldEditorDelegate)
-- (NSString *)fieldEditor:(MGFieldEditor *)fieldEditor wantsCompletionFor:(NSString *)text;
-- (NSString *)fieldEditorWantsCurrentValue:(MGFieldEditor *)fieldEditor;
-- (NSString *)fieldEditorWantsPrevValue:(MGFieldEditor *)fieldEditor;
-- (NSString *)fieldEditorWantsNextValue:(MGFieldEditor *)fieldEditor;
+@interface MGFieldEditor : NSTextView
+{
+    PyCompletableEdit *py;
+    NSString *lastCompletion;
+}
+- (void)setSource:(PyGUI *)source;
+- (void)setAttrname:(NSString *)attrname;
 @end

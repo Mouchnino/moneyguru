@@ -9,21 +9,18 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
 #import "MGDocument.h"
-#import "MGTextField.h"
 #import "PyMassEditionPanel.h"
 
 @interface MGMassEditionPanel : MGPanel {
     IBOutlet NSTextField *dateField;
-    IBOutlet MGTextField *descriptionField;
-    IBOutlet MGTextField *payeeField;
+    IBOutlet NSTextField *descriptionField;
+    IBOutlet NSTextField *payeeField;
     IBOutlet NSTextField *checknoField;
-    IBOutlet MGTextField *fromField;
-    IBOutlet MGTextField *toField;
+    IBOutlet NSTextField *fromField;
+    IBOutlet NSTextField *toField;
     IBOutlet NSComboBox *currencySelector;
     
     NSArray *currencies;
-    NSTextView *customFieldEditor;
-    NSTextView *customDateFieldEditor;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 - (PyMassEditionPanel *)py;

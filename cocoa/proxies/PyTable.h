@@ -7,10 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyCompletion.h"
+#import "PyGUI.h"
 
-@interface PyTable : PyCompletion {}
-
+@interface PyTable : PyGUI {}
 - (void)add;
 - (void)cancelEdits;
 - (BOOL)canEditColumn:(NSString *)column atRow:(NSInteger)row;

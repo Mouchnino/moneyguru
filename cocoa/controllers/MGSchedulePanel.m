@@ -16,8 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" document:aDocument];
     [self window]; // Initialize the window
-    customFieldEditor = [[MGFieldEditor alloc] init];
-    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
     [splitTable connect];
     return self;
@@ -25,8 +23,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)dealloc
 {
-    [customDateFieldEditor release];
-    [customFieldEditor release];
     [splitTable release];
     [super dealloc];
 }
@@ -39,15 +35,18 @@ http://www.hardcoded.net/licenses/hs_license
 /* Override */
 - (NSString *)fieldOfTextField:(NSTextField *)textField
 {
-    if (textField == descriptionField)
-    {
+    if (textField == descriptionField) {
         return @"description";
     }
-    else if (textField == payeeField)
-    {
+    else if (textField == payeeField) {
         return @"payee";
     }
     return nil;
+}
+
+- (BOOL)isFieldDateField:(NSTextField *)textField
+{
+    return (textField == startDateField) || (textField == stopDateField);
 }
 
 - (NSResponder *)firstField
@@ -148,14 +147,5 @@ http://www.hardcoded.net/licenses/hs_license
         [[self py] setAmount:[(NSTextField *)control stringValue]];
     }
     // for the repeatType field, it's handled in repeatTypeSelected:
-}
-
-- (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
-{
-    if ((asker == startDateField) || (asker == stopDateField))
-    {
-        return customDateFieldEditor;
-    }
-    return customFieldEditor;
 }
 @end
