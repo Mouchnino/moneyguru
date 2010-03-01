@@ -61,3 +61,10 @@ class ItemDelegate(QStyledItemDelegate):
             painter.drawPixmap(rect, pixmap)
             xOffset += pixmap.width()
     
+    def setModelData(self, editor, model, index):
+        # This call below is to give a chance to the editor to tweak its content a little bit before
+        # we send it to the model.
+        if hasattr(editor, 'prepareDataForCommit'):
+            editor.prepareDataForCommit()
+        QStyledItemDelegate.setModelData(self, editor, model, index)
+    

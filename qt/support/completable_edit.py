@@ -53,9 +53,7 @@ class CompletableEdit(QLineEdit):
         # THIS DOESN'T WORK IN ITEM VIEW EDITION. When item views use this class as an editor,
         # the value of the editor is pushed down to the model *before* the focus out event. The
         # logic for completion replacement in these cases is in controller.table._setData.
-        if self.selectedText() and self.selectedText() == self.model.completion:
-            self.model.commit()
-            self._refresh()
+        self.prepareDataForCommit()
         QLineEdit.focusOutEvent(self, event)
     
     def keyPressEvent(self, event):
@@ -75,6 +73,12 @@ class CompletableEdit(QLineEdit):
             if len(oldPrefix) < len(prefix):
                 self.model.text = prefix
                 self._refresh()
+    
+    #--- Public
+    def prepareDataForCommit(self):
+        if self.selectedText() and self.selectedText() == self.model.completion:
+            self.model.commit()
+            self._refresh()
     
 
 class DescriptionEdit(CompletableEdit):

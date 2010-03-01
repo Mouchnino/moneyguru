@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, QTimer
+from PyQt4.QtCore import Qt, QTimer, QEvent
 from PyQt4.QtGui import QLineEdit
 
 from core.gui.date_widget import DateWidget
@@ -33,6 +33,7 @@ class DateEdit(QLineEdit):
         selStart, selEnd = self.widget.selection
         self.setSelection(selStart, selEnd-selStart+1)
     
+    #--- QLineEdit overrides
     def keyPressEvent(self, event):
         key = event.key()
         if key in self.KEY2METHOD:
@@ -53,4 +54,13 @@ class DateEdit(QLineEdit):
         # A timer is used here because a mouse event following the focusInEvent messes up the
         # selection (so the refresh *has* to happen after the mouse event).
         QTimer.singleShot(0, self._refresh)
+    
+    def focusOutEvent(self, event):
+        self.prepareDataForCommit()
+        QLineEdit.focusOutEvent(self, event)
+    
+    #--- Public
+    def prepareDataForCommit(self):
+        self.widget.exit()
+        self._refresh()
     
