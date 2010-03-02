@@ -30,6 +30,7 @@ from ..gui.bar_graph import BarGraph
 from ..gui.budget_panel import BudgetPanel
 from ..gui.budget_table import BudgetTable
 from ..gui.budget_view import BudgetView
+from ..gui.completable_edit import CompletableEdit
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.entry_table import EntryTable
@@ -404,6 +405,11 @@ class TestApp(object):
             convert = lambda i: date.fromordinal(i).strftime('%d/%m/%Y')
             result.append((convert(x1), convert(x2), '%2.2f' % y1, '%2.2f' % y2))
         return result
+    
+    def completable_edit(self, source, attrname):
+        ce = CompletableEdit(source=source)
+        ce.attrname = attrname
+        return ce
     
     def save_file(self):
         assert self.tmppath is not None

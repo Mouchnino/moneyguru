@@ -12,7 +12,7 @@ from nose.tools import eq_
 
 from hsutil.currency import USD
 
-from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp
+from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
 from ...gui.transaction_table import TransactionTable
 from ...model.date import MonthRange, YearRange
 
@@ -748,28 +748,45 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.assertTrue(self.ttable[0].reconciled)
     
 
+#--- Transaction created through the ttable
+def app_transaction_created_through_ttable():
+    app = TestApp()
+    app.mw.select_transaction_table()
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'foo'
+    row.payee = 'bar'
+    row.from_ = 'first'
+    row.to = 'second'
+    row.amount = '42'
+    app.ttable.save_edits()
+    return app
+
+@with_app(app_transaction_created_through_ttable)
+def test_completion(app):
+    # Here, we want to make sure that complete() works, but we also want to make sure it is 
+    # unaffected by entries (which means selected account and stuff).
+    # There is *no* selected account
+    ce = app.completable_edit(app.ttable, 'description')
+    ce.text = 'f'
+    eq_(ce.completion, 'oo')
+    ce.attrname = 'payee'
+    ce.text = 'b'
+    eq_(ce.completion, 'ar')
+    ce.attrname = 'from'
+    ce.text = 'f'
+    eq_(ce.completion, 'irst')
+    ce.text = 's'
+    eq_(ce.completion, 'econd')
+    ce.attrname = 'to'
+    ce.text = 'f'
+    eq_(ce.completion, 'irst')
+    ce.text = 's'
+    eq_(ce.completion, 'econd')
+
 class TransactionCreatedThroughTheTransactionTable(TestCase):
     def setUp(self):
         self.create_instances()
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'foo'
-        row.payee = 'bar'
-        row.from_ = 'first'
-        row.to = 'second'
-        row.amount = '42'
-        self.ttable.save_edits()
-    
-    def test_completion(self):
-        """Here, we want to make sure that complete() works, but we also want to make sure it is 
-        unaffected by entries (which means selected account and stuff)"""
-        # There is *no* selected account
-        self.assertEqual(self.ttable.complete('f', 'description'), 'foo')
-        self.assertEqual(self.ttable.complete('b', 'payee'), 'bar')
-        self.assertEqual(self.ttable.complete('f', 'from'), 'first')
-        self.assertEqual(self.ttable.complete('s', 'from'), 'second')
-        self.assertEqual(self.ttable.complete('f', 'to'), 'first')
-        self.assertEqual(self.ttable.complete('s', 'to'), 'second')
     
 
 class LoadFile(TestCase):

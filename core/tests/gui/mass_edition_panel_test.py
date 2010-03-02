@@ -194,7 +194,9 @@ def test_completion():
     app = app_two_transactions_different_value()
     app.add_account() # the tpanel's completion must not be dependant on the selected account (like entries)
     app.mainwindow.show_account()
-    eq_(app.mepanel.complete('d', 'description'), 'description2')
+    ce = app.completable_edit(app.mepanel, 'description')
+    ce.text = 'd'
+    eq_(ce.completion, 'escription2')
 
 class TwoTransactionsSameValues(TestCase):
     def setUp(self):

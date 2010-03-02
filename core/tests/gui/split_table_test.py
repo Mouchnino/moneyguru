@@ -53,7 +53,9 @@ def test_changes_split_buffer_only():
 def test_completion():
     # Just make sure it works. That is enough to know SplitTable is of the right subclass.
     app = app_one_entry()
-    eq_(app.stable.complete('s', 'account'), 'second')
+    ce = app.completable_edit(app.stable, 'account')
+    ce.text = 's'
+    eq_(ce.completion, 'econd')
 
 def test_completion_new_txn():
     # When completing an account from a new txn, the completion wouldn't work at all
@@ -61,7 +63,9 @@ def test_completion_new_txn():
     app.mainwindow.select_transaction_table()
     app.ttable.add()
     app.tpanel.load()
-    eq_(app.stable.complete('f', 'account'), 'first')
+    ce = app.completable_edit(app.stable, 'account')
+    ce.text = 'f'
+    eq_(ce.completion, 'irst')
 
 def test_load_tpanel_from_ttable():
     # When the tpanel is loaded form the ttable, the system currency is used.

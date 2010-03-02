@@ -70,7 +70,9 @@ def test_completion():
     app = app_one_entry()
     app.add_account() # the tpanel's completion must not be ependant on the selected account (like entries)
     app.doc.show_selected_account()
-    eq_(app.tpanel.complete('d', 'description'), 'description')
+    ce = app.completable_edit(app.tpanel, 'description')
+    ce.text = 'd'
+    eq_(ce.completion, 'escription')
 
 def test_load_refreshes_mct_button():
     # loading the panel refreshes the mct button
