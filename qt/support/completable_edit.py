@@ -48,11 +48,6 @@ class CompletableEdit(QLineEdit):
         self.model.text = ''
     
     def focusOutEvent(self, event):
-        # On focus out, we want to see if the text we have is exactly the same as the completion,
-        # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
-        # THIS DOESN'T WORK IN ITEM VIEW EDITION. When item views use this class as an editor,
-        # the value of the editor is pushed down to the model *before* the focus out event. The
-        # logic for completion replacement in these cases is in controller.table._setData.
         self.prepareDataForCommit()
         QLineEdit.focusOutEvent(self, event)
     
@@ -76,6 +71,8 @@ class CompletableEdit(QLineEdit):
     
     #--- Public
     def prepareDataForCommit(self):
+        # On focus out, we want to see if the text we have is exactly the same as the completion,
+        # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
         if self.selectedText() and self.selectedText() == self.model.completion:
             self.model.commit()
             self._refresh()

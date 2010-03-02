@@ -228,8 +228,20 @@ def app_transaction_with_payee_and_checkno():
     app.tpanel.save()
     return app
 
+#--- Entry with blank description
+def app_entry_with_blank_description():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
+    return app
+
 #--- Generators
-def test_save_load_foo():
+def test_save_load():
+    # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
+    # because, in the old TestCase based system, had mixed in the TestCase with the TestSaveLoadMixin
+    # without commenting on why I was doing that. When nose-ifying, I didn't want to lose coverage
+    # so I kept them, but I'm not sure what they're testing.
     @with_tmpdir
     def check(app, tmppath):
         filepath = unicode(tmppath + 'foo.xml')
@@ -245,6 +257,9 @@ def test_save_load_foo():
     yield check, app
     
     app = app_transaction_with_payee_and_checkno()
+    yield check, app
+    
+    app = app_entry_with_blank_description()
     yield check, app
 
 def test_save_load_qif():

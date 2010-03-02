@@ -6,537 +6,571 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import os.path as op
 import time
-from datetime import date
 
 from nose.tools import eq_
+from hsutil.testutil import Patcher, patch_today, with_tmpdir
 
-from .base import TestCase, TestSaveLoadMixin
-from ..model.date import MonthRange
+from .base import TestCase, TestApp, with_app
+from ..model.account import AccountType
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-    
-    def test_current_completion(self):
-        # There is no completion yet.
-        eq_(self.etable.current_completion(), None)
-    
+#--- Pristine
+@with_app(TestApp)
+def test_initial_current_completion(app):
+    # The current completion is initially None
+    eq_(app.etable.current_completion(), None)
 
-class OneEmptyAccount(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('Checking')
-        self.document.show_selected_account()
-    
-    def test_complete_transfer(self):
-        # Don't lookup the selected account for transfer completion.
-        assert self.etable.complete('c', 'transfer') is None
-    
+#--- One empty account
+def app_one_empty_account():
+    app = TestApp()
+    app.add_account('Checking')
+    app.doc.show_selected_account()
+    return app
 
-class EmptyAccountWithWhitespaceInName(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('  Foobar  ')
-        self.add_account('foobaz')
-        self.document.show_selected_account()
-    
-    def test_complete_transfer(self):
-        # transfer completion looking up account names ignores whitespaces (and case).
-        eq_(self.etable.complete('f', 'transfer'), 'Foobar')
-    
+#--- Empty account with whitespace in name
+def app_empty_account_with_whitespace_in_name():
+    app = TestApp()
+    app.add_account('  Foobar  ')
+    app.add_account('foobaz')
+    app.doc.show_selected_account()
+    return app
 
-class ThreeEmptyAccounts(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('one')
-        self.add_account('two')
-        self.add_account('three') # This is the selected account (in second position)
-        self.document.show_selected_account()
-    
-    def test_complete_transfer(self):
-        # When no entry match for transfer completion, lookup in accounts.
-        eq_(self.etable.complete('o', 'transfer'), 'one')
-    
-    def test_complete_empty_transfer(self):
-        # Don't complete an empty transfer.
-        eq_(self.etable.complete('', 'transfer'), None)
+#--- Three empty accounts
+def app_three_empty_accounts():
+    app = TestApp()
+    app.add_account('one')
+    app.add_account('two')
+    app.add_account('three') # This is the selected account (in second position)
+    app.doc.show_selected_account()
+    return app
 
-    def test_complete_description(self):
-        # description completion does *not* look into accounts.
-        assert self.etable.complete('o', 'description') is None
-    
+@with_app(app_three_empty_accounts)
+def test_complete_empty_transfer(app):
+    # Don't complete an empty transfer.
+    eq_(app.etable.complete('', 'transfer'), None)
 
-class DifferentAccountTypes(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('one')
-        self.add_account('two')
-        self.document.show_selected_account()
-        self.add_entry(transfer='three')
-    
-    def test_complete_transfer_ignore_selected(self):
-        # Ignore selected account in completion in cases where non-asset accounts are selected as
-        # well.
-        assert self.etable.complete('th', 'transfer') is None
-    
+@with_app(app_three_empty_accounts)
+def test_complete_description(app):
+    # description completion does *not* look into accounts.
+    assert app.etable.complete('o', 'description') is None
 
-class EntryInEditionMode(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.etable.add()
-        row = self.etable.edited
-        row.date = '1/10/2007'
-        row.description = 'foobar'
-        row.increase = '42'
-    
-    def test_complete(self):
-        # Don't make completion match with the edited entry.
-        assert self.etable.complete('foo', 'description') is None
-    
+#--- Income account shown
+def app_income_account_shown():
+    app = TestApp()
+    app.add_account('foobar', account_type=AccountType.Income)
+    app.mw.show_account()
+    return app
 
-class OneEntryYearRange2007(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('Checking')
-        self.document.show_selected_account()
-        self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
-    
-    def test_amount_completion_uses_the_latest_entered(self):
-        # Even if the date is earlier, we use this newly added entry because it's the latest 
-        # modified.
-        self.add_entry('9/10/2007', 'Deposit', increase='12.34')
-        self.etable.add()
-        row = self.etable.edited
-        row.date = '11/10/2007'
-        row.description = 'Deposit'
-        eq_(self.etable[self.etable.selected_indexes[0]].increase, '12.34')
-    
-    def test_autofill_column_selection_for_description(self):
-        # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
-        self.etable.add()
-        self.etable.change_columns(['description', 'payee', 'amount'])
-        row = self.etable.selected_row
-        row.description = 'Deposit'
-        eq_(self.etable[1].transfer, '')
-    
-    def test_autofill_column_selection_for_transfer(self):
-        """It's possible to pass a list of columns to be autofilled (instead of autofilling all)"""
-        self.etable.change_columns(['transfer', 'payee', 'amount'])
-        self.etable.add()
-        row = self.etable.selected_row
-        row.transfer = 'Salary'
-        eq_(self.etable[1].description, '')
-    
-    def test_autofill_column_selection_for_payee(self):
-        # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
-        self.etable.change_columns(['payee', 'description', 'amount'])
-        self.etable.add()
-        row = self.etable.selected_row
-        row.payee = 'Payee'
-        eq_(self.etable[1].transfer, '')
-    
-    def test_autofill_convert_amount_field(self):
-        # autofill_columns can be given 'increase' and 'decrease'. It will all be converted into
-        # 'amount'.
-        self.etable.change_columns(['description', 'increase', 'decrease'])
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'Deposit'
-        eq_(self.etable[1].increase, '42.00')
-    
-    def test_autofill_garbage_columns(self):
-        # autofill ignores column that can be auto filled.
-        self.etable.change_columns(['description', 'payee', 'amount', 'foo', 'bar'])
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'Deposit' # no crash
-        eq_(self.etable[1].payee, 'Payee') # The rest of the columns were filled anyway
-        eq_(self.etable[1].transfer, '') #... and only the selected ones
-    
-    def test_complete_case_insensitive(self):
-        # The completion matching is case insensitive.
-        eq_(self.etable.complete('deposit', 'description'), 'Deposit')
-        eq_(self.etable.complete('dEposit', 'description'), 'Deposit')
-    
-    def test_complete_exact(self):
-        # Exact match returns the same value.
-        eq_(self.etable.complete('Deposit', 'description'), 'Deposit')
-    
-    def test_complete_goes_to_next(self):
-        # As soon as a completion gets longer than the matched entry, find another one.
-        self.add_entry('1/10/2007', description='Dep')
-        eq_(self.etable.complete('Dep', 'description'), 'Dep')
-        eq_(self.etable.complete('Depo', 'description'), 'Deposit')
-    
-    def test_complete_latest_modified(self):
-        # Always search the latest modified entries first for completion match.
-        self.add_entry('31/10/2007', 'DepositFoo')
-        eq_(self.etable.complete('Deposit', 'description'), 'DepositFoo')
-        self.etable.delete()
-        eq_(self.etable.complete('Deposit', 'description'), 'Deposit')
-    
-    def test_complete_partial(self):
-        # Partial match returns the attribute of the matched entry.
-        eq_(self.etable.complete('Dep', 'description'), 'Deposit')
-    
-    def test_complete_transfer(self):
-        # MoneyGuru.complete() can do completion on more than one attribute.
-        eq_(self.etable.complete('sal', 'transfer'), 'Salary')
-    
-    def test_field_completion_is_case_sensitive(self):
-        # When the case of a description/transfer value does not match an entry, completion do not
-        # occur.
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'deposit'
-        row.transfer = 'deposit'
-        eq_(self.etable[self.etable.selected_indexes[0]].increase, '')
-    
-    def test_field_completion_on_set_entry_transfer(self):
-        # Setting a transfer autocompletes the amount and the description.
-        self.etable.add()
-        row = self.etable.selected_row
-        row.transfer = 'Salary'
-        selected = self.etable.selected_indexes[0]
-        eq_(self.etable[selected].increase, '42.00')
-        eq_(self.etable[selected].description, 'Deposit')
-        eq_(self.etable[selected].payee, 'Payee')
-    
-    def test_field_completion_on_set_entry_description(self):
-        # Setting a description autocompletes the amount and the transfer.
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'Deposit'
-        selected = self.etable.selected_indexes[0]
-        eq_(self.etable[selected].increase, '42.00')
-        eq_(self.etable[selected].transfer, 'Salary')
-        eq_(self.etable[selected].payee, 'Payee')
-    
-    def test_field_completion_on_set_entry_payee(self):
-        # Setting a transfer autocompletes the amount and the description.
-        self.etable.add()
-        row = self.etable.selected_row
-        row.payee = 'Payee'
-        selected = self.etable.selected_indexes[0]
-        eq_(self.etable[selected].increase, '42.00')
-        eq_(self.etable[selected].description, 'Deposit')
-        eq_(self.etable[selected].transfer, 'Salary')
-    
+#--- Different account types
+def app_different_account_types():
+    app = TestApp()
+    app.add_account('income', account_type=AccountType.Income)
+    app.add_account('asset')
+    app.mw.show_account()
+    return app
 
-class EntryWithBlankDescription(TestCase, TestSaveLoadMixin):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
-    
-    def test_field_completion_on_description(self):
-        # Don't do a field completion on blank values.
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = ''
-        selected = self.etable.selected_indexes[0]
-        eq_(self.etable[selected].transfer, '')
-        eq_(self.etable[selected].increase, '')
-        eq_(self.etable[selected].decrease, '')
-    
-    def test_complete_empty_string(self):
-        # complete() always returns None on empty strings.
-        assert self.etable.complete('', 'description') is None
-    
+#--- Entry in editing mode
+def app_entry_in_editing_mode():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.etable.add()
+    row = app.etable.edited
+    row.date = '1/10/2007'
+    row.description = 'foobar'
+    row.increase = '42'
+    return app
 
-class EntryWithWhitespaceInDescription(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry('10/10/2007', description='  foobar  ', increase='1')
-    
-    def test_completion_ignore_whitespaces(self):
-        # Don't complete string based on whitespaces.
-        assert self.etable.complete(' ', 'description') is None
-    
-    def test_completion_strip_whitespace(self):
-        # Ignore whitespace when finding a completion match.
-        eq_(self.etable.complete('foo', 'description'), 'foobar')
-    
+@with_app(app_entry_in_editing_mode)
+def test_complete(app):
+    # Don't make completion match with the edited entry.
+    assert app.etable.complete('foo', 'description') is None    
 
-class DifferentAccountTypes(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('one')
-        self.add_account('two')
-        self.document.show_selected_account()
-        self.add_entry(transfer='three') # three is not an asset
-    
-    def test_complete_transfer(self):
-        # Complete transfer with non-asset categories as well.
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        eq_(self.etable.complete('th', 'transfer'), 'three')
-    
+#--- One entry
+def app_one_entry():
+    app = TestApp()
+    app.add_account('Checking')
+    app.mw.show_account()
+    app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
+    return app
 
-class TwoEntriesInRange(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.document.date_range = MonthRange(date(2007, 10, 1))
-        self.add_entry('2/10/2007', 'first', increase='102.00')
-        self.add_entry('4/10/2007', 'second', increase='42.00')
-        self.etable.select([0])
-    
-    def test_amount_completion(self):
-        # Upon setting description, set the amount to the amount of the first matching entry with
-        # the same description.
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'first'
-        eq_(self.etable[self.etable.selected_indexes[0]].increase, '102.00')
-    
-    def test_amount_completion_already_set(self):
-        # If the amount is already set, don't complete it.
-        row = self.etable.selected_row
-        row.description = 'second'
-        eq_(self.etable[self.etable.selected_indexes[0]].increase, '102.00')
-    
+@with_app(app_one_entry)
+def test_amount_completion_uses_the_latest_entered(app):
+    # Even if the date is earlier, we use this newly added entry because it's the latest modified.
+    app.add_entry('9/10/2007', 'Deposit', increase='12.34')
+    app.etable.add()
+    row = app.etable.edited
+    row.date = '11/10/2007'
+    row.description = 'Deposit'
+    eq_(app.etable[app.etable.selected_indexes[0]].increase, '12.34')
 
-class ThreeEntriesInTwoAccountTypes(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry(description='first')
-        self.add_entry(description='second')
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry(description='third') # selected
-    
-    def test_complete(self):
-        # Even in the entry table, completion from other accounts show up
-        eq_(self.etable.complete('f', 'description'), 'first')
-    
+@with_app(app_one_entry)
+def test_autofill_column_selection_for_description(app):
+    # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
+    app.etable.add()
+    app.etable.change_columns(['description', 'payee', 'amount'])
+    row = app.etable.selected_row
+    row.description = 'Deposit'
+    eq_(app.etable[1].transfer, '')
 
-class FourEntriesWithSomeDescriptionAndCategoryCollision(TestCase):
+@with_app(app_one_entry)
+def test_autofill_column_selection_for_transfer(app):
+    # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
+    app.etable.change_columns(['transfer', 'payee', 'amount'])
+    app.etable.add()
+    row = app.etable.selected_row
+    row.transfer = 'Salary'
+    eq_(app.etable[1].description, '')
+
+@with_app(app_one_entry)
+def test_autofill_column_selection_for_payee(app):
+    # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
+    app.etable.change_columns(['payee', 'description', 'amount'])
+    app.etable.add()
+    row = app.etable.selected_row
+    row.payee = 'Payee'
+    eq_(app.etable[1].transfer, '')
+
+@with_app(app_one_entry)
+def test_autofill_convert_amount_field(app):
+    # autofill_columns can be given 'increase' and 'decrease'. It will all be converted into
+    # 'amount'.
+    app.etable.change_columns(['description', 'increase', 'decrease'])
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = 'Deposit'
+    eq_(app.etable[1].increase, '42.00')
+
+@with_app(app_one_entry)
+def test_autofill_garbage_columns(app):
+    # autofill ignores column that can be auto filled.
+    app.etable.change_columns(['description', 'payee', 'amount', 'foo', 'bar'])
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = 'Deposit' # no crash
+    eq_(app.etable[1].payee, 'Payee') # The rest of the columns were filled anyway
+    eq_(app.etable[1].transfer, '') #... and only the selected ones
+
+@with_app(app_one_entry)
+def test_complete_case_insensitive(app):
+    # The completion matching is case insensitive.
+    eq_(app.etable.complete('deposit', 'description'), 'Deposit')
+    eq_(app.etable.complete('dEposit', 'description'), 'Deposit')
+
+@with_app(app_one_entry)
+def test_complete_exact(app):
+    # Exact match returns the same value.
+    eq_(app.etable.complete('Deposit', 'description'), 'Deposit')
+
+@with_app(app_one_entry)
+def test_complete_goes_to_next(app):
+    # As soon as a completion gets longer than the matched entry, find another one.
+    app.add_entry('1/10/2007', description='Dep')
+    eq_(app.etable.complete('Dep', 'description'), 'Dep')
+    eq_(app.etable.complete('Depo', 'description'), 'Deposit')
+
+@with_app(app_one_entry)
+def test_complete_latest_modified(app):
+    # Always search the latest modified entries first for completion match.
+    app.add_entry('31/10/2007', 'DepositFoo')
+    eq_(app.etable.complete('Deposit', 'description'), 'DepositFoo')
+    app.etable.delete()
+    eq_(app.etable.complete('Deposit', 'description'), 'Deposit')
+
+@with_app(app_one_entry)
+def test_complete_partial(app):
+    # Partial match returns the attribute of the matched entry.
+    eq_(app.etable.complete('Dep', 'description'), 'Deposit')
+
+@with_app(app_one_entry)
+def test_complete_other_attr_yields_different_result(app):
+    # complete() can do completion on more than one attribute.
+    eq_(app.etable.complete('sal', 'transfer'), 'Salary')
+
+@with_app(app_one_entry)
+def test_field_completion_is_case_sensitive(app):
+    # When the case of a description/transfer value does not match an entry, completion do not
+    # occur.
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = 'deposit'
+    row.transfer = 'deposit'
+    eq_(app.etable[app.etable.selected_indexes[0]].increase, '')
+
+@with_app(app_one_entry)
+def test_field_completion_on_set_entry_transfer(app):
+    # Setting a transfer autocompletes the amount and the description.
+    app.etable.add()
+    row = app.etable.selected_row
+    row.transfer = 'Salary'
+    selected = app.etable.selected_indexes[0]
+    eq_(app.etable[selected].increase, '42.00')
+    eq_(app.etable[selected].description, 'Deposit')
+    eq_(app.etable[selected].payee, 'Payee')
+
+@with_app(app_one_entry)
+def test_field_completion_on_set_entry_description(app):
+    # Setting a description autocompletes the amount and the transfer.
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = 'Deposit'
+    selected = app.etable.selected_indexes[0]
+    eq_(app.etable[selected].increase, '42.00')
+    eq_(app.etable[selected].transfer, 'Salary')
+    eq_(app.etable[selected].payee, 'Payee')
+
+@with_app(app_one_entry)
+def test_field_completion_on_set_entry_payee(app):
+    # Setting a transfer autocompletes the amount and the description.
+    app.etable.add()
+    row = app.etable.selected_row
+    row.payee = 'Payee'
+    selected = app.etable.selected_indexes[0]
+    eq_(app.etable[selected].increase, '42.00')
+    eq_(app.etable[selected].description, 'Deposit')
+    eq_(app.etable[selected].transfer, 'Salary')
+
+#--- Entry with blank description
+def app_entry_with_blank_description():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
+    return app
+
+@with_app(app_entry_with_blank_description)
+def test_field_completion_on_description(app):
+    # Don't do a field completion on blank values.
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = ''
+    selected = app.etable.selected_indexes[0]
+    eq_(app.etable[selected].transfer, '')
+    eq_(app.etable[selected].increase, '')
+    eq_(app.etable[selected].decrease, '')
+
+@with_app(app_entry_with_blank_description)
+def test_complete_empty_string(app):
+    # complete() always returns None on empty strings.
+    assert app.etable.complete('', 'description') is None
+
+#--- Entry with whitespace in description
+def app_entry_with_whitespace_in_description():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('10/10/2007', description='  foobar  ', increase='1')
+    return app
+
+@with_app(app_entry_with_whitespace_in_description)
+def test_completion_ignore_whitespaces(app):
+    # Don't complete string based on whitespaces.
+    assert app.etable.complete(' ', 'description') is None
+
+@with_app(app_entry_with_whitespace_in_description)
+def test_completion_strip_whitespace(app):
+    # Ignore whitespace when finding a completion match.
+    eq_(app.etable.complete('foo', 'description'), 'foobar')
+
+#--- Two entries
+def app_two_entries():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('2/10/2007', 'first', increase='102.00')
+    app.add_entry('4/10/2007', 'second', increase='42.00')
+    app.etable.select([0])
+    return app
+
+@with_app(app_two_entries)
+def test_amount_completion(app):
+    # Upon setting description, set the amount to the amount of the first matching entry with
+    # the same description.
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = 'first'
+    eq_(app.etable[app.etable.selected_indexes[0]].increase, '102.00')
+
+@with_app(app_two_entries)
+def test_amount_completion_already_set(app):
+    # If the amount is already set, don't complete it.
+    row = app.etable.selected_row
+    row.description = 'second'
+    eq_(app.etable[app.etable.selected_indexes[0]].increase, '102.00')
+
+#--- Three entries in two account types
+def app_three_entries_in_two_account_types():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry(description='first')
+    app.add_entry(description='second')
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry(description='third') # selected
+    return app
+
+@with_app(app_three_entries_in_two_account_types)
+def test_completion_from_other_accounts_show_up(app):
+    # Even in the entry table, completion from other accounts show up
+    eq_(app.etable.complete('f', 'description'), 'first')
+
+#--- Four entries with description and category collision
+def app_four_entries_with_description_and_category_collision():
     # Four entries. Mostly for completion, I can't see any other use. The first is a 'booby trap'.
     # (simply having the completion iterate the list made all tests pass). The second is the base
     # entry. The third has the same description but a different transfer. The fourth has a different 
     # transfer but the same description. All have different amounts and dates. Second entry is 
     # selected. Also, time.time() is mocked so that the time of the setUp is earlier than the time
     # of the tests.
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.mock(time, 'time', lambda: 42)
-        self.add_entry('2/10/2007', description='description', payee='payee', transfer='category', increase='42')
-        self.mock(time, 'time', lambda: 43)
-        self.add_entry('3/10/2007', description='desc1', payee='pay1', transfer='cat1', increase='1')
-        self.mock(time, 'time', lambda: 44)
-        self.add_entry('4/10/2007', description='desc1', payee='pay1', transfer='cat2', increase='2')
-        self.mock(time, 'time', lambda: 45)
-        self.add_entry('5/10/2007', description='desc2', payee='pay1', transfer='cat1', increase='3')
-        self.etable.select([1])
-        self.mock(time, 'time', lambda: 46)
-    
-    def assert_completion_order_changed(self):
-        # complete() returns descriptions for the second entry, and field completion also is based
-        # on the second entry.
-        eq_(self.etable.complete('d', 'description'), 'desc1')
-        eq_(self.etable.complete('c', 'transfer'), 'cat1')
-        eq_(self.etable.complete('p', 'payee'), 'pay1')
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'desc1'
-        eq_(self.etable[self.etable.selected_indexes[0]].payee, 'pay1')
-        eq_(self.etable[self.etable.selected_indexes[0]].transfer, 'cat1')
-        self.etable.add()
-        row = self.etable.selected_row
-        row.transfer = 'cat1'
-        eq_(self.etable[self.etable.selected_indexes[0]].description, 'desc1')
-        eq_(self.etable[self.etable.selected_indexes[0]].payee, 'pay1')
-        self.etable.add()
-        row = self.etable.selected_row
-        row.payee = 'pay1'
-        eq_(self.etable[self.etable.selected_indexes[0]].description, 'desc1')
-        eq_(self.etable[self.etable.selected_indexes[0]].transfer, 'cat1')
-    
-    def test_edit_transfer_changes_completion_list_order(self):
-        # A transfer edit on the second entry makes it the first candidate for completion.
-        row = self.etable.selected_row
-        row.transfer = 'cat12'
-        self.etable.save_edits()
-        row = self.etable.selected_row
-        row.transfer = 'cat1'
-        self.etable.save_edits()
-        self.assert_completion_order_changed()
-    
-    def test_edit_credit_changes_completion_list_order(self):
-        # A credit edit on the second entry makes it the first candidate for completion.
-        row = self.etable.selected_row
-        row.decrease = '1'
-        self.etable.save_edits()
-        self.assert_completion_order_changed()
-    
-    def test_edit_date_changes_completion_list_order(self):
-        # A date edit on the second entry makes it the first candidate for completion.
-        row = self.etable.selected_row
-        row.date = '2/10/2007'
-        self.etable.save_edits()
-        self.assert_completion_order_changed()
-    
-    def test_edit_debit_changes_completion_list_order(self):
-        # A debit edit on the second entry makes it the first candidate for completion.
-        row = self.etable.selected_row
-        row.increase = '8'
-        self.etable.save_edits()
-        self.assert_completion_order_changed()
-    
-    def test_edit_description_changes_completion_list_order(self):
-        # A description edit on the second entry makes it the first candidate for completion.
-        row = self.etable.selected_row
-        row.description = 'other desc' # Make sure that edition takes place
-        row.description = 'desc1'
-        self.etable.save_edits()
-        self.assert_completion_order_changed()
-    
-    def test_edit_ttable_changes_completion_list_order(self):
-        # Changing a txn in the ttable updates the mtime
-        self.mainwindow.select_transaction_table()
-        self.ttable.selected_row.amount = '1'
-        self.ttable.save_edits()
-        self.mainwindow.select_entry_table()
-        self.assert_completion_order_changed()
-    
-    def test_next_completion_after_description(self):
-        # next_completion() after a complete_description() returns the next matching description.
-        self.etable.complete('d', 'description') # desc 2
-        eq_(self.etable.next_completion(), 'description')
-    
-    def test_next_completion_after_null_completion(self):
-        # After a completion that returns nothing, next_completion() just returns None.
-        self.etable.complete('nothing', 'description')
-        assert self.etable.next_completion() is None
-    
-    def test_next_completion_after_transfer(self):
-        # next_completion() after a complete_transfer() returns the next matching transfer.
-        self.etable.complete('c', 'transfer') # cat1
-        eq_(self.etable.next_completion(), 'category')
-    
-    def test_next_completion_rollover(self):
-        # next_completion() 3 times rolls over.
-        self.etable.complete('d', 'description')
-        self.etable.next_completion()
-        self.etable.next_completion()
-        eq_(self.etable.next_completion(), 'desc2')
-    
-    def test_next_completion_rollover_plus_one(self):
-        # An easy way out for all the other tests was to use negative indexing. But it stops 
-        # working here.
-        self.etable.complete('d', 'description')
-        self.etable.next_completion()
-        self.etable.next_completion()
-        self.etable.next_completion()
-        eq_(self.etable.next_completion(), 'description')
-    
-    def test_next_completion_twice(self):
-        # next_completion() twice returns the second next completion, skipping duplicates.
-        self.etable.complete('d', 'description')
-        self.etable.next_completion()
-        eq_(self.etable.next_completion(), 'desc1')
-    
-    def test_previous_completion_after_description(self):
-        # previous_completion() after a complete_description() returns the previous matching
-        # description.
-        self.etable.complete('d', 'description') # desc 2
-        eq_(self.etable.prev_completion(), 'desc1')
-        eq_(self.etable.current_completion(), 'desc1')
-    
-    def test_previous_completion_after_null_completion(self):
-        # After a completion that returns nothing, previous_completion() just returns None.
-        self.etable.complete('nothing', 'description')
-        assert self.etable.prev_completion() is None
-    
-    def test_previous_completion_after_set_description(self):
-        # previous_completion() returns nothing after set_entry_description().
-        self.etable.complete('d', 'description')
-        row = self.etable.selected_row
-        row.description = 'dabble'
-        eq_(self.etable.prev_completion(), None)
-    
-    def test_previous_completion_after_set_payee(self):
-        # previous_completion() returns nothing after set_entry_payee().
-        self.etable.complete('p', 'payee')
-        row = self.etable.selected_row
-        row.payee = 'police'
-        eq_(self.etable.prev_completion(), None)
-    
-    def test_previous_completion_after_set_transfer(self):
-        # previous_complteion() returns nothing after set_entry_transfer().
-        self.etable.complete('c', 'transfer')
-        row = self.etable.selected_row
-        row.transfer = 'cow'
-        eq_(self.etable.prev_completion(), None)
-    
-    def test_previous_completion_after_transfer(self):
-        # previous_completion() after a complete_transfer() returns the previous matching transfer.
-        self.etable.complete('c', 'transfer') # cat1
-        eq_(self.etable.prev_completion(), 'cat2')
-    
-    def test_previous_completion_rollover(self):
-        # previous_completion() 3 times rolls over.
-        self.etable.complete('d', 'description')
-        self.etable.prev_completion()
-        self.etable.prev_completion()
-        eq_(self.etable.prev_completion(), 'desc2')
-    
-    def test_previous_completion_twice(self):
-        # previous_completion() twice returns the second previous completion, skipping duplicates.
-        self.etable.complete('d', 'description')
-        self.etable.prev_completion()
-        eq_(self.etable.prev_completion(), 'description')
-    
-    def test_persistence_of_completion(self):
-        # Completion (including its order) is persistent.
-        self.mock_today(2007, 10, 6) # the test fails otherwise
-        row = self.etable.selected_row
-        row.transfer = 'cat12'
-        self.etable.save_edits()
-        row = self.etable.selected_row
-        row.transfer = 'cat1'
-        self.etable.save_edits()
-        filepath = op.join(self.tmpdir(), 'foo.xml')
-        self.document.save_to_xml(filepath)
-        del self.document
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.etable.add()
-        row = self.etable.selected_row
-        row.description = 'Duh, that shouldn\'t be here!'
-        self.etable.save_edits()
-        self.document.load_from_xml(filepath)
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assert_completion_order_changed()
-    
+    app = TestApp()
+    p = Patcher()
+    app.add_account()
+    app.doc.show_selected_account()
+    p.patch(time, 'time', lambda: 42)
+    app.add_entry('2/10/2007', description='description', payee='payee', transfer='category', increase='42')
+    p.patch(time, 'time', lambda: 43)
+    app.add_entry('3/10/2007', description='desc1', payee='pay1', transfer='cat1', increase='1')
+    p.patch(time, 'time', lambda: 44)
+    app.add_entry('4/10/2007', description='desc1', payee='pay1', transfer='cat2', increase='2')
+    p.patch(time, 'time', lambda: 45)
+    app.add_entry('5/10/2007', description='desc2', payee='pay1', transfer='cat1', increase='3')
+    app.etable.select([1])
+    p.patch(time, 'time', lambda: 46)
+    return app, p
 
-class AccountCreatedThroughTransactionTable(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.show_transaction_table()
-        self.add_txn(from_='foo', to='bar', amount='42')
-        self.ttable.show_from_account()
+def assert_completion_order_changed(app):
+    # complete() returns descriptions for the second entry, and field completion also is based
+    # on the second entry.
+    eq_(app.etable.complete('d', 'description'), 'desc1')
+    eq_(app.etable.complete('c', 'transfer'), 'cat1')
+    eq_(app.etable.complete('p', 'payee'), 'pay1')
+    app.etable.add()
+    row = app.etable.selected_row
+    row.description = 'desc1'
+    eq_(app.etable[app.etable.selected_indexes[0]].payee, 'pay1')
+    eq_(app.etable[app.etable.selected_indexes[0]].transfer, 'cat1')
+    app.etable.add()
+    row = app.etable.selected_row
+    row.transfer = 'cat1'
+    eq_(app.etable[app.etable.selected_indexes[0]].description, 'desc1')
+    eq_(app.etable[app.etable.selected_indexes[0]].payee, 'pay1')
+    app.etable.add()
+    row = app.etable.selected_row
+    row.payee = 'pay1'
+    eq_(app.etable[app.etable.selected_indexes[0]].description, 'desc1')
+    eq_(app.etable[app.etable.selected_indexes[0]].transfer, 'cat1')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_edit_transfer_changes_completion_list_order(app):
+    # A transfer edit on the second entry makes it the first candidate for completion.
+    row = app.etable.selected_row
+    row.transfer = 'cat12'
+    app.etable.save_edits()
+    row = app.etable.selected_row
+    row.transfer = 'cat1'
+    app.etable.save_edits()
+    assert_completion_order_changed(app)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_edit_credit_changes_completion_list_order(app):
+    # A credit edit on the second entry makes it the first candidate for completion.
+    row = app.etable.selected_row
+    row.decrease = '1'
+    app.etable.save_edits()
+    assert_completion_order_changed(app)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_edit_date_changes_completion_list_order(app):
+    # A date edit on the second entry makes it the first candidate for completion.
+    row = app.etable.selected_row
+    row.date = '2/10/2007'
+    app.etable.save_edits()
+    assert_completion_order_changed(app)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_edit_debit_changes_completion_list_order(app):
+    # A debit edit on the second entry makes it the first candidate for completion.
+    row = app.etable.selected_row
+    row.increase = '8'
+    app.etable.save_edits()
+    assert_completion_order_changed(app)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_edit_description_changes_completion_list_order(app):
+    # A description edit on the second entry makes it the first candidate for completion.
+    row = app.etable.selected_row
+    row.description = 'other desc' # Make sure that edition takes place
+    row.description = 'desc1'
+    app.etable.save_edits()
+    assert_completion_order_changed(app)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_edit_ttable_changes_completion_list_order(app):
+    # Changing a txn in the ttable updates the mtime
+    app.mw.select_transaction_table()
+    app.ttable.selected_row.amount = '1'
+    app.ttable.save_edits()
+    app.mw.select_entry_table()
+    assert_completion_order_changed(app)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_next_completion_after_description(app):
+    # next_completion() after a complete_description() returns the next matching description.
+    app.etable.complete('d', 'description') # desc 2
+    eq_(app.etable.next_completion(), 'description')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_next_completion_after_null_completion(app):
+    # After a completion that returns nothing, next_completion() just returns None.
+    app.etable.complete('nothing', 'description')
+    assert app.etable.next_completion() is None
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_next_completion_after_transfer(app):
+    # next_completion() after a complete_transfer() returns the next matching transfer.
+    app.etable.complete('c', 'transfer') # cat1
+    eq_(app.etable.next_completion(), 'category')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_next_completion_rollover(app):
+    # next_completion() 3 times rolls over.
+    app.etable.complete('d', 'description')
+    app.etable.next_completion()
+    app.etable.next_completion()
+    eq_(app.etable.next_completion(), 'desc2')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_next_completion_rollover_plus_one(app):
+    # An easy way out for all the other tests was to use negative indexing. But it stops 
+    # working here.
+    app.etable.complete('d', 'description')
+    app.etable.next_completion()
+    app.etable.next_completion()
+    app.etable.next_completion()
+    eq_(app.etable.next_completion(), 'description')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_next_completion_twice(app):
+    # next_completion() twice returns the second next completion, skipping duplicates.
+    app.etable.complete('d', 'description')
+    app.etable.next_completion()
+    eq_(app.etable.next_completion(), 'desc1')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_after_description(app):
+    # previous_completion() after a complete_description() returns the previous matching
+    # description.
+    app.etable.complete('d', 'description') # desc 2
+    eq_(app.etable.prev_completion(), 'desc1')
+    eq_(app.etable.current_completion(), 'desc1')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_after_null_completion(app):
+    # After a completion that returns nothing, previous_completion() just returns None.
+    app.etable.complete('nothing', 'description')
+    assert app.etable.prev_completion() is None
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_after_set_description(app):
+    # previous_completion() returns nothing after set_entry_description().
+    app.etable.complete('d', 'description')
+    row = app.etable.selected_row
+    row.description = 'dabble'
+    eq_(app.etable.prev_completion(), None)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_after_set_payee(app):
+    # previous_completion() returns nothing after set_entry_payee().
+    app.etable.complete('p', 'payee')
+    row = app.etable.selected_row
+    row.payee = 'police'
+    eq_(app.etable.prev_completion(), None)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_after_set_transfer(app):
+    # previous_complteion() returns nothing after set_entry_transfer().
+    app.etable.complete('c', 'transfer')
+    row = app.etable.selected_row
+    row.transfer = 'cow'
+    eq_(app.etable.prev_completion(), None)
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_after_transfer(app):
+    # previous_completion() after a complete_transfer() returns the previous matching transfer.
+    app.etable.complete('c', 'transfer') # cat1
+    eq_(app.etable.prev_completion(), 'cat2')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_rollover(app):
+    # previous_completion() 3 times rolls over.
+    app.etable.complete('d', 'description')
+    app.etable.prev_completion()
+    app.etable.prev_completion()
+    eq_(app.etable.prev_completion(), 'desc2')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+def test_previous_completion_twice(app):
+    # previous_completion() twice returns the second previous completion, skipping duplicates.
+    app.etable.complete('d', 'description')
+    app.etable.prev_completion()
+    eq_(app.etable.prev_completion(), 'description')
+
+@with_app(app_four_entries_with_description_and_category_collision)
+@patch_today(2007, 10, 6) # the test fails otherwise
+@with_tmpdir
+def test_persistence_of_completion(app, tmppath):
+    # Completion (including its order) is persistent.
+    row = app.etable.selected_row
+    row.transfer = 'cat12'
+    app.etable.save_edits()
+    row = app.etable.selected_row
+    row.transfer = 'cat1'
+    app.etable.save_edits()
+    filepath = unicode(tmppath + 'foo.xml')
+    app.doc.save_to_xml(filepath)
+    app = TestApp()
+    app.add_txn(description='Duh, that shouldn\'t be here!')
+    app.doc.load_from_xml(filepath)
+    app.mw.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    assert_completion_order_changed(app)
+
+#--- Account created through transaction table
+def app_account_created_through_transaction_table():
+    app = TestApp()
+    app.mw.show_transaction_table()
+    app.add_txn(from_='foo', to='bar', amount='42')
+    app.ttable.show_from_account()
+    return app
+
+#--- Generators
+def test_complete_transfer():
+    def check(app, s, expected):
+        eq_(app.etable.complete(s, 'transfer'), expected)
     
-    def test_complete_transfer(self):
-        # Completion correctly excludes shown account on the transfer column. Previously, 
-        # selected_account was used instead of shown_account
-        assert self.etable.complete('f', 'transfer') is None
+    # Don't lookup the selected account for transfer completion.
+    app = app_one_empty_account()
+    yield check, app, 'c', None
     
+    # transfer completion looking up account names ignores whitespaces (and case).
+    app = app_empty_account_with_whitespace_in_name()
+    yield check, app, 'f', 'Foobar'
     
+    # When no entry match for transfer completion, lookup in accounts.
+    app = app_three_empty_accounts()
+    yield check, app, 'o', 'one'
+    
+    # Ignore selected account in completion in cases where non-asset accounts are shown as well.
+    app = app_income_account_shown()
+    yield check, app, 'f', None
+    
+    # Complete transfer with non-asset categories as well.
+    app = app_different_account_types()
+    yield check, app, 'in', 'income'
+    
+    # Completion correctly excludes shown account on the transfer column. Previously, 
+    # selected_account was used instead of shown_account.
+    app = app_account_created_through_transaction_table()
+    yield check, app, 'f', None
