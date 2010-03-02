@@ -8,14 +8,13 @@
 
 from ..model.amount import parse_amount
 from .base import TransactionPanelGUIObject
-from .complete import CompletionMixIn
 from .table import GUITable, RowWithDebitAndCredit
 
-class SplitTable(GUITable, TransactionPanelGUIObject, CompletionMixIn):
+class SplitTable(GUITable, TransactionPanelGUIObject):
     def __init__(self, view, transaction_panel):
         TransactionPanelGUIObject.__init__(self, view, transaction_panel)
         GUITable.__init__(self)
-        self.document = transaction_panel.document # CompletionMixIn requires a document member
+        self.document = transaction_panel.document # CompletableEdit requires a document member
     
     #--- Override
     def _do_add(self):

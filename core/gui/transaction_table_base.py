@@ -8,10 +8,9 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from .base import DocumentGUIObject
-from .complete import CompletionMixIn
 from .table import GUITable
 
-class TransactionTableBase(GUITable, DocumentGUIObject, CompletionMixIn):
+class TransactionTableBase(GUITable, DocumentGUIObject):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
     def __init__(self, view, document):

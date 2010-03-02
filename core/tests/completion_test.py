@@ -20,12 +20,6 @@ def complete_etable(app, value, attrname):
     ce.text = value
     return ce.completion
 
-#--- Pristine
-@with_app(TestApp)
-def test_initial_current_completion(app):
-    # The current completion is initially None
-    eq_(app.etable.current_completion(), None)
-
 #--- One empty account
 def app_one_empty_account():
     app = TestApp()

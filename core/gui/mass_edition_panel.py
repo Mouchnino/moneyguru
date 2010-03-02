@@ -13,9 +13,8 @@ from hsutil.misc import allsame, nonone, flatten
 
 from ..exception import OperationAborted
 from .base import GUIPanel
-from .complete import CompletionMixIn
 
-class MassEditionPanel(GUIPanel, CompletionMixIn):
+class MassEditionPanel(GUIPanel):
     def __init__(self, view, document):
         GUIPanel.__init__(self, view, document)
         self._init_fields()

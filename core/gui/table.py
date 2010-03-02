@@ -191,7 +191,6 @@ def rowattr(attrname, autofillname=None):
         setattr(self, attrname, value)
         if autofillname:
             self._autofill(value, autofillname)
-        self.table.stop_completion()
     
     return property(fget, fset)
     

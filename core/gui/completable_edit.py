@@ -9,16 +9,37 @@
 
 from hsutil.misc import nonone
 
+from ..model.completion import CompletionList
+
 class CompletableEdit(object):
     def __init__(self, source=None):
-        # `source` must be a CompletionMixIn subclass
+        # `source` must be have a 'document' attr
         self._source = source
         self._attrname = ''
+        self._candidates = None
+        self._completions = None
         self._complete_completion = ''
         self.completion = ''
         self._text = ''
     
     #--- Private
+    def _refresh_candidates(self):
+        if self.source is None or not self.attrname:
+            return
+        doc = self.source.document
+        attrname = self.attrname
+        if attrname == 'description':
+            self._candidates = doc.transactions.descriptions
+        elif attrname == 'payee':
+            self._candidates = doc.transactions.payees
+        elif attrname in ('from', 'to', 'account', 'transfer'):
+            result = doc.transactions.account_names
+            # `result` doesn't contain empty accounts' name, so we'll add them.
+            result += [a.name for a in doc.accounts]
+            if attrname == 'transfer' and doc.shown_account is not None:
+                result = [name for name in result if name != doc.shown_account.name]
+            self._candidates = result
+    
     def _set_completion(self, completion):
         completion = nonone(completion, '')
         self._complete_completion = completion
@@ -37,10 +58,12 @@ class CompletableEdit(object):
             self.completion = ''
     
     def down(self):
-        self._set_completion(self.source.prev_completion())
+        if self._completions:
+            self._set_completion(self._completions.prev())
     
     def up(self):
-        self._set_completion(self.source.next_completion())
+        if self._completions:
+            self._set_completion(self._completions.next())
     
     #--- Properties
     @property
@@ -50,6 +73,7 @@ class CompletableEdit(object):
     @attrname.setter
     def attrname(self, value):
         self._attrname = value
+        self._refresh_candidates()
         self._text = ''
         self._set_completion('')
     
@@ -60,6 +84,7 @@ class CompletableEdit(object):
     @source.setter
     def source(self, value):
         self._source = value
+        self._refresh_candidates()
         self._text = ''
         self._set_completion('')
     
@@ -70,5 +95,9 @@ class CompletableEdit(object):
     @text.setter
     def text(self, value):
         self._text = value
-        self._set_completion(self.source.complete(self._text, self.attrname))
+        if self._candidates:
+            self._completions = CompletionList(value, self._candidates)
+            self._set_completion(self._completions.current())
+        else:
+            self._completions = None
     
