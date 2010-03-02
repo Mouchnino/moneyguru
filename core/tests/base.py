@@ -784,10 +784,6 @@ class CommonSetup(object):
         self.scpanel.save()
         self.mainwindow.select_transaction_table()
     
-    def setup_three_accounts(self):
-        #Three accounts, empty
-        self.add_accounts('one', 'two', 'three') # three is the selected account (in second position)
-    
     def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_name=None):
         # 4 days left to the month, 100$ monthly budget
         self.mock_today(2008, 1, 27)

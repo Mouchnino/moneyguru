@@ -9,7 +9,7 @@
 
 from nose.tools import eq_
 
-from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, CommonSetup
+from ..base import TestCase, Document, DocumentGUI, ApplicationGUI
 from ...app import Application
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
 from ...loader.csv import CsvField
@@ -197,10 +197,10 @@ class LotsOfNoiseReadyToImport(TestCase):
         assert not self.csvopt.line_is_excluded(7)
     
 
-class FortisWithTwoLayouts(TestCase, CommonSetup):
+class FortisWithTwoLayouts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_three_accounts()
+        self.add_accounts('one', 'two', 'three')
         self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_column_field(0, CsvField.Reference)
@@ -263,7 +263,7 @@ class FortisWithTwoLayouts(TestCase, CommonSetup):
         self.check_gui_calls_partial(self.csvopt_gui, not_expected=['refresh_layout_menu'])
     
 
-class FortisWithLoadedLayouts(TestCase, CommonSetup):
+class FortisWithLoadedLayouts(TestCase):
     def setUp(self):
         self.app_gui = ApplicationGUI()
         self.app = Application(self.app_gui)
@@ -283,7 +283,7 @@ class FortisWithLoadedLayouts(TestCase, CommonSetup):
         }
         self.app_gui.set_default(LAYOUT_PREFERENCE_NAME, [default, foobar])
         self.create_instances()
-        self.setup_three_accounts()
+        self.add_accounts('one', 'two', 'three')
         self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
     
     def test_layouts(self):
@@ -314,10 +314,10 @@ class DateFieldWithGarbage(TestCase):
         eq_(self.itable[0].date_import, '14/01/2009')
     
 
-class FortisThreeEmptyAccounts(TestCase, CommonSetup):
+class FortisThreeEmptyAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_three_accounts()
+        self.add_accounts('one', 'two', 'three')
         self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
     
     def test_remember_selected_target_in_layout(self):
@@ -331,10 +331,10 @@ class FortisThreeEmptyAccounts(TestCase, CommonSetup):
         eq_(self.csvopt.target_account_names, ['< New Account >', 'one', 'three', 'two'])
     
 
-class FortisImportedThreeEmptyAccounts(TestCase, CommonSetup):
+class FortisImportedThreeEmptyAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_three_accounts()
+        self.add_accounts('one', 'two', 'three')
         self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_column_field(0, CsvField.Reference)
