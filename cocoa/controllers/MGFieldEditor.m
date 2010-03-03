@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
     Class pyClass = [Utils classNamed:@"PyCompletableEdit"];
-    py = [[pyClass alloc] init];
+    py = [[pyClass alloc] initWithCocoa:self];
     lastCompletion = nil;
     [self setEditable:YES];
     [self setFieldEditor:YES];

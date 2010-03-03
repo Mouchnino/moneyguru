@@ -407,7 +407,7 @@ class TestApp(object):
         return result
     
     def completable_edit(self, source, attrname):
-        ce = CompletableEdit(source=source)
+        ce = CompletableEdit(CallLogger(), source=source)
         ce.attrname = attrname
         return ce
     

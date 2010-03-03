@@ -19,16 +19,12 @@ from core.gui.completable_edit import CompletableEdit as CompletableEditModel
 # Moreover, QCompleter's behavior on up/down arrow is inadequate in InlineCompletion mode (doesn't
 # cycle through possible completions)
 
-# For a CompletableEdit to work, its model/attrname attributes *have* to be set. model has to be
-# something that has complete(value, attrname), current_completion(), next_completion() and 
-# prev_completion().
-
 class CompletableEdit(QLineEdit):
     ATTRNAME = '' # must be set
     
     def __init__(self, parent):
         QLineEdit.__init__(self, parent)
-        self.model = CompletableEditModel()
+        self.model = CompletableEditModel(view=self)
         self.model.attrname = self.ATTRNAME
     
     def _refresh(self):

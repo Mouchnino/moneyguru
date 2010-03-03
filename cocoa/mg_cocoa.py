@@ -1498,9 +1498,10 @@ class PyDateWidget(NSObject):
     
 
 class PyCompletableEdit(NSObject):
-    def init(self):
+    def initWithCocoa_(self, cocoa):
         super(PyCompletableEdit, self).init()
-        self.py = CompletableEdit()
+        self.py = CompletableEdit(view=self)
+        self.cocoa = cocoa
         return self
     
     def setSource_(self, source):

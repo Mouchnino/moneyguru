@@ -12,8 +12,9 @@ from hsutil.misc import nonone
 from ..model.completion import CompletionList
 
 class CompletableEdit(object):
-    def __init__(self, source=None):
+    def __init__(self, view, source=None):
         # `source` must be have a 'document' attr
+        self.view = view
         self._source = source
         self._attrname = ''
         self._candidates = None
