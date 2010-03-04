@@ -26,8 +26,7 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"description" toUserDefault:TransactionDescriptionColumnVisible];
     [columnsManager linkColumn:@"payee" toUserDefault:TransactionPayeeColumnVisible];
     [columnsManager linkColumn:@"checkno" toUserDefault:TransactionChecknoColumnVisible];
-    customFieldEditor = [[MGFieldEditor alloc] init];
-    [customFieldEditor setSource:py];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPyParent];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     [self changeColumns]; // initial set
     return self;

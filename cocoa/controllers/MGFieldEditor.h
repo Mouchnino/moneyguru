@@ -15,6 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
     PyCompletableEdit *py;
     NSString *lastCompletion;
 }
-- (void)setSource:(PyGUI *)source;
+- (id)initWithPyParent:(id)aParent;
 - (void)setAttrname:(NSString *)attrname;
 @end

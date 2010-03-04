@@ -10,9 +10,8 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyCompletableEdit : NSObject {}
-- (id)initWithCocoa:(id)cocoa;
+- (id)initWithCocoa:(id)cocoa pyParent:(id)pyParent;
 
-- (void)setSource:(PyGUI *)source;
 - (void)setAttrname:(NSString *)attrname;
 - (NSString *)text;
 - (void)setText:(NSString *)text;

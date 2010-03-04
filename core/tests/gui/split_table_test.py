@@ -53,7 +53,7 @@ def test_changes_split_buffer_only():
 def test_completion():
     # Just make sure it works. That is enough to know SplitTable is of the right subclass.
     app = app_one_entry()
-    ce = app.completable_edit(app.stable, 'account')
+    ce = app.completable_edit('account')
     ce.text = 's'
     eq_(ce.completion, 'econd')
 
@@ -63,7 +63,7 @@ def test_completion_new_txn():
     app.mainwindow.select_transaction_table()
     app.ttable.add()
     app.tpanel.load()
-    ce = app.completable_edit(app.stable, 'account')
+    ce = app.completable_edit('account')
     ce.text = 'f'
     eq_(ce.completion, 'irst')
 

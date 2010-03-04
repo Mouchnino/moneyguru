@@ -29,6 +29,7 @@ class SchedulePanel(Panel, Ui_SchedulePanel):
     
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
+        self.mainwindow = mainwindow
         self._setupUi()
         self.model = SchedulePanelModel(view=self, mainwindow=mainwindow.model)
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)

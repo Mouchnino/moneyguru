@@ -188,16 +188,6 @@ def test_change_description_only():
     eq_(row.date, '06/07/2008')
     eq_(row.description, 'description3')
 
-def test_completion():
-    # Here, we just want to make sure that complete() responds. We don't want to re-test 
-    # completion, we just want to make sure that the panel is of the right subclass.
-    app = app_two_transactions_different_value()
-    app.add_account() # the tpanel's completion must not be dependant on the selected account (like entries)
-    app.mainwindow.show_account()
-    ce = app.completable_edit(app.mepanel, 'description')
-    ce.text = 'd'
-    eq_(ce.completion, 'escription2')
-
 class TwoTransactionsSameValues(TestCase):
     def setUp(self):
         self.create_instances()

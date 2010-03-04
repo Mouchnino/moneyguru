@@ -13,8 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aParent py]];
     parentWindow = [aParent window];
-    customFieldEditor = [[MGFieldEditor alloc] init];
-    [customFieldEditor setSource:py];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:[aParent py]];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }

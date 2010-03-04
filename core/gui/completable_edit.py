@@ -12,10 +12,10 @@ from hsutil.misc import nonone
 from ..model.completion import CompletionList
 
 class CompletableEdit(object):
-    def __init__(self, view, source=None):
+    def __init__(self, view, mainwindow):
         # `source` must be have a 'document' attr
         self.view = view
-        self._source = source
+        self._mainwindow = mainwindow
         self._attrname = ''
         self._candidates = None
         self._completions = None
@@ -25,9 +25,9 @@ class CompletableEdit(object):
     
     #--- Private
     def _refresh_candidates(self):
-        if self.source is None or not self.attrname:
+        if self.mainwindow is None or not self.attrname:
             return
-        doc = self.source.document
+        doc = self.mainwindow.document
         attrname = self.attrname
         if attrname == 'description':
             self._candidates = doc.transactions.descriptions
@@ -83,12 +83,12 @@ class CompletableEdit(object):
         self._completions = None
     
     @property
-    def source(self):
-        return self._source
+    def mainwindow(self):
+        return self._mainwindow
     
-    @source.setter
-    def source(self, value):
-        self._source = value
+    @mainwindow.setter
+    def mainwindow(self, value):
+        self._mainwindow = value
         self._refresh_candidates()
         self._text = ''
         self._set_completion('')

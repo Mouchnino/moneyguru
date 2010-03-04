@@ -10,11 +10,11 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGFieldEditor
-- (id)init
+- (id)initWithPyParent:(id)aParent
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
     Class pyClass = [Utils classNamed:@"PyCompletableEdit"];
-    py = [[pyClass alloc] initWithCocoa:self];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aParent];
     lastCompletion = nil;
     [self setEditable:YES];
     [self setFieldEditor:YES];
@@ -37,13 +37,6 @@ http://www.hardcoded.net/licenses/hs_license
     } 
     NSString *text = [self string];
     return [text substringWithRange:sel];
-}
-
-- (void)setSource:(PyGUI *)source
-{
-    [py setSource:source];
-    [lastCompletion release];
-    lastCompletion = nil;
 }
 
 - (void)setAttrname:(NSString *)attrname

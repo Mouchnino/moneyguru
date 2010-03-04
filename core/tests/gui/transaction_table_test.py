@@ -767,7 +767,7 @@ def test_completion(app):
     # Here, we want to make sure that complete() works, but we also want to make sure it is 
     # unaffected by entries (which means selected account and stuff).
     # There is *no* selected account
-    ce = app.completable_edit(app.ttable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'f'
     eq_(ce.completion, 'oo')
     ce.attrname = 'payee'

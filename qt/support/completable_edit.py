@@ -24,7 +24,7 @@ class CompletableEdit(QLineEdit):
     
     def __init__(self, parent):
         QLineEdit.__init__(self, parent)
-        self.model = CompletableEditModel(view=self)
+        self.model = CompletableEditModel(view=self, mainwindow=None) # has to be set right after creation
         self.model.attrname = self.ATTRNAME
     
     def _prefix(self):

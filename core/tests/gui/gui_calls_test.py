@@ -283,7 +283,7 @@ def app_completable_edit():
     app.add_txn(description='buz')
     app.add_txn(description='bar')
     app.add_txn(description='foo')
-    app.ce = app.completable_edit(app.ttable, 'description')
+    app.ce = app.completable_edit('description')
     app.ce_gui = app.ce.view
     app.clear_gui_calls()
     return app

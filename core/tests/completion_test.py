@@ -16,7 +16,7 @@ from ..model.account import AccountType
 
 # a little helper that creates a completable edit, sets the text and returns the completion
 def complete_etable(app, value, attrname):
-    ce = app.completable_edit(app.etable, attrname)
+    ce = app.completable_edit(attrname)
     ce.text = value
     return ce.completion
 
@@ -417,7 +417,7 @@ def test_edit_ttable_changes_completion_list_order(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_next_completion_after_description(app):
     # next_completion() after a complete_description() returns the next matching description.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd' # completion: esc2
     ce.up()
     eq_(ce.completion, 'escription')
@@ -425,7 +425,7 @@ def test_next_completion_after_description(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_next_completion_after_null_completion(app):
     # After a completion that returns nothing, next_completion() just returns None.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'nothing' # completion: none
     ce.up()
     eq_(ce.completion, '')
@@ -433,7 +433,7 @@ def test_next_completion_after_null_completion(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_next_completion_after_transfer(app):
     # next_completion() after a complete_transfer() returns the next matching transfer.
-    ce = app.completable_edit(app.etable, 'transfer')
+    ce = app.completable_edit('transfer')
     ce.text = 'c' # completion: at1
     ce.up()
     eq_(ce.completion, 'ategory')
@@ -441,7 +441,7 @@ def test_next_completion_after_transfer(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_next_completion_rollover(app):
     # next_completion() 3 times rolls over.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd'
     ce.up()
     ce.up()
@@ -452,7 +452,7 @@ def test_next_completion_rollover(app):
 def test_next_completion_rollover_plus_one(app):
     # An easy way out for all the other tests was to use negative indexing. But it stops 
     # working here.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd'
     ce.up()
     ce.up()
@@ -463,7 +463,7 @@ def test_next_completion_rollover_plus_one(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_next_completion_twice(app):
     # next_completion() twice returns the second next completion, skipping duplicates.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd'
     ce.up()
     ce.up()
@@ -473,7 +473,7 @@ def test_next_completion_twice(app):
 def test_previous_completion_after_description(app):
     # previous_completion() after a complete_description() returns the previous matching
     # description.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd'
     ce.down()
     eq_(ce.completion, 'esc1')
@@ -481,7 +481,7 @@ def test_previous_completion_after_description(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_previous_completion_after_null_completion(app):
     # After a completion that returns nothing, previous_completion() just returns None.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'nothing'
     ce.down()
     eq_(ce.completion, '')
@@ -489,7 +489,7 @@ def test_previous_completion_after_null_completion(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_previous_completion_after_transfer(app):
     # previous_completion() after a complete_transfer() returns the previous matching transfer.
-    ce = app.completable_edit(app.etable, 'transfer')
+    ce = app.completable_edit('transfer')
     ce.text = 'c' # caompletion: at1
     ce.down()
     eq_(ce.completion, 'at2')
@@ -497,7 +497,7 @@ def test_previous_completion_after_transfer(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_previous_completion_rollover(app):
     # previous_completion() 3 times rolls over.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd'
     ce.down()
     ce.down()
@@ -507,7 +507,7 @@ def test_previous_completion_rollover(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_previous_completion_twice(app):
     # previous_completion() twice returns the second previous completion, skipping duplicates.
-    ce = app.completable_edit(app.etable, 'description')
+    ce = app.completable_edit('description')
     ce.text = 'd'
     ce.down()
     ce.down()

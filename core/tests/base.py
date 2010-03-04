@@ -406,8 +406,8 @@ class TestApp(object):
             result.append((convert(x1), convert(x2), '%2.2f' % y1, '%2.2f' % y2))
         return result
     
-    def completable_edit(self, source, attrname):
-        ce = CompletableEdit(CallLogger(), source=source)
+    def completable_edit(self, attrname):
+        ce = CompletableEdit(CallLogger(), self.mw)
         ce.attrname = attrname
         return ce
     

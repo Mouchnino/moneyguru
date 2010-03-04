@@ -36,6 +36,7 @@ class MassEditionPanel(Panel, Ui_MassEditionPanel):
     
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
+        self.mainwindow = mainwindow
         self._setupUi()
         self.model = MassEditionPanelModel(view=self, mainwindow=mainwindow.model)
     

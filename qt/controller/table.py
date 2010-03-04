@@ -36,7 +36,7 @@ class TableDelegate(ItemDelegate):
                 ACCOUNT_EDIT: AccountEdit
             }[editType]
             result = editClass(parent)
-            result.model.source = self._model
+            result.model.mainwindow = self._model.mainwindow
             return result
     
 

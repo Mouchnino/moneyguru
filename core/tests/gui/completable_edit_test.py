@@ -18,7 +18,7 @@ def app_default():
     app.add_txn(description='buz')
     app.add_txn(description='bar')
     app.add_txn(description='foo')
-    app.ce = app.completable_edit(app.ttable, 'description')
+    app.ce = app.completable_edit('description')
     return app
 
 @with_app(app_default)
@@ -57,7 +57,7 @@ def app_with_match():
     app.add_txn(description='buz')
     app.add_txn(description='bar')
     app.add_txn(description='foo')
-    app.ce = app.completable_edit(app.ttable, 'description')
+    app.ce = app.completable_edit('description')
     app.ce.text = 'b'
     return app
 
@@ -80,9 +80,9 @@ def test_down(app):
     eq_(app.ce.completion, 'uz')
 
 @with_app(app_with_match)
-def test_set_source(app):
-    # Setting the source resets text and completion
-    app.ce.source = app.ce.source
+def test_set_mainwindow(app):
+    # Setting the mainwindow resets text and completion
+    app.ce.mainwindow = app.ce.mainwindow
     app.ce.commit()
     eq_(app.ce.text, '')
     eq_(app.ce.completion, '')
@@ -105,9 +105,9 @@ def test_set_attrname_then_up(app):
     eq_(app.ce.completion, '')
 
 @with_app(app_with_match)
-def test_set_source_then_up(app):
-    # Same as test_set_attrname_then_up, but with source
-    app.ce.source = app.ce.source
+def test_set_mainwindow_then_up(app):
+    # Same as test_set_attrname_then_up, but with mainwindow
+    app.ce.mainwindow = app.ce.mainwindow
     app.ce.up()
     eq_(app.ce.text, '')
     eq_(app.ce.completion, '')

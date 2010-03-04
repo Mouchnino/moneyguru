@@ -28,6 +28,7 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
     
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
+        self.mainwindow = mainwindow
         self._setupUi()
         self.model = TransactionPanelModel(view=self, mainwindow=mainwindow.model)
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
