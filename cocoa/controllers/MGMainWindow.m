@@ -22,20 +22,20 @@ http://www.hardcoded.net/licenses/hs_license
     massEditionPanel = [[MGMassEditionPanel alloc] initWithParent:self];
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
-    netWorthView = [[MGNetWorthView alloc] initWithDocument:document];
-    profitView = [[MGProfitView alloc] initWithDocument:document];
-    transactionView = [[MGTransactionView alloc] initWithDocument:document];
-    accountView = [[MGAccountView alloc] initWithDocument:document];
+    netWorthView = [[MGNetWorthView alloc] initWithPyParent:py];
+    profitView = [[MGProfitView alloc] initWithPyParent:py];
+    transactionView = [[MGTransactionView alloc] initWithPyParent:py];
+    accountView = [[MGAccountView alloc] initWithPyParent:py];
     scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
     budgetView = [[MGBudgetView alloc] initWithPyParent:py];
-    searchField = [[MGSearchField alloc] initWithDocument:document];
+    searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
     [csvOptionsWindow connect];
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithDocument:document];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
-    accountLookup = [[MGAccountLookup alloc] initWithDocument:document];
+    accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];

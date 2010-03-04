@@ -19,16 +19,16 @@ from ui.entry_view_ui import Ui_EntryView
 class EntryView(BaseView, Ui_EntryView):
     PRINT_TITLE_FORMAT = "Entries from {startDate} to {endDate}"
     
-    def __init__(self, doc):
+    def __init__(self, mainwindow):
         BaseView.__init__(self)
-        self.doc = doc
+        self.doc = mainwindow.doc
         self._setupUi()
-        self.etable = EntryTable(doc=doc, view=self.tableView)
-        self.efbar = EntryFilterBar(doc=doc, view=self.filterBar)
-        self.bgraph = AccountBarGraph(doc=doc, view=self.barGraphView)
-        self.lgraph = AccountLineGraph(doc=doc, view=self.lineGraphView)
+        self.etable = EntryTable(mainwindow=mainwindow, view=self.tableView)
+        self.efbar = EntryFilterBar(mainwindow=mainwindow, view=self.filterBar)
+        self.bgraph = AccountBarGraph(mainwindow=mainwindow, view=self.barGraphView)
+        self.lgraph = AccountLineGraph(mainwindow=mainwindow, view=self.lineGraphView)
         children = [self.etable.model, self.lgraph.model, self.bgraph.model, self.efbar.model]
-        self.model = AccountViewModel(view=self, document=doc.model, children=children)
+        self.model = AccountViewModel(view=self, mainwindow=mainwindow.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

@@ -46,8 +46,8 @@ class EntryTable(TableWithTransactions):
         Column('balance', 'Balance', 110, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, doc, view):
-        model = EntryTableModel(view=self, document=doc.model)
+    def __init__(self, mainwindow, view):
+        model = EntryTableModel(view=self, mainwindow=mainwindow.model)
         TableWithTransactions.__init__(self, model, view)
         self.tableDelegate = EntryTableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)

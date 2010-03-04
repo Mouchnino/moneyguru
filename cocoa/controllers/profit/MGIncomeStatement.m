@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGIncomeStatement
 
-- (id)initWithDocument:(MGDocument *)aDocument view:(HSOutlineView *)aOutlineView
+- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithDocument:aDocument pyClassName:@"PyIncomeStatement" view:aOutlineView];
+    self = [super initWithPyParent:aPyParent pyClassName:@"PyIncomeStatement" view:aOutlineView];
     [self setAutosaveName:@"IncomeStatement"];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:aOutlineView];
     [columnsManager linkColumn:@"delta" toUserDefault:IncomeStatementDeltaColumnVisible];

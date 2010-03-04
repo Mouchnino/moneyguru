@@ -7,11 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
 #import "MGChart.h"
 #import "PyChart.h"
 
 @interface MGPieChart : MGChart {}
-- (id)initWithDocument:(MGDocument *)aDocument pieChartClassName:(NSString *)className;
+- (id)initWithPyParent:(id)aPyParent pieChartClassName:(NSString *)className;
 - (PyChart *)py;
 @end

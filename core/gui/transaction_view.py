@@ -12,8 +12,8 @@ from __future__ import unicode_literals
 from .base import BaseView
 
 class TransactionView(BaseView):
-    def __init__(self, view, document, children):
-        BaseView.__init__(self, view, document, children)
+    def __init__(self, view, mainwindow, children):
+        BaseView.__init__(self, view, mainwindow.document, children)
         self.ttable, self.tfbar = children
     
     def connect(self):

@@ -13,7 +13,7 @@ from nose.tools import eq_
 
 from hsutil.currency import Currency, USD, CAD
 
-from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, ApplicationGUI, CommonSetup
+from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, ApplicationGUI, CommonSetup, TestApp
 from ...app import Application
 from ...document import Document
 from ...gui.balance_sheet import BalanceSheet
@@ -601,9 +601,8 @@ class OneExcludedAccount(_AccountsAndEntries):
     def test_save_and_load(self):
         # account exclusion is persistent
         newdoc = self.save_and_load(newapp=False)
-        bsheet = BalanceSheet(CallLogger(), newdoc)
-        bsheet.connect()
-        assert bsheet.assets[1].is_excluded
+        app = TestApp(app=self.app, doc=newdoc)
+        assert app.bsheet.assets[1].is_excluded
     
     def test_values(self):
         # Excluding an account removes its amount from the totals and blanks its own amounts

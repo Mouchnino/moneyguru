@@ -329,7 +329,7 @@ class OneTransaction(TestCase):
         eq_(row.to, 'newto')
         eq_(row.amount, '0.42')
         # the changes didn't go down to Transaction
-        table = TransactionTable(self.ttable_gui, self.document)
+        table = TransactionTable(self.ttable_gui, self.mainwindow)
         table.connect()
         self.assert_row_has_original_attrs(table[0])
     

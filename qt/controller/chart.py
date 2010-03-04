@@ -10,10 +10,10 @@
 class Chart(object):
     CHART_MODEL_CLASS = None
     
-    def __init__(self, doc, view):
-        self.doc = doc
+    def __init__(self, mainwindow, view):
+        self.doc = mainwindow.doc
         self.view = view
-        self.model = self.CHART_MODEL_CLASS(document=doc.model, view=self)
+        self.model = self.CHART_MODEL_CLASS(mainwindow=mainwindow.model, view=self)
         self.view.dataSource = self.model
     
     #--- model --> view

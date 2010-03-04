@@ -20,8 +20,8 @@ def get_delta_perc(delta_amount, start_amount):
         return '---'
 
 class Report(DocumentGUIObject, tree.Tree):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
         tree.Tree.__init__(self)
         self.edited = None
     

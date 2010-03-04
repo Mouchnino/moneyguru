@@ -9,6 +9,9 @@
 from .base import DocumentGUIObject
 
 class SearchField(DocumentGUIObject):
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
+    
     @property
     def query(self):
         return self.document.filter_string

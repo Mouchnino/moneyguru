@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyProfitView.h"
 #import "MGBaseView.h"
-#import "MGDocument.h"
 #import "HSOutlineView.h"
 #import "MGIncomeStatement.h"
 #import "MGPieChart.h"
@@ -29,7 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGPieChart *expensesPieChart;
     MGBarGraph *profitGraph;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 - (PyProfitView *)py;
 
 /* Private */

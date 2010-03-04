@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSTableColumnManager.h"
-#import "MGDocument.h"
 #import "MGReport.h"
 #import "PyBalanceSheet.h"
 
@@ -16,6 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     HSTableColumnManager *columnsManager;
 }
-- (id)initWithDocument:(MGDocument *)document view:(HSOutlineView *)aOutlineView;
+- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView;
 - (PyBalanceSheet *)py;
 @end

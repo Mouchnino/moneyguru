@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 
 @implementation MGBalanceSheet
-- (id)initWithDocument:(MGDocument *)aDocument view:(HSOutlineView *)aOutlineView
+- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithDocument:aDocument pyClassName:@"PyBalanceSheet" view:aOutlineView];
+    self = [super initWithPyParent:aPyParent pyClassName:@"PyBalanceSheet" view:aOutlineView];
     [self setAutosaveName:@"BalanceSheet"];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:aOutlineView];
     [columnsManager linkColumn:@"delta" toUserDefault:BalanceSheetDeltaColumnVisible];

@@ -45,10 +45,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.doc = doc
         self.app = doc.app
         self.model = MainWindowModel(view=self, document=doc.model)
-        self.nwview = NetWorthView(doc=doc)
-        self.pview = ProfitView(doc=doc)
-        self.tview = TransactionView(doc=doc)
-        self.eview = EntryView(doc=doc)
+        self.nwview = NetWorthView(mainwindow=self)
+        self.pview = ProfitView(mainwindow=self)
+        self.tview = TransactionView(mainwindow=self)
+        self.eview = EntryView(mainwindow=self)
         self.scview = ScheduleView(mainwindow=self)
         self.bview = BudgetView(mainwindow=self)
         self.apanel = AccountPanel(mainwindow=self)
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bpanel = BudgetPanel(mainwindow=self)
         self.cdrpanel = CustomDateRangePanel(self, doc=doc)
         self.arpanel = AccountReassignPanel(self, doc=doc)
-        self.alookup = AccountLookup(self, doc=doc)
+        self.alookup = AccountLookup(self, mainwindow=self)
         self._setupUi()
         # We don't set geometry if the window was maximized so that if the user de-maximize the
         # window, it actually shrinks.
@@ -69,7 +69,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model]
         self.model.set_children(children)
         self.model.connect()
-        self.sfield = SearchField(doc=doc, view=self.searchLineEdit)
+        self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
         self.sfield.model.connect()
         self._updateUndoActions()
         

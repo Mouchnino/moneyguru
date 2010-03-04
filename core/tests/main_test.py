@@ -333,7 +333,7 @@ class OneEntryYearRange2007(TestCase):
         setattr(row, column, value) # Sets the flag
         self.etable.save_edits()
         # Make sure that the values really made it down in the model by using a spanking new gui
-        etable = EntryTable(self.etable_gui, self.document)
+        etable = EntryTable(self.etable_gui, self.mainwindow)
         etable.connect()
         eq_(getattr(etable[0], column), value)
         self.save_file()

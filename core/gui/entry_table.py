@@ -15,8 +15,8 @@ from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
-    def __init__(self, view, document):
-        TransactionTableBase.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        TransactionTableBase.__init__(self, view, mainwindow)
         self.account = None
         self._total_increase = 0
         self._total_decrease = 0

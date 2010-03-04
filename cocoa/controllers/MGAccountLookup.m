@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "NSEventAdditions.h"
 
 @implementation MGAccountLookup
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
-    self = [super initWithNibName:@"AccountLookup" pyClassName:@"PyAccountLookup" pyParent:[aDocument py]];
+    self = [super initWithNibName:@"AccountLookup" pyClassName:@"PyAccountLookup" pyParent:aPyParent];
     currentNames = [[NSArray array] retain];
     [self window]; // Initialize the window
     [namesTable setTarget:self];

@@ -12,11 +12,10 @@ from PyQt4.QtCore import QObject
 from core.gui.search_field import SearchField as SearchFieldModel
 
 class SearchField(QObject):
-    def __init__(self, doc, view):
+    def __init__(self, mainwindow, view):
         QObject.__init__(self)
-        self.doc = doc
         self.view = view
-        self.model = SearchFieldModel(document=doc.model, view=self)
+        self.model = SearchFieldModel(mainwindow=mainwindow.model, view=self)
         
         self.view.searchChanged.connect(self.searchChanged)
     

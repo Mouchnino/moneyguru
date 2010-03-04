@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
 #import "HSWindowController.h"
 #import "MGDateFieldEditor.h"
 #import "MGFieldEditor.h"

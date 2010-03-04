@@ -36,8 +36,8 @@ def letters_distance(s, query):
     return sum(letter_distance(s, l1, l2) for l1, l2 in combinations(query, 2))
 
 class AccountLookup(DocumentGUIObject):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
         self._original_names = []
         self._filtered_names = []
         self._search_query = ''

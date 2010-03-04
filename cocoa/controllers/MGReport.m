@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGReport
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(HSOutlineView *)aOutlineView
+- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithDocument:aDocument pyClassName:aClassName view:aOutlineView];
+    self = [super initWithPyParent:aPyParent pyClassName:aClassName view:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
     return self;
 }

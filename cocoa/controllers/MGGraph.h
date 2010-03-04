@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGGraphView.h"
-#import "MGDocument.h"
 #import "MGChart.h"
 #import "PyGraph.h"
 

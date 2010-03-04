@@ -19,17 +19,17 @@ from ui.networth_view_ui import Ui_NetWorthView
 class NetWorthView(BaseView, Ui_NetWorthView):
     PRINT_TITLE_FORMAT = "Net Worth at {endDate}, starting from {startDate}"
     
-    def __init__(self, doc):
+    def __init__(self, mainwindow):
         BaseView.__init__(self)
-        self.doc = doc
+        self.doc = mainwindow.doc
         self._setupUi()
-        self.nwsheet = NetWorthSheet(doc=doc, view=self.treeView)
-        self.nwgraph = NetWorthGraph(doc=doc, view=self.graphView)
-        self.apiechart = AssetPieChart(doc=doc, view=self.assetPieChart)
-        self.lpiechart = LiabilityPieChart(doc=doc, view=self.liabilityPieChart)
+        self.nwsheet = NetWorthSheet(mainwindow=mainwindow, view=self.treeView)
+        self.nwgraph = NetWorthGraph(mainwindow=mainwindow, view=self.graphView)
+        self.apiechart = AssetPieChart(mainwindow=mainwindow, view=self.assetPieChart)
+        self.lpiechart = LiabilityPieChart(mainwindow=mainwindow, view=self.liabilityPieChart)
         self.children = [self.nwsheet, self.nwgraph, self.apiechart, self.lpiechart]
         children = [self.nwsheet.model, self.nwgraph.model, self.apiechart.model, self.lpiechart.model]
-        self.model = NetWorthViewModel(view=self, document=doc.model, children=children)
+        self.model = NetWorthViewModel(view=self, mainwindow=mainwindow.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

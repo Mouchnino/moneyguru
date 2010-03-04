@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
 #import "HSWindowController.h"
 #import "PyAccountLookup.h"
 
@@ -17,7 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *currentNames;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 - (PyAccountLookup *)py;
 
 - (IBAction)go:(id)sender;

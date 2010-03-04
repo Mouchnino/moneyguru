@@ -9,6 +9,9 @@
 from .base import DocumentGUIObject
 
 class FilterBar(DocumentGUIObject):
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
+    
     #--- Override
     def connect(self):
         DocumentGUIObject.connect(self)
@@ -25,8 +28,8 @@ class FilterBar(DocumentGUIObject):
     
 
 class EntryFilterBar(FilterBar): # disables buttons
-    def __init__(self, view, document):
-        FilterBar.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        FilterBar.__init__(self, view, mainwindow)
         self._disabled_buttons = False
     
     #--- Override

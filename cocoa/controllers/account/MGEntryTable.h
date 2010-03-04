@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSTableColumnManager.h"
-#import "MGDocument.h"
 #import "PyEntryTable.h"
 #import "MGEditableTable.h"
 #import "MGFieldEditor.h"
@@ -20,7 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
 }
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView;
+- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 
 /* Public */
 - (PyEntryTable *)py;

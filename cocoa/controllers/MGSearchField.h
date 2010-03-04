@@ -8,14 +8,13 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSGUIController.h"
-#import "MGDocument.h"
 #import "PySearchField.h"
 
 @interface MGSearchField : HSGUIController
 {   
     IBOutlet NSSearchField *view;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 
 - (PySearchField *)py;
 - (IBAction)changeQuery:(id)sender;

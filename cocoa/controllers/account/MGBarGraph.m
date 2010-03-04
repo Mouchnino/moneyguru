@@ -9,9 +9,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGBarGraph.h"
 
 @implementation MGBarGraph
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName
+- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName
 {
-    self = [super initWithPyClassName:aClassName pyParent:[aDocument py]];
+    self = [super initWithPyClassName:aClassName pyParent:aPyParent];
     view = [[MGBarGraphView alloc] init];
     return self;
 }

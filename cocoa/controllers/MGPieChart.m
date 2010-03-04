@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPieChartView.h"
 
 @implementation MGPieChart
-- (id)initWithDocument:(MGDocument *)document pieChartClassName:(NSString *)className
+- (id)initWithPyParent:(id)aPyParent pieChartClassName:(NSString *)className
 {
-    self = [super initWithPyClassName:className pyParent:[document py]];
+    self = [super initWithPyClassName:className pyParent:aPyParent];
     view = [[MGPieChartView alloc] init];
     return self;
 }

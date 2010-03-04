@@ -13,9 +13,10 @@ from .table import GUITable
 class TransactionTableBase(GUITable, DocumentGUIObject):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
         GUITable.__init__(self)
+        self.mainwindow = mainwindow
         self._columns = [] # empty columns == unrestricted autofill
     
     #--- Override

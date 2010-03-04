@@ -15,9 +15,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 @implementation MGTransactionTable
 
-- (id)initWithDocument:(MGDocument *)aDocument view:(MGTableView *)aTableView
+- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyTransactionTable" pyParent:[aDocument py] view:aTableView];
+    self = [super initWithPyClassName:@"PyTransactionTable" pyParent:aPyParent view:aTableView];
     [[self tableView] registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];

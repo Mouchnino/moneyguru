@@ -27,7 +27,7 @@ class NetWorthSheet(AccountSheet):
     AMOUNT_ATTRS = set(['end', 'start', 'delta', 'delta_perc', 'budgeted'])
     BOLD_ATTRS = set(['end'])
     
-    def __init__(self, doc, view):
-        model = BalanceSheetModel(view=self, document=doc.model)
-        AccountSheet.__init__(self, doc, model, view)
+    def __init__(self, mainwindow, view):
+        model = BalanceSheetModel(view=self, mainwindow=mainwindow.model)
+        AccountSheet.__init__(self, mainwindow.doc, model, view)
     

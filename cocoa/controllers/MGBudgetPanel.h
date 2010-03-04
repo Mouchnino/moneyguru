@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
-#import "MGDocument.h"
 #import "PyBudgetPanel.h"
 
 @interface MGBudgetPanel : MGPanel {

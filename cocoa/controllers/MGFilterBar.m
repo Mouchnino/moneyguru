@@ -18,10 +18,10 @@ http://www.hardcoded.net/licenses/hs_license
 #define MGNOTRECONCILED @"not_reconciled"
 
 @implementation MGFilterBar
-- (id)initWithDocument:(MGDocument *)aDocument view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
+- (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
 {
     NSString *pyClassName = forEntryTable ? @"PyEntryFilterBar" : @"PyFilterBar";
-    self = [super initWithPyClassName:pyClassName pyParent:[aDocument py]];
+    self = [super initWithPyClassName:pyClassName pyParent:aPyParent];
     view = [aView retain];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
 	[item setTitle:@"All"];

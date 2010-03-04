@@ -17,14 +17,14 @@ from ui.transaction_view_ui import Ui_TransactionView
 class TransactionView(BaseView, Ui_TransactionView):
     PRINT_TITLE_FORMAT = "Transactions from {startDate} to {endDate}"
     
-    def __init__(self, doc):
+    def __init__(self, mainwindow):
         BaseView.__init__(self)
-        self.doc = doc
+        self.doc = mainwindow.doc
         self._setupUi()
-        self.ttable = TransactionTable(doc=doc, view=self.tableView)
-        self.tfbar = TransactionFilterBar(doc=doc, view=self.filterBar)
+        self.ttable = TransactionTable(mainwindow=mainwindow, view=self.tableView)
+        self.tfbar = TransactionFilterBar(mainwindow=mainwindow, view=self.filterBar)
         children = [self.ttable.model, self.tfbar.model]
-        self.model = TransactionViewModel(view=self, document=doc.model, children=children)
+        self.model = TransactionViewModel(view=self, mainwindow=mainwindow.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

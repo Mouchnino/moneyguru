@@ -19,16 +19,16 @@ from ui.profit_view_ui import Ui_ProfitView
 class ProfitView(BaseView, Ui_ProfitView):
     PRINT_TITLE_FORMAT = "Profit and loss from {startDate} to {endDate}"
     
-    def __init__(self, doc):
+    def __init__(self, mainwindow):
         BaseView.__init__(self)
-        self.doc = doc
+        self.doc = mainwindow.doc
         self._setupUi()
-        self.psheet = ProfitSheet(doc=doc, view=self.treeView)
-        self.pgraph = ProfitGraph(doc=doc, view=self.graphView)
-        self.ipiechart = IncomePieChart(doc=doc, view=self.incomePieChart)
-        self.epiechart = ExpensePieChart(doc=doc, view=self.expensePieChart)
+        self.psheet = ProfitSheet(mainwindow=mainwindow, view=self.treeView)
+        self.pgraph = ProfitGraph(mainwindow=mainwindow, view=self.graphView)
+        self.ipiechart = IncomePieChart(mainwindow=mainwindow, view=self.incomePieChart)
+        self.epiechart = ExpensePieChart(mainwindow=mainwindow, view=self.expensePieChart)
         children = [self.psheet.model, self.pgraph.model, self.ipiechart.model, self.epiechart.model]
-        self.model = ProfitViewModel(view=self, document=doc.model, children=children)
+        self.model = ProfitViewModel(view=self, mainwindow=mainwindow.model, children=children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

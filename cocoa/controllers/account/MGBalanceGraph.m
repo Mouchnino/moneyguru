@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyBalanceGraph.h"
 
 @implementation MGBalanceGraph
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName
+- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName
 {
-    self = [super initWithPyClassName:aClassName pyParent:[aDocument py]];
+    self = [super initWithPyClassName:aClassName pyParent:aPyParent];
     view = [[MGLineGraphView alloc] init];
     return self;
 }

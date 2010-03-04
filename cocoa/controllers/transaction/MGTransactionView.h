@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyTransactionView.h"
 #import "MGBaseView.h"
-#import "MGDocument.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
 #import "MGTransactionTable.h"
@@ -25,7 +24,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGTransactionTable *transactionTable;
     MGFilterBar *filterBar;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 
 - (PyTransactionView *)py;
 

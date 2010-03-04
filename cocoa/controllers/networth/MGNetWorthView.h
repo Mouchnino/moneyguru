@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyNetWorthView.h"
 #import "MGBaseView.h"
-#import "MGDocument.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
 #import "MGPieChart.h"
@@ -29,7 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGPieChart *liabilitiesPieChart;
     MGBalanceGraph *netWorthGraph;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 - (PyNetWorthView *)py;
 
 /* Private */

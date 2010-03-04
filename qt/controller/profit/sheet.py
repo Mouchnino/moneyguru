@@ -27,7 +27,7 @@ class ProfitSheet(AccountSheet):
     AMOUNT_ATTRS = set(['cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'])
     BOLD_ATTRS = set(['cash_flow'])
     
-    def __init__(self, doc, view):
-        model = IncomeStatementModel(view=self, document=doc.model)
-        AccountSheet.__init__(self, doc, model, view)
+    def __init__(self, mainwindow, view):
+        model = IncomeStatementModel(view=self, mainwindow=mainwindow.model)
+        AccountSheet.__init__(self, mainwindow.doc, model, view)
     

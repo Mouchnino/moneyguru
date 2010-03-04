@@ -23,7 +23,7 @@ class TransactionFilterBar(FilterBar):
         ("Not Reconciled", FilterType.NotReconciled),
     ]
     
-    def __init__(self, doc, view):
-        model = FilterBarModel(document=doc.model, view=self)
+    def __init__(self, mainwindow, view):
+        model = FilterBarModel(mainwindow=mainwindow.model, view=self)
         FilterBar.__init__(self, model, view)
     

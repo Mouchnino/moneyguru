@@ -13,6 +13,9 @@ from ..model.date import DateRange, ONE_DAY
 from .graph import Graph
 
 class BalanceGraph(Graph):
+    def __init__(self, view, mainwindow):
+        Graph.__init__(self, view, mainwindow.document)
+    
     # BalanceGraph's data point is (float x, float y)
     #--- Virtual
     def _balance_for_date(self, date):

@@ -12,16 +12,16 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGProfitView
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super init];
     [NSBundle loadNibNamed:@"IncomeStatement" owner:self];
-    incomeStatement = [[MGIncomeStatement alloc] initWithDocument:aDocument view:outlineView];
-    incomePieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyIncomePieChart"];
-    expensesPieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyExpensesPieChart"];
+    incomeStatement = [[MGIncomeStatement alloc] initWithPyParent:aPyParent view:outlineView];
+    incomePieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyIncomePieChart"];
+    expensesPieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyExpensesPieChart"];
     [pieChartsView setFirstView:[incomePieChart view]];
     [pieChartsView setSecondView:[expensesPieChart view]];
-    profitGraph = [[MGBarGraph alloc] initWithDocument:aDocument pyClassName:@"PyProfitGraph"];
+    profitGraph = [[MGBarGraph alloc] initWithPyParent:aPyParent pyClassName:@"PyProfitGraph"];
     NSView *graphView = [profitGraph view];
     [graphView setFrame:[profitGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[profitGraphPlaceholder autoresizingMask]];
@@ -30,7 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[incomeStatement py], [profitGraph py],
         [incomePieChart py], [expensesPieChart py], nil];
     Class pyClass = [Utils classNamed:@"PyProfitView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
     
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

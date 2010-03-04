@@ -12,14 +12,14 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGAccountView
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super init];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    entryTable = [[MGEntryTable alloc] initWithDocument:aDocument view:tableView];
-    filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:YES];
-    balanceGraph = [[MGBalanceGraph alloc] initWithDocument:aDocument pyClassName:@"PyBalanceGraph"];
-    barGraph = [[MGBarGraph alloc] initWithDocument:aDocument pyClassName:@"PyBarGraph"];
+    entryTable = [[MGEntryTable alloc] initWithPyParent:aPyParent view:tableView];
+    filterBar = [[MGFilterBar alloc] initWithPyParent:aPyParent view:filterBarView forEntryTable:YES];
+    balanceGraph = [[MGBalanceGraph alloc] initWithPyParent:aPyParent pyClassName:@"PyBalanceGraph"];
+    barGraph = [[MGBarGraph alloc] initWithPyParent:aPyParent pyClassName:@"PyBarGraph"];
     // We have to put one of the graph in there before we link the prefs
     NSView *graphView = [balanceGraph view];
     [graphView setFrame:[graphPlaceholder frame]];
@@ -30,7 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[entryTable py], [balanceGraph py], [barGraph py],
         [filterBar py], nil];
     Class pyClass = [Utils classNamed:@"PyAccountView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
     
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyAccountView.h"
 #import "MGBaseView.h"
-#import "MGDocument.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
 #import "MGEntryTable.h"
@@ -32,7 +31,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGBarGraph *barGraph;
     NSView *currentGraphView;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithPyParent:(id)aPyParent;
 - (PyAccountView *)py;
 
 /* Private */

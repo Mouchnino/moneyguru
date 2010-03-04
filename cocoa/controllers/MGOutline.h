@@ -8,18 +8,18 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSOutline.h"
-#import "MGDocument.h"
 
 @interface MGOutline : HSOutline {
-    MGDocument *document;
+    // MGDocument *document;
     NSString *autosaveName;
     BOOL stateRestored;
 }
-- (id)initWithDocument:(MGDocument *)aDocument pyClassName:(NSString *)aClassName view:(HSOutlineView *)aOutlineView;
+- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName view:(HSOutlineView *)aOutlineView;
 
 /* Private */
-- (void)restoreExpandedStates;
-- (void)saveExpandedStates;
+// XXX Push that logic in the core code
+// - (void)restoreExpandedStates;
+// - (void)saveExpandedStates;
 
 /* Public */
 - (void)setAutosaveName:(NSString *)aAutosaveName;

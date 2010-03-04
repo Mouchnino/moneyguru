@@ -15,9 +15,9 @@ from core.gui.account_lookup import AccountLookup as AccountLookupModel
 from ui.account_lookup_ui import Ui_AccountLookup
 
 class AccountLookup(QWidget, Ui_AccountLookup):
-    def __init__(self, parent, doc):
+    def __init__(self, parent, mainwindow):
         QWidget.__init__(self, parent, Qt.Window)
-        self.model = AccountLookupModel(view=self, document=doc.model)
+        self.model = AccountLookupModel(view=self, mainwindow=mainwindow.model)
         self._setupUi()
         
         self.searchEdit.searchChanged.connect(self.searchChanged)

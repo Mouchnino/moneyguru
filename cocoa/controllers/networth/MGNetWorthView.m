@@ -12,16 +12,16 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGNetWorthView
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super init];
     [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
-    balanceSheet = [[MGBalanceSheet alloc] initWithDocument:aDocument view:outlineView];
-    assetsPieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyAssetsPieChart"];
-    liabilitiesPieChart = [[MGPieChart alloc] initWithDocument:aDocument pieChartClassName:@"PyLiabilitiesPieChart"];
+    balanceSheet = [[MGBalanceSheet alloc] initWithPyParent:aPyParent view:outlineView];
+    assetsPieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyAssetsPieChart"];
+    liabilitiesPieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyLiabilitiesPieChart"];
     [pieChartsView setFirstView:[assetsPieChart view]];
     [pieChartsView setSecondView:[liabilitiesPieChart view]];
-    netWorthGraph = [[MGBalanceGraph alloc] initWithDocument:aDocument pyClassName:@"PyNetWorthGraph"];
+    netWorthGraph = [[MGBalanceGraph alloc] initWithPyParent:aPyParent pyClassName:@"PyNetWorthGraph"];
     NSView *graphView = [netWorthGraph view];
     [graphView setFrame:[netWorthGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[netWorthGraphPlaceholder autoresizingMask]];
@@ -30,7 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [netWorthGraph py],
         [assetsPieChart py], [liabilitiesPieChart py], nil];
     Class pyClass = [Utils classNamed:@"PyNetWorthView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
     
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

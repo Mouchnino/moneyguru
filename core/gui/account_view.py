@@ -12,10 +12,10 @@ from __future__ import unicode_literals
 from .base import BaseView
 
 class AccountView(BaseView):
-    def __init__(self, view, document, children):
+    def __init__(self, view, mainwindow, children):
         self.etable, self.balgraph, self.bargraph, self.efbar = children
         # we count the graphs separately because the connect/disconnect rules for them are special
-        BaseView.__init__(self, view, document, [self.etable, self.efbar])
+        BaseView.__init__(self, view, mainwindow.document, [self.etable, self.efbar])
         self._shown_graph = self.balgraph
     
     def connect(self):

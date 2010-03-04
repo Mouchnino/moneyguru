@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGTableView.h"
-#import "MGDocument.h"
 #import "PySplitTable.h"
 #import "PyPanel.h"
 #import "MGEditableTable.h"

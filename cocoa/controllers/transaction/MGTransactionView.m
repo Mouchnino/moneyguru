@@ -11,15 +11,15 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGTransactionView
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super init];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    transactionTable = [[MGTransactionTable alloc] initWithDocument:aDocument view:tableView];
-    filterBar = [[MGFilterBar alloc] initWithDocument:aDocument view:filterBarView forEntryTable:NO];
+    transactionTable = [[MGTransactionTable alloc] initWithPyParent:aPyParent view:tableView];
+    filterBar = [[MGFilterBar alloc] initWithPyParent:aPyParent view:filterBarView forEntryTable:NO];
     NSArray *children = [NSArray arrayWithObjects:[transactionTable py], [filterBar py], nil];
     Class pyClass = [Utils classNamed:@"PyTransactionView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[aDocument py] children:children];
+    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
     return self;
 }
         

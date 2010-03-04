@@ -18,8 +18,8 @@ from ..model.date import DateRange
 from .pie_chart import PieChart
 
 class _AccountPieChart(PieChart):
-    def __init__(self, view, document, account_type, title):
-        PieChart.__init__(self, view, document)
+    def __init__(self, view, mainwindow, account_type, title):
+        PieChart.__init__(self, view, mainwindow.document)
         self._account_type = account_type
         self._title = title
     
@@ -72,13 +72,13 @@ class _BalancePieChart(_AccountPieChart):
     
 
 class AssetsPieChart(_BalancePieChart):
-    def __init__(self, view, document):
-        _BalancePieChart.__init__(self, view, document, AccountType.Asset, 'Assets')
+    def __init__(self, view, mainwindow):
+        _BalancePieChart.__init__(self, view, mainwindow, AccountType.Asset, 'Assets')
     
 
 class LiabilitiesPieChart(_BalancePieChart):
-    def __init__(self, view, document):
-        _BalancePieChart.__init__(self, view, document, AccountType.Liability, 'Liabilities')
+    def __init__(self, view, mainwindow):
+        _BalancePieChart.__init__(self, view, mainwindow, AccountType.Liability, 'Liabilities')
     
 
 class _CashFlowPieChart(_AccountPieChart):
@@ -95,11 +95,11 @@ class _CashFlowPieChart(_AccountPieChart):
     
 
 class IncomePieChart(_CashFlowPieChart):
-    def __init__(self, view, document):
-        _CashFlowPieChart.__init__(self, view, document, AccountType.Income, 'Income')
+    def __init__(self, view, mainwindow):
+        _CashFlowPieChart.__init__(self, view, mainwindow, AccountType.Income, 'Income')
     
 
 class ExpensesPieChart(_CashFlowPieChart):
-    def __init__(self, view, document):
-        _CashFlowPieChart.__init__(self, view, document, AccountType.Expense, 'Expenses')
+    def __init__(self, view, mainwindow):
+        _CashFlowPieChart.__init__(self, view, mainwindow, AccountType.Expense, 'Expenses')
     

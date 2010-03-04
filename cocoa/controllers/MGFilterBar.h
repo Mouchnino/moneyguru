@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSGUIController.h"
-#import "MGDocument.h"
 #import "AMButtonBar.h"
 #import "PyFilterBar.h"
 #import "PyEntryFilterBar.h"
@@ -17,6 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 {   
     AMButtonBar *view;
 }
-- (id)initWithDocument:(MGDocument *)aDocument view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
+- (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
 - (PyFilterBar *)py;
 @end
