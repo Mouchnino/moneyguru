@@ -104,6 +104,8 @@ class MoneyGuru(ApplicationBase):
             self.mainWindow.show()
     
     def applicationWillTerminate(self):
+        # This line stops the autosave timer which sometimes prevent the app from quitting.
+        self.model.autosave_interval = 0
         self.doc.close()
         self.willSavePrefs.emit()
         self.prefs.nativeCurrency = self.model.default_currency.code
