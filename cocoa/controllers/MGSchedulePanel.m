@@ -8,14 +8,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGSchedulePanel.h"
 #import "Utils.h"
-#import "MGFieldEditor.h"
-#import "MGDateFieldEditor.h"
 
 @implementation MGSchedulePanel
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" document:aDocument];
-    [self window]; // Initialize the window
+    self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
     [splitTable connect];
     return self;

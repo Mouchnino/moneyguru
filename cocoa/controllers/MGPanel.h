@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
 }
-- (id)initWithNibName:aNibName pyClassName:aClassName document:aDocument;
+- (id)initWithNibName:(NSString *)aNibName pyClassName:(NSString *)aClassName parent:(HSWindowController *)aParent;
 - (PyPanel *)py;
 /* Virtual */
 - (NSString *)fieldOfTextField:(NSTextField *)textField;

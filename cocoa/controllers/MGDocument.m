@@ -32,6 +32,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)dealloc
 {
     // NSLog(@"Document dealloc");
+    for (NSWindowController *wc in [self windowControllers]) {
+        [wc release];
+    }
     [py release];
     [super dealloc];
 }
@@ -86,7 +89,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)makeWindowControllers 
 {
-    MGMainWindow *controller = [[[MGMainWindow alloc] initWithWindowNibName:@"MainWindow"] autorelease];
+    MGMainWindow *controller = [[MGMainWindow alloc] initWithDocument:self];
     [controller setShouldCloseDocument:YES];
     [self addWindowController:controller];
 }

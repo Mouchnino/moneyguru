@@ -12,25 +12,16 @@ http://www.hardcoded.net/licenses/hs_license
 #import "NSEventAdditions.h"
 
 @implementation MGMainWindow
-
-/* Overrides */
-
-- (void)awakeFromNib
+- (id)initWithDocument:(MGDocument *)document
 {
-    [self window]; // Ensures that all the outlets are set
-    MGDocument *document = [self document];
+    self = [super initWithNibName:@"MainWindow" pyClassName:@"PyMainWindow" pyParent:[document py]];
+    [self setDocument:document];
     [self restoreState];
-    
-    Class PyMainWindow = [Utils classNamed:@"PyMainWindow"];
-    py = [[PyMainWindow alloc] initWithCocoa:self pyParent:[document py]];
-    
-    accountProperties = [[MGAccountProperties alloc] initWithDocument:document];
-    transactionPanel = [[MGTransactionInspector alloc] initWithDocument:document];
-    massEditionPanel = [[MGMassEditionPanel alloc] initWithDocument:document];
-    schedulePanel = [[MGSchedulePanel alloc] initWithDocument:document];
-    [schedulePanel connect];
-    budgetPanel = [[MGBudgetPanel alloc] initWithDocument:document];
-    [budgetPanel connect];
+    accountProperties = [[MGAccountProperties alloc] initWithParent:self];
+    transactionPanel = [[MGTransactionInspector alloc] initWithParent:self];
+    massEditionPanel = [[MGMassEditionPanel alloc] initWithParent:self];
+    schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
+    budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
     netWorthView = [[MGNetWorthView alloc] initWithDocument:document];
     profitView = [[MGProfitView alloc] initWithDocument:document];
     transactionView = [[MGTransactionView alloc] initWithDocument:document];
@@ -55,9 +46,10 @@ http://www.hardcoded.net/licenses/hs_license
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
         [budgetPanel py], [accountLookup py], nil];
-    [py setChildren:children];
-    [py connect];
+    [[self py] setChildren:children];
+    [[self py] connect];
     [searchField connect];
+    return self;
 }
 
 - (void)dealloc
@@ -82,13 +74,14 @@ http://www.hardcoded.net/licenses/hs_license
     [super dealloc];
 }
 
-- (oneway void)release
+- (PyMainWindow *)py
 {
-    if ([self retainCount] == 2)
-    {
-        [py free];
-    }
-    [super release];
+    return (PyMainWindow *)py;
+}
+
+- (MGDocument *)document
+{
+    return (MGDocument *)[super document];
 }
 
 - (void)keyDown:(NSEvent *)event 
@@ -190,7 +183,7 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(showPreviousView:))
         return (top != netWorthView);
     else if (action == @selector(showEntryTable:))
-        return [py canSelectEntryTable];
+        return [[self py] canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:))
     {
         if ((top == netWorthView) || (top == profitView))
@@ -204,7 +197,7 @@ http://www.hardcoded.net/licenses/hs_license
         return (top == accountView) && [[[self document] py] shownAccountIsBalanceSheet];
     else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
         || (action == @selector(selectTodayDateRange:)))
-        return [py canNavigateDateRange];
+        return [[self py] canNavigateDateRange];
     return YES;
 }
 
@@ -213,52 +206,52 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)delete:(id)sender
 {
-    [py deleteItem];
+    [[self py] deleteItem];
 }
 
 - (IBAction)duplicateItem:(id)sender
 {
-    [py duplicateItem];
+    [[self py] duplicateItem];
 }
 
 - (IBAction)editItemInfo:(id)sender
 {
-    [py editItem];
+    [[self py] editItem];
 }
 
 - (IBAction)jumpToAccount:(id)sender
 {
-    [py jumpToAccount];
+    [[self py] jumpToAccount];
 }
 
 - (IBAction)makeScheduleFromSelected:(id)sender
 {
-    [py makeScheduleFromSelected];
+    [[self py] makeScheduleFromSelected];
 }
 
 - (IBAction)moveDown:(id)sender
 {
-    [py moveDown];
+    [[self py] moveDown];
 }
 
 - (IBAction)moveUp:(id)sender
 {
-    [py moveUp];
+    [[self py] moveUp];
 }
 
 - (IBAction)navigateBack:(id)sender
 {
-    [py navigateBack];
+    [[self py] navigateBack];
 }
 
 - (IBAction)newGroup:(id)sender
 {
-    [py newGroup];
+    [[self py] newGroup];
 }
 
 - (IBAction)newItem:(id)sender
 {
-    [py newItem];
+    [[self py] newItem];
 }
 
 - (IBAction)search:(id)sender
@@ -318,47 +311,47 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showBalanceSheet:(id)sender
 {
-    [py selectBalanceSheet];
+    [[self py] selectBalanceSheet];
 }
 
 - (IBAction)showIncomeStatement:(id)sender
 {
-    [py selectIncomeStatement];
+    [[self py] selectIncomeStatement];
 }
 
 - (IBAction)showTransactionTable:(id)sender
 {
-    [py selectTransactionTable];
+    [[self py] selectTransactionTable];
 }
 
 - (IBAction)showEntryTable:(id)sender
 {
-    [py selectEntryTable];
+    [[self py] selectEntryTable];
 }
 
 - (IBAction)showScheduleTable:(id)sender
 {
-    [py selectScheduleTable];
+    [[self py] selectScheduleTable];
 }
 
 - (IBAction)showBudgetTable:(id)sender
 {
-    [py selectBudgetTable];
+    [[self py] selectBudgetTable];
 }
 
 - (IBAction)showNextView:(id)sender
 {
-    [py selectNextView];
+    [[self py] selectNextView];
 }
 
 - (IBAction)showPreviousView:(id)sender
 {
-    [py selectPreviousView];
+    [[self py] selectPreviousView];
 }
 
 - (IBAction)showSelectedAccount:(id)sender
 {
-    [py showAccount];
+    [[self py] showAccount];
 }
 
 - (IBAction)toggleEntriesReconciled:(id)sender
@@ -597,7 +590,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)refreshDateRangeSelector
 {
     [dateRangePopUp setTitle:[[[self document] py] dateRangeDisplay]];
-    BOOL canNavigate = [py canNavigateDateRange];
+    BOOL canNavigate = [[self py] canNavigateDateRange];
     [prevDateRangeButton setEnabled:canNavigate];
     [nextDateRangeButton setEnabled:canNavigate];
 }

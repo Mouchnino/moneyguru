@@ -12,11 +12,11 @@ from hsutil.currency import Currency
 from hsutil.misc import allsame, nonone, flatten
 
 from ..exception import OperationAborted
-from .base import GUIPanel
+from .base import MainWindowPanel
 
-class MassEditionPanel(GUIPanel):
-    def __init__(self, view, document):
-        GUIPanel.__init__(self, view, document)
+class MassEditionPanel(MainWindowPanel):
+    def __init__(self, view, mainwindow):
+        MainWindowPanel.__init__(self, view, mainwindow)
         self._init_fields()
     
     #--- Override

@@ -32,6 +32,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     MGSplitTable *splitTable;
 }
+- (id)initWithParent:(HSWindowController *)aParent;
 - (PySchedulePanel *)py;
 /* Actions */
 - (IBAction)addSplit:(id)sender;

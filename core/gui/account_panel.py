@@ -10,11 +10,11 @@ from hsutil.currency import Currency
 
 from ..exception import DuplicateAccountNameError, OperationAborted
 from ..model.account import AccountType
-from .base import GUIPanel
+from .base import MainWindowPanel
 
-class AccountPanel(GUIPanel):
-    def __init__(self, view, document):
-        GUIPanel.__init__(self, view, document)
+class AccountPanel(MainWindowPanel):
+    def __init__(self, view, mainwindow):
+        MainWindowPanel.__init__(self, view, mainwindow)
         self._init_fields()
     
     #--- Override

@@ -10,10 +10,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDateFieldEditor.h"
 
 @implementation MGBudgetPanel
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" document:aDocument];
-    [self window]; // Initialize the window
+    self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" parent:aParent];
     return self;
 }
 

@@ -22,7 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *currencies;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithParent:(HSWindowController *)aParent;
 - (PyMassEditionPanel *)py;
 /* Python --> Cocoa */
 - (void)refresh;

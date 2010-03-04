@@ -14,12 +14,12 @@ from hsutil.misc import first
 from ..exception import OperationAborted
 from ..model.account import Account, AccountType
 from ..model.transaction import Split, Transaction
-from .base import GUIPanel
+from .base import MainWindowPanel
 
-class PanelWithTransaction(GUIPanel, Broadcaster):
+class PanelWithTransaction(MainWindowPanel, Broadcaster):
     """Base class for panels working with a transaction"""
-    def __init__(self, view, document):
-        GUIPanel.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        MainWindowPanel.__init__(self, view, mainwindow)
         Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
     

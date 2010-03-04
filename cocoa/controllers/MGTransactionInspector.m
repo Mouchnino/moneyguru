@@ -13,10 +13,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "NSEventAdditions.h"
 
 @implementation MGTransactionInspector
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"TransactionInspector" pyClassName:@"PyTransactionPanel" document:aDocument];
-    [self window]; // Initialize the window
+    self = [super initWithNibName:@"TransactionInspector" pyClassName:@"PyTransactionPanel" parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
     [splitTable connect];
     return self;

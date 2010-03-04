@@ -9,10 +9,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPanel.h"
 
 @implementation MGPanel
-- (id)initWithNibName:aNibName pyClassName:aClassName document:aDocument
+- (id)initWithNibName:(NSString *)aNibName pyClassName:(NSString *)aClassName parent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aDocument py]];
-    parentWindow = [aDocument windowForSheet];
+    self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aParent py]];
+    parentWindow = [aParent window];
     customFieldEditor = [[MGFieldEditor alloc] init];
     [customFieldEditor setSource:py];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];

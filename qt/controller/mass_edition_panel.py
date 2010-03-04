@@ -34,12 +34,11 @@ class MassEditionPanel(Panel, Ui_MassEditionPanel):
         ('currencyComboBox', 'currency_index'),
     ]
     
-    def __init__(self, parent, doc):
-        Panel.__init__(self, parent)
+    def __init__(self, mainwindow):
+        Panel.__init__(self, mainwindow)
         self._setupUi()
-        self.doc = doc
-        self.model = MassEditionPanelModel(view=self, document=doc.model)
-        
+        self.model = MassEditionPanelModel(view=self, mainwindow=mainwindow.model)
+    
     def _setupUi(self):
         self.setupUi(self)
         availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]

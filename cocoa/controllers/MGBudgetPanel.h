@@ -22,6 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *amountField;
     IBOutlet NSTextField *notesField;
 }
+- (id)initWithParent:(HSWindowController *)aParent;
 - (PyBudgetPanel *)py;
 /* Actions */
 - (IBAction)repeatTypeSelected:(id)sender;

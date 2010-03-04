@@ -9,9 +9,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGMassEditionPanel.h"
 
 @implementation MGMassEditionPanel
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"MassEditionPanel" pyClassName:@"PyMassEditionPanel" document:aDocument];
+    self = [super initWithNibName:@"MassEditionPanel" pyClassName:@"PyMassEditionPanel" parent:aParent];
     currencies = [[[self py] availableCurrencies] retain];
     return self;
 }

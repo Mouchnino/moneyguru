@@ -26,11 +26,10 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         ('amountEdit2', 'amount'),
     ]
     
-    def __init__(self, parent, doc):
-        Panel.__init__(self, parent)
+    def __init__(self, mainwindow):
+        Panel.__init__(self, mainwindow)
         self._setupUi()
-        self.doc = doc
-        self.model = TransactionPanelModel(view=self, document=doc.model)
+        self.model = TransactionPanelModel(view=self, mainwindow=mainwindow.model)
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
         self.splitTable.model.connect()
         

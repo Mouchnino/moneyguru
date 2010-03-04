@@ -19,6 +19,6 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *currencies;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithParent:(HSWindowController *)aParent;
 - (PyAccountPanel *)py;
 @end

@@ -156,6 +156,12 @@ class GUIPanel(DocumentGUIObject):
         self._save()
     
 
+class MainWindowPanel(GUIPanel):
+    def __init__(self, view, mainwindow):
+        GUIPanel.__init__(self, view, mainwindow.document)
+        self.mainwindow = mainwindow
+    
+
 class BaseView(DocumentGUIObject):
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)

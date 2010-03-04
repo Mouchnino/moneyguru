@@ -10,13 +10,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGConst.h"
 
 @implementation MGAccountProperties
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"AccountProperties" pyClassName:@"PyAccountPanel" document:aDocument];
+    self = [super initWithNibName:@"AccountProperties" pyClassName:@"PyAccountPanel" parent:aParent];
     // We have to initialize the currencies before the widgets if we want the inital data source call
     // to return something
     currencies = [[[self py] availableCurrencies] retain];
-    [self window]; // Initialize the window
     return self;
 }
 

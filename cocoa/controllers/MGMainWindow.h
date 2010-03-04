@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "HSWindowController.h"
 #import "MGAccountProperties.h"
 #import "MGTransactionInspector.h"
 #import "MGMassEditionPanel.h"
@@ -28,13 +29,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
 
-@interface MGMainWindow : NSWindowController
+@interface MGMainWindow : HSWindowController
 {
     IBOutlet NSPopUpButton *dateRangePopUp;
     IBOutlet NSButton *prevDateRangeButton;
     IBOutlet NSButton *nextDateRangeButton;
 
-    PyMainWindow *py;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
     MGMassEditionPanel *massEditionPanel;
@@ -55,7 +55,9 @@ http://www.hardcoded.net/licenses/hs_license
     MGBaseView *top;
     NSToolbarItem *reconciliationToolbarItem;
 }
-
+- (id)initWithDocument:(MGDocument *)document;
+- (PyMainWindow *)py;
+- (MGDocument *)document;
 /* Private */
 - (void)arrangeViews;
 - (MGBaseView *)top;
