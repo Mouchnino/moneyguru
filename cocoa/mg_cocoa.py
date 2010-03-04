@@ -1530,6 +1530,10 @@ class PyCompletableEdit(NSObject):
     def up(self):
         self.py.up()
     
+    # Python --> Cocoa
+    def refresh(self):
+        self.cocoa.refresh()
+    
 
 #--- Printing
 

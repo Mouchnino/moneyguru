@@ -15,7 +15,7 @@ from hsutil.currency import EUR
 
 from ...document import FilterType
 from ...model.account import AccountType
-from ..base import TestCase, TestApp
+from ..base import TestCase, TestApp, with_app
 
 #--- No Setup
 def test_initial_gui_calls():
@@ -174,69 +174,74 @@ def test_jump_to_account():
     app.alookup.go()
     app.check_gui_calls(app.alookup_gui, ['hide'])
 
-class OneTransaction(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_txn()
-        self.clear_gui_calls()
-    
-    def test_delete_transaction(self):
-        # Deleting a transaction refreshes the totals label
-        self.mainwindow.delete_item()
-        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
-    
-    def test_change_tview_filter(self):
-        # Changing tview's filter type updates the totals
-        self.tfbar.filter_type = FilterType.Reconciled
-        self.check_gui_calls(self.tview_gui, ['refresh_totals'])
-    
+#--- One transaction
+def app_one_transaction():
+    app = TestApp()
+    app.add_txn()
+    app.clear_gui_calls()
+    return app
 
-class LoadFileWithBalanceSheetSelected(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_balance_sheet()
-        self.clear_gui_calls()
-        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
-    
-    def test_views_are_refreshed(self):
-        # view.refresh() is called on file load
-        self.check_gui_calls_partial(self.bsheet_gui, ['refresh'])
-        self.check_gui_calls_partial(self.nwgraph_gui, ['refresh'])
-    
+@with_app(app_one_transaction)
+def test_delete_transaction(app):
+    # Deleting a transaction refreshes the totals label
+    app.mw.delete_item()
+    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
 
-class TransactionBetweenIncomeAndExpense(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('income', account_type=AccountType.Income)
-        self.add_account('expense', account_type=AccountType.Expense)
-        self.add_txn(from_='income', to='expense', amount='42')
-        self.clear_gui_calls()
-    
-    def test_etable_show_transfer_account(self):
-        # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
-        self.show_account('income')
-        self.clear_gui_calls()
-        self.etable.show_transfer_account()
-        self.check_gui_calls(self.etable_gui, ['show_selected_row', 'refresh'])
-        self.check_gui_calls(self.bargraph_gui, ['refresh'])
-    
+@with_app(app_one_transaction)
+def test_change_tview_filter(app):
+    # Changing tview's filter type updates the totals
+    app.tfbar.filter_type = FilterType.Reconciled
+    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
 
-class TransactionBetweenAssetAndLiability(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('asset', account_type=AccountType.Asset)
-        self.add_account('liability', account_type=AccountType.Liability)
-        self.add_txn(from_='liability', to='asset', amount='42')
-        self.clear_gui_calls()
-    
-    def test_etable_show_transfer_account(self):
-        # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
-        self.show_account('asset')
-        self.clear_gui_calls()
-        self.etable.show_transfer_account()
-        self.check_gui_calls(self.etable_gui, ['show_selected_row', 'refresh'])
-        self.check_gui_calls(self.balgraph_gui, ['refresh'])
-    
+#--- Load file with balance sheet selected
+def app_load_file_with_bsheet_selected():
+    app = TestApp()
+    app.mainwindow.select_balance_sheet()
+    app.clear_gui_calls()
+    app.doc.load_from_xml(TestCase.filepath('moneyguru', 'simple.moneyguru'))
+    return app
+
+@with_app(app_load_file_with_bsheet_selected)
+def test_views_are_refreshed(self):
+    # view.refresh() is called on file load
+    self.check_gui_calls_partial(self.bsheet_gui, ['refresh'])
+    self.check_gui_calls_partial(self.nwgraph_gui, ['refresh'])
+
+#--- Transaction between income and expense
+def app_transaction_between_income_and_expense():
+    app = TestApp()
+    app.add_account('income', account_type=AccountType.Income)
+    app.add_account('expense', account_type=AccountType.Expense)
+    app.add_txn(from_='income', to='expense', amount='42')
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_transaction_between_income_and_expense)
+def test_etable_show_income_account(app):
+    # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
+    app.show_account('income')
+    app.clear_gui_calls()
+    app.etable.show_transfer_account()
+    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh'])
+    app.check_gui_calls(app.bargraph_gui, ['refresh'])
+
+#--- Transaction between asset and liability
+def app_transaction_between_asset_and_liability():
+    app = TestApp()
+    app.add_account('asset', account_type=AccountType.Asset)
+    app.add_account('liability', account_type=AccountType.Liability)
+    app.add_txn(from_='liability', to='asset', amount='42')
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_transaction_between_asset_and_liability)
+def test_etable_show_asset_account(app):
+    # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
+    app.show_account('asset')
+    app.clear_gui_calls()
+    app.etable.show_transfer_account()
+    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh'])
+    app.check_gui_calls(app.balgraph_gui, ['refresh'])
 
 #--- Transaction with panel loaded
 def app_transaction_with_panel_loaded():
@@ -270,3 +275,57 @@ def test_move_split():
     app = app_transaction_with_panel_loaded()
     app.stable.move_split(0, 1)
     app.check_gui_calls_partial(app.stable_gui, ['refresh'])
+
+#--- Completable edit
+def app_completable_edit():
+    app = TestApp()
+    app.add_txn(description='Bazooka')
+    app.add_txn(description='buz')
+    app.add_txn(description='bar')
+    app.add_txn(description='foo')
+    app.ce = app.completable_edit(app.ttable, 'description')
+    app.ce_gui = app.ce.view
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_completable_edit)
+def test_cedit_set_text(app):
+    # Setting the text of the cedit results in a refresh of the view
+    app.ce.text = 'f'
+    app.check_gui_calls(app.ce_gui, ['refresh'])
+
+@with_app(app_completable_edit)
+def test_cedit_set_text_no_completion(app):
+    # Setting the text when there's no completion doesn't result in a refresh.
+    app.ce.text = 'nomatch'
+    app.check_gui_calls_partial(app.ce_gui, not_expected=['refresh'])
+
+@with_app(app_completable_edit)
+def test_cedit_up(app):
+    # Pressing up() refreshes the view
+    app.ce.text = 'b'
+    app.clear_gui_calls()
+    app.ce.up()
+    app.check_gui_calls(app.ce_gui, ['refresh'])
+
+@with_app(app_completable_edit)
+def test_cedit_up_no_completion(app):
+    # Pressing up() when there's no completion doesn't result in a refresh
+    app.ce.up()
+    app.check_gui_calls_partial(app.ce_gui, not_expected=['refresh'])
+
+@with_app(app_completable_edit)
+def test_cedit_commit_partial_value(app):
+    # Commiting when the text is a partial value of the completion results in a view refresh
+    app.ce.text = 'b'
+    app.clear_gui_calls()
+    app.ce.commit()
+    app.check_gui_calls(app.ce_gui, ['refresh'])
+
+@with_app(app_completable_edit)
+def test_cedit_commit_complete_value(app):
+    # Commiting when cedit's text is the whole completion doesn't result in a refresh.
+    app.ce.text = 'bazooka'
+    app.clear_gui_calls()
+    app.ce.commit()
+    app.check_gui_calls_partial(app.ce_gui, not_expected=['refresh'])

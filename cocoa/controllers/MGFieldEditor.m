@@ -29,17 +29,14 @@ http://www.hardcoded.net/licenses/hs_license
     [super dealloc];
 }
 
-- (void)refresh
+- (NSString *)selectedText
 {
-    NSString *text = [py text];
-    NSString *completion = [py completion];
-    NSInteger insertionPoint = [text length];
-    // don't use insertText here: infinite loop hazard.
-    [self setString:[text stringByAppendingString:completion]];
-    [self setSelectedRange:NSMakeRange(insertionPoint, [completion length])];
-    [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
-    [lastCompletion release];
-    lastCompletion = [completion retain];
+    NSRange sel = [self selectedRange];
+    if (sel.length == 0) {
+        return nil;
+    } 
+    NSString *text = [self string];
+    return [text substringWithRange:sel];
 }
 
 - (void)setSource:(PyGUI *)source
@@ -58,30 +55,24 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)moveUp:(id)sender 
 {
-    if ([[py text] length]) {
-        [py up];
-        [self refresh];
-    }
+    [py up];
 }
 
 - (void)moveDown:(id)sender
 {
-    if ([[py text] length]) {
-        [py down];
-        [self refresh];
-    }
+    [py down];
 }
 
 - (void)insertText:(NSString *)text
 {
     [super insertText:text];
     NSString *newText = [self string];
+    NSString *selected = [self selectedText];
     // Remove the completion part
-    if ((lastCompletion != nil) && ([newText hasSuffix:lastCompletion])) {
-        newText = [newText substringToIndex:([newText length] - [lastCompletion length])];
+    if ((selected != nil) && ([selected isEqualTo:lastCompletion])) {
+        newText = [newText substringToIndex:([newText length] - [selected length])];
     }
     [py setText:newText];
-    [self refresh];
 }
 
 - (BOOL)resignFirstResponder
@@ -91,10 +82,24 @@ http://www.hardcoded.net/licenses/hs_license
      * 1. The user deleted the completion
      * 2. No changes have been made to the text view, which was pre-populated and selected
     */
-    if (([self selectedRange].length > 0) && (lastCompletion != nil)) {
+    NSString *selected = [self selectedText];
+    if ((selected != nil) && ([selected isEqualTo:lastCompletion])) {
         [py commit];
-        [self refresh];
     }
     return [super resignFirstResponder];
+}
+
+/* Python --> Cocoa */
+- (void)refresh
+{
+    NSString *text = [py text];
+    NSString *completion = [py completion];
+    NSInteger insertionPoint = [text length];
+    // don't use insertText here: infinite loop hazard.
+    [self setString:[text stringByAppendingString:completion]];
+    [self setSelectedRange:NSMakeRange(insertionPoint, [completion length])];
+    [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
+    [lastCompletion release];
+    lastCompletion = [completion retain];
 }
 @end

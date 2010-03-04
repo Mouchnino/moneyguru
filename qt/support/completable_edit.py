@@ -27,10 +27,6 @@ class CompletableEdit(QLineEdit):
         self.model = CompletableEditModel(view=self)
         self.model.attrname = self.ATTRNAME
     
-    def _refresh(self):
-        self.setText(self.model.text + self.model.completion)
-        self.setSelection(len(self.model.text), len(self.model.completion))
-    
     def _prefix(self):
         # Returns the text before the selection
         if self.selectionStart() == -1:
@@ -50,20 +46,15 @@ class CompletableEdit(QLineEdit):
     def keyPressEvent(self, event):
         key = event.key()
         if key == Qt.Key_Up:
-            if self.model.text:
-                self.model.up()
-                self._refresh()
+            self.model.up()
         elif key == Qt.Key_Down:
-            if self.model.text:
-                self.model.down()
-                self._refresh()
+            self.model.down()
         else:
             oldPrefix = self._prefix()
             QLineEdit.keyPressEvent(self, event)
             prefix = self._prefix()
             if len(oldPrefix) < len(prefix):
                 self.model.text = prefix
-                self._refresh()
     
     #--- Public
     def prepareDataForCommit(self):
@@ -71,7 +62,11 @@ class CompletableEdit(QLineEdit):
         # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
         if self.selectedText() and self.selectedText() == self.model.completion:
             self.model.commit()
-            self._refresh()
+    
+    #--- model --> view
+    def refresh(self):
+        self.setText(self.model.text + self.model.completion)
+        self.setSelection(len(self.model.text), len(self.model.completion))
     
 
 class DescriptionEdit(CompletableEdit):

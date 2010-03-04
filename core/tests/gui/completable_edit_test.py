@@ -94,3 +94,20 @@ def test_set_attrname(app):
     app.ce.commit()
     eq_(app.ce.text, '')
     eq_(app.ce.completion, '')
+
+@with_app(app_with_match)
+def test_set_attrname_then_up(app):
+    # Setting the attrname has to clear the completion list (so when we press up(), we don't cycle
+    # through previous completions).
+    app.ce.attrname = 'foo'
+    app.ce.up()
+    eq_(app.ce.text, '')
+    eq_(app.ce.completion, '')
+
+@with_app(app_with_match)
+def test_set_source_then_up(app):
+    # Same as test_set_attrname_then_up, but with source
+    app.ce.source = app.ce.source
+    app.ce.up()
+    eq_(app.ce.text, '')
+    eq_(app.ce.completion, '')

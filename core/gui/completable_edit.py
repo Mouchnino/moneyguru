@@ -45,6 +45,8 @@ class CompletableEdit(object):
         completion = nonone(completion, '')
         self._complete_completion = completion
         self.completion = completion[len(self._text):]
+        if self.completion:
+            self.view.refresh()
     
     #--- Public
     def commit(self):
@@ -57,6 +59,7 @@ class CompletableEdit(object):
         if len(self._text) < len(self._complete_completion):
             self._text = self._complete_completion
             self.completion = ''
+            self.view.refresh()
     
     def down(self):
         if self._completions:
@@ -77,6 +80,7 @@ class CompletableEdit(object):
         self._refresh_candidates()
         self._text = ''
         self._set_completion('')
+        self._completions = None
     
     @property
     def source(self):
@@ -88,6 +92,7 @@ class CompletableEdit(object):
         self._refresh_candidates()
         self._text = ''
         self._set_completion('')
+        self._completions = None
     
     @property
     def text(self):
