@@ -10,7 +10,7 @@ from nose.tools import eq_
 
 from hsutil.currency import CAD, USD
 
-from ..base import TestCase, CommonSetup, ApplicationGUI
+from ..base import TestCase, ApplicationGUI
 from ...app import Application
 from ...model.account import AccountType
 from ...model.date import MonthRange
@@ -46,10 +46,10 @@ class Pristine(TestCase):
         eq_(len(set([self.istatement.income, self.istatement.expenses])), 2) # no crash
     
 
-class AccountsAndEntries(TestCase, CommonSetup):
+class AccountsAndEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account('Account 1', account_type=AccountType.Income)
         self.document.show_selected_account()
         self.add_entry('10/01/2008', 'Entry 1', increase='100.00')

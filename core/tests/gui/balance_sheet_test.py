@@ -24,10 +24,10 @@ from ...model.date import MonthRange
 # IMPORTANT NOTE: Keep in mind that every node count check in these tests take the total node and the
 # blank node into account. For example, the node acount of an empty ASSETS node is 2.
 
-class _AccountsAndEntries(TestCase, CommonSetup):
+class _AccountsAndEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account('income', account_type=AccountType.Income)
         self.add_account('expense', account_type=AccountType.Expense)
         self.add_account('Account 1')

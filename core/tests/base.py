@@ -768,9 +768,6 @@ class TestQIFExportImportMixin(TestAppCompareMixin):
     
 
 class CommonSetup(object):
-    def setup_monthly_range(self):
-        self.document.date_range = MonthRange(date.today())
-    
     def setup_one_entry_in_previous_range(self):
         # One entry with a date before the start of the current range. The only entry in the entry list
         # is a previous balance

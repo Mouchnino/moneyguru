@@ -14,16 +14,16 @@ from nose.tools import eq_
 
 from hsutil.currency import Currency, USD, CAD
 
-from ..base import TestCase, ApplicationGUI, CommonSetup
+from ..base import TestCase, ApplicationGUI
 from ...app import Application
 from ...gui.pie_chart import SLICE_COUNT
 from ...model.account import AccountType
 
-class _SomeAssetsAndLiabilities(TestCase, CommonSetup):
+class _SomeAssetsAndLiabilities(TestCase):
     def setUp(self):
-        self.create_instances()
-        self.setup_monthly_range()
         self.mock_today(2009, 1, 29) # On the last day of the month, some tests fail
+        self.create_instances()
+        self.document.select_month_range()
         self.add_account_legacy('a1')
         self.add_entry(increase='1.01') # values are trucated
         self.add_account_legacy('a2')
@@ -135,10 +135,10 @@ class MoreThanSliceCountAssets(TestCase):
         self.assertEqual(other, ('Others %1.1f%%' % (3 / (SLICE_COUNT + 2) * 100), 3))
     
 
-class SomeIncomeAndExpenses(TestCase, CommonSetup):
+class SomeIncomeAndExpenses(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account_legacy('foo')
         self.add_entry(transfer='i1', increase='2')
         self.add_entry(transfer='i2', increase='4')
@@ -201,10 +201,10 @@ class SomeIncomeAndExpenses(TestCase, CommonSetup):
         self.assertEqual(self.ipie.data, expected)
     
 
-class DifferentDateRanges(TestCase, CommonSetup):
+class DifferentDateRanges(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account_legacy('foo')
         self.add_entry(date='01/08/2008', transfer='baz', increase='5')
         self.add_entry(date='01/08/2008', transfer='bar', decrease='1')

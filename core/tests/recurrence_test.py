@@ -291,7 +291,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
     # ref txn. So the recurrences were always getting splits from the last loaded normal txn
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account_legacy('account')
         self.add_entry('19/09/2008', description='bar', increase='2')
         self.setup_scheduled_transaction(description='foo', account='account', debit='1', repeat_every=3)

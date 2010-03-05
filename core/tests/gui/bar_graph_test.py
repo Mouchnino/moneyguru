@@ -10,7 +10,7 @@ from nose.tools import eq_
 
 from hsutil.currency import CAD
 
-from ..base import TestCase, CommonSetup
+from ..base import TestCase
 from ...model.account import AccountType
 
 class Pristine(TestCase):
@@ -74,11 +74,11 @@ class SomeIncomeTodayAndInTheFuture(TestCase):
         eq_(self.bargraph.data[0][2:], (30, 12))
     
 
-class AccountAndEntriesAndBudget(TestCase, CommonSetup):
+class AccountAndEntriesAndBudget(TestCase):
     def setUp(self):
         # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account('Account 1', account_type=AccountType.Income)
         self.mock_today(2008, 1, 17)
         self.add_budget('Account 1', None, '400')

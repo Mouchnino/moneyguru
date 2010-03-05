@@ -13,10 +13,10 @@ from hsutil.currency import CAD, USD
 from ..base import TestCase, CommonSetup
 from ...model.account import AccountType
 
-class AssetsAndLiabilitiesInDifferentAccounts(TestCase, CommonSetup):
+class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         for i in range(1, 15):
             USD.set_CAD_value(1.42, date(2008, 7, i))
         for i in range(15, 32):

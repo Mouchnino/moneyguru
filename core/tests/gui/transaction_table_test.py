@@ -594,10 +594,10 @@ class ThreeWayNullAmounts(TestCase):
         eq_(row.to, 'third')
     
 
-class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
+class TwoTransactionsOneOutOfRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account()
         self.document.show_selected_account()
         self.add_entry('11/06/2008', description='first')

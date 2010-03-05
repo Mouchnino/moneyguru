@@ -8,14 +8,14 @@
 
 from datetime import date
 
-from ..base import TestCase, CommonSetup
+from ..base import TestCase
 from ...gui.print_view import PrintView
 
-class DateRangeOnApril2009(TestCase, CommonSetup):
+class DateRangeOnApril2009(TestCase):
     def setUp(self):
         self.mock_today(2009, 04, 01)
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.pv = PrintView(self.ttable)
     
     def test_attributes(self):

@@ -154,13 +154,13 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         eq_(self.btable[0].target, 'other asset')
     
 
-class TwoBudgetsFromSameAccount(TestCase, CommonSetup):
+class TwoBudgetsFromSameAccount(TestCase):
     def setUp(self):
         # XXX this mock is because the test previously failed because we were currently on the last
         # day of the month. TODO: Re-create the last-day condition and fix the calculation bug
         self.mock_today(2009, 8, 20)
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_entry(increase='25') # This entry must not be counted twice in budget calculations!
         self.add_budget('income', None, '100')

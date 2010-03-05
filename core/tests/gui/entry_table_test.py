@@ -357,10 +357,10 @@ class TwoEntries(TestCase):
         self.check_gui_calls(self.etable_gui, ['refresh', 'show_selected_row'])
     
 
-class TwoEntriesOneOutOfRange(TestCase, CommonSetup):
+class TwoEntriesOneOutOfRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         self.add_account()
         self.document.show_selected_account()
         self.add_entry('11/06/2008', 'first')

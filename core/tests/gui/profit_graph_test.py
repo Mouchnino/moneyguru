@@ -11,12 +11,12 @@ from datetime import date
 
 from hsutil.currency import USD
 
-from ..base import TestCase, CommonSetup
+from ..base import TestCase
 
-class Pristine(TestCase, CommonSetup):
+class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
     
     def test_cook_bar_overflow(self):
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
@@ -31,10 +31,10 @@ class Pristine(TestCase, CommonSetup):
         self.assertEqual(self.pgraph.data[0][2], 84)
     
     
-class IncomesAndExpensesInDifferentAccounts(TestCase, CommonSetup):
+class IncomesAndExpensesInDifferentAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_monthly_range()
+        self.document.select_month_range()
         USD.set_CAD_value(1.42, date(2008, 7, 1))
         # in july 2008, the first mondy is the 7th
         self.add_account_legacy('asset')
