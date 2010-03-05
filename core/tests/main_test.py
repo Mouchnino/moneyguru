@@ -568,10 +568,14 @@ class NegativeBoundEntry(TestCase):
         self.assertEqual(self.istatement.expenses.children_count, 3)
     
 
-class OneEntryInPreviousRange(TestCase, CommonSetup):
+class OneEntryInPreviousRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_one_entry_in_previous_range()
+        self.document.select_month_range()
+        self.add_account()
+        self.mainwindow.show_account()
+        self.add_entry('1/1/2008')
+        self.document.select_next_date_range()
     
     def test_attrs(self):
         row = self.etable[0]

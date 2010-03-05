@@ -768,13 +768,6 @@ class TestQIFExportImportMixin(TestAppCompareMixin):
     
 
 class CommonSetup(object):
-    def setup_one_entry_in_previous_range(self):
-        # One entry with a date before the start of the current range. The only entry in the entry list
-        # is a previous balance
-        self.add_account_legacy()
-        self.add_entry('1/1/2008')
-        self.document.date_range = MonthRange(date(2008, 2, 1))
-    
     def setup_scheduled_transaction(self, start_date='13/09/2008', description='foobar', 
             account=None, debit=None, repeat_type_index=0, repeat_every=1, stop_date=None):
         # 0 = daily, 1 = weekly, etc..
