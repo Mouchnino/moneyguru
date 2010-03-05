@@ -40,6 +40,7 @@ class CompletableEdit(object):
             if attrname == 'transfer' and doc.shown_account is not None:
                 result = [name for name in result if name != doc.shown_account.name]
             self._candidates = result
+        self._candidates = [name for name in self._candidates if name.strip()]
     
     def _set_completion(self, completion):
         completion = nonone(completion, '')
@@ -68,6 +69,13 @@ class CompletableEdit(object):
     def up(self):
         if self._completions:
             self._set_completion(self._completions.next())
+    
+    def lookup(self):
+        self.mainwindow.completion_lookup.show(self)
+    
+    def set_lookup_choice(self, text):
+        self._text = text
+        self.view.refresh()
     
     #--- Properties
     @property

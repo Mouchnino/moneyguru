@@ -82,6 +82,12 @@ http://www.hardcoded.net/licenses/hs_license
     return [super resignFirstResponder];
 }
 
+/* Actions */
+- (IBAction)lookupCompletion:(id)sender
+{
+    [py lookup];
+}
+
 /* Python --> Cocoa */
 - (void)refresh
 {

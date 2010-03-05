@@ -21,7 +21,7 @@ from .networth.view import NetWorthView
 from .profit.view import ProfitView
 from .transaction.view import TransactionView
 from .schedule.view import ScheduleView
-from .account_lookup import AccountLookup
+from .lookup import AccountLookup, CompletionLookup
 from .account_panel import AccountPanel
 from .account_reassign_panel import AccountReassignPanel
 from .transaction_panel import TransactionPanel
@@ -59,6 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cdrpanel = CustomDateRangePanel(self, doc=doc)
         self.arpanel = AccountReassignPanel(self, doc=doc)
         self.alookup = AccountLookup(self, mainwindow=self)
+        self.clookup = CompletionLookup(self, mainwindow=self)
         self._setupUi()
         # We don't set geometry if the window was maximized so that if the user de-maximize the
         # window, it actually shrinks.
@@ -66,7 +67,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.setGeometry(self.app.prefs.mainWindowRect)
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
-            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model]
+            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model,
+            self.clookup.model]
         self.model.set_children(children)
         self.model.connect()
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)

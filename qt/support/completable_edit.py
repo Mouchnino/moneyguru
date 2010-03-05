@@ -26,7 +26,7 @@ class CompletableEdit(QLineEdit):
         QLineEdit.__init__(self, parent)
         self.model = CompletableEditModel(view=self, mainwindow=None) # has to be set right after creation
         self.model.attrname = self.ATTRNAME
-    
+        
     def _prefix(self):
         # Returns the text before the selection
         if self.selectionStart() == -1:

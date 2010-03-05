@@ -31,6 +31,7 @@ from ..gui.budget_panel import BudgetPanel
 from ..gui.budget_table import BudgetTable
 from ..gui.budget_view import BudgetView
 from ..gui.completable_edit import CompletableEdit
+from ..gui.completion_lookup import CompletionLookup
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.entry_table import EntryTable
@@ -221,6 +222,8 @@ class TestApp(object):
         self.itable = ImportTable(self.itable_gui, self.iwin)
         self.alookup_gui = CallLogger()
         self.alookup = AccountLookup(self.alookup_gui, self.mw)
+        self.clookup_gui = CallLogger()
+        self.clookup = CompletionLookup(self.clookup_gui, self.mw)
         self.nwview_gui = CallLogger()
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
         self.nwview = NetWorthView(self.nwview_gui, self.mw, children)
@@ -240,7 +243,8 @@ class TestApp(object):
         children = [self.btable]
         self.bview = BudgetView(self.bview_gui, self.mw, children)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.alookup]
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.alookup,
+            self.clookup]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()

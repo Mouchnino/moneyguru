@@ -20,4 +20,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)commit;
 - (void)up;
 - (void)down;
+- (void)lookup;
 @end

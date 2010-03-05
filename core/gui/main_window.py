@@ -16,7 +16,7 @@ class MainWindow(DocumentGUIObject):
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
-            self.alookup) = children
+            self.alookup, self.completion_lookup) = children
         self._current_view = None
         self.show_balance_sheet()
     

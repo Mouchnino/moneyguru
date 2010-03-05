@@ -17,4 +17,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 - (id)initWithPyParent:(id)aParent;
 - (void)setAttrname:(NSString *)attrname;
+/* Actions */
+- (IBAction)lookupCompletion:(id)sender;
 @end

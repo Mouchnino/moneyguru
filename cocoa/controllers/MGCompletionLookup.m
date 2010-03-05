@@ -6,11 +6,17 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import <Cocoa/Cocoa.h>
-#import "MGLookup.h"
-#import "PyAccountLookup.h"
+#import "MGCompletionLookup.h"
 
-@interface MGAccountLookup : MGLookup {}
-- (id)initWithPyParent:(id)aPyParent;
-- (PyAccountLookup *)py;
+@implementation MGCompletionLookup
+- (id)initWithPyParent:(id)aPyParent
+{
+    self = [super initWithClassName:@"PyCompletionLookup" pyParent:aPyParent];
+    return self;
+}
+
+- (PyCompletionLookup *)py
+{
+    return (PyCompletionLookup *)py;
+}
 @end

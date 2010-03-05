@@ -34,6 +34,7 @@ from core.gui.budget_panel import BudgetPanel
 from core.gui.budget_view import BudgetView
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
 from core.gui.completable_edit import CompletableEdit
+from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_widget import DateWidget
 from core.gui.entry_print import EntryPrint
@@ -1424,9 +1425,7 @@ class PyImportTable(PyTable):
         self.py.unbind(index)
     
 
-class PyAccountLookup(PyGUIObject):
-    py_class = AccountLookup
-    
+class PyLookup(PyGUIObject):
     def go(self):
         self.py.go()
     
@@ -1454,6 +1453,12 @@ class PyAccountLookup(PyGUIObject):
     def hide(self):
         self.cocoa.hide()
     
+
+class PyAccountLookup(PyLookup):
+    py_class = AccountLookup
+
+class PyCompletionLookup(PyLookup):
+    py_class = CompletionLookup
 
 class PyDateWidget(NSObject):
     def init(self):
@@ -1526,6 +1531,9 @@ class PyCompletableEdit(NSObject):
     
     def up(self):
         self.py.up()
+    
+    def lookup(self):
+        self.py.lookup()
     
     # Python --> Cocoa
     def refresh(self):

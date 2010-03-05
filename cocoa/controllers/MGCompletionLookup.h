@@ -8,9 +8,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGLookup.h"
-#import "PyAccountLookup.h"
+#import "PyCompletionLookup.h"
 
-@interface MGAccountLookup : MGLookup {}
+@interface MGCompletionLookup : MGLookup {}
 - (id)initWithPyParent:(id)aPyParent;
-- (PyAccountLookup *)py;
+- (PyCompletionLookup *)py;
 @end

@@ -36,6 +36,7 @@ http://www.hardcoded.net/licenses/hs_license
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithDocument:document];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
+    completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
@@ -45,7 +46,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], [accountLookup py], nil];
+        [budgetPanel py], [accountLookup py], [completionLookup py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];

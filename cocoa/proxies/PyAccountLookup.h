@@ -7,13 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
+#import "PyLookup.h"
 
-@interface PyAccountLookup : PyGUI {}
-- (void)go;
-- (NSArray *)names;
-- (NSString *)searchQuery;
-- (void)setSearchQuery:(NSString *)query;
-- (NSInteger)selectedIndex;
-- (void)setSelectedIndex:(NSInteger)index;
+@interface PyAccountLookup : PyLookup {}
 @end

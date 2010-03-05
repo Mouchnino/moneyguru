@@ -329,3 +329,10 @@ def test_cedit_commit_complete_value(app):
     app.clear_gui_calls()
     app.ce.commit()
     app.check_gui_calls_partial(app.ce_gui, not_expected=['refresh'])
+
+@with_app(app_completable_edit)
+def test_cedit_lookup_and_select(app):
+    # When selecting a value through the completion lookup, the edit view is refreshed.
+    app.ce.lookup()
+    app.clookup.go()
+    app.check_gui_calls(app.ce_gui, ['refresh'])

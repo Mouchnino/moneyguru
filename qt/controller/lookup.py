@@ -11,13 +11,16 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QShortcut, QKeySequence
 
 from core.gui.account_lookup import AccountLookup as AccountLookupModel
+from core.gui.completion_lookup import CompletionLookup as CompletionLookupModel
 
-from ui.account_lookup_ui import Ui_AccountLookup
+from ui.lookup_ui import Ui_Lookup
 
-class AccountLookup(QWidget, Ui_AccountLookup):
+class Lookup(QWidget, Ui_Lookup):
+    MODEL_CLASS = None
+    
     def __init__(self, parent, mainwindow):
         QWidget.__init__(self, parent, Qt.Window)
-        self.model = AccountLookupModel(view=self, mainwindow=mainwindow.model)
+        self.model = self.MODEL_CLASS(view=self, mainwindow=mainwindow.model)
         self._setupUi()
         
         self.searchEdit.searchChanged.connect(self.searchChanged)
@@ -76,3 +79,9 @@ class AccountLookup(QWidget, Ui_AccountLookup):
     def hide(self):
         QWidget.hide(self)
     
+
+class AccountLookup(Lookup):
+    MODEL_CLASS = AccountLookupModel
+
+class CompletionLookup(Lookup):
+    MODEL_CLASS = CompletionLookupModel

@@ -25,6 +25,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGCustomDateRangePanel.h"
 #import "MGAccountReassignPanel.h"
 #import "MGAccountLookup.h"
+#import "MGCompletionLookup.h"
 #import "MGBaseView.h"
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
@@ -52,6 +53,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGCustomDateRangePanel *customDateRangePanel;
     MGAccountReassignPanel *accountReassignPanel;
     MGAccountLookup *accountLookup;
+    MGCompletionLookup *completionLookup;
     MGBaseView *top;
     NSToolbarItem *reconciliationToolbarItem;
 }
