@@ -20,14 +20,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)import:(id)sender;
 - (IBAction)saveToQIF:(id)sender;
 
-/* Private */
-- (void)registerDefaults;
-
 /* Misc */
 - (void)stopEdition;
-- (NSString *)documentDefaultsKey;
-- (id)defaultForKey:(NSString *)aKey;
-- (void)setDefault:(id)aDefault forKey:(NSString *)aKey;
 
 /* Python -> Cocoa */
 - (BOOL)queryForScheduleScope;

@@ -25,7 +25,6 @@ http://www.hardcoded.net/licenses/hs_license
     Class pyClass = [Utils classNamed:@"PyDocument"];
     py = [[pyClass alloc] initWithCocoa:self pyParent:[app py]];
     [self setUndoManager:[[[MGUndoManager alloc] initWithPy:[self py]] autorelease]];
-    [self registerDefaults]; // register new file defaults
     return self;
 }
 
@@ -48,22 +47,6 @@ http://www.hardcoded.net/licenses/hs_license
     }
     [super release];
 }
-
-/* Private */
-
-// Register default values for document based preferences
-- (void)registerDefaults
-{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *key = [self documentDefaultsKey];
-    NSMutableDictionary *d = [NSMutableDictionary dictionary];
-    NSArray *expandedItems = [NSArray arrayWithObjects:@"0", @"1",nil]; // the 2 top level nodes
-    [d setObject:expandedItems forKey:[NSString stringWithFormat:@"%@.BalanceSheet.ExpandedItems",key]];
-    [d setObject:expandedItems forKey:[NSString stringWithFormat:@"%@.IncomeStatement.ExpandedItems",key]];
-    [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:d];
-    [ud registerDefaults:d];
-}
-
 /* For GUI Proxies */
 
 - (PyDocument *)py
@@ -146,12 +129,6 @@ http://www.hardcoded.net/licenses/hs_license
     return NO;
 }
 
-- (void)setFileURL:(NSURL *)absoluteURL
-{
-    [super setFileURL:absoluteURL];
-    [self registerDefaults];
-}
-
 /* Actions */
 
 - (IBAction)import:(id)sender
@@ -185,7 +162,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Misc */
-
 - (BOOL)isDirty
 {
     return [py isDirty];
@@ -194,32 +170,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)stopEdition
 {
     [py stopEdition];
-}
-
-- (NSString *)documentDefaultsKey
-{
-    NSURL *path = [self fileURL];
-    NSString *strPath = path == nil ? @"NewFile" : [path absoluteString];
-    return [NSString stringWithFormat:@"DocumentBased.%@",strPath];
-}
-
-- (id)defaultForKey:(NSString *)aKey
-{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *wholeKey = [NSString stringWithFormat:@"%@.%@",[self documentDefaultsKey],aKey];
-    return [ud objectForKey:wholeKey];
-}
-
-- (void)setDefault:(id)aDefault forKey:(NSString *)aKey
-{
-    if ([self fileURL] == nil)
-    {
-        // Dont't write preferences for new files. They are always on default values.
-        return;
-    }
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *wholeKey = [NSString stringWithFormat:@"%@.%@",[self documentDefaultsKey],aKey];
-    [ud setObject:aDefault forKey:wholeKey];
 }
 
 /* Python -> Cocoa */
