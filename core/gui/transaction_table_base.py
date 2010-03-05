@@ -54,6 +54,8 @@ class TransactionTableBase(GUITable, DocumentGUIObject):
     
     def change_columns(self, columns):
         """Call this when the order or the visibility of the columns change"""
+        
+        columns = [c if c != 'from_' else 'from' for c in columns]
         self._columns = columns
     
     def duplicate_selected(self):

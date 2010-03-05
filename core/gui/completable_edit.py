@@ -88,6 +88,10 @@ class CompletableEdit(object):
     
     @attrname.setter
     def attrname(self, value):
+        # XXX this place is getting very ugly
+        if self.mainwindow is None:
+            self._attrname = value
+            return
         doc = self.mainwindow.document
         if value == self._attrname and self._candidates_refresh_time >= doc.transactions.last_change_mtime:
             # attrname, during Cocoa's table editing can be called quite often. This is an

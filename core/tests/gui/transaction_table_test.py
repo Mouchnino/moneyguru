@@ -26,13 +26,13 @@ class Pristine(TestCase):
         """Reverting after an add removes the transaction from the list"""
         self.ttable.add()
         self.ttable.cancel_edits()
-        self.assertEqual(len(self.ttable), 0)
+        eq_(len(self.ttable), 0)
     
     def test_add_change_and_save(self):
         """The add mechanism works as expected"""
         self.ttable.add()
-        self.assertEqual(len(self.ttable), 1)
-        self.assertEqual(self.ttable.selected_indexes, [0])    
+        eq_(len(self.ttable), 1)
+        eq_(self.ttable.selected_indexes, [0])    
         row = self.ttable[0]
         row.description = 'foobar'
         row.from_ = 'some account'
@@ -42,7 +42,7 @@ class Pristine(TestCase):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
+        eq_(len(self.etable), 1)
     
     def test_add_twice_then_save(self):
         """Calling add() while in edition calls save_edits()"""
@@ -51,7 +51,7 @@ class Pristine(TestCase):
         self.ttable.add()
         self.ttable.add()
         self.ttable.save_edits()
-        self.assertEqual(len(self.ttable), 2)
+        eq_(len(self.ttable), 2)
     
     def test_delete(self):
         """Don't crash when trying to remove a transaction from an empty list"""
@@ -91,7 +91,7 @@ class EditionMode(TestCase):
         """Leaving the from/to columns empty don't auto-create an empty named account"""
         self.ttable.save_edits()
         self.mainwindow.select_income_statement()
-        self.assertEqual(self.istatement.income.children_count, 2)
+        eq_(self.istatement.income.children_count, 2)
     
     def test_change_date_range(self):
         # When changing the date range during edition, stop that edition before the date range changes
@@ -103,7 +103,7 @@ class EditionMode(TestCase):
         out of edition mode.
         """
         self.ttable.delete()
-        self.assertEqual(len(self.ttable), 0)
+        eq_(len(self.ttable), 0)
         self.ttable.save_edits() # Shouldn't raise anything
     
     def test_duplicate_selected(self):
@@ -380,9 +380,9 @@ class OneTwoWayTransactionOtherWay(TestCase):
         """The from and to attributes depends on the money flow, not the order of the splits"""
         self.mainwindow.select_transaction_table()
         row = self.ttable[0]
-        self.assertEqual(row.from_, 'second')
-        self.assertEqual(row.to, 'first')
-        self.assertEqual(row.amount, '42.00')
+        eq_(row.from_, 'second')
+        eq_(row.to, 'first')
+        eq_(row.amount, '42.00')
     
 
 #--- Three-way transaction
@@ -508,8 +508,8 @@ class OneFourWayTransactionWithUnassigned(TestCase):
     def test_attributes(self):
         """The from/to fields show the unassigned splits"""
         row = self.ttable[0]
-        self.assertEqual(row.from_, 'first, Unassigned')
-        self.assertEqual(row.to, 'second, Unassigned')
+        eq_(row.from_, 'first, Unassigned')
+        eq_(row.to, 'second, Unassigned')
     
 
 class TwoWayUnassignedWithAmount(TestCase):
@@ -524,8 +524,8 @@ class TwoWayUnassignedWithAmount(TestCase):
         """The from/to columns are empty"""
         # previously, they would show "Unassigned"
         row = self.ttable[0]
-        self.assertEqual(row.from_, '')
-        self.assertEqual(row.to, '')
+        eq_(row.from_, '')
+        eq_(row.to, '')
     
         
 class EmptyTransaction(TestCase):
@@ -538,8 +538,8 @@ class EmptyTransaction(TestCase):
     def test_null_unassigned_dont_show_up(self):
         """As opposed to null amounts assigned to accounts, null amounts assign to nothing are ignored"""
         row = self.ttable[0]
-        self.assertEqual(row.from_, '')
-        self.assertEqual(row.to, '')
+        eq_(row.from_, '')
+        eq_(row.to, '')
     
 
 class TwoWayNullAmounts(TestCase):
@@ -553,13 +553,13 @@ class TwoWayNullAmounts(TestCase):
     def test_dont_blank_zero(self):
         """Null amounts are not blanked"""
         row = self.ttable[0]
-        self.assertEqual(row.amount, '0.00')
+        eq_(row.amount, '0.00')
         
     def test_from_to(self):
         """When the amounts are null, put everything in from and the last in to"""
         row = self.ttable[0]
-        self.assertEqual(row.from_, 'first')
-        self.assertEqual(row.to, 'second')
+        eq_(row.from_, 'first')
+        eq_(row.to, 'second')
     
 
 class ThreeWayNullAmounts(TestCase):
@@ -585,13 +585,13 @@ class ThreeWayNullAmounts(TestCase):
         row = self.ttable[0]
         row.to = 'fourth'
         self.ttable.save_edits()
-        self.assertEqual(self.ttable[0].to, 'fourth')
+        eq_(self.ttable[0].to, 'fourth')
     
     def test_from_to(self):
         """When the amounts are null, put everything in from and the last in to"""
         row = self.ttable[0]
-        self.assertEqual(row.from_, 'first, second')
-        self.assertEqual(row.to, 'third')
+        eq_(row.from_, 'first, second')
+        eq_(row.to, 'third')
     
 
 class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
@@ -607,7 +607,7 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
     
     def test_attributes(self):
         """The table only contains transactons in the current date range"""
-        self.assertEqual(len(self.ttable), 1)
+        eq_(len(self.ttable), 1)
     
     def test_select_prev_date_range(self):
         # The transaction table refreshes itself on date range change
@@ -621,7 +621,7 @@ class TwoTransactionsOneOutOfRange(TestCase, CommonSetup):
         # The tpanel loads the document selection, so this is why we test through it.
         self.document.select_prev_date_range()
         self.tpanel.load()
-        self.assertEqual(self.tpanel.description, 'first')
+        eq_(self.tpanel.description, 'first')
     
 
 class ThreeTransactionsInRange(TestCase):
@@ -641,31 +641,31 @@ class ThreeTransactionsInRange(TestCase):
         self.ttable.select([0])
         self.ttable.add()
         row = self.ttable.edited
-        self.assertEqual(row.date, '11/07/2008')
-        self.assertEqual(self.ttable.selected_indexes, [2])
+        eq_(row.date, '11/07/2008')
+        eq_(self.ttable.selected_indexes, [2])
     
     def test_delete_last(self):
         """Deleting the last txn makes the selection goes one index before"""
         self.ttable.delete()
-        self.assertEqual(self.ttable.selected_indexes, [1])
+        eq_(self.ttable.selected_indexes, [1])
     
     def test_delete_multiple_selection(self):
         """delete() when having multiple entries selected delete all selected entries"""
         self.ttable.select([0, 2])
         self.ttable.delete()
-        self.assertEqual(self.transaction_descriptions(), ['second'])
+        eq_(self.transaction_descriptions(), ['second'])
     
     def test_delete_entries_second(self):
         """Deleting a txn that is not the last does not change the selected index"""
         self.ttable.select([1])
         self.ttable.delete()
-        self.assertEqual(self.ttable.selected_indexes, [1])
+        eq_(self.ttable.selected_indexes, [1])
     
     def test_delete_first(self):
         # Deleting the first entry keeps the selection on the first index
         self.ttable.select([0])
         self.ttable.delete()
-        self.assertEqual(self.ttable.selected_indexes, [0])
+        eq_(self.ttable.selected_indexes, [0])
     
     def test_delete_second_then_add(self):
         # When deleting the second entry, the 3rd end up selected. if we add a new txn, the txn date
@@ -673,7 +673,7 @@ class ThreeTransactionsInRange(TestCase):
         self.ttable.select([1])
         self.ttable.delete()
         self.ttable.add()
-        self.assertEqual(self.ttable.edited.date, '12/07/2008')
+        eq_(self.ttable.edited.date, '12/07/2008')
     
     def test_explicit_selection(self):
         """Only the explicit selection is sticky. If the non-explicit selection changes, this 
@@ -683,7 +683,7 @@ class ThreeTransactionsInRange(TestCase):
         self.istatement.selected = self.istatement.income[1] # second
         self.istatement.show_selected_account()
         self.mainwindow.select_transaction_table()
-        self.assertEqual(self.ttable.selected_indexes, [2]) # explicit selection
+        eq_(self.ttable.selected_indexes, [2]) # explicit selection
         # the other way around too
         self.ttable.select([1])
         self.mainwindow.select_income_statement()
@@ -692,7 +692,7 @@ class ThreeTransactionsInRange(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(self.etable.selected_indexes, [1]) # explicit selection
+        eq_(self.etable.selected_indexes, [1]) # explicit selection
     
     def test_selection(self):
         # TransactionTable stays in sync with EntryTable.
@@ -741,8 +741,8 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         # The ttable is correctly updated after a move with a filter applied
         self.sfield.query = 'entry'
         self.ttable.move([1], 3)
-        self.assertEqual(self.ttable[1].description, 'entry 3')
-        self.assertEqual(self.ttable[2].description, 'entry 2')
+        eq_(self.ttable[1].description, 'entry 3')
+        eq_(self.ttable[2].description, 'entry 2')
     
     def test_row_reconciled(self):
         self.assertTrue(self.ttable[0].reconciled)
@@ -799,134 +799,148 @@ class LoadFile(TestCase):
     def test_add_txn(self):
         # The newly added txn will have the last transactions' date rather then today's date
         self.ttable.add()
-        self.assertEqual(self.ttable.edited.date, '19/02/2008')
+        eq_(self.ttable.edited.date, '19/02/2008')
     
     def test_attributes(self):
         """The transaction table refreshes upon FILE_LOADED"""
-        self.assertEqual(len(self.ttable), 4)
-        self.assertEqual(self.ttable.selected_indexes, [3])
+        eq_(len(self.ttable), 4)
+        eq_(self.ttable.selected_indexes, [3])
     
 
-class AutoFill(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('Checking')
-        self.document.show_selected_account()
-        self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
-    
-    def test_autofill_after_column_change(self):
-        """When setting the Table's columns, only the columns to the right of the edited are auto-filled"""
-        self.ttable.change_columns(['from', 'description', 'to', 'amount']) # payee is not there
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'Deposit'
-        self.assertEqual(row.amount, '42.00')
-        self.assertEqual(row.payee, '')
-        self.assertEqual(row.from_, '')
-        self.assertEqual(row.to, 'Checking')
-    
-    def test_autofill_doesnt_overwrite_nonblank_fields(self):
-        """Autofill doesn't touch fields that have a non-blank value"""
-        self.ttable.add()
-        row = self.ttable.edited
-        row.payee = 'foo'
-        row.from_ = 'bar'
-        row.to = 'baz'
-        row.amount = '12'
-        row.description = 'Deposit'
-        self.assertEqual(row.amount, '12.00')
-        self.assertEqual(row.payee, 'foo')
-        self.assertEqual(row.from_, 'bar')
-        self.assertEqual(row.to, 'baz')
-        self.ttable.cancel_edits()
-        # Now we need another row to try for description
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'foo'
-        row.payee = 'Payee'
-        self.assertEqual(row.description, 'foo')
-    
-    def test_autofill_is_case_sensitive(self):
-        """When the case of a description/transfer value does not match an entry, completion do not
-        occur
-        """
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'deposit'
-        row.from_ = 'deposit'
-        row.to = 'deposit'
-        self.assertEqual(row.amount, '0.00')
-    
-    def test_autofill_ignores_blank(self):
-        """Blank values never result in autofill"""
-        self.mainwindow.select_transaction_table()
-        row = self.ttable[0]
-        row.description = ''
-        self.ttable.save_edits()
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = ''
-        self.assertEqual(row.payee, '')
-    
-    def test_autofill_on_set_from(self):
-        """Setting 'from' autocompletes the rest"""
-        self.ttable.add()
-        row = self.ttable.edited
-        row.from_ = 'Salary'
-        self.assertEqual(row.amount, '42.00')
-        self.assertEqual(row.description, 'Deposit')
-        self.assertEqual(row.payee, 'Payee')
-        self.assertEqual(row.to, 'Checking')
-    
-    def test_autofill_on_set_to(self):
-        """Setting 'from' autocompletes the rest"""
-        self.ttable.add()
-        row = self.ttable.edited
-        row.to = 'Checking'
-        self.assertEqual(row.amount, '42.00')
-        self.assertEqual(row.description, 'Deposit')
-        self.assertEqual(row.payee, 'Payee')
-        self.assertEqual(row.from_, 'Salary')
-    
-    def test_autofill_on_set_description(self):
-        """Setting a description autocompletes the amount and the transfer"""
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'Deposit'
-        self.assertEqual(row.amount, '42.00')
-        self.assertEqual(row.payee, 'Payee')
-        self.assertEqual(row.from_, 'Salary')
-        self.assertEqual(row.to, 'Checking')
-    
-    def test_autofill_on_set_payee(self):
-        """Setting a transfer autocompletes the amount and the description"""
-        self.ttable.add()
-        row = self.ttable.edited
-        row.payee = 'Payee'
-        self.assertEqual(row.amount, '42.00')
-        self.assertEqual(row.description, 'Deposit')
-        self.assertEqual(row.from_, 'Salary')
-        self.assertEqual(row.to, 'Checking')
-    
-    def test_autofill_only_when_the_value_changes(self):
-        # When editing an existing entry, don't autofill if the value set hasn't changed
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'Deposit' # everything is autofilled
-        row.payee = ''
-        row.description = 'Deposit'
-        self.assertEqual(row.payee, '')
-    
-    def test_autofill_uses_the_latest_entered(self):
-        """Even if the date is earlier, we use this newly added entry because it's the latest 
-        modified
-        """
-        self.add_entry('9/10/2007', 'Deposit', increase='12.34')
-        self.ttable.add()
-        row = self.ttable.edited
-        row.description = 'Deposit'
-        self.assertEqual(row.amount, '12.34')
-    
+#--- Autofill
+def app_autofill():
+    app = TestApp()
+    app.add_account('Checking')
+    app.doc.show_selected_account()
+    app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
+    return app
+
+@with_app(app_autofill)
+def test_autofill_after_column_change(app):
+    # When setting the Table's columns, only the columns to the right of the edited are auto-filled.
+    app.ttable.change_columns(['from', 'description', 'to', 'amount']) # payee is not there
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'Deposit'
+    eq_(row.amount, '42.00')
+    eq_(row.payee, '')
+    eq_(row.from_, '')
+    eq_(row.to, 'Checking')
+
+@with_app(app_autofill)
+def test_autofill_doesnt_overwrite_nonblank_fields(app):
+    # Autofill doesn't touch fields that have a non-blank value.
+    app.ttable.add()
+    row = app.ttable.edited
+    row.payee = 'foo'
+    row.from_ = 'bar'
+    row.to = 'baz'
+    row.amount = '12'
+    row.description = 'Deposit'
+    eq_(row.amount, '12.00')
+    eq_(row.payee, 'foo')
+    eq_(row.from_, 'bar')
+    eq_(row.to, 'baz')
+    app.ttable.cancel_edits()
+    # Now we need another row to try for description
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'foo'
+    row.payee = 'Payee'
+    eq_(row.description, 'foo')
+
+@with_app(app_autofill)
+def test_autofill_is_case_sensitive(app):
+    # When the case of a description/transfer value does not match an entry, completion do not occur.
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'deposit'
+    row.from_ = 'deposit'
+    row.to = 'deposit'
+    eq_(row.amount, '0.00')
+
+@with_app(app_autofill)
+def test_autofill_ignores_blank(app):
+    # Blank values never result in autofill.
+    app.mw.select_transaction_table()
+    row = app.ttable[0]
+    row.description = ''
+    app.ttable.save_edits()
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = ''
+    eq_(row.payee, '')
+
+@with_app(app_autofill)
+def test_autofill_on_set_from(app):
+    # Setting 'from' autocompletes the rest.
+    app.ttable.add()
+    row = app.ttable.edited
+    row.from_ = 'Salary'
+    eq_(row.amount, '42.00')
+    eq_(row.description, 'Deposit')
+    eq_(row.payee, 'Payee')
+    eq_(row.to, 'Checking')
+
+@with_app(app_autofill)
+def test_autofill_on_set_to(app):
+    # Setting 'from' autocompletes the rest.
+    app.ttable.add()
+    row = app.ttable.edited
+    row.to = 'Checking'
+    eq_(row.amount, '42.00')
+    eq_(row.description, 'Deposit')
+    eq_(row.payee, 'Payee')
+    eq_(row.from_, 'Salary')
+
+@with_app(app_autofill)
+def test_autofill_on_set_description(app):
+    # Setting a description autocompletes the amount and the transfer.
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'Deposit'
+    eq_(row.amount, '42.00')
+    eq_(row.payee, 'Payee')
+    eq_(row.from_, 'Salary')
+    eq_(row.to, 'Checking')
+
+@with_app(app_autofill)
+def test_autofill_on_set_payee(app):
+    # Setting a transfer autocompletes the amount and the description.
+    app.ttable.add()
+    row = app.ttable.edited
+    row.payee = 'Payee'
+    eq_(row.amount, '42.00')
+    eq_(row.description, 'Deposit')
+    eq_(row.from_, 'Salary')
+    eq_(row.to, 'Checking')
+
+@with_app(app_autofill)
+def test_autofill_only_when_the_value_changes(app):
+    # When editing an existing entry, don't autofill if the value set hasn't changed
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'Deposit' # everything is autofilled
+    row.payee = ''
+    row.description = 'Deposit'
+    eq_(row.payee, '')
+
+@with_app(app_autofill)
+def test_autofill_uses_the_latest_entered(app):
+    # Even if the date is earlier, we use this newly added entry because it's the latest modified.
+    app.add_entry('9/10/2007', 'Deposit', increase='12.34')
+    app.ttable.add()
+    row = app.ttable.edited
+    row.description = 'Deposit'
+    eq_(row.amount, '12.34')
+
+@with_app(app_autofill)
+def test_change_columns_fixed_from(app):
+    # When 'from_' is passed in change_columns(), it is automatically changed to 'from'
+    app.mw.select_transaction_table()
+    app.ttable.change_columns(['from_', 'description', 'to', 'amount'])
+    app.ttable[0].from_ = 'foo' # no crash
+
 
 class SevenEntries(TestCase):
     def setUp(self):
@@ -976,32 +990,32 @@ class SevenEntries(TestCase):
         row = self.ttable[2]
         row.date = '3/1/2008'
         self.ttable.save_edits()
-        self.assertEqual(self.ttable[6].description, 'txn 3')
-        self.assertEqual(self.ttable.selected_indexes, [6])
+        eq_(self.ttable[6].description, 'txn 3')
+        eq_(self.ttable.selected_indexes, [6])
     
     def test_move_entry_to_the_end_of_the_day(self):
         """Moving a txn to the end of the day works"""
         self.mainwindow.select_transaction_table()
         self.ttable.move([1], 5)
-        self.assertEqual(self.transaction_descriptions()[:5], ['txn 1', 'txn 3', 'txn 4', 'txn 5', 'txn 2'])
+        eq_(self.transaction_descriptions()[:5], ['txn 1', 'txn 3', 'txn 4', 'txn 5', 'txn 2'])
     
     def test_move_entry_to_the_end_of_the_list(self):
         """Moving a txn to the end of the list works"""
         self.mainwindow.select_transaction_table()
         self.ttable.move([5], 7)
-        self.assertEqual(self.transaction_descriptions()[5:], ['txn 7', 'txn 6'])
+        eq_(self.transaction_descriptions()[5:], ['txn 7', 'txn 6'])
     
     def test_reorder_entry(self):
         """Moving a txn reorders the entries."""
         self.mainwindow.select_transaction_table()
         self.ttable.move([1], 3)
-        self.assertEqual(self.transaction_descriptions()[:4], ['txn 1', 'txn 3', 'txn 2', 'txn 4'])
+        eq_(self.transaction_descriptions()[:4], ['txn 1', 'txn 3', 'txn 2', 'txn 4'])
     
     def test_reorder_entry_multiple(self):
         """Multiple txns can be re-ordered at once"""
         self.mainwindow.select_transaction_table()
         self.ttable.move([1, 2], 4)
-        self.assertEqual(self.transaction_descriptions()[:4], ['txn 1', 'txn 4', 'txn 2', 'txn 3'])
+        eq_(self.transaction_descriptions()[:4], ['txn 1', 'txn 4', 'txn 2', 'txn 3'])
     
     def test_reorder_entry_makes_the_app_dirty(self):
         """reordering txns makes the app dirty"""
@@ -1015,28 +1029,28 @@ class SevenEntries(TestCase):
         self.mainwindow.select_transaction_table()
         self.ttable.select([1])
         self.ttable.move([1], 3)
-        self.assertEqual(self.ttable.selected_indexes, [2])
+        eq_(self.ttable.selected_indexes, [2])
         self.ttable.move([2], 1)
-        self.assertEqual(self.ttable.selected_indexes, [1])
+        eq_(self.ttable.selected_indexes, [1])
     
     def test_selection_follows_multiple(self):
         """The selection follows when we move the selected txns"""
         self.mainwindow.select_transaction_table()
         self.ttable.select([1, 2])
         self.ttable.move([1, 2], 4)
-        self.assertEqual(self.ttable.selected_indexes, [2, 3])
+        eq_(self.ttable.selected_indexes, [2, 3])
     
     def test_selection_stays(self):
         """The selection stays on the same txn if we don't move the selected one"""
         self.mainwindow.select_transaction_table()
         self.ttable.select([2])
         self.ttable.move([1], 3)
-        self.assertEqual(self.ttable.selected_indexes, [1])
+        eq_(self.ttable.selected_indexes, [1])
         self.ttable.move([2], 1)
-        self.assertEqual(self.ttable.selected_indexes, [2])
+        eq_(self.ttable.selected_indexes, [2])
         self.ttable.select([4])
         self.ttable.move([1], 3)
-        self.assertEqual(self.ttable.selected_indexes, [4])
+        eq_(self.ttable.selected_indexes, [4])
     
 
 class FourEntriesOnTheSameDate(TestCase):
@@ -1060,23 +1074,23 @@ class FourEntriesOnTheSameDate(TestCase):
         """Moving more than one entry up does nothing"""
         self.ttable.select([1, 2])
         self.ttable.move_up()
-        self.assertEqual(self.transaction_descriptions(), ['txn 1', 'txn 2', 'txn 3', 'txn 4'])
+        eq_(self.transaction_descriptions(), ['txn 1', 'txn 2', 'txn 3', 'txn 4'])
 
     def test_move_entry_down(self):
         """Move an entry down a couple of times"""
         self.ttable.select([2])
         self.ttable.move_down()
-        self.assertEqual(self.transaction_descriptions(), ['txn 1', 'txn 2', 'txn 4', 'txn 3'])
+        eq_(self.transaction_descriptions(), ['txn 1', 'txn 2', 'txn 4', 'txn 3'])
         self.ttable.move_down()
-        self.assertEqual(self.transaction_descriptions(), ['txn 1', 'txn 2', 'txn 4', 'txn 3'])
+        eq_(self.transaction_descriptions(), ['txn 1', 'txn 2', 'txn 4', 'txn 3'])
 
     def test_move_entry_up(self):
         """Move an entry up a couple of times"""
         self.ttable.select([1])
         self.ttable.move_up()
-        self.assertEqual(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
+        eq_(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
         self.ttable.move_up()
-        self.assertEqual(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
+        eq_(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
     
 
 class WithBudget(TestCase, CommonSetup):
