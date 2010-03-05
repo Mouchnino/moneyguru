@@ -12,6 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyParent:(id)aPyParent
 {
     self = [super initWithClassName:@"PyAccountLookup" pyParent:aPyParent];
+    [[self window] setTitle:@"Account Lookup"];
     return self;
 }
 
