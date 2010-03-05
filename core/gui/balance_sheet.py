@@ -13,6 +13,8 @@ from ..model.date import DateRange, ONE_DAY
 from .report import Report, get_delta_perc
 
 class BalanceSheet(Report):
+    PREFERENCE_PREFIX = 'BalanceSheet'
+    
     #--- Override
     def _compute_account_node(self, node):
         account = node.account

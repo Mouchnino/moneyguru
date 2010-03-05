@@ -12,7 +12,6 @@
 		071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0714240D0E2A797800AC27AC /* MGLineGraphView.m */; };
 		0726B2B40E49E1260059E8A7 /* MGReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0726B2B30E49E1260059E8A7 /* MGReport.m */; };
 		0726B3C50E4A02C30059E8A7 /* IncomeStatement.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0726B3C40E4A02C30059E8A7 /* IncomeStatement.xib */; };
-		07373CB20E3130050082D3E8 /* MGOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = 07373CB10E3130050082D3E8 /* MGOutline.m */; };
 		0761B95D0E547CE800E99B31 /* MGAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0761B95C0E547CE800E99B31 /* MGAmountCell.m */; };
 		0775D6B10CE4F640007F0C8F /* mg_cocoa.plugin in Resources */ = {isa = PBXBuildFile; fileRef = 0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */; };
 		077FBF2C0E27B053001DC57D /* EntryTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077FBF2B0E27B053001DC57D /* EntryTable.xib */; };
@@ -224,8 +223,6 @@
 		0726B3260E49E7A50059E8A7 /* PyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReport.h; sourceTree = "<group>"; };
 		0726B32B0E49E83B0059E8A7 /* PyIncomeStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyIncomeStatement.h; sourceTree = "<group>"; };
 		0726B3C40E4A02C30059E8A7 /* IncomeStatement.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomeStatement.xib; sourceTree = "<group>"; };
-		07373CB00E3130050082D3E8 /* MGOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGOutline.h; sourceTree = "<group>"; };
-		07373CB10E3130050082D3E8 /* MGOutline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGOutline.m; sourceTree = "<group>"; };
 		0761B95B0E547CE800E99B31 /* MGAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAmountCell.h; sourceTree = "<group>"; };
 		0761B95C0E547CE800E99B31 /* MGAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAmountCell.m; sourceTree = "<group>"; };
 		0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mg_cocoa.plugin; sourceTree = "<group>"; };
@@ -831,8 +828,6 @@
 				CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */,
 				CE873A880E21622F004F63E9 /* MGMainWindow.h */,
 				CE873A890E21622F004F63E9 /* MGMainWindow.m */,
-				07373CB00E3130050082D3E8 /* MGOutline.h */,
-				07373CB10E3130050082D3E8 /* MGOutline.m */,
 				0726B2B20E49E1260059E8A7 /* MGReport.h */,
 				0726B2B30E49E1260059E8A7 /* MGReport.m */,
 				CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */,
@@ -1320,7 +1315,6 @@
 				0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */,
 				071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */,
 				CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */,
-				07373CB20E3130050082D3E8 /* MGOutline.m in Sources */,
 				CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */,
 				07D99F260E37D5A70009142B /* MGTextFieldCell.m in Sources */,
 				CE0F13940E39BC4A006B6982 /* MGMassEditionPanel.m in Sources */,

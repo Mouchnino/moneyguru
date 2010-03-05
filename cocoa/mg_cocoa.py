@@ -476,6 +476,9 @@ class PyReport(PyOutline):
     def collapsePath_(self, path):
         self.py.collapse_node(self.py.get_node(path))
     
+    def expandedPaths(self):
+        return self.py.expanded_paths
+    
     #--- Python --> Cocoa
     def show_message(self, msg):
         self.cocoa.showMessage_(msg)

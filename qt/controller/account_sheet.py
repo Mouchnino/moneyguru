@@ -89,7 +89,6 @@ class AccountSheetDelegate(ItemDelegate):
     
 
 class AccountSheet(TreeModel, ColumnBearer):
-    EXPANDED_NODE_PREF_NAME = None # must set in subclass
     AMOUNT_ATTRS = set()
     BOLD_ATTRS = set()
     
@@ -99,12 +98,10 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.doc = doc
         self.app = doc.app
         self.view = view
-        self._wasRestored = False
         self.model = model
         self.view.setModel(self)
         self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)
-        self._restoreNodeExpansionState()
         
         self.view.selectionModel().currentRowChanged.connect(self.currentRowChanged)
         self.view.collapsed.connect(self.nodeCollapsed)
@@ -112,7 +109,6 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.deletePressed.connect(self.model.delete)
         self.view.spacePressed.connect(self.model.toggle_excluded)
         self.view.doubleClicked.connect(self.model.show_selected_account)
-        self.app.willSavePrefs.connect(self._saveNodeExpansionState)
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):
@@ -122,21 +118,6 @@ class AccountSheet(TreeModel, ColumnBearer):
         return self.model[:]
     
     #--- Private
-    def _restoreNodeExpansionState(self):
-        paths = getattr(self.app.prefs, self.EXPANDED_NODE_PREF_NAME)
-        for path in paths:
-            index = self.findIndex(path)
-            self.view.expand(index)
-    
-    def _saveNodeExpansionState(self):
-        paths = []
-        index = self.index(0, 0, QModelIndex())
-        while index.isValid():
-            if self.view.isExpanded(index):
-                paths.append(self.pathForIndex(index))
-            index = self.view.indexBelow(index)
-        setattr(self.app.prefs, self.EXPANDED_NODE_PREF_NAME, paths)
-    
     def _updateViewSelection(self):
         # Takes the selection on the model's side and update the view with it.
         selectedPath = self.model.selected_path
@@ -265,11 +246,10 @@ class AccountSheet(TreeModel, ColumnBearer):
     
     #--- model --> view
     def refresh(self):
-        if self._wasRestored:
-            self._saveNodeExpansionState()
         self.reset()
-        self._restoreNodeExpansionState()
-        self._wasRestored = True
+        for path in self.model.expanded_paths:
+            index = self.findIndex(path)
+            self.view.expand(index)
         self._updateViewSelection()
     
     def show_message(self, msg):

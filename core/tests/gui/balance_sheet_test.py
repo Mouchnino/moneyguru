@@ -12,11 +12,11 @@ from datetime import date
 from nose.tools import eq_
 
 from hsutil.currency import Currency, USD, CAD
+from hsutil.testutil import Patcher
 
-from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, CallLogger, ApplicationGUI, CommonSetup, TestApp
+from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, ApplicationGUI, CommonSetup, TestApp, with_app
 from ...app import Application
 from ...document import Document
-from ...gui.balance_sheet import BalanceSheet
 from ...model.account import AccountType
 from ...model.amount import Amount
 from ...model.date import MonthRange
@@ -41,88 +41,98 @@ class _AccountsAndEntries(TestCase, CommonSetup):
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
     
+#--- Pristine app
+@with_app(TestApp)
+def test_add_account(app):
+    # The default name for an account is 'New Account', and the selection goes from None to 0.
+    # Then, on subsequent calls, a number is added next to 'New Account'.
+    app.bsheet.add_account()
+    eq_(app.account_names(), ['New account'])
+    eq_(app.bsheet.selected, app.bsheet.assets[0])
+    app.bsheet.add_account()
+    eq_(app.account_names(), ['New account', 'New account 1'])
+    eq_(app.bsheet.selected, app.bsheet.assets[1])
+    app.bsheet.add_account()
+    eq_(app.account_names(), ['New account', 'New account 1', 'New account 2'])
+    eq_(app.bsheet.selected, app.bsheet.assets[2])
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-    
-    def test_add_account(self):
-        # The default name for an account is 'New Account', and the selection goes from None to 0.
-        # Then, on subsequent calls, a number is added next to 'New Account'.
-        self.bsheet.add_account()
-        eq_(self.account_names(), ['New account'])
-        eq_(self.bsheet.selected, self.bsheet.assets[0])
-        self.bsheet.add_account()
-        eq_(self.account_names(), ['New account', 'New account 1'])
-        eq_(self.bsheet.selected, self.bsheet.assets[1])
-        self.bsheet.add_account()
-        eq_(self.account_names(), ['New account', 'New account 1', 'New account 2'])
-        eq_(self.bsheet.selected, self.bsheet.assets[2])
-    
-    def test_add_account_in_other_groups(self):
-        # When groups other than Assets are selected, new accounts go underneath it.
-        self.bsheet.selected = self.bsheet.liabilities
-        self.bsheet.add_account()
-        eq_(self.bsheet.selected, self.bsheet.liabilities[0])
-        self.bsheet.add_account()
-        eq_(self.bsheet.selected, self.bsheet.liabilities[1])
-        self.bsheet.selected = self.bsheet.assets
-        self.bsheet.add_account()
-        eq_(self.bsheet.selected, self.bsheet.assets[0])
-        self.bsheet.add_account()
-        eq_(self.bsheet.selected, self.bsheet.assets[1])
-        self.bsheet.selected = None
-        self.bsheet.add_account()
-        eq_(self.bsheet.selected, self.bsheet.assets[2])
-    
-    def test_add_account_with_total_node_selected(self):
-        # The added account will be of the type of the type node we're under
-        self.bsheet.selected = self.bsheet.liabilities[0] # total node
-        self.bsheet.add_account()
-        eq_(self.bsheet.liabilities[0].name, 'New account')
-    
-    def test_add_group(self):
-        # add_group() creates a new account group in the selected base group.
-        self.bsheet.selected = self.bsheet.liabilities
-        self.bsheet.add_account_group()
-        eq_(self.bsheet.selected, self.bsheet.liabilities[0])
-        eq_(self.bsheet.liabilities[0].name, 'New group')
-        assert self.bsheet.liabilities[0].is_group
-        assert self.document.is_dirty()
-    
-    def test_add_group_with_total_node_selected(self):
-        # The added group will be of the type of the type node we're under
-        self.bsheet.selected = self.bsheet.liabilities[0] # total node
-        self.bsheet.add_account_group()
-        eq_(self.bsheet.liabilities[0].name, 'New group')
-    
-    def test_balance_sheet(self):
-        # The balance sheet is empty
-        eq_([x.name for x in self.bsheet], ['ASSETS',  'LIABILITIES',  'NET WORTH'])
-        eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
-        eq_(self.account_node_subaccount_count(self.bsheet.liabilities), 0)
-    
-    def test_can_delete(self):
-        # can_delete doesn't crash when nothing is selected
-        assert not self.bsheet.can_delete() # no crash
-    
-    def test_is_excluded_is_bool_for_empty_groups_and_type(self):
-        # previously, empty lists would be returned, causing a crash in the gui
-        assert isinstance(self.bsheet.assets.is_excluded, bool)
-        self.bsheet.add_account_group()
-        assert isinstance(self.bsheet.assets[0].is_excluded, bool)
-    
-    def test_save_edits_doesnt_lead_to_infinite_loop(self):
-        # in save_edits, self.edited must be put to None asap because changes in the document could
-        # lead to refreshes in the views that would call save_edits again and create an infinite
-        # loop
-        self.bsheet.add_account()
-        self.bsheet.assets[0].name = 'foo'
-        def fake_refresh():
-            assert self.bsheet.edited is None
-        self.mock(self.bsheet_gui, 'refresh', fake_refresh)
-        self.bsheet.save_edits()
-    
+@with_app(TestApp)
+def test_add_account_in_other_groups(app):
+    # When groups other than Assets are selected, new accounts go underneath it.
+    app.bsheet.selected = app.bsheet.liabilities
+    app.bsheet.add_account()
+    eq_(app.bsheet.selected, app.bsheet.liabilities[0])
+    app.bsheet.add_account()
+    eq_(app.bsheet.selected, app.bsheet.liabilities[1])
+    app.bsheet.selected = app.bsheet.assets
+    app.bsheet.add_account()
+    eq_(app.bsheet.selected, app.bsheet.assets[0])
+    app.bsheet.add_account()
+    eq_(app.bsheet.selected, app.bsheet.assets[1])
+    app.bsheet.selected = None
+    app.bsheet.add_account()
+    eq_(app.bsheet.selected, app.bsheet.assets[2])
+
+@with_app(TestApp)
+def test_add_account_with_total_node_selected(app):
+    # The added account will be of the type of the type node we're under
+    app.bsheet.selected = app.bsheet.liabilities[0] # total node
+    app.bsheet.add_account()
+    eq_(app.bsheet.liabilities[0].name, 'New account')
+
+@with_app(TestApp)
+def test_add_group(app):
+    # add_group() creates a new account group in the selected base group.
+    app.bsheet.selected = app.bsheet.liabilities
+    app.bsheet.add_account_group()
+    eq_(app.bsheet.selected, app.bsheet.liabilities[0])
+    eq_(app.bsheet.liabilities[0].name, 'New group')
+    assert app.bsheet.liabilities[0].is_group
+    assert app.doc.is_dirty()
+
+@with_app(TestApp)
+def test_add_group_with_total_node_selected(app):
+    # The added group will be of the type of the type node we're under
+    app.bsheet.selected = app.bsheet.liabilities[0] # total node
+    app.bsheet.add_account_group()
+    eq_(app.bsheet.liabilities[0].name, 'New group')
+
+@with_app(TestApp)
+def test_balance_sheet(app):
+    # The balance sheet is empty
+    eq_([x.name for x in app.bsheet], ['ASSETS',  'LIABILITIES',  'NET WORTH'])
+    eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
+    eq_(app.account_node_subaccount_count(app.bsheet.liabilities), 0)
+
+@with_app(TestApp)
+def test_can_delete(app):
+    # can_delete doesn't crash when nothing is selected
+    assert not app.bsheet.can_delete() # no crash
+
+@with_app(TestApp)
+def test_is_excluded_is_bool_for_empty_groups_and_type(app):
+    # previously, empty lists would be returned, causing a crash in the gui
+    assert isinstance(app.bsheet.assets.is_excluded, bool)
+    app.bsheet.add_account_group()
+    assert isinstance(app.bsheet.assets[0].is_excluded, bool)
+
+@with_app(TestApp)
+def test_root_nodes_initially_expanded(app):
+    # When the preference doesn't say otherwise, root nodes are expanded.
+    eq_(app.bsheet.expanded_paths, [(0, ), (1, )])
+
+@with_app(TestApp)
+def test_save_edits_doesnt_lead_to_infinite_loop(app):
+    # in save_edits, self.edited must be put to None asap because changes in the document could
+    # lead to refreshes in the views that would call save_edits again and create an infinite
+    # loop
+    app.bsheet.add_account()
+    app.bsheet.assets[0].name = 'foo'
+    def fake_refresh():
+        assert app.bsheet.edited is None
+    with Patcher() as p:
+        p.patch(app.bsheet_gui, 'refresh', fake_refresh)
+        app.bsheet.save_edits()
 
 class AccountHierarchy(TestCase):
     def setUp(self):
@@ -300,29 +310,36 @@ class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
         eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 1)
     
 
-class OneAccountInOneGroup(TestCase, TestSaveLoadMixin):
-    # TestSaveLoadMixin is to make sure that groups are saved
-    def setUp(self):
-        self.create_instances()
-        self.add_group('group')
-        self.add_account(group_name='group')
-        self.bsheet.selected = self.bsheet.assets[0][0] # the account in the group
-    
-    def test_add_account(self):
-        # Adding an account when the selection is an account under a user created group creates
-        # the new account under that same group.
-        self.bsheet.add_account()
-        eq_(self.account_node_subaccount_count(self.bsheet.assets[0]), 2)
-    
-    def test_is_subtotal(self):
-        # In case we only have a group node just before a total node, this not will be considered
-        # a subtotal node *only* if it's collapsed (if it's expanded, it has a total node hierarchy
-        # of its own).
-        self.bsheet.expand_node(self.bsheet.assets[0])
-        assert not self.bsheet.assets[0].is_subtotal
-        self.bsheet.collapse_node(self.bsheet.assets[0])
-        assert self.bsheet.assets[0].is_subtotal
-    
+#--- Account in group
+def app_account_in_group():
+    app = TestApp()
+    app.add_group('group')
+    app.add_account(group_name='group')
+    app.bsheet.selected = app.bsheet.assets[0][0] # the account in the group
+    return app
+
+@with_app(app_account_in_group)
+def test_add_account_with_group_selected(app):
+    # Adding an account when the selection is an account under a user created group creates
+    # the new account under that same group.
+    app.bsheet.add_account()
+    eq_(app.account_node_subaccount_count(app.bsheet.assets[0]), 2)
+
+@with_app(app_account_in_group)
+def test_expanded_nodes(app):
+    # the `expanded_paths` property returns nodes that are... exapnded!
+    app.bsheet.expand_node(app.bsheet.assets[0])
+    eq_(app.bsheet.expanded_paths, [(0, ), (1, ), (0, 0)])
+
+@with_app(app_account_in_group)
+def test_is_subtotal(app):
+    # In case we only have a group node just before a total node, this not will be considered
+    # a subtotal node *only* if it's collapsed (if it's expanded, it has a total node hierarchy
+    # of its own).
+    app.bsheet.expand_node(app.bsheet.assets[0])
+    assert not app.bsheet.assets[0].is_subtotal
+    app.bsheet.collapse_node(app.bsheet.assets[0])
+    assert app.bsheet.assets[0].is_subtotal
 
 class AccountsAndEntries(_AccountsAndEntries):
     def test_balance_sheet(self):

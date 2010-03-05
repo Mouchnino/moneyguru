@@ -57,7 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] sortByColumn:[sd key] desc:![sd ascending]];
 }
 
-// See MGOutline.outlineViewSelectionIsChanging: to know why we update selection in both notifs
+// See HSOutline.outlineViewSelectionIsChanging: to know why we update selection in both notifs
 - (void)tableViewSelectionIsChanging:(NSNotification *)notification
 {
     NSArray *selection = [Utils indexSet2Array:[[self tableView] selectedRowIndexes]];

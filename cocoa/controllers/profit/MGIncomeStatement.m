@@ -13,8 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithPyParent:aPyParent pyClassName:@"PyIncomeStatement" view:aOutlineView];
-    [self setAutosaveName:@"IncomeStatement"];
+    self = [super initWithPyClassName:@"PyIncomeStatement" pyParent:aPyParent view:aOutlineView];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:aOutlineView];
     [columnsManager linkColumn:@"delta" toUserDefault:IncomeStatementDeltaColumnVisible];
     [columnsManager linkColumn:@"delta_perc" toUserDefault:IncomeStatementDeltaPercColumnVisible];

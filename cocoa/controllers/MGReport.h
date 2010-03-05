@@ -7,11 +7,11 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGOutline.h"
+#import "HSOutline.h"
 #import "PyReport.h"
 
 
-@interface MGReport : MGOutline {
+@interface MGReport : HSOutline {
     BOOL toggleExcludedIsEnabled;
 }
 - (PyReport *)py;

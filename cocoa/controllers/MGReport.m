@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGReport
-- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName view:(HSOutlineView *)aOutlineView
+- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithPyParent:aPyParent pyClassName:aClassName view:aOutlineView];
+    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
     return self;
 }
@@ -25,6 +25,20 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyReport *)py;
 }
 
+/* Overrides */
+- (void)refresh
+{
+    [super refresh];
+    NSArray *expandedPaths = [[self py] expandedPaths];
+    for (NSArray *arrayPath in expandedPaths) {
+        NSIndexPath *path = a2p(arrayPath);
+        if (path != nil) {
+            [outlineView expandItem:path];
+        }
+    }
+}
+
+/* Actions */
 - (IBAction)showSelectedAccount:(id)sender
 {
     [[self py] showSelectedAccount];
@@ -43,7 +57,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* NSOutlineView data source */
-
 - (id)outlineView:(NSOutlineView *)aOutlineView objectValueForTableColumn:(NSTableColumn *)column byItem:(id)item
 {
     NSIndexPath *path = item;
@@ -111,7 +124,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* NSOutlineView delegate */
-
 - (void)outlineView:(NSOutlineView *)aOutlineView willDisplayCell:(id)theCell 
      forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {

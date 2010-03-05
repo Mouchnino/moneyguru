@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)showSelectedAccount;
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;
+- (NSArray *)expandedPaths;
 - (void)expandPath:(NSArray *)path;
 - (void)collapsePath:(NSArray *)path;
 @end

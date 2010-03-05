@@ -23,7 +23,6 @@ class NetWorthSheet(AccountSheet):
         Column('delta_perc', 'Change %', 100),
         Column('budgeted', 'Budgeted', 100, alignment=Qt.AlignRight),
     ]
-    EXPANDED_NODE_PREF_NAME = 'netWorthExpandedPaths'
     AMOUNT_ATTRS = set(['end', 'start', 'delta', 'delta_perc', 'budgeted'])
     BOLD_ATTRS = set(['end'])
     

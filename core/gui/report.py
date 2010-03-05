@@ -12,6 +12,8 @@ from hsutil.misc import first
 from ..exception import DuplicateAccountNameError
 from .base import DocumentGUIObject
 
+EXPANDED_PATHS_PREFERENCE = 'ExpandedPaths'
+
 # used in both bsheet and istatement
 def get_delta_perc(delta_amount, start_amount):
     if start_amount > 0:
@@ -20,10 +22,19 @@ def get_delta_perc(delta_amount, start_amount):
         return '---'
 
 class Report(DocumentGUIObject, tree.Tree):
+    PREFERENCE_PREFIX = 'Sheet'
+    
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
         tree.Tree.__init__(self)
         self.edited = None
+        
+        prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
+        expanded = self.app.get_default(prefname, list())
+        if expanded:
+            self._expanded_paths = set(map(tuple, expanded))
+        else:
+            self._expanded_paths = set([(0, ), (1, )])
     
     #--- Override
     def _select_nodes(self, nodes):
@@ -125,8 +136,8 @@ class Report(DocumentGUIObject, tree.Tree):
         self.edited = None
     
     def collapse_node(self, node):
+        self._expanded_paths.discard(tuple(node.path))
         if node.is_group:
-            node.is_expanded = False
             self.document.collapse_group(node.group)
     
     def delete(self):
@@ -142,8 +153,8 @@ class Report(DocumentGUIObject, tree.Tree):
             self.document.delete_group(group)
     
     def expand_node(self, node):
+        self._expanded_paths.add(tuple(node.path))
         if node.is_group:
-            node.is_expanded = True
             self.document.expand_group(node.group)
     
     def make_account_node(self, account):
@@ -226,6 +237,12 @@ class Report(DocumentGUIObject, tree.Tree):
             node._name = node.account.name if node.is_account else node.group.name
             self.view.show_message(msg)
     
+    def save_node_expansion_state(self):
+        # This is called by the mainwindow when it receives document_will_close. We can't listen
+        # to it ourselves because the sheet is not necessarily connected when the document closes.
+        prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
+        self.app.set_default(prefname, self.expanded_paths)
+    
     def show_selected_account(self):
         self.document.show_selected_account()
     
@@ -293,6 +310,13 @@ class Report(DocumentGUIObject, tree.Tree):
     def can_show_selected_account(self):
         return self.document.selected_account is not None
     
+    @property
+    def expanded_paths(self):
+        paths = list(self._expanded_paths)
+        # We want the paths in orthe of length so that the paths are correctly expanded in the gui.
+        paths.sort(key=lambda p: (len(p), ) + p)
+        return paths
+    
     selected = tree.Tree.selected_node
     
 
@@ -305,7 +329,10 @@ class Node(tree.Node):
         self.is_total = False
         self.is_type = False
         self.is_excluded = False
-        self.is_expanded = False
+    
+    @property
+    def is_expanded(self):
+        return tuple(self.path) in self.root._expanded_paths
     
     @property
     def is_subtotal(self):

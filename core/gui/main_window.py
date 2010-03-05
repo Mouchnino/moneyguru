@@ -238,6 +238,12 @@ class MainWindow(DocumentGUIObject):
             self.select_balance_sheet()
         self._undo_stack_changed()
     
+    def document_will_close(self):
+        # When the document closes the sheets are not necessarily connected. This is why we do it
+        # this way.
+        self.nwview.bsheet.save_node_expansion_state()
+        self.pview.istatement.save_node_expansion_state()
+    
     def filter_applied(self):
         if self.document.filter_string and self._current_view not in (self.tview, self.aview):
             self.show_transaction_table()

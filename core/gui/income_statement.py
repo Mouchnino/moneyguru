@@ -8,6 +8,8 @@ from ..model.account import AccountType
 from .report import Report, get_delta_perc
 
 class IncomeStatement(Report):
+    PREFERENCE_PREFIX = 'IncomeStatement'
+    
     #--- Override
     def _compute_account_node(self, node):
         account = node.account

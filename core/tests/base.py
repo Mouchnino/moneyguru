@@ -356,6 +356,11 @@ class TestApp(object):
             row.checkno = checkno
         self.etable.save_edits()
     
+    def add_group(self, name=None, account_type=AccountType.Asset):
+        group = self.doc.new_group(account_type)
+        if name is not None:
+            self.doc.change_group(group, name=name)
+    
     def add_schedule(self, start_date=None, description='', account=None, amount='0',
             repeat_type_index=0, repeat_every=1, stop_date=None):
         if start_date is None:
@@ -398,6 +403,23 @@ class TestApp(object):
         if checkno is not None:
             row.checkno = checkno
         self.ttable.save_edits()
+    
+    def account_names(self): # doesn't include Imbalance
+        account_sort = {
+            AccountType.Asset:0,
+            AccountType.Liability: 1,
+            AccountType.Income: 2,
+            AccountType.Expense: 3,
+        }
+        accounts = list(self.doc.accounts)
+        accounts.sort(key=lambda a: (account_sort[a.type], a))
+        return [a.name for a in accounts]
+    
+    def account_node_subaccount_count(self, node):
+        # In the balance sheet and the income statement testing for emptyness becomes cumbersome
+        # because of the 2 total nodes (1 total, 1 blank) that are always there, even if empty. To
+        # avoid putting a comment next to each len() test, just use this method.
+        return len(node) - 2
     
     def bar_graph_data(self):
         result = []
@@ -502,16 +524,8 @@ class TestCase(TestCaseBase):
             setattr(self, name, getattr(self.ta, name))
             setattr(self, guiname, getattr(self.ta, guiname))
     
-    def account_names(self): # doesn't include Imbalance
-        account_sort = {
-            AccountType.Asset:0,
-            AccountType.Liability: 1,
-            AccountType.Income: 2,
-            AccountType.Expense: 3,
-        }
-        accounts = list(self.document.accounts)
-        accounts.sort(key=lambda a: (account_sort[a.type], a))
-        return [a.name for a in accounts]
+    def account_names(self, *args, **kw):
+        return self.ta.account_names(*args, **kw)
     
     def add_account(self, *args, **kw):
         self.ta.add_account(*args, **kw)
@@ -548,10 +562,8 @@ class TestCase(TestCaseBase):
     def add_entry(self, *args, **kw):
         self.ta.add_entry(*args, **kw)
     
-    def add_group(self, name=None, account_type=AccountType.Asset):
-        group = self.document.new_group(account_type)
-        if name is not None:
-            self.document.change_group(group, name=name)
+    def add_group(self, *args, **kw):
+        self.ta.add_group(*args, **kw)
     
     def add_schedule(self, *args, **kw):
         self.ta.add_schedule(*args, **kw)
@@ -559,11 +571,8 @@ class TestCase(TestCaseBase):
     def add_txn(self, *args, **kw):
         self.ta.add_txn(*args, **kw)
     
-    def account_node_subaccount_count(self, node):
-        # In the balance sheet and the income statement testing for emptyness becomes cumbersome
-        # because of the 2 total nodes (1 total, 1 blank) that are always there, even if empty. To
-        # avoid putting a comment next to each len() test, just use this method.
-        return len(node) - 2
+    def account_node_subaccount_count(self, *args, **kw):
+        return self.ta.account_node_subaccount_count(*args, **kw)
     
     def balances(self):
         return [self.etable[i].balance for i in range(len(self.etable))]
