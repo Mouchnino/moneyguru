@@ -13,8 +13,8 @@ from ..base import TestApp, with_app
 
 def app_default():
     app = TestApp()
-    app.add_txn(description='Bazooka', payee='payee')
-    app.add_txn(description='buz', payee='kyle')
+    app.add_txn(description='Bazooka', payee='payee', from_='account1', to='account2', amount='42')
+    app.add_txn(description='buz', payee='kyle', from_='account1', to='account2', amount='42')
     app.add_txn(description='bar', payee='kate')
     app.add_txn(description='foo')
     app.ce = app.completable_edit('description')
@@ -25,6 +25,13 @@ def test_lookup_lists_descriptions(app):
     # The lookup, when the edit is empty, show values in alphabetical order
     app.ce.lookup()
     eq_(app.clookup.names, ['bar', 'Bazooka', 'buz', 'foo'])
+
+@with_app(app_default)
+def test_lookup_list_has_no_dupe(app):
+    # Remove duplicate names from the list.
+    app.ce = app.completable_edit('account')
+    app.ce.lookup()
+    eq_(app.clookup.names, ['account1', 'account2'])
 
 @with_app(app_default)
 def test_lookup_with_non_empty_edit(app):

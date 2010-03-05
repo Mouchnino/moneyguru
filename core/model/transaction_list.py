@@ -6,6 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import time
 from operator import itemgetter
 
 class TransactionList(list):
@@ -14,6 +15,7 @@ class TransactionList(list):
         self._descriptions = None
         self._payees = None
         self._account_names = None
+        self.last_change_mtime = time.time()
     
     #--- Overrides
     def remove(self, transaction):
@@ -79,6 +81,7 @@ class TransactionList(list):
         self._descriptions = None
         self._payees = None
         self._account_names = None
+        self.last_change_mtime = time.time()
     
     def reassign_account(self, account, reassign_to=None):
         """Removes 'account' reference in all transactions"""

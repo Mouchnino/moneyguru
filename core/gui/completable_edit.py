@@ -7,7 +7,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.misc import nonone
+import time
+
+from hsutil.misc import nonone, dedupe
 
 from ..model.completion import CompletionList
 
@@ -18,6 +20,7 @@ class CompletableEdit(object):
         self._mainwindow = mainwindow
         self._attrname = ''
         self._candidates = None
+        self._candidates_refresh_time = 0
         self._completions = None
         self._complete_completion = ''
         self.completion = ''
@@ -40,7 +43,8 @@ class CompletableEdit(object):
             if attrname == 'transfer' and doc.shown_account is not None:
                 result = [name for name in result if name != doc.shown_account.name]
             self._candidates = result
-        self._candidates = [name for name in self._candidates if name.strip()]
+        self._candidates = dedupe([name for name in self._candidates if name.strip()])
+        self._candidates_refresh_time = time.time()
     
     def _set_completion(self, completion):
         completion = nonone(completion, '')
@@ -84,6 +88,13 @@ class CompletableEdit(object):
     
     @attrname.setter
     def attrname(self, value):
+        doc = self.mainwindow.document
+        if value == self._attrname and self._candidates_refresh_time >= doc.transactions.last_change_mtime:
+            # attrname, during Cocoa's table editing can be called quite often. This is an
+            # optimisation because focusing on an Account cell took a long time.
+            # XXX Ideally, we'll make CompletableEdit into a Listener and we'll invalidate our
+            # candidates on transaction change.
+            return
         self._attrname = value
         self._refresh_candidates()
         self._text = ''
