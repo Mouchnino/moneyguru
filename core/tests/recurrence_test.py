@@ -12,32 +12,35 @@ from hsutil.testutil import Patcher
 from ..document import ScheduleScope
 from .base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
 
-class OneTransaction(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_monthly_range()
-        self.setup_one_entry()
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
-    
-    def test_make_schedule_from_selected(self):
-        # make_schedule_from_selected takes the selected transaction, create a monthly schedule out
-        # of it, selects the schedule table, and pops the edition panel for it.
-        self.mainwindow.make_schedule_from_selected()
-        self.check_gui_calls(self.mainwindow_gui, ['show_schedule_table'])
-        self.check_gui_calls_partial(self.scpanel_gui, ['pre_load', 'post_load'])
-        eq_(len(self.sctable), 0) # It's a *new* schedule, only added if we press save
-        eq_(self.scpanel.start_date, '11/07/2008')
-        eq_(self.scpanel.description, 'description')
-        eq_(self.scpanel.repeat_type_index, 2) # monthly
-        eq_(self.scpanel.repeat_every, 1)
-        self.scpanel.save()
-        eq_(len(self.sctable), 1) # now we have it
-        # When creating the schedule, we must delete the first occurrence because it overlapse with
-        # the base transaction
-        self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 1)
-    
+#--- One transaction
+def app_one_transaction():
+    app = TestApp()
+    app.doc.select_month_range()
+    app.add_account('first')
+    app.mw.show_account()
+    app.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42', checkno='24')
+    app.mw.select_transaction_table()
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_one_transaction)
+def test_make_schedule_from_selected(app):
+    # make_schedule_from_selected takes the selected transaction, create a monthly schedule out
+    # of it, selects the schedule table, and pops the edition panel for it.
+    app.mw.make_schedule_from_selected()
+    app.check_gui_calls(app.mainwindow_gui, ['show_schedule_table'])
+    app.check_gui_calls_partial(app.scpanel_gui, ['pre_load', 'post_load'])
+    eq_(len(app.sctable), 0) # It's a *new* schedule, only added if we press save
+    eq_(app.scpanel.start_date, '11/07/2008')
+    eq_(app.scpanel.description, 'description')
+    eq_(app.scpanel.repeat_type_index, 2) # monthly
+    eq_(app.scpanel.repeat_every, 1)
+    app.scpanel.save()
+    eq_(len(app.sctable), 1) # now we have it
+    # When creating the schedule, we must delete the first occurrence because it overlapse with
+    # the base transaction
+    app.mw.select_transaction_table()
+    eq_(len(app.ttable), 1)
 
 #--- Daily schedule
 def app_daily_schedule():
