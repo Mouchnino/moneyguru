@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, QProcess
-from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QPrintDialog, QLabel, QFont
+from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QPrintDialog, QLabel, QFont, QMessageBox
 
 from core.gui.main_window import MainWindow as MainWindowModel
 
@@ -435,4 +435,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def show_transaction_table(self):
         self._setMainWidgetIndex(TRANSACTION_INDEX)
+    
+    def show_message(self, msg):
+        title = "Warning"
+        QMessageBox.warning(self, title, msg)
     

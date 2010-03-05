@@ -197,6 +197,9 @@ class MainWindow(DocumentGUIObject):
         if self._current_view in (self.nwview, self.pview, self.tview, self.aview):
             self._current_view.show_account()
     
+    def show_message(self, message):
+        self.view.show_message(message)
+    
     #--- Event callbacks
     def _undo_stack_changed(self):
         self.view.refresh_undo_actions()

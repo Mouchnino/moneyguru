@@ -211,32 +211,35 @@ class AccountHierarchy(TestCase):
         eq_(self.document.selected_account.name, 'Bank 1')
     
 
-class OneAccount(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('Checking')
-        self.clear_gui_calls()
-    
-    def test_add_accounts_after_current(self):
-        # The selection follows the newly added account.
-        self.bsheet.add_account()
-        eq_(self.bsheet.selected, self.bsheet.assets[1])
-        self.check_gui_calls(self.bsheet_gui, ['update_selection', 'start_editing', 'stop_editing', 'refresh'])
-    
-    def test_duplicate_account_name(self):
-        # when the user enters a duplicate account name, show a dialog.
-        self.bsheet.add_account()
-        self.bsheet.selected.name = 'checking' # fails
-        self.bsheet.save_edits()
-        eq_(self.bsheet.selected.name, 'New account')
-        self.check_gui_calls_partial(self.bsheet_gui, ['show_message'])
-        assert self.bsheet.edited is None
-    
-    def test_make_account_liability(self):
-        # Making the account a liability account refreshes all views.
-        self.bsheet.move(self.bsheet.get_path(self.bsheet.assets[0]), self.bsheet.get_path(self.bsheet.liabilities))
-        self.check_gui_calls(self.nwgraph_gui, ['refresh'])
-    
+#--- One account
+def app_one_account():
+    app = TestApp()
+    app.add_account('Checking')
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_one_account)
+def test_add_accounts_after_current(app):
+    # The selection follows the newly added account.
+    app.bsheet.add_account()
+    eq_(app.bsheet.selected, app.bsheet.assets[1])
+    app.check_gui_calls(app.bsheet_gui, ['update_selection', 'start_editing', 'stop_editing', 'refresh'])
+
+@with_app(app_one_account)
+def test_duplicate_account_name(app):
+    # when the user enters a duplicate account name, show a dialog.
+    app.bsheet.add_account()
+    app.bsheet.selected.name = 'checking' # fails
+    app.bsheet.save_edits()
+    eq_(app.bsheet.selected.name, 'New account')
+    app.check_gui_calls_partial(app.mainwindow_gui, ['show_message'])
+    assert app.bsheet.edited is None
+
+@with_app(app_one_account)
+def test_make_account_liability(app):
+    # Making the account a liability account refreshes all views.
+    app.bsheet.move(app.bsheet.get_path(app.bsheet.assets[0]), app.bsheet.get_path(app.bsheet.liabilities))
+    app.check_gui_calls(app.nwgraph_gui, ['refresh'])
 
 class OneAccountInEditionMode(TestCase):
     def setUp(self):

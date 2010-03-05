@@ -27,6 +27,7 @@ class Report(DocumentGUIObject, tree.Tree):
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
         tree.Tree.__init__(self)
+        self.mainwindow = mainwindow
         self.edited = None
         
         prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
@@ -235,7 +236,7 @@ class Report(DocumentGUIObject, tree.Tree):
             msg = "The account '{0}' already exists.".format(node.name)
             # we use _name because we don't want to change self.edited
             node._name = node.account.name if node.is_account else node.group.name
-            self.view.show_message(msg)
+            self.mainwindow.show_message(msg)
     
     def save_node_expansion_state(self):
         # This is called by the mainwindow when it receives document_will_close. We can't listen

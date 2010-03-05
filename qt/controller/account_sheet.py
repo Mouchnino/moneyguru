@@ -252,10 +252,6 @@ class AccountSheet(TreeModel, ColumnBearer):
             self.view.expand(index)
         self._updateViewSelection()
     
-    def show_message(self, msg):
-        title = "Warning"
-        QMessageBox.warning(self.view, title, msg)
-    
     def start_editing(self):
         self.view.editSelected()
     

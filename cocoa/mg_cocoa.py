@@ -479,10 +479,6 @@ class PyReport(PyOutline):
     def expandedPaths(self):
         return self.py.expanded_paths
     
-    #--- Python --> Cocoa
-    def show_message(self, msg):
-        self.cocoa.showMessage_(msg)
-    
 
 class PyPanel(PyListener):
     def savePanel(self):
