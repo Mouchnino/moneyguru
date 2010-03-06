@@ -14,7 +14,8 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
     def __init__(self, view, transaction_panel):
         TransactionPanelGUIObject.__init__(self, view, transaction_panel)
         GUITable.__init__(self)
-        self.document = transaction_panel.document # CompletableEdit requires a document member
+        self.mainwindow = transaction_panel.mainwindow # CompletableEdit on Qt requires a mainwindow member
+        self.document = transaction_panel.document
     
     #--- Override
     def _do_add(self):
