@@ -7,24 +7,22 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import time
-
 from hsutil.misc import nonone, dedupe
 
+from .base import DocumentGUIObject
 from ..model.completion import CompletionList
 
-class CompletableEdit(object):
+class CompletableEdit(DocumentGUIObject):
     def __init__(self, view, mainwindow):
-        # `source` must be have a 'document' attr
-        self.view = view
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
         self._mainwindow = mainwindow
         self._attrname = ''
         self._candidates = None
-        self._candidates_refresh_time = 0
         self._completions = None
         self._complete_completion = ''
         self.completion = ''
         self._text = ''
+        self.connect()
     
     #--- Private
     def _refresh_candidates(self):
@@ -44,7 +42,6 @@ class CompletableEdit(object):
                 result = [name for name in result if name != doc.shown_account.name]
             self._candidates = result
         self._candidates = dedupe([name for name in self._candidates if name.strip()])
-        self._candidates_refresh_time = time.time()
     
     def _set_completion(self, completion):
         completion = nonone(completion, '')
@@ -88,22 +85,19 @@ class CompletableEdit(object):
     
     @attrname.setter
     def attrname(self, value):
-        # XXX this place is getting very ugly
-        if self.mainwindow is None:
-            self._attrname = value
-            return
-        doc = self.mainwindow.document
-        if value == self._attrname and self._candidates_refresh_time >= doc.transactions.last_change_mtime:
-            # attrname, during Cocoa's table editing can be called quite often. This is an
-            # optimisation because focusing on an Account cell took a long time.
-            # XXX Ideally, we'll make CompletableEdit into a Listener and we'll invalidate our
-            # candidates on transaction change.
+        if self._attrname == value:
             return
         self._attrname = value
-        self._refresh_candidates()
+        self._candidates = None
         self._text = ''
         self._set_completion('')
         self._completions = None
+    
+    @property
+    def candidates(self):
+        if self._candidates is None:
+            self._refresh_candidates()
+        return self._candidates
     
     @property
     def mainwindow(self):
@@ -112,7 +106,7 @@ class CompletableEdit(object):
     @mainwindow.setter
     def mainwindow(self, value):
         self._mainwindow = value
-        self._refresh_candidates()
+        self._candidates = None
         self._text = ''
         self._set_completion('')
         self._completions = None
@@ -124,9 +118,20 @@ class CompletableEdit(object):
     @text.setter
     def text(self, value):
         self._text = value
-        if self._candidates:
+        if self.candidates:
             self._completions = CompletionList(value, self._candidates)
             self._set_completion(self._completions.current())
         else:
             self._completions = None
     
+    #--- Events
+    def transaction_changed(self):
+        self._candidates = None
+    
+    account_added = transaction_changed
+    account_changed = transaction_changed
+    account_deleted = transaction_changed
+    document_changed = transaction_changed
+    performed_undo_or_redo = transaction_changed
+    transaction_added = transaction_changed
+    transaction_deleted = transaction_changed

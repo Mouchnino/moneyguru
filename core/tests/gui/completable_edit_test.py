@@ -50,6 +50,15 @@ def test_commit_complete(app):
     eq_(app.ce.text, 'Buz')
     eq_(app.ce.completion, '')
 
+@with_app(app_default)
+def test_refresh_candidates_on_txn_change(app):
+    # Changing transactions refreshes completion candidates. Note that we only test for transaction
+    # addition here, but all transaction/account mutation notifications must be listened to.
+    app.ce.text = 'b' # build candidates
+    app.add_txn(description='other') # This is supposed to invalidate candidates cache
+    app.ce.text = 'o'
+    eq_(app.ce.completion, 'ther')
+
 #--- Edit with match
 def app_with_match():
     app = TestApp()

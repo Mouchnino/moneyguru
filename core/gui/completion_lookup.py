@@ -17,7 +17,7 @@ class CompletionLookup(Lookup):
     
     def _generate_lookup_names(self):
         if self._completable_edit is not None:
-            names = self._completable_edit._candidates[:]
+            names = self._completable_edit.candidates[:]
             return sorted(names, key=sort_string)
         else:
             return []
