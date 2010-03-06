@@ -9,7 +9,7 @@
 from nose.tools import eq_
 from hsutil.currency import CAD, EUR
 
-from ..base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, TestApp
+from ..base import TestApp, with_app
 
 #--- One entry
 def app_one_entry():
@@ -99,39 +99,41 @@ def test_set_wrong_values_for_attributes():
     app.credit = 'invalid'
     # no crash occured
 
-class OneTransactionBeingAdded(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-    
-    def test_change_splits(self):
-        """It's possible to change the splits of a newly created transaction"""
-        # Previously, it would crash because of the 0 amounts.
-        # At this moment, we have a transaction with 2 empty splits
-        self.tpanel.load()
-        self.stable[0].account = 'first'
-        self.stable[0].credit = '42'
-        self.stable.save_edits()
-        self.stable.select([1])
-        self.stable[1].account = 'second'
-        self.stable.save_edits()
-        self.tpanel.save()
-        row = self.ttable[0]
-        self.assertEqual(row.from_, 'first')
-        self.assertEqual(row.to, 'second')
-        self.assertEqual(row.amount, '42.00')
-    
-    def test_delete_split_with_none_selected(self):
-        # don't crash when stable.delete() is called enough times to leave the table empty
-        self.tpanel.load()
-        self.stable.delete() # Unassigned 1
-        self.stable.delete() # Unassigned 2
-        try:
-            self.stable.delete()
-        except AttributeError:
-            self.fail("When the table is empty, don't try to delete")
-    
+#--- Transaction being added
+def app_transaction_being_added():
+    app = TestApp()
+    app.mw.select_transaction_table()
+    app.ttable.add()
+    return app
+
+@with_app(app_transaction_being_added)
+def test_change_splits(app):
+    # It's possible to change the splits of a newly created transaction.
+    # Previously, it would crash because of the 0 amounts.
+    # At this moment, we have a transaction with 2 empty splits
+    app.tpanel.load()
+    app.stable[0].account = 'first'
+    app.stable[0].credit = '42'
+    app.stable.save_edits()
+    app.stable.select([1])
+    app.stable[1].account = 'second'
+    app.stable.save_edits()
+    app.tpanel.save()
+    row = app.ttable[0]
+    eq_(row.from_, 'first')
+    eq_(row.to, 'second')
+    eq_(row.amount, '42.00')
+
+@with_app(app_transaction_being_added)
+def test_delete_split_with_none_selected(app):
+    # don't crash when stable.delete() is called enough times to leave the table empty
+    app.tpanel.load()
+    app.stable.delete() # Unassigned 1
+    app.stable.delete() # Unassigned 2
+    try:
+        app.stable.delete()
+    except AttributeError:
+        raise AssertionError("When the table is empty, don't try to delete")
 
 #--- Transaction with splits
 def app_transaction_with_splits():
@@ -192,24 +194,3 @@ def test_change_amount_implicit_currency():
     app = app_eur_account_and_eur_transfer()
     app.stable[0].debit = '64'
     eq_(app.stable[0].debit, 'EUR 64.00')
-
-class OneTransactionWithMemos(TestCase, TestSaveLoadMixin, TestQIFExportImportMixin):
-    # TestSaveLoadMixin: Make sure memos are loaded/saved
-    # same for TestQIFExportImportMixin
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('first')
-        self.add_account_legacy('second')
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-        self.tpanel.load()
-        self.stable[0].account = 'first'
-        self.stable[0].memo = 'memo1'
-        self.stable[0].credit = '42'
-        self.stable.save_edits()
-        self.stable.select([1])
-        self.stable[1].account = 'second'
-        self.stable[1].memo = 'memo2'
-        self.stable.save_edits()
-        self.tpanel.save()
-    

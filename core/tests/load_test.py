@@ -265,6 +265,25 @@ def test_expanded_nodes_are_restored_on_load(app, tmppath):
     newapp.doc.load_from_xml(filepath)
     assert (0, 0) in newapp.bsheet.expanded_paths
 
+#--- Transaction_with_memos
+def app_transaction_with_memos():
+    app = TestApp()
+    app.add_account('first')
+    app.add_account('second')
+    app.mw.select_transaction_table()
+    app.ttable.add()
+    app.tpanel.load()
+    app.stable[0].account = 'first'
+    app.stable[0].memo = 'memo1'
+    app.stable[0].credit = '42'
+    app.stable.save_edits()
+    app.stable.select([1])
+    app.stable[1].account = 'second'
+    app.stable[1].memo = 'memo2'
+    app.stable.save_edits()
+    app.tpanel.save()
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -294,6 +313,10 @@ def test_save_load():
     # make sure that groups are saved
     app = app_account_in_group()
     yield check, app
+    
+    # Make sure memos are loaded/saved
+    app = app_transaction_with_memos()
+    yield check, app
 
 def test_save_load_qif():
     @with_tmpdir
@@ -310,4 +333,8 @@ def test_save_load_qif():
         compare_apps(app.doc, newapp.doc, qif_mode=True)
     
     app = app_transaction_with_payee_and_checkno()
+    yield check, app
+    
+    # Make sure memos are loaded/saved
+    app = app_transaction_with_memos()
     yield check, app

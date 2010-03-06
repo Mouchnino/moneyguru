@@ -128,7 +128,7 @@ class EntryWithoutTransfer(TestCase):
         self.assertEqual(self.stable[1].debit, '130.00')
     
 
-class _SplitTransaction(TestCase):
+class SplitTransaction(TestCase):
     def setUp(self):
         # New Account   0 100
         # expense1    100   0
@@ -159,8 +159,6 @@ class _SplitTransaction(TestCase):
         self.stable.save_edits()
         self.tpanel.save()
     
-
-class SplitTransaction(_SplitTransaction):
     def test_amounts(self):
         """All split amounts are right"""
         self.tpanel.load()

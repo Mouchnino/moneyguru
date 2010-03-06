@@ -6,35 +6,47 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from ..base import TestCase
-from ..split_test import _SplitTransaction
+from nose.tools import eq_
+
+from ..base import TestApp, with_app
 from ...gui.entry_print import EntryPrint
 
-class SplitTransaction(_SplitTransaction):
-    def setUp(self):
-        _SplitTransaction.setUp(self)
-        self.pv = EntryPrint(self.etable)
-    
-    def test_split_count(self):
-        self.assertEqual(self.pv.split_count_at_row(0), 4)
-        self.assertEqual(self.pv.split_count_at_row(1), 1)
-    
-    def test_split_values(self):
-        self.assertEqual(self.pv.split_values(0, 1), ['expense2', 'some memo', '10.00'])
-        self.assertEqual(self.pv.split_values(0, 3), ['Unassigned', '', '-9.00'])
-    
+#--- Split transaction
+def app_split_transaction():
+    app = TestApp()
+    splits = [
+        ('split1', 'some memo', '10', ''),
+        ('split2', '', '', '1'),
+        ('', '', '', '9'),
+    ]
+    app.add_txn(from_='foo', to='bar', amount='110', splits=splits)
+    app.add_txn(from_='foo', to='bar', amount='42')
+    app.mw.show_account()
+    app.pv = EntryPrint(app.etable)
+    return app
 
-class OneEntryInPreviousRange(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.select_month_range()
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry('1/1/2008')
-        self.document.select_next_date_range()
-        self.pv = EntryPrint(self.etable)
-    
-    def test_split_count(self):
-        # For the "Previous Balance" entry, return 0, don't crash
-        self.assertEqual(self.pv.split_count_at_row(0), 0)
-    
+@with_app(app_split_transaction)
+def test_split_count(app):
+    eq_(app.pv.split_count_at_row(0), 4)
+    eq_(app.pv.split_count_at_row(1), 1)
+
+@with_app(app_split_transaction)
+def test_split_values(app):
+    eq_(app.pv.split_values(0, 1), ['split1', 'some memo', '10.00'])
+    eq_(app.pv.split_values(0, 3), ['Unassigned', '', '-9.00'])
+
+#--- Entry in previous range
+def app_entry_in_previous_range():
+    app = TestApp()
+    app.doc.select_month_range()
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('1/1/2008')
+    app.doc.select_next_date_range()
+    app.pv = EntryPrint(app.etable)
+    return app
+
+@with_app(app_entry_in_previous_range)    
+def test_split_count_of_previous_balance_entry(app):
+    # For the "Previous Balance" entry, return 0, don't crash
+    eq_(app.pv.split_count_at_row(0), 0)

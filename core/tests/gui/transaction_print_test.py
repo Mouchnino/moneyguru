@@ -6,21 +6,31 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from ..base import TestCase
-from ..split_test import _SplitTransaction
+from nose.tools import eq_
+
+from ..base import TestApp, with_app
 from ...gui.transaction_print import TransactionPrint
 
-class SplitTransaction(_SplitTransaction):
-    def setUp(self):
-        _SplitTransaction.setUp(self)
-        self.mainwindow.select_transaction_table()
-        self.pv = TransactionPrint(self.ttable)
-    
-    def test_split_count(self):
-        self.assertEqual(self.pv.split_count_at_row(0), 5)
-        self.assertEqual(self.pv.split_count_at_row(1), 2)
-    
-    def test_split_values(self):
-        self.assertEqual(self.pv.split_values(0, 2), ['expense2', 'some memo', '10.00'])
-        self.assertEqual(self.pv.split_values(0, 4), ['Unassigned', '', '-9.00'])
-    
+#--- Split transaction
+def app_split_transaction():
+    app = TestApp()
+    splits = [
+        ('split1', 'some memo', '10', ''),
+        ('split2', '', '', '1'),
+        ('', '', '', '9'),
+    ]
+    app.add_txn(from_='foo', to='bar', amount='110', splits=splits)
+    app.add_txn(from_='foo', to='bar', amount='42')
+    app.pv = TransactionPrint(app.ttable)
+    return app
+
+@with_app(app_split_transaction)
+def test_split_count(app):
+    eq_(app.pv.split_count_at_row(0), 5)
+    eq_(app.pv.split_count_at_row(1), 2)
+
+@with_app(app_split_transaction)
+def test_split_values(app):
+    eq_(app.pv.split_values(0, 2), ['split1', 'some memo', '10.00'])
+    eq_(app.pv.split_values(0, 4), ['Unassigned', '', '-9.00'])
+
