@@ -80,4 +80,13 @@ http://www.hardcoded.net/licenses/hs_license
     [[self tableView] stopEditing];
 }
 
+- (NSString *)editedFieldname
+{
+    NSInteger editedColumn = [[self tableView] editedColumn];
+    if (editedColumn > -1) {
+        NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
+        return [column identifier];
+    }
+    return nil;
+}
 @end

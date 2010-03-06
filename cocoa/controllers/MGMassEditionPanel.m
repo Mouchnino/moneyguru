@@ -28,26 +28,26 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Override */
-- (NSString *)fieldOfTextField:(NSTextField *)textField
+- (NSString *)completionAttrForField:(id)aField
 {
-    if (textField == descriptionField) {
+    if (aField == descriptionField) {
         return @"description";
     }
-    else if (textField == payeeField) {
+    else if (aField == payeeField) {
         return @"payee";
     }
-    else if (textField == fromField) {
+    else if (aField == fromField) {
         return @"from";
     }
-    else if (textField == toField) {
+    else if (aField == toField) {
         return @"to";
     }
     return nil;
 }
 
-- (BOOL)isFieldDateField:(NSTextField *)textField
+- (BOOL)isFieldDateField:(id)aField
 {
-    return textField == dateField;
+    return aField == dateField;
 }
 
 - (NSResponder *)firstField

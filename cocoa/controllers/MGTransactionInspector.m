@@ -32,20 +32,26 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyTransactionPanel *)py;
 }
 
-- (NSString *)fieldOfTextField:(NSTextField *)textField
+- (NSString *)completionAttrForField:(id)aField
 {
-    if (textField == descriptionField) {
+    if (aField == descriptionField) {
         return @"description";
     }
-    else if (textField == payeeField) {
+    else if (aField == payeeField) {
         return @"payee";
+    }
+    else if (aField == splitTableView) {
+        NSString *name = [splitTable editedFieldname];
+        if ((name != nil) && ([name isEqualTo:@"account"])) {
+            return @"account";
+        }
     }
     return nil;
 }
 
-- (BOOL)isFieldDateField:(NSTextField *)textField
+- (BOOL)isFieldDateField:(id)aField
 {
-    return textField == dateField;
+    return aField == dateField;
 }
 
 - (NSResponder *)firstField

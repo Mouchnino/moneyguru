@@ -22,9 +22,9 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Override */
-- (BOOL)isFieldDateField:(NSTextField *)textField
+- (BOOL)isFieldDateField:(id)aField
 {
-    return (textField == startDateField) || (textField == stopDateField);
+    return (aField == startDateField) || (aField == stopDateField);
 }
 
 - (NSResponder *)firstField

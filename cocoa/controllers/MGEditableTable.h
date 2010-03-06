@@ -16,11 +16,11 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Private */
-
 - (void)changeColumns; // call this right after init
 
 /* Public */
 - (void)startEditing;
 - (void)stopEditing;
+- (NSString *)editedFieldname;
 
 @end

@@ -12,6 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithNibName:(NSString *)aNibName pyClassName:(NSString *)aClassName parent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aParent py]];
+    [self window]; // Initialize elements from the NIB.
     parentWindow = [aParent window];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:[aParent py]];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
@@ -31,13 +32,13 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Virtual */
-- (NSString *)fieldOfTextField:(NSTextField *)textField
+- (NSString *)completionAttrForField:(id)aField
 {
     // if textField is a field to perform auto-complete on, return the name of the field for auto-completion
     return nil;
 }
 
-- (BOOL)isFieldDateField:(NSTextField *)textField
+- (BOOL)isFieldDateField:(id)aField
 {
     return NO;
 }
@@ -81,7 +82,7 @@ http://www.hardcoded.net/licenses/hs_license
         return customDateFieldEditor;
     }
     else {
-        NSString *attrname = [self fieldOfTextField:asker];
+        NSString *attrname = [self completionAttrForField:asker];
         if (attrname != nil) {
             [customFieldEditor setAttrname:attrname];
             return customFieldEditor;

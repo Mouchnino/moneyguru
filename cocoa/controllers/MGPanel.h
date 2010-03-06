@@ -20,8 +20,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithNibName:(NSString *)aNibName pyClassName:(NSString *)aClassName parent:(HSWindowController *)aParent;
 - (PyPanel *)py;
 /* Virtual */
-- (NSString *)fieldOfTextField:(NSTextField *)textField;
-- (BOOL)isFieldDateField:(NSTextField *)textField;
+- (NSString *)completionAttrForField:(id)aField;
+- (BOOL)isFieldDateField:(id)aField;
 - (NSResponder *)firstField;
 - (void)loadFields;
 - (void)saveFields;
