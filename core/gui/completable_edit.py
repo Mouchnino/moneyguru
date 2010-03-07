@@ -76,6 +76,7 @@ class CompletableEdit(DocumentGUIObject):
     
     def set_lookup_choice(self, text):
         self._text = text
+        self.completion = ''
         self.view.refresh()
     
     #--- Properties

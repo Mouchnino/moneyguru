@@ -35,11 +35,14 @@ def test_lookup_list_has_no_dupe(app):
 
 @with_app(app_default)
 def test_lookup_with_non_empty_edit(app):
-    # If there was already something in the edit, put in the lookup search query
+    # If there was already something in the edit, put in the lookup search query. When go() is
+    # called afterwards, edit's completion is cleared.
     app.ce.text = 'b'
     app.ce.lookup()
     eq_(app.clookup.search_query, 'b')
     eq_(app.clookup.names, ['bar', 'Bazooka', 'buz'])
+    app.clookup.go()
+    eq_(app.ce.completion, '')    
 
 @with_app(app_default)
 def test_select_name_then_go(app):
