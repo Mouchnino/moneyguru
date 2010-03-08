@@ -10,202 +10,220 @@
 from __future__ import unicode_literals
 
 from nose.tools import eq_
+from hsutil.testutil import Patcher
 
 from ...model.account import AccountType
-from ..base import TestCase
+from ..base import TestApp, with_app
 
-class TransactionsWithInfoFilledUp(TestCase):
-    # Transactions with all kinds of info filled up (desc, payee, checkno...)
-    def setUp(self):
-        self.create_instances()
-        self.add_txn(date='30/11/2009', description='desc', payee='payee', checkno='123',
-            from_='from', to='to', amount='42')
-        self.add_txn(date='01/12/2009', description='aaa', payee='zzz', checkno='321',
-            from_='aaa', to='zzz', amount='41')
-        self.add_txn(date='02/12/2009', description='zzz', payee='aaa', checkno='000',
-            from_='zzz', to='aaa', amount='43')
-    
-    def test_sort_by_date(self):
-        # Sorting by date use the datetime value for sorting, not the string value.
-        self.ttable.sort_by('date')
-        eq_(self.ttable[0].date, '30/11/2009')
-        eq_(self.ttable[1].date, '01/12/2009')
-        eq_(self.ttable[2].date, '02/12/2009')
-    
-    def test_sort_by_description(self):
-        # Sorting by description works
-        self.ttable.sort_by('description')
-        eq_(self.ttable[0].description, 'aaa')
-        eq_(self.ttable[1].description, 'desc')
-        eq_(self.ttable[2].description, 'zzz')
-    
-    def test_sort_by_description_desc(self):
-        # When `desc` is True, the sort order is inverted
-        self.ttable.sort_by('description', desc=True)
-        eq_(self.ttable[0].description, 'zzz')
-        eq_(self.ttable[1].description, 'desc')
-        eq_(self.ttable[2].description, 'aaa')
-    
-    def test_sort_by_from(self):
-        # we deal with the from --> from_ escaping. At the time this test was written, it didn't
-        # fail because the we're just fetching '_from', but it's still a case that can very likely
-        # fail in future re-factorings.
-        self.ttable.sort_by('from')
-        eq_(self.ttable[0].from_, 'aaa')
-        eq_(self.ttable[1].from_, 'from')
-        eq_(self.ttable[2].from_, 'zzz')
-    
+#--- Transactions with info filled up
+# Transactions with all kinds of info filled up (desc, payee, checkno...)
+def app_transactions_with_info_filled_up():
+    app = TestApp()
+    app.add_txn(date='30/11/2009', description='desc', payee='payee', checkno='123', from_='from',
+        to='to', amount='42')
+    app.add_txn(date='01/12/2009', description='aaa', payee='zzz', checkno='321', from_='aaa',
+        to='zzz', amount='41')
+    app.add_txn(date='02/12/2009', description='zzz', payee='aaa', checkno='000', from_='zzz',
+        to='aaa', amount='43')
+    return app
 
-class TransactionsWithAccents(TestCase):
-    # Transactions with accented letters in their descriptions
-    def setUp(self):
-        self.create_instances()
-        self.add_txn(description='aaa')
-        self.add_txn(description='ZZZ')
-        self.add_txn(description='ez')
-        self.add_txn(description='éa')
-    
-    def test_sort_by_description(self):
-        # Letters with accents are treated as if they didn't have their accent.
-        self.ttable.sort_by('description')
-        eq_(self.ttable[0].description, 'aaa')
-        eq_(self.ttable[1].description, 'éa')
-        eq_(self.ttable[2].description, 'ez')
-        eq_(self.ttable[3].description, 'ZZZ')
-    
+@with_app(app_transactions_with_info_filled_up)
+def test_sort_by_date(app):
+    # Sorting by date use the datetime value for sorting, not the string value.
+    app.ttable.sort_by('date')
+    eq_(app.ttable[0].date, '30/11/2009')
+    eq_(app.ttable[1].date, '01/12/2009')
+    eq_(app.ttable[2].date, '02/12/2009')
 
-class EntriesWithReconciliationDate(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry('05/01/2010')
-        self.add_entry('05/01/2010')
-        self.etable[1].reconciliation_date = '05/01/2010'
-        self.etable.save_edits()
-    
-    def test_sort_by_reconciliation_date(self):
-        # Don't crash because some dates are None.
-        self.etable.sort_by('reconciliation_date') # no crash
-        eq_(self.etable[0].reconciliation_date, '')
-        eq_(self.etable[1].reconciliation_date, '05/01/2010')
-    
+@with_app(app_transactions_with_info_filled_up)
+def test_sort_by_description(app):
+    # Sorting by description works
+    app.ttable.sort_by('description')
+    eq_(app.ttable[0].description, 'aaa')
+    eq_(app.ttable[1].description, 'desc')
+    eq_(app.ttable[2].description, 'zzz')
 
-class TwoBudgetsWithOneNoneStopDate(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('expense', account_type=AccountType.Expense)
-        self.add_budget('expense', None, '42', stop_date=None)
-        self.add_budget('expense', None, '42', stop_date='21/12/2012')
-    
-    def test_sort_by_stop_date(self):
-        # Don't crash because some dates are None.
-        self.btable.sort_by('stop_date') # no crash
-        eq_(self.btable[0].stop_date, '')
-        eq_(self.btable[1].stop_date, '21/12/2012')
-    
+@with_app(app_transactions_with_info_filled_up)
+def test_sort_by_description_desc(app):
+    # When `desc` is True, the sort order is inverted
+    app.ttable.sort_by('description', desc=True)
+    eq_(app.ttable[0].description, 'zzz')
+    eq_(app.ttable[1].description, 'desc')
+    eq_(app.ttable[2].description, 'aaa')
 
-class TwoSchedulesWithOneNoneStopDate(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_schedule(stop_date=None)
-        self.add_schedule(stop_date='21/12/2012')
-    
-    def test_sort_by_stop_date(self):
-        # Don't crash because some dates are None.
-        self.sctable.sort_by('stop_date') # no crash
-        eq_(self.sctable[0].stop_date, '')
-        eq_(self.sctable[1].stop_date, '21/12/2012')
-    
+@with_app(app_transactions_with_info_filled_up)
+def test_sort_by_from(app):
+    # we deal with the from --> from_ escaping. At the time this test was written, it didn't
+    # fail because the we're just fetching '_from', but it's still a case that can very likely
+    # fail in future re-factorings.
+    app.ttable.sort_by('from')
+    eq_(app.ttable[0].from_, 'aaa')
+    eq_(app.ttable[1].from_, 'from')
+    eq_(app.ttable[2].from_, 'zzz')
 
-class TwoTransactionsWithDifferentCurrencies(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_txn(amount='42 GBP')
-        self.add_txn(amount='43 CAD')
-    
-    def test_sort_by_amount(self):
-        # When sorting by amount, just use the raw number as a sort key. Ignore currencies.
-        self.ttable.sort_by('amount') # no crash
-        eq_(self.ttable[0].amount, 'GBP 42.00')
-        eq_(self.ttable[1].amount, 'CAD 43.00')
-    
+#--- Transactions with accents
+# Transactions with accented letters in their descriptions
+def app_transactions_with_accents():
+    app = TestApp()
+    app.add_txn(description='aaa')
+    app.add_txn(description='ZZZ')
+    app.add_txn(description='ez')
+    app.add_txn(description='éa')
+    return app
 
-class MixedUpReconciledScheduleAndBudget(TestCase):
-    # A mix of 4 txns. One reconciled, one normal, one schedule spawn and one budget spawn.
-    def setUp(self):
-        self.mock_today(2010, 1, 1)
-        self.create_instances()
-        self.document.select_month_range() # we just want 4 transactions
-        self.add_account('expense', account_type=AccountType.Expense)
-        self.add_account('asset')
-        self.document.show_selected_account()
-        self.add_entry('02/01/2010', description='reconciled')
-        self.etable[0].reconciliation_date = '02/01/2010'
-        self.etable.save_edits()
-        self.add_txn('01/01/2010', description='plain', from_='asset')
-        self.add_schedule(repeat_type_index=2, description='schedule', account='asset', amount='42') # monthly
-        self.add_budget('expense', 'asset', '500', start_date='01/01/2010')
-    
-    def test_sort_etable_by_status(self):
-        # Reconciled are first, then plain, then schedules, then budgets
-        self.mainwindow.select_entry_table() # 'asset' is already selected from setup
-        self.etable.sort_by('status')
-        eq_(self.etable[0].description, 'reconciled')
-        eq_(self.etable[1].description, 'plain')
-        eq_(self.etable[2].description, 'schedule')
-        assert self.etable[3].is_budget
-    
-    def test_sort_ttable_by_status(self):
-        # Reconciled are first, then plain, then schedules, then budgets
-        self.mainwindow.select_transaction_table()
-        self.ttable.sort_by('status')
-        eq_(self.ttable[0].description, 'reconciled')
-        eq_(self.ttable[1].description, 'plain')
-        eq_(self.ttable[2].description, 'schedule')
-        assert self.ttable[3].is_budget
-    
+@with_app(app_transactions_with_accents)
+def test_sort_by_description_considers_accents(app):
+    # Letters with accents are treated as if they didn't have their accent.
+    app.ttable.sort_by('description')
+    eq_(app.ttable[0].description, 'aaa')
+    eq_(app.ttable[1].description, 'éa')
+    eq_(app.ttable[2].description, 'ez')
+    eq_(app.ttable[3].description, 'ZZZ')
 
-class TwoTransactionsAddedWhenSortedByDescription(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_transaction_table()
-        self.ttable.sort_by('description')
-        self.add_txn(description='foo', from_='asset')
-        self.add_txn(description='bar', from_='asset')
-    
-    def test_can_move_etable_row(self):
-        # a row in etable can only be moved when the sort descriptor is ('date', False)
-        self.show_account('asset')
-        self.etable.sort_by('description')
-        assert not self.etable.can_move([1], 0)
-        self.etable.sort_by('date')
-        assert self.etable.can_move([1], 0)
-    
-    def test_can_move_ttable_row(self):
-        # a row in ttable can only be moved when the sort descriptor is ('date', False)
-        assert not self.ttable.can_move([1], 0)
-        self.ttable.sort_by('date')
-        assert self.ttable.can_move([1], 0)
-    
-    def test_sort_etable_by_description_then_by_date(self):
-        # Like with ttable, etable doesn't ignore txn position when sorting by date.
-        self.show_account('asset')
-        self.etable.sort_by('description')
-        self.etable.sort_by('date')
-        eq_(self.etable[0].description, 'foo')
-        eq_(self.etable[1].description, 'bar')
-    
-    def test_sort_ttable_by_date(self):
-        # When sorting by date, the "position" attribute of the transaction is taken into account
-        # when transactions have the same date.
-        self.ttable.sort_by('date')
-        eq_(self.ttable[0].description, 'foo')
-        eq_(self.ttable[1].description, 'bar')
-    
-    def test_sort_order_persistent(self):
-        # When changing transactions, the table is re-sorted automatically according to the current
-        # sorting.
-        eq_(self.ttable[0].description, 'bar')
-        eq_(self.ttable[1].description, 'foo')
-    
+#--- Entries with reconciliation date
+def app_entries_with_reconciliation_date():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('05/01/2010')
+    app.add_entry('05/01/2010')
+    app.etable[1].reconciliation_date = '05/01/2010'
+    app.etable.save_edits()
+    return app
+
+@with_app(app_entries_with_reconciliation_date)
+def test_sort_by_reconciliation_date(app):
+    # Don't crash because some dates are None.
+    app.etable.sort_by('reconciliation_date') # no crash
+    eq_(app.etable[0].reconciliation_date, '')
+    eq_(app.etable[1].reconciliation_date, '05/01/2010')
+
+#--- Two budgets with one stop date
+def app_two_budgets_one_stop_date():
+    app = TestApp()
+    app.add_account('expense', account_type=AccountType.Expense)
+    app.add_budget('expense', None, '42', stop_date=None)
+    app.add_budget('expense', None, '42', stop_date='21/12/2012')
+    return app
+
+@with_app(app_two_budgets_one_stop_date)
+def test_sort_btable_by_stop_date(app):
+    # Don't crash because some dates are None.
+    app.btable.sort_by('stop_date') # no crash
+    eq_(app.btable[0].stop_date, '')
+    eq_(app.btable[1].stop_date, '21/12/2012')
+
+#--- Two schedules one stop date
+def app_two_schedules_one_stop_date():
+    app = TestApp()
+    app.add_schedule(stop_date=None)
+    app.add_schedule(stop_date='21/12/2012')
+    return app
+
+@with_app(app_two_schedules_one_stop_date)
+def test_sort_sctable_by_stop_date(app):
+    # Don't crash because some dates are None.
+    app.sctable.sort_by('stop_date') # no crash
+    eq_(app.sctable[0].stop_date, '')
+    eq_(app.sctable[1].stop_date, '21/12/2012')
+
+#--- Two transactions different currencies
+def app_two_txn_different_currencies():
+    app = TestApp()
+    app.add_txn(amount='42 GBP')
+    app.add_txn(amount='43 CAD')
+    return app
+
+@with_app(app_two_txn_different_currencies)
+def test_sort_by_amount(app):
+    # When sorting by amount, just use the raw number as a sort key. Ignore currencies.
+    app.ttable.sort_by('amount') # no crash
+    eq_(app.ttable[0].amount, 'GBP 42.00')
+    eq_(app.ttable[1].amount, 'CAD 43.00')
+
+#--- Mixed up reconciled schedule and budget
+# A mix of 4 txns. One reconciled, one normal, one schedule spawn and one budget spawn.
+def app_mixed_up_schedule_and_budget():
+    p = Patcher()
+    p.patch_today(2010, 1, 1)
+    app = TestApp()
+    app.doc.select_month_range() # we just want 4 transactions
+    app.add_account('expense', account_type=AccountType.Expense)
+    app.add_account('asset')
+    app.doc.show_selected_account()
+    app.add_entry('02/01/2010', description='reconciled')
+    app.etable[0].reconciliation_date = '02/01/2010'
+    app.etable.save_edits()
+    app.add_txn('01/01/2010', description='plain', from_='asset')
+    app.add_schedule(repeat_type_index=2, description='schedule', account='asset', amount='42') # monthly
+    app.add_budget('expense', 'asset', '500', start_date='01/01/2010')
+    return app, p
+
+@with_app(app_mixed_up_schedule_and_budget)
+def test_sort_etable_by_status(app):
+    # Reconciled are first, then plain, then schedules, then budgets
+    app.mw.select_entry_table() # 'asset' is already selected from setup
+    app.etable.sort_by('status')
+    eq_(app.etable[0].description, 'reconciled')
+    eq_(app.etable[1].description, 'plain')
+    eq_(app.etable[2].description, 'schedule')
+    assert app.etable[3].is_budget
+
+@with_app(app_mixed_up_schedule_and_budget)
+def test_sort_ttable_by_status(app):
+    # Reconciled are first, then plain, then schedules, then budgets
+    app.mw.select_transaction_table()
+    app.ttable.sort_by('status')
+    eq_(app.ttable[0].description, 'reconciled')
+    eq_(app.ttable[1].description, 'plain')
+    eq_(app.ttable[2].description, 'schedule')
+    assert app.ttable[3].is_budget
+
+#--- Two transactions added when sorted by description
+def app_two_txns_added_when_sorted_by_description():
+    app = TestApp()
+    app.mw.select_transaction_table()
+    app.ttable.sort_by('description')
+    app.add_txn(description='foo', from_='asset')
+    app.add_txn(description='bar', from_='asset')
+    return app
+
+@with_app(app_two_txns_added_when_sorted_by_description)
+def test_can_move_etable_row(app):
+    # a row in etable can only be moved when the sort descriptor is ('date', False)
+    app.show_account('asset')
+    app.etable.sort_by('description')
+    assert not app.etable.can_move([1], 0)
+    app.etable.sort_by('date')
+    assert app.etable.can_move([1], 0)
+
+@with_app(app_two_txns_added_when_sorted_by_description)
+def test_can_move_ttable_row(app):
+    # a row in ttable can only be moved when the sort descriptor is ('date', False)
+    assert not app.ttable.can_move([1], 0)
+    app.ttable.sort_by('date')
+    assert app.ttable.can_move([1], 0)
+
+@with_app(app_two_txns_added_when_sorted_by_description)
+def test_sort_etable_by_description_then_by_date(app):
+    # Like with ttable, etable doesn't ignore txn position when sorting by date.
+    app.show_account('asset')
+    app.etable.sort_by('description')
+    app.etable.sort_by('date')
+    eq_(app.etable[0].description, 'foo')
+    eq_(app.etable[1].description, 'bar')
+
+@with_app(app_two_txns_added_when_sorted_by_description)
+def test_sort_ttable_by_date(app):
+    # When sorting by date, the "position" attribute of the transaction is taken into account
+    # when transactions have the same date.
+    app.ttable.sort_by('date')
+    eq_(app.ttable[0].description, 'foo')
+    eq_(app.ttable[1].description, 'bar')
+
+@with_app(app_two_txns_added_when_sorted_by_description)
+def test_sort_order_persistent(app):
+    # When changing transactions, the table is re-sorted automatically according to the current
+    # sorting.
+    eq_(app.ttable[0].description, 'bar')
+    eq_(app.ttable[1].description, 'foo')
