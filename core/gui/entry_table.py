@@ -24,19 +24,17 @@ class EntryTable(TransactionTableBase):
     #--- Override
     def _do_add(self):
         entry = self.document.new_entry()
-        for index, row in enumerate(self):
+        rows = self[:-1] # ignore total row
+        for index, row in enumerate(rows):
             if not isinstance(row, EntryTableRow):
                 continue
             if row._date > entry.date:
                 insert_index = index
                 break
         else:
-            insert_index = len(self)
+            insert_index = len(rows)
         row = EntryTableRow(self, entry, entry.account)
-        self.insert(insert_index, row)
-        self.select([insert_index])
-        self.document.select_transactions([entry.transaction])
-        return row
+        return row, insert_index
     
     def _do_delete(self):
         entries = self.selected_entries
@@ -63,10 +61,27 @@ class EntryTable(TransactionTableBase):
             convert = lambda a: convert_amount(a, account.currency, entry.date)
             self._total_increase += convert(row._increase)
             self._total_decrease += convert(row._decrease)
+        row = TotalRow(self, date_range.end, self._total_increase, self._total_decrease)
+        self.append(row)
+    
+    def _restore_selection(self, previous_selection):
         if self.document.explicitly_selected_transactions:
             self.select_transactions(self.document.explicitly_selected_transactions)
             if not self.selected_indexes:
                 self.select_nearest_date(self.document.explicitly_selected_transactions[0].date)
+        # We do the default selection restore, but if we end up selecting the Total row and there's
+        # a row above it, we select it.
+        TransactionTableBase._restore_selection(self, previous_selection)
+        if self.selected_indexes == [len(self)-1] and len(self) > 1:
+            self.selected_indexes = [len(self) - 2]
+    
+    def sort_by(self, column_name, desc=False):
+        # We don't want to include the totals row in the sort, so we remove it first, then we put it
+        # back.
+        # XXX do this with previous balance as well.
+        total_row = self.pop()
+        TransactionTableBase.sort_by(self, column_name, desc)
+        self.append(total_row)
     
     #--- Public
     def add(self):
@@ -382,4 +397,22 @@ class PreviousBalanceRow(BaseEntryTableRow):
         self._reconciled_balance = reconciled_balance
         self._description = 'Previous Balance'
         self._reconciled = False
+    
+
+class TotalRow(BaseEntryTableRow):
+    def __init__(self, table, date, total_increase, total_decrease):
+        super(TotalRow, self).__init__(table)
+        self._date = date
+        self._description = 'TOTAL'
+        # don't touch _increase and _decrease, they trigger editing.
+        self._total_increase = total_increase
+        self._total_decrease = total_decrease
+    
+    @property
+    def increase(self):
+        return self.table.document.app.format_amount(self._total_increase, blank_zero=True)
+    
+    @property
+    def decrease(self):
+        return self.table.document.app.format_amount(self._total_decrease, blank_zero=True)
     

@@ -39,7 +39,7 @@ class TransactionsOfEachType(TestCase):
         #The etable's expense filter makes it only show entries with a decrease
         self.efbar.filter_type = FilterType.Expense # decrease
         self.check_gui_calls(self.etable_gui, ['refresh'])
-        eq_(len(self.etable), 2)
+        eq_(self.ta.etable_count(), 2)
         eq_(self.etable[0].description, 'third')
         eq_(self.etable[1].description, 'fourth')
         #The ttable's expense filter makes it only show entries with a transfer to an expense.
@@ -53,7 +53,7 @@ class TransactionsOfEachType(TestCase):
         #The etable's income filter makes it only show entries with an increase.
         self.efbar.filter_type = FilterType.Income
         self.check_gui_calls(self.etable_gui, ['refresh'])
-        eq_(len(self.etable), 2)
+        eq_(self.ta.etable_count(), 2)
         eq_(self.etable[0].description, 'first')
         eq_(self.etable[1].description, 'second')
         #The etable's income filter makes it only show entries with a transfer to an income.
@@ -67,7 +67,7 @@ class TransactionsOfEachType(TestCase):
         #The etable's transfer filter makes it only show entries with a transfer to an asset/liability.
         self.efbar.filter_type = FilterType.Transfer
         self.check_gui_calls(self.etable_gui, ['refresh'])
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
         eq_(self.etable[0].description, 'fourth')
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
@@ -80,7 +80,7 @@ class TransactionsOfEachType(TestCase):
         # the filter on.
         self.efbar.filter_type = FilterType.Unassigned
         self.check_gui_calls(self.etable_gui, ['refresh'])
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
         eq_(self.etable[0].description, 'second')
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
@@ -131,7 +131,7 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
     
     def test_efbar_not_reconciled(self):
         self.efbar.filter_type = FilterType.NotReconciled
-        eq_(len(self.etable), 2)
+        eq_(self.ta.etable_count(), 2)
         eq_(self.etable[0].description, 'one')
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 2)
@@ -139,7 +139,7 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
     
     def test_efbar_reconciled(self):
         self.efbar.filter_type = FilterType.Reconciled
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
         eq_(self.etable[0].description, 'two')
         self.mainwindow.select_transaction_table()
         eq_(len(self.ttable), 1)
@@ -168,14 +168,14 @@ def app_expense_split_between_asset_and_liability():
 def test_efbar_increase_decrease():
     app = app_expense_split_between_asset_and_liability()
     app.efbar.filter_type = FilterType.Income # increase
-    eq_(len(app.etable), 0)
+    eq_(app.etable_count(), 0)
     app.efbar.filter_type = FilterType.Expense # decrease
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)
     # now, let's go to the liability side
     app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.liabilities[0]
     app.bsheet.show_selected_account()
     # we're still on FilterType.Expense (decrease)
-    eq_(len(app.etable), 0)
+    eq_(app.etable_count(), 0)
     app.efbar.filter_type = FilterType.Income # increase
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)

@@ -23,9 +23,7 @@ class TransactionTable(TransactionTableBase):
         else:
             insert_index = len(self)
         row = TransactionTableRow(self, transaction)
-        self.insert(insert_index, row)
-        self.select([insert_index])
-        return row
+        return row, insert_index
     
     def _do_delete(self):
         transactions = self.selected_transactions

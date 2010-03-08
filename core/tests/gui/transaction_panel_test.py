@@ -57,7 +57,7 @@ def test_buffer():
     eq_(app.tpanel.checkno, '42')
 
 def test_can_load_selected_transaction():
-    # Whether load() is possible is based on the last selection of either the etable ot the ttable
+    # Whether load() is possible is based on the last selection of either the etable or the ttable
     app = app_one_entry()
     app.etable.select([])
     app.mainwindow.select_transaction_table()
@@ -79,7 +79,7 @@ def test_load_while_etable_is_editing():
     app.clear_gui_calls()
     app.tpanel.load()
     assert app.etable.edited is None
-    eq_(len(app.etable), 2)
+    eq_(app.etable_count(), 2)
     app.check_gui_calls(app.etable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
 
 def test_load_while_ttable_is_editing():

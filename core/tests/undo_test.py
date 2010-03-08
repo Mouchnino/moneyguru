@@ -395,7 +395,7 @@ class TwoAccountsTwoTransactions(TestCase):
     def test_etable_refreshes(self):
         self.clear_gui_calls()
         self.document.undo()
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
         self.check_gui_calls(self.etable_gui, ['refresh', 'stop_editing'])
     
     def test_ttable_refreshes(self):

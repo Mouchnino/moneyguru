@@ -42,7 +42,7 @@ class Pristine(TestCase):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
     
     def test_add_twice_then_save(self):
         """Calling add() while in edition calls save_edits()"""

@@ -250,7 +250,7 @@ class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        eq_(len(self.etable), 2)
+        eq_(self.ta.etable_count(), 2)
     
 
 class EntryInEditionMode(TestCase):
@@ -269,7 +269,7 @@ class EntryInEditionMode(TestCase):
     def test_add_entry(self):
         # Make sure that the currently edited entry is saved before another one is added.
         self.etable.add()
-        eq_(len(self.etable), 2)
+        eq_(self.ta.etable_count(), 2)
         eq_(self.etable[0].date, '01/10/2007')
         eq_(self.etable[0].description, 'foobar')
         eq_(self.etable[0].increase, '42.00')
@@ -278,7 +278,7 @@ class EntryInEditionMode(TestCase):
         # Calling delete_entries() while in edition mode removes the edited entry and put the app
         # out of edition mode.
         self.etable.delete()
-        eq_(len(self.etable), 0)
+        eq_(self.ta.etable_count(), 0)
         self.etable.save_edits() # Shouldn't raise anything
     
     def test_increase_and_decrease(self):
@@ -296,7 +296,7 @@ class EntryInEditionMode(TestCase):
     def test_revert_entry(self):
         # Reverting a newly added entry deletes it.
         self.etable.cancel_edits()
-        eq_(len(self.etable), 0)
+        eq_(self.ta.etable_count(), 0)
         assert not self.document.is_dirty()
     
     def test_selected_entry_index(self):
@@ -359,7 +359,7 @@ class OneEntryYearRange2007(TestCase):
         eq_(self.istatement.income.children_count, 3)
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
         eq_(self.etable[0].description, 'Deposit')
     
     def test_delete_entries(self):
@@ -486,11 +486,11 @@ class TwoBoundEntries(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # first
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # third
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
+        self.assertEqual(self.ta.etable_count(), 1)
     
     def test_change_transfer_backwards(self):
         """Entry binding works both ways"""
@@ -503,11 +503,11 @@ class TwoBoundEntries(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
+        self.assertEqual(self.ta.etable_count(), 1)
     
     def test_change_transfer_non_account(self):
         """The binding should be cancelled when the transfer is changed to a non-account. Also,
@@ -519,11 +519,11 @@ class TwoBoundEntries(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # first
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # third
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
         # Make sure the entry don't try to unbind from 'first' again
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1] # second
@@ -549,7 +549,7 @@ class TwoBoundEntries(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
     
 
 class NegativeBoundEntry(TestCase):
@@ -592,7 +592,7 @@ class OneEntryInPreviousRange(TestCase):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
     
     def test_new_entry_are_inserted_after_previous_balance_entry(self):
         """When a new entry's date is the same date as a Previous Balance entry, the entry is added
@@ -619,7 +619,7 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
     
     def test_entries(self):
         """app.entries has 2 entries: a previous balance entry and the october entry."""
-        self.assertEqual(len(self.etable), 2) # Previous balance
+        self.assertEqual(self.ta.etable_count(), 2) # Previous balance
         self.assertEqual(self.etable[0].description, 'Previous Balance')
         self.assertEqual(self.etable[0].payee, '')
         self.assertEqual(self.etable[0].checkno, '')
@@ -977,11 +977,11 @@ class ThreeEntriesInTwoAccountTypes(TestCase):
     def test_delete_entries(self):
         """delete the entry in the selected type"""
         self.etable.delete()
-        self.assertEqual(len(self.etable), 0)
+        self.assertEqual(self.ta.etable_count(), 0)
     
     def test_entries_count(self):
         """depends on the selected account type"""
-        self.assertEqual(len(self.etable), 1)
+        self.assertEqual(self.ta.etable_count(), 1)
     
     def test_get_entry_attribute_value(self):
         """depends on the selected account type"""
@@ -1021,7 +1021,8 @@ class ThreeEntriesInTheSameExpenseAccount(TestCase):
         """delete_entries() when having multiple entries selected delete all selected entries"""
         self.etable.select([0, 2])
         self.etable.delete()
-        self.assertEqual(self.entry_descriptions(), ['entry2'])
+        # [:-1]: ignore total line
+        self.assertEqual(self.entry_descriptions()[:-1], ['entry2'])
     
     def test_graph_data(self):
         # The expense graph is correct.
@@ -1067,12 +1068,14 @@ class FourEntriesInRange(TestCase):
     def test_balances(self):
         """Balances are correct for all entries.
         """
-        self.assertEqual(self.balances(), ['1.00', '-1.00', '2.00', '-2.00'])
+        # [:-1] is because we ignore total row
+        self.assertEqual(self.balances()[:-1], ['1.00', '-1.00', '2.00', '-2.00'])
     
     def test_delete_entries_last(self):
-        """Deleting the last entry makes the selection goes one index before"""
+        # Deleting the last entry makes the selection goes one index above, even though there's a
+        # total row below.
         self.etable.delete()
-        self.assertEqual(self.etable.selected_indexes[0], 2)
+        self.assertEqual(self.etable.selected_index, 2)
     
     def test_delete_entries_second(self):
         """Deleting an entry that is not the last does not change the selected index"""
@@ -1132,8 +1135,8 @@ class EightEntries(TestCase):
     def test_move_entry_to_the_end_of_the_list(self):
         """Moving an entry to the end of the list works."""
         self.etable.move([6], 8)
-        self.assertEqual(self.entry_descriptions()[6:], ['entry 7', 'entry 6'])
-        self.assertEqual(self.balances()[6:], ['1070.00', '1130.00'])
+        self.assertEqual(self.entry_descriptions()[6:8], ['entry 7', 'entry 6'])
+        self.assertEqual(self.balances()[6:8], ['1070.00', '1130.00'])
     
     def test_reorder_entry(self):
         """Moving an entry reorders the entries."""
@@ -1197,23 +1200,26 @@ class FourEntriesOnTheSameDate(TestCase):
         """Moving more than one entry up does nothing"""
         self.etable.select([1, 2])
         self.etable.move_up()
-        self.assertEqual(self.entry_descriptions(), ['entry 1', 'entry 2', 'entry 3', 'entry 4'])
+        # [:-1]: ignore total line
+        self.assertEqual(self.entry_descriptions()[:-1], ['entry 1', 'entry 2', 'entry 3', 'entry 4'])
 
     def test_move_entry_down(self):
         """Move an entry down a couple of times"""
         self.etable.select([2])
         self.etable.move_down()
-        self.assertEqual(self.entry_descriptions(), ['entry 1', 'entry 2', 'entry 4', 'entry 3'])
+        # [:-1]: ignore total line
+        self.assertEqual(self.entry_descriptions()[:-1], ['entry 1', 'entry 2', 'entry 4', 'entry 3'])
         self.etable.move_down()
-        self.assertEqual(self.entry_descriptions(), ['entry 1', 'entry 2', 'entry 4', 'entry 3'])
+        self.assertEqual(self.entry_descriptions()[:-1], ['entry 1', 'entry 2', 'entry 4', 'entry 3'])
 
     def test_move_entry_up(self):
         """Move an entry up a couple of times"""
         self.etable.select([1])
         self.etable.move_up()
-        self.assertEqual(self.entry_descriptions(), ['entry 2', 'entry 1', 'entry 3', 'entry 4'])
+        # [:-1]: ignore total line
+        self.assertEqual(self.entry_descriptions()[:-1], ['entry 2', 'entry 1', 'entry 3', 'entry 4'])
         self.etable.move_up()
-        self.assertEqual(self.entry_descriptions(), ['entry 2', 'entry 1', 'entry 3', 'entry 4'])
+        self.assertEqual(self.entry_descriptions()[:-1], ['entry 2', 'entry 1', 'entry 3', 'entry 4'])
     
     def test_save_load_preserve_positions(self):
         # After a save and load, moving entries around still works correctly (previously, all
@@ -1259,17 +1265,11 @@ class EntrySelectionOnAccountChange(TestCase):
         self.assertEqual(self.etable.selected_indexes, [0])
     
     def test_keep_transaction(self):
-        """Explicitely selecting a transaction make it so it stays selected when possible"""
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
+        # Explicitly selecting a transaction make it so it stays selected when possible.
+        self.show_account('asset1')
         self.etable.select([0]) # the transaction from asset1 to expense1
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[1] # We select an account where the transaction don't exist
-        self.bsheet.show_selected_account()
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.expenses[0]
-        self.istatement.show_selected_account()
+        self.show_account('asset2') # the transaction doesn't exist there.
+        self.show_account('expense1')
         # Even though we selected asset2, the transaction from asset1 should be selected
         self.assertEqual(self.etable.selected_indexes, [0])
     

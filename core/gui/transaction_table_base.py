@@ -64,7 +64,7 @@ class TransactionTableBase(GUITable, DocumentGUIObject):
     def move(self, row_indexes, to_index):
         try:
             to_row = self[to_index]
-            to_transaction = to_row.transaction
+            to_transaction = getattr(to_row, 'transaction', None)
         except IndexError:
             to_transaction = None
         # we can use any from_index, let's use the first

@@ -137,7 +137,7 @@ class OFXImport(TestCase):
         # We start with one entry
         self.add_entry()
         self.add_entry()
-        self.assertEqual(len(self.etable), 3)
+        self.assertEqual(self.ta.etable_count(), 3)
     
     def test_modified(self):
         """The app is marked as modified."""
@@ -216,11 +216,11 @@ class AnotherDoubleOFXImport(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 2)
+        self.assertEqual(self.ta.etable_count(), 2)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
+        self.assertEqual(self.ta.etable_count(), 1)
     
 
 class TripleOFXImportAcrossSessions(TestCase):
@@ -241,7 +241,7 @@ class TripleOFXImportAcrossSessions(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 3)
+        self.assertEqual(self.ta.etable_count(), 3)
     
 
 #--- Double OFX import with split in the middle

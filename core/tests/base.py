@@ -450,6 +450,12 @@ class TestApp(object):
         ce.attrname = attrname
         return ce
     
+    def etable_count(self):
+        # Now that the entry table has a total row, it messes up all tests that check the length
+        # of etable. Rather than having confusing expected numbers with a comment explaining why we
+        # add one to the expected count, we use this method that subtract 1 to the len of etable.
+        return len(self.etable) - 1 
+    
     def save_file(self):
         assert self.tmppath is not None
         filename = self.tmppath + 'foo.xml'

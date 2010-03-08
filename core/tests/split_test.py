@@ -37,7 +37,7 @@ class OneEmptyAccount(TestCase):
         self.stable.add()
         self.stable.save_edits()
         self.tpanel.save()
-        self.assertEqual(len(self.etable), 1)
+        self.assertEqual(self.ta.etable_count(), 1)
     
 
 class OneEntry(TestCase):

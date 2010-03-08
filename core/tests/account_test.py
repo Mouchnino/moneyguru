@@ -396,7 +396,7 @@ class TwoBoundEntries(TestCase):
         self.bsheet.delete()
         self.bsheet.selected = self.bsheet.assets[0] # second
         self.bsheet.show_selected_account()
-        eq_(len(self.etable), 1)
+        eq_(self.ta.etable_count(), 1)
         self.etable.delete() # Doesn't crash, the entry has been unbound
     
 

@@ -34,7 +34,7 @@ class DeletingSecondAccount(TestCase, CommonSetup):
         self.assertEqual(len(self.bsheet.assets), 3) # now, it's deleted
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 1)
+        self.assertEqual(self.ta.etable_count(), 1)
         self.assertEqual(self.etable[0].transfer, 'three')
         self.assertEqual(self.etable[0].increase, '42.00') # got the right side of the txn
     

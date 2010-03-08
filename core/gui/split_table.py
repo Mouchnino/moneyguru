@@ -21,9 +21,7 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
     def _do_add(self):
         split = self.panel.new_split()
         row = SplitTableRow(self, split)
-        self.append(row)
-        self.select([len(self) - 1])
-        return row
+        return row, len(self)
     
     def _do_delete(self):
         self.panel.delete_split(self.selected_row.split)

@@ -28,7 +28,7 @@ def test_add_empty_entry_and_save():
     app.etable.save_edits()
     app.doc.select_prev_date_range()
     app.doc.select_next_date_range()
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)
 
 def test_add_twice_then_save():
     # Calling add() while in edition calls save_edits().
@@ -38,7 +38,7 @@ def test_add_twice_then_save():
     app.etable.add()
     app.etable.add()
     app.etable.save_edits()
-    eq_(len(app.etable), 2)
+    eq_(app.etable_count(), 2)
 
 def test_delete_when_no_entry():
     # Don't crash when trying to remove a transaction from an empty list.
@@ -46,9 +46,9 @@ def test_delete_when_no_entry():
     app.etable.delete() # no crash
 
 def test_selected_entry_index():
-    # selected_indexes is empty when there is no entry.
+    # When there's no entry, the total row is selected
     app = app_one_account()
-    eq_(app.etable.selected_indexes, [])
+    eq_(app.etable.selected_indexes, [0])
 
 def test_set_decrease_auto_decimal_place():
     # When the auto decimal place option is set, amounts in the decrease column are correctly set.
@@ -83,7 +83,7 @@ def test_add_transfer_entry(app):
     app.mw.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)
 
 #--- Liability account
 def app_liability_account():
@@ -106,8 +106,8 @@ def app_expense_account():
     app.mw.show_account()
     return app
 
-#--- Entry being edited
-def app_entry_being_edited():
+#--- Entry being added
+def app_entry_being_added():
     app = TestApp()
     app.add_account()
     app.mw.show_account()
@@ -115,14 +115,19 @@ def app_entry_being_edited():
     app.clear_gui_calls()
     return app
 
-@with_app(app_entry_being_edited)
+@with_app(app_entry_being_added)
 def test_cancel_edits(app):
     # cancel_edits() calls view.refresh() and stop_editing()
     app.etable.cancel_edits()
     # We can't test the order of the gui calls, but stop_editing must happen first
     app.check_gui_calls(app.etable_gui, ['refresh', 'stop_editing'])
 
-@with_app(app_entry_being_edited)
+@with_app(app_entry_being_added)
+def test_entry_is_added_before_total_line(app):
+    # When adding an entry, never make it go after the total line
+    eq_(app.etable.selected_index, 0)
+
+@with_app(app_entry_being_added)
 @with_tmpdir
 def test_save(app, tmppath):
     # Saving the document ends the edition mode and save the edits
@@ -130,7 +135,7 @@ def test_save(app, tmppath):
     app.doc.save_to_xml(filepath)
     app.check_gui_calls(app.etable_gui, ['stop_editing', 'refresh', 'show_selected_row'])
     assert app.etable.edited is None
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)
 
 #--- One entry
 def app_one_entry():
@@ -157,7 +162,7 @@ def test_add_then_delete(app):
     # delete the other entry as well.
     app.etable.add()
     app.etable.delete()
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)
     assert app.etable.edited is None
 
 @with_app(app_one_entry)
@@ -194,7 +199,7 @@ def test_delete_when_entry_selected(app):
 def test_duplicate_transaction(app):
     # duplicate_item() also works on the entry table.
     app.mainwindow.duplicate_item()
-    eq_(len(app.etable), 2)
+    eq_(app.etable_count(), 2)
     eq_(app.etable[0].description, 'description')
     # assume the rest is correct, torough tests in transaction_table_test
 
@@ -230,7 +235,7 @@ def test_show_transfer_account_then_add_entry(app):
     app.etable.show_transfer_account()
     app.mainwindow.new_item()
     app.etable.save_edits()
-    eq_(len(app.etable), 2)
+    eq_(app.etable_count(), 2)
 
 @with_app(app_one_entry)
 def test_show_transfer_account_twice(app):
@@ -336,7 +341,7 @@ def test_search(app):
     # Searching when on etable doesn't switch to the ttable, and shows the results in etable
     app.sfield.query = 'second'
     app.check_gui_calls_partial(app.mainwindow_gui, not_expected=['show_transaction_table'])
-    eq_(len(app.etable), 1)
+    eq_(app.etable_count(), 1)
     eq_(app.etable[0].description, 'second')
 
 @with_app(app_two_entries)
@@ -350,6 +355,16 @@ def test_selection(app):
     app.bsheet.show_selected_account()
     eq_(app.etable.selected_indexes, [0])
     app.check_gui_calls(app.etable_gui, ['refresh', 'show_selected_row'])
+
+@with_app(app_two_entries)
+def test_total_row(app):
+    # The total row shows total increase and decrease with the date being the last day of the date
+    # range.
+    row = app.etable[2]
+    eq_(row.date, '31/12/2008')
+    eq_(row.description, 'TOTAL')
+    eq_(row.increase, '42.00')
+    eq_(row.decrease, '12.00')
 
 #--- Entry in previous range
 def app_entry_in_previous_range():
@@ -535,7 +550,7 @@ def test_delete_both_entries(app):
     # There would be a crash when deleting two entries belonging to the same txn
     app.etable.select([0, 1])
     app.etable.delete() # no crash
-    eq_(len(app.etable), 0)
+    eq_(app.etable_count(), 0)
 
 #--- With budget
 def app_with_budget():
@@ -551,7 +566,7 @@ def app_with_budget():
 @with_app(app_with_budget)
 def test_budget_spawns(app):
     # When a budget is set budget transaction spawns show up in wtable, at the end of each month.
-    eq_(len(app.etable), 12)
+    eq_(app.etable_count(), 12)
     assert app.etable[0].is_budget
     # Budget spawns can't be edited
     assert not app.etable.can_edit_cell('date', 0)

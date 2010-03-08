@@ -73,7 +73,7 @@ class ImportCheckbookQIF(TestCase):
         self.assertEqual(self.bsheet.assets[0].name, 'Account 1')
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 5)
+        self.assertEqual(self.ta.etable_count(), 5)
         # When importing the last pane, the window should close
         self.clear_gui_calls()
         self.iwin.import_selected_pane()
@@ -85,7 +85,7 @@ class ImportCheckbookQIF(TestCase):
         self.iwin.import_selected_pane()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 4)
+        self.assertEqual(self.ta.etable_count(), 4)
     
     def test_remember_target_account_selection(self):
         """When selecting a target account, it's specific to the ane we're in"""
@@ -173,14 +173,14 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.assertEqual(self.bsheet.assets.children_count, 3) # did not add a new account
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
-        self.assertEqual(len(self.etable), 7) # The entries have been added
+        self.assertEqual(self.ta.etable_count(), 7) # The entries have been added
     
     def test_match_then_import(self):
         """The entry matching has the correct effect on the import"""
         self.itable.bind(2, 5) # second entry --> 04/02/2007 Transfer 80.00
         self.iwin.import_selected_pane()
         # The merged entry is supposed to be the last because it changed its date
-        self.assertEqual(len(self.etable), 6)
+        self.assertEqual(self.ta.etable_count(), 6)
         row = self.etable[5]
         self.assertEqual(row.date, '04/02/2007')
         self.assertEqual(row.description, 'second entry')

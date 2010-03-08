@@ -69,8 +69,7 @@ class LoadFile(TestCase):
     
     def test_edit_entry(self):
         # When about to save the document, if an entry is in edition, the document saves the edits first
-        row = self.etable.selected_row
-        row.description = 'foo'
+        self.etable[0].description = 'foo'
         self.document.stop_edition()
         assert self.document.is_dirty() # We started editing, the flag is on
         self.etable.save_edits()

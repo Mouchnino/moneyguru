@@ -232,7 +232,7 @@ def test_delete_spawn_with_global_scope_after_change(app):
 @with_app(app_daily_schedule)
 def test_etable_attrs(app):
     app.show_account('account')
-    eq_(len(app.etable), 6) # same thing in etable
+    eq_(app.etable_count(), 6) # same thing in etable
     assert app.etable[0].recurrent
     eq_(app.ttable[0].date, '13/09/2008')
     assert app.ttable[5].recurrent
@@ -306,7 +306,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
     
     def test_etable_attrs(self):
         self.mainwindow.select_entry_table()
-        self.assertEqual(len(self.etable), 7)
+        self.assertEqual(self.ta.etable_count(), 7)
         self.assertEqual(self.etable[2].date, '19/09/2008')
         self.assertEqual(self.etable[2].description, 'bar')
         self.assertEqual(self.etable[3].date, '19/09/2008')
