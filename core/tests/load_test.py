@@ -284,6 +284,14 @@ def app_transaction_with_memos():
     app.tpanel.save()
     return app
 
+#--- Entry in liability
+def app_entry_in_liability():
+    app = TestApp()
+    app.add_account('Credit card', account_type=AccountType.Liability)
+    app.mw.show_account()
+    app.add_entry('1/1/2008', 'Payment', increase='10')
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -337,4 +345,8 @@ def test_save_load_qif():
     
     # Make sure memos are loaded/saved
     app = app_transaction_with_memos()
+    yield check, app
+    
+    # make sure liability accounts are exported/imported correctly.
+    app = app_entry_in_liability()
     yield check, app
