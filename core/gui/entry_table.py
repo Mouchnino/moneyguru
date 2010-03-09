@@ -408,3 +408,8 @@ class TotalRow(BaseEntryTableRow):
     def decrease(self):
         return self.table.document.app.format_amount(self._total_decrease, blank_zero=True)
     
+    @property
+    def balance(self):
+        return ''
+    
+

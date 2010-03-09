@@ -365,6 +365,7 @@ def test_total_row(app):
     eq_(row.description, 'TOTAL')
     eq_(row.increase, '42.00')
     eq_(row.decrease, '12.00')
+    eq_(row.balance, '')
 
 #--- Entry in previous range
 def app_entry_in_previous_range():
