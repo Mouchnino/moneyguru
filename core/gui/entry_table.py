@@ -61,8 +61,7 @@ class EntryTable(TransactionTableBase):
             convert = lambda a: convert_amount(a, account.currency, entry.date)
             self._total_increase += convert(row._increase)
             self._total_decrease += convert(row._decrease)
-        row = TotalRow(self, date_range.end, self._total_increase, self._total_decrease)
-        self.append(row)
+        self.footer = TotalRow(self, date_range.end, self._total_increase, self._total_decrease)
     
     def _restore_selection(self, previous_selection):
         if self.document.explicitly_selected_transactions:
@@ -75,14 +74,7 @@ class EntryTable(TransactionTableBase):
         if self.selected_indexes == [len(self)-1] and len(self) > 1:
             self.selected_indexes = [len(self) - 2]
     
-    def sort_by(self, column_name, desc=False):
-        # We don't want to include the totals row in the sort, so we remove it first, then we put it
-        # back.
-        # XXX do this with previous balance as well.
-        total_row = self.pop()
-        TransactionTableBase.sort_by(self, column_name, desc)
-        self.append(total_row)
-    
+    # XXX when sorting, keep previous balances on top.
     #--- Public
     def add(self):
         if self.account is None:

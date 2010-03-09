@@ -61,6 +61,14 @@ def test_sort_by_from(app):
     eq_(app.ttable[1].from_, 'from')
     eq_(app.ttable[2].from_, 'zzz')
 
+@with_app(app_transactions_with_info_filled_up)
+def test_sort_preserves_total_row(app):
+    # When sorting, the total row stays where it is, at the bottom of the table. We test it on
+    # etable because at the time the test was created, it wasn't added to ttable yet.
+    app.show_account('from') # There's now only one entry and the total row.
+    app.etable.sort_by('description')
+    eq_(app.etable[1].description, 'TOTAL')
+
 #--- Transactions with accents
 # Transactions with accented letters in their descriptions
 def app_transactions_with_accents():
