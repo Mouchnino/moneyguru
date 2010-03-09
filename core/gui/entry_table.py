@@ -52,7 +52,7 @@ class EntryTable(TransactionTableBase):
             if prev_entry is not None:
                 balance = prev_entry.balance
                 rbalance = prev_entry.reconciled_balance
-                self.append(PreviousBalanceRow(self, date_range.start, balance, rbalance, account))
+                self.header = PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
         self._total_increase = 0
         self._total_decrease = 0
         for entry in self.document.visible_entries:
@@ -74,7 +74,6 @@ class EntryTable(TransactionTableBase):
         if self.selected_indexes == [len(self)-1] and len(self) > 1:
             self.selected_indexes = [len(self) - 2]
     
-    # XXX when sorting, keep previous balances on top.
     #--- Public
     def add(self):
         if self.account is None:
