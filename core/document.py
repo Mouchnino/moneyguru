@@ -96,9 +96,7 @@ class Document(Broadcaster, Listener):
         self._filter_string = ''
         self._filter_type = None
         self._visible_transactions = None
-        self._visible_unfiltered_transaction_count = 0
         self._visible_entries = None
-        self._visible_unfiltered_entry_count = 0
         self._restore_preferences()
     
     #--- Private
@@ -314,11 +312,9 @@ class Document(Broadcaster, Listener):
         account = self.shown_account
         if account is None:
             self._visible_entries = []
-            self._visible_unfiltered_entry_count = 0
             return
         date_range = self.date_range
         entries = [e for e in account.entries if e.date in date_range]
-        self._visible_unfiltered_entry_count = len(entries)
         query_string = self.filter_string
         filter_type = self.filter_type
         if query_string:
@@ -347,7 +343,6 @@ class Document(Broadcaster, Listener):
     def _set_visible_transactions(self):
         date_range = self.date_range
         txns = [t for t in self.oven.transactions if t.date in date_range]
-        self._visible_unfiltered_transaction_count = len(txns)
         query_string = self.filter_string
         filter_type = self.filter_type
         if not query_string and filter_type is None:
@@ -587,10 +582,6 @@ class Document(Broadcaster, Listener):
             self._set_visible_transactions()
         return self._visible_transactions
     
-    @property
-    def visible_unfiltered_transaction_count(self):
-        return self._visible_unfiltered_transaction_count
-    
     #--- Entry
     @handle_abort
     def change_entry(self, entry, date=NOEDIT, reconciliation_date=NOEDIT, description=NOEDIT, 
@@ -680,10 +671,6 @@ class Document(Broadcaster, Listener):
         if self._visible_entries is None:
             self._set_visible_entries()
         return self._visible_entries
-    
-    @property
-    def visible_unfiltered_entry_count(self):
-        return self._visible_unfiltered_entry_count
     
     #--- Budget
     def budgeted_amount_for_target(self, target, date_range):
