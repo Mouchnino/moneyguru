@@ -9,16 +9,28 @@
 
 from __future__ import unicode_literals
 
+from ..model.amount import convert_amount
 from .base import BaseView
 
 class TransactionView(BaseView):
     def __init__(self, view, mainwindow, children):
         BaseView.__init__(self, view, mainwindow.document, children)
         self.ttable, self.tfbar = children
+        self.totals = ''
     
     def connect(self):
         BaseView.connect(self)
         self.view.refresh_totals()
+    
+    #--- Private
+    def _refresh_totals(self):
+        selected = len(self.document.selected_transactions)
+        total = len(self.document.visible_transactions)
+        currency = self.app.default_currency
+        total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.document.selected_transactions)
+        total_amount_fmt = self.app.format_amount(total_amount)
+        msg = "{0} out of {1} selected. Amount: {2}"
+        self.totals = msg.format(selected, total, total_amount_fmt)
     
     #--- Public
     def delete_item(self):
@@ -39,17 +51,11 @@ class TransactionView(BaseView):
     def show_account(self):
         self.ttable.show_from_account()
     
-    #--- Properties
-    @property
-    def totals(self):
-        shown = len(self.document.visible_transactions)
-        total = self.document.visible_unfiltered_transaction_count
-        msg = "Showing {0} out of {1}."
-        return msg.format(shown, total)
-    
     #--- Event Handlers
-    def transaction_changed(self):
+    def transactions_selected(self):
+        self._refresh_totals()
         self.view.refresh_totals()
-    transaction_deleted = transaction_changed
-    filter_applied = transaction_changed
-    date_range_changed = transaction_changed
+    
+    # We also listen to transaction_changed because when we change transaction, selection doesn't
+    # change and amounts might have been changed.
+    transaction_changed = transactions_selected

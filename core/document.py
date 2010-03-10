@@ -818,6 +818,7 @@ class Document(Broadcaster, Listener):
     
     def select_transactions(self, transactions):
         self._selected_transactions = transactions
+        self.notify('transactions_selected')
     
     @property
     def explicitly_selected_transactions(self):

@@ -98,6 +98,9 @@ class DocumentGUIObject(Listener):
     def transactions_imported(self):
         pass
     
+    def transactions_selected(self):
+        pass
+    
 
 class TransactionPanelGUIObject(Listener):
     def __init__(self, view, panel):
