@@ -11,8 +11,11 @@ from .print_view import PrintView
 # the parent of this view must be a TransactionTable
 class TransactionPrint(PrintView):
     def split_count_at_row(self, row_index):
-        txn = self.parent[row_index].transaction
-        return len(txn.splits)
+        row = self.parent[row_index]
+        if hasattr(row, 'transaction'):
+            return len(row.transaction.splits)
+        else:
+            return 0
     
     def split_values(self, row_index, split_row_index):
         txn = self.parent[row_index].transaction

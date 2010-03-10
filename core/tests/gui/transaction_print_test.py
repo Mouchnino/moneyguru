@@ -28,6 +28,8 @@ def app_split_transaction():
 def test_split_count(app):
     eq_(app.pv.split_count_at_row(0), 5)
     eq_(app.pv.split_count_at_row(1), 2)
+    # Instead of crashing, split_count_at_row returns 0 on total row
+    eq_(app.pv.split_count_at_row(2), 0)
 
 @with_app(app_split_transaction)
 def test_split_values(app):
