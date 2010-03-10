@@ -18,8 +18,6 @@ class EntryTable(TransactionTableBase):
     def __init__(self, view, mainwindow):
         TransactionTableBase.__init__(self, view, mainwindow)
         self.account = None
-        self._total_increase = 0
-        self._total_decrease = 0
     
     #--- Override
     def _do_add(self):
@@ -53,15 +51,15 @@ class EntryTable(TransactionTableBase):
                 balance = prev_entry.balance
                 rbalance = prev_entry.reconciled_balance
                 self.header = PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
-        self._total_increase = 0
-        self._total_decrease = 0
+        total_increase = 0
+        total_decrease = 0
         for entry in self.document.visible_entries:
             row = EntryTableRow(self, entry, account)
             self.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)
-            self._total_increase += convert(row._increase)
-            self._total_decrease += convert(row._decrease)
-        self.footer = TotalRow(self, date_range.end, self._total_increase, self._total_decrease)
+            total_increase += convert(row._increase)
+            total_decrease += convert(row._decrease)
+        self.footer = TotalRow(self, date_range.end, total_increase, total_decrease)
     
     def _restore_selection(self, previous_selection):
         if self.document.explicitly_selected_transactions:

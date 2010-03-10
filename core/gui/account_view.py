@@ -34,6 +34,19 @@ class AccountView(BaseView):
         self.balgraph.disconnect()
         self.bargraph.disconnect()
     
+    #--- Private
+    def _refresh_totals(self):
+        selected = len(self.document.selected_transactions)
+        total = len(self.document.visible_entries)
+        account = self.document.shown_account
+        amounts = [t.amount_for_account(account, account.currency) for t in self.document.selected_transactions]
+        total_increase = sum(a for a in amounts if a > 0)
+        total_decrease = abs(sum(a for a in amounts if a < 0))
+        total_increase_fmt = self.app.format_amount(total_increase)
+        total_decrease_fmt = self.app.format_amount(total_decrease)
+        msg = "{0} out of {1} selected. Increase: {2} Decrease: {3}"
+        self.totals = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
+    
     #--- Public
     def delete_item(self):
         self.etable.delete()
@@ -53,25 +66,16 @@ class AccountView(BaseView):
     def show_account(self):
         self.etable.show_transfer_account()
     
-    #--- Properties
-    @property
-    def totals(self):
-        shown = len(self.document.visible_entries)
-        total = self.document.visible_unfiltered_entry_count
-        # XXX It's a little hackish to have _total_* computed on etable...
-        increase = self.app.format_amount(self.etable._total_increase)
-        decrease = self.app.format_amount(self.etable._total_decrease)
-        msg = "Showing {shown} out of {total}. Total increase: {increase} Total decrease: {decrease}"
-        return msg.format(shown=shown, total=total, increase=increase, decrease=decrease)
-    
     #--- Event Handlers
     def account_must_be_shown(self):
         self.disconnect()
         if self.document.shown_account is not None:
             self.connect()
     
-    def transaction_changed(self):
+    def transactions_selected(self):
+        self._refresh_totals()
         self.view.refresh_totals()
-    transaction_deleted = transaction_changed
-    filter_applied = transaction_changed
-    date_range_changed = transaction_changed
+    
+    # We also listen to transaction_changed because when we change transaction, selection doesn't
+    # change and amounts might have been changed.
+    transaction_changed = transactions_selected
