@@ -479,6 +479,9 @@ class TestApp(object):
         else:
             raise LookupError("Trying to show an account that doesn't exist")
     
+    def transaction_descriptions(self):
+        return [row.description for row in self.ttable]
+    
 
 def with_app(appfunc):
     # This decorator sends the app resulting from the `appfunc` call as an argument to the decorated
@@ -662,8 +665,8 @@ class TestCase(TestCaseBase):
     def show_account(self, *args, **kw):
         self.ta.show_account(*args, **kw)
     
-    def transaction_descriptions(self):
-        return [row.description for row in self.ttable]
+    def transaction_descriptions(self, *args, **kw):
+        return self.ta.transaction_descriptions(*args, **kw)
     
 
 def compare_apps(first, second, qif_mode=False):

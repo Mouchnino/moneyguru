@@ -454,39 +454,6 @@ def app_three_way_multi_currency_transaction():
     app.mainwindow.select_transaction_table()
     return app
 
-#--- Generators
-def test_attributes():
-    def check(app, index, expected):
-        row = app.ttable[index]
-        for attrname, value in expected.items():
-            eq_(getattr(row, attrname), value)
-    
-    # Transactions with more than 2 splits are supported.
-    app = app_three_way_transaction()
-    yield check, app, 0, {'from_': 'first', 'to': 'second, third', 'amount': '42.00'}
-    
-    # When the 'to' side has more than one currency, convert everything to the account's currency.
-    app = app_three_way_multi_currency_transaction()
-    # (42 + 22 + (20 / .8)) / 2
-    yield check, app, 0, {'amount': '44.50'}
-
-def test_can_edit():
-    def check(app, index, uneditable_fields):
-        for colname in ['date', 'description', 'payee', 'checkno', 'from', 'to', 'amount']:
-            if colname in uneditable_fields:
-                assert not app.ttable.can_edit_cell(colname, index)
-            else:
-                assert app.ttable.can_edit_cell(colname, index)                
-    
-    # All fields are editable except "to" which contains 2 accounts (from has only one so it's
-    # editable).
-    app = app_three_way_transaction()
-    yield check, app, 0, ('to', )
-    
-    # When the transaction is multi-currency, the amount can't be edited.
-    app = app_three_way_multi_currency_transaction()
-    yield check, app, 0, ('to', 'amount')
-
 class OneFourWayTransactionWithUnassigned(TestCase):
     def setUp(self):
         self.create_instances()
@@ -624,95 +591,102 @@ class TwoTransactionsOneOutOfRange(TestCase):
         eq_(self.tpanel.description, 'first')
     
 
-class ThreeTransactionsInRange(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.document.show_selected_account()
-        self.add_entry('11/07/2008', description='first', transfer='first')
-        self.add_entry('11/07/2008', description='second', transfer='second')
-        self.add_entry('12/07/2008', description='third', transfer='third') 
-        self.mainwindow.select_transaction_table()
-    
-    def test_add_date_and_selection(self):
-        """New transactions are added on the same date as the currently selected transaction, after
-        all transactions of the same date.
-        """
-        self.ttable.select([0])
-        self.ttable.add()
-        row = self.ttable.edited
-        eq_(row.date, '11/07/2008')
-        eq_(self.ttable.selected_indexes, [2])
-    
-    def test_delete_last(self):
-        """Deleting the last txn makes the selection goes one index before"""
-        self.ttable.delete()
-        eq_(self.ttable.selected_indexes, [1])
-    
-    def test_delete_multiple_selection(self):
-        """delete() when having multiple entries selected delete all selected entries"""
-        self.ttable.select([0, 2])
-        self.ttable.delete()
-        eq_(self.transaction_descriptions(), ['second'])
-    
-    def test_delete_entries_second(self):
-        """Deleting a txn that is not the last does not change the selected index"""
-        self.ttable.select([1])
-        self.ttable.delete()
-        eq_(self.ttable.selected_indexes, [1])
-    
-    def test_delete_first(self):
-        # Deleting the first entry keeps the selection on the first index
-        self.ttable.select([0])
-        self.ttable.delete()
-        eq_(self.ttable.selected_indexes, [0])
-    
-    def test_delete_second_then_add(self):
-        # When deleting the second entry, the 3rd end up selected. if we add a new txn, the txn date
-        # must be the date from the 3rd txn
-        self.ttable.select([1])
-        self.ttable.delete()
-        self.ttable.add()
-        eq_(self.ttable.edited.date, '12/07/2008')
-    
-    def test_explicit_selection(self):
-        """Only the explicit selection is sticky. If the non-explicit selection changes, this 
-        doesn't affect the ttable selection.
-        """
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[1] # second
-        self.istatement.show_selected_account()
-        self.mainwindow.select_transaction_table()
-        eq_(self.ttable.selected_indexes, [2]) # explicit selection
-        # the other way around too
-        self.ttable.select([1])
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[2]
-        self.istatement.show_selected_account()
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        eq_(self.etable.selected_indexes, [1]) # explicit selection
-    
-    def test_selection(self):
-        # TransactionTable stays in sync with EntryTable.
-        self.ttable.disconnect() # this disconnect scheme will eventually be embedded in the main testcase
-        self.etable.select([0, 1])
-        self.clear_gui_calls()
-        self.etable.disconnect()
-        self.ttable.connect()
-        eq_(self.ttable.selected_indexes, [0, 1])
-        self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row'])
-    
-    def test_selection_changed_when_filtering_out(self):
-        # selected transactions becoming filtered out are not selected anymore. Also, the selection
-        # is updated at the document level
-        self.ttable.select([0]) # first
-        self.sfield.query = 'second'
-        eq_(self.ttable.selected_row.description, 'second')
-        self.mainwindow.edit_item()
-        eq_(self.tpanel.description, 'second')
-    
+#--- Three transactions
+def app_three_transactions():
+    app = TestApp()
+    app.add_account()
+    app.doc.show_selected_account()
+    app.add_entry('11/07/2008', description='first', transfer='first', increase='1')
+    app.add_entry('11/07/2008', description='second', transfer='second', increase='2')
+    app.add_entry('12/07/2008', description='third', transfer='third', increase='3') 
+    app.mw.select_transaction_table()
+    return app
+
+@with_app(app_three_transactions)
+def test_add_date_and_selection(app):
+    # New transactions are added on the same date as the currently selected transaction, after all
+    # transactions of the same date.
+    app.ttable.select([0])
+    app.ttable.add()
+    row = app.ttable.edited
+    eq_(row.date, '11/07/2008')
+    eq_(app.ttable.selected_indexes, [2])
+
+@with_app(app_three_transactions)
+def test_delete_last(app):
+    # Deleting the last txn makes the selection goes one index before.
+    app.ttable.delete()
+    eq_(app.ttable.selected_indexes, [1])
+
+@with_app(app_three_transactions)
+def test_delete_multiple_selection(app):
+    # delete() when having multiple entries selected delete all selected entries.
+    app.ttable.select([0, 2])
+    app.ttable.delete()
+    eq_(app.transaction_descriptions(), ['second'])
+
+@with_app(app_three_transactions)
+def test_delete_entries_second(app):
+    # Deleting a txn that is not the last does not change the selected index.
+    app.ttable.select([1])
+    app.ttable.delete()
+    eq_(app.ttable.selected_indexes, [1])
+
+@with_app(app_three_transactions)
+def test_delete_first(app):
+    # Deleting the first entry keeps the selection on the first index
+    app.ttable.select([0])
+    app.ttable.delete()
+    eq_(app.ttable.selected_indexes, [0])
+
+@with_app(app_three_transactions)
+def test_delete_second_then_add(app):
+    # When deleting the second entry, the 3rd end up selected. if we add a new txn, the txn date
+    # must be the date from the 3rd txn
+    app.ttable.select([1])
+    app.ttable.delete()
+    app.ttable.add()
+    eq_(app.ttable.edited.date, '12/07/2008')
+
+@with_app(app_three_transactions)
+def test_explicit_selection(app):
+    # Only the explicit selection is sticky. If the non-explicit selection changes, this doesn't
+    # affect the ttable selection.
+    app.mw.select_income_statement()
+    app.istatement.selected = app.istatement.income[1] # second
+    app.istatement.show_selected_account()
+    app.mw.select_transaction_table()
+    eq_(app.ttable.selected_indexes, [2]) # explicit selection
+    # the other way around too
+    app.ttable.select([1])
+    app.mw.select_income_statement()
+    app.istatement.selected = app.istatement.income[2]
+    app.istatement.show_selected_account()
+    app.mainwindow.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    eq_(app.etable.selected_indexes, [1]) # explicit selection
+
+@with_app(app_three_transactions)
+def test_selection(app):
+    # TransactionTable stays in sync with EntryTable.
+    app.ttable.disconnect() # this disconnect scheme will eventually be embedded in the main testcase
+    app.etable.select([0, 1])
+    app.clear_gui_calls()
+    app.etable.disconnect()
+    app.ttable.connect()
+    eq_(app.ttable.selected_indexes, [0, 1])
+    app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row'])
+
+@with_app(app_three_transactions)
+def test_selection_changed_when_filtering_out(app):
+    # selected transactions becoming filtered out are not selected anymore. Also, the selection
+    # is updated at the document level
+    app.ttable.select([0]) # first
+    app.sfield.query = 'second'
+    eq_(app.ttable.selected_row.description, 'second')
+    app.mw.edit_item()
+    eq_(app.tpanel.description, 'second')
 
 class ThreeTransactionsEverythingReconciled(TestCase):
     def setUp(self):
@@ -783,11 +757,6 @@ def test_completion(app):
     eq_(ce.completion, 'irst')
     ce.text = 's'
     eq_(ce.completion, 'econd')
-
-class TransactionCreatedThroughTheTransactionTable(TestCase):
-    def setUp(self):
-        self.create_instances()
-    
 
 class LoadFile(TestCase):
     def setUp(self):
@@ -1113,3 +1082,36 @@ class WithBudget(TestCase, CommonSetup):
         self.mainwindow.edit_item() # budget spawns can't be edited
         self.check_gui_calls_partial(self.tpanel_gui, not_expected=['post_load'])
     
+
+#--- Generators
+def test_attributes():
+    def check(app, index, expected):
+        row = app.ttable[index]
+        for attrname, value in expected.items():
+            eq_(getattr(row, attrname), value)
+    
+    # Transactions with more than 2 splits are supported.
+    app = app_three_way_transaction()
+    yield check, app, 0, {'from_': 'first', 'to': 'second, third', 'amount': '42.00'}
+    
+    # When the 'to' side has more than one currency, convert everything to the account's currency.
+    app = app_three_way_multi_currency_transaction()
+    # (42 + 22 + (20 / .8)) / 2
+    yield check, app, 0, {'amount': '44.50'}
+
+def test_can_edit():
+    def check(app, index, uneditable_fields):
+        for colname in ['date', 'description', 'payee', 'checkno', 'from', 'to', 'amount']:
+            if colname in uneditable_fields:
+                assert not app.ttable.can_edit_cell(colname, index)
+            else:
+                assert app.ttable.can_edit_cell(colname, index)                
+    
+    # All fields are editable except "to" which contains 2 accounts (from has only one so it's
+    # editable).
+    app = app_three_way_transaction()
+    yield check, app, 0, ('to', )
+    
+    # When the transaction is multi-currency, the amount can't be edited.
+    app = app_three_way_multi_currency_transaction()
+    yield check, app, 0, ('to', 'amount')
