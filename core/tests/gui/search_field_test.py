@@ -36,55 +36,55 @@ class TwoTransactions(TestCase, CommonSetup):
         # when using the 'account:' search form, only account are searched. Also, commas can be used
         # to specify more than one term
         self.sfield.query = 'account: withdrawal,inCome'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'a Deposit')
     
     def test_query_amount(self):
         """Amounts can be queried, and the cents, when 0, can be ommited"""
         self.sfield.query = '140'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'Withdrawal')
     
     def test_query_amount_exact(self):
         """Amount searches are exact"""
         self.sfield.query = '212'
-        self.assertEqual(len(self.ttable), 0)
+        self.assertEqual(self.ttable.row_count, 0)
         self.sfield.query = '212.12'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'a Deposit')
     
     def test_query_amount_negative(self):
         """When searching for amount, we ignore the amounts' sign"""
         self.sfield.query = '-140'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'Withdrawal')
     
     def test_query_description(self):
         """The query is case insensitive and works on description"""
         self.sfield.query = 'wiTH'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'Withdrawal')
     
     def test_query_checkno(self):
         """The query works on checkno"""
         self.sfield.query = '42a'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'a Deposit')
     
     def test_query_checkno_partial(self):
         """We don't match transactions that only partially match checkno (it doesn't make much sense)"""
         self.sfield.query = '4'
-        self.assertEqual(len(self.ttable), 0)
+        self.assertEqual(self.ttable.row_count, 0)
     
     def test_query_from(self):
         """The 'from' account can be queried"""
         self.sfield.query = 'desJ'
-        self.assertEqual(len(self.ttable), 2)
+        self.assertEqual(self.ttable.row_count, 2)
     
     def test_query_payee(self):
         """The query is case insensitive and works on payee"""
         self.sfield.query = 'siX'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'a Deposit')
     
     def test_query_space(self):
@@ -92,12 +92,12 @@ class TwoTransactions(TestCase, CommonSetup):
         # parsed as an amount.
         self.mainwindow.select_transaction_table()
         self.sfield.query = ' ' # no crash
-        self.assertEqual(len(self.ttable), 2) # same as no filter
+        self.assertEqual(self.ttable.row_count, 2) # same as no filter
     
     def test_query_to(self):
         """The 'to' account can be queried"""
         self.sfield.query = 'Come'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'a Deposit')
     
 
@@ -110,7 +110,7 @@ class ThreeTransactionsOneWithZeroAmount(TestCase, CommonSetup):
     def test_query_amount(self):
         # querying an amount with a zero amount in the stack doesn't cause a crash
         self.sfield.query = '212.12' # no crash
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
     
     
 class Split(TestCase):
@@ -141,12 +141,12 @@ class Split(TestCase):
     def test_query_memo(self):
         # memo fields are part of the search query
         self.sfield.query = 'memo2'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
     
     def test_query_split_account(self):
         """Any account in a split can match a sfield query"""
         self.sfield.query = 'third'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
     
 
 class ThreeTransactionsFiltered(TestCase):
@@ -168,7 +168,7 @@ class ThreeTransactionsFiltered(TestCase):
         self.check_gui_calls(self.mainwindow_gui, ['show_balance_sheet'])
         self.check_gui_calls(self.sfield_gui, ['refresh'])
         self.mainwindow.select_transaction_table()
-        self.assertEqual(len(self.ttable), 3)
+        self.assertEqual(self.ttable.row_count, 3)
     
     def test_change_account_to_bsheet(self):
         """Balance sheet is another notification, so we must also test it in addition to 
@@ -178,14 +178,14 @@ class ThreeTransactionsFiltered(TestCase):
         self.assertEqual(self.sfield.query, '')
         self.check_gui_calls(self.sfield_gui, ['refresh'])
         self.mainwindow.select_transaction_table()
-        self.assertEqual(len(self.ttable), 3)
+        self.assertEqual(self.ttable.row_count, 3)
     
     def test_modify_transaction_out_of_filter(self):
         """When changing a txn so it doesn't match the filter anymore, remove it"""
         row = self.ttable.selected_row
         row.description = 'baz'
         self.ttable.save_edits()
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable.selected_indexes, [0])
     
 
@@ -200,6 +200,6 @@ class GroupedAndUngroupedTransactions(TestCase):
     
     def test_query_group(self):
         self.sfield.query = 'group:foo,mygRoup'
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].description, 'first')
     

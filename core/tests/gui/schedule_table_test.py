@@ -44,7 +44,7 @@ def test_delete():
     eq_(len(app.sctable), 0)
     # And the spawns aren't there anymore in the ttable
     app.mainwindow.select_transaction_table()
-    eq_(len(app.ttable), 0)
+    eq_(app.ttable.row_count, 0)
 
 def test_edit_selected():
     # There was a bug where, although the selected_indexes in the table were correctly set

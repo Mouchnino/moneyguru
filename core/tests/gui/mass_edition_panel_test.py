@@ -142,7 +142,7 @@ def test_change_and_save(tmppath):
     app.mepanel.amount = '44'
     app.mepanel.save()
     assert app.doc.is_dirty()
-    for row in app.ttable:
+    for row in app.ttable.rows:
         eq_(row.date, '08/07/2008')
         eq_(row.description, 'description3')
         eq_(row.payee, 'payee3')

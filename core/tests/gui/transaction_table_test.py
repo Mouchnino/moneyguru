@@ -26,12 +26,12 @@ class Pristine(TestCase):
         """Reverting after an add removes the transaction from the list"""
         self.ttable.add()
         self.ttable.cancel_edits()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
     def test_add_change_and_save(self):
         """The add mechanism works as expected"""
         self.ttable.add()
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         eq_(self.ttable.selected_indexes, [0])    
         row = self.ttable[0]
         row.description = 'foobar'
@@ -51,7 +51,7 @@ class Pristine(TestCase):
         self.ttable.add()
         self.ttable.add()
         self.ttable.save_edits()
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
     
     def test_delete(self):
         """Don't crash when trying to remove a transaction from an empty list"""
@@ -71,7 +71,7 @@ class Pristine(TestCase):
         self.clear_gui_calls()
         self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
         self.iwin.import_selected_pane()
-        self.assertNotEqual(len(self.ttable), 0)
+        self.assertNotEqual(self.ttable.row_count, 0)
         self.check_gui_calls(self.ttable_gui, ['refresh'])
     
     def test_show_from_account(self):
@@ -103,7 +103,7 @@ class EditionMode(TestCase):
         out of edition mode.
         """
         self.ttable.delete()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
         self.ttable.save_edits() # Shouldn't raise anything
     
     def test_duplicate_selected(self):
@@ -152,11 +152,11 @@ class OneTransaction(TestCase):
         # delete the other txn as well.
         self.ttable.add()
         self.ttable.delete()
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         assert self.ttable.edited is None
     
     def test_attributes(self):
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         self.assert_row_has_original_attrs(self.ttable[0])
     
     def test_autofill_amount_format_cache(self):
@@ -197,7 +197,7 @@ class OneTransaction(TestCase):
     def test_duplicate_transaction(self):
         # calling duplicate_selected() duplicates the selected transactions
         self.ttable.duplicate_selected()
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
         self.assert_row_has_original_attrs(self.ttable[0])
         self.assert_row_has_original_attrs(self.ttable[1])
     
@@ -206,7 +206,7 @@ class OneTransaction(TestCase):
         self.mainwindow.duplicate_item()
         self.ttable.select([0, 1])
         self.mainwindow.duplicate_item()
-        eq_(len(self.ttable), 4)
+        eq_(self.ttable.row_count, 4)
     
     def test_edit_date_out_of_bounds(self):
         # when the date of the edited row is out of the date range, is_date_in_future() or
@@ -224,7 +224,7 @@ class OneTransaction(TestCase):
     def test_delete(self):
         # Deleting a transaction updates the graph and makes the 'second' account go away.
         self.ttable.delete()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -235,7 +235,7 @@ class OneTransaction(TestCase):
         # Deleting a txn while a filter is applied correctly refreshes the ttable
         self.sfield.query = 'description'
         self.ttable.delete()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
     def test_edition_mode(self):
         # Initially, no row is edited. setting a row's attr sets the edition mode.
@@ -350,9 +350,9 @@ class OneTransaction(TestCase):
         self.sfield.query = 'description'
         self.ttable.delete()
         self.document.undo()
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         self.document.redo()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
 
 class TransactionLinkedToNumberedAccounts(TestCase):
@@ -574,7 +574,7 @@ class TwoTransactionsOneOutOfRange(TestCase):
     
     def test_attributes(self):
         """The table only contains transactons in the current date range"""
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
     
     def test_select_prev_date_range(self):
         # The transaction table refreshes itself on date range change
@@ -688,6 +688,14 @@ def test_selection_changed_when_filtering_out(app):
     app.mw.edit_item()
     eq_(app.tpanel.description, 'second')
 
+@with_app(app_three_transactions)
+def test_total_row(app):
+    # The total row shows total amount with the date being the last day of the date range.
+    row = app.ttable[3]
+    eq_(row.date, '31/12/2008')
+    eq_(row.description, 'TOTAL')
+    eq_(row.amount, '6.00')
+
 class ThreeTransactionsEverythingReconciled(TestCase):
     def setUp(self):
         self.create_instances()
@@ -772,7 +780,7 @@ class LoadFile(TestCase):
     
     def test_attributes(self):
         """The transaction table refreshes upon FILE_LOADED"""
-        eq_(len(self.ttable), 4)
+        eq_(self.ttable.row_count, 4)
         eq_(self.ttable.selected_indexes, [3])
     
 
@@ -1071,7 +1079,7 @@ class WithBudget(TestCase, CommonSetup):
     
     def test_budget_spawns(self):
         # When a budget is set budget transaction spawns show up in ttable, at the end of each month.
-        eq_(len(self.ttable), 12)
+        eq_(self.ttable.row_count, 12)
         eq_(self.ttable[0].amount, '100.00')
         eq_(self.ttable[0].date, '31/01/2008')
         eq_(self.ttable[0].to, 'Some Expense')

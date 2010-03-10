@@ -46,7 +46,7 @@ class TransactionsOfEachType(TestCase):
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         assert self.tfbar.filter_type is FilterType.Expense
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         eq_(self.ttable[0].description, 'third')
     
     def test_efbar_filter_income(self):
@@ -60,7 +60,7 @@ class TransactionsOfEachType(TestCase):
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         assert self.tfbar.filter_type is FilterType.Income
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         eq_(self.ttable[0].description, 'first')
     
     def test_efbar_filter_transfer(self):
@@ -72,7 +72,7 @@ class TransactionsOfEachType(TestCase):
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         assert self.tfbar.filter_type is FilterType.Transfer
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         eq_(self.ttable[0].description, 'fourth')
     
     def test_efbar_filter_unassigned(self):
@@ -85,7 +85,7 @@ class TransactionsOfEachType(TestCase):
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.tfbar_gui, ['refresh']) # refreshes on connect()
         assert self.tfbar.filter_type is FilterType.Unassigned
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
     
     def test_enable_disable_buttons(self):
         # The enable disable mechanism of the income, expense and transfer buttons work as expected
@@ -117,7 +117,7 @@ class TransactionsOfEachType(TestCase):
         self.mainwindow.select_transaction_table()
         self.tfbar.filter_type = FilterType.Unassigned
         self.sfield.query = 'first'
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
 
 class ThreeEntriesOneReconciled(TestCase, CommonSetup):
@@ -134,7 +134,7 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
         eq_(self.ta.etable_count(), 2)
         eq_(self.etable[0].description, 'one')
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
         eq_(self.ttable[1].description, 'three')
     
     def test_efbar_reconciled(self):
@@ -142,7 +142,7 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
         eq_(self.ta.etable_count(), 1)
         eq_(self.etable[0].description, 'two')
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         eq_(self.ttable[0].description, 'two')
     
 

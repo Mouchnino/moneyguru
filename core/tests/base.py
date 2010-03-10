@@ -480,7 +480,7 @@ class TestApp(object):
             raise LookupError("Trying to show an account that doesn't exist")
     
     def transaction_descriptions(self):
-        return [row.description for row in self.ttable]
+        return [row.description for row in self.ttable.rows]
     
 
 def with_app(appfunc):

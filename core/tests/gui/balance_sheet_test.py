@@ -501,7 +501,7 @@ class MultipleCurrencies(TestCase):
         # Deleting a transaction correctly updates the balance sheet balances. Previously, the
         # cache in Account would not correctly be cleared on cook()
         self.mainwindow.select_transaction_table()
-        self.ttable.select([3]) # last entry, on the 31st
+        self.ttable.select([2]) # last entry, on the 31st
         self.ttable.delete()
         self.mainwindow.select_balance_sheet()
         eq_(self.bsheet.assets.end, '217.00')

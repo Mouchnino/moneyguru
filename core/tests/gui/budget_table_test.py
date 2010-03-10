@@ -36,7 +36,7 @@ class OneExpenseWithBudget(TestCase, CommonSetup):
         eq_(len(self.btable), 0)
         # And the spawns aren't there anymore in the ttable
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
     def test_edition_must_stop(self):
         # When the edition_must_stop event is broadcasted, btable must ignore it because the objc

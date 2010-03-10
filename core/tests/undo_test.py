@@ -402,7 +402,7 @@ class TwoAccountsTwoTransactions(TestCase):
         self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
         self.document.undo()
-        eq_(len(self.ttable), 1)
+        eq_(self.ttable.row_count, 1)
         self.check_gui_calls(self.ttable_gui, ['refresh', 'stop_editing'])
     
     @save_state_then_verify
@@ -650,10 +650,10 @@ class ScheduledTransaction(TestCase):
         self.ttable.delete()
         self.document.undo()
         # we don't care about the exact len, we just care that it decreases by 1
-        len_before = len(self.ttable)
+        len_before = self.ttable.row_count
         self.ttable.select([0])
         self.ttable.delete()
-        eq_(len(self.ttable), len_before-1)
+        eq_(self.ttable.row_count, len_before-1)
     
 
 class Budget(TestCase, CommonSetup):

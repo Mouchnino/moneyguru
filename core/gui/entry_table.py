@@ -68,11 +68,7 @@ class EntryTable(TransactionTableBase):
             self.select_transactions(self.document.explicitly_selected_transactions)
             if not self.selected_indexes:
                 self.select_nearest_date(self.document.explicitly_selected_transactions[0].date)
-        # We do the default selection restore, but if we end up selecting the Total row and there's
-        # a row above it, we select it.
         TransactionTableBase._restore_selection(self, previous_selection)
-        if self.selected_indexes == [len(self)-1] and len(self) > 1:
-            self.selected_indexes = [len(self) - 2]
     
     #--- Public
     def add(self):

@@ -66,7 +66,7 @@ class OneIncomeWithBudgetInPast(TestCase):
         # it once we went past the spawn's end date.
         self.mainwindow.select_transaction_table()
          # Only the spawns for november and december, NOT, september and october.
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
     
 
 class OneExpenseWithBudgetAndTxn(TestCase, CommonSetup):
@@ -89,7 +89,7 @@ class OneExpenseWithBustedBudget(TestCase, CommonSetup):
     
     def test_budget_spawn_doesnt_show(self):
         # When a budget is busted, don't show the spawn
-        self.assertEqual(len(self.ttable), 12)
+        self.assertEqual(self.ttable.row_count, 12)
         self.assertEqual(self.ttable[1].date, '29/02/2008')
     
 

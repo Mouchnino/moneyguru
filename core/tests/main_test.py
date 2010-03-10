@@ -541,7 +541,7 @@ class TwoBoundEntries(TestCase):
         self.check_gui_calls_partial(self.mainwindow_gui, ['show_balance_sheet'])
         eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
     def test_delete_entries(self):
         """Deleting an entry also delets any bound entry"""
@@ -1341,7 +1341,7 @@ class ExampleDocumentLoadTest(TestCase):
         self.mainwindow.select_transaction_table()
         # There are 3 normal txns (the last one is deleted because it's in the future)
         # and 1 schedule spawns (only future spawns are kept)
-        eq_(len(self.ttable), 4)
+        eq_(self.ttable.row_count, 4)
         eq_(self.ttable[0].date, '01/03/2009') # from 29/09/2008, it was in feb, but overflowed
         eq_(self.ttable[1].date, '01/07/2009') # from 01/03/2009
         eq_(self.ttable[2].date, '15/08/2009') # from 15/04/2009

@@ -8,6 +8,7 @@
 
 from operator import attrgetter
 
+from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
@@ -31,8 +32,12 @@ class TransactionTable(TransactionTableBase):
             self.document.delete_transactions(transactions)
     
     def _fill(self):
+        total_amount = 0
         for transaction in self.document.visible_transactions:
             self.append(TransactionTableRow(self, transaction))
+            convert = lambda a: convert_amount(a, self.document.app.default_currency, transaction.date)
+            total_amount += convert(transaction.amount)
+        self.footer = TotalRow(self, self.document.date_range.end, total_amount)
         if self.document.explicitly_selected_transactions:
             self.select_transactions(self.document.explicitly_selected_transactions)
     
@@ -62,7 +67,7 @@ class TransactionTable(TransactionTableBase):
     #--- Properties
     @property
     def selected_transactions(self):
-        return [row.transaction for row in self.selected_rows]
+        return [row.transaction for row in self.selected_rows if hasattr(row, 'transaction')]
     
     #--- Event handlers
     def date_range_changed(self):
@@ -207,4 +212,20 @@ class TransactionTableRow(RowWithDate):
     @property
     def is_budget(self):
         return self._is_budget
+    
+
+class TotalRow(Row):
+    def __init__(self, table, date, total_amount):
+        Row.__init__(self, table)
+        self._date = date
+        self.date = self.table.document.app.format_date(date)
+        self.description = 'TOTAL'
+        self.amount = self.table.document.app.format_amount(total_amount)
+        self.payee = ''
+        self.checkno = ''
+        self.from_ = ''
+        self.to = ''
+        self.reconciled = False
+        self.recurrent = False
+        self.is_budget = False
     

@@ -122,4 +122,4 @@ def test_edit_then_save():
     app.scpanel.save()
     # To see if the save_edits() worked, we look if the spawns are correct in the ttable
     app.mainwindow.select_transaction_table()
-    eq_(len(app.ttable), 3) #stops 2 days after it starts
+    eq_(app.ttable.row_count, 3) #stops 2 days after it starts

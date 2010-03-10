@@ -338,16 +338,16 @@ class AllTransactionsRangeWithOneTransactionFarInThePast(TestCase):
     def test_add_earlier_transaction(self):
         # Adding a transactions that's earlier than the current start date adjusts the range.
         self.add_txn('30/09/1981')
-        eq_(len(self.ttable), 3)
+        eq_(self.ttable.row_count, 3)
     
     def test_includes_ahead_months(self):
         # All Transactions range end_date is computed using the ahead_months pref
         self.app.ahead_months = 3 # triggers a date range update
         self.add_txn('30/04/2010')
-        eq_(len(self.ttable), 3)
+        eq_(self.ttable.row_count, 3)
         # but not further...
         self.add_txn('01/05/2010')
-        eq_(len(self.ttable), 3)
+        eq_(self.ttable.row_count, 3)
     
     def test_income_statement_last_column(self):
         # the Last column of the income statement must show 0 (there's nothing before).
@@ -360,9 +360,9 @@ class AllTransactionsRangeWithOneTransactionFarInThePast(TestCase):
         self.document = self.save_and_load(newapp=False)
         self.create_instances()
         self.mainwindow.show_transaction_table()
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
     
     def test_transactions_are_shown(self):
         # When under All Transactions range, the range is big enough to contain all txns.
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
     

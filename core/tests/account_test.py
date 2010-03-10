@@ -377,7 +377,7 @@ class EntryWithoutTransfer(TestCase):
         self.bsheet.delete()
         self.arpanel.ok() # continue deletion
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 0)
+        eq_(self.ttable.row_count, 0)
     
 
 class TwoBoundEntries(TestCase):
@@ -416,7 +416,7 @@ class TwoEntriesWithTransfer(TestCase):
         self.arpanel.ok() # continue deletion
         eq_(self.account_names(), ['transfer1', 'transfer2'])
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
         eq_(self.ttable[0].to, '')
         eq_(self.ttable[1].to, '')
     
@@ -428,7 +428,7 @@ class TwoEntriesWithTransfer(TestCase):
         self.arpanel.ok() # continue deletion
         eq_(self.account_names(), ['New account', 'transfer2'])
         self.mainwindow.select_transaction_table()
-        eq_(len(self.ttable), 2)
+        eq_(self.ttable.row_count, 2)
         eq_(self.ttable[0].from_, '')
     
 

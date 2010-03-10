@@ -23,6 +23,13 @@ class TransactionTableBase(GUITable, DocumentGUIObject):
     def _is_edited_new(self):
         return self.edited.transaction not in self.document.transactions
     
+    def _restore_selection(self, previous_selection):
+        # We do the default selection restore, but if we end up selecting the Total row and there's
+        # a row above it, we select it.
+        GUITable._restore_selection(self, previous_selection)
+        if self.selected_indexes == [len(self)-1] and len(self) > 1:
+            self.selected_indexes = [len(self) - 2]
+    
     def _update_selection(self):
         self.document.explicitly_select_transactions(self.selected_transactions)
     

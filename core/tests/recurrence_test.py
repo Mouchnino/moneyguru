@@ -40,7 +40,7 @@ def test_make_schedule_from_selected(app):
     # When creating the schedule, we must delete the first occurrence because it overlapse with
     # the base transaction
     app.mw.select_transaction_table()
-    eq_(len(app.ttable), 1)
+    eq_(app.ttable.row_count, 1)
 
 #--- Daily schedule
 def app_daily_schedule():
@@ -74,7 +74,7 @@ def test_change_spawn(app):
     app.ttable[1].date = '17/09/2008'
     app.ttable[1].description = 'changed'
     app.ttable.save_edits()
-    eq_(len(app.ttable), 6) # the spawn wasn't added to the tlist as a normal txn
+    eq_(app.ttable.row_count, 6) # the spawn wasn't added to the tlist as a normal txn
     assert app.ttable[1].recurrent
     eq_(app.ttable[1].date, '17/09/2008')
     eq_(app.ttable[1].description, 'changed')
@@ -96,7 +96,7 @@ def test_change_spawn_cancel(app):
     # The schedule scoping logic used to take place after the under had recorded. What we're
     # testing here is that the undoer, due to the cancellation, has *not* recorded anything
     app.doc.undo()
-    eq_(len(app.ttable), 0) # the schedule creation has been undone
+    eq_(app.ttable.row_count, 0) # the schedule creation has been undone
 
 @with_app(app_daily_schedule)
 def test_change_spawn_then_delete_it(app):
@@ -105,7 +105,7 @@ def test_change_spawn_then_delete_it(app):
     app.ttable[1].date = '17/09/2008'
     app.ttable.save_edits()
     app.ttable.delete()
-    eq_(len(app.ttable), 5)
+    eq_(app.ttable.row_count, 5)
     eq_(app.ttable[1].date, '19/09/2008')
 
 @with_app(app_daily_schedule)
@@ -197,7 +197,7 @@ def test_delete_spawn(app):
     # deleting a spawn only deletes this instance
     app.ttable.select([1])
     app.ttable.delete()
-    eq_(len(app.ttable), 5)
+    eq_(app.ttable.row_count, 5)
     eq_(app.ttable[1].date, '19/09/2008')
 
 @with_app(app_daily_schedule)
@@ -206,7 +206,7 @@ def test_delete_spawn_cancel(app):
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Cancel
     app.ttable.select([1])
     app.ttable.delete()
-    eq_(len(app.ttable), 6)
+    eq_(app.ttable.row_count, 6)
 
 @with_app(app_daily_schedule)
 def test_delete_spawn_with_global_scope(app):
@@ -215,7 +215,7 @@ def test_delete_spawn_with_global_scope(app):
     app.ttable.select([2])
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.delete()
-    eq_(len(app.ttable), 2)
+    eq_(app.ttable.row_count, 2)
     eq_(app.ttable[1].date, '16/09/2008')
 
 @with_app(app_daily_schedule)
@@ -227,7 +227,7 @@ def test_delete_spawn_with_global_scope_after_change(app):
     app.ttable.select([2])
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.delete()
-    eq_(len(app.ttable), 2)
+    eq_(app.ttable.row_count, 2)
 
 @with_app(app_daily_schedule)
 def test_etable_attrs(app):
@@ -249,13 +249,13 @@ def test_exceptions_are_always_spawned(app):
     app.ttable.save_edits() # date range now on 09/2008
     app.doc._cook() # little hack to invalidate previously spawned txns
     app.ttable.refresh() # a manual refresh is required
-    eq_(len(app.ttable), 7) # The changed spawn must be there.
+    eq_(app.ttable.row_count, 7) # The changed spawn must be there.
 
 @with_app(app_daily_schedule)
 def test_filter(app):
     # scheduled transactions are included in the filters
     app.sfield.query = 'foobar'
-    eq_(len(app.ttable), 6)
+    eq_(app.ttable.row_count, 6)
 
 @with_app(app_daily_schedule)
 def test_mass_edition(app):
@@ -270,7 +270,7 @@ def test_mass_edition(app):
 
 @with_app(app_daily_schedule)
 def test_ttable_attrs(app):
-    eq_(len(app.ttable), 6) # this txn happens 6 times this month
+    eq_(app.ttable.row_count, 6) # this txn happens 6 times this month
     assert app.ttable[0].recurrent # original is not recurrent
     eq_(app.ttable[0].date, '13/09/2008')
     assert app.ttable[1].recurrent
@@ -297,7 +297,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
         self.setup_scheduled_transaction(description='foo', account='account', debit='1', repeat_every=3)
     
     def test_ttable_attrs(self):
-        self.assertEqual(len(self.ttable), 7)
+        self.assertEqual(self.ttable.row_count, 7)
         self.assertEqual(self.ttable[2].date, '19/09/2008')
         self.assertEqual(self.ttable[2].description, 'bar')
         self.assertEqual(self.ttable[3].date, '19/09/2008')
@@ -393,7 +393,7 @@ class OneDailyRecurrentTransactionWithStopDate(TestCase, CommonSetup):
         self.ttable.select([1])
         self.ttable[1].description = 'changed'
         self.ttable.save_edits()
-        self.assertEqual(len(self.ttable), 3)
+        self.assertEqual(self.ttable.row_count, 3)
     
 
 class OneWeeklyRecurrentTransaction(TestCase, CommonSetup):
@@ -404,12 +404,12 @@ class OneWeeklyRecurrentTransaction(TestCase, CommonSetup):
     def test_next_date_range(self):
         # The next date range also has the correct recurrent txns
         self.document.select_next_date_range()
-        self.assertEqual(len(self.ttable), 2)
+        self.assertEqual(self.ttable.row_count, 2)
         self.assertEqual(self.ttable[0].date, '11/10/2008')
         self.assertEqual(self.ttable[1].date, '25/10/2008')
     
     def test_ttable_attrs(self):
-        self.assertEqual(len(self.ttable), 2)
+        self.assertEqual(self.ttable.row_count, 2)
         self.assertEqual(self.ttable[0].date, '13/09/2008')
         self.assertEqual(self.ttable[1].date, '27/09/2008')
     
@@ -421,11 +421,11 @@ class OneMonthlyRecurrentTransactionOnThirtyFirst(TestCase, CommonSetup):
     
     def test_use_last_day_in_invalid_months(self):
         self.document.select_next_date_range() # sept
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '30/09/2008') # can't use 31, so it uses 30
         # however, revert to 31st on the next month
         self.document.select_next_date_range() # oct
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '31/10/2008')
     
 
@@ -437,13 +437,13 @@ class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase, CommonSetup):
     def test_use_last_day_in_invalid_months(self):
         self.document.select_year_range()
         self.document.select_next_date_range() # 2009
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '28/02/2009') # can't use 29, so it uses 28
         # however, revert to 29 4 years later
         self.document.select_next_date_range() # 2010
         self.document.select_next_date_range() # 2011
         self.document.select_next_date_range() # 2012
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '29/02/2012')
     
 
@@ -455,7 +455,7 @@ class TransactionRecurringOnThirdMondayOfTheMonth(TestCase, CommonSetup):
     def test_year_range(self):
         # The next date range also has the correct recurrent txns
         self.document.select_year_range()
-        self.assertEqual(len(self.ttable), 4)
+        self.assertEqual(self.ttable.row_count, 4)
         self.assertEqual(self.ttable[0].date, '15/09/2008')
         self.assertEqual(self.ttable[1].date, '20/10/2008')
         self.assertEqual(self.ttable[2].date, '17/11/2008')
@@ -470,11 +470,11 @@ class TransactionRecurringOnFifthTuesdayOfTheMonth(TestCase, CommonSetup):
     def test_next_date_range(self):
         # There's not a month with a fifth tuesday until december
         self.document.select_next_date_range() # oct
-        self.assertEqual(len(self.ttable), 0)
+        self.assertEqual(self.ttable.row_count, 0)
         self.document.select_next_date_range() # nov
-        self.assertEqual(len(self.ttable), 0)
+        self.assertEqual(self.ttable.row_count, 0)
         self.document.select_next_date_range() # dec
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '30/12/2008')
     
 
@@ -486,7 +486,7 @@ class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
     def test_next_date_range(self):
         # next month has no 5th tuesday, so use the last one
         self.document.select_next_date_range() # oct
-        self.assertEqual(len(self.ttable), 1)
+        self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '28/10/2008')
     
 
@@ -526,7 +526,7 @@ class DailyScheduleWithOneSpawnReconciled(TestCase, CommonSetup):
         self.mainwindow.select_transaction_table()
         # spawns start from the 13th, *not* the 13th, which means 18 spawn. If we add the reconciled
         # spawn which have been materialized, we have 19
-        eq_(len(self.ttable), 19)
+        eq_(self.ttable.row_count, 19)
     
     def test_spawn_was_materialized(self):
         # reconciling a scheduled transaction "materializes" it
