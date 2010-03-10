@@ -13,6 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)canMoveRows:(NSArray *)rows to:(NSInteger)position;
 - (BOOL)canReconcileEntryAtRow:(NSInteger)row;
 - (BOOL)isBalanceNegativeAtRow:(NSInteger)row;
+- (BOOL)isBoldAtRow:(NSInteger)row;
 - (void)moveRows:(NSArray *)rows to:(NSInteger)position;
 - (BOOL)shouldShowBalanceColumn;
 - (void)showTransferAccount;

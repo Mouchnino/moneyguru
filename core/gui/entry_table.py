@@ -164,6 +164,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         self._reconciliation_date = None
         self._recurrent = False
         self._is_budget = False
+        self.is_bold = False
     
     def _the_balance(self):
         if self.table.document._in_reconciliation_mode:
@@ -384,6 +385,7 @@ class PreviousBalanceRow(BaseEntryTableRow):
         self._reconciled_balance = reconciled_balance
         self._description = 'Previous Balance'
         self._reconciled = False
+        self.is_bold = True
     
 
 class TotalRow(BaseEntryTableRow):
@@ -394,6 +396,7 @@ class TotalRow(BaseEntryTableRow):
         # don't touch _increase and _decrease, they trigger editing.
         self._total_increase = total_increase
         self._total_decrease = total_decrease
+        self.is_bold = True
     
     @property
     def increase(self):

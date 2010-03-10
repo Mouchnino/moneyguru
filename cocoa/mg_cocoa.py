@@ -559,6 +559,10 @@ class PyEntryTable(PyTableWithDate):
     def isBalanceNegativeAtRow_(self, row):
         return self.py[row].is_balance_negative()
     
+    @signature('c@:i')
+    def isBoldAtRow_(self, row):
+        return self.py[row].is_bold
+    
     @signature('v@:@i')
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
@@ -580,7 +584,11 @@ class PyEntryTable(PyTableWithDate):
 
 class PyTransactionTable(PyTableWithDate):
     py_class = TransactionTable
-
+    
+    @signature('c@:i')
+    def isBoldAtRow_(self, row):
+        return self.py[row].is_bold
+    
     @signature('c@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)

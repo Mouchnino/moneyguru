@@ -128,232 +128,248 @@ class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
         self.check_gui_calls_partial(self.mainwindow_gui, not_expected=['show_entry_table'])
     
 
-class OneTransaction(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.select_month_range()
-        self.add_account('first')
-        self.add_txn('11/07/2008', 'description', 'payee', from_='first', to='second', amount='42',
-            checkno='24')
-        self.clear_gui_calls()
-    
-    def assert_row_has_original_attrs(self, row):
-        eq_(row.date, '11/07/2008')
-        eq_(row.description, 'description')
-        eq_(row.payee, 'payee')
-        eq_(row.checkno, '24')
-        eq_(row.from_, 'first')
-        eq_(row.to, 'second')
-        eq_(row.amount, '42.00')
-        assert not row.reconciled
-    
-    def test_add_then_delete(self):
-        # calling delete() while being in edition mode just cancels the current edit. it does *not*
-        # delete the other txn as well.
-        self.ttable.add()
-        self.ttable.delete()
-        eq_(self.ttable.row_count, 1)
-        assert self.ttable.edited is None
-    
-    def test_attributes(self):
-        eq_(self.ttable.row_count, 1)
-        self.assert_row_has_original_attrs(self.ttable[0])
-    
-    def test_autofill_amount_format_cache(self):
-        # The amount field is correctly autofilled and the cache correctly invalidated
-        self.ttable.add()
-        self.ttable.edited.amount # cache the format
-        self.ttable.edited.description = 'description'
-        eq_(self.ttable.edited.amount, '42.00')
-    
-    def test_can_edit(self):
-        # All columns can be edited, except unknown ones
-        self.mainwindow.select_transaction_table()
-        editable_columns = ['date', 'description', 'payee', 'checkno', 'from', 'to', 'amount']
-        for colname in editable_columns:
-            assert self.ttable.can_edit_cell(colname, 0)
-        assert not self.ttable.can_edit_cell('unknown', 0)
-        # It's also possible to call cen_edit_cell() on the row instance
-        assert self.ttable[0].can_edit_cell('date')
-        assert not self.ttable[0].can_edit_cell('unknown')
-    
-    def test_cancel_edits(self):
-        # cancel_edits() reverts the edited row back to it's old values.
-        self.ttable.cancel_edits() # does nothing
-        row = self.ttable[0]
-        row.date = '12/07/2008'
-        self.ttable.cancel_edits()
-        # The current implementation keeps the same row instance, but the tests shouldn't require it
-        row = self.ttable[0]
-        eq_(row.date, '11/07/2008')
-    
-    def test_change_transaction_gui_calls(self):
-        # Changing a transaction results in a refresh and a show_selected_row call
-        row = self.ttable[0]
-        row.date = '12/07/2008'
-        self.ttable.save_edits()
-        self.check_gui_calls(self.ttable_gui, ['refresh', 'show_selected_row'])
-    
-    def test_duplicate_transaction(self):
-        # calling duplicate_selected() duplicates the selected transactions
-        self.ttable.duplicate_selected()
-        eq_(self.ttable.row_count, 2)
-        self.assert_row_has_original_attrs(self.ttable[0])
-        self.assert_row_has_original_attrs(self.ttable[1])
-    
-    def test_duplicate_transactions(self):
-        # duplication works when more than one transaction is selected
-        self.mainwindow.duplicate_item()
-        self.ttable.select([0, 1])
-        self.mainwindow.duplicate_item()
-        eq_(self.ttable.row_count, 4)
-    
-    def test_edit_date_out_of_bounds(self):
-        # when the date of the edited row is out of the date range, is_date_in_future() or
-        # is_date_in_past() return True
-        # (range is 07/2008)
-        assert not self.ttable[0].is_date_in_past()
-        assert not self.ttable[0].is_date_in_future()
-        self.ttable[0].date = '01/08/2008'
-        assert self.ttable.edited.is_date_in_future()
-        assert not self.ttable.edited.is_date_in_past()
-        self.ttable[0].date = '30/06/2008'
-        assert not self.ttable.edited.is_date_in_future()
-        assert self.ttable.edited.is_date_in_past()
-    
-    def test_delete(self):
-        # Deleting a transaction updates the graph and makes the 'second' account go away.
-        self.ttable.delete()
-        eq_(self.ttable.row_count, 0)
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        eq_(list(self.balgraph.data), [])
-        eq_(self.account_names(), ['first'])
-    
-    def test_delete_while_filtered(self):
-        # Deleting a txn while a filter is applied correctly refreshes the ttable
-        self.sfield.query = 'description'
-        self.ttable.delete()
-        eq_(self.ttable.row_count, 0)
-    
-    def test_edition_mode(self):
-        # Initially, no row is edited. setting a row's attr sets the edition mode.
-        assert self.ttable.edited is None
-        row = self.ttable[0]
-        row.date = '12/07/2008'
-        assert self.ttable.edited is row
-        self.ttable.cancel_edits()
-        assert self.ttable.edited is None
-        row.date = '12/07/2008'
-        self.ttable.save_edits()
-        assert self.ttable.edited is None
-    
-    def test_save_edits(self):
-        # save_edits() puts the changes in the buffer down to the model.
-        self.mainwindow.select_transaction_table()
-        self.ttable.save_edits() # does nothing
-        row = self.ttable[0]
-        row.date = '12/07/2008'
-        row.description = 'foo'
-        row.payee = 'bar'
-        row.checkno = 'baz'
-        row.from_ = 'newfrom'
-        row.to = 'newto'
-        row.amount = '.42'
-        self.ttable.save_edits()
-        # This way, we can make sure that what we have in ttable is from the model, not the row buffer
-        self.ttable.refresh()
-        row = self.ttable[0]
-        eq_(row.date, '12/07/2008')
-        eq_(row.description, 'foo')
-        eq_(row.payee, 'bar')
-        eq_(row.checkno, 'baz')
-        eq_(row.from_, 'newfrom')
-        eq_(row.to, 'newto')
-        eq_(row.amount, '0.42')
-        # 'newfrom' has been created as an income, and 'newto' as an expense. 'second' has been cleaned
-        self.mainwindow.select_income_statement()
-        eq_(self.istatement.income.children_count, 3)
-        eq_(self.istatement.expenses.children_count, 3)
-        eq_(self.istatement.income[0].name, 'newfrom')
-        eq_(self.istatement.expenses[0].name, 'newto')
-        # now we want to verify that cooking has taken place
-        self.istatement.selected = self.istatement.expenses[0]
-        self.istatement.show_selected_account()
-        row = self.etable[0]
-        eq_(row.increase, '0.42')
-    
-    def test_set_date_in_range(self):
-        # Setting the date in range doesn't cause useless notifications.
-        self.mainwindow.select_transaction_table()
-        self.ttable[0].date = '12/07/2008'
-        self.clear_gui_calls()
-        self.ttable.save_edits()
-        not_expected = ['animate_date_range_backward', 'animate_date_range_forward',
-            'refresh_date_range_selector']
-        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=not_expected)
-    
-    def test_set_date_out_of_range(self):
-        # Setting the date out of range makes the app's date range change accordingly.
-        self.mainwindow.select_transaction_table()
-        self.ttable[0].date = '1/08/2008'
-        self.clear_gui_calls()
-        self.ttable.save_edits()
-        eq_(self.document.date_range, MonthRange(date(2008, 8, 1)))
-        expected = ['animate_date_range_forward', 'refresh_date_range_selector']
-        self.check_gui_calls_partial(self.mainwindow_gui, expected)
-    
-    def test_set_invalid_amount(self):
-        # setting an invalid amount reverts to the old amount
-        self.ttable[0].amount = 'foo' # no exception
-        eq_(self.ttable[0].amount, '42.00')
-    
-    def test_set_row_attr(self):
-        # Setting a row's attr puts the table in edition mode, changes the row's buffer, but doesn't
-        # touch the transaction.
-        self.mainwindow.select_transaction_table()
-        row = self.ttable[0]
-        row.date = '12/07/2008'
-        row.description = 'foo'
-        row.payee = 'bar'
-        row.checkno = 'baz'
-        row.from_ = 'newfrom'
-        row.to = 'newto'
-        row.amount = '.42'
-        eq_(row.date, '12/07/2008')
-        eq_(row.description, 'foo')
-        eq_(row.payee, 'bar')
-        eq_(row.checkno, 'baz')
-        eq_(row.from_, 'newfrom')
-        eq_(row.to, 'newto')
-        eq_(row.amount, '0.42')
-        # the changes didn't go down to Transaction
-        table = TransactionTable(self.ttable_gui, self.mainwindow)
-        table.connect()
-        self.assert_row_has_original_attrs(table[0])
-    
-    def test_show_from_account(self):
-        # show_from_account() takes the first account in the From column and shows it in etable.
-        self.ttable.show_from_account()
-        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
-        eq_(self.document.shown_account.name, 'first')
-    
-    def test_show_to_account(self):
-        # show_two_account() takes the first account in the To column and shows it in etable.
-        self.ttable.show_to_account()
-        self.check_gui_calls_partial(self.mainwindow_gui, ['show_entry_table'])
-        eq_(self.document.shown_account.name, 'second')
-    
-    def test_undo_redo_while_filtered(self):
-        # undo/redo while a filter is applied correctly refreshes the ttable
-        self.sfield.query = 'description'
-        self.ttable.delete()
-        self.document.undo()
-        eq_(self.ttable.row_count, 1)
-        self.document.redo()
-        eq_(self.ttable.row_count, 0)
-    
+#--- One transaction
+def app_one_transaction():
+    app = TestApp()
+    app.doc.select_month_range()
+    app.add_account('first')
+    app.add_txn('11/07/2008', 'description', 'payee', from_='first', to='second', amount='42',
+        checkno='24')
+    app.clear_gui_calls()
+    return app
+
+def assert_row_has_original_attrs(row):
+    eq_(row.date, '11/07/2008')
+    eq_(row.description, 'description')
+    eq_(row.payee, 'payee')
+    eq_(row.checkno, '24')
+    eq_(row.from_, 'first')
+    eq_(row.to, 'second')
+    eq_(row.amount, '42.00')
+    assert not row.reconciled
+
+@with_app(app_one_transaction)
+def test_add_then_delete(app):
+    # calling delete() while being in edition mode just cancels the current edit. it does *not*
+    # delete the other txn as well.
+    app.ttable.add()
+    app.ttable.delete()
+    eq_(app.ttable.row_count, 1)
+    assert app.ttable.edited is None
+
+@with_app(app_one_transaction)
+def test_attributes_after_new_txn(app):
+    eq_(app.ttable.row_count, 1)
+    assert_row_has_original_attrs(app.ttable[0])
+
+@with_app(app_one_transaction)
+def test_autofill_amount_format_cache(app):
+    # The amount field is correctly autofilled and the cache correctly invalidated
+    app.ttable.add()
+    app.ttable.edited.amount # cache the format
+    app.ttable.edited.description = 'description'
+    eq_(app.ttable.edited.amount, '42.00')
+
+@with_app(app_one_transaction)
+def test_can_call_can_edit_cell_on_row(app):
+    # It's possible to call cen_edit_cell() on the row instance
+    assert app.ttable[0].can_edit_cell('date')
+    assert not app.ttable[0].can_edit_cell('unknown')
+
+@with_app(app_one_transaction)
+def test_cancel_edits(app):
+    # cancel_edits() reverts the edited row back to it's old values.
+    app.ttable.cancel_edits() # does nothing
+    row = app.ttable[0]
+    row.date = '12/07/2008'
+    app.ttable.cancel_edits()
+    # The current implementation keeps the same row instance, but the tests shouldn't require it
+    row = app.ttable[0]
+    eq_(row.date, '11/07/2008')
+
+@with_app(app_one_transaction)
+def test_change_transaction_gui_calls(app):
+    # Changing a transaction results in a refresh and a show_selected_row call
+    row = app.ttable[0]
+    row.date = '12/07/2008'
+    app.ttable.save_edits()
+    app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row'])
+
+@with_app(app_one_transaction)
+def test_duplicate_transaction(app):
+    # calling duplicate_selected() duplicates the selected transactions
+    app.ttable.duplicate_selected()
+    eq_(app.ttable.row_count, 2)
+    assert_row_has_original_attrs(app.ttable[0])
+    assert_row_has_original_attrs(app.ttable[1])
+
+@with_app(app_one_transaction)
+def test_duplicate_transactions(app):
+    # duplication works when more than one transaction is selected
+    app.mw.duplicate_item()
+    app.ttable.select([0, 1])
+    app.mw.duplicate_item()
+    eq_(app.ttable.row_count, 4)
+
+@with_app(app_one_transaction)
+def test_edit_date_out_of_bounds(app):
+    # when the date of the edited row is out of the date range, is_date_in_future() or
+    # is_date_in_past() return True
+    # (range is 07/2008)
+    assert not app.ttable[0].is_date_in_past()
+    assert not app.ttable[0].is_date_in_future()
+    app.ttable[0].date = '01/08/2008'
+    assert app.ttable.edited.is_date_in_future()
+    assert not app.ttable.edited.is_date_in_past()
+    app.ttable[0].date = '30/06/2008'
+    assert not app.ttable.edited.is_date_in_future()
+    assert app.ttable.edited.is_date_in_past()
+
+@with_app(app_one_transaction)
+def test_delete(app):
+    # Deleting a transaction updates the graph and makes the 'second' account go away.
+    app.ttable.delete()
+    eq_(app.ttable.row_count, 0)
+    app.mw.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.bsheet.show_selected_account()
+    eq_(list(app.balgraph.data), [])
+    eq_(app.account_names(), ['first'])
+
+@with_app(app_one_transaction)
+def test_delete_while_filtered(app):
+    # Deleting a txn while a filter is applied correctly refreshes the ttable
+    app.sfield.query = 'description'
+    app.ttable.delete()
+    eq_(app.ttable.row_count, 0)
+
+@with_app(app_one_transaction)
+def test_edition_mode(app):
+    # Initially, no row is edited. setting a row's attr sets the edition mode.
+    assert app.ttable.edited is None
+    row = app.ttable[0]
+    row.date = '12/07/2008'
+    assert app.ttable.edited is row
+    app.ttable.cancel_edits()
+    assert app.ttable.edited is None
+    row.date = '12/07/2008'
+    app.ttable.save_edits()
+    assert app.ttable.edited is None
+
+@with_app(app_one_transaction)
+def test_row_is_bold(app):
+    # Normal rows are not bold and total rows are bold
+    assert not app.ttable[0].is_bold
+    assert app.ttable[1].is_bold
+
+@with_app(app_one_transaction)
+def test_save_edits(app):
+    # save_edits() puts the changes in the buffer down to the model.
+    app.ttable.save_edits() # does nothing
+    row = app.ttable[0]
+    row.date = '12/07/2008'
+    row.description = 'foo'
+    row.payee = 'bar'
+    row.checkno = 'baz'
+    row.from_ = 'newfrom'
+    row.to = 'newto'
+    row.amount = '.42'
+    app.ttable.save_edits()
+    # This way, we can make sure that what we have in ttable is from the model, not the row buffer
+    app.ttable.refresh()
+    row = app.ttable[0]
+    eq_(row.date, '12/07/2008')
+    eq_(row.description, 'foo')
+    eq_(row.payee, 'bar')
+    eq_(row.checkno, 'baz')
+    eq_(row.from_, 'newfrom')
+    eq_(row.to, 'newto')
+    eq_(row.amount, '0.42')
+    # 'newfrom' has been created as an income, and 'newto' as an expense. 'second' has been cleaned
+    app.mw.select_income_statement()
+    eq_(app.istatement.income.children_count, 3)
+    eq_(app.istatement.expenses.children_count, 3)
+    eq_(app.istatement.income[0].name, 'newfrom')
+    eq_(app.istatement.expenses[0].name, 'newto')
+    # now we want to verify that cooking has taken place
+    app.istatement.selected = app.istatement.expenses[0]
+    app.istatement.show_selected_account()
+    row = app.etable[0]
+    eq_(row.increase, '0.42')
+
+@with_app(app_one_transaction)
+def test_set_date_in_range(app):
+    # Setting the date in range doesn't cause useless notifications.
+    app.ttable[0].date = '12/07/2008'
+    app.clear_gui_calls()
+    app.ttable.save_edits()
+    not_expected = ['animate_date_range_backward', 'animate_date_range_forward',
+        'refresh_date_range_selector']
+    app.check_gui_calls_partial(app.mainwindow_gui, not_expected=not_expected)
+
+@with_app(app_one_transaction)
+def test_set_date_out_of_range(app):
+    # Setting the date out of range makes the app's date range change accordingly.
+    app.ttable[0].date = '1/08/2008'
+    app.clear_gui_calls()
+    app.ttable.save_edits()
+    eq_(app.doc.date_range, MonthRange(date(2008, 8, 1)))
+    expected = ['animate_date_range_forward', 'refresh_date_range_selector']
+    app.check_gui_calls_partial(app.mainwindow_gui, expected)
+
+@with_app(app_one_transaction)
+def test_set_invalid_amount(app):
+    # setting an invalid amount reverts to the old amount
+    app.ttable[0].amount = 'foo' # no exception
+    eq_(app.ttable[0].amount, '42.00')
+
+@with_app(app_one_transaction)
+def test_set_row_attr(app):
+    # Setting a row's attr puts the table in edition mode, changes the row's buffer, but doesn't
+    # touch the transaction.
+    row = app.ttable[0]
+    row.date = '12/07/2008'
+    row.description = 'foo'
+    row.payee = 'bar'
+    row.checkno = 'baz'
+    row.from_ = 'newfrom'
+    row.to = 'newto'
+    row.amount = '.42'
+    eq_(row.date, '12/07/2008')
+    eq_(row.description, 'foo')
+    eq_(row.payee, 'bar')
+    eq_(row.checkno, 'baz')
+    eq_(row.from_, 'newfrom')
+    eq_(row.to, 'newto')
+    eq_(row.amount, '0.42')
+    # the changes didn't go down to Transaction
+    table = TransactionTable(app.ttable_gui, app.mw)
+    table.connect()
+    assert_row_has_original_attrs(table[0])
+
+@with_app(app_one_transaction)
+def test_show_from_account(app):
+    # show_from_account() takes the first account in the From column and shows it in etable.
+    app.ttable.show_from_account()
+    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.doc.shown_account.name, 'first')
+
+@with_app(app_one_transaction)
+def test_show_to_account(app):
+    # show_two_account() takes the first account in the To column and shows it in etable.
+    app.ttable.show_to_account()
+    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.doc.shown_account.name, 'second')
+
+@with_app(app_one_transaction)
+def test_undo_redo_while_filtered(app):
+    # undo/redo while a filter is applied correctly refreshes the ttable
+    app.sfield.query = 'description'
+    app.ttable.delete()
+    app.doc.undo()
+    eq_(app.ttable.row_count, 1)
+    app.doc.redo()
+    eq_(app.ttable.row_count, 0)
 
 class TransactionLinkedToNumberedAccounts(TestCase):
     def setUp(self):
@@ -1114,6 +1130,7 @@ def test_can_edit():
                 assert not app.ttable.can_edit_cell(colname, index)
             else:
                 assert app.ttable.can_edit_cell(colname, index)                
+        assert not app.ttable.can_edit_cell('unknown', index)
     
     # All fields are editable except "to" which contains 2 accounts (from has only one so it's
     # editable).
@@ -1123,3 +1140,7 @@ def test_can_edit():
     # When the transaction is multi-currency, the amount can't be edited.
     app = app_three_way_multi_currency_transaction()
     yield check, app, 0, ('to', 'amount')
+    
+    # All columns can be edited, except unknown ones
+    app = app_one_transaction()
+    yield check, app, 0, []

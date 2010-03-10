@@ -44,7 +44,7 @@ class Panel(QDialog):
             elif isinstance(widget, QLineEdit):
                 widget.editingFinished.connect(self.lineEditEditingFinished)
                 if isinstance(widget, CompletableEdit):
-                    widget.model.mainwindow = self.mainwindow.model
+                    widget.setMainwindow(self.mainwindow.model)
             elif isinstance(widget, QPlainTextEdit):
                 widget.textChanged.connect(self.plainEditTextChanged)
             elif isinstance(widget, QCheckBox):

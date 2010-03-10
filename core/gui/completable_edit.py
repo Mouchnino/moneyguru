@@ -15,7 +15,7 @@ from ..model.completion import CompletionList
 class CompletableEdit(DocumentGUIObject):
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
-        self._mainwindow = mainwindow
+        self.mainwindow = mainwindow
         self._attrname = ''
         self._candidates = None
         self._completions = None
@@ -99,18 +99,6 @@ class CompletableEdit(DocumentGUIObject):
         if self._candidates is None:
             self._refresh_candidates()
         return self._candidates
-    
-    @property
-    def mainwindow(self):
-        return self._mainwindow
-    
-    @mainwindow.setter
-    def mainwindow(self, value):
-        self._mainwindow = value
-        self._candidates = None
-        self._text = ''
-        self._set_completion('')
-        self._completions = None
     
     @property
     def text(self):

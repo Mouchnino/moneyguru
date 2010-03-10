@@ -19,14 +19,10 @@ from core.gui.completable_edit import CompletableEdit as CompletableEditModel
 # Moreover, QCompleter's behavior on up/down arrow is inadequate in InlineCompletion mode (doesn't
 # cycle through possible completions)
 
+# For CompletableEdit to work correctly, you *have* to call setMainwindow() right after creation.
 class CompletableEdit(QLineEdit):
     ATTRNAME = '' # must be set
     
-    def __init__(self, parent):
-        QLineEdit.__init__(self, parent)
-        self.model = CompletableEditModel(view=self, mainwindow=None) # has to be set right after creation
-        self.model.attrname = self.ATTRNAME
-        
     def _prefix(self):
         # Returns the text before the selection
         if self.selectionStart() == -1:
@@ -62,6 +58,10 @@ class CompletableEdit(QLineEdit):
         # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
         if self.selectedText() and self.selectedText() == self.model.completion:
             self.model.commit()
+    
+    def setMainwindow(self, mainwindow_model):
+        self.model = CompletableEditModel(view=self, mainwindow=mainwindow_model)
+        self.model.attrname = self.ATTRNAME
     
     #--- model --> view
     def refresh(self):

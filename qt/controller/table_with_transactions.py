@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
-from PyQt4.QtGui import QPixmap
+from PyQt4.QtGui import QPixmap, QFont
 
 from .table import Table
 
@@ -41,6 +41,10 @@ class TableWithTransactions(Table):
             return None
     
     def _getData(self, row, column, role):
+        if role == Qt.FontRole:
+            font = QFont(self.view.font())
+            font.setBold(row.is_bold)
+            return font
         if column.attrname == 'status':
             return self._getStatusData(row, role)
         else:

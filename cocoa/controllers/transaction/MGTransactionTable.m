@@ -136,20 +136,29 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
-    if (row >= [[self py] numberOfRows])
-    {
+    if (row >= [[self py] numberOfRows]) {
         return;
     }
-    if ([[column identifier] isEqualToString:@"status"])
-    {
+    if ([aCell isKindOfClass:[NSTextFieldCell class]]) {
+        NSTextFieldCell *cell = aCell;
+        NSFont *font = [cell font];
+        NSFontManager *fontManager = [NSFontManager sharedFontManager];
+        BOOL isBold = [[self py] isBoldAtRow:row];
+        if (isBold) {
+            font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
+        }
+        else {
+            font = [fontManager convertFont:font toNotHaveTrait:NSFontBoldTrait];
+        }
+        [cell setFont:font];
+    }
+    if ([[column identifier] isEqualToString:@"status"]) {
         MGReconciliationCell *cell = aCell;
-        if (row == [[self tableView] editedRow])
-        {
+        if (row == [[self tableView] editedRow]) {
             [cell setIsInFuture:[[self py] isEditedRowInTheFuture]];
             [cell setIsInPast:[[self py] isEditedRowInThePast]];
         }
-        else
-        {
+        else {
             [cell setIsInFuture:NO];
             [cell setIsInPast:NO];
         }
@@ -157,8 +166,7 @@ http://www.hardcoded.net/licenses/hs_license
         [cell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
         [cell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
     }
-    if (([[column identifier] isEqualToString:@"from"]) || ([[column identifier] isEqualToString:@"to"]))
-    {
+    if (([[column identifier] isEqualToString:@"from"]) || ([[column identifier] isEqualToString:@"to"])) {
         MGTextFieldCell *cell = aCell;
         BOOL isFocused = aTableView == [[aTableView window] firstResponder] && [[aTableView window] isKeyWindow];
         BOOL isSelected = row == [aTableView selectedRow];

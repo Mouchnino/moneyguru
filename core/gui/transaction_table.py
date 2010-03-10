@@ -89,6 +89,7 @@ class TransactionTableRow(RowWithDate):
         super(TransactionTableRow, self).__init__(table)
         self.document = table.document
         self.transaction = transaction
+        self.is_bold = False
         self.load()
     
     def _autofill_row(self, ref_row, dest_attrs):
@@ -228,4 +229,5 @@ class TotalRow(Row):
         self.reconciled = False
         self.recurrent = False
         self.is_budget = False
+        self.is_bold = True
     

@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import <math.h>
 
-#define CELL_PADDING 4
+#define CELL_PADDING 8
 
 @implementation MGTablePrint
 - (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView

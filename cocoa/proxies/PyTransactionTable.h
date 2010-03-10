@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyTableWithDate.h"
 
 @interface PyTransactionTable : PyTableWithDate {}
-
+- (BOOL)isBoldAtRow:(NSInteger)row;
 - (BOOL)canMoveRows:(NSArray *)rows to:(NSInteger)position;
 - (void)moveRows:(NSArray *)rows to:(NSInteger)position;
 - (void)showFromAccount;

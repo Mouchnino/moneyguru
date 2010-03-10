@@ -204,6 +204,10 @@ def test_duplicate_transaction(app):
     # assume the rest is correct, torough tests in transaction_table_test
 
 @with_app(app_one_entry)
+def test_normal_row_is_not_bold(app):
+    assert not app.etable[0].is_bold
+
+@with_app(app_one_entry)
 def test_set_invalid_amount(app):
     # setting an invalid amount reverts to the old amount
     app.etable[0].increase = 'foo' # no exception
@@ -366,6 +370,7 @@ def test_total_row(app):
     eq_(row.increase, '42.00')
     eq_(row.decrease, '12.00')
     eq_(row.balance, '')
+    assert row.is_bold
 
 #--- Entry in previous range
 def app_entry_in_previous_range():
@@ -376,6 +381,10 @@ def app_entry_in_previous_range():
     app.add_entry('11/06/2008', 'first')
     app.add_entry('11/07/2008', 'second')
     return app
+
+@with_app(app_entry_in_previous_range)
+def test_previous_balance_row_is_bold(app):
+    assert app.etable[0].is_bold
 
 @with_app(app_entry_in_previous_range)
 def test_selection_after_date_range_change(app):
