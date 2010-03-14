@@ -15,6 +15,7 @@ from nose.tools import nottest, istest, eq_
 
 from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
+from hsutil.testutil import TestData as TestDataBase
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
@@ -506,6 +507,12 @@ def with_app(appfunc):
         wrapper.__name__ = func.__name__
         return wrapper
     return decorator
+
+class TestData(TestDataBase):
+    @classmethod
+    def datadirpath(cls):
+        return Path(__file__)[:-1] + 'testdata'
+    
 
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
 # now, not all convenience methods have been moved to TestApp, but if you need one, just move it
