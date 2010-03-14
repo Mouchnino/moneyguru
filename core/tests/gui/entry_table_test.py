@@ -69,6 +69,11 @@ def test_show_transfer_account_on_empty_row_does_nothing():
     app = app_one_account()
     app.etable.show_transfer_account() # no crash
 
+@with_app(app_one_account)
+def test_total_line_balance_is_empty(app):
+    # When there's no change in the balance, the balance cell of the total row shows nothing
+    eq_(app.etable[0].balance, '')
+
 #--- Three accounts
 def app_three_accounts():
     app = TestApp()
@@ -363,13 +368,13 @@ def test_selection(app):
 @with_app(app_two_entries)
 def test_total_row(app):
     # The total row shows total increase and decrease with the date being the last day of the date
-    # range.
+    # range. The balance column shows balance delta.
     row = app.etable[2]
     eq_(row.date, '31/12/2008')
     eq_(row.description, 'TOTAL')
     eq_(row.increase, '42.00')
     eq_(row.decrease, '12.00')
-    eq_(row.balance, '')
+    eq_(row.balance, '+30.00')
     assert row.is_bold
 
 #--- Entry in previous range

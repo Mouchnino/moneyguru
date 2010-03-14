@@ -392,20 +392,28 @@ class TotalRow(BaseEntryTableRow):
         self._date = date
         self._description = 'TOTAL'
         # don't touch _increase and _decrease, they trigger editing.
-        self._total_increase = total_increase
-        self._total_decrease = total_decrease
+        self._increase_fmt = table.document.app.format_amount(total_increase, blank_zero=True)
+        self._decrease_fmt = table.document.app.format_amount(total_decrease, blank_zero=True)
+        delta = total_increase - total_decrease
+        if delta:
+            positive = delta > 0
+            delta_fmt = table.document.app.format_amount(abs(delta))
+            delta_fmt = ('+' if positive else '-') + delta_fmt
+            self._balance_fmt = delta_fmt
+        else:
+            self._balance_fmt = ''
         self.is_bold = True
     
     @property
     def increase(self):
-        return self.table.document.app.format_amount(self._total_increase, blank_zero=True)
+        return self._increase_fmt
     
     @property
     def decrease(self):
-        return self.table.document.app.format_amount(self._total_decrease, blank_zero=True)
+        return self._decrease_fmt
     
     @property
     def balance(self):
-        return ''
+        return self._balance_fmt
     
 
