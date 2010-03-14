@@ -8,22 +8,21 @@
 
 from datetime import date
 
-from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY, 
-                     REPEAT_WEEKDAY_LAST)
 from ..exception import OperationAborted
-from ..model.recurrence import Recurrence
+from ..model.recurrence import Recurrence, RepeatType
 from ..model.transaction import Transaction
 from .transaction_panel import PanelWithTransaction
 
-REPEAT_OPTIONS_ORDER = [REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY,
-                        REPEAT_WEEKDAY_LAST]
+REPEAT_OPTIONS_ORDER = [RepeatType.Daily, RepeatType.Weekly, RepeatType.Monthly, RepeatType.Yearly,
+    RepeatType.Weekday, RepeatType.WeekdayLast]
+
 REPEAT_EVERY_DESCS = {
-    REPEAT_DAILY: 'day',
-    REPEAT_WEEKLY: 'week',
-    REPEAT_MONTHLY: 'month',
-    REPEAT_YEARLY: 'year',
-    REPEAT_WEEKDAY: 'month',
-    REPEAT_WEEKDAY_LAST: 'month',
+    RepeatType.Daily: 'day',
+    RepeatType.Weekly: 'week',
+    RepeatType.Monthly: 'month',
+    RepeatType.Yearly: 'year',
+    RepeatType.Weekday: 'month',
+    RepeatType.WeekdayLast: 'month',
 }
 
 class PanelWithScheduleMixIn(object):
@@ -96,7 +95,7 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
         self.view.refresh_for_multi_currency()
     
     def _new(self):
-        self._load_schedule(Recurrence(Transaction(date.today(), amount=0), REPEAT_MONTHLY, 1))
+        self._load_schedule(Recurrence(Transaction(date.today(), amount=0), RepeatType.Monthly, 1))
         self.view.refresh_for_multi_currency()
     
     def _save(self):

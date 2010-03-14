@@ -12,19 +12,25 @@ from calendar import monthrange
 
 from hsutil.misc import nonone
 
-from ..const import (REPEAT_DAILY, REPEAT_WEEKLY, REPEAT_MONTHLY, REPEAT_YEARLY, REPEAT_WEEKDAY,
-    REPEAT_WEEKDAY_LAST)
 from .date import (inc_day, inc_week, inc_month, inc_year, inc_weekday_in_month,
     inc_last_weekday_in_month)
 from .transaction import Transaction
 
+class RepeatType(object):
+    Daily = 'daily'
+    Weekly = 'Weekly'
+    Monthly = 'Monthly'
+    Yearly = 'Yearly'
+    Weekday = 'Weekday'
+    WeekdayLast = 'Weekday_Last'
+
 RTYPE2INCFUNC = {
-    REPEAT_DAILY: inc_day,
-    REPEAT_WEEKLY: inc_week,
-    REPEAT_MONTHLY: inc_month,
-    REPEAT_YEARLY: inc_year,
-    REPEAT_WEEKDAY: inc_weekday_in_month,
-    REPEAT_WEEKDAY_LAST: inc_last_weekday_in_month,
+    RepeatType.Daily: inc_day,
+    RepeatType.Weekly: inc_week,
+    RepeatType.Monthly: inc_month,
+    RepeatType.Yearly: inc_year,
+    RepeatType.Weekday: inc_weekday_in_month,
+    RepeatType.WeekdayLast: inc_last_weekday_in_month,
 }
 
 ONE_DAY = datetime.timedelta(1)
@@ -72,7 +78,7 @@ class Recurrence(object):
     def __init__(self, ref, repeat_type, repeat_every):
         if repeat_type not in RTYPE2INCFUNC:
             # invalid repeat type, default to monthly
-            repeat_type = REPEAT_MONTHLY
+            repeat_type = RepeatType.Monthly
         self.ref = ref
         self._repeat_type = repeat_type
         self._repeat_every = repeat_every
@@ -81,12 +87,12 @@ class Recurrence(object):
         self.date2globalchange = {}
         self.date2instances = {}
         self.rtype2desc = {
-            REPEAT_DAILY: 'Daily',
-            REPEAT_WEEKLY: 'Weekly',
-            REPEAT_MONTHLY: 'Monthly',
-            REPEAT_YEARLY: 'Yearly',
-            REPEAT_WEEKDAY: '', # dynamic
-            REPEAT_WEEKDAY_LAST: '', # dynamic
+            RepeatType.Daily: 'Daily',
+            RepeatType.Weekly: 'Weekly',
+            RepeatType.Monthly: 'Monthly',
+            RepeatType.Yearly: 'Yearly',
+            RepeatType.Weekday: '', # dynamic
+            RepeatType.WeekdayLast: '', # dynamic
         }
         self._update_rtype_descs()
     
@@ -102,12 +108,12 @@ class Recurrence(object):
         weekday_name = date.strftime('%A')
         week_no = (date.day - 1) // 7
         position = ['first', 'second', 'third', 'fourth', 'fifth'][week_no]
-        self.rtype2desc[REPEAT_WEEKDAY] = 'Every %s %s of the month' % (position, weekday_name)
+        self.rtype2desc[RepeatType.Weekday] = 'Every %s %s of the month' % (position, weekday_name)
         _, days_in_month = monthrange(date.year, date.month)
         if days_in_month - date.day < 7:
-            self.rtype2desc[REPEAT_WEEKDAY_LAST] = 'Every last %s of the month' % weekday_name
+            self.rtype2desc[RepeatType.WeekdayLast] = 'Every last %s of the month' % weekday_name
         else:
-            self.rtype2desc[REPEAT_WEEKDAY_LAST] = ''
+            self.rtype2desc[RepeatType.WeekdayLast] = ''
     
     #--- Public
     def add_exception(self, spawn):

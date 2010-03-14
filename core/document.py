@@ -22,7 +22,7 @@ from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     AllTransactionsRange, CustomDateRange, inc_month)
 from .model.oven import Oven
-from .model.recurrence import Recurrence, Spawn, REPEAT_MONTHLY
+from .model.recurrence import Recurrence, Spawn, RepeatType
 from .model.transaction import Transaction, Entry
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
@@ -770,7 +770,7 @@ class Document(Broadcaster, Listener):
         self.notify('schedule_deleted')
     
     def new_schedule_from_transaction(self, transaction):
-        schedule = Recurrence(transaction.replicate(), REPEAT_MONTHLY, 1)
+        schedule = Recurrence(transaction.replicate(), RepeatType.Monthly, 1)
         schedule.delete_at(transaction.date)
         self.select_schedules([schedule]) # yes, we select a schedule that ain't part of self.schedules
     

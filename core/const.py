@@ -7,10 +7,3 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 NOEDIT = object()
-
-REPEAT_DAILY = 'daily'
-REPEAT_WEEKLY = 'weekly'
-REPEAT_MONTHLY = 'monthly'
-REPEAT_YEARLY = 'yearly'
-REPEAT_WEEKDAY = 'weekday'
-REPEAT_WEEKDAY_LAST = 'weekday_last'
