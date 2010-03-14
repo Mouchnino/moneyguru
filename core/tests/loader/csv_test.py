@@ -91,3 +91,10 @@ def test_with_comments():
     # It's not because the commented lines weren't passed to the sniffer that they don't show
     # up in the csv options panel. All lines must be there.
     eq_(len(loader.lines), 6)
+
+def test_null_character():
+    # Purge the csv file from null characters before sending it to the csv loader so that we avoid
+    # crashes.
+    loader = Loader(USD)
+    loader.parse(TestData.filepath('csv/null_character.csv')) # no exception
+    eq_(len(loader.lines), 4)

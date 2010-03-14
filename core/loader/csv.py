@@ -40,6 +40,7 @@ class Loader(base.Loader):
     def _prepare(self, infile):
         # Comment lines can confuse the sniffer. We remove them
         content = infile.read()
+        content = content.replace('\0', '')
         lines = content.split('\n')
         stripped_lines = [line.strip() for line in lines]
         stripped_lines = [line for line in lines if line and not line.startswith('#')]
