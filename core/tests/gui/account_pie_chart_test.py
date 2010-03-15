@@ -23,7 +23,7 @@ class _SomeAssetsAndLiabilities(TestCase):
     def setUp(self):
         self.mock_today(2009, 1, 29) # On the last day of the month, some tests fail
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy('a1')
         self.add_entry(increase='1.01') # values are trucated
         self.add_account_legacy('a2')
@@ -92,14 +92,14 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
 class SomeAssetsAndLiabilitiesWithBudget(_SomeAssetsAndLiabilities):
     def setUp(self):
         _SomeAssetsAndLiabilities.setUp(self)
-        self.document.select_today_date_range()
+        self.drsel.select_today_date_range()
         self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_budget('income', 'a3', '5')
         self.mainwindow.select_balance_sheet()
     
     def test_future_date_range(self):
         # the budget amounts used for the pie chart include all previous budgets
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         expected = [
             ('a3 60.0%', 12),
             ('a2 20.0%', 4),
@@ -138,7 +138,7 @@ class MoreThanSliceCountAssets(TestCase):
 class SomeIncomeAndExpenses(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy('foo')
         self.add_entry(transfer='i1', increase='2')
         self.add_entry(transfer='i2', increase='4')
@@ -204,7 +204,7 @@ class SomeIncomeAndExpenses(TestCase):
 class DifferentDateRanges(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy('foo')
         self.add_entry(date='01/08/2008', transfer='baz', increase='5')
         self.add_entry(date='01/08/2008', transfer='bar', decrease='1')
@@ -215,7 +215,7 @@ class DifferentDateRanges(TestCase):
     def test_balance_pie_chart(self):
         # the data in the balance pie chart reflects the currencly selected date range
         eq_(self.apie.data, [('foo 100.0%', 2)])
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.apie.data, [('foo 100.0%', 4)])
         self.check_gui_calls(self.apie_gui, ['refresh'])
     
@@ -225,7 +225,7 @@ class DifferentDateRanges(TestCase):
         self.istatement.selected = self.istatement.expenses[0]
         self.clear_gui_calls()
         eq_(self.epie.data, [('bar 100.0%', 2)])
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.epie.data, [('bar 100.0%', 1)])
         self.check_gui_calls(self.epie_gui, ['refresh'])
     

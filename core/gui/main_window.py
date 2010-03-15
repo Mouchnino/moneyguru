@@ -14,16 +14,18 @@ class MainWindow(DocumentGUIObject):
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
     def set_children(self, children):
-        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
-            self.alookup, self.completion_lookup) = children
+        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.apanel,
+            self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.alookup,
+            self.completion_lookup, self.daterange_selector) = children
         self._current_view = None
         self.show_balance_sheet()
     
     def connect(self):
         DocumentGUIObject.connect(self)
+        self.daterange_selector.connect()
         self.view.refresh_date_range_selector()
     
+    # We don't override disconnect because we never disconnect the main window anyway...
     #--- Private
     def _change_current_view(self, view):
         if self._current_view is view:

@@ -155,7 +155,7 @@ def app_mixed_up_schedule_and_budget():
     p = Patcher()
     p.patch_today(2010, 1, 1)
     app = TestApp()
-    app.doc.select_month_range() # we just want 4 transactions
+    app.drsel.select_month_range() # we just want 4 transactions
     app.add_account('expense', account_type=AccountType.Expense)
     app.add_account('asset')
     app.doc.show_selected_account()

@@ -38,11 +38,11 @@ def test_split_values(app):
 #--- Entry in previous range
 def app_entry_in_previous_range():
     app = TestApp()
-    app.doc.select_month_range()
+    app.drsel.select_month_range()
     app.add_account()
     app.mw.show_account()
     app.add_entry('1/1/2008')
-    app.doc.select_next_date_range()
+    app.drsel.select_next_date_range()
     app.pv = EntryPrint(app.etable)
     return app
 

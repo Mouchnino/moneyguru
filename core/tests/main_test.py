@@ -78,7 +78,7 @@ def test_close_document():
     # when the document is closed, the date range type and the first weekday are saved to 
     # preferences.
     app = TestApp()
-    app.doc.select_year_range()
+    app.drsel.select_year_range()
     app.app.first_weekday = 1
     app.app.ahead_months = 5
     app.app.year_start_month = 4
@@ -137,7 +137,7 @@ class RangeOnOctober2007(TestCase):
     def setUp(self):
         self.mock_today(2007, 10, 1)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.clear_gui_calls()
     
     def test_graph_xaxis(self):
@@ -169,7 +169,7 @@ class RangeOnYearToDate(TestCase):
     def setUp(self):
         self.create_instances()
         self.mock_today(2008, 11, 12)
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
     
     def test_graph_xaxis(self):
         # The graph xaxis shows abbreviated month names
@@ -571,11 +571,11 @@ class NegativeBoundEntry(TestCase):
 class OneEntryInPreviousRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account()
         self.mainwindow.show_account()
         self.add_entry('1/1/2008')
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
     
     def test_attrs(self):
         row = self.etable[0]
@@ -645,7 +645,7 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
         """Changing the date range while in edition mode saves the data first"""
         row = self.etable.selected_row
         row.description = 'foo'
-        self.document.select_prev_date_range() # Save the entry *then* go in the prev date range
+        self.drsel.select_prev_date_range() # Save the entry *then* go in the prev date range
         self.etable.save_edits()
         self.assertEqual(self.etable[0].description, 'first')
     
@@ -686,7 +686,7 @@ class TwoEntriesInRange(TestCase):
     
     def test_date_range_change(self):
         """The currently selected entry stays selected"""
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         self.assertEqual(self.etable[self.etable.selected_indexes[0]].description, 'first')
     
     def test_delete_first_entry(self):
@@ -945,7 +945,7 @@ class ThreeEntriesInThreeMonthsRangeOnThird(TestCase):
         """The selected entry stays selected after a date range, even if its index changes (the 
         index of the third entry goes from 1 to 2.
         """
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         self.assertEqual(self.etable[self.etable.selected_indexes[0]].description, 'third')
     
 
@@ -992,7 +992,7 @@ class ThreeEntriesInTheSameExpenseAccount(TestCase):
     """Three entries balanced in the same expense account."""
     def setUp(self):
         self.create_instances()
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         self.add_account_legacy()
         self.add_entry('31/12/2007', 'entry0', transfer='Expense', decrease='42')
         self.add_entry('1/1/2008', 'entry1', transfer='Expense', decrease='100')
@@ -1288,7 +1288,7 @@ class EntrySelectionOnDateRangeChange(TestCase):
     """Multiple entries in multiple date range to test the entry selection on date range change"""
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy()
         self.add_entry('2/2/2007')
         self.add_entry('2/1/2008')
@@ -1304,16 +1304,16 @@ class EntrySelectionOnDateRangeChange(TestCase):
     def test_prev_range(self):
         """Explicit entry selection keeps the same delta with the date range's start when it 
         translates"""
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         self.assertEqual(self.etable.selected_indexes, [2]) # 2008/1/2
     
     def test_year_range(self):
         """Even in year range, the system stays the same for range change (keep the same distance
         with the range's start"""
-        self.document.select_year_range()
-        self.document.select_prev_date_range()
+        self.drsel.select_year_range()
+        self.drsel.select_prev_date_range()
         self.etable.select([0]) # 2007/2/2, no previous balance
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         self.assertEqual(self.etable.selected_indexes, [5]) # 2008/2/2
     
 

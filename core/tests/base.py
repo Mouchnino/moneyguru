@@ -35,6 +35,7 @@ from ..gui.completable_edit import CompletableEdit
 from ..gui.completion_lookup import CompletionLookup
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
+from ..gui.date_range_selector import DateRangeSelector
 from ..gui.entry_table import EntryTable
 from ..gui.filter_bar import FilterBar, EntryFilterBar
 from ..gui.income_statement import IncomeStatement
@@ -215,6 +216,8 @@ class TestApp(object):
         self.efbar = EntryFilterBar(self.efbar_gui, self.mw)
         self.tfbar_gui = CallLogger()
         self.tfbar = FilterBar(self.tfbar_gui, self.mw)
+        self.drsel_gui = CallLogger()
+        self.drsel = DateRangeSelector(self.drsel_gui, self.mw)
         self.csvopt_gui = CallLogger()
         self.csvopt = CSVOptions(self.csvopt_gui, self.doc)
         self.iwin_gui = CallLogger()
@@ -245,7 +248,7 @@ class TestApp(object):
         self.bview = BudgetView(self.bview_gui, self.mw, children)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.alookup,
-            self.clookup]
+            self.clookup, self.drsel]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
@@ -546,8 +549,8 @@ class TestCase(TestCaseBase):
         names = ['app', 'apanel', 'arpanel', 'etable', 'ttable', 'sctable', 'btable', 'scpanel',
             'tpanel', 'mepanel', 'bpanel', 'stable', 'scsplittable', 'balgraph', 'bargraph',
             'nwgraph', 'pgraph', 'bsheet', 'apie', 'lpie', 'ipie', 'epie', 'istatement', 'sfield',
-            'efbar', 'tfbar', 'csvopt', 'iwin', 'itable', 'cdrpanel', 'nwview', 'pview', 'tview',
-            'aview', 'scview', 'bview', 'mainwindow']
+            'efbar', 'tfbar', 'drsel', 'csvopt', 'iwin', 'itable', 'cdrpanel', 'nwview', 'pview',
+            'tview', 'aview', 'scview', 'bview', 'mainwindow']
         for name in names:
             guiname = name + '_gui'
             setattr(self, name, getattr(self.ta, name))
@@ -821,7 +824,7 @@ class CommonSetup(object):
     def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_name=None):
         # 4 days left to the month, 100$ monthly budget
         self.mock_today(2008, 1, 27)
-        self.document.select_today_date_range()
+        self.drsel.select_today_date_range()
         account_type = AccountType.Expense if is_expense else AccountType.Income
         self.add_account_legacy(account_name, account_type=account_type)
         self.add_budget(account_name, target_name, '100')

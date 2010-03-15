@@ -16,7 +16,7 @@ from ...model.account import AccountType
 class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         for i in range(1, 15):
             USD.set_CAD_value(1.42, date(2008, 7, i))
         for i in range(15, 32):

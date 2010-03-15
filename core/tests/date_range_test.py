@@ -25,13 +25,13 @@ class Pristine(TestCase):
     def test_load_while_on_ytd_range(self):
         # Previously, the document would try to call around() on the current date range, even if not
         # navigable, causing a crash.
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
         filename = self.filepath('moneyguru/payee_description.moneyguru')
         self.document.load_from_xml(filename) # no crash
     
     def test_all_transactions_range(self):
         # Selecting the All Transactions range when there's no transaction doesn't do anything.
-        self.document.select_all_transactions_range() # no crash
+        self.drsel.select_all_transactions_range() # no crash
     
     def test_set_ahead_months(self):
         # setting the ahead_months preference doesn't change the current date range type
@@ -43,7 +43,7 @@ class RangeOnOctober2007(TestCase):
     def setUp(self):
         self.mock_today(2007, 10, 1)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.clear_gui_calls()
     
     def test_close_and_load(self):
@@ -57,11 +57,11 @@ class RangeOnOctober2007(TestCase):
     
     def test_quarter_range(self):
         # When there is no selected entry, the selected range is based on the current date range.
-        self.document.select_quarter_range()
+        self.drsel.select_quarter_range()
         eq_(self.document.date_range, QuarterRange(date(2007, 10, 1)))
     
     def test_select_custom_date_range(self):
-        self.document.select_custom_date_range()
+        self.drsel.select_custom_date_range()
         self.check_gui_calls(self.mainwindow_gui, ['show_custom_date_range_panel'])
         self.cdrpanel.start_date = '09/12/2008'
         self.cdrpanel.end_date = '18/02/2009'
@@ -74,34 +74,34 @@ class RangeOnOctober2007(TestCase):
     def test_select_custom_date_range_without_changing_the_dates(self):
         # When selecting a custom date range that has the same start/end as the previous one, it
         # still causes the change notification (so the DR display changes.
-        self.document.select_custom_date_range()
+        self.drsel.select_custom_date_range()
         self.cdrpanel.ok()
         eq_(self.document.date_range.display, '01/10/2007 - 31/10/2007')
     
     def test_select_prev_date_range(self):
         # If no account is selected, the range is not limited.
         try:
-            self.document.select_prev_date_range()
+            self.drsel.select_prev_date_range()
         except Exception:
             raise AssertionError()
         eq_(self.document.date_range, MonthRange(date(2007, 9, 1)))
     
     def test_select_today_date_range(self):
         # the document's date range wraps around today's date
-        self.document.select_today_date_range()
+        self.drsel.select_today_date_range()
         dr = self.document.date_range
         assert dr.start <= date.today() <= dr.end
     
     def test_select_year_range(self):
         # Verify that the range changes.
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         eq_(self.document.date_range, YearRange(date(2007, 1, 1)))
         # We don't ask the GUI to perform any animation
         self.check_gui_calls(self.mainwindow_gui, ['refresh_date_range_selector'])
     
     def test_select_year_to_date_range(self):
         # Year-to-date starts at the first day of this year and ends today.
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
         eq_(self.document.date_range.start, date(date.today().year, 1, 1))
         eq_(self.document.date_range.end, date.today())
         eq_(self.document.date_range.display, 'Jan 2007 - Now')
@@ -114,7 +114,7 @@ class RangeOnYear2007(TestCase):
     
     def test_month_range(self):
         # When there is no selected entry, the selected range is based on the current date range.
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         eq_(self.document.date_range, MonthRange(date(2007, 1, 1)))
     
 
@@ -122,7 +122,7 @@ class RangeOnYearStartsOnApril(TestCase):
     def setUp(self):
         self.mock_today(2007, 4, 1)
         self.create_instances()
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         self.app.year_start_month = 4
     
     def test_add_entry(self):
@@ -139,9 +139,9 @@ class RangeOnYearStartsOnApril(TestCase):
     
     def test_select_next_then_previous(self):
         # when navigating date ranges, preserve the year_start_month
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         eq_(self.document.date_range.start, date(2008, 4, 1))
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.document.date_range.start, date(2007, 4, 1))
     
 
@@ -149,7 +149,7 @@ class RangeOnYearToDate(TestCase):
     def setUp(self):
         self.create_instances()
         self.mock_today(2008, 11, 12)
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
     
     def test_close_and_load(self):
         # The date range preference is correctly restored
@@ -158,11 +158,11 @@ class RangeOnYearToDate(TestCase):
     
     def test_select_next_prev_today_range(self):
         # next/prev/today do nothing in YTD
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         eq_(self.document.date_range.start, date(2008, 1, 1))
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.document.date_range.start, date(2008, 1, 1))
-        self.document.select_today_date_range()
+        self.drsel.select_today_date_range()
         eq_(self.document.date_range.start, date(2008, 1, 1))
     
     def test_year_start_month_at_4(self):
@@ -183,7 +183,7 @@ class RangeOnRunningYear(TestCase):
     def setUp(self):
         self.create_instances()
         self.mock_today(2009, 1, 25)
-        self.document.select_running_year_range()
+        self.drsel.select_running_year_range()
         self.clear_gui_calls()
     
     def test_11_ahead_months(self):
@@ -206,7 +206,7 @@ class RangeOnRunningYear(TestCase):
     
     def test_prev_date_range(self):
         # prev_date_range() does nothing
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.document.date_range.start, date(2008, 4, 1))
     
 
@@ -215,7 +215,7 @@ class RangeOnRunningYearWithAheadMonths(TestCase):
         self.create_instances()
         self.mock_today(2009, 1, 25)
         self.app.ahead_months = 5
-        self.document.select_running_year_range()
+        self.drsel.select_running_year_range()
         self.clear_gui_calls()
     
     def test_date_range(self):
@@ -226,7 +226,7 @@ class RangeOnRunningYearWithAheadMonths(TestCase):
 class CustomDateRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_custom_date_range()
+        self.drsel.select_custom_date_range()
         self.cdrpanel.start_date = '09/12/2008'
         self.cdrpanel.end_date = '18/02/2009'
         self.cdrpanel.ok() # changes the date range
@@ -248,13 +248,13 @@ class OneEntryYearRange2007(TestCase):
     def test_select_month_range(self):
         # Make sure that the month range selection will be the first valid (contains at least one 
         # entry) range.
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         eq_(self.document.date_range, MonthRange(date(2007, 10, 1)))
     
     def test_select_quarter_range(self):
         # Make sure that the quarter range selection will be the first valid (contains at least one 
         # entry) range.
-        self.document.select_quarter_range()
+        self.drsel.select_quarter_range()
         eq_(self.document.date_range, QuarterRange(date(2007, 10, 1)))
     
     def test_set_date_in_range(self):
@@ -291,12 +291,12 @@ class TwoEntriesInDifferentQuartersWithYearRange(TestCase):
     
     def test_select_quarter_range(self):
         # The selected quarter range is the range containing the selected entry, Q2.
-        self.document.select_quarter_range()
+        self.drsel.select_quarter_range()
         eq_(self.document.date_range, QuarterRange(date(2007, 4, 1)))
     
     def test_select_month_range(self):
         # The selected month range is the range containing the selected entry, April.
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         eq_(self.document.date_range, MonthRange(date(2007, 4, 1)))
     
 
@@ -316,14 +316,14 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
         self.etable.select([1])
     
     def test_next_date_range(self):
-        # document.select_next_date_range() makes the date range go one month later.
+        # drsel.select_next_date_range() makes the date range go one month later.
         self.document.date_range = MonthRange(date(2007, 9, 1))
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         eq_(self.document.date_range, MonthRange(date(2007, 10, 1)))
     
     def test_prev_date_range(self):
         # app.select_prev_date_range() makes the date range go one month earlier.
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.document.date_range, MonthRange(date(2007, 9, 1)))
     
 
@@ -333,7 +333,7 @@ class AllTransactionsRangeWithOneTransactionFarInThePast(TestCase):
         self.create_instances()
         self.add_txn('01/10/1981', from_='foo', to='bar', amount='42')
         self.add_txn('10/01/2010')
-        self.document.select_all_transactions_range()
+        self.drsel.select_all_transactions_range()
     
     def test_add_earlier_transaction(self):
         # Adding a transactions that's earlier than the current start date adjusts the range.

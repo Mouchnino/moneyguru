@@ -33,7 +33,7 @@ def app_one_expense_with_budget():
     p = Patcher()
     p.patch_today(2008, 1, 27)
     app = TestApp()
-    app.doc.select_today_date_range()
+    app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')
     app.mainwindow.select_income_statement()

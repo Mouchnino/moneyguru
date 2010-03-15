@@ -127,7 +127,7 @@ def app_on_transaction_view():
 def test_changing_date_range_refreshes_transaction_totals():
     # totals label should be refreshed when the date range changes
     app = app_on_transaction_view()
-    app.doc.select_quarter_range()
+    app.drsel.select_quarter_range()
     app.check_gui_calls(app.tview_gui, ['refresh_totals'])
 
 #--- One account
@@ -155,7 +155,7 @@ def test_change_aview_filter():
 def test_changing_date_range_refreshes_account_totals():
     # totals label should be refreshed when the date range changes
     app = app_one_account()
-    app.doc.select_quarter_range()
+    app.drsel.select_quarter_range()
     app.check_gui_calls(app.aview_gui, ['refresh_totals'])
 
 def test_delete_entry():

@@ -37,6 +37,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
+    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py view:dateRangeSelectorView];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
@@ -46,7 +47,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], [accountLookup py], [completionLookup py], nil];
+        [budgetPanel py], [accountLookup py], [completionLookup py], [dateRangeSelector py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
@@ -71,6 +72,7 @@ http://www.hardcoded.net/licenses/hs_license
     [customDateRangePanel release];
     [accountReassignPanel release];
     [accountLookup release];
+    [dateRangeSelector release];
     [reconciliationToolbarItem release];
     [super dealloc];
 }
@@ -120,30 +122,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     top = aTop;
     [self arrangeViews];
-}
-
-- (void)animateDateRange:(BOOL)forward
-{
-    CGFloat PADDING = 3;
-    NSRect convertedFrame = [dateRangePopUp convertRect:[dateRangePopUp bounds] toView:[[self window] contentView]];
-    convertedFrame.size.width -= PADDING *2;
-    convertedFrame.size.height -= PADDING *2;
-    convertedFrame.origin.x += PADDING;
-    convertedFrame.origin.y += PADDING;
-    NSImageView *imageView = [[[NSImageView alloc] initWithFrame:convertedFrame] autorelease];
-    [imageView setImageAlignment:forward ? NSImageAlignTopRight : NSImageAlignTopLeft];
-    [imageView setImageScaling:NSScaleProportionally];
-    [imageView setImage:[NSImage imageNamed:forward ? @"forward_32" : @"backward_32"]];
-    [[[self window] contentView] addSubview:imageView positioned:NSWindowAbove relativeTo:nil];
-    NSMutableDictionary *animData = [NSMutableDictionary dictionary];
-    [animData setObject:imageView forKey:NSViewAnimationTargetKey];
-    [animData setObject:NSViewAnimationFadeOutEffect forKey:NSViewAnimationEffectKey];
-    NSMutableArray *animations = [NSMutableArray arrayWithObject:animData];
-    NSViewAnimation *anim = [[NSViewAnimation alloc] initWithViewAnimations:animations];
-    [anim setDuration:0.5];
-    [anim setAnimationCurve:NSAnimationLinear];
-    [anim setDelegate:self];
-    [anim startAnimation];
 }
 
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event
@@ -198,7 +176,7 @@ http://www.hardcoded.net/licenses/hs_license
         return (top == accountView) && [[[self document] py] shownAccountIsBalanceSheet];
     else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
         || (action == @selector(selectTodayDateRange:)))
-        return [[self py] canNavigateDateRange];
+        return [[dateRangeSelector py] canNavigate];
     return YES;
 }
 
@@ -262,52 +240,52 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)selectMonthRange:(id)sender
 {
-    [[[self document] py] selectMonthRange];
+    [[dateRangeSelector py] selectMonthRange];
 }
 
 - (IBAction)selectNextDateRange:(id)sender
 {
-    [[[self document] py] selectNextDateRange];
+    [[dateRangeSelector py] selectNextDateRange];
 }
 
 - (IBAction)selectPrevDateRange:(id)sender
 {
-    [[[self document] py] selectPrevDateRange];
+    [[dateRangeSelector py] selectPrevDateRange];
 }
 
 - (IBAction)selectTodayDateRange:(id)sender
 {
-    [[[self document] py] selectTodayDateRange];
+    [[dateRangeSelector py] selectTodayDateRange];
 }
 
 - (IBAction)selectQuarterRange:(id)sender
 {
-    [[[self document] py] selectQuarterRange];
+    [[dateRangeSelector py] selectQuarterRange];
 }
 
 - (IBAction)selectYearRange:(id)sender
 {
-    [[[self document] py] selectYearRange];
+    [[dateRangeSelector py] selectYearRange];
 }
 
 - (IBAction)selectYearToDateRange:(id)sender
 {
-    [[[self document] py] selectYearToDateRange];
+    [[dateRangeSelector py] selectYearToDateRange];
 }
 
 - (IBAction)selectRunningYearRange:(id)sender
 {
-    [[[self document] py] selectRunningYearRange];
+    [[dateRangeSelector py] selectRunningYearRange];
 }
 
 - (IBAction)selectAllTransactionsRange:(id)sender
 {
-    [[[self document] py] selectAllTransactionsRange];
+    [[dateRangeSelector py] selectAllTransactionsRange];
 }
 
 - (IBAction)selectCustomDateRange:(id)sender
 {
-    [[[self document] py] selectCustomDateRange];
+    [[dateRangeSelector py] selectCustomDateRange];
 }
 
 - (IBAction)showBalanceSheet:(id)sender
@@ -393,19 +371,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
-- (void)animationDidEnd:(NSAnimation *)animation
-{
-    // Remove all views used by the animation from their superviews
-    NSDictionary *animData;
-    NSEnumerator *e = [[(NSViewAnimation *)animation viewAnimations] objectEnumerator];
-    while (animData = [e nextObject])
-    {
-        NSView *view = [animData objectForKey:NSViewAnimationTargetKey];
-        [view removeFromSuperview];
-    }
-    [animation release];
-}
-
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     [sheet orderOut:nil];
@@ -580,20 +545,17 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)animateDateRangeForward
 {
-    [self animateDateRange:YES];
+    [dateRangeSelector animate:YES];
 }
 
 - (void)animateDateRangeBackward
 {
-    [self animateDateRange:NO];
+    [dateRangeSelector animate:NO];
 }
 
 - (void)refreshDateRangeSelector
 {
-    [dateRangePopUp setTitle:[[[self document] py] dateRangeDisplay]];
-    BOOL canNavigate = [[self py] canNavigateDateRange];
-    [prevDateRangeButton setEnabled:canNavigate];
-    [nextDateRangeButton setEnabled:canNavigate];
+    [dateRangeSelector refresh];
 }
 
 - (void)refreshReconciliationButton

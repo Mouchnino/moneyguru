@@ -15,7 +15,7 @@ from .base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
 #--- One transaction
 def app_one_transaction():
     app = TestApp()
-    app.doc.select_month_range()
+    app.drsel.select_month_range()
     app.add_account('first')
     app.mw.show_account()
     app.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42', checkno='24')
@@ -47,7 +47,7 @@ def app_daily_schedule():
     p = Patcher()
     p.patch_today(2008, 9, 13)
     app = TestApp()
-    app.doc.select_month_range()
+    app.drsel.select_month_range()
     app.add_account('account')
     app.add_schedule(start_date='13/09/2008', description='foobar', account='account',  amount='1',
         repeat_every=3)
@@ -243,7 +243,7 @@ def test_exceptions_are_always_spawned(app):
     # When an exception has a smaller date than the "spawn date", enough to be in another range,
     # when reloading the document, this exception would not be spawn until the date range
     # reached the "spawn date" rather than the exception date.
-    app.doc.select_next_date_range()
+    app.drsel.select_next_date_range()
     app.ttable.select([0])
     app.ttable[0].date = '30/09/2008'
     app.ttable.save_edits() # date range now on 09/2008
@@ -291,7 +291,7 @@ class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSave
     # ref txn. So the recurrences were always getting splits from the last loaded normal txn
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy('account')
         self.add_entry('19/09/2008', description='bar', increase='2')
         self.setup_scheduled_transaction(description='foo', account='account', debit='1', repeat_every=3)
@@ -403,7 +403,7 @@ class OneWeeklyRecurrentTransaction(TestCase, CommonSetup):
     
     def test_next_date_range(self):
         # The next date range also has the correct recurrent txns
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         self.assertEqual(self.ttable.row_count, 2)
         self.assertEqual(self.ttable[0].date, '11/10/2008')
         self.assertEqual(self.ttable[1].date, '25/10/2008')
@@ -420,11 +420,11 @@ class OneMonthlyRecurrentTransactionOnThirtyFirst(TestCase, CommonSetup):
         self.setup_scheduled_transaction(start_date='31/08/2008', repeat_type_index=2) # monthly
     
     def test_use_last_day_in_invalid_months(self):
-        self.document.select_next_date_range() # sept
+        self.drsel.select_next_date_range() # sept
         self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '30/09/2008') # can't use 31, so it uses 30
         # however, revert to 31st on the next month
-        self.document.select_next_date_range() # oct
+        self.drsel.select_next_date_range() # oct
         self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '31/10/2008')
     
@@ -435,14 +435,14 @@ class OneYearlyRecurrentTransactionOnTwentyNinth(TestCase, CommonSetup):
         self.setup_scheduled_transaction(start_date='29/02/2008', repeat_type_index=3) # yearly
     
     def test_use_last_day_in_invalid_months(self):
-        self.document.select_year_range()
-        self.document.select_next_date_range() # 2009
+        self.drsel.select_year_range()
+        self.drsel.select_next_date_range() # 2009
         self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '28/02/2009') # can't use 29, so it uses 28
         # however, revert to 29 4 years later
-        self.document.select_next_date_range() # 2010
-        self.document.select_next_date_range() # 2011
-        self.document.select_next_date_range() # 2012
+        self.drsel.select_next_date_range() # 2010
+        self.drsel.select_next_date_range() # 2011
+        self.drsel.select_next_date_range() # 2012
         self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '29/02/2012')
     
@@ -454,7 +454,7 @@ class TransactionRecurringOnThirdMondayOfTheMonth(TestCase, CommonSetup):
     
     def test_year_range(self):
         # The next date range also has the correct recurrent txns
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         self.assertEqual(self.ttable.row_count, 4)
         self.assertEqual(self.ttable[0].date, '15/09/2008')
         self.assertEqual(self.ttable[1].date, '20/10/2008')
@@ -469,11 +469,11 @@ class TransactionRecurringOnFifthTuesdayOfTheMonth(TestCase, CommonSetup):
     
     def test_next_date_range(self):
         # There's not a month with a fifth tuesday until december
-        self.document.select_next_date_range() # oct
+        self.drsel.select_next_date_range() # oct
         self.assertEqual(self.ttable.row_count, 0)
-        self.document.select_next_date_range() # nov
+        self.drsel.select_next_date_range() # nov
         self.assertEqual(self.ttable.row_count, 0)
-        self.document.select_next_date_range() # dec
+        self.drsel.select_next_date_range() # dec
         self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '30/12/2008')
     
@@ -485,7 +485,7 @@ class TransactionRecurringOnLastTuesdayOfTheMonth(TestCase, CommonSetup):
     
     def test_next_date_range(self):
         # next month has no 5th tuesday, so use the last one
-        self.document.select_next_date_range() # oct
+        self.drsel.select_next_date_range() # oct
         self.assertEqual(self.ttable.row_count, 1)
         self.assertEqual(self.ttable[0].date, '28/10/2008')
     

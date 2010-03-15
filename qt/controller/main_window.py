@@ -30,6 +30,7 @@ from .schedule_panel import SchedulePanel
 from .budget_panel import BudgetPanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .search_field import SearchField
+from .date_range_selector import DateRangeSelector
 from ui.main_window_ui import Ui_MainWindow
 
 NETWORTH_INDEX = 0
@@ -60,6 +61,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.arpanel = AccountReassignPanel(self, doc=doc)
         self.alookup = AccountLookup(self, mainwindow=self)
         self.clookup = CompletionLookup(self, mainwindow=self)
+        self.drsel = DateRangeSelector(mainwindow=self)
         self._setupUi()
         # We don't set geometry if the window was maximized so that if the user de-maximize the
         # window, it actually shrinks.
@@ -68,7 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
             self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model,
-            self.clookup.model]
+            self.clookup.model, self.drsel.model]
         self.model.set_children(children)
         self.model.connect()
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
@@ -85,16 +87,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         # Actions
         # Date range
-        self.actionNextDateRange.triggered.connect(self.nextDateRangeTriggered)
-        self.actionPreviousDateRange.triggered.connect(self.previousDateRangeTriggered)
-        self.actionTodayDateRange.triggered.connect(self.todayDateRangeTriggered)
-        self.actionChangeDateRangeMonth.triggered.connect(self.changeDateRangeMonthTriggered)
-        self.actionChangeDateRangeQuarter.triggered.connect(self.changeDateRangeQuarterTriggered)
-        self.actionChangeDateRangeYear.triggered.connect(self.changeDateRangeYearTriggered)
-        self.actionChangeDateRangeYearToDate.triggered.connect(self.changeDateRangeYearToDateTriggered)
-        self.actionChangeDateRangeRunningYear.triggered.connect(self.changeDateRangeRunningYearTriggered)
-        self.actionChangeDateRangeAllTransactions.triggered.connect(self.doc.model.select_all_transactions_range)
-        self.actionChangeDateRangeCustom.triggered.connect(self.changeDateRangeCustomTriggered)
+        self.actionNextDateRange.triggered.connect(self.drsel.model.select_next_date_range)
+        self.actionPreviousDateRange.triggered.connect(self.drsel.model.select_prev_date_range)
+        self.actionTodayDateRange.triggered.connect(self.drsel.model.select_today_date_range)
+        self.actionChangeDateRangeMonth.triggered.connect(self.drsel.model.select_month_range)
+        self.actionChangeDateRangeQuarter.triggered.connect(self.drsel.model.select_quarter_range)
+        self.actionChangeDateRangeYear.triggered.connect(self.drsel.model.select_year_range)
+        self.actionChangeDateRangeYearToDate.triggered.connect(self.drsel.model.select_year_to_date_range)
+        self.actionChangeDateRangeRunningYear.triggered.connect(self.drsel.model.select_running_year_range)
+        self.actionChangeDateRangeAllTransactions.triggered.connect(self.drsel.model.select_all_transactions_range)
+        self.actionChangeDateRangeCustom.triggered.connect(self.drsel.model.select_custom_date_range)
         
         # Views
         self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
@@ -240,7 +242,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         shownAccount = self.doc.model.shown_account
         canToggleReconciliation = viewIndex == ACCOUNT_INDEX and shownAccount is not None and \
             shownAccount.is_balance_sheet_account()
-        canNavigateDateRange = self.doc.model.date_range.can_navigate
         
         newItemLabel = {
             NETWORTH_INDEX: "New Account",
@@ -264,9 +265,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNavigateBack.setEnabled(viewIndex == ACCOUNT_INDEX)
         self.actionToggleReconciliationMode.setEnabled(canToggleReconciliation)
         self.actionToggleReconciliationModeToolbar.setEnabled(canToggleReconciliation)
-        self.actionNextDateRange.setEnabled(canNavigateDateRange)
-        self.actionPreviousDateRange.setEnabled(canNavigateDateRange)
-        self.actionTodayDateRange.setEnabled(canNavigateDateRange)
     
     def _updateUndoActions(self):
         if self.doc.model.can_undo():
@@ -291,34 +289,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.scview.updateOptionalWidgetsVisibility()
     
     #--- Actions
-    # Date range
-    def changeDateRangeCustomTriggered(self):
-        self.doc.model.select_custom_date_range()
-    
-    def changeDateRangeMonthTriggered(self):
-        self.doc.model.select_month_range()
-    
-    def changeDateRangeQuarterTriggered(self):
-        self.doc.model.select_quarter_range()
-    
-    def changeDateRangeRunningYearTriggered(self):
-        self.doc.model.select_running_year_range()
-    
-    def changeDateRangeYearTriggered(self):
-        self.doc.model.select_year_range()
-    
-    def changeDateRangeYearToDateTriggered(self):
-        self.doc.model.select_year_to_date_range()
-    
-    def nextDateRangeTriggered(self):
-        self.doc.model.select_next_date_range()
-    
-    def previousDateRangeTriggered(self):
-        self.doc.model.select_prev_date_range()
-    
-    def todayDateRangeTriggered(self):
-        self.doc.model.select_today_date_range()
-    
     # Views
     def showNetWorthTriggered(self):
         self.model.select_balance_sheet()
@@ -401,8 +371,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pass
     
     def refresh_date_range_selector(self):
-        self.dateRangeButton.setText(self.doc.model.date_range.display)
-        self._updateActionsState()
+        self.drsel.refresh()
     
     def refresh_reconciliation_button(self):
         imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'

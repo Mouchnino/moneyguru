@@ -10,19 +10,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyDocument : PyGUI {}
-/* Date range */
-- (void)selectPrevDateRange;
-- (void)selectNextDateRange;
-- (void)selectTodayDateRange;
-- (void)selectMonthRange;
-- (void)selectQuarterRange;
-- (void)selectYearRange;
-- (void)selectYearToDateRange;
-- (void)selectRunningYearRange;
-- (void)selectAllTransactionsRange;
-- (void)selectCustomDateRange;
-- (NSString *)dateRangeDisplay;
-
 /* Reconciliation */
 - (void)toggleReconciliationMode;
 - (BOOL)inReconciliationMode;

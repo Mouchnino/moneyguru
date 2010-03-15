@@ -31,8 +31,8 @@ class OneIncomeWithBudget(TestCase, CommonSetup):
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         eq_(self.etable[0].transfer, '')
-        self.document.select_next_date_range()
-        self.document.select_prev_date_range()
+        self.drsel.select_next_date_range()
+        self.drsel.select_prev_date_range()
         eq_(self.etable[0].transfer, '') # It shouldn't be set to "Some Income"
     
     def test_save_and_load(self):
@@ -160,7 +160,7 @@ class TwoBudgetsFromSameAccount(TestCase):
         # day of the month. TODO: Re-create the last-day condition and fix the calculation bug
         self.mock_today(2009, 8, 20)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_entry(increase='25') # This entry must not be counted twice in budget calculations!
         self.add_budget('income', None, '100')
@@ -176,7 +176,7 @@ class YearBudgetWithEntryBeforeCurrentMonth(TestCase):
     def setUp(self):
         self.create_instances()
         self.mock_today(2009, 8, 24)
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_entry(date='01/07/2009', increase='25')
         self.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3) # yearly
@@ -197,7 +197,7 @@ class ScheduledTxnAndBudget(TestCase, CommonSetup):
     def setUp(self):
         self.mock_today(2009, 9, 10)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account_legacy('account', account_type=AccountType.Expense)
         self.setup_scheduled_transaction(start_date='10/09/2009', account='account', debit='1',
             repeat_type_index=2) # monthly

@@ -26,8 +26,8 @@ def test_add_empty_entry_and_save():
     app = app_one_account()
     app.etable.add()
     app.etable.save_edits()
-    app.doc.select_prev_date_range()
-    app.doc.select_next_date_range()
+    app.drsel.select_prev_date_range()
+    app.drsel.select_next_date_range()
     eq_(app.etable_count(), 1)
 
 def test_add_twice_then_save():
@@ -145,7 +145,7 @@ def test_save(app, tmppath):
 #--- One entry
 def app_one_entry():
     app = TestApp()
-    app.doc.select_month_range()
+    app.drsel.select_month_range()
     app.add_account('first')
     app.mw.show_account()
     app.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42')
@@ -380,7 +380,7 @@ def test_total_row(app):
 #--- Entry in previous range
 def app_entry_in_previous_range():
     app = TestApp()
-    app.doc.select_month_range()
+    app.drsel.select_month_range()
     app.add_account()
     app.mw.show_account()
     app.add_entry('11/06/2008', 'first')
@@ -395,7 +395,7 @@ def test_previous_balance_row_is_bold(app):
 def test_selection_after_date_range_change(app):
     # The selection in the document is correctly updated when the date range changes.
     # The tpanel loads the document selection, so this is why we test through it.
-    app.doc.select_prev_date_range()
+    app.drsel.select_prev_date_range()
     app.tpanel.load()
     eq_(app.tpanel.description, 'first')
 
@@ -572,7 +572,7 @@ def app_with_budget():
     app = TestApp()
     p = Patcher()
     p.patch_today(2008, 1, 27)
-    app.doc.select_today_date_range()
+    app.drsel.select_today_date_range()
     app.add_account('foo', account_type=AccountType.Expense)
     app.add_budget('foo', None, '100')
     app.show_account('foo')

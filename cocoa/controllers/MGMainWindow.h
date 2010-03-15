@@ -26,15 +26,15 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGAccountReassignPanel.h"
 #import "MGAccountLookup.h"
 #import "MGCompletionLookup.h"
+#import "MGDateRangeSelectorView.h"
+#import "MGDateRangeSelector.h"
 #import "MGBaseView.h"
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
 
 @interface MGMainWindow : HSWindowController
 {
-    IBOutlet NSPopUpButton *dateRangePopUp;
-    IBOutlet NSButton *prevDateRangeButton;
-    IBOutlet NSButton *nextDateRangeButton;
+    IBOutlet MGDateRangeSelectorView *dateRangeSelectorView;
 
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
@@ -54,6 +54,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGAccountReassignPanel *accountReassignPanel;
     MGAccountLookup *accountLookup;
     MGCompletionLookup *completionLookup;
+    MGDateRangeSelector *dateRangeSelector;
     MGBaseView *top;
     NSToolbarItem *reconciliationToolbarItem;
 }
@@ -64,7 +65,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)arrangeViews;
 - (MGBaseView *)top;
 - (void)setTop:(MGBaseView *)top;
-- (void)animateDateRange:(BOOL)forward;
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;
 

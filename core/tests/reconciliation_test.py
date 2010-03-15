@@ -76,7 +76,7 @@ class OneEntryInReconciliationMode(TestCase):
     
     def test_cant_reconcile_previous_balance_entry(self):
         # It's not possible to reconcile a previous balance entry.
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         # The first entry is not a "Previous Balance" entry
         assert not self.etable[0].can_reconcile()
     

@@ -22,7 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectNextView;
 - (void)selectPreviousView;
 - (void)showAccount;
-- (BOOL)canNavigateDateRange;
 - (void)navigateBack;
 - (void)jumpToAccount;
 

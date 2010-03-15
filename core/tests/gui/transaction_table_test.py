@@ -95,7 +95,7 @@ class EditionMode(TestCase):
     
     def test_change_date_range(self):
         # When changing the date range during edition, stop that edition before the date range changes
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         assert self.ttable.edited is None
     
     def test_delete(self):
@@ -131,7 +131,7 @@ class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
 #--- One transaction
 def app_one_transaction():
     app = TestApp()
-    app.doc.select_month_range()
+    app.drsel.select_month_range()
     app.add_account('first')
     app.add_txn('11/07/2008', 'description', 'payee', from_='first', to='second', amount='42',
         checkno='24')
@@ -580,7 +580,7 @@ class ThreeWayNullAmounts(TestCase):
 class TwoTransactionsOneOutOfRange(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account()
         self.document.show_selected_account()
         self.add_entry('11/06/2008', description='first')
@@ -594,7 +594,7 @@ class TwoTransactionsOneOutOfRange(TestCase):
     
     def test_select_prev_date_range(self):
         # The transaction table refreshes itself on date range change
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         row = self.ttable[0]
         eq_(row.description, 'first')
         self.check_gui_calls_partial(self.ttable_gui, ['refresh', 'show_selected_row'])
@@ -602,7 +602,7 @@ class TwoTransactionsOneOutOfRange(TestCase):
     def test_selection_after_date_range_change(self):
         """The selection in the document is correctly updated when the date range changes"""
         # The tpanel loads the document selection, so this is why we test through it.
-        self.document.select_prev_date_range()
+        self.drsel.select_prev_date_range()
         self.tpanel.load()
         eq_(self.tpanel.description, 'first')
     

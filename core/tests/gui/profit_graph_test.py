@@ -16,14 +16,14 @@ from ..base import TestCase
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
     
     def test_cook_bar_overflow(self):
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
         # until the end of the *overflow*, not the end of the date range.
         self.add_account_legacy('Checking')
         self.add_entry('01/11/2008', transfer='Income', increase='42') #sunday
-        self.document.select_prev_date_range() # oct 2008
+        self.drsel.select_prev_date_range() # oct 2008
         self.add_entry('31/10/2008', transfer='Income', increase='42')
         self.mainwindow.select_income_statement()
         # now, the creation of the txn forced a recook. what we want to make sure is that both 
@@ -34,7 +34,7 @@ class Pristine(TestCase):
 class IncomesAndExpensesInDifferentAccounts(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         USD.set_CAD_value(1.42, date(2008, 7, 1))
         # in july 2008, the first mondy is the 7th
         self.add_account_legacy('asset')

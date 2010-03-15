@@ -16,7 +16,7 @@ from ...model.account import AccountType
 class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
     
     def test_cook_bar_overflow(self):
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
@@ -25,7 +25,7 @@ class Pristine(TestCase):
         self.add_account('Income', account_type=AccountType.Income)
         self.document.show_selected_account()
         self.add_entry('01/11/2008', transfer='Checking', increase='42') #sunday
-        self.document.select_prev_date_range() # oct 2008
+        self.drsel.select_prev_date_range() # oct 2008
         self.add_entry('31/10/2008', transfer='Checking', increase='42')
         # now, the creation of the txn forced a recook. what we want to make sure is that both 
         # entries will be in the bar
@@ -49,7 +49,7 @@ class SomeIncomeInTheFutureWithRangeOnYearToDate(TestCase):
         self.add_account('Checking')
         self.document.show_selected_account()
         self.add_entry('13/01/2010', transfer='Income', increase='42')
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
     
     def test_bar_graphs_during_ytd_dont_show_future_data(self):
         # Unlike all other date ranges, bar charts during YTD don't overflow
@@ -66,7 +66,7 @@ class SomeIncomeTodayAndInTheFuture(TestCase):
         self.document.show_selected_account()
         self.add_entry('13/01/2010', transfer='Checking', increase='12')
         self.add_entry('12/01/2010', transfer='Checking', increase='30')
-        self.document.select_year_range()
+        self.drsel.select_year_range()
     
     def test_bar_split_in_two(self):
         # when some amounts are in the future, but part of the same bar, the amounts are correctly
@@ -78,7 +78,7 @@ class AccountAndEntriesAndBudget(TestCase):
     def setUp(self):
         # Weeks of Jan: 31-6 7-13 14-20 21-27 28-3
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account('Account 1', account_type=AccountType.Income)
         self.mock_today(2008, 1, 17)
         self.add_budget('Account 1', None, '400')
@@ -105,7 +105,7 @@ class RunningYearWithSomeIncome(TestCase):
         self.document.show_selected_account()
         self.add_entry('11/09/2008', transfer='Income', increase='42')
         self.add_entry('24/09/2008', transfer='Income', increase='44')
-        self.document.select_running_year_range()
+        self.drsel.select_running_year_range()
     
     def test_data_is_taken_from_shown_account(self):
         # Ensure that bargraph's data is taken from shown_account, *not* selected_account

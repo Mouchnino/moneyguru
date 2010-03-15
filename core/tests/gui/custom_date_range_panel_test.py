@@ -15,7 +15,7 @@ class DateRangeOnOctober2007AndPanelLoaded(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2007, 10, 1))
-        self.document.select_custom_date_range()
+        self.drsel.select_custom_date_range()
         self.clear_gui_calls()
     
     def test_dates(self):

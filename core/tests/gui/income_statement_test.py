@@ -49,7 +49,7 @@ class Pristine(TestCase):
 class AccountsAndEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account('Account 1', account_type=AccountType.Income)
         self.document.show_selected_account()
         self.add_entry('10/01/2008', 'Entry 1', increase='100.00')
@@ -77,16 +77,16 @@ class AccountsAndEntries(TestCase):
         eq_(self.istatement.income[0].budgeted, '150.00')
         eq_(self.istatement.income.budgeted, '150.00')
         eq_(self.istatement.net_income.budgeted, '150.00')
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         eq_(self.istatement.income[0].cash_flow, '0.00')
         eq_(self.istatement.income[0].budgeted, '400.00')
-        self.document.select_quarter_range()
+        self.drsel.select_quarter_range()
         eq_(self.istatement.income[0].cash_flow, '250.00')
         eq_(self.istatement.income[0].budgeted, '950.00')
-        self.document.select_year_range()
+        self.drsel.select_year_range()
         eq_(self.istatement.income[0].cash_flow, '250.00')
         eq_(self.istatement.income[0].budgeted, '4550.00')
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
         eq_(self.istatement.income[0].cash_flow, '250.00')
     
     def test_cash_flow_with_underestimated_budget(self):
@@ -118,7 +118,7 @@ class AccountsAndEntries(TestCase):
     
     def test_set_custom_date_range(self):
         # same problem as test_year_to_date_last_cash_flow
-        self.document.select_custom_date_range()
+        self.drsel.select_custom_date_range()
         self.cdrpanel.start_date = '01/01/2008'
         self.cdrpanel.start_date = '12/12/2008'
         self.cdrpanel.ok()
@@ -128,7 +128,7 @@ class AccountsAndEntries(TestCase):
         # When the YTD range is selected, the "Last" column shows last year's value (here, 0) instead
         # of showing the exact same thing as this period.
         self.mock_today(2008, 12, 12)
-        self.document.select_year_to_date_range()
+        self.drsel.select_year_to_date_range()
         eq_(self.istatement.income[0].last_cash_flow, '0.00')
     
 
@@ -136,7 +136,7 @@ class MultipleCurrencies(TestCase):
     def setUp(self):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         USD.set_CAD_value(0.9, date(2008, 1, 31))
         self.add_group('Group', account_type=AccountType.Income)
@@ -172,7 +172,7 @@ class MultipleCurrenciesOverTwoMonths(TestCase):
     def setUp(self):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         USD.set_CAD_value(0.9, date(2008, 1, 31))
         USD.set_CAD_value(0.9, date(2008, 2, 10))
@@ -229,7 +229,7 @@ class EntriesSpreadOverAYear(TestCase):
         # the 'Last' column will correctly be set and will include amounts from a whole year before
         # the start of the running year.
         self.mock_today(2008, 12, 1)
-        self.document.select_running_year_range()
+        self.drsel.select_running_year_range()
         # ahead_months is 2, so current is 01/03/2008-28/02/2009, which means 6 + 7 + 8 (21)
         eq_(self.istatement.income[0].cash_flow, '21.00')
         # 'Last' is 01/03/2007-28/02/2008, which means 2 + 3 + 4 + 5 (14)
@@ -240,7 +240,7 @@ class BustedBudget(TestCase):
     def setUp(self):
         self.mock_today(2010, 1, 3)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account('account', account_type=AccountType.Income)
         self.document.show_selected_account()
         self.add_entry('01/01/2010', increase='112')

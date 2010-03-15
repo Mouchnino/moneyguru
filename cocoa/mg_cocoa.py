@@ -36,6 +36,7 @@ from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
 from core.gui.completable_edit import CompletableEdit
 from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
+from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
 from core.gui.entry_print import EntryPrint
 from core.gui.entry_table import EntryTable
@@ -174,40 +175,6 @@ class PyDocument(NSObject):
         self.py = Document(self, pyparent.py)
         self.py.connect()
         return self
-    
-    #--- Date range
-    def selectPrevDateRange(self):
-        self.py.select_prev_date_range()
-
-    def selectMonthRange(self):
-        self.py.select_month_range()
-
-    def selectQuarterRange(self):
-        self.py.select_quarter_range()
-
-    def selectYearRange(self):
-        self.py.select_year_range()
-    
-    def selectYearToDateRange(self):
-        self.py.select_year_to_date_range()
-    
-    def selectNextDateRange(self):
-        self.py.select_next_date_range()
-    
-    def selectTodayDateRange(self):
-        self.py.select_today_date_range()
-    
-    def selectRunningYearRange(self):
-        self.py.select_running_year_range()
-    
-    def selectAllTransactionsRange(self):
-        self.py.select_all_transactions_range()
-    
-    def selectCustomDateRange(self):
-        self.py.select_custom_date_range()
-    
-    def dateRangeDisplay(self):
-        return self.py.date_range.display
     
     #--- Reconciliation
     def toggleReconciliationMode(self):
@@ -1144,10 +1111,6 @@ class PyMainWindow(PyListener):
     def showAccount(self):
         self.py.show_account()
     
-    @signature('c@:')
-    def canNavigateDateRange(self):
-        return self.py.document.date_range.can_navigate
-    
     def navigateBack(self):
         self.py.navigate_back()
     
@@ -1545,6 +1508,47 @@ class PyCompletableEdit(NSObject):
     # Python --> Cocoa
     def refresh(self):
         self.cocoa.refresh()
+    
+
+class PyDateRangeSelector(PyGUIObject):
+    py_class = DateRangeSelector
+    
+    def selectPrevDateRange(self):
+        self.py.select_prev_date_range()
+
+    def selectMonthRange(self):
+        self.py.select_month_range()
+
+    def selectQuarterRange(self):
+        self.py.select_quarter_range()
+
+    def selectYearRange(self):
+        self.py.select_year_range()
+    
+    def selectYearToDateRange(self):
+        self.py.select_year_to_date_range()
+    
+    def selectNextDateRange(self):
+        self.py.select_next_date_range()
+    
+    def selectTodayDateRange(self):
+        self.py.select_today_date_range()
+    
+    def selectRunningYearRange(self):
+        self.py.select_running_year_range()
+    
+    def selectAllTransactionsRange(self):
+        self.py.select_all_transactions_range()
+    
+    def selectCustomDateRange(self):
+        self.py.select_custom_date_range()
+    
+    def display(self):
+        return self.py.display
+    
+    @signature('c@:')
+    def canNavigate(self):
+        return self.py.document.date_range.can_navigate
     
 
 #--- Printing

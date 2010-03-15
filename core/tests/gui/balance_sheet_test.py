@@ -27,7 +27,7 @@ from ...model.date import MonthRange
 class _AccountsAndEntries(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         self.add_account('income', account_type=AccountType.Income)
         self.add_account('expense', account_type=AccountType.Expense)
         self.add_account('Account 1')
@@ -381,7 +381,7 @@ class AccountsAndEntries(_AccountsAndEntries):
         eq_(self.bsheet.assets.budgeted, '70.00')
         eq_(self.bsheet.net_worth.budgeted, '70.00')
         # When we go to the next date range, the "budgeted" value must be cumulated
-        self.document.select_next_date_range()
+        self.drsel.select_next_date_range()
         eq_(self.bsheet.assets[0].budgeted, '-180.00') # 80 + 100
         eq_(self.bsheet.assets[1].budgeted, '550.00') # 150 + 300
         eq_(self.bsheet.assets.budgeted, '370.00')
@@ -470,7 +470,7 @@ class MultipleCurrencies(TestCase):
     def setUp(self):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
         self.create_instances()
-        self.document.select_month_range()
+        self.drsel.select_month_range()
         USD.set_CAD_value(0.8, date(2008, 1, 1))
         USD.set_CAD_value(0.9, date(2008, 1, 31))
         self.add_group('Group')
