@@ -20,8 +20,8 @@ class Pristine(TestCase):
     
     def test_change_date_range(self):
         self.document.date_range = self.document.date_range.prev()
-        expected_calls = ['refresh_date_range_selector', 'animate_date_range_backward']
-        self.check_gui_calls(self.mainwindow_gui, expected_calls)
+        expected_calls = ['refresh', 'animate_backward']
+        self.check_gui_calls(self.drsel_gui, expected_calls)
         self.check_gui_calls_partial(self.bsheet_gui, ['refresh'])
         self.check_gui_calls(self.nwgraph_gui, ['refresh'])
         self.check_gui_calls_partial(self.balgraph_gui, not_expected=['refresh'])
@@ -31,7 +31,7 @@ class Pristine(TestCase):
         # the main window sends it's view calls on *connect*, not on init
         self.mainwindow.disconnect()
         self.mainwindow.connect()
-        self.check_gui_calls(self.mainwindow_gui, ['refresh_date_range_selector'])
+        self.check_gui_calls(self.drsel_gui, ['refresh'])
     
     def test_select_next_previous_view(self):
         self.mainwindow.select_next_view()

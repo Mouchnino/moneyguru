@@ -18,6 +18,18 @@ class DateRangeSelector(object):
         self.mainwindow = mainwindow
         self.model = DateRangeSelectorModel(self, mainwindow.model)
     
+    #--- model --> view
+    def animate_backward(self):
+        # I didn't find a way to have a nice fading effect like we do on the Cocoa side in Qt.
+        # The animation framework seems to be mainly for the QGraphicsScene framework. Since QWidget
+        # doesn't have an opacity property, we're kind of screwed. However, since the date range
+        # widget now displays the dates of the current range, this animation is less important than
+        # it used to be.
+        pass
+    
+    def animate_forward(self):
+        pass
+    
     def refresh(self):
         mw = self.mainwindow
         mw.dateRangeButton.setText(self.model.display)

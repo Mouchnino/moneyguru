@@ -15,12 +15,11 @@ http://www.hardcoded.net/licenses/hs_license
 {
     MGDateRangeSelectorView *view;
 }
-- (id)initWithPyParent:(id)aPyParent view:(MGDateRangeSelectorView *)aView;
+- (id)initWithPyParent:(id)aPyParent dateRangeView:(MGDateRangeSelectorView *)aView;
 
 /* Virtual */
 - (PyDateRangeSelector *)py;
 
 /* Public */
 - (void)animate:(BOOL)forward;
-- (void)refresh;
 @end

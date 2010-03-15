@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGDateRangeSelector
-- (id)initWithPyParent:(id)aPyParent view:(MGDateRangeSelectorView *)aView
+- (id)initWithPyParent:(id)aPyParent dateRangeView:(MGDateRangeSelectorView *)aView
 {
     self = [super initWithPyClassName:@"PyDateRangeSelector" pyParent:aPyParent];
     view = aView;
@@ -53,14 +53,6 @@ http://www.hardcoded.net/licenses/hs_license
     [anim startAnimation];
 }
 
-- (void)refresh
-{
-    [[view dateRangePopUp] setTitle:[[self py] display]];
-    BOOL canNavigate = [[self py] canNavigate];
-    [[view prevDateRangeButton] setEnabled:canNavigate];
-    [[view nextDateRangeButton] setEnabled:canNavigate];
-}
-
 /* Delegate */
 - (void)animationDidEnd:(NSAnimation *)animation
 {
@@ -72,5 +64,23 @@ http://www.hardcoded.net/licenses/hs_license
         [theView removeFromSuperview];
     }
     [animation release];
+}
+
+- (void)animateForward
+{
+    [self animate:YES];
+}
+
+- (void)animateBackward
+{
+    [self animate:NO];
+}
+
+- (void)refresh
+{
+    [[view dateRangePopUp] setTitle:[[self py] display]];
+    BOOL canNavigate = [[self py] canNavigate];
+    [[view prevDateRangeButton] setEnabled:canNavigate];
+    [[view nextDateRangeButton] setEnabled:canNavigate];
 }
 @end

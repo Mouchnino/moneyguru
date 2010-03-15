@@ -97,7 +97,7 @@ class RangeOnOctober2007(TestCase):
         self.drsel.select_year_range()
         eq_(self.document.date_range, YearRange(date(2007, 1, 1)))
         # We don't ask the GUI to perform any animation
-        self.check_gui_calls(self.mainwindow_gui, ['refresh_date_range_selector'])
+        self.check_gui_calls(self.drsel_gui, ['refresh'])
     
     def test_select_year_to_date_range(self):
         # Year-to-date starts at the first day of this year and ends today.
@@ -263,9 +263,7 @@ class OneEntryYearRange2007(TestCase):
         row.dat = '11/10/2007'
         self.clear_gui_calls()
         self.etable.save_edits()
-        not_expected = ['animate_date_range_backward', 'animate_date_range_forward',
-            'refresh_date_range_selector']
-        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=not_expected)
+        self.check_gui_calls(self.drsel_gui, [])
     
     def test_set_date_out_of_range(self):
         # Setting the date out of range makes the app's date range change accordingly.
@@ -274,8 +272,8 @@ class OneEntryYearRange2007(TestCase):
         self.clear_gui_calls()
         self.etable.save_edits()
         eq_(self.document.date_range, YearRange(date(2008, 1, 1)))
-        expected = ['animate_date_range_forward', 'refresh_date_range_selector']
-        self.check_gui_calls_partial(self.mainwindow_gui, expected)
+        expected = ['animate_forward', 'refresh']
+        self.check_gui_calls(self.drsel_gui, expected)
     
 
 class TwoEntriesInDifferentQuartersWithYearRange(TestCase):

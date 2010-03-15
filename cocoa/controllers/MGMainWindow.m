@@ -37,7 +37,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
-    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py view:dateRangeSelectorView];
+    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py dateRangeView:dateRangeSelectorView];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
@@ -542,22 +542,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Callbacks for python */
-
-- (void)animateDateRangeForward
-{
-    [dateRangeSelector animate:YES];
-}
-
-- (void)animateDateRangeBackward
-{
-    [dateRangeSelector animate:NO];
-}
-
-- (void)refreshDateRangeSelector
-{
-    [dateRangeSelector refresh];
-}
-
 - (void)refreshReconciliationButton
 {
     NSString *imageName = [[[self document] py] inReconciliationMode] ? @"reconcile_check_48" : @"reconcile_48";

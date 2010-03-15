@@ -1143,15 +1143,6 @@ class PyMainWindow(PyListener):
         self.py.new_group()
     
     #--- Python -> Cocoa
-    def animate_date_range_backward(self):
-        self.cocoa.animateDateRangeBackward()
-    
-    def animate_date_range_forward(self):
-        self.cocoa.animateDateRangeForward()
-    
-    def refresh_date_range_selector(self):
-        self.cocoa.refreshDateRangeSelector()
-    
     def refresh_reconciliation_button(self):
         self.cocoa.refreshReconciliationButton()
     
@@ -1549,6 +1540,16 @@ class PyDateRangeSelector(PyGUIObject):
     @signature('c@:')
     def canNavigate(self):
         return self.py.document.date_range.can_navigate
+    
+    #--- Python -> Cocoa
+    def animate_backward(self):
+        self.cocoa.animateBackward()
+    
+    def animate_forward(self):
+        self.cocoa.animateForward()
+    
+    def refresh(self):
+        self.cocoa.refresh()
     
 
 #--- Printing

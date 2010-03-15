@@ -13,6 +13,10 @@ class DateRangeSelector(DocumentGUIObject):
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
     
+    def connect(self):
+        DocumentGUIObject.connect(self)
+        self.view.refresh()
+    
     #--- Public
     def select_month_range(self):
         self.document.select_month_range()
@@ -48,4 +52,18 @@ class DateRangeSelector(DocumentGUIObject):
     @property
     def display(self):
         return self.document.date_range.display
+    
+    #--- Event Handlers
+    def date_range_will_change(self):
+        self._old_date_range = self.document.date_range
+    
+    def date_range_changed(self):
+        self.view.refresh()
+        old = self._old_date_range
+        new = self.document.date_range
+        if type(new) == type(old):
+            if new.start > old.start:
+                self.view.animate_forward()
+            else:
+                self.view.animate_backward()
     

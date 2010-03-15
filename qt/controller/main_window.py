@@ -359,20 +359,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.showAboutBox()
     
     #--- model --> view
-    def animate_date_range_backward(self):
-        # I didn't find a way to have a nice fading effect like we do on the Cocoa side in Qt.
-        # The animation framework seems to be mainly for the QGraphicsScene framework. Since QWidget
-        # doesn't have an opacity property, we're kind of screwed. However, since the date range
-        # widget now displays the dates of the current range, this animation is less important than
-        # it used to be.
-        pass
-    
-    def animate_date_range_forward(self):
-        pass
-    
-    def refresh_date_range_selector(self):
-        self.drsel.refresh()
-    
     def refresh_reconciliation_button(self):
         imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))

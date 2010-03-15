@@ -23,7 +23,6 @@ class MainWindow(DocumentGUIObject):
     def connect(self):
         DocumentGUIObject.connect(self)
         self.daterange_selector.connect()
-        self.view.refresh_date_range_selector()
     
     # We don't override disconnect because we never disconnect the main window anyway...
     #--- Private
@@ -224,19 +223,6 @@ class MainWindow(DocumentGUIObject):
     
     def custom_date_range_selected(self):
         self.view.show_custom_date_range_panel()
-    
-    def date_range_will_change(self):
-        self._old_date_range = self.document.date_range
-    
-    def date_range_changed(self):
-        self.view.refresh_date_range_selector()
-        old = self._old_date_range
-        new = self.document.date_range
-        if type(new) == type(old):
-            if new.start > old.start:
-                self.view.animate_date_range_forward()
-            else:
-                self.view.animate_date_range_backward()
     
     def document_changed(self):
         if self.document.shown_account is None and self._current_view is self.aview:

@@ -21,7 +21,8 @@ from ..base import TestCase, TestApp, with_app
 def test_initial_gui_calls():
     app = TestApp()
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.mainwindow_gui, ['refresh_date_range_selector', 'show_balance_sheet'])
+    app.check_gui_calls(app.mainwindow_gui, ['show_balance_sheet'])
+    app.check_gui_calls(app.drsel_gui, ['refresh'])
 
 #--- Cleared GUI calls
 def app_cleared_gui_calls():
