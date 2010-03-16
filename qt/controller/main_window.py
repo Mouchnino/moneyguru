@@ -69,7 +69,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
         
-        self._setupUiPost()
+        # Set main views
+        self.mainView.addWidget(self.nwview)
+        self.mainView.addWidget(self.pview)
+        self.mainView.addWidget(self.tview)
+        self.mainView.addWidget(self.eview)
+        self.mainView.addWidget(self.scview)
+        self.mainView.addWidget(self.bview)
         
         # set_children() and connect() calls have to happen after _setupUiPost()
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
@@ -112,28 +118,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # window, it actually shrinks.
         if self.app.prefs.mainWindowRect is not None and not self.app.prefs.mainWindowIsMaximized:
             self.setGeometry(self.app.prefs.mainWindowRect)
-    
-    def _setupUiPost(self): # has to take place *after* base elements creation
-        self.mainView.addWidget(self.nwview)
-        self.mainView.addWidget(self.pview)
-        self.mainView.addWidget(self.tview)
-        self.mainView.addWidget(self.eview)
-        self.mainView.addWidget(self.scview)
-        self.mainView.addWidget(self.bview)
-        
-        # Date range menu. We take actions from drsel and put it in menuDateRange.
-        m = self.menuDateRange
-        drsel = self.drsel
-        m.addAction(drsel.actionChangeToMonth)
-        m.addAction(drsel.actionChangeToQuarter)
-        m.addAction(drsel.actionChangeToYear)
-        m.addAction(drsel.actionChangeToYearToDate)
-        m.addAction(drsel.actionChangeToRunningYear)
-        m.addAction(drsel.actionChangeToAllTransactions)
-        m.addAction(drsel.actionChangeToCustom)
-        m.addAction(drsel.actionPrevious)
-        m.addAction(drsel.actionNext)
-        m.addAction(drsel.actionToday)
     
     def _bindSignals(self):
         self.recentDocuments.mustOpenItem.connect(self.doc.open)

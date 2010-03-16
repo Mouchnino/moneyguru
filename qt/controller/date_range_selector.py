@@ -64,6 +64,19 @@ class DateRangeSelector(QObject):
         menu.addAction(self.actionChangeToCustom)
         self.view.typeButton.setMenu(menu)
         
+        # set mainwindow's date range menu
+        m = self.mainwindow.menuDateRange
+        m.addAction(self.actionChangeToMonth)
+        m.addAction(self.actionChangeToQuarter)
+        m.addAction(self.actionChangeToYear)
+        m.addAction(self.actionChangeToYearToDate)
+        m.addAction(self.actionChangeToRunningYear)
+        m.addAction(self.actionChangeToAllTransactions)
+        m.addAction(self.actionChangeToCustom)
+        m.addAction(self.actionPrevious)
+        m.addAction(self.actionNext)
+        m.addAction(self.actionToday)
+        
         # bind prev/next button
         self.view.prevButton.clicked.connect(self.model.select_prev_date_range)
         self.view.nextButton.clicked.connect(self.model.select_next_date_range)
