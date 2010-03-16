@@ -1539,7 +1539,7 @@ class PyDateRangeSelector(PyGUIObject):
     
     @signature('c@:')
     def canNavigate(self):
-        return self.py.document.date_range.can_navigate
+        return self.py.can_navigate
     
     #--- Python -> Cocoa
     def animate_backward(self):

@@ -50,6 +50,10 @@ class DateRangeSelector(DocumentGUIObject):
     
     #--- Properties
     @property
+    def can_navigate(self):
+        return self.document.date_range.can_navigate
+    
+    @property
     def display(self):
         return self.document.date_range.display
     

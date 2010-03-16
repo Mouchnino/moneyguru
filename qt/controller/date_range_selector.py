@@ -33,8 +33,7 @@ class DateRangeSelector(object):
     def refresh(self):
         mw = self.mainwindow
         mw.dateRangeButton.setText(self.model.display)
-        # XXX push down can_navigate to DateRangeSelectorModel!
-        canNavigateDateRange = self.model.document.date_range.can_navigate
+        canNavigateDateRange = self.model.can_navigate
         mw.actionNextDateRange.setEnabled(canNavigateDateRange)
         mw.actionPreviousDateRange.setEnabled(canNavigateDateRange)
         mw.actionTodayDateRange.setEnabled(canNavigateDateRange)
