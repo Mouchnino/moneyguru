@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, QProcess
-from PyQt4.QtGui import QMainWindow, QMenu, QIcon, QPixmap, QPrintDialog, QLabel, QFont, QMessageBox
+from PyQt4.QtGui import QMainWindow, QIcon, QPixmap, QPrintDialog, QLabel, QFont, QMessageBox
 
 from core.gui.main_window import MainWindow as MainWindowModel
 
@@ -45,6 +45,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self, None)
         self.doc = doc
         self.app = doc.app
+        
+        self._setupUi()
+        
+        # Create base elements
         self.model = MainWindowModel(view=self, document=doc.model)
         self.nwview = NetWorthView(mainwindow=self)
         self.pview = ProfitView(mainwindow=self)
@@ -61,42 +65,81 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.arpanel = AccountReassignPanel(self, doc=doc)
         self.alookup = AccountLookup(self, mainwindow=self)
         self.clookup = CompletionLookup(self, mainwindow=self)
-        self.drsel = DateRangeSelector(mainwindow=self)
-        self._setupUi()
-        # We don't set geometry if the window was maximized so that if the user de-maximize the
-        # window, it actually shrinks.
-        if self.app.prefs.mainWindowRect is not None and not self.app.prefs.mainWindowIsMaximized:
-            self.setGeometry(self.app.prefs.mainWindowRect)
+        self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
+        self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
+        self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
+        
+        self._setupUiPost()
+        
+        # set_children() and connect() calls have to happen after _setupUiPost()
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
             self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model,
             self.clookup.model, self.drsel.model]
         self.model.set_children(children)
         self.model.connect()
-        self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
         self.sfield.model.connect()
-        self._updateUndoActions()
         
-        # Recent Menu
-        self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
+        self._updateUndoActions()
+        self._bindSignals()
+    
+    def _setupUi(self): # has to take place *before* base elements creation
+        self.setupUi(self)
+        # Toolbar setup. We have to do it manually because it's tricky to insert the view title
+        # label otherwise.
+        self.toolBar.addAction(self.actionShowNetWorth)
+        self.toolBar.addAction(self.actionShowProfitLoss)
+        self.toolBar.addAction(self.actionShowTransactions)
+        self.toolBar.addAction(self.actionShowAccount)
+        self.toolBar.addAction(self.actionShowSchedules)
+        self.toolBar.addAction(self.actionShowBudgets)
+        self.viewTitleLabel = QLabel()
+        font = QFont(self.viewTitleLabel.font())
+        font.setBold(True)
+        self.viewTitleLabel.setFont(font)
+        self.viewTitleLabel.setMinimumWidth(82) # just enough for the widest title
+        self.viewTitleLabel.setMargin(4)
+        self.toolBar.addWidget(self.viewTitleLabel)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionToggleReconciliationModeToolbar)
+        self.toolBar.addSeparator()
+        self.searchLineEdit = SearchEdit()
+        self.searchLineEdit.setMaximumWidth(240)
+        self.toolBar.addWidget(self.searchLineEdit)
+        
+        # Restore window size
+        # We don't set geometry if the window was maximized so that if the user de-maximize the
+        # window, it actually shrinks.
+        if self.app.prefs.mainWindowRect is not None and not self.app.prefs.mainWindowIsMaximized:
+            self.setGeometry(self.app.prefs.mainWindowRect)
+    
+    def _setupUiPost(self): # has to take place *after* base elements creation
+        self.mainView.addWidget(self.nwview)
+        self.mainView.addWidget(self.pview)
+        self.mainView.addWidget(self.tview)
+        self.mainView.addWidget(self.eview)
+        self.mainView.addWidget(self.scview)
+        self.mainView.addWidget(self.bview)
+        
+        # Date range menu. We take actions from drsel and put it in menuDateRange.
+        m = self.menuDateRange
+        drsel = self.drsel
+        m.addAction(drsel.actionChangeToMonth)
+        m.addAction(drsel.actionChangeToQuarter)
+        m.addAction(drsel.actionChangeToYear)
+        m.addAction(drsel.actionChangeToYearToDate)
+        m.addAction(drsel.actionChangeToRunningYear)
+        m.addAction(drsel.actionChangeToAllTransactions)
+        m.addAction(drsel.actionChangeToCustom)
+        m.addAction(drsel.actionPrevious)
+        m.addAction(drsel.actionNext)
+        m.addAction(drsel.actionToday)
+    
+    def _bindSignals(self):
         self.recentDocuments.mustOpenItem.connect(self.doc.open)
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
-        
         self.app.willSavePrefs.connect(self._savePrefs)
-        
-        # Actions
-        # Date range
-        self.actionNextDateRange.triggered.connect(self.drsel.model.select_next_date_range)
-        self.actionPreviousDateRange.triggered.connect(self.drsel.model.select_prev_date_range)
-        self.actionTodayDateRange.triggered.connect(self.drsel.model.select_today_date_range)
-        self.actionChangeDateRangeMonth.triggered.connect(self.drsel.model.select_month_range)
-        self.actionChangeDateRangeQuarter.triggered.connect(self.drsel.model.select_quarter_range)
-        self.actionChangeDateRangeYear.triggered.connect(self.drsel.model.select_year_range)
-        self.actionChangeDateRangeYearToDate.triggered.connect(self.drsel.model.select_year_to_date_range)
-        self.actionChangeDateRangeRunningYear.triggered.connect(self.drsel.model.select_running_year_range)
-        self.actionChangeDateRangeAllTransactions.triggered.connect(self.drsel.model.select_all_transactions_range)
-        self.actionChangeDateRangeCustom.triggered.connect(self.drsel.model.select_custom_date_range)
         
         # Views
         self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
@@ -144,48 +187,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionCheckForUpdate.triggered.connect(self.checkForUpdateTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
         self.actionQuit.triggered.connect(self.close)
-    
-    def _setupUi(self):
-        self.setupUi(self)
-        self.mainView.addWidget(self.nwview)
-        self.mainView.addWidget(self.pview)
-        self.mainView.addWidget(self.tview)
-        self.mainView.addWidget(self.eview)
-        self.mainView.addWidget(self.scview)
-        self.mainView.addWidget(self.bview)
-        
-        # Date range menu
-        menu = QMenu(self.dateRangeButton)
-        menu.addAction(self.actionChangeDateRangeMonth)
-        menu.addAction(self.actionChangeDateRangeQuarter)
-        menu.addAction(self.actionChangeDateRangeYear)
-        menu.addAction(self.actionChangeDateRangeYearToDate)
-        menu.addAction(self.actionChangeDateRangeRunningYear)
-        menu.addAction(self.actionChangeDateRangeAllTransactions)
-        menu.addAction(self.actionChangeDateRangeCustom)
-        self.dateRangeButton.setMenu(menu)
-        
-        # Toolbar setup. We have to do it manually because it's tricky to insert the view title
-        # label otherwise.
-        self.toolBar.addAction(self.actionShowNetWorth)
-        self.toolBar.addAction(self.actionShowProfitLoss)
-        self.toolBar.addAction(self.actionShowTransactions)
-        self.toolBar.addAction(self.actionShowAccount)
-        self.toolBar.addAction(self.actionShowSchedules)
-        self.toolBar.addAction(self.actionShowBudgets)
-        self.viewTitleLabel = QLabel()
-        font = QFont(self.viewTitleLabel.font())
-        font.setBold(True)
-        self.viewTitleLabel.setFont(font)
-        self.viewTitleLabel.setMinimumWidth(82) # just enough for the widest title
-        self.viewTitleLabel.setMargin(4)
-        self.toolBar.addWidget(self.viewTitleLabel)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.actionToggleReconciliationModeToolbar)
-        self.toolBar.addSeparator()
-        self.searchLineEdit = SearchEdit()
-        self.searchLineEdit.setMaximumWidth(240)
-        self.toolBar.addWidget(self.searchLineEdit)
     
     #--- QWidget overrides
     def closeEvent(self, event):

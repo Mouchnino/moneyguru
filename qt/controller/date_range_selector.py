@@ -7,16 +7,66 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from PyQt4.QtCore import QObject
+from PyQt4.QtGui import QMenu, QAction
+
 from core.gui.date_range_selector import DateRangeSelector as DateRangeSelectorModel
 
-# XXX This class doesn't have its own widget and refers to MainWindow's widgets directly. This is
-# because actions are shared between the widget and the main menu and it would be too complicated,
-# for now, to correctly put actions where they belong. It's hacky, but temporary.
-
-class DateRangeSelector(object):
-    def __init__(self, mainwindow):
+class DateRangeSelector(QObject):
+    def __init__(self, mainwindow, view):
+        QObject.__init__(self)
         self.mainwindow = mainwindow
+        self.view = view
         self.model = DateRangeSelectorModel(self, mainwindow.model)
+        self._setupUi()
+    
+    def _setupUi(self):
+        # Create actions
+        self.actionNext = QAction("Next", self)
+        self.actionNext.setShortcut("Ctrl+Alt+]")
+        self.actionNext.triggered.connect(self.model.select_next_date_range)
+        self.actionPrevious = QAction("Previous", self)
+        self.actionPrevious.setShortcut("Ctrl+Alt+[")
+        self.actionPrevious.triggered.connect(self.model.select_prev_date_range)
+        self.actionToday = QAction("Today", self)
+        self.actionToday.setShortcut("Ctrl+Alt+T")
+        self.actionToday.triggered.connect(self.model.select_today_date_range)
+        self.actionChangeToMonth = QAction("Month", self)
+        self.actionChangeToMonth.setShortcut("Ctrl+Alt+1")
+        self.actionChangeToMonth.triggered.connect(self.model.select_month_range)
+        self.actionChangeToQuarter = QAction("Quarter", self)
+        self.actionChangeToQuarter.setShortcut("Ctrl+Alt+2")
+        self.actionChangeToQuarter.triggered.connect(self.model.select_quarter_range)
+        self.actionChangeToYear = QAction("Year", self)
+        self.actionChangeToYear.setShortcut("Ctrl+Alt+3")
+        self.actionChangeToYear.triggered.connect(self.model.select_year_range)
+        self.actionChangeToYearToDate = QAction("Year to date", self)
+        self.actionChangeToYearToDate.setShortcut("Ctrl+Alt+4")
+        self.actionChangeToYearToDate.triggered.connect(self.model.select_year_to_date_range)
+        self.actionChangeToRunningYear = QAction("Running Year", self)
+        self.actionChangeToRunningYear.setShortcut("Ctrl+Alt+5")
+        self.actionChangeToRunningYear.triggered.connect(self.model.select_running_year_range)
+        self.actionChangeToAllTransactions = QAction("All Transactions", self)
+        self.actionChangeToAllTransactions.setShortcut("Ctrl+Alt+6")
+        self.actionChangeToAllTransactions.triggered.connect(self.model.select_all_transactions_range)
+        self.actionChangeToCustom = QAction("Custom...", self)
+        self.actionChangeToCustom.setShortcut("Ctrl+Alt+7")
+        self.actionChangeToCustom.triggered.connect(self.model.select_custom_date_range)
+        
+        # set typeButton menu
+        menu = QMenu(self.view.typeButton)
+        menu.addAction(self.actionChangeToMonth)
+        menu.addAction(self.actionChangeToQuarter)
+        menu.addAction(self.actionChangeToYear)
+        menu.addAction(self.actionChangeToYearToDate)
+        menu.addAction(self.actionChangeToRunningYear)
+        menu.addAction(self.actionChangeToAllTransactions)
+        menu.addAction(self.actionChangeToCustom)
+        self.view.typeButton.setMenu(menu)
+        
+        # bind prev/next button
+        self.view.prevButton.clicked.connect(self.model.select_prev_date_range)
+        self.view.nextButton.clicked.connect(self.model.select_next_date_range)
     
     #--- model --> view
     def animate_backward(self):
@@ -31,10 +81,11 @@ class DateRangeSelector(object):
         pass
     
     def refresh(self):
-        mw = self.mainwindow
-        mw.dateRangeButton.setText(self.model.display)
+        self.view.typeButton.setText(self.model.display)
         canNavigateDateRange = self.model.can_navigate
-        mw.actionNextDateRange.setEnabled(canNavigateDateRange)
-        mw.actionPreviousDateRange.setEnabled(canNavigateDateRange)
-        mw.actionTodayDateRange.setEnabled(canNavigateDateRange)
+        self.actionNext.setEnabled(canNavigateDateRange)
+        self.actionPrevious.setEnabled(canNavigateDateRange)
+        self.actionToday.setEnabled(canNavigateDateRange)
+        self.view.prevButton.setEnabled(canNavigateDateRange)
+        self.view.nextButton.setEnabled(canNavigateDateRange)
     

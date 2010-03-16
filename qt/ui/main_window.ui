@@ -80,55 +80,12 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="prevDateRangeButton">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../mg.qrc">
-           <normaloff>:/nav_left_9</normaloff>:/nav_left_9</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="dateRangeButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+        <widget class="DateRangeSelectorView" name="dateRangeSelectorView" native="true">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>180</width>
            <height>0</height>
           </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;date range&gt;</string>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>6</width>
-           <height>6</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="nextDateRangeButton">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../mg.qrc">
-           <normaloff>:/nav_right_9</normaloff>:/nav_right_9</iconset>
          </property>
         </widget>
        </item>
@@ -188,16 +145,6 @@
      <property name="title">
       <string>Date Range</string>
      </property>
-     <addaction name="actionChangeDateRangeMonth"/>
-     <addaction name="actionChangeDateRangeQuarter"/>
-     <addaction name="actionChangeDateRangeYear"/>
-     <addaction name="actionChangeDateRangeYearToDate"/>
-     <addaction name="actionChangeDateRangeRunningYear"/>
-     <addaction name="actionChangeDateRangeAllTransactions"/>
-     <addaction name="actionChangeDateRangeCustom"/>
-     <addaction name="actionPreviousDateRange"/>
-     <addaction name="actionNextDateRange"/>
-     <addaction name="actionTodayDateRange"/>
     </widget>
     <addaction name="actionShowNetWorth"/>
     <addaction name="actionShowProfitLoss"/>
@@ -268,70 +215,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
-   </property>
-  </action>
-  <action name="actionPreviousDateRange">
-   <property name="text">
-    <string>Previous</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+[</string>
-   </property>
-  </action>
-  <action name="actionNextDateRange">
-   <property name="text">
-    <string>Next</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+]</string>
-   </property>
-  </action>
-  <action name="actionChangeDateRangeMonth">
-   <property name="text">
-    <string>Month</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+1</string>
-   </property>
-  </action>
-  <action name="actionChangeDateRangeQuarter">
-   <property name="text">
-    <string>Quarter</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+2</string>
-   </property>
-  </action>
-  <action name="actionChangeDateRangeYear">
-   <property name="text">
-    <string>Year</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+3</string>
-   </property>
-  </action>
-  <action name="actionChangeDateRangeYearToDate">
-   <property name="text">
-    <string>Year to date</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+4</string>
-   </property>
-  </action>
-  <action name="actionChangeDateRangeRunningYear">
-   <property name="text">
-    <string>Running year</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+5</string>
-   </property>
-  </action>
-  <action name="actionChangeDateRangeCustom">
-   <property name="text">
-    <string>Custom...</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+7</string>
    </property>
   </action>
   <action name="actionShowNetWorth">
@@ -441,14 +324,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>
-   </property>
-  </action>
-  <action name="actionTodayDateRange">
-   <property name="text">
-    <string>Today</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+T</string>
    </property>
   </action>
   <action name="actionShowNextView">
@@ -636,17 +511,6 @@
     <string>Ctrl+D</string>
    </property>
   </action>
-  <action name="actionChangeDateRangeAllTransactions">
-   <property name="text">
-    <string>All Transactions</string>
-   </property>
-   <property name="toolTip">
-    <string>All Transactions</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+6</string>
-   </property>
-  </action>
   <action name="actionJumpToAccount">
    <property name="text">
     <string>Jump to Account...</string>
@@ -656,42 +520,18 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DateRangeSelectorView</class>
+   <extends>QWidget</extends>
+   <header>support.date_range_selector_view</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../mg.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>prevDateRangeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>actionPreviousDateRange</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>221</x>
-     <y>451</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>nextDateRangeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>actionNextDateRange</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>423</x>
-     <y>451</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>newItemButton</sender>
    <signal>clicked()</signal>
