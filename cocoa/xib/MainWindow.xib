@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="1369"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -213,8 +213,45 @@
 															<string key="NSAction">_popUpItemAction:</string>
 															<reference key="NSTarget" ref="248234042"/>
 														</object>
+														<object class="NSMenuItem" id="473103042">
+															<reference key="NSMenu" ref="1012849033"/>
+															<bool key="NSIsHidden">YES</bool>
+															<string key="NSTitle">Custom1</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="965102912"/>
+															<reference key="NSMixedImage" ref="926120808"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<int key="NSTag">2000</int>
+															<reference key="NSTarget" ref="248234042"/>
+														</object>
+														<object class="NSMenuItem" id="581283307">
+															<reference key="NSMenu" ref="1012849033"/>
+															<bool key="NSIsHidden">YES</bool>
+															<string key="NSTitle">Custom2</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="965102912"/>
+															<reference key="NSMixedImage" ref="926120808"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<int key="NSTag">2001</int>
+															<reference key="NSTarget" ref="248234042"/>
+														</object>
+														<object class="NSMenuItem" id="195240183">
+															<reference key="NSMenu" ref="1012849033"/>
+															<bool key="NSIsHidden">YES</bool>
+															<string key="NSTitle">Custom3</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="965102912"/>
+															<reference key="NSMixedImage" ref="926120808"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<int key="NSTag">2002</int>
+															<reference key="NSTarget" ref="248234042"/>
+														</object>
 													</object>
 												</object>
+												<int key="NSSelectedIndex">10</int>
 												<bool key="NSPullDown">YES</bool>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
@@ -491,6 +528,30 @@
 					</object>
 					<int key="connectionID">1391</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSavedCustomRange:</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="473103042"/>
+					</object>
+					<int key="connectionID">1398</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSavedCustomRange:</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="581283307"/>
+					</object>
+					<int key="connectionID">1399</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSavedCustomRange:</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="195240183"/>
+					</object>
+					<int key="connectionID">1400</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -664,6 +725,9 @@
 							<reference ref="821129333"/>
 							<reference ref="202418604"/>
 							<reference ref="116104934"/>
+							<reference ref="473103042"/>
+							<reference ref="581283307"/>
+							<reference ref="195240183"/>
 						</object>
 						<reference key="parent" ref="248234042"/>
 					</object>
@@ -712,6 +776,21 @@
 						<reference key="object" ref="119064551"/>
 						<reference key="parent" ref="501240593"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1392</int>
+						<reference key="object" ref="473103042"/>
+						<reference key="parent" ref="1012849033"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1394</int>
+						<reference key="object" ref="581283307"/>
+						<reference key="parent" ref="1012849033"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1396</int>
+						<reference key="object" ref="195240183"/>
+						<reference key="parent" ref="1012849033"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -756,6 +835,9 @@
 					<string>1377.IBPluginDependency</string>
 					<string>1378.CustomClassName</string>
 					<string>1378.IBPluginDependency</string>
+					<string>1392.IBPluginDependency</string>
+					<string>1394.IBPluginDependency</string>
+					<string>1396.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
 					<string>2.ImportedFromIB2</string>
 					<string>21.IBEditorWindowLastContentRect</string>
@@ -796,7 +878,7 @@
 					<string>MGTransparentButtonCellWithLeftSide</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{205, 104}, {212, 163}}</string>
+					<string>{{217, 44}, {212, 223}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{280, 175}, {182, 103}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -808,6 +890,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>MGTransparentButtonCellWithLeftSide</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -839,7 +924,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1391</int>
+			<int key="maxID">1400</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -941,6 +1026,7 @@
 							<string>selectPrevDateRange:</string>
 							<string>selectQuarterRange:</string>
 							<string>selectRunningYearRange:</string>
+							<string>selectSavedCustomRange:</string>
 							<string>selectTodayDateRange:</string>
 							<string>selectYearRange:</string>
 							<string>selectYearToDateRange:</string>
@@ -958,6 +1044,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

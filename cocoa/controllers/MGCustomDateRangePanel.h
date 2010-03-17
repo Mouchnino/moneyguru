@@ -14,6 +14,8 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGCustomDateRangePanel : HSWindowController {
     IBOutlet NSTextField *startDateField;
     IBOutlet NSTextField *endDateField;
+    IBOutlet NSPopUpButton *slotIndexSelector;
+    IBOutlet NSTextField *slotNameField;
     
     NSTextView *customDateFieldEditor;
 }

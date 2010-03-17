@@ -83,6 +83,9 @@ class DocumentGUIObject(Listener):
     def reconciliation_changed(self):
         pass
     
+    def saved_custom_ranges_changed(self):
+        pass
+    
     def schedule_changed(self):
         pass
     

@@ -17,6 +17,9 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSPopUpButton *yearStartMonthPopup;
     IBOutlet NSTextField *autoSaveIntervalField;
     IBOutlet NSButton *autoDecimalPlaceButton;
+    IBOutlet NSMenuItem *customDateRangeItem1;
+    IBOutlet NSMenuItem *customDateRangeItem2;
+    IBOutlet NSMenuItem *customDateRangeItem3;
     
     NSWindowController *viewOptionsWindow;
     NSInvocation *continueUpdate;
@@ -29,4 +32,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)openWebsite:(id)sender;
 - (IBAction)toggleViewOptionsVisible:(id)sender;
 - (IBAction)unlockApp:(id)sender;
+
+- (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 @end

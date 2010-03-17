@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGDateRangeSelector : HSGUIController
 {
     MGDateRangeSelectorView *view;
+    NSArray *customRangeItems;
 }
 - (id)initWithPyParent:(id)aPyParent dateRangeView:(MGDateRangeSelectorView *)aView;
 

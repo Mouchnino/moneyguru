@@ -52,6 +52,18 @@ class DateRangeSelector(QObject):
         self.actionChangeToCustom = QAction("Custom...", self)
         self.actionChangeToCustom.setShortcut("Ctrl+Alt+7")
         self.actionChangeToCustom.triggered.connect(self.model.select_custom_date_range)
+        self.actionChangeToCustom1 = QAction("Custom1", self)
+        self.actionChangeToCustom1.setShortcut("Ctrl+Alt+8")
+        self.actionChangeToCustom1.setVisible(False)
+        self.actionChangeToCustom1.triggered.connect(self.custom1Triggered)
+        self.actionChangeToCustom2 = QAction("Custom2", self)
+        self.actionChangeToCustom2.setShortcut("Ctrl+Alt+9")
+        self.actionChangeToCustom2.setVisible(False)
+        self.actionChangeToCustom2.triggered.connect(self.custom2Triggered)
+        self.actionChangeToCustom3 = QAction("Custom3", self)
+        self.actionChangeToCustom3.setShortcut("Ctrl+Alt+0")
+        self.actionChangeToCustom3.setVisible(False)
+        self.actionChangeToCustom3.triggered.connect(self.custom3Triggered)
         
         # set typeButton menu
         menu = QMenu(self.view.typeButton)
@@ -62,6 +74,9 @@ class DateRangeSelector(QObject):
         menu.addAction(self.actionChangeToRunningYear)
         menu.addAction(self.actionChangeToAllTransactions)
         menu.addAction(self.actionChangeToCustom)
+        menu.addAction(self.actionChangeToCustom1)
+        menu.addAction(self.actionChangeToCustom2)
+        menu.addAction(self.actionChangeToCustom3)
         self.view.typeButton.setMenu(menu)
         
         # set mainwindow's date range menu
@@ -73,6 +88,9 @@ class DateRangeSelector(QObject):
         m.addAction(self.actionChangeToRunningYear)
         m.addAction(self.actionChangeToAllTransactions)
         m.addAction(self.actionChangeToCustom)
+        m.addAction(self.actionChangeToCustom1)
+        m.addAction(self.actionChangeToCustom2)
+        m.addAction(self.actionChangeToCustom3)
         m.addAction(self.actionPrevious)
         m.addAction(self.actionNext)
         m.addAction(self.actionToday)
@@ -80,6 +98,16 @@ class DateRangeSelector(QObject):
         # bind prev/next button
         self.view.prevButton.clicked.connect(self.model.select_prev_date_range)
         self.view.nextButton.clicked.connect(self.model.select_next_date_range)
+    
+    #--- Event Handlers
+    def custom1Triggered(self):
+        self.model.select_saved_range(0)
+    
+    def custom2Triggered(self):
+        self.model.select_saved_range(1)
+    
+    def custom3Triggered(self):
+        self.model.select_saved_range(2)
     
     #--- model --> view
     def animate_backward(self):
@@ -101,4 +129,15 @@ class DateRangeSelector(QObject):
         self.actionToday.setEnabled(canNavigateDateRange)
         self.view.prevButton.setEnabled(canNavigateDateRange)
         self.view.nextButton.setEnabled(canNavigateDateRange)
+    
+    def refresh_custom_ranges(self):
+        customActions = [self.actionChangeToCustom1, self.actionChangeToCustom2,
+            self.actionChangeToCustom3]
+        for i, name in enumerate(self.model.custom_range_names):
+            action = customActions[i]
+            if name is not None:
+                action.setText(name)
+                action.setVisible(True)
+            else:
+                action.setVisible(False)
     

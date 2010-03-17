@@ -27,12 +27,6 @@ class Pristine(TestCase):
         self.check_gui_calls_partial(self.balgraph_gui, not_expected=['refresh'])
         self.check_gui_calls_partial(self.bargraph_gui, not_expected=['refresh'])
     
-    def test_gui_calls(self):
-        # the main window sends it's view calls on *connect*, not on init
-        self.mainwindow.disconnect()
-        self.mainwindow.connect()
-        self.check_gui_calls(self.drsel_gui, ['refresh'])
-    
     def test_select_next_previous_view(self):
         self.mainwindow.select_next_view()
         self.check_gui_calls(self.mainwindow_gui, ['show_income_statement'])

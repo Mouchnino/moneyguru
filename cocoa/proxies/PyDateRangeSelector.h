@@ -20,6 +20,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectRunningYearRange;
 - (void)selectAllTransactionsRange;
 - (void)selectCustomDateRange;
+- (void)selectSavedRange:(NSInteger)slot;
 - (NSString *)display;
 - (BOOL)canNavigate;
+- (NSArray *)customRangeNames;
 @end

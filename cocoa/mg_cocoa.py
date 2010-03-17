@@ -1028,6 +1028,20 @@ class PyCustomDateRangePanel(PyListener):
     def setEndDate_(self, value):
         self.py.end_date = value
     
+    @signature('i@:')
+    def slotIndex(self):
+        return self.py.slot_index
+    
+    @signature('v@:i')
+    def setSlotIndex_(self, index):
+        self.py.slot_index = index
+    
+    def slotName(self):
+        return self.py.slot_name
+    
+    def setSlotName_(self, name):
+        self.py.slot_name = name
+    
 
 class PyAccountReassignPanel(PyListener):
     py_class = AccountReassignPanel
@@ -1534,12 +1548,19 @@ class PyDateRangeSelector(PyGUIObject):
     def selectCustomDateRange(self):
         self.py.select_custom_date_range()
     
+    @signature('v@:i')
+    def selectSavedRange_(self, slot):
+        self.py.select_saved_range(slot)
+    
     def display(self):
         return self.py.display
     
     @signature('c@:')
     def canNavigate(self):
         return self.py.can_navigate
+    
+    def customRangeNames(self):
+        return self.py.custom_range_names
     
     #--- Python -> Cocoa
     def animate_backward(self):
@@ -1550,6 +1571,9 @@ class PyDateRangeSelector(PyGUIObject):
     
     def refresh(self):
         self.cocoa.refresh()
+    
+    def refresh_custom_ranges(self):
+        self.cocoa.refreshCustomRanges()
     
 
 #--- Printing

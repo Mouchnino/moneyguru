@@ -460,6 +460,11 @@ class TestApp(object):
         # add one to the expected count, we use this method that subtract 1 to the len of etable.
         return len(self.etable) - 1 
     
+    def new_app_same_prefs(self):
+        # Returns a new TestApp() but with the same app_gui as before, thus preserving preferences.
+        app = Application(self.app_gui)
+        return TestApp(app=app)
+    
     def save_file(self):
         assert self.tmppath is not None
         filename = self.tmppath + 'foo.xml'

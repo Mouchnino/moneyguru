@@ -14,7 +14,7 @@ from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
 from hsutil.misc import nonone, allsame, dedupe, extract
 
-from .const import NOEDIT
+from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES
 from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
 from .model.account import Account, Group, AccountList, GroupList, AccountType
@@ -41,8 +41,6 @@ DATE_RANGE_YTD = 'ytd'
 DATE_RANGE_RUNNING_YEAR = 'running_year'
 DATE_RANGE_ALL_TRANSACTIONS = 'all_transactions'
 DATE_RANGE_CUSTOM = 'custom'
-
-DATE_FORMAT_FOR_PREFERENCES = '%d/%m/%Y'
 
 class FilterType(object):
     Unassigned = object()
@@ -1160,6 +1158,9 @@ class Document(Broadcaster, Listener):
     def must_autosave(self):
         # this is called async
         self._async_autosave()
+    
+    def saved_custom_ranges_changed(self):
+        self.notify('saved_custom_ranges_changed')
     
     def year_start_month_changed(self):
         if isinstance(self.date_range, YearRange):

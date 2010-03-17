@@ -35,13 +35,14 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [[self window] makeFirstResponder:nil];
     [[self py] loadPanel];
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
+    [startDateField setStringValue:[[self py] startDate]];
+    [endDateField setStringValue:[[self py] endDate]];
+    [slotIndexSelector selectItemAtIndex:[[self py] slotIndex]];
+    [slotNameField setStringValue:[[self py] slotName]];
     [[self window] makeFirstResponder:startDateField];
 }
 
 /* Actions */
-
 - (IBAction)cancel:(id)sender
 {
     [NSApp endSheet:[self window]];
@@ -53,15 +54,31 @@ http://www.hardcoded.net/licenses/hs_license
     // is called (Not when you press Return to Save, but when you click on Save, it happens).
     // This is what the line below is for.
     [[self window] makeFirstResponder:[self window]];
+    [[self py] setSlotIndex:[slotIndexSelector indexOfSelectedItem]];
+    [[self py] setSlotName:[slotNameField stringValue]];
     [[self py] ok];
     [NSApp endSheet:[self window]];
 }
 
 /* Delegate */
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+{
+    // We have to update start/end field in real time
+    id control = [aNotification object];
+    if (control == startDateField) {
+        [[self py] setStartDate:[startDateField stringValue]];
+    }
+    else if (control == endDateField) {
+        [[self py] setEndDate:[endDateField stringValue]];
+    }
+}
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
-    return customDateFieldEditor;
+    if ((asker == startDateField) || (asker == endDateField)) {
+        return customDateFieldEditor;
+    }
+    return nil;
 }
 
 @end

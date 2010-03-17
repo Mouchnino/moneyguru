@@ -7,3 +7,4 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 NOEDIT = object()
+DATE_FORMAT_FOR_PREFERENCES = '%d/%m/%Y'

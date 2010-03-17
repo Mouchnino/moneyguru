@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1040</int>
+		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10C540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038.25</string>
@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1306"/>
-			<integer value="1138"/>
+			<integer value="1145"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -553,7 +553,7 @@
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
-									<int key="NSTag">1</int>
+									<int key="NSTag">1000</int>
 								</object>
 								<object class="NSMenuItem" id="732537169">
 									<reference key="NSMenu" ref="657949865"/>
@@ -837,6 +837,42 @@
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
+								</object>
+								<object class="NSMenuItem" id="749246150">
+									<reference key="NSMenu" ref="644935139"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsHidden">YES</bool>
+									<string key="NSTitle">Custom1</string>
+									<string key="NSKeyEquiv">8</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+									<int key="NSTag">2000</int>
+								</object>
+								<object class="NSMenuItem" id="467142981">
+									<reference key="NSMenu" ref="644935139"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsHidden">YES</bool>
+									<string key="NSTitle">Custom2</string>
+									<string key="NSKeyEquiv">9</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+									<int key="NSTag">2001</int>
+								</object>
+								<object class="NSMenuItem" id="834946961">
+									<reference key="NSMenu" ref="644935139"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsHidden">YES</bool>
+									<string key="NSTitle">Custom3</string>
+									<string key="NSKeyEquiv">0</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+									<int key="NSTag">2002</int>
 								</object>
 								<object class="NSMenuItem" id="549891574">
 									<reference key="NSMenu" ref="644935139"/>
@@ -2486,6 +2522,54 @@
 					</object>
 					<int key="connectionID">1430</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">customDateRangeItem1</string>
+						<reference key="source" ref="1071329777"/>
+						<reference key="destination" ref="749246150"/>
+					</object>
+					<int key="connectionID">1437</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">customDateRangeItem2</string>
+						<reference key="source" ref="1071329777"/>
+						<reference key="destination" ref="467142981"/>
+					</object>
+					<int key="connectionID">1438</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">customDateRangeItem3</string>
+						<reference key="source" ref="1071329777"/>
+						<reference key="destination" ref="834946961"/>
+					</object>
+					<int key="connectionID">1439</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSavedCustomRange:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="749246150"/>
+					</object>
+					<int key="connectionID">1440</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSavedCustomRange:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="467142981"/>
+					</object>
+					<int key="connectionID">1441</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSavedCustomRange:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="834946961"/>
+					</object>
+					<int key="connectionID">1442</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2974,6 +3058,9 @@
 							<reference ref="311891534"/>
 							<reference ref="549891574"/>
 							<reference ref="914250853"/>
+							<reference ref="749246150"/>
+							<reference ref="467142981"/>
+							<reference ref="834946961"/>
 						</object>
 						<reference key="parent" ref="875242672"/>
 					</object>
@@ -3667,6 +3754,21 @@
 						<reference key="object" ref="503715007"/>
 						<reference key="parent" ref="657949865"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1431</int>
+						<reference key="object" ref="749246150"/>
+						<reference key="parent" ref="644935139"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1433</int>
+						<reference key="object" ref="467142981"/>
+						<reference key="parent" ref="644935139"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1435</int>
+						<reference key="object" ref="834946961"/>
+						<reference key="parent" ref="644935139"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3833,6 +3935,9 @@
 					<string>1429.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
+					<string>1431.IBPluginDependency</string>
+					<string>1433.IBPluginDependency</string>
+					<string>1435.IBPluginDependency</string>
 					<string>144.IBPluginDependency</string>
 					<string>144.ImportedFromIB2</string>
 					<string>145.IBPluginDependency</string>
@@ -3945,7 +4050,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{378, 411}, {236, 403}}</string>
+					<string>{{378, 351}, {236, 463}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{658, 387}, {236, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4088,6 +4193,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -4196,7 +4304,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1430</int>
+			<int key="maxID">1442</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4337,6 +4445,9 @@
 							<string>aheadMonthsPopup</string>
 							<string>autoDecimalPlaceButton</string>
 							<string>autoSaveIntervalField</string>
+							<string>customDateRangeItem1</string>
+							<string>customDateRangeItem2</string>
+							<string>customDateRangeItem3</string>
 							<string>firstWeekdayPopup</string>
 							<string>unlockMenuItem</string>
 							<string>yearStartMonthPopup</string>
@@ -4346,6 +4457,9 @@
 							<string>NSPopUpButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
 							<string>NSPopUpButton</string>
 							<string>NSMenuItem</string>
 							<string>NSPopUpButton</string>
@@ -4354,6 +4468,29 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">controllers/MGAppDelegate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MGDateRangeSelectorView</string>
+					<string key="superclassName">NSView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>dateRangePopUp</string>
+							<string>nextDateRangeButton</string>
+							<string>prevDateRangeButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSPopUpButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">support/MGDateRangeSelectorView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4414,6 +4551,7 @@
 							<string>selectPrevDateRange:</string>
 							<string>selectQuarterRange:</string>
 							<string>selectRunningYearRange:</string>
+							<string>selectSavedCustomRange:</string>
 							<string>selectTodayDateRange:</string>
 							<string>selectYearRange:</string>
 							<string>selectYearToDateRange:</string>
@@ -4463,22 +4601,12 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>dateRangePopUp</string>
-							<string>nextDateRangeButton</string>
-							<string>prevDateRangeButton</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSPopUpButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-						</object>
+						<string key="NS.key.0">dateRangeSelectorView</string>
+						<string key="NS.object.0">MGDateRangeSelectorView</string>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -4486,16 +4614,8 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MGOutline</string>
-					<string key="superclassName">HSOutline</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">controllers/MGOutline.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">MGReport</string>
-					<string key="superclassName">MGOutline</string>
+					<string key="superclassName">HSOutline</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">showSelectedAccount:</string>
 						<string key="NS.object.0">id</string>
@@ -5214,7 +5334,7 @@
 		<int key="IBDocument.localizationMode">0</int>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1040" key="NS.object.0"/>
+			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>

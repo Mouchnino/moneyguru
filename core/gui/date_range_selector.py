@@ -15,6 +15,7 @@ class DateRangeSelector(DocumentGUIObject):
     
     def connect(self):
         DocumentGUIObject.connect(self)
+        self.view.refresh_custom_ranges()
         self.view.refresh()
     
     #--- Public
@@ -48,10 +49,19 @@ class DateRangeSelector(DocumentGUIObject):
     def select_today_date_range(self):
         self.document.select_today_date_range()
     
+    def select_saved_range(self, slot):
+        saved_range = self.app.saved_custom_ranges[slot]
+        if saved_range:
+            self.document.select_custom_date_range(saved_range.start, saved_range.end)
+    
     #--- Properties
     @property
     def can_navigate(self):
         return self.document.date_range.can_navigate
+    
+    @property
+    def custom_range_names(self):
+        return [(r.name if r else None) for r in self.app.saved_custom_ranges]
     
     @property
     def display(self):
@@ -70,4 +80,7 @@ class DateRangeSelector(DocumentGUIObject):
                 self.view.animate_forward()
             else:
                 self.view.animate_backward()
+    
+    def saved_custom_ranges_changed(self):
+        self.view.refresh_custom_ranges()
     

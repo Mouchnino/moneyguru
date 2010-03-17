@@ -90,6 +90,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)selectRunningYearRange:(id)sender;
 - (IBAction)selectAllTransactionsRange:(id)sender;
 - (IBAction)selectCustomDateRange:(id)sender;
+- (IBAction)selectSavedCustomRange:(id)sender;
 - (IBAction)showBalanceSheet:(id)sender;
 - (IBAction)showIncomeStatement:(id)sender;
 - (IBAction)showTransactionTable:(id)sender;

@@ -20,10 +20,14 @@ class CustomDateRangePanel(DocumentGUIObject):
     def load(self):
         self._start_date = self.document.date_range.start
         self._end_date = self.document.date_range.end
+        self.slot_index = 0 # 0 = None, 1 = Slot 1...
+        self.slot_name = ''
     
     def ok(self):
         start = self._start_date
         end = self._end_date
+        if self.slot_index > 0:
+            self.app.save_custom_range(self.slot_index-1, self.slot_name, start, end)
         self.document.date_range = CustomDateRange(start, end, self.app.format_date)
     
     #--- Properties

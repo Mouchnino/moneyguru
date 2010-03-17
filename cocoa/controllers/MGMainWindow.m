@@ -288,6 +288,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[dateRangeSelector py] selectCustomDateRange];
 }
 
+- (IBAction)selectSavedCustomRange:(id)sender
+{
+    NSInteger slot = [(NSMenuItem *)sender tag] - MGCustomSavedRangeStart;
+    [[dateRangeSelector py] selectSavedRange:slot];
+}
+
 - (IBAction)showBalanceSheet:(id)sender
 {
     [[self py] selectBalanceSheet];

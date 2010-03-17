@@ -131,8 +131,32 @@ http://www.hardcoded.net/licenses/hs_license
     [ri release];
 }
 
-/* delegate */
+/* Public */
+- (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot
+{
+    // setting aName to nil disables the menu item
+    NSMenuItem *item;
+    if (aSlot == 0) {
+        item = customDateRangeItem1;
+    }
+    else if (aSlot == 1) {
+        item = customDateRangeItem2;
+    }
+    else {
+        item = customDateRangeItem3;
+    }
+    if (aName != nil) {
+        [item setHidden:NO];
+        [item setEnabled:YES];
+        [item setTitle:aName];
+    }
+    else {
+        [item setHidden:YES];
+        [item setEnabled:NO];
+    }
+}
 
+/* delegate */
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
     return NO;

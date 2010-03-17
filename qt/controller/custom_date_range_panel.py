@@ -20,20 +20,21 @@ from ui.custom_date_range_panel_ui import Ui_CustomDateRangePanel
 class CustomDateRangePanel(Panel, Ui_CustomDateRangePanel):
     def __init__(self, parent, doc):
         Panel.__init__(self, parent)
-        self._setupUi()
+        self.setupUi(self)
         self.doc = doc
         self.model = CustomDateRangePanelModel(view=self, document=doc.model)
     
     def _loadFields(self):
         self.startDateEdit.setText(self.model.start_date)
         self.endDateEdit.setText(self.model.end_date)
+        self.slotIndexComboBox.setCurrentIndex(self.model.slot_index)
+        self.slotNameEdit.setText(self.model.slot_name)
     
     def _saveFields(self):
         self.model.start_date = unicode(self.startDateEdit.text())
         self.model.end_date = unicode(self.endDateEdit.text())
-    
-    def _setupUi(self):
-        self.setupUi(self)
+        self.model.slot_index = self.slotIndexComboBox.currentIndex()
+        self.model.slot_name = unicode(self.slotNameEdit.text())
     
     #--- Hack
     def accept(self):

@@ -6,7 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import datetime
 import threading
+from collections import namedtuple
 
 from hsutil import io
 from hsutil.currency import USD
@@ -14,6 +16,7 @@ from hsutil.notify import Broadcaster
 from hsutil.reg import RegistrableApplication
 from hsutil.misc import nonone
 
+from .const import DATE_FORMAT_FOR_PREFERENCES
 from .model import currency
 from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
@@ -23,6 +26,9 @@ AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
 YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 AUTO_DECIMAL_PLACE_PREFERENCE = 'AutoDecimalPlace'
+CUSTOM_RANGES_PREFERENCE = 'CustomRanges'
+
+SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
@@ -54,6 +60,8 @@ class Application(Broadcaster, RegistrableApplication):
         self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
         self._auto_decimal_place = self.get_default(AUTO_DECIMAL_PLACE_PREFERENCE, False)
+        self.saved_custom_ranges = [None] * 3
+        self._load_custom_ranges()
         self._update_autosave_timer()
     
     #--- Override
@@ -76,6 +84,31 @@ class Application(Broadcaster, RegistrableApplication):
         else:
             self._autosave_timer = None
     
+    def _load_custom_ranges(self):
+        custom_ranges = self.get_default(CUSTOM_RANGES_PREFERENCE)
+        if not custom_ranges:
+            return
+        for index, custom_range in enumerate(custom_ranges):
+            if custom_range:
+                name = custom_range[0]
+                start = datetime.datetime.strptime(custom_range[1], DATE_FORMAT_FOR_PREFERENCES).date()
+                end = datetime.datetime.strptime(custom_range[2], DATE_FORMAT_FOR_PREFERENCES).date()
+                self.saved_custom_ranges[index] = SavedCustomRange(name, start, end)
+            else:
+                self.saved_custom_ranges[index] = None
+    
+    def _save_custom_ranges(self):
+        custom_ranges = []
+        for custom_range in self.saved_custom_ranges:
+            if custom_range:
+                start_str = custom_range.start.strftime(DATE_FORMAT_FOR_PREFERENCES)
+                end_str = custom_range.end.strftime(DATE_FORMAT_FOR_PREFERENCES)
+                custom_ranges.append([custom_range.name, start_str, end_str])
+            else:
+                # We can't insert None in arrays for preferences
+                custom_ranges.append([])
+        self.set_default(CUSTOM_RANGES_PREFERENCE, custom_ranges)
+    
     #--- Public
     def format_amount(self, amount, **kw):
         return format_amount(amount, self._default_currency, decimal_sep=self._decimal_sep,
@@ -91,6 +124,11 @@ class Application(Broadcaster, RegistrableApplication):
     
     def parse_date(self, date):
         return parse_date(date, self._date_format)
+    
+    def save_custom_range(self, slot, name, start, end):
+        self.saved_custom_ranges[slot] = SavedCustomRange(name, start, end)
+        self._save_custom_ranges()
+        self.notify('saved_custom_ranges_changed')
     
     def get_default(self, key, fallback_value=None):
         result = nonone(self.view.get_default(key), fallback_value)

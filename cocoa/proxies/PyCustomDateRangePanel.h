@@ -16,4 +16,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setStartDate:(NSString *)date;
 - (NSString *)endDate;
 - (void)setEndDate:(NSString *)date;
+- (NSInteger)slotIndex;
+- (void)setSlotIndex:(NSInteger)index;
+- (NSString *)slotName;
+- (void)setSlotName:(NSString *)name;
 @end

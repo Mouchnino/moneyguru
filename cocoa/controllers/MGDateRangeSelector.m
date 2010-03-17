@@ -8,13 +8,25 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGDateRangeSelector.h"
 #import "Utils.h"
+#import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector
 - (id)initWithPyParent:(id)aPyParent dateRangeView:(MGDateRangeSelectorView *)aView
 {
     self = [super initWithPyClassName:@"PyDateRangeSelector" pyParent:aPyParent];
     view = aView;
+    /* In popups, there's the invisible first item, which is why we start our indexing at 8! */
+    NSMenuItem *custom1 = [[view dateRangePopUp] itemAtIndex:8];
+    NSMenuItem *custom2 = [[view dateRangePopUp] itemAtIndex:9];
+    NSMenuItem *custom3 = [[view dateRangePopUp] itemAtIndex:10];
+    customRangeItems = [[NSArray arrayWithObjects:custom1, custom2, custom3, nil] retain];
     return self;
+}
+
+- (void)dealloc
+{
+    [customRangeItems release];
+    [super dealloc];
 }
 
 /* HSGUIController */
@@ -57,9 +69,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)animationDidEnd:(NSAnimation *)animation
 {
     // Remove all views used by the animation from their superviews
-    NSDictionary *animData;
-    NSEnumerator *e = [[(NSViewAnimation *)animation viewAnimations] objectEnumerator];
-    while (animData = [e nextObject]) {
+    for (NSDictionary *animData in [(NSViewAnimation *)animation viewAnimations]) {
         NSView *theView = [animData objectForKey:NSViewAnimationTargetKey];
         [theView removeFromSuperview];
     }
@@ -82,5 +92,24 @@ http://www.hardcoded.net/licenses/hs_license
     BOOL canNavigate = [[self py] canNavigate];
     [[view prevDateRangeButton] setEnabled:canNavigate];
     [[view nextDateRangeButton] setEnabled:canNavigate];
+}
+
+- (void)refreshCustomRanges
+{
+    NSArray *names = [[self py] customRangeNames];
+    MGAppDelegate *app = [NSApp delegate];
+    for (NSInteger i=0; i<[names count]; i++) {
+        id item = [names objectAtIndex:i];
+        NSString *name = item == [NSNull null] ? nil : item;
+        [app setCustomDateRangeName:name atSlot:i];
+        NSMenuItem *popupItem = [customRangeItems objectAtIndex:i];
+        if (name != nil) {
+            [popupItem setHidden:NO];
+            [popupItem setTitle:name];
+        }
+        else {
+            [popupItem setHidden:YES];
+        }
+    }
 }
 @end
