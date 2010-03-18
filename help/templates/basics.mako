@@ -23,7 +23,9 @@ There are 7 types of date ranges:
 1. **All Transactions:** This date range starts at the date of the earliest transaction in your document and ends at now + ahead months (see Running Year).
 1. **Custom date range:** When you select this date range, moneyGuru will prompt you for a start date and an end date. Afterwards, the date range will be the dates you chose.
 
-For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's ${cmd_opt}[ and ${cmd_opt}]). There are also shortcuts to select date range types (${cmd_opt}1-6). You can also press ${cmd_opt}T to return to the today's date range.
+For "navigable" date ranges (Month, Quarter, Year), you can use the arrows to select the previous or the next date range (on the keyboard, it's ${cmd_opt}[ and ${cmd_opt}]). There are also shortcuts to select date range types (${cmd_opt}1-7). You can also press ${cmd_opt}T to return to the today's date range.
+
+When selecting custom date ranges, you also have the option to have moneyGuru put that date range into one of the 3 available slots. When you do this, a new date range will appear in the menu and will be quickly re-callable.
 
 The thin red line
 -----

@@ -35,7 +35,7 @@ Little aside note: Changing an account's currency does **not** change the curren
 Transactions
 -----
 
-Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (speaking of which, see the "Date Editing" section below). The Description, Payee and Account (From, To Transfer) columns are auto-completed. This means that as soon as you type something in them, moneyGuru will look in the other transactions and give you a completion proposition. You can cycle through the propositions with the up and down arrows. To accept a proposition, just tab out. You can also, of course, just continue to type.
+Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (speaking of which, see the "Date Editing" section below). The Description, Payee and Account (From, To Transfer) columns are auto-completed (see "Auto-completion" below).
 
 It's possible to re-order a transaction within other transactions of the same date. To do so, you can use drag & drop, or you can use ${cmd}+ and ${cmd}-.
 
@@ -96,3 +96,12 @@ Because moneyGuru follows double-entry accounting, splits in a transaction must 
 * You can use drag and drop to re-order splits.
 * When one of the main splits is edited, the transaction's Amount value will be adjusted.
 * If the transaction is a [Multi-Currency Transaction](currencies.htm), the Amount field cannot be directly set. It can only be edited through splits directly. The read-only amount shown represents a conversion of all amounts of the transaction's splits in your native currency, divided by 2.
+
+Auto-completion, Autofill and Lookups
+-----
+
+moneyGuru has advanced auto-completion and autofill capabilities. As soon as you type something in an auto-completable field (Description, Payee, Account), moneyGuru will look in other transactions you have and give you a completion proposition. You can cycle through the propositions with the up and down arrows. To accept a proposition, just tab out. You can also, of course, just continue to type.
+
+The autofill feature will automatically fill empty fields after you tab out of an auto-completable field. For example, if Payee is the first auto-completable column, typing an existing payee will make all subsequent fields automatically filled with values from the last transaction containing that payee.
+
+Under Mac OS X, it's possible to summon a lookup list for any auto-completable field. You need to type a payee that you **know** you have somewhere in your transaction, but don't remember what it starts with? Press **${cmd}L** and a lookup dialog will appear, listing all your payees. The search field allows you to run a fuzzy search (which means that you don't have to type the beginning of your payee, just a few letters that are in it) that will make most relevant payees come first in the list.
