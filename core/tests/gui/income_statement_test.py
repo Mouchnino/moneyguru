@@ -121,7 +121,7 @@ class AccountsAndEntries(TestCase):
         self.drsel.select_custom_date_range()
         self.cdrpanel.start_date = '01/01/2008'
         self.cdrpanel.start_date = '12/12/2008'
-        self.cdrpanel.ok()
+        self.cdrpanel.save()
         eq_(self.istatement.income[0].last_cash_flow, '0.00')
     
     def test_year_to_date_last_cash_flow(self):

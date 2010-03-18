@@ -123,7 +123,7 @@ def test_save_custom_range(app):
     app.drsel.select_custom_date_range()
     app.cdrpanel.slot_index = 1
     app.cdrpanel.slot_name = 'foo'
-    app.cdrpanel.ok()
+    app.cdrpanel.save()
     app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
 
 def test_show_account():

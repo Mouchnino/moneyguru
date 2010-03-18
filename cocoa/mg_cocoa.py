@@ -1007,14 +1007,8 @@ class PyBudgetPanel(PyPanel):
         self.cocoa.refreshRepeatOptions()
     
 
-class PyCustomDateRangePanel(PyListener):
+class PyCustomDateRangePanel(PyPanel):
     py_class = CustomDateRangePanel
-    
-    def loadPanel(self):
-        self.py.load()
-    
-    def ok(self):
-        self.py.ok()
     
     def startDate(self):
         return self.py.start_date

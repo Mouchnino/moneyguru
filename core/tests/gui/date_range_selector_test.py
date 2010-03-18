@@ -27,7 +27,7 @@ def app_saved_custom_range():
     app.cdrpanel.end_date = '17/03/2010'
     app.cdrpanel.slot_index = 2
     app.cdrpanel.slot_name = 'foo'
-    app.cdrpanel.ok()
+    app.cdrpanel.save()
     # Select another range
     app.drsel.select_month_range()
     return app

@@ -17,7 +17,7 @@ class Pristine(TestCase):
         self.drsel.select_custom_date_range()
         self.cdrpanel.start_date = '09/11/2007' # 22 days before the end of the month
         self.cdrpanel.end_date = '18/02/2008'
-        self.cdrpanel.ok() # changes the date range
+        self.cdrpanel.save() # changes the date range
         first_mark = self.nwgraph.xtickmarks[1] # 0 is xmin
         self.assertEqual(first_mark - self.nwgraph.xmin, 22)
     
@@ -29,7 +29,7 @@ class Pristine(TestCase):
         self.drsel.select_custom_date_range()
         self.cdrpanel.start_date = '09/12/2007' # 23 days before the end of the year
         self.cdrpanel.end_date = '18/02/2009'
-        self.cdrpanel.ok() # changes the date range
+        self.cdrpanel.save() # changes the date range
         first_mark = self.nwgraph.xtickmarks[1] # 0 is xmin
         self.assertEqual(first_mark - self.nwgraph.xmin, 23)
         # also, don't make the label go left of the xmin

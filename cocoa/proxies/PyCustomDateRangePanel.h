@@ -7,11 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
+#import "PyPanel.h"
 
-@interface PyCustomDateRangePanel : PyGUI {}
-- (void)loadPanel;
-- (void)ok;
+@interface PyCustomDateRangePanel : PyPanel {}
 - (NSString *)startDate;
 - (void)setStartDate:(NSString *)date;
 - (NSString *)endDate;

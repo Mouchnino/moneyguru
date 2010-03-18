@@ -61,7 +61,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mepanel = MassEditionPanel(mainwindow=self)
         self.scpanel = SchedulePanel(mainwindow=self)
         self.bpanel = BudgetPanel(mainwindow=self)
-        self.cdrpanel = CustomDateRangePanel(self, doc=doc)
+        self.cdrpanel = CustomDateRangePanel(self, mainwindow=self)
         self.arpanel = AccountReassignPanel(self, doc=doc)
         self.alookup = AccountLookup(self, mainwindow=self)
         self.clookup = CompletionLookup(self, mainwindow=self)
@@ -80,8 +80,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # set_children() and connect() calls have to happen after _setupUiPost()
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
-            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.alookup.model,
-            self.clookup.model, self.drsel.model]
+            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.cdrpanel.model,
+            self.alookup.model, self.clookup.model, self.drsel.model]
         self.model.set_children(children)
         self.model.connect()
         self.sfield.model.connect()
@@ -360,9 +360,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def show_budget_table(self):
         self._setMainWidgetIndex(BUDGET_INDEX)
-    
-    def show_custom_date_range_panel(self):
-        self.cdrpanel.load()
     
     def show_entry_table(self):
         self._setMainWidgetIndex(ACCOUNT_INDEX)

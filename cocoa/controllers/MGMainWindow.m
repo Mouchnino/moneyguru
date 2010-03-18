@@ -33,7 +33,7 @@ http://www.hardcoded.net/licenses/hs_license
     [importWindow connect];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
     [csvOptionsWindow connect];
-    customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithDocument:document];
+    customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithParent:self];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
@@ -47,7 +47,8 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], [accountLookup py], [completionLookup py], [dateRangeSelector py], nil];
+        [budgetPanel py], [customDateRangePanel py], [accountLookup py], [completionLookup py],
+        [dateRangeSelector py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
@@ -561,18 +562,10 @@ http://www.hardcoded.net/licenses/hs_license
         didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
-
 - (void)showBalanceSheet
 {
     [self setTop:netWorthView];
     [[[self window] toolbar] setSelectedItemIdentifier:MGBalanceSheetToolbarItemIdentifier];
-}
-
-- (void)showCustomDateRangePanel
-{
-    [customDateRangePanel load];
-    [NSApp beginSheet:[customDateRangePanel window] modalForWindow:[self window] modalDelegate:self 
-        didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)showEntryTable

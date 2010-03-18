@@ -8,22 +8,15 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGDocument.h"
-#import "HSWindowController.h"
+#import "MGPanel.h"
 #import "PyCustomDateRangePanel.h"
 
-@interface MGCustomDateRangePanel : HSWindowController {
+@interface MGCustomDateRangePanel : MGPanel {
     IBOutlet NSTextField *startDateField;
     IBOutlet NSTextField *endDateField;
     IBOutlet NSPopUpButton *slotIndexSelector;
     IBOutlet NSTextField *slotNameField;
-    
-    NSTextView *customDateFieldEditor;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithParent:(HSWindowController *)aParent;
 - (PyCustomDateRangePanel *)py;
-/* Public */
-- (void)load;
-/* Actions */
-- (IBAction)cancel:(id)sender;
-- (IBAction)ok:(id)sender;
 @end

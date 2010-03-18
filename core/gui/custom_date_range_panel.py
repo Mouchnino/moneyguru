@@ -9,21 +9,22 @@
 from datetime import date
 
 from ..model.date import CustomDateRange
-from .base import DocumentGUIObject
+from .base import MainWindowPanel
 
-class CustomDateRangePanel(DocumentGUIObject):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+class CustomDateRangePanel(MainWindowPanel):
+    def __init__(self, view, mainwindow):
+        MainWindowPanel.__init__(self, view, mainwindow)
         self._start_date = date.today()
         self._end_date = date.today()
     
-    def load(self):
+    #--- Override
+    def _load(self):
         self._start_date = self.document.date_range.start
         self._end_date = self.document.date_range.end
         self.slot_index = 0 # 0 = None, 1 = Slot 1...
         self.slot_name = ''
     
-    def ok(self):
+    def _save(self):
         start = self._start_date
         end = self._end_date
         if self.slot_index > 0:

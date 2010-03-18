@@ -62,10 +62,9 @@ class RangeOnOctober2007(TestCase):
     
     def test_select_custom_date_range(self):
         self.drsel.select_custom_date_range()
-        self.check_gui_calls(self.mainwindow_gui, ['show_custom_date_range_panel'])
         self.cdrpanel.start_date = '09/12/2008'
         self.cdrpanel.end_date = '18/02/2009'
-        self.cdrpanel.ok() # changes the date range
+        self.cdrpanel.save() # changes the date range
         eq_(self.document.date_range.start, date(2008, 12, 9))
         eq_(self.document.date_range.end, date(2009, 2, 18))
         eq_(self.document.date_range.display, '09/12/2008 - 18/02/2009')
@@ -75,7 +74,7 @@ class RangeOnOctober2007(TestCase):
         # When selecting a custom date range that has the same start/end as the previous one, it
         # still causes the change notification (so the DR display changes.
         self.drsel.select_custom_date_range()
-        self.cdrpanel.ok()
+        self.cdrpanel.save()
         eq_(self.document.date_range.display, '01/10/2007 - 31/10/2007')
     
     def test_select_prev_date_range(self):
@@ -229,7 +228,7 @@ class CustomDateRange(TestCase):
         self.drsel.select_custom_date_range()
         self.cdrpanel.start_date = '09/12/2008'
         self.cdrpanel.end_date = '18/02/2009'
-        self.cdrpanel.ok() # changes the date range
+        self.cdrpanel.save() # changes the date range
     
     def test_close_and_load(self):
         # the custom date range's end date is kept in preferences.

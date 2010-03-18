@@ -15,7 +15,7 @@ class MainWindow(DocumentGUIObject):
     # children to have reference to the main window.
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.apanel,
-            self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.alookup,
+            self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel, self.alookup,
             self.completion_lookup, self.daterange_selector) = children
         self._current_view = None
         self.show_balance_sheet()
@@ -222,7 +222,7 @@ class MainWindow(DocumentGUIObject):
     budget_deleted = _undo_stack_changed
     
     def custom_date_range_selected(self):
-        self.view.show_custom_date_range_panel()
+        self.cdrpanel.load()
     
     def document_changed(self):
         if self.document.shown_account is None and self._current_view is self.aview:

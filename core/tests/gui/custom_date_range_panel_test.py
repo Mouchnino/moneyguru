@@ -32,7 +32,7 @@ def test_save_range(app):
     app.cdrpanel.start_date = '17/03/2010'
     app.cdrpanel.slot_index = 1 # Slot 1
     app.cdrpanel.slot_name = 'foobar'
-    app.cdrpanel.ok()
+    app.cdrpanel.save()
     eq_(app.drsel.custom_range_names, ['foobar', None, None])
 
 @with_app(app_monthrange_panel_loaded)

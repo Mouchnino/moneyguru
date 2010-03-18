@@ -11,11 +11,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDateFieldEditor.h"
 
 @implementation MGCustomDateRangePanel
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"CustomDateRangePanel" pyClassName:@"PyCustomDateRangePanel" pyParent:[aDocument py]];
-    [self window]; // Initialize the window
-    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
+    self = [super initWithNibName:@"CustomDateRangePanel" pyClassName:@"PyCustomDateRangePanel" parent:aParent];
     return self;
 }
 
@@ -30,34 +28,29 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyCustomDateRangePanel *)py;
 }
 
-/* Public */
-- (void)load
+/* Override */
+- (BOOL)isFieldDateField:(id)aField
 {
-    [[self window] makeFirstResponder:nil];
-    [[self py] loadPanel];
+    return (aField == startDateField) || (aField == endDateField);
+}
+
+- (NSResponder *)firstField
+{
+    return startDateField;
+}
+
+- (void)loadFields
+{
     [startDateField setStringValue:[[self py] startDate]];
     [endDateField setStringValue:[[self py] endDate]];
     [slotIndexSelector selectItemAtIndex:[[self py] slotIndex]];
     [slotNameField setStringValue:[[self py] slotName]];
-    [[self window] makeFirstResponder:startDateField];
 }
 
-/* Actions */
-- (IBAction)cancel:(id)sender
+- (void)saveFields
 {
-    [NSApp endSheet:[self window]];
-}
-
-- (IBAction)ok:(id)sender
-{
-    // Sometimes, the last edited fields doesn't have the time to flush its data before savePanel
-    // is called (Not when you press Return to Save, but when you click on Save, it happens).
-    // This is what the line below is for.
-    [[self window] makeFirstResponder:[self window]];
     [[self py] setSlotIndex:[slotIndexSelector indexOfSelectedItem]];
     [[self py] setSlotName:[slotNameField stringValue]];
-    [[self py] ok];
-    [NSApp endSheet:[self window]];
 }
 
 /* Delegate */
@@ -72,13 +65,4 @@ http://www.hardcoded.net/licenses/hs_license
         [[self py] setEndDate:[endDateField stringValue]];
     }
 }
-
-- (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
-{
-    if ((asker == startDateField) || (asker == endDateField)) {
-        return customDateFieldEditor;
-    }
-    return nil;
-}
-
 @end
