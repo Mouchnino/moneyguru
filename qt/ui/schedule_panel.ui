@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>428</width>
-    <height>298</height>
+    <width>545</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -404,10 +404,14 @@
   <tabstop>descriptionEdit</tabstop>
   <tabstop>payeeEdit</tabstop>
   <tabstop>checkNoEdit</tabstop>
-  <tabstop>splitTableView</tabstop>
+  <tabstop>amountEdit</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>tabWidget</tabstop>
   <tabstop>addSplitButton</tabstop>
   <tabstop>removeSplitButton</tabstop>
-  <tabstop>buttonBox</tabstop>
+  <tabstop>splitTableView</tabstop>
+  <tabstop>amountEdit2</tabstop>
+  <tabstop>notesEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../mg.qrc"/>

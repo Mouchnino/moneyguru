@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>222</width>
-    <height>227</height>
+    <width>230</width>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -209,6 +209,7 @@
   <tabstop>accountComboBox</tabstop>
   <tabstop>targetComboBox</tabstop>
   <tabstop>amountEdit</tabstop>
+  <tabstop>notesEdit</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>

@@ -30,4 +30,6 @@ class BudgetTable(Table):
         self.view.sortByColumn(0, Qt.AscendingOrder) # sorted by start_date by default
         self.view.deletePressed.connect(self.model.delete)
         self.view.doubleClicked.connect(self.model.edit)
+        # we have to prevent Return from initiating editing.
+        self.view.editSelected = lambda: None
     
