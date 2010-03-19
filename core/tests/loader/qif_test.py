@@ -191,6 +191,18 @@ def test_yyyymmdd_without_sep():
     transaction = transactions[0]
     eq_(transaction.date, date(2007, 1, 22))
 
+def test_yyyymmdd_with_sep():
+    loader = Loader(USD)
+    loader.parse(TestData.filepath('qif', 'yyyymmdd_with_sep.qif'))
+    loader.load()
+    accounts = loader.account_infos
+    eq_(len(accounts), 1)
+    account = accounts[0]
+    transactions = loader.transaction_infos
+    eq_(len(transactions), 1)
+    transaction = transactions[0]
+    eq_(transaction.date, date(2007, 1, 22))
+
 def test_chr13_line_sep():
     loader = Loader(USD)
     loader.parse(TestData.filepath('qif', 'chr13_line_sep.qif'))

@@ -28,8 +28,12 @@ from ..model.transaction_list import TransactionList
 
 # date formats to use for format guessing
 # there is not one test for each single format
-DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%d.%m.%Y', '%d.%m.%y', '%m.%d.%y', 
-    '%m.%d.%Y', '%m-%d-%y', '%m-%d-%Y', '%d-%m-%Y', '%d-%m-%y', '%Y%m%d']
+# The order of the fields depending on the separator is different because we try to minimize the
+# possibility of errors. Most american users use the slash separator with month as a first field
+# and most european users have dot or hyphen seps with the first field being the day.
+DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%Y/%m/%d', '%d.%m.%Y', '%d.%m.%y',
+    '%m.%d.%y', '%m.%d.%Y', '%Y.%m.%d', '%m-%d-%y', '%m-%d-%Y', '%d-%m-%Y', '%d-%m-%y', '%Y-%m-%d',
+    '%Y%m%d']
 
 re_possibly_a_date = re.compile(r'[\d/.-]{6,10}')
 
