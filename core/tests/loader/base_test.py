@@ -6,76 +6,75 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from datetime import date, datetime
-
-from hsutil.testcase import TestCase
+from nose.tools import eq_
 
 from ...loader import base
+    
+def test_accounts():
+    loader = base.Loader('USD')
+    eq_(len(loader.account_infos), 0)
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.loader = base.Loader('USD')
-    
-    def test_accounts(self):
-        self.assertEqual(len(self.loader.account_infos), 0)
-    
-    def test_unnamed_account(self):
-        """Name is mandatory"""
-        self.loader.start_account()
-        self.loader.flush_account()
-        self.assertEqual(len(self.loader.account_infos), 0)
-    
-    def test_default_currency(self):
-        """Currency is optional"""
-        self.loader.start_account()
-        self.loader.account_info.name = 'foo'
-        self.loader.flush_account()
-        self.assertEqual(len(self.loader.account_infos), 1)
-        self.assertTrue(self.loader.account_infos[0].currency is None)
-    
+def test_unnamed_account():
+    # Name is mandatory.
+    loader = base.Loader('USD')
+    loader.start_account()
+    loader.flush_account()
+    eq_(len(loader.account_infos), 0)
 
-class OneAccount(TestCase):
-    def setUp(self):
-        self.loader = base.Loader('USD')
-        self.loader.parse_date = lambda rawdate: datetime.strptime(rawdate, '%Y/%m/%d').date()
-        self.loader.start_account()
-        self.loader.account_info.name = 'foo'
-    
-    def test_missing_amount(self):
-        """Amount is mandatory"""
-        self.loader.start_transaction()
-        self.loader.transaction_info.date = '2008/02/15'
-        self.loader.transaction_info.description = 'foo'
-        self.loader.transaction_info.transfer = 'bar'
-        self.loader.flush_account()
-        self.assertEqual(len(self.loader.transaction_infos), 0)
-    
-    def test_missing_date(self):
-        """Date is mandatory"""
-        self.loader.start_transaction()
-        self.loader.transaction_info.amount = '42'
-        self.loader.transaction_info.description = 'foo'
-        self.loader.transaction_info.transfer = 'bar'
-        self.loader.flush_account()
-        self.assertEqual(len(self.loader.transaction_infos), 0)
-    
-    def test_missing_description(self):
-        """Description is optional"""
-        self.loader.start_transaction()
-        self.loader.transaction_info.date = '2008/02/15'
-        self.loader.transaction_info.amount = '42'
-        self.loader.transaction_info.transfer = 'bar'
-        self.loader.flush_account()
-        self.assertEqual(len(self.loader.transaction_infos), 1)
-    
-    def test_missing_transfer(self):
-        """Category is optional"""
-        self.loader.start_transaction()
-        self.loader.transaction_info.date = date(2008, 2, 15)
-        self.loader.transaction_info.amount = '42'
-        self.loader.transaction_info.description = 'foo'
-        self.loader.flush_account()
-        self.assertEqual(len(self.loader.transaction_infos), 1)
-        # But the balancing entry in the imbalance account
-        self.assertEqual(len(self.loader.account_infos), 1)
-    
+def test_default_currency():
+    # Currency is optional.
+    loader = base.Loader('USD')
+    loader.start_account()
+    loader.account_info.name = 'foo'
+    loader.flush_account()
+    eq_(len(loader.account_infos), 1)
+    assert loader.account_infos[0].currency is None
+
+#--- One account
+def loader_one_account():
+    loader = base.Loader('USD')
+    loader.start_account()
+    loader.account_info.name = 'foo'
+    return loader
+
+def test_missing_amount():
+    # Amount is mandatory.
+    loader = loader_one_account()
+    loader.start_transaction()
+    loader.transaction_info.date = '2008/02/15'
+    loader.transaction_info.description = 'foo'
+    loader.transaction_info.transfer = 'bar'
+    loader.flush_account()
+    eq_(len(loader.transaction_infos), 0)
+
+def test_missing_date():
+    # Date is mandatory.
+    loader = loader_one_account()
+    loader.start_transaction()
+    loader.transaction_info.amount = '42'
+    loader.transaction_info.description = 'foo'
+    loader.transaction_info.transfer = 'bar'
+    loader.flush_account()
+    eq_(len(loader.transaction_infos), 0)
+
+def test_missing_description():
+    # Description is optional.
+    loader = loader_one_account()
+    loader.start_transaction()
+    loader.transaction_info.date = '2008/02/15'
+    loader.transaction_info.amount = '42'
+    loader.transaction_info.transfer = 'bar'
+    loader.flush_account()
+    eq_(len(loader.transaction_infos), 1)
+
+def test_missing_transfer():
+    # Category is optional.
+    loader = loader_one_account()
+    loader.start_transaction()
+    loader.transaction_info.date = '2008/02/15'
+    loader.transaction_info.amount = '42'
+    loader.transaction_info.description = 'foo'
+    loader.flush_account()
+    eq_(len(loader.transaction_infos), 1)
+    # But the balancing entry in the imbalance account
+    eq_(len(loader.account_infos), 1)
