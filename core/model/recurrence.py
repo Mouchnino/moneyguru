@@ -18,11 +18,11 @@ from .transaction import Transaction
 
 class RepeatType(object):
     Daily = 'daily'
-    Weekly = 'Weekly'
-    Monthly = 'Monthly'
-    Yearly = 'Yearly'
-    Weekday = 'Weekday'
-    WeekdayLast = 'Weekday_Last'
+    Weekly = 'weekly'
+    Monthly = 'monthly'
+    Yearly = 'yearly'
+    Weekday = 'weekday'
+    WeekdayLast = 'weekday_last'
 
 RTYPE2INCFUNC = {
     RepeatType.Daily: inc_day,
