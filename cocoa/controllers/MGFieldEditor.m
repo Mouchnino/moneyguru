@@ -68,6 +68,13 @@ http://www.hardcoded.net/licenses/hs_license
     [py setText:newText];
 }
 
+- (BOOL)becomeFirstResponder
+{
+    /* We don't want the remnants of previous completion haunting us. */
+    [py setText:@""];
+    return [super becomeFirstResponder];
+}
+
 - (BOOL)resignFirstResponder
 {
     /* We only want to commit completion if we actually have one. The conditions below prevent 2
