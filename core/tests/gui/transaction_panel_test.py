@@ -13,7 +13,7 @@ from nose.tools import eq_, assert_raises
 from hsutil.currency import USD
 
 from ...exception import OperationAborted
-from ..base import TestApp
+from ..base import TestApp, with_app
 
 #--- Pristine
 def test_attrs():
@@ -255,6 +255,16 @@ def test_mct_balance_twice():
     app.tpanel.mct_balance()
     app.tpanel.mct_balance()
     eq_(len(app.stable), 3)
+
+@with_app(app_multi_currency_transaction)
+def test_set_amount_doesnt_crash_and_doesnt_change_anything(app):
+    # There was previously an assertion making sure that the txn wasn't a MCT on set amount. This
+    # behavior is not correct because panels shouldn't have to check for MCT before deciding if they
+    # send their data to the core. Instead, if the txn is an MCT, setting the amount should do
+    # nothing.
+    amount_before = app.tpanel.amount
+    app.tpanel.amount = '2042' # no crash
+    eq_(app.tpanel.amount, amount_before)
 
 def test_stop_edition_on_mct_balance():
     # edition must stop before mct balance or else we end up with a crash

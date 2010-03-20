@@ -89,7 +89,8 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
     
     @amount.setter
     def amount(self, value):
-        assert not self.transaction.is_mct
+        if self.transaction.is_mct:
+            return # We can't set the amount of a MCT transaction.
         if self.transaction.amount:
             currency = self.transaction.amount.currency
         else:
