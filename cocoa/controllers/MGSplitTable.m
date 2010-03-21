@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGSplitTable.h"
+#import "NSEventAdditions.h"
 
 #define MGSplitPasteboardType @"MGSplitPasteboardType"
 
@@ -67,5 +68,14 @@ http://www.hardcoded.net/licenses/hs_license
         }
         [cell setFont:font];
     }
+}
+
+- (BOOL)tableView:(NSTableView *)tableView receivedKeyEvent:(NSEvent *)aEvent
+{
+    if ([aEvent isDown] && ([[self tableView] selectedRow] == [[self py] numberOfRows]-1)) {
+        [[self py] add];
+        return YES;
+    }
+    return NO;
 }
 @end
