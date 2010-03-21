@@ -42,8 +42,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setAttrname:(NSString *)attrname
 {
     [py setAttrname:attrname];
-    [lastCompletion release];
-    lastCompletion = nil;
 }
 
 - (void)moveUp:(id)sender 
@@ -72,6 +70,8 @@ http://www.hardcoded.net/licenses/hs_license
 {
     /* We don't want the remnants of previous completion haunting us. */
     [py setText:@""];
+    [lastCompletion release];
+    lastCompletion = nil;
     return [super becomeFirstResponder];
 }
 
