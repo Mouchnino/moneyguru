@@ -11,8 +11,9 @@ from datetime import date
 from nose.tools import eq_
 
 from hsutil.currency import USD
+from hsutil.testutil import Patcher
 
-from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
+from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app, TestData
 from ...gui.transaction_table import TransactionTable
 from ...model.date import MonthRange, YearRange
 
@@ -780,23 +781,42 @@ def test_completion(app):
     ce.text = 's'
     eq_(ce.completion, 'econd')
 
-class LoadFile(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
-        self.mainwindow.select_transaction_table()
-    
-    def test_add_txn(self):
-        # The newly added txn will have the last transactions' date rather then today's date
-        self.ttable.add()
-        eq_(self.ttable.edited.date, '19/02/2008')
-    
-    def test_attributes(self):
-        """The transaction table refreshes upon FILE_LOADED"""
-        eq_(self.ttable.row_count, 4)
-        eq_(self.ttable.selected_indexes, [3])
-    
+#--- Transaction on last day of range
+def app_txn_on_last_day_of_range():
+    app = TestApp()
+    p = Patcher()
+    p.patch_today(2010, 3, 21)
+    app.add_txn('31/12/2010')
+    return app, p
+
+@with_app(app_txn_on_last_day_of_range)
+def test_added_txn_is_correctly_selected(app):
+    # Previously, the total row would mess things up if a transaction was added while a selection
+    # with the same date as the total row was active. A row would be added at the correct place, but
+    # the *total row* would end up selected and edited.
+    app.ttable.add()
+    eq_(len(app.ttable.rows), 2)
+    eq_(app.ttable.selected_index, 1)
+
+#--- Load file
+def app_load_file():
+    app = TestApp()
+    app.doc.date_range = MonthRange(date(2008, 2, 1))
+    app.doc.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
+    app.mainwindow.select_transaction_table()
+    return app
+
+@with_app(app_load_file)
+def test_added_txn_has_selected_txn_date(app):
+    # The newly added txn will have the last transactions' date rather then today's date
+    app.ttable.add()
+    eq_(app.ttable.edited.date, '19/02/2008')
+
+@with_app(app_load_file)
+def test_table_is_refreshed_upon_load(app):
+    # The transaction table refreshes upon FILE_LOADED.
+    eq_(app.ttable.row_count, 4)
+    eq_(app.ttable.selected_indexes, [3])
 
 #--- Autofill
 def app_autofill():

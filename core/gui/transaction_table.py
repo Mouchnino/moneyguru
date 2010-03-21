@@ -17,12 +17,13 @@ class TransactionTable(TransactionTableBase):
     #--- Override
     def _do_add(self):
         transaction = self.document.new_transaction()
-        for index, row in enumerate(self):
+        rows = self[:-1] # ignore total row
+        for index, row in enumerate(rows):
             if row._date > transaction.date:
                 insert_index = index
                 break
         else:
-            insert_index = len(self)
+            insert_index = len(rows)
         row = TransactionTableRow(self, transaction)
         return row, insert_index
     
