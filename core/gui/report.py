@@ -63,6 +63,9 @@ class Report(DocumentGUIObject, tree.Tree):
         pass
     
     #--- Protected
+    def _node_of_account(self, account):
+        return self.find(lambda n: getattr(n, 'account', None) is account)
+    
     def _select_first(self):
         for type_node in self:
             if len(type_node) > 2: # total + blank
@@ -95,7 +98,7 @@ class Report(DocumentGUIObject, tree.Tree):
         if account_group is not None:
             account_group.expanded = True
         account = self.document.new_account(account_type, account_group) # refresh happens on account_added
-        self.selected = self.find(lambda n: getattr(n, 'account', None) is account)
+        self.selected = self._node_of_account(account)
         self.view.update_selection()
         self.view.start_editing()
     
@@ -219,7 +222,14 @@ class Report(DocumentGUIObject, tree.Tree):
     def refresh(self):
         selected_path = self.selected_path
         self._refresh()
-        self.selected_path = selected_path
+        if self.document.selected_account is not None:
+            node_of_account = self._node_of_account(self.document.selected_account)
+            if node_of_account is not None:
+                self.selected = node_of_account
+            else:
+                self.selected_path = selected_path
+        else:
+            self.selected_path = selected_path
     
     def save_edits(self):
         node = self.edited

@@ -241,6 +241,15 @@ def test_make_account_liability(app):
     app.bsheet.move(app.bsheet.get_path(app.bsheet.assets[0]), app.bsheet.get_path(app.bsheet.liabilities))
     app.check_gui_calls(app.nwgraph_gui, ['refresh'])
 
+@with_app(app_one_account)
+def test_selection_follows_account_after_editing(app):
+    # After editing, selection follows the account that was edited. This is important to avoid
+    # confusion when invoking the account panel when still editing the name.
+    app.mw.new_item() # 'New Account', so it's after 'Checking'
+    app.bsheet.selected.name = 'aaa' # will end up *before* 'Checking'
+    app.mw.edit_item()
+    eq_(app.bsheet.selected.name, 'aaa')
+
 class OneAccountInEditionMode(TestCase):
     def setUp(self):
         self.create_instances()
