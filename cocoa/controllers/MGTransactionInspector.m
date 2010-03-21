@@ -32,6 +32,7 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyTransactionPanel *)py;
 }
 
+/* MGPanel Overrides */
 - (NSString *)completionAttrForField:(id)aField
 {
     if (aField == descriptionField) {
@@ -78,6 +79,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setCheckno:[checknoField stringValue]];
     [[self py] setNotes:[notesField stringValue]];
     [[self py] setAmount:[amountField stringValue]];
+}
+
+/* NSWindowController Overrides */
+- (NSString *)windowFrameAutosaveName
+{
+    return @"TransactionPanel";
 }
 
 /* Python --> Cocoa */

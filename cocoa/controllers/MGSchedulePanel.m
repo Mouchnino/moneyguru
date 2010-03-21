@@ -29,7 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     return (PySchedulePanel *)py;
 }
 
-/* Override */
+/* MGPanel Override */
 - (NSString *)completionAttrForField:(id)aField
 {
     if (aField == descriptionField) {
@@ -84,6 +84,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setCheckno:[checknoField stringValue]];
     [[self py] setNotes:[notesField stringValue]];
     [[self py] setAmount:[amountField stringValue]];
+}
+
+/* NSWindowController Overrides */
+- (NSString *)windowFrameAutosaveName
+{
+    return @"SchedulePanel";
 }
 
 /* Actions */
