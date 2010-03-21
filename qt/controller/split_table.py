@@ -29,6 +29,7 @@ class SplitTable(Table):
         model = SplitTableModel(view=self, transaction_panel=transactionPanel.model)
         Table.__init__(self, model, view)
         self.setColumnsWidth(None)
+        view.keyPressed.connect(self.keyPressed)
     
     def _getData(self, row, column, role):
         if role == Qt.FontRole:
@@ -64,4 +65,11 @@ class SplitTable(Table):
     
     def supportedDropActions(self):
         return Qt.MoveAction
+    
+    #--- Event Handlers
+    def keyPressed(self, event):
+        # return
+        if (event.key() == Qt.Key_Down) and (self.model.selected_index == len(self.model)-1):
+            event.ignore()
+            self.model.add()
     

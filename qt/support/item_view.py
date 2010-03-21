@@ -92,6 +92,14 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
             superMethod(self, editor, hint)
     
     def _handleKeyPressEvent(self, event, superMethod):
+        # This is kind of a hack, but it's the only way I found to let the model tell the view if
+        # the keypress has already been handled. event.isAccepted() is initially true. If you handle
+        # the keypress event in the keyPressed handler, call event.ignore(). Then, here, we call
+        # event.accept() again and stop things right there.
+        self.keyPressed.emit(event)
+        if not event.isAccepted():
+            event.accept()
+            return
         key = event.key()
         if key == Qt.Key_Space:
             self.spacePressed.emit()
@@ -147,6 +155,7 @@ class TableView(QTableView, ItemViewMixIn):
         return self.horizontalHeader()
     
     #--- Signals
+    keyPressed = pyqtSignal(['QEvent'])
     deletePressed = pyqtSignal()
     spacePressed = pyqtSignal()
 
@@ -166,5 +175,6 @@ class TreeView(QTreeView, ItemViewMixIn): # Same as in TableView, see comments t
         return self.header()
     
     #--- Signals
+    keyPressed = pyqtSignal(['QEvent'])
     deletePressed = pyqtSignal()
     spacePressed = pyqtSignal()
