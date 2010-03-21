@@ -57,7 +57,12 @@ class Transaction(object):
     def affected_accounts(self):
         return set(s.account for s in self.splits if s.account is not None)
     
-    def balance(self, strong_split=None):
+    def balance(self, strong_split=None, avoid_unassigned=False):
+        # strong_split is the split that was last edited.
+        # if avoid_unassigned is True, the main amount of the transaction will be changed instead
+        # of creating a new unassigned split in the case a main split is edited. (this is for the
+        # entry table)
+        
         # For the special case where there is 2 splits on the same "side" and a strong split, we
         # reverse the weak split
         if len(self.splits) == 2 and strong_split is not None:
@@ -77,11 +82,12 @@ class Transaction(object):
         debits = sum(s.debit for s in self.splits)
         credits = sum(s.credit for s in self.splits)
         main_debit, main_credit = self.main_splits()
-        # when a main split is edited, the amount is adjusted
-        if strong_split is not None and strong_split is main_debit:
-            self.amount = debits
-        elif strong_split is not None and strong_split is main_credit:
-            self.amount = credits
+        if avoid_unassigned and strong_split is not None:
+            # when a main split is edited, the amount is adjusted
+            if strong_split is main_debit:
+                self.amount = debits
+            elif strong_split is main_credit:
+                self.amount = credits
         if debits == credits == self.amount:
             return
         if debits != self.amount:
@@ -330,7 +336,7 @@ class Entry(object):
             other_is_asset = other_split.account is not None and other_split.account.is_balance_sheet_account()
             if not (is_asset and other_is_asset): # if is_asset and other_is_asset, then we have a MCT
                 other_split.amount = -amount
-        self.transaction.balance(self.split)
+        self.transaction.balance(self.split, avoid_unassigned=True)
     
     def normal_balance(self):
         is_credit = self.account is not None and self.account.is_credit_account()

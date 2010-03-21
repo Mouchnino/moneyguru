@@ -92,14 +92,15 @@ def app_transaction_with_splits():
     return app
 
 def test_change_main_split():
-    # Changing a main split changes the transaction amount
+    # Changing a main split creates a new unassigned split.
     app = app_transaction_with_splits()
     dindex, cindex = first_debit_credit_indexes(app)
     app.stable[cindex].credit = '43'
     app.stable.save_edits()
-    eq_(app.tpanel.amount, '43.00')
-    eq_(len(app.stable), 3)
-    eq_(app.stable[dindex].debit, '38.00')
+    eq_(app.tpanel.amount, '42.00')
+    eq_(len(app.stable), 4)
+    eq_(app.stable[3].account, '')
+    eq_(app.stable[3].debit, '1.00')
 
 def test_delete_main_split():
     # Deleting a main split doesn't affect the txn amount. It recreates an unassigned split at
