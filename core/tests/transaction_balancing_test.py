@@ -12,7 +12,7 @@ from datetime import date
 from nose.tools import eq_
 from hsutil.currency import USD
 
-from .base import TestApp
+from .base import TestApp, with_app
 
 def first_debit_credit(app):
     # The order of the splits is not defined, so we test whatever split has a debit
@@ -84,11 +84,9 @@ def test_set_negative_amount():
 #--- Transaction With Splits
 def app_transaction_with_splits():
     app = TestApp()
-    app.add_txn('20/02/2010', from_='foo', to='bar', amount='42')
+    splits = [('baz', '', '5', '')]
+    app.add_txn('20/02/2010', from_='foo', to='bar', amount='42', splits=splits)
     app.tpanel.load()
-    app.stable.add()
-    app.stable[2].debit = '5'
-    app.stable.save_edits()
     return app
 
 def test_change_main_split():
@@ -121,6 +119,22 @@ def test_set_amount():
     debit, credit = first_debit_credit(app)
     eq_(debit, '38.00')
     eq_(credit, '43.00')
+
+#--- Unassigned splits
+def app_unassigned_splits():
+    app = TestApp()
+    splits = [('', '', '1', '')]
+    app.add_txn('20/02/2010', from_='foo', to='bar', amount='42', splits=splits)
+    app.tpanel.load()
+    return app
+
+@with_app(app_unassigned_splits)
+def test_neutralizing_unassigned_split_removes_it(app):
+    # When editing a split results in an unassigned split being put to 0, we remove it.
+    dindex, cindex = first_debit_credit_indexes(app)
+    app.stable[dindex].debit = '42' # The unsassigned split should end up being deleted.
+    app.stable.save_edits()
+    eq_(len(app.stable), 2)
 
 #--- Multi-Currency Transaction
 def app_multi_currency_transaction():
