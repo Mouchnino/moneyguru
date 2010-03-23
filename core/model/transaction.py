@@ -98,16 +98,17 @@ class Transaction(object):
                 main_credit.amount -= (self.amount - credits)
         # At this point, it's possible we still have an imbalance. If we do, we look for an
         # unassigned split to adjust or we create a new one.
+        is_unassigned = lambda s: s.account is None and s is not strong_split
         imbalance = sum(s.amount for s in self.splits)
         if imbalance:
-            is_unassigned = lambda s: s.account is None and s not in (main_credit, main_debit, strong_split)
             unassigned = first(s for s in self.splits if is_unassigned(s))
             if unassigned is not None:
                 unassigned.amount -= imbalance
-                if not unassigned.amount: # Automatically remove empty unassigned splits.
-                    self.splits.remove(unassigned)
             else:
                 self.splits.append(Split(self, None, -imbalance))
+        for split in self.splits[:]:
+            if is_unassigned(split) and split.amount == 0:
+                self.splits.remove(split)
     
     def balance_currencies(self, strong_split=None):
         splits_with_amount = [s for s in self.splits if s.amount != 0]

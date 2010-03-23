@@ -136,6 +136,22 @@ def test_neutralizing_unassigned_split_removes_it(app):
     app.stable.save_edits()
     eq_(len(app.stable), 2)
 
+#--- Unassigned main split
+def app_unassigned_main_split():
+    app = TestApp()
+    app.add_txn('20/02/2010', from_='foo', to='', amount='42')
+    # We have a transaction with one of the main splits being unassigned
+    app.tpanel.load()
+    return app
+
+@with_app(app_unassigned_main_split)
+def test_nullifying_unassigned_main_split_removes_it(app):
+    # When an unassigned split because null, *even* if it's a main split, it's removed
+    app.stable.add()
+    app.stable[2].debit = '42'
+    app.stable.save_edits()
+    eq_(len(app.stable), 2)
+
 #--- Multi-Currency Transaction
 def app_multi_currency_transaction():
     app = TestApp()
