@@ -32,7 +32,7 @@ As you can see, the concept is rather simple: You can edit scheduled transaction
 Budgeting
 -----
 
-Budgets are similar to schedules in the way they behave. The also create transactions at regular intervals, but instead of creating occurrences with fixed amounts, they create occurrences with **floating** amounts. For example, if you create a 200$ monthly budget for the expense account *Clothes*, it will, like the schedules, create regular occurrences of 200$ every month. However, if you create a transaction that sends 50$ to the *Clothes* account, the budget occurrence for that month will become 150$.
+Budgets are similar to schedules in the way they behave. They also create transactions at regular intervals, but instead of creating occurrences with fixed amounts, they create occurrences with **floating** amounts. For example, if you create a 200$ monthly budget for the expense account *Clothes*, it will, like the schedules, create regular occurrences of 200$ every month. However, if you create a transaction that sends 50$ to the *Clothes* account, the budget occurrence for that month will become 150$.
 
 A budget can be created from the Budgets view. The Repeat fields work exactly like they do for the schedules. The Account field is the income or expense account for which the budget is (Clothes, Salary, etc..). The Target field, which is optional, lets you indicate an asset or liability to be used for the other side of the transaction. When you define one, the "future" area of the balance graph in that account will correctly reflect change in its balance that will occur.
 

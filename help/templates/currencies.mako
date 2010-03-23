@@ -10,7 +10,7 @@ One central concept in moneyGuru is that there are 2 types of currencies. The **
 
 The display of these currencies works with a very simple rule: If the amount is in your native currency, it is shown plainly. If it's not, it is shown with the currency's 3 letter ISO code (USD, CAD, EUR, GBP, etc..).
 
-The rules for amount typing are just a little more complex: In almost all cases, typing a number without any currency code means that this amount will be of your native's currency. However, if you are on the Account view with an account that is not of your native's currency, typing an amount without any currency code will create an amount with the **account**'s currency. The reason for this is that if your native currency is USD and you are in a EUR account, you **very** likely want to type a EUR amount. Of course, in **all cases**, explicitly typing a currency code either in front or after the number makes an amount of that currency.
+The rules for amount typing are just a little more complex: In almost all cases, typing a number without any currency code means that this amount will be of your native's currency. However, if you are on the Account view with an account that is not of your native's currency, typing an amount without any currency code will create an amount with the **account**'s currency. The reason for this is that even if your native currency is USD, when you are in a EUR account you **very** likely want to type a EUR amount. Another exception is the split editing pane: Amounts' default currency is the currency of the transaction's amount. Of course, in **all cases**, explicitly typing a currency code either in front or after the number makes an amount of that currency.
 
 Some other applications do automatic conversion of amount on transfer between accounts of different currencies. That doesn't make much sense because if you withdraw 200 EUR in an ATM while on a trip, the amount that will be removed from your USD account is pretty much **certain** not to be of the exact exchange rate for that day. Anyway, exchange rate information are estimates and must be treated as such. In moneyGuru, the currencies for an amount just stay as is (200 EUR) until you tell it otherwise (you change the amount to USD after having received your bank statement).
 
@@ -34,7 +34,9 @@ Currency Rules
 
 * Amounts of foreign currencies are **always** explicitly displayed with their ISO code.
 * Explicitly typing the ISO code of a currency for an amount **always** makes this amount an amount of the specified currency.
-* Typing a plain amount always results in a native amount, except when editing an account of a foreign currency.
+* Typing a plain amount always results in a native amount, except when:
+    * editing an account of a foreign currency.
+    * editing splits of a foreign transaction.
 * Net worth and profits are calculated in the native currency.
 * A transaction involving more than one currency always balances.
 

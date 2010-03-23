@@ -22,7 +22,7 @@ When in edit mode, Tab and Shift-Tab can be used to navigate editable cells. Whe
 Accounts
 -----
 
-Accounts are edited from the Balance Sheet and the Income Statement. When you create a new account, it will be created under the type of account that currently contains the selection. For example, if I have "Credit Card" selected and press ${cmd}N, a new liability will be created. New accounts are automatically created in edition mode. Type a new name then press Return to end edition.
+Accounts are edited from the Balance Sheet and the Income Statement. When you create a new account, it will be created under the type of account that currently contains the selection. For example, if I have "Credit Card" selected and press ${cmd}N, a new liability will be created. You can then type a new then press Return to end editing.
 
 You can also use drag & drop to change an account type or group (yeah, account group. use ${cmd_shift}N to create one).
 
@@ -30,12 +30,12 @@ You can also use drag & drop to change an account type or group (yeah, account g
 
 Using Show Info on an account will bring the account edition panel shown above. From there, you can edit an account name, but also change its type, its [currency](currencies.htm) and its account number. An account number is a numerical reference to an account. Use this if your accounting has account number (you know, 1000-1999 is for assets, 8000-8999 is for expenses, stuff like that). When an account has an account number, that number will be displayed along with the name in the Transaction and Account views. Moreover, you can type the number instead of the name to reference to that account (if you know the numbers by heart, it will make typing much faster).
 
-Little aside note: Changing an account's currency does **not** change the currency of the transactions it contains.
+Note that changing an account's currency does **not** change the currency of the transactions it contains.
 
 Transactions
 -----
 
-Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (speaking of which, see the "Date Editing" section below). The Description, Payee and Account (From, To Transfer) columns are auto-completed (see "Auto-completion" below).
+Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (see "Date Editing" below). The Description, Payee and Account (From, To Transfer) columns are auto-completed (see "Auto-completion" below).
 
 It's possible to re-order a transaction within other transactions of the same date. To do so, you can use drag & drop, or you can use ${cmd}+ and ${cmd}-.
 
@@ -89,12 +89,12 @@ Transaction Balancing
 Because moneyGuru follows double-entry accounting, splits in a transaction must always balance. To make moneyGuru easier to use, this balancing happens automatically and follow a couple of rules.
 
 * The Amount field of a transaction represents the sum of amounts on each side (debit side and credit side).
-* Most of the time, when moneyGuru balances splits, it tries to keep the Amount field unchanged.
-* When split amounts needs to be adjusted, moneyGuru always adjust them from the 2 **main splits** (see below). Amounts from other splits are never touched.
+* When balancing splits, the Amount field is not changed.
+* When split amounts need to be adjusted, moneyGuru always adjust them from the 2 **main splits** (see below). Amounts from other splits are never touched.
 * The 2 main splits in a transaction are the first split of each side.
 * Main splits are displayed in bold.
 * You can use drag and drop to re-order splits.
-* When one of the main splits is edited, the transaction's Amount value will be adjusted.
+* When one of the main splits is edited, an unassigned split will be created to balance the transaction (because it can't adjust the main split which was just edited).
 * If the transaction is a [Multi-Currency Transaction](currencies.htm), the Amount field cannot be directly set. It can only be edited through splits directly. The read-only amount shown represents a conversion of all amounts of the transaction's splits in your native currency, divided by 2.
 
 Auto-completion, Autofill and Lookups

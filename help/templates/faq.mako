@@ -11,11 +11,11 @@ moneyGuru is a personal finance management and planning tool. With it, you can e
 
 ### How much does it cost?
 
-The target price for moneyGuru is 49.95. You can buy moneyGuru at the [Hardcoded Software purchase page.](http://www.hardcoded.net/purchase.htm)
+The price for moneyGuru is 29.95. You can buy moneyGuru at the [Hardcoded Software purchase page.](http://www.hardcoded.net/purchase.htm)
 
 ### What makes it better than other finance management applications?
 
-Rather than having reports which you have to configure (or find out which pre-configured report is the right one), your important financial data (net worth, profit) is constantly up-to-date and "in your face". This allows you to constantly make informed decision rather than doing so periodically. moneyGuru also has a very efficient [navigation](basics.htm) and [edition](edition.htm) system, a strong support for [currencies](currencies.htm) and a system based on double-entry bookkeeping.
+Rather than having reports which you have to configure (or find out which pre-configured report is the right one), your important financial data (net worth, profit) is constantly up-to-date and "in your face". This allows you to constantly make informed decision rather than doing so periodically. moneyGuru also has a very efficient [navigation](basics.htm) and [editing](edition.htm) system, a strong support for [currencies](currencies.htm) and a system based on double-entry bookkeeping.
 
 ### What are the demo limitations of moneyGuru?
 
