@@ -62,7 +62,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
-    [tabView selectFirstTabViewItem:self];
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];

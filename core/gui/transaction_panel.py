@@ -32,7 +32,7 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
             split.account = Account(account_name, self.app.default_currency, account_type)
         else:
             split.account = None
-        split.amount = amount
+        split.set_amount_explicitly(amount)
         split.memo = memo
         self.transaction.balance(split)
         self.notify('split_changed')

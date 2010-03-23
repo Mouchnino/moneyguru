@@ -177,9 +177,10 @@ class Transaction(object):
         self.mtime = time.time()
     
     def main_splits(self):
-        main_debit = first(s for s in self.splits if s.amount > 0)
-        main_credit = first(s for s in self.splits if s.amount < 0)
-        free_splits = (s for s in self.splits if not s.amount)
+        potential_mains = [s for s in self.splits if not s.explicit_amount]
+        main_debit = first(s for s in potential_mains if s.amount > 0)
+        main_credit = first(s for s in potential_mains if s.amount < 0)
+        free_splits = (s for s in potential_mains if not s.amount)
         if main_debit is None:
             main_debit = first(free_splits)
         if main_credit is None:
@@ -282,6 +283,7 @@ class Split(object):
         self._amount = amount
         self.reconciliation_date = None
         self.reference = None
+        self.explicit_amount = False
     
     def __repr__(self):
         return '<Split %r %s>' % (self.account_name, self.amount)
@@ -294,6 +296,11 @@ class Split(object):
     def remove(self):
         self.transaction.splits.remove(self)
         self.transaction.balance()
+    
+    def set_amount_explicitly(self, amount):
+        if amount != self.amount:
+            self.amount = amount
+            self.explicit_amount = True
     
     #--- Properties
     @property

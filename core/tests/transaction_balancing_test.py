@@ -81,6 +81,16 @@ def test_set_negative_amount():
     app.tpanel.amount = '-12'
     eq_(app.tpanel.amount, '12.00')
 
+@with_app(app_simple_transaction)
+def test_setting_split_amount_removes_main_status(app):
+    # Explicitly setting a split amount removes its main status.
+    dindex, cindex = first_debit_credit_indexes(app)
+    app.stable[dindex].debit = '41'
+    app.stable.save_edits()
+    assert not app.stable[dindex].is_main
+    # The newly created unassigned split, however, has the main status
+    assert app.stable[2].is_main
+
 #--- Transaction With Splits
 def app_transaction_with_splits():
     app = TestApp()

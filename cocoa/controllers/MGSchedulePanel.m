@@ -59,7 +59,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
-    [tabView selectFirstTabViewItem:self];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
     [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
