@@ -43,20 +43,18 @@ If you type the name of an account that doesn't exist in an Account column, this
 
 ![](images/edition_transaction_panel.png)
 
-Using Show Info on a single transaction brings the panel above up. With it, you can edit everything that you can edit from the Transactions and Account views, and additionally, you can create and edit transaction with more than 2 entries (commonly called a "Split Transaction") with the table at the bottom. To do so, select the "Splits" tab.
+Using Show Info on a single transaction brings the panel above up. With it, you can edit everything that you can edit from the Transactions and Account views, and additionally, you can create and edit transaction with more than 2 entries (commonly called a "Split Transaction") with the table at the bottom.
 
-![](images/edition_transaction_panel_split.png)
+One thing to remember about this entry editing table is that it's constantly auto-balancing. Therefore, if you take a transaction and simply delete one of its entries, it will not disappear. It will instantly re-add an unassigned entry with the same amount. Changing the amount of an entry will also automatically add an unassigned entry with the amount difference. Therefore, if you want to add a split transaction like, for example, a roommate shared bill where you pay a 40$ bill (let's say internet) using direct banking transfer and your roommate gives you 20$ in cash, you would do the following:
 
-From this tab, you can add new splits to your transactions. When you add splits, the transaction constantly balances itself automatically. The rules for split balancing are a little complex (see "Transaction balancing" below), but using the split table is usually very simple. For example, to re-create the transaction shown in the picture above, you'd do the following:
+1. Add a normal 2 way Checking --> Utilities transaction.
+1. Show Info for the transaction.
+1. Change the Utilities debit to 20$. This will create a 3rd unassigned row with a 20$ debit.
+1. Change the 3rd row account to Cash.
 
-1. Create a new transaction through the Transaction or Account table that transfers 1200$ from Salary to Checking.
-1. Click the Show Info button and select the Splits tab.
-1. Add a new split with the + button.
-1. Write down "Federal Taxes" in the Account column and "126.12" in the Debit column.
-1. Add a new split with the + button.
-1. Write down "State Taxes" in the Account column and "287.92" in the Debit column.
+![](images/edition_three_way_split.png)
 
-You'll notice that adding new splits automatically deduces the amount assigned to Checking.
+Congratulations, you just made a 3 ways split transaction. This transaction correctly reflect reality where 40$ are out of your checking account, internet had a net cost of 20$ for you and you end up with 20 more dollars in your pocket.
 
 ![](images/edition_mass_edition_panel.png)
 
@@ -82,20 +80,6 @@ Fields allowing you to enter amounts have a few hidden features.
 * You can enter simple expressions like "2+4.35/2" and they will be automatically calculated.
 * If you enabled the "Automatically place decimals when typing" option, typing numbers without decimal point will result in it being automatically placed. For example, if your default currency is USD, typing "1234" will result in the amount "12.34".
 * You can always explicitly specify the currency of an amount by prepending or appending the 3-letters ISO code of that currency to that amount (see the [currencies help page](currencies.htm)).
-
-Transaction Balancing
------
-
-Because moneyGuru follows double-entry accounting, splits in a transaction must always balance. To make moneyGuru easier to use, this balancing happens automatically and follow a couple of rules.
-
-* The Amount field of a transaction represents the sum of amounts on each side (debit side and credit side).
-* When balancing splits, the Amount field is not changed.
-* When split amounts need to be adjusted, moneyGuru always adjust them from the 2 **main splits** (see below). Amounts from other splits are never touched.
-* The 2 main splits in a transaction are the first split of each side.
-* Main splits are displayed in bold.
-* You can use drag and drop to re-order splits.
-* When one of the main splits is edited, an unassigned split will be created to balance the transaction (because it can't adjust the main split which was just edited).
-* If the transaction is a [Multi-Currency Transaction](currencies.htm), the Amount field cannot be directly set. It can only be edited through splits directly. The read-only amount shown represents a conversion of all amounts of the transaction's splits in your native currency, divided by 2.
 
 Auto-completion, Autofill and Lookups
 -----
