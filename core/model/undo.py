@@ -14,8 +14,7 @@ from ..model.recurrence import Spawn
 
 ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group']
 GROUP_SWAP_ATTRS = ['name', 'type']
-TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'notes', 'position', 'amount',
-    'splits']
+TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'notes', 'position', 'splits']
 SPLIT_SWAP_ATTRS = ['account', 'amount', 'reconciliation_date']
 SCHEDULE_SWAP_ATTRS = ['start_date', 'repeat_type', 'repeat_every', 'stop_date', 'date2exception', 
                        'date2globalchange', 'date2instances']

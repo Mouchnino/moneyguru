@@ -403,17 +403,12 @@ class OneTwoWayTransactionOtherWay(TestCase):
 #--- Three-way transaction
 def app_three_way_transaction():
     app = TestApp()
-    app.add_account('first')
-    app.doc.show_selected_account()
-    app.add_entry('11/07/2008', description='foobar', transfer='second', decrease='42')
-    app.tpanel.load()
-    app.stable.add()
-    row = app.stable.selected_row
-    row.account = 'third'
-    row.debit = '20'
-    app.stable.save_edits()
-    app.tpanel.save()
-    app.mainwindow.select_transaction_table()
+    splits = [
+        ('first', '', '', '42'),
+        ('second', '', '22', ''),
+        ('third', '', '20', ''),
+    ]
+    app.add_txn_with_splits(splits, date='11/07/2008', description='foobar')
     return app
 
 def test_autofill():
@@ -440,13 +435,6 @@ def test_edit_from():
     app.ttable.save_edits()
     eq_(app.ttable[0].from_, 'fourth')
 
-def test_set_amount():
-    # Setting the amount value on a split transaction is possible.
-    app = app_three_way_transaction()
-    app.ttable[0].amount = '43'
-    app.ttable.save_edits()
-    eq_(app.ttable[0].amount, '43.00')
-
 #--- Three-way multi-currency transaction
 def app_three_way_multi_currency_transaction():
     app = TestApp()
@@ -469,30 +457,24 @@ def app_three_way_multi_currency_transaction():
     app.mainwindow.select_transaction_table()
     return app
 
-class OneFourWayTransactionWithUnassigned(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('first')
-        self.document.show_selected_account()
-        self.add_entry('11/07/2008', transfer='second', decrease='42')
-        self.tpanel.load()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.debit = '20'
-        self.stable.save_edits()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.credit = '20'
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.mainwindow.select_transaction_table()
-    
-    def test_attributes(self):
-        """The from/to fields show the unassigned splits"""
-        row = self.ttable[0]
-        eq_(row.from_, 'first, Unassigned')
-        eq_(row.to, 'second, Unassigned')
-    
+#--- Four way txn with unassigned
+def app_four_way_txn_with_unassigned():
+    app = TestApp()
+    splits = [
+        ('first', '', '', '22'),
+        ('second', '', '22', ''),
+        ('', '', '20', ''),
+        ('', '', '', '20'),
+    ]
+    app.add_txn_with_splits(splits, date='11/07/2008')
+    return app
+
+@with_app(app_four_way_txn_with_unassigned)
+def test_from_and_to_column_show_unassigned_splits(app):
+    # The from/to fields show the unassigned splits.
+    row = app.ttable[0]
+    eq_(row.from_, 'first, Unassigned')
+    eq_(row.to, 'second, Unassigned')
 
 class TwoWayUnassignedWithAmount(TestCase):
     def setUp(self):
@@ -544,37 +526,36 @@ class TwoWayNullAmounts(TestCase):
         eq_(row.to, 'second')
     
 
-class ThreeWayNullAmounts(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account('first')
-        self.document.show_selected_account()
-        self.add_entry('11/07/2008', transfer='second')
-        self.tpanel.load()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.account = 'third'
-        self.stable.save_edits()
-        self.tpanel.save()
-        self.mainwindow.select_transaction_table()
-    
-    def test_can_edit_to(self):
-        """The To column can be edited when it represents a single split"""
-        assert self.ttable.can_edit_cell('to', 0)
-    
-    def test_edit_to(self):
-        """When edited, the To column is saved"""
-        row = self.ttable[0]
-        row.to = 'fourth'
-        self.ttable.save_edits()
-        eq_(self.ttable[0].to, 'fourth')
-    
-    def test_from_to(self):
-        """When the amounts are null, put everything in from and the last in to"""
-        row = self.ttable[0]
-        eq_(row.from_, 'first, second')
-        eq_(row.to, 'third')
-    
+#--- Three way null amounts
+def app_three_way_null_amounts():
+    app = TestApp()
+    splits = [
+        ('first', '', '', ''),
+        ('second', '', '', ''),
+        ('third', '', '', ''),
+    ]
+    app.add_txn_with_splits(splits, date='11/07/2008')
+    return app
+
+@with_app(app_three_way_null_amounts)
+def test_can_edit_to(app):
+    # The To column can be edited when it represents a single split.
+    assert app.ttable.can_edit_cell('to', 0)
+
+@with_app(app_three_way_null_amounts)
+def test_edit_to(app):
+    # When edited, the To column is saved.
+    row = app.ttable[0]
+    row.to = 'fourth'
+    app.ttable.save_edits()
+    eq_(app.ttable[0].to, 'fourth')
+
+@with_app(app_three_way_null_amounts)
+def test_from_to(app):
+    # When the amounts are null, put everything in from and the last in to.
+    row = app.ttable[0]
+    eq_(row.from_, 'first, second')
+    eq_(row.to, 'third')
 
 class TwoTransactionsOneOutOfRange(TestCase):
     def setUp(self):
@@ -1151,9 +1132,9 @@ def test_can_edit():
         assert not app.ttable.can_edit_cell('unknown', index)
     
     # All fields are editable except "to" which contains 2 accounts (from has only one so it's
-    # editable).
+    # editable) and "amount" because there's more than one split.
     app = app_three_way_transaction()
-    yield check, app, 0, ('to', )
+    yield check, app, 0, ('to', 'amount')
     
     # When the transaction is multi-currency, the amount can't be edited.
     app = app_three_way_multi_currency_transaction()

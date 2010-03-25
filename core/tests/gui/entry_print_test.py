@@ -15,11 +15,13 @@ from ...gui.entry_print import EntryPrint
 def app_split_transaction():
     app = TestApp()
     splits = [
+        ('foo', '', '100', ''),
+        ('bar', '', '', '100'),
         ('split1', 'some memo', '10', ''),
         ('split2', '', '', '1'),
         ('', '', '', '9'),
     ]
-    app.add_txn(from_='foo', to='bar', amount='110', splits=splits)
+    app.add_txn_with_splits(splits)
     app.add_txn(from_='foo', to='bar', amount='42')
     app.mw.show_account()
     app.pv = EntryPrint(app.etable)

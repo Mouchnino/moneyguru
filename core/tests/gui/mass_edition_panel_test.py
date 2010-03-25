@@ -331,9 +331,9 @@ def test_can_change_amount():
     def check(app, expected):
         eq_(app.mepanel.can_change_amount, expected)
     
-    # Splits don't prevent the Amount field from being enabled
+    # Splits prevent the Amount field from being enabled
     app = app_two_transactions_one_split()
-    yield check, app, True
+    yield check, app, False
     
     # If a MCT is selected, amount is not editable
     app = app_two_transactions_with_a_multi_currency_one()

@@ -22,8 +22,6 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         ('payeeEdit', 'payee'),
         ('checkNoEdit', 'checkno'),
         ('notesEdit', 'notes'),
-        ('amountEdit', 'amount'),
-        ('amountEdit2', 'amount'),
     ]
     
     def __init__(self, mainwindow):
@@ -46,14 +44,6 @@ class TransactionPanel(Panel, Ui_TransactionPanel):
         self.tabWidget.setCurrentIndex(0)
     
     #--- model --> view
-    def refresh_amount(self):
-        self.amountEdit.setText(self.model.amount)
-        self.amountEdit2.setText(self.model.amount)
-    
     def refresh_for_multi_currency(self):
         self.mctButton.setEnabled(self.model.is_multi_currency)
-        self.amountEdit.setEnabled(not self.model.is_multi_currency)
-        self.amountEdit2.setEnabled(not self.model.is_multi_currency)
-        self.mctNoticeLabel.setHidden(not self.model.is_multi_currency)
-        self.mctNoticeLabel2.setHidden(not self.model.is_multi_currency)
     

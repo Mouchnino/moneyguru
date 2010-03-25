@@ -86,8 +86,7 @@ def test_new_schedule():
     app = app_cleared_gui_calls()
     app.mainwindow.select_schedule_table()
     app.mainwindow.new_item()
-    expected = ['refresh_for_multi_currency', 'refresh_repeat_options']
-    app.check_gui_calls_partial(app.scpanel_gui, expected)
+    app.check_gui_calls_partial(app.scpanel_gui, ['refresh_repeat_options'])
 
 def test_show_transaction_table():
     # tview's totals label is refreshed upon connecting.
@@ -267,25 +266,6 @@ def app_transaction_with_panel_loaded():
     app.tpanel.load()
     app.clear_gui_calls()
     return app
-
-def test_change_txn_amount():
-    # Changing the panel's amount results in a refresh_amount call
-    app = app_transaction_with_panel_loaded()
-    app.tpanel.amount = '23'
-    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
-
-def test_change_txn_amount_through_splits():
-    # Changing the transaction's amount through the splits updates the Amount field.
-    app = app_transaction_with_panel_loaded()
-    app.stable[0].debit = '54'
-    app.stable.save_edits()
-    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
-
-def test_delete_split():
-    # Deleting a split calls refresh_amount. This is in caste the txn is multi-currency.
-    app = app_transaction_with_panel_loaded()
-    app.stable.delete()
-    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_amount'])
 
 def test_move_split():
     # The split table is refreshed after a move

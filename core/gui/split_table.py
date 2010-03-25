@@ -114,8 +114,3 @@ class SplitTableRow(RowWithDebitAndCredit):
         except ValueError:
             pass
     
-    @property
-    def is_main(self):
-        maind, mainc = self.split.transaction.main_splits()
-        return self.split is maind or self.split is mainc
-    

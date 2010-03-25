@@ -523,6 +523,12 @@ def test_autofill():
     app.etable.edited.description = 'foobar'
     eq_(app.etable.edited.transfer, '')
 
+@with_app(app_split_transaction)
+def test_dont_allow_amount_change_for_splits(app):
+    # Amount of entries belonging to splits can't be set.
+    assert not app.etable[0].can_edit_cell('increase')
+    assert not app.etable[0].can_edit_cell('decrease')
+
 def test_show_transfer_account():
     # show_transfer_account() cycles through all splits of the entry
     app = app_split_transaction()

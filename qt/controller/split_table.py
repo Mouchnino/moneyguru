@@ -31,13 +31,6 @@ class SplitTable(Table):
         self.setColumnsWidth(None)
         view.keyPressed.connect(self.keyPressed)
     
-    def _getData(self, row, column, role):
-        if role == Qt.FontRole:
-            font = QFont(self.view.font())
-            font.setBold(row.is_main)
-            return font
-        return Table._getData(self, row, column, role)
-    
     def _getFlags(self, row, column):
         flags = Table._getFlags(self, row, column)
         return flags | Qt.ItemIsDragEnabled

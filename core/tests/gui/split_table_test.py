@@ -166,13 +166,6 @@ def test_move_split():
     eq_(app.stable[2].account, first_account)
     eq_(app.stable.selected_indexes, [2])
 
-def test_row_is_main():
-    # Row.is_main return True if the split is one of the main splits.
-    app = app_transaction_with_splits()
-    assert app.stable[0].is_main
-    assert app.stable[1].is_main
-    assert not app.stable[2].is_main
-
 #--- EUR account and EUR transfer
 def app_eur_account_and_eur_transfer():
     app = TestApp()

@@ -62,12 +62,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)loadFields
 {
+    [tabView selectFirstTabViewItem:self];
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
     [checknoField setStringValue:[[self py] checkno]];
     [notesField setStringValue:[[self py] notes]];
-    [amountField setStringValue:[[self py] amount]];
-    [amountField2 setStringValue:[[self py] amount]];
     [splitTable refresh];
 }
 
@@ -77,7 +76,6 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setPayee:[payeeField stringValue]];
     [[self py] setCheckno:[checknoField stringValue]];
     [[self py] setNotes:[notesField stringValue]];
-    [[self py] setAmount:[amountField stringValue]];
 }
 
 /* NSWindowController Overrides */
@@ -87,20 +85,9 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Python --> Cocoa */
-- (void)refreshAmount
-{
-    [amountField setStringValue:[[self py] amount]];
-    [amountField2 setStringValue:[[self py] amount]];
-}
-
 - (void)refreshForMultiCurrency
 {
-    BOOL mct = [[self py] isMultiCurrency];
-    [mctBalanceButton setEnabled:mct];
-    [amountField setEnabled:!mct];
-    [amountField2 setEnabled:!mct];
-    [mctNotice setHidden:!mct];
-    [mctNotice2 setHidden:!mct];
+    [mctBalanceButton setEnabled:[[self py] isMultiCurrency]];
 }
 
 /* Actions */
@@ -117,15 +104,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)mctBalance:(id)sender
 {
     [[self py] mctBalance];
-}
-
-/* Delegate */
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
-{
-    id control = [aNotification object];
-    if ((control == amountField) || (control == amountField2)) {
-        // must be edited right away to refresh the split table
-        [[self py] setAmount:[(NSTextField *)control stringValue]];
-    }
 }
 @end

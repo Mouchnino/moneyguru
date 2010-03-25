@@ -685,10 +685,6 @@ class PySplitTable(PyTable):
     def moveSplitFromRow_toRow_(self, from_row, to_row):
         self.py.move_split(from_row, to_row)
     
-    @signature('c@:i')
-    def isRowMainAtIndex_(self, index):
-        return self.py[index].is_main
-    
 
 class PyPanelWithTransaction(PyPanel):
     def description(self):
@@ -715,20 +711,11 @@ class PyPanelWithTransaction(PyPanel):
     def setNotes_(self, value):
         self.py.notes = value
     
-    def amount(self):
-        return self.py.amount
-    
-    def setAmount_(self, value):
-        self.py.amount = value
-    
     @signature('c@:')
     def isMultiCurrency(self):
         return self.py.is_multi_currency
     
     #--- Python -> Cocoa
-    def refresh_amount(self):
-        self.cocoa.refreshAmount()
-    
     def refresh_for_multi_currency(self):
         self.cocoa.refreshForMultiCurrency()
     

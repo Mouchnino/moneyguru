@@ -53,23 +53,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
-{
-    if ([aCell isKindOfClass:[NSTextFieldCell class]]) {
-        BOOL isMain = [[self py] isRowMainAtIndex:row];
-        NSTextFieldCell *cell = aCell;
-        NSFont *font = [cell font];
-        NSFontManager *fontManager = [NSFontManager sharedFontManager];
-        if (isMain) {
-            font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
-        }
-        else {
-            font = [fontManager convertFont:font toNotHaveTrait:NSFontBoldTrait];
-        }
-        [cell setFont:font];
-    }
-}
-
 - (BOOL)tableView:(NSTableView *)tableView receivedKeyEvent:(NSEvent *)aEvent
 {
     if ([aEvent isDown] && ([[self tableView] selectedRow] == [[self py] numberOfRows]-1)) {

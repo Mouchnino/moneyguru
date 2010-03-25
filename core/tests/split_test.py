@@ -136,38 +136,27 @@ class SplitTransaction(TestCase):
         # income        0   1
         # Unassigned    0   9
         self.create_instances()
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry(date='2/1/2007', description='Split', transfer='expense1', decrease='110')
+        self.add_account('New Account')
+        splits = [
+            ('New Account', '', '', '100'),
+            ('expense1', '', '100', ''),
+            ('expense2', '', '10', ''),
+            ('income', '', '', '1'),
+        ] # there will be an unassigned for 9
+        self.ta.add_txn_with_splits(splits, date='2/1/2007', description='Split')
+        self.show_account('New Account')
         self.add_entry(date='3/1/2007')   # That's to make sure the selection doesn't change on edits
         self.etable.select([0])
-        self.tpanel.load()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.account = 'expense2'
-        row.memo = 'some memo'
-        row.debit = '10'
-        self.stable.save_edits()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.account = 'income'
-        row.credit = '1'
-        self.stable.save_edits()
-        self.stable.add()
-        row = self.stable.selected_row
-        row.credit = '9'
-        self.stable.save_edits()
-        self.tpanel.save()
     
     def test_amounts(self):
         """All split amounts are right"""
         self.tpanel.load()
-        self.assertEqual(self.stable[0].credit, '100.00')
-        self.assertEqual(self.stable[1].debit, '100.00')
-        self.assertEqual(self.stable[2].debit, '10.00')
-        self.assertEqual(self.stable[3].credit, '1.00')
-        self.assertEqual(self.stable[4].credit, '9.00')
-        self.assertEqual(self.etable[0].decrease, '100.00')
+        eq_(self.stable[0].credit, '100.00')
+        eq_(self.stable[1].debit, '100.00')
+        eq_(self.stable[2].debit, '10.00')
+        eq_(self.stable[3].credit, '1.00')
+        eq_(self.stable[4].credit, '9.00')
+        eq_(self.etable[0].decrease, '100.00')
     
     def test_delete_split(self):
         """Deleting a split works"""
@@ -175,11 +164,10 @@ class SplitTransaction(TestCase):
         self.stable.select([2])
         self.stable.delete()
         eq_(len(self.stable), 4)
-        # The expense1 split took the adjustment
-        eq_(self.stable[1].debit, '110.00')
+        # The unassigned split took the difference
         eq_(self.stable[2].account, 'income')
         eq_(self.stable[2].credit, '1.00')
-        eq_(self.stable[3].credit, '9.00')
+        eq_(self.stable[3].debit, '1.00')
 
     def test_revert_split(self):
         """Reverting the edits works"""

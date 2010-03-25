@@ -347,9 +347,6 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     payee = rowattr('_payee', 'payee')
     checkno = rowattr('_checkno')
     transfer = rowattr('_transfer', 'transfer')
-    @property
-    def can_edit_transfer(self):
-        return len(self.entry.splits) == 1
     
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
@@ -373,6 +370,11 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
             return
         self._decrease = decrease
     
+    @property
+    def can_edit_transfer(self):
+        return len(self.entry.splits) == 1
+    can_edit_increase = can_edit_transfer
+    can_edit_decrease = can_edit_transfer
 
 class PreviousBalanceRow(BaseEntryTableRow):
     def __init__(self, table, date, balance, reconciled_balance, account):

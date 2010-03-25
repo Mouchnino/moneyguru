@@ -23,10 +23,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *payeeField;
     IBOutlet NSTextField *checknoField;
     IBOutlet NSTextField *notesField;
-    IBOutlet NSTextField *amountField;
-    IBOutlet NSTextField *amountField2;
-    IBOutlet NSTextField *mctNotice;
-    IBOutlet NSTextField *mctNotice2;
     IBOutlet MGTableView *splitTableView;
     
     MGSplitTable *splitTable;

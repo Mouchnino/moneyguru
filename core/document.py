@@ -480,7 +480,6 @@ class Document(Broadcaster, Listener):
             if split.account is not None:
                 split.account = self.accounts.find(split.account.name, split.account.type)
         original.set_splits(new.splits)
-        original.amount = new.amount
         min_date = min(original.date, new.date)
         self._change_transaction(original, date=new.date, description=new.description,
             payee=new.payee, checkno=new.checkno, notes=new.notes, global_scope=global_scope)
@@ -594,9 +593,9 @@ class Document(Broadcaster, Listener):
         min_date = entry.date if date is NOEDIT else min(entry.date, date)
         if reconciliation_date is not NOEDIT:
             entry.split.reconciliation_date = reconciliation_date
-        if amount is not NOEDIT:
+        if (amount is not NOEDIT) and (len(entry.splits) == 1):
             entry.change_amount(amount)
-        if transfer is not NOEDIT and len(entry.splits) == 1 and transfer != entry.transfer:
+        if (transfer is not NOEDIT) and (len(entry.splits) == 1) and (transfer != entry.transfer):
             auto_create_type = AccountType.Expense if entry.split.amount < 0 else AccountType.Income
             transfer_account = self.accounts.find(transfer, auto_create_type) if transfer else None
             entry.splits[0].account = transfer_account

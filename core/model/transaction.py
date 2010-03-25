@@ -23,7 +23,6 @@ class Transaction(object):
         self.payee = nonone(payee, '')
         self.checkno = nonone(checkno, '')
         self.notes = ''
-        self.amount = nonone(amount, 0)
         if amount is not None:
             self.splits = [Split(self, account, amount), Split(self, None, -amount)]
         else:
@@ -43,7 +42,6 @@ class Transaction(object):
         result.notes = txn.notes
         result.position = txn.position
         result.mtime = txn.mtime
-        result.amount = txn.amount
         for split in txn.splits:
             newsplit = copy(split)
             newsplit.transaction = result
@@ -57,11 +55,8 @@ class Transaction(object):
     def affected_accounts(self):
         return set(s.account for s in self.splits if s.account is not None)
     
-    def balance(self, strong_split=None, avoid_unassigned=False):
+    def balance(self, strong_split=None):
         # strong_split is the split that was last edited.
-        # if avoid_unassigned is True, the main amount of the transaction will be changed instead
-        # of creating a new unassigned split in the case a main split is edited. (this is for the
-        # entry table)
         
         # For the special case where there is 2 splits on the same "side" and a strong split, we
         # reverse the weak split
@@ -73,31 +68,9 @@ class Transaction(object):
         if splits_with_amount and not allsame(s.amount.currency for s in splits_with_amount):
             self.balance_currencies(strong_split)
             return
-        # When the transaction amount is 0, the existing splits then determine what this amount is
-        # going to be.
-        if not self.amount:
-            debits = sum(s.debit for s in self.splits)
-            credits = sum(s.credit for s in self.splits)
-            self.amount = max(debits, credits)
-        debits = sum(s.debit for s in self.splits)
-        credits = sum(s.credit for s in self.splits)
-        main_debit, main_credit = self.main_splits()
-        if avoid_unassigned and strong_split is not None:
-            # when a main split is edited, the amount is adjusted
-            if strong_split is main_debit:
-                self.amount = debits
-            elif strong_split is main_credit:
-                self.amount = credits
-        if debits == credits == self.amount:
+        imbalance = sum(s.amount for s in self.splits)
+        if not imbalance:
             return
-        if debits != self.amount:
-            if (main_debit is not None) and (main_debit is not strong_split):
-                main_debit.amount += (self.amount - debits)
-        if credits != self.amount:
-            if (main_credit is not None) and (main_credit is not strong_split):
-                main_credit.amount -= (self.amount - credits)
-        # At this point, it's possible we still have an imbalance. If we do, we look for an
-        # unassigned split to adjust or we create a new one.
         is_unassigned = lambda s: s.account is None and s is not strong_split
         imbalance = sum(s.amount for s in self.splits)
         if imbalance:
@@ -130,13 +103,6 @@ class Transaction(object):
                         split.amount -= amount # adjust
                 else:
                     self.splits.append(Split(self, None, -amount))
-        # We need an approximation for the amount value. What we do is we take the currency of the
-        # first split and use it as a base currency. Then, we sum up all amounts, convert them, and
-        # divide the sum by 2.
-        currency = splits_with_amount[0].amount.currency
-        convert = lambda a: convert_amount(abs(a), currency, self.date)
-        amount_sum = sum(convert(s.amount) for s in splits_with_amount)
-        self.amount = amount_sum * 0.5
     
     def change(self, date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT, from_=NOEDIT, 
             to=NOEDIT, amount=NOEDIT, currency=NOEDIT, notes=NOEDIT):
@@ -153,11 +119,8 @@ class Transaction(object):
             self.notes = notes
         # the amount field has to be set first so that splitted_splits() is not confused by splits
         # with no amount.
-        if amount is not NOEDIT:
-            if not same_currency(amount, self.amount):
-                self.change(currency=amount.currency)
+        if (amount is not NOEDIT) and self.can_set_amount:
             self.amount = abs(amount)
-            self.balance()
         if from_ is not NOEDIT:
             fsplits, _ = self.splitted_splits()
             if len(fsplits) == 1:
@@ -175,17 +138,6 @@ class Transaction(object):
                 split.reconciliation_date = None
             self.amount = Amount(self.amount.value, currency)
         self.mtime = time.time()
-    
-    def main_splits(self):
-        potential_mains = [s for s in self.splits if not s.explicit_amount]
-        main_debit = first(s for s in potential_mains if s.amount > 0)
-        main_credit = first(s for s in potential_mains if s.amount < 0)
-        free_splits = (s for s in potential_mains if not s.amount)
-        if main_debit is None:
-            main_debit = first(free_splits)
-        if main_credit is None:
-            main_credit = first(free_splits)
-        return main_debit, main_credit
     
     def matches(self, query):
         """Return whether 'self' is matching query, which is a dict containing various arguments,
@@ -258,6 +210,34 @@ class Transaction(object):
         froms += null_amounts
         return froms, tos
     
+    #--- Properties
+    @property
+    def amount(self):
+        if self.is_mct:
+            # We need an approximation for the amount value. What we do is we take the currency of the
+            # first split and use it as a base currency. Then, we sum up all amounts, convert them, and
+            # divide the sum by 2.
+            splits_with_amount = [s for s in self.splits if s.amount != 0]
+            currency = splits_with_amount[0].amount.currency
+            convert = lambda a: convert_amount(abs(a), currency, self.date)
+            amount_sum = sum(convert(s.amount) for s in splits_with_amount)
+            return amount_sum * 0.5
+        else:
+            return sum(s.debit for s in self.splits)
+    
+    @amount.setter
+    def amount(self, value):
+        assert self.can_set_amount
+        debit = first(s for s in self.splits if s.debit)
+        credit = first(s for s in self.splits if s.credit)
+        debit_account = debit.account if debit is not None else None
+        credit_account = credit.account if credit is not None else None
+        self.splits = [Split(self, debit_account, value), Split(self, credit_account, -value)]
+    
+    @property
+    def can_set_amount(self):
+        return (len(self.splits) <= 2) and (not self.is_mct)
+    
     @property
     def has_unassigned_split(self):
         return any(s.account is None for s in self.splits)
@@ -283,12 +263,14 @@ class Split(object):
         self._amount = amount
         self.reconciliation_date = None
         self.reference = None
-        self.explicit_amount = False
     
     def __repr__(self):
         return '<Split %r %s>' % (self.account_name, self.amount)
     
     #--- Public
+    def is_on_same_side(self, other_split):
+        return (self.amount >= 0) == (other_split.amount >= 0)
+    
     def move_to_index(self, index):
         self.transaction.splits.remove(self)
         self.transaction.splits.insert(index, self)
@@ -296,11 +278,6 @@ class Split(object):
     def remove(self):
         self.transaction.splits.remove(self)
         self.transaction.balance()
-    
-    def set_amount_explicitly(self, amount):
-        if amount != self.amount:
-            self.amount = amount
-            self.explicit_amount = True
     
     #--- Properties
     @property
@@ -342,15 +319,20 @@ class Entry(object):
         return '<Entry %r %r>' % (self.date, self.description)
     
     def change_amount(self, amount):
-        old_amount = self.split.amount
+        assert len(self.splits) == 1
         self.split.amount = amount
-        if not same_currency(amount, old_amount) and len(self.splits) == 1:
-            other_split = self.splits[0]
+        other_split = self.splits[0]
+        is_mct = False
+        if not same_currency(amount, other_split.amount):
             is_asset = self.account is not None and self.account.is_balance_sheet_account()
             other_is_asset = other_split.account is not None and other_split.account.is_balance_sheet_account()
-            if not (is_asset and other_is_asset): # if is_asset and other_is_asset, then we have a MCT
-                other_split.amount = -amount
-        self.transaction.balance(self.split, avoid_unassigned=True)
+            if is_asset and other_is_asset:
+                is_mct = True
+        if is_mct: # don't touch other side unless we have a logical imbalance
+            if self.split.is_on_same_side(other_split):
+                other_split.amount *= -1
+        else:
+            other_split.amount = -amount
     
     def normal_balance(self):
         is_credit = self.account is not None and self.account.is_credit_account()

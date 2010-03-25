@@ -383,9 +383,7 @@ class TestApp(object):
         self.scpanel.save()
     
     def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
-            checkno=None, splits=None):
-        # If splits is not None, additional splits will be added to the txn. The format of the 
-        # splits argument is [(account_name, memo, debit, credit)]
+            checkno=None):
         self.mw.select_transaction_table()
         self.ttable.add()
         row = self.ttable.edited
@@ -404,17 +402,23 @@ class TestApp(object):
         if checkno is not None:
             row.checkno = checkno
         self.ttable.save_edits()
-        if splits is not None:
-            self.mw.edit_item()
-            for account, memo, debit, credit in splits:
+    
+    def add_txn_with_splits(self, splits, date=None, description=None, payee=None, checkno=None):
+        # If splits is not None, additional splits will be added to the txn. The format of the 
+        # splits argument is [(account_name, memo, debit, credit)]. Don't forget that if they don't
+        # balance, you end up with an imbalance split.
+        self.add_txn(date=date, description=description, payee=payee, checkno=checkno)
+        self.mw.edit_item()
+        for index, (account, memo, debit, credit) in enumerate(splits):
+            if index >= len(self.stable):
                 self.stable.add()
-                row = self.stable.edited
-                row.account = account
-                row.memo = memo
-                row.debit = debit
-                row.credit = credit
-                self.stable.save_edits()
-            self.tpanel.save()
+            row = self.stable[index]
+            row.account = account
+            row.memo = memo
+            row.debit = debit
+            row.credit = credit
+            self.stable.save_edits()
+        self.tpanel.save()
     
     def account_names(self): # doesn't include Imbalance
         account_sort = {

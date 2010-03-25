@@ -269,7 +269,7 @@ def test_split_wasnt_touched():
     # When matching transaction and encountering a case where the old transaction was changed
     # into a split, bail out and don't touch the amounts.
     app = app_double_ofx_import_with_split_in_the_middle()
-    eq_(len(app.stable), 3)
+    eq_(len(app.stable), 4)
     eq_(app.stable[2].credit, '1.00')
 
 class ImportAccountInGroup(TestCase):

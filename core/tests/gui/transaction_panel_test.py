@@ -134,38 +134,12 @@ def app_entry_with_amount_panel_loaded():
     app.clear_gui_calls()
     return app
 
-def test_amount_field():
-    # The transaction panel has an amount field corresponding to the transaction amount.
-    app = app_entry_with_amount_panel_loaded()
-    eq_(app.tpanel.amount, '42.00')
-
-def test_amount_field_set():
-    # Setting the amount field refreshes the split table
-    app = app_entry_with_amount_panel_loaded()
-    app.tpanel.amount = '43'
-    eq_(app.stable[0].debit, '43.00')
-    eq_(app.stable[1].credit, '43.00')
-    app.check_gui_calls_partial(app.stable_gui, ['refresh'])
-
 def test_change_date():
     # Changing the date no longer calls refresh_repeat_options() on the view (this stuff is now
     # in schedules)
     app = app_entry_with_amount_panel_loaded()
     app.tpanel.date = '17/07/2008'
     app.check_gui_calls_partial(app.tpanel_gui, not_expected=['refresh_repeat_options'])
-
-def test_set_amount_with_auto_decimal_place():
-    # The auto decimal place option affects amount in the tpanel too.
-    app = app_entry_with_amount_panel_loaded()
-    app.app.auto_decimal_place = True
-    app.tpanel.amount = '1234'
-    eq_(app.tpanel.amount, '12.34')
-
-def test_set_invalid_amount():
-    # Invalid amounts are ignored and the old value is reverted
-    app = app_entry_with_amount_panel_loaded()
-    app.tpanel.amount = 'invalid' # no crash
-    eq_(app.tpanel.amount, '42.00')
 
 #--- Two Amountless Entries
 def app_two_amountless_entries():
@@ -256,39 +230,12 @@ def test_mct_balance_twice():
     app.tpanel.mct_balance()
     eq_(len(app.stable), 3)
 
-@with_app(app_multi_currency_transaction)
-def test_set_amount_doesnt_crash_and_doesnt_change_anything(app):
-    # There was previously an assertion making sure that the txn wasn't a MCT on set amount. This
-    # behavior is not correct because panels shouldn't have to check for MCT before deciding if they
-    # send their data to the core. Instead, if the txn is an MCT, setting the amount should do
-    # nothing.
-    amount_before = app.tpanel.amount
-    app.tpanel.amount = '2042' # no crash
-    eq_(app.tpanel.amount, amount_before)
-
 def test_stop_edition_on_mct_balance():
     # edition must stop before mct balance or else we end up with a crash
     app = app_multi_currency_transaction()
     app.stable[1].account = 'foo'
     app.tpanel.mct_balance()
     app.check_gui_calls_partial(app.stable_gui, ['stop_editing'])
-
-#--- Transaction with foreign amount
-def app_transaction_with_foreign_amount():
-    app = TestApp()
-    app.add_account()
-    app.doc.show_selected_account()
-    app.add_entry(date='06/07/2008', description='description', increase='42 eur')
-    app.mainwindow.select_transaction_table()
-    app.ttable.select([0])
-    app.tpanel.load()
-    return app
-
-def test_set_amount_without_currency():
-    # The value typed in the amount field is considered as the same currency as the previous amount.
-    app = app_transaction_with_foreign_amount()
-    app.tpanel.amount = '45'
-    eq_(app.tpanel.amount, 'EUR 45.00')
 
 #--- Generators (tests with more than one setup)
 def test_is_multi_currency():

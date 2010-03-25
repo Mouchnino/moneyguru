@@ -26,7 +26,7 @@ class MassEditionPanel(MainWindowPanel):
             raise OperationAborted()
         self._init_fields()
         self.can_change_accounts = all(len(t.splits) == 2 for t in transactions)
-        self.can_change_amount = all(not t.is_mct for t in transactions)
+        self.can_change_amount = all(t.can_set_amount for t in transactions)
         first = transactions[0]
         if allsame(t.date for t in transactions):
             self._date = first.date

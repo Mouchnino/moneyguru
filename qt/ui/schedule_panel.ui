@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
-    <height>360</height>
+    <width>518</width>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -116,16 +116,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="DateEdit" name="stopDateEdit">
-         <property name="maximumSize">
-          <size>
-           <width>120</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
@@ -175,105 +165,11 @@
        <item row="7" column="0">
         <widget class="QLabel" name="amountLabel">
          <property name="text">
-          <string>Amount:</string>
+          <string>Transfers:</string>
          </property>
         </widget>
        </item>
        <item row="7" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLineEdit" name="amountEdit">
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="mctNoticeLabel">
-           <property name="text">
-            <string>Multiple currencies. Edit splits directly.</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>Splits</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="amountLabel_2">
-           <property name="text">
-            <string>Amount:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="amountEdit2">
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="mctNoticeLabel2">
-           <property name="text">
-            <string>Multiple currencies. Edit splits directly.</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
         <widget class="TableView" name="splitTableView">
          <property name="acceptDrops">
           <bool>true</bool>
@@ -307,7 +203,7 @@
          </attribute>
         </widget>
        </item>
-       <item>
+       <item row="8" column="1">
         <widget class="QWidget" name="widget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -315,9 +211,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="horizontalSpacer_4">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -349,6 +245,22 @@
         </widget>
        </item>
       </layout>
+      <widget class="DateEdit" name="stopDateEdit">
+       <property name="geometry">
+        <rect>
+         <x>111</x>
+         <y>111</y>
+         <width>120</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -404,13 +316,8 @@
   <tabstop>descriptionEdit</tabstop>
   <tabstop>payeeEdit</tabstop>
   <tabstop>checkNoEdit</tabstop>
-  <tabstop>amountEdit</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>addSplitButton</tabstop>
-  <tabstop>removeSplitButton</tabstop>
-  <tabstop>splitTableView</tabstop>
-  <tabstop>amountEdit2</tabstop>
   <tabstop>notesEdit</tabstop>
  </tabstops>
  <resources>

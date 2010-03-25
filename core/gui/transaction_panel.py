@@ -32,16 +32,14 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
             split.account = Account(account_name, self.app.default_currency, account_type)
         else:
             split.account = None
-        split.set_amount_explicitly(amount)
+        split.amount = amount
         split.memo = memo
         self.transaction.balance(split)
         self.notify('split_changed')
-        self.view.refresh_amount()
         self.view.refresh_for_multi_currency()
     
     def delete_split(self, split):
         split.remove()
-        self.view.refresh_amount()
         self.view.refresh_for_multi_currency()
     
     def new_split(self):
@@ -82,26 +80,6 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
     @notes.setter
     def notes(self, value):
         self.transaction.notes = value
-    
-    @property
-    def amount(self):
-        return self.document.app.format_amount(self.transaction.amount)
-    
-    @amount.setter
-    def amount(self, value):
-        if self.transaction.is_mct:
-            return # We can't set the amount of a MCT transaction.
-        if self.transaction.amount:
-            currency = self.transaction.amount.currency
-        else:
-            currency = self.document.app.default_currency
-        try:
-            amount = self.document.app.parse_amount(value, default_currency=currency)
-            self.transaction.change(amount=amount)
-            self.notify('split_changed')
-        except ValueError:
-            pass
-        self.view.refresh_amount()
     
     @property
     def is_multi_currency(self):
