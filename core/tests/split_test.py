@@ -10,6 +10,9 @@ from nose.tools import eq_
 
 from .base import TestApp, with_app
 
+def first_debit_credit_indexes(app):
+    return (0, 1) if app.stable[0].debit else (1, 0)
+
 #--- Empty account
 def app_empty_account():
     app = TestApp()
@@ -49,12 +52,23 @@ def app_one_entry():
     app.add_account('Checking')
     app.mw.show_account()
     app.add_entry('10/10/2007', 'Deposit', transfer='Salary', increase='42.00')
+    app.tpanel.load()
     return app
+
+@with_app(app_one_entry)
+def test_reverse_main_split(app):
+    # Reversing (changing it from debit to credit or vice versa) a main split reverses the other
+    # main split.
+    dindex, cindex = first_debit_credit_indexes(app)
+    app.stable[cindex].debit = '42'
+    app.stable.save_edits()
+    eq_(len(app.stable), 2)
+    eq_(app.stable[cindex].debit, '42.00')
+    eq_(app.stable[dindex].credit, '42.00')
 
 @with_app(app_one_entry)
 def test_save_split_on_second_row(app):
     # save_split() doesn't change the selected row.
-    app.tpanel.load()
     app.stable.select([1])
     row = app.stable.selected_row
     row.account = 'foobar'
@@ -64,7 +78,6 @@ def test_save_split_on_second_row(app):
 @with_app(app_one_entry)
 def test_split_are_correctly_assigned(app):
     # There are two splits and the attributes are correct.
-    app.tpanel.load()
     eq_(len(app.stable), 2)
     eq_(app.stable[0].account, 'Checking')
     eq_(app.stable[0].debit, '42.00')
@@ -74,7 +87,6 @@ def test_split_are_correctly_assigned(app):
 @with_app(app_one_entry)
 def test_set_split_credit(app):
     # Setting the split credit changes the split credit, the entry amount and the balance.
-    app.tpanel.load()
     row = app.stable.selected_row
     row.credit = '100.00'
     app.stable.save_edits()
@@ -86,7 +98,6 @@ def test_set_split_credit(app):
 @with_app(app_one_entry)
 def test_set_split_debit(app):
     # Setting the split debit changes the split debit, the entry amount and the balance.
-    app.tpanel.load()
     row = app.stable.selected_row
     row.debit = '100.00'
     app.stable.save_edits()
@@ -99,7 +110,6 @@ def test_set_split_debit(app):
 def test_set_split_account(app):
     # Setting the split account changes both the split and the entry. If the current entry's account
     # is changed, the account selection changes too.
-    app.tpanel.load()
     row = app.stable.selected_row
     row.account = 'foo'
     app.stable.save_edits()
@@ -182,6 +192,13 @@ def test_delete_split(app):
     eq_(app.stable[3].debit, '1.00')
 
 @with_app(app_split_transaction)
+def test_neutralizing_unassigned_split_removes_it(app):
+    # When editing a split results in an unassigned split being put to 0, we remove it.
+    app.stable[3].credit = '10' # The unsassigned split should end up being deleted.
+    app.stable.save_edits()
+    eq_(len(app.stable), 4)
+
+@with_app(app_split_transaction)
 def test_revert_split(app):
     # Reverting the edits works.
     app.tpanel.load()
@@ -243,3 +260,29 @@ def app_split_with_no_account():
 def test_transfer_doesnt_include_unassigned_split(app):
     # The transfer column don't include splits with no account.
     eq_(app.etable[0].transfer, 'expense1')
+
+#--- Split txn no unassigned
+def app_split_txn_no_unassigned():
+    app = TestApp()
+    splits = [('foo', '', '37', ''), ('bar', '', '', '42'), ('baz', '', '5', '')]
+    app.add_txn_with_splits(splits, date='20/02/2010')
+    app.tpanel.load()
+    return app
+
+def test_change_split_create_new_unassigned():
+    # Changing a split creates a new unassigned split.
+    app = app_split_txn_no_unassigned()
+    app.stable[1].credit = '43'
+    app.stable.save_edits()
+    eq_(len(app.stable), 4)
+    eq_(app.stable[3].account, '')
+    eq_(app.stable[3].debit, '1.00')
+
+def test_delete_split_creates_new_unassigned():
+    # Deleting a split doesn't affect the txn amount. It recreates an unassigned split at stable's
+    # bottom.
+    app = app_split_txn_no_unassigned()
+    app.stable.select([1])
+    app.stable.delete()
+    eq_(app.stable[1].debit, '5.00')
+    eq_(app.stable[2].credit, '42.00')
