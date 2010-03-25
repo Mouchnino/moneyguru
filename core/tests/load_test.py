@@ -291,6 +291,20 @@ def app_entry_in_liability():
     app.add_entry('1/1/2008', 'Payment', increase='10')
     return app
 
+#--- Split with null amount
+def app_split_with_null_amount():
+    app = TestApp()
+    app.add_account('foo')
+    app.mw.show_account()
+    app.add_entry(date='2/1/2007', description='Split', transfer='bar')
+    app.tpanel.load()
+    app.stable.add()
+    row = app.stable.selected_row
+    row.account = 'baz'
+    app.stable.save_edits()
+    app.tpanel.save()
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -348,4 +362,8 @@ def test_save_load_qif():
     
     # make sure liability accounts are exported/imported correctly.
     app = app_entry_in_liability()
+    yield check, app
+    
+    # Splits with null amount are saved/loaded
+    app = app_split_with_null_amount()
     yield check, app
