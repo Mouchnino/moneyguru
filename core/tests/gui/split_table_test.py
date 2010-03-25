@@ -37,6 +37,15 @@ def test_cancel_edits():
     assert app.stable.edited is None
     app.check_gui_calls(app.stable_gui, ['refresh', 'stop_editing'])
 
+@with_app(app_one_entry)
+def test_cancel_edits_while_adding(app):
+    # cancel_edits() removes edited row if it was being added
+    app.tpanel.load()
+    app.stable.add()
+    app.stable[2].account = 'foo'
+    app.stable.cancel_edits()
+    eq_(len(app.stable), 2)
+
 def test_changes_split_buffer_only():
     # Changes made to the split table don't directly get to the model until tpanel.save().
     app = app_one_entry()

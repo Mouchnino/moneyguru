@@ -28,6 +28,10 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
         self.refresh()
         self.view.refresh()
     
+    def _is_edited_new(self):
+        split = self.edited.split
+        return split not in split.transaction.splits
+    
     def _fill(self):
         transaction = self.panel.transaction
         splits = transaction.splits

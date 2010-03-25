@@ -34,6 +34,8 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
             split.account = None
         split.amount = amount
         split.memo = memo
+        if split not in self.transaction.splits:
+            self.transaction.splits.append(split)
         self.transaction.balance(split)
         self.notify('split_changed')
         self.view.refresh_for_multi_currency()
@@ -43,10 +45,7 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
         self.view.refresh_for_multi_currency()
     
     def new_split(self):
-        transaction = self.transaction
-        split = Split(transaction, None, 0)
-        transaction.splits.append(split)
-        return split
+        return Split(self.transaction, None, 0)
     
     #--- Properties
     @property
