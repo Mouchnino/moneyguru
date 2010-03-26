@@ -24,6 +24,12 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Delegate */
+- (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
+{
+    [[self py] deleteSelectedRows];
+    return YES;
+}
+
 - (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
 {
     [[self py] editItem];
