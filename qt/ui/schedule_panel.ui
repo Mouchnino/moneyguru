@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>464</height>
+    <width>469</width>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -183,6 +183,9 @@
          <property name="dragDropMode">
           <enum>QAbstractItemView::InternalMove</enum>
          </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>40</number>
          </attribute>
@@ -244,23 +247,17 @@
          </layout>
         </widget>
        </item>
+       <item row="3" column="1">
+        <widget class="DateEdit" name="stopDateEdit">
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
       </layout>
-      <widget class="DateEdit" name="stopDateEdit">
-       <property name="geometry">
-        <rect>
-         <x>111</x>
-         <y>111</y>
-         <width>120</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
