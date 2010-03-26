@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"AccountProperties" pyClassName:@"PyAccountPanel" parent:aParent];
-    // We have to initialize the currencies before the widgets if we want the inital data source call
-    // to return something
     currencies = [[[self py] availableCurrencies] retain];
+    /* If we don't reload data, we'll have a 0-length combobox at loadFields */
+    [currencySelector reloadData];
     return self;
 }
 
