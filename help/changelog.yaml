@@ -1,3 +1,14 @@
+- date: 2010-03-26
+  version: 1.8.0
+  description: |
+    * Added lookup lists for completable edit. [Mac OS X] (#98)
+    * Added a lookup list for quick account jumping. (#118)
+    * Added an option for auto decimal places when typing amounts. (#116)
+    * It's now possible to save custom date range for quick invocation later. (#115)
+    * Added a total row to tables in Account and Transactions view. (#136)
+    * Added a Notes field for transactions. (#19)
+    * The totals label in Account and Transactions view now show totals for selected transactions. (#130)
+    * Fixed a crash on CSV import. (#144)
 - date: 2010-02-27
   version: 1.7.8
   description: |
