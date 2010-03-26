@@ -141,6 +141,12 @@ class EntryTable(TransactionTableBase):
         self.refresh()
         self.view.refresh()
     
+    def transaction_changed(self):
+        TransactionTableBase.transaction_changed(self)
+        # It's possible that because of the change, the selected txn has been removed, so we have
+        # to update document selection.
+        self._update_selection()
+    
     def transactions_imported(self):
         self.refresh()
         self.document.select_transactions(self.selected_transactions)

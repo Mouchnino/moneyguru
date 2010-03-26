@@ -346,6 +346,20 @@ def app_two_entries():
     return app
 
 @with_app(app_two_entries)
+def test_remove_entry_through_tpanel(app):
+    # Removing an entry through tpanel (by unassigning the split from the shown account) correctly
+    # updates selection at the document level
+    app.mw.edit_item()
+    # We're not too sure which split is assigned to the account, so we unassign both
+    app.stable[0].account = ''
+    app.stable.save_edits()
+    app.stable[1].account = ''
+    app.stable.save_edits()
+    app.tpanel.save()
+    app.mw.edit_item() # Because doc selection has been updated, the first entry is shown in tpanel.
+    eq_(app.tpanel.description, 'first')
+
+@with_app(app_two_entries)
 def test_search(app):
     # Searching when on etable doesn't switch to the ttable, and shows the results in etable
     app.sfield.query = 'second'
