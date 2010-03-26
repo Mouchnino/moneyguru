@@ -6,6 +6,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from hsutil.misc import dedupe
+
+from .sort import sort_string
+
 class CompletionList(object):
     def __init__(self, partial, candidates):
         """Build a completion list.
@@ -15,12 +19,14 @@ class CompletionList(object):
         if not partial:
             self._completions = None
             return
-        partial = partial.lower()
+        partial = sort_string(partial)
+        candidates = dedupe(c.strip() for c in candidates)
         self._completions = []
         for candidate in candidates:
-            candidate = candidate.strip()
-            if candidate.lower().startswith(partial) and candidate not in self._completions:
-                self._completions.insert(0, candidate)
+            normalized = sort_string(candidate)
+            if normalized.startswith(partial):
+                self._completions.append(candidate)
+        self._completions.reverse()
         if self._completions:
             self._index = len(self._completions) - 1
 

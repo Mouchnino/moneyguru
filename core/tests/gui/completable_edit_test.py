@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from nose.tools import eq_
 
 from ..base import TestApp, with_app
@@ -18,6 +20,7 @@ def app_default():
     app.add_txn(description='buz')
     app.add_txn(description='bar')
     app.add_txn(description='foo')
+    app.add_txn(description='électrique')
     app.ce = app.completable_edit('description')
     return app
 
@@ -58,6 +61,13 @@ def test_refresh_candidates_on_txn_change(app):
     app.add_txn(description='other') # This is supposed to invalidate candidates cache
     app.ce.text = 'o'
     eq_(app.ce.completion, 'ther')
+
+@with_app(app_default)
+def test_ignore_accents(app):
+    app.ce.text = 'e'
+    eq_(app.ce.completion, 'lectrique')
+    app.ce.text = 'é'
+    eq_(app.ce.completion, 'lectrique')
 
 #--- Edit with match
 def app_with_match():

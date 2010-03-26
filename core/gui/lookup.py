@@ -12,6 +12,7 @@ from itertools import combinations
 
 from hsutil.misc import extract
 
+from ..model.sort import sort_string
 from .base import DocumentGUIObject
 
 def has_letters(s, query):
@@ -46,7 +47,7 @@ class Lookup(DocumentGUIObject):
         # On top, we want exact matches (the name starts with the query). Then, we want matches
         # that contain all the letters, sorted in order of names that have query letters as close
         # to each other as possible.
-        q = self._search_query
+        q = sort_string(self._search_query)
         matches1, rest = extract(lambda n: n.startswith(q), self._original_names)
         matches2, rest = extract(lambda n: q in n, rest)
         matches3, rest = extract(lambda n: has_letters(n, q), rest)
@@ -65,7 +66,7 @@ class Lookup(DocumentGUIObject):
         self._search_query = ''
         self.selected_index = 0
         names = self._generate_lookup_names()
-        normalized_names = [n.lower() for n in names]
+        normalized_names = [sort_string(n) for n in names]
         self._normalized2original = {}
         for normalized, original in zip(normalized_names, names):
             self._normalized2original[normalized] = original
