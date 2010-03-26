@@ -13,8 +13,7 @@ from copy import copy
 from hsutil.misc import allsame, first, nonone
 
 from ..const import NOEDIT
-from .account import AccountType
-from .amount import Amount, convert_amount, same_currency
+from .amount import Amount, convert_amount, same_currency, of_currency
 
 class Transaction(object):
     def __init__(self, date, description=None, payee=None, checkno=None, account=None, amount=None):
@@ -180,7 +179,11 @@ class Transaction(object):
         converted_amounts = (convert_amount(split.amount, new_split_currency, self.date) for split in self.splits)
         converted_total = sum(converted_amounts)
         if converted_total != 0:
-            self.splits.append(Split(self, None, -converted_total))
+            target = first(s for s in self.splits if (s.account is None) and of_currency(s.amount, new_split_currency))
+            if target is not None:
+                target.amount -= converted_total
+            else:
+                self.splits.append(Split(self, None, -converted_total))
     
     def reassign_account(self, account, reassign_to=None):
         for split in self.splits:

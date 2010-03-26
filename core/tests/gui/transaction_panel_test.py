@@ -186,16 +186,13 @@ def test_set_values():
 def app_multi_currency_transaction():
     app = TestApp()
     USD.set_CAD_value(0.8, date(2008, 1, 1))
-    app.mainwindow.select_transaction_table()
-    app.ttable.add()
-    app.tpanel.load()
-    app.stable[0].account = 'first'
-    app.stable[0].credit = '44 usd'
-    app.stable.save_edits()
+    splits = [
+        ('first', '', '', '44 usd'),
+        ('second', '', '42 cad', ''),
+    ]
+    app.add_txn_with_splits(splits)
+    app.mw.edit_item()
     app.stable.select([1])
-    app.stable[1].account = 'second'
-    app.stable[1].debit = '42 cad'
-    app.stable.save_edits()
     app.clear_gui_calls()
     return app
 
@@ -209,12 +206,22 @@ def test_mct_balance():
     eq_(app.stable[2].credit, 'CAD 6.80') # the selected split is the 2nd one
     app.check_gui_calls_partial(app.stable_gui, ['refresh', 'stop_editing'])
 
+@with_app(app_multi_currency_transaction)
+def test_mct_balance_reuses_unassigned_split(app):
+    # mct balance reuses unassigned split if available
+    app.stable.add()
+    app.stable[2].credit = '1 cad'
+    app.stable.save_edits()
+    app.tpanel.mct_balance()
+    eq_(len(app.stable), 3)
+    eq_(app.stable[2].credit, 'CAD 6.80')
+
 def test_mct_balance_select_null_split():
     # if the selected split has no amount, use the default currency
     app = app_multi_currency_transaction()
     app.stable.add()
     app.tpanel.mct_balance()
-    eq_(app.stable[3].credit, '8.50') # the new split is the 4th!
+    eq_(app.stable[2].credit, '8.50') # the newly added split is re-used
 
 def test_mct_balance_select_usd_split():
     # the currency of the new split is the currency of the selected split
