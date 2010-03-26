@@ -13,6 +13,9 @@ from nose.tools import eq_
 
 from ..base import TestApp, with_app
 
+# XXX These tests are flaky on windows because completion order is defined by mtime and all txns
+# have the same mtime. Fix this.
+
 #--- Default completable edit
 def app_default():
     app = TestApp()
