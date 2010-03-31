@@ -10,10 +10,34 @@
 import sys
 import os
 import os.path as op
+import compileall
+import shutil
 
 import yaml
 
-from hsutil.build import build_dmg
+from core.app import Application as MoneyGuru
+from hsutil.build import build_dmg, copy_packages
+
+def package_windows():
+    pythonpath = os.environ.get('PYTHONPATH', '')
+    pythonpath = ';'.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
+    os.environ['PYTHONPATH'] = pythonpath
+    os.chdir('qt')
+    os.system('python build.py')
+    os.chdir('..')
+
+def package_debian():
+    if op.exists('build'):
+        shutil.rmtree('build')
+    destpath = op.join('build', 'moneyguru-{0}'.format(MoneyGuru.VERSION))
+    srcpath = op.join(destpath, 'src')
+    os.makedirs(destpath)
+    shutil.copytree('qt', srcpath)
+    copy_packages(['hsutil', 'hsgui', 'core', 'qtlib'], srcpath)
+    shutil.copytree('debian', op.join(destpath, 'debian'))
+    compileall.compile_dir(srcpath)
+    os.chdir(destpath)
+    os.system("dpkg-buildpackage")
 
 def main():
     conf = yaml.load(open('conf.yaml'))
@@ -26,15 +50,12 @@ def main():
     if ui == 'cocoa':
         build_dmg('cocoa/build/release/moneyGuru.app', '.')
     elif ui == 'qt':
-        if sys.platform != "win32":
-            print "Qt packaging only works under Windows."
-            return
-        pythonpath = os.environ.get('PYTHONPATH', '')
-        pythonpath = ';'.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
-        os.environ['PYTHONPATH'] = pythonpath
-        os.chdir('qt')
-        os.system('python build.py')
-        os.chdir('..')
+        if sys.platform == "win32":
+            package_windows()
+        elif sys.platform == "linux2":
+            package_debian()
+        else:
+            print "Qt packaging only works under Windows or Linux."
 
 if __name__ == '__main__':
     main()
