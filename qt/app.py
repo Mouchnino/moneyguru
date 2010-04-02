@@ -29,6 +29,7 @@ from controller.preferences_panel import PreferencesPanel
 from controller.view_options import ViewOptionsDialog
 from support.date_edit import DateEdit
 from preferences import Preferences
+from plat import HELP_PATH
 
 class MoneyGuru(ApplicationBase):
     VERSION = MoneyGuruModel.VERSION
@@ -80,7 +81,7 @@ class MoneyGuru(ApplicationBase):
         self.aboutBox.show()
     
     def showHelp(self):
-        url = QUrl.fromLocalFile(op.abspath('help/intro.htm'))
+        url = QUrl.fromLocalFile(op.abspath(op.join(HELP_PATH, 'intro.htm')))
         QDesktopServices.openUrl(url)
     
     def showPreferences(self):
