@@ -23,8 +23,6 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	# $(MAKE)
-	#docbook-to-man debian/helloworld.sgml > helloworld.1
 
 	touch $@
 
@@ -34,7 +32,6 @@ clean:
 	rm -f build-stamp configure-stamp
 
 	# Add here commands to clean up after the build process.
-	# $(MAKE) clean
 
 	dh_clean 
 
@@ -46,6 +43,7 @@ install: build
 
 	chmod +x src/start.py
 	cp -R src/ $(CURDIR)/debian/tmp/usr/local/share/moneyguru
+	cp $(CURDIR)/debian/moneyguru.desktop $(CURDIR)/debian/tmp/usr/share/applications
 	ln -s /usr/local/share/moneyguru/start.py $(CURDIR)/debian/tmp/usr/local/bin/moneyguru
 
 
@@ -60,8 +58,8 @@ binary-arch: install
 	dh_installchangelogs 
 	dh_installdocs
 	dh_installexamples
-#	dh_install
-#	dh_installmenu
+	dh_install
+	dh_installmenu
 #	dh_installdebconf
 #	dh_installlogrotate
 #	dh_installemacsen

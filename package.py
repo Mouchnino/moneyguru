@@ -37,6 +37,7 @@ def package_debian():
     shutil.copytree('debian', op.join(destpath, 'debian'))
     build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('help', 'moneyguru_help'), op.join(srcpath, 'help'))
+    shutil.copy(op.join('images', 'logo_small.png'), srcpath)
     compileall.compile_dir(srcpath)
     os.chdir(destpath)
     os.system("dpkg-buildpackage")
