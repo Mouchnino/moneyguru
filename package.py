@@ -16,7 +16,7 @@ import shutil
 import yaml
 
 from core.app import Application as MoneyGuru
-from hsutil.build import build_dmg, copy_packages
+from hsutil.build import build_dmg, copy_packages, build_debian_changelog
 
 def package_windows():
     pythonpath = os.environ.get('PYTHONPATH', '')
@@ -35,6 +35,7 @@ def package_debian():
     shutil.copytree('qt', srcpath)
     copy_packages(['hsutil', 'hsgui', 'core', 'qtlib'], srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
+    build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'moneyguru', from_version='1.8.0')
     compileall.compile_dir(srcpath)
     os.chdir(destpath)
     os.system("dpkg-buildpackage")
