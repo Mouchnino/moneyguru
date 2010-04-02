@@ -1,0 +1,4 @@
+RegSubmitDialog {
+	/* Under linux, the dialog is not high enough */
+	min-height: 180px;
+}

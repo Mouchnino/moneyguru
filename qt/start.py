@@ -23,7 +23,10 @@ if __name__ == "__main__":
     app.setOrganizationName('Hardcoded Software')
     app.setApplicationName('moneyGuru')
     app.setApplicationVersion(MoneyGuru.VERSION)
-    stylesheetFile = QFile(':/stylesheet_win')
+    if sys.platform == 'linux2':
+        stylesheetFile = QFile(':/stylesheet_lnx')
+    else:
+        stylesheetFile = QFile(':/stylesheet_win')
     stylesheetFile.open(QFile.ReadOnly)
     textStream = QTextStream(stylesheetFile)
     style = textStream.readAll()
