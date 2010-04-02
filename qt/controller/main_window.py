@@ -7,6 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import sys
+
 from PyQt4.QtCore import Qt, QProcess
 from PyQt4.QtGui import QMainWindow, QIcon, QPixmap, QPrintDialog, QLabel, QFont, QMessageBox
 
@@ -118,6 +120,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # window, it actually shrinks.
         if self.app.prefs.mainWindowRect is not None and not self.app.prefs.mainWindowIsMaximized:
             self.setGeometry(self.app.prefs.mainWindowRect)
+
+        # Linux setup
+        if sys.platform == 'linux2':
+            self.actionCheckForUpdate.setVisible(False) # This only works on Windows
     
     def _bindSignals(self):
         self.recentDocuments.mustOpenItem.connect(self.doc.open)
