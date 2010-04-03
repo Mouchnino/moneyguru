@@ -6,6 +6,7 @@ syntax: glob
 *.mode1v3
 *.tm_build_errors
 build
+_build
 conf.yaml
 cocoa/Info.plist
 cocoa/build

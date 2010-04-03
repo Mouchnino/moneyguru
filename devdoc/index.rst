@@ -23,3 +23,4 @@ Contents
    devprocess
    architecture
    refactorings
+   api/index
