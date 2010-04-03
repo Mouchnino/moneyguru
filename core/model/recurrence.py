@@ -13,7 +13,7 @@ from calendar import monthrange
 from hsutil.misc import nonone
 
 from .date import (inc_day, inc_week, inc_month, inc_year, inc_weekday_in_month,
-    inc_last_weekday_in_month)
+    inc_last_weekday_in_month, strftime)
 from .transaction import Transaction
 
 class RepeatType(object):
@@ -105,7 +105,7 @@ class Recurrence(object):
     
     def _update_rtype_descs(self):
         date = self.start_date
-        weekday_name = date.strftime('%A')
+        weekday_name = strftime('%A', date)
         week_no = (date.day - 1) // 7
         position = ['first', 'second', 'third', 'fourth', 'fifth'][week_no]
         self.rtype2desc[RepeatType.Weekday] = 'Every %s %s of the month' % (position, weekday_name)

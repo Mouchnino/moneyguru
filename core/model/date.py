@@ -22,8 +22,8 @@ class DateRange(object):
         self.end = end
     
     def __repr__(self):
-        start_date_str = self.start.strftime('%Y/%m/%d') if self.start.year > 1900 else 'MINDATE'
-        return '<%s %s - %s>' % (type(self).__name__, start_date_str, self.end.strftime('%Y/%m/%d'))
+        start_date_str = strftime('%Y/%m/%d', self.start) if self.start.year > 1900 else 'MINDATE'
+        return '<%s %s - %s>' % (type(self).__name__, start_date_str, strftime('%Y/%m/%d', self.end))
     
     def __nonzero__(self):
         return self.start <= self.end
@@ -122,7 +122,7 @@ class MonthRange(NavigableDateRange):
     
     @property
     def display(self):
-        return self.start.strftime('%B %Y')
+        return strftime('%B %Y', self.start)
     
 
 class QuarterRange(NavigableDateRange):
@@ -166,7 +166,7 @@ class YearRange(NavigableDateRange):
     
     @property
     def display(self):
-        return '{0} - {1}'.format(self.start.strftime('%b %Y'), self.end.strftime('%b %Y'))
+        return '{0} - {1}'.format(strftime('%b %Y', self.start), strftime('%b %Y', self.end))
     
 
 class YearToDateRange(DateRange):
@@ -183,7 +183,7 @@ class YearToDateRange(DateRange):
     
     @property
     def display(self):
-        return '{0} - Now'.format(self.start.strftime('%b %Y'))
+        return '{0} - Now'.format(strftime('%b %Y', self.start))
     
 
 def compute_ahead_months(ahead_months):
@@ -207,7 +207,7 @@ class RunningYearRange(DateRange):
     
     @property
     def display(self):
-        return 'Running year ({0} - {1})'.format(self.start.strftime('%b'), self.end.strftime('%b'))
+        return 'Running year ({0} - {1})'.format(strftime('%b', self.start), strftime('%b', self.end))
     
 
 class AllTransactionsRange(DateRange):
@@ -328,5 +328,12 @@ def format_year_month_day(year, month, day, format):
     result = result.replace('dd', '%02d' % day)
     result = result.replace('d', '%d' % day)
     return result
-    
 
+#--- Misc
+def strftime(fmt, date):
+    """Returns a *unicode* string resulting from date.strftime().
+    
+    Under some locales, the result of strftime() can contain non-ascii letters, resulting in a
+    crash when mixed with unicode string.
+    """
+    return unicode(date.strftime(fmt), 'utf-8', 'replace')

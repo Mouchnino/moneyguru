@@ -11,7 +11,7 @@ from __future__ import division
 from datetime import date
 from math import ceil, floor, log10
 
-from ..model.date import inc_month, inc_year
+from ..model.date import inc_month, inc_year, strftime
 from .chart import Chart
 
 # A graph is a chart or drawing that shows the relationship between changing things.
@@ -40,7 +40,7 @@ class Graph(Chart):
             # 'tick' might be lower than xmin. ensure that it's not (for label pos)
             tick = tick if tick > date_range.start else date_range.start
             tick_pos = tick.toordinal() + (newtick - tick).days / 2
-            self._xlabels.append(dict(text=tick.strftime(tick_format), pos=tick_pos))
+            self._xlabels.append(dict(text=strftime(tick_format, tick), pos=tick_pos))
             tick = newtick
             self._xtickmarks.append(tick.toordinal())
 

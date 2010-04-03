@@ -7,12 +7,16 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from datetime import date
+import time
 
 from nose.tools import eq_
+from hsutil.testutil import Patcher
 
 from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
-from .base import TestCase
+from .base import TestCase, TestApp, with_app
 
 class Pristine(TestCase):
     def setUp(self):
@@ -106,16 +110,29 @@ class RangeOnOctober2007(TestCase):
         eq_(self.document.date_range.display, 'Jan 2007 - Now')
     
 
-class RangeOnYear2007(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2007, 1, 1))
-    
-    def test_month_range(self):
-        # When there is no selected entry, the selected range is based on the current date range.
-        self.drsel.select_month_range()
-        eq_(self.document.date_range, MonthRange(date(2007, 1, 1)))
-    
+#--- Range on year 2007
+def app_range_on_year2007():
+    p = Patcher()
+    p.patch_today(2007, 1, 1)
+    app = TestApp()
+    return app, p
+
+@with_app(app_range_on_year2007)
+def test_month_range(app):
+    # When there is no selected entry, the selected range is based on the current date range.
+    app.drsel.select_month_range()
+    eq_(app.doc.date_range, MonthRange(date(2007, 1, 1)))
+
+@with_app(app_range_on_year2007)
+def test_accented_date_range_display_doesnt_cause_crash(app):
+    # When, because of the locale, the date range display has accented letters, we don't have a
+    # crash. On system other than linux, the locale system isn't really used, so using setlocale()
+    # doesn't work. So what we do here is we mock strftime so that it returns a string with accents
+    with Patcher() as p:
+        # Important: the mock string below has to be a byte string for the test to be significant.
+        mocked_string = 'fooé'.encode('utf-8')
+        p.patch(time, 'strftime', lambda fmt, t: mocked_string)
+        eq_(app.drsel.display, 'fooé - fooé') # no crash
 
 class RangeOnYearStartsOnApril(TestCase):
     def setUp(self):

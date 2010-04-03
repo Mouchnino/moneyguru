@@ -17,7 +17,7 @@ from hsutil import io
 from hsutil.currency import EUR
 from hsutil.testutil import Patcher, with_tmpdir
 
-from .base import TestCase, CommonSetup, ApplicationGUI, TestApp
+from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app
 from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
@@ -133,28 +133,29 @@ def test_modified_flag():
     app = TestApp()
     assert not app.doc.is_dirty()
 
-class RangeOnOctober2007(TestCase):
-    def setUp(self):
-        self.mock_today(2007, 10, 1)
-        self.create_instances()
-        self.drsel.select_month_range()
-        self.clear_gui_calls()
-    
-    def test_graph_xaxis(self):
-        eq_(self.nwgraph.xmax - self.nwgraph.xmin, 31)
-        eq_(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x - 1 for x in [1, 32]])
-        [label] = self.nwgraph.xlabels # there is only one
-        eq_(label['text'], 'October')
-        self.document.date_range = QuarterRange(self.document.date_range)
-        eq_(self.nwgraph.xmax - self.nwgraph.xmin, 92)
-        eq_(self.nwgraph.xtickmarks, [self.nwgraph.xmin + x for x in [0, 31, 61, 92]])
-        expected = [dict(text=text, pos=self.nwgraph.xmin + pos) 
-            for (text, pos) in [('October', 15.5), ('November', 31 + 15), ('December', 61 + 15.5)]]
-        eq_(self.nwgraph.xlabels, expected)
-        self.document.date_range = YearRange(self.document.date_range)
-        expected = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        eq_([d['text'] for d in self.nwgraph.xlabels], expected)
-    
+#--- Range on October 2007
+def app_range_on_october2007():
+    p = Patcher()
+    p.patch_today(2007, 10, 1)
+    app = TestApp()
+    app.drsel.select_month_range()
+    return app, p
+
+@with_app(app_range_on_october2007)
+def test_graph_xaxis(app):
+    eq_(app.nwgraph.xmax - app.nwgraph.xmin, 31)
+    eq_(app.nwgraph.xtickmarks, [app.nwgraph.xmin + x - 1 for x in [1, 32]])
+    [label] = app.nwgraph.xlabels # there is only one
+    eq_(label['text'], 'October')
+    app.drsel.select_quarter_range()
+    eq_(app.nwgraph.xmax - app.nwgraph.xmin, 92)
+    eq_(app.nwgraph.xtickmarks, [app.nwgraph.xmin + x for x in [0, 31, 61, 92]])
+    expected = [dict(text=text, pos=app.nwgraph.xmin + pos) 
+        for (text, pos) in [('October', 15.5), ('November', 31 + 15), ('December', 61 + 15.5)]]
+    eq_(app.nwgraph.xlabels, expected)
+    app.drsel.select_year_range()
+    expected = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    eq_([d['text'] for d in app.nwgraph.xlabels], expected)
 
 class RangeOnJuly2006(TestCase):
     def setUp(self):
