@@ -70,6 +70,12 @@ def test_show_transfer_account_on_empty_row_does_nothing():
     app.etable.show_transfer_account() # no crash
 
 @with_app(app_one_account)
+def test_toggle_reconciliation(app):
+    # Toggling reconciliation when no entry is selected doesn't cause a crash.
+    app.doc.toggle_reconciliation_mode()
+    app.etable.toggle_reconciled() # no crash
+
+@with_app(app_one_account)
 def test_total_line_balance_is_empty(app):
     # When there's no change in the balance, the balance cell of the total row shows nothing
     eq_(app.etable[0].balance, '')

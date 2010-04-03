@@ -629,7 +629,7 @@ class Document(Broadcaster, Listener):
     def toggle_entries_reconciled(self, entries):
         """Toggle the reconcile flag of `entries`.
         """
-        if not self._in_reconciliation_mode:
+        if not self._in_reconciliation_mode or not entries:
             return
         all_reconciled = not entries or all(entry.reconciled for entry in entries)
         newvalue = not all_reconciled
