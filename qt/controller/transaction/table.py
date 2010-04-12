@@ -10,10 +10,10 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
+from qtlib.column import Column
 from core.gui.transaction_table import TransactionTable as TransactionTableModel
 from support.item_delegate import ItemDecoration
-from ..column import Column, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
-from ..table import TableDelegate
+from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions
 
 class TransactionTableDelegate(TableDelegate):

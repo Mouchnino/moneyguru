@@ -10,9 +10,9 @@
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QFont
 
+from qtlib.column import Column
 from core.gui.split_table import SplitTable as SplitTableModel
-from .column import Column, ACCOUNT_EDIT
-from .table import Table
+from .table import Table, ACCOUNT_EDIT
 
 MIME_INDEX = 'application/moneyguru.splitindex'
 

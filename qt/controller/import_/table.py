@@ -10,8 +10,8 @@
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
+from qtlib.column import Column
 from core.gui.import_table import ImportTable as ImportTableModel
-from ..column import Column
 from ..table import Table
 
 MIME_INDEXES = 'application/moneyguru.rowindexes'

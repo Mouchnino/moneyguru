@@ -9,9 +9,9 @@
 
 from PyQt4.QtCore import Qt
 
+from qtlib.column import Column
 from core.gui.income_statement import IncomeStatement as IncomeStatementModel
 from ..account_sheet import AccountSheet, AccountSheetDelegate
-from ..column import Column
 
 class ProfitSheet(AccountSheet):
     COLUMNS = [

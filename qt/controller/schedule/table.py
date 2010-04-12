@@ -9,8 +9,8 @@
 
 from PyQt4.QtCore import Qt
 
+from qtlib.column import Column
 from core.gui.schedule_table import ScheduleTable as ScheduleTableModel
-from ..column import Column
 from ..table import Table
 
 class ScheduleTable(Table):

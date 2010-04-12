@@ -9,8 +9,8 @@
 
 from PyQt4.QtCore import Qt
 
+from qtlib.column import Column
 from core.gui.budget_table import BudgetTable as BudgetTableModel
-from ..column import Column
 from ..table import Table
 
 class BudgetTable(Table):

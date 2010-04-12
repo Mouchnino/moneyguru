@@ -9,9 +9,9 @@
 
 from PyQt4.QtCore import Qt
 
+from qtlib.column import Column
 from core.gui.balance_sheet import BalanceSheet as BalanceSheetModel
 from ..account_sheet import AccountSheet, AccountSheetDelegate
-from ..column import Column
 
 class NetWorthSheet(AccountSheet):
     COLUMNS = [
