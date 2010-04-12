@@ -7,24 +7,12 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "HSTable.h"
 #import "MGTableView.h"
-#import "HSGUIController.h"
-#import "PyTable.h"
 
-@interface MGTable : HSGUIController
-{
-    MGTableView *tableView;
-}
+@interface MGTable : HSTable {}
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView;
 
-/* Virtual */
-- (PyTable *)py;
-
 /* Public */
-
 - (MGTableView *)tableView;
-
-- (void)refresh;
-- (void)showSelectedRow;
-- (void)updateSelection;
 @end
