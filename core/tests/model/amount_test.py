@@ -54,13 +54,6 @@ def test_cmp_with_zero():
     assert not Amount(42, CAD) <= 0
     assert_raises(TypeError, op.le, Amount(0, CAD), 42)
 
-def test_cmp_with_zero_in_other_currency():
-    # Amounts with different currencies are not comparable, even if one side is 0.
-    assert_raises(ValueError, op.gt, Amount(42, CAD), Amount(0, USD))
-    assert_raises(ValueError, op.ge, Amount(42, CAD), Amount(0, USD))
-    assert_raises(ValueError, op.lt, Amount(42, CAD), Amount(0, USD))
-    assert_raises(ValueError, op.le, Amount(42, CAD), Amount(0, USD))
-
 def test_div_with_amount():
     # Amounts can be divided by other amounts if they all amounts share the same currency. That
     # yields a plain number.

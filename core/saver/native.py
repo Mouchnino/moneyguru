@@ -9,6 +9,8 @@
 
 import xml.etree.cElementTree as ET
 
+from ..model.amount import format_amount
+
 def save(filename, accounts, groups, transactions, schedules, budgets):
     def date2str(date):
         return date.strftime('%Y-%m-%d')
@@ -37,7 +39,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
             split_element = ET.SubElement(transaction_element, 'split')
             attrib = split_element.attrib
             attrib['account'] = split.account_name
-            attrib['amount'] = str(split.amount)
+            attrib['amount'] = format_amount(split.amount)
             setattrib(attrib, 'memo', split.memo)
             setattrib(attrib, 'reference', split.reference)
             if split.reconciliation_date is not None:
@@ -89,7 +91,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         attrib['account'] = budget.account.name
         attrib['type'] = budget.repeat_type
         attrib['every'] = unicode(budget.repeat_every)
-        attrib['amount'] = unicode(budget.amount)
+        attrib['amount'] = format_amount(budget.amount)
         attrib['notes'] = budget.notes
         if budget.target is not None:
             attrib['target'] = budget.target.name

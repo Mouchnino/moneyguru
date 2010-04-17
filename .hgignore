@@ -2,6 +2,8 @@ syntax: glob
 
 .DS_Store
 *.pyc
+*.so
+*.pyd
 *.pbxuser
 *.mode1v3
 *.tm_build_errors
