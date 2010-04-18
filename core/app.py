@@ -177,7 +177,7 @@ class Application(Broadcaster, RegistrableApplication):
     @year_start_month.setter
     def year_start_month(self, value):
         assert 1 <= value <= 12
-        if value == self._ahead_months:
+        if value == self._year_start_month:
             return
         self._year_start_month = value
         self.set_default(YEAR_START_MONTH_PREFERENCE, value)
