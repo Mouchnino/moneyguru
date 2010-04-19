@@ -32,7 +32,7 @@ SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
-    VERSION = '1.8.0'
+    VERSION = '1.8.1'
     DEMO_LIMIT_DESC = "In the demo version, documents with more than 100 transactions cannot be saved."
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
@@ -177,7 +177,7 @@ class Application(Broadcaster, RegistrableApplication):
     @year_start_month.setter
     def year_start_month(self, value):
         assert 1 <= value <= 12
-        if value == self._ahead_months:
+        if value == self._year_start_month:
             return
         self._year_start_month = value
         self.set_default(YEAR_START_MONTH_PREFERENCE, value)

@@ -16,32 +16,40 @@ from nose.tools import eq_
 from hsutil.testutil import Patcher
 
 from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
-from .base import TestCase, TestApp, with_app
+from .base import TestCase, TestApp, with_app, TestData
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-    
-    def test_date_range(self):
-        # By default, the date range is a yearly range for today.
-        eq_(self.document.date_range, YearRange(date.today()))
-    
-    def test_load_while_on_ytd_range(self):
-        # Previously, the document would try to call around() on the current date range, even if not
-        # navigable, causing a crash.
-        self.drsel.select_year_to_date_range()
-        filename = self.filepath('moneyguru/payee_description.moneyguru')
-        self.document.load_from_xml(filename) # no crash
-    
-    def test_all_transactions_range(self):
-        # Selecting the All Transactions range when there's no transaction doesn't do anything.
-        self.drsel.select_all_transactions_range() # no crash
-    
-    def test_set_ahead_months(self):
-        # setting the ahead_months preference doesn't change the current date range type
-        self.app.ahead_months = 5
-        assert isinstance(self.document.date_range, YearRange)
-    
+#--- Pristine
+@with_app(TestApp)
+def test_date_range(app):
+    # By default, the date range is a yearly range for today.
+    eq_(app.doc.date_range, YearRange(date.today()))
+
+@with_app(TestApp)
+def test_load_while_on_ytd_range(app):
+    # Previously, the document would try to call around() on the current date range, even if not
+    # navigable, causing a crash.
+    app.drsel.select_year_to_date_range()
+    filename = TestData.filepath('moneyguru/payee_description.moneyguru')
+    app.doc.load_from_xml(filename) # no crash
+
+@with_app(TestApp)
+def test_all_transactions_range(app):
+    # Selecting the All Transactions range when there's no transaction doesn't do anything.
+    app.drsel.select_all_transactions_range() # no crash
+
+@with_app(TestApp)
+def test_set_ahead_months(app):
+    # setting the ahead_months preference doesn't change the current date range type
+    app.app.ahead_months = 5
+    assert isinstance(app.doc.date_range, YearRange)
+
+@with_app(TestApp)
+def test_year_start_month_same_as_ahead_month(app):
+    # There was a stupid bug where setting year_start_month to the same value as ahead_months
+    # wouldn't work.
+    app.app.year_start_month = 11 # I don't thin ahead_month's default is every gonna be 11.
+    app.app.year_start_month = app.app.ahead_months
+    eq_(app.app.year_start_month, app.app.ahead_months)
 
 class RangeOnOctober2007(TestCase):
     def setUp(self):

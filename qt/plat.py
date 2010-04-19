@@ -17,4 +17,3 @@ elif sys.platform == 'darwin':
     from plat_osx import *
 else:
     print "Unsupported platform"
-

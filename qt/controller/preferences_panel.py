@@ -30,7 +30,7 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         appm = self.app.model
         self.firstWeekdayComboBox.setCurrentIndex(appm.first_weekday)
         self.aheadMonthsSpinBox.setValue(appm.ahead_months)
-        self.yearStartComboBox.setCurrentIndex(appm.year_start_month)
+        self.yearStartComboBox.setCurrentIndex(appm.year_start_month - 1)
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
         self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
@@ -40,7 +40,7 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         appm = self.app.model
         appm.first_weekday = self.firstWeekdayComboBox.currentIndex()
         appm.ahead_months = self.aheadMonthsSpinBox.value()
-        appm.year_start_month = self.yearStartComboBox.currentIndex()
+        appm.year_start_month = self.yearStartComboBox.currentIndex() + 1
         appm.autosave_interval = self.autoSaveIntervalSpinBox.value()
         if self.nativeCurrencyComboBox.currentIndex() >= 0:
             appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]

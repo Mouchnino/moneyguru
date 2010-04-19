@@ -13,7 +13,10 @@ from itertools import groupby
 
 from hsutil.currency import Currency
 
-from _amount import Amount
+try:
+    from _amount import Amount
+except ImportError:
+    from _amount_ref import Amount
 
 # The dash "-" has to be escaped even in []
 re_expression = re.compile(r'^[+\-*/()\d\s.]*$')

@@ -1,3 +1,8 @@
+- date: 2010-04-18
+  version: 1.8.1
+  description: |
+    * Fixed a crash when reconciling entries. (#147)
+    * Fixed glitches with the "Year starts in" preference. (#148)
 - date: 2010-03-26
   version: 1.8.0
   description: |

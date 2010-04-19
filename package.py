@@ -16,14 +16,46 @@ import shutil
 import yaml
 
 from core.app import Application as MoneyGuru
-from hsutil.build import build_dmg, copy_packages, build_debian_changelog
+from hsutil.build import (build_dmg, copy_packages, build_debian_changelog, add_to_pythonpath,
+    copy_qt_plugins, print_and_do)
 
-def package_windows():
-    pythonpath = os.environ.get('PYTHONPATH', '')
-    pythonpath = ';'.join([op.abspath('.'), pythonpath]) if pythonpath else op.abspath('.')
-    os.environ['PYTHONPATH'] = pythonpath
+def package_windows(dev):
+    if sys.platform != "win32":
+        print "Qt packaging only works under Windows."
+        return
+    add_to_pythonpath('.')
+    add_to_pythonpath('qt')
     os.chdir('qt')
-    os.system('python build.py')
+    
+    if op.exists('dist'):
+        shutil.rmtree('dist')
+    
+    cmd = 'cxfreeze --base-name Win32GUI --target-name "moneyGuru.exe" --icon ..\\images\\main_icon.ico start.py'
+    print_and_do(cmd)
+    
+    if not dev:
+        # Copy qt plugins
+        plugin_dest = op.join('dist', 'qt4_plugins')
+        plugin_names = ['accessible', 'codecs', 'iconengines', 'imageformats']
+        copy_qt_plugins(plugin_names, plugin_dest)
+        
+        # Compress with UPX 
+        libs = [name for name in os.listdir('dist') if op.splitext(name)[1] in ('.pyd', '.dll', '.exe')]
+        for lib in libs:
+            print_and_do("upx --best \"dist\\{0}\"".format(lib))
+    
+    help_path = '..\\help\\moneyguru_help'
+    print "Copying {0} to dist\\help".format(help_path)
+    shutil.copytree(help_path, 'dist\\help')
+    
+    if not dev:
+        # AdvancedInstaller.com has to be in your PATH
+        # this is so we don'a have to re-commit installer.aip at every version change
+        shutil.copy('installer.aip', 'installer_tmp.aip')
+        print_and_do('AdvancedInstaller.com /edit installer_tmp.aip /SetVersion %s' % MoneyGuru.VERSION)
+        print_and_do('AdvancedInstaller.com /build installer_tmp.aip -force')
+        os.remove('installer_tmp.aip')
+    
     os.chdir('..')
 
 def package_debian():
@@ -46,15 +78,12 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    if dev:
-        print "You can't package in dev mode"
-        return
     print "Packaging moneyGuru with UI {0}".format(ui)
     if ui == 'cocoa':
         build_dmg('cocoa/build/release/moneyGuru.app', '.')
     elif ui == 'qt':
         if sys.platform == "win32":
-            package_windows()
+            package_windows(dev)
         elif sys.platform == "linux2":
             package_debian()
         else:
