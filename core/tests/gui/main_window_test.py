@@ -111,13 +111,15 @@ class AssetAccountAndIncomeAccount(TestCase):
         self.istatement.selected = self.istatement.income[0]
         self.istatement.show_selected_account()
         self.check_gui_calls(self.mainwindow_gui, ['show_entry_table'])
-        self.check_gui_calls(self.aview_gui, ['refresh_totals', 'show_bar_graph'])
+        expected = ['refresh_totals', 'show_bar_graph', 'refresh_reconciliation_button']
+        self.check_gui_calls(self.aview_gui, expected)
         self.mainwindow.select_balance_sheet()
         self.check_gui_calls(self.mainwindow_gui, ['show_balance_sheet'])
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.check_gui_calls(self.mainwindow_gui, ['show_entry_table'])
-        self.check_gui_calls(self.aview_gui, ['refresh_totals', 'show_line_graph'])
+        expected = ['refresh_totals', 'show_line_graph', 'refresh_reconciliation_button']
+        self.check_gui_calls(self.aview_gui, expected)
         self.mainwindow.select_transaction_table()
         self.check_gui_calls(self.mainwindow_gui, ['show_transaction_table'])
     

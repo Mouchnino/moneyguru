@@ -231,8 +231,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         isSheet = viewIndex in (NETWORTH_INDEX, PROFIT_INDEX)
         isTransactionOrEntryTable = viewIndex in (TRANSACTION_INDEX, ACCOUNT_INDEX)
         shownAccount = self.doc.model.shown_account
-        canToggleReconciliation = viewIndex == ACCOUNT_INDEX and shownAccount is not None and \
-            shownAccount.is_balance_sheet_account()
+        canToggleReconciliation = viewIndex == ACCOUNT_INDEX and \
+            self.eview.model.can_toggle_reconciliation_mode
         
         newItemLabel = {
             NETWORTH_INDEX: "New Account",
@@ -248,7 +248,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
         self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
-        self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and self.doc.model.in_reconciliation_mode())
+        self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and self.eview.model.reconciliation_mode)
         self.actionShowNextView.setEnabled(viewIndex != BUDGET_INDEX)
         self.actionShowPreviousView.setEnabled(viewIndex != NETWORTH_INDEX)
         self.actionShowAccount.setEnabled(shownAccount is not None)
@@ -338,7 +338,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.eview.etable.model.toggle_reconciled()
     
     def toggleReconciliationModeTriggered(self):
-        self.doc.model.toggle_reconciliation_mode()
+        self.eview.model.toggle_reconciliation_mode()
     
     def registerTriggered(self):
         self.app.askForRegCode()
@@ -349,12 +349,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def aboutTriggered(self):
         self.app.showAboutBox()
     
-    #--- model --> view
-    def refresh_reconciliation_button(self):
-        imgname = ':/reconcile_check_48' if self.doc.model.in_reconciliation_mode() else ':/reconcile_48'
+    def refreshReconciliationButton(self):
+        imgname = ':/reconcile_check_48' if self.eview.model.reconciliation_mode else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
         self._updateActionsState()
     
+    #--- model --> view
     def refresh_undo_actions(self):
         self._updateUndoActions()
     

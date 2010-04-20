@@ -30,6 +30,13 @@ def app_cleared_gui_calls():
     app.clear_gui_calls()
     return app
 
+@with_app(app_cleared_gui_calls)
+def test_add_account_and_show_it(app):
+    # When an account is shown, the reconciliation button is refreshed.
+    app.add_account()
+    app.mw.show_account()
+    app.check_gui_calls_partial(app.aview_gui, ['refresh_reconciliation_button'])
+
 def test_add_group():
     # Adding a group refreshes the view and goes into edit mode.
     app = app_cleared_gui_calls()

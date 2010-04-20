@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 
 from nose.tools import eq_
 
+from ...model.account import AccountType
 from ..base import TestApp, with_app
 
 #--- Two entries
@@ -44,3 +45,27 @@ def test_totals_with_unicode_amount_format(app):
     app.mw.select_entry_table()
     expected = "1 out of 2 selected. Increase: 0\xa000 Decrease: 12\xa000"
     eq_(app.aview.totals, expected)
+
+#--- Asset Shown
+def app_asset_shown():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    return app
+
+@with_app(app_asset_shown)
+def test_can_toggle_reconciliation_mode_with_asset_shown(app):
+    # When an asset is shown, reconciliation mode can be toggled
+    assert app.aview.can_toggle_reconciliation_mode
+
+#--- Expense Shown
+def app_expense_shown():
+    app = TestApp()
+    app.add_account(account_type=AccountType.Expense)
+    app.mw.show_account()
+    return app
+
+@with_app(app_expense_shown)
+def test_can_toggle_reconciliation_mode_with_expense_shown(app):
+    # When an asset is shown, reconciliation mode can't be toggled
+    assert not app.aview.can_toggle_reconciliation_mode

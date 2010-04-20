@@ -80,9 +80,6 @@ class DocumentGUIObject(Listener):
     def performed_undo_or_redo(self):
         pass
     
-    def reconciliation_changed(self):
-        pass
-    
     def saved_custom_ranges_changed(self):
         pass
     

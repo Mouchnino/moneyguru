@@ -18,6 +18,7 @@ class EntryTable(TransactionTableBase):
     def __init__(self, view, mainwindow):
         TransactionTableBase.__init__(self, view, mainwindow)
         self.account = None
+        self._reconciliation_mode = False
     
     #--- Override
     def _do_add(self):
@@ -112,6 +113,18 @@ class EntryTable(TransactionTableBase):
     
     #--- Properties
     @property
+    def reconciliation_mode(self):
+        return self._reconciliation_mode
+    
+    @reconciliation_mode.setter
+    def reconciliation_mode(self, value):
+        if value == self._reconciliation_mode:
+            return
+        self._reconciliation_mode = value
+        self.refresh()
+        self.view.refresh()
+    
+    @property
     def selected_entries(self):
         return [row.entry for row in self.selected_rows if hasattr(row, 'entry')]
     
@@ -136,10 +149,6 @@ class EntryTable(TransactionTableBase):
         date = transactions[0].date if transactions else date_range.end
         delta = date - date_range.start
         self._delta_before_change = delta
-    
-    def reconciliation_changed(self):
-        self.refresh()
-        self.view.refresh()
     
     def transaction_changed(self):
         TransactionTableBase.transaction_changed(self)
@@ -171,7 +180,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         self.is_bold = False
     
     def _the_balance(self):
-        if self.table.document._in_reconciliation_mode:
+        if self.table.reconciliation_mode:
             balance = self._reconciled_balance
         else:
             balance = self._balance
@@ -301,7 +310,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         return not self.is_budget
     
     def can_reconcile(self):
-        inmode = self.table.document._in_reconciliation_mode
+        inmode = self.table.reconciliation_mode
         canedit = self.can_edit()
         future = self._date > datetime.date.today()
         foreign = self._amount != 0 and self._amount.currency != self.account.currency
@@ -332,7 +341,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         self.load()
     
     def toggle_reconciled(self):
-        assert self.table.document._in_reconciliation_mode
+        assert self.table.reconciliation_mode
         self.table.selected_row = self
         self.table._update_selection()
         self.table.toggle_reconciled()

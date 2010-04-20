@@ -74,7 +74,6 @@ http://www.hardcoded.net/licenses/hs_license
     [accountReassignPanel release];
     [accountLookup release];
     [dateRangeSelector release];
-    [reconciliationToolbarItem release];
     [super dealloc];
 }
 
@@ -157,7 +156,7 @@ http://www.hardcoded.net/licenses/hs_license
              (action == @selector(makeScheduleFromSelected:)))
         return (top == transactionView) || (top == accountView);
     else if (action == @selector(toggleEntriesReconciled:))
-        return (top == accountView) && [[[self document] py] inReconciliationMode];
+        return (top == accountView) && [accountView inReconciliationMode];
     else if (action == @selector(showNextView:))
         return (top != budgetView);
     else if (action == @selector(showPreviousView:))
@@ -174,7 +173,7 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(navigateBack:))
         return (top == accountView);
     else if (action == @selector(toggleReconciliationMode:))
-        return (top == accountView) && [[[self document] py] shownAccountIsBalanceSheet];
+        return (top == accountView) && [accountView canToggleReconciliationMode];
     else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
         || (action == @selector(selectTodayDateRange:)))
         return [[dateRangeSelector py] canNavigate];
@@ -342,13 +341,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)toggleEntriesReconciled:(id)sender
 {
-    if ([[[self document] py] inReconciliationMode])
-        [accountView toggleReconciled];
+    [accountView toggleReconciled];
 }
 
 - (IBAction)toggleReconciliationMode:(id)sender
 {
-    [[[self document] py] toggleReconciliationMode];
+    [accountView toggleReconciliationMode];
 }
 
 /* Public */
@@ -410,7 +408,6 @@ http://www.hardcoded.net/licenses/hs_license
             MGBudgetToolbarItemIdentifier,
             MGDateRangeToolbarItemIdentifier, 
             MGSearchFieldToolbarItemIdentifier, 
-            MGReconcileToolbarItemIdentifier,
             nil];
 }
 
@@ -424,7 +421,6 @@ http://www.hardcoded.net/licenses/hs_license
             MGSchedulesToolbarItemIdentifier,
             MGBudgetToolbarItemIdentifier,
             NSToolbarFlexibleSpaceItemIdentifier,
-            MGReconcileToolbarItemIdentifier,
             MGSearchFieldToolbarItemIdentifier,
             nil];
 }
@@ -511,17 +507,6 @@ http://www.hardcoded.net/licenses/hs_license
         [toolbarItem setAction:@selector(showBudgetTable:)];
         return toolbarItem;
     }
-    else if ([itemIdentifier isEqual:MGReconcileToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Reconcile"];
-        [toolbarItem setImage:[NSImage imageNamed:@"reconcile_48"]];
-        [toolbarItem setToolTip:@"Toggle reconciliation mode on and off"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(toggleReconciliationMode:)];
-        reconciliationToolbarItem = [toolbarItem retain];
-        return toolbarItem;
-    }
     return nil;
 }
 
@@ -549,12 +534,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Callbacks for python */
-- (void)refreshReconciliationButton
-{
-    NSString *imageName = [[[self document] py] inReconciliationMode] ? @"reconcile_check_48" : @"reconcile_48";
-    [reconciliationToolbarItem setImage:[NSImage imageNamed:imageName]];
-}
-
 - (void)showAccountReassignPanel
 {
     [accountReassignPanel load];

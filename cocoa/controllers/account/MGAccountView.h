@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSView *graphPlaceholder;
     IBOutlet AMButtonBar *filterBarView;
     IBOutlet NSTextField *totalsLabel;
+    IBOutlet NSButton *reconciliationModeButton;
     
     PyAccountView *py;
     MGEntryTable *entryTable;
@@ -39,5 +40,11 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Public */
 - (id)fieldEditorForObject:(id)asker;
+- (BOOL)canToggleReconciliationMode;
+- (BOOL)inReconciliationMode;
+- (void)toggleReconciliationMode;
 - (void)toggleReconciled;
+
+/* Actions */
+- (IBAction)toggleReconciliationMode:(id)sender;
 @end

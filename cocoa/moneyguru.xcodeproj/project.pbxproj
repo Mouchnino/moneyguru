@@ -54,7 +54,6 @@
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
 		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
-		CE3BD41D0E61C9570071559C /* reconcile_check_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BD41C0E61C9570071559C /* reconcile_check_48.png */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
 		CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41C98F0E2B52CD006D3BEA /* MGTable.m */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
@@ -305,7 +304,6 @@
 		CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog.m; sourceTree = "<group>"; };
 		CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitGraph.h; sourceTree = "<group>"; };
 		CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		CE3BD41C0E61C9570071559C /* reconcile_check_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reconcile_check_48.png; sourceTree = "<group>"; };
 		CE3F6A7610F903640046B2D2 /* PyProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitView.h; sourceTree = "<group>"; };
 		CE40239E0F4C737D0083BAD2 /* doc_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_icon.icns; sourceTree = "<group>"; };
 		CE41C98E0E2B52CD006D3BEA /* MGTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTable.h; sourceTree = "<group>"; };
@@ -1159,7 +1157,6 @@
 				CEACD4FA0E73DCFA00E9A2AB /* account_out_16.png */,
 				CE16B0240E715B3F001290F7 /* backward_32.png */,
 				CE16B0250E715B3F001290F7 /* forward_32.png */,
-				CE3BD41C0E61C9570071559C /* reconcile_check_48.png */,
 				CE107C890E619F780064AF17 /* lock_12.png */,
 				CE107C710E619A8B0064AF17 /* info_gray_12.png */,
 				CE107C720E619A8B0064AF17 /* minus_8.png */,
@@ -1252,7 +1249,6 @@
 				CE107C790E619A8B0064AF17 /* nav_right_9.png in Resources */,
 				CE107C7A0E619A8B0064AF17 /* plus_8.png in Resources */,
 				CE107C8A0E619F780064AF17 /* lock_12.png in Resources */,
-				CE3BD41D0E61C9570071559C /* reconcile_check_48.png in Resources */,
 				CE4B8C120E656DB70017432D /* moneyguru_help in Resources */,
 				CE0C64ED0E6974BD007424CA /* ViewOptions.xib in Resources */,
 				CE16B0260E715B3F001290F7 /* backward_32.png in Resources */,

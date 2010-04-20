@@ -157,9 +157,9 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.create_instances()
         self.add_account_legacy('foo')
         self.add_entry(date='01/01/2007', description='first entry', increase='1')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
         self.etable.toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
+        self.aview.toggle_reconciliation_mode() # commit
         self.add_entry(date='02/01/2007', description='second entry', increase='2')
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.document.parse_file_for_import(self.filepath('qif/checkbook.qif'))

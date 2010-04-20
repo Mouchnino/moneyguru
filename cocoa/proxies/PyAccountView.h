@@ -10,5 +10,8 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUIContainer.h"
 
 @interface PyAccountView : PyGUIContainer {}
+- (BOOL)canToggleReconciliationMode;
+- (BOOL)inReconciliationMode;
+- (void)toggleReconciliationMode;
 - (NSString *)totals;
 @end

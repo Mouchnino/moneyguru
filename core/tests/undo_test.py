@@ -512,11 +512,11 @@ class ThreeTransactionsReconciled(TestCase):
         self.add_entry('19/6/2008', description='first')
         self.add_entry('19/6/2008', description='second')
         self.add_entry('20/6/2008', description='third')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
         self.etable[0].toggle_reconciled()
         self.etable[1].toggle_reconciled()
         self.etable[2].toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit
+        self.aview.toggle_reconciliation_mode() # commit
     
     @save_state_then_verify
     def test_change_entry(self):
@@ -553,7 +553,7 @@ class ThreeTransactionsReconciled(TestCase):
     @save_state_then_verify
     def test_toggle_reconciled(self):
         # reconciliation toggling is undoable
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
         self.etable[1].toggle_reconciled()
     
 

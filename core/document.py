@@ -83,7 +83,6 @@ class Document(Broadcaster, Listener):
         self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
         self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules, self.budgets)
         self._date_range = YearRange(datetime.date.today())
-        self._in_reconciliation_mode = False
         self._selected_account = None
         self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_transactions = []
@@ -629,7 +628,7 @@ class Document(Broadcaster, Listener):
     def toggle_entries_reconciled(self, entries):
         """Toggle the reconcile flag of `entries`.
         """
-        if not self._in_reconciliation_mode or not entries:
+        if not entries:
             return
         all_reconciled = not entries or all(entry.reconciled for entry in entries)
         newvalue = not all_reconciled
@@ -1098,13 +1097,6 @@ class Document(Broadcaster, Listener):
     def close(self):
         self._save_preferences()
         self.notify('document_will_close')
-    
-    def in_reconciliation_mode(self):
-        return self._in_reconciliation_mode
-    
-    def toggle_reconciliation_mode(self):
-        self._in_reconciliation_mode = not self._in_reconciliation_mode
-        self.notify('reconciliation_changed')
     
     def stop_edition(self):
         """Call this when some operation (such as a panel loading) requires the other GUIs to save

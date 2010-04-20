@@ -107,9 +107,30 @@ http://www.hardcoded.net/licenses/hs_license
     return [entryTable fieldEditorForObject:asker];
 }
 
+- (BOOL)canToggleReconciliationMode
+{
+    return [[self py] canToggleReconciliationMode];
+}
+
+- (BOOL)inReconciliationMode
+{
+    return [[self py] inReconciliationMode];
+}
+
+- (void)toggleReconciliationMode
+{
+    [[self py] toggleReconciliationMode];
+}
+
 - (void)toggleReconciled
 {
     [[entryTable py] toggleReconciled];
+}
+
+/* Actions */
+- (IBAction)toggleReconciliationMode:(id)sender
+{
+    [self toggleReconciliationMode];
 }
 
 /* Delegate */
@@ -119,6 +140,19 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Core --> Cocoa */
+- (void)refreshReconciliationButton
+{
+    if ([self canToggleReconciliationMode]) {
+        [reconciliationModeButton setEnabled:YES];
+        NSInteger state = [self inReconciliationMode] ? NSOnState : NSOffState;
+        [reconciliationModeButton setState:state];
+    }
+    else {
+        [reconciliationModeButton setEnabled:NO];
+        [reconciliationModeButton setState:NSOffState];
+    }
+}
+
 -(void)refreshTotals
 {
     [totalsLabel setStringValue:[py totals]];

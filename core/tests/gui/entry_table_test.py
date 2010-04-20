@@ -72,7 +72,7 @@ def test_show_transfer_account_on_empty_row_does_nothing():
 @with_app(app_one_account)
 def test_toggle_reconciliation(app):
     # Toggling reconciliation when no entry is selected doesn't cause a crash.
-    app.doc.toggle_reconciliation_mode()
+    app.aview.toggle_reconciliation_mode()
     app.etable.toggle_reconciled() # no crash
 
 @with_app(app_one_account)
@@ -451,7 +451,7 @@ def app_two_entries_with_one_reconciled():
     app.doc.show_selected_account()
     app.add_entry(increase='1')
     app.add_entry(increase='2')
-    app.doc.toggle_reconciliation_mode()
+    app.aview.toggle_reconciliation_mode()
     app.etable[0].toggle_reconciled()
     return app
 
@@ -491,14 +491,14 @@ def app_two_entries_two_currencies():
 @with_app(app_two_entries_two_currencies)
 def test_can_reconcile(app):
     # an entry with a foreign currency can't be reconciled.
-    app.doc.toggle_reconciliation_mode()
+    app.aview.toggle_reconciliation_mode()
     assert not app.etable[1].can_reconcile()
 
 @with_app(app_two_entries_two_currencies)
 def test_toggle_reconcilitation_on_both(app):
     # When both entries are selected and toggle_reconciliation is called, only the first one
     # is toggled.
-    app.doc.toggle_reconciliation_mode()
+    app.aview.toggle_reconciliation_mode()
     app.etable.select([0, 1])
     app.etable.toggle_reconciled()
     assert app.etable[0].reconciled

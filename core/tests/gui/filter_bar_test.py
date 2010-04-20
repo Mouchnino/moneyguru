@@ -127,7 +127,7 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup):
         self.etable.select([1])
         row = self.etable.selected_row
         row.toggle_reconciled()
-        self.document.toggle_reconciliation_mode() # commit reonciliation
+        self.aview.toggle_reconciliation_mode() # commit reonciliation
     
     def test_efbar_not_reconciled(self):
         self.efbar.filter_type = FilterType.NotReconciled

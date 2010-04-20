@@ -703,7 +703,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.add_entry('19/07/2008', description='entry 1', increase='1')
         self.add_entry('20/07/2008', description='entry 2', transfer='second', increase='2')
         self.add_entry('20/07/2008', description='entry 3', increase='3')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
         self.etable[0].toggle_reconciled()
         self.etable[1].toggle_reconciled()
         self.etable[2].toggle_reconciled()
@@ -711,7 +711,7 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.bsheet.selected = self.bsheet.assets[1]
         self.bsheet.show_selected_account()
         self.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
-        self.document.toggle_reconciliation_mode() # commit reconciliation
+        self.aview.toggle_reconciliation_mode() # commit reconciliation
         self.mainwindow.select_transaction_table()
         self.clear_gui_calls()
     

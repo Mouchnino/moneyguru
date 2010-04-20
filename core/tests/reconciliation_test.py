@@ -18,7 +18,7 @@ class CommonSetup(CommonSetupBase):
         self.add_entry('1/1/2008', 'one')
         self.add_entry('20/1/2008', 'two')
         self.add_entry('31/1/2008', 'three')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
     
 
 class Pristine(TestCase):
@@ -28,12 +28,12 @@ class Pristine(TestCase):
     
     def test_reconciliation_mode(self):
         #Toggling reconciliation mode on and off
-        assert not self.document.in_reconciliation_mode()
-        self.document.toggle_reconciliation_mode()
-        self.check_gui_calls(self.mainwindow_gui, ['refresh_reconciliation_button'])
-        assert self.document.in_reconciliation_mode()
-        self.document.toggle_reconciliation_mode()
-        assert not self.document.in_reconciliation_mode()
+        assert not self.aview.reconciliation_mode
+        self.aview.toggle_reconciliation_mode()
+        self.check_gui_calls(self.aview_gui, ['refresh_reconciliation_button'])
+        assert self.aview.reconciliation_mode
+        self.aview.toggle_reconciliation_mode()
+        assert not self.aview.reconciliation_mode
     
 
 class OneEntry(TestCase, CommonSetup):
@@ -67,7 +67,7 @@ class OneEntryInReconciliationMode(TestCase):
         self.add_account()
         self.document.show_selected_account()
         self.add_entry('11/07/2008', decrease='42')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
     
     def test_can_reconcile_entry(self):
         # An entry today is reconciliable.
@@ -83,7 +83,7 @@ class OneEntryInReconciliationMode(TestCase):
     def test_commit_reconciliation(self):
         # committing reconciliation sets the entry's reconciliation date to the txn's date
         self.etable.selected_row.toggle_reconciled()
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
         assert self.etable[0].reconciled
         eq_(self.etable[0].reconciliation_date, '11/07/2008')
     
@@ -122,7 +122,7 @@ class OneEntryInTheFuture(TestCase):
         self.add_account()
         self.document.show_selected_account()
         self.add_entry('27/12/2009', increase='42')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
     
     def test_can_reconcile_entry(self):
         # It's not possible to reconcile an entry in the future.
@@ -139,7 +139,7 @@ class OneEntryInLiability(TestCase):
         self.add_account(account_type=AccountType.Liability)
         self.document.show_selected_account()
         self.add_entry(increase='42')
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
     
     def test_entry_balance(self):
         # The balance of the entry is empty.
@@ -153,9 +153,9 @@ def app_reconciled_entry():
     app.add_account()
     app.doc.show_selected_account()
     app.add_entry('11/07/2008', transfer='foo', decrease='42')
-    app.doc.toggle_reconciliation_mode()
+    app.aview.toggle_reconciliation_mode()
     app.etable.selected_row.toggle_reconciled()
-    app.doc.toggle_reconciliation_mode()
+    app.aview.toggle_reconciliation_mode()
     return app
 
 def test_change_amount_currency_dereconciles_entry():

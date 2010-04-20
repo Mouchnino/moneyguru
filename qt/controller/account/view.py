@@ -21,6 +21,7 @@ class EntryView(BaseView, Ui_EntryView):
     
     def __init__(self, mainwindow):
         BaseView.__init__(self)
+        self.mainwindow = mainwindow
         self.doc = mainwindow.doc
         self._setupUi()
         self.etable = EntryTable(mainwindow=mainwindow, view=self.tableView)
@@ -64,6 +65,9 @@ class EntryView(BaseView, Ui_EntryView):
         self.graphView.setHidden(not prefs.entryGraphVisible)
     
     #--- model --> view
+    def refresh_reconciliation_button(self):
+        self.mainwindow.refreshReconciliationButton()
+    
     def refresh_totals(self):
         self.totalsLabel.setText(self.model.totals)
     

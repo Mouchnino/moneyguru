@@ -176,14 +176,6 @@ class PyDocument(NSObject):
         self.py.connect()
         return self
     
-    #--- Reconciliation
-    def toggleReconciliationMode(self):
-        self.py.toggle_reconciliation_mode()
-
-    @signature('c@:')
-    def inReconciliationMode(self):
-        return self.py.in_reconciliation_mode()
-    
     #--- Undo
     @signature('c@:')
     def canUndo(self):
@@ -237,10 +229,6 @@ class PyDocument(NSObject):
     @signature('i@:')
     def transactionCount(self):
         return len(self.py.transactions)
-    
-    @signature('c@:')
-    def shownAccountIsBalanceSheet(self):
-        return self.py.shown_account is not None and self.py.shown_account.is_balance_sheet_account()
     
     def close(self):
         self.py.close()
@@ -414,11 +402,25 @@ class PyTransactionView(PyGUIContainer):
 
 class PyAccountView(PyGUIContainer):
     py_class = AccountView
+
+    @signature('c@:')
+    def canToggleReconciliationMode(self):
+        return self.py.can_toggle_reconciliation_mode
+    
+    @signature('c@:')
+    def inReconciliationMode(self):
+        return self.py.reconciliation_mode
     
     def totals(self):
         return self.py.totals
     
+    def toggleReconciliationMode(self):
+        self.py.toggle_reconciliation_mode()
+    
     #Python --> Cocoa
+    def refresh_reconciliation_button(self):
+        self.cocoa.refreshReconciliationButton()
+    
     def refresh_totals(self):
         self.cocoa.refreshTotals()
     
@@ -1070,9 +1072,6 @@ class PyMainWindow(PyListener):
         self.py.new_group()
     
     #--- Python -> Cocoa
-    def refresh_reconciliation_button(self):
-        self.cocoa.refreshReconciliationButton()
-    
     def refresh_undo_actions(self):
         pass # We don't need this on the Cocoa side
     

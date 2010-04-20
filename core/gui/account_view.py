@@ -17,6 +17,7 @@ class AccountView(BaseView):
         # we count the graphs separately because the connect/disconnect rules for them are special
         BaseView.__init__(self, view, mainwindow.document, [self.etable, self.efbar])
         self._shown_graph = self.balgraph
+        self._reconciliation_mode = False
     
     def connect(self):
         BaseView.connect(self)
@@ -28,6 +29,7 @@ class AccountView(BaseView):
             self.view.show_bar_graph()
         self._shown_graph.connect()
         self.view.refresh_totals()
+        self.view.refresh_reconciliation_button()
     
     def disconnect(self):
         BaseView.disconnect(self)
@@ -65,6 +67,21 @@ class AccountView(BaseView):
     
     def show_account(self):
         self.etable.show_transfer_account()
+    
+    def toggle_reconciliation_mode(self):
+        self._reconciliation_mode = not self._reconciliation_mode
+        self.etable.reconciliation_mode = self._reconciliation_mode
+        self.view.refresh_reconciliation_button()
+    
+    #--- Properties
+    @property
+    def can_toggle_reconciliation_mode(self):
+        shown_account = self.document.shown_account
+        return shown_account is not None and shown_account.is_balance_sheet_account()
+    
+    @property
+    def reconciliation_mode(self):
+        return self._reconciliation_mode
     
     #--- Event Handlers
     def account_must_be_shown(self):

@@ -241,9 +241,6 @@ class MainWindow(DocumentGUIObject):
     
     performed_undo_or_redo = _undo_stack_changed
     
-    def reconciliation_changed(self):
-        self.view.refresh_reconciliation_button()
-    
     schedule_changed = _undo_stack_changed
     schedule_deleted = _undo_stack_changed
     transaction_changed = _undo_stack_changed

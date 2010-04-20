@@ -10,12 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUI.h"
 
 @interface PyDocument : PyGUI {}
-/* Reconciliation */
-- (void)toggleReconciliationMode;
-- (BOOL)inReconciliationMode;
-
 /* Undo */
-
 - (BOOL)canUndo;
 - (NSString *)undoDescription;
 - (void)undo;
@@ -32,6 +27,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)isDirty;
 - (void)stopEdition;
 - (NSInteger)transactionCount;
-- (BOOL)shownAccountIsBalanceSheet;
 - (void)close;
 @end;

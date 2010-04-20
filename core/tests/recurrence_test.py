@@ -509,9 +509,9 @@ class DailyScheduleWithOneSpawnReconciled(TestCase, CommonSetup):
         self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
         self.mainwindow.select_entry_table()
         self.etable.select([1]) # This one is the spawn on 16/09/2008
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
         self.etable.selected_row.toggle_reconciled()
-        self.document.toggle_reconciliation_mode()
+        self.aview.toggle_reconciliation_mode()
     
     def test_dont_spawn_before_last_materialization_on_change(self):
         # One tricky problem was that if a schedule was changed to a more frequent one. When it happens,
