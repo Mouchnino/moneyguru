@@ -1037,6 +1037,10 @@ class PyMainWindow(PyListener):
     def selectPreviousView(self):
         self.py.select_previous_view()
     
+    @signature('i@:')
+    def currentViewIndex(self):
+        return self.py.current_view_index
+    
     def showAccount(self):
         self.py.show_account()
     

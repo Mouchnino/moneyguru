@@ -18,6 +18,8 @@ class MainWindow(DocumentGUIObject):
             self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel, self.alookup,
             self.completion_lookup, self.daterange_selector) = children
         self._current_view = None
+        self._current_view_index = -1
+        self.subviews = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview]
         self.show_balance_sheet()
     
     def connect(self):
@@ -28,36 +30,41 @@ class MainWindow(DocumentGUIObject):
     #--- Private
     def _change_current_view(self, view):
         if self._current_view is view:
-            return False
+            return
         if self._current_view is not None:
             self._current_view.disconnect()
         self._current_view = view
         self._current_view.connect()
-        return True
-    
-    def show_balance_sheet(self):
-        if self._change_current_view(self.nwview):
+        if view is self.nwview:
             self.view.show_balance_sheet()
-    
-    def show_budget_table(self):
-        if self._change_current_view(self.bview):
+        elif view is self.pview:
+            self.view.show_income_statement()
+        elif view is self.tview:
+            self.view.show_transaction_table()
+        elif view is self.aview:
+            self.view.show_entry_table()
+        elif view is self.scview:
+            self.view.show_schedule_table()
+        elif view is self.bview:
             self.view.show_budget_table()
     
+    def show_balance_sheet(self):
+        self.current_view_index = 0
+    
+    def show_budget_table(self):
+        self.current_view_index = 5
+    
     def show_entry_table(self):
-        if self._change_current_view(self.aview):
-            self.view.show_entry_table()
+        self.current_view_index = 3
     
     def show_income_statement(self):
-        if self._change_current_view(self.pview):
-            self.view.show_income_statement()
+        self.current_view_index = 1
     
     def show_schedule_table(self):
-        if self._change_current_view(self.scview):
-            self.view.show_schedule_table()
+        self.current_view_index = 4
     
     def show_transaction_table(self):
-        if self._change_current_view(self.tview):
-            self.view.show_transaction_table()
+        self.current_view_index = 2
     
     #--- Public
     def edit_item(self):
@@ -159,34 +166,20 @@ class MainWindow(DocumentGUIObject):
         self.show_budget_table()
     
     def select_next_view(self):
-        if self._current_view is self.nwview:
-            self.select_income_statement()
-        elif self._current_view is self.pview:
-            self.select_transaction_table()
-        elif self._current_view is self.tview:
-            if self.document.shown_account is not None:
-                self.select_entry_table()
-            else:
-                self.select_schedule_table()
-        elif self._current_view is self.aview:
-            self.select_schedule_table()
-        elif self._current_view is self.scview:
-            self.select_budget_table()
+        if self.current_view_index == 5:
+            return
+        if self.current_view_index == 2 and self.document.shown_account is None:
+            self.current_view_index += 2 # we have to skip the account view
+        else:
+            self.current_view_index += 1
     
     def select_previous_view(self):
-        if self._current_view is self.pview:
-            self.select_balance_sheet()
-        elif self._current_view is self.tview:
-            self.select_income_statement()
-        elif self._current_view is self.aview:
-            self.select_transaction_table()
-        elif self._current_view is self.scview:
-            if self.document.shown_account is not None:
-                self.select_entry_table()
-            else:
-                self.select_transaction_table()
-        elif self._current_view is self.bview:
-            self.select_schedule_table()
+        if self.current_view_index == 0:
+            return
+        if self.current_view_index == 4 and self.document.shown_account is None:
+            self.current_view_index -= 2 # we have to skip the account view
+        else:
+            self.current_view_index -= 1
     
     def show_account(self):
         """Shows the currently selected account in the Account view.
@@ -200,6 +193,19 @@ class MainWindow(DocumentGUIObject):
     
     def show_message(self, message):
         self.view.show_message(message)
+    
+    #--- Properties
+    @property
+    def current_view_index(self):
+        return self._current_view_index
+    
+    @current_view_index.setter
+    def current_view_index(self, value):
+        if value == self._current_view_index:
+            return
+        view = self.subviews[value]
+        self._current_view_index = value
+        self._change_current_view(view)
     
     #--- Event callbacks
     def _undo_stack_changed(self):

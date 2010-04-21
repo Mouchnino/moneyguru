@@ -30,6 +30,24 @@ def test_change_date_range(app):
     app.check_gui_calls_partial(app.bargraph_gui, not_expected=['refresh'])
 
 @with_app(app_cleared_gui_calls)
+def test_current_view_index(app):
+    # The main window has a `current_view_index` property which indicate which view is currently
+    # selected.
+    view_seq = [0, 1, 2, 4, 5] # we skip the account view because there's no shown account
+    for index in view_seq:
+        eq_(app.mw.current_view_index, index)
+        app.mw.select_next_view()
+    # we can't go further
+    app.mw.select_next_view()
+    eq_(app.mw.current_view_index, 5)
+    for index in reversed(view_seq):
+        eq_(app.mw.current_view_index, index)
+        app.mw.select_previous_view()
+    # we can't go further
+    app.mw.select_previous_view()
+    eq_(app.mw.current_view_index, 0)
+
+@with_app(app_cleared_gui_calls)
 def test_select_mainwindow_next_previous_view(app):
     app.mw.select_next_view()
     app.check_gui_calls(app.mainwindow_gui, ['show_income_statement'])

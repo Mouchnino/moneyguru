@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectBudgetTable;
 - (void)selectNextView;
 - (void)selectPreviousView;
+- (NSInteger)currentViewIndex;
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;

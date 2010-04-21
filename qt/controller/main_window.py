@@ -355,29 +355,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._updateActionsState()
     
     #--- model --> view
+    def change_current_view(self):
+        self._setMainWidgetIndex(self.model.current_view_index)
+    
     def refresh_undo_actions(self):
         self._updateUndoActions()
     
     def show_account_reassign_panel(self):
         self.arpanel.load()
     
-    def show_balance_sheet(self):
-        self._setMainWidgetIndex(NETWORTH_INDEX)
-    
-    def show_budget_table(self):
-        self._setMainWidgetIndex(BUDGET_INDEX)
-    
-    def show_entry_table(self):
-        self._setMainWidgetIndex(ACCOUNT_INDEX)
-    
-    def show_income_statement(self):
-        self._setMainWidgetIndex(PROFIT_INDEX)
-    
-    def show_schedule_table(self):
-        self._setMainWidgetIndex(SCHEDULE_INDEX)
-    
-    def show_transaction_table(self):
-        self._setMainWidgetIndex(TRANSACTION_INDEX)
+    show_balance_sheet = change_current_view
+    show_budget_table = change_current_view
+    show_entry_table = change_current_view
+    show_income_statement = change_current_view
+    show_schedule_table = change_current_view
+    show_transaction_table = change_current_view
     
     def show_message(self, msg):
         title = "Warning"
