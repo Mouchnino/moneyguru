@@ -537,7 +537,6 @@ def test_persistence_of_completion(app, tmppath):
 #--- Account created through transaction table
 def app_account_created_through_transaction_table():
     app = TestApp()
-    app.mw.show_transaction_table()
     app.add_txn(from_='foo', to='bar', amount='42')
     app.ttable.show_from_account()
     return app

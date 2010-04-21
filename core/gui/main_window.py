@@ -20,7 +20,7 @@ class MainWindow(DocumentGUIObject):
         self._current_view = None
         self._current_view_index = -1
         self.subviews = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview]
-        self.show_balance_sheet()
+        self.current_view_index = 0
     
     def connect(self):
         DocumentGUIObject.connect(self)
@@ -47,24 +47,6 @@ class MainWindow(DocumentGUIObject):
             self.view.show_schedule_table()
         elif view is self.bview:
             self.view.show_budget_table()
-    
-    def show_balance_sheet(self):
-        self.current_view_index = 0
-    
-    def show_budget_table(self):
-        self.current_view_index = 5
-    
-    def show_entry_table(self):
-        self.current_view_index = 3
-    
-    def show_income_statement(self):
-        self.current_view_index = 1
-    
-    def show_schedule_table(self):
-        self.current_view_index = 4
-    
-    def show_transaction_table(self):
-        self.current_view_index = 2
     
     #--- Public
     def edit_item(self):
@@ -141,29 +123,29 @@ class MainWindow(DocumentGUIObject):
     
     def select_balance_sheet(self):
         self.document.filter_string = ''
-        self.show_balance_sheet()
+        self.current_view_index = 0
     
     def select_income_statement(self):
         self.document.filter_string = ''
-        self.show_income_statement()
+        self.current_view_index = 1
     
     def select_transaction_table(self):
         self.document.filter_string = ''
-        self.show_transaction_table()
+        self.current_view_index = 2
     
     def select_entry_table(self):
         if self.document.shown_account is None:
             return
         self.document.filter_string = ''
-        self.show_entry_table()
+        self.current_view_index = 3
     
     def select_schedule_table(self):
         self.document.filter_string = ''
-        self.show_schedule_table()
+        self.current_view_index = 4
     
     def select_budget_table(self):
         self.document.filter_string = ''
-        self.show_budget_table()
+        self.current_view_index = 5
     
     def select_next_view(self):
         if self.current_view_index == 5:
@@ -247,7 +229,7 @@ class MainWindow(DocumentGUIObject):
     
     def filter_applied(self):
         if self.document.filter_string and self._current_view not in (self.tview, self.aview):
-            self.show_transaction_table()
+            self.current_view_index = 2
     
     performed_undo_or_redo = _undo_stack_changed
     

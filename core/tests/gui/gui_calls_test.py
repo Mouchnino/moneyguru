@@ -98,7 +98,7 @@ def test_new_schedule():
 def test_show_transaction_table():
     # tview's totals label is refreshed upon connecting.
     app = app_cleared_gui_calls()
-    app.mainwindow.show_transaction_table()
+    app.mw.select_transaction_table()
     app.check_gui_calls(app.tview_gui, ['refresh_totals'])
 
 def test_sort_table():
@@ -143,7 +143,7 @@ def test_show_account():
 #--- On transaction view
 def app_on_transaction_view():
     app = TestApp()
-    app.mainwindow.show_transaction_table()
+    app.mw.select_transaction_table()
     app.clear_gui_calls()
     return app
 

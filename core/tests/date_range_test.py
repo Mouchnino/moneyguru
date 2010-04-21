@@ -381,7 +381,7 @@ class AllTransactionsRangeWithOneTransactionFarInThePast(TestCase):
         # back *after* transactions have been loaded.
         self.document = self.save_and_load(newapp=False)
         self.create_instances()
-        self.mainwindow.show_transaction_table()
+        self.mainwindow.select_transaction_table()
         eq_(self.ttable.row_count, 2)
     
     def test_transactions_are_shown(self):
