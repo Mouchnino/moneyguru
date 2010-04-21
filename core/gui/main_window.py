@@ -207,6 +207,10 @@ class MainWindow(DocumentGUIObject):
         self._current_view_index = value
         self._change_current_view(view)
     
+    @property
+    def view_count(self):
+        return len(self.subviews)
+    
     #--- Event callbacks
     def _undo_stack_changed(self):
         self.view.refresh_undo_actions()

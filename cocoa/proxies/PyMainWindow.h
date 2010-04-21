@@ -22,6 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)selectNextView;
 - (void)selectPreviousView;
 - (NSInteger)currentViewIndex;
+- (NSInteger)viewCount;
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;

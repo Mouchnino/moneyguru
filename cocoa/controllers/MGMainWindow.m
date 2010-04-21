@@ -158,9 +158,9 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(toggleEntriesReconciled:))
         return (top == accountView) && [accountView inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return (top != budgetView);
+        return [[self py] currentViewIndex] < [[self py] viewCount]-1;
     else if (action == @selector(showPreviousView:))
-        return (top != netWorthView);
+        return [[self py] currentViewIndex] > 0;
     else if (action == @selector(showEntryTable:))
         return [[self py] canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:))

@@ -1041,6 +1041,10 @@ class PyMainWindow(PyListener):
     def currentViewIndex(self):
         return self.py.current_view_index
     
+    @signature('i@:')
+    def viewCount(self):
+        return self.py.view_count
+    
     def showAccount(self):
         self.py.show_account()
     

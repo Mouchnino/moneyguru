@@ -70,6 +70,11 @@ def test_select_ttable_on_sfield_query(app):
     app.sfield.query = 'foobar'
     app.check_gui_calls(app.mainwindow_gui, ['show_transaction_table'])
 
+@with_app(app_cleared_gui_calls)
+def test_view_count(app):
+    # the view_count property returns the number of available views.
+    eq_(app.mw.view_count, 6)
+
 #--- Asset and Income accounts
 def app_asset_and_income_accounts():
     app = TestApp()
