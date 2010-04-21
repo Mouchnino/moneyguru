@@ -35,18 +35,7 @@ class MainWindow(DocumentGUIObject):
             self._current_view.disconnect()
         self._current_view = view
         self._current_view.connect()
-        if view is self.nwview:
-            self.view.show_balance_sheet()
-        elif view is self.pview:
-            self.view.show_income_statement()
-        elif view is self.tview:
-            self.view.show_transaction_table()
-        elif view is self.aview:
-            self.view.show_entry_table()
-        elif view is self.scview:
-            self.view.show_schedule_table()
-        elif view is self.bview:
-            self.view.show_budget_table()
+        self.view.change_current_view()
     
     #--- Public
     def edit_item(self):

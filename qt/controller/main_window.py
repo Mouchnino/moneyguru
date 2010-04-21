@@ -364,13 +364,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_account_reassign_panel(self):
         self.arpanel.load()
     
-    show_balance_sheet = change_current_view
-    show_budget_table = change_current_view
-    show_entry_table = change_current_view
-    show_income_statement = change_current_view
-    show_schedule_table = change_current_view
-    show_transaction_table = change_current_view
-    
     def show_message(self, msg):
         title = "Warning"
         QMessageBox.warning(self, title, msg)

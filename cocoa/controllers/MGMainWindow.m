@@ -38,6 +38,8 @@ http://www.hardcoded.net/licenses/hs_license
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py dateRangeView:dateRangeSelectorView];
+    subviews = [[NSArray arrayWithObjects:netWorthView, profitView, transactionView, accountView,
+        scheduleView, budgetView, nil] retain];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
@@ -74,6 +76,7 @@ http://www.hardcoded.net/licenses/hs_license
     [accountReassignPanel release];
     [accountLookup release];
     [dateRangeSelector release];
+    [subviews release];
     [super dealloc];
 }
 
@@ -534,29 +537,27 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Callbacks for python */
+- (void)changeSelectedView
+{
+    NSInteger index = [[self py] currentViewIndex];
+    [self setTop:[subviews objectAtIndex:index]];
+    NSString *ident = @"";
+    switch (index) {
+        case 0: ident = MGBalanceSheetToolbarItemIdentifier; break;
+        case 1: ident = MGIncomeStatementToolbarItemIdentifier; break;
+        case 2: ident = MGTransactionsToolbarItemIdentifier; break;
+        case 3: ident = MGEntriesToolbarItemIdentifier; break;
+        case 4: ident = MGSchedulesToolbarItemIdentifier; break;
+        case 5: ident = MGBudgetToolbarItemIdentifier; break;
+    }
+    [[[self window] toolbar] setSelectedItemIdentifier:ident];
+}
+
 - (void)showAccountReassignPanel
 {
     [accountReassignPanel load];
     [NSApp beginSheet:[accountReassignPanel window] modalForWindow:[self window] modalDelegate:self 
         didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-}
-
-- (void)showBalanceSheet
-{
-    [self setTop:netWorthView];
-    [[[self window] toolbar] setSelectedItemIdentifier:MGBalanceSheetToolbarItemIdentifier];
-}
-
-- (void)showEntryTable
-{
-    [self setTop:accountView];
-    [[[self window] toolbar] setSelectedItemIdentifier:MGEntriesToolbarItemIdentifier];
-}
-
-- (void)showIncomeStatement
-{
-    [self setTop:profitView];
-    [[[self window] toolbar] setSelectedItemIdentifier:MGIncomeStatementToolbarItemIdentifier];
 }
 
 - (void)showMessage:(NSString *)aMessage
@@ -565,23 +566,4 @@ http://www.hardcoded.net/licenses/hs_license
         otherButton:nil informativeTextWithFormat:@""];
     [a beginSheetModalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
-
-- (void)showScheduleTable
-{
-    [self setTop:scheduleView];
-    [[[self window] toolbar] setSelectedItemIdentifier:MGSchedulesToolbarItemIdentifier];
-}
-
-- (void)showBudgetTable
-{
-    [self setTop:budgetView];
-    [[[self window] toolbar] setSelectedItemIdentifier:MGBudgetToolbarItemIdentifier];
-}
-
-- (void)showTransactionTable
-{
-    [self setTop:transactionView];
-    [[[self window] toolbar] setSelectedItemIdentifier:MGTransactionsToolbarItemIdentifier];
-}
-
 @end

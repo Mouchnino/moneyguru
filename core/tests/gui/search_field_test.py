@@ -6,9 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from ..base import TestCase, CommonSetup
+from nose.tools import eq_
 
-class CommonSetup(CommonSetup):
+from ..base import TestCase, CommonSetup as CommonSetupBase
+
+class CommonSetup(CommonSetupBase):
     def setup_two_transactions(self):
         self.add_account_legacy('Desjardins')
         self.add_entry(description='a Deposit', payee='Joe SixPack', checkno='42A', transfer='Income', increase='212.12')
@@ -165,7 +167,7 @@ class ThreeTransactionsFiltered(TestCase):
         self.mainwindow.select_balance_sheet()
         self.assertEqual(self.sfield.query, '')
         # setting the sfield query didn't make document go to all_transactions again
-        self.check_gui_calls(self.mainwindow_gui, ['show_balance_sheet'])
+        eq_(self.mainwindow.current_view_index, 0)
         self.check_gui_calls(self.sfield_gui, ['refresh'])
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable.row_count, 3)

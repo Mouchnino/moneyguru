@@ -350,14 +350,14 @@ def test_set_row_attr(app):
 def test_show_from_account(app):
     # show_from_account() takes the first account in the From column and shows it in etable.
     app.ttable.show_from_account()
-    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     eq_(app.doc.shown_account.name, 'first')
 
 @with_app(app_one_transaction)
 def test_show_to_account(app):
     # show_two_account() takes the first account in the To column and shows it in etable.
     app.ttable.show_to_account()
-    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     eq_(app.doc.shown_account.name, 'second')
 
 @with_app(app_one_transaction)

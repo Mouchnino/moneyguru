@@ -48,27 +48,10 @@ def test_current_view_index(app):
     eq_(app.mw.current_view_index, 0)
 
 @with_app(app_cleared_gui_calls)
-def test_select_mainwindow_next_previous_view(app):
-    app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_income_statement'])
-    app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_transaction_table'])
-    app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_schedule_table'])
-    app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_budget_table'])
-    app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_schedule_table'])
-    app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_transaction_table'])
-    app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_income_statement'])
-
-@with_app(app_cleared_gui_calls)
 def test_select_ttable_on_sfield_query(app):
     # Setting a value in the search field selects the ttable.
     app.sfield.query = 'foobar'
-    app.check_gui_calls(app.mainwindow_gui, ['show_transaction_table'])
+    eq_(app.mw.current_view_index, 2)
 
 @with_app(app_cleared_gui_calls)
 def test_view_count(app):
@@ -102,25 +85,25 @@ def test_navigate_back(app):
     app.bsheet.show_selected_account()
     app.clear_gui_calls()
     app.mw.navigate_back()
-    app.check_gui_calls(app.mainwindow_gui, ['show_balance_sheet'])
+    eq_(app.mw.current_view_index, 0)
     app.mw.select_income_statement()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     app.clear_gui_calls()
     app.mw.navigate_back()
-    app.check_gui_calls(app.mainwindow_gui, ['show_income_statement'])
+    eq_(app.mw.current_view_index, 1)
 
 @with_app(app_asset_and_income_accounts)
 def test_select_next_previous_view(app):
     # Now that an account has been shown, the Account view is part of the view cycle
     app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_transaction_table'])
+    eq_(app.mw.current_view_index, 2)
     app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_schedule_table'])
+    eq_(app.mw.current_view_index, 4)
     app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
 
 @with_app(app_asset_and_income_accounts)
 def test_show_account_when_in_sheet(app):
@@ -128,31 +111,31 @@ def test_show_account_when_in_sheet(app):
     app.mw.select_balance_sheet()
     app.clear_gui_calls()
     app.mw.show_account()
-    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     app.mw.select_income_statement()
     app.clear_gui_calls()
     app.mw.show_account()
-    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
 
 @with_app(app_asset_and_income_accounts)
 def test_switch_views(app):
     # Views shown in the main window depend on what's selected in the account tree.
     app.mw.select_income_statement()
-    app.check_gui_calls(app.mainwindow_gui, ['show_income_statement'])
+    eq_(app.mw.current_view_index, 1)
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
-    app.check_gui_calls(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     expected = ['refresh_totals', 'show_bar_graph', 'refresh_reconciliation_button']
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_balance_sheet()
-    app.check_gui_calls(app.mainwindow_gui, ['show_balance_sheet'])
+    eq_(app.mw.current_view_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
-    app.check_gui_calls(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     expected = ['refresh_totals', 'show_line_graph', 'refresh_reconciliation_button']
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_transaction_table()
-    app.check_gui_calls(app.mainwindow_gui, ['show_transaction_table'])
+    eq_(app.mw.current_view_index, 2)
 
 #--- One transaction
 def app_one_transaction():
@@ -171,5 +154,5 @@ def test_show_account_when_in_etable(app):
 @with_app(app_one_transaction)
 def test_show_account_when_in_ttable(app):
     app.mw.show_account()
-    app.check_gui_calls_partial(app.mainwindow_gui, ['show_entry_table'])
+    eq_(app.mw.current_view_index, 3)
     eq_(app.doc.shown_account.name, 'first')

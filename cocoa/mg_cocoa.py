@@ -1080,35 +1080,20 @@ class PyMainWindow(PyListener):
         self.py.new_group()
     
     #--- Python -> Cocoa
+    def change_current_view(self):
+        self.cocoa.changeSelectedView()
+    
     def refresh_undo_actions(self):
         pass # We don't need this on the Cocoa side
     
     def show_account_reassign_panel(self):
         self.cocoa.showAccountReassignPanel()
     
-    def show_balance_sheet(self):
-        self.cocoa.showBalanceSheet()
-
-    def show_budget_table(self):
-        self.cocoa.showBudgetTable()
-    
     def show_custom_date_range_panel(self):
         self.cocoa.showCustomDateRangePanel()
     
-    def show_entry_table(self):
-        self.cocoa.showEntryTable()
-
-    def show_income_statement(self):
-        self.cocoa.showIncomeStatement()
-    
     def show_message(self, message):
         self.cocoa.showMessage_(message)
-    
-    def show_schedule_table(self):
-        self.cocoa.showScheduleTable()
-    
-    def show_transaction_table(self):
-        self.cocoa.showTransactionTable()
     
 
 class PyImportWindow(PyListener):

@@ -56,6 +56,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGCompletionLookup *completionLookup;
     MGDateRangeSelector *dateRangeSelector;
     MGBaseView *top;
+    NSArray *subviews;
 }
 - (id)initWithDocument:(MGDocument *)document;
 - (PyMainWindow *)py;
