@@ -9,38 +9,37 @@
 from nose.tools import eq_, assert_raises
 from hsutil.testutil import with_tmpdir, patch_today
 
-from ..base import TestCase, TestApp
+from ..base import TestApp, with_app
 from ...exception import OperationAborted
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-    
-    def test_can_load(self):
-        # When there's no selection, loading the panel raises OperationAborted
-        assert_raises(OperationAborted, self.mepanel.load)
-    
+#--- Pristine
+@with_app(TestApp)
+def test_can_load_when_empty(app):
+    # When there's no selection, loading the panel raises OperationAborted
+    assert_raises(OperationAborted, app.mepanel.load)
 
-class TwoTransactions(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-        self.ttable.save_edits()
-        self.ttable.add()
-        self.ttable.save_edits()
-    
-    def test_can_load(self):
-        # When there is only one txn selected, loading the panel raises OperationAborted
-        assert_raises(OperationAborted, self.mepanel.load)
-    
-    def test_can_load_after_selection(self):
-        # When there is more than one txn selected, load() can be called
-        # This test has a collateral, which is to make sure that mepanel doesn't have a problem
-        # loading txns with splits with None accounts.
-        self.ttable.select([0, 1])
-        self.mepanel.load() # No OperationAborted
-    
+#--- Two Transactions
+def app_two_transactions():
+    app = TestApp()
+    app.mw.select_transaction_table()
+    app.ttable.add()
+    app.ttable.save_edits()
+    app.ttable.add()
+    app.ttable.save_edits()
+    return app
+
+@with_app(app_two_transactions)
+def test_can_load_when_one_txn_selected(app):
+    # When there is only one txn selected, loading the panel raises OperationAborted
+    assert_raises(OperationAborted, app.mepanel.load)
+
+@with_app(app_two_transactions)
+def test_can_load_after_selection(app):
+    # When there is more than one txn selected, load() can be called
+    # This test has a collateral, which is to make sure that mepanel doesn't have a problem
+    # loading txns with splits with None accounts.
+    app.ttable.select([0, 1])
+    app.mepanel.load() # No OperationAborted
 
 #--- Two transactions different values
 def app_two_transactions_different_value():
@@ -188,73 +187,77 @@ def test_change_description_only():
     eq_(row.date, '06/07/2008')
     eq_(row.description, 'description3')
 
-class TwoTransactionsSameValues(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('account1')
-        self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
-        self.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
-        self.etable.select([0, 1])
-        self.mepanel.load()
-    
-    def test_attributes(self):
-        """All fields are disabled but contain the values common to all selection"""
-        self.assertFalse(self.mepanel.date_enabled)
-        self.assertFalse(self.mepanel.description_enabled)
-        self.assertFalse(self.mepanel.payee_enabled)
-        self.assertFalse(self.mepanel.checkno_enabled)
-        self.assertFalse(self.mepanel.from_enabled)
-        self.assertFalse(self.mepanel.to_enabled)
-        self.assertFalse(self.mepanel.amount_enabled)
-        self.assertEqual(self.mepanel.date, '06/07/2008')
-        self.assertEqual(self.mepanel.description, 'description')
-        self.assertEqual(self.mepanel.payee, 'payee')
-        self.assertEqual(self.mepanel.checkno, '42')
-        self.assertEqual(self.mepanel.from_, 'account2')
-        self.assertEqual(self.mepanel.to, 'account1')
-        self.assertEqual(self.mepanel.amount, '42.00')
-    
-    def test_change_field_same(self):
-        """Don't auto-enable when changing a field to the same value"""
-        self.mepanel.date = '06/07/2008'
-        self.assertFalse(self.mepanel.date_enabled)
-        self.mepanel.description = 'description'
-        self.assertFalse(self.mepanel.description_enabled)
-        self.mepanel.payee = 'payee'
-        self.assertFalse(self.mepanel.payee_enabled)
-        self.mepanel.checkno = '42'
-        self.assertFalse(self.mepanel.checkno_enabled)
-        self.mepanel.from_ = 'account2'
-        self.assertFalse(self.mepanel.from_enabled)
-        self.mepanel.to = 'account1'
-        self.assertFalse(self.mepanel.to_enabled)
-        self.mepanel.amount = '42'
-        self.assertFalse(self.mepanel.amount_enabled)
-    
-    def test_load_again(self):
-        """load() blanks values when necessary"""
-        self.mock_today(2010, 2, 20)
-        self.mepanel.date_enabled = True
-        self.mepanel.description_enabled = True
-        self.mepanel.payee_enabled = True
-        self.mepanel.checkno_enabled = True
-        self.mepanel.from_enabled = True
-        self.mepanel.amount_enabled = True
-        self.add_entry(date='07/07/2008') # Now, none of the values are common
-        self.etable.select([0, 1, 2])
-        self.mepanel.load()
-        self.assertFalse(self.mepanel.date_enabled)
-        self.assertFalse(self.mepanel.description_enabled)
-        self.assertFalse(self.mepanel.payee_enabled)
-        self.assertFalse(self.mepanel.checkno_enabled)
-        self.assertFalse(self.mepanel.from_enabled)
-        self.assertFalse(self.mepanel.to_enabled)
-        self.assertFalse(self.mepanel.amount_enabled)
-        self.assertEqual(self.mepanel.date, '20/02/2010')
-        self.assertEqual(self.mepanel.description, '')
-        self.assertEqual(self.mepanel.payee, '')
-        self.assertEqual(self.mepanel.checkno, '')
-        
+#--- Two transactions same values
+def app_two_transactions_same_values():
+    app = TestApp()
+    app.add_account('account1')
+    app.mw.show_account()
+    app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
+    app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
+    app.etable.select([0, 1])
+    app.mepanel.load()
+    return app
+
+@with_app(app_two_transactions_same_values)
+def test_attributes_when_same_values(app):
+    # All fields are disabled but contain the values common to all selection.
+    assert not app.mepanel.date_enabled
+    assert not app.mepanel.description_enabled
+    assert not app.mepanel.payee_enabled
+    assert not app.mepanel.checkno_enabled
+    assert not app.mepanel.from_enabled
+    assert not app.mepanel.to_enabled
+    assert not app.mepanel.amount_enabled
+    eq_(app.mepanel.date, '06/07/2008')
+    eq_(app.mepanel.description, 'description')
+    eq_(app.mepanel.payee, 'payee')
+    eq_(app.mepanel.checkno, '42')
+    eq_(app.mepanel.from_, 'account2')
+    eq_(app.mepanel.to, 'account1')
+    eq_(app.mepanel.amount, '42.00')
+
+@with_app(app_two_transactions_same_values)
+def test_change_field_same(app):
+    # Don't auto-enable when changing a field to the same value.
+    app.mepanel.date = '06/07/2008'
+    assert not app.mepanel.date_enabled
+    app.mepanel.description = 'description'
+    assert not app.mepanel.description_enabled
+    app.mepanel.payee = 'payee'
+    assert not app.mepanel.payee_enabled
+    app.mepanel.checkno = '42'
+    assert not app.mepanel.checkno_enabled
+    app.mepanel.from_ = 'account2'
+    assert not app.mepanel.from_enabled
+    app.mepanel.to = 'account1'
+    assert not app.mepanel.to_enabled
+    app.mepanel.amount = '42'
+    assert not app.mepanel.amount_enabled
+
+@with_app(app_two_transactions_same_values)
+@patch_today(2010, 2, 20)
+def test_load_again(app):
+    # load() blanks values when necessary.
+    app.mepanel.date_enabled = True
+    app.mepanel.description_enabled = True
+    app.mepanel.payee_enabled = True
+    app.mepanel.checkno_enabled = True
+    app.mepanel.from_enabled = True
+    app.mepanel.amount_enabled = True
+    app.add_entry(date='07/07/2008') # Now, none of the values are common
+    app.etable.select([0, 1, 2])
+    app.mepanel.load()
+    assert not app.mepanel.date_enabled
+    assert not app.mepanel.description_enabled
+    assert not app.mepanel.payee_enabled
+    assert not app.mepanel.checkno_enabled
+    assert not app.mepanel.from_enabled
+    assert not app.mepanel.to_enabled
+    assert not app.mepanel.amount_enabled
+    eq_(app.mepanel.date, '20/02/2010')
+    eq_(app.mepanel.description, '')
+    eq_(app.mepanel.payee, '')
+    eq_(app.mepanel.checkno, '')
 
 #--- Two transactions one split
 def app_two_transactions_one_split():
