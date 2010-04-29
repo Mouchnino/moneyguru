@@ -41,12 +41,6 @@ http://www.hardcoded.net/licenses/hs_license
     MGMassEditionPanel *massEditionPanel;
     MGSchedulePanel *schedulePanel;
     MGBudgetPanel *budgetPanel;
-    MGNetWorthView *netWorthView;
-    MGProfitView *profitView;
-    MGTransactionView *transactionView;
-    MGAccountView *accountView;
-    MGScheduleView *scheduleView;
-    MGBudgetView *budgetView;
     MGSearchField *searchField;
     MGImportWindow *importWindow;
     MGCSVImportOptions *csvOptionsWindow;

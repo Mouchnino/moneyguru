@@ -22,12 +22,13 @@ http://www.hardcoded.net/licenses/hs_license
     massEditionPanel = [[MGMassEditionPanel alloc] initWithParent:self];
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
-    netWorthView = [[MGNetWorthView alloc] initWithPyParent:py];
-    profitView = [[MGProfitView alloc] initWithPyParent:py];
-    transactionView = [[MGTransactionView alloc] initWithPyParent:py];
-    accountView = [[MGAccountView alloc] initWithPyParent:py];
-    scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
-    budgetView = [[MGBudgetView alloc] initWithPyParent:py];
+    /* We autorelease the views because their reference is kept by the subviews array */
+    MGNetWorthView *netWorthView = [[[MGNetWorthView alloc] initWithPyParent:py] autorelease];
+    MGProfitView *profitView = [[[MGProfitView alloc] initWithPyParent:py] autorelease];
+    MGTransactionView *transactionView = [[[MGTransactionView alloc] initWithPyParent:py] autorelease];
+    MGAccountView *accountView = [[[MGAccountView alloc] initWithPyParent:py] autorelease];
+    MGScheduleView *scheduleView = [[[MGScheduleView alloc] initWithPyParent:py] autorelease];
+    MGBudgetView *budgetView = [[[MGBudgetView alloc] initWithPyParent:py] autorelease];
     searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -63,12 +64,6 @@ http://www.hardcoded.net/licenses/hs_license
     [massEditionPanel release];
     [schedulePanel release];
     [accountProperties release];
-    [netWorthView release];
-    [profitView release];
-    [accountView release];
-    [transactionView release];
-    [scheduleView release];
-    [budgetView release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -152,31 +147,30 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)validateAction:(SEL)action
 {
     if (action == @selector(newGroup:))
-        return (top == netWorthView) || (top == profitView);
+        return [top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]];
     else if ((action == @selector(moveUp:)) ||
              (action == @selector(moveDown:)) ||
              (action == @selector(duplicateItem:)) ||
              (action == @selector(makeScheduleFromSelected:)))
-        return (top == transactionView) || (top == accountView);
+        return [top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]];
     else if (action == @selector(toggleEntriesReconciled:))
-        return (top == accountView) && [accountView inReconciliationMode];
+        return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top inReconciliationMode];
     else if (action == @selector(showNextView:))
         return [[self py] currentViewIndex] < [[self py] viewCount]-1;
     else if (action == @selector(showPreviousView:))
         return [[self py] currentViewIndex] > 0;
     else if (action == @selector(showEntryTable:))
         return [[self py] canSelectEntryTable];
-    else if (action == @selector(showSelectedAccount:))
-    {
-        if ((top == netWorthView) || (top == profitView))
+    else if (action == @selector(showSelectedAccount:)) {
+        if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
             return [(id)top canShowSelectedAccount];
         else
-            return (top == transactionView) || (top == accountView);
+            return [top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]];
     }
     else if (action == @selector(navigateBack:))
-        return (top == accountView);
+        return [top isKindOfClass:[MGAccountView class]];
     else if (action == @selector(toggleReconciliationMode:))
-        return (top == accountView) && [accountView canToggleReconciliationMode];
+        return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top canToggleReconciliationMode];
     else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
         || (action == @selector(selectTodayDateRange:)))
         return [[dateRangeSelector py] canNavigate];
@@ -344,12 +338,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)toggleEntriesReconciled:(id)sender
 {
-    [accountView toggleReconciled];
+    [(MGAccountView *)top toggleReconciled];
 }
 
 - (IBAction)toggleReconciliationMode:(id)sender
 {
-    [accountView toggleReconciliationMode];
+    [(MGAccountView *)top toggleReconciliationMode];
 }
 
 /* Public */
@@ -391,10 +385,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
 {
-    if (top == accountView)
-        return [accountView fieldEditorForObject:asker];
-    else if (top == transactionView)
-        return [transactionView fieldEditorForObject:asker];
+    if ([top respondsToSelector:@selector(fieldEditorForObject:)]) {
+        return [(id)top fieldEditorForObject:asker];
+    }
     return nil;
 }
 
@@ -518,13 +511,13 @@ http://www.hardcoded.net/licenses/hs_license
     if ([aItem tag] == MGNewItemMenuItem)
     {
         NSString *title = @"New Item";
-        if ((top == netWorthView) || (top == profitView))
+        if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
             title = @"New Account";
-        else if ((top == transactionView) || (top == accountView))
+        else if ([top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]])
             title = @"New Transaction";
-        else if (top == scheduleView)
+        else if ([top isKindOfClass:[MGScheduleView class]])
             title = @"New Schedule";
-        else if (top == budgetView)
+        else if ([top isKindOfClass:[MGBudgetView class]])
             title = @"New Budget";
         [aItem setTitle:title];
     }

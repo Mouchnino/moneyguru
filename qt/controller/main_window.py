@@ -52,12 +52,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         # Create base elements
         self.model = MainWindowModel(view=self, document=doc.model)
-        self.nwview = NetWorthView(mainwindow=self)
-        self.pview = ProfitView(mainwindow=self)
-        self.tview = TransactionView(mainwindow=self)
-        self.eview = EntryView(mainwindow=self)
-        self.scview = ScheduleView(mainwindow=self)
-        self.bview = BudgetView(mainwindow=self)
+        nwview = NetWorthView(mainwindow=self)
+        pview = ProfitView(mainwindow=self)
+        tview = TransactionView(mainwindow=self)
+        eview = EntryView(mainwindow=self)
+        scview = ScheduleView(mainwindow=self)
+        bview = BudgetView(mainwindow=self)
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
         self.mepanel = MassEditionPanel(mainwindow=self)
@@ -72,18 +72,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
         
         # Set main views
-        self.mainView.addWidget(self.nwview)
-        self.mainView.addWidget(self.pview)
-        self.mainView.addWidget(self.tview)
-        self.mainView.addWidget(self.eview)
-        self.mainView.addWidget(self.scview)
-        self.mainView.addWidget(self.bview)
+        self.mainView.addWidget(nwview)
+        self.mainView.addWidget(pview)
+        self.mainView.addWidget(tview)
+        self.mainView.addWidget(eview)
+        self.mainView.addWidget(scview)
+        self.mainView.addWidget(bview)
         
         # set_children() and connect() calls have to happen after _setupUiPost()
-        children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
-            self.scview.model, self.bview.model, self.apanel.model, self.tpanel.model,
-            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.cdrpanel.model,
-            self.alookup.model, self.clookup.model, self.drsel.model]
+        children = [nwview.model, pview.model, tview.model, eview.model, scview.model, bview.model,
+            self.apanel.model, self.tpanel.model, self.mepanel.model, self.scpanel.model,
+            self.bpanel.model, self.cdrpanel.model, self.alookup.model, self.clookup.model,
+            self.drsel.model]
         self.model.set_children(children)
         self.model.connect()
         self.sfield.model.connect()
@@ -228,11 +228,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.viewTitleLabel.setText(action.text())
         
         # Determine what actions are enabled
+        view = self.mainView.currentWidget()
         isSheet = viewIndex in (NETWORTH_INDEX, PROFIT_INDEX)
         isTransactionOrEntryTable = viewIndex in (TRANSACTION_INDEX, ACCOUNT_INDEX)
         shownAccount = self.doc.model.shown_account
         canToggleReconciliation = viewIndex == ACCOUNT_INDEX and \
-            self.eview.model.can_toggle_reconciliation_mode
+            view.model.can_toggle_reconciliation_mode
         
         newItemLabel = {
             NETWORTH_INDEX: "New Account",
@@ -248,7 +249,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
         self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
-        self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and self.eview.model.reconciliation_mode)
+        self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and view.model.reconciliation_mode)
         self.actionShowNextView.setEnabled(self.model.current_view_index < self.model.view_count-1)
         self.actionShowPreviousView.setEnabled(self.model.current_view_index > 0)
         self.actionShowAccount.setEnabled(shownAccount is not None)
@@ -273,11 +274,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
-        self.nwview.updateOptionalWidgetsVisibility()
-        self.pview.updateOptionalWidgetsVisibility()
-        self.tview.updateOptionalWidgetsVisibility()
-        self.eview.updateOptionalWidgetsVisibility()
-        self.scview.updateOptionalWidgetsVisibility()
+        for i in xrange(self.mainView.count()):
+            view = self.mainView.widget(i)
+            if hasattr(view, 'updateOptionalWidgetsVisibility'):
+                view.updateOptionalWidgetsVisibility()
     
     #--- Actions
     # Views
@@ -335,10 +335,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.make_schedule_from_selected()
     
     def reconcileSelectedTriggered(self):
-        self.eview.etable.model.toggle_reconciled()
+        self.mainView.currentWidget().etable.model.toggle_reconciled()
     
     def toggleReconciliationModeTriggered(self):
-        self.eview.model.toggle_reconciliation_mode()
+        self.mainView.currentWidget().model.toggle_reconciliation_mode()
     
     def registerTriggered(self):
         self.app.askForRegCode()
@@ -350,7 +350,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.showAboutBox()
     
     def refreshReconciliationButton(self):
-        imgname = ':/reconcile_check_48' if self.eview.model.reconciliation_mode else ':/reconcile_48'
+        view = self.mainView.currentWidget()
+        in_reconciliation_mode = isinstance(view, EntryView) and view.model.reconciliation_mode
+        imgname = ':/reconcile_check_48' if in_reconciliation_mode else ':/reconcile_48'
         self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
         self._updateActionsState()
     
