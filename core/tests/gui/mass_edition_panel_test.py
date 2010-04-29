@@ -329,6 +329,27 @@ def app_two_transactions_with_a_multi_currency_one():
     app.mepanel.load()
     return app
 
+#--- Transactions with splits
+def app_transactions_with_splits():
+    app = TestApp()
+    app.add_txn()
+    splits = [
+        ('foo', '', '20', ''),
+        ('bar', '', '', '10'),
+        ('baz', '', '', '10'),
+    ]
+    app.add_txn_with_splits(splits)
+    app.ttable.select([0, 1])
+    app.mepanel.load()
+    return app
+
+@with_app(app_transactions_with_splits)
+def test_currency_change_on_splits(app):
+    # currency mass change also work on split transactions. There would previously be a crash.
+    app.mepanel.currency_index = 2 # GBP
+    app.mepanel.save() # no crash
+    eq_(app.ttable[1].amount, 'GBP 20.00')
+
 #--- Generators
 def test_can_change_amount():
     def check(app, expected):
