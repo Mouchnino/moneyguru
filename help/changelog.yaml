@@ -3,6 +3,7 @@
   description: |
     * Fixed a crash on currency mass editing. (#151)
     * Added support for UAH, LTL and BBD currencies.
+    * Fixed a glitch in the currency system sometimes causing exchange rates to be wrong.
 - date: 2010-04-18
   version: 1.8.1
   description: |
