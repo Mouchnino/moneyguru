@@ -23,11 +23,6 @@ class RatesDB(RatesDBBase):
         self.async = async
         self._fetched_values = Queue()
         self._fetched_ranges = {} # a currency --> (start, end) map
-        self._cache = {} # queries to the sqlite db are slow and frequent. this is an optimization
-        sql = "select currency, date, rate from rates"
-        cur = self._execute(sql)
-        for currency, date, rate in cur:
-            self._cache[(currency, date)] = rate
     
     def ensure_rates(self, start_date, currencies):
         """Ensures that the DB has all the rates it needs for 'currencies' between 'start_date' and today
@@ -75,16 +70,11 @@ class RatesDB(RatesDBBase):
         else:
             do()
     
-    def _seek_value_in_CAD(self, str_date, currency_code):
+    def get_rate(self, date, currency1_code, currency2_code):
         # We want to check self._fetched_values for rates to add.
         if not self._fetched_values.empty():
             self.save_fetched_rates()
-        try:
-            return self._cache[(currency_code, str_date)]
-        except KeyError:
-            result = RatesDBBase._seek_value_in_CAD(self, str_date, currency_code)
-            self._cache[(currency_code, str_date)] = result
-            return result
+        return RatesDBBase.get_rate(self, date, currency1_code, currency2_code)
     
     def save_fetched_rates(self):
         while True:
@@ -96,11 +86,6 @@ class RatesDB(RatesDBBase):
                     self.set_CAD_value(rate_date, currency, rate)
             except Empty:
                 break
-    
-    def set_CAD_value(self, date, currency_code, value):
-        RatesDBBase.set_CAD_value(self, date, currency_code, value)
-        str_date = '%d%02d%02d' % (date.year, date.month, date.day)
-        self._cache[(currency_code, str_date)] = value
     
 
 def initialize_db(path):

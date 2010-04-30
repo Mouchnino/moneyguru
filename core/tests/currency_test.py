@@ -340,7 +340,6 @@ class ThreeCurrenciesTwoEntriesSaveLoad(TestCase):
         # This is a weird way to test that we don't have the rate yet. No need to import fallback 
         # rates just for that.
         self.assertNotEqual(rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD'), 1.42)
-        rates_db.clear_cache()
         self.jointhreads()
         self.assertEqual(rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD'), 1.42)
     

@@ -135,7 +135,6 @@ class Transaction(object):
             for split in tochange:
                 split.amount = Amount(split.amount.value, currency)
                 split.reconciliation_date = None
-            self.amount = Amount(self.amount.value, currency)
         self.mtime = time.time()
     
     def matches(self, query):
