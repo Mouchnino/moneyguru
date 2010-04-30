@@ -57,6 +57,7 @@ Supported Currencies
 * [ANG] Neth. Antilles flori
 * [ARS] Argentine peso
 * [ATS] Austrian schillin
+* [BBD] Barbadian dollar
 * [BEF] Belgian franc
 * [BHD] Bahraini dinar
 * [BRL] Brazilian real
@@ -88,6 +89,7 @@ Supported Currencies
 * [JMD] Jamaican dollar
 * [KRW] South Korean won
 * [LKR] Sri Lanka rupee
+* [LTL] Lithuanian litas
 * [MAD] Moroccan dirham
 * [MMK] Myanmar (Burma) kyat
 * [MXN] Mexican peso
@@ -111,6 +113,7 @@ Supported Currencies
 * [TND] Tunisian dinar
 * [TRL] Turkish lira
 * [TWD] Taiwanese new dollar
+* [UAH] Ukrainian hryvnia
 * [VEB] Venezuelan bolivar
 * [VEF] Venezuelan bolivar fuerte
 * [VND] Vietnamese dong
