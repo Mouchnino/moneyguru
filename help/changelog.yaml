@@ -1,3 +1,8 @@
+- date: 2010-04-30
+  version: 1.8.2
+  description: |
+    * Fixed a crash on currency mass editing. (#151)
+    * Added support for UAH, LTL and BBD currencies.
 - date: 2010-04-18
   version: 1.8.1
   description: |
