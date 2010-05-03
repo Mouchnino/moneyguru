@@ -1009,27 +1009,9 @@ class PyMainWindow(PyListener):
     def setChildren_(self, children):
         self.py.set_children([child.py for child in children])
     
-    def selectBalanceSheet(self):
-        self.py.select_balance_sheet()
-    
-    def selectIncomeStatement(self):
-        self.py.select_income_statement()
-    
-    def selectTransactionTable(self):
-        self.py.select_transaction_table()
-    
-    def selectEntryTable(self):
-        self.py.select_entry_table()
-    
     @signature('c@:')
     def canSelectEntryTable(self):
         return self.py.document.shown_account is not None
-    
-    def selectScheduleTable(self):
-        self.py.select_schedule_table()
-    
-    def selectBudgetTable(self):
-        self.py.select_budget_table()
     
     def selectNextView(self):
         self.py.select_next_view()
@@ -1040,6 +1022,10 @@ class PyMainWindow(PyListener):
     @signature('i@:')
     def currentViewIndex(self):
         return self.py.current_view_index
+    
+    @signature('v@:i')
+    def setCurrentViewIndex_(self, index):
+        self.py.current_view_index = index
     
     @signature('i@:')
     def viewCount(self):

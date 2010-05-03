@@ -12,16 +12,11 @@ http://www.hardcoded.net/licenses/hs_license
 @interface PyMainWindow : PyGUI {}
 - (void)setChildren:(NSArray *)children;
 // Navigation
-- (void)selectBalanceSheet;
-- (void)selectIncomeStatement;
-- (void)selectTransactionTable;
-- (void)selectEntryTable;
 - (BOOL)canSelectEntryTable;
-- (void)selectScheduleTable;
-- (void)selectBudgetTable;
 - (void)selectNextView;
 - (void)selectPreviousView;
 - (NSInteger)currentViewIndex;
+- (void)setCurrentViewIndex:(NSInteger)index;
 - (NSInteger)viewCount;
 - (void)showAccount;
 - (void)navigateBack;

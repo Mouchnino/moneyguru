@@ -18,12 +18,6 @@ http://www.hardcoded.net/licenses/hs_license
 #define MGDateRangeToolbarItemIdentifier @"MGDateRangeToolbarItemIdentifier"
 #define MGMainToolbarIdentifier @"MGMainToolbarIdentifier"
 #define MGSearchFieldToolbarItemIdentifier @"MGSearchFieldToolbarItemIdentifier"
-#define MGBalanceSheetToolbarItemIdentifier @"MGBalanceSheetToolbarItemIdentifier"
-#define MGIncomeStatementToolbarItemIdentifier @"MGIncomeStatementToolbarItemIdentifier"
-#define MGTransactionsToolbarItemIdentifier @"MGTransactionsToolbarItemIdentifier"
-#define MGEntriesToolbarItemIdentifier @"MGEntriesToolbarItemIdentifier"
-#define MGSchedulesToolbarItemIdentifier @"MGSchedulesToolbarItemIdentifier"
-#define MGBudgetToolbarItemIdentifier @"MGBudgetToolbarItemIdentifier"
 
 /* Menu Item Tags */
 

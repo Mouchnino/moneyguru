@@ -42,21 +42,27 @@ http://www.hardcoded.net/licenses/hs_license
     
     /* Add views to the tab view */
     NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setLabel:@"Net Worth"];
     [item setView:[netWorthView view]];
     [tabView addTabViewItem:item];
     item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setLabel:@"Profit & Loss"];
     [item setView:[profitView view]];
     [tabView addTabViewItem:item];
     item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setLabel:@"Transactions"];
     [item setView:[transactionView view]];
     [tabView addTabViewItem:item];
     item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setLabel:@"Account"];
     [item setView:[accountView view]];
     [tabView addTabViewItem:item];
     item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setLabel:@"Schedules"];
     [item setView:[scheduleView view]];
     [tabView addTabViewItem:item];
     item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setLabel:@"Budgets"];
     [item setView:[budgetView view]];
     [tabView addTabViewItem:item];
     subviews = [[NSArray arrayWithObjects:netWorthView, profitView, transactionView, accountView,
@@ -75,6 +81,10 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
+    /* Don't set the delegate in the XIB or else delegates methods are called to soon and cause
+       crashes.
+    */
+    [tabBar setDelegate:self];
     return self;
 }
 
@@ -285,32 +295,32 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showBalanceSheet:(id)sender
 {
-    [[self py] selectBalanceSheet];
+    [[self py] setCurrentViewIndex:0];
 }
 
 - (IBAction)showIncomeStatement:(id)sender
 {
-    [[self py] selectIncomeStatement];
+    [[self py] setCurrentViewIndex:1];
 }
 
 - (IBAction)showTransactionTable:(id)sender
 {
-    [[self py] selectTransactionTable];
+    [[self py] setCurrentViewIndex:2];
 }
 
 - (IBAction)showEntryTable:(id)sender
 {
-    [[self py] selectEntryTable];
+    [[self py] setCurrentViewIndex:3];
 }
 
 - (IBAction)showScheduleTable:(id)sender
 {
-    [[self py] selectScheduleTable];
+    [[self py] setCurrentViewIndex:4];
 }
 
 - (IBAction)showBudgetTable:(id)sender
 {
-    [[self py] selectBudgetTable];
+    [[self py] setCurrentViewIndex:5];
 }
 
 - (IBAction)showNextView:(id)sender
@@ -370,6 +380,12 @@ http://www.hardcoded.net/licenses/hs_license
     [sheet orderOut:nil];
 }
 
+- (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
+{
+    NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
+    [[self py] setCurrentViewIndex:index];
+}
+
 - (void)windowWillClose:(NSNotification *)notification
 {
     [self saveState];
@@ -388,13 +404,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return [NSArray arrayWithObjects:
             NSToolbarFlexibleSpaceItemIdentifier, 
-            MGBalanceSheetToolbarItemIdentifier,
-            MGIncomeStatementToolbarItemIdentifier,
-            MGTransactionsToolbarItemIdentifier,
-            MGEntriesToolbarItemIdentifier,
-            MGSchedulesToolbarItemIdentifier,
-            MGBudgetToolbarItemIdentifier,
-            MGDateRangeToolbarItemIdentifier, 
             MGSearchFieldToolbarItemIdentifier, 
             nil];
 }
@@ -402,32 +411,15 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
-            MGBalanceSheetToolbarItemIdentifier,
-            MGIncomeStatementToolbarItemIdentifier,
-            MGTransactionsToolbarItemIdentifier,
-            MGEntriesToolbarItemIdentifier,
-            MGSchedulesToolbarItemIdentifier,
-            MGBudgetToolbarItemIdentifier,
             NSToolbarFlexibleSpaceItemIdentifier,
             MGSearchFieldToolbarItemIdentifier,
             nil];
 }
 
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar;
-{
-    return [NSArray arrayWithObjects:MGBalanceSheetToolbarItemIdentifier,
-                                     MGIncomeStatementToolbarItemIdentifier,
-                                     MGTransactionsToolbarItemIdentifier,
-                                     MGEntriesToolbarItemIdentifier, 
-                                     MGSchedulesToolbarItemIdentifier,
-                                     MGBudgetToolbarItemIdentifier, nil];
-}
-
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier 
  willBeInsertedIntoToolbar:(BOOL)inserted
 {
-    if ([itemIdentifier isEqual:MGSearchFieldToolbarItemIdentifier])
-    {
+    if ([itemIdentifier isEqual:MGSearchFieldToolbarItemIdentifier]) {
         NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
         [toolbarItem setLabel: @"Filter"];
         [toolbarItem setView:[searchField view]];
@@ -435,73 +427,12 @@ http://www.hardcoded.net/licenses/hs_license
         [toolbarItem setMaxSize:[[searchField view] frame].size];
         return toolbarItem;
     }
-    else if ([itemIdentifier isEqual:MGBalanceSheetToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Net Worth"];
-        [toolbarItem setImage:[NSImage imageNamed:@"balance_sheet_48"]];
-        [toolbarItem setToolTip:@"Show the Balance Sheet"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showBalanceSheet:)];
-        return toolbarItem;
-    }
-    else if ([itemIdentifier isEqual:MGIncomeStatementToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Profit/Loss"];
-        [toolbarItem setImage:[NSImage imageNamed:@"income_statement_48"]];
-        [toolbarItem setToolTip:@"Show the Income Statement"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showIncomeStatement:)];
-        return toolbarItem;
-    }
-    else if ([itemIdentifier isEqual:MGTransactionsToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Transactions"];
-        [toolbarItem setImage:[NSImage imageNamed:@"transaction_table_48"]];
-        [toolbarItem setToolTip:@"Edit your transactions"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showTransactionTable:)];
-        return toolbarItem;
-    }
-    else if ([itemIdentifier isEqual:MGEntriesToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Account"];
-        [toolbarItem setImage:[NSImage imageNamed:@"entry_table_48"]];
-        [toolbarItem setToolTip:@"Edit the selected account's entries"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showEntryTable:)];
-        return toolbarItem;
-    }
-    else if ([itemIdentifier isEqual:MGSchedulesToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Schedules"];
-        [toolbarItem setImage:[NSImage imageNamed:@"schedules_48"]];
-        [toolbarItem setToolTip:@"Edit your scheduled transactions"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showScheduleTable:)];
-        return toolbarItem;
-    }
-    else if ([itemIdentifier isEqual:MGBudgetToolbarItemIdentifier])
-    {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-        [toolbarItem setLabel:@"Budgets"];
-        [toolbarItem setImage:[NSImage imageNamed:@"budget_48"]];
-        [toolbarItem setToolTip:@"Edit your budgets"];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showBudgetTable:)];
-        return toolbarItem;
-    }
     return nil;
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aItem
 {
-    if ([aItem tag] == MGNewItemMenuItem)
-    {
+    if ([aItem tag] == MGNewItemMenuItem) {
         NSString *title = @"New Item";
         if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
             title = @"New Account";
@@ -527,16 +458,6 @@ http://www.hardcoded.net/licenses/hs_license
     NSInteger index = [[self py] currentViewIndex];
     [tabView selectTabViewItemAtIndex:index];
     top = [subviews objectAtIndex:index];
-    NSString *ident = @"";
-    switch (index) {
-        case 0: ident = MGBalanceSheetToolbarItemIdentifier; break;
-        case 1: ident = MGIncomeStatementToolbarItemIdentifier; break;
-        case 2: ident = MGTransactionsToolbarItemIdentifier; break;
-        case 3: ident = MGEntriesToolbarItemIdentifier; break;
-        case 4: ident = MGSchedulesToolbarItemIdentifier; break;
-        case 5: ident = MGBudgetToolbarItemIdentifier; break;
-    }
-    [[[self window] toolbar] setSelectedItemIdentifier:ident];
 }
 
 - (void)showAccountReassignPanel

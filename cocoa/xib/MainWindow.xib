@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="1407"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -367,7 +367,7 @@
 						<object class="NSTabView" id="963846985">
 							<reference key="NSNextResponder" ref="1024620742"/>
 							<int key="NSvFlags">18</int>
-							<string key="NSFrame">{{0, 20}, {800, 580}}</string>
+							<string key="NSFrame">{{0, 20}, {800, 558}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
@@ -376,6 +376,13 @@
 							<int key="NSTvFlags">6</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
+						</object>
+						<object class="NSCustomView" id="619150477">
+							<reference key="NSNextResponder" ref="1024620742"/>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{0, 578}, {800, 22}}</string>
+							<reference key="NSSuperview" ref="1024620742"/>
+							<string key="NSClassName">PSMTabBarControl</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{800, 600}</string>
@@ -565,6 +572,30 @@
 					</object>
 					<int key="connectionID">1406</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabView</string>
+						<reference key="source" ref="619150477"/>
+						<reference key="destination" ref="963846985"/>
+					</object>
+					<int key="connectionID">1408</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="963846985"/>
+						<reference key="destination" ref="619150477"/>
+					</object>
+					<int key="connectionID">1409</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabBar</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="619150477"/>
+					</object>
+					<int key="connectionID">1411</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -610,6 +641,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="542700773"/>
 							<reference ref="963846985"/>
+							<reference ref="619150477"/>
 						</object>
 						<reference key="parent" ref="211527197"/>
 					</object>
@@ -807,6 +839,11 @@
 						</object>
 						<reference key="parent" ref="1024620742"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1407</int>
+						<reference key="object" ref="619150477"/>
+						<reference key="parent" ref="1024620742"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -854,6 +891,7 @@
 					<string>1394.IBPluginDependency</string>
 					<string>1396.IBPluginDependency</string>
 					<string>1401.IBPluginDependency</string>
+					<string>1407.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
 					<string>2.ImportedFromIB2</string>
 					<string>21.IBEditorWindowLastContentRect</string>
@@ -911,6 +949,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{80, 245}, {800, 600}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -940,7 +979,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1406</int>
+			<int key="maxID">1411</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1100,11 +1139,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>dateRangeSelectorView</string>
+							<string>tabBar</string>
 							<string>tabView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>MGDateRangeSelectorView</string>
+							<string>PSMTabBarControl</string>
 							<string>NSTabView</string>
 						</object>
 					</object>
@@ -1158,7 +1199,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="425253464">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../psmtabbarcontrol/PSMTabBarControl.h</string>
 					</object>
@@ -1182,6 +1223,56 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">views/NSTableViewAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PSMTabBarControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../psmtabbarcontrol/PSMProgressIndicator.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PSMTabBarControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../psmtabbarcontrol/PSMTabBarCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PSMTabBarControl</string>
+					<string key="superclassName">NSControl</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delegate</string>
+							<string>partnerView</string>
+							<string>style</string>
+							<string>tabView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>NSTabView</string>
+						</object>
+					</object>
+					<reference key="sourceIdentifier" ref="425253464"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PSMTabBarControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../psmtabbarcontrol/PSMTabDragAssistant.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PSMTabBarControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../psmtabbarcontrol/PSMTabStyle.h</string>
 					</object>
 				</object>
 			</object>

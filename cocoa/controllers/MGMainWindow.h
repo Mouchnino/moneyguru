@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSWindowController.h"
+#import "PSMTabBarControl.h"
 #import "MGAccountProperties.h"
 #import "MGTransactionInspector.h"
 #import "MGMassEditionPanel.h"
@@ -36,6 +37,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     IBOutlet MGDateRangeSelectorView *dateRangeSelectorView;
     IBOutlet NSTabView *tabView;
+    IBOutlet PSMTabBarControl *tabBar;
 
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
