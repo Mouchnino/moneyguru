@@ -35,6 +35,7 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGMainWindow : HSWindowController
 {
     IBOutlet MGDateRangeSelectorView *dateRangeSelectorView;
+    IBOutlet NSTabView *tabView;
 
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
@@ -56,9 +57,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyMainWindow *)py;
 - (MGDocument *)document;
 /* Private */
-- (void)arrangeViews;
-- (MGBaseView *)top;
-- (void)setTop:(MGBaseView *)top;
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;
 

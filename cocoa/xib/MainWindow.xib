@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10C540</string>
-		<string key="IBDocument.InterfaceBuilderVersion">740</string>
-		<string key="IBDocument.AppKitVersion">1038.25</string>
-		<string key="IBDocument.HIToolboxVersion">458.00</string>
+		<string key="IBDocument.SystemVersion">10D573</string>
+		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">740</string>
+			<string key="NS.object.0">762</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1369"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -251,7 +251,6 @@
 														</object>
 													</object>
 												</object>
-												<int key="NSSelectedIndex">10</int>
 												<bool key="NSPullDown">YES</bool>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
@@ -365,12 +364,18 @@
 							<reference key="NSSuperview" ref="1024620742"/>
 							<string key="NSClassName">MGGradientBar</string>
 						</object>
-						<object class="NSCustomView" id="286462593">
+						<object class="NSTabView" id="963846985">
 							<reference key="NSNextResponder" ref="1024620742"/>
-							<int key="NSvFlags">274</int>
-							<string key="NSFrame">{{0, 22}, {800, 578}}</string>
+							<int key="NSvFlags">18</int>
+							<string key="NSFrame">{{0, 20}, {800, 580}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
-							<string key="NSClassName">NSView</string>
+							<object class="NSMutableArray" key="NSTabViewItems">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+							</object>
+							<reference key="NSFont" ref="111373161"/>
+							<int key="NSTvFlags">6</int>
+							<bool key="NSAllowTruncatedLabels">YES</bool>
+							<bool key="NSDrawsBackground">YES</bool>
 						</object>
 					</object>
 					<string key="NSFrameSize">{800, 600}</string>
@@ -552,6 +557,14 @@
 					</object>
 					<int key="connectionID">1400</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabView</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="963846985"/>
+					</object>
+					<int key="connectionID">1406</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -596,7 +609,7 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="542700773"/>
-							<reference ref="286462593"/>
+							<reference ref="963846985"/>
 						</object>
 						<reference key="parent" ref="211527197"/>
 					</object>
@@ -653,11 +666,6 @@
 						<int key="objectID">1301</int>
 						<reference key="object" ref="50896734"/>
 						<reference key="parent" ref="784518846"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1302</int>
-						<reference key="object" ref="286462593"/>
-						<reference key="parent" ref="1024620742"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1363</int>
@@ -791,6 +799,14 @@
 						<reference key="object" ref="195240183"/>
 						<reference key="parent" ref="1012849033"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1401</int>
+						<reference key="object" ref="963846985"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
+						<reference key="parent" ref="1024620742"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -811,7 +827,6 @@
 					<string>1300.IBPluginDependency</string>
 					<string>1301.CustomClassName</string>
 					<string>1301.IBPluginDependency</string>
-					<string>1302.IBPluginDependency</string>
 					<string>1363.IBEditorWindowLastContentRect</string>
 					<string>1363.IBPluginDependency</string>
 					<string>1364.IBPluginDependency</string>
@@ -838,6 +853,7 @@
 					<string>1392.IBPluginDependency</string>
 					<string>1394.IBPluginDependency</string>
 					<string>1396.IBPluginDependency</string>
+					<string>1401.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
 					<string>2.ImportedFromIB2</string>
 					<string>21.IBEditorWindowLastContentRect</string>
@@ -867,7 +883,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>MGTransparentButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{88, 822}, {276, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -890,6 +905,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>MGTransparentButtonCellWithLeftSide</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -924,7 +940,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1400</int>
+			<int key="maxID">1406</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1080,8 +1096,17 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">dateRangeSelectorView</string>
-						<string key="NS.object.0">MGDateRangeSelectorView</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>dateRangeSelectorView</string>
+							<string>tabView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>MGDateRangeSelectorView</string>
+							<string>NSTabView</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -1567,6 +1592,14 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSTabView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSTabView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
@@ -1626,6 +1659,7 @@
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
@@ -1641,5 +1675,28 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../moneyguru.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>NSMenuCheckmark</string>
+				<string>NSMenuMixedState</string>
+				<string>info_gray_12</string>
+				<string>minus_8</string>
+				<string>nav_left_9</string>
+				<string>nav_right_9</string>
+				<string>plus_8</string>
+			</object>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{9, 8}</string>
+				<string>{7, 2}</string>
+				<string>{12, 12}</string>
+				<string>{8, 8}</string>
+				<string>{9, 9}</string>
+				<string>{9, 9}</string>
+				<string>{8, 8}</string>
+			</object>
+		</object>
 	</data>
 </archive>

@@ -39,6 +39,26 @@ http://www.hardcoded.net/licenses/hs_license
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py dateRangeView:dateRangeSelectorView];
+    
+    /* Add views to the tab view */
+    NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setView:[netWorthView view]];
+    [tabView addTabViewItem:item];
+    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setView:[profitView view]];
+    [tabView addTabViewItem:item];
+    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setView:[transactionView view]];
+    [tabView addTabViewItem:item];
+    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setView:[accountView view]];
+    [tabView addTabViewItem:item];
+    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setView:[scheduleView view]];
+    [tabView addTabViewItem:item];
+    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [item setView:[budgetView view]];
+    [tabView addTabViewItem:item];
     subviews = [[NSArray arrayWithObjects:netWorthView, profitView, transactionView, accountView,
         scheduleView, budgetView, nil] retain];
     
@@ -94,34 +114,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Private */
-
-- (void)arrangeViews
-{
-    /* The view indexes below are just the way they *happen* to be in the NIB. This can change when
-    the NIB is changed.
-    */
-    int MAIN_VIEW_INDEX = 1;
-    NSView *contentView = [[self window] contentView];
-    NSView *mainView = [[contentView subviews] objectAtIndex:MAIN_VIEW_INDEX];
-    NSView *topView = [top view];
-    [topView setFrame:[mainView frame]];
-    [contentView replaceSubview:mainView with:topView];
-    [topView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    // Each main view has its nextKeyView set to the view that must have fosuc
-    [[self window] makeFirstResponder:[[top view] nextKeyView]];
-}
-
-- (MGBaseView *)top
-{
-    return top;
-}
-
-- (void)setTop:(MGBaseView *)aTop
-{
-    top = aTop;
-    [self arrangeViews];
-}
-
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event
 {
     SEL action = nil;
@@ -533,7 +525,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)changeSelectedView
 {
     NSInteger index = [[self py] currentViewIndex];
-    [self setTop:[subviews objectAtIndex:index]];
+    [tabView selectTabViewItemAtIndex:index];
+    top = [subviews objectAtIndex:index];
     NSString *ident = @"";
     switch (index) {
         case 0: ident = MGBalanceSheetToolbarItemIdentifier; break;
