@@ -38,7 +38,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
-    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py dateRangeView:dateRangeSelectorView];
+    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py];
     
     /* Add views to the tab view */
     NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
@@ -70,6 +70,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
+    [toolbar setDisplayMode:NSToolbarDisplayModeIconOnly];
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
@@ -239,58 +240,57 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)selectMonthRange:(id)sender
 {
-    [[dateRangeSelector py] selectMonthRange];
+    [dateRangeSelector selectMonthRange:sender];
 }
 
 - (IBAction)selectNextDateRange:(id)sender
 {
-    [[dateRangeSelector py] selectNextDateRange];
+    [dateRangeSelector selectNextDateRange:sender];
 }
 
 - (IBAction)selectPrevDateRange:(id)sender
 {
-    [[dateRangeSelector py] selectPrevDateRange];
+    [dateRangeSelector selectPrevDateRange:sender];
 }
 
 - (IBAction)selectTodayDateRange:(id)sender
 {
-    [[dateRangeSelector py] selectTodayDateRange];
+    [dateRangeSelector selectTodayDateRange:sender];
 }
 
 - (IBAction)selectQuarterRange:(id)sender
 {
-    [[dateRangeSelector py] selectQuarterRange];
+    [dateRangeSelector selectQuarterRange:sender];
 }
 
 - (IBAction)selectYearRange:(id)sender
 {
-    [[dateRangeSelector py] selectYearRange];
+    [dateRangeSelector selectYearRange:sender];
 }
 
 - (IBAction)selectYearToDateRange:(id)sender
 {
-    [[dateRangeSelector py] selectYearToDateRange];
+    [dateRangeSelector selectYearToDateRange:sender];
 }
 
 - (IBAction)selectRunningYearRange:(id)sender
 {
-    [[dateRangeSelector py] selectRunningYearRange];
+    [dateRangeSelector selectRunningYearRange:sender];
 }
 
 - (IBAction)selectAllTransactionsRange:(id)sender
 {
-    [[dateRangeSelector py] selectAllTransactionsRange];
+    [dateRangeSelector selectAllTransactionsRange:sender];
 }
 
 - (IBAction)selectCustomDateRange:(id)sender
 {
-    [[dateRangeSelector py] selectCustomDateRange];
+    [dateRangeSelector selectCustomDateRange:sender];
 }
 
 - (IBAction)selectSavedCustomRange:(id)sender
 {
-    NSInteger slot = [(NSMenuItem *)sender tag] - MGCustomSavedRangeStart;
-    [[dateRangeSelector py] selectSavedRange:slot];
+    [dateRangeSelector selectSavedCustomRange:sender];
 }
 
 - (IBAction)showBalanceSheet:(id)sender
@@ -403,7 +403,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
+            NSToolbarSpaceItemIdentifier,
             NSToolbarFlexibleSpaceItemIdentifier, 
+            MGDateRangeToolbarItemIdentifier,
             MGSearchFieldToolbarItemIdentifier, 
             nil];
 }
@@ -411,6 +413,9 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
+            NSToolbarSpaceItemIdentifier,
+            NSToolbarFlexibleSpaceItemIdentifier,
+            MGDateRangeToolbarItemIdentifier,
             NSToolbarFlexibleSpaceItemIdentifier,
             MGSearchFieldToolbarItemIdentifier,
             nil];
@@ -425,6 +430,14 @@ http://www.hardcoded.net/licenses/hs_license
         [toolbarItem setView:[searchField view]];
         [toolbarItem setMinSize:[[searchField view] frame].size];
         [toolbarItem setMaxSize:[[searchField view] frame].size];
+        return toolbarItem;
+    }
+    else if ([itemIdentifier isEqual:MGDateRangeToolbarItemIdentifier]) {
+        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+        [toolbarItem setLabel: @"Date Range"];
+        [toolbarItem setView:[dateRangeSelector view]];
+        [toolbarItem setMinSize:[[dateRangeSelector view] frame].size];
+        [toolbarItem setMaxSize:[[dateRangeSelector view] frame].size];
         return toolbarItem;
     }
     return nil;

@@ -35,7 +35,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGMainWindow : HSWindowController
 {
-    IBOutlet MGDateRangeSelectorView *dateRangeSelectorView;
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;
 

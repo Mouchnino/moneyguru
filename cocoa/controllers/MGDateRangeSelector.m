@@ -7,18 +7,19 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGDateRangeSelector.h"
+#import "MGConst.h"
 #import "Utils.h"
 #import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector
-- (id)initWithPyParent:(id)aPyParent dateRangeView:(MGDateRangeSelectorView *)aView
+- (id)initWithPyParent:(id)aPyParent
 {
     self = [super initWithPyClassName:@"PyDateRangeSelector" pyParent:aPyParent];
-    view = aView;
+    [NSBundle loadNibNamed:@"DateRangeSelector" owner:self];
     /* In popups, there's the invisible first item, which is why we start our indexing at 8! */
-    NSMenuItem *custom1 = [[view dateRangePopUp] itemAtIndex:8];
-    NSMenuItem *custom2 = [[view dateRangePopUp] itemAtIndex:9];
-    NSMenuItem *custom3 = [[view dateRangePopUp] itemAtIndex:10];
+    NSMenuItem *custom1 = [dateRangePopUp itemAtIndex:8];
+    NSMenuItem *custom2 = [dateRangePopUp itemAtIndex:9];
+    NSMenuItem *custom3 = [dateRangePopUp itemAtIndex:10];
     customRangeItems = [[NSArray arrayWithObjects:custom1, custom2, custom3, nil] retain];
     return self;
 }
@@ -44,7 +45,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)animate:(BOOL)forward
 {
     CGFloat PADDING = 3;
-    NSRect convertedFrame = [[view dateRangePopUp] convertRect:[[view dateRangePopUp] bounds] toView:[[[self view] window] contentView]];
+    NSRect convertedFrame = [dateRangePopUp convertRect:[dateRangePopUp bounds] toView:[[view window] contentView]];
     convertedFrame.size.width -= PADDING *2;
     convertedFrame.size.height -= PADDING *2;
     convertedFrame.origin.x += PADDING;
@@ -63,6 +64,74 @@ http://www.hardcoded.net/licenses/hs_license
     [anim setAnimationCurve:NSAnimationLinear];
     [anim setDelegate:self];
     [anim startAnimation];
+}
+
+/* Actions */
+- (IBAction)segmentClicked:(id)sender
+{
+    NSInteger index = [segmentedControl selectedSegment];
+    if (index == 0) {
+        [[self py] selectPrevDateRange];
+    }
+    else if (index == 2) {
+        [[self py] selectNextDateRange];
+    }
+}
+
+- (IBAction)selectMonthRange:(id)sender
+{
+    [[self py] selectMonthRange];
+}
+
+- (IBAction)selectNextDateRange:(id)sender
+{
+    [[self py] selectNextDateRange];
+}
+
+- (IBAction)selectPrevDateRange:(id)sender
+{
+    [[self py] selectPrevDateRange];
+}
+
+- (IBAction)selectTodayDateRange:(id)sender
+{
+    [[self py] selectTodayDateRange];
+}
+
+- (IBAction)selectQuarterRange:(id)sender
+{
+    [[self py] selectQuarterRange];
+}
+
+- (IBAction)selectYearRange:(id)sender
+{
+    [[self py] selectYearRange];
+}
+
+- (IBAction)selectYearToDateRange:(id)sender
+{
+    [[self py] selectYearToDateRange];
+}
+
+- (IBAction)selectRunningYearRange:(id)sender
+{
+    [[self py] selectRunningYearRange];
+}
+
+- (IBAction)selectAllTransactionsRange:(id)sender
+{
+    [[self py] selectAllTransactionsRange];
+}
+
+- (IBAction)selectCustomDateRange:(id)sender
+{
+    [[self py] selectCustomDateRange];
+}
+
+- (IBAction)selectSavedCustomRange:(id)sender
+{
+    NSInteger slot = [(NSMenuItem *)sender tag] - MGCustomSavedRangeStart;
+    [[self py] selectSavedRange:slot];
 }
 
 /* Delegate */
@@ -88,10 +157,10 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refresh
 {
-    [[view dateRangePopUp] setTitle:[[self py] display]];
+    [dateRangePopUp setTitle:[[self py] display]];
     BOOL canNavigate = [[self py] canNavigate];
-    [[view prevDateRangeButton] setEnabled:canNavigate];
-    [[view nextDateRangeButton] setEnabled:canNavigate];
+    [segmentedControl setEnabled:canNavigate forSegment:0];
+    [segmentedControl setEnabled:canNavigate forSegment:2];
 }
 
 - (void)refreshCustomRanges

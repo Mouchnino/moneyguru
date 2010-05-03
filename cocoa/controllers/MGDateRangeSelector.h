@@ -8,19 +8,35 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "HSGUIController.h"
-#import "MGDateRangeSelectorView.h"
 #import "PyDateRangeSelector.h"
 
 @interface MGDateRangeSelector : HSGUIController
 {
-    MGDateRangeSelectorView *view;
+    IBOutlet NSView *view;
+    IBOutlet NSPopUpButton *dateRangePopUp;
+    IBOutlet NSSegmentedControl *segmentedControl;
+    
     NSArray *customRangeItems;
 }
-- (id)initWithPyParent:(id)aPyParent dateRangeView:(MGDateRangeSelectorView *)aView;
+- (id)initWithPyParent:(id)aPyParent;
 
 /* Virtual */
 - (PyDateRangeSelector *)py;
 
 /* Public */
 - (void)animate:(BOOL)forward;
+
+/* Actions */
+- (IBAction)segmentClicked:(id)sender;
+- (IBAction)selectMonthRange:(id)sender;
+- (IBAction)selectNextDateRange:(id)sender;
+- (IBAction)selectPrevDateRange:(id)sender;
+- (IBAction)selectTodayDateRange:(id)sender;
+- (IBAction)selectQuarterRange:(id)sender;
+- (IBAction)selectYearRange:(id)sender;
+- (IBAction)selectYearToDateRange:(id)sender;
+- (IBAction)selectRunningYearRange:(id)sender;
+- (IBAction)selectAllTransactionsRange:(id)sender;
+- (IBAction)selectCustomDateRange:(id)sender;
+- (IBAction)selectSavedCustomRange:(id)sender;
 @end
