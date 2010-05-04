@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGUI.h"
+#import "MGConst.h"
 
 @interface PyMainWindow : PyGUI {}
 - (void)setChildren:(NSArray *)children;
@@ -18,6 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSInteger)currentViewIndex;
 - (void)setCurrentViewIndex:(NSInteger)index;
 - (NSInteger)viewCount;
+- (enum MGViewType)viewTypeAtIndex:(NSInteger)index;
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;

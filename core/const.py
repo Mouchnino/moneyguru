@@ -8,3 +8,12 @@
 
 NOEDIT = object()
 DATE_FORMAT_FOR_PREFERENCES = '%d/%m/%Y'
+
+# These constants are in sync with the GUI
+class ViewType(object):
+    NetWorth = 0
+    Profit = 1
+    Transaction = 2
+    Account = 3
+    Schedule = 4
+    Budget = 5

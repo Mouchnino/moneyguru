@@ -166,6 +166,8 @@ class MainWindowPanel(GUIPanel):
     
 
 class BaseView(DocumentGUIObject):
+    VIEW_TYPE = -1
+    
     def __init__(self, view, document, children):
         DocumentGUIObject.__init__(self, view, document)
         self._children = children

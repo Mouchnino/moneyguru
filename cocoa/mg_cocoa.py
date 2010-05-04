@@ -1031,6 +1031,10 @@ class PyMainWindow(PyListener):
     def viewCount(self):
         return self.py.view_count
     
+    @signature('i@:i')
+    def viewTypeAtIndex_(self, index):
+        return self.py.view_type(index)
+    
     def showAccount(self):
         self.py.show_account()
     
@@ -1068,6 +1072,9 @@ class PyMainWindow(PyListener):
     #--- Python -> Cocoa
     def change_current_view(self):
         self.cocoa.changeSelectedView()
+    
+    def refresh_subviews(self):
+        self.cocoa.refreshSubviews()
     
     def refresh_undo_actions(self):
         pass # We don't need this on the Cocoa side

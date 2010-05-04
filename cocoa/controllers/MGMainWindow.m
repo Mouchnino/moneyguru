@@ -22,13 +22,12 @@ http://www.hardcoded.net/licenses/hs_license
     massEditionPanel = [[MGMassEditionPanel alloc] initWithParent:self];
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
-    /* We autorelease the views because their reference is kept by the subviews array */
-    MGNetWorthView *netWorthView = [[[MGNetWorthView alloc] initWithPyParent:py] autorelease];
-    MGProfitView *profitView = [[[MGProfitView alloc] initWithPyParent:py] autorelease];
-    MGTransactionView *transactionView = [[[MGTransactionView alloc] initWithPyParent:py] autorelease];
-    MGAccountView *accountView = [[[MGAccountView alloc] initWithPyParent:py] autorelease];
-    MGScheduleView *scheduleView = [[[MGScheduleView alloc] initWithPyParent:py] autorelease];
-    MGBudgetView *budgetView = [[[MGBudgetView alloc] initWithPyParent:py] autorelease];
+    netWorthView = [[MGNetWorthView alloc] initWithPyParent:py];
+    profitView = [[MGProfitView alloc] initWithPyParent:py];
+    transactionView = [[MGTransactionView alloc] initWithPyParent:py];
+    accountView = [[MGAccountView alloc] initWithPyParent:py];
+    scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
+    budgetView = [[MGBudgetView alloc] initWithPyParent:py];
     searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -39,34 +38,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py];
-    
-    /* Add views to the tab view */
-    NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [item setLabel:@"Net Worth"];
-    [item setView:[netWorthView view]];
-    [tabView addTabViewItem:item];
-    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [item setLabel:@"Profit & Loss"];
-    [item setView:[profitView view]];
-    [tabView addTabViewItem:item];
-    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [item setLabel:@"Transactions"];
-    [item setView:[transactionView view]];
-    [tabView addTabViewItem:item];
-    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [item setLabel:@"Account"];
-    [item setView:[accountView view]];
-    [tabView addTabViewItem:item];
-    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [item setLabel:@"Schedules"];
-    [item setView:[scheduleView view]];
-    [tabView addTabViewItem:item];
-    item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [item setLabel:@"Budgets"];
-    [item setView:[budgetView view]];
-    [tabView addTabViewItem:item];
-    subviews = [[NSArray arrayWithObjects:netWorthView, profitView, transactionView, accountView,
-        scheduleView, budgetView, nil] retain];
+    subviews = [[NSMutableArray alloc] init];
     
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
@@ -95,6 +67,12 @@ http://www.hardcoded.net/licenses/hs_license
     [massEditionPanel release];
     [schedulePanel release];
     [accountProperties release];
+    [netWorthView release];
+    [profitView release];
+    [accountView release];
+    [transactionView release];
+    [scheduleView release];
+    [budgetView release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -471,6 +449,49 @@ http://www.hardcoded.net/licenses/hs_license
     NSInteger index = [[self py] currentViewIndex];
     [tabView selectTabViewItemAtIndex:index];
     top = [subviews objectAtIndex:index];
+}
+
+- (void)refreshSubviews
+{
+    [subviews removeAllObjects];
+    while ([tabView numberOfTabViewItems] > 0) {
+        NSTabViewItem *item = [tabView tabViewItemAtIndex:0];
+        [tabView removeTabViewItem:item];
+    }
+    for (NSInteger i=0; i<[[self py] viewCount]; i++) {
+        enum MGViewType viewType = [[self py] viewTypeAtIndex:i];
+        NSString *label = nil;
+        MGBaseView *view = nil;
+        if (viewType == MGViewTypeNetWorth) {
+            label = @"Net Worth";
+            view = netWorthView;
+        }
+        else if (viewType == MGViewTypeProfit) {
+            label = @"Profit & Loss";
+            view = profitView;
+        }
+        else if (viewType == MGViewTypeTransaction) {
+            label = @"Transactions";
+            view = transactionView;
+        }
+        else if (viewType == MGViewTypeAccount) {
+            label = @"Account";
+            view = accountView;
+        }
+        else if (viewType == MGViewTypeSchedule) {
+            label = @"Schedules";
+            view = scheduleView;
+        }
+        else if (viewType == MGViewTypeBudget) {
+            label = @"Budgets";
+            view = budgetView;
+        }
+        [subviews addObject:view];
+        NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+        [item setLabel:label];
+        [item setView:[view view]];
+        [tabView addTabViewItem:item];
+    }
 }
 
 - (void)showAccountReassignPanel

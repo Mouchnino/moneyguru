@@ -68,3 +68,13 @@ http://www.hardcoded.net/licenses/hs_license
 #define ScheduleScopeLocal 0
 #define ScheduleScopeGlobal 1
 #define ScheduleScopeCancel 2
+
+// Synced with the core
+enum MGViewType {
+    MGViewTypeNetWorth = 0,
+    MGViewTypeProfit = 1,
+    MGViewTypeTransaction = 2,
+    MGViewTypeAccount = 3,
+    MGViewTypeSchedule = 4,
+    MGViewTypeBudget = 5,
+};

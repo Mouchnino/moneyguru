@@ -20,6 +20,7 @@ class MainWindow(DocumentGUIObject):
         self._current_view = None
         self._current_view_index = -1
         self.subviews = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview]
+        self.view.refresh_subviews()
         self.current_view_index = 0
     
     def connect(self):
@@ -164,6 +165,10 @@ class MainWindow(DocumentGUIObject):
     
     def show_message(self, message):
         self.view.show_message(message)
+    
+    def view_type(self, index):
+        view = self.subviews[index]
+        return view.VIEW_TYPE
     
     #--- Properties
     @property

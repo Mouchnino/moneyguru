@@ -11,6 +11,7 @@ from datetime import date
 from nose.tools import eq_
 
 from ..base import TestApp, with_app
+from ...const import ViewType
 from ...model.date import YearRange
 
 #--- Pristine
@@ -57,6 +58,16 @@ def test_select_ttable_on_sfield_query(app):
 def test_view_count(app):
     # the view_count property returns the number of available views.
     eq_(app.mw.view_count, 6)
+
+@with_app(app_cleared_gui_calls)
+def test_current_types(app):
+    # View types are correct
+    eq_(app.mw.view_type(0), ViewType.NetWorth)
+    eq_(app.mw.view_type(1), ViewType.Profit)
+    eq_(app.mw.view_type(2), ViewType.Transaction)
+    eq_(app.mw.view_type(3), ViewType.Account)
+    eq_(app.mw.view_type(4), ViewType.Schedule)
+    eq_(app.mw.view_type(5), ViewType.Budget)
 
 #--- Asset and Income accounts
 def app_asset_and_income_accounts():

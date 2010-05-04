@@ -27,7 +27,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGAccountReassignPanel.h"
 #import "MGAccountLookup.h"
 #import "MGCompletionLookup.h"
-#import "MGDateRangeSelectorView.h"
 #import "MGDateRangeSelector.h"
 #import "MGBaseView.h"
 #import "MGPrintView.h"
@@ -37,7 +36,13 @@ http://www.hardcoded.net/licenses/hs_license
 {
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;
-
+    
+    MGNetWorthView *netWorthView;
+    MGProfitView *profitView;
+    MGTransactionView *transactionView;
+    MGAccountView *accountView;
+    MGScheduleView *scheduleView;
+    MGBudgetView *budgetView;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
     MGMassEditionPanel *massEditionPanel;
@@ -52,7 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGCompletionLookup *completionLookup;
     MGDateRangeSelector *dateRangeSelector;
     MGBaseView *top;
-    NSArray *subviews;
+    NSMutableArray *subviews;
 }
 - (id)initWithDocument:(MGDocument *)document;
 - (PyMainWindow *)py;
@@ -60,6 +65,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Private */
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;
+- (void)refreshSubviews;
 
 /* Actions */
 - (IBAction)delete:(id)sender;
