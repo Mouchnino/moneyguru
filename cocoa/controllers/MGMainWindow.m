@@ -160,6 +160,15 @@ http://www.hardcoded.net/licenses/hs_license
 
 
 /* Actions */
+- (IBAction)closeTab:(id)sender
+{
+    if ([[self py] viewCount] > 1) {
+        [[self py] closeViewAtIndex:[[self py] currentViewIndex]];
+    }
+    else {
+        [[self window] performClose:sender];
+    }
+}
 
 - (IBAction)delete:(id)sender
 {

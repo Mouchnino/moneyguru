@@ -68,6 +68,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)refreshSubviews;
 
 /* Actions */
+- (IBAction)closeTab:(id)sender;
 - (IBAction)delete:(id)sender;
 - (IBAction)duplicateItem:(id)sender;
 - (IBAction)editItemInfo:(id)sender;
