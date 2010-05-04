@@ -39,6 +39,20 @@ class MainWindow(DocumentGUIObject):
         self.view.change_current_view()
     
     #--- Public
+    def close_view(self, index):
+        is_selected = index == self.current_view_index
+        del self.subviews[index]
+        self.view.view_closed(index)
+        if is_selected:
+            self._current_view_index = min(self.current_view_index, len(self.subviews)-1)
+            self._change_current_view(self.subviews[self._current_view_index])
+        else:
+            # The index of the current view might have changed
+            newindex = self.subviews.index(self._current_view)
+            if newindex != self._current_view_index:
+                self._current_view_index = newindex
+                self.view.change_current_view()
+    
     def edit_item(self):
         try:
             if self._current_view in (self.nwview, self.pview):

@@ -24,6 +24,8 @@ class AccountView(BaseView):
     
     def connect(self):
         BaseView.connect(self)
+        if self.document.shown_account is None:
+            return
         if self.document.shown_account.is_balance_sheet_account():
             self._shown_graph = self.balgraph
             self.view.show_line_graph()

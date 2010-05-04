@@ -358,6 +358,16 @@ http://www.hardcoded.net/licenses/hs_license
     [sheet orderOut:nil];
 }
 
+- (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)aTabViewItem
+{
+    NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
+    [[self py] closeViewAtIndex:index];
+    /* We never let the tab bar remove the tab itself. It causes all kind of problems with tab
+       syncing. A callback will take care of closing the tab manually.
+     */
+    return NO;
+}
+
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
@@ -506,5 +516,11 @@ http://www.hardcoded.net/licenses/hs_license
     NSAlert *a = [NSAlert alertWithMessageText:aMessage defaultButton:nil alternateButton:nil
         otherButton:nil informativeTextWithFormat:@""];
     [a beginSheetModalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+}
+
+- (void)viewClosedAtIndex:(NSInteger)index
+{
+    NSTabViewItem *item = [tabView tabViewItemAtIndex:index];
+    [tabView removeTabViewItem:item];
 }
 @end

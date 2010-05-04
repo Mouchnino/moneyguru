@@ -20,6 +20,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)setCurrentViewIndex:(NSInteger)index;
 - (NSInteger)viewCount;
 - (enum MGViewType)viewTypeAtIndex:(NSInteger)index;
+- (void)closeViewAtIndex:(NSInteger)index;
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;

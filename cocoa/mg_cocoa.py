@@ -1035,6 +1035,10 @@ class PyMainWindow(PyListener):
     def viewTypeAtIndex_(self, index):
         return self.py.view_type(index)
     
+    @signature('v@:i')
+    def closeViewAtIndex_(self, index):
+        self.py.close_view(index)
+    
     def showAccount(self):
         self.py.show_account()
     
@@ -1087,6 +1091,9 @@ class PyMainWindow(PyListener):
     
     def show_message(self, message):
         self.cocoa.showMessage_(message)
+    
+    def view_closed(self, index):
+        self.cocoa.viewClosedAtIndex_(index)
     
 
 class PyImportWindow(PyListener):

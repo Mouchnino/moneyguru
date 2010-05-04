@@ -15,6 +15,43 @@ from ...const import ViewType
 from ...model.date import YearRange
 
 #--- Pristine
+@with_app(TestApp)
+def test_close_view(app):
+    # closing a view removes it from main window's subviews
+    app.mw.current_view_index = 2
+    app.clear_gui_calls()
+    app.mw.close_view(4)
+    eq_(app.mw.view_count, 5)
+    eq_(app.mw.view_type(4), ViewType.Budget)
+    eq_(app.mw.current_view_index, 2)
+    app.check_gui_calls(app.mainwindow_gui, ['view_closed'])
+
+@with_app(TestApp)
+def test_close_view_index_lower_than_selected(app):
+    # when a view with an index lower than the selected view is closed, the selected view stays the
+    # same.
+    app.mw.current_view_index = 2
+    app.clear_gui_calls()
+    app.mw.close_view(1)
+    # The current index was decremented by one to follow the current index.
+    eq_(app.mw.current_view_index, 1)
+    # Event though the view itself didn't change, we still have a change_current_view call so that
+    # the selected view index changed.
+    app.check_gui_calls(app.mainwindow_gui, ['view_closed', 'change_current_view'])
+
+@with_app(TestApp)
+def test_close_view_when_selected(app):
+    # closing the selected view adjusts the current view index if appropriate
+    app.mw.current_view_index = 4
+    app.clear_gui_calls()
+    app.mw.close_view(4)
+    eq_(app.mw.current_view_index, 4) # We stay at 4 because it's appropriate
+    # Although the view index stayed the same, the view still changed, so the GUI needs to change.
+    app.check_gui_calls(app.mainwindow_gui, ['view_closed', 'change_current_view'])
+    app.mw.close_view(4)
+    eq_(app.mw.current_view_index, 3)
+
+#--- Cleared GUI calls
 def app_cleared_gui_calls():
     app = TestApp()
     app.clear_gui_calls()
@@ -60,7 +97,7 @@ def test_view_count(app):
     eq_(app.mw.view_count, 6)
 
 @with_app(app_cleared_gui_calls)
-def test_current_types(app):
+def test_view_types(app):
     # View types are correct
     eq_(app.mw.view_type(0), ViewType.NetWorth)
     eq_(app.mw.view_type(1), ViewType.Profit)
