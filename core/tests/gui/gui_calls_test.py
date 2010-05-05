@@ -21,7 +21,7 @@ from ..base import TestCase, TestApp, with_app
 def test_initial_gui_calls():
     app = TestApp()
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.mainwindow_gui, ['refresh_subviews', 'change_current_view'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane'])
     app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
 
 #--- Cleared GUI calls
@@ -98,9 +98,9 @@ def test_new_schedule():
 @with_app(app_cleared_gui_calls)
 def test_select_mainwindow_next_previous_view(app):
     app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_view'])
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane'])
     app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_view'])
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane'])
 
 def test_show_transaction_table():
     # tview's totals label is refreshed upon connecting.

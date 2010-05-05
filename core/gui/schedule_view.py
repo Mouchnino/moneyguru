@@ -7,11 +7,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from ..const import ViewType
+from ..const import PaneType
 from .base import BaseView
 
 class ScheduleView(BaseView):
-    VIEW_TYPE = ViewType.Schedule
+    VIEW_TYPE = PaneType.Schedule
     
     def __init__(self, view, mainwindow, children):
         BaseView.__init__(self, view, mainwindow.document, children)

@@ -16,11 +16,12 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)canSelectEntryTable;
 - (void)selectNextView;
 - (void)selectPreviousView;
-- (NSInteger)currentViewIndex;
-- (void)setCurrentViewIndex:(NSInteger)index;
-- (NSInteger)viewCount;
-- (enum MGViewType)viewTypeAtIndex:(NSInteger)index;
-- (void)closeViewAtIndex:(NSInteger)index;
+- (NSInteger)currentPaneIndex;
+- (void)setCurrentPaneIndex:(NSInteger)index;
+- (NSInteger)paneCount;
+- (NSString *)paneLabelAtIndex:(NSInteger)index;
+- (enum MGPaneType)paneTypeAtIndex:(NSInteger)index;
+- (void)closePaneAtIndex:(NSInteger)index;
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;

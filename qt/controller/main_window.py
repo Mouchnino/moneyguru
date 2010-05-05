@@ -250,8 +250,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
         self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and view.model.reconciliation_mode)
-        self.actionShowNextView.setEnabled(self.model.current_view_index < self.model.view_count-1)
-        self.actionShowPreviousView.setEnabled(self.model.current_view_index > 0)
+        self.actionShowNextView.setEnabled(self.model.current_pane_index < self.model.pane_count-1)
+        self.actionShowPreviousView.setEnabled(self.model.current_pane_index > 0)
         self.actionShowAccount.setEnabled(shownAccount is not None)
         self.actionShowSelectedAccount.setEnabled(isSheet or isTransactionOrEntryTable)
         self.actionNavigateBack.setEnabled(viewIndex == ACCOUNT_INDEX)
@@ -357,8 +357,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._updateActionsState()
     
     #--- model --> view
-    def change_current_view(self):
-        self._setMainWidgetIndex(self.model.current_view_index)
+    def change_current_pane(self):
+        self._setMainWidgetIndex(self.model.current_pane_index)
     
     def refresh_undo_actions(self):
         self._updateUndoActions()

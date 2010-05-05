@@ -9,11 +9,11 @@
 
 from __future__ import unicode_literals
 
-from ..const import ViewType
+from ..const import PaneType
 from .base import BaseView
 
 class AccountView(BaseView):
-    VIEW_TYPE = ViewType.Account
+    VIEW_TYPE = PaneType.Account
     
     def __init__(self, view, mainwindow, children):
         self.etable, self.balgraph, self.bargraph, self.efbar = children

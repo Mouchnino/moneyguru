@@ -167,7 +167,7 @@ class ThreeTransactionsFiltered(TestCase):
         self.mainwindow.select_balance_sheet()
         self.assertEqual(self.sfield.query, '')
         # setting the sfield query didn't make document go to all_transactions again
-        eq_(self.mainwindow.current_view_index, 0)
+        eq_(self.mainwindow.current_pane_index, 0)
         self.check_gui_calls(self.sfield_gui, ['refresh'])
         self.mainwindow.select_transaction_table()
         self.assertEqual(self.ttable.row_count, 3)

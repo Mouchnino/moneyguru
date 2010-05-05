@@ -10,7 +10,7 @@ NOEDIT = object()
 DATE_FORMAT_FOR_PREFERENCES = '%d/%m/%Y'
 
 # These constants are in sync with the GUI
-class ViewType(object):
+class PaneType(object):
     NetWorth = 0
     Profit = 1
     Transaction = 2

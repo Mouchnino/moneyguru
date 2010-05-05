@@ -65,7 +65,6 @@ http://www.hardcoded.net/licenses/hs_license
 /* Private */
 - (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;
-- (void)refreshSubviews;
 
 /* Actions */
 - (IBAction)closeTab:(id)sender;

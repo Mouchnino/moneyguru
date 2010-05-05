@@ -9,12 +9,12 @@
 
 from __future__ import unicode_literals
 
-from ..const import ViewType
+from ..const import PaneType
 from ..model.amount import convert_amount
 from .base import BaseView
 
 class TransactionView(BaseView):
-    VIEW_TYPE = ViewType.Transaction
+    VIEW_TYPE = PaneType.Transaction
     
     def __init__(self, view, mainwindow, children):
         BaseView.__init__(self, view, mainwindow.document, children)

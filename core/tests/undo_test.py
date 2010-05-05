@@ -213,8 +213,8 @@ class OneNamedAccount(TestCase):
         self.clear_gui_calls()
         self.document.redo()
         assert self.document.selected_account is None
-        eq_(self.mainwindow.current_view_index, 0)
-        self.check_gui_calls(self.mainwindow_gui, ['change_current_view', 'refresh_undo_actions'])
+        eq_(self.mainwindow.current_pane_index, 0)
+        self.check_gui_calls(self.mainwindow_gui, ['change_current_pane', 'refresh_undo_actions'])
     
     @save_state_then_verify
     def test_undo_add_entry(self):
@@ -257,8 +257,8 @@ class OneNamedAccount(TestCase):
         self.clear_gui_calls()
         self.document.undo()
         assert self.document.selected_account is None
-        eq_(self.mainwindow.current_view_index, 0)
-        self.check_gui_calls(self.mainwindow_gui, ['change_current_view', 'refresh_undo_actions'])
+        eq_(self.mainwindow.current_pane_index, 0)
+        self.check_gui_calls(self.mainwindow_gui, ['change_current_pane', 'refresh_undo_actions'])
     
     def test_undo_twice(self):
         # Undoing a new_account() just after having undone a change_account works.

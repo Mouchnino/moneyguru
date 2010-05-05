@@ -137,9 +137,9 @@ http://www.hardcoded.net/licenses/hs_license
     else if (action == @selector(toggleEntriesReconciled:))
         return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return [[self py] currentViewIndex] < [[self py] viewCount]-1;
+        return [[self py] currentPaneIndex] < [[self py] paneCount]-1;
     else if (action == @selector(showPreviousView:))
-        return [[self py] currentViewIndex] > 0;
+        return [[self py] currentPaneIndex] > 0;
     else if (action == @selector(showEntryTable:))
         return [[self py] canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:)) {
@@ -162,8 +162,8 @@ http://www.hardcoded.net/licenses/hs_license
 /* Actions */
 - (IBAction)closeTab:(id)sender
 {
-    if ([[self py] viewCount] > 1) {
-        [[self py] closeViewAtIndex:[[self py] currentViewIndex]];
+    if ([[self py] paneCount] > 1) {
+        [[self py] closePaneAtIndex:[[self py] currentPaneIndex]];
     }
     else {
         [[self window] performClose:sender];
@@ -282,32 +282,32 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showBalanceSheet:(id)sender
 {
-    [[self py] setCurrentViewIndex:0];
+    [[self py] setCurrentPaneIndex:0];
 }
 
 - (IBAction)showIncomeStatement:(id)sender
 {
-    [[self py] setCurrentViewIndex:1];
+    [[self py] setCurrentPaneIndex:1];
 }
 
 - (IBAction)showTransactionTable:(id)sender
 {
-    [[self py] setCurrentViewIndex:2];
+    [[self py] setCurrentPaneIndex:2];
 }
 
 - (IBAction)showEntryTable:(id)sender
 {
-    [[self py] setCurrentViewIndex:3];
+    [[self py] setCurrentPaneIndex:3];
 }
 
 - (IBAction)showScheduleTable:(id)sender
 {
-    [[self py] setCurrentViewIndex:4];
+    [[self py] setCurrentPaneIndex:4];
 }
 
 - (IBAction)showBudgetTable:(id)sender
 {
-    [[self py] setCurrentViewIndex:5];
+    [[self py] setCurrentPaneIndex:5];
 }
 
 - (IBAction)showNextView:(id)sender
@@ -370,7 +370,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
-    [[self py] closeViewAtIndex:index];
+    [[self py] closePaneAtIndex:index];
     /* We never let the tab bar remove the tab itself. It causes all kind of problems with tab
        syncing. A callback will take care of closing the tab manually.
      */
@@ -380,7 +380,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
-    [[self py] setCurrentViewIndex:index];
+    [[self py] setCurrentPaneIndex:index];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
@@ -463,46 +463,40 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Callbacks for python */
-- (void)changeSelectedView
+- (void)changeSelectedPane
 {
-    NSInteger index = [[self py] currentViewIndex];
+    NSInteger index = [[self py] currentPaneIndex];
     [tabView selectTabViewItemAtIndex:index];
     top = [subviews objectAtIndex:index];
 }
 
-- (void)refreshSubviews
+- (void)refreshPanes
 {
     [subviews removeAllObjects];
     while ([tabView numberOfTabViewItems] > 0) {
         NSTabViewItem *item = [tabView tabViewItemAtIndex:0];
         [tabView removeTabViewItem:item];
     }
-    for (NSInteger i=0; i<[[self py] viewCount]; i++) {
-        enum MGViewType viewType = [[self py] viewTypeAtIndex:i];
-        NSString *label = nil;
+    for (NSInteger i=0; i<[[self py] paneCount]; i++) {
+        enum MGPaneType paneType = [[self py] paneTypeAtIndex:i];
+        NSString *label = [[self py] paneLabelAtIndex:i];
         MGBaseView *view = nil;
-        if (viewType == MGViewTypeNetWorth) {
-            label = @"Net Worth";
+        if (paneType == MGPaneTypeNetWorth) {
             view = netWorthView;
         }
-        else if (viewType == MGViewTypeProfit) {
-            label = @"Profit & Loss";
+        else if (paneType == MGPaneTypeProfit) {
             view = profitView;
         }
-        else if (viewType == MGViewTypeTransaction) {
-            label = @"Transactions";
+        else if (paneType == MGPaneTypeTransaction) {
             view = transactionView;
         }
-        else if (viewType == MGViewTypeAccount) {
-            label = @"Account";
+        else if (paneType == MGPaneTypeAccount) {
             view = accountView;
         }
-        else if (viewType == MGViewTypeSchedule) {
-            label = @"Schedules";
+        else if (paneType == MGPaneTypeSchedule) {
             view = scheduleView;
         }
-        else if (viewType == MGViewTypeBudget) {
-            label = @"Budgets";
+        else if (paneType == MGPaneTypeBudget) {
             view = budgetView;
         }
         [subviews addObject:view];

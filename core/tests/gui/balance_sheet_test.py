@@ -207,7 +207,7 @@ class AccountHierarchy(TestCase):
         self.clear_gui_calls()
         self.bsheet.show_selected_account()
         # no show_line_graph because it was already selected in the etable view before
-        eq_(self.mainwindow.current_view_index, 3)
+        eq_(self.mainwindow.current_pane_index, 3)
         eq_(self.document.selected_account.name, 'Bank 1')
     
 

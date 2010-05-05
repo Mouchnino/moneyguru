@@ -539,7 +539,7 @@ class TwoBoundEntries(TestCase):
         # in the main window is kicked back to the bsheet.
         self.clear_gui_calls()
         self.document.clear()
-        eq_(self.mainwindow.current_view_index, 0)
+        eq_(self.mainwindow.current_pane_index, 0)
         eq_(self.account_node_subaccount_count(self.bsheet.assets), 0)
         self.mainwindow.select_transaction_table()
         eq_(self.ttable.row_count, 0)

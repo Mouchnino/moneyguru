@@ -1020,24 +1020,28 @@ class PyMainWindow(PyListener):
         self.py.select_previous_view()
     
     @signature('i@:')
-    def currentViewIndex(self):
-        return self.py.current_view_index
+    def currentPaneIndex(self):
+        return self.py.current_pane_index
     
     @signature('v@:i')
-    def setCurrentViewIndex_(self, index):
-        self.py.current_view_index = index
+    def setCurrentPaneIndex_(self, index):
+        self.py.current_pane_index = index
     
     @signature('i@:')
-    def viewCount(self):
-        return self.py.view_count
+    def paneCount(self):
+        return self.py.pane_count
+    
+    @signature('@@:i')
+    def paneLabelAtIndex_(self, index):
+        return self.py.pane_label(index)
     
     @signature('i@:i')
-    def viewTypeAtIndex_(self, index):
-        return self.py.view_type(index)
+    def paneTypeAtIndex_(self, index):
+        return self.py.pane_type(index)
     
     @signature('v@:i')
-    def closeViewAtIndex_(self, index):
-        self.py.close_view(index)
+    def closePaneAtIndex_(self, index):
+        self.py.close_pane(index)
     
     def showAccount(self):
         self.py.show_account()
@@ -1074,11 +1078,11 @@ class PyMainWindow(PyListener):
         self.py.new_group()
     
     #--- Python -> Cocoa
-    def change_current_view(self):
-        self.cocoa.changeSelectedView()
+    def change_current_pane(self):
+        self.cocoa.changeSelectedPane()
     
-    def refresh_subviews(self):
-        self.cocoa.refreshSubviews()
+    def refresh_panes(self):
+        self.cocoa.refreshPanes()
     
     def refresh_undo_actions(self):
         pass # We don't need this on the Cocoa side
