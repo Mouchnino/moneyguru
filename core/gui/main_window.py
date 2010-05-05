@@ -8,11 +8,13 @@
 
 from collections import namedtuple
 
+from hsutil.misc import first
+
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from .base import DocumentGUIObject
 
-ViewPane = namedtuple('ViewPane', 'view label')
+ViewPane = namedtuple('ViewPane', 'view label account')
 
 class MainWindow(DocumentGUIObject):
     # After having created the main window, you *have* to call this method. This scheme is to allow
@@ -24,12 +26,12 @@ class MainWindow(DocumentGUIObject):
         self._current_pane = None
         self._current_pane_index = -1
         self.panes = [
-            ViewPane(self.nwview, "Net Worth"),
-            ViewPane(self.pview, "Profit & Loss"),
-            ViewPane(self.tview, "Transactions"),
-            ViewPane(self.aview, "Account"),
-            ViewPane(self.scview, "Schedules"),
-            ViewPane(self.bview, "Budgets"),
+            ViewPane(self.nwview, "Net Worth", None),
+            ViewPane(self.pview, "Profit & Loss", None),
+            ViewPane(self.tview, "Transactions", None),
+            ViewPane(self.aview, "Account", None),
+            ViewPane(self.scview, "Schedules", None),
+            ViewPane(self.bview, "Budgets", None),
         ]
         self.view.refresh_panes()
         self.current_pane_index = 0
@@ -235,8 +237,16 @@ class MainWindow(DocumentGUIObject):
     account_deleted = _undo_stack_changed
     
     def account_must_be_shown(self):
-        if self.document.shown_account is not None:
-            self.select_entry_table()
+        shown = self.document.shown_account
+        if shown is not None:
+            # Try to find a suitable pane, or add a new one
+            index = first(i for i, p in enumerate(self.panes) if p.account is shown)
+            if index is None:
+                self.panes.append(ViewPane(self.aview, shown.name, shown))
+                self.view.refresh_panes()
+                self.current_pane_index = len(self.panes) - 1
+            else:
+                self.current_pane_index = index
         elif self._current_pane.view is self.aview:
             self.select_balance_sheet()
     

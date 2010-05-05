@@ -253,6 +253,17 @@ class TestApp(object):
         self.itable.connect()
         self.csvopt.connect()
     
+    def check_current_pane(self, pane_type, account_name=None):
+        """Asserts that the currently selecte pane in the main window is of the specified type and,
+        optionally, shows the correct account.
+        """
+        index = self.mw.current_pane_index
+        eq_(self.mw.pane_type(index), pane_type)
+        if account_name is not None:
+            # This method is a little flimsy (testing account name through pane label), but it works
+            # for now.
+            eq_(self.mw.pane_label(index), account_name)
+    
     @staticmethod
     def check_gui_calls(gui, expected, verify_order=False):
         """Checks that the expected calls have been made to 'gui', then clears the log.

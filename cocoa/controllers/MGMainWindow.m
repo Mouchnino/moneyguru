@@ -472,6 +472,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refreshPanes
 {
+    [tabBar setDelegate:nil];
     [subviews removeAllObjects];
     while ([tabView numberOfTabViewItems] > 0) {
         NSTabViewItem *item = [tabView tabViewItemAtIndex:0];
@@ -505,6 +506,7 @@ http://www.hardcoded.net/licenses/hs_license
         [item setView:[view view]];
         [tabView addTabViewItem:item];
     }
+    [tabBar setDelegate:self];
 }
 
 - (void)showAccountReassignPanel

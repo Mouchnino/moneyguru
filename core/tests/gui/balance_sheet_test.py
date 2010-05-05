@@ -14,8 +14,9 @@ from nose.tools import eq_
 from hsutil.currency import Currency, USD, CAD
 from hsutil.testutil import Patcher
 
-from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, ApplicationGUI, CommonSetup, TestApp, with_app
+from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, ApplicationGUI, TestApp, with_app
 from ...app import Application
+from ...const import PaneType
 from ...document import Document
 from ...model.account import AccountType
 from ...model.amount import Amount
@@ -207,8 +208,7 @@ class AccountHierarchy(TestCase):
         self.clear_gui_calls()
         self.bsheet.show_selected_account()
         # no show_line_graph because it was already selected in the etable view before
-        eq_(self.mainwindow.current_pane_index, 3)
-        eq_(self.document.selected_account.name, 'Bank 1')
+        self.ta.check_current_pane(PaneType.Account, account_name='Bank 1')
     
 
 #--- One account
