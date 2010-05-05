@@ -51,23 +51,7 @@ def test_close_view_when_selected(app):
     app.mw.close_view(4)
     eq_(app.mw.current_view_index, 3)
 
-#--- Cleared GUI calls
-def app_cleared_gui_calls():
-    app = TestApp()
-    app.clear_gui_calls()
-    return app
-
-@with_app(app_cleared_gui_calls)
-def test_change_date_range(app):
-    app.doc.date_range = app.doc.date_range.prev()
-    expected_calls = ['refresh', 'animate_backward']
-    app.check_gui_calls(app.drsel_gui, expected_calls)
-    app.check_gui_calls_partial(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.nwgraph_gui, ['refresh'])
-    app.check_gui_calls_partial(app.balgraph_gui, not_expected=['refresh'])
-    app.check_gui_calls_partial(app.bargraph_gui, not_expected=['refresh'])
-
-@with_app(app_cleared_gui_calls)
+@with_app(TestApp)
 def test_current_view_index(app):
     # The main window has a `current_view_index` property which indicate which view is currently
     # selected.
@@ -85,18 +69,18 @@ def test_current_view_index(app):
     app.mw.select_previous_view()
     eq_(app.mw.current_view_index, 0)
 
-@with_app(app_cleared_gui_calls)
+@with_app(TestApp)
 def test_select_ttable_on_sfield_query(app):
     # Setting a value in the search field selects the ttable.
     app.sfield.query = 'foobar'
     eq_(app.mw.current_view_index, 2)
 
-@with_app(app_cleared_gui_calls)
+@with_app(TestApp)
 def test_view_count(app):
     # the view_count property returns the number of available views.
     eq_(app.mw.view_count, 6)
 
-@with_app(app_cleared_gui_calls)
+@with_app(TestApp)
 def test_view_types(app):
     # View types are correct
     eq_(app.mw.view_type(0), ViewType.NetWorth)
@@ -105,6 +89,22 @@ def test_view_types(app):
     eq_(app.mw.view_type(3), ViewType.Account)
     eq_(app.mw.view_type(4), ViewType.Schedule)
     eq_(app.mw.view_type(5), ViewType.Budget)
+
+#--- Cleared GUI calls
+def app_cleared_gui_calls():
+    app = TestApp()
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_cleared_gui_calls)
+def test_change_date_range(app):
+    app.doc.date_range = app.doc.date_range.prev()
+    expected_calls = ['refresh', 'animate_backward']
+    app.check_gui_calls(app.drsel_gui, expected_calls)
+    app.check_gui_calls_partial(app.bsheet_gui, ['refresh'])
+    app.check_gui_calls(app.nwgraph_gui, ['refresh'])
+    app.check_gui_calls_partial(app.balgraph_gui, not_expected=['refresh'])
+    app.check_gui_calls_partial(app.bargraph_gui, not_expected=['refresh'])
 
 #--- Asset and Income accounts
 def app_asset_and_income_accounts():
