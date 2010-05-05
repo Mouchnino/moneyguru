@@ -78,7 +78,7 @@ http://www.hardcoded.net/licenses/hs_license
      */
     [controller setDocument:nil];
     [controller setShouldCloseDocument:YES];
-    [self addWindowController:controller];
+    [self addWindowController:[controller autorelease]];
 }
 
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError

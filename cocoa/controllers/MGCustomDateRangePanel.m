@@ -17,12 +17,6 @@ http://www.hardcoded.net/licenses/hs_license
     return self;
 }
 
-- (void)dealloc
-{
-    [customDateFieldEditor release];
-    [super dealloc];
-}
-
 - (PyCustomDateRangePanel *)py
 {
     return (PyCustomDateRangePanel *)py;

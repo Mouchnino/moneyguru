@@ -386,6 +386,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)windowWillClose:(NSNotification *)notification
 {
     [self saveState];
+    [tabBar setDelegate:nil];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
