@@ -9,6 +9,7 @@
 from nose.tools import eq_
 from hsutil.testutil import Patcher
 
+from ..const import PaneType
 from ..document import ScheduleScope
 from .base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
 
@@ -28,7 +29,7 @@ def test_make_schedule_from_selected(app):
     # make_schedule_from_selected takes the selected transaction, create a monthly schedule out
     # of it, selects the schedule table, and pops the edition panel for it.
     app.mw.make_schedule_from_selected()
-    eq_(app.mw.current_pane_index, 4)
+    app.check_current_pane(PaneType.Schedule)
     app.check_gui_calls_partial(app.scpanel_gui, ['pre_load', 'post_load'])
     eq_(len(app.sctable), 0) # It's a *new* schedule, only added if we press save
     eq_(app.scpanel.start_date, '11/07/2008')

@@ -10,6 +10,7 @@ from collections import namedtuple
 
 from hsutil.misc import first
 
+from ..const import PaneType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from .base import DocumentGUIObject
@@ -29,7 +30,6 @@ class MainWindow(DocumentGUIObject):
             ViewPane(self.nwview, "Net Worth", None),
             ViewPane(self.pview, "Profit & Loss", None),
             ViewPane(self.tview, "Transactions", None),
-            ViewPane(self.aview, "Account", None),
             ViewPane(self.scview, "Schedules", None),
             ViewPane(self.bview, "Budgets", None),
         ]
@@ -147,47 +147,40 @@ class MainWindow(DocumentGUIObject):
         if current_view in (self.nwview, self.pview):
             current_view.new_group()
     
-    def select_balance_sheet(self):
+    def select_pane_of_type(self, pane_type):
         self.document.filter_string = ''
-        self.current_pane_index = 0
+        index = first(i for i, p in enumerate(self.panes) if p.view.VIEW_TYPE == pane_type)
+        self.current_pane_index = index
+    
+    def select_balance_sheet(self):
+        self.select_pane_of_type(PaneType.NetWorth)
     
     def select_income_statement(self):
-        self.document.filter_string = ''
-        self.current_pane_index = 1
+        self.select_pane_of_type(PaneType.Profit)
     
     def select_transaction_table(self):
-        self.document.filter_string = ''
-        self.current_pane_index = 2
+        self.select_pane_of_type(PaneType.Transaction)
     
     def select_entry_table(self):
         if self.document.shown_account is None:
             return
-        self.document.filter_string = ''
-        self.current_pane_index = 3
+        self.select_pane_of_type(PaneType.Account)
     
     def select_schedule_table(self):
-        self.document.filter_string = ''
-        self.current_pane_index = 4
+        self.select_pane_of_type(PaneType.Schedule)
     
     def select_budget_table(self):
-        self.document.filter_string = ''
-        self.current_pane_index = 5
+        self.select_pane_of_type(PaneType.Budget)
     
     def select_next_view(self):
-        if self.current_pane_index == 5:
+        if self.current_pane_index == len(self.panes) - 1:
             return
-        if self.current_pane_index == 2 and self.document.shown_account is None:
-            self.current_pane_index += 2 # we have to skip the account view
-        else:
-            self.current_pane_index += 1
+        self.current_pane_index += 1
     
     def select_previous_view(self):
         if self.current_pane_index == 0:
             return
-        if self.current_pane_index == 4 and self.document.shown_account is None:
-            self.current_pane_index -= 2 # we have to skip the account view
-        else:
-            self.current_pane_index -= 1
+        self.current_pane_index -= 1
     
     def show_account(self):
         """Shows the currently selected account in the Account view.

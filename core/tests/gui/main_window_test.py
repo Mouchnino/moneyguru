@@ -20,9 +20,9 @@ def test_close_pane(app):
     # closing a view removes it from main window's subviews
     app.mw.current_pane_index = 2
     app.clear_gui_calls()
-    app.mw.close_pane(4)
-    eq_(app.mw.pane_count, 5)
-    eq_(app.mw.pane_type(4), PaneType.Budget)
+    app.mw.close_pane(3)
+    eq_(app.mw.pane_count, 4)
+    eq_(app.mw.pane_type(3), PaneType.Budget)
     eq_(app.mw.current_pane_index, 2)
     app.check_gui_calls(app.mainwindow_gui, ['view_closed'])
 
@@ -42,27 +42,26 @@ def test_close_pane_index_lower_than_selected(app):
 @with_app(TestApp)
 def test_close_pane_when_selected(app):
     # closing the selected view adjusts the current view index if appropriate
-    app.mw.current_pane_index = 4
+    app.mw.current_pane_index = 3
     app.clear_gui_calls()
-    app.mw.close_pane(4)
-    eq_(app.mw.current_pane_index, 4) # We stay at 4 because it's appropriate
+    app.mw.close_pane(3)
+    eq_(app.mw.current_pane_index, 3) # We stay at 4 because it's appropriate
     # Although the view index stayed the same, the view still changed, so the GUI needs to change.
     app.check_gui_calls(app.mainwindow_gui, ['view_closed', 'change_current_pane'])
-    app.mw.close_pane(4)
-    eq_(app.mw.current_pane_index, 3)
+    app.mw.close_pane(3)
+    eq_(app.mw.current_pane_index, 2)
 
 @with_app(TestApp)
 def test_current_pane_index(app):
     # The main window has a `current_pane_index` property which indicate which view is currently
     # selected.
-    view_seq = [0, 1, 2, 4, 5] # we skip the account view because there's no shown account
-    for index in view_seq:
+    for index in range(5):
         eq_(app.mw.current_pane_index, index)
         app.mw.select_next_view()
     # we can't go further
     app.mw.select_next_view()
-    eq_(app.mw.current_pane_index, 5)
-    for index in reversed(view_seq):
+    eq_(app.mw.current_pane_index, 4)
+    for index in reversed(range(5)):
         eq_(app.mw.current_pane_index, index)
         app.mw.select_previous_view()
     # we can't go further
@@ -76,29 +75,18 @@ def test_select_ttable_on_sfield_query(app):
     eq_(app.mw.current_pane_index, 2)
 
 @with_app(TestApp)
-def test_pane_count(app):
-    # the pane_count property returns the number of available views.
-    eq_(app.mw.pane_count, 6)
-
-@with_app(TestApp)
-def test_pane_labels(app):
-    # View labels are correct
+def test_initial_panes(app):
+    eq_(app.mw.pane_count, 5)
     eq_(app.mw.pane_label(0), "Net Worth")
     eq_(app.mw.pane_label(1), "Profit & Loss")
     eq_(app.mw.pane_label(2), "Transactions")
-    eq_(app.mw.pane_label(3), "Account")
-    eq_(app.mw.pane_label(4), "Schedules")
-    eq_(app.mw.pane_label(5), "Budgets")
-
-@with_app(TestApp)
-def test_pane_types(app):
-    # View types are correct
+    eq_(app.mw.pane_label(3), "Schedules")
+    eq_(app.mw.pane_label(4), "Budgets")
     eq_(app.mw.pane_type(0), PaneType.NetWorth)
     eq_(app.mw.pane_type(1), PaneType.Profit)
     eq_(app.mw.pane_type(2), PaneType.Transaction)
-    eq_(app.mw.pane_type(3), PaneType.Account)
-    eq_(app.mw.pane_type(4), PaneType.Schedule)
-    eq_(app.mw.pane_type(5), PaneType.Budget)
+    eq_(app.mw.pane_type(3), PaneType.Schedule)
+    eq_(app.mw.pane_type(4), PaneType.Budget)
 
 #--- Cleared GUI calls
 def app_cleared_gui_calls():
@@ -127,10 +115,10 @@ def app_one_account():
 def test_show_account_opens_a_new_tab(app):
     # Showing an account opens a new tab with the account shown in it.
     app.mw.show_account()
-    eq_(app.mw.pane_count, 7)
-    eq_(app.mw.current_pane_index, 6)
-    eq_(app.mw.pane_type(6), PaneType.Account)
-    eq_(app.mw.pane_label(6), "foo")
+    eq_(app.mw.pane_count, 6)
+    eq_(app.mw.current_pane_index, 5)
+    eq_(app.mw.pane_type(5), PaneType.Account)
+    eq_(app.mw.pane_label(5), "foo")
     app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane'], verify_order=True)
 
 #--- Asset and Income accounts
@@ -175,11 +163,11 @@ def test_show_account_when_in_sheet(app):
     app.mw.select_balance_sheet()
     app.clear_gui_calls()
     app.mw.show_account()
-    eq_(app.mw.current_pane_index, 6) # The tab opened in setup is re-used
+    eq_(app.mw.current_pane_index, 5) # The tab opened in setup is re-used
     app.mw.select_income_statement()
     app.clear_gui_calls()
     app.mw.show_account()
-    eq_(app.mw.current_pane_index, 7) # a new tab is opened for this one
+    eq_(app.mw.current_pane_index, 6) # a new tab is opened for this one
 
 @with_app(app_asset_and_income_accounts)
 def test_switch_views(app):
@@ -188,14 +176,14 @@ def test_switch_views(app):
     eq_(app.mw.current_pane_index, 1)
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
-    eq_(app.mw.current_pane_index, 7)
+    eq_(app.mw.current_pane_index, 6)
     expected = ['refresh_totals', 'show_bar_graph', 'refresh_reconciliation_button']
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_balance_sheet()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
-    eq_(app.mw.current_pane_index, 6)
+    eq_(app.mw.current_pane_index, 5)
     expected = ['refresh_totals', 'show_line_graph', 'refresh_reconciliation_button']
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_transaction_table()
@@ -213,10 +201,9 @@ def app_one_transaction():
 def test_show_account_when_in_etable(app):
     app.show_account('first')
     app.mw.show_account()
-    eq_(app.mw.pane_label(app.mw.current_pane_index), 'second')
+    app.check_current_pane(PaneType.Account, 'second')
 
 @with_app(app_one_transaction)
 def test_show_account_when_in_ttable(app):
     app.mw.show_account()
-    eq_(app.mw.current_pane_index, 6)
-    eq_(app.mw.pane_label(app.mw.current_pane_index), 'first')
+    app.check_current_pane(PaneType.Account, 'first')
