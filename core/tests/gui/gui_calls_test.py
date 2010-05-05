@@ -21,7 +21,7 @@ from ..base import TestCase, TestApp, with_app
 def test_initial_gui_calls():
     app = TestApp()
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_view'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_subviews', 'change_current_view'])
     app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
 
 #--- Cleared GUI calls
