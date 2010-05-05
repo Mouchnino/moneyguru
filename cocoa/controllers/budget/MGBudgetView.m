@@ -13,27 +13,18 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGBudgetView
 - (id)initWithPyParent:(id)aPyParent
 {
-    self = [super init];
+    self = [super initWithPyClassName:@"PyBudgetView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    budgetTable = [[MGBudgetTable alloc] initWithPyParent:aPyParent view:tableView];
+    budgetTable = [[MGBudgetTable alloc] initWithPyParent:[self py] view:tableView];
     NSArray *children = [NSArray arrayWithObjects:[budgetTable py], nil];
-    Class pyClass = [Utils classNamed:@"PyBudgetView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
+    [[self py] setChildren:children];
     return self;
 }
         
 - (void)dealloc
 {
-    [py release];
     [budgetTable release];
     [super dealloc];
-}
-
-- (oneway void)release
-{
-    if ([self retainCount] == 2)
-        [py free];
-    [super release];
 }
 
 - (PyBudgetView *)py

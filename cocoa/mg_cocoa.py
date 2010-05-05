@@ -262,12 +262,8 @@ class PyListener(PyGUIObject):
     
 
 class PyGUIContainer(PyListener):
-    def initWithCocoa_pyParent_children_(self, cocoa, pyparent, children):
-        super(PyGUIContainer, self).init()
-        self.cocoa = cocoa
-        pychildren = [child.py for child in children]
-        self.py = self.py_class(self, pyparent.py, pychildren)
-        return self
+    def setChildren_(self, children):
+        self.py.set_children([child.py for child in children])
     
 
 class PyWindowController(PyListener):
@@ -1003,11 +999,8 @@ class PyIncomePieChart(PyChart):
 class PyExpensesPieChart(PyChart):
     py_class = ExpensesPieChart
 
-class PyMainWindow(PyListener):
+class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
-    
-    def setChildren_(self, children):
-        self.py.set_children([child.py for child in children])
     
     @signature('c@:')
     def canSelectEntryTable(self):

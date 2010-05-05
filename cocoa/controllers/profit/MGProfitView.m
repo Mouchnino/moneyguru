@@ -14,14 +14,14 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGProfitView
 - (id)initWithPyParent:(id)aPyParent
 {
-    self = [super init];
+    self = [super initWithPyClassName:@"PyProfitView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"IncomeStatement" owner:self];
-    incomeStatement = [[MGIncomeStatement alloc] initWithPyParent:aPyParent view:outlineView];
-    incomePieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyIncomePieChart"];
-    expensesPieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyExpensesPieChart"];
+    incomeStatement = [[MGIncomeStatement alloc] initWithPyParent:[self py] view:outlineView];
+    incomePieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyIncomePieChart"];
+    expensesPieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyExpensesPieChart"];
     [pieChartsView setFirstView:[incomePieChart view]];
     [pieChartsView setSecondView:[expensesPieChart view]];
-    profitGraph = [[MGBarGraph alloc] initWithPyParent:aPyParent pyClassName:@"PyProfitGraph"];
+    profitGraph = [[MGBarGraph alloc] initWithPyParent:[self py] pyClassName:@"PyProfitGraph"];
     NSView *graphView = [profitGraph view];
     [graphView setFrame:[profitGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[profitGraphPlaceholder autoresizingMask]];
@@ -29,8 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *children = [NSArray arrayWithObjects:[incomeStatement py], [profitGraph py],
         [incomePieChart py], [expensesPieChart py], nil];
-    Class pyClass = [Utils classNamed:@"PyProfitView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
+    [[self py] setChildren:children];
     
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -48,15 +47,7 @@ http://www.hardcoded.net/licenses/hs_license
     [profitGraph release];
     [incomePieChart release];
     [expensesPieChart release];
-    [py release];
     [super dealloc];
-}
-
-- (oneway void)release
-{
-    if ([self retainCount] == 2)
-        [py free];
-    [super release];
 }
 
 - (PyProfitView *)py

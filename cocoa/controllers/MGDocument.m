@@ -30,7 +30,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)dealloc
 {
-    // NSLog(@"Document dealloc");
     for (NSWindowController *wc in [self windowControllers]) {
         [wc release];
     }

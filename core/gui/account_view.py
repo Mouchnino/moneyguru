@@ -15,12 +15,16 @@ from .base import BaseView
 class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
     
-    def __init__(self, view, mainwindow, children):
-        self.etable, self.balgraph, self.bargraph, self.efbar = children
-        # we count the graphs separately because the connect/disconnect rules for them are special
-        BaseView.__init__(self, view, mainwindow.document, [self.etable, self.efbar])
-        self._shown_graph = self.balgraph
+    def __init__(self, view, mainwindow):
+        BaseView.__init__(self, view, mainwindow)
+        self._shown_graph = None
         self._reconciliation_mode = False
+    
+    def set_children(self, children):
+        self.etable, self.balgraph, self.bargraph, self.efbar = children
+        self._shown_graph = self.balgraph
+        # we count the graphs separately because the connect/disconnect rules for them are special
+        BaseView.set_children(self, [self.etable, self.efbar])
     
     def connect(self):
         BaseView.connect(self)

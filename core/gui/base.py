@@ -168,8 +168,13 @@ class MainWindowPanel(GUIPanel):
 class BaseView(DocumentGUIObject):
     VIEW_TYPE = -1
     
-    def __init__(self, view, document, children):
-        DocumentGUIObject.__init__(self, view, document)
+    def __init__(self, view, mainwindow):
+        DocumentGUIObject.__init__(self, view, mainwindow.document)
+        self.mainwindow = mainwindow
+    
+    # This has to be call *once* and *right after creation*. The children are set after
+    # initialization so that we can pass a reference to self during children's initialization.
+    def set_children(self, children):
         self._children = children
     
     def connect(self):

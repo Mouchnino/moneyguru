@@ -13,29 +13,20 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGTransactionView
 - (id)initWithPyParent:(id)aPyParent
 {
-    self = [super init];
+    self = [super initWithPyClassName:@"PyTransactionView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    transactionTable = [[MGTransactionTable alloc] initWithPyParent:aPyParent view:tableView];
-    filterBar = [[MGFilterBar alloc] initWithPyParent:aPyParent view:filterBarView forEntryTable:NO];
+    transactionTable = [[MGTransactionTable alloc] initWithPyParent:[self py] view:tableView];
+    filterBar = [[MGFilterBar alloc] initWithPyParent:[self py] view:filterBarView forEntryTable:NO];
     NSArray *children = [NSArray arrayWithObjects:[transactionTable py], [filterBar py], nil];
-    Class pyClass = [Utils classNamed:@"PyTransactionView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
+    [[self py] setChildren:children];
     return self;
 }
         
 - (void)dealloc
 {
-    [py release];
     [transactionTable release];
     [filterBar release];
     [super dealloc];
-}
-
-- (oneway void)release
-{
-    if ([self retainCount] == 2)
-        [py free];
-    [super release];
 }
 
 - (PyTransactionView *)py
@@ -57,6 +48,6 @@ http://www.hardcoded.net/licenses/hs_license
 // Python --> Cocoa
 -(void)refreshTotals
 {
-    [totalsLabel setStringValue:[py totals]];
+    [totalsLabel setStringValue:[[self py] totals]];
 }
 @end

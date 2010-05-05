@@ -16,7 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     IBOutlet MGTableView *tableView;
     
-    PyBudgetView *py;
     MGBudgetTable *budgetTable;
 }
 - (id)initWithPyParent:(id)aPyParent;

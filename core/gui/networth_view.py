@@ -13,8 +13,8 @@ from .base import BaseView
 class NetWorthView(BaseView):
     VIEW_TYPE = PaneType.NetWorth
     
-    def __init__(self, view, mainwindow, children):
-        BaseView.__init__(self, view, mainwindow.document, children)
+    def set_children(self, children):
+        BaseView.set_children(self, children)
         [self.bsheet, self.nwgraph, self.apie, self.lpie] = children
     
     #--- Public

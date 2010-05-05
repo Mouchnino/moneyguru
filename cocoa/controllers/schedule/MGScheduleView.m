@@ -13,27 +13,18 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGScheduleView
 - (id)initWithPyParent:(id)aPyParent
 {
-    self = [super init];
+    self = [super initWithPyClassName:@"PyScheduleView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    scheduleTable = [[MGScheduleTable alloc] initWithPyParent:aPyParent view:tableView];
+    scheduleTable = [[MGScheduleTable alloc] initWithPyParent:[self py] view:tableView];
     NSArray *children = [NSArray arrayWithObjects:[scheduleTable py], nil];
-    Class pyClass = [Utils classNamed:@"PyScheduleView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
+    [[self py] setChildren:children];
     return self;
 }
         
 - (void)dealloc
 {
-    [py release];
     [scheduleTable release];
     [super dealloc];
-}
-
-- (oneway void)release
-{
-    if ([self retainCount] == 2)
-        [py free];
-    [super release];
 }
 
 - (PyScheduleView *)py

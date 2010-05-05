@@ -7,12 +7,12 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "HSGUIController.h"
 #import "MGPrintView.h"
 
-@interface MGBaseView : NSObject
+@interface MGBaseView : HSGUIController
 {
     IBOutlet NSView *wholeView;
 }
-- (NSView *)view;
 - (MGPrintView *)viewToPrint;
 @end

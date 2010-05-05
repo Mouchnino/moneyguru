@@ -16,7 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     IBOutlet MGTableView *tableView;
     
-    PyScheduleView *py;
     MGScheduleTable *scheduleTable;
 }
 - (id)initWithPyParent:(id)aPyParent;

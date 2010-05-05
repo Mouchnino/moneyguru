@@ -25,7 +25,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTextField *totalsLabel;
     IBOutlet NSButton *reconciliationModeButton;
     
-    PyAccountView *py;
     MGEntryTable *entryTable;
     MGFilterBar *filterBar;
     MGBalanceGraph *balanceGraph;

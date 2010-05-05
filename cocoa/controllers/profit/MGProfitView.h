@@ -22,7 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGDoubleView *pieChartsView;
     IBOutlet NSView *profitGraphPlaceholder;
     
-    PyProfitView *py;
     MGIncomeStatement *incomeStatement;
     MGPieChart *incomePieChart;
     MGPieChart *expensesPieChart;

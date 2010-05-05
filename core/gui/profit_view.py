@@ -13,8 +13,8 @@ from .base import BaseView
 class ProfitView(BaseView):
     VIEW_TYPE = PaneType.Profit
     
-    def __init__(self, view, mainwindow, children):
-        BaseView.__init__(self, view, mainwindow.document, children)
+    def set_children(self, children):
+        BaseView.set_children(self, children)
         [self.istatement, self.pgraph, self.ipie, self.epie] = children
     
     #--- Public

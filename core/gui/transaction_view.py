@@ -16,10 +16,13 @@ from .base import BaseView
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
     
-    def __init__(self, view, mainwindow, children):
-        BaseView.__init__(self, view, mainwindow.document, children)
-        self.ttable, self.tfbar = children
+    def __init__(self, view, mainwindow):
+        BaseView.__init__(self, view, mainwindow)
         self.totals = ''
+        
+    def set_children(self, children):
+        BaseView.set_children(self, children)
+        self.ttable, self.tfbar = children
     
     def connect(self):
         BaseView.connect(self)

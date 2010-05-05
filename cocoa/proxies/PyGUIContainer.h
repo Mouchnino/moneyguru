@@ -13,5 +13,5 @@ http://www.hardcoded.net/licenses/hs_license
 // Rather than having a 3km long method name (this is objc, remember), we're passing a list of
 // instances here. However, they *have* to be in the right order. See the corresponding core class
 // for the correct order.
-- (id)initWithCocoa:(id)cocoa pyParent:(id)pyParent children:(NSArray *)children;
+- (void)setChildren:(NSArray *)children;
 @end

@@ -13,8 +13,8 @@ from .base import BaseView
 class BudgetView(BaseView):
     VIEW_TYPE = PaneType.Budget
     
-    def __init__(self, view, mainwindow, children):
-        BaseView.__init__(self, view, mainwindow.document, children)
+    def set_children(self, children):
+        BaseView.set_children(self, children)
         [self.btable] = children
     
     def delete_item(self):

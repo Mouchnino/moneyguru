@@ -160,6 +160,18 @@ class TestApp(object):
         self.mainwindow_gui = MainWindowGUI(self.arpanel)
         self.mainwindow = MainWindow(self.mainwindow_gui, self.doc)
         self.mw = self.mainwindow # shortcut. This one is often typed
+        self.nwview_gui = CallLogger()
+        self.nwview = NetWorthView(self.nwview_gui, self.mw)
+        self.pview_gui = CallLogger()
+        self.pview = ProfitView(self.pview_gui, self.mw)
+        self.tview_gui = CallLogger()
+        self.tview = TransactionView(self.tview_gui, self.mw)
+        self.aview_gui = CallLogger()
+        self.aview = AccountView(self.aview_gui, self.mw)
+        self.scview_gui = CallLogger()
+        self.scview = ScheduleView(self.scview_gui, self.mw)
+        self.bview_gui = CallLogger()
+        self.bview = BudgetView(self.bview_gui, self.mw)
         self.apanel_gui = CallLogger()
         self.apanel = AccountPanel(self.apanel_gui, self.mw)
         self.etable_gui = CallLogger()
@@ -223,24 +235,19 @@ class TestApp(object):
         self.alookup = AccountLookup(self.alookup_gui, self.mw)
         self.clookup_gui = CallLogger()
         self.clookup = CompletionLookup(self.clookup_gui, self.mw)
-        self.nwview_gui = CallLogger()
+        # set children
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
-        self.nwview = NetWorthView(self.nwview_gui, self.mw, children)
-        self.pview_gui = CallLogger()
+        self.nwview.set_children(children)
         children = [self.istatement, self.pgraph, self.ipie, self.epie]
-        self.pview = ProfitView(self.pview_gui, self.mw, children)
-        self.tview_gui = CallLogger()
+        self.pview.set_children(children)
         children = [self.ttable, self.tfbar]
-        self.tview = TransactionView(self.tview_gui, self.mw, children)
-        self.aview_gui = CallLogger()
+        self.tview.set_children(children)
         children = [self.etable, self.balgraph, self.bargraph, self.efbar]
-        self.aview = AccountView(self.aview_gui, self.mw, children)
-        self.scview_gui = CallLogger()
+        self.aview.set_children(children)
         children = [self.sctable]
-        self.scview = ScheduleView(self.scview_gui, self.mw, children)
-        self.bview_gui = CallLogger()
+        self.scview.set_children(children)
         children = [self.btable]
-        self.bview = BudgetView(self.bview_gui, self.mw, children)
+        self.bview.set_children(children)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
             self.alookup, self.clookup, self.drsel]

@@ -13,8 +13,8 @@ from .base import BaseView
 class ScheduleView(BaseView):
     VIEW_TYPE = PaneType.Schedule
     
-    def __init__(self, view, mainwindow, children):
-        BaseView.__init__(self, view, mainwindow.document, children)
+    def set_children(self, children):
+        BaseView.set_children(self, children)
         [self.sctable] = children
     
     def delete_item(self):

@@ -14,14 +14,14 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGNetWorthView
 - (id)initWithPyParent:(id)aPyParent
 {
-    self = [super init];
+    self = [super initWithPyClassName:@"PyNetWorthView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
-    balanceSheet = [[MGBalanceSheet alloc] initWithPyParent:aPyParent view:outlineView];
-    assetsPieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyAssetsPieChart"];
-    liabilitiesPieChart = [[MGPieChart alloc] initWithPyParent:aPyParent pieChartClassName:@"PyLiabilitiesPieChart"];
+    balanceSheet = [[MGBalanceSheet alloc] initWithPyParent:[self py] view:outlineView];
+    assetsPieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyAssetsPieChart"];
+    liabilitiesPieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyLiabilitiesPieChart"];
     [pieChartsView setFirstView:[assetsPieChart view]];
     [pieChartsView setSecondView:[liabilitiesPieChart view]];
-    netWorthGraph = [[MGBalanceGraph alloc] initWithPyParent:aPyParent pyClassName:@"PyNetWorthGraph"];
+    netWorthGraph = [[MGBalanceGraph alloc] initWithPyParent:[self py] pyClassName:@"PyNetWorthGraph"];
     NSView *graphView = [netWorthGraph view];
     [graphView setFrame:[netWorthGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[netWorthGraphPlaceholder autoresizingMask]];
@@ -29,8 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [netWorthGraph py],
         [assetsPieChart py], [liabilitiesPieChart py], nil];
-    Class pyClass = [Utils classNamed:@"PyNetWorthView"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:aPyParent children:children];
+    [[self py] setChildren:children];
     
     [self updateVisibility];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -48,15 +47,7 @@ http://www.hardcoded.net/licenses/hs_license
     [netWorthGraph release];
     [assetsPieChart release];
     [liabilitiesPieChart release];
-    [py release];
     [super dealloc];
-}
-
-- (oneway void)release
-{
-    if ([self retainCount] == 2)
-        [py free];
-    [super release];
 }
 
 - (PyNetWorthView *)py

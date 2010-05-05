@@ -7,11 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
+#import "PyGUIContainer.h"
 #import "MGConst.h"
 
-@interface PyMainWindow : PyGUI {}
-- (void)setChildren:(NSArray *)children;
+@interface PyMainWindow : PyGUIContainer {}
 // Navigation
 - (BOOL)canSelectEntryTable;
 - (void)selectNextView;

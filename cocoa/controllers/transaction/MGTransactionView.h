@@ -20,7 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet AMButtonBar *filterBarView;
     IBOutlet NSTextField *totalsLabel;
     
-    PyTransactionView *py;
     MGTransactionTable *transactionTable;
     MGFilterBar *filterBar;
 }

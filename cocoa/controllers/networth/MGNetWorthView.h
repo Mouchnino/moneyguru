@@ -22,7 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet MGDoubleView *pieChartsView;
     IBOutlet NSView *netWorthGraphPlaceholder;
     
-    PyNetWorthView *py;
     MGBalanceSheet *balanceSheet;
     MGPieChart *assetsPieChart;
     MGPieChart *liabilitiesPieChart;
