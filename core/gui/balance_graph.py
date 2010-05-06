@@ -7,9 +7,9 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from __future__ import division
-from datetime import date, timedelta
+from datetime import date
 
-from ..model.date import DateRange, ONE_DAY
+from ..model.date import ONE_DAY
 from .graph import Graph
 
 class BalanceGraph(Graph):
@@ -19,14 +19,10 @@ class BalanceGraph(Graph):
     # BalanceGraph's data point is (float x, float y)
     #--- Virtual
     def _balance_for_date(self, date):
-        if self._account is None:
-            return 0
-        entry = self._account.last_entry(date=date)
-        return entry.normal_balance() if entry else 0
+        return 0
     
     def _budget_for_date(self, date):
-        date_range = DateRange(date.min, date)
-        return self.document.budgeted_amount_for_target(self._account, date_range)
+        return 0
     
     #--- Override
     # Computation Notes: When the balance in the graph changes, we have to create a flat line until
@@ -35,7 +31,6 @@ class BalanceGraph(Graph):
     # rather than calculating the budget every day, they are only calculated when the balance without
     # budget changes. this is what the algorithm below reflects.
     def compute_data(self):
-        self._account = self.document.shown_account
         date_range = self.document.date_range
         TODAY = date.today()
         date2value = {}
@@ -75,16 +70,14 @@ class BalanceGraph(Graph):
     
     @property
     def title(self):
-        return self.document.shown_account.name
+        return ''
     
     @property
     def currency(self):
-        return self._account.currency
+        return None
     
     @property
     def xtoday(self):
         """The X value representing today"""
         return date.today().toordinal() + 1
     
-    #--- Event Handlers
-    account_must_be_shown = Graph._data_changed

@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
     entryTable = [[MGEntryTable alloc] initWithPyParent:[self py] view:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyParent:[self py] view:filterBarView forEntryTable:YES];
-    balanceGraph = [[MGBalanceGraph alloc] initWithPyParent:[self py] pyClassName:@"PyBalanceGraph"];
+    balanceGraph = [[MGBalanceGraph alloc] initWithPyParent:[self py] pyClassName:@"PyAccountBalanceGraph"];
     barGraph = [[MGBarGraph alloc] initWithPyParent:[self py] pyClassName:@"PyBarGraph"];
     // We have to put one of the graph in there before we link the prefs
     NSView *graphView = [balanceGraph view];
@@ -146,7 +146,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 -(void)refreshTotals
 {
-    [totalsLabel setStringValue:[py totals]];
+    [totalsLabel setStringValue:[[self py] totals]];
 }
 
 - (void)showLineGraph

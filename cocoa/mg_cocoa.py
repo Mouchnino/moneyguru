@@ -21,13 +21,13 @@ from hsutil.reg import InvalidCodeError
 from core.app import Application
 from core.document import Document, FilterType
 from core.exception import FileFormatError
+from core.gui.account_balance_graph import AccountBalanceGraph
 from core.gui.account_lookup import AccountLookup
 from core.gui.account_panel import AccountPanel
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from core.gui.account_reassign_panel import AccountReassignPanel
 from core.gui.account_view import AccountView
 from core.gui.bar_graph import BarGraph
-from core.gui.balance_graph import BalanceGraph
 from core.gui.balance_sheet import BalanceSheet
 from core.gui.budget_table import BudgetTable
 from core.gui.budget_panel import BudgetPanel
@@ -975,8 +975,8 @@ class PyAccountReassignPanel(PyListener):
         self.py.account_index = value
     
 
-class PyBalanceGraph(PyGraph):
-    py_class = BalanceGraph
+class PyAccountBalanceGraph(PyGraph):
+    py_class = AccountBalanceGraph
 
 class PyNetWorthGraph(PyGraph):
     py_class = NetWorthGraph

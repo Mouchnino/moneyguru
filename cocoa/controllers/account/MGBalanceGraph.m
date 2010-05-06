@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGBalanceGraph.h"
-#import "PyBalanceGraph.h"
 
 @implementation MGBalanceGraph
 - (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName

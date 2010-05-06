@@ -20,12 +20,12 @@ from hsutil.testutil import TestData as TestDataBase
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
+from ..gui.account_balance_graph import AccountBalanceGraph
 from ..gui.account_lookup import AccountLookup
 from ..gui.account_panel import AccountPanel
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from ..gui.account_reassign_panel import AccountReassignPanel
 from ..gui.account_view import AccountView
-from ..gui.balance_graph import BalanceGraph
 from ..gui.balance_sheet import BalanceSheet
 from ..gui.bar_graph import BarGraph
 from ..gui.budget_panel import BudgetPanel
@@ -197,7 +197,7 @@ class TestApp(object):
         self.scsplittable_gui = CallLogger()
         self.scsplittable = SplitTable(self.scsplittable_gui, self.scpanel)
         self.balgraph_gui = CallLogger()
-        self.balgraph = BalanceGraph(self.balgraph_gui, self.mw)
+        self.balgraph = AccountBalanceGraph(self.balgraph_gui, self.aview)
         self.bargraph_gui = CallLogger()
         self.bargraph = BarGraph(self.bargraph_gui, self.mw)
         self.nwgraph_gui = CallLogger()

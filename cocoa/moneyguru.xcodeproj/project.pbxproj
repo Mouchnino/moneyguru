@@ -385,7 +385,6 @@
 		CE873A8E0E21622F004F63E9 /* MGUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGUndoManager.h; sourceTree = "<group>"; };
 		CE873A8F0E21622F004F63E9 /* MGUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGUndoManager.m; sourceTree = "<group>"; };
 		CE873A910E21622F004F63E9 /* PyAccountPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountPanel.h; sourceTree = "<group>"; };
-		CE873A930E21622F004F63E9 /* PyBalanceGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBalanceGraph.h; sourceTree = "<group>"; };
 		CE873A940E21622F004F63E9 /* PyBarGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBarGraph.h; sourceTree = "<group>"; };
 		CE873A950E21622F004F63E9 /* PyDateWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateWidget.h; sourceTree = "<group>"; };
 		CE873A960E21622F004F63E9 /* PyEntryTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryTable.h; sourceTree = "<group>"; };
@@ -491,6 +490,7 @@
 		CEB1E0B31031A386001FC4B4 /* schedules_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedules_48.png; sourceTree = "<group>"; };
 		CEB1E0B81031C286001FC4B4 /* ScheduleTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleTable.xib; sourceTree = "<group>"; };
 		CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyScheduleTable.h; sourceTree = "<group>"; };
+		CEB29A6C119320C700D8D6D9 /* PyAccountBalanceGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountBalanceGraph.h; sourceTree = "<group>"; };
 		CEB2FA170F223C3400A09E4C /* PyCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVImportOptions.m; sourceTree = "<group>"; };
@@ -891,7 +891,7 @@
 				CE14AF910E7042C800E75B76 /* PyBalancePieChart.h */,
 				CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */,
 				CE873A910E21622F004F63E9 /* PyAccountPanel.h */,
-				CE873A930E21622F004F63E9 /* PyBalanceGraph.h */,
+				CEB29A6C119320C700D8D6D9 /* PyAccountBalanceGraph.h */,
 				07DFC4690E2922890025FCD8 /* PyBalanceSheet.h */,
 				CE873A940E21622F004F63E9 /* PyBarGraph.h */,
 				CE873A950E21622F004F63E9 /* PyDateWidget.h */,
