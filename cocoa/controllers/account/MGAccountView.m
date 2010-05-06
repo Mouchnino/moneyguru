@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
     entryTable = [[MGEntryTable alloc] initWithPyParent:[self py] view:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyParent:[self py] view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithPyParent:[self py] pyClassName:@"PyAccountBalanceGraph"];
-    barGraph = [[MGBarGraph alloc] initWithPyParent:[self py] pyClassName:@"PyBarGraph"];
+    barGraph = [[MGBarGraph alloc] initWithPyParent:[self py] pyClassName:@"PyAccountFlowGraph"];
     // We have to put one of the graph in there before we link the prefs
     NSView *graphView = [balanceGraph view];
     [graphView setFrame:[graphPlaceholder frame]];

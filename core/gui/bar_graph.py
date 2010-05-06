@@ -19,16 +19,10 @@ class BarGraph(Graph):
     # BarGraph's data point is (float x1, float x2, float past_value, float future_value).
     #--- Virtual
     def _currency(self):
-        account = self.document.shown_account
-        return account.currency
+        return None
     
     def _get_cash_flow(self, date_range):
-        self.document.oven.continue_cooking(date_range.end) # it's possible that the overflow is not cooked
-        account = self.document.shown_account
-        currency = self._currency()
-        cash_flow = account.normal_cash_flow(date_range, currency=currency)
-        budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)
-        return cash_flow + budgeted
+        return 0
     
     #--- Override
     def compute_data(self):
@@ -91,7 +85,7 @@ class BarGraph(Graph):
     
     @property
     def title(self):
-        return self.document.shown_account.name
+        return ''
     
     @property
     def currency(self):

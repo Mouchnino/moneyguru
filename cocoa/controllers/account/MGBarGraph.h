@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGBarGraphView.h"
 #import "MGGraph.h"
-#import "PyBarGraph.h"
+#import "PyAccountFlowGraph.h"
 
 
 @interface MGBarGraph : MGGraph {}

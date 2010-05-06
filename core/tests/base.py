@@ -21,13 +21,13 @@ from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
 from ..gui.account_balance_graph import AccountBalanceGraph
+from ..gui.account_flow_graph import AccountFlowGraph
 from ..gui.account_lookup import AccountLookup
 from ..gui.account_panel import AccountPanel
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from ..gui.account_reassign_panel import AccountReassignPanel
 from ..gui.account_view import AccountView
 from ..gui.balance_sheet import BalanceSheet
-from ..gui.bar_graph import BarGraph
 from ..gui.budget_panel import BudgetPanel
 from ..gui.budget_table import BudgetTable
 from ..gui.budget_view import BudgetView
@@ -199,7 +199,7 @@ class TestApp(object):
         self.balgraph_gui = CallLogger()
         self.balgraph = AccountBalanceGraph(self.balgraph_gui, self.aview)
         self.bargraph_gui = CallLogger()
-        self.bargraph = BarGraph(self.bargraph_gui, self.mw)
+        self.bargraph = AccountFlowGraph(self.bargraph_gui, self.aview)
         self.nwgraph_gui = CallLogger()
         self.nwgraph = NetWorthGraph(self.nwgraph_gui, self.mw)
         self.pgraph_gui = CallLogger()

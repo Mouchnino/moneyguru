@@ -9,5 +9,5 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyGraph.h"
 
-@interface PyBarGraph : PyGraph {}
+@interface PyAccountFlowGraph : PyGraph {}
 @end
