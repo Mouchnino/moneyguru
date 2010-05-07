@@ -49,7 +49,7 @@ class EntryTable(TransactionTableBase):
         date_range = self.document.date_range
         self.account = account
         if account.is_balance_sheet_account():
-            prev_entry = self.document.previous_entry
+            prev_entry = self._previous_entry
             if prev_entry is not None:
                 balance = prev_entry.balance
                 rbalance = prev_entry.reconciled_balance
@@ -88,6 +88,15 @@ class EntryTable(TransactionTableBase):
         split = transaction.splits[0]
         entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
         return entry
+    
+    @property
+    def _previous_entry(self): # the entry just before the date range
+        account = self.document.shown_account
+        if account is None:
+            return None
+        date_range = self.document.date_range
+        prev_entries = [entry for entry in account.entries if entry.date < date_range.start]
+        return prev_entries[-1] if prev_entries else None
     
     #--- Public
     def add(self):

@@ -603,15 +603,6 @@ class Document(Broadcaster, Listener):
         self._cook(from_date=min_date)
         self.notify('transaction_changed')
     
-    @property
-    def previous_entry(self): # the entry just before the date range
-        account = self.shown_account
-        if account is None:
-            return None
-        date_range = self.date_range
-        prev_entries = [entry for entry in account.entries if entry.date < date_range.start]
-        return prev_entries[-1] if prev_entries else None
-    
     #--- Budget
     def budgeted_amount_for_target(self, target, date_range):
         """Returns the sum of all the budgeted amounts targeting 'target'. The currency of the 
