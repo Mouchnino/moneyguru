@@ -23,7 +23,7 @@ from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, R
     AllTransactionsRange, CustomDateRange, inc_month)
 from .model.oven import Oven
 from .model.recurrence import Recurrence, Spawn, RepeatType
-from .model.transaction import Transaction, Entry
+from .model.transaction import Transaction
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
 from .saver.native import save as save_native
@@ -574,22 +574,6 @@ class Document(Broadcaster, Listener):
     def delete_entries(self, entries):
         transactions = dedupe(e.transaction for e in entries)
         self.delete_transactions(transactions)
-    
-    def new_entry(self):
-        account = self.shown_account
-        date = self.selected_transaction.date if self.selected_transaction else datetime.date.today()
-        balance = 0
-        reconciled_balance = 0
-        balance_with_budget = 0
-        previous_entry = account.last_entry(date=date)
-        if previous_entry:
-            balance = previous_entry.balance
-            reconciled_balance = previous_entry.reconciled_balance
-            balance_with_budget = previous_entry.balance_with_budget
-        transaction = Transaction(date, account=self.shown_account, amount=0)
-        split = transaction.splits[0]
-        entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
-        return entry
     
     def toggle_entries_reconciled(self, entries):
         """Toggle the reconcile flag of `entries`.

@@ -11,6 +11,7 @@ from operator import attrgetter
 
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
+from ..model.transaction import Transaction, Entry
 from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
@@ -23,7 +24,7 @@ class EntryTable(TransactionTableBase):
     
     #--- Override
     def _do_add(self):
-        entry = self.document.new_entry()
+        entry = self._new_entry()
         rows = self[:-1] # ignore total row
         for index, row in enumerate(rows):
             if not isinstance(row, EntryTableRow):
@@ -69,6 +70,24 @@ class EntryTable(TransactionTableBase):
             if not self.selected_indexes:
                 self.select_nearest_date(self.document.explicitly_selected_transactions[0].date)
         TransactionTableBase._restore_selection(self, previous_selection)
+    
+    #--- Private
+    def _new_entry(self):
+        account = self.document.shown_account
+        selected_transaction = self.document.selected_transaction
+        date = selected_transaction.date if selected_transaction else datetime.date.today()
+        balance = 0
+        reconciled_balance = 0
+        balance_with_budget = 0
+        previous_entry = account.last_entry(date=date)
+        if previous_entry:
+            balance = previous_entry.balance
+            reconciled_balance = previous_entry.reconciled_balance
+            balance_with_budget = previous_entry.balance_with_budget
+        transaction = Transaction(date, account=self.document.shown_account, amount=0)
+        split = transaction.splits[0]
+        entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
+        return entry
     
     #--- Public
     def add(self):
