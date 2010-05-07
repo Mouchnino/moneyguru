@@ -8,6 +8,8 @@
 
 from datetime import date
 
+from hsutil.misc import first
+
 from ..exception import OperationAborted
 from ..model.recurrence import Recurrence, RepeatType
 from ..model.transaction import Transaction
@@ -91,7 +93,8 @@ class PanelWithScheduleMixIn(object):
 class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
     #--- Override
     def _load(self):
-        self._load_schedule(self.document.selected_schedule)
+        schedule = first(self.mainwindow.selected_schedules)
+        self._load_schedule(schedule)
     
     def _new(self):
         self._load_schedule(Recurrence(Transaction(date.today(), amount=0), RepeatType.Monthly, 1))

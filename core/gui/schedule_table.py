@@ -20,7 +20,7 @@ class ScheduleTable(GUITable, DocumentGUIObject):
     
     #--- Override
     def _update_selection(self):
-        self.document.select_schedules(self.selected_schedules)
+        self.mainwindow.selected_schedules = self.selected_schedules
     
     def _fill(self):
         for schedule in self.document.schedules:

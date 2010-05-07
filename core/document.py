@@ -22,7 +22,7 @@ from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     AllTransactionsRange, CustomDateRange, inc_month)
 from .model.oven import Oven
-from .model.recurrence import Recurrence, Spawn, RepeatType
+from .model.recurrence import Spawn
 from .model.transaction import Transaction
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
@@ -86,8 +86,6 @@ class Document(Broadcaster, Listener):
         self._selected_account = None
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
-        self._selected_schedules = []
-        self._selected_budgets = []
         self._filter_string = ''
         self._filter_type = None
         self._visible_transactions = None
@@ -697,11 +695,6 @@ class Document(Broadcaster, Listener):
         self._cook(from_date=min_date)
         self.notify('schedule_deleted')
     
-    def new_schedule_from_transaction(self, transaction):
-        schedule = Recurrence(transaction.replicate(), RepeatType.Monthly, 1)
-        schedule.delete_at(transaction.date)
-        self.select_schedules([schedule]) # yes, we select a schedule that ain't part of self.schedules
-    
     #--- Selection
     @property
     def selected_account(self):
@@ -729,28 +722,6 @@ class Document(Broadcaster, Listener):
     def explicitly_select_transactions(self, transactions):
         self._explicitly_selected_transactions = transactions
         self.select_transactions(transactions)
-    
-    @property
-    def selected_schedule(self):
-        return self._selected_schedules[0] if self._selected_schedules else None
-    
-    @property
-    def selected_schedules(self):
-        return self._selected_schedules
-    
-    def select_schedules(self, schedules):
-        self._selected_schedules = schedules
-    
-    @property
-    def selected_budget(self):
-        return self._selected_budgets[0] if self._selected_budgets else None
-    
-    @property
-    def selected_budgets(self):
-        return self._selected_budgets
-    
-    def select_budgets(self, budgets):
-        self._selected_budgets = budgets
     
     #--- Load / Save / Import
     def adjust_example_file(self):

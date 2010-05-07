@@ -11,6 +11,8 @@ from __future__ import unicode_literals
 
 from datetime import date
 
+from hsutil.misc import first
+
 from ..exception import OperationAborted
 from ..model.account import sort_accounts
 from ..model.budget import Budget
@@ -20,7 +22,8 @@ from .schedule_panel import PanelWithScheduleMixIn, REPEAT_OPTIONS_ORDER
 class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
     #--- Override
     def _load(self):
-        self._load_budget(self.document.selected_budget)
+        budget = first(self.mainwindow.selected_budgets)
+        self._load_budget(budget)
     
     def _new(self):
         self._load_budget(Budget(None, None, 0, date.today()))

@@ -13,6 +13,7 @@ from hsutil.misc import first
 from ..const import PaneType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
+from ..model.recurrence import Recurrence, RepeatType
 from .base import DocumentGUIObject
 
 ViewPane = namedtuple('ViewPane', 'view label account')
@@ -21,6 +22,8 @@ class MainWindow(DocumentGUIObject):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
         self._shown_account = None # the account that is shown when the entry table is selected
+        self._selected_schedules = []
+        self._selected_budgets = []
     
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
@@ -122,7 +125,9 @@ class MainWindow(DocumentGUIObject):
             # overwrite our selection.
             self.select_schedule_table()
             ref = self.document.selected_transactions[0]
-            self.document.new_schedule_from_transaction(ref)
+            schedule = Recurrence(ref.replicate(), RepeatType.Monthly, 1)
+            schedule.delete_at(ref.date)
+            self.selected_schedules = [schedule]
             self.edit_item()
     
     def move_down(self):
@@ -234,6 +239,22 @@ class MainWindow(DocumentGUIObject):
     @property
     def pane_count(self):
         return len(self.panes)
+    
+    @property
+    def selected_schedules(self):
+        return self._selected_schedules
+    
+    @selected_schedules.setter
+    def selected_schedules(self, schedules):
+        self._selected_schedules = schedules
+    
+    @property
+    def selected_budgets(self):
+        return self._selected_budgets
+    
+    @selected_budgets.setter
+    def selected_budgets(self, budgets):
+        self._selected_budgets = budgets
     
     @property
     def shown_account(self):

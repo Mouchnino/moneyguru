@@ -19,7 +19,7 @@ class BudgetTable(GUITable, DocumentGUIObject):
     
     #--- Override
     def _update_selection(self):
-        self.document.select_budgets(self.selected_budgets)
+        self.mainwindow.selected_budgets = self.selected_budgets
     
     def _fill(self):
         for budget in self.document.budgets:
