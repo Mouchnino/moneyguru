@@ -140,8 +140,6 @@ http://www.hardcoded.net/licenses/hs_license
         return [[self py] currentPaneIndex] < [[self py] paneCount]-1;
     else if (action == @selector(showPreviousView:))
         return [[self py] currentPaneIndex] > 0;
-    else if (action == @selector(showEntryTable:))
-        return [[self py] canSelectEntryTable];
     else if (action == @selector(showSelectedAccount:)) {
         if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
             return [(id)top canShowSelectedAccount];

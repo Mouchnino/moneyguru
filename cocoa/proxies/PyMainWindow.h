@@ -12,7 +12,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface PyMainWindow : PyGUIContainer {}
 // Navigation
-- (BOOL)canSelectEntryTable;
 - (void)selectNextView;
 - (void)selectPreviousView;
 - (NSInteger)currentPaneIndex;

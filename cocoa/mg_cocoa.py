@@ -1002,10 +1002,6 @@ class PyExpensesPieChart(PyChart):
 class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
     
-    @signature('c@:')
-    def canSelectEntryTable(self):
-        return self.py.document.shown_account is not None
-    
     def selectNextView(self):
         self.py.select_next_view()
     
