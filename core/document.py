@@ -86,7 +86,6 @@ class Document(Broadcaster, Listener):
         self._selected_account = None
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
-        self._selected_splits = []
         self._selected_schedules = []
         self._selected_budgets = []
         self._filter_string = ''
@@ -730,13 +729,6 @@ class Document(Broadcaster, Listener):
     def explicitly_select_transactions(self, transactions):
         self._explicitly_selected_transactions = transactions
         self.select_transactions(transactions)
-    
-    @property
-    def selected_splits(self):
-        return self._selected_splits
-    
-    def select_splits(self, splits):
-        self._selected_splits = splits
     
     @property
     def selected_schedule(self):

@@ -22,6 +22,7 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
         MainWindowPanel.__init__(self, view, mainwindow)
         Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
+        self._selected_splits = []
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:
@@ -46,6 +47,9 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
     
     def new_split(self):
         return Split(self.transaction, None, 0)
+    
+    def select_splits(self, splits):
+        self._selected_splits = splits
     
     #--- Properties
     @property
@@ -106,7 +110,7 @@ class TransactionPanel(PanelWithTransaction):
         the currently selected split.
         """
         self.notify('edition_must_stop')
-        split = first(self.document.selected_splits)
+        split = first(self._selected_splits)
         new_split_currency = self.app.default_currency
         if split is not None and split.amount != 0:
             new_split_currency = split.amount.currency

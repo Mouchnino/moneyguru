@@ -39,7 +39,7 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
             self.append(SplitTableRow(self, split))
     
     def _update_selection(self):
-        self.document.select_splits([row.split for row in self.selected_rows])
+        self.panel.select_splits([row.split for row in self.selected_rows])
     
     #--- Public
     def move_split(self, from_index, to_index):
