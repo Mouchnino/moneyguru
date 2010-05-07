@@ -15,8 +15,9 @@ from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
-    def __init__(self, view, mainwindow):
-        TransactionTableBase.__init__(self, view, mainwindow)
+    def __init__(self, view, account_view):
+        TransactionTableBase.__init__(self, view, account_view.mainwindow)
+        self.account_view = account_view
         self.account = None
         self._reconciliation_mode = False
     

@@ -28,8 +28,8 @@ class FilterBar(DocumentGUIObject):
     
 
 class EntryFilterBar(FilterBar): # disables buttons
-    def __init__(self, view, mainwindow):
-        FilterBar.__init__(self, view, mainwindow)
+    def __init__(self, view, account_view):
+        FilterBar.__init__(self, view, account_view.mainwindow)
         self._disabled_buttons = False
     
     #--- Override

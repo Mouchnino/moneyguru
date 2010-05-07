@@ -175,7 +175,7 @@ class TestApp(object):
         self.apanel_gui = CallLogger()
         self.apanel = AccountPanel(self.apanel_gui, self.mw)
         self.etable_gui = CallLogger()
-        self.etable = EntryTable(self.etable_gui, self.mw)
+        self.etable = EntryTable(self.etable_gui, self.aview)
         self.ttable_gui = CallLogger()
         self.ttable = TransactionTable(self.ttable_gui, self.mw)
         self.sctable_gui = CallLogger()
@@ -220,7 +220,7 @@ class TestApp(object):
         self.sfield = SearchField(self.sfield_gui, self.mw)
         # There are 2 filter bars: one for etable, one for ttable
         self.efbar_gui = CallLogger()
-        self.efbar = EntryFilterBar(self.efbar_gui, self.mw)
+        self.efbar = EntryFilterBar(self.efbar_gui, self.aview)
         self.tfbar_gui = CallLogger()
         self.tfbar = FilterBar(self.tfbar_gui, self.mw)
         self.drsel_gui = CallLogger()
