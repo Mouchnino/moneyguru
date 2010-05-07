@@ -55,7 +55,7 @@ class EntryTable(TransactionTableBase):
                 self.header = PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
         total_increase = 0
         total_decrease = 0
-        for entry in self.document.visible_entries:
+        for entry in self.account_view.visible_entries:
             row = EntryTableRow(self, entry, account)
             self.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)
@@ -75,6 +75,12 @@ class EntryTable(TransactionTableBase):
         if self.account is None:
             return
         TransactionTableBase.add(self)
+    
+    def refresh_and_restore_selection(self):
+        self.refresh()
+        self.document.select_transactions(self.selected_transactions)
+        self.view.refresh()
+        self.view.show_selected_row()
     
     def select_nearest_date(self, target_date):
         # This method assumes that self is sorted by date
@@ -158,9 +164,7 @@ class EntryTable(TransactionTableBase):
         self._update_selection()
     
     def transactions_imported(self):
-        self.refresh()
-        self.document.select_transactions(self.selected_transactions)
-        self.view.refresh()
+        self.refresh_and_restore_selection()
 
 class BaseEntryTableRow(RowWithDebitAndCredit):
     def __init__(self, table):

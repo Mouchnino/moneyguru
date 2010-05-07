@@ -93,7 +93,6 @@ class Document(Broadcaster, Listener):
         self._filter_string = ''
         self._filter_type = None
         self._visible_transactions = None
-        self._visible_entries = None
         self._restore_preferences()
     
     #--- Private
@@ -174,7 +173,6 @@ class Document(Broadcaster, Listener):
     def _cook(self, from_date=None):
         self.oven.cook(from_date=from_date, until_date=self.date_range.end)
         self._visible_transactions = None
-        self._visible_entries = None
     
     def _date_range_starting_point(self):
         if self.selected_transaction:
@@ -304,38 +302,6 @@ class Document(Broadcaster, Listener):
         self.app.set_default(SELECTED_DATE_RANGE_END_PREFERENCE, str_end_date)
         excluded_account_names = [a.name for a in self.excluded_accounts]
         self.app.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
-    
-    def _set_visible_entries(self):
-        account = self.shown_account
-        if account is None:
-            self._visible_entries = []
-            return
-        date_range = self.date_range
-        entries = [e for e in account.entries if e.date in date_range]
-        query_string = self.filter_string
-        filter_type = self.filter_type
-        if query_string:
-            query = self._parse_search_query(query_string)
-            entries = [e for e in entries if e.transaction.matches(query)]
-        if filter_type is FilterType.Unassigned:
-            entries = [e for e in entries if not e.transfer]
-        elif (filter_type is FilterType.Income) or (filter_type is FilterType.Expense):
-            if account.is_credit_account():
-                want_positive = self.filter_type is FilterType.Expense
-            else:
-                want_positive = self.filter_type is FilterType.Income
-            if want_positive:
-                entries = [e for e in entries if e.amount > 0]
-            else:
-                entries = [e for e in entries if e.amount < 0]
-        elif filter_type is FilterType.Transfer:
-            entries = [e for e in entries if
-                any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
-        elif filter_type is FilterType.Reconciled:
-            entries = [e for e in entries if e.reconciled]
-        elif filter_type is FilterType.NotReconciled:
-            entries = [e for e in entries if not e.reconciled]
-        self._visible_entries = entries
     
     def _set_visible_transactions(self):
         date_range = self.date_range
@@ -662,12 +628,6 @@ class Document(Broadcaster, Listener):
         prev_entries = [entry for entry in account.entries if entry.date < date_range.start]
         return prev_entries[-1] if prev_entries else None
     
-    @property
-    def visible_entries(self):
-        if self._visible_entries is None:
-            self._set_visible_entries()
-        return self._visible_entries
-    
     #--- Budget
     def budgeted_amount_for_target(self, target, date_range):
         """Returns the sum of all the budgeted amounts targeting 'target'. The currency of the 
@@ -783,8 +743,6 @@ class Document(Broadcaster, Listener):
         return self._shown_account
     
     def show_account(self, account):
-        if account is not self._shown_account:
-            self._visible_entries = None
         self._shown_account = account
         self.notify('account_must_be_shown')
     
@@ -1057,7 +1015,6 @@ class Document(Broadcaster, Listener):
         self._date_range = date_range
         self.oven.continue_cooking(date_range.end)
         self._visible_transactions = None
-        self._visible_entries = None
         self.notify('date_range_changed')
     
     #--- Undo
@@ -1116,7 +1073,6 @@ class Document(Broadcaster, Listener):
             return
         self._filter_string = value
         self._visible_transactions = None
-        self._visible_entries = None
         self.notify('filter_applied')
     
     # use FilterType.* consts or None
@@ -1130,7 +1086,6 @@ class Document(Broadcaster, Listener):
             return
         self._filter_type = value
         self._visible_transactions = None
-        self._visible_entries = None
         self.notify('filter_applied')
     
     #--- Events

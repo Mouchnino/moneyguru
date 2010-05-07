@@ -10,6 +10,7 @@
 from __future__ import unicode_literals
 
 from ..const import PaneType
+from ..document import FilterType
 from .base import BaseView
 
 class AccountView(BaseView):
@@ -19,15 +20,24 @@ class AccountView(BaseView):
         BaseView.__init__(self, view, mainwindow)
         self._shown_graph = None
         self._reconciliation_mode = False
+        self._visible_entries = None
     
     def set_children(self, children):
         self.etable, self.balgraph, self.bargraph, self.efbar = children
         self._shown_graph = self.balgraph
         # we count the graphs separately because the connect/disconnect rules for them are special
-        BaseView.set_children(self, [self.etable, self.efbar])
+        BaseView.set_children(self, [self.efbar])
     
     def connect(self):
+        # We don't connect and disconnect etable because of the ongoing refactoring giving more
+        # responsibilities to views (see the refactorings section of the devdocs)
         BaseView.connect(self)
+        # XXX Huh oh, this is very inefficient (but for now the only way to make tests pass)! Once
+        # the view refactoring is over, the views will have to be connected at all times to make
+        # the invalidation of their cache more efficient. Then, we'll have show()/hide() methods
+        # where children will be refreshed.
+        self._visible_entries = None
+        self.etable.refresh_and_restore_selection()
         if self.document.shown_account is None:
             return
         if self.document.shown_account.is_balance_sheet_account():
@@ -46,10 +56,17 @@ class AccountView(BaseView):
         self.bargraph.disconnect()
     
     #--- Private
+    def _invalidate_cache(self):
+        self._visible_entries = None
+        self._refresh_totals()
+        self.view.refresh_totals()
+    
     def _refresh_totals(self):
-        selected = len(self.document.selected_transactions)
-        total = len(self.document.visible_entries)
         account = self.document.shown_account
+        if account is None:
+            return
+        selected = len(self.document.selected_transactions)
+        total = len(self.visible_entries)
         amounts = [t.amount_for_account(account, account.currency) for t in self.document.selected_transactions]
         total_increase = sum(a for a in amounts if a > 0)
         total_decrease = abs(sum(a for a in amounts if a < 0))
@@ -57,6 +74,38 @@ class AccountView(BaseView):
         total_decrease_fmt = self.app.format_amount(total_decrease)
         msg = "{0} out of {1} selected. Increase: {2} Decrease: {3}"
         self.totals = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
+    
+    def _set_visible_entries(self):
+        account = self.document.shown_account
+        if account is None:
+            self._visible_entries = []
+            return
+        date_range = self.document.date_range
+        entries = [e for e in account.entries if e.date in date_range]
+        query_string = self.document.filter_string
+        filter_type = self.document.filter_type
+        if query_string:
+            query = self.document._parse_search_query(query_string)
+            entries = [e for e in entries if e.transaction.matches(query)]
+        if filter_type is FilterType.Unassigned:
+            entries = [e for e in entries if not e.transfer]
+        elif (filter_type is FilterType.Income) or (filter_type is FilterType.Expense):
+            if account.is_credit_account():
+                want_positive = filter_type is FilterType.Expense
+            else:
+                want_positive = filter_type is FilterType.Income
+            if want_positive:
+                entries = [e for e in entries if e.amount > 0]
+            else:
+                entries = [e for e in entries if e.amount < 0]
+        elif filter_type is FilterType.Transfer:
+            entries = [e for e in entries if
+                any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
+        elif filter_type is FilterType.Reconciled:
+            entries = [e for e in entries if e.reconciled]
+        elif filter_type is FilterType.NotReconciled:
+            entries = [e for e in entries if not e.reconciled]
+        self._visible_entries = entries
     
     #--- Public
     def delete_item(self):
@@ -92,16 +141,54 @@ class AccountView(BaseView):
     def reconciliation_mode(self):
         return self._reconciliation_mode
     
+    @property
+    def visible_entries(self):
+        if self._visible_entries is None:
+            self._set_visible_entries()
+        return self._visible_entries
+    
     #--- Event Handlers
     def account_must_be_shown(self):
+        self._visible_entries = None
         self.disconnect()
         if self.document.shown_account is not None:
             self.connect()
+    
+    def date_range_changed(self):
+        self._invalidate_cache()
+        self.etable.date_range_changed()
+    
+    def date_range_will_change(self):
+        self.etable.date_range_will_change()
+    
+    def document_changed(self):
+        self._invalidate_cache()
+        self.etable.document_changed()
+    
+    def edition_must_stop(self):
+        self.etable.edition_must_stop()
+    
+    def filter_applied(self):
+        self._invalidate_cache()
+        self.etable.filter_applied()
+    
+    def performed_undo_or_redo(self):
+        self._invalidate_cache()
+        self.etable.performed_undo_or_redo()
     
     def transactions_selected(self):
         self._refresh_totals()
         self.view.refresh_totals()
     
-    # We also listen to transaction_changed because when we change transaction, selection doesn't
-    # change and amounts might have been changed.
-    transaction_changed = transactions_selected
+    def transaction_changed(self):
+        self._invalidate_cache()
+        self.etable.transaction_changed()
+    
+    def transaction_deleted(self):
+        self._invalidate_cache()
+        self.etable.transaction_deleted()
+    
+    def transactions_imported(self):
+        self._invalidate_cache()
+        self.etable.transactions_imported()
+    
