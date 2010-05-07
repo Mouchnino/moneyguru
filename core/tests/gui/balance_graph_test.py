@@ -16,7 +16,7 @@ class TwoLiabilityTransactions(TestCase):
         self.create_instances()
         self.drsel.select_month_range()
         self.add_account('Visa', account_type=AccountType.Liability)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('3/1/2008', increase='120.00')
         self.add_entry('5/1/2008', decrease='40.00')
     
@@ -68,7 +68,7 @@ class ForeignAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('Visa', currency=CAD)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
     
     def test_graph(self):
         eq_(self.balgraph.currency, CAD)

@@ -343,7 +343,7 @@ def test_set_row_attr(app):
     eq_(row.to, 'newto')
     eq_(row.amount, '0.42')
     # the changes didn't go down to Transaction
-    table = TransactionTable(app.ttable_gui, app.mw)
+    table = TransactionTable(app.ttable_gui, app.tview)
     table.connect()
     assert_row_has_original_attrs(table[0])
 
@@ -387,7 +387,7 @@ class OneTwoWayTransactionOtherWay(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('first')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/07/2008', transfer='second', increase='42')
     
     def test_attributes(self):
@@ -439,7 +439,7 @@ def app_three_way_multi_currency_transaction():
     app = TestApp()
     USD.set_CAD_value(0.8, date(2008, 1, 1))
     app.add_account('first')
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('11/07/2008', transfer='second', decrease='42')
     app.tpanel.load()
     app.stable.select([1])
@@ -509,7 +509,7 @@ class TwoWayNullAmounts(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('first')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/07/2008', transfer='second')
         self.mainwindow.select_transaction_table()
     
@@ -561,7 +561,7 @@ class TwoTransactionsOneOutOfRange(TestCase):
         self.create_instances()
         self.drsel.select_month_range()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/06/2008', description='first')
         self.add_entry('11/07/2008', description='second') # The month range has now changed to July 2008
         self.mainwindow.select_transaction_table()
@@ -590,7 +590,7 @@ class TwoTransactionsOneOutOfRange(TestCase):
 def app_three_transactions():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('11/07/2008', description='first', transfer='first', increase='1')
     app.add_entry('11/07/2008', description='second', transfer='second', increase='2')
     app.add_entry('12/07/2008', description='third', transfer='third', increase='3') 
@@ -802,7 +802,7 @@ def test_table_is_refreshed_upon_load(app):
 def app_autofill():
     app = TestApp()
     app.add_account('Checking')
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
     return app
 
@@ -937,7 +937,7 @@ class SevenEntries(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.document.date_range = MonthRange(date(2008, 1, 1))
         self.add_entry('1/1/2008', description='txn 1')
         self.add_entry('2/1/2008', description='txn 2')
@@ -1049,7 +1049,7 @@ class FourEntriesOnTheSameDate(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.document.date_range = MonthRange(date(2008, 1, 1))
         self.add_entry('1/1/2008', description='txn 1')
         self.add_entry('1/1/2008', description='txn 2')

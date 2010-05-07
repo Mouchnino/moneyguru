@@ -15,6 +15,9 @@ from .report import Report, get_delta_perc
 class BalanceSheet(Report):
     PREFERENCE_PREFIX = 'BalanceSheet'
     
+    def __init__(self, view, networth_view):
+        Report.__init__(self, view, networth_view.mainwindow)
+    
     #--- Override
     def _compute_account_node(self, node):
         account = node.account

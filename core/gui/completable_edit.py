@@ -38,8 +38,8 @@ class CompletableEdit(DocumentGUIObject):
             result = doc.transactions.account_names
             # `result` doesn't contain empty accounts' name, so we'll add them.
             result += [a.name for a in doc.accounts]
-            if attrname == 'transfer' and doc.shown_account is not None:
-                result = [name for name in result if name != doc.shown_account.name]
+            if attrname == 'transfer' and self.mainwindow.shown_account is not None:
+                result = [name for name in result if name != self.mainwindow.shown_account.name]
             self._candidates = result
         self._candidates = dedupe([name for name in self._candidates if name.strip()])
     

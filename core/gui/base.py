@@ -32,9 +32,6 @@ class DocumentGUIObject(Listener):
     def accounts_excluded(self):
         pass
     
-    def account_must_be_shown(self):
-        pass
-    
     def budget_changed(self):
         pass
     

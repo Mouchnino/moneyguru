@@ -18,6 +18,10 @@ from .base import DocumentGUIObject
 ViewPane = namedtuple('ViewPane', 'view label account')
 
 class MainWindow(DocumentGUIObject):
+    def __init__(self, view, document):
+        DocumentGUIObject.__init__(self, view, document)
+        self._shown_account = None # the account that is shown when the entry table is selected
+    
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
     def set_children(self, children):
@@ -50,6 +54,16 @@ class MainWindow(DocumentGUIObject):
         self._current_pane = pane
         self._current_pane.view.connect()
         self.view.change_current_pane()
+    
+    def _close_irrelevant_account_panes(self):
+        indexes_to_close = []
+        for index, pane in enumerate(self.panes):
+            if pane.view.VIEW_TYPE == PaneType.Account and pane.account not in self.document.accounts:
+                indexes_to_close.append(index)
+        if indexes_to_close:
+            self.select_balance_sheet()
+        for index in reversed(indexes_to_close):
+            self.close_pane(index)
     
     #--- Public
     def close_pane(self, index):
@@ -124,7 +138,7 @@ class MainWindow(DocumentGUIObject):
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
         assert self._current_pane.view is self.aview # not supposed to be called outside the entry_table context
-        if self.document.shown_account.is_balance_sheet_account():
+        if self.shown_account.is_balance_sheet_account():
             self.select_balance_sheet()
         else:
             self.select_income_statement()
@@ -162,7 +176,7 @@ class MainWindow(DocumentGUIObject):
         self.select_pane_of_type(PaneType.Transaction)
     
     def select_entry_table(self):
-        if self.document.shown_account is None:
+        if self.shown_account is None:
             return
         self.select_pane_of_type(PaneType.Account)
     
@@ -221,6 +235,25 @@ class MainWindow(DocumentGUIObject):
     def pane_count(self):
         return len(self.panes)
     
+    @property
+    def shown_account(self):
+        return self._shown_account
+    
+    @shown_account.setter
+    def shown_account(self, account):
+        self._shown_account = account
+        if account is not None:
+            # Try to find a suitable pane, or add a new one
+            index = first(i for i, p in enumerate(self.panes) if p.account is account)
+            if index is None:
+                self.panes.append(ViewPane(self.aview, account.name, account))
+                self.view.refresh_panes()
+                self.current_pane_index = len(self.panes) - 1
+            else:
+                self.current_pane_index = index
+        elif self._current_pane.view is self.aview:
+            self.select_balance_sheet()
+    
     #--- Event callbacks
     def _undo_stack_changed(self):
         self.view.refresh_undo_actions()
@@ -228,20 +261,6 @@ class MainWindow(DocumentGUIObject):
     account_added = _undo_stack_changed
     account_changed = _undo_stack_changed
     account_deleted = _undo_stack_changed
-    
-    def account_must_be_shown(self):
-        shown = self.document.shown_account
-        if shown is not None:
-            # Try to find a suitable pane, or add a new one
-            index = first(i for i, p in enumerate(self.panes) if p.account is shown)
-            if index is None:
-                self.panes.append(ViewPane(self.aview, shown.name, shown))
-                self.view.refresh_panes()
-                self.current_pane_index = len(self.panes) - 1
-            else:
-                self.current_pane_index = index
-        elif self._current_pane.view is self.aview:
-            self.select_balance_sheet()
     
     def account_needs_reassignment(self):
         self.view.show_account_reassign_panel()
@@ -253,8 +272,7 @@ class MainWindow(DocumentGUIObject):
         self.cdrpanel.load()
     
     def document_changed(self):
-        if self.document.shown_account is None and self._current_pane.view is self.aview:
-            self.select_balance_sheet()
+        self._close_irrelevant_account_panes()
         self._undo_stack_changed()
     
     def document_will_close(self):
@@ -267,7 +285,9 @@ class MainWindow(DocumentGUIObject):
         if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):
             self.current_pane_index = 2
     
-    performed_undo_or_redo = _undo_stack_changed
+    def performed_undo_or_redo(self):
+        self._close_irrelevant_account_panes()
+        self.view.refresh_undo_actions()
     
     schedule_changed = _undo_stack_changed
     schedule_deleted = _undo_stack_changed

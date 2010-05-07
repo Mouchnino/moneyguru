@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyFilterBar.h"
+#import "PyFilterBarBase.h"
 
-@interface PyEntryFilterBar : PyFilterBar {}
+@interface PyEntryFilterBar : PyFilterBarBase {}
 @end

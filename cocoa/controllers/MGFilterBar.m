@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGFilterBar
 - (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
 {
-    NSString *pyClassName = forEntryTable ? @"PyEntryFilterBar" : @"PyFilterBar";
+    NSString *pyClassName = forEntryTable ? @"PyEntryFilterBar" : @"PyTransactionFilterBar";
     self = [super initWithPyClassName:pyClassName pyParent:aPyParent];
     view = [aView retain];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
@@ -57,9 +57,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* HSGUIController */
 
-- (PyFilterBar *)py
+- (PyFilterBarBase *)py
 {
-    return (PyFilterBar *)py;
+    return (PyFilterBarBase *)py;
 }
 
 - (NSView *)view

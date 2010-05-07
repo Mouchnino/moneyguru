@@ -9,6 +9,7 @@
 
 from nose.tools import eq_
 
+from ...const import PaneType
 from ...model.account import AccountType
 from ..base import TestApp, with_app
 
@@ -37,9 +38,10 @@ def test_adjust_selection_when_coming_back_from_no_result(app):
 @with_app(app_accounts)
 def test_go_with_no_result_does_nothing(app):
     # calling go() when there's no result does nothing (no crash)
+    pane_index = app.mw.current_pane_index
     app.alookup.search_query = 'noresult'
     app.alookup.go() # no crash
-    assert app.doc.shown_account is None
+    eq_(app.mw.current_pane_index, pane_index) # no change
 
 @with_app(app_accounts)
 def test_search_one_letter(app):
@@ -103,7 +105,7 @@ def test_select_and_go(app):
     # Selecting a name and pressing return (go()) shows the account.
     app.alookup.selected_index = 2
     app.alookup.go()
-    eq_(app.doc.shown_account.name, 'foo')
+    app.check_current_pane(PaneType.Account, account_name='foo')
 
 #--- Accounts with numbers
 def app_accounts_with_number():

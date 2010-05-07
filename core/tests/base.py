@@ -37,7 +37,7 @@ from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.date_range_selector import DateRangeSelector
 from ..gui.entry_table import EntryTable
-from ..gui.filter_bar import FilterBar, EntryFilterBar
+from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from ..gui.income_statement import IncomeStatement
 from ..gui.import_table import ImportTable
 from ..gui.import_window import ImportWindow
@@ -177,11 +177,11 @@ class TestApp(object):
         self.etable_gui = CallLogger()
         self.etable = EntryTable(self.etable_gui, self.aview)
         self.ttable_gui = CallLogger()
-        self.ttable = TransactionTable(self.ttable_gui, self.mw)
+        self.ttable = TransactionTable(self.ttable_gui, self.tview)
         self.sctable_gui = CallLogger()
-        self.sctable = ScheduleTable(self.sctable_gui, self.mw)
+        self.sctable = ScheduleTable(self.sctable_gui, self.scview)
         self.btable_gui = CallLogger()
-        self.btable = BudgetTable(self.btable_gui, self.mw)
+        self.btable = BudgetTable(self.btable_gui, self.bview)
         self.scpanel_gui = CallLogger()
         self.scpanel = SchedulePanel(self.scpanel_gui, self.mw)
         self.tpanel_gui = CallLogger()
@@ -201,28 +201,28 @@ class TestApp(object):
         self.bargraph_gui = CallLogger()
         self.bargraph = AccountFlowGraph(self.bargraph_gui, self.aview)
         self.nwgraph_gui = CallLogger()
-        self.nwgraph = NetWorthGraph(self.nwgraph_gui, self.mw)
+        self.nwgraph = NetWorthGraph(self.nwgraph_gui, self.nwview)
         self.pgraph_gui = CallLogger()
-        self.pgraph = ProfitGraph(self.pgraph_gui, self.mw)
+        self.pgraph = ProfitGraph(self.pgraph_gui, self.pview)
         self.bsheet_gui = CallLogger()
-        self.bsheet = BalanceSheet(self.bsheet_gui, self.mw)
+        self.bsheet = BalanceSheet(self.bsheet_gui, self.nwview)
         self.apie_gui = CallLogger()
-        self.apie = AssetsPieChart(self.apie_gui, self.mw)
+        self.apie = AssetsPieChart(self.apie_gui, self.nwview)
         self.lpie_gui = CallLogger()
-        self.lpie = LiabilitiesPieChart(self.lpie_gui, self.mw)
+        self.lpie = LiabilitiesPieChart(self.lpie_gui, self.nwview)
         self.ipie_gui = CallLogger()
-        self.ipie = IncomePieChart(self.ipie_gui, self.mw)
+        self.ipie = IncomePieChart(self.ipie_gui, self.pview)
         self.epie_gui = CallLogger()
-        self.epie = ExpensesPieChart(self.epie_gui, self.mw)
+        self.epie = ExpensesPieChart(self.epie_gui, self.pview)
         self.istatement_gui = CallLogger()
-        self.istatement = IncomeStatement(self.istatement_gui, self.mw)
+        self.istatement = IncomeStatement(self.istatement_gui, self.pview)
         self.sfield_gui = CallLogger()
         self.sfield = SearchField(self.sfield_gui, self.mw)
         # There are 2 filter bars: one for etable, one for ttable
         self.efbar_gui = CallLogger()
         self.efbar = EntryFilterBar(self.efbar_gui, self.aview)
         self.tfbar_gui = CallLogger()
-        self.tfbar = FilterBar(self.tfbar_gui, self.mw)
+        self.tfbar = TransactionFilterBar(self.tfbar_gui, self.tview)
         self.drsel_gui = CallLogger()
         self.drsel = DateRangeSelector(self.drsel_gui, self.mw)
         self.csvopt_gui = CallLogger()
@@ -314,6 +314,10 @@ class TestApp(object):
     def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None,
             account_number=None):
         # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
+        if account_type in (AccountType.Income, AccountType.Expense):
+            self.mw.select_income_statement()
+        else:
+            self.mw.select_balance_sheet()
         group = self.doc.groups.find(group_name, account_type) if group_name else None
         account = self.doc.new_account(account_type, group)
         attrs = {}
@@ -490,17 +494,17 @@ class TestApp(object):
     def show_account(self, account_name):
         # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
         predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
-        self.mainwindow.select_balance_sheet()
+        self.mw.select_balance_sheet()
         node = self.bsheet.find(predicate)
         if node is not None:
             self.bsheet.selected = node
-            self.doc.show_selected_account()
+            self.mw.show_account()
             return
-        self.mainwindow.select_income_statement()
+        self.mw.select_income_statement()
         node = self.istatement.find(predicate)
         if node is not None:
             self.istatement.selected = node
-            self.doc.show_selected_account()
+            self.mw.show_account()
             return
         else:
             raise LookupError("Trying to show an account that doesn't exist")
@@ -605,7 +609,7 @@ class TestCase(TestCaseBase):
         # situation. Such carefulness can hardly be achieved in a mass re-factoring, so it has to be
         # made progressively.
         self.add_account(*args, **kwargs)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
     
     def add_accounts(self, *args, **kw):
         self.ta.add_accounts(*args, **kw)

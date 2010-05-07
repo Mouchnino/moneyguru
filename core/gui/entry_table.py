@@ -43,7 +43,7 @@ class EntryTable(TransactionTableBase):
             self.document.delete_entries(entries)
     
     def _fill(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         if account is None:
             return
         date_range = self.document.date_range
@@ -73,7 +73,7 @@ class EntryTable(TransactionTableBase):
     
     #--- Private
     def _new_entry(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         selected_transaction = self.document.selected_transaction
         date = selected_transaction.date if selected_transaction else datetime.date.today()
         balance = 0
@@ -84,14 +84,14 @@ class EntryTable(TransactionTableBase):
             balance = previous_entry.balance
             reconciled_balance = previous_entry.reconciled_balance
             balance_with_budget = previous_entry.balance_with_budget
-        transaction = Transaction(date, account=self.document.shown_account, amount=0)
+        transaction = Transaction(date, account=self.mainwindow.shown_account, amount=0)
         split = transaction.splits[0]
         entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
         return entry
     
     @property
     def _previous_entry(self): # the entry just before the date range
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         if account is None:
             return None
         date_range = self.document.date_range
@@ -124,7 +124,8 @@ class EntryTable(TransactionTableBase):
             self.selected_index = len(self) - 1
     
     def should_show_balance_column(self):
-        return bool(self.document.shown_account) and self.document.shown_account.is_balance_sheet_account()
+        account = self.mainwindow.shown_account
+        return account is not None and self.mainwindow.shown_account.is_balance_sheet_account()
     
     def show_transfer_account(self):
         if not self.selected_entries:
@@ -139,7 +140,7 @@ class EntryTable(TransactionTableBase):
             account_to_show = accounts[index+1]
         else:
             account_to_show = accounts[0]
-        self.document.show_account(account_to_show)
+        self.mainwindow.shown_account = account_to_show
     
     def toggle_reconciled(self):
         """Toggle the reconcile flag of selected entries"""
@@ -217,7 +218,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
             balance = self._reconciled_balance
         else:
             balance = self._balance
-        if balance and self.table.document.shown_account.is_credit_account():
+        if balance and self.table.mainwindow.shown_account.is_credit_account():
             balance = -balance
         return balance
     
@@ -399,7 +400,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
         try:
-            currency = self.table.document.shown_account.currency
+            currency = self.table.mainwindow.shown_account.currency
             increase = self.table.document.app.parse_amount(value, default_currency=currency)
         except ValueError:
             return
@@ -410,7 +411,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     @BaseEntryTableRow.decrease.setter
     def decrease(self, value):
         try:
-            currency = self.table.document.shown_account.currency
+            currency = self.table.mainwindow.shown_account.currency
             decrease = self.table.document.app.parse_amount(value, default_currency=currency)
         except ValueError:
             return

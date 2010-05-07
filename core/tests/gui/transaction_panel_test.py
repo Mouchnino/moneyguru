@@ -30,7 +30,7 @@ def test_can_load():
 def app_one_entry():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
     return app
 
@@ -114,7 +114,7 @@ def test_values_after_deselect():
 def app_amountless_entry_panel_loaded():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
     app.mainwindow.select_transaction_table()
     app.ttable.select([0])
@@ -126,7 +126,7 @@ def app_amountless_entry_panel_loaded():
 def app_entry_with_amount_panel_loaded():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(date='06/07/2008', description='description', increase='42')
     app.mainwindow.select_transaction_table()
     app.ttable.select([0])
@@ -145,7 +145,7 @@ def test_change_date():
 def app_two_amountless_entries():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(date='06/07/2008', description='desc1', payee='payee1', checkno='42')
     app.add_entry(date='07/07/2008', description='desc2', payee='payee2', checkno='43')
     return app

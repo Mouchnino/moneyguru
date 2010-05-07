@@ -17,5 +17,5 @@ class AccountLookup(Lookup):
     
     def _go(self, name):
         account = self.document.accounts.find(name)
-        self.document.show_account(account)
+        self.mainwindow.shown_account = account
     

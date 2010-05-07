@@ -38,9 +38,10 @@ class AccountView(BaseView):
         # where children will be refreshed.
         self._visible_entries = None
         self.etable.refresh_and_restore_selection()
-        if self.document.shown_account is None:
+        account = self.mainwindow.shown_account
+        if account is None:
             return
-        if self.document.shown_account.is_balance_sheet_account():
+        if account.is_balance_sheet_account():
             self._shown_graph = self.balgraph
             self.view.show_line_graph()
         else:
@@ -62,7 +63,7 @@ class AccountView(BaseView):
         self.view.refresh_totals()
     
     def _refresh_totals(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         if account is None:
             return
         selected = len(self.document.selected_transactions)
@@ -76,7 +77,7 @@ class AccountView(BaseView):
         self.totals = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     
     def _set_visible_entries(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         if account is None:
             self._visible_entries = []
             return
@@ -134,7 +135,7 @@ class AccountView(BaseView):
     #--- Properties
     @property
     def can_toggle_reconciliation_mode(self):
-        shown_account = self.document.shown_account
+        shown_account = self.mainwindow.shown_account
         return shown_account is not None and shown_account.is_balance_sheet_account()
     
     @property
@@ -151,7 +152,7 @@ class AccountView(BaseView):
     def account_must_be_shown(self):
         self._visible_entries = None
         self.disconnect()
-        if self.document.shown_account is not None:
+        if self.mainwindow.shown_account is not None:
             self.connect()
     
     def date_range_changed(self):

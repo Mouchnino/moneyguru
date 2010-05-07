@@ -23,7 +23,7 @@ class Pristine(TestCase):
         # until the end of the *overflow*, not the end of the date range.
         self.add_account('Checking')
         self.add_account('Income', account_type=AccountType.Income)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('01/11/2008', transfer='Checking', increase='42') #sunday
         self.drsel.select_prev_date_range() # oct 2008
         self.add_entry('31/10/2008', transfer='Checking', increase='42')
@@ -36,7 +36,7 @@ class ForeignAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('Visa', account_type=AccountType.Income, currency=CAD)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
     
     def test_graph(self):
         eq_(self.bargraph.currency, CAD)
@@ -47,7 +47,7 @@ class SomeIncomeInTheFutureWithRangeOnYearToDate(TestCase):
         self.mock_today(2010, 1, 12)
         self.create_instances()
         self.add_account('Checking')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('13/01/2010', transfer='Income', increase='42')
         self.drsel.select_year_to_date_range()
     
@@ -63,7 +63,7 @@ class SomeIncomeTodayAndInTheFuture(TestCase):
         self.create_instances()
         self.add_account('Checking')
         self.add_account('Income', account_type=AccountType.Income)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('13/01/2010', transfer='Checking', increase='12')
         self.add_entry('12/01/2010', transfer='Checking', increase='30')
         self.drsel.select_year_range()
@@ -102,7 +102,7 @@ class RunningYearWithSomeIncome(TestCase):
         self.mock_today(2008, 11, 1)
         self.create_instances()
         self.add_account('Checking')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/09/2008', transfer='Income', increase='42')
         self.add_entry('24/09/2008', transfer='Income', increase='44')
         self.drsel.select_running_year_range()

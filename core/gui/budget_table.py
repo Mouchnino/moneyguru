@@ -12,10 +12,10 @@ from .base import DocumentGUIObject
 from .table import GUITable, Row, rowattr
 
 class BudgetTable(GUITable, DocumentGUIObject):
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+    def __init__(self, view, budget_view):
+        DocumentGUIObject.__init__(self, view, budget_view.mainwindow.document)
         GUITable.__init__(self)
-        self.mainwindow = mainwindow
+        self.mainwindow = budget_view.mainwindow
     
     #--- Override
     def _update_selection(self):

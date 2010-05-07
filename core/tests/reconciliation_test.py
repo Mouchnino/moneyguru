@@ -14,7 +14,7 @@ from ..model.account import AccountType
 class CommonSetup(CommonSetupBase):
     def setup_three_entries_reconciliation_mode(self):
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('1/1/2008', 'one')
         self.add_entry('20/1/2008', 'two')
         self.add_entry('31/1/2008', 'three')
@@ -40,7 +40,7 @@ class OneEntry(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/07/2008', decrease='42')
     
     def test_initial_attrs(self):
@@ -65,7 +65,7 @@ class OneEntryInReconciliationMode(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/07/2008', decrease='42')
         self.aview.toggle_reconciliation_mode()
     
@@ -120,7 +120,7 @@ class OneEntryInTheFuture(TestCase):
         self.mock_today(2009, 12, 26)
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('27/12/2009', increase='42')
         self.aview.toggle_reconciliation_mode()
     
@@ -137,7 +137,7 @@ class OneEntryInLiability(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account(account_type=AccountType.Liability)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry(increase='42')
         self.aview.toggle_reconciliation_mode()
     
@@ -151,7 +151,7 @@ class OneEntryInLiability(TestCase):
 def app_reconciled_entry():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('11/07/2008', transfer='foo', decrease='42')
     app.aview.toggle_reconciliation_mode()
     app.etable.selected_row.toggle_reconciled()
@@ -180,7 +180,7 @@ class OneEntryReconciledDifferentDate(TestCase):
         self.mock_today(2008, 7, 20)
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('11/07/2008', decrease='42')
         self.etable[0].reconciliation_date = '12/07/2008'
         self.etable.save_edits()
@@ -190,7 +190,7 @@ class OneEntryReconciledDifferentDate(TestCase):
         self.document = self.save_and_load()
         self.create_instances()
         self.bsheet.selected = self.bsheet.assets[0]
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         eq_(self.etable[0].reconciliation_date, '12/07/2008')
     
 

@@ -38,6 +38,7 @@ def letters_distance(s, query):
 class Lookup(DocumentGUIObject):
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
+        self.mainwindow = mainwindow
         self._original_names = []
         self._filtered_names = []
         self._search_query = ''

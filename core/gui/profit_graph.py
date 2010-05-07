@@ -11,6 +11,9 @@ from hsutil.misc import flatten
 from .bar_graph import BarGraph
 
 class ProfitGraph(BarGraph):
+    def __init__(self, view, profit_view):
+        BarGraph.__init__(self, view, profit_view.mainwindow)
+    
     #--- Override
     def _currency(self):
         return self.app.default_currency

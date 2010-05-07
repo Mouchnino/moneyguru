@@ -180,7 +180,7 @@ def app_eur_account_and_eur_transfer():
     app = TestApp()
     app.add_account('first', EUR)
     app.add_account('second', EUR)
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(transfer='first', increase='42') # EUR
     app.tpanel.load()
     return app

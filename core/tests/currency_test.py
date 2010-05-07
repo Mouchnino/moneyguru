@@ -349,7 +349,7 @@ def app_multi_currency_transaction():
     app = TestApp()
     app.add_account('CAD Account', CAD)
     app.add_account('USD Account', USD)
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(transfer='CAD Account', increase='42 usd')
     app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[0]

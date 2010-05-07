@@ -15,6 +15,7 @@ from .graph import Graph
 class BalanceGraph(Graph):
     def __init__(self, view, mainwindow):
         Graph.__init__(self, view, mainwindow.document)
+        self.mainwindow = mainwindow
     
     # BalanceGraph's data point is (float x, float y)
     #--- Virtual

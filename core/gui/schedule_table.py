@@ -13,10 +13,10 @@ from .base import DocumentGUIObject
 from .table import GUITable, Row, rowattr
 
 class ScheduleTable(GUITable, DocumentGUIObject):
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+    def __init__(self, view, schedule_view):
+        DocumentGUIObject.__init__(self, view, schedule_view.mainwindow.document)
         GUITable.__init__(self)
-        self.mainwindow = mainwindow
+        self.mainwindow = schedule_view.mainwindow
     
     #--- Override
     def _update_selection(self):

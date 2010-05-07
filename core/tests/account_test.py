@@ -323,7 +323,7 @@ class DifferentAccountTypes(TestCase):
         self.create_instances()
         self.add_account('one')
         self.add_account('two')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry(transfer='three')
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # 'three'
@@ -367,7 +367,7 @@ class EntryWithoutTransfer(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry(description='foobar', decrease='130')
     
     def test_delete_account(self):
@@ -385,7 +385,7 @@ class TwoBoundEntries(TestCase):
         self.create_instances()
         self.add_account('first')
         self.add_account('second')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry(description='transfer', transfer='first', increase='42')
         self.add_account('third')
         self.mainwindow.select_balance_sheet()
@@ -404,7 +404,7 @@ class TwoEntriesWithTransfer(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('1/10/2007', 'entry1', transfer='transfer1', increase='1')
         self.add_entry('2/10/2007', 'entry2', transfer='transfer2', increase='2')
     

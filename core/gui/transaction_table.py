@@ -14,6 +14,9 @@ from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class TransactionTable(TransactionTableBase):
+    def __init__(self, view, transaction_view):
+        TransactionTableBase.__init__(self, view, transaction_view.mainwindow)
+    
     #--- Override
     def _do_add(self):
         transaction = self.document.new_transaction()
@@ -51,7 +54,7 @@ class TransactionTable(TransactionTableBase):
         froms, tos = txn.splitted_splits()
         splits = tos if use_to_column else froms
         account_to_show = splits[0].account
-        self.document.show_account(account_to_show)
+        self.mainwindow.shown_account = account_to_show
     
     #--- Public
     def select_transactions(self, transactions):

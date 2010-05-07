@@ -84,7 +84,6 @@ class Document(Broadcaster, Listener):
         self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules, self.budgets)
         self._date_range = YearRange(datetime.date.today())
         self._selected_account = None
-        self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
         self._selected_splits = []
@@ -161,7 +160,6 @@ class Document(Broadcaster, Listener):
     
     def _clear(self):
         self._selected_account = None
-        self._shown_account = None
         self.accounts.clear()
         self.transactions.clear()
         self.groups.clear()
@@ -714,17 +712,6 @@ class Document(Broadcaster, Listener):
         self._selected_account = account
     
     @property
-    def shown_account(self):
-        return self._shown_account
-    
-    def show_account(self, account):
-        self._shown_account = account
-        self.notify('account_must_be_shown')
-    
-    def show_selected_account(self):
-        self.show_account(self._selected_account)
-    
-    @property
     def selected_transactions(self):
         return self._selected_transactions
     
@@ -1005,8 +992,6 @@ class Document(Broadcaster, Listener):
         self._cook()
         if self.selected_account is not None and self.selected_account not in self.accounts:
             self.select_account(None)
-        if self.shown_account is not None and self.shown_account not in self.accounts:
-            self.show_account(None)
         self.notify('performed_undo_or_redo')
     
     def can_redo(self):
@@ -1021,8 +1006,6 @@ class Document(Broadcaster, Listener):
         self._cook()
         if self.selected_account is not None and self.selected_account not in self.accounts:
             self.select_account(None)
-        if self.shown_account is not None and self.shown_account not in self.accounts:
-            self.show_account(None)
         self.notify('performed_undo_or_redo')
     
     #--- Misc

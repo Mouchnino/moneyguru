@@ -73,7 +73,7 @@ class Report(DocumentGUIObject, tree.Tree):
                 break
     
     def _update_selection(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         if account is not None:
             self.selected = self.find(lambda n: getattr(n, 'account', None) is account)
         if not (isinstance(self.selected, Node) and self.selected.is_account):
@@ -255,7 +255,7 @@ class Report(DocumentGUIObject, tree.Tree):
         self.app.set_default(prefname, self.expanded_paths)
     
     def show_selected_account(self):
-        self.document.show_selected_account()
+        self.mainwindow.shown_account = self.document.selected_account
     
     def toggle_excluded(self):
         node = self.selected

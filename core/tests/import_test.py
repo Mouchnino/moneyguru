@@ -290,7 +290,7 @@ class TwoEntriesInRangeSaveThenLoad(TestCase):
         self.create_instances()
         self.document.date_range = MonthRange(date(2007, 10, 1))
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('1/10/2007', description='first')
         self.add_entry('1/10/2007', description='second')
         self.filename = op.join(self.tmpdir(), 'foo.xml')

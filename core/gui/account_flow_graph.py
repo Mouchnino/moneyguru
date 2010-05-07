@@ -16,23 +16,19 @@ class AccountFlowGraph(BarGraph):
     
     #--- Override
     def _currency(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         return account.currency
     
     def _get_cash_flow(self, date_range):
         self.document.oven.continue_cooking(date_range.end) # it's possible that the overflow is not cooked
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         currency = self._currency()
         cash_flow = account.normal_cash_flow(date_range, currency=currency)
         budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)
         return cash_flow + budgeted
     
-    #--- Event Handlers
-    # XXX Aren't we supposed to refresh on account_must_be_shown?
-    # account_must_be_shown = BarGraph._data_changed
-    
     #--- Properties
     @property
     def title(self):
-        return self.document.shown_account.name
+        return self.mainwindow.shown_account.name
     

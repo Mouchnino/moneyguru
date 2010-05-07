@@ -7,10 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
+#import "PyFilterBarBase.h"
 
-@interface PyFilterBar : PyGUI {}
-
-- (NSString *)filterType;
-- (void)setFilterType:(NSString *)filterType;
+@interface PyTransactionFilterBar : PyFilterBarBase {}
 @end

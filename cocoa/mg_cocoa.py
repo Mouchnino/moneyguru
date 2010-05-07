@@ -40,7 +40,7 @@ from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
 from core.gui.entry_print import EntryPrint
 from core.gui.entry_table import EntryTable
-from core.gui.filter_bar import FilterBar, EntryFilterBar
+from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from core.gui.income_statement import IncomeStatement
 from core.gui.import_table import ImportTable
 from core.gui.import_window import ImportWindow, DAY, MONTH, YEAR
@@ -525,9 +525,7 @@ class PySearchField(PyListener):
         self.py.query = query
     
 
-class PyFilterBar(PyListener):
-    py_class = FilterBar
-    
+class PyFilterBarBase(PyListener):
     def filterType(self):
         result = 'all'
         if self.py.filter_type is FilterType.Unassigned:
@@ -561,7 +559,10 @@ class PyFilterBar(PyListener):
         self.py.filter_type = value
     
 
-class PyEntryFilterBar(PyFilterBar):
+class PyTransactionFilterBar(PyFilterBarBase):
+    py_class = TransactionFilterBar
+
+class PyEntryFilterBar(PyFilterBarBase):
     py_class = EntryFilterBar
     
     #--- Python --> Cocoa    

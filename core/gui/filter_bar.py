@@ -11,6 +11,7 @@ from .base import DocumentGUIObject
 class FilterBar(DocumentGUIObject):
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
+        self.mainwindow = mainwindow
     
     #--- Override
     def connect(self):
@@ -27,6 +28,11 @@ class FilterBar(DocumentGUIObject):
         self.document.filter_type = value
     
 
+class TransactionFilterBar(FilterBar):
+    def __init__(self, view, transaction_view):
+        DocumentGUIObject.__init__(self, view, transaction_view.mainwindow.document)
+    
+
 class EntryFilterBar(FilterBar): # disables buttons
     def __init__(self, view, account_view):
         FilterBar.__init__(self, view, account_view.mainwindow)
@@ -34,7 +40,7 @@ class EntryFilterBar(FilterBar): # disables buttons
     
     #--- Override
     def connect(self):
-        account = self.document.shown_account
+        account = self.mainwindow.shown_account
         if account is not None and account.is_income_statement_account():
             self.document.filter_type = None
             if not self._disabled_buttons:

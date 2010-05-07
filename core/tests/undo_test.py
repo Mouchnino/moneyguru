@@ -14,6 +14,7 @@ from nose.tools import eq_
 
 from hsutil.currency import EUR
 
+from ..const import PaneType
 from ..document import ScheduleScope
 from ..model.date import MonthRange
 from .base import TestCase as TestCaseBase, CommonSetup, TestAppCompareMixin
@@ -110,7 +111,7 @@ class OneNamedAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('foobar')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
     
     def test_action_after_undo(self):
         # When doing an action after an undo, the whole undo chain is broken at the current index.
@@ -213,8 +214,8 @@ class OneNamedAccount(TestCase):
         self.clear_gui_calls()
         self.document.redo()
         assert self.document.selected_account is None
-        eq_(self.mainwindow.current_pane_index, 0)
-        self.check_gui_calls(self.mainwindow_gui, ['change_current_pane', 'refresh_undo_actions'])
+        self.ta.check_current_pane(PaneType.NetWorth)
+        self.check_gui_calls(self.mainwindow_gui, ['view_closed', 'change_current_pane', 'refresh_undo_actions'])
     
     @save_state_then_verify
     def test_undo_add_entry(self):
@@ -257,8 +258,8 @@ class OneNamedAccount(TestCase):
         self.clear_gui_calls()
         self.document.undo()
         assert self.document.selected_account is None
-        eq_(self.mainwindow.current_pane_index, 0)
-        self.check_gui_calls(self.mainwindow_gui, ['change_current_pane', 'refresh_undo_actions'])
+        self.ta.check_current_pane(PaneType.NetWorth)
+        self.check_gui_calls(self.mainwindow_gui, ['view_closed', 'change_current_pane', 'refresh_undo_actions'])
     
     def test_undo_twice(self):
         # Undoing a new_account() just after having undone a change_account works.
@@ -306,7 +307,7 @@ class AccountInGroup(TestCase):
         self.create_instances()
         self.add_group('group')
         self.add_account(group_name='group')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
     
     def test_change_group_on_duplicate_account_name_doesnt_record_action(self):
         # Renaming a group and causing a duplicate account name error doesn't cause an action to
@@ -490,7 +491,7 @@ class TwoTransactionsSameDate(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('19/6/2008', description='first')
         self.add_entry('19/6/2008', description='second')
     
@@ -510,7 +511,7 @@ class ThreeTransactionsReconciled(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('19/6/2008', description='first')
         self.add_entry('19/6/2008', description='second')
         self.add_entry('20/6/2008', description='third')
@@ -597,7 +598,7 @@ class TransactionWithAutoCreatedTransfer(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('19/6/2008', transfer='auto')
     
     @save_state_then_verify

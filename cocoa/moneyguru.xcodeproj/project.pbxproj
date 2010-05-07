@@ -320,6 +320,8 @@
 		CE55EB881047DC8500F3390F /* MGSchedulePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSchedulePrint.m; path = print/MGSchedulePrint.m; sourceTree = "<group>"; };
 		CE55EB8A1047DE0C00F3390F /* MGBudgetPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBudgetPrint.h; path = print/MGBudgetPrint.h; sourceTree = "<group>"; };
 		CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBudgetPrint.m; path = print/MGBudgetPrint.m; sourceTree = "<group>"; };
+		CE5BA72B11944CD6003B7BBE /* PyFilterBarBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFilterBarBase.h; sourceTree = "<group>"; };
+		CE5BA72C11944CD6003B7BBE /* PyTransactionFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionFilterBar.h; sourceTree = "<group>"; };
 		CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2707114E35B0008F43F8 /* MGDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateRangeSelector.m; sourceTree = "<group>"; };
@@ -572,7 +574,6 @@
 		CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCustomDateRangePanel.m; sourceTree = "<group>"; };
 		CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCustomDateRangePanel.h; sourceTree = "<group>"; };
 		CEFBAB0C0E45B510004C0AB0 /* PyNetWorthGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyNetWorthGraph.h; sourceTree = "<group>"; };
-		CEFCB6E70E44898E00F5D379 /* PyFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFilterBar.h; sourceTree = "<group>"; };
 		CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGFilterBar.h; sourceTree = "<group>"; };
 		CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGFilterBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -885,7 +886,6 @@
 				CE00BDC20F890A9E00EB18BE /* PyTransactionPrint.h */,
 				CEC1C8D00F88AB5600953BDB /* PyPrintView.h */,
 				CEB2FA170F223C3400A09E4C /* PyCSVImportOptions.h */,
-				CECFE92C0E72C633001BAFCF /* PyEntryFilterBar.h */,
 				CE14AF7B0E6FCACA00E75B76 /* PyChart.h */,
 				CE55964A0E711C20004A959D /* PyCashFlowPieChart.h */,
 				CE14AF910E7042C800E75B76 /* PyBalancePieChart.h */,
@@ -896,7 +896,9 @@
 				CE8E44BC11932F3C00D21EF0 /* PyAccountFlowGraph.h */,
 				CE873A950E21622F004F63E9 /* PyDateWidget.h */,
 				CEBAC1B0113A72CD000BBDB2 /* PyCompletableEdit.h */,
-				CEFCB6E70E44898E00F5D379 /* PyFilterBar.h */,
+				CE5BA72B11944CD6003B7BBE /* PyFilterBarBase.h */,
+				CE5BA72C11944CD6003B7BBE /* PyTransactionFilterBar.h */,
+				CECFE92C0E72C633001BAFCF /* PyEntryFilterBar.h */,
 				CE873A970E21622F004F63E9 /* PyGraph.h */,
 				CE873A980E21622F004F63E9 /* PyMainWindow.h */,
 				CEFBAB0C0E45B510004C0AB0 /* PyNetWorthGraph.h */,

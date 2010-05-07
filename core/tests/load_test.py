@@ -158,11 +158,11 @@ class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase, TestSaveLoadMixin,
     def setUp(self):
         self.create_instances()
         self.add_account(u'first_account\u0142', currency=PLN)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('3/10/2007', u'first\u0142', transfer='other account', increase='1 usd')
         self.add_entry('4/10/2007', u'second\u0142', increase='2 usd') # Imbalance
         self.add_account(u'second_account\u0142', currency=CAD)
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('5/10/2007', u'third\u0142', transfer=u'first_account\u0142', decrease='1 usd')
         self.add_entry('6/10/2007', u'fourth\u0142', transfer='yet another account', decrease='2 usd')
     
@@ -199,7 +199,7 @@ class LoadWithReferences1(TestCase):
     def test_reconciliation(self):
         # legacy boolean reconciliation was correctly loaded
         self.bsheet.selected = self.bsheet.assets[0] # Account 1
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         # 2 entries, first is not reconciled, second is.
         assert not self.etable[0].reconciled
         assert self.etable[1].reconciled
@@ -231,7 +231,7 @@ def app_transaction_with_payee_and_checkno():
 def app_entry_with_blank_description():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
     return app
 

@@ -152,7 +152,7 @@ class RangeOnYearStartsOnApril(TestCase):
     def test_add_entry(self):
         # When adding an entry, don't revert to a jan-dec based year range
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('01/01/2008') # in the same date range
         self.test_date_range() # date range hasn't changed
     
@@ -265,7 +265,7 @@ class OneEntryYearRange2007(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('Checking')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
         self.document.date_range = YearRange(date(2007, 1, 1))
     
@@ -307,7 +307,7 @@ class TwoEntriesInDifferentQuartersWithYearRange(TestCase):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.add_account()
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('1/1/2007', 'first', increase='1')
         self.add_entry('1/4/2007', 'second', increase='2')
     
@@ -329,7 +329,7 @@ class TwoEntriesInTwoMonthsRangeOnSecond(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account('Checking')
-        self.document.show_selected_account()
+        self.mainwindow.show_account()
         self.add_entry('3/9/2007', 'first', increase='102.00')
         self.add_entry('10/10/2007', 'second', increase='42.00')
         self.document.date_range = MonthRange(date(2007, 10, 1))

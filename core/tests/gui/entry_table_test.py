@@ -11,14 +11,15 @@ from nose.tools import eq_
 from hsutil.currency import EUR
 from hsutil.testutil import with_tmpdir, Patcher
 
-from ..base import TestApp, with_app
+from ...const import PaneType
 from ...model.account import AccountType
+from ..base import TestApp, with_app
 
 #--- One account
 def app_one_account():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     return app
 
 def test_add_empty_entry_and_save():
@@ -239,7 +240,7 @@ def test_set_invalid_reconciliation_date(app):
 def test_show_transfer_account_entry_with_transfer_selected(app):
     # show_transfer_account() changes the shown account to 'second'
     app.etable.show_transfer_account()
-    eq_(app.doc.shown_account.name, 'second')
+    app.check_current_pane(PaneType.Account, account_name='second')
     # Previously, this was based on selected_account rather than shown_account
     assert not app.etable.should_show_balance_column()
 
@@ -258,7 +259,7 @@ def test_show_transfer_account_twice(app):
     app.etable.show_transfer_account()
     app.clear_gui_calls()
     app.etable.show_transfer_account()
-    eq_(app.doc.shown_account.name, 'first')
+    app.check_current_pane(PaneType.Account, account_name='first')
 
 #--- Entry without transfer
 def app_entry_without_transfer():
@@ -277,7 +278,7 @@ def test_entry_transfer(app):
 def test_show_transfer_account_when_entry_has_no_transfer(app):
     # show_transfer_account() does nothing when an entry has no transfer
     app.etable.show_transfer_account() # no crash
-    eq_(app.doc.shown_account.name, 'account')
+    app.check_current_pane(PaneType.Account, account_name='account')
 
 #--- Entry with decrease
 def app_entry_with_decrease():
@@ -423,10 +424,10 @@ def test_selection_after_date_range_change(app):
 def app_two_entries_in_two_accounts():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('11/07/2008', 'first')
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('12/07/2008', 'second')
     return app
 
@@ -434,8 +435,6 @@ def app_two_entries_in_two_accounts():
 def test_selection_after_connect(app):
     # The selection in the document is correctly updated when the selected account changes.
     # The tpanel loads the document selection, so this is why we test through it.
-    # XXX This test fails when, istead of using app.doc.show_selected_account() I use
-    # app.mw.show_account(). This is very strange...
     app.mw.select_transaction_table()
     app.ttable.select([0]) # first
     app.mw.select_balance_sheet()
@@ -448,7 +447,7 @@ def test_selection_after_connect(app):
 def app_two_entries_with_one_reconciled():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(increase='1')
     app.add_entry(increase='2')
     app.aview.toggle_reconciliation_mode()
@@ -483,7 +482,7 @@ def test_toggle_both_twice(app):
 def app_two_entries_two_currencies():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry(increase='1')
     app.add_entry(increase='2 cad')
     return app
@@ -508,7 +507,7 @@ def test_toggle_reconcilitation_on_both(app):
 def app_three_entries_different_dates():
     app = TestApp()
     app.add_account()
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('01/08/2008')
     app.add_entry('02/08/2008')
     # The date has to be "further" so select_nearest_date() doesn't pick it
@@ -526,7 +525,7 @@ def test_delete_second_entry(app):
 def app_split_transaction():
     app = TestApp()
     app.add_account('first')
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
     app.tpanel.load()
     app.stable.add()
@@ -553,11 +552,11 @@ def test_show_transfer_account():
     # show_transfer_account() cycles through all splits of the entry
     app = app_split_transaction()
     app.etable.show_transfer_account()
-    eq_(app.doc.shown_account.name, 'second')
+    app.check_current_pane(PaneType.Account, account_name='second')
     app.etable.show_transfer_account()
-    eq_(app.doc.shown_account.name, 'third')
+    app.check_current_pane(PaneType.Account, account_name='third')
     app.etable.show_transfer_account()
-    eq_(app.doc.shown_account.name, 'first')
+    app.check_current_pane(PaneType.Account, account_name='first')
 
 def test_show_transfer_account_with_unassigned_split():
     # If there's an unassigned split among the splits, just skip over it
@@ -568,13 +567,13 @@ def test_show_transfer_account_with_unassigned_split():
     app.stable.save_edits()
     app.tpanel.save()
     app.etable.show_transfer_account() # skip unassigned, and to to third
-    eq_(app.doc.shown_account.name, 'third')    
+    app.check_current_pane(PaneType.Account, account_name='third')
 
 #--- Two splits same account
 def app_two_splits_same_account():
     app = TestApp()
     app.add_account('first')
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
     app.tpanel.load()
     app.stable.select([0])

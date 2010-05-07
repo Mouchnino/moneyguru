@@ -27,16 +27,13 @@ class AccountBalanceGraph(BalanceGraph):
         return self.document.budgeted_amount_for_target(self._account, date_range)
     
     def compute_data(self):
-        self._account = self.document.shown_account
+        self._account = self.mainwindow.shown_account
         BalanceGraph.compute_data(self)
-    
-    #--- Event Handlers
-    account_must_be_shown = BalanceGraph._data_changed
     
     #--- Properties
     @property
     def title(self):
-        return self.document.shown_account.name
+        return self.mainwindow.shown_account.name
     
     @property
     def currency(self):

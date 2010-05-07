@@ -125,7 +125,7 @@ def test_show_account_opens_a_new_tab(app):
 def app_asset_and_income_accounts():
     app = TestApp()
     app.add_account('Checking')
-    app.doc.show_selected_account()
+    app.mw.show_account()
     app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00')
     app.doc.date_range = YearRange(date(2007, 1, 1))
     app.clear_gui_calls()
