@@ -25,10 +25,6 @@ class DocumentGUIObject(Listener):
     def account_deleted(self):
         pass
     
-    # When a non-empty account is deleted, it needs its txns re-assigned
-    def account_needs_reassignment(self):
-        pass
-    
     def accounts_excluded(self):
         pass
     

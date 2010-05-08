@@ -151,7 +151,11 @@ class Report(DocumentGUIObject, tree.Tree):
         node = self.selected
         selected_path = self.selected_path
         if node.is_account:
-            self.document.delete_selected_account()
+            account = node.account
+            if account.entries:
+                self.mainwindow.show_reassign_panel()
+            else:
+                self.document.delete_account(account)
         else:
             group = node.group
             self.document.delete_group(group)

@@ -24,5 +24,5 @@ class AccountReassignPanel(MainWindowPanel):
     def _save(self):
         assert self.account is self.document.selected_account
         reassign_to = self._accounts[self.account_index]
-        self.document.reassign_and_delete_selected_account(reassign_to)
+        self.document.delete_account(self.account, reassign_to=reassign_to)
     

@@ -215,6 +215,9 @@ class MainWindow(DocumentGUIObject):
     def show_message(self, message):
         self.view.show_message(message)
     
+    def show_reassign_panel(self):
+        self.arpanel.load()
+    
     def pane_label(self, index):
         pane = self.panes[index]
         return pane.label
@@ -282,10 +285,6 @@ class MainWindow(DocumentGUIObject):
     account_added = _undo_stack_changed
     account_changed = _undo_stack_changed
     account_deleted = _undo_stack_changed
-    
-    def account_needs_reassignment(self):
-        self.arpanel.load()
-    
     budget_changed = _undo_stack_changed
     budget_deleted = _undo_stack_changed
     
