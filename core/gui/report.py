@@ -42,7 +42,7 @@ class Report(DocumentGUIObject, tree.Tree):
         tree.Tree._select_nodes(self, nodes)
         node = first(nodes)
         account = node.account if isinstance(node, Node) and node.is_account else None
-        self.document.select_account(account)
+        self.mainwindow.selected_account = account
     
     def connect(self):
         DocumentGUIObject.connect(self)
@@ -226,8 +226,8 @@ class Report(DocumentGUIObject, tree.Tree):
     def refresh(self):
         selected_path = self.selected_path
         self._refresh()
-        if self.document.selected_account is not None:
-            node_of_account = self._node_of_account(self.document.selected_account)
+        if self.mainwindow.selected_account is not None:
+            node_of_account = self._node_of_account(self.mainwindow.selected_account)
             if node_of_account is not None:
                 self.selected = node_of_account
             else:
@@ -259,7 +259,7 @@ class Report(DocumentGUIObject, tree.Tree):
         self.app.set_default(prefname, self.expanded_paths)
     
     def show_selected_account(self):
-        self.mainwindow.shown_account = self.document.selected_account
+        self.mainwindow.shown_account = self.mainwindow.selected_account
     
     def toggle_excluded(self):
         node = self.selected
@@ -323,7 +323,7 @@ class Report(DocumentGUIObject, tree.Tree):
     #--- Properties
     @property
     def can_show_selected_account(self):
-        return self.document.selected_account is not None
+        return self.mainwindow.selected_account is not None
     
     @property
     def expanded_paths(self):

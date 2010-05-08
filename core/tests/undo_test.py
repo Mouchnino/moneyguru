@@ -213,7 +213,7 @@ class OneNamedAccount(TestCase):
         self.bsheet.show_selected_account()
         self.clear_gui_calls()
         self.document.redo()
-        assert self.document.selected_account is None
+        assert self.mainwindow.selected_account is None
         self.ta.check_current_pane(PaneType.NetWorth)
         self.check_gui_calls(self.mainwindow_gui, ['view_closed', 'change_current_pane', 'refresh_undo_actions'])
     
@@ -257,7 +257,7 @@ class OneNamedAccount(TestCase):
         self.document.undo()
         self.clear_gui_calls()
         self.document.undo()
-        assert self.document.selected_account is None
+        assert self.mainwindow.selected_account is None
         self.ta.check_current_pane(PaneType.NetWorth)
         self.check_gui_calls(self.mainwindow_gui, ['view_closed', 'change_current_pane', 'refresh_undo_actions'])
     

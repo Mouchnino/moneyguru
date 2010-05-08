@@ -83,7 +83,6 @@ class Document(Broadcaster, Listener):
         self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
         self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules, self.budgets)
         self._date_range = YearRange(datetime.date.today())
-        self._selected_account = None
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
         self._filter_string = ''
@@ -157,7 +156,6 @@ class Document(Broadcaster, Listener):
                 self.accounts.remove(account)
     
     def _clear(self):
-        self._selected_account = None
         self.accounts.clear()
         self.transactions.clear()
         self.groups.clear()
@@ -687,13 +685,12 @@ class Document(Broadcaster, Listener):
         self.notify('schedule_deleted')
     
     #--- Selection
-    @property
-    def selected_account(self):
-        return self._selected_account
-    
-    def select_account(self, account):
-        self._selected_account = account
-    
+    # XXX I pushed all selection attributes up into the GUI elements except those because of
+    # technical problems. When moving explicitly_selected_transactions up, there's a conflict
+    # between MainWindow's listening of transaction_deleted (to empty the selection) and the tables'
+    # listening of it. It seems like I'll have to re-organize the notifications so that it is
+    # hierarchized (MainWindow listens to Document and repeats the notifs to its children, etc.)
+    # For now, I have enough re-factoring on my hands, so I leave it like that.
     @property
     def selected_transactions(self):
         return self._selected_transactions
@@ -944,8 +941,6 @@ class Document(Broadcaster, Listener):
         self.stop_edition()
         self._undoer.undo()
         self._cook()
-        if self.selected_account is not None and self.selected_account not in self.accounts:
-            self.select_account(None)
         self.notify('performed_undo_or_redo')
     
     def can_redo(self):
@@ -958,8 +953,6 @@ class Document(Broadcaster, Listener):
         self.stop_edition()
         self._undoer.redo()
         self._cook()
-        if self.selected_account is not None and self.selected_account not in self.accounts:
-            self.select_account(None)
         self.notify('performed_undo_or_redo')
     
     #--- Misc

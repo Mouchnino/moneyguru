@@ -19,7 +19,7 @@ class AccountPanel(MainWindowPanel):
     
     #--- Override
     def _load(self):
-        account = self.document.selected_account
+        account = self.mainwindow.selected_account
         if account is None:
             raise OperationAborted()
         self.document.stop_edition()
@@ -33,7 +33,7 @@ class AccountPanel(MainWindowPanel):
         self.account = account # for the save() assert
     
     def _save(self):
-        assert self.account is self.document.selected_account
+        assert self.account is self.mainwindow.selected_account
         try:
             self.document.change_account(self.account, name=self.name, type=self.type, 
                 currency=self.currency, account_number=self.account_number)

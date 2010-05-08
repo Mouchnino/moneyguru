@@ -324,7 +324,7 @@ class TestApp(object):
             attrs['account_number'] = account_number
         if attrs:
             self.doc.change_account(account, **attrs)
-        self.doc.select_account(account)
+        self.mw.selected_account = account
     
     def add_accounts(self, *names):
         # add a serie of simple accounts, *names being names for each account

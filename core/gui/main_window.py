@@ -21,6 +21,7 @@ ViewPane = namedtuple('ViewPane', 'view label account')
 class MainWindow(DocumentGUIObject):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
+        self._selected_account = None
         self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_schedules = []
         self._selected_budgets = []
@@ -242,6 +243,14 @@ class MainWindow(DocumentGUIObject):
     @property
     def pane_count(self):
         return len(self.panes)
+    
+    @property
+    def selected_account(self):
+        return self._selected_account
+    
+    @selected_account.setter
+    def selected_account(self, account):
+        self._selected_account = account
     
     @property
     def selected_schedules(self):
