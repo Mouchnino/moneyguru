@@ -12,7 +12,7 @@ import time
 from hsutil import io
 from hsutil.currency import Currency
 from hsutil.notify import Broadcaster, Listener
-from hsutil.misc import nonone, allsame, dedupe, extract
+from hsutil.misc import nonone, allsame, dedupe, extract, first
 
 from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES
 from .exception import FileFormatError, OperationAborted
@@ -148,9 +148,10 @@ class Document(Broadcaster, Listener):
                 self.transactions.move_last(transaction)
         self.transactions.clear_cache()
     
-    def _clean_empty_categories(self):
+    # XXX When this is called, close all affected account tabs
+    def _clean_empty_categories(self, from_account=None):
         for account in list(self.accounts.auto_created):
-            if account is self.selected_account:
+            if account is from_account:
                 continue
             if not account.entries:
                 self.accounts.remove(account)
@@ -477,7 +478,7 @@ class Document(Broadcaster, Listener):
             self.notify('transaction_changed')
     
     @handle_abort
-    def delete_transactions(self, transactions):
+    def delete_transactions(self, transactions, from_account=None):
         action = Action('Remove transaction')
         spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
         global_scope = self._query_for_scope_if_needed(spawns)
@@ -499,7 +500,7 @@ class Document(Broadcaster, Listener):
                 self._explicitly_selected_transactions.remove(txn)
         min_date = min(t.date for t in transactions)
         self._cook(from_date=min_date)
-        self._clean_empty_categories()
+        self._clean_empty_categories(from_account=from_account)
         self.notify('transaction_deleted')
     
     def duplicate_transactions(self, transactions):
@@ -567,8 +568,9 @@ class Document(Broadcaster, Listener):
             self.notify('transaction_changed')
     
     def delete_entries(self, entries):
+        from_account = first(entries).account
         transactions = dedupe(e.transaction for e in entries)
-        self.delete_transactions(transactions)
+        self.delete_transactions(transactions, from_account=from_account)
     
     def toggle_entries_reconciled(self, entries):
         """Toggle the reconcile flag of `entries`.
