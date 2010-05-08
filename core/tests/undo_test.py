@@ -454,7 +454,7 @@ class TwoAccountsTwoTransactions(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
-        self.arpanel.ok() # continue deletion
+        self.arpanel.save() # continue deletion
     
     @save_state_then_verify
     def test_undo_duplicate_transaction(self):
@@ -639,7 +639,7 @@ class ScheduledTransaction(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
-        self.arpanel.ok()
+        self.arpanel.save()
     
     @save_state_then_verify
     def test_delete_schedule(self):
@@ -677,7 +677,7 @@ class Budget(TestCase, CommonSetup):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.delete()
-        self.arpanel.ok()
+        self.arpanel.save()
     
     @save_state_then_verify
     def test_delete_budget(self):

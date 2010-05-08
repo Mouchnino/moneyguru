@@ -189,7 +189,7 @@ def test_delete_account(app):
     app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
-    app.arpanel.ok()
+    app.arpanel.save()
     app.mainwindow.select_schedule_table()
     eq_(app.sctable[0].to, '')
 

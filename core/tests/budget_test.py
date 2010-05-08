@@ -117,7 +117,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.expenses[0]
         self.istatement.delete()
-        self.arpanel.ok() # don't reassign
+        self.arpanel.save() # don't reassign
         self.mainwindow.select_budget_table()
         eq_(len(self.btable), 0) # the budget has been removed
     
@@ -128,7 +128,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         self.istatement.selected = self.istatement.expenses[1] # Some Expense
         self.istatement.delete()
         self.arpanel.account_index = 2 # other expense
-        self.arpanel.ok()
+        self.arpanel.save()
         self.mainwindow.select_budget_table()
         eq_(self.btable[0].account, 'other expense')
     
@@ -138,7 +138,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
-        self.arpanel.ok()
+        self.arpanel.save()
         self.mainwindow.select_budget_table()
         eq_(self.btable[0].target, '') # been changed to None
     
@@ -149,7 +149,7 @@ class OneExpenseWithBudgetAndTarget(TestCase, CommonSetup):
         self.bsheet.selected = self.bsheet.assets[1] # some asset
         self.bsheet.delete()
         self.arpanel.account_index = 1 # other asset
-        self.arpanel.ok()
+        self.arpanel.save()
         self.mainwindow.select_budget_table()
         eq_(self.btable[0].target, 'other asset')
     

@@ -10,10 +10,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGAccountReassignPanel
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"AccountReassignPanel" pyClassName:@"PyAccountReassignPanel" pyParent:[aDocument py]];
-    [self window]; // Initialize the window
+    self = [super initWithNibName:@"AccountReassignPanel" pyClassName:@"PyAccountReassignPanel" parent:aParent];
     return self;
 }
 
@@ -22,32 +21,21 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyAccountReassignPanel *)py;
 }
 
-/* Public */
-- (void)load
+/* Override */
+- (NSResponder *)firstField
 {
-    [[self py] loadPanel];
-    // Reload the account list
+    return accountSelector;
+}
+
+- (void)loadFields
+{
     [accountSelector removeAllItems];
     [accountSelector addItemsWithTitles:[[self py] availableAccounts]];
     [accountSelector selectItemAtIndex:[[self py] accountIndex]];
-    [[self window] makeFirstResponder:accountSelector];
 }
 
-/* Actions */
-
-- (IBAction)cancel:(id)sender
+- (void)saveFields
 {
-    [NSApp endSheet:[self window]];
-}
-
-- (IBAction)ok:(id)sender
-{
-    // Sometimes, the last edited fields doesn't have the time to flush its data before savePanel
-    // is called (Not when you press Return to Save, but when you click on Save, it happens).
-    // This is what the line below is for.
-    [[self window] makeFirstResponder:[self window]];
     [[self py] setAccountIndex:[accountSelector indexOfSelectedItem]];
-    [[self py] ok];
-    [NSApp endSheet:[self window]];
 }
 @end

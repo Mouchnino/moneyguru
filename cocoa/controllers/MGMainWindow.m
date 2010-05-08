@@ -34,7 +34,7 @@ http://www.hardcoded.net/licenses/hs_license
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
     [csvOptionsWindow connect];
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithParent:self];
-    accountReassignPanel = [[MGAccountReassignPanel alloc] initWithDocument:document];
+    accountReassignPanel = [[MGAccountReassignPanel alloc] initWithParent:self];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py];
@@ -49,8 +49,8 @@ http://www.hardcoded.net/licenses/hs_license
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], [customDateRangePanel py], [accountLookup py], [completionLookup py],
-        [dateRangeSelector py], nil];
+        [budgetPanel py], [customDateRangePanel py], [accountReassignPanel py], [accountLookup py],
+        [completionLookup py], [dateRangeSelector py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
@@ -506,13 +506,6 @@ http://www.hardcoded.net/licenses/hs_license
         [tabView addTabViewItem:item];
     }
     [tabBar setDelegate:self];
-}
-
-- (void)showAccountReassignPanel
-{
-    [accountReassignPanel load];
-    [NSApp beginSheet:[accountReassignPanel window] modalForWindow:[self window] modalDelegate:self 
-        didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)showMessage:(NSString *)aMessage

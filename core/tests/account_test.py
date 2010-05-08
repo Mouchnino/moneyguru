@@ -342,7 +342,7 @@ class DifferentAccountTypes(TestCase):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # three
         self.istatement.delete()
-        self.arpanel.ok() # continue deletion
+        self.arpanel.save() # continue deletion
         eq_(self.account_names(), ['one', 'two'])
     
     def test_account_group_size(self):
@@ -375,7 +375,7 @@ class EntryWithoutTransfer(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
-        self.arpanel.ok() # continue deletion
+        self.arpanel.save() # continue deletion
         self.mainwindow.select_transaction_table()
         eq_(self.ttable.row_count, 0)
     
@@ -413,7 +413,7 @@ class TwoEntriesWithTransfer(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
-        self.arpanel.ok() # continue deletion
+        self.arpanel.save() # continue deletion
         eq_(self.account_names(), ['transfer1', 'transfer2'])
         self.mainwindow.select_transaction_table()
         eq_(self.ttable.row_count, 2)
@@ -425,7 +425,7 @@ class TwoEntriesWithTransfer(TestCase):
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0] # transfer1
         self.istatement.delete()
-        self.arpanel.ok() # continue deletion
+        self.arpanel.save() # continue deletion
         eq_(self.account_names(), ['New account', 'transfer2'])
         self.mainwindow.select_transaction_table()
         eq_(self.ttable.row_count, 2)

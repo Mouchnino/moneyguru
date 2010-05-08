@@ -955,14 +955,8 @@ class PyCustomDateRangePanel(PyPanel):
         self.py.slot_name = name
     
 
-class PyAccountReassignPanel(PyListener):
+class PyAccountReassignPanel(PyPanel):
     py_class = AccountReassignPanel
-    
-    def loadPanel(self):
-        self.py.load()
-    
-    def ok(self):
-        self.py.ok()
     
     def availableAccounts(self):
         return self.py.available_accounts
@@ -1076,9 +1070,6 @@ class PyMainWindow(PyGUIContainer):
     
     def refresh_undo_actions(self):
         pass # We don't need this on the Cocoa side
-    
-    def show_account_reassign_panel(self):
-        self.cocoa.showAccountReassignPanel()
     
     def show_custom_date_range_panel(self):
         self.cocoa.showCustomDateRangePanel()

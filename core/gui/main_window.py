@@ -29,8 +29,8 @@ class MainWindow(DocumentGUIObject):
     # children to have reference to the main window.
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.apanel,
-            self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel, self.alookup,
-            self.completion_lookup, self.daterange_selector) = children
+            self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, 
+            self.alookup, self.completion_lookup, self.daterange_selector) = children
         self._current_pane = None
         self._current_pane_index = -1
         self.panes = [
@@ -284,7 +284,7 @@ class MainWindow(DocumentGUIObject):
     account_deleted = _undo_stack_changed
     
     def account_needs_reassignment(self):
-        self.view.show_account_reassign_panel()
+        self.arpanel.load()
     
     budget_changed = _undo_stack_changed
     budget_deleted = _undo_stack_changed

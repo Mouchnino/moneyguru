@@ -7,10 +7,10 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..model.account import sort_accounts
-from .base import DocumentGUIObject
+from .base import MainWindowPanel
 
-class AccountReassignPanel(DocumentGUIObject):
-    def load(self):
+class AccountReassignPanel(MainWindowPanel):
+    def _load(self):
         self.account = self.document.selected_account
         accounts = self.document.accounts[:]
         accounts.remove(self.account)
@@ -21,7 +21,7 @@ class AccountReassignPanel(DocumentGUIObject):
         self._accounts.insert(0, None)
         self.account_index = 0
     
-    def ok(self):
+    def _save(self):
         assert self.account is self.document.selected_account
         reassign_to = self._accounts[self.account_index]
         self.document.reassign_and_delete_selected_account(reassign_to)

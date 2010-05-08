@@ -30,7 +30,7 @@ class DeletingSecondAccount(TestCase, CommonSetup):
     def test_reassign_to_one(self):
         # choosing 'one' and continuing reassigns two's entry to one.
         self.arpanel.account_index = 1 # one
-        self.arpanel.ok()
+        self.arpanel.save()
         self.assertEqual(len(self.bsheet.assets), 3) # now, it's deleted
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()

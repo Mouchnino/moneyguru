@@ -110,14 +110,9 @@ class DocumentGUI(CallLogger):
     
 
 class MainWindowGUI(CallLogger):
-    def __init__(self, arpanel):
+    def __init__(self):
         CallLogger.__init__(self)
         self.messages = []
-        self.arpanel = arpanel
-    
-    @log
-    def show_account_reassign_panel(self):
-        self.arpanel.load()
     
     @log
     def show_message(self, message):
@@ -155,9 +150,7 @@ class TestApp(object):
             doc = Document(DocumentGUI(), self.app)
         self.doc = doc
         self.doc_gui = doc.view
-        self.arpanel_gui = CallLogger()
-        self.arpanel = AccountReassignPanel(self.arpanel_gui, self.doc)
-        self.mainwindow_gui = MainWindowGUI(self.arpanel)
+        self.mainwindow_gui = MainWindowGUI()
         self.mainwindow = MainWindow(self.mainwindow_gui, self.doc)
         self.mw = self.mainwindow # shortcut. This one is often typed
         self.nwview_gui = CallLogger()
@@ -192,6 +185,8 @@ class TestApp(object):
         self.bpanel = BudgetPanel(self.bpanel_gui, self.mw)
         self.cdrpanel_gui = CallLogger()
         self.cdrpanel = CustomDateRangePanel(self.cdrpanel_gui, self.mw)
+        self.arpanel_gui = CallLogger()
+        self.arpanel = AccountReassignPanel(self.arpanel_gui, self.mw)
         self.stable_gui = CallLogger()
         self.stable = SplitTable(self.stable_gui, self.tpanel)
         self.scsplittable_gui = CallLogger()
@@ -250,7 +245,7 @@ class TestApp(object):
         self.bview.set_children(children)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
-            self.alookup, self.clookup, self.drsel]
+            self.arpanel, self.alookup, self.clookup, self.drsel]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()

@@ -45,7 +45,7 @@ class LoadFile(TestCase):
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.delete()
-        self.arpanel.ok() # continue deletion
+        self.arpanel.save() # continue deletion
         assert self.document.is_dirty()
     
     def test_delete_entries(self):

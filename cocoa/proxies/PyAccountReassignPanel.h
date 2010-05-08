@@ -7,11 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyGUI.h"
+#import "PyPanel.h"
 
-@interface PyAccountReassignPanel : PyGUI {}
-- (void)loadPanel;
-- (void)ok;
+@interface PyAccountReassignPanel : PyPanel {}
 - (NSArray *)availableAccounts;
 - (NSInteger)accountIndex;
 - (void)setAccountIndex:(NSInteger)index;
