@@ -170,7 +170,7 @@ def test_show_account_when_in_sheet(app):
     eq_(app.mw.current_pane_index, 6) # a new tab is opened for this one
 
 @with_app(app_asset_and_income_accounts)
-def test_switch_views(app):
+def test_switch_panes_through_show_account(app):
     # Views shown in the main window depend on what's selected in the account tree.
     app.mw.select_income_statement()
     eq_(app.mw.current_pane_index, 1)
@@ -188,6 +188,17 @@ def test_switch_views(app):
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_transaction_table()
     eq_(app.mw.current_pane_index, 2)
+
+@with_app(app_asset_and_income_accounts)
+def test_switch_panes_through_pane_index(app):
+    app.etable.show_transfer_account()
+    eq_(app.mw.pane_count, 7) # Now, the two last views are our 2 accounts
+    app.mw.select_previous_view()
+    # etable has change its values
+    eq_(app.etable[0].transfer, "Salary")
+    app.mw.select_next_view()
+    # and again
+    eq_(app.etable[0].transfer, "Checking")
 
 #--- One transaction
 def app_one_transaction():

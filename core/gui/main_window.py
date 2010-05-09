@@ -56,6 +56,8 @@ class MainWindow(DocumentGUIObject):
         if self._current_pane is not None:
             self._current_pane.view.disconnect()
         self._current_pane = pane
+        if pane.account is not None:
+            self._shown_account = pane.account
         self._current_pane.view.connect()
         self.view.change_current_pane()
     
