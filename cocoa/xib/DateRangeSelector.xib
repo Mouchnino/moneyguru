@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -234,7 +234,7 @@
 								<object class="NSSegmentItem">
 									<object class="NSCustomResource" key="NSSegmentItemImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">NSGoLeftTemplate</string>
+										<string key="NSResourceName">nav_left_9</string>
 									</object>
 									<string key="NSSegmentItemLabel"/>
 									<int key="NSSegmentItemImageScaling">0</int>
@@ -248,7 +248,7 @@
 								<object class="NSSegmentItem">
 									<object class="NSCustomResource" key="NSSegmentItemImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">NSGoRightTemplate</string>
+										<string key="NSResourceName">nav_right_9</string>
 									</object>
 									<int key="NSSegmentItemImageScaling">0</int>
 								</object>
@@ -579,7 +579,7 @@
 					<integer value="0"/>
 					<integer value="0"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="2"/>
+					<integer value="0"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{235, 412}, {215, 223}}</string>
@@ -1182,17 +1182,17 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>NSGoLeftTemplate</string>
-				<string>NSGoRightTemplate</string>
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
+				<string>nav_left_9</string>
+				<string>nav_right_9</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{9, 9}</string>
-				<string>{9, 9}</string>
 				<string>{9, 8}</string>
 				<string>{7, 2}</string>
+				<string>{9, 9}</string>
+				<string>{9, 9}</string>
 			</object>
 		</object>
 	</data>
