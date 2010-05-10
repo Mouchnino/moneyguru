@@ -174,24 +174,6 @@ class Document(Repeater):
             action.change_transactions(transactions)
         return action
     
-    def _parse_search_query(self, query_string):
-        # Returns a dict of query arguments
-        query_string = query_string.lower()
-        if query_string.startswith('account:'):
-            accounts = query_string[len('account:'):].split(',')
-            accounts = set([s.strip().lower() for s in accounts])
-            return {'account': accounts}
-        if query_string.startswith('group:'):
-            groups = query_string[len('group:'):].split(',')
-            groups = set([s.strip().lower() for s in groups])
-            return {'group': groups}
-        query = {'all': query_string}
-        try:
-            query['amount'] = abs(self.app.parse_amount(query_string))
-        except ValueError:
-            pass
-        return query
-    
     def _query_for_scope_if_needed(self, transactions):
         """Queries the UI for change scope if there's any Spawn among transactions.
         

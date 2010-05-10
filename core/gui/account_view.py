@@ -83,7 +83,7 @@ class AccountView(BaseView):
         query_string = self.document.filter_string
         filter_type = self.document.filter_type
         if query_string:
-            query = self.document._parse_search_query(query_string)
+            query = self.app.parse_search_query(query_string)
             entries = [e for e in entries if e.transaction.matches(query)]
         if filter_type is FilterType.Unassigned:
             entries = [e for e in entries if not e.transfer]

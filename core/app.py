@@ -125,6 +125,24 @@ class Application(Broadcaster, RegistrableApplication):
     def parse_date(self, date):
         return parse_date(date, self._date_format)
     
+    def parse_search_query(self, query_string):
+        # Returns a dict of query arguments
+        query_string = query_string.lower()
+        if query_string.startswith('account:'):
+            accounts = query_string[len('account:'):].split(',')
+            accounts = set([s.strip().lower() for s in accounts])
+            return {'account': accounts}
+        if query_string.startswith('group:'):
+            groups = query_string[len('group:'):].split(',')
+            groups = set([s.strip().lower() for s in groups])
+            return {'group': groups}
+        query = {'all': query_string}
+        try:
+            query['amount'] = abs(self.parse_amount(query_string))
+        except ValueError:
+            pass
+        return query
+    
     def save_custom_range(self, slot, name, start, end):
         self.saved_custom_ranges[slot] = SavedCustomRange(name, start, end)
         self._save_custom_ranges()
