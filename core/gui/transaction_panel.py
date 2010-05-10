@@ -92,9 +92,9 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
 class TransactionPanel(PanelWithTransaction):
     #--- Override
     def _load(self):
-        original = self.document.selected_transaction
-        if original is None:
+        if not self.mainwindow.selected_transactions:
             raise OperationAborted()
+        original = self.mainwindow.selected_transactions[0]
         self.document.stop_edition()
         self.transaction = original.replicate()
         self.original = original

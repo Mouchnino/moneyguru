@@ -82,6 +82,8 @@ class DocumentNotificationsMixin(object):
     def transactions_imported(self):
         pass
     
+
+class MainWindowNotificationsMixin(object):
     def transactions_selected(self):
         pass
     
@@ -160,7 +162,7 @@ class MainWindowPanel(GUIPanel):
         self.mainwindow = mainwindow
     
 
-class BaseView(Listener, DocumentNotificationsMixin):
+class BaseView(Listener, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     VIEW_TYPE = -1
     
     def __init__(self, view, mainwindow):

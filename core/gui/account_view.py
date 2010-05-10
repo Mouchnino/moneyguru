@@ -66,9 +66,9 @@ class AccountView(BaseView):
         account = self.mainwindow.shown_account
         if account is None:
             return
-        selected = len(self.document.selected_transactions)
+        selected = len(self.mainwindow.selected_transactions)
         total = len(self.visible_entries)
-        amounts = [t.amount_for_account(account, account.currency) for t in self.document.selected_transactions]
+        amounts = [t.amount_for_account(account, account.currency) for t in self.mainwindow.selected_transactions]
         total_increase = sum(a for a in amounts if a > 0)
         total_decrease = abs(sum(a for a in amounts if a < 0))
         total_increase_fmt = self.app.format_amount(total_increase)

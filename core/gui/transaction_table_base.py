@@ -7,16 +7,21 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base import DocumentGUIObject
+from hsutil.notify import Listener
+
+from .base import DocumentNotificationsMixin, MainWindowNotificationsMixin
 from .table import GUITable
 
-class TransactionTableBase(GUITable, DocumentGUIObject):
+class TransactionTableBase(GUITable, Listener, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
     def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+        Listener.__init__(self, mainwindow)
         GUITable.__init__(self)
+        self.view = view
         self.mainwindow = mainwindow
+        self.document = mainwindow.document
+        self.app = mainwindow.document.app
         self._columns = [] # empty columns == unrestricted autofill
     
     #--- Override
@@ -31,15 +36,15 @@ class TransactionTableBase(GUITable, DocumentGUIObject):
             self.selected_indexes = [len(self) - 2]
     
     def _update_selection(self):
-        self.document.explicitly_select_transactions(self.selected_transactions)
+        self.mainwindow.explicitly_selected_transactions = self.selected_transactions
     
     def add(self):
         GUITable.add(self)
     
     def connect(self):
-        DocumentGUIObject.connect(self)
+        Listener.connect(self)
         self.refresh()
-        self.document.select_transactions(self.selected_transactions)
+        self.mainwindow.selected_transactions = self.selected_transactions
         self.view.refresh()
         self.view.show_selected_row()
     

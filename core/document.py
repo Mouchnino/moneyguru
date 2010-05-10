@@ -23,7 +23,6 @@ from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, R
     AllTransactionsRange, CustomDateRange, inc_month)
 from .model.oven import Oven
 from .model.recurrence import Spawn
-from .model.transaction import Transaction
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
 from .saver.native import save as save_native
@@ -84,8 +83,6 @@ class Document(Repeater):
         self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
         self._undoer = Undoer(self.accounts, self.groups, self.transactions, self.schedules, self.budgets)
         self._date_range = YearRange(datetime.date.today())
-        self._selected_transactions = []
-        self._explicitly_selected_transactions = []
         self._filter_string = ''
         self._filter_type = None
         self._visible_transactions = None
@@ -168,14 +165,6 @@ class Document(Repeater):
     def _cook(self, from_date=None):
         self.oven.cook(from_date=from_date, until_date=self.date_range.end)
         self._visible_transactions = None
-    
-    def _date_range_starting_point(self):
-        if self.selected_transaction:
-            return self.selected_transaction.date
-        elif datetime.date.today() in self.date_range:
-            return datetime.date.today()
-        else:
-            return self.date_range
     
     def _get_action_from_changed_transactions(self, transactions):
         if len(transactions) == 1 and not isinstance(transactions[0], Spawn) \
@@ -484,8 +473,6 @@ class Document(Repeater):
                     txn.recurrence.delete(txn)
             else:
                 self.transactions.remove(txn)
-            if txn in self._explicitly_selected_transactions:
-                self._explicitly_selected_transactions.remove(txn)
         min_date = min(t.date for t in transactions)
         self._cook(from_date=min_date)
         self._clean_empty_categories(from_account=from_account)
@@ -517,10 +504,6 @@ class Document(Repeater):
             self.transactions.move_before(transaction, to_transaction)
         self._cook()
         self.notify('transaction_changed')
-    
-    def new_transaction(self):
-        date = self.selected_transaction.date if self.selected_transaction else datetime.date.today()
-        return Transaction(date, amount=0)
     
     @property
     def visible_transactions(self):
@@ -685,33 +668,6 @@ class Document(Repeater):
         self._cook(from_date=min_date)
         self.notify('schedule_deleted')
     
-    #--- Selection
-    # XXX I pushed all selection attributes up into the GUI elements except those because of
-    # technical problems. When moving explicitly_selected_transactions up, there's a conflict
-    # between MainWindow's listening of transaction_deleted (to empty the selection) and the tables'
-    # listening of it. It seems like I'll have to re-organize the notifications so that it is
-    # hierarchized (MainWindow listens to Document and repeats the notifs to its children, etc.)
-    # For now, I have enough re-factoring on my hands, so I leave it like that.
-    @property
-    def selected_transactions(self):
-        return self._selected_transactions
-    
-    @property
-    def selected_transaction(self):
-        return self._selected_transactions[0] if self._selected_transactions else None
-    
-    def select_transactions(self, transactions):
-        self._selected_transactions = transactions
-        self.notify('transactions_selected')
-    
-    @property
-    def explicitly_selected_transactions(self):
-        return self._explicitly_selected_transactions
-    
-    def explicitly_select_transactions(self, transactions):
-        self._explicitly_selected_transactions = transactions
-        self.select_transactions(transactions)
-    
     #--- Load / Save / Import
     def adjust_example_file(self):
         def inc_month_overflow(refdate, count):
@@ -871,19 +827,13 @@ class Document(Repeater):
         return self._undoer.modified
     
     #--- Date Range
-    def select_month_range(self, starting_point=None):
-        if starting_point is None:
-            starting_point = self._date_range_starting_point()
+    def select_month_range(self, starting_point):
         self.date_range = MonthRange(starting_point)
     
-    def select_quarter_range(self, starting_point=None):
-        if starting_point is None:
-            starting_point = self._date_range_starting_point()
+    def select_quarter_range(self, starting_point):
         self.date_range = QuarterRange(starting_point)
     
-    def select_year_range(self, starting_point=None):
-        if starting_point is None:
-            starting_point = self._date_range_starting_point()
+    def select_year_range(self, starting_point):
         self.date_range = YearRange(starting_point, year_start_month=self.app.year_start_month)
     
     def select_year_to_date_range(self):
@@ -1010,7 +960,11 @@ class Document(Repeater):
     
     def year_start_month_changed(self):
         if isinstance(self.date_range, YearRange):
-            self.select_year_range()
+            if datetime.date.today() in self.date_range:
+                starting_point = datetime.date.today()
+            else:
+                starting_point = self.date_range
+            self.select_year_range(starting_point=starting_point)
         elif isinstance(self.date_range, YearToDateRange):
             self.select_year_to_date_range()
     

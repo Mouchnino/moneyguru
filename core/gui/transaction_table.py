@@ -6,10 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import datetime
 from operator import attrgetter
 
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
+from ..model.transaction import Transaction
 from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
@@ -19,7 +21,9 @@ class TransactionTable(TransactionTableBase):
     
     #--- Override
     def _do_add(self):
-        transaction = self.document.new_transaction()
+        transactions = self.mainwindow.selected_transactions
+        date = transactions[0].date if transactions else datetime.date.today()
+        transaction = Transaction(date, amount=0)
         rows = self[:-1] # ignore total row
         for index, row in enumerate(rows):
             if row._date > transaction.date:
@@ -42,8 +46,8 @@ class TransactionTable(TransactionTableBase):
             convert = lambda a: convert_amount(a, self.document.app.default_currency, transaction.date)
             total_amount += convert(transaction.amount)
         self.footer = TotalRow(self, self.document.date_range.end, total_amount)
-        if self.document.explicitly_selected_transactions:
-            self.select_transactions(self.document.explicitly_selected_transactions)
+        if self.mainwindow.explicitly_selected_transactions:
+            self.select_transactions(self.mainwindow.explicitly_selected_transactions)
     
     #--- Private
     def _show_account(self, use_to_column=False):

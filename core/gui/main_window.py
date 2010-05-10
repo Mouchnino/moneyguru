@@ -25,6 +25,8 @@ class MainWindow(Repeater):
         self.document = document
         self._selected_account = None
         self._shown_account = None # the account that is shown when the entry table is selected
+        self._selected_transactions = []
+        self._explicitly_selected_transactions = []
         self._selected_schedules = []
         self._selected_budgets = []
     
@@ -95,7 +97,7 @@ class MainWindow(Repeater):
             if current_view in (self.nwview, self.pview):
                 self.apanel.load()
             elif current_view in (self.aview, self.tview):
-                editable_txns = [txn for txn in self.document.selected_transactions if not isinstance(txn, BudgetSpawn)]
+                editable_txns = [txn for txn in self.selected_transactions if not isinstance(txn, BudgetSpawn)]
                 if len(editable_txns) > 1:
                     self.mepanel.load()
                 elif len(editable_txns) == 1:
@@ -123,13 +125,13 @@ class MainWindow(Repeater):
     def make_schedule_from_selected(self):
         current_view = self._current_pane.view
         if current_view in (self.tview, self.aview):
-            if not self.document.selected_transactions:
+            if not self.selected_transactions:
                 return
             # There's no test case for this, but select_schedule_table() must happen before 
             # new_schedule_from_transaction() or else the sctable's selection upon view switch will
             # overwrite our selection.
             self.select_schedule_table()
-            ref = self.document.selected_transactions[0]
+            ref = self.selected_transactions[0]
             schedule = Recurrence(ref.replicate(), RepeatType.Monthly, 1)
             schedule.delete_at(ref.date)
             self.selected_schedules = [schedule]
@@ -273,6 +275,24 @@ class MainWindow(Repeater):
         self._selected_budgets = budgets
     
     @property
+    def selected_transactions(self):
+        return self._selected_transactions
+    
+    @selected_transactions.setter
+    def selected_transactions(self, transactions):
+        self._selected_transactions = transactions
+        self.notify('transactions_selected')
+    
+    @property
+    def explicitly_selected_transactions(self):
+        return self._explicitly_selected_transactions
+    
+    @explicitly_selected_transactions.setter
+    def explicitly_selected_transactions(self, transactions):
+        self._explicitly_selected_transactions = transactions
+        self.selected_transactions = transactions
+    
+    @property
     def shown_account(self):
         return self._shown_account
     
@@ -325,5 +345,10 @@ class MainWindow(Repeater):
     schedule_changed = _undo_stack_changed
     schedule_deleted = _undo_stack_changed
     transaction_changed = _undo_stack_changed
-    transaction_deleted = _undo_stack_changed
+    
+    def transaction_deleted(self):
+        self._explicitly_selected_transactions = []
+        self._selected_transactions = []
+        self.view.refresh_undo_actions()
+    
     transaction_imported = _undo_stack_changed

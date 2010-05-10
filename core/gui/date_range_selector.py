@@ -7,26 +7,38 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import datetime
+
 from .base import DocumentGUIObject
 
 class DateRangeSelector(DocumentGUIObject):
     def __init__(self, view, mainwindow):
         DocumentGUIObject.__init__(self, view, mainwindow.document)
+        self.mainwindow = mainwindow
     
     def connect(self):
         DocumentGUIObject.connect(self)
         self.view.refresh_custom_ranges()
         self.view.refresh()
     
+    #--- Private
+    def _date_range_starting_point(self):
+        if self.mainwindow.selected_transactions:
+            return self.mainwindow.selected_transactions[0].date
+        elif datetime.date.today() in self.document.date_range:
+            return datetime.date.today()
+        else:
+            return self.document.date_range
+    
     #--- Public
     def select_month_range(self):
-        self.document.select_month_range()
+        self.document.select_month_range(starting_point=self._date_range_starting_point())
     
     def select_quarter_range(self):
-        self.document.select_quarter_range()
+        self.document.select_quarter_range(starting_point=self._date_range_starting_point())
     
     def select_year_range(self):
-        self.document.select_year_range()
+        self.document.select_year_range(starting_point=self._date_range_starting_point())
     
     def select_year_to_date_range(self):
         self.document.select_year_to_date_range()

@@ -65,17 +65,17 @@ class EntryTable(TransactionTableBase):
         self.footer = TotalRow(self, date_range.end, total_increase, total_decrease)
     
     def _restore_selection(self, previous_selection):
-        if self.document.explicitly_selected_transactions:
-            self.select_transactions(self.document.explicitly_selected_transactions)
+        if self.mainwindow.explicitly_selected_transactions:
+            self.select_transactions(self.mainwindow.explicitly_selected_transactions)
             if not self.selected_indexes:
-                self.select_nearest_date(self.document.explicitly_selected_transactions[0].date)
+                self.select_nearest_date(self.mainwindow.explicitly_selected_transactions[0].date)
         TransactionTableBase._restore_selection(self, previous_selection)
     
     #--- Private
     def _new_entry(self):
         account = self.mainwindow.shown_account
-        selected_transaction = self.document.selected_transaction
-        date = selected_transaction.date if selected_transaction else datetime.date.today()
+        transactions = self.mainwindow.selected_transactions
+        date = transactions[0].date if transactions else datetime.date.today()
         balance = 0
         reconciled_balance = 0
         balance_with_budget = 0
@@ -106,7 +106,7 @@ class EntryTable(TransactionTableBase):
     
     def refresh_and_restore_selection(self):
         self.refresh()
-        self.document.select_transactions(self.selected_transactions)
+        self.mainwindow.selected_transactions = self.selected_transactions
         self.view.refresh()
         self.view.show_selected_row()
     
@@ -172,12 +172,12 @@ class EntryTable(TransactionTableBase):
     def date_range_changed(self):
         date_range = self.document.date_range
         self.refresh()
-        self.select_transactions(self.document.selected_transactions)
+        self.select_transactions(self.mainwindow.selected_transactions)
         if not self.selected_indexes:
             self.select_nearest_date(date_range.start + self._delta_before_change)
         self.view.refresh()
         self.view.show_selected_row()
-        self.document.select_transactions(self.selected_transactions)
+        self.mainwindow.selected_transactions = self.selected_transactions
     
     def date_range_will_change(self):
         date_range = self.document.date_range

@@ -21,7 +21,7 @@ class MassEditionPanel(MainWindowPanel):
     
     #--- Override
     def _load(self):
-        transactions = self.document.selected_transactions
+        transactions = self.mainwindow.selected_transactions
         if len(transactions) < 2:
             raise OperationAborted()
         self._init_fields()
@@ -61,7 +61,7 @@ class MassEditionPanel(MainWindowPanel):
                 self._amount = first.amount
     
     def _save(self):
-        transactions = self.document.selected_transactions
+        transactions = self.mainwindow.selected_transactions
         kw = {}
         if self.date_enabled:
             kw['date'] = self._date

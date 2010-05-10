@@ -30,10 +30,10 @@ class TransactionView(BaseView):
     
     #--- Private
     def _refresh_totals(self):
-        selected = len(self.document.selected_transactions)
+        selected = len(self.mainwindow.selected_transactions)
         total = len(self.document.visible_transactions)
         currency = self.app.default_currency
-        total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.document.selected_transactions)
+        total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.mainwindow.selected_transactions)
         total_amount_fmt = self.app.format_amount(total_amount)
         msg = "{0} out of {1} selected. Amount: {2}"
         self.totals = msg.format(selected, total, total_amount_fmt)
