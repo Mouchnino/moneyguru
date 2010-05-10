@@ -17,7 +17,7 @@ from .transaction_table_base import TransactionTableBase
 
 class TransactionTable(TransactionTableBase):
     def __init__(self, view, transaction_view):
-        TransactionTableBase.__init__(self, view, transaction_view.mainwindow)
+        TransactionTableBase.__init__(self, view, transaction_view)
     
     #--- Override
     def _do_add(self):

@@ -6,12 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base import DocumentGUIObject
+from .base import ViewChild
 
-class Chart(DocumentGUIObject):
+class Chart(ViewChild):
     #--- Override
     def connect(self):
-        DocumentGUIObject.connect(self)
+        ViewChild.connect(self)
         self.compute()
         self.view.refresh()
     

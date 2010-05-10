@@ -9,14 +9,13 @@
 import datetime
 
 from ..model.amount import convert_amount
-from .base import DocumentGUIObject
+from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
-class ScheduleTable(GUITable, DocumentGUIObject):
+class ScheduleTable(GUITable, ViewChild):
     def __init__(self, view, schedule_view):
-        DocumentGUIObject.__init__(self, view, schedule_view.mainwindow.document)
+        ViewChild.__init__(self, view, schedule_view)
         GUITable.__init__(self)
-        self.mainwindow = schedule_view.mainwindow
     
     #--- Override
     def _update_selection(self):
@@ -27,7 +26,7 @@ class ScheduleTable(GUITable, DocumentGUIObject):
             self.append(ScheduleTableRow(self, schedule))
     
     def connect(self):
-        DocumentGUIObject.connect(self)
+        ViewChild.connect(self)
         self.refresh()
         self.view.refresh()
     

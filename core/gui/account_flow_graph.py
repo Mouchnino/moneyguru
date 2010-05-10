@@ -11,8 +11,7 @@ from .bar_graph import BarGraph
 
 class AccountFlowGraph(BarGraph):
     def __init__(self, view, account_view):
-        BarGraph.__init__(self, view, account_view.mainwindow)
-        self.account_view = account_view
+        BarGraph.__init__(self, view, account_view)
     
     #--- Override
     def _currency(self):

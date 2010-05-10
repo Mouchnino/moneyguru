@@ -11,7 +11,7 @@ class IncomeStatement(Report):
     PREFERENCE_PREFIX = 'IncomeStatement'
     
     def __init__(self, view, profit_view):
-        Report.__init__(self, view, profit_view.mainwindow)
+        Report.__init__(self, view, profit_view)
     
     #--- Override
     def _compute_account_node(self, node):

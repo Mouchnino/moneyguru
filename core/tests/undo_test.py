@@ -103,7 +103,6 @@ class Pristine(TestCase):
         self.mainwindow.select_income_statement()
         self.mainwindow.new_item()
         self.mainwindow.show_account()
-        self.notify_first(self.bargraph, self.document)
         self.document.undo() # no crash
     
 

@@ -8,14 +8,13 @@
 
 import datetime
 
-from .base import DocumentGUIObject
+from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
-class BudgetTable(GUITable, DocumentGUIObject):
+class BudgetTable(GUITable, ViewChild):
     def __init__(self, view, budget_view):
-        DocumentGUIObject.__init__(self, view, budget_view.mainwindow.document)
+        ViewChild.__init__(self, view, budget_view)
         GUITable.__init__(self)
-        self.mainwindow = budget_view.mainwindow
     
     #--- Override
     def _update_selection(self):
@@ -26,7 +25,7 @@ class BudgetTable(GUITable, DocumentGUIObject):
             self.append(BudgetTableRow(self, budget))
     
     def connect(self):
-        DocumentGUIObject.connect(self)
+        ViewChild.connect(self)
         self.refresh()
         self.view.refresh()
     

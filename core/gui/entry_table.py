@@ -17,8 +17,7 @@ from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
     def __init__(self, view, account_view):
-        TransactionTableBase.__init__(self, view, account_view.mainwindow)
-        self.account_view = account_view
+        TransactionTableBase.__init__(self, view, account_view)
         self.account = None
         self._reconciliation_mode = False
     
@@ -56,7 +55,7 @@ class EntryTable(TransactionTableBase):
                 self.header = PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
         total_increase = 0
         total_decrease = 0
-        for entry in self.account_view.visible_entries:
+        for entry in self.parent_view.visible_entries:
             row = EntryTableRow(self, entry, account)
             self.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)

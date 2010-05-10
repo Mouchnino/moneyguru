@@ -7,21 +7,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.notify import Listener
-
-from .base import DocumentNotificationsMixin, MainWindowNotificationsMixin
+from .base import ViewChild
 from .table import GUITable
 
-class TransactionTableBase(GUITable, Listener, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+class TransactionTableBase(GUITable, ViewChild):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
-    def __init__(self, view, mainwindow):
-        Listener.__init__(self, mainwindow)
+    def __init__(self, view, parent_view):
+        ViewChild.__init__(self, view, parent_view)
         GUITable.__init__(self)
-        self.view = view
-        self.mainwindow = mainwindow
-        self.document = mainwindow.document
-        self.app = mainwindow.document.app
         self._columns = [] # empty columns == unrestricted autofill
     
     #--- Override
@@ -42,7 +36,7 @@ class TransactionTableBase(GUITable, Listener, DocumentNotificationsMixin, MainW
         GUITable.add(self)
     
     def connect(self):
-        Listener.connect(self)
+        ViewChild.connect(self)
         self.refresh()
         self.mainwindow.selected_transactions = self.selected_transactions
         self.view.refresh()

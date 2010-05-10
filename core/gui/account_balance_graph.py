@@ -12,8 +12,7 @@ from .balance_graph import BalanceGraph
 
 class AccountBalanceGraph(BalanceGraph):
     def __init__(self, view, account_view):
-        BalanceGraph.__init__(self, view, account_view.mainwindow)
-        self.account_view = account_view
+        BalanceGraph.__init__(self, view, account_view)
         self._account = None
     
     def _balance_for_date(self, date):

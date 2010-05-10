@@ -4,7 +4,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.notify import Listener
+from hsutil.notify import Listener, Repeater
 
 class DocumentNotificationsMixin(object):
     def account_added(self):
@@ -99,6 +99,18 @@ class DocumentGUIObject(Listener, DocumentNotificationsMixin):
         return self.document.app
     
 
+class ViewChild(Listener, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+    # yeah, there's a little ambiguity here... `view` is the GUI view, where GUI callbacks are made.
+    # `parent` is the parent view instance, which is a core instance.
+    def __init__(self, view, parent_view):
+        Listener.__init__(self, parent_view)
+        self.view = view
+        self.parent_view = parent_view
+        self.mainwindow = parent_view.mainwindow
+        self.document = self.mainwindow.document
+        self.app = self.document.app
+    
+
 class TransactionPanelGUIObject(Listener):
     def __init__(self, view, panel):
         Listener.__init__(self, panel)
@@ -162,11 +174,11 @@ class MainWindowPanel(GUIPanel):
         self.mainwindow = mainwindow
     
 
-class BaseView(Listener, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+class BaseView(Repeater, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     VIEW_TYPE = -1
     
     def __init__(self, view, mainwindow):
-        Listener.__init__(self, mainwindow)
+        Repeater.__init__(self, mainwindow)
         self.view = view
         self.mainwindow = mainwindow
         self.document = mainwindow.document

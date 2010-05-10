@@ -11,7 +11,7 @@ from .balance_graph import BalanceGraph
 
 class NetWorthGraph(BalanceGraph):
     def __init__(self, view, networth_view):
-        BalanceGraph.__init__(self, view, networth_view.mainwindow)
+        BalanceGraph.__init__(self, view, networth_view)
     
     def _balance_for_date(self, date):
         balances = (a.balance(date=date, currency=self._currency) for a in self._accounts)

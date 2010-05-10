@@ -10,7 +10,7 @@ from hsgui import tree
 from hsutil.misc import first
 
 from ..exception import DuplicateAccountNameError
-from .base import DocumentGUIObject
+from .base import ViewChild
 
 EXPANDED_PATHS_PREFERENCE = 'ExpandedPaths'
 
@@ -21,13 +21,12 @@ def get_delta_perc(delta_amount, start_amount):
     else:
         return '---'
 
-class Report(DocumentGUIObject, tree.Tree):
+class Report(ViewChild, tree.Tree):
     PREFERENCE_PREFIX = 'Sheet'
     
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+    def __init__(self, view, parent_view):
+        ViewChild.__init__(self, view, parent_view)
         tree.Tree.__init__(self)
-        self.mainwindow = mainwindow
         self.edited = None
         
         prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
@@ -45,7 +44,7 @@ class Report(DocumentGUIObject, tree.Tree):
         self.mainwindow.selected_account = account
     
     def connect(self):
-        DocumentGUIObject.connect(self)
+        ViewChild.connect(self)
         self.refresh()
         self._update_selection()
         self.view.refresh()
