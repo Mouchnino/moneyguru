@@ -10,6 +10,8 @@
 from __future__ import unicode_literals
 
 from ..const import PaneType
+from ..document import FilterType
+from ..model.account import AccountType
 from ..model.amount import convert_amount
 from .base import BaseView
 
@@ -18,6 +20,7 @@ class TransactionView(BaseView):
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
+        self._visible_transactions = None
         self.totals = ''
         
     def set_children(self, children):
@@ -25,18 +28,52 @@ class TransactionView(BaseView):
         self.ttable, self.tfbar = children
     
     def connect(self):
+        self._visible_transactions = None
         BaseView.connect(self)
+        self._refresh_totals()
         self.view.refresh_totals()
     
     #--- Private
+    def _invalidate_cache(self):
+        self._visible_transactions = None
+        self._refresh_totals()
+        self.view.refresh_totals()
+    
     def _refresh_totals(self):
         selected = len(self.mainwindow.selected_transactions)
-        total = len(self.document.visible_transactions)
+        total = len(self.visible_transactions)
         currency = self.app.default_currency
         total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.mainwindow.selected_transactions)
         total_amount_fmt = self.app.format_amount(total_amount)
         msg = "{0} out of {1} selected. Amount: {2}"
         self.totals = msg.format(selected, total, total_amount_fmt)
+    
+    def _set_visible_transactions(self):
+        date_range = self.document.date_range
+        txns = [t for t in self.document.oven.transactions if t.date in date_range]
+        query_string = self.document.filter_string
+        filter_type = self.document.filter_type
+        if not query_string and filter_type is None:
+            self._visible_transactions = txns
+            return
+        if query_string:
+            query = self.document._parse_search_query(query_string)
+            txns = [t for t in txns if t.matches(query)]
+        if filter_type is FilterType.Unassigned:
+            txns = [t for t in txns if t.has_unassigned_split]
+        elif filter_type is FilterType.Income:
+            txns = [t for t in txns if any(getattr(s.account, 'type', '') == AccountType.Income for s in t.splits)]
+        elif filter_type is FilterType.Expense:
+            txns = [t for t in txns if any(getattr(s.account, 'type', '') == AccountType.Expense for s in t.splits)]
+        elif filter_type is FilterType.Transfer:
+            def is_transfer(t):
+                return len([s for s in t.splits if s.account is not None and s.account.is_balance_sheet_account()]) >= 2
+            txns = filter(is_transfer, txns)
+        elif filter_type is FilterType.Reconciled:
+            txns = [t for t in txns if any(s.reconciled for s in t.splits)]
+        elif filter_type is FilterType.NotReconciled:
+            txns = [t for t in txns if all(not s.reconciled for s in t.splits)]
+        self._visible_transactions = txns
     
     #--- Public
     def delete_item(self):
@@ -57,11 +94,36 @@ class TransactionView(BaseView):
     def show_account(self):
         self.ttable.show_from_account()
     
+    #--- Properties
+    @property
+    def visible_transactions(self):
+        if self._visible_transactions is None:
+            self._set_visible_transactions()
+        return self._visible_transactions
+    
     #--- Event Handlers
+    def date_range_changed(self):
+        self._invalidate_cache()
+    
+    def document_changed(self):
+        self._invalidate_cache()
+    
+    def filter_applied(self):
+        self._invalidate_cache()
+    
+    def performed_undo_or_redo(self):
+        self._invalidate_cache()
+    
     def transactions_selected(self):
         self._refresh_totals()
         self.view.refresh_totals()
     
-    # We also listen to transaction_changed because when we change transaction, selection doesn't
-    # change and amounts might have been changed.
-    transaction_changed = transactions_selected
+    def transaction_changed(self):
+        self._invalidate_cache()
+    
+    def transaction_deleted(self):
+        self._invalidate_cache()
+    
+    def transactions_imported(self):
+        self._invalidate_cache()
+    

@@ -85,7 +85,6 @@ class Document(Repeater):
         self._date_range = YearRange(datetime.date.today())
         self._filter_string = ''
         self._filter_type = None
-        self._visible_transactions = None
         self._restore_preferences()
     
     #--- Private
@@ -164,7 +163,6 @@ class Document(Repeater):
     
     def _cook(self, from_date=None):
         self.oven.cook(from_date=from_date, until_date=self.date_range.end)
-        self._visible_transactions = None
     
     def _get_action_from_changed_transactions(self, transactions):
         if len(transactions) == 1 and not isinstance(transactions[0], Spawn) \
@@ -259,33 +257,6 @@ class Document(Repeater):
         self.app.set_default(SELECTED_DATE_RANGE_END_PREFERENCE, str_end_date)
         excluded_account_names = [a.name for a in self.excluded_accounts]
         self.app.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
-    
-    def _set_visible_transactions(self):
-        date_range = self.date_range
-        txns = [t for t in self.oven.transactions if t.date in date_range]
-        query_string = self.filter_string
-        filter_type = self.filter_type
-        if not query_string and filter_type is None:
-            self._visible_transactions = txns
-            return
-        if query_string:
-            query = self._parse_search_query(query_string)
-            txns = [t for t in txns if t.matches(query)]
-        if filter_type is FilterType.Unassigned:
-            txns = [t for t in txns if t.has_unassigned_split]
-        elif filter_type is FilterType.Income:
-            txns = [t for t in txns if any(getattr(s.account, 'type', '') == AccountType.Income for s in t.splits)]
-        elif filter_type is FilterType.Expense:
-            txns = [t for t in txns if any(getattr(s.account, 'type', '') == AccountType.Expense for s in t.splits)]
-        elif filter_type is FilterType.Transfer:
-            def is_transfer(t):
-                return len([s for s in t.splits if s.account is not None and s.account.is_balance_sheet_account()]) >= 2
-            txns = filter(is_transfer, txns)
-        elif filter_type is FilterType.Reconciled:
-            txns = [t for t in txns if any(s.reconciled for s in t.splits)]
-        elif filter_type is FilterType.NotReconciled:
-            txns = [t for t in txns if all(not s.reconciled for s in t.splits)]
-        self._visible_transactions = txns
     
     #--- Account
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
@@ -504,12 +475,6 @@ class Document(Repeater):
             self.transactions.move_before(transaction, to_transaction)
         self._cook()
         self.notify('transaction_changed')
-    
-    @property
-    def visible_transactions(self):
-        if self._visible_transactions is None:
-            self._set_visible_transactions()
-        return self._visible_transactions
     
     #--- Entry
     @handle_abort
@@ -878,7 +843,6 @@ class Document(Repeater):
         self.notify('date_range_will_change')
         self._date_range = date_range
         self.oven.continue_cooking(date_range.end)
-        self._visible_transactions = None
         self.notify('date_range_changed')
     
     #--- Undo
@@ -928,7 +892,6 @@ class Document(Repeater):
         if value == self._filter_string:
             return
         self._filter_string = value
-        self._visible_transactions = None
         self.notify('filter_applied')
     
     # use FilterType.* consts or None
@@ -941,7 +904,6 @@ class Document(Repeater):
         if value is self._filter_type:
             return
         self._filter_type = value
-        self._visible_transactions = None
         self.notify('filter_applied')
     
     #--- Events

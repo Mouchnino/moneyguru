@@ -41,7 +41,7 @@ class TransactionTable(TransactionTableBase):
     
     def _fill(self):
         total_amount = 0
-        for transaction in self.document.visible_transactions:
+        for transaction in self.parent_view.visible_transactions:
             self.append(TransactionTableRow(self, transaction))
             convert = lambda a: convert_amount(a, self.document.app.default_currency, transaction.date)
             total_amount += convert(transaction.amount)
