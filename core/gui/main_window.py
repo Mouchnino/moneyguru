@@ -70,7 +70,7 @@ class MainWindow(Repeater):
         for index, pane in enumerate(self.panes):
             if pane.view.VIEW_TYPE == PaneType.Account and pane.account not in self.document.accounts:
                 indexes_to_close.append(index)
-        if indexes_to_close:
+        if self.current_pane_index in indexes_to_close:
             self.select_balance_sheet()
         for index in reversed(indexes_to_close):
             self.close_pane(index)
@@ -349,6 +349,7 @@ class MainWindow(Repeater):
     def transaction_deleted(self):
         self._explicitly_selected_transactions = []
         self._selected_transactions = []
+        self._close_irrelevant_account_panes() # after an auto-clean
         self.view.refresh_undo_actions()
     
     transaction_imported = _undo_stack_changed

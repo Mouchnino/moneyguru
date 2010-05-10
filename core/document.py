@@ -144,7 +144,6 @@ class Document(Repeater):
                 self.transactions.move_last(transaction)
         self.transactions.clear_cache()
     
-    # XXX When this is called, close all affected account tabs
     def _clean_empty_categories(self, from_account=None):
         for account in list(self.accounts.auto_created):
             if account is from_account:

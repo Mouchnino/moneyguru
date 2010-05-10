@@ -132,6 +132,15 @@ def app_asset_and_income_accounts():
     return app
 
 @with_app(app_asset_and_income_accounts)
+def test_close_pane_of_autocleaned_accounts(app):
+    # When an account is auto cleaned, close its pane if it's opened
+    app.etable.show_transfer_account() # the Salary account, which is auto-created
+    app.etable.show_transfer_account() # We're back on the Checking account
+    app.etable.delete() # the Salary pane is supposed to be closed.
+    eq_(app.mw.pane_count, 6)
+    eq_(app.mw.current_pane_index, 5) # we stay on the current index
+
+@with_app(app_asset_and_income_accounts)
 def test_delete_account(app):
     # deleting a non-empty account shows the account reassign panel
     app.mw.select_balance_sheet()
