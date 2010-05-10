@@ -26,18 +26,15 @@ class AccountView(BaseView):
         self.etable, self.balgraph, self.bargraph, self.efbar = children
         self._shown_graph = self.balgraph
         # we count the graphs separately because the connect/disconnect rules for them are special
-        BaseView.set_children(self, [self.efbar])
+        BaseView.set_children(self, [self.etable, self.efbar])
     
     def connect(self):
-        # We don't connect and disconnect etable because of the ongoing refactoring giving more
-        # responsibilities to views (see the refactorings section of the devdocs)
-        BaseView.connect(self)
         # XXX Huh oh, this is very inefficient (but for now the only way to make tests pass)! Once
         # the view refactoring is over, the views will have to be connected at all times to make
         # the invalidation of their cache more efficient. Then, we'll have show()/hide() methods
         # where children will be refreshed.
         self._visible_entries = None
-        self.etable.refresh_and_restore_selection()
+        BaseView.connect(self)
         account = self.mainwindow.shown_account
         if account is None:
             return
@@ -151,25 +148,15 @@ class AccountView(BaseView):
     #--- Event Handlers
     def date_range_changed(self):
         self._invalidate_cache()
-        self.etable.date_range_changed()
-    
-    def date_range_will_change(self):
-        self.etable.date_range_will_change()
     
     def document_changed(self):
         self._invalidate_cache()
-        self.etable.document_changed()
-    
-    def edition_must_stop(self):
-        self.etable.edition_must_stop()
     
     def filter_applied(self):
         self._invalidate_cache()
-        self.etable.filter_applied()
     
     def performed_undo_or_redo(self):
         self._invalidate_cache()
-        self.etable.performed_undo_or_redo()
     
     def transactions_selected(self):
         self._refresh_totals()
@@ -177,13 +164,10 @@ class AccountView(BaseView):
     
     def transaction_changed(self):
         self._invalidate_cache()
-        self.etable.transaction_changed()
     
     def transaction_deleted(self):
         self._invalidate_cache()
-        self.etable.transaction_deleted()
     
     def transactions_imported(self):
         self._invalidate_cache()
-        self.etable.transactions_imported()
     

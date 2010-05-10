@@ -103,12 +103,6 @@ class EntryTable(TransactionTableBase):
             return
         TransactionTableBase.add(self)
     
-    def refresh_and_restore_selection(self):
-        self.refresh()
-        self.mainwindow.selected_transactions = self.selected_transactions
-        self.view.refresh()
-        self.view.show_selected_row()
-    
     def select_nearest_date(self, target_date):
         # This method assumes that self is sorted by date
         last_delta = datetime.timedelta.max

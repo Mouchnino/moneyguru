@@ -37,10 +37,7 @@ class TransactionTableBase(GUITable, ViewChild):
     
     def connect(self):
         ViewChild.connect(self)
-        self.refresh()
-        self.mainwindow.selected_transactions = self.selected_transactions
-        self.view.refresh()
-        self.view.show_selected_row()
+        self.refresh_and_restore_selection()
     
     #--- Public
     def can_move(self, row_indexes, position):
@@ -92,6 +89,12 @@ class TransactionTableBase(GUITable, ViewChild):
         position = self.selected_indexes[0] - 1
         if self.can_move(self.selected_indexes, position):
             self.move(self.selected_indexes, position)
+    
+    def refresh_and_restore_selection(self):
+        self.refresh()
+        self.mainwindow.selected_transactions = self.selected_transactions
+        self.view.refresh()
+        self.view.show_selected_row()
     
     def select_transactions(self, transactions):
         selected_indexes = []
