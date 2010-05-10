@@ -9,18 +9,20 @@
 from collections import namedtuple
 
 from hsutil.misc import first
+from hsutil.notify import Repeater
 
 from ..const import PaneType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
-from .base import DocumentGUIObject
 
 ViewPane = namedtuple('ViewPane', 'view label account')
 
-class MainWindow(DocumentGUIObject):
+class MainWindow(Repeater):
     def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+        Repeater.__init__(self, document)
+        self.view = view
+        self.document = document
         self._selected_account = None
         self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_schedules = []
@@ -45,7 +47,7 @@ class MainWindow(DocumentGUIObject):
         self.current_pane_index = 0
     
     def connect(self):
-        DocumentGUIObject.connect(self)
+        Repeater.connect(self)
         self.daterange_selector.connect()
     
     # We don't override disconnect because we never disconnect the main window anyway...

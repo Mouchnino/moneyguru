@@ -6,16 +6,7 @@
 
 from hsutil.notify import Listener
 
-class DocumentGUIObject(Listener):
-    def __init__(self, view, document):
-        Listener.__init__(self, document)
-        self.view = view
-        self.document = document
-    
-    @property
-    def app(self):
-        return self.document.app
-    
+class DocumentNotificationsMixin(object):
     def account_added(self):
         pass
     
@@ -95,6 +86,17 @@ class DocumentGUIObject(Listener):
         pass
     
 
+class DocumentGUIObject(Listener, DocumentNotificationsMixin):
+    def __init__(self, view, document):
+        Listener.__init__(self, document)
+        self.view = view
+        self.document = document
+    
+    @property
+    def app(self):
+        return self.document.app
+    
+
 class TransactionPanelGUIObject(Listener):
     def __init__(self, view, panel):
         Listener.__init__(self, panel)
@@ -158,12 +160,15 @@ class MainWindowPanel(GUIPanel):
         self.mainwindow = mainwindow
     
 
-class BaseView(DocumentGUIObject):
+class BaseView(Listener, DocumentNotificationsMixin):
     VIEW_TYPE = -1
     
     def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+        Listener.__init__(self, mainwindow)
+        self.view = view
         self.mainwindow = mainwindow
+        self.document = mainwindow.document
+        self.app = mainwindow.document.app
     
     # This has to be call *once* and *right after creation*. The children are set after
     # initialization so that we can pass a reference to self during children's initialization.
@@ -171,12 +176,12 @@ class BaseView(DocumentGUIObject):
         self._children = children
     
     def connect(self):
-        DocumentGUIObject.connect(self)
+        Listener.connect(self)
         for child in self._children:
             child.connect()
     
     def disconnect(self):
-        DocumentGUIObject.disconnect(self)
+        Listener.disconnect(self)
         for child in self._children:
             child.disconnect()
     
