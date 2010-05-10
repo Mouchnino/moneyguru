@@ -11,7 +11,7 @@ import time
 
 from hsutil import io
 from hsutil.currency import Currency
-from hsutil.notify import Broadcaster, Listener
+from hsutil.notify import Repeater
 from hsutil.misc import nonone, allsame, dedupe, extract, first
 
 from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES
@@ -66,10 +66,11 @@ def handle_abort(method):
     
     return wrapper
 
-class Document(Broadcaster, Listener):
+class Document(Repeater):
+    REPEATED_NOTIFICATIONS = frozenset(['first_weekday_changed', 'saved_custom_ranges_changed'])
+    
     def __init__(self, view, app):
-        Broadcaster.__init__(self)
-        Listener.__init__(self, app)
+        Repeater.__init__(self, app)
         self.app = app
         self.view = view
         self.accounts = AccountList(self.app.default_currency)
@@ -1003,15 +1004,9 @@ class Document(Broadcaster, Listener):
     def default_currency_changed(self):
         self.notify('document_changed')
     
-    def first_weekday_changed(self):
-        self.notify('first_weekday_changed')
-    
     def must_autosave(self):
         # this is called async
         self._async_autosave()
-    
-    def saved_custom_ranges_changed(self):
-        self.notify('saved_custom_ranges_changed')
     
     def year_start_month_changed(self):
         if isinstance(self.date_range, YearRange):
