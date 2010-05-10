@@ -149,12 +149,6 @@ class AccountView(BaseView):
         return self._visible_entries
     
     #--- Event Handlers
-    def account_must_be_shown(self):
-        self._visible_entries = None
-        self.disconnect()
-        if self.mainwindow.shown_account is not None:
-            self.connect()
-    
     def date_range_changed(self):
         self._invalidate_cache()
         self.etable.date_range_changed()
