@@ -15,9 +15,10 @@ from datetime import date
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange
+from .base import SheetViewNotificationsMixin
 from .pie_chart import PieChart
 
-class _AccountPieChart(PieChart):
+class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
     def __init__(self, view, parent_view, account_type, title):
         PieChart.__init__(self, view, parent_view)
         self._account_type = account_type

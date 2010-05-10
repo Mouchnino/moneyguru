@@ -8,25 +8,12 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..const import PaneType
-from .base import BaseView
+from .account_sheet_view import AccountSheetView
 
-class NetWorthView(BaseView):
+class NetWorthView(AccountSheetView):
     VIEW_TYPE = PaneType.NetWorth
     
     def set_children(self, children):
-        BaseView.set_children(self, children)
+        AccountSheetView.set_children(self, children)
         [self.bsheet, self.nwgraph, self.apie, self.lpie] = children
-    
-    #--- Public
-    def delete_item(self):
-        self.bsheet.delete()
-    
-    def new_item(self):
-        self.bsheet.add_account()
-    
-    def new_group(self):
-        self.bsheet.add_account_group()
-    
-    def show_account(self):
-        self.bsheet.show_selected_account()
     

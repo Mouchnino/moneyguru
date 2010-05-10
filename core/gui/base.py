@@ -47,9 +47,6 @@ class DocumentNotificationsMixin(object):
     def edition_must_stop(self):
         pass
     
-    def group_expanded_state_changed(self):
-        pass
-    
     # A file has been parsed and is ready to be shown to the user in the import window
     def file_loaded_for_import(self):
         pass
@@ -85,6 +82,11 @@ class DocumentNotificationsMixin(object):
 
 class MainWindowNotificationsMixin(object):
     def transactions_selected(self):
+        pass
+    
+
+class SheetViewNotificationsMixin(object):
+    def group_expanded_state_changed(self):
         pass
     
 

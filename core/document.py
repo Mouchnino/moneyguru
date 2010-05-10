@@ -316,10 +316,6 @@ class Document(Repeater):
         self._undoer.record(action)
         self.notify('account_changed')
     
-    def collapse_group(self, group):
-        group.expanded = False
-        self.notify('group_expanded_state_changed')
-    
     def delete_group(self, group):
         accounts = [a for a in self.accounts if a.group is group]
         action = Action('Remove group')
@@ -330,10 +326,6 @@ class Document(Repeater):
         for account in accounts:
             account.group = None
         self.notify('account_deleted')
-    
-    def expand_group(self, group):
-        group.expanded = True
-        self.notify('group_expanded_state_changed')
     
     def new_group(self, type):
         name = self.groups.new_name('New group', type)

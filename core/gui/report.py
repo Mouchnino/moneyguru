@@ -10,7 +10,7 @@ from hsgui import tree
 from hsutil.misc import first
 
 from ..exception import DuplicateAccountNameError
-from .base import ViewChild
+from .base import ViewChild, SheetViewNotificationsMixin
 
 EXPANDED_PATHS_PREFERENCE = 'ExpandedPaths'
 
@@ -21,7 +21,7 @@ def get_delta_perc(delta_amount, start_amount):
     else:
         return '---'
 
-class Report(ViewChild, tree.Tree):
+class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     PREFERENCE_PREFIX = 'Sheet'
     
     def __init__(self, view, parent_view):
@@ -141,7 +141,7 @@ class Report(ViewChild, tree.Tree):
     def collapse_node(self, node):
         self._expanded_paths.discard(tuple(node.path))
         if node.is_group:
-            self.document.collapse_group(node.group)
+            self.parent_view.collapse_group(node.group)
     
     def delete(self):
         if not self.can_delete():
@@ -162,7 +162,7 @@ class Report(ViewChild, tree.Tree):
     def expand_node(self, node):
         self._expanded_paths.add(tuple(node.path))
         if node.is_group:
-            self.document.expand_group(node.group)
+            self.parent_view.expand_group(node.group)
     
     def make_account_node(self, account):
         node = self._make_node(account.name)
