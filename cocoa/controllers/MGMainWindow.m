@@ -28,6 +28,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountView = [[MGAccountView alloc] initWithPyParent:py];
     scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
     budgetView = [[MGBudgetView alloc] initWithPyParent:py];
+    emptyView = [[MGEmptyView alloc] initWithPyParent:py];
     searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -48,16 +49,20 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
-        [accountProperties py], [transactionPanel py],  [massEditionPanel py], [schedulePanel py],
-        [budgetPanel py], [customDateRangePanel py], [accountReassignPanel py], [accountLookup py],
-        [completionLookup py], [dateRangeSelector py], nil];
+        [emptyView py], [accountProperties py], [transactionPanel py],  [massEditionPanel py],
+        [schedulePanel py], [budgetPanel py], [customDateRangePanel py], [accountReassignPanel py],
+        [accountLookup py], [completionLookup py], [dateRangeSelector py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
     /* Don't set the delegate in the XIB or else delegates methods are called to soon and cause
        crashes.
     */
+    [tabBar setShowAddTabButton:YES];
+    [tabBar setSizeCellsToFit:YES];
     [tabBar setDelegate:self];
+    [[tabBar addTabButton] setTarget:self];
+    [[tabBar addTabButton] setAction:@selector(newTab:)];
     return self;
 }
 
@@ -73,6 +78,7 @@ http://www.hardcoded.net/licenses/hs_license
     [transactionView release];
     [scheduleView release];
     [budgetView release];
+    [emptyView release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -216,6 +222,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)newItem:(id)sender
 {
     [[self py] newItem];
+}
+
+- (IBAction)newTab:(id)sender
+{
+    [[self py] newTab];
 }
 
 - (IBAction)search:(id)sender
@@ -498,6 +509,9 @@ http://www.hardcoded.net/licenses/hs_license
         }
         else if (paneType == MGPaneTypeBudget) {
             view = budgetView;
+        }
+        else if (paneType == MGPaneTypeEmpty) {
+            view = emptyView;
         }
         [subviews addObject:view];
         NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];

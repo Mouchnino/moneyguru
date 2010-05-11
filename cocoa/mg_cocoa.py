@@ -39,6 +39,7 @@ from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
 from core.gui.entry_print import EntryPrint
+from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
 from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from core.gui.income_statement import IncomeStatement
@@ -432,6 +433,14 @@ class PyBudgetView(PyGUIContainer):
 
 class PyScheduleView(PyGUIContainer):
     py_class = ScheduleView
+
+class PyEmptyView(PyGUIContainer):
+    py_class = EmptyView
+    
+    @signature('v@:i')
+    def selectPaneType_(self, paneType):
+        self.py.select_pane_type(paneType)
+    
 
 #--- GUI layer classes
 
@@ -1026,6 +1035,9 @@ class PyMainWindow(PyGUIContainer):
     @signature('v@:i')
     def closePaneAtIndex_(self, index):
         self.py.close_pane(index)
+    
+    def newTab(self):
+        self.py.new_tab()
     
     def showAccount(self):
         self.py.show_account()

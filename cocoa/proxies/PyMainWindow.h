@@ -20,6 +20,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSString *)paneLabelAtIndex:(NSInteger)index;
 - (enum MGPaneType)paneTypeAtIndex:(NSInteger)index;
 - (void)closePaneAtIndex:(NSInteger)index;
+- (void)newTab;
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;

@@ -104,6 +104,16 @@ def test_change_date_range(app):
     app.check_gui_calls_partial(app.balgraph_gui, not_expected=['refresh'])
     app.check_gui_calls_partial(app.bargraph_gui, not_expected=['refresh'])
 
+@with_app(app_cleared_gui_calls)
+def test_new_tab(app):
+    app.mw.new_tab()
+    eq_(app.mw.pane_count, 6)
+    app.check_current_pane(PaneType.Empty)
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes'])
+    app.emptyview.select_pane_type(PaneType.Profit)
+    app.check_current_pane(PaneType.Profit)
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes'])
+
 #--- One account
 def app_one_account():
     app = TestApp()

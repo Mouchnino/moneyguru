@@ -77,4 +77,5 @@ enum MGPaneType {
     MGPaneTypeAccount = 3,
     MGPaneTypeSchedule = 4,
     MGPaneTypeBudget = 5,
+    MGPaneTypeEmpty = 100,
 };

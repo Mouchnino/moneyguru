@@ -181,6 +181,7 @@ class BaseView(Repeater, DocumentNotificationsMixin, MainWindowNotificationsMixi
     
     def __init__(self, view, mainwindow):
         Repeater.__init__(self, mainwindow)
+        self._children = []
         self.view = view
         self.mainwindow = mainwindow
         self.document = mainwindow.document

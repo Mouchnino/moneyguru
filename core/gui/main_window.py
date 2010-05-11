@@ -33,18 +33,14 @@ class MainWindow(Repeater):
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
     def set_children(self, children):
-        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.apanel,
-            self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, 
-            self.alookup, self.completion_lookup, self.daterange_selector) = children
+        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.emptyview,
+            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
+            self.arpanel, self.alookup, self.completion_lookup, self.daterange_selector) = children
         self._current_pane = None
         self._current_pane_index = -1
-        self.panes = [
-            ViewPane(self.nwview, "Net Worth", None),
-            ViewPane(self.pview, "Profit & Loss", None),
-            ViewPane(self.tview, "Transactions", None),
-            ViewPane(self.scview, "Schedules", None),
-            ViewPane(self.bview, "Budgets", None),
-        ]
+        initital_pane_types = [PaneType.NetWorth, PaneType.Profit, PaneType.Transaction,
+            PaneType.Schedule, PaneType.Budget]
+        self.panes = [self._create_pane(pt) for pt in initital_pane_types]
         self.view.refresh_panes()
         self.current_pane_index = 0
     
@@ -74,6 +70,22 @@ class MainWindow(Repeater):
             self.select_balance_sheet()
         for index in reversed(indexes_to_close):
             self.close_pane(index)
+    
+    def _create_pane(self, pane_type):
+        if pane_type == PaneType.NetWorth:
+            return ViewPane(self.nwview, "Net Worth", None)
+        elif pane_type == PaneType.Profit:
+            return ViewPane(self.pview, "Profit & Loss", None)
+        elif pane_type == PaneType.Transaction:
+            return ViewPane(self.tview, "Transactions", None)
+        elif pane_type == PaneType.Schedule:
+            return ViewPane(self.scview, "Schedules", None)
+        elif pane_type == PaneType.Budget:
+            return ViewPane(self.bview, "Budgets", None)
+        elif pane_type == PaneType.Empty:
+            return ViewPane(self.emptyview, "New Tab", None)
+        else:
+            raise ValueError("Cannot create pane of type {0}".format(pane_type))
     
     #--- Public
     def close_pane(self, index):
@@ -173,6 +185,11 @@ class MainWindow(Repeater):
         if current_view in (self.nwview, self.pview):
             current_view.new_group()
     
+    def new_tab(self):
+        self.panes.append(self._create_pane(PaneType.Empty))
+        self.view.refresh_panes()
+        self.current_pane_index = len(self.panes) - 1
+    
     def select_pane_of_type(self, pane_type):
         self.document.filter_string = ''
         index = first(i for i, p in enumerate(self.panes) if p.view.VIEW_TYPE == pane_type)
@@ -207,6 +224,13 @@ class MainWindow(Repeater):
         if self.current_pane_index == 0:
             return
         self.current_pane_index -= 1
+    
+    def set_current_pane_type(self, pane_type):
+        index = self.current_pane_index
+        pane = self._create_pane(pane_type)
+        self.panes[index] = pane
+        self.view.refresh_panes()
+        self._change_current_pane(pane)
     
     def show_account(self):
         """Shows the currently selected account in the Account view.

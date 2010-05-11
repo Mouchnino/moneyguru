@@ -80,6 +80,8 @@
 		CE720A5B0F84BF71005C4D5B /* MGOutlinePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */; };
 		CE720A5F0F84CB39005C4D5B /* MGTablePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */; };
 		CE7311D31040360A00DB8B30 /* BudgetTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7311D21040360A00DB8B30 /* BudgetTable.xib */; };
+		CE74808711994DD600D59C50 /* NewTabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE74808611994DD600D59C50 /* NewTabView.xib */; };
+		CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74808C11995EF400D59C50 /* MGEmptyView.m */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
 		CE873A690E21621F004F63E9 /* AccountProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE873A630E21621F004F63E9 /* AccountProperties.xib */; };
 		CE873A6A0E21621F004F63E9 /* BalanceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE873A640E21621F004F63E9 /* BalanceSheet.xib */; };
@@ -359,6 +361,10 @@
 		CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTablePrint.m; path = print/MGTablePrint.m; sourceTree = "<group>"; };
 		CE7311D21040360A00DB8B30 /* BudgetTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BudgetTable.xib; sourceTree = "<group>"; };
 		CE7311D41040361C00DB8B30 /* PyBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetTable.h; sourceTree = "<group>"; };
+		CE74808611994DD600D59C50 /* NewTabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewTabView.xib; sourceTree = "<group>"; };
+		CE74808A11995EDF00D59C50 /* PyEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEmptyView.h; sourceTree = "<group>"; };
+		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
+		CE74808C11995EF400D59C50 /* MGEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEmptyView.m; sourceTree = "<group>"; };
 		CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSearchField.h; sourceTree = "<group>"; };
 		CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSearchField.m; sourceTree = "<group>"; };
 		CE80FF400E34ABD3001CB573 /* PySearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySearchField.h; sourceTree = "<group>"; };
@@ -752,6 +758,7 @@
 				077FBF2B0E27B053001DC57D /* EntryTable.xib */,
 				CEB1E0B81031C286001FC4B4 /* ScheduleTable.xib */,
 				CE7311D21040360A00DB8B30 /* BudgetTable.xib */,
+				CE74808611994DD600D59C50 /* NewTabView.xib */,
 				CE873A630E21621F004F63E9 /* AccountProperties.xib */,
 				CEE46FB70F91E4E400D08E40 /* AccountReassignPanel.xib */,
 				CE873A680E21621F004F63E9 /* TransactionInspector.xib */,
@@ -776,6 +783,8 @@
 			children = (
 				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
 				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
+				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
+				CE74808C11995EF400D59C50 /* MGEmptyView.m */,
 				CED1FC8410F7903800634D72 /* networth */,
 				CED1FC8710F7903800634D72 /* profit */,
 				CEEDCEE610F75FF9003BC1BA /* transaction */,
@@ -862,6 +871,7 @@
 				CE98C2B110F8F77200EB1D21 /* PyNetWorthView.h */,
 				CE4DCE4910F8E1C00062DA0B /* PyScheduleView.h */,
 				CEBD4E2D10F8DE2300B00BBF /* PyBudgetView.h */,
+				CE74808A11995EDF00D59C50 /* PyEmptyView.h */,
 				CEBD4E2C10F8CD6600B00BBF /* PyAccountView.h */,
 				CE1E88D910F8A295003BB329 /* PyGUIContainer.h */,
 				CE1E88D810F89FB1003BB329 /* PyTransactionView.h */,
@@ -1301,6 +1311,7 @@
 				CEBA331011294D2B009C782F /* registration.xib in Resources */,
 				CE05E1771140470000DB13ED /* Lookup.xib in Resources */,
 				CE940B49118F2D0F00FA9FAD /* DateRangeSelector.xib in Resources */,
+				CE74808711994DD600D59C50 /* NewTabView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,6 +1430,7 @@
 				CE9805E511403F5A00CB3693 /* MGLookup.m in Sources */,
 				CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */,
 				CE647EA311730765006D28BA /* HSTable.m in Sources */,
+				CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

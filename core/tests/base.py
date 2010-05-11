@@ -36,6 +36,7 @@ from ..gui.completion_lookup import CompletionLookup
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.date_range_selector import DateRangeSelector
+from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
 from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from ..gui.income_statement import IncomeStatement
@@ -165,6 +166,8 @@ class TestApp(object):
         self.scview = ScheduleView(self.scview_gui, self.mw)
         self.bview_gui = CallLogger()
         self.bview = BudgetView(self.bview_gui, self.mw)
+        self.emptyview_gui = CallLogger()
+        self.emptyview = EmptyView(self.emptyview_gui, self.mw)
         self.apanel_gui = CallLogger()
         self.apanel = AccountPanel(self.apanel_gui, self.mw)
         self.etable_gui = CallLogger()
@@ -244,8 +247,8 @@ class TestApp(object):
         children = [self.btable]
         self.bview.set_children(children)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
-            self.arpanel, self.alookup, self.clookup, self.drsel]
+            self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
+            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()

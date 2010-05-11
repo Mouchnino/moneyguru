@@ -20,6 +20,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTransactionView.h"
 #import "MGScheduleView.h"
 #import "MGBudgetView.h"
+#import "MGEmptyView.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
 #import "MGCSVImportOptions.h"
@@ -43,6 +44,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGAccountView *accountView;
     MGScheduleView *scheduleView;
     MGBudgetView *budgetView;
+    MGEmptyView *emptyView;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
     MGMassEditionPanel *massEditionPanel;
@@ -78,6 +80,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)navigateBack:(id)sender;
 - (IBAction)newGroup:(id)sender;
 - (IBAction)newItem:(id)sender;
+- (IBAction)newTab:(id)sender;
 - (IBAction)search:(id)sender;
 - (IBAction)selectMonthRange:(id)sender;
 - (IBAction)selectNextDateRange:(id)sender;
