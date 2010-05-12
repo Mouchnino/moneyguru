@@ -232,6 +232,7 @@
 							<object class="NSMutableArray" key="NSSegmentImages">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSSegmentItem">
+									<double key="NSSegmentItemWidth">25</double>
 									<object class="NSCustomResource" key="NSSegmentItemImage">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">nav_left_9</string>
@@ -246,6 +247,7 @@
 									<int key="NSSegmentItemImageScaling">0</int>
 								</object>
 								<object class="NSSegmentItem">
+									<double key="NSSegmentItemWidth">25</double>
 									<object class="NSCustomResource" key="NSSegmentItemImage">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">nav_right_9</string>
