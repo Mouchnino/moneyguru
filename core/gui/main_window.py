@@ -50,6 +50,11 @@ class MainWindow(Repeater):
     
     # We don't override disconnect because we never disconnect the main window anyway...
     #--- Private
+    def _add_pane(self, pane):
+        self.panes.append(pane)
+        self.view.refresh_panes()
+        self.current_pane_index = len(self.panes) - 1
+    
     def _change_current_pane(self, pane):
         if self._current_pane is pane:
             return
@@ -193,7 +198,10 @@ class MainWindow(Repeater):
     def select_pane_of_type(self, pane_type):
         self.document.filter_string = ''
         index = first(i for i, p in enumerate(self.panes) if p.view.VIEW_TYPE == pane_type)
-        self.current_pane_index = index
+        if index is None:
+            self._add_pane(self._create_pane(pane_type))
+        else:
+            self.current_pane_index = index
     
     def select_balance_sheet(self):
         self.select_pane_of_type(PaneType.NetWorth)
@@ -327,9 +335,7 @@ class MainWindow(Repeater):
             # Try to find a suitable pane, or add a new one
             index = first(i for i, p in enumerate(self.panes) if p.account is account)
             if index is None:
-                self.panes.append(ViewPane(self.aview, account.name, account))
-                self.view.refresh_panes()
-                self.current_pane_index = len(self.panes) - 1
+                self._add_pane(ViewPane(self.aview, account.name, account))
             else:
                 self.current_pane_index = index
         elif self._current_pane.view is self.aview:

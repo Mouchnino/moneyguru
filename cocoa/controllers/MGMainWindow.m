@@ -291,32 +291,27 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)showBalanceSheet:(id)sender
 {
-    [[self py] setCurrentPaneIndex:0];
+    [[self py] showPaneOfType:MGPaneTypeNetWorth];
 }
 
 - (IBAction)showIncomeStatement:(id)sender
 {
-    [[self py] setCurrentPaneIndex:1];
+    [[self py] showPaneOfType:MGPaneTypeProfit];
 }
 
 - (IBAction)showTransactionTable:(id)sender
 {
-    [[self py] setCurrentPaneIndex:2];
-}
-
-- (IBAction)showEntryTable:(id)sender
-{
-    [[self py] setCurrentPaneIndex:3];
+    [[self py] showPaneOfType:MGPaneTypeTransaction];
 }
 
 - (IBAction)showScheduleTable:(id)sender
 {
-    [[self py] setCurrentPaneIndex:4];
+    [[self py] showPaneOfType:MGPaneTypeSchedule];
 }
 
 - (IBAction)showBudgetTable:(id)sender
 {
-    [[self py] setCurrentPaneIndex:5];
+    [[self py] showPaneOfType:MGPaneTypeBudget];
 }
 
 - (IBAction)showNextView:(id)sender
@@ -489,7 +484,7 @@ http://www.hardcoded.net/licenses/hs_license
         [tabView removeTabViewItem:item];
     }
     for (NSInteger i=0; i<[[self py] paneCount]; i++) {
-        enum MGPaneType paneType = [[self py] paneTypeAtIndex:i];
+        NSInteger paneType = [[self py] paneTypeAtIndex:i];
         NSString *label = [[self py] paneLabelAtIndex:i];
         MGBaseView *view = nil;
         if (paneType == MGPaneTypeNetWorth) {

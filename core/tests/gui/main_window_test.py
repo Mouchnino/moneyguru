@@ -69,12 +69,6 @@ def test_current_pane_index(app):
     eq_(app.mw.current_pane_index, 0)
 
 @with_app(TestApp)
-def test_select_ttable_on_sfield_query(app):
-    # Setting a value in the search field selects the ttable.
-    app.sfield.query = 'foobar'
-    eq_(app.mw.current_pane_index, 2)
-
-@with_app(TestApp)
 def test_initial_panes(app):
     eq_(app.mw.pane_count, 5)
     eq_(app.mw.pane_label(0), "Net Worth")
@@ -87,6 +81,20 @@ def test_initial_panes(app):
     eq_(app.mw.pane_type(2), PaneType.Transaction)
     eq_(app.mw.pane_type(3), PaneType.Schedule)
     eq_(app.mw.pane_type(4), PaneType.Budget)
+
+@with_app(TestApp)
+def test_select_pane_of_type_creates_new_pane_if_needed(app):
+    # calling select_pane_of_type() creates a new pane if needed
+    app.mw.close_pane(0) # net worth
+    app.mw.select_pane_of_type(PaneType.NetWorth)
+    eq_(app.mw.pane_count, 5)
+    app.check_current_pane(PaneType.NetWorth)
+
+@with_app(TestApp)
+def test_select_ttable_on_sfield_query(app):
+    # Setting a value in the search field selects the ttable.
+    app.sfield.query = 'foobar'
+    eq_(app.mw.current_pane_index, 2)
 
 #--- Cleared GUI calls
 def app_cleared_gui_calls():

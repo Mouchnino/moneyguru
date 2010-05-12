@@ -1033,6 +1033,10 @@ class PyMainWindow(PyGUIContainer):
         return self.py.pane_type(index)
     
     @signature('v@:i')
+    def showPaneOfType_(self, pane_type):
+        self.py.select_pane_of_type(pane_type)
+    
+    @signature('v@:i')
     def closePaneAtIndex_(self, index):
         self.py.close_pane(index)
     

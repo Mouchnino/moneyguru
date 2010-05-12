@@ -70,12 +70,10 @@ http://www.hardcoded.net/licenses/hs_license
 #define ScheduleScopeCancel 2
 
 // Synced with the core
-enum MGPaneType {
-    MGPaneTypeNetWorth = 0,
-    MGPaneTypeProfit = 1,
-    MGPaneTypeTransaction = 2,
-    MGPaneTypeAccount = 3,
-    MGPaneTypeSchedule = 4,
-    MGPaneTypeBudget = 5,
-    MGPaneTypeEmpty = 100,
-};
+#define MGPaneTypeNetWorth 0
+#define MGPaneTypeProfit 1
+#define MGPaneTypeTransaction 2
+#define MGPaneTypeAccount 3
+#define MGPaneTypeSchedule 4
+#define MGPaneTypeBudget 5
+#define MGPaneTypeEmpty 100

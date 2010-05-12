@@ -96,7 +96,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)showBalanceSheet:(id)sender;
 - (IBAction)showIncomeStatement:(id)sender;
 - (IBAction)showTransactionTable:(id)sender;
-- (IBAction)showEntryTable:(id)sender;
 - (IBAction)showScheduleTable:(id)sender;
 - (IBAction)showBudgetTable:(id)sender;
 - (IBAction)showNextView:(id)sender;

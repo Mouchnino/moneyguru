@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="81"/>
+			<integer value="1145"/>
 			<integer value="1306"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -737,19 +737,10 @@
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
 								</object>
-								<object class="NSMenuItem" id="786513482">
-									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Account</string>
-									<string key="NSKeyEquiv">4</string>
-									<int key="NSKeyEquivModMask">1048840</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="640623815"/>
-									<reference key="NSMixedImage" ref="176664579"/>
-								</object>
 								<object class="NSMenuItem" id="994774801">
 									<reference key="NSMenu" ref="644935139"/>
 									<string key="NSTitle">Schedules</string>
-									<string key="NSKeyEquiv">5</string>
+									<string key="NSKeyEquiv">4</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
@@ -758,7 +749,7 @@
 								<object class="NSMenuItem" id="262649211">
 									<reference key="NSMenu" ref="644935139"/>
 									<string key="NSTitle">Budgets</string>
-									<string key="NSKeyEquiv">6</string>
+									<string key="NSKeyEquiv">5</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
@@ -766,7 +757,7 @@
 								</object>
 								<object class="NSMenuItem" id="311891534">
 									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Previous View</string>
+									<string key="NSTitle">Previous Tab</string>
 									<string key="NSKeyEquiv">[</string>
 									<int key="NSKeyEquivModMask">1179648</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -775,7 +766,7 @@
 								</object>
 								<object class="NSMenuItem" id="965669742">
 									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Next View</string>
+									<string key="NSTitle">Next Tab</string>
 									<string key="NSKeyEquiv">]</string>
 									<int key="NSKeyEquivModMask">1179648</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2198,14 +2189,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showEntryTable:</string>
-						<reference key="source" ref="954832501"/>
-						<reference key="destination" ref="786513482"/>
-					</object>
-					<int key="connectionID">1280</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">showTransactionTable:</string>
 						<reference key="source" ref="954832501"/>
 						<reference key="destination" ref="309490052"/>
@@ -3082,7 +3065,6 @@
 							<reference ref="124390410"/>
 							<reference ref="551150681"/>
 							<reference ref="309490052"/>
-							<reference ref="786513482"/>
 							<reference ref="965669742"/>
 							<reference ref="853742698"/>
 							<reference ref="791400974"/>
@@ -3204,11 +3186,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1278</int>
 						<reference key="object" ref="309490052"/>
-						<reference key="parent" ref="644935139"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1279</int>
-						<reference key="object" ref="786513482"/>
 						<reference key="parent" ref="644935139"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3869,7 +3846,6 @@
 					<string>1276.IBPluginDependency</string>
 					<string>1277.IBPluginDependency</string>
 					<string>1278.IBPluginDependency</string>
-					<string>1279.IBPluginDependency</string>
 					<string>1284.IBPluginDependency</string>
 					<string>1285.IBPluginDependency</string>
 					<string>129.IBPluginDependency</string>
@@ -4098,7 +4074,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{378, 352}, {236, 463}}</string>
+					<string>{{378, 372}, {236, 443}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{658, 387}, {236, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4118,7 +4094,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
