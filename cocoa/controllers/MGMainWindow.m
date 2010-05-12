@@ -44,6 +44,8 @@ http://www.hardcoded.net/licenses/hs_license
     // Setup the toolbar
     NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:MGMainToolbarIdentifier] autorelease];
     [toolbar setDisplayMode:NSToolbarDisplayModeIconOnly];
+    [toolbar setAllowsUserCustomization:YES];
+    [toolbar setAutosavesConfiguration:YES];
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
@@ -409,6 +411,11 @@ http://www.hardcoded.net/licenses/hs_license
             NSToolbarFlexibleSpaceItemIdentifier, 
             MGDateRangeToolbarItemIdentifier,
             MGSearchFieldToolbarItemIdentifier, 
+            MGBalanceSheetToolbarItemIdentifier,
+            MGIncomeStatementToolbarItemIdentifier,
+            MGTransactionsToolbarItemIdentifier,
+            MGSchedulesToolbarItemIdentifier,
+            MGBudgetToolbarItemIdentifier,
             nil];
 }
 
@@ -426,23 +433,58 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier 
  willBeInsertedIntoToolbar:(BOOL)inserted
 {
+    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
     if ([itemIdentifier isEqual:MGSearchFieldToolbarItemIdentifier]) {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
         [toolbarItem setLabel: @"Filter"];
         [toolbarItem setView:[searchField view]];
         [toolbarItem setMinSize:[[searchField view] frame].size];
         [toolbarItem setMaxSize:[[searchField view] frame].size];
-        return toolbarItem;
     }
     else if ([itemIdentifier isEqual:MGDateRangeToolbarItemIdentifier]) {
-        NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
         [toolbarItem setLabel: @"Date Range"];
         [toolbarItem setView:[dateRangeSelector view]];
         [toolbarItem setMinSize:[[dateRangeSelector view] frame].size];
         [toolbarItem setMaxSize:[[dateRangeSelector view] frame].size];
-        return toolbarItem;
     }
-    return nil;
+    else if ([itemIdentifier isEqual:MGBalanceSheetToolbarItemIdentifier])
+    {
+        [toolbarItem setLabel:@"Net Worth"];
+        [toolbarItem setImage:[NSImage imageNamed:@"balance_sheet_48"]];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(showBalanceSheet:)];
+    }
+    else if ([itemIdentifier isEqual:MGIncomeStatementToolbarItemIdentifier])
+    {
+        [toolbarItem setLabel:@"Profit/Loss"];
+        [toolbarItem setImage:[NSImage imageNamed:@"income_statement_48"]];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(showIncomeStatement:)];
+    }
+    else if ([itemIdentifier isEqual:MGTransactionsToolbarItemIdentifier])
+    {
+        [toolbarItem setLabel:@"Transactions"];
+        [toolbarItem setImage:[NSImage imageNamed:@"transaction_table_48"]];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(showTransactionTable:)];
+    }
+    else if ([itemIdentifier isEqual:MGSchedulesToolbarItemIdentifier])
+    {
+        [toolbarItem setLabel:@"Schedules"];
+        [toolbarItem setImage:[NSImage imageNamed:@"schedules_48"]];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(showScheduleTable:)];
+    }
+    else if ([itemIdentifier isEqual:MGBudgetToolbarItemIdentifier])
+    {
+        [toolbarItem setLabel:@"Budgets"];
+        [toolbarItem setImage:[NSImage imageNamed:@"budget_48"]];
+        [toolbarItem setTarget:self];
+        [toolbarItem setAction:@selector(showBudgetTable:)];
+    }
+    else {
+        toolbarItem = nil;
+    }
+    return toolbarItem;
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)aItem
