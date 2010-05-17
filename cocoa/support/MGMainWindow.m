@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGMainWindow.h"
 #import "NSEventAdditions.h"
+#import "MGMainWindowController.h"
 
 @implementation MGMainWindow
 - (BOOL)performKeyEquivalent:(NSEvent *)event 
@@ -29,7 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
             action = @selector(showSelectedAccount:);
         }
     }
-    id delegate = [self delegate];
+    MGMainWindowController *delegate = [self delegate];
     if ((action != nil) && ([delegate validateAction:action])) {
         [delegate performSelector:action withObject:delegate];
         return YES;
