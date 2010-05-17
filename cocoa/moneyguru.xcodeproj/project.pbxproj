@@ -101,6 +101,7 @@
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
 		CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */; };
 		CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88544811A1819C00268FBD /* MGMainWindowController.m */; };
+		CE88545111A1837B00268FBD /* MGMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88545011A1837B00268FBD /* MGMainWindow.m */; };
 		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
 		CE940B49118F2D0F00FA9FAD /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE940B48118F2D0F00FA9FAD /* DateRangeSelector.xib */; };
 		CE95AFCB10F769D2007AC512 /* MGAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AFCA10F769D2007AC512 /* MGAccountView.m */; };
@@ -407,6 +408,8 @@
 		CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransparentButtonCell.m; sourceTree = "<group>"; };
 		CE88544711A1819C00268FBD /* MGMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindowController.h; sourceTree = "<group>"; };
 		CE88544811A1819C00268FBD /* MGMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindowController.m; sourceTree = "<group>"; };
+		CE88544F11A1837B00268FBD /* MGMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindow.h; sourceTree = "<group>"; };
+		CE88545011A1837B00268FBD /* MGMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindow.m; sourceTree = "<group>"; };
 		CE8CD7AC1042E340004B30E0 /* budget_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_16.png; sourceTree = "<group>"; };
 		CE8E44BC11932F3C00D21EF0 /* PyAccountFlowGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountFlowGraph.h; sourceTree = "<group>"; };
 		CE940B48118F2D0F00FA9FAD /* DateRangeSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateRangeSelector.xib; sourceTree = "<group>"; };
@@ -922,6 +925,8 @@
 		CE873A9C0E21622F004F63E9 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				CE88544F11A1837B00268FBD /* MGMainWindow.h */,
+				CE88545011A1837B00268FBD /* MGMainWindow.m */,
 				CE4C22940F7FB37D00845640 /* MGGraphic.h */,
 				CE6E000D0F4ECD0B00FE7628 /* MGChartView.h */,
 				CE6E000E0F4ECD0B00FE7628 /* MGChartView.m */,
@@ -1431,6 +1436,7 @@
 				CE647EA311730765006D28BA /* HSTable.m in Sources */,
 				CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */,
 				CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */,
+				CE88545111A1837B00268FBD /* MGMainWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

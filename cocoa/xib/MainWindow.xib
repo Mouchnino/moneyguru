@@ -44,7 +44,7 @@
 				<string key="NSWindowRect">{{314, 161}, {800, 600}}</string>
 				<int key="NSWTFlags">1886914560</int>
 				<string key="NSWindowTitle">moneyGuru</string>
-				<string key="NSWindowClass">NSWindow</string>
+				<string key="NSWindowClass">MGMainWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{600, 300}</string>
@@ -493,6 +493,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MGMainWindow</string>
+					<string key="superclassName">NSWindow</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">support/MGMainWindow.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

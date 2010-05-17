@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGMainWindowController.h"
 #import "Utils.h"
 #import "MGConst.h"
-#import "NSEventAdditions.h"
 
 @implementation MGMainWindowController
 - (id)initWithDocument:(MGDocument *)document
@@ -102,37 +101,7 @@ http://www.hardcoded.net/licenses/hs_license
     return (MGDocument *)[super document];
 }
 
-- (void)keyDown:(NSEvent *)event 
-{
-    if (![self dispatchSpecialKeys:event])
-	{
-        [super keyDown:event];
-	}
-}
-
 /* Private */
-- (BOOL)dispatchSpecialKeys:(NSEvent *)event
-{
-    SEL action = nil;
-    if ([event modifierKeysFlags] == (NSCommandKeyMask | NSShiftKeyMask))
-    {
-        if ([event isLeft])
-            action = @selector(showPreviousView:);
-        else if ([event isRight])
-            action = @selector(showNextView:);
-    }
-    else if ([event modifierKeysFlags] == NSCommandKeyMask)
-    {
-        if ([event isLeft])
-            action = @selector(navigateBack:);
-        else if ([event isRight])
-            action = @selector(showSelectedAccount:);
-    }
-    if ((action != nil) && ([self validateAction:action]))
-        [self performSelector:action withObject:self];
-    return action != nil;
-}
-
 - (BOOL)validateAction:(SEL)action
 {
     if (action == @selector(newGroup:))
@@ -515,6 +484,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSInteger index = [[self py] currentPaneIndex];
     [tabView selectTabViewItemAtIndex:index];
     top = [subviews objectAtIndex:index];
+    [[self window] makeFirstResponder:[[top view] nextKeyView]];
 }
 
 - (void)refreshPanes

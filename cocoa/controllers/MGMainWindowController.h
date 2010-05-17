@@ -65,7 +65,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyMainWindow *)py;
 - (MGDocument *)document;
 /* Private */
-- (BOOL)dispatchSpecialKeys:(NSEvent *)event;
 - (BOOL)validateAction:(SEL)action;
 
 /* Actions */
