@@ -13,6 +13,8 @@ http://www.hardcoded.net/licenses/hs_license
 @interface MGBaseView : HSGUIController
 {
     IBOutlet NSView *wholeView;
+    IBOutlet NSResponder *mainResponder;
 }
 - (MGPrintView *)viewToPrint;
+- (NSResponder *)mainResponder;
 @end

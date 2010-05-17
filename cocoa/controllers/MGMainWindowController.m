@@ -484,7 +484,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSInteger index = [[self py] currentPaneIndex];
     [tabView selectTabViewItemAtIndex:index];
     top = [subviews objectAtIndex:index];
-    [[self window] makeFirstResponder:[[top view] nextKeyView]];
+    [[self window] makeFirstResponder:[top mainResponder]];
 }
 
 - (void)refreshPanes

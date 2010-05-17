@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10C540</string>
-		<string key="IBDocument.InterfaceBuilderVersion">740</string>
-		<string key="IBDocument.AppKitVersion">1038.25</string>
-		<string key="IBDocument.HIToolboxVersion">458.00</string>
+		<string key="IBDocument.SystemVersion">10D573</string>
+		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">740</string>
+			<string key="NS.object.0">762</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -528,14 +528,6 @@
 					<int key="connectionID">40</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">nextKeyView</string>
-						<reference key="source" ref="15180194"/>
-						<reference key="destination" ref="87066603"/>
-					</object>
-					<int key="connectionID">41</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">fontSize: values.TableFontSize</string>
 						<reference key="source" ref="541030972"/>
@@ -674,6 +666,14 @@
 						<reference key="destination" ref="502161932"/>
 					</object>
 					<int key="connectionID">60</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">mainResponder</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="920014116"/>
+					</object>
+					<int key="connectionID">61</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1005,7 +1005,7 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">60</int>
+			<int key="maxID">61</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1017,9 +1017,38 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 						<string key="NS.key.0">delegate</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="792888489">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="547106070">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">AMButtonBar/AMButtonBar.h</string>
+						<string key="minorKey">../ambuttonbar/AMButtonBar.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">HSGUIController</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">controllers/HSGUIController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MGBaseView</string>
+					<string key="superclassName">HSGUIController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>mainResponder</string>
+							<string>wholeView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSResponder</string>
+							<string>NSView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">controllers/MGBaseView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1061,7 +1090,7 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MGTransactionView</string>
-					<string key="superclassName">NSObject</string>
+					<string key="superclassName">MGBaseView</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -1069,14 +1098,12 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 							<string>filterBarView</string>
 							<string>tableView</string>
 							<string>totalsLabel</string>
-							<string>wholeView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AMButtonBar</string>
 							<string>MGTableView</string>
 							<string>NSTextField</string>
-							<string>NSView</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1093,27 +1120,13 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="792888489"/>
+					<reference key="sourceIdentifier" ref="547106070"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">PSMTabBarControl/PSMTabBarControl.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">controllers/MGFieldEditor.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">support/MGOutlineView.h</string>
+						<string key="minorKey">../psmtabbarcontrol/PSMTabBarControl.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1124,19 +1137,19 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">support/MGTextField.h</string>
+						<string key="minorKey">views/HSOutlineView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="224720750">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="671775093">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">support/NSTableViewAdditions.h</string>
+						<string key="minorKey">views/NSTableViewAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSTableView</string>
-					<reference key="sourceIdentifier" ref="224720750"/>
+					<reference key="sourceIdentifier" ref="671775093"/>
 				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
@@ -1603,6 +1616,7 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
@@ -1618,5 +1632,9 @@ aGUgdmlldyAoYW5kIGR1cmluZyBleGVjdXRpb24sIGl0J3MgYXQgdGhlIGJvdHRvbSk</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../moneyguru.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">NSSwitch</string>
+			<string key="NS.object.0">{15, 15}</string>
+		</object>
 	</data>
 </archive>

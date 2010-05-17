@@ -18,4 +18,9 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return nil;
 }
+
+- (NSResponder *)mainResponder
+{
+    return mainResponder;
+}
 @end
