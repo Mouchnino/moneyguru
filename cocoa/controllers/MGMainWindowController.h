@@ -33,7 +33,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
 
-@interface MGMainWindow : HSWindowController
+@interface MGMainWindowController : HSWindowController
 {
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;

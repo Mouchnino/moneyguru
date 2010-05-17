@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="119759130">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1063475451">
-				<string key="NSClassName">MGMainWindow</string>
+				<string key="NSClassName">MGMainWindowController</string>
 			</object>
 			<object class="NSCustomObject" id="290543511">
 				<string key="NSClassName">FirstResponder</string>
@@ -496,12 +496,13 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MGMainWindow</string>
+					<string key="className">MGMainWindowController</string>
 					<string key="superclassName">HSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>closeTab:</string>
 							<string>delete:</string>
 							<string>duplicateItem:</string>
 							<string>editItemInfo:</string>
@@ -512,6 +513,7 @@
 							<string>navigateBack:</string>
 							<string>newGroup:</string>
 							<string>newItem:</string>
+							<string>newTab:</string>
 							<string>search:</string>
 							<string>selectAllTransactionsRange:</string>
 							<string>selectCustomDateRange:</string>
@@ -526,7 +528,6 @@
 							<string>selectYearToDateRange:</string>
 							<string>showBalanceSheet:</string>
 							<string>showBudgetTable:</string>
-							<string>showEntryTable:</string>
 							<string>showIncomeStatement:</string>
 							<string>showNextView:</string>
 							<string>showPreviousView:</string>
@@ -538,6 +539,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -588,15 +590,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">controllers/MGMainWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGMainWindow</string>
-					<string key="superclassName">HSWindowController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
+						<string key="minorKey">controllers/MGMainWindowController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

@@ -93,7 +93,6 @@
 		CE873AB90E21622F004F63E9 /* MGDateFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A7D0E21622F004F63E9 /* MGDateFieldEditor.m */; };
 		CE873ABA0E21622F004F63E9 /* MGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A7F0E21622F004F63E9 /* MGDocument.m */; };
 		CE873ABC0E21622F004F63E9 /* MGFieldEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A830E21622F004F63E9 /* MGFieldEditor.m */; };
-		CE873ABF0E21622F004F63E9 /* MGMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A890E21622F004F63E9 /* MGMainWindow.m */; };
 		CE873AC00E21622F004F63E9 /* MGSplitTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8B0E21622F004F63E9 /* MGSplitTable.m */; };
 		CE873AC10E21622F004F63E9 /* MGTransactionInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8D0E21622F004F63E9 /* MGTransactionInspector.m */; };
 		CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8F0E21622F004F63E9 /* MGUndoManager.m */; };
@@ -101,6 +100,7 @@
 		CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA60E21622F004F63E9 /* MGScrollView.m */; };
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
 		CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */; };
+		CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88544811A1819C00268FBD /* MGMainWindowController.m */; };
 		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
 		CE940B49118F2D0F00FA9FAD /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE940B48118F2D0F00FA9FAD /* DateRangeSelector.xib */; };
 		CE95AFCB10F769D2007AC512 /* MGAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AFCA10F769D2007AC512 /* MGAccountView.m */; };
@@ -384,8 +384,6 @@
 		CE873A7F0E21622F004F63E9 /* MGDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDocument.m; sourceTree = "<group>"; };
 		CE873A820E21622F004F63E9 /* MGFieldEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGFieldEditor.h; sourceTree = "<group>"; };
 		CE873A830E21622F004F63E9 /* MGFieldEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGFieldEditor.m; sourceTree = "<group>"; };
-		CE873A880E21622F004F63E9 /* MGMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindow.h; sourceTree = "<group>"; };
-		CE873A890E21622F004F63E9 /* MGMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindow.m; sourceTree = "<group>"; };
 		CE873A8A0E21622F004F63E9 /* MGSplitTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitTable.h; sourceTree = "<group>"; };
 		CE873A8B0E21622F004F63E9 /* MGSplitTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitTable.m; sourceTree = "<group>"; };
 		CE873A8C0E21622F004F63E9 /* MGTransactionInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionInspector.h; sourceTree = "<group>"; };
@@ -407,6 +405,8 @@
 		CE873AA80E21622F004F63E9 /* MGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableView.m; sourceTree = "<group>"; };
 		CE873AAD0E21622F004F63E9 /* MGTransparentButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransparentButtonCell.h; sourceTree = "<group>"; };
 		CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransparentButtonCell.m; sourceTree = "<group>"; };
+		CE88544711A1819C00268FBD /* MGMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindowController.h; sourceTree = "<group>"; };
+		CE88544811A1819C00268FBD /* MGMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindowController.m; sourceTree = "<group>"; };
 		CE8CD7AC1042E340004B30E0 /* budget_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_16.png; sourceTree = "<group>"; };
 		CE8E44BC11932F3C00D21EF0 /* PyAccountFlowGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountFlowGraph.h; sourceTree = "<group>"; };
 		CE940B48118F2D0F00FA9FAD /* DateRangeSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateRangeSelector.xib; sourceTree = "<group>"; };
@@ -781,16 +781,18 @@
 		CE873A6F0E21622F004F63E9 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
-				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
-				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
-				CE74808C11995EF400D59C50 /* MGEmptyView.m */,
 				CED1FC8410F7903800634D72 /* networth */,
 				CED1FC8710F7903800634D72 /* profit */,
 				CEEDCEE610F75FF9003BC1BA /* transaction */,
 				CE95AFC810F769D2007AC512 /* account */,
 				CEBB300210F76E3600FC4C7A /* schedule */,
 				CEBB2FFA10F76BD100FC4C7A /* budget */,
+				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
+				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
+				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
+				CE74808C11995EF400D59C50 /* MGEmptyView.m */,
+				CE88544711A1819C00268FBD /* MGMainWindowController.h */,
+				CE88544811A1819C00268FBD /* MGMainWindowController.m */,
 				CE036D62103AE51100E172F8 /* MGPanel.h */,
 				CE036D63103AE51100E172F8 /* MGPanel.m */,
 				CE41C98E0E2B52CD006D3BEA /* MGTable.h */,
@@ -846,8 +848,6 @@
 				CE873A830E21622F004F63E9 /* MGFieldEditor.m */,
 				CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */,
 				CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */,
-				CE873A880E21622F004F63E9 /* MGMainWindow.h */,
-				CE873A890E21622F004F63E9 /* MGMainWindow.m */,
 				0726B2B20E49E1260059E8A7 /* MGReport.h */,
 				0726B2B30E49E1260059E8A7 /* MGReport.m */,
 				CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */,
@@ -1328,7 +1328,6 @@
 				CE873AB90E21622F004F63E9 /* MGDateFieldEditor.m in Sources */,
 				CE873ABA0E21622F004F63E9 /* MGDocument.m in Sources */,
 				CE873ABC0E21622F004F63E9 /* MGFieldEditor.m in Sources */,
-				CE873ABF0E21622F004F63E9 /* MGMainWindow.m in Sources */,
 				CE873AC00E21622F004F63E9 /* MGSplitTable.m in Sources */,
 				CE873AC10E21622F004F63E9 /* MGTransactionInspector.m in Sources */,
 				CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */,
@@ -1431,6 +1430,7 @@
 				CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */,
 				CE647EA311730765006D28BA /* HSTable.m in Sources */,
 				CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */,
+				CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

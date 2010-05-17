@@ -6,12 +6,12 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import "MGMainWindow.h"
+#import "MGMainWindowController.h"
 #import "Utils.h"
 #import "MGConst.h"
 #import "NSEventAdditions.h"
 
-@implementation MGMainWindow
+@implementation MGMainWindowController
 - (id)initWithDocument:(MGDocument *)document
 {
     self = [super initWithNibName:@"MainWindow" pyClassName:@"PyMainWindow" pyParent:[document py]];

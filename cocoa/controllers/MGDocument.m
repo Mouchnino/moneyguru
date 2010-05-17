@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGDocument.h"
-#import "MGMainWindow.h"
+#import "MGMainWindowController.h"
 #import "MGConst.h"
 #import "Utils.h"
 #import "Dialogs.h"
@@ -71,7 +71,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)makeWindowControllers 
 {
-    MGMainWindow *controller = [[MGMainWindow alloc] initWithDocument:self];
+    MGMainWindowController *controller = [[MGMainWindowController alloc] initWithDocument:self];
     /* Ok, this call below to set docoument to nil is hacky, but the thing is that we need to set
      * the document during initialization to avoid crashes, and then we need to set it to nil here
      * or else the window controller won't really get added in addWindowController:
@@ -85,7 +85,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSPrintInfo *pi = [self printInfo];
     [pi setHorizontalPagination:NSFitPagination];
-    MGMainWindow *mw = [[self windowControllers] objectAtIndex:0];
+    MGMainWindowController *mw = [[self windowControllers] objectAtIndex:0];
     MGPrintView *viewToPrint = [mw viewToPrint];
     [viewToPrint setUpWithPrintInfo:pi];
     return [NSPrintOperation printOperationWithView:viewToPrint printInfo:pi];
