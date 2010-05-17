@@ -35,6 +35,6 @@ http://www.hardcoded.net/licenses/hs_license
         [delegate performSelector:action withObject:delegate];
         return YES;
     }
-    return NO;
+    return [super performKeyEquivalent:event];
 }
 @end
