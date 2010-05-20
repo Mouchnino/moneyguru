@@ -9,7 +9,7 @@
 from collections import namedtuple
 
 from hsutil.misc import first
-from hsutil.notify import Repeater
+from hsutil.notify import Repeater, Listener
 
 from ..const import PaneType
 from ..exception import OperationAborted
@@ -44,7 +44,9 @@ class MainWindow(Repeater):
         self.view.refresh_panes()
         self.current_pane_index = 0
         for child in children:
-            child.connect()
+            # Panels are not listeners
+            if isinstance(child, Listener):
+                child.connect()
     
     # We don't override disconnect because we never disconnect the main window anyway...
     #--- Private

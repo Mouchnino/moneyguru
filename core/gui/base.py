@@ -121,10 +121,7 @@ class DocumentGUIObject(Listener, DocumentNotificationsMixin):
         Listener.__init__(self, document)
         self.view = view
         self.document = document
-    
-    @property
-    def app(self):
-        return self.document.app
+        self.app = document.app
     
 
 class ViewChild(Listener, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
@@ -175,7 +172,12 @@ class ImportWindowGUIObject(Listener):
         pass
     
 
-class GUIPanel(DocumentGUIObject):
+class GUIPanel(object):
+    def __init__(self, view, document):
+        self.view = view
+        self.document = document
+        self.app = document.app
+    
     def _load(self):
         raise NotImplementedError()
     
