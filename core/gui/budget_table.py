@@ -12,6 +12,8 @@ from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
 class BudgetTable(GUITable, ViewChild):
+    INVALIDATING_MESSAGES = set(['budget_changed', 'budget_deleted', 'account_deleted'])
+    
     def __init__(self, view, budget_view):
         ViewChild.__init__(self, view, budget_view)
         GUITable.__init__(self)
@@ -24,8 +26,7 @@ class BudgetTable(GUITable, ViewChild):
         for budget in self.document.budgets:
             self.append(BudgetTableRow(self, budget))
     
-    def connect(self):
-        ViewChild.connect(self)
+    def _revalidate(self):
         self.refresh()
         self.view.refresh()
     

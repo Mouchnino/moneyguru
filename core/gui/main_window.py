@@ -43,10 +43,8 @@ class MainWindow(Repeater):
         self.panes = [self._create_pane(pt) for pt in initital_pane_types]
         self.view.refresh_panes()
         self.current_pane_index = 0
-    
-    def connect(self):
-        Repeater.connect(self)
-        self.daterange_selector.connect()
+        for child in children:
+            child.connect()
     
     # We don't override disconnect because we never disconnect the main window anyway...
     #--- Private
@@ -59,11 +57,11 @@ class MainWindow(Repeater):
         if self._current_pane is pane:
             return
         if self._current_pane is not None:
-            self._current_pane.view.disconnect()
+            self._current_pane.view.hide()
         self._current_pane = pane
         if pane.account is not None:
             self._shown_account = pane.account
-        self._current_pane.view.connect()
+        self._current_pane.view.show()
         self.view.change_current_pane()
     
     def _close_irrelevant_account_panes(self):

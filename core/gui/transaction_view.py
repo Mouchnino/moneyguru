@@ -17,6 +17,9 @@ from .base import BaseView
 
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
+    INVALIDATING_MESSAGES = set(['filter_applied', 'transaction_changed', 'transaction_deleted',
+        'date_range_changed', 'transactions_imported', 'budget_changed', 'budget_deleted',
+        'schedule_changed', 'schedule_deleted'])
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
@@ -27,9 +30,8 @@ class TransactionView(BaseView):
         BaseView.set_children(self, children)
         self.ttable, self.tfbar = children
     
-    def connect(self):
+    def _revalidate(self):
         self._visible_transactions = None
-        BaseView.connect(self)
         self._refresh_totals()
         self.view.refresh_totals()
     

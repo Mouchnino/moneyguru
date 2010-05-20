@@ -345,6 +345,7 @@ def test_set_row_attr(app):
     # the changes didn't go down to Transaction
     table = TransactionTable(app.ttable_gui, app.tview)
     table.connect()
+    table.show()
     assert_row_has_original_attrs(table[0])
 
 @with_app(app_one_transaction)
@@ -665,11 +666,11 @@ def test_explicit_selection(app):
 @with_app(app_three_transactions)
 def test_selection(app):
     # TransactionTable stays in sync with EntryTable.
-    app.ttable.disconnect() # this disconnect scheme will eventually be embedded in the main testcase
+    app.ttable.hide() # this disconnect scheme will eventually be embedded in the main testcase
     app.etable.select([0, 1])
     app.clear_gui_calls()
-    app.etable.disconnect()
-    app.ttable.connect()
+    app.etable.hide()
+    app.ttable.show()
     eq_(app.ttable.selected_indexes, [0, 1])
     app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row'])
 
@@ -712,7 +713,6 @@ class ThreeTransactionsEverythingReconciled(TestCase):
         self.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
         self.aview.toggle_reconciliation_mode() # commit reconciliation
         self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
     
     def test_move_while_filtered(self):
         # The ttable is correctly updated after a move with a filter applied

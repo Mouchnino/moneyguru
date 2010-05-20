@@ -90,6 +90,32 @@ class SheetViewNotificationsMixin(object):
         pass
     
 
+class HideableObject(object):
+    INVALIDATING_MESSAGES = set()
+    
+    def __init__(self):
+        self._hidden = True
+        self._invalidated = True
+    
+    #--- Protected
+    def _process_message(self, msg):
+        if msg in self.INVALIDATING_MESSAGES:
+            self._invalidated = True
+    
+    def _revalidate(self):
+        pass
+    
+    #--- Public
+    def show(self):
+        self._hidden = False
+        if self._invalidated:
+            self._revalidate()
+            self._invalidated = False
+    
+    def hide(self):
+        self._hidden = True
+    
+
 class DocumentGUIObject(Listener, DocumentNotificationsMixin):
     def __init__(self, view, document):
         Listener.__init__(self, document)
@@ -101,16 +127,23 @@ class DocumentGUIObject(Listener, DocumentNotificationsMixin):
         return self.document.app
     
 
-class ViewChild(Listener, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+class ViewChild(Listener, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     # yeah, there's a little ambiguity here... `view` is the GUI view, where GUI callbacks are made.
     # `parent` is the parent view instance, which is a core instance.
     def __init__(self, view, parent_view):
         Listener.__init__(self, parent_view)
+        HideableObject.__init__(self)
         self.view = view
         self.parent_view = parent_view
         self.mainwindow = parent_view.mainwindow
         self.document = self.mainwindow.document
         self.app = self.document.app
+    
+    def dispatch(self, msg):
+        if self._hidden:
+            self._process_message(msg)
+        else:
+            Listener.dispatch(self, msg)
     
 
 class TransactionPanelGUIObject(Listener):
@@ -176,29 +209,39 @@ class MainWindowPanel(GUIPanel):
         self.mainwindow = mainwindow
     
 
-class BaseView(Repeater, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     VIEW_TYPE = -1
     
     def __init__(self, view, mainwindow):
         Repeater.__init__(self, mainwindow)
+        HideableObject.__init__(self)
         self._children = []
         self.view = view
         self.mainwindow = mainwindow
         self.document = mainwindow.document
         self.app = mainwindow.document.app
     
+    def dispatch(self, msg):
+        if self._hidden:
+            self._process_message(msg)
+            self._repeat_message(msg)
+        else:
+            Repeater.dispatch(self, msg)
+    
     # This has to be call *once* and *right after creation*. The children are set after
     # initialization so that we can pass a reference to self during children's initialization.
     def set_children(self, children):
         self._children = children
-    
-    def connect(self):
-        Listener.connect(self)
-        for child in self._children:
+        for child in children:
             child.connect()
     
-    def disconnect(self):
-        Listener.disconnect(self)
+    def show(self):
+        HideableObject.show(self)
         for child in self._children:
-            child.disconnect()
+            child.show()
+    
+    def hide(self):
+        HideableObject.hide(self)
+        for child in self._children:
+            child.hide()
     

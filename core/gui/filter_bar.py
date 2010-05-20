@@ -9,12 +9,15 @@
 from .base import ViewChild
 
 class FilterBar(ViewChild):
+    INVALIDATING_MESSAGES = set(['filter_applied'])
+    
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
     
     #--- Override
-    def connect(self):
-        ViewChild.connect(self)
+    # XXX should be done on _revalidate. is view.refresh really always needed?
+    def show(self):
+        ViewChild.show(self)
         self.view.refresh()
     
     #--- Properties
@@ -38,7 +41,8 @@ class EntryFilterBar(FilterBar): # disables buttons
         self._disabled_buttons = False
     
     #--- Override
-    def connect(self):
+    def show(self):
+        FilterBar.show(self)
         account = self.mainwindow.shown_account
         if account is not None and account.is_income_statement_account():
             self.document.filter_type = None
@@ -49,5 +53,4 @@ class EntryFilterBar(FilterBar): # disables buttons
             if self._disabled_buttons:
                 self.view.enable_transfers()
                 self._disabled_buttons = False
-        FilterBar.connect(self)
     

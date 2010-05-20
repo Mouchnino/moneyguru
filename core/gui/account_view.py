@@ -25,33 +25,39 @@ class AccountView(BaseView):
     def set_children(self, children):
         self.etable, self.balgraph, self.bargraph, self.efbar = children
         self._shown_graph = self.balgraph
-        # we count the graphs separately because the connect/disconnect rules for them are special
+        # we count the graphs separately because the show/hide rules for them are special
         BaseView.set_children(self, [self.etable, self.efbar])
+        self.balgraph.connect()
+        self.bargraph.connect()
     
-    def connect(self):
+    def show(self):
         # XXX Huh oh, this is very inefficient (but for now the only way to make tests pass)! Once
         # the view refactoring is over, the views will have to be connected at all times to make
         # the invalidation of their cache more efficient. Then, we'll have show()/hide() methods
         # where children will be refreshed.
+        # XXX all of these forced refreshes below are very ugly, but necessary to make tests pass
+        # they have to be cleaned up.
         self._visible_entries = None
-        BaseView.connect(self)
+        BaseView.show(self)
         account = self.mainwindow.shown_account
         if account is None:
             return
+        self.etable._revalidate()
         if account.is_balance_sheet_account():
             self._shown_graph = self.balgraph
             self.view.show_line_graph()
         else:
             self._shown_graph = self.bargraph
             self.view.show_bar_graph()
-        self._shown_graph.connect()
+        self._shown_graph._invalidated = True
+        self._shown_graph.show()
         self.view.refresh_totals()
         self.view.refresh_reconciliation_button()
     
-    def disconnect(self):
-        BaseView.disconnect(self)
-        self.balgraph.disconnect()
-        self.bargraph.disconnect()
+    def hide(self):
+        BaseView.hide(self)
+        self.balgraph.hide()
+        self.bargraph.hide()
     
     #--- Private
     def _invalidate_cache(self):

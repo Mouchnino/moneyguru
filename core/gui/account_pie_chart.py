@@ -19,6 +19,9 @@ from .base import SheetViewNotificationsMixin
 from .pie_chart import PieChart
 
 class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
+    INVALIDATING_MESSAGES = PieChart.INVALIDATING_MESSAGES | set(['accounts_excluded',
+        'group_expanded_state_changed'])
+    
     def __init__(self, view, parent_view, account_type, title):
         PieChart.__init__(self, view, parent_view)
         self._account_type = account_type
@@ -49,12 +52,10 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
     
     #--- Event Handlers
     def accounts_excluded(self):
-        self.compute()
-        self.view.refresh()
+        self._revalidate()
     
     def group_expanded_state_changed(self):
-        self.compute()
-        self.view.refresh()
+        self._revalidate()
     
 
 class _BalancePieChart(_AccountPieChart):

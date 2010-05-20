@@ -23,6 +23,10 @@ def get_delta_perc(delta_amount, start_amount):
 
 class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     PREFERENCE_PREFIX = 'Sheet'
+    INVALIDATING_MESSAGES = set(['account_added', 'account_changed', 'account_deleted',
+        'accounts_excluded', 'budget_changed', 'budget_deleted', 'date_range_changed',
+        'schedule_changed', 'schedule_deleted', 'transaction_changed', 'transaction_deleted', 
+        'transactions_imported', 'document_changed', 'performed_undo_or_redo'])
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
@@ -43,8 +47,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         account = node.account if isinstance(node, Node) and node.is_account else None
         self.mainwindow.selected_account = account
     
-    def connect(self):
-        ViewChild.connect(self)
+    def _revalidate(self):
         self.refresh()
         self._update_selection()
         self.view.refresh()

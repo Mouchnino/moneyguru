@@ -13,6 +13,8 @@ from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
 class ScheduleTable(GUITable, ViewChild):
+    INVALIDATING_MESSAGES = set(['schedule_changed', 'schedule_deleted', 'account_deleted'])
+    
     def __init__(self, view, schedule_view):
         ViewChild.__init__(self, view, schedule_view)
         GUITable.__init__(self)
@@ -25,8 +27,7 @@ class ScheduleTable(GUITable, ViewChild):
         for schedule in self.document.schedules:
             self.append(ScheduleTableRow(self, schedule))
     
-    def connect(self):
-        ViewChild.connect(self)
+    def _revalidate(self):
         self.refresh()
         self.view.refresh()
     

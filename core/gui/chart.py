@@ -9,9 +9,13 @@
 from .base import ViewChild
 
 class Chart(ViewChild):
+    INVALIDATING_MESSAGES = set(['account_changed', 'account_deleted', 'accounts_excluded', 
+        'budget_changed', 'budget_deleted', 'date_range_changed', 'document_changed',
+        'performed_undo_or_redo', 'schedule_changed', 'schedule_deleted', 'transaction_changed',
+        'transaction_deleted', 'transactions_imported'])
+    
     #--- Override
-    def connect(self):
-        ViewChild.connect(self)
+    def _revalidate(self):
         self.compute()
         self.view.refresh()
     
@@ -21,8 +25,7 @@ class Chart(ViewChild):
     
     #--- Event Handlers
     def _data_changed(self):
-        self.compute()
-        self.view.refresh()
+        self._revalidate()
     
     account_changed = _data_changed
     account_deleted = _data_changed

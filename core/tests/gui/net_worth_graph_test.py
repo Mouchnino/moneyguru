@@ -10,7 +10,7 @@ from datetime import date
 
 from hsutil.currency import CAD, USD
 
-from ..base import TestCase, CommonSetup
+from ..base import TestCase
 from ...model.account import AccountType
 
 class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
@@ -21,16 +21,20 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
             USD.set_CAD_value(1.42, date(2008, 7, i))
         for i in range(15, 32):
             USD.set_CAD_value(1.54, date(2008, 7, i))
-        self.add_account_legacy('asset1')
+        self.add_account('asset1')
+        self.mainwindow.show_account()
         self.add_entry('12/6/2008', increase='10') # previous balance
         self.add_entry('3/7/2008', increase='50')
         self.add_entry('5/7/2008', increase='80')
-        self.add_account_legacy('asset2')
+        self.add_account('asset2')
+        self.mainwindow.show_account()
         self.add_entry('1/7/2008', increase='32')
         self.add_entry('5/7/2008', increase='22')
-        self.add_account_legacy('liability1', CAD, account_type=AccountType.Liability)
+        self.add_account('liability1', CAD, account_type=AccountType.Liability)
+        self.mainwindow.show_account()
         self.add_entry('1/7/2008', increase='10')
-        self.add_account_legacy('liability2', account_type=AccountType.Liability)
+        self.add_account('liability2', account_type=AccountType.Liability)
+        self.mainwindow.show_account()
         self.add_entry('8/7/2008', increase='100')
         self.mainwindow.select_balance_sheet()
         self.clear_gui_calls()
@@ -45,8 +49,8 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
     def test_budget(self):
         # when we add a budget, the balance graph will show a regular progression throughout date range
         self.mock_today(2008, 7, 27)
-        self.add_account_legacy('income', account_type=AccountType.Income)
-        self.add_account_legacy('expense', account_type=AccountType.Expense)
+        self.add_account('income', account_type=AccountType.Income)
+        self.add_account('expense', account_type=AccountType.Expense)
         self.add_budget('income', 'asset1', '300')
         self.add_budget('expense', 'asset1', '100')
         self.mainwindow.select_balance_sheet()
@@ -71,11 +75,9 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
     def test_budget_target_excluded(self):
         # when the budget target is excluded, don't show it's budgeted data
         self.mock_today(2008, 7, 27)
-        self.mainwindow.select_income_statement() # refresh graph
-        self.mainwindow.select_balance_sheet() # refresh graph
+        self.add_account('asset3')
+        self.add_account('income', account_type=AccountType.Income)
         without_budget = self.nw_graph_data()
-        self.add_account_legacy('asset3')
-        self.add_account_legacy('income', account_type=AccountType.Income)
         self.add_budget('income', 'asset3', '300')
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2] # asset3

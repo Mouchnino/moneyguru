@@ -13,6 +13,10 @@ from .table import GUITable
 class TransactionTableBase(GUITable, ViewChild):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
+    INVALIDATING_MESSAGES = set(['filter_applied', 'transaction_changed', 'transaction_deleted',
+        'date_range_changed', 'transactions_imported', 'transactions_selected', 'budget_changed',
+        'budget_deleted', 'schedule_changed', 'schedule_deleted'])
+    
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         GUITable.__init__(self)
@@ -35,8 +39,7 @@ class TransactionTableBase(GUITable, ViewChild):
     def add(self):
         GUITable.add(self)
     
-    def connect(self):
-        ViewChild.connect(self)
+    def _revalidate(self):
         self.refresh_and_restore_selection()
     
     #--- Public
