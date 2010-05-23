@@ -364,7 +364,7 @@ class PyReport(PyOutline):
         return self.py.expanded_paths
     
 
-class PyPanel(PyListener):
+class PyPanel(PyGUIObject):
     def savePanel(self):
         self.py.save()
     
