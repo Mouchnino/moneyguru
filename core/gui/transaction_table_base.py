@@ -7,15 +7,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base import ViewChild
+from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 from .table import GUITable
 
 class TransactionTableBase(GUITable, ViewChild):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
-    INVALIDATING_MESSAGES = set(['filter_applied', 'transaction_changed', 'transaction_deleted',
-        'date_range_changed', 'transactions_imported', 'transactions_selected', 'budget_changed',
-        'budget_deleted', 'schedule_changed', 'schedule_deleted'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
+        'date_range_changed', 'transactions_selected'])
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)

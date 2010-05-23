@@ -81,6 +81,9 @@ class DocumentNotificationsMixin(object):
     
 
 class MainWindowNotificationsMixin(object):
+    def shown_account_changed(self):
+        pass
+    
     def transactions_selected(self):
         pass
     
@@ -89,6 +92,11 @@ class SheetViewNotificationsMixin(object):
     def group_expanded_state_changed(self):
         pass
     
+
+MESSAGES_DOCUMENT_CHANGED = set(['account_added', 'account_changed', 'account_deleted',
+    'transaction_changed', 'transaction_deleted', 'transactions_imported', 'budget_changed',
+    'budget_deleted', 'schedule_changed', 'schedule_deleted', 'document_changed',
+    'performed_undo_or_redo'])
 
 class HideableObject(object):
     INVALIDATING_MESSAGES = set()

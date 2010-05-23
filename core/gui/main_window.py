@@ -61,8 +61,9 @@ class MainWindow(Repeater):
         if self._current_pane is not None:
             self._current_pane.view.hide()
         self._current_pane = pane
-        if pane.account is not None:
+        if pane.account is not None and pane.account is not self._shown_account:
             self._shown_account = pane.account
+            self.notify('shown_account_changed')
         self._current_pane.view.show()
         self.view.change_current_pane()
     
@@ -330,7 +331,10 @@ class MainWindow(Repeater):
     
     @shown_account.setter
     def shown_account(self, account):
+        changed = account is not self._shown_account
         self._shown_account = account
+        if changed:
+            self.notify('shown_account_changed')
         if account is not None:
             # Try to find a suitable pane, or add a new one
             index = first(i for i, p in enumerate(self.panes) if p.account is account)

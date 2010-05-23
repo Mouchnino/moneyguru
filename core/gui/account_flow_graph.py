@@ -10,6 +10,8 @@
 from .bar_graph import BarGraph
 
 class AccountFlowGraph(BarGraph):
+    INVALIDATING_MESSAGES = BarGraph.INVALIDATING_MESSAGES | set(['shown_account_changed'])
+    
     def __init__(self, view, account_view):
         BarGraph.__init__(self, view, account_view)
     
@@ -30,4 +32,8 @@ class AccountFlowGraph(BarGraph):
     @property
     def title(self):
         return self.mainwindow.shown_account.name
+    
+    #--- Event Handlers
+    def shown_account_changed(self):
+        self._invalidated = True
     

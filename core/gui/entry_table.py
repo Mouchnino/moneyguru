@@ -16,6 +16,8 @@ from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
+    INVALIDATING_MESSAGES = TransactionTableBase.INVALIDATING_MESSAGES | set(['shown_account_changed'])
+    
     def __init__(self, view, account_view):
         TransactionTableBase.__init__(self, view, account_view)
         self.account = None
@@ -178,6 +180,9 @@ class EntryTable(TransactionTableBase):
         date = transactions[0].date if transactions else date_range.end
         delta = date - date_range.start
         self._delta_before_change = delta
+    
+    def shown_account_changed(self):
+        self._invalidated = True
     
     def transaction_changed(self):
         TransactionTableBase.transaction_changed(self)

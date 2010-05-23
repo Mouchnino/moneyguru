@@ -13,13 +13,12 @@ from ..const import PaneType
 from ..document import FilterType
 from ..model.account import AccountType
 from ..model.amount import convert_amount
-from .base import BaseView
+from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
-    INVALIDATING_MESSAGES = set(['filter_applied', 'transaction_changed', 'transaction_deleted',
-        'date_range_changed', 'transactions_imported', 'budget_changed', 'budget_deleted',
-        'schedule_changed', 'schedule_deleted'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
+        'date_range_changed'])
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)

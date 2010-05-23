@@ -11,6 +11,8 @@ from ..model.date import DateRange
 from .balance_graph import BalanceGraph
 
 class AccountBalanceGraph(BalanceGraph):
+    INVALIDATING_MESSAGES = BalanceGraph.INVALIDATING_MESSAGES | set(['shown_account_changed'])
+    
     def __init__(self, view, account_view):
         BalanceGraph.__init__(self, view, account_view)
         self._account = None
@@ -37,3 +39,8 @@ class AccountBalanceGraph(BalanceGraph):
     @property
     def currency(self):
         return self._account.currency
+    
+    #--- Event Handlers
+    def shown_account_changed(self):
+        self._invalidated = True
+    

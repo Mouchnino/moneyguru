@@ -6,13 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from .base import ViewChild
+from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 
 class Chart(ViewChild):
-    INVALIDATING_MESSAGES = set(['account_changed', 'account_deleted', 'accounts_excluded', 
-        'budget_changed', 'budget_deleted', 'date_range_changed', 'document_changed',
-        'performed_undo_or_redo', 'schedule_changed', 'schedule_deleted', 'transaction_changed',
-        'transaction_deleted', 'transactions_imported'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['accounts_excluded',
+        'date_range_changed'])
     
     #--- Override
     def _revalidate(self):

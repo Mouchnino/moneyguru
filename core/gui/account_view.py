@@ -11,10 +11,12 @@ from __future__ import unicode_literals
 
 from ..const import PaneType
 from ..document import FilterType
-from .base import BaseView
+from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
+        'date_range_changed', 'transactions_selected', 'shown_account_changed'])
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
@@ -30,29 +32,26 @@ class AccountView(BaseView):
         self.balgraph.connect()
         self.bargraph.connect()
     
-    def show(self):
+    def _revalidate(self):
         # XXX Huh oh, this is very inefficient (but for now the only way to make tests pass)! Once
         # the view refactoring is over, the views will have to be connected at all times to make
         # the invalidation of their cache more efficient. Then, we'll have show()/hide() methods
         # where children will be refreshed.
-        # XXX all of these forced refreshes below are very ugly, but necessary to make tests pass
-        # they have to be cleaned up.
-        self._visible_entries = None
+        self._invalidate_cache()
+        self.view.refresh_reconciliation_button()
+    
+    def show(self):
         BaseView.show(self)
         account = self.mainwindow.shown_account
         if account is None:
             return
-        self.etable._revalidate()
         if account.is_balance_sheet_account():
             self._shown_graph = self.balgraph
             self.view.show_line_graph()
         else:
             self._shown_graph = self.bargraph
             self.view.show_bar_graph()
-        self._shown_graph._invalidated = True
         self._shown_graph.show()
-        self.view.refresh_totals()
-        self.view.refresh_reconciliation_button()
     
     def hide(self):
         BaseView.hide(self)
@@ -163,6 +162,11 @@ class AccountView(BaseView):
     
     def performed_undo_or_redo(self):
         self._invalidate_cache()
+    
+    # If the account view is visible when the message is broadcasted, we won't get automatically
+    # invalidated, so we have to do it automatically.
+    def shown_account_changed(self):
+        self._invalidated = True
     
     def transactions_selected(self):
         self._refresh_totals()

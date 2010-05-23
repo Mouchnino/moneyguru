@@ -10,7 +10,7 @@ from hsgui import tree
 from hsutil.misc import first
 
 from ..exception import DuplicateAccountNameError
-from .base import ViewChild, SheetViewNotificationsMixin
+from .base import ViewChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
 
 EXPANDED_PATHS_PREFERENCE = 'ExpandedPaths'
 
@@ -23,10 +23,8 @@ def get_delta_perc(delta_amount, start_amount):
 
 class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     PREFERENCE_PREFIX = 'Sheet'
-    INVALIDATING_MESSAGES = set(['account_added', 'account_changed', 'account_deleted',
-        'accounts_excluded', 'budget_changed', 'budget_deleted', 'date_range_changed',
-        'schedule_changed', 'schedule_deleted', 'transaction_changed', 'transaction_deleted', 
-        'transactions_imported', 'document_changed', 'performed_undo_or_redo'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['accounts_excluded',
+        'date_range_changed'])
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
