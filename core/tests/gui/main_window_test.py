@@ -83,6 +83,29 @@ def test_initial_panes(app):
     eq_(app.mw.pane_type(4), PaneType.Budget)
 
 @with_app(TestApp)
+def test_move_pane(app):
+    # moving a pane takes a pane at a specified index and moves it to the dest index
+    app.mw.move_pane(2, 1)
+    eq_(app.mw.pane_label(1), "Transactions")
+    eq_(app.mw.pane_label(2), "Profit & Loss")
+    # when moving a pane, the dest index is the index *with* the pane at its original position,
+    # *not* the index with the pane removed from the list.
+    app.mw.move_pane(2, 3)
+    eq_(app.mw.pane_label(2), "Schedules")
+    eq_(app.mw.pane_label(3), "Profit & Loss")
+    # When the pane index is the same as the dest index, we do nothing.
+    app.mw.move_pane(2, 2)
+    eq_(app.mw.pane_label(1), "Transactions")
+    eq_(app.mw.pane_label(2), "Schedules")
+    eq_(app.mw.pane_label(3), "Profit & Loss")
+
+@with_app(TestApp)
+def test_move_pane_selected(app):
+    # When the moved pane is selected, the selection follows the pane.
+    app.mw.move_pane(0, 3)
+    eq_(app.mw.current_pane_index, 3)
+
+@with_app(TestApp)
 def test_select_pane_of_type_creates_new_pane_if_needed(app):
     # calling select_pane_of_type() creates a new pane if needed
     app.mw.close_pane(0) # net worth

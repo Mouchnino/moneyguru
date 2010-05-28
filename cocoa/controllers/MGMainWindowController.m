@@ -358,6 +358,11 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setCurrentPaneIndex:index];
 }
 
+- (void)tabView:(NSTabView *)aTabView movedTab:(NSTabViewItem *)aTabViewItem fromIndex:(NSInteger)aFrom toIndex:(NSInteger)aTo
+{
+    [[self py] movePaneAtIndex:aFrom toIndex:aTo];
+}
+
 - (void)windowWillClose:(NSNotification *)notification
 {
     [self saveState];

@@ -165,6 +165,13 @@ class MainWindow(Repeater):
         if current_view in (self.tview, self.aview):
             current_view.move_up()
     
+    def move_pane(self, pane_index, dest_index):
+        pane = self.panes[pane_index]
+        del self.panes[pane_index]
+        self.panes.insert(dest_index, pane)
+        if pane_index == self.current_pane_index:
+            self.current_pane_index = dest_index
+    
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
         assert self._current_pane.view is self.aview # not supposed to be called outside the entry_table context

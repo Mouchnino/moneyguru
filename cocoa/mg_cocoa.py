@@ -1040,6 +1040,10 @@ class PyMainWindow(PyGUIContainer):
     def closePaneAtIndex_(self, index):
         self.py.close_pane(index)
     
+    @signature('v@:ii')
+    def movePaneAtIndex_toIndex_(self, pane_index, dest_index):
+        self.py.move_pane(pane_index, dest_index)
+    
     def newTab(self):
         self.py.new_tab()
     

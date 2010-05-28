@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSInteger)paneTypeAtIndex:(NSInteger)index;
 - (void)showPaneOfType:(NSInteger)paneType;
 - (void)closePaneAtIndex:(NSInteger)index;
+- (void)movePaneAtIndex:(NSInteger)paneIndex toIndex:(NSInteger)destIndex;
 - (void)newTab;
 - (void)showAccount;
 - (void)navigateBack;
