@@ -15,7 +15,7 @@ from nose.tools import nottest, istest, eq_
 
 from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
-from hsutil.testutil import TestData as TestDataBase
+from hsutil.testutil import TestData as TestDataBase, with_tmpdir
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
@@ -483,6 +483,16 @@ class TestApp(object):
         # Returns a new TestApp() but with the same app_gui as before, thus preserving preferences.
         app = Application(self.app_gui)
         return TestApp(app=app)
+    
+    @with_tmpdir
+    def save_and_load(self, tmppath):
+        # saves the current document and returns a new app with that document loaded
+        filepath = tmppath + 'foo.xml'
+        self.doc.save_to_xml(unicode(filepath))
+        self.doc.close()
+        newapp = TestApp()
+        newapp.doc.load_from_xml(unicode(filepath))
+        return newapp
     
     def save_file(self):
         assert self.tmppath is not None

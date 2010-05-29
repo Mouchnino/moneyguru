@@ -305,6 +305,20 @@ def app_split_with_null_amount():
     app.tpanel.save()
     return app
 
+#--- One account and one group
+def app_one_account_and_one_group():
+    app = TestApp()
+    app.add_account()
+    app.add_group() # The group is selected
+    return app
+
+#--- One account in one group
+def app_one_account_in_one_group():
+    app = TestApp()
+    app.add_group('group')
+    app.add_account(group_name='group')
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -337,6 +351,14 @@ def test_save_load():
     
     # Make sure memos are loaded/saved
     app = app_transaction_with_memos()
+    yield check, app
+    
+    # make sure that empty groups are kept when saving/loading
+    app = app_one_account_and_one_group()
+    yield check, app
+    
+    # make sure that groups are saved
+    app = app_one_account_in_one_group()
     yield check, app
 
 def test_save_load_qif():
