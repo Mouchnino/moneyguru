@@ -84,7 +84,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.toolBar.addAction(self.actionShowNetWorth)
         self.toolBar.addAction(self.actionShowProfitLoss)
         self.toolBar.addAction(self.actionShowTransactions)
-        self.toolBar.addAction(self.actionShowAccount)
         self.toolBar.addAction(self.actionShowSchedules)
         self.toolBar.addAction(self.actionShowBudgets)
         self.toolBar.addSeparator()
@@ -114,7 +113,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
         self.actionShowProfitLoss.triggered.connect(self.showProfitLossTriggered)        
         self.actionShowTransactions.triggered.connect(self.showTransactionsTriggered)        
-        self.actionShowAccount.triggered.connect(self.showAccountTriggered)        
         self.actionShowSchedules.triggered.connect(self.showSchedulesTriggered)        
         self.actionShowBudgets.triggered.connect(self.showBudgetsTriggered)        
         self.actionShowPreviousView.triggered.connect(self.showPreviousViewTriggered)        
@@ -250,9 +248,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showTransactionsTriggered(self):
         self.model.select_transaction_table()
-    
-    def showAccountTriggered(self):
-        self.model.select_entry_table()
     
     def showSchedulesTriggered(self):
         self.model.select_schedule_table()

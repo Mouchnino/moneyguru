@@ -153,7 +153,6 @@
     <addaction name="actionShowNetWorth"/>
     <addaction name="actionShowProfitLoss"/>
     <addaction name="actionShowTransactions"/>
-    <addaction name="actionShowAccount"/>
     <addaction name="actionShowSchedules"/>
     <addaction name="actionShowBudgets"/>
     <addaction name="actionShowPreviousView"/>
@@ -255,18 +254,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+3</string>
-   </property>
-  </action>
-  <action name="actionShowAccount">
-   <property name="icon">
-    <iconset resource="../mg.qrc">
-     <normaloff>:/entry_table_48</normaloff>:/entry_table_48</iconset>
-   </property>
-   <property name="text">
-    <string>Account</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionShowSelectedAccount">
@@ -409,7 +396,7 @@
     <string>Schedules</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+5</string>
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionShowBudgets">
@@ -421,7 +408,7 @@
     <string>Budgets</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+6</string>
+    <string>Ctrl+5</string>
    </property>
   </action>
   <action name="actionShowViewOptions">
