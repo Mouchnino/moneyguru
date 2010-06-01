@@ -667,6 +667,7 @@ class Document(Repeater):
         self._cook()
         self._restore_preferences_after_load()
         self.notify('document_changed')
+        self.notify('document_loaded')
         self._undoer.set_save_point()
     
     def save_to_xml(self, filename, autosave=False):

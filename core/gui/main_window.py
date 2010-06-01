@@ -16,6 +16,8 @@ from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
 
+OPENED_PANES_PREFERENCE = 'OpenedPanes'
+
 ViewPane = namedtuple('ViewPane', 'view label account')
 
 class MainWindow(Repeater):
@@ -29,6 +31,7 @@ class MainWindow(Repeater):
         self._explicitly_selected_transactions = []
         self._selected_schedules = []
         self._selected_budgets = []
+        self._panes_were_restored = False
     
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
@@ -36,13 +39,7 @@ class MainWindow(Repeater):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.emptyview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
             self.arpanel, self.alookup, self.completion_lookup, self.daterange_selector) = children
-        self._current_pane = None
-        self._current_pane_index = -1
-        initital_pane_types = [PaneType.NetWorth, PaneType.Profit, PaneType.Transaction,
-            PaneType.Schedule, PaneType.Budget]
-        self.panes = [self._create_pane(pt) for pt in initital_pane_types]
-        self.view.refresh_panes()
-        self.current_pane_index = 0
+        self._restore_opened_panes()
         for child in children:
             # Panels are not listeners
             if isinstance(child, Listener):
@@ -77,13 +74,15 @@ class MainWindow(Repeater):
         for index in reversed(indexes_to_close):
             self.close_pane(index)
     
-    def _create_pane(self, pane_type):
+    def _create_pane(self, pane_type, account=None):
         if pane_type == PaneType.NetWorth:
             return ViewPane(self.nwview, "Net Worth", None)
         elif pane_type == PaneType.Profit:
             return ViewPane(self.pview, "Profit & Loss", None)
         elif pane_type == PaneType.Transaction:
             return ViewPane(self.tview, "Transactions", None)
+        elif pane_type == PaneType.Account:
+            return ViewPane(self.aview, account.name, account)
         elif pane_type == PaneType.Schedule:
             return ViewPane(self.scview, "Schedules", None)
         elif pane_type == PaneType.Budget:
@@ -92,6 +91,54 @@ class MainWindow(Repeater):
             return ViewPane(self.emptyview, "New Tab", None)
         else:
             raise ValueError("Cannot create pane of type {0}".format(pane_type))
+    
+    def _restore_default_panes(self):
+        pane_types = [PaneType.NetWorth, PaneType.Profit, PaneType.Transaction,
+            PaneType.Schedule, PaneType.Budget]
+        pane_data = zip(pane_types, [None] * len(pane_types))
+        self._set_panes(pane_data)
+    
+    def _restore_opened_panes(self):
+        # Depending on the platform, it's possible to have set_children called either before
+        # the initial document load, or after it. That is why we check here to see if we can restore
+        # pane, but we also check on document_loaded.
+        if self._panes_were_restored:
+            return
+        if not self.document.accounts:
+            self._restore_default_panes()
+            return
+        self._panes_were_restored = True
+        stored_panes = self.document.app.get_default(OPENED_PANES_PREFERENCE)
+        if not stored_panes:
+            self._restore_default_panes()
+            return
+        pane_data = []
+        for data in stored_panes:
+            pane_type = data['pane_type']
+            account_name = data.get('account_name', '')
+            account = self.document.accounts.find(account_name)
+            pane_data.append((pane_type, account))
+        self._set_panes(pane_data)
+    
+    def _save_preferences(self):
+        opened_panes = []
+        for pane in self.panes:
+            data = {}
+            data['pane_type'] = pane.view.VIEW_TYPE
+            if pane.account is not None:
+                data['account_name'] = pane.account.name
+            opened_panes.append(data)
+        self.document.app.set_default(OPENED_PANES_PREFERENCE, opened_panes)
+    
+    def _set_panes(self, pane_data):
+        # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, account)]
+        self._current_pane = None
+        self._current_pane_index = -1
+        self.panes = []
+        for pane_type, account in pane_data:
+            self.panes.append(self._create_pane(pane_type, account=account))
+        self.view.refresh_panes()
+        self.current_pane_index = 0
     
     #--- Public
     def close_pane(self, index):
@@ -346,7 +393,7 @@ class MainWindow(Repeater):
             # Try to find a suitable pane, or add a new one
             index = first(i for i, p in enumerate(self.panes) if p.account is account)
             if index is None:
-                self._add_pane(ViewPane(self.aview, account.name, account))
+                self._add_pane(self._create_pane(PaneType.Account, account))
             else:
                 self.current_pane_index = index
         elif self._current_pane.view is self.aview:
@@ -369,11 +416,18 @@ class MainWindow(Repeater):
         self._close_irrelevant_account_panes()
         self._undo_stack_changed()
     
+    def document_loaded(self):
+        # We can only restore opened panes after load because if we have account panes opened,
+        # we need these accounts to be loaded first.
+        self._restore_opened_panes()
+    
     def document_will_close(self):
         # When the document closes the sheets are not necessarily connected. This is why we do it
         # this way.
+        # XXX This is not the case anymore, we can move this to the sheet themselves now.
         self.nwview.bsheet.save_node_expansion_state()
         self.pview.istatement.save_node_expansion_state()
+        self._save_preferences()
     
     def filter_applied(self):
         if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):

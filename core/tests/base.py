@@ -490,7 +490,7 @@ class TestApp(object):
         filepath = tmppath + 'foo.xml'
         self.doc.save_to_xml(unicode(filepath))
         self.doc.close()
-        newapp = TestApp()
+        newapp = TestApp(app=self.app)
         newapp.doc.load_from_xml(unicode(filepath))
         return newapp
     

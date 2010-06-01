@@ -41,6 +41,9 @@ class DocumentNotificationsMixin(object):
     def document_changed(self): 
         pass
     
+    def document_loaded(self):
+        pass
+    
     def document_will_close(self):
         pass
     
