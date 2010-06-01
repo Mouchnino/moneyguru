@@ -24,12 +24,13 @@ class EntryView(BaseView, Ui_EntryView):
         self.mainwindow = mainwindow
         self.doc = mainwindow.doc
         self._setupUi()
-        self.etable = EntryTable(mainwindow=mainwindow, view=self.tableView)
-        self.efbar = EntryFilterBar(mainwindow=mainwindow, view=self.filterBar)
-        self.bgraph = AccountBarGraph(mainwindow=mainwindow, view=self.barGraphView)
-        self.lgraph = AccountLineGraph(mainwindow=mainwindow, view=self.lineGraphView)
+        self.model = AccountViewModel(view=self, mainwindow=mainwindow.model)
+        self.etable = EntryTable(self, view=self.tableView)
+        self.efbar = EntryFilterBar(self, view=self.filterBar)
+        self.bgraph = AccountBarGraph(self, view=self.barGraphView)
+        self.lgraph = AccountLineGraph(self, view=self.lineGraphView)
         children = [self.etable.model, self.lgraph.model, self.bgraph.model, self.efbar.model]
-        self.model = AccountViewModel(view=self, mainwindow=mainwindow.model, children=children)
+        self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
@@ -66,7 +67,8 @@ class EntryView(BaseView, Ui_EntryView):
     
     #--- model --> view
     def refresh_reconciliation_button(self):
-        self.mainwindow.refreshReconciliationButton()
+        # XXX Add reconciliation button and refresh it here
+        pass
     
     def refresh_totals(self):
         self.totalsLabel.setText(self.model.totals)

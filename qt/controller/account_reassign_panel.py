@@ -14,31 +14,17 @@ from core.gui.account_reassign_panel import AccountReassignPanel as AccountReass
 from .panel import Panel
 from ui.account_reassign_panel_ui import Ui_AccountReassignPanel
 
-#XXX the Hack part is there for the same reasons as with the CustomDateRangePanel
 class AccountReassignPanel(Panel, Ui_AccountReassignPanel):
     FIELDS = [
         ('accountComboBox', 'account_index'),
     ]
     
-    def __init__(self, parent, doc):
+    def __init__(self, parent, mainwindow):
         Panel.__init__(self, parent)
         self.setupUi(self)
-        self.doc = doc
-        self.model = AccountReassignPanelModel(view=self, document=doc.model)
+        self.model = AccountReassignPanelModel(view=self, mainwindow=mainwindow.model)
     
     def _loadFields(self):
         self._changeComboBoxItems(self.accountComboBox, self.model.available_accounts)
         Panel._loadFields(self)
-    
-    #--- Hack
-    def accept(self):
-        self._saveFields()
-        self.model.ok()
-        QDialog.accept(self)
-    
-    def load(self):
-        self.model.load()
-        self._loadFields()
-        self._connectSignals()
-        self.show()
     

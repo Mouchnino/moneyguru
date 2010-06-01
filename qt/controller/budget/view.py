@@ -20,9 +20,10 @@ class BudgetView(BaseView, Ui_BudgetView):
         BaseView.__init__(self)
         self.doc = mainwindow.doc
         self._setupUi()
-        self.btable = BudgetTable(mainwindow=mainwindow, view=self.tableView)
+        self.model = BudgetViewModel(view=self, mainwindow=mainwindow.model)
+        self.btable = BudgetTable(self, view=self.tableView)
         children = [self.btable.model]
-        self.model = BudgetViewModel(view=self, mainwindow=mainwindow.model, children=children)
+        self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

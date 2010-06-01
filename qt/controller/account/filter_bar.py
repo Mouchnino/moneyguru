@@ -23,8 +23,8 @@ class EntryFilterBar(FilterBar):
         ("Not Reconciled", FilterType.NotReconciled),
     ]
     
-    def __init__(self, mainwindow, view):
-        model = EntryFilterBarModel(mainwindow=mainwindow.model, view=self)
+    def __init__(self, account_view, view):
+        model = EntryFilterBarModel(account_view=account_view.model, view=self)
         FilterBar.__init__(self, model, view)
     
     #--- model --> view

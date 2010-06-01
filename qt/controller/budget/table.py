@@ -24,8 +24,8 @@ class BudgetTable(Table):
         Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, mainwindow, view):
-        model = BudgetTableModel(view=self, mainwindow=mainwindow.model)
+    def __init__(self, budget_view, view):
+        model = BudgetTableModel(view=self, budget_view=budget_view.model)
         Table.__init__(self, model, view)
         self.view.sortByColumn(0, Qt.AscendingOrder) # sorted by start_date by default
         self.view.deletePressed.connect(self.model.delete)

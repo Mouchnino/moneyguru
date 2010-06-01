@@ -7,9 +7,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from core.gui.bar_graph import BarGraph as BarGraphModel
+from core.gui.account_flow_graph import AccountFlowGraph as AccountFlowGraphModel
 
 from ..chart import Chart
 
 class AccountBarGraph(Chart):
-    CHART_MODEL_CLASS = BarGraphModel
+    CHART_MODEL_CLASS = AccountFlowGraphModel

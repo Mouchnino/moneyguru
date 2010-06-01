@@ -27,8 +27,8 @@ class ScheduleTable(Table):
         Column('amount', 'Amount', 97, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, mainwindow, view):
-        model = ScheduleTableModel(view=self, mainwindow=mainwindow.model)
+    def __init__(self, schedule_view, view):
+        model = ScheduleTableModel(view=self, schedule_view=schedule_view.model)
         Table.__init__(self, model, view)
         self.view.sortByColumn(0, Qt.AscendingOrder) # sorted by start_date by default
         self.view.deletePressed.connect(self.model.delete)

@@ -48,8 +48,8 @@ class TransactionTable(TableWithTransactions):
         Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, mainwindow, view):
-        model = TransactionTableModel(view=self, mainwindow=mainwindow.model)
+    def __init__(self, transaction_view, view):
+        model = TransactionTableModel(view=self, transaction_view=transaction_view.model)
         TableWithTransactions.__init__(self, model, view)
         self.tableDelegate = TransactionTableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)

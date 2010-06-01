@@ -23,13 +23,13 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         BaseView.__init__(self)
         self.doc = mainwindow.doc
         self._setupUi()
-        self.nwsheet = NetWorthSheet(mainwindow=mainwindow, view=self.treeView)
-        self.nwgraph = NetWorthGraph(mainwindow=mainwindow, view=self.graphView)
-        self.apiechart = AssetPieChart(mainwindow=mainwindow, view=self.assetPieChart)
-        self.lpiechart = LiabilityPieChart(mainwindow=mainwindow, view=self.liabilityPieChart)
-        self.children = [self.nwsheet, self.nwgraph, self.apiechart, self.lpiechart]
+        self.model = NetWorthViewModel(view=self, mainwindow=mainwindow.model)
+        self.nwsheet = NetWorthSheet(self, view=self.treeView)
+        self.nwgraph = NetWorthGraph(self, view=self.graphView)
+        self.apiechart = AssetPieChart(self, view=self.assetPieChart)
+        self.lpiechart = LiabilityPieChart(self, view=self.liabilityPieChart)
         children = [self.nwsheet.model, self.nwgraph.model, self.apiechart.model, self.lpiechart.model]
-        self.model = NetWorthViewModel(view=self, mainwindow=mainwindow.model, children=children)
+        self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

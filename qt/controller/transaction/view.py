@@ -21,10 +21,11 @@ class TransactionView(BaseView, Ui_TransactionView):
         BaseView.__init__(self)
         self.doc = mainwindow.doc
         self._setupUi()
-        self.ttable = TransactionTable(mainwindow=mainwindow, view=self.tableView)
-        self.tfbar = TransactionFilterBar(mainwindow=mainwindow, view=self.filterBar)
+        self.model = TransactionViewModel(view=self, mainwindow=mainwindow.model)
+        self.ttable = TransactionTable(self, view=self.tableView)
+        self.tfbar = TransactionFilterBar(self, view=self.filterBar)
         children = [self.ttable.model, self.tfbar.model]
-        self.model = TransactionViewModel(view=self, mainwindow=mainwindow.model, children=children)
+        self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

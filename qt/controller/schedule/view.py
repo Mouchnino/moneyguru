@@ -20,9 +20,10 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         BaseView.__init__(self)
         self.doc = mainwindow.doc
         self._setupUi()
-        self.sctable = ScheduleTable(mainwindow=mainwindow, view=self.tableView)
+        self.model = ScheduleViewModel(view=self, mainwindow=mainwindow.model)
+        self.sctable = ScheduleTable(self, view=self.tableView)
         children = [self.sctable.model]
-        self.model = ScheduleViewModel(view=self, mainwindow=mainwindow.model, children=children)
+        self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)

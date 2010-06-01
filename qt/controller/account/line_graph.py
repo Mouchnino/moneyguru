@@ -7,9 +7,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from core.gui.balance_graph import BalanceGraph as BalanceGraphModel
+from core.gui.account_balance_graph import AccountBalanceGraph as AccountBalanceGraphModel
 
 from ..chart import Chart
 
 class AccountLineGraph(Chart):
-    CHART_MODEL_CLASS = BalanceGraphModel
+    CHART_MODEL_CLASS = AccountBalanceGraphModel

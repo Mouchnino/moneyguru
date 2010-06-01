@@ -10,8 +10,9 @@
 import sys
 
 from PyQt4.QtCore import Qt, QProcess
-from PyQt4.QtGui import QMainWindow, QIcon, QPixmap, QPrintDialog, QLabel, QFont, QMessageBox
+from PyQt4.QtGui import QMainWindow, QPrintDialog, QLabel, QFont, QMessageBox
 
+from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
 
 from print_ import ViewPrinter
@@ -35,13 +36,6 @@ from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
 from ui.main_window_ui import Ui_MainWindow
 
-NETWORTH_INDEX = 0
-PROFIT_INDEX = 1
-TRANSACTION_INDEX = 2
-ACCOUNT_INDEX = 3
-SCHEDULE_INDEX = 4
-BUDGET_INDEX = 5
-
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
         QMainWindow.__init__(self, None)
@@ -52,38 +46,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         # Create base elements
         self.model = MainWindowModel(view=self, document=doc.model)
-        nwview = NetWorthView(mainwindow=self)
-        pview = ProfitView(mainwindow=self)
-        tview = TransactionView(mainwindow=self)
-        eview = EntryView(mainwindow=self)
-        scview = ScheduleView(mainwindow=self)
-        bview = BudgetView(mainwindow=self)
+        self.nwview = NetWorthView(mainwindow=self)
+        self.pview = ProfitView(mainwindow=self)
+        self.tview = TransactionView(mainwindow=self)
+        self.eview = EntryView(mainwindow=self)
+        self.scview = ScheduleView(mainwindow=self)
+        self.bview = BudgetView(mainwindow=self)
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
         self.mepanel = MassEditionPanel(mainwindow=self)
         self.scpanel = SchedulePanel(mainwindow=self)
         self.bpanel = BudgetPanel(mainwindow=self)
         self.cdrpanel = CustomDateRangePanel(self, mainwindow=self)
-        self.arpanel = AccountReassignPanel(self, doc=doc)
+        self.arpanel = AccountReassignPanel(self, mainwindow=self)
         self.alookup = AccountLookup(self, mainwindow=self)
         self.clookup = CompletionLookup(self, mainwindow=self)
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
         
-        # Set main views
-        self.mainView.addWidget(nwview)
-        self.mainView.addWidget(pview)
-        self.mainView.addWidget(tview)
-        self.mainView.addWidget(eview)
-        self.mainView.addWidget(scview)
-        self.mainView.addWidget(bview)
-        
         # set_children() and connect() calls have to happen after _setupUiPost()
-        children = [nwview.model, pview.model, tview.model, eview.model, scview.model, bview.model,
-            self.apanel.model, self.tpanel.model, self.mepanel.model, self.scpanel.model,
-            self.bpanel.model, self.cdrpanel.model, self.alookup.model, self.clookup.model,
-            self.drsel.model]
+        children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
+            self.scview.model, self.bview.model, None, self.apanel.model, self.tpanel.model,
+            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.cdrpanel.model,
+            self.arpanel.model, self.alookup.model, self.clookup.model, self.drsel.model]
         self.model.set_children(children)
         self.model.connect()
         self.sfield.model.connect()
@@ -101,15 +87,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.toolBar.addAction(self.actionShowAccount)
         self.toolBar.addAction(self.actionShowSchedules)
         self.toolBar.addAction(self.actionShowBudgets)
-        self.viewTitleLabel = QLabel()
-        font = QFont(self.viewTitleLabel.font())
-        font.setBold(True)
-        self.viewTitleLabel.setFont(font)
-        self.viewTitleLabel.setMinimumWidth(82) # just enough for the widest title
-        self.viewTitleLabel.setMargin(4)
-        self.toolBar.addWidget(self.viewTitleLabel)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.actionToggleReconciliationModeToolbar)
         self.toolBar.addSeparator()
         self.searchLineEdit = SearchEdit()
         self.searchLineEdit.setMaximumWidth(240)
@@ -168,7 +145,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionMakeScheduleFromSelected.triggered.connect(self.makeScheduleFromSelectedTriggered)
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
-        self.actionToggleReconciliationModeToolbar.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionShowPreferences.triggered.connect(self.app.showPreferences)
         self.actionShowViewOptions.triggered.connect(self.app.showViewOptions)
         self.actionPrint.triggered.connect(self._print)
@@ -210,53 +186,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # under various conditions: main view change, date range type change and when reconciliation
         # mode is toggled
         
-        # Determine what view action is checked
-        actionsInOrder = [
-            self.actionShowNetWorth,
-            self.actionShowProfitLoss,
-            self.actionShowTransactions,
-            self.actionShowAccount,
-            self.actionShowSchedules,
-            self.actionShowBudgets,
-        ]
-        viewIndex = self.mainView.currentIndex()
-        for index, action in enumerate(actionsInOrder):
-            checked = viewIndex == index
-            action.setCheckable(checked)
-            action.setChecked(checked)
-            if checked:
-                self.viewTitleLabel.setText(action.text())
-        
         # Determine what actions are enabled
         view = self.mainView.currentWidget()
-        isSheet = viewIndex in (NETWORTH_INDEX, PROFIT_INDEX)
-        isTransactionOrEntryTable = viewIndex in (TRANSACTION_INDEX, ACCOUNT_INDEX)
-        shownAccount = self.doc.model.shown_account
-        canToggleReconciliation = viewIndex == ACCOUNT_INDEX and \
+        viewType = view.model.VIEW_TYPE
+        isSheet = viewType in (PaneType.NetWorth, PaneType.Profit)
+        isTransactionOrEntryTable = viewType in (PaneType.Transaction, PaneType.Account)
+        canToggleReconciliation = viewType == PaneType.Account and \
             view.model.can_toggle_reconciliation_mode
         
         newItemLabel = {
-            NETWORTH_INDEX: "New Account",
-            PROFIT_INDEX: "New Account",
-            TRANSACTION_INDEX: "New Transaction",
-            ACCOUNT_INDEX: "New Transaction",
-            SCHEDULE_INDEX: "New Schedule",
-            BUDGET_INDEX: "New Budget",
-        }[viewIndex]
+            PaneType.NetWorth: "New Account",
+            PaneType.Profit: "New Account",
+            PaneType.Transaction: "New Transaction",
+            PaneType.Account: "New Transaction",
+            PaneType.Schedule: "New Schedule",
+            PaneType.Budget: "New Budget",
+        }[viewType]
         self.actionNewItem.setText(newItemLabel)
         self.actionNewAccountGroup.setEnabled(isSheet)
         self.actionMoveDown.setEnabled(isTransactionOrEntryTable)
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
         self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
-        self.actionReconcileSelected.setEnabled(viewIndex == ACCOUNT_INDEX and view.model.reconciliation_mode)
+        self.actionReconcileSelected.setEnabled(viewType == PaneType.Account and view.model.reconciliation_mode)
         self.actionShowNextView.setEnabled(self.model.current_pane_index < self.model.pane_count-1)
         self.actionShowPreviousView.setEnabled(self.model.current_pane_index > 0)
-        self.actionShowAccount.setEnabled(shownAccount is not None)
         self.actionShowSelectedAccount.setEnabled(isSheet or isTransactionOrEntryTable)
-        self.actionNavigateBack.setEnabled(viewIndex == ACCOUNT_INDEX)
+        self.actionNavigateBack.setEnabled(viewType == PaneType.Account)
         self.actionToggleReconciliationMode.setEnabled(canToggleReconciliation)
-        self.actionToggleReconciliationModeToolbar.setEnabled(canToggleReconciliation)
     
     def _updateUndoActions(self):
         if self.doc.model.can_undo():
@@ -349,22 +306,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def aboutTriggered(self):
         self.app.showAboutBox()
     
-    def refreshReconciliationButton(self):
-        view = self.mainView.currentWidget()
-        in_reconciliation_mode = isinstance(view, EntryView) and view.model.reconciliation_mode
-        imgname = ':/reconcile_check_48' if in_reconciliation_mode else ':/reconcile_48'
-        self.actionToggleReconciliationModeToolbar.setIcon(QIcon(QPixmap(imgname)))
-        self._updateActionsState()
-    
     #--- model --> view
     def change_current_pane(self):
         self._setMainWidgetIndex(self.model.current_pane_index)
     
+    def refresh_panes(self):
+        while self.mainView.count() > 0:
+            self.mainView.removeWidget(self.mainView.currentWidget())
+        for i in xrange(self.model.pane_count):
+            pane_type = self.model.pane_type(i)
+            view = None
+            if pane_type == PaneType.NetWorth:
+                view = self.nwview
+            elif pane_type == PaneType.Profit:
+                view = self.pview
+            elif pane_type == PaneType.Transaction:
+                view = self.tview
+            elif pane_type == PaneType.Account:
+                view = self.eview
+            elif pane_type == PaneType.Schedule:
+                view = self.scview
+            elif pane_type == PaneType.Budget:
+                view = self.bview
+            self.mainView.addWidget(view)
+    
     def refresh_undo_actions(self):
         self._updateUndoActions()
-    
-    def show_account_reassign_panel(self):
-        self.arpanel.load()
     
     def show_message(self, msg):
         title = "Warning"

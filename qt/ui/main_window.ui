@@ -396,15 +396,6 @@
     <string>Ctrl+Shift+R</string>
    </property>
   </action>
-  <action name="actionToggleReconciliationModeToolbar">
-   <property name="icon">
-    <iconset resource="../mg.qrc">
-     <normaloff>:/reconcile_48</normaloff>:/reconcile_48</iconset>
-   </property>
-   <property name="text">
-    <string>Reconcile</string>
-   </property>
-  </action>
   <action name="actionShowSchedules">
    <property name="icon">
     <iconset resource="../mg.qrc">
