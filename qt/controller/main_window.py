@@ -10,7 +10,7 @@
 import sys
 
 from PyQt4.QtCore import Qt, QProcess
-from PyQt4.QtGui import QMainWindow, QPrintDialog, QLabel, QFont, QMessageBox
+from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox
 
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
@@ -107,6 +107,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
         self.app.willSavePrefs.connect(self._savePrefs)
+        self.mainView.currentChanged.connect(self.currentTabChanged)
+        self.mainView.tabCloseRequested.connect(self.tabCloseRequested)
         
         # Views
         self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
@@ -177,6 +179,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.prefs.mainWindowRect = self.geometry()
     
     def _setMainWidgetIndex(self, index):
+        if not self.mainView.count():
+            return
         self.mainView.setCurrentIndex(index)
         self._updateActionsState()
         self.mainView.currentWidget().setFocus()
@@ -187,12 +191,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # mode is toggled
         
         # Determine what actions are enabled
-        view = self.mainView.currentWidget()
-        viewType = view.model.VIEW_TYPE
+        viewType = self.model.pane_type(self.model.current_pane_index)
         isSheet = viewType in (PaneType.NetWorth, PaneType.Profit)
         isTransactionOrEntryTable = viewType in (PaneType.Transaction, PaneType.Account)
         canToggleReconciliation = viewType == PaneType.Account and \
-            view.model.can_toggle_reconciliation_mode
+            self.eview.model.can_toggle_reconciliation_mode
         
         newItemLabel = {
             PaneType.NetWorth: "New Account",
@@ -208,7 +211,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
         self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
-        self.actionReconcileSelected.setEnabled(viewType == PaneType.Account and view.model.reconciliation_mode)
+        self.actionReconcileSelected.setEnabled(viewType == PaneType.Account and \
+            self.eview.model.reconciliation_mode)
         self.actionShowNextView.setEnabled(self.model.current_pane_index < self.model.pane_count-1)
         self.actionShowPreviousView.setEnabled(self.model.current_pane_index > 0)
         self.actionShowSelectedAccount.setEnabled(isSheet or isTransactionOrEntryTable)
@@ -306,15 +310,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def aboutTriggered(self):
         self.app.showAboutBox()
     
+    #--- Other Signals
+    def currentTabChanged(self, index):
+        self.model.current_pane_index = index
+    
+    def tabCloseRequested(self, index):
+        self.model.close_pane(index)
+    
     #--- model --> view
     def change_current_pane(self):
         self._setMainWidgetIndex(self.model.current_pane_index)
     
     def refresh_panes(self):
         while self.mainView.count() > 0:
-            self.mainView.removeWidget(self.mainView.currentWidget())
+            self.mainView.removeTab(0)
         for i in xrange(self.model.pane_count):
             pane_type = self.model.pane_type(i)
+            pane_label = self.model.pane_label(i)
             view = None
             if pane_type == PaneType.NetWorth:
                 view = self.nwview
@@ -328,7 +340,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 view = self.scview
             elif pane_type == PaneType.Budget:
                 view = self.bview
-            self.mainView.addWidget(view)
+            self.mainView.addTab(view, pane_label)
     
     def refresh_undo_actions(self):
         self._updateUndoActions()
@@ -336,4 +348,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_message(self, msg):
         title = "Warning"
         QMessageBox.warning(self, title, msg)
+    
+    def view_closed(self, index):
+        self.mainView.removeTab(index)
     
