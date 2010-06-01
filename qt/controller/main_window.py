@@ -108,6 +108,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.willSavePrefs.connect(self._savePrefs)
         self.mainView.currentChanged.connect(self.currentTabChanged)
         self.mainView.tabCloseRequested.connect(self.tabCloseRequested)
+        self.mainView.tabBar().tabMoved.connect(self.tabMoved)
         
         # Views
         self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
@@ -311,6 +312,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def tabCloseRequested(self, index):
         self.model.close_pane(index)
+    
+    def tabMoved(self, fromIndex, toIndex):
+        self.model.move_pane(fromIndex, toIndex)
     
     #--- model --> view
     def change_current_pane(self):
