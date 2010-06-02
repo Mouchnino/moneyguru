@@ -29,8 +29,8 @@ class EntryFilterBar(FilterBar):
     
     #--- model --> view
     def disable_transfers(self):
-        self.view.setTabEnabled(3, False)
+        self.view.buttons[3].setEnabled(False)
     
     def enable_transfers(self):
-        self.view.setTabEnabled(3, True)
+        self.view.buttons[3].setEnabled(True)
     

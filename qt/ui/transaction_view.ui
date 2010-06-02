@@ -21,7 +21,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTabBar" name="filterBar" native="true">
+    <widget class="RadioBox" name="filterBar" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -48,8 +54,8 @@
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
      <property name="sortingEnabled">
-       <bool>true</bool>
-      </property>
+      <bool>true</bool>
+     </property>
      <property name="cornerButtonEnabled">
       <bool>false</bool>
      </property>
@@ -64,6 +70,18 @@
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>18</number>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>18</number>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>18</number>
+     </attribute>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>false</bool>
      </attribute>
     </widget>
    </item>
@@ -83,9 +101,9 @@
    <header>support.item_view</header>
   </customwidget>
   <customwidget>
-   <class>QTabBar</class>
+   <class>RadioBox</class>
    <extends>QWidget</extends>
-   <header>PyQt4.QtGui</header>
+   <header>qtlib.radio_box</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

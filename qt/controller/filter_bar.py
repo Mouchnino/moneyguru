@@ -14,23 +14,23 @@ class FilterBar(QObject):
     BUTTONS = [] # (Title, FilterID)
     
     def __init__(self, model, view):
+        # the view is a qtlib.RadioBox
         QObject.__init__(self, None)
         self.model = model
         self.view = view
-        for title, filterId in self.BUTTONS:
-            self.view.addTab(title)
+        self.view.items = [title for title, _ in self.BUTTONS]
         
-        self.view.currentChanged.connect(self.currentTabChanged)
+        self.view.itemSelected.connect(self.itemSelected)
     
     #--- Event Handlers
-    def currentTabChanged(self):
-        _, filterId = self.BUTTONS[self.view.currentIndex()]
+    def itemSelected(self, index):
+        _, filterId = self.BUTTONS[index]
         self.model.filter_type = filterId
     
     #--- model --> view
     def refresh(self):
         for index, (title, filterId) in enumerate(self.BUTTONS):
             if filterId is self.model.filter_type:
-                self.view.setCurrentIndex(index)
+                self.view.selected_index = index
                 break
     
