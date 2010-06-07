@@ -14,6 +14,8 @@ from hsutil.testutil import Patcher
 from ..model.currency import RatesDB
 from ..model import currency as currency_module
 
+is_ratesdb_patched = False
+
 def setup_package():
     global patcher
     patcher = Patcher()
@@ -27,6 +29,17 @@ def setup_package():
     def raise_if_called(*args, **kwargs):
         raise Exception('This is not supposed to be used in a test case')
     patcher.patch(xmlrpclib, 'ServerProxy', raise_if_called)
+    global is_ratesdb_patched
+    is_ratesdb_patched = True
+
+def ensure_ratesdb_patched():
+    # I've noticed that Nose doesn't seem to call setup_package is nosetests hasn't been called
+    # from inside that package (for example, if we call it from moneyGuru's root folder). This is
+    # pretty bad because we don't want the currency server to be hit by anyone running this test
+    # suite from moneyGuru's root folder. So, what I did is that I call this function every time a
+    # TestApp instance is created, just to be sure.
+    if not is_ratesdb_patched:
+        setup_package()
 
 def teardown_package():
     global patcher

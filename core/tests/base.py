@@ -60,6 +60,7 @@ from ..loader import base
 from ..model.account import AccountType
 from ..model.date import MonthRange
 from .. import document as document_module
+from . import ensure_ratesdb_patched
 
 class CallLogger(object):
     """This is a dummy object that logs all calls made to it.
@@ -142,6 +143,7 @@ class DictLoader(base.Loader):
 @nottest
 class TestApp(object):
     def __init__(self, app=None, doc=None, tmppath=None):
+        ensure_ratesdb_patched()
         self.tmppath = tmppath
         if app is None:
             app = Application(ApplicationGUI())
