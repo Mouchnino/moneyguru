@@ -22,14 +22,17 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTabWidget" name="mainView">
-      <property name="tabsClosable">
-       <bool>true</bool>
-      </property>
-      <property name="movable">
-       <bool>true</bool>
+     <widget class="QTabBar" name="tabBar" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="mainView"/>
     </item>
     <item>
      <widget class="QWidget" name="bottomBar" native="true">
@@ -510,6 +513,12 @@
    <class>DateRangeSelectorView</class>
    <extends>QWidget</extends>
    <header>support.date_range_selector_view</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QTabBar</class>
+   <extends>QWidget</extends>
+   <header>PyQt4.QtGui</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

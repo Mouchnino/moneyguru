@@ -36,6 +36,9 @@ from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
 from ui.main_window_ui import Ui_MainWindow
 
+# IMPORTANT NOTE ABOUT TABS
+# Why don't we use a QTabWidget? Because it doesn't allow to add the same widget twice.
+
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, doc):
         QMainWindow.__init__(self, None)
@@ -65,6 +68,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
         
+        # Set main views
+        self.mainView.addWidget(self.nwview)
+        self.mainView.addWidget(self.pview)
+        self.mainView.addWidget(self.tview)
+        self.mainView.addWidget(self.eview)
+        self.mainView.addWidget(self.scview)
+        self.mainView.addWidget(self.bview)
+        
         # set_children() and connect() calls have to happen after _setupUiPost()
         children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
             self.scview.model, self.bview.model, None, self.apanel.model, self.tpanel.model,
@@ -79,6 +90,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def _setupUi(self): # has to take place *before* base elements creation
         self.setupUi(self)
+        self.tabBar.setMovable(True)
+        self.tabBar.setTabsClosable(True)
+        
         # Toolbar setup. We have to do it manually because it's tricky to insert the view title
         # label otherwise.
         self.toolBar.addAction(self.actionShowNetWorth)
@@ -106,9 +120,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
         self.app.willSavePrefs.connect(self._savePrefs)
-        self.mainView.currentChanged.connect(self.currentTabChanged)
-        self.mainView.tabCloseRequested.connect(self.tabCloseRequested)
-        self.mainView.tabBar().tabMoved.connect(self.tabMoved)
+        self.tabBar.currentChanged.connect(self.currentTabChanged)
+        self.tabBar.tabCloseRequested.connect(self.tabCloseRequested)
+        self.tabBar.tabMoved.connect(self.tabMoved)
         
         # Views
         self.actionShowNetWorth.triggered.connect(self.showNetWorthTriggered)        
@@ -177,12 +191,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.prefs.mainWindowIsMaximized = self.isMaximized()
         self.app.prefs.mainWindowRect = self.geometry()
     
-    def _setMainWidgetIndex(self, index):
-        if not self.mainView.count():
+    def _setTabIndex(self, index):
+        if not self.tabBar.count():
             return
-        self.mainView.setCurrentIndex(index)
+        self.tabBar.setCurrentIndex(index)
         self._updateActionsState()
-        self.mainView.currentWidget().setFocus()
+        pane_type = self.model.pane_type(index)
+        view = None
+        if pane_type == PaneType.NetWorth:
+            view = self.nwview
+        elif pane_type == PaneType.Profit:
+            view = self.pview
+        elif pane_type == PaneType.Transaction:
+            view = self.tview
+        elif pane_type == PaneType.Account:
+            view = self.eview
+        elif pane_type == PaneType.Schedule:
+            view = self.scview
+        elif pane_type == PaneType.Budget:
+            view = self.bview
+        self.mainView.setCurrentWidget(view)
+        view.setFocus()
     
     def _updateActionsState(self):
         # Updates enable/disable checked/unchecked state of all actions. These state can change
@@ -292,10 +321,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.make_schedule_from_selected()
     
     def reconcileSelectedTriggered(self):
-        self.mainView.currentWidget().etable.model.toggle_reconciled()
+        self.aview.etable.model.toggle_reconciled()
     
     def toggleReconciliationModeTriggered(self):
-        self.mainView.currentWidget().model.toggle_reconciliation_mode()
+        self.aview.model.toggle_reconciliation_mode()
     
     def registerTriggered(self):
         self.app.askForRegCode()
@@ -309,6 +338,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #--- Other Signals
     def currentTabChanged(self, index):
         self.model.current_pane_index = index
+        self._setTabIndex(index)
     
     def tabCloseRequested(self, index):
         self.model.close_pane(index)
@@ -318,28 +348,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     #--- model --> view
     def change_current_pane(self):
-        self._setMainWidgetIndex(self.model.current_pane_index)
+        self._setTabIndex(self.model.current_pane_index)
     
     def refresh_panes(self):
-        while self.mainView.count() > 0:
-            self.mainView.removeTab(0)
+        while self.tabBar.count() > 0:
+            self.tabBar.removeTab(0)
         for i in xrange(self.model.pane_count):
-            pane_type = self.model.pane_type(i)
             pane_label = self.model.pane_label(i)
-            view = None
-            if pane_type == PaneType.NetWorth:
-                view = self.nwview
-            elif pane_type == PaneType.Profit:
-                view = self.pview
-            elif pane_type == PaneType.Transaction:
-                view = self.tview
-            elif pane_type == PaneType.Account:
-                view = self.eview
-            elif pane_type == PaneType.Schedule:
-                view = self.scview
-            elif pane_type == PaneType.Budget:
-                view = self.bview
-            self.mainView.addTab(view, pane_label)
+            self.tabBar.addTab(pane_label)
     
     def refresh_undo_actions(self):
         self._updateUndoActions()
@@ -349,5 +365,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMessageBox.warning(self, title, msg)
     
     def view_closed(self, index):
-        self.mainView.removeTab(index)
+        self.tabBar.removeTab(index)
     
