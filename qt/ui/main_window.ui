@@ -136,11 +136,13 @@
      </property>
     </widget>
     <addaction name="actionNewDocument"/>
+    <addaction name="actionNewTab"/>
     <addaction name="actionOpenDocument"/>
     <addaction name="menuOpenRecent"/>
     <addaction name="actionOpenExampleDocument"/>
     <addaction name="actionImport"/>
     <addaction name="separator"/>
+    <addaction name="actionCloseTab"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
     <addaction name="actionExportToQIF"/>
@@ -341,7 +343,7 @@
   </action>
   <action name="actionNewDocument">
    <property name="text">
-    <string>New</string>
+    <string>New Document</string>
    </property>
   </action>
   <action name="actionOpenExampleDocument">
@@ -505,6 +507,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionNewTab">
+   <property name="text">
+    <string>New Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionCloseTab">
+   <property name="text">
+    <string>Close Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
    </property>
   </action>
  </widget>

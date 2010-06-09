@@ -24,6 +24,7 @@ from .networth.view import NetWorthView
 from .profit.view import ProfitView
 from .transaction.view import TransactionView
 from .schedule.view import ScheduleView
+from .new_view import NewView
 from .lookup import AccountLookup, CompletionLookup
 from .account_panel import AccountPanel
 from .account_reassign_panel import AccountReassignPanel
@@ -55,6 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.eview = EntryView(mainwindow=self)
         self.scview = ScheduleView(mainwindow=self)
         self.bview = BudgetView(mainwindow=self)
+        self.newview = NewView(mainwindow=self)
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
         self.mepanel = MassEditionPanel(mainwindow=self)
@@ -75,13 +77,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.eview)
         self.mainView.addWidget(self.scview)
         self.mainView.addWidget(self.bview)
+        self.mainView.addWidget(self.newview)
         
         # set_children() and connect() calls have to happen after _setupUiPost()
-        children = [self.nwview.model, self.pview.model, self.tview.model, self.eview.model,
-            self.scview.model, self.bview.model, None, self.apanel.model, self.tpanel.model,
-            self.mepanel.model, self.scpanel.model, self.bpanel.model, self.cdrpanel.model,
-            self.arpanel.model, self.alookup.model, self.clookup.model, self.drsel.model]
-        self.model.set_children(children)
+        children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview,
+            self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
+            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel]
+        self.model.set_children([child.model for child in children])
         self.model.connect()
         self.sfield.model.connect()
         
@@ -154,6 +156,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionExportToQIF.triggered.connect(self.doc.exportToQIF)
         
         # Misc
+        self.actionNewTab.triggered.connect(self.model.new_tab)
+        self.actionCloseTab.triggered.connect(self.closeTabTriggered)
         self.actionShowSelectedAccount.triggered.connect(self.model.show_account)
         self.actionNavigateBack.triggered.connect(self.navigateBackTriggered)
         self.actionJumpToAccount.triggered.connect(self.jumpToAccountTriggered)
@@ -210,6 +214,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             view = self.scview
         elif pane_type == PaneType.Budget:
             view = self.bview
+        elif pane_type == PaneType.Empty:
+            view = self.newview
         self.mainView.setCurrentWidget(view)
         view.setFocus()
     
@@ -232,6 +238,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             PaneType.Account: "New Transaction",
             PaneType.Schedule: "New Schedule",
             PaneType.Budget: "New Budget",
+            PaneType.Empty: "New Item", #XXX make disabled
         }[viewType]
         self.actionNewItem.setText(newItemLabel)
         self.actionNewAccountGroup.setEnabled(isSheet)
@@ -311,6 +318,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.move_down()
     
     # Misc
+    def closeTabTriggered(self):
+        self.model.close_pane(self.model.current_pane_index)
+    
     def navigateBackTriggered(self):
         self.model.navigate_back()
     
