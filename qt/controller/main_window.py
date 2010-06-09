@@ -9,7 +9,7 @@
 
 import sys
 
-from PyQt4.QtCore import Qt, QProcess
+from PyQt4.QtCore import QProcess
 from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox
 
 from core.const import PaneType
@@ -361,11 +361,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._setTabIndex(self.model.current_pane_index)
     
     def refresh_panes(self):
-        while self.tabBar.count() > 0:
-            self.tabBar.removeTab(0)
+        if self.tabBar.currentIndex() < self.model.pane_count:
+            # Normally, we don't touch the tabBar index here and wait for change_current_pane,
+            # but when we remove tabs, it's possible that currentTabChanged end up being called and
+            # then the tab selection is bugged. I tried disconnecting/reconnecting the signal, but
+            # this is buggy. So when a selected tab is about to be removed, we change the selection
+            # to the model's one immediately.
+            self.tabBar.setCurrentIndex(self.model.current_pane_index)
+        while self.tabBar.count() > self.model.pane_count:
+            self.tabBar.removeTab(self.tabBar.count()-1)
+        while self.tabBar.count() < self.model.pane_count:
+            self.tabBar.addTab('')
         for i in xrange(self.model.pane_count):
             pane_label = self.model.pane_label(i)
-            self.tabBar.addTab(pane_label)
+            self.tabBar.setTabText(i, pane_label)
     
     def refresh_undo_actions(self):
         self._updateUndoActions()
