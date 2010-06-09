@@ -321,10 +321,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.model.make_schedule_from_selected()
     
     def reconcileSelectedTriggered(self):
-        self.aview.etable.model.toggle_reconciled()
+        self.eview.etable.model.toggle_reconciled()
     
     def toggleReconciliationModeTriggered(self):
-        self.aview.model.toggle_reconciliation_mode()
+        self.eview.model.toggle_reconciliation_mode()
     
     def registerTriggered(self):
         self.app.askForRegCode()

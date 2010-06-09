@@ -34,6 +34,7 @@ class EntryView(BaseView, Ui_EntryView):
         self._setupColumns() # Can only be done after the model has been connected
         
         self.doc.app.willSavePrefs.connect(self._savePrefs)
+        self.reconciliationButton.clicked.connect(self.model.toggle_reconciliation_mode)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -67,8 +68,12 @@ class EntryView(BaseView, Ui_EntryView):
     
     #--- model --> view
     def refresh_reconciliation_button(self):
-        # XXX Add reconciliation button and refresh it here
-        pass
+        if self.model.can_toggle_reconciliation_mode:
+            self.reconciliationButton.setEnabled(True)
+            self.reconciliationButton.setChecked(self.model.reconciliation_mode)
+        else:
+            self.reconciliationButton.setEnabled(False)
+            self.reconciliationButton.setChecked(False)
     
     def refresh_totals(self):
         self.totalsLabel.setText(self.model.totals)
