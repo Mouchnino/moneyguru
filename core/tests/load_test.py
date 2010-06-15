@@ -17,6 +17,18 @@ from ..model.account import AccountType
 from ..model.date import MonthRange
 from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, compare_apps, TestApp, with_app
 
+#--- Pristine
+@with_tmpdir
+def test_dont_save_invalid_xml_characters(tmppath):
+    # It's possible that characters that are invalid in an XML file end up in a moneyGuru document
+    # (mostly through imports). Don't let this happen.
+    app = TestApp()
+    app.add_txn(description=u"foo\0bar")
+    filepath = unicode(tmppath + 'foo.xml')
+    app.doc.save_to_xml(filepath)
+    app.doc.load_from_xml(filepath) # no exception
+    eq_(app.ttable[0].description, u"foo bar")
+
 class LoadFile(TestCase):
     # Loads 'simple.moneyguru', a file with 2 accounts and 2 entries in each. Select the first entry.
     def setUp(self):

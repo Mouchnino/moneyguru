@@ -9,6 +9,8 @@
 
 import xml.etree.cElementTree as ET
 
+from hsutil.str import remove_invalid_xml
+
 def save(filename, accounts, groups, transactions, schedules, budgets):
     def date2str(date):
         return date.strftime('%Y-%m-%d')
@@ -96,5 +98,9 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         attrib['start_date'] = date2str(budget.start_date)
         if budget.stop_date is not None:
             attrib['stop_date'] = date2str(budget.stop_date)
+    for elem in root.getiterator():
+        attrib = elem.attrib
+        for key, value in attrib.iteritems():
+            attrib[key] = remove_invalid_xml(value)
     tree = ET.ElementTree(root)
     tree.write(filename, 'utf-8')
