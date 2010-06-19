@@ -285,6 +285,16 @@ def test_autoswitch_buggy():
     eq_(len(loader.account_infos), 50)
     eq_(len(loader.transaction_infos), 37)
 
+def test_autoswitch_none():
+    # Some QIF files don't have the autoswitch flag to indicate a list of accounts. The loader used
+    # to crash when such an account block would contain a "D" line that couldn't parse to a date.
+    loader = Loader(USD)
+    loader.parse(TestData.filepath('qif', 'autoswitch_none.qif'))
+    loader.load() # no crash
+    # We don't test for account_info because in such buggy cases, we don't care much. We only care
+    # that transactions are correctly loaded.
+    eq_(len(loader.transaction_infos), 1)
+
 def test_with_cat():
     # some file have a "!Type:Cat" section with buggy "D" lines
     loader = Loader(USD)
