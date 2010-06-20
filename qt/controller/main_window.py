@@ -17,7 +17,6 @@ from core.gui.main_window import MainWindow as MainWindowModel
 
 from print_ import ViewPrinter
 from support.recent import Recent
-from support.search_edit import SearchEdit
 from .account.view import EntryView
 from .budget.view import BudgetView
 from .networth.view import NetWorthView
@@ -94,18 +93,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.tabBar.setMovable(True)
         self.tabBar.setTabsClosable(True)
-        
-        # Toolbar setup. We have to do it manually because it's tricky to insert the view title
-        # label otherwise.
-        self.toolBar.addAction(self.actionShowNetWorth)
-        self.toolBar.addAction(self.actionShowProfitLoss)
-        self.toolBar.addAction(self.actionShowTransactions)
-        self.toolBar.addAction(self.actionShowSchedules)
-        self.toolBar.addAction(self.actionShowBudgets)
-        self.toolBar.addSeparator()
-        self.searchLineEdit = SearchEdit()
-        self.searchLineEdit.setMaximumWidth(240)
-        self.toolBar.addWidget(self.searchLineEdit)
         
         # Restore window size
         # We don't set geometry if the window was maximized so that if the user de-maximize the
