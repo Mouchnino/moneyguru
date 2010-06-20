@@ -60,17 +60,6 @@ class Pristine(TestCase, TestQIFExportImportMixin):
         # No need to test further, we already test moneyguru file loading, which is basically the 
         # same thing.
     
-    def test_import_qif_with_bad_amount(self):
-        # When moneyGuru can't parse something, it should not continue to try to import the file. If
-        # it ignores entries it can't parse, the user has no use for the rest of the entries, the
-        # integrity of the file has been breached. log a warning with the error, and raise a
-        # FileFormatError telling the user to contact support.
-        # (The file also has a bad date)
-        filename = op.join(self.filepath('qif', 'bad_amount.qif'))
-        self.assertRaises(FileFormatError, self.document.parse_file_for_import, filename)
-        self.logged.seek(0)
-        self.assertTrue(self.logged.read()) # something (a warning) was logged
-    
 
 class QIFImport(TestCase):
     """One account named 'Account 1' and then an parse_file_for_import() call for the 'checkbook.qif' test file

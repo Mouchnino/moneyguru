@@ -1,0 +1,23 @@
+!Account
+NAccount 1
+TOth A
+DThe account number 1
+^
+NAccount 2
+TOth A
+DThe account number 2
+^
+NAccount 3
+TOth A
+DThe account number 3
+^
+!Account
+NAccount 4
+TBank
+DThe account number 4
+^
+D01/01/10
+MSome Transaction
+T100.00
+LAccount 1
+^
