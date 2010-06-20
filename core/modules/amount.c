@@ -2,6 +2,12 @@
 #include <Python.h>
 #include "structmember.h"
 
+#ifdef _MSC_VER
+typedef __int64 int64_t;
+double round(double x) { return floor(x + 0.5); }
+int rint(double x) { return (int)round(x); }
+#endif
+
 typedef struct {
     PyObject_HEAD
     int64_t ival; /* Value shifted by currency's exponent */
@@ -86,16 +92,16 @@ check_amounts(PyObject *a, PyObject *b, int seterr)
        if seterr is true, an appropriate error is set.
     */
     if (!check_amount(a) || !check_amount(b)) {
-	    if (seterr) {
+        if (seterr) {
             PyErr_SetString(PyExc_TypeError, "Amounts can only be compared with other amounts or zero.");
-    	}
+        }
         return 0;
-	}
-	
-	if (!amounts_are_compatible(a, b)) {
+    }
+    
+    if (!amounts_are_compatible(a, b)) {
         if (seterr) {
             PyErr_SetString(PyExc_ValueError, "Amounts of different currencies can't be compared.");
-    	}
+        }
         return 0;
     }
     
@@ -199,15 +205,15 @@ Amount_traverse(Amount *self, visitproc visit, void *arg)
 {
     Py_VISIT(self->rval);
     Py_VISIT(self->currency);
-	return 0;
+    return 0;
 }
 
 static int
 Amount_clear(Amount *self)
 {
-	Py_CLEAR(self->rval);
-	Py_CLEAR(self->currency);
-	return 0;
+    Py_CLEAR(self->rval);
+    Py_CLEAR(self->currency);
+    return 0;
 }
 
 static PyObject *
@@ -256,23 +262,23 @@ Amount_richcompare(PyObject *a, PyObject *b, int op)
             return NULL; // An error has been set already
         }
     }
-	    
+    
     /* The comparison is valid, do it */
     r = 0;
     aval = get_amount_ival(a);
     bval = get_amount_ival(b);
     switch (op) {
-    	case Py_LT: r = aval < bval; break;
-    	case Py_LE: r = aval <= bval; break;
-    	case Py_EQ: r = aval == bval; break;
-    	case Py_NE: r = aval != bval; break;
-    	case Py_GT: r = aval > bval; break;
-    	case Py_GE: r = aval >= bval; break;
-	}
-	if (r) {
-	    Py_RETURN_TRUE;
-	}
-	else {
+        case Py_LT: r = aval < bval; break;
+        case Py_LE: r = aval <= bval; break;
+        case Py_EQ: r = aval == bval; break;
+        case Py_NE: r = aval != bval; break;
+        case Py_GT: r = aval > bval; break;
+        case Py_GE: r = aval >= bval; break;
+    }
+    if (r) {
+        Py_RETURN_TRUE;
+    }
+    else {
         Py_RETURN_FALSE;
     }
 }
