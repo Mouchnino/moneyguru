@@ -12,3 +12,11 @@ QTreeView::branch:has-children:closed {
 QTreeView::branch:has-children:open {
     image: url(:/tree_minus_9);
 }
+
+/* We want the buttons in the NewView to be aligned on the left
+rather than in the middle.
+*/
+
+QWidget#NewView QPushButton {
+    text-align: left;
+}
