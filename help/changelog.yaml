@@ -1,3 +1,8 @@
+- date: 2010-06-20
+  version: 1.8.3
+  description: |
+    * Fixed imports of some malformed QIF files. (#153)
+    * Fixed a bug causing moneyGuru to save invalid files if importing files with invalid characters.
 - date: 2010-04-30
   version: 1.8.2
   description: |
