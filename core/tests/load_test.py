@@ -15,7 +15,7 @@ from hsutil.testutil import with_tmpdir
 
 from ..model.account import AccountType
 from ..model.date import MonthRange
-from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, compare_apps, TestApp, with_app
+from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, compare_apps, TestApp
 
 #--- Pristine
 @with_tmpdir
@@ -254,27 +254,6 @@ def app_account_in_group():
     app.add_account(group_name='group')
     app.bsheet.selected = app.bsheet.assets[0][0] # the account in the group
     return app
-
-#--- Expanded group
-def app_expanded_group():
-    app = TestApp()
-    app.add_group('group')
-    app.bsheet.expand_node(app.bsheet.assets[0])
-    return app
-
-@with_app(app_expanded_group)
-@with_tmpdir
-def test_expanded_nodes_are_restored_on_load(app, tmppath):
-    # We can't use the normal compare_apps mechanism here because node expansion info doesn't go into
-    # the document. This test also makes sure that the nodes expansion state are saved even if the
-    # sheet is not connected at close (and thus doesn't receive the document_will_close msg).
-    app.mw.select_income_statement()
-    filepath = unicode(tmppath + 'foo.xml')
-    app.doc.save_to_xml(filepath)
-    app.doc.close()
-    newapp = TestApp(app=app.app)
-    newapp.doc.load_from_xml(filepath)
-    assert (0, 0) in newapp.bsheet.expanded_paths
 
 #--- Transaction_with_memos
 def app_transaction_with_memos():
