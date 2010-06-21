@@ -135,16 +135,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 
 /* Actions */
-- (IBAction)closeTab:(id)sender
-{
-    if ([[self py] paneCount] > 1) {
-        [[self py] closePaneAtIndex:[[self py] currentPaneIndex]];
-    }
-    else {
-        [[self window] performClose:sender];
-    }
-}
-
 - (IBAction)delete:(id)sender
 {
     [[self py] deleteItem];
@@ -334,6 +324,16 @@ http://www.hardcoded.net/licenses/hs_license
 - (MGPrintView *)viewToPrint
 {
     return [top viewToPrint];
+}
+
+- (NSInteger)openedTabCount
+{
+    return [[self py] paneCount];
+}
+
+- (void)closeActiveTab
+{
+    [[self py] closePaneAtIndex:[[self py] currentPaneIndex]];
 }
 
 /* Delegate */

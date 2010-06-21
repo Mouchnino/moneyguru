@@ -27,6 +27,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Menu Item Tags */
 
 #define MGNewItemMenuItem 1000
+#define MGCloseWindowMenuItem 1001
 #define MGCustomSavedRangeStart 2000
 
 /* Errors */

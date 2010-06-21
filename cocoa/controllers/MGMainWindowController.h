@@ -68,7 +68,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)validateAction:(SEL)action;
 
 /* Actions */
-- (IBAction)closeTab:(id)sender;
 - (IBAction)delete:(id)sender;
 - (IBAction)duplicateItem:(id)sender;
 - (IBAction)editItemInfo:(id)sender;
@@ -108,6 +107,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)restoreState;
 - (void)saveState;
 - (MGPrintView *)viewToPrint;
+- (NSInteger)openedTabCount;
+- (void)closeActiveTab;
 
 /* Delegate */
 - (BOOL)validateMenuItem:(NSMenuItem *)aItem;

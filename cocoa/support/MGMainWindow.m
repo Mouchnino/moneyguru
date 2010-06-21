@@ -7,10 +7,29 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGMainWindow.h"
+#import "MGConst.h"
 #import "NSEventAdditions.h"
 #import "MGMainWindowController.h"
 
 @implementation MGMainWindow
+- (void)performClose:(id)sender
+{
+    if ([sender tag] == MGCloseWindowMenuItem) {
+        // Force the close of the whole window.
+        [super performClose:sender];
+    }
+    else {
+        // Close tab if there's more than one.
+        MGMainWindowController *delegate = [self delegate];
+        if ([delegate openedTabCount] > 1) {
+            [delegate closeActiveTab];
+        }
+        else {
+            [super performClose:sender];
+        }
+    }
+}
+
 - (BOOL)performKeyEquivalent:(NSEvent *)event 
 {
     SEL action = nil;
