@@ -15,6 +15,8 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithNibName:@"MainWindow" pyClassName:@"PyMainWindow" pyParent:[document py]];
     [self setDocument:document];
+    /* Put a cute iTunes-like bottom bar */
+    [[self window] setContentBorderThickness:28 forEdge:NSMinYEdge];
     [self restoreState];
     accountProperties = [[MGAccountProperties alloc] initWithParent:self];
     transactionPanel = [[MGTransactionInspector alloc] initWithParent:self];
@@ -148,6 +150,20 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)editItemInfo:(id)sender
 {
     [[self py] editItem];
+}
+
+- (IBAction)itemSegmentClicked:(id)sender
+{
+    NSInteger index = [(NSSegmentedControl *)sender selectedSegment];
+    if (index == 0) {
+        [self newItem:sender];
+    }
+    else if (index == 1) {
+        [self delete:sender];
+    }
+    else if (index == 2) {
+        [self editItemInfo:sender];
+    }
 }
 
 - (IBAction)jumpToAccount:(id)sender

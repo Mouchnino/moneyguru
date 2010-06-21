@@ -99,7 +99,6 @@
 		CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA00E21622F004F63E9 /* MGGradientBar.m */; };
 		CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA60E21622F004F63E9 /* MGScrollView.m */; };
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
-		CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */; };
 		CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88544811A1819C00268FBD /* MGMainWindowController.m */; };
 		CE88545111A1837B00268FBD /* MGMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88545011A1837B00268FBD /* MGMainWindow.m */; };
 		CE8CD7AD1042E340004B30E0 /* budget_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8CD7AC1042E340004B30E0 /* budget_16.png */; };
@@ -404,8 +403,6 @@
 		CE873AA60E21622F004F63E9 /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
 		CE873AA70E21622F004F63E9 /* MGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableView.h; sourceTree = "<group>"; };
 		CE873AA80E21622F004F63E9 /* MGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableView.m; sourceTree = "<group>"; };
-		CE873AAD0E21622F004F63E9 /* MGTransparentButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransparentButtonCell.h; sourceTree = "<group>"; };
-		CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransparentButtonCell.m; sourceTree = "<group>"; };
 		CE88544711A1819C00268FBD /* MGMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindowController.h; sourceTree = "<group>"; };
 		CE88544811A1819C00268FBD /* MGMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindowController.m; sourceTree = "<group>"; };
 		CE88544F11A1837B00268FBD /* MGMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindow.h; sourceTree = "<group>"; };
@@ -960,8 +957,6 @@
 				CE873AA80E21622F004F63E9 /* MGTableView.m */,
 				07D99F240E37D5A70009142B /* MGTextFieldCell.h */,
 				07D99F250E37D5A70009142B /* MGTextFieldCell.m */,
-				CE873AAD0E21622F004F63E9 /* MGTransparentButtonCell.h */,
-				CE873AAE0E21622F004F63E9 /* MGTransparentButtonCell.m */,
 			);
 			path = support;
 			sourceTree = "<group>";
@@ -1339,7 +1334,6 @@
 				CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */,
 				CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */,
 				CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */,
-				CE873ACB0E21622F004F63E9 /* MGTransparentButtonCell.m in Sources */,
 				0714240E0E2A797800AC27AC /* MGBarGraphView.m in Sources */,
 				0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */,
 				071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */,
