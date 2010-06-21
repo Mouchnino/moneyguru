@@ -252,12 +252,6 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             node._name = node.account.name if node.is_account else node.group.name
             self.mainwindow.show_message(msg)
     
-    def save_node_expansion_state(self):
-        # This is called by the mainwindow when it receives document_will_close. We can't listen
-        # to it ourselves because the sheet is not necessarily connected when the document closes.
-        prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
-        self.app.set_default(prefname, self.expanded_paths)
-    
     def show_selected_account(self):
         self.mainwindow.shown_account = self.mainwindow.selected_account
     
@@ -300,6 +294,11 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     def date_range_changed(self):
         self.refresh()
         self.view.refresh()
+    
+    def document_will_close(self):
+        # Save node expansion state
+        prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
+        self.app.set_default(prefname, self.expanded_paths)
     
     def edition_must_stop(self):
         self.view.stop_editing()

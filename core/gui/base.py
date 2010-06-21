@@ -102,7 +102,11 @@ MESSAGES_DOCUMENT_CHANGED = set(['account_added', 'account_changed', 'account_de
     'performed_undo_or_redo'])
 
 class HideableObject(object):
+    # Messages that invalidates the view if received while it's hidden (its cache will be
+    # revalidated upon show)
     INVALIDATING_MESSAGES = set()
+    # Messages that are always passed, even if the object is hidden.
+    ALWAYSON_MESSAGES = set(['document_will_close'])
     
     def __init__(self):
         self._hidden = True
@@ -110,8 +114,10 @@ class HideableObject(object):
     
     #--- Protected
     def _process_message(self, msg):
-        if msg in self.INVALIDATING_MESSAGES:
+        # Returns True if the message must be dispatched, False if not.
+        if self._hidden and (msg in self.INVALIDATING_MESSAGES):
             self._invalidated = True
+        return (not self._hidden) or (msg in self.ALWAYSON_MESSAGES)
     
     def _revalidate(self):
         pass
@@ -148,9 +154,7 @@ class ViewChild(Listener, HideableObject, DocumentNotificationsMixin, MainWindow
         self.app = self.document.app
     
     def dispatch(self, msg):
-        if self._hidden:
-            self._process_message(msg)
-        else:
+        if self._process_message(msg):
             Listener.dispatch(self, msg)
     
 
@@ -235,11 +239,10 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         self.app = mainwindow.document.app
     
     def dispatch(self, msg):
-        if self._hidden:
-            self._process_message(msg)
-            self._repeat_message(msg)
-        else:
+        if self._process_message(msg):
             Repeater.dispatch(self, msg)
+        else:
+            self._repeat_message(msg)
     
     # This has to be call *once* and *right after creation*. The children are set after
     # initialization so that we can pass a reference to self during children's initialization.

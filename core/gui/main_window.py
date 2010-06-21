@@ -422,11 +422,6 @@ class MainWindow(Repeater):
         self._restore_opened_panes()
     
     def document_will_close(self):
-        # When the document closes the sheets are not necessarily connected. This is why we do it
-        # this way.
-        # XXX This is not the case anymore, we can move this to the sheet themselves now.
-        self.nwview.bsheet.save_node_expansion_state()
-        self.pview.istatement.save_node_expansion_state()
         self._save_preferences()
     
     def filter_applied(self):
