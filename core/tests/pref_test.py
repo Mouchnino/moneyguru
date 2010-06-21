@@ -23,9 +23,10 @@ def test_mainwindow_panes_reopen(app):
     app.mw.close_pane(4) # close budget pane
     app.add_account('foo')
     app.mw.show_account() # we now have the 'foo' account opened.
-    app.mw.move_pane(4, 0) # move the 'foo' pane at the first index
+    app.mw.move_pane(4, 1) # move the 'foo' pane at the second position
+    # The selected pane index is 1
     newapp = app.save_and_load()
-    eq_(newapp.mw.current_pane_index, 0)
+    eq_(newapp.mw.current_pane_index, 1) # We've restored the selected pane index
     newapp.check_current_pane(PaneType.Account, account_name='foo')
     newapp.mw.current_pane_index = 4
     newapp.check_current_pane(PaneType.Schedule)

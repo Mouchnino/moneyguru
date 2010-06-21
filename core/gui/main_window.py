@@ -17,6 +17,7 @@ from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
+SELECTED_PANE_PREFERENCE = 'SelectedPane'
 
 ViewPane = namedtuple('ViewPane', 'view label account')
 
@@ -119,6 +120,9 @@ class MainWindow(Repeater):
             account = self.document.accounts.find(account_name)
             pane_data.append((pane_type, account))
         self._set_panes(pane_data)
+        selected_pane_index = self.document.app.get_default(SELECTED_PANE_PREFERENCE)
+        if selected_pane_index is not None:
+            self.current_pane_index = selected_pane_index
     
     def _save_preferences(self):
         opened_panes = []
@@ -129,6 +133,7 @@ class MainWindow(Repeater):
                 data['account_name'] = pane.account.name
             opened_panes.append(data)
         self.document.app.set_default(OPENED_PANES_PREFERENCE, opened_panes)
+        self.document.app.set_default(SELECTED_PANE_PREFERENCE, self._current_pane_index)
     
     def _set_panes(self, pane_data):
         # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, account)]
