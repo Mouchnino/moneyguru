@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGAccountProperties
 - (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"AccountProperties" pyClassName:@"PyAccountPanel" parent:aParent];
+    self = [super initWithNibName:@"AccountPanel" pyClassName:@"PyAccountPanel" parent:aParent];
     currencies = [[[self py] availableCurrencies] retain];
     /* If we don't reload data, we'll have a 0-length combobox at loadFields */
     [currencySelector reloadData];

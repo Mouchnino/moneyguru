@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGTransactionInspector
 - (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"TransactionInspector" pyClassName:@"PyTransactionPanel" parent:aParent];
+    self = [super initWithNibName:@"TransactionPanel" pyClassName:@"PyTransactionPanel" parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
     [splitTable connect];
     return self;

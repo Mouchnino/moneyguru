@@ -11,7 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGMassEditionPanel
 - (id)initWithParent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:@"MassEditionPanel" pyClassName:@"PyMassEditionPanel" parent:aParent];
+    self = [super initWithNibName:@"MassEditingPanel" pyClassName:@"PyMassEditionPanel" parent:aParent];
     currencies = [[[self py] availableCurrencies] retain];
     return self;
 }
