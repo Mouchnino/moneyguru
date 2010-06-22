@@ -52,7 +52,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)pageTitle
 {
-    return [NSString stringWithFormat:@"Entries from %@ to %@",[py startDate],[py endDate]];
+    return [NSString stringWithFormat:TR(@"EntryPrintTitle"),[py startDate],[py endDate]];
 }
 
 - (NSArray *)unresizableColumns

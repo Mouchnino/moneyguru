@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGTransactionPrint.h"
+#import "MGConst.h"
 
 @implementation MGTransactionPrint
 + (NSString *)pyClassName
@@ -21,7 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)pageTitle
 {
-    return [NSString stringWithFormat:@"Transactions from %@ to %@",[py startDate],[py endDate]];
+    return [NSString stringWithFormat:TR(@"TransactionPrintTitle"),[py startDate],[py endDate]];
 }
 
 - (NSArray *)unresizableColumns

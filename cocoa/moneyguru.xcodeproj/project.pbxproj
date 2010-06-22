@@ -177,6 +177,7 @@
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
 		CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */; };
+		CECF31D911D0B27400B786F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CECF31D711D0B27400B786F7 /* Localizable.strings */; };
 		CED1FC6D10F7851600634D72 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6C10F7851600634D72 /* MGTransactionTable.m */; };
 		CED1FC7410F7852000634D72 /* MGBalanceGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6F10F7852000634D72 /* MGBalanceGraph.m */; };
 		CED1FC7510F7852000634D72 /* MGBarGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC7110F7852000634D72 /* MGBarGraph.m */; };
@@ -534,6 +535,8 @@
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
 		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
 		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
+		CECF31D811D0B27400B786F7 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		CECF31F711D0BE3400B786F7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		CECFE92C0E72C633001BAFCF /* PyEntryFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryFilterBar.h; sourceTree = "<group>"; };
 		CED1FC6B10F7851600634D72 /* MGTransactionTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionTable.h; sourceTree = "<group>"; };
 		CED1FC6C10F7851600634D72 /* MGTransactionTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransactionTable.m; sourceTree = "<group>"; };
@@ -735,6 +738,7 @@
 		CE8739FF0E21615F004F63E9 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				CECF31D711D0B27400B786F7 /* Localizable.strings */,
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
 				CEEED1D30E3F763100BBA154 /* images */,
@@ -1217,6 +1221,14 @@
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moneyguru" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				fr,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* moneyguru */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1312,6 +1324,7 @@
 				CE05E1771140470000DB13ED /* Lookup.xib in Resources */,
 				CE940B49118F2D0F00FA9FAD /* DateRangeSelector.xib in Resources */,
 				CE74808711994DD600D59C50 /* NewTabView.xib in Resources */,
+				CECF31D911D0B27400B786F7 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1435,6 +1448,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CECF31D711D0B27400B786F7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CECF31D811D0B27400B786F7 /* en */,
+				CECF31F711D0BE3400B786F7 /* fr */,
+			);
+			name = Localizable.strings;
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* release */ = {

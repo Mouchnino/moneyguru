@@ -1,0 +1,41 @@
+"New Item" = "New Item";
+"New Account" = "New Account";
+"New Transaction" = "New Transaction";
+"New Schedule" = "New Schedule";
+"New Budget" = "New Budget";
+
+"Account Lookup" = "Account Lookup";
+"Completion Lookup" = "Completion Lookup";
+
+"All" = "All";
+"Increase" = "Increase";
+"Decrease" = "Decrease";
+"Income" = "Income";
+"Expenses" = "Expenses";
+"Transfers" = "Transfers";
+"Unassigned" = "Unassigned";
+"Reconciled" = "Reconciled";
+"Not Reconciled" = "Not Reconciled";
+
+"Filter" = "Filter";
+"Date Range" = "Date Range";
+"Net Worth" = "Net Worth";
+"Profit/Loss" = "Profit/Loss";
+"Schedules" = "Schedules";
+"Budgets" = "Budgets";
+
+/* Print titles */
+"NetWorthPrintTitle" = "Net Worth at %@, starting from %@";
+"ProfitPrintTitle" = "Profit and loss from %@ to %@";
+"TransactionPrintTitle" = "Transactions from %@ to %@";
+"EntryPrintTitle" = "Entries from %@ to %@";
+"SchedulePrintTitle" = "Schedules from %@ to %@";
+"BudgetPrintTitle" = "Budgets from %@ to %@";
+
+/* Messages */
+"FirstRunMsg" = "This is your first time running moneyGuru. Do you want to open the example file?";
+"AboutToRestartMsg" = "moneyGuru is about to restart";
+"ThanksForBuyingMsg" = "Thanks for buying moneyGuru!";
+"DemoLimitReachedMsg" = "You have reached the limits of this demo version. You must buy moneyGuru to save the document.";
+"SelectFileToImportMsg" = "Select a file to import";
+"ExportToQIFMsg" = "Export to QIF";

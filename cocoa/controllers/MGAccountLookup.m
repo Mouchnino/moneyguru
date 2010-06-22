@@ -7,12 +7,13 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGAccountLookup.h"
+#import "MGConst.h"
 
 @implementation MGAccountLookup
 - (id)initWithPyParent:(id)aPyParent
 {
     self = [super initWithClassName:@"PyAccountLookup" pyParent:aPyParent];
-    [[self window] setTitle:@"Account Lookup"];
+    [[self window] setTitle:TR(@"Account Lookup")];
     return self;
 }
 

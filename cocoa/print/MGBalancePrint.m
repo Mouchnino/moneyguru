@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)pageTitle
 {
-    return [NSString stringWithFormat:@"Net Worth at %@, starting from %@",[py endDate],[py startDate]];
+    return [NSString stringWithFormat:TR(@"NetWorthPrintTitle"),[py endDate],[py startDate]];
 }
 
 -(void)setUpWithPrintInfo:(NSPrintInfo *)pi

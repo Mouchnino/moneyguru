@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGSchedulePrint.h"
+#import "MGConst.h"
 
 @implementation MGSchedulePrint
 + (NSString *)pyClassName
@@ -21,7 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)pageTitle
 {
-    return [NSString stringWithFormat:@"Schedules from %@ to %@",[py startDate],[py endDate]];
+    return [NSString stringWithFormat:TR(@"SchedulePrintTitle"),[py startDate],[py endDate]];
 }
 
 - (NSArray *)unresizableColumns

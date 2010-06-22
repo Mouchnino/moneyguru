@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGBudgetPrint.h"
+#import "MGConst.h"
 
 @implementation MGBudgetPrint
 + (NSString *)pyClassName
@@ -21,7 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)pageTitle
 {
-    return [NSString stringWithFormat:@"Budgets from %@ to %@",[py startDate],[py endDate]];
+    return [NSString stringWithFormat:TR(@"BudgetPrintTitle"),[py startDate],[py endDate]];
 }
 
 - (NSArray *)unresizableColumns

@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSString *)pageTitle
 {
-    return [NSString stringWithFormat:@"Profit and loss from %@ to %@",[py startDate],[py endDate]];
+    return [NSString stringWithFormat:TR(@"ProfitPrintTitle"),[py startDate],[py endDate]];
 }
 
 -(void)setUpWithPrintInfo:(NSPrintInfo *)pi

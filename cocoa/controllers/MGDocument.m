@@ -121,7 +121,7 @@ http://www.hardcoded.net/licenses/hs_license
         {
             if ([py transactionCount] > 100)
             {
-                error = @"You have reached the limits of this demo version. You must buy moneyGuru to save the document.";
+                error = TR(@"DemoLimitReachedMsg");
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObject:error forKey:NSLocalizedFailureReasonErrorKey];
                 *outError = [NSError errorWithDomain:MGErrorDomain code:MGDemoLimitErrorCode userInfo:userInfo];
                 return NO;
@@ -141,7 +141,7 @@ http://www.hardcoded.net/licenses/hs_license
     [op setCanChooseFiles:YES];
     [op setCanChooseDirectories:NO];
     [op setAllowsMultipleSelection:NO];
-    [op setTitle:@"Select a file to import"];
+    [op setTitle:TR(@"SelectFileToImportMsg")];
     if ([op runModalForTypes:nil] == NSOKButton)
     {
         NSString *filename = [[op filenames] objectAtIndex:0];
@@ -157,7 +157,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSSavePanel *sp = [NSSavePanel savePanel];
     [sp setCanCreateDirectories:YES];
-    [sp setTitle:@"Export to QIF"];
+    [sp setTitle:TR(@"ExportToQIFMsg")];
     if ([sp runModalForDirectory:nil file:@"export.qif"] == NSOKButton)
     {
         NSString *filename = [sp filename];

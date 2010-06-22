@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGFilterBar.h"
+#import "MGConst.h"
 #import "AMButtonBarItem.h"
 
 #define MGALL @"all"
@@ -24,25 +25,25 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super initWithPyClassName:pyClassName pyParent:aPyParent];
     view = [aView retain];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
-	[item setTitle:@"All"];
+	[item setTitle:TR(@"All")];
 	[view insertItem:item atIndex:0];
 	item = [[[AMButtonBarItem alloc] initWithIdentifier:MGINCOME] autorelease];
-	[item setTitle:forEntryTable ? @"Increase" : @"Income"];
+	[item setTitle:forEntryTable ? TR(@"Increase") : TR(@"Income")];
 	[view insertItem:item atIndex:1];
 	item = [[[AMButtonBarItem alloc] initWithIdentifier:MGEXPENSE] autorelease];
-	[item setTitle:forEntryTable ? @"Decrease" : @"Expenses"];
+	[item setTitle:forEntryTable ? TR(@"Decrease") : TR(@"Expenses")];
 	[view insertItem:item atIndex:2];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGTRANSFER] autorelease];
-    [item setTitle:@"Transfers"];
+    [item setTitle:TR(@"Transfers")];
     [view insertItem:item atIndex:3];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGUNASSIGNED] autorelease];
-    [item setTitle:@"Unassigned"];
+    [item setTitle:TR(@"Unassigned")];
     [view insertItem:item atIndex:4];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGRECONCILED] autorelease];
-    [item setTitle:@"Reconciled"];
+    [item setTitle:TR(@"Reconciled")];
     [view insertItem:item atIndex:5];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGNOTRECONCILED] autorelease];
-    [item setTitle:@"Not Reconciled"];
+    [item setTitle:TR(@"Not Reconciled")];
     [view insertItem:item atIndex:6];
     [view selectItemWithIdentifier:MGALL];
 	[view setDelegate:self];

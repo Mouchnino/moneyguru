@@ -425,48 +425,48 @@ http://www.hardcoded.net/licenses/hs_license
 {
     NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
     if ([itemIdentifier isEqual:MGSearchFieldToolbarItemIdentifier]) {
-        [toolbarItem setLabel: @"Filter"];
+        [toolbarItem setLabel: TR(@"Filter")];
         [toolbarItem setView:[searchField view]];
         [toolbarItem setMinSize:[[searchField view] frame].size];
         [toolbarItem setMaxSize:[[searchField view] frame].size];
     }
     else if ([itemIdentifier isEqual:MGDateRangeToolbarItemIdentifier]) {
-        [toolbarItem setLabel: @"Date Range"];
+        [toolbarItem setLabel: TR(@"Date Range")];
         [toolbarItem setView:[dateRangeSelector view]];
         [toolbarItem setMinSize:[[dateRangeSelector view] frame].size];
         [toolbarItem setMaxSize:[[dateRangeSelector view] frame].size];
     }
     else if ([itemIdentifier isEqual:MGBalanceSheetToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:@"Net Worth"];
+        [toolbarItem setLabel:TR(@"Net Worth")];
         [toolbarItem setImage:[NSImage imageNamed:@"balance_sheet_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showBalanceSheet:)];
     }
     else if ([itemIdentifier isEqual:MGIncomeStatementToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:@"Profit/Loss"];
+        [toolbarItem setLabel:TR(@"Profit/Loss")];
         [toolbarItem setImage:[NSImage imageNamed:@"income_statement_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showIncomeStatement:)];
     }
     else if ([itemIdentifier isEqual:MGTransactionsToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:@"Transactions"];
+        [toolbarItem setLabel:TR(@"Transactions")];
         [toolbarItem setImage:[NSImage imageNamed:@"transaction_table_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showTransactionTable:)];
     }
     else if ([itemIdentifier isEqual:MGSchedulesToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:@"Schedules"];
+        [toolbarItem setLabel:TR(@"Schedules")];
         [toolbarItem setImage:[NSImage imageNamed:@"schedules_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showScheduleTable:)];
     }
     else if ([itemIdentifier isEqual:MGBudgetToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:@"Budgets"];
+        [toolbarItem setLabel:TR(@"Budgets")];
         [toolbarItem setImage:[NSImage imageNamed:@"budget_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showBudgetTable:)];
@@ -480,15 +480,15 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)validateMenuItem:(NSMenuItem *)aItem
 {
     if ([aItem tag] == MGNewItemMenuItem) {
-        NSString *title = @"New Item";
+        NSString *title = TR(@"New Item");
         if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
-            title = @"New Account";
+            title = TR(@"New Account");
         else if ([top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]])
-            title = @"New Transaction";
+            title = TR(@"New Transaction");
         else if ([top isKindOfClass:[MGScheduleView class]])
-            title = @"New Schedule";
+            title = TR(@"New Schedule");
         else if ([top isKindOfClass:[MGBudgetView class]])
-            title = @"New Budget";
+            title = TR(@"New Budget");
         [aItem setTitle:title];
     }
     return [self validateUserInterfaceItem:aItem];

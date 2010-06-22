@@ -184,7 +184,7 @@ http://www.hardcoded.net/licenses/hs_license
     }
     else
     {
-        if ([Dialogs askYesNo:@"This is your first time running moneyGuru. Do you want to open the example file?"] == NSAlertFirstButtonReturn)
+        if ([Dialogs askYesNo:TR(@"FirstRunMsg")] == NSAlertFirstButtonReturn)
         {
             [self openExampleDocument:self];
         }
@@ -210,7 +210,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     continueUpdate = [invocation retain];
     [[NSDocumentController sharedDocumentController] 
-        reviewUnsavedDocumentsWithAlertTitle:@"moneyGuru is about to restart"
+        reviewUnsavedDocumentsWithAlertTitle:TR(@"AboutToRestartMsg")
         cancellable:NO delegate:self didReviewAllSelector:@selector(documentController:didReviewAll:contextInfo:)
         contextInfo:nil];
     return YES;
@@ -227,6 +227,6 @@ http://www.hardcoded.net/licenses/hs_license
 // Python -> Cocoa
 - (void)setupAsRegistered
 {
-    [unlockMenuItem setTitle:@"Thanks for buying moneyGuru!"];
+    [unlockMenuItem setTitle:TR(@"ThanksForBuyingMsg")];
 }
 @end

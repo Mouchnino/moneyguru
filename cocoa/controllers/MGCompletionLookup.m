@@ -7,12 +7,13 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGCompletionLookup.h"
+#import "MGConst.h"
 
 @implementation MGCompletionLookup
 - (id)initWithPyParent:(id)aPyParent
 {
     self = [super initWithClassName:@"PyCompletionLookup" pyParent:aPyParent];
-    [[self window] setTitle:@"Completion Lookup"];
+    [[self window] setTitle:TR(@"Completion Lookup")];
     return self;
 }
 
