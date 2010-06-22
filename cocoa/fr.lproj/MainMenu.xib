@@ -556,7 +556,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="549672869">
 									<reference key="NSMenu" ref="657949865"/>
-									<string key="NSTitle">Nouveau &lt;item&gt;</string>
+									<string key="NSTitle">New &lt;item&gt;</string>
 									<string key="NSKeyEquiv">n</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -712,7 +712,7 @@
 								</object>
 								<object class="NSMenuItem" id="551150681">
 									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Profit &amp; Pertes</string>
+									<string key="NSTitle">Profits &amp; Pertes</string>
 									<string key="NSKeyEquiv">2</string>
 									<int key="NSKeyEquivModMask">1048840</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1054,7 +1054,7 @@
 								<reference key="NSControlView" ref="569786493"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="272308373">
+								<object class="NSCustomResource" key="NSNormalImage" id="998699276">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSSwitch</string>
 								</object>
@@ -1242,7 +1242,7 @@
 								<reference key="NSControlView" ref="37537141"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="272308373"/>
+								<reference key="NSNormalImage" ref="998699276"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -1264,7 +1264,7 @@
 								<reference key="NSControlView" ref="125175313"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="272308373"/>
+								<reference key="NSNormalImage" ref="998699276"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>

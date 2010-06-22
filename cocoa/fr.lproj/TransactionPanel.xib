@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{853, 437}, {485, 352}}</string>
 				<int key="NSWTFlags">-469761024</int>
-				<string key="NSWindowTitle">Détails de transaction</string>
+				<string key="NSWindowTitle">Transaction Inspector</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -320,7 +320,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="923510204">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents">Transfers</string>
+													<string key="NSContents">Transferts</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<reference key="NSControlView" ref="419813320"/>
 													<reference key="NSBackgroundColor" ref="459028066"/>
@@ -411,7 +411,7 @@
 																				<double key="NSSize">11</double>
 																				<int key="NSfFlags">16</int>
 																			</object>
-																			<string key="NSPlaceholderString">Unassigned</string>
+																			<string key="NSPlaceholderString">Non-assigné</string>
 																			<reference key="NSControlView" ref="352860623"/>
 																			<object class="NSColor" key="NSBackgroundColor" id="747064107">
 																				<int key="NSColorSpace">6</int>

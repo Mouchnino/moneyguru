@@ -522,7 +522,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="312350403">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Jours</string>
+								<string key="NSContents">Days</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>

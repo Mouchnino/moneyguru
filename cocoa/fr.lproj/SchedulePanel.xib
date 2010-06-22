@@ -408,7 +408,7 @@
 													<int key="NSPeriodicInterval">75</int>
 													<object class="NSMenuItem" key="NSMenuItem" id="39770134">
 														<reference key="NSMenu" ref="722058687"/>
-														<string key="NSTitle">Mensuellement</string>
+														<string key="NSTitle">Montly</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSKeyEquivModMask">1048576</int>
 														<int key="NSMnemonicLoc">2147483647</int>
@@ -431,7 +431,7 @@
 															<bool key="EncodedWithXMLCoder">YES</bool>
 															<object class="NSMenuItem" id="1064861421">
 																<reference key="NSMenu" ref="722058687"/>
-																<string key="NSTitle">Jamais</string>
+																<string key="NSTitle">Never</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
@@ -442,7 +442,7 @@
 															</object>
 															<object class="NSMenuItem" id="268271876">
 																<reference key="NSMenu" ref="722058687"/>
-																<string key="NSTitle">Quotidiennement</string>
+																<string key="NSTitle">Daily</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
@@ -489,7 +489,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="312350403">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">272630784</int>
-													<string key="NSContents">Jours</string>
+													<string key="NSContents">Days</string>
 													<object class="NSFont" key="NSSupport" id="438511893">
 														<string key="NSName">LucidaGrande</string>
 														<double key="NSSize">11</double>
