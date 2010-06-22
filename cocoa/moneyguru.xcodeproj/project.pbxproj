@@ -68,7 +68,6 @@
 		CE5CBBC5103834D8008AC465 /* SchedulePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5CBBC4103834D8008AC465 /* SchedulePanel.xib */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
 		CE647EA311730765006D28BA /* HSTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE647EA211730765006D28BA /* HSTable.m */; };
-		CE6818DF0EEA945D007C5CDF /* UnreconciliationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38070F93648E00FA8460 /* Dialogs.m */; };
 		CE6D38130F93648E00FA8460 /* HSErrorReportWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */; };
@@ -339,7 +338,6 @@
 		CE647EA01173074C006D28BA /* PyTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTable.h; sourceTree = "<group>"; };
 		CE647EA111730765006D28BA /* HSTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTable.h; sourceTree = "<group>"; };
 		CE647EA211730765006D28BA /* HSTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTable.m; sourceTree = "<group>"; };
-		CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnreconciliationDialog.xib; sourceTree = "<group>"; };
 		CE6C6FEF0E74324B003B5062 /* MGChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChart.h; sourceTree = "<group>"; };
 		CE6C6FF00E74324B003B5062 /* MGChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChart.m; sourceTree = "<group>"; };
 		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
@@ -772,7 +770,6 @@
 				CEF674AA0F4C7477003E5283 /* CustomDateRangePanel.xib */,
 				CEF4C4FE0F220F7A004FDC9D /* CSVImportOptions.xib */,
 				CE4CD3800F2B78B6003F1738 /* CSVLayoutName.xib */,
-				CE6818DE0EEA945D007C5CDF /* UnreconciliationDialog.xib */,
 				CE2848E20E84FB7200FF7EA2 /* RecurrenceScopeDialog.xib */,
 				CE0C64EC0E6974BD007424CA /* ViewOptions.xib */,
 				CE1453420E4AFD6B009517B6 /* ImportWindow.xib */,
@@ -1276,7 +1273,6 @@
 				CEACD4FC0E73DCFA00E9A2AB /* account_out_16.png in Resources */,
 				CEE674D20E7A7C0300941332 /* recurrent_16.png in Resources */,
 				CE2848E30E84FB7200FF7EA2 /* RecurrenceScopeDialog.xib in Resources */,
-				CE6818DF0EEA945D007C5CDF /* UnreconciliationDialog.xib in Resources */,
 				CEF4C4FF0F220F7A004FDC9D /* CSVImportOptions.xib in Resources */,
 				CEF4C5060F22274B004FDC9D /* popup_arrows.png in Resources */,
 				CE4CD3810F2B78B6003F1738 /* CSVLayoutName.xib in Resources */,
