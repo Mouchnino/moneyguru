@@ -10,5 +10,4 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUIContainer.h"
 
 @interface PyTransactionView : PyGUIContainer {}
-- (NSString *)totals;
 @end

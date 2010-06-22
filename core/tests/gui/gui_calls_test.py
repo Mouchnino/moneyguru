@@ -21,7 +21,7 @@ from ..base import TestCase, TestApp, with_app
 def test_initial_gui_calls():
     app = TestApp()
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane', 'refresh_status_line'])
     app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
 
 #--- Cleared GUI calls
@@ -50,16 +50,14 @@ def test_add_group():
     app.check_gui_calls(app.mainwindow_gui, ['refresh_undo_actions'])
 
 def test_add_transaction():
-    # Adding a transaction causes a refresh_undo_actions() gui call and the tview's totals to
-    # be updated.
+    # Adding a transaction causes a refresh_undo_actions() gui call and the main window status line.
     app = app_cleared_gui_calls()
     app.mainwindow.select_transaction_table()
     app.clear_gui_calls()
     app.ttable.add()
     app.ttable[0].description = 'foobar'
     app.ttable.save_edits()
-    app.check_gui_calls(app.mainwindow_gui, ['refresh_undo_actions'])
-    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_undo_actions', 'refresh_status_line'])
 
 def test_change_default_currency():
     # When the default currency is changed, all gui refresh themselves
@@ -91,15 +89,15 @@ def test_new_schedule():
 @with_app(app_cleared_gui_calls)
 def test_select_mainwindow_next_previous_view(app):
     app.mw.select_next_view()
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane'])
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_status_line'])
     app.mw.select_previous_view()
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane'])
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_status_line'])
 
 def test_show_transaction_table():
-    # tview's totals label is refreshed upon connecting.
+    # main window's status is refreshed upon showing.
     app = app_cleared_gui_calls()
     app.mw.select_transaction_table()
-    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+    app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 def test_sort_table():
     # sorting a table refreshes it.
@@ -133,12 +131,12 @@ def test_save_custom_range(app):
     app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
 
 def test_show_account():
-    # on show_account() totals are refreshed
+    # on show_account() status line is refreshed
     app = app_cleared_gui_calls()
     app.add_account()
     app.clear_gui_calls()
     app.mainwindow.show_account()
-    app.check_gui_calls_partial(app.aview_gui, ['refresh_totals'])
+    app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 #--- On transaction view
 def app_on_transaction_view():
@@ -151,7 +149,7 @@ def test_changing_date_range_refreshes_transaction_totals():
     # totals label should be refreshed when the date range changes
     app = app_on_transaction_view()
     app.drsel.select_quarter_range()
-    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_status_line'])
 
 #--- One account
 def app_one_account():
@@ -167,26 +165,26 @@ def test_add_entry():
     app = app_one_account()
     app.add_entry()
     app.check_gui_calls_partial(app.etable_gui, ['stop_editing', 'refresh', 'start_editing'])
-    app.check_gui_calls_partial(app.aview_gui, ['refresh_totals'])
+    app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 def test_change_aview_filter():
     # Changing aview's filter type updates the totals
     app = app_one_account()
     app.efbar.filter_type = FilterType.Reconciled
-    app.check_gui_calls(app.aview_gui, ['refresh_totals'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_status_line'])
 
 def test_changing_date_range_refreshes_account_totals():
     # totals label should be refreshed when the date range changes
     app = app_one_account()
     app.drsel.select_quarter_range()
-    app.check_gui_calls(app.aview_gui, ['refresh_totals'])
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_status_line'])
 
 def test_delete_entry():
     app = app_one_account()
     app.add_entry()
     app.clear_gui_calls()
     app.mainwindow.delete_item()
-    app.check_gui_calls_partial(app.aview_gui, ['refresh_totals'])
+    app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 def test_jump_to_account():
     app = app_one_account()
@@ -208,13 +206,13 @@ def app_one_transaction():
 def test_delete_transaction(app):
     # Deleting a transaction refreshes the totals label
     app.mw.delete_item()
-    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+    app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 @with_app(app_one_transaction)
 def test_change_tview_filter(app):
     # Changing tview's filter type updates the totals
     app.tfbar.filter_type = FilterType.Reconciled
-    app.check_gui_calls(app.tview_gui, ['refresh_totals'])
+    app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 #--- Load file with balance sheet selected
 def app_load_file_with_bsheet_selected():

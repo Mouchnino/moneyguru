@@ -62,7 +62,6 @@ class AccountView(BaseView):
     def _invalidate_cache(self):
         self._visible_entries = None
         self._refresh_totals()
-        self.view.refresh_totals()
     
     def _refresh_totals(self):
         account = self.mainwindow.shown_account
@@ -76,7 +75,7 @@ class AccountView(BaseView):
         total_increase_fmt = self.app.format_amount(total_increase)
         total_decrease_fmt = self.app.format_amount(total_decrease)
         msg = "{0} out of {1} selected. Increase: {2} Decrease: {3}"
-        self.totals = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
+        self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     
     def _set_visible_entries(self):
         account = self.mainwindow.shown_account
@@ -170,7 +169,6 @@ class AccountView(BaseView):
     
     def transactions_selected(self):
         self._refresh_totals()
-        self.view.refresh_totals()
     
     def transaction_changed(self):
         self._invalidate_cache()

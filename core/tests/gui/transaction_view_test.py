@@ -26,14 +26,14 @@ def app_three_transactions():
 def test_totals_select_one(app):
     # the totals line shows the number of selected transactions
     expected = "1 out of 3 selected. Amount: 3.00"
-    eq_(app.tview.totals, expected)
+    eq_(app.mw.status_line, expected)
 
 @with_app(app_three_transactions)
 def test_totals_select_two(app):
     # when two transactions are selected, the totals line changes
     app.ttable.select([1, 2])
     expected = "2 out of 3 selected. Amount: 5.00"
-    eq_(app.tview.totals, expected)
+    eq_(app.mw.status_line, expected)
 
 #--- Multiple currencies
 def app_multiple_currencies():
@@ -48,4 +48,4 @@ def test_totals_select_all(app):
     # Foreign amounts are converted
     app.ttable.select([0, 1])
     expected = "2 out of 2 selected. Amount: 15.00"
-    eq_(app.tview.totals, expected)
+    eq_(app.mw.status_line, expected)

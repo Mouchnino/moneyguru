@@ -57,7 +57,3 @@ class TransactionView(BaseView, Ui_TransactionView):
     def updateOptionalWidgetsVisibility(self):
         self.ttable.setHiddenColumns(self.doc.app.prefs.transactionHiddenColumns)
     
-    #--- model --> view
-    def refresh_totals(self):
-        self.totalsLabel.setText(self.model.totals)
-    

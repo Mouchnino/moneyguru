@@ -285,7 +285,7 @@ class TestApp(object):
         gui.clear_calls()
     
     @staticmethod
-    def check_gui_calls_partial(gui, expected=None, not_expected=None):
+    def check_gui_calls_partial(gui, expected=None, not_expected=None, verify_order=False):
         """Checks that the expected calls have been made to 'gui', then clears the log.
         
         `expected` is an iterable of strings representing method names. Order doesn't matter.
@@ -293,14 +293,18 @@ class TestApp(object):
         `not_expected` can be used for a more explicit check (rather than calling `check_gui_calls`
         with an empty `expected`) to assert that calls have *not* been made.
         """
-        calls = set(gui.calls)
         if expected is not None:
-            expected = set(expected)
-            not_called = expected - calls
+            not_called = set(expected) - set(gui.calls)
             assert not not_called, u"These calls haven't been made: {0}".format(not_called)
+            if verify_order:
+                max_index = 0
+                for call in expected:
+                    index = gui.calls.index(call)
+                    if index < max_index:
+                        raise AssertionError("The call {0} hasn't been made in the correct order".format(call))
+                    max_index = index
         if not_expected is not None:
-            not_expected = set(not_expected)
-            called = not_expected & calls
+            called = set(not_expected) & set(gui.calls)
             assert not called, u"These calls shouldn't have been made: {0}".format(called)
         gui.clear_calls()
     

@@ -13,5 +13,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)canToggleReconciliationMode;
 - (BOOL)inReconciliationMode;
 - (void)toggleReconciliationMode;
-- (NSString *)totals;
 @end

@@ -37,6 +37,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;
+    IBOutlet NSTextField *statusLabel;
     
     MGNetWorthView *netWorthView;
     MGProfitView *profitView;

@@ -64,6 +64,7 @@ class MainWindow(Repeater):
             self.notify('shown_account_changed')
         self._current_pane.view.show()
         self.view.change_current_pane()
+        self.update_status_line()
     
     def _close_irrelevant_account_panes(self):
         indexes_to_close = []
@@ -255,6 +256,14 @@ class MainWindow(Repeater):
         self.view.refresh_panes()
         self.current_pane_index = len(self.panes) - 1
     
+    def pane_label(self, index):
+        pane = self.panes[index]
+        return pane.label
+    
+    def pane_type(self, index):
+        pane = self.panes[index]
+        return pane.view.VIEW_TYPE
+    
     def select_pane_of_type(self, pane_type):
         self.document.filter_string = ''
         index = first(i for i, p in enumerate(self.panes) if p.view.VIEW_TYPE == pane_type)
@@ -317,13 +326,8 @@ class MainWindow(Repeater):
     def show_reassign_panel(self):
         self.arpanel.load()
     
-    def pane_label(self, index):
-        pane = self.panes[index]
-        return pane.label
-    
-    def pane_type(self, index):
-        pane = self.panes[index]
-        return pane.view.VIEW_TYPE
+    def update_status_line(self):
+        self.view.refresh_status_line()
     
     #--- Properties
     @property
@@ -403,6 +407,10 @@ class MainWindow(Repeater):
                 self.current_pane_index = index
         elif self._current_pane.view is self.aview:
             self.select_balance_sheet()
+    
+    @property
+    def status_line(self):
+        return self._current_pane.view.status_line
     
     #--- Event callbacks
     def _undo_stack_changed(self):

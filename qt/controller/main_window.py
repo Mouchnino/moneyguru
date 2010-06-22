@@ -363,6 +363,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             pane_label = self.model.pane_label(i)
             self.tabBar.setTabText(i, pane_label)
     
+    def refresh_status_line(self):
+        self.statusLabel.setText(self.model.status_line)
+    
     def refresh_undo_actions(self):
         self._updateUndoActions()
     

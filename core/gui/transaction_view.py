@@ -23,7 +23,6 @@ class TransactionView(BaseView):
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
         self._visible_transactions = None
-        self.totals = ''
         
     def set_children(self, children):
         BaseView.set_children(self, children)
@@ -32,13 +31,11 @@ class TransactionView(BaseView):
     def _revalidate(self):
         self._visible_transactions = None
         self._refresh_totals()
-        self.view.refresh_totals()
     
     #--- Private
     def _invalidate_cache(self):
         self._visible_transactions = None
         self._refresh_totals()
-        self.view.refresh_totals()
     
     def _refresh_totals(self):
         selected = len(self.mainwindow.selected_transactions)
@@ -47,7 +44,7 @@ class TransactionView(BaseView):
         total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.mainwindow.selected_transactions)
         total_amount_fmt = self.app.format_amount(total_amount)
         msg = "{0} out of {1} selected. Amount: {2}"
-        self.totals = msg.format(selected, total, total_amount_fmt)
+        self.status_line = msg.format(selected, total, total_amount_fmt)
     
     def _set_visible_transactions(self):
         date_range = self.document.date_range
@@ -117,7 +114,6 @@ class TransactionView(BaseView):
     
     def transactions_selected(self):
         self._refresh_totals()
-        self.view.refresh_totals()
     
     def transaction_changed(self):
         self._invalidate_cache()

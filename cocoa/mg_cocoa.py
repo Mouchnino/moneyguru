@@ -388,14 +388,6 @@ class PyProfitView(PyGUIContainer):
 
 class PyTransactionView(PyGUIContainer):
     py_class = TransactionView
-    
-    def totals(self):
-        return self.py.totals
-    
-    #Python --> Cocoa
-    def refresh_totals(self):
-        self.cocoa.refreshTotals()
-    
 
 class PyAccountView(PyGUIContainer):
     py_class = AccountView
@@ -408,18 +400,12 @@ class PyAccountView(PyGUIContainer):
     def inReconciliationMode(self):
         return self.py.reconciliation_mode
     
-    def totals(self):
-        return self.py.totals
-    
     def toggleReconciliationMode(self):
         self.py.toggle_reconciliation_mode()
     
     #Python --> Cocoa
     def refresh_reconciliation_button(self):
         self.cocoa.refreshReconciliationButton()
-    
-    def refresh_totals(self):
-        self.cocoa.refreshTotals()
     
     def show_bar_graph(self):
         self.cocoa.showBarGraph()
@@ -1081,6 +1067,10 @@ class PyMainWindow(PyGUIContainer):
     def newGroup(self):
         self.py.new_group()
     
+    #--- Other
+    def statusLine(self):
+        return self.py.status_line
+    
     #--- Python -> Cocoa
     def change_current_pane(self):
         self.cocoa.changeSelectedPane()
@@ -1093,6 +1083,9 @@ class PyMainWindow(PyGUIContainer):
     
     def show_custom_date_range_panel(self):
         self.cocoa.showCustomDateRangePanel()
+    
+    def refresh_status_line(self):
+        self.cocoa.refreshStatusLine()
     
     def show_message(self, message):
         self.cocoa.showMessage_(message)

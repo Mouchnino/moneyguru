@@ -18,7 +18,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     IBOutlet MGTableView *tableView;
     IBOutlet AMButtonBar *filterBarView;
-    IBOutlet NSTextField *totalsLabel;
     
     MGTransactionTable *transactionTable;
     MGFilterBar *filterBar;

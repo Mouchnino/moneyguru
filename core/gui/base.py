@@ -237,6 +237,7 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         self.mainwindow = mainwindow
         self.document = mainwindow.document
         self.app = mainwindow.document.app
+        self._status_line = ""
     
     def dispatch(self, msg):
         if self._process_message(msg):
@@ -260,4 +261,15 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         HideableObject.hide(self)
         for child in self._children:
             child.hide()
+    
+    #--- Properties
+    @property
+    def status_line(self):
+        return self._status_line
+    
+    @status_line.setter
+    def status_line(self, value):
+        self._status_line = value
+        if not self._hidden:
+            self.mainwindow.update_status_line()
     

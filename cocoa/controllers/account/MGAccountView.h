@@ -22,7 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSScrollView *tableScrollView;
     IBOutlet NSView *graphPlaceholder;
     IBOutlet AMButtonBar *filterBarView;
-    IBOutlet NSTextField *totalsLabel;
     IBOutlet NSButton *reconciliationModeButton;
     
     MGEntryTable *entryTable;

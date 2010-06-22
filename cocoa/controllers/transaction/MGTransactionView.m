@@ -44,10 +44,4 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return [transactionTable fieldEditorForObject:asker];
 }
-
-// Python --> Cocoa
--(void)refreshTotals
-{
-    [totalsLabel setStringValue:[[self py] totals]];
-}
 @end

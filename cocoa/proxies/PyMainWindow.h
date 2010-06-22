@@ -36,4 +36,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)moveUp;
 - (void)newGroup;
 - (void)newItem;
+
+// Other
+- (NSString *)statusLine;
 @end

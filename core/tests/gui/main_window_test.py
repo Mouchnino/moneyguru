@@ -47,7 +47,7 @@ def test_close_pane_when_selected(app):
     app.mw.close_pane(3)
     eq_(app.mw.current_pane_index, 3) # We stay at 4 because it's appropriate
     # Although the view index stayed the same, the view still changed, so the GUI needs to change.
-    app.check_gui_calls(app.mainwindow_gui, ['view_closed', 'change_current_pane'])
+    app.check_gui_calls(app.mainwindow_gui, ['view_closed', 'change_current_pane', 'refresh_status_line'])
     app.mw.close_pane(3)
     eq_(app.mw.current_pane_index, 2)
 
@@ -140,10 +140,10 @@ def test_new_tab(app):
     app.mw.new_tab()
     eq_(app.mw.pane_count, 6)
     app.check_current_pane(PaneType.Empty)
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes'])
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes', 'refresh_status_line'])
     app.emptyview.select_pane_type(PaneType.Profit)
     app.check_current_pane(PaneType.Profit)
-    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes'])
+    app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes', 'refresh_status_line'])
 
 #--- One account
 def app_one_account():
@@ -160,7 +160,8 @@ def test_show_account_opens_a_new_tab(app):
     eq_(app.mw.current_pane_index, 5)
     eq_(app.mw.pane_type(5), PaneType.Account)
     eq_(app.mw.pane_label(5), "foo")
-    app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane'], verify_order=True)
+    expected = ['refresh_panes', 'change_current_pane']
+    app.check_gui_calls_partial(app.mainwindow_gui, expected, verify_order=True)
 
 #--- Asset and Income accounts
 def app_asset_and_income_accounts():
@@ -227,14 +228,14 @@ def test_switch_panes_through_show_account(app):
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     eq_(app.mw.current_pane_index, 6)
-    expected = ['refresh_totals', 'show_bar_graph', 'refresh_reconciliation_button']
+    expected = ['show_bar_graph', 'refresh_reconciliation_button']
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_balance_sheet()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.mw.current_pane_index, 5)
-    expected = ['refresh_totals', 'show_line_graph', 'refresh_reconciliation_button']
+    expected = ['show_line_graph', 'refresh_reconciliation_button']
     app.check_gui_calls(app.aview_gui, expected)
     app.mainwindow.select_transaction_table()
     eq_(app.mw.current_pane_index, 2)

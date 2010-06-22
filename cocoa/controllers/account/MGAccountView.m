@@ -144,11 +144,6 @@ http://www.hardcoded.net/licenses/hs_license
     }
 }
 
--(void)refreshTotals
-{
-    [totalsLabel setStringValue:[[self py] totals]];
-}
-
 - (void)showLineGraph
 {
     [self showGraph:balanceGraph];

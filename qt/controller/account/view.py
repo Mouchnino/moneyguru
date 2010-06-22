@@ -75,9 +75,6 @@ class EntryView(BaseView, Ui_EntryView):
             self.reconciliationButton.setEnabled(False)
             self.reconciliationButton.setChecked(False)
     
-    def refresh_totals(self):
-        self.totalsLabel.setText(self.model.totals)
-    
     def show_bar_graph(self):
         self.graphView.setCurrentIndex(1)
     

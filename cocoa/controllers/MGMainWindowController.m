@@ -550,6 +550,11 @@ http://www.hardcoded.net/licenses/hs_license
     [tabBar setDelegate:self];
 }
 
+- (void)refreshStatusLine
+{
+    [statusLabel setStringValue:[[self py] statusLine]];
+}
+
 - (void)showMessage:(NSString *)aMessage
 {
     NSAlert *a = [NSAlert alertWithMessageText:aMessage defaultButton:nil alternateButton:nil

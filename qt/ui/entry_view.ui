@@ -80,6 +80,18 @@
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>18</number>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>18</number>
+     </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
@@ -113,13 +125,6 @@
      </property>
      <widget class="LineGraphView" name="lineGraphView"/>
      <widget class="BarGraphView" name="barGraphView"/>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="totalsLabel">
-     <property name="text">
-      <string/>
-     </property>
     </widget>
    </item>
   </layout>
