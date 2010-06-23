@@ -3,6 +3,8 @@
     <file alias="example.moneyguru">../data/example.moneyguru</file>
     <file alias="stylesheet_win">../data/stylesheet_win.css</file>
     <file alias="stylesheet_lnx">../data/stylesheet_lnx.css</file>
+    <file alias="fr_FR.qm">lang/fr_FR.qm</file>
+    <file alias="qt_fr_FR.qm">lang/qt_fr_FR.qm</file>
     <file alias="logo_big">../images/logo_big.png</file>
     <file alias="logo_small">../images/logo_small.png</file>
     <file alias="balance_sheet_48">../images/balance_sheet_48.png</file>

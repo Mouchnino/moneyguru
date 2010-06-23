@@ -11,11 +11,14 @@
 import sys
 import gc
 
-from PyQt4.QtCore import QFile, QTextStream
+from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
+import core.trans
 from qtlib.error_report_dialog import install_excepthook
 from app import MoneyGuru
+
+SUPPORTED_LOCALES = ['fr_FR']
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -32,6 +35,17 @@ if __name__ == "__main__":
     style = textStream.readAll()
     stylesheetFile.close()
     app.setStyleSheet(style)
+    localeName = QLocale.system().name()
+    if localeName in SUPPORTED_LOCALES:
+        qtr1 = QTranslator()
+        qtr1.load(':/qt_%s' % QLocale.system().name())
+        app.installTranslator(qtr1)
+        qtr2 = QTranslator()
+        qtr2.load(':/%s' % QLocale.system().name())
+        app.installTranslator(qtr2)
+        def qt_tr(s):
+            return unicode(app.translate('core', s, None))
+        core.trans.set_tr(qt_tr)
     mgapp = MoneyGuru()
     install_excepthook()
     exec_result = app.exec_()

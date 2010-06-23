@@ -73,6 +73,12 @@ def build_cocoa(dev):
     os.chdir('..')
 
 def build_qt(dev):
+    print "Converting .ts to .qm"
+    langdir = op.join('qt', 'lang')
+    tsfiles = [fn for fn in os.listdir(langdir) if fn.endswith('.ts')]
+    for ts in tsfiles:
+        print "Converting {0}".format(ts)
+        os.system('lrelease {0}'.format(op.join(langdir, ts)))
     print "Building UI units"
     build_all_qt_ui(op.join('qtlib', 'ui'))
     build_all_qt_ui(op.join('qt', 'ui'))
