@@ -27,6 +27,7 @@ from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
 from .saver.native import save as save_native
 from .saver.qif import save as save_qif
+from .trans import tr
 
 SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
 SELECTED_DATE_RANGE_START_PREFERENCE = 'SelectedDateRangeStart'
@@ -166,10 +167,10 @@ class Document(Repeater):
     def _get_action_from_changed_transactions(self, transactions):
         if len(transactions) == 1 and not isinstance(transactions[0], Spawn) \
                 and transactions[0] not in self.transactions:
-            action = Action('Add transaction')
+            action = Action(tr('Add transaction'))
             action.added_transactions.add(transactions[0])
         else:
-            action = Action('Change transaction')
+            action = Action(tr('Change transaction'))
             action.change_transactions(transactions)
         return action
     
@@ -243,7 +244,7 @@ class Document(Repeater):
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
             account_number=NOEDIT):
         assert account is not None
-        action = Action('Change account')
+        action = Action(tr('Change account'))
         action.change_accounts([account])
         if name is not NOEDIT:
             self.accounts.set_account_name(account, name)
@@ -261,7 +262,7 @@ class Document(Repeater):
         self.notify('account_changed')
     
     def delete_account(self, account, reassign_to=None):
-        action = Action('Remove account')
+        action = Action(tr('Remove account'))
         action.delete_account(account)
         affected_schedules = [s for s in self.schedules if account in s.ref.affected_accounts()]
         map(action.change_schedule, affected_schedules)
@@ -288,10 +289,10 @@ class Document(Repeater):
         self.notify('account_deleted')
     
     def new_account(self, type, group):
-        name = self.accounts.new_name('New account')
+        name = self.accounts.new_name(tr('New account'))
         account = Account(name, self.app.default_currency, type)
         account.group = group
-        action = Action('Add account')
+        action = Action(tr('Add account'))
         action.added_accounts.add(account)
         self._undoer.record(action)
         self.accounts.add(account)
@@ -308,7 +309,7 @@ class Document(Repeater):
     #--- Group
     def change_group(self, group, name=NOEDIT):
         assert group is not None
-        action = Action('Change group')
+        action = Action(tr('Change group'))
         action.change_groups([group])
         if name is not NOEDIT:
             self.groups.set_group_name(group, name)
@@ -317,7 +318,7 @@ class Document(Repeater):
     
     def delete_group(self, group):
         accounts = [a for a in self.accounts if a.group is group]
-        action = Action('Remove group')
+        action = Action(tr('Remove group'))
         action.deleted_groups.add(group)
         action.change_accounts(accounts)
         self._undoer.record(action)
@@ -327,9 +328,9 @@ class Document(Repeater):
         self.notify('account_deleted')
     
     def new_group(self, type):
-        name = self.groups.new_name('New group', type)
+        name = self.groups.new_name(tr('New group'), type)
         group = Group(name, type)
-        action = Action('Add group')
+        action = Action(tr('Add group'))
         action.added_groups.add(group)
         self._undoer.record(action)
         self.groups.append(group)
@@ -352,7 +353,7 @@ class Document(Repeater):
     def change_transaction(self, original, new):
         date_changed = new.date != original.date
         global_scope = self._query_for_scope_if_needed([original])
-        action = Action('Change transaction')
+        action = Action(tr('Change transaction'))
         action.change_transactions([original])
         self._undoer.record(action)
         
@@ -400,7 +401,7 @@ class Document(Repeater):
     
     @handle_abort
     def delete_transactions(self, transactions, from_account=None):
-        action = Action('Remove transaction')
+        action = Action(tr('Remove transaction'))
         spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
         global_scope = self._query_for_scope_if_needed(spawns)
         schedules = set(spawn.recurrence for spawn in spawns)
@@ -425,7 +426,7 @@ class Document(Repeater):
     def duplicate_transactions(self, transactions):
         if not transactions:
             return
-        action = Action('Duplicate transactions')
+        action = Action(tr('Duplicate transactions'))
         duplicated = [txn.replicate() for txn in transactions]
         action.added_transactions |= set(duplicated)
         self._undoer.record(action)
@@ -440,7 +441,7 @@ class Document(Repeater):
         affected = set(transactions)
         affected_date = transactions[0].date
         affected |= set(self.transactions.transactions_at_date(affected_date))
-        action = Action('Move transaction')
+        action = Action(tr('Move transaction'))
         action.change_transactions(affected)
         self._undoer.record(action)
         
@@ -488,7 +489,7 @@ class Document(Repeater):
             return
         all_reconciled = not entries or all(entry.reconciled for entry in entries)
         newvalue = not all_reconciled
-        action = Action('Change reconciliation')
+        action = Action(tr('Change reconciliation'))
         action.change_splits([e.split for e in entries])
         self._undoer.record(action)
         
@@ -533,10 +534,10 @@ class Document(Repeater):
     
     def change_budget(self, original, new):
         if original in self.budgets:
-            action = Action('Change Budget')
+            action = Action(tr('Change Budget'))
             action.change_budget(original)
         else:
-            action = Action('Add Budget')
+            action = Action(tr('Add Budget'))
             action.added_budgets.add(original)
         self._undoer.record(action)
         min_date = min(original.start_date, new.start_date)
@@ -557,7 +558,7 @@ class Document(Repeater):
     def delete_budgets(self, budgets):
         if not budgets:
             return
-        action = Action('Remove Budget')
+        action = Action(tr('Remove Budget'))
         action.deleted_budgets |= set(budgets)
         self._undoer.record(action)
         for budget in budgets:
@@ -573,10 +574,10 @@ class Document(Repeater):
                 # same as in change_transaction()
                 split.account = self.accounts.find(split.account.name, split.account.type)
         if schedule in self.schedules:
-            action = Action('Change Schedule')
+            action = Action(tr('Change Schedule'))
             action.change_schedule(schedule)
         else:
-            action = Action('Add Schedule')
+            action = Action(tr('Add Schedule'))
             action.added_schedules.add(schedule)
         self._undoer.record(action)
         original = schedule.ref
@@ -597,7 +598,7 @@ class Document(Repeater):
     def delete_schedules(self, schedules):
         if not schedules:
             return
-        action = Action('Remove Schedule')
+        action = Action(tr('Remove Schedule'))
         action.deleted_schedules |= set(schedules)
         self._undoer.record(action)
         for schedule in schedules:
@@ -651,7 +652,7 @@ class Document(Repeater):
         try:
             loader.parse(filename)
         except FileFormatError:
-            raise FileFormatError('"%s" is not a moneyGuru file' % filename)
+            raise FileFormatError(tr('"%s" is not a moneyGuru file') % filename)
         loader.load()
         self._clear()
         for group in loader.groups:
@@ -693,7 +694,7 @@ class Document(Repeater):
                 pass
         else:
             # No file fitted
-            raise FileFormatError('%s is of an unknown format.' % filename)
+            raise FileFormatError(tr('%s is of an unknown format.') % filename)
         self.loader = loader
         if isinstance(self.loader, csv.Loader):
             self.notify('csv_options_needed')
@@ -736,7 +737,7 @@ class Document(Repeater):
                     split.account = account
             if target_account is not ref_account:
                 entry.split.account = target_account
-        action = Action('Import')
+        action = Action(tr('Import'))
         action.added_accounts |= added_accounts
         action.added_transactions |= added_transactions
         action.change_splits(to_unreconcile)

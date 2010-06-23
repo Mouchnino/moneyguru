@@ -8,6 +8,7 @@
 
 from hsutil.misc import flatten
 
+from ..trans import tr
 from .bar_graph import BarGraph
 from .base import SheetViewNotificationsMixin
 
@@ -38,5 +39,5 @@ class ProfitGraph(BarGraph, SheetViewNotificationsMixin):
     #--- Properties
     @property
     def title(self):
-        return 'Profit & Loss'
+        return tr('Profit & Loss')
     

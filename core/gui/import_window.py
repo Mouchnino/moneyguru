@@ -10,6 +10,7 @@ from hsutil.notify import Broadcaster
 from hsutil.misc import flatten, dedupe, first
 
 from ..exception import OperationAborted
+from ..trans import tr
 from .base import DocumentGUIObject
 
 DAY = 'day'
@@ -241,7 +242,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
     
     @property
     def target_account_names(self):
-        return ['< New Account >'] + [a.name for a in self.target_accounts]
+        return [tr('< New Account >')] + [a.name for a in self.target_accounts]
     
     #--- Events
     def file_loaded_for_import(self):

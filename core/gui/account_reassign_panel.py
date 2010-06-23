@@ -7,6 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..model.account import sort_accounts
+from ..trans import tr
 from .base import MainWindowPanel
 
 class AccountReassignPanel(MainWindowPanel):
@@ -16,7 +17,7 @@ class AccountReassignPanel(MainWindowPanel):
         accounts.remove(self.account)
         sort_accounts(accounts)
         self.available_accounts = [a.name for a in accounts]
-        self.available_accounts.insert(0, 'No Account')
+        self.available_accounts.insert(0, tr('No Account'))
         self._accounts = accounts
         self._accounts.insert(0, None)
         self.account_index = 0

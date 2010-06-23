@@ -15,6 +15,7 @@ from ..const import PaneType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
+from ..trans import tr
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
@@ -78,19 +79,19 @@ class MainWindow(Repeater):
     
     def _create_pane(self, pane_type, account=None):
         if pane_type == PaneType.NetWorth:
-            return ViewPane(self.nwview, "Net Worth", None)
+            return ViewPane(self.nwview, tr("Net Worth"), None)
         elif pane_type == PaneType.Profit:
-            return ViewPane(self.pview, "Profit & Loss", None)
+            return ViewPane(self.pview, tr("Profit & Loss"), None)
         elif pane_type == PaneType.Transaction:
-            return ViewPane(self.tview, "Transactions", None)
+            return ViewPane(self.tview, tr("Transactions"), None)
         elif pane_type == PaneType.Account:
             return ViewPane(self.aview, account.name, account)
         elif pane_type == PaneType.Schedule:
-            return ViewPane(self.scview, "Schedules", None)
+            return ViewPane(self.scview, tr("Schedules"), None)
         elif pane_type == PaneType.Budget:
-            return ViewPane(self.bview, "Budgets", None)
+            return ViewPane(self.bview, tr("Budgets"), None)
         elif pane_type == PaneType.Empty:
-            return ViewPane(self.emptyview, "New Tab", None)
+            return ViewPane(self.emptyview, tr("New Tab"), None)
         else:
             raise ValueError("Cannot create pane of type {0}".format(pane_type))
     

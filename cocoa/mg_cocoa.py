@@ -12,11 +12,18 @@ from hsutil.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyReg
 from hsutil.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
-    NSNumberFormatter, NSNumberFormatterBehavior10_4)
+    NSNumberFormatter, NSNumberFormatterBehavior10_4, NSBundle)
 from hsutil.path import Path
 from hsutil.currency import Currency, USD
 from hsutil.misc import nonone
 from hsutil.reg import InvalidCodeError
+
+# Set translation func. This has to be set before core modules are initialized
+import core.trans
+mainBundle = NSBundle.mainBundle()
+def cocoa_tr(s):
+    return mainBundle.localizedStringForKey_value_table_(s, s, 'core')
+core.trans.set_tr(cocoa_tr)
 
 from core.app import Application
 from core.document import Document, FilterType

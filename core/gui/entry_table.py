@@ -12,6 +12,7 @@ from operator import attrgetter
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from ..model.transaction import Transaction, Entry
+from ..trans import tr
 from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
@@ -430,7 +431,7 @@ class PreviousBalanceRow(BaseEntryTableRow):
         self._date = date
         self._balance = balance
         self._reconciled_balance = reconciled_balance
-        self._description = 'Previous Balance'
+        self._description = tr('Previous Balance')
         self._reconciled = False
         self.is_bold = True
     
@@ -439,7 +440,7 @@ class TotalRow(BaseEntryTableRow):
     def __init__(self, table, date, total_increase, total_decrease):
         super(TotalRow, self).__init__(table)
         self._date = date
-        self._description = 'TOTAL'
+        self._description = tr('TOTAL')
         # don't touch _increase and _decrease, they trigger editing.
         self._increase_fmt = table.document.app.format_amount(total_increase, blank_zero=True)
         self._decrease_fmt = table.document.app.format_amount(total_decrease, blank_zero=True)

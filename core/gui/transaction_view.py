@@ -13,6 +13,7 @@ from ..const import PaneType
 from ..document import FilterType
 from ..model.account import AccountType
 from ..model.amount import convert_amount
+from ..trans import tr
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class TransactionView(BaseView):
@@ -43,7 +44,7 @@ class TransactionView(BaseView):
         currency = self.app.default_currency
         total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.mainwindow.selected_transactions)
         total_amount_fmt = self.app.format_amount(total_amount)
-        msg = "{0} out of {1} selected. Amount: {2}"
+        msg = tr("{0} out of {1} selected. Amount: {2}")
         self.status_line = msg.format(selected, total, total_amount_fmt)
     
     def _set_visible_transactions(self):

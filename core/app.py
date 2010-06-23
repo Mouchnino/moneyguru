@@ -20,6 +20,7 @@ from .const import DATE_FORMAT_FOR_PREFERENCES
 from .model import currency
 from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
+from .trans import tr
 
 FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
 AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
@@ -33,7 +34,7 @@ SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
     VERSION = '2.0.0b3'
-    DEMO_LIMIT_DESC = "In the demo version, documents with more than 100 transactions cannot be saved."
+    DEMO_LIMIT_DESC = tr("In the demo version, documents with more than 100 transactions cannot be saved.")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
         default_currency=USD, cache_path=None):

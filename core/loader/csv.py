@@ -12,8 +12,9 @@ import csv
 import logging
 from datetime import datetime
 
-from . import base
 from ..exception import FileFormatError, FileLoadError
+from ..trans import tr
+from . import base
 
 class CsvField(object):
     Date = 'date'
@@ -82,7 +83,7 @@ class Loader(base.Loader):
         hasdate = CsvField.Date in ci
         hasamount = (CsvField.Amount in ci) or (CsvField.Increase in ci and CsvField.Decrease in ci)
         if not (hasdate and hasamount):
-            raise FileLoadError('The Date and Amount columns must be set')
+            raise FileLoadError(tr("The Date and Amount columns must be set."))
         self.account_info.name = 'CSV Import'
         date_index = ci[CsvField.Date]
         lines_to_load = []
@@ -97,7 +98,7 @@ class Loader(base.Loader):
         str_dates = [line[date_index] for line in lines_to_load]
         date_format = self.guess_date_format(str_dates)
         if date_format is None:
-            raise FileLoadError('The Date column has been set on a column that doesn\'t contain dates')
+            raise FileLoadError(tr("The Date column has been set on a column that doesn't contain dates."))
         for line in lines_to_load:
             self.start_transaction()
             for attr, index in ci.items():

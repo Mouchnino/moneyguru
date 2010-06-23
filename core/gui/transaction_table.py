@@ -12,6 +12,7 @@ from operator import attrgetter
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from ..model.transaction import Transaction
+from ..trans import tr
 from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
@@ -134,10 +135,10 @@ class TransactionTableRow(RowWithDate):
         froms, tos = self.transaction.splitted_splits()
         self._from_count = len(froms)
         self._to_count = len(tos)
-        UNASSIGNED = 'Unassigned' if len(froms) > 1 else ''
+        UNASSIGNED = tr('Unassigned') if len(froms) > 1 else ''
         get_display = lambda s: s.account.combined_display if s.account is not None else UNASSIGNED
         self._from = ', '.join(map(get_display, froms))
-        UNASSIGNED = 'Unassigned' if len(tos) > 1 else ''
+        UNASSIGNED = tr('Unassigned') if len(tos) > 1 else ''
         get_display = lambda s: s.account.combined_display if s.account is not None else UNASSIGNED
         self._to = ', '.join(map(get_display, tos))
         self._amount = transaction.amount
@@ -228,7 +229,7 @@ class TotalRow(Row):
         Row.__init__(self, table)
         self._date = date
         self.date = self.table.document.app.format_date(date)
-        self.description = 'TOTAL'
+        self.description = tr('TOTAL')
         self.amount = self.table.document.app.format_amount(total_amount)
         self.payee = ''
         self.checkno = ''

@@ -12,21 +12,22 @@ from hsutil.misc import first, nonone
 
 from ..exception import FileLoadError
 from ..loader.csv import CsvField
+from ..trans import tr
 from .base import DocumentGUIObject
 
 LAYOUT_PREFERENCE_NAME = 'CSVLayouts'
 FIELD_NAMES = {
-    None: 'None',
-    CsvField.Date: 'Date',
-    CsvField.Description: 'Description',
-    CsvField.Payee: 'Payee',
-    CsvField.Checkno: 'Check #',
-    CsvField.Transfer: 'Transfer',
-    CsvField.Amount: 'Amount',
-    CsvField.Increase: 'Increase',
-    CsvField.Decrease: 'Decrease',
-    CsvField.Currency: 'Currency',
-    CsvField.Reference: 'Transaction ID',
+    None: tr('None'),
+    CsvField.Date: tr('Date'),
+    CsvField.Description: tr('Description'),
+    CsvField.Payee: tr('Payee'),
+    CsvField.Checkno: tr('Check #'),
+    CsvField.Transfer: tr('Transfer'),
+    CsvField.Amount: tr('Amount'),
+    CsvField.Increase: tr('Increase'),
+    CsvField.Decrease: tr('Decrease'),
+    CsvField.Currency: tr('Currency'),
+    CsvField.Reference: tr('Transaction ID'),
 }
 
 FIELD_ORDER = [None, CsvField.Date, CsvField.Description, CsvField.Payee, CsvField.Checkno, 
@@ -101,7 +102,7 @@ class CSVOptions(DocumentGUIObject):
         self.lines = []
         self._colcount = 0
         self._target_accounts = []
-        self._default_layout = Layout('Default')
+        self._default_layout = Layout(tr('Default'))
         preferences = self.app.get_default(LAYOUT_PREFERENCE_NAME)
         try:    
             self._layouts = [preference2layout(pref) for pref in preferences]
@@ -225,7 +226,7 @@ class CSVOptions(DocumentGUIObject):
     
     @property
     def layout_names(self):
-        return ['Default'] + [layout.name for layout in self._layouts]
+        return [tr('Default')] + [layout.name for layout in self._layouts]
     
     @property
     def selected_target_index(self):
@@ -241,11 +242,11 @@ class CSVOptions(DocumentGUIObject):
     
     @property
     def target_account_names(self):
-        return ['< New Account >'] + [a.name for a in self._target_accounts]
+        return [tr('< New Account >')] + [a.name for a in self._target_accounts]
     
     #--- Events
     def csv_options_needed(self):
-        self._default_layout = Layout('Default')
+        self._default_layout = Layout(tr('Default'))
         self.layout = self._default_layout
         self._refresh_columns()
         self._refresh_lines()

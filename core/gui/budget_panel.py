@@ -44,14 +44,14 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
         self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(budget.repeat_type)
         self._accounts = [a for a in self.document.accounts if a.is_income_statement_account()]
         if not self._accounts:
-            msg = "Income/Expense accounts must be created before budgets can be set."
+            msg = tr("Income/Expense accounts must be created before budgets can be set.")
             raise OperationAborted(msg)
         sort_accounts(self._accounts)
         self._targets = [a for a in self.document.accounts if a.is_balance_sheet_account()]
         sort_accounts(self._targets)
         self._targets.insert(0, None)
         self.account_options = [a.name for a in self._accounts]
-        self.target_options = [(a.name if a is not None else 'None') for a in self._targets]
+        self.target_options = [(a.name if a is not None else tr('None')) for a in self._targets]
         self.account_index = self._accounts.index(budget.account) if budget.account is not None else 0
         self.target_index = self._targets.index(budget.target)
         self.view.refresh_repeat_options()

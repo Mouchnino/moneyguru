@@ -8,6 +8,7 @@
 
 from __future__ import division
 
+from ..trans import tr
 from .chart import Chart
 
 # A pie chart's data is a list of (name, (float)amount). The name part is ready for display. It
@@ -31,7 +32,7 @@ class PieChart(Chart):
             others = data[SLICE_COUNT - 1:]
             others_total = sum(amount for name, amount in others)
             del data[SLICE_COUNT - 1:]
-            data.append(('Others', others_total))
+            data.append((tr('Others'), others_total))
         total = sum(amount for name, amount in data)
         if not total:
             return

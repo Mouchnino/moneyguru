@@ -10,6 +10,7 @@ from hsgui import tree
 from hsutil.misc import first
 
 from ..exception import DuplicateAccountNameError
+from ..trans import tr
 from .base import ViewChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
 
 EXPANDED_PATHS_PREFERENCE = 'ExpandedPaths'
@@ -189,7 +190,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             node.append(self.make_account_node(account))
         node.is_excluded = bool(accounts) and set(accounts) <= self.document.excluded_accounts # all accounts excluded
         if not node.is_excluded:
-            node.append(self.make_total_node(node, 'Total ' + group.name))
+            node.append(self.make_total_node(node, tr('Total ') + group.name))
         node.append(self.make_blank_node())
         return node
 
@@ -209,7 +210,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         accounts = self.document.accounts.filter(type=type)
         node.is_excluded = bool(accounts) and set(accounts) <= self.document.excluded_accounts # all accounts excluded
         if not node.is_excluded:
-            node.append(self.make_total_node(node, 'TOTAL ' + name))
+            node.append(self.make_total_node(node, tr('TOTAL ') + name))
         node.append(self.make_blank_node())
         return node
 
@@ -247,7 +248,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             else:
                 self.document.change_group(node.group, name=node.name)
         except DuplicateAccountNameError:
-            msg = "The account '{0}' already exists.".format(node.name)
+            msg = tr("The account '{0}' already exists.").format(node.name)
             # we use _name because we don't want to change self.edited
             node._name = node.account.name if node.is_account else node.group.name
             self.mainwindow.show_message(msg)

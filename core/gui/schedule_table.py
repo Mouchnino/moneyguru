@@ -9,6 +9,7 @@
 import datetime
 
 from ..model.amount import convert_amount
+from ..trans import tr
 from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
@@ -75,9 +76,9 @@ class ScheduleTableRow(Row):
         froms, tos = txn.splitted_splits()
         self._from_count = len(froms)
         self._to_count = len(tos)
-        UNASSIGNED = 'Unassigned' if len(froms) > 1 else ''
+        UNASSIGNED = tr('Unassigned') if len(froms) > 1 else ''
         self._from = ', '.join(s.account.name if s.account is not None else UNASSIGNED for s in froms)
-        UNASSIGNED = 'Unassigned' if len(tos) > 1 else ''
+        UNASSIGNED = tr('Unassigned') if len(tos) > 1 else ''
         self._to = ', '.join(s.account.name if s.account is not None else UNASSIGNED for s in tos)
         try:
             self._amount = sum(s.amount for s in tos)

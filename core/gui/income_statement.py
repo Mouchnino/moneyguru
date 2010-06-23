@@ -5,6 +5,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..model.account import AccountType
+from ..trans import tr
 from .report import Report, get_delta_perc
 
 class IncomeStatement(Report):
@@ -53,9 +54,9 @@ class IncomeStatement(Report):
     
     def _refresh(self):
         self.clear()
-        self.income = self.make_type_node('INCOME', AccountType.Income)
-        self.expenses = self.make_type_node('EXPENSES', AccountType.Expense)
-        self.net_income = self._make_node('NET INCOME')
+        self.income = self.make_type_node(tr('INCOME'), AccountType.Income)
+        self.expenses = self.make_type_node(tr('EXPENSES'), AccountType.Expense)
+        self.net_income = self._make_node(tr('NET INCOME'))
         net_income = self.income.cash_flow_amount - self.expenses.cash_flow_amount
         last_net_income = self.income.last_cash_flow_amount - self.expenses.last_cash_flow_amount
         net_budgeted = self.income.budgeted_amount - self.expenses.budgeted_amount

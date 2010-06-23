@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 
 from ..const import PaneType
 from ..document import FilterType
+from ..trans import tr
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class AccountView(BaseView):
@@ -74,7 +75,7 @@ class AccountView(BaseView):
         total_decrease = abs(sum(a for a in amounts if a < 0))
         total_increase_fmt = self.app.format_amount(total_increase)
         total_decrease_fmt = self.app.format_amount(total_decrease)
-        msg = "{0} out of {1} selected. Increase: {2} Decrease: {3}"
+        msg = tr("{0} out of {1} selected. Increase: {2} Decrease: {3}")
         self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     
     def _set_visible_entries(self):

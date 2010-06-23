@@ -12,6 +12,7 @@ from calendar import monthrange
 
 from hsutil.misc import nonone
 
+from ..trans import tr
 from .date import (inc_day, inc_week, inc_month, inc_year, inc_weekday_in_month,
     inc_last_weekday_in_month, strftime)
 from .transaction import Transaction
@@ -87,10 +88,10 @@ class Recurrence(object):
         self.date2globalchange = {}
         self.date2instances = {}
         self.rtype2desc = {
-            RepeatType.Daily: 'Daily',
-            RepeatType.Weekly: 'Weekly',
-            RepeatType.Monthly: 'Monthly',
-            RepeatType.Yearly: 'Yearly',
+            RepeatType.Daily: tr('Daily'),
+            RepeatType.Weekly: tr('Weekly'),
+            RepeatType.Monthly: tr('Monthly'),
+            RepeatType.Yearly: tr('Yearly'),
             RepeatType.Weekday: '', # dynamic
             RepeatType.WeekdayLast: '', # dynamic
         }
@@ -107,11 +108,11 @@ class Recurrence(object):
         date = self.start_date
         weekday_name = strftime('%A', date)
         week_no = (date.day - 1) // 7
-        position = ['first', 'second', 'third', 'fourth', 'fifth'][week_no]
-        self.rtype2desc[RepeatType.Weekday] = 'Every %s %s of the month' % (position, weekday_name)
+        position = [tr('first'), tr('second'), tr('third'), tr('fourth'), tr('fifth')][week_no]
+        self.rtype2desc[RepeatType.Weekday] = tr('Every %s %s of the month') % (position, weekday_name)
         _, days_in_month = monthrange(date.year, date.month)
         if days_in_month - date.day < 7:
-            self.rtype2desc[RepeatType.WeekdayLast] = 'Every last %s of the month' % weekday_name
+            self.rtype2desc[RepeatType.WeekdayLast] = tr('Every last %s of the month') % weekday_name
         else:
             self.rtype2desc[RepeatType.WeekdayLast] = ''
     

@@ -15,6 +15,7 @@ from datetime import date
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange
+from ..trans import tr
 from .base import SheetViewNotificationsMixin
 from .pie_chart import PieChart
 
@@ -75,12 +76,12 @@ class _BalancePieChart(_AccountPieChart):
 
 class AssetsPieChart(_BalancePieChart):
     def __init__(self, view, networth_view):
-        _BalancePieChart.__init__(self, view, networth_view, AccountType.Asset, 'Assets')
+        _BalancePieChart.__init__(self, view, networth_view, AccountType.Asset, tr('Assets'))
     
 
 class LiabilitiesPieChart(_BalancePieChart):
     def __init__(self, view, networth_view):
-        _BalancePieChart.__init__(self, view, networth_view, AccountType.Liability, 'Liabilities')
+        _BalancePieChart.__init__(self, view, networth_view, AccountType.Liability, tr('Liabilities'))
     
 
 class _CashFlowPieChart(_AccountPieChart):
@@ -98,10 +99,10 @@ class _CashFlowPieChart(_AccountPieChart):
 
 class IncomePieChart(_CashFlowPieChart):
     def __init__(self, view, profit_view):
-        _CashFlowPieChart.__init__(self, view, profit_view, AccountType.Income, 'Income')
+        _CashFlowPieChart.__init__(self, view, profit_view, AccountType.Income, tr('Income'))
     
 
 class ExpensesPieChart(_CashFlowPieChart):
     def __init__(self, view, profit_view):
-        _CashFlowPieChart.__init__(self, view, profit_view, AccountType.Expense, 'Expenses')
+        _CashFlowPieChart.__init__(self, view, profit_view, AccountType.Expense, tr('Expenses'))
     

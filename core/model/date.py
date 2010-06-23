@@ -12,6 +12,8 @@ import re
 from calendar import monthrange
 from datetime import date, datetime, timedelta
 
+from ..trans import tr
+
 ONE_DAY = timedelta(1)
 
 #--- Date Ranges
@@ -183,7 +185,7 @@ class YearToDateRange(DateRange):
     
     @property
     def display(self):
-        return '{0} - Now'.format(strftime('%b %Y', self.start))
+        return tr('{0} - Now').format(strftime('%b %Y', self.start))
     
 
 def compute_ahead_months(ahead_months):
@@ -207,7 +209,7 @@ class RunningYearRange(DateRange):
     
     @property
     def display(self):
-        return 'Running year ({0} - {1})'.format(strftime('%b', self.start), strftime('%b', self.end))
+        return tr('Running year ({0} - {1})').format(strftime('%b', self.start), strftime('%b', self.end))
     
 
 class AllTransactionsRange(DateRange):
@@ -221,7 +223,7 @@ class AllTransactionsRange(DateRange):
     
     @property
     def display(self):
-        return "All Transactions"
+        return tr("All Transactions")
     
 
 class CustomDateRange(DateRange):

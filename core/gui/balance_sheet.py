@@ -10,6 +10,7 @@ from datetime import timedelta, date
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange, ONE_DAY
+from ..trans import tr
 from .report import Report, get_delta_perc
 
 class BalanceSheet(Report):
@@ -60,9 +61,9 @@ class BalanceSheet(Report):
     
     def _refresh(self):
         self.clear()
-        self.assets = self.make_type_node('ASSETS', AccountType.Asset)
-        self.liabilities = self.make_type_node('LIABILITIES', AccountType.Liability)
-        self.net_worth = self._make_node('NET WORTH')
+        self.assets = self.make_type_node(tr('ASSETS'), AccountType.Asset)
+        self.liabilities = self.make_type_node(tr('LIABILITIES'), AccountType.Liability)
+        self.net_worth = self._make_node(tr('NET WORTH'))
         net_worth_start = self.assets.start_amount - self.liabilities.start_amount
         net_worth_end = self.assets.end_amount - self.liabilities.end_amount
         budget_date_range = DateRange(date.today(), self.document.date_range.end)

@@ -1,0 +1,243 @@
+/* core/app.py:36 */
+"In the demo version, documents with more than 100 transactions cannot be saved." = "In the demo version, documents with more than 100 transactions cannot be saved.";
+
+/* core/document.py:169 */
+"Add transaction" = "Add transaction";
+
+/* core/document.py:172 core/document.py:355 */
+"Change transaction" = "Change transaction";
+
+/* core/document.py:246 */
+"Change account" = "Change account";
+
+/* core/document.py:264 */
+"Remove account" = "Remove account";
+
+/* core/document.py:291 */
+"New account" = "New account";
+
+/* core/document.py:294 */
+"Add account" = "Add account";
+
+/* core/document.py:311 */
+"Change group" = "Change group";
+
+/* core/document.py:320 */
+"Remove group" = "Remove group";
+
+/* core/document.py:330 */
+"New group" = "New group";
+
+/* core/document.py:332 */
+"Add group" = "Add group";
+
+/* core/document.py:403 */
+"Remove transaction" = "Remove transaction";
+
+/* core/document.py:428 */
+"Duplicate transactions" = "Duplicate transactions";
+
+/* core/document.py:443 */
+"Move transaction" = "Move transaction";
+
+/* core/document.py:491 */
+"Change reconciliation" = "Change reconciliation";
+
+/* core/document.py:536 */
+"Change Budget" = "Change Budget";
+
+/* core/document.py:539 */
+"Add Budget" = "Add Budget";
+
+/* core/document.py:560 */
+"Remove Budget" = "Remove Budget";
+
+/* core/document.py:576 */
+"Change Schedule" = "Change Schedule";
+
+/* core/document.py:579 */
+"Add Schedule" = "Add Schedule";
+
+/* core/document.py:600 */
+"Remove Schedule" = "Remove Schedule";
+
+/* core/document.py:654 */
+"\"%s\" is not a moneyGuru file" = "\"%s\" is not a moneyGuru file";
+
+/* core/document.py:696 */
+"%s is of an unknown format." = "%s is of an unknown format.";
+
+/* core/document.py:739 */
+"Import" = "Import";
+
+/* core/gui/account_pie_chart.py:78 */
+"Assets" = "Assets";
+
+/* core/gui/account_pie_chart.py:83 */
+"Liabilities" = "Liabilities";
+
+/* core/gui/account_pie_chart.py:101 */
+"Income" = "Income";
+
+/* core/gui/account_pie_chart.py:106 */
+"Expenses" = "Expenses";
+
+/* core/gui/account_reassign_panel.py:19 */
+"No Account" = "No Account";
+
+/* core/gui/account_view.py:77 */
+"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} out of {1} selected. Increase: {2} Decrease: {3}";
+
+/* core/gui/balance_sheet.py:63 */
+"ASSETS" = "ASSETS";
+
+/* core/gui/balance_sheet.py:64 */
+"LIABILITIES" = "LIABILITIES";
+
+/* core/gui/balance_sheet.py:65 */
+"NET WORTH" = "NET WORTH";
+
+/* core/gui/budget_panel.py:47 */
+"Income/Expense accounts must be created before budgets can be set." = "Income/Expense accounts must be created before budgets can be set.";
+
+/* core/gui/budget_panel.py:54 core/gui/csv_options.py:19 */
+"None" = "None";
+
+/* core/gui/csv_options.py:20 */
+"Date" = "Date";
+
+/* core/gui/csv_options.py:21 */
+"Description" = "Description";
+
+/* core/gui/csv_options.py:22 */
+"Payee" = "Payee";
+
+/* core/gui/csv_options.py:23 */
+"Check #" = "Check #";
+
+/* core/gui/csv_options.py:24 */
+"Transfer" = "Transfer";
+
+/* core/gui/csv_options.py:25 */
+"Amount" = "Amount";
+
+/* core/gui/csv_options.py:26 */
+"Increase" = "Increase";
+
+/* core/gui/csv_options.py:27 */
+"Decrease" = "Decrease";
+
+/* core/gui/csv_options.py:28 */
+"Currency" = "Currency";
+
+/* core/gui/csv_options.py:29 */
+"Transaction ID" = "Transaction ID";
+
+/* core/gui/csv_options.py:104 core/gui/csv_options.py:228 */
+/* core/gui/csv_options.py:248 */
+"Default" = "Default";
+
+/* core/gui/csv_options.py:244 core/gui/import_window.py:244 */
+"< New Account >" = "< New Account >";
+
+/* core/gui/entry_print.py:23 core/gui/schedule_table.py:78 */
+/* core/gui/schedule_table.py:80 core/gui/transaction_print.py:23 */
+/* core/gui/transaction_table.py:137 core/gui/transaction_table.py:140 */
+"Unassigned" = "Unassigned";
+
+/* core/gui/entry_table.py:433 */
+"Previous Balance" = "Previous Balance";
+
+/* core/gui/entry_table.py:442 core/gui/transaction_table.py:231 */
+"TOTAL" = "TOTAL";
+
+/* core/gui/income_statement.py:56 */
+"INCOME" = "INCOME";
+
+/* core/gui/income_statement.py:57 */
+"EXPENSES" = "EXPENSES";
+
+/* core/gui/income_statement.py:58 */
+"NET INCOME" = "NET INCOME";
+
+/* core/gui/main_window.py:81 core/gui/net_worth_graph.py:39 */
+"Net Worth" = "Net Worth";
+
+/* core/gui/main_window.py:83 core/gui/profit_graph.py:41 */
+"Profit & Loss" = "Profit & Loss";
+
+/* core/gui/main_window.py:85 */
+"Transactions" = "Transactions";
+
+/* core/gui/main_window.py:89 */
+"Schedules" = "Schedules";
+
+/* core/gui/main_window.py:91 */
+"Budgets" = "Budgets";
+
+/* core/gui/main_window.py:93 */
+"New Tab" = "New Tab";
+
+/* core/gui/pie_chart.py:34 */
+"Others" = "Others";
+
+/* core/gui/report.py:192 */
+"Total " = "Total ";
+
+/* core/gui/report.py:212 */
+"TOTAL " = "TOTAL ";
+
+/* core/gui/report.py:250 */
+"The account '{0}' already exists." = "The account '{0}' already exists.";
+
+/* core/gui/transaction_view.py:46 */
+"{0} out of {1} selected. Amount: {2}" = "{0} out of {1} selected. Amount: {2}";
+
+/* core/loader/csv.py:85 */
+"The Date and Amount columns must be set." = "The Date and Amount columns must be set.";
+
+/* core/loader/csv.py:100 */
+"The Date column has been set on a column that doesn't contain dates." = "The Date column has been set on a column that doesn't contain dates.";
+
+/* core/model/date.py:186 */
+"{0} - Now" = "{0} - Now";
+
+/* core/model/date.py:210 */
+"Running year ({0} - {1})" = "Running year ({0} - {1})";
+
+/* core/model/date.py:224 */
+"All Transactions" = "All Transactions";
+
+/* core/model/recurrence.py:90 */
+"Daily" = "Daily";
+
+/* core/model/recurrence.py:91 */
+"Weekly" = "Weekly";
+
+/* core/model/recurrence.py:92 */
+"Monthly" = "Monthly";
+
+/* core/model/recurrence.py:93 */
+"Yearly" = "Yearly";
+
+/* core/model/recurrence.py:110 */
+"fifth" = "fifth";
+
+/* core/model/recurrence.py:110 */
+"first" = "first";
+
+/* core/model/recurrence.py:110 */
+"fourth" = "fourth";
+
+/* core/model/recurrence.py:110 */
+"second" = "second";
+
+/* core/model/recurrence.py:110 */
+"third" = "third";
+
+/* core/model/recurrence.py:111 */
+"Every %s %s of the month" = "Every %s %s of the month";
+
+/* core/model/recurrence.py:114 */
+"Every last %s of the month" = "Every last %s of the month";
+

@@ -7,6 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..model.date import DateRange
+from ..trans import tr
 from .balance_graph import BalanceGraph
 from .base import SheetViewNotificationsMixin
 
@@ -36,7 +37,7 @@ class NetWorthGraph(BalanceGraph, SheetViewNotificationsMixin):
     #--- Properties
     @property
     def title(self):
-        return 'Net Worth'
+        return tr('Net Worth')
     
     @property
     def currency(self):
