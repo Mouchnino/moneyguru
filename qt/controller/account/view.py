@@ -8,6 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from core.gui.account_view import AccountView as AccountViewModel
+from core.trans import tr
 
 from ..base_view import BaseView
 from .filter_bar import EntryFilterBar
@@ -17,7 +18,7 @@ from .line_graph import AccountLineGraph
 from ui.entry_view_ui import Ui_EntryView
 
 class EntryView(BaseView, Ui_EntryView):
-    PRINT_TITLE_FORMAT = "Entries from {startDate} to {endDate}"
+    PRINT_TITLE_FORMAT = tr("Entries from {startDate} to {endDate}")
     
     def __init__(self, mainwindow):
         BaseView.__init__(self)

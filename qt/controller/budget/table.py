@@ -11,17 +11,18 @@ from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
 from core.gui.budget_table import BudgetTable as BudgetTableModel
+from core.trans import tr
 from ..table import Table
 
 class BudgetTable(Table):
     COLUMNS = [
-        Column('start_date', 'Start Date', 90),
-        Column('stop_date', 'Stop Date', 90),
-        Column('repeat_type', 'Repeat Type', 80),
-        Column('interval', 'Interval', 50),
-        Column('account', 'Account', 144),
-        Column('target', 'Target', 144),
-        Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
+        Column('start_date', tr('Start Date'), 90),
+        Column('stop_date', tr('Stop Date'), 90),
+        Column('repeat_type', tr('Repeat Type'), 80),
+        Column('interval', tr('Interval'), 50),
+        Column('account', tr('Account'), 144),
+        Column('target', tr('Target'), 144),
+        Column('amount', tr('Amount'), 100, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, budget_view, view):

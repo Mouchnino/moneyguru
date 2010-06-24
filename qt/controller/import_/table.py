@@ -12,6 +12,7 @@ from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
 from core.gui.import_table import ImportTable as ImportTableModel
+from core.trans import tr
 from ..table import Table
 
 MIME_INDEXES = 'application/moneyguru.rowindexes'
@@ -19,16 +20,16 @@ MIME_INDEXES = 'application/moneyguru.rowindexes'
 class ImportTable(Table):
     COLUMNS = [
         Column('will_import', '', 20),
-        Column('date', 'Date', 80),
-        Column('description', 'Description', 90),
-        Column('amount', 'Amount', 90, alignment=Qt.AlignRight),
+        Column('date', tr('Date'), 80),
+        Column('description', tr('Description'), 90),
+        Column('amount', tr('Amount'), 90, alignment=Qt.AlignRight),
         Column('bound', '', 22),
-        Column('date_import', 'Date', 80),
-        Column('description_import', 'Description', 90),
-        Column('payee_import', 'Payee', 90),
-        Column('checkno_import', 'Check #', 57),
-        Column('transfer_import', 'Transfer', 90),
-        Column('amount_import', 'Amount', 90, alignment=Qt.AlignRight),
+        Column('date_import', tr('Date'), 80),
+        Column('description_import', tr('Description'), 90),
+        Column('payee_import', tr('Payee'), 90),
+        Column('checkno_import', tr('Check #'), 57),
+        Column('transfer_import', tr('Transfer'), 90),
+        Column('amount_import', tr('Amount'), 90, alignment=Qt.AlignRight),
     ]
         
     def __init__(self, importWindow, view):

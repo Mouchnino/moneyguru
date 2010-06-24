@@ -12,16 +12,17 @@ from PyQt4.QtGui import QFont
 
 from qtlib.column import Column
 from core.gui.split_table import SplitTable as SplitTableModel
+from core.trans import tr
 from .table import Table, ACCOUNT_EDIT
 
 MIME_INDEX = 'application/moneyguru.splitindex'
 
 class SplitTable(Table):
     COLUMNS = [
-        Column('account', 'Account', 100, editor=ACCOUNT_EDIT),
-        Column('memo', 'Memo', 70),
-        Column('debit', 'Debit', 90, alignment=Qt.AlignRight),
-        Column('credit', 'Credit', 90, alignment=Qt.AlignRight),
+        Column('account', tr('Account'), 100, editor=ACCOUNT_EDIT),
+        Column('memo', tr('Memo'), 70),
+        Column('debit', tr('Debit'), 90, alignment=Qt.AlignRight),
+        Column('credit', tr('Credit'), 90, alignment=Qt.AlignRight),
     ]
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled | Qt.ItemIsDropEnabled
     

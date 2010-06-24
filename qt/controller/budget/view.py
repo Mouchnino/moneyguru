@@ -8,13 +8,14 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from core.gui.budget_view import BudgetView as BudgetViewModel
+from core.trans import tr
 
 from ..base_view import BaseView
 from .table import BudgetTable
 from ui.budget_view_ui import Ui_BudgetView
 
 class BudgetView(BaseView, Ui_BudgetView):
-    PRINT_TITLE_FORMAT = "Budgets from {startDate} to {endDate}"
+    PRINT_TITLE_FORMAT = tr("Budgets from {startDate} to {endDate}")
     
     def __init__(self, mainwindow):
         BaseView.__init__(self)

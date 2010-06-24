@@ -14,6 +14,7 @@ from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox
 
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
+from core.trans import tr
 
 from print_ import ViewPrinter
 from support.recent import Recent
@@ -219,13 +220,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.eview.model.can_toggle_reconciliation_mode
         
         newItemLabel = {
-            PaneType.NetWorth: "New Account",
-            PaneType.Profit: "New Account",
-            PaneType.Transaction: "New Transaction",
-            PaneType.Account: "New Transaction",
-            PaneType.Schedule: "New Schedule",
-            PaneType.Budget: "New Budget",
-            PaneType.Empty: "New Item", #XXX make disabled
+            PaneType.NetWorth: tr("New Account"),
+            PaneType.Profit: tr("New Account"),
+            PaneType.Transaction: tr("New Transaction"),
+            PaneType.Account: tr("New Transaction"),
+            PaneType.Schedule: tr("New Schedule"),
+            PaneType.Budget: tr("New Budget"),
+            PaneType.Empty: tr("New Item"), #XXX make disabled
         }[viewType]
         self.actionNewItem.setText(newItemLabel)
         self.actionNewAccountGroup.setEnabled(isSheet)
@@ -244,16 +245,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def _updateUndoActions(self):
         if self.doc.model.can_undo():
             self.actionUndo.setEnabled(True)
-            self.actionUndo.setText("Undo {0}".format(self.doc.model.undo_description()))
+            self.actionUndo.setText(tr("Undo {0}").format(self.doc.model.undo_description()))
         else:
             self.actionUndo.setEnabled(False)
-            self.actionUndo.setText("Undo")
+            self.actionUndo.setText(tr("Undo"))
         if self.doc.model.can_redo():
             self.actionRedo.setEnabled(True)
-            self.actionRedo.setText("Redo {0}".format(self.doc.model.redo_description()))
+            self.actionRedo.setText(tr("Redo {0}").format(self.doc.model.redo_description()))
         else:
             self.actionRedo.setEnabled(False)
-            self.actionRedo.setText("Redo")
+            self.actionRedo.setText(tr("Redo"))
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
@@ -370,7 +371,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._updateUndoActions()
     
     def show_message(self, msg):
-        title = "Warning"
+        title = tr("Warning")
         QMessageBox.warning(self, title, msg)
     
     def view_closed(self, index):

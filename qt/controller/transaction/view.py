@@ -8,6 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from core.gui.transaction_view import TransactionView as TransactionViewModel
+from core.trans import tr
 
 from ..base_view import BaseView
 from .filter_bar import TransactionFilterBar
@@ -15,7 +16,7 @@ from .table import TransactionTable
 from ui.transaction_view_ui import Ui_TransactionView
 
 class TransactionView(BaseView, Ui_TransactionView):
-    PRINT_TITLE_FORMAT = "Transactions from {startDate} to {endDate}"
+    PRINT_TITLE_FORMAT = tr("Transactions from {startDate} to {endDate}")
     
     def __init__(self, mainwindow):
         BaseView.__init__(self)

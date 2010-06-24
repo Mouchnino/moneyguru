@@ -323,6 +323,262 @@
         <source>Every last %s of the month</source>
         <translation>Chaque dernier %s du mois</translation>
     </message>
+
+    <!-- Main Window -->
+    <message>
+        <source>New Account</source>
+        <translation>Nouveau compte</translation>
+    </message>
+    <message>
+        <source>New Transaction</source>
+        <translation>Nouvelle transaction</translation>
+    </message>
+    <message>
+        <source>New Schedule</source>
+        <translation>Nouvelle récurrence</translation>
+    </message>
+    <message>
+        <source>New Budget</source>
+        <translation>Nouveau budget</translation>
+    </message>
+		<message>
+        <source>New Item</source>
+        <translation>Nouveau</translation>
+    </message>
+		<message>
+        <source>Undo {0}</source>
+        <translation>Défaire {0}</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation>Défaire</translation>
+    </message>
+    <message>
+        <source>Redo {0}</source>
+        <translation>Refaire {0}</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation>Refaire</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+
+		<!-- Print Titles -->
+    <message>
+        <source>Net Worth at {endDate}, starting from {startDate}</source>
+        <translation>Valeur Nette à {startDate}, commençant à {endDate}</translation>
+    </message>
+    <message>
+        <source>Profit and loss from {startDate} to {endDate}</source>
+        <translation>Profits et pertes de {startDate} à {endDate}</translation>
+    </message>
+    <message>
+        <source>Transactions from {startDate} to {endDate}</source>
+        <translation>Transactions de {startDate} à {endDate}</translation>
+    </message>
+    <message>
+        <source>Entries from {startDate} to {endDate}</source>
+        <translation>Entrées de {startDate} à {endDate}</translation>
+    </message>
+    <message>
+        <source>Schedules from {startDate} to {endDate}</source>
+        <translation>Récurrences de {startDate} à {endDate}</translation>
+    </message>
+    <message>
+        <source>Budgets from {startDate} to {endDate}</source>
+        <translation>Budgets de {startDate} à {endDate}</translation>
+    </message>
+
+		<!-- Document -->
+    <message>
+        <source>FirstRunMsg</source>
+        <translation>Vous utilisez moneyGuru pour la première fois. Voulez-vous ouvrir le fichier d'exemple?</translation>
+    </message>
+    <message>
+        <source>AboutToRestartMsg</source>
+        <translation>moneyGuru va fermer</translation>
+    </message>
+    <message>
+        <source>ThanksForBuyingMsg</source>
+        <translation>Merci d'avoir acheté moneyGuru!</translation>
+    </message>
+		<message>
+        <source>Registration Required</source>
+        <translation>Enregistrement requis</translation>
+    </message>
+    <message>
+        <source>You have reached the limits of this demo version. You must buy moneyGuru to save the document.</source>
+        <translation>Vous avez atteint les limites de la démo. Vous devez acheter moneyGuru pour sauvegarder votre document.</translation>
+    </message>
+    <message>
+        <source>Export to QIF</source>
+        <translation>Exporter vers QIF</translation>
+    </message>
+    <message>
+        <source>QIF Files (*.qif)</source>
+        <translation>Fichiers QIF (*.qif)</translation>
+    </message>
+    <message>
+        <source>Select a document to import</source>
+        <translation>Selectionner un fichier à importer</translation>
+    </message>
+    <message>
+        <source>Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)</source>
+        <translation>Fichier supportés (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)</translation>
+    </message>
+		<message>
+        <source>Cannot import file</source>
+        <translation>Impossible d'importer le fichier</translation>
+    </message>
+		<message>
+        <source>Select a document to load</source>
+        <translation>Sélectionnez un document à ouvrir</translation>
+    </message>
+		<message>
+        <source>moneyGuru Documents (*.moneyguru)</source>
+        <translation>Documents moneyGuru (*.moneyguru)</translation>
+    </message>
+		<message>
+        <source>Cannot load file</source>
+        <translation>Impossible d'ouvrir le fichier</translation>
+    </message>
+		<message>
+        <source>Save As</source>
+        <translation>Sauvegarder sous</translation>
+    </message>
+		<message>
+        <source>Unsaved Document</source>
+        <translation>Document non-sauvegardé</translation>
+    </message>
+		<message>
+        <source>Do you want to save your changes before continuing?</source>
+        <translation>Voulez-vous sauvegarder vos changement avant de continuer?</translation>
+    </message>
+		
+		<!-- Filters -->
+		<message>
+        <source>All</source>
+        <translation>Tout</translation>
+    </message>
+    <message>
+        <source>Transfers</source>
+        <translation>Transfert</translation>
+    </message>
+    <message>
+        <source>Reconciled</source>
+        <translation>Reconcilié</translation>
+    </message>
+    <message>
+        <source>Not Reconciled</source>
+        <translation>Non Reconcilié</translation>
+    </message>
+
+		<!-- CSV -->
+		<message>
+        <source>New Layout</source>
+        <translation>Nouvelle configuration</translation>
+    </message>
+    <message>
+        <source>Choose a name for your new layout:</source>
+        <translation>Choisissez un nom pour la nouvelle configuration:</translation>
+    </message>
+    <message>
+        <source>Rename Layout</source>
+        <translation>Renommer la configuration</translation>
+    </message>
+    <message>
+        <source>Choose a name for your layout:</source>
+        <translation>Choisissez un nom pour la configuration:</translation>
+    </message>
+    <message>
+        <source>New Layout...</source>
+        <translation>Nouvelle configuration</translation>
+    </message>
+    <message>
+        <source>Rename Selected Layout...</source>
+        <translation>Renommer la configuration sélectionnée...</translation>
+    </message>
+    <message>
+        <source>Delete Selected Layout</source>
+        <translation>Supprimer la configuration sélectionnée...</translation>
+    </message>
+
+		<!-- Columns -->
+		<message>
+        <source>Change</source>
+        <translation>Variation</translation>
+    </message>
+    <message>
+        <source>Change %</source>
+        <translation>Variation %</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Début</translation>
+    </message>
+    <message>
+        <source>Budgeted</source>
+        <translation>Budgeté</translation>
+    </message>
+    <message>
+        <source>Account #</source>
+        <translation># Compte</translation>
+    </message>
+    <message>
+        <source>Current</source>
+        <translation>Courant</translation>
+    </message>
+    <message>
+        <source>Last</source>
+        <translation>Précédent</translation>
+    </message>
+    <message>
+        <source>Account</source>
+        <translation>Compte</translation>
+    </message>
+    <message>
+        <source>Reconciliation Date</source>
+        <translation>Date réconciliation</translation>
+    </message>
+    <message>
+        <source>Balance</source>
+        <translation>Balance</translation>
+    </message>
+    <message>
+        <source>Start Date</source>
+        <translation>Date début</translation>
+    </message>
+    <message>
+        <source>Date fin</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Repeat Type</source>
+        <translation>Type répétition</translation>
+    </message>
+    <message>
+        <source>Interval</source>
+        <translation>Intervalle</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Cible</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation>Fin</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>Cp. crédités</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation>Cp. débités</translation>
+    </message>
 </context>
 <context>
     <name>AccountPanel</name>
@@ -800,6 +1056,9 @@
         <translation>Fermer l&apos;onglet</translation>
     </message>
 </context>
+
+
+
 <context>
     <name>MassEditionPanel</name>
     <message>

@@ -12,6 +12,7 @@ from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
 from core.gui.entry_table import EntryTable as EntryTableModel
+from core.trans import tr
 from support.item_delegate import ItemDecoration
 from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions
@@ -35,15 +36,15 @@ class EntryTableDelegate(TableDelegate):
 class EntryTable(TableWithTransactions):
     COLUMNS = [
         Column('status', '', 25),
-        Column('date', 'Date', 86, editor=DATE_EDIT),
-        Column('reconciliation_date', 'Reconciliation Date', 110, editor=DATE_EDIT),
-        Column('description', 'Description', 150, editor=DESCRIPTION_EDIT),
-        Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
-        Column('checkno', 'Check #', 100),
-        Column('transfer', 'Transfer', 120, editor=ACCOUNT_EDIT),
-        Column('increase', 'Increase', 95, alignment=Qt.AlignRight),
-        Column('decrease', 'Decrease', 95, alignment=Qt.AlignRight),
-        Column('balance', 'Balance', 110, alignment=Qt.AlignRight),
+        Column('date', tr('Date'), 86, editor=DATE_EDIT),
+        Column('reconciliation_date', tr('Reconciliation Date'), 110, editor=DATE_EDIT),
+        Column('description', tr('Description'), 150, editor=DESCRIPTION_EDIT),
+        Column('payee', tr('Payee'), 150, editor=PAYEE_EDIT),
+        Column('checkno', tr('Check #'), 100),
+        Column('transfer', tr('Transfer'), 120, editor=ACCOUNT_EDIT),
+        Column('increase', tr('Increase'), 95, alignment=Qt.AlignRight),
+        Column('decrease', tr('Decrease'), 95, alignment=Qt.AlignRight),
+        Column('balance', tr('Balance'), 110, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, account_view, view):

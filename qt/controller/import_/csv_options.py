@@ -11,6 +11,7 @@ from PyQt4.QtCore import Qt, QAbstractTableModel
 from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog, QMessageBox
 
 from core.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER
+from core.trans import tr
 from ui.csv_options_ui import Ui_CSVOptionsWindow
 
 NEW_LAYOUT = 'new_layout'
@@ -33,15 +34,15 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
     
     #--- Private
     def _newLayout(self):
-        title = "New Layout"
-        msg = "Choose a name for your new layout:"
+        title = tr("New Layout")
+        msg = tr("Choose a name for your new layout:")
         name, ok = QInputDialog.getText(self, title, msg)
         if ok and name:
             self.model.new_layout(name)
     
     def _renameLayout(self):
-        title = "Rename Layout"
-        msg = "Choose a name for your layout:"
+        title = tr("Rename Layout")
+        msg = tr("Choose a name for your layout:")
         name, ok = QInputDialog.getText(self, title, msg)
         if ok and name:
             self.model.rename_selected_layout(name)
@@ -86,9 +87,9 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         self.layoutComboBox.clear()
         self.layoutComboBox.addItems(self.model.layout_names)
         self.layoutComboBox.insertSeparator(self.layoutComboBox.count())
-        self.layoutComboBox.addItem('New Layout...', NEW_LAYOUT)
-        self.layoutComboBox.addItem('Rename Selected Layout...', RENAME_LAYOUT)
-        self.layoutComboBox.addItem('Delete Selected Layout', DELETE_LAYOUT)
+        self.layoutComboBox.addItem(tr("New Layout..."), NEW_LAYOUT)
+        self.layoutComboBox.addItem(tr("Rename Selected Layout..."), RENAME_LAYOUT)
+        self.layoutComboBox.addItem(tr("Delete Selected Layout"), DELETE_LAYOUT)
         self.layoutComboBox.setCurrentIndex(self.layoutComboBox.findText(self.model.layout.name))
         self.layoutComboBox.currentIndexChanged.connect(self.layoutIndexChanged)
     
@@ -161,7 +162,7 @@ class CSVOptionsTableModel(QAbstractTableModel):
             return None
         if role == Qt.DisplayRole:
             if section == 0:
-                return "Import"
+                return tr("Import")
             else:
                 return self.model.get_column_name(section-1)
         elif role == Qt.DecorationRole and section > 0:

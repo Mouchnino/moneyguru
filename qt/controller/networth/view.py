@@ -8,6 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from core.gui.networth_view import NetWorthView as NetWorthViewModel
+from core.trans import tr
 
 from ..base_view import BaseView
 from .sheet import NetWorthSheet
@@ -17,7 +18,7 @@ from .liability_pie_chart import LiabilityPieChart
 from ui.networth_view_ui import Ui_NetWorthView
 
 class NetWorthView(BaseView, Ui_NetWorthView):
-    PRINT_TITLE_FORMAT = "Net Worth at {endDate}, starting from {startDate}"
+    PRINT_TITLE_FORMAT = tr("Net Worth at {endDate}, starting from {startDate}")
     
     def __init__(self, mainwindow):
         BaseView.__init__(self)

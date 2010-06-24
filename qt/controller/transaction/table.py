@@ -12,6 +12,7 @@ from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
 from core.gui.transaction_table import TransactionTable as TransactionTableModel
+from core.trans import tr
 from support.item_delegate import ItemDecoration
 from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions
@@ -39,13 +40,13 @@ class TransactionTableDelegate(TableDelegate):
 class TransactionTable(TableWithTransactions):
     COLUMNS = [
         Column('status', '', 25),
-        Column('date', 'Date', 86, editor=DATE_EDIT),
-        Column('description', 'Description', 230, editor=DESCRIPTION_EDIT),
-        Column('payee', 'Payee', 150, editor=PAYEE_EDIT),
-        Column('checkno', 'Check #', 80),
-        Column('from_', 'From', 120, editor=ACCOUNT_EDIT),
-        Column('to', 'To', 120, editor=ACCOUNT_EDIT),
-        Column('amount', 'Amount', 100, alignment=Qt.AlignRight),
+        Column('date', tr('Date'), 86, editor=DATE_EDIT),
+        Column('description', tr('Description'), 230, editor=DESCRIPTION_EDIT),
+        Column('payee', tr('Payee'), 150, editor=PAYEE_EDIT),
+        Column('checkno', tr('Check #'), 80),
+        Column('from_', tr('From'), 120, editor=ACCOUNT_EDIT),
+        Column('to', tr('To'), 120, editor=ACCOUNT_EDIT),
+        Column('amount', tr('Amount'), 100, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, transaction_view, view):

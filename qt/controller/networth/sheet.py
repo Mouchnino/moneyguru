@@ -11,17 +11,18 @@ from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
 from core.gui.balance_sheet import BalanceSheet as BalanceSheetModel
+from core.trans import tr
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 
 class NetWorthSheet(AccountSheet):
     COLUMNS = [
-        Column('name', 'Account', 133),
-        Column('account_number', 'Account #', 80),
-        Column('end', 'End', 100, alignment=Qt.AlignRight),
-        Column('start', 'Start', 100, alignment=Qt.AlignRight),
-        Column('delta', 'Change', 100, alignment=Qt.AlignRight),
-        Column('delta_perc', 'Change %', 100),
-        Column('budgeted', 'Budgeted', 100, alignment=Qt.AlignRight),
+        Column('name', tr('Account'), 133),
+        Column('account_number', tr('Account #'), 80),
+        Column('end', tr('End'), 100, alignment=Qt.AlignRight),
+        Column('start', tr('Start'), 100, alignment=Qt.AlignRight),
+        Column('delta', tr('Change'), 100, alignment=Qt.AlignRight),
+        Column('delta_perc', tr('Change %'), 100),
+        Column('budgeted', tr('Budgeted'), 100, alignment=Qt.AlignRight),
     ]
     AMOUNT_ATTRS = set(['end', 'start', 'delta', 'delta_perc', 'budgeted'])
     BOLD_ATTRS = set(['end'])

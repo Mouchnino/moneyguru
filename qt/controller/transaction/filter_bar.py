@@ -9,18 +9,19 @@
 
 from core.document import FilterType
 from core.gui.filter_bar import TransactionFilterBar as TransactionFilterBarModel
+from core.trans import tr
 
 from ..filter_bar import FilterBar
 
 class TransactionFilterBar(FilterBar):
     BUTTONS = [
-        ("All", None),
-        ("Income", FilterType.Income),
-        ("Expenses", FilterType.Expense),
-        ("Transfers", FilterType.Transfer),
-        ("Unassigned", FilterType.Unassigned),
-        ("Reconciled", FilterType.Reconciled),
-        ("Not Reconciled", FilterType.NotReconciled),
+        (tr("All"), None),
+        (tr("Income"), FilterType.Income),
+        (tr("Expenses"), FilterType.Expense),
+        (tr("Transfers"), FilterType.Transfer),
+        (tr("Unassigned"), FilterType.Unassigned),
+        (tr("Reconciled"), FilterType.Reconciled),
+        (tr("Not Reconciled"), FilterType.NotReconciled),
     ]
     
     def __init__(self, transaction_view, view):

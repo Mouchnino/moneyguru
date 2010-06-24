@@ -15,6 +15,7 @@ from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
 from core.exception import FileFormatError
 from core.document import Document as DocumentModel, ScheduleScope
+from core.trans import tr
 
 from controller.schedule_scope_dialog import ScheduleScopeDialog
 
@@ -27,8 +28,8 @@ class Document(QObject):
     
     def _save(self, docpath):
         if not self.app.model.registered and len(self.model.transactions) > 100:
-            msg = "You have reached the limits of this demo version. You must buy moneyGuru to save the document."
-            QMessageBox.warning(self.app.mainWindow, "Registration Required", msg)
+            msg = tr("You have reached the limits of this demo version. You must buy moneyGuru to save the document.")
+            QMessageBox.warning(self.app.mainWindow, tr("Registration Required"), msg)
             return False
         self.model.save_to_xml(docpath)
         return True
@@ -44,8 +45,8 @@ class Document(QObject):
         # continue.
         if not self.model.is_dirty():
             return True
-        title = "Unsaved Document"
-        msg = "Do you want to save your changes before continuing?"
+        title = tr("Unsaved Document")
+        msg = tr("Do you want to save your changes before continuing?")
         buttons = QMessageBox.Save | QMessageBox.Cancel | QMessageBox.Discard
         result = QMessageBox.question(self.app.mainWindow, title, msg, buttons)
         if result == QMessageBox.Save:
@@ -60,21 +61,21 @@ class Document(QObject):
             return True
     
     def exportToQIF(self):
-        title = "Export to QIF"
-        filters = "QIF Files (*.qif)"
+        title = tr("Export to QIF")
+        filters = tr("QIF Files (*.qif)")
         docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', '', filters))
         if docpath:
             self.model.save_to_qif(docpath)
     
     def importDocument(self):
-        title = "Select a document to import"
-        filters = "Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
+        title = tr("Select a document to import")
+        filters = tr("Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)")
         docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             try:
                 self.model.parse_file_for_import(docpath)
             except FileFormatError as e:
-                QMessageBox.warning(self.app.mainWindow, "Cannot import file", unicode(e))
+                QMessageBox.warning(self.app.mainWindow, tr("Cannot import file"), unicode(e))
     
     def new(self):
         if not self.confirmDestructiveAction():
@@ -90,12 +91,12 @@ class Document(QObject):
             self.model.load_from_xml(docpath)
             self.documentPath = docpath
         except FileFormatError as e:
-            QMessageBox.warning(self.app.mainWindow, "Cannot load file", unicode(e))
+            QMessageBox.warning(self.app.mainWindow, tr("Cannot load file"), unicode(e))
         self.documentOpened.emit(docpath)
     
     def openDocument(self):
-        title = "Select a document to load"
-        filters = "moneyGuru Documents (*.moneyguru)"
+        title = tr("Select a document to load")
+        filters = tr("moneyGuru Documents (*.moneyguru)")
         docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             self.open(docpath)
@@ -118,8 +119,8 @@ class Document(QObject):
             self.saveAs()
     
     def saveAs(self):
-        title = "Save As"
-        filters = "moneyGuru Documents (*.moneyguru)"
+        title = tr("Save As")
+        filters = tr("moneyGuru Documents (*.moneyguru)")
         docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             if self._save(docpath):
