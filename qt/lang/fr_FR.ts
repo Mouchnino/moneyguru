@@ -1515,4 +1515,70 @@
         <translation>Récurrences</translation>
     </message>
 </context>
+<context>
+    <name>RegDemoDialog</name>
+    <message>
+        <location filename="reg_demo_dialog.ui" line="26"/>
+        <source>$appname Demo Version</source>
+        <translation>Version démo de $appname</translation>
+    </message>
+    <message>
+        <location filename="reg_demo_dialog.ui" line="33"/>
+        <source>You are currently running a demo version of $appname. This version has limited functionalities, and you need to buy it to have access to these functionalities.</source>
+        <translation>Vous utilisez une version démo de $appname. Cette version a des fonctionnalités limitées et vous devez l'acheter pour enlever ces limites.</translation>
+    </message>
+    <message>
+        <location filename="reg_demo_dialog.ui" line="87"/>
+        <source>Try Demo</source>
+        <translation>Essayer</translation>
+    </message>
+    <message>
+        <location filename="reg_demo_dialog.ui" line="100"/>
+        <source>Enter Code</source>
+        <translation>Entrer code</translation>
+    </message>
+    <message>
+        <location filename="reg_demo_dialog.ui" line="113"/>
+        <source>Purchase</source>
+        <translation>Acheter</translation>
+    </message>
+</context>
+<context>
+    <name>RegSubmitDialog</name>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="14"/>
+        <source>Enter your registration code</source>
+        <translation>Entrez votre code</translation>
+    </message>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="20"/>
+        <source>Please enter your $appname registration code and registered e-mail (the e-mail you used for the purchase), then press &quot;Submit&quot;.</source>
+        <translation>Veuillez entrer votre code pour $appname ainsi que le courriel utilisé pour acheter ce code. Ensuite, appuyez sur &quot;Soumettre&quot;</translation>
+    </message>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="47"/>
+        <source>Registration code:</source>
+        <translation>Code:</translation>
+    </message>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="54"/>
+        <source>Registered e-mail:</source>
+        <translation>Courriel:</translation>
+    </message>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="71"/>
+        <source>Purchase</source>
+        <translation>Acheter</translation>
+    </message>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="100"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="reg_submit_dialog.ui" line="116"/>
+        <source>Submit</source>
+        <translation>Soumettre</translation>
+    </message>
+</context>
 </TS>
