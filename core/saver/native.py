@@ -104,4 +104,6 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         for key, value in attrib.iteritems():
             attrib[key] = remove_invalid_xml(value)
     tree = ET.ElementTree(root)
-    tree.write(filename, 'utf-8')
+    fp = open(filename, 'w')
+    fp.write('<?xml version="1.0" encoding="utf-8"?>\n')
+    tree.write(fp, 'utf-8')
