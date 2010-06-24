@@ -10,6 +10,7 @@
 
 import sys
 import gc
+import locale
 
 from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
@@ -36,6 +37,8 @@ if __name__ == "__main__":
     app.setStyleSheet(style)
     localeName = QLocale.system().name()
     if localeName in SUPPORTED_LOCALES:
+        # for date formatting
+        locale.setlocale(locale.LC_ALL, str(localeName))
         qtr1 = QTranslator()
         qtr1.load(':/qt_%s' % localeName)
         app.installTranslator(qtr1)

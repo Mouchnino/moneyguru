@@ -24,6 +24,11 @@ mainBundle = NSBundle.mainBundle()
 def cocoa_tr(s):
     return mainBundle.localizedStringForKey_value_table_(s, s, 'core')
 core.trans.set_tr(cocoa_tr)
+currentLang = NSBundle.preferredLocalizationsFromArray_(mainBundle.localizations())[0]
+LANG2LOCALENAME = {'fr': 'fr_FR'}
+if currentLang in LANG2LOCALENAME:
+    import locale
+    locale.setlocale(locale.LC_ALL, LANG2LOCALENAME[currentLang])
 
 from core.app import Application
 from core.document import Document, FilterType
