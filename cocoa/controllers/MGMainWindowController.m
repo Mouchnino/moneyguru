@@ -62,7 +62,7 @@ http://www.hardcoded.net/licenses/hs_license
        crashes.
     */
     [tabBar setShowAddTabButton:YES];
-    [tabBar setSizeCellsToFit:YES];
+    [tabBar setSizeCellsToFit:NO];
     [tabBar setDelegate:self];
     [[tabBar addTabButton] setTarget:self];
     [[tabBar addTabButton] setAction:@selector(newTab:)];
