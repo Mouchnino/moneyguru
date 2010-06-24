@@ -555,6 +555,11 @@ http://www.hardcoded.net/licenses/hs_license
     [statusLabel setStringValue:[[self py] statusLine]];
 }
 
+- (void)refreshUndoActions
+{
+    [[self window] setDocumentEdited:[[self document] isDocumentEdited]];
+}
+
 - (void)showMessage:(NSString *)aMessage
 {
     NSAlert *a = [NSAlert alertWithMessageText:aMessage defaultButton:nil alternateButton:nil

@@ -128,6 +128,7 @@ http://www.hardcoded.net/licenses/hs_license
             }
         }
         [py saveToFile:[url path]];
+        [[self windowForSheet] setDocumentEdited:[self isDocumentEdited]];
         return YES;
     }
     return NO;

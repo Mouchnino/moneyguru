@@ -1086,7 +1086,7 @@ class PyMainWindow(PyGUIContainer):
         self.cocoa.refreshPanes()
     
     def refresh_undo_actions(self):
-        pass # We don't need this on the Cocoa side
+        self.cocoa.refreshUndoActions()
     
     def show_custom_date_range_panel(self):
         self.cocoa.showCustomDateRangePanel()
