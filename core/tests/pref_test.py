@@ -14,7 +14,7 @@ from nose.tools import eq_
 from hsutil.testutil import with_tmpdir
 
 from ..const import PaneType
-from .base import TestApp, with_app
+from .base import TestApp, with_app, TestData
 
 #--- Pristine
 @with_app(TestApp)
@@ -30,6 +30,19 @@ def test_mainwindow_panes_reopen(app):
     newapp.check_current_pane(PaneType.Account, account_name='foo')
     newapp.mw.current_pane_index = 4
     newapp.check_current_pane(PaneType.Schedule)
+
+@with_app(TestApp)
+def test_mainwindow_panes_reopen_except_nonexistant_accounts(app):
+    # When re-opening tabs, ignore (and don't crash) tabs for accounts that aren't in the document.
+    app.add_account('foo')
+    app.mw.show_account()
+    app.doc.close()
+    newapp = TestApp(app=app.app)
+    # We have to load a file for the columns to be restored. That file doesn't have a 'foo' account
+    newapp.doc.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru')) # no crash on restore
+    eq_(newapp.mw.pane_count, 5)
+    # since we don't have enough tabs to restore last selected index, select the last one
+    eq_(newapp.mw.current_pane_index, 4)
 
 #--- Expanded group
 def app_expanded_group():

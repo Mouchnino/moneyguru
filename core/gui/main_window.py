@@ -8,7 +8,7 @@
 
 from collections import namedtuple
 
-from hsutil.misc import first
+from hsutil.misc import first, minmax
 from hsutil.notify import Repeater, Listener
 
 from ..const import PaneType
@@ -120,11 +120,14 @@ class MainWindow(Repeater):
             pane_type = data['pane_type']
             account_name = data.get('account_name', '')
             account = self.document.accounts.find(account_name)
+            if pane_type == PaneType.Account and account is None:
+                continue
             pane_data.append((pane_type, account))
-        self._set_panes(pane_data)
-        selected_pane_index = self.document.app.get_default(SELECTED_PANE_PREFERENCE)
-        if selected_pane_index is not None:
-            self.current_pane_index = selected_pane_index
+        if pane_data:
+            self._set_panes(pane_data)
+            selected_pane_index = self.document.app.get_default(SELECTED_PANE_PREFERENCE)
+            if selected_pane_index is not None:
+                self.current_pane_index = selected_pane_index
     
     def _save_preferences(self):
         opened_panes = []
@@ -339,6 +342,7 @@ class MainWindow(Repeater):
     def current_pane_index(self, value):
         if value == self._current_pane_index:
             return
+        value = minmax(value, 0, len(self.panes)-1)
         pane = self.panes[value]
         self._current_pane_index = value
         self._change_current_pane(pane)

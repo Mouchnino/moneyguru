@@ -16,6 +16,7 @@ from hsutil.misc import first
 from ..exception import OperationAborted
 from ..model.account import sort_accounts
 from ..model.budget import Budget
+from ..trans import tr
 from .base import MainWindowPanel
 from .schedule_panel import PanelWithScheduleMixIn, REPEAT_OPTIONS_ORDER
 
