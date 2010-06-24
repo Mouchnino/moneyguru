@@ -570,6 +570,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)viewClosedAtIndex:(NSInteger)index
 {
     NSTabViewItem *item = [tabView tabViewItemAtIndex:index];
+    [subviews removeObjectAtIndex:index];
     [tabView removeTabViewItem:item];
 }
 @end
