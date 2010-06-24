@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 #define GRAPH_PADDING 20.0
 #define GRAPH_LINE_WIDTH 2.0
 #define GRAPH_LABEL_FONT_SIZE 10.0
-#define GRAPH_TITLE_FONT_SIZE 22.0
+#define GRAPH_TITLE_FONT_SIZE 15.0
 #define GRAPH_TICKMARKS_LENGTH 5.0
 #define GRAPH_X_LABELS_PADDING 4.0
 #define GRAPH_Y_LABELS_PADDING 7.0

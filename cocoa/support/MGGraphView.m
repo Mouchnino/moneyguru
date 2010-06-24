@@ -56,127 +56,130 @@ http://www.hardcoded.net/licenses/hs_license
     [super drawRect:rect];
     // Setup some colors and fonts
     NSColor *axisColor = [NSColor darkGrayColor];
-	NSFont *labelFont = [NSFont labelFontOfSize:GRAPH_LABEL_FONT_SIZE];
-	NSDictionary *labelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:labelFont, NSFontAttributeName, axisColor, NSForegroundColorAttributeName, nil];
+    NSFont *labelFont = [NSFont labelFontOfSize:GRAPH_LABEL_FONT_SIZE];
+    NSDictionary *labelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:labelFont, NSFontAttributeName, axisColor, NSForegroundColorAttributeName, nil];
     NSFont *titleFont = [NSFont boldSystemFontOfSize:GRAPH_TITLE_FONT_SIZE];
     NSDictionary *titleAttributes = [NSDictionary dictionaryWithObjectsAndKeys:titleFont, NSFontAttributeName, titleColor, NSForegroundColorAttributeName, nil];
-	
-	// Loop variables
-	NSEnumerator *labelsEnumerator;
-	NSDictionary *label;
-	NSEnumerator *tickMarksEnumerator;
-	NSNumber *tickMark;
-	
-	// Calculate the space taken by labels
-	CGFloat labelsHeight = [labelFont pointSize];
-	CGFloat yLabelsWidth = 0;
-	labelsEnumerator = [yLabels objectEnumerator];
-	while (label = [labelsEnumerator nextObject])
-	{
-		NSString *labelText = [label objectForKey:@"text"];
-		NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
-		if (labelSize.width > yLabelsWidth)	
-        {
-			yLabelsWidth = labelSize.width;
-		}
-	}
-	
-	// Calculate the graph dimensions
-	CGFloat dataWidth = maxX - minX;
-	CGFloat dataHeight = maxY - minY;
-	NSSize viewSize = [self bounds].size;
-	CGFloat graphWidth = viewSize.width - yLabelsWidth - GRAPH_PADDING * 2;
-	CGFloat graphHeight = viewSize.height - labelsHeight - GRAPH_PADDING * 2; 
-	xFactor = graphWidth / dataWidth;
-	yFactor = graphHeight / dataHeight;
-	CGFloat graphLeft = roundf((float)(minX * xFactor));
-	CGFloat graphRight = roundf((float)(maxX * xFactor));
-	CGFloat graphBottom = roundf((float)(minY * yFactor));
-    if (graphBottom < 0)
-    {
-        // Leave some space at the bottom of the graph
-        graphBottom -= 2 * GRAPH_LINE_WIDTH;
-    }
-	CGFloat graphTop = roundf((float)(maxY * yFactor));
-    graphBounds = NSMakeRect(graphLeft, graphBottom, graphRight - graphLeft, graphTop - graphBottom);
-	
-	// Change the coordinates so that the drawing origin corresponds to the graph origin.
-	NSAffineTransform *moveOrigin = [NSAffineTransform transform];
-	[moveOrigin translateXBy:(ceilf((float)yLabelsWidth) + GRAPH_PADDING - graphLeft) yBy:(ceilf((float)labelsHeight) + GRAPH_PADDING - graphBottom)];
-	[moveOrigin concat];
-
-    // Draw the graph
-	[self drawGraph];
     
-	// Draw the X axis.
-	[axisColor setStroke];
-	NSBezierPath *xAxisPath = [NSBezierPath bezierPath];
-    [xAxisPath setLineWidth:GRAPH_LINE_WIDTH];
-	[xAxisPath moveToPoint:NSMakePoint(graphLeft - GRAPH_LINE_WIDTH / 2, graphBottom)];
-	[xAxisPath lineToPoint:NSMakePoint(graphRight + GRAPH_LINE_WIDTH / 2, graphBottom)];
-	[xAxisPath stroke];
-
-	// Draw the Y axis.
-	NSBezierPath *yAxisPath = [NSBezierPath bezierPath];
-    [yAxisPath setLineWidth:GRAPH_LINE_WIDTH];
-	[yAxisPath moveToPoint:NSMakePoint(graphLeft, graphBottom - GRAPH_LINE_WIDTH / 2)];
-	[yAxisPath lineToPoint:NSMakePoint(graphLeft, graphTop + GRAPH_LINE_WIDTH / 2)];
-	[yAxisPath stroke];
-	
-	// Draw the X tick marks
-	NSBezierPath *xTickMarksPath = [NSBezierPath bezierPath];
-    [xTickMarksPath setLineWidth:GRAPH_LINE_WIDTH];
-	tickMarksEnumerator = [xTickMarks objectEnumerator];
-	while (tickMark = [tickMarksEnumerator nextObject])
-	{
-		CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * xFactor));
-		[xTickMarksPath moveToPoint:NSMakePoint(tickMarkPos, graphBottom)];
-		[xTickMarksPath lineToPoint:NSMakePoint(tickMarkPos, graphBottom - GRAPH_TICKMARKS_LENGTH)];
-	}
-	[xTickMarksPath stroke];
-	
-	// Draw the Y tick marks
-	NSBezierPath *yTickMarksPath = [NSBezierPath bezierPath];
-    [yTickMarksPath setLineWidth:GRAPH_LINE_WIDTH];
-	tickMarksEnumerator = [yTickMarks objectEnumerator];
-	while (tickMark = [tickMarksEnumerator nextObject])
-	{
-		CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * yFactor));
-		[yTickMarksPath moveToPoint:NSMakePoint(graphLeft, tickMarkPos)];
-		[yTickMarksPath lineToPoint:NSMakePoint(graphLeft - GRAPH_TICKMARKS_LENGTH, tickMarkPos)];
-	}
-	[yTickMarksPath stroke];
-	
-	// Draw the X labels
-	labelsEnumerator = [xLabels objectEnumerator];
-	while (label = [labelsEnumerator nextObject])
-	{
-		NSString *labelText = [label objectForKey:@"text"];
-		CGFloat labelPos = n2f([label objectForKey:@"pos"]) * xFactor;
-		NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
-		[labelText drawAtPoint:NSMakePoint(labelPos - labelSize.width / 2, graphBottom - labelsHeight - GRAPH_X_LABELS_PADDING) withAttributes:labelAttributes];
-	}
-
-	// Draw the Y labels
-	labelsEnumerator = [yLabels objectEnumerator];
-	while (label = [labelsEnumerator nextObject])
-	{
-		NSString *labelText = [label objectForKey:@"text"];
-		CGFloat labelPos = n2f([label objectForKey:@"pos"]) * yFactor;
-		NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
-		[labelText drawAtPoint:NSMakePoint(graphLeft - GRAPH_Y_LABELS_PADDING - labelSize.width, labelPos - labelsHeight / 2) withAttributes:labelAttributes];
-	}
-	
-    [moveOrigin invert];
-    [moveOrigin concat];
+    // Basic Sizes
+    CGFloat dataWidth = maxX - minX;
+    CGFloat dataHeight = maxY - minY;
+    NSSize viewSize = [self bounds].size;
+    
+    // Loop variables
+    NSEnumerator *labelsEnumerator;
+    NSDictionary *label;
+    NSEnumerator *tickMarksEnumerator;
+    NSNumber *tickMark;
     
     // Draw the title
     NSString *titleToDraw = [NSString stringWithFormat:@"%@ (%@)",title,currency];
     NSSize titleSize = [titleToDraw sizeWithAttributes:titleAttributes];
     CGFloat titlePos = viewSize.width / 2;
     CGFloat titleX = titlePos - titleSize.width / 2;
-    CGFloat titleY = viewSize.height - titleSize.height - GRAPH_Y_TITLE_PADDING;
-    [titleToDraw drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];    
+    CGFloat heightTakenByTitle = titleSize.height + GRAPH_Y_TITLE_PADDING;
+    CGFloat titleY = viewSize.height - heightTakenByTitle;
+    [titleToDraw drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];
+    
+    // Calculate the space taken by labels
+    CGFloat labelsHeight = [labelFont pointSize];
+    CGFloat yLabelsWidth = 0;
+    labelsEnumerator = [yLabels objectEnumerator];
+    while (label = [labelsEnumerator nextObject])
+    {
+        NSString *labelText = [label objectForKey:@"text"];
+        NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
+        if (labelSize.width > yLabelsWidth) 
+        {
+            yLabelsWidth = labelSize.width;
+        }
+    }
+    
+    // Calculate the graph dimensions
+    CGFloat graphWidth = viewSize.width - yLabelsWidth - GRAPH_PADDING * 2;
+    CGFloat graphHeight = viewSize.height - labelsHeight - GRAPH_PADDING - heightTakenByTitle; 
+    xFactor = graphWidth / dataWidth;
+    yFactor = graphHeight / dataHeight;
+    CGFloat graphLeft = roundf((float)(minX * xFactor));
+    CGFloat graphRight = roundf((float)(maxX * xFactor));
+    CGFloat graphBottom = roundf((float)(minY * yFactor));
+    if (graphBottom < 0)
+    {
+        // Leave some space at the bottom of the graph
+        graphBottom -= 2 * GRAPH_LINE_WIDTH;
+    }
+    CGFloat graphTop = roundf((float)(maxY * yFactor));
+    graphBounds = NSMakeRect(graphLeft, graphBottom, graphRight - graphLeft, graphTop - graphBottom);
+    
+    // Change the coordinates so that the drawing origin corresponds to the graph origin.
+    NSAffineTransform *moveOrigin = [NSAffineTransform transform];
+    [moveOrigin translateXBy:(ceilf((float)yLabelsWidth) + GRAPH_PADDING - graphLeft) yBy:(ceilf((float)labelsHeight) + GRAPH_PADDING - graphBottom)];
+    [moveOrigin concat];
+
+    // Draw the graph
+    [self drawGraph];
+    
+    // Draw the X axis.
+    [axisColor setStroke];
+    NSBezierPath *xAxisPath = [NSBezierPath bezierPath];
+    [xAxisPath setLineWidth:GRAPH_LINE_WIDTH];
+    [xAxisPath moveToPoint:NSMakePoint(graphLeft - GRAPH_LINE_WIDTH / 2, graphBottom)];
+    [xAxisPath lineToPoint:NSMakePoint(graphRight + GRAPH_LINE_WIDTH / 2, graphBottom)];
+    [xAxisPath stroke];
+
+    // Draw the Y axis.
+    NSBezierPath *yAxisPath = [NSBezierPath bezierPath];
+    [yAxisPath setLineWidth:GRAPH_LINE_WIDTH];
+    [yAxisPath moveToPoint:NSMakePoint(graphLeft, graphBottom - GRAPH_LINE_WIDTH / 2)];
+    [yAxisPath lineToPoint:NSMakePoint(graphLeft, graphTop + GRAPH_LINE_WIDTH / 2)];
+    [yAxisPath stroke];
+    
+    // Draw the X tick marks
+    NSBezierPath *xTickMarksPath = [NSBezierPath bezierPath];
+    [xTickMarksPath setLineWidth:GRAPH_LINE_WIDTH];
+    tickMarksEnumerator = [xTickMarks objectEnumerator];
+    while (tickMark = [tickMarksEnumerator nextObject])
+    {
+        CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * xFactor));
+        [xTickMarksPath moveToPoint:NSMakePoint(tickMarkPos, graphBottom)];
+        [xTickMarksPath lineToPoint:NSMakePoint(tickMarkPos, graphBottom - GRAPH_TICKMARKS_LENGTH)];
+    }
+    [xTickMarksPath stroke];
+    
+    // Draw the Y tick marks
+    NSBezierPath *yTickMarksPath = [NSBezierPath bezierPath];
+    [yTickMarksPath setLineWidth:GRAPH_LINE_WIDTH];
+    tickMarksEnumerator = [yTickMarks objectEnumerator];
+    while (tickMark = [tickMarksEnumerator nextObject])
+    {
+        CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * yFactor));
+        [yTickMarksPath moveToPoint:NSMakePoint(graphLeft, tickMarkPos)];
+        [yTickMarksPath lineToPoint:NSMakePoint(graphLeft - GRAPH_TICKMARKS_LENGTH, tickMarkPos)];
+    }
+    [yTickMarksPath stroke];
+    
+    // Draw the X labels
+    labelsEnumerator = [xLabels objectEnumerator];
+    while (label = [labelsEnumerator nextObject])
+    {
+        NSString *labelText = [label objectForKey:@"text"];
+        CGFloat labelPos = n2f([label objectForKey:@"pos"]) * xFactor;
+        NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
+        [labelText drawAtPoint:NSMakePoint(labelPos - labelSize.width / 2, graphBottom - labelsHeight - GRAPH_X_LABELS_PADDING) withAttributes:labelAttributes];
+    }
+
+    // Draw the Y labels
+    labelsEnumerator = [yLabels objectEnumerator];
+    while (label = [labelsEnumerator nextObject])
+    {
+        NSString *labelText = [label objectForKey:@"text"];
+        CGFloat labelPos = n2f([label objectForKey:@"pos"]) * yFactor;
+        NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
+        [labelText drawAtPoint:NSMakePoint(graphLeft - GRAPH_Y_LABELS_PADDING - labelSize.width, labelPos - labelsHeight / 2) withAttributes:labelAttributes];
+    }
+    
+    [moveOrigin invert];
+    [moveOrigin concat];
 }
 
 - (void)setMinX:(CGFloat)aMinX
