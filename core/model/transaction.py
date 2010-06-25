@@ -187,6 +187,7 @@ class Transaction(object):
     def reassign_account(self, account, reassign_to=None):
         for split in self.splits:
             if split.account is account:
+                split.reconciliation_date = None
                 split.account = reassign_to
     
     def replicate(self):

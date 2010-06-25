@@ -8,6 +8,8 @@
 
 from nose.tools import eq_
 
+from hsutil.currency import USD, EUR
+
 from ..base import TestApp, with_app
 
 #--- Deleting second account
@@ -43,3 +45,32 @@ def test_reassign_to_one(app):
     eq_(app.etable_count(), 1)
     eq_(app.etable[0].transfer, 'three')
     eq_(app.etable[0].increase, '42.00') # got the right side of the txn
+
+#--- Different currencies
+def app_different_currencies_reconciled_entries():
+    app = TestApp()
+    app.add_account('one', currency=USD)
+    app.add_account('two', currency=EUR)
+    app.add_txn(description='txn 1', from_='one', amount='1 USD')
+    app.add_txn(description='txn 2', from_='two', amount='1 EUR')
+    app.show_account('one')
+    app.aview.toggle_reconciliation_mode()
+    app.etable[0].toggle_reconciled()
+    app.aview.toggle_reconciliation_mode()
+    app.show_account('two')
+    app.aview.toggle_reconciliation_mode()
+    app.etable[0].toggle_reconciled()
+    app.aview.toggle_reconciliation_mode()
+    app.mw.select_balance_sheet()
+    app.bsheet.selected = app.bsheet.assets[1] # account 'two', the one with the entry
+    app.bsheet.delete() # the panel shows up
+    return app
+
+@with_app(app_different_currencies_reconciled_entries)
+def test_reassign_to_account_with_different_currency(app):
+    # When re-assigning transactions to a different account, de-reconcile them if the account is
+    # of a different currency or else we get a crash when we compute the balance.
+    app.arpanel.account_index = 1 # one
+    app.arpanel.save() # no crash
+    app.show_account('one')
+    eq_(app.etable_count(), 2)
