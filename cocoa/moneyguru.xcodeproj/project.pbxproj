@@ -78,7 +78,6 @@
 		CE873AC10E21622F004F63E9 /* MGTransactionInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8D0E21622F004F63E9 /* MGTransactionInspector.m */; };
 		CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A8F0E21622F004F63E9 /* MGUndoManager.m */; };
 		CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA00E21622F004F63E9 /* MGGradientBar.m */; };
-		CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA60E21622F004F63E9 /* MGScrollView.m */; };
 		CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873AA80E21622F004F63E9 /* MGTableView.m */; };
 		CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88544811A1819C00268FBD /* MGMainWindowController.m */; };
 		CE88545111A1837B00268FBD /* MGMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88545011A1837B00268FBD /* MGMainWindow.m */; };
@@ -86,7 +85,6 @@
 		CE95AFCB10F769D2007AC512 /* MGAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AFCA10F769D2007AC512 /* MGAccountView.m */; };
 		CE9805E411403F5A00CB3693 /* MGCompletionLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9805E111403F5A00CB3693 /* MGCompletionLookup.m */; };
 		CE9805E511403F5A00CB3693 /* MGLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9805E311403F5A00CB3693 /* MGLookup.m */; };
-		CE98C6A90E6294A900DEE6BA /* NSCellAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */; };
 		CE9912221136CD1300E006A5 /* MGAccountLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9912211136CD1300E006A5 /* MGAccountLookup.m */; };
 		CEA6DDCE1101E6830028E125 /* AMButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA11101E6830028E125 /* AMButtonBar.m */; };
 		CEA6DDCF1101E6830028E125 /* AMButtonBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA31101E6830028E125 /* AMButtonBarCell.m */; };
@@ -381,8 +379,6 @@
 		CE873A9B0E21622F004F63E9 /* PyTransactionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPanel.h; sourceTree = "<group>"; };
 		CE873A9F0E21622F004F63E9 /* MGGradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGradientBar.h; sourceTree = "<group>"; };
 		CE873AA00E21622F004F63E9 /* MGGradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGradientBar.m; sourceTree = "<group>"; };
-		CE873AA50E21622F004F63E9 /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
-		CE873AA60E21622F004F63E9 /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
 		CE873AA70E21622F004F63E9 /* MGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableView.h; sourceTree = "<group>"; };
 		CE873AA80E21622F004F63E9 /* MGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableView.m; sourceTree = "<group>"; };
 		CE88544711A1819C00268FBD /* MGMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindowController.h; sourceTree = "<group>"; };
@@ -401,8 +397,6 @@
 		CE9805E211403F5A00CB3693 /* MGLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLookup.h; sourceTree = "<group>"; };
 		CE9805E311403F5A00CB3693 /* MGLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLookup.m; sourceTree = "<group>"; };
 		CE98C2B110F8F77200EB1D21 /* PyNetWorthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyNetWorthView.h; sourceTree = "<group>"; };
-		CE98C6A70E6294A900DEE6BA /* NSCellAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCellAdditions.h; sourceTree = "<group>"; };
-		CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCellAdditions.m; sourceTree = "<group>"; };
 		CE99121F1136CD0700E006A5 /* PyAccountLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountLookup.h; sourceTree = "<group>"; };
 		CE9912201136CD1300E006A5 /* MGAccountLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAccountLookup.h; sourceTree = "<group>"; };
 		CE9912211136CD1300E006A5 /* MGAccountLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountLookup.m; sourceTree = "<group>"; };
@@ -934,8 +928,6 @@
 				CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */,
 				CE14AF770E6FB3B500E75B76 /* MGPieChartView.h */,
 				CE14AF780E6FB3B500E75B76 /* MGPieChartView.m */,
-				CE98C6A70E6294A900DEE6BA /* NSCellAdditions.h */,
-				CE98C6A80E6294A900DEE6BA /* NSCellAdditions.m */,
 				0761B95B0E547CE800E99B31 /* MGAmountCell.h */,
 				0761B95C0E547CE800E99B31 /* MGAmountCell.m */,
 				CEAFD2570E518B9B00A1E707 /* MGImportBindingCell.h */,
@@ -950,8 +942,6 @@
 				0714240D0E2A797800AC27AC /* MGLineGraphView.m */,
 				CEEED1CD0E3F5FD100BBA154 /* MGReconciliationCell.h */,
 				CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */,
-				CE873AA50E21622F004F63E9 /* MGScrollView.h */,
-				CE873AA60E21622F004F63E9 /* MGScrollView.m */,
 				CE873AA70E21622F004F63E9 /* MGTableView.h */,
 				CE873AA80E21622F004F63E9 /* MGTableView.m */,
 				07D99F240E37D5A70009142B /* MGTextFieldCell.h */,
@@ -1371,7 +1361,6 @@
 				CE873AC10E21622F004F63E9 /* MGTransactionInspector.m in Sources */,
 				CE873AC20E21622F004F63E9 /* MGUndoManager.m in Sources */,
 				CE873AC40E21622F004F63E9 /* MGGradientBar.m in Sources */,
-				CE873AC70E21622F004F63E9 /* MGScrollView.m in Sources */,
 				CE873AC80E21622F004F63E9 /* MGTableView.m in Sources */,
 				0714240E0E2A797800AC27AC /* MGBarGraphView.m in Sources */,
 				0714240F0E2A797800AC27AC /* MGGraphView.m in Sources */,
@@ -1389,7 +1378,6 @@
 				CEAFD2590E518B9B00A1E707 /* MGImportBindingCell.m in Sources */,
 				0761B95D0E547CE800E99B31 /* MGAmountCell.m in Sources */,
 				CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */,
-				CE98C6A90E6294A900DEE6BA /* NSCellAdditions.m in Sources */,
 				CE14AF790E6FB3B500E75B76 /* MGPieChartView.m in Sources */,
 				CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */,
 				CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */,
