@@ -4,7 +4,20 @@
 %>
 <%inherit file="/base_mg.mako"/>
 
-Some transactions happen in a regular manner, like salaries, utility bills, rent, loan payment, etc.. Some expenses, you can estimate, like groceries, clothing, dining out, etc.. With the scheduling and budgeting features in moneyGuru, you can forecast your financial situation.
+Some transactions happen in a regular manner, like salaries, utility bills, rent, loan payment, etc.. These are fit for **schedules**. Some expenses, you can estimate, like groceries, clothing, dining out, etc.. These are fit for **budgets**. With the scheduling and budgeting features in moneyGuru, you can forecast your financial situation.
+
+How it works
+-----
+
+Both schedules and budgets work with a system of "occurrences". When you create a schedule or budget (in the Schedules and Budgets views), you create a "master" transaction. From this master transaction, occurrences will be created at regular intervals (which you define in your master transaction) and will be shown in the Transactions and Account views.
+
+Schedule occurrences can be directly edited from the Transactions and Account views. When you modify such an occurrence, moneyGuru asks you for the scope of your modification. You can either modify just one occurrence (if, for example, a loan payment was exceptionally higher once), or you can choose to give a global scope to your modification, that is, affecting all future occurrences (if, for example, your rent was raised).
+
+When you modify a master schedule, these changes affect all occurrences, *except* for occurrences you manually edited.
+
+Budget occurrences are a little different. They can't be edited, but their amount is affected by other transactions. All transactions affecting a budget's target income/expense account will reduce the amount of the occurrence covering the date of these transactions. For example, if you have a monthly "clothes" budget of 100$, creating a transaction sending 20$ to "clothes" in July will make the "clothes" occurrence of July 31st to be 80$ instead of 100$.
+
+Another specificity of budget occurrences is that they're exclusively *in the future*. As soon as their date is reached, they disappear.
 
 Creating a schedule
 -----
@@ -32,11 +45,11 @@ As you can see, the concept is rather simple: You can edit scheduled transaction
 Budgeting
 -----
 
-Budgets are similar to schedules in the way they behave. They also create transactions at regular intervals, but instead of creating occurrences with fixed amounts, they create occurrences with **floating** amounts. For example, if you create a 200$ monthly budget for the expense account *Clothes*, it will, like the schedules, create regular occurrences of 200$ every month. However, if you create a transaction that sends 50$ to the *Clothes* account, the budget occurrence for that month will become 150$.
-
-A budget can be created from the Budgets view. The Repeat fields work exactly like they do for the schedules. The Account field is the income or expense account for which the budget is (Clothes, Salary, etc..). The Target field, which is optional, lets you indicate an asset or liability to be used for the other side of the transaction. When you define one, the "future" area of the balance graph in that account will correctly reflect change in its balance that will occur.
+A budget can be created from the Budgets view. The Repeat fields work exactly like they do for the schedules. The Account field is the income or expense account for which the budget is (Clothes, Salary, etc..). The Target field, which is optional, lets you indicate an asset or liability to be used for the other side of the transactions. When you define one, the "future" area of the balance graph in that account will correctly reflect change in its balance that will occur.
 
 It's important to remember that setting a Target account **does not** limit your budget to that target account. For example, if you create a 200$ budget for *Clothes*, with a target to your *Checking* account, buying 50$ worth of clothes with your *Credit Card* account will still correctly affect your budget occurrence for that month and make it go down to 150$.
+
+Normally, the best account to use as budget target is your main checking account since it's where the money is coming from and going to in the end. The purpose of the budget target is to let budgets affect your future balances, so if you target, for example, your credit card account, unless you hace a scheduled transaction that regularly pays off the card, your future balance for that credit card will simply grow up indefinitely.
 
 Forecasting
 -----

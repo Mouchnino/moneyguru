@@ -4,7 +4,12 @@
 %>
 <%inherit file="/base_mg.mako"/>
 
-moneyGuru is loosely based on [double-entry accounting](http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system). The core of the system is the **transaction** which represents a movement of money from some account(s) to some other account(s) at a particular date. A transaction consists in a zero-sum set of 2 or more entries to 2 or more accounts. Any account, whether it's an asset or an income, can send money to any other account (no segregation! no "categories"!). This comes handy when it comes to [cash management](cash.htm). There's not much else to describe for the basics of the system itself. Things get a little more complex when multiple currencies are involved, but the details about that are described on the [currencies page](currencies.htm).
+moneyGuru is loosely based on [double-entry accounting](http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system). The core of the system is the **transaction** which represents a movement of money from some account(s) to some other account(s) at a particular date. A transaction consists in a zero-sum set of 2 or more entries to 2 or more accounts. Any account, whether it's an asset or an income, can send money to any other account. This comes handy when it comes to [cash management](cash.htm). There's not much else to describe for the basics of the system itself. Things get a little more complex when multiple currencies are involved, but the details about that are described on the [currencies page](currencies.htm).
+
+Tabs and views
+-----
+
+moneyGuru is based around different views (the main ones are explained below) through which you manage your moneyGuru document. These views are managed through tabs. Tabs behave like any other tab-enabled app. You open a new tab with ${cmd}T, you close it with ${cmd}W, you can cycle through tabs with ${cmd_shift}&#8592;&#8594;. Whenever you open an account with the ![](images/basics_show_account_arrow.png) arrow, a new tab is opened (or if it was already opened, it's selected) for that account.
 
 The date range
 -----
@@ -31,15 +36,6 @@ The thin red line
 -----
 
 All information in moneyGuru is displayed according to the currently selected date range. Things get interesting when the date range ends at a future date. If you have scheduled transactions or budget set up, the numbers you will see and the chart you will look at will include them. In the graphs, there is a sharp distinction between the past and the future. The past is displayed in green, and the future is displayed in gray, a thin red line separating both. So when you look at the grey part of graphs, you are looking at stuff that has not happened yet. Your net worth in your balance sheet will count the yet-to-happen scheduled transactions as well as budgets. Sometimes, you just want to know about your current financial situation. This is what the "Year to date" (${cmd_opt}4) date range is for.
-
-The toolbar
------
-
-![](images/basics_toolbar.png)
-
-The toolbar is mainly used to select one of the 6 *views* of moneyGuru, which are described below. Additionally to those button, there's also a button to toggle [reconciliation](reconciliation.htm) on and off and a filter field.
-
-The filter field allows you to see all transactions that match the stuff you type in it. To use it, type something and press return. Only transactions that have a description, payee, check #, account or amount matching with what you typed will be shown. If you want to see transactions from specific accounts or groups, type "account: account1,account2" or "group: group1,group2" in the filter box. This is very handy for [mass editing](edition.htm).
 
 Net Worth and Profit & Loss
 -----
@@ -90,8 +86,6 @@ Above the transactions list, there is a **filter bar** allowing you to see only 
 * **Reconciled:** Show only transactions having at least one reconciled entry.
 * **Not Reconciled:** Show only transactions having no reconciled entry.
 
-The filter bar also contains a **status line** showing the number of transactions shown compared to the total number of transactions in the current date range.
-
 **From** and **To** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the Net Worth and Profit views, you can click on it to show the account displayed in the cell (if, for transactions having more than 2 splits, there's more than one account in the cell, the first account is shown).
 
 Account
@@ -99,9 +93,7 @@ Account
 
 ![](images/basics_account.png)
 
-This view displays transactions *from the perspective of a specific account*. It lists transactions similarly to the Transactions view, but it only lists transactions that affect the shown account. Instead of a **From** and a **To** column, there is only a **Transfer** column (the *other side(s)* of the transaction). However, the **Amount** column is split into an **Increase** and a **Decrease** column. For example, if I have Checking shown and the **Transfer** is "Groceries" and the **Decrease** is "42", it means that 42$ are taken from Checking and sent to Groceries. If the shown account is an asset or liability, there is also a **Balance** column, which shows the running balance of the account. The graph below shows the balance of the account for each day of the date range. If the shown account is an income or an expense, a bar chart similar to the Profit & Loss chart will be shown.
-
-This view is initially disabled because it needs a target account to show. That is why you must first select an account to show with the ![](images/basics_show_account_arrow.png) arrows. Afterwards, the Account view button in the toolbar will become enabled because moneyGuru will remember the account that was last shown.
+This view displays transactions *from the perspective of a specific account*. You can open an Account view by clicking on the ![](images/basics_show_account_arrow.png) in other views. It lists transactions similarly to the Transactions view, but it only lists transactions that affect the shown account. Instead of a **From** and a **To** column, there is only a **Transfer** column (the *other side(s)* of the transaction). However, the **Amount** column is split into an **Increase** and a **Decrease** column. For example, if I have Checking shown and the **Transfer** is "Groceries" and the **Decrease** is "42", it means that 42$ are taken from Checking and sent to Groceries. If the shown account is an asset or liability, there is also a **Balance** column, which shows the running balance of the account. The graph below shows the balance of the account for each day of the date range. If the shown account is an income or an expense, a bar chart similar to the Profit & Loss chart will be shown.
 
 The Account view also has a filter bar, which behaves similarly to the one in the Transactions view, but with slight differences.
 
@@ -112,9 +104,14 @@ The Account view also has a filter bar, which behaves similarly to the one in th
 * **Reconciled:** Show only reconciled entries.
 * **Not Reconciled:** Show only un-reconciled entries.
 
-The Account view's filter bar also has a status line, which additionally shows the total amounts in the "Increase" and "Decrease" columns.
+The *Reconciliation* button in the filter bar (only enabled for assets/liabilities) lets you toggle [reconciliation](reconciliation.htm) mode on and off.
 
 **Transfer** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the other views, you can click on it to show the account displayed in the cell. Unlike arrows from the Transaction view, this only *cycles through* the transaction's split. Therefore, even when a transaction has more than 2 splits, continually clicking on that arrow will show all affected accounts, not just the first 2.
+
+Filtering
+-----
+
+The filter field in the toolbar allows you to see all transactions that match the stuff you type in it. To use it, type something and press return. Only transactions that have a description, payee, check #, account or amount matching with what you typed will be shown. If you want to see transactions from specific accounts or groups, type "account: account1,account2" or "group: group1,group2" in the filter box. This is very handy for [mass editing](edition.htm).
 
 View Options
 -----
