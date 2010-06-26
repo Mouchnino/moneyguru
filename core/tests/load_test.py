@@ -321,6 +321,14 @@ def app_one_account_in_one_group():
     app.add_account(group_name='group')
     return app
 
+#--- Budget with all fields set
+def app_budget_with_all_fields_set():
+    app = TestApp()
+    app.add_account('income', account_type=AccountType.Income)
+    app.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3,
+        repeat_every=2, stop_date='01/01/2022')
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -361,6 +369,10 @@ def test_save_load():
     
     # make sure that groups are saved
     app = app_one_account_in_one_group()
+    yield check, app
+    
+    # make sure that all budget fields are correctly saved
+    app = app_budget_with_all_fields_set()
     yield check, app
 
 def test_save_load_qif():
