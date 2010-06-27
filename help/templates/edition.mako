@@ -17,7 +17,7 @@ Of course, it's also possible to do the same thing with the keyboard. ${cmd}N cr
 
 It's possible to edit things by double clicking on a cell that is editable (for example, the name cell of an account). It is also possible to start editing a thing by selecting it and pressing Return. The first editable cell will be in edit mode.
 
-When in edit mode, Tab and Shift-Tab can be used to navigate editable cells. When there is no more editable cell in a row, edition ends. It's also possible to end edition by pressing Return again. You can cancel edition by pressing Escape. When doing so, everything you edited in the currently edited row will be reverted to its old value.
+When in edit mode, Tab and Shift-Tab can be used to navigate editable cells. When there is no more editable cell in a row, editing ends. It's also possible to end editing by pressing Return again. You can cancel editing by pressing Escape. When doing so, everything you edited in the currently edited row will be reverted to its old value.
 
 Accounts
 -----
@@ -28,7 +28,7 @@ You can also use drag & drop to change an account type or group (yeah, account g
 
 ![](images/edition_account_panel.png)
 
-Using Show Info on an account will bring the account edition panel shown above. From there, you can edit an account name, but also change its type, its [currency](currencies.htm) and its account number. An account number is a numerical reference to an account. Use this if your accounting has account number (you know, 1000-1999 is for assets, 8000-8999 is for expenses, stuff like that). When an account has an account number, that number will be displayed along with the name in the Transaction and Account views. Moreover, you can type the number instead of the name to reference to that account (if you know the numbers by heart, it will make typing much faster).
+Using Show Info on an account will bring the account editing panel shown above. From there, you can edit an account name, but also change its type, its [currency](currencies.htm) and its account number. An account number is a numerical reference to an account. Use this if your accounting has account number (you know, 1000-1999 is for assets, 8000-8999 is for expenses, stuff like that). When an account has an account number, that number will be displayed along with the name in the Transaction and Account views. Moreover, you can type the number instead of the name to reference to that account (if you know the numbers by heart, it will make typing much faster).
 
 Note that changing an account's currency does **not** change the currency of the transactions it contains.
 
@@ -63,7 +63,7 @@ Using Show Info with more than one transaction selected bring up the panel above
 Date Editing
 -----
 
-Whenever a date is edited, it is edited using a special widget. This widget has 3 fields: day, month and year. Whenever an editing is initiated, it is always the **day** fields that starts out selected, whatever your date format is. You can navigate the fields with the left and right arrows. You can increment and decrement the currently selected field with the up and down arrows. You can of course type the date out. The widget automatically changes the selection when a date separator is typed or the maximum length of a field is reached. Here is a list of the rules that this widget follows, just to make it clear:
+Whenever a date is edited, it is edited using a special widget. This widget has 3 fields: day, month and year. Whenever an editing operation is initiated, it is always the **day** fields that starts out selected, whatever your date format is. You can navigate the fields with the left and right arrows. You can increment and decrement the currently selected field with the up and down arrows. You can of course type the date out. The widget automatically changes the selection when a date separator is typed or the maximum length of a field is reached. Here is a list of the rules that this widget follows, just to make it clear:
 
 * The display format is always your system's format.
 * The **input** format is always day --> month --> year.
