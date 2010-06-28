@@ -2,21 +2,21 @@
 	title = 'moneyGuru Basics'
 	selected_menu_item = 'basics'
 %>
-<%inherit file="/base_mg.mako"/>
+<%inherit file="/en/base_mg.mako"/>
 
 moneyGuru is loosely based on [double-entry accounting](http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system). The core of the system is the **transaction** which represents a movement of money from some account(s) to some other account(s) at a particular date. A transaction consists in a zero-sum set of 2 or more entries to 2 or more accounts. Any account, whether it's an asset or an income, can send money to any other account. This comes handy when it comes to [cash management](cash.htm). There's not much else to describe for the basics of the system itself. Things get a little more complex when multiple currencies are involved, but the details about that are described on the [currencies page](currencies.htm).
 
 Tabs and views
 -----
 
-moneyGuru is based around different views (the main ones are explained below) through which you manage your moneyGuru document. These views are managed through tabs. Tabs behave like any other tab-enabled app. You open a new tab with ${cmd}T, you close it with ${cmd}W, you can cycle through tabs with ${cmd_shift}&#8592;&#8594;. Whenever you open an account with the ![](images/basics_show_account_arrow.png) arrow, a new tab is opened (or if it was already opened, it's selected) for that account.
+moneyGuru is based around different views (the main ones are explained below) through which you manage your moneyGuru document. These views are managed through tabs. Tabs behave like any other tab-enabled app. You open a new tab with ${cmd}T, you close it with ${cmd}W, you can cycle through tabs with ${cmd_shift}&#8592;&#8594;. Whenever you open an account with the ![](../images/basics_show_account_arrow.png) arrow, a new tab is opened (or if it was already opened, it's selected) for that account.
 
 The date range
 -----
 
 The currently selected date range affects the whole application. Everything you see in the views is for the current date range. For example, if August 2008 is selected, everything that you see in all the views is data from 2008/08/01 to 2008/08/31. The range is controlled by this little widget:
 
-![](images/basics_date_range.png)
+![](../images/basics_date_range.png)
 
 There are 7 types of date ranges:
 
@@ -40,15 +40,15 @@ All information in moneyGuru is displayed according to the currently selected da
 Net Worth and Profit & Loss
 -----
 
-![](images/basics_net_worth.png)
+![](../images/basics_net_worth.png)
 
 The Net Worth and Profit &amp; Loss views are where you do account management and get statistics about your financial situation. They both have a similar layout and behave the same way.
 
 **Sheet:** At the top left, there is the "sheet", listing accounts, gives totals account groups. Totals are always given in your native currency. You can also [add, change and remove](edition.htm) accounts from this sheets.
 
-**Show Account:** Next to each account, there is a little ![](images/basics_show_account_arrow.png). You can click on it to show this account in the Account view. You can also select it and press ${cmd}&#8594;.
+**Show Account:** Next to each account, there is a little ![](../images/basics_show_account_arrow.png). You can click on it to show this account in the Account view. You can also select it and press ${cmd}&#8594;.
 
-**Account Exclusion:** You can also "exclude" accounts by clicking on the little ![](images/basics_account_out.png) icon, or by pressing space. Excluded accounts are not counted in the sheet's totals or in the charts.
+**Account Exclusion:** You can also "exclude" accounts by clicking on the little ![](../images/basics_account_out.png) icon, or by pressing space. Excluded accounts are not counted in the sheet's totals or in the charts.
 
 **Pie Chart:** At the right of the sheet of each view are two pie charts showing the weight of every account for each type. If you have account groups, you can collapse one of these groups in the sheet to have the account values grouped in the pie chart. For example, if you have a "Automobile" group with a few related accounts under it, you can collapse the group in the sheet to have "Automobile" as one slice (rather than having one slice for Gas, one slice for Insurance, etc..).
 
@@ -73,7 +73,7 @@ The Net Worth and Profit &amp; Loss views are where you do account management an
 Transactions
 -----
 
-![](images/basics_transactions.png)
+![](../images/basics_transactions.png)
 
 In the Transactions view, all transactions of the document for the current date range are listed. From there, you can [add, change and remove](edition.htm) transactions. This view is the most efficient view for adding a batch of transactions (if you have a pile of invoices and receipts to add, for example). **Amount** contains the value that is transferred by the transaction. **From** and **To** contain the name of the accounts affected by the transaction (if it's a split transaction, names are comma separated). What these 3 columns mean is "This transaction transfers **Amount** from **From** and sent it to **To**". For example, if **From** is "Checking" and **To** is "Groceries", money is taken out of Checking and put in "Groceries". For an income **From** would be "Salary" and **To** would be "Checking".
 
@@ -86,14 +86,14 @@ Above the transactions list, there is a **filter bar** allowing you to see only 
 * **Reconciled:** Show only transactions having at least one reconciled entry.
 * **Not Reconciled:** Show only transactions having no reconciled entry.
 
-**From** and **To** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the Net Worth and Profit views, you can click on it to show the account displayed in the cell (if, for transactions having more than 2 splits, there's more than one account in the cell, the first account is shown).
+**From** and **To** cells have a little ![](../images/basics_show_account_arrow.png) at their right. Similarly to the Net Worth and Profit views, you can click on it to show the account displayed in the cell (if, for transactions having more than 2 splits, there's more than one account in the cell, the first account is shown).
 
 Account
 -----
 
-![](images/basics_account.png)
+![](../images/basics_account.png)
 
-This view displays transactions *from the perspective of a specific account*. You can open an Account view by clicking on the ![](images/basics_show_account_arrow.png) in other views. It lists transactions similarly to the Transactions view, but it only lists transactions that affect the shown account. Instead of a **From** and a **To** column, there is only a **Transfer** column (the *other side(s)* of the transaction). However, the **Amount** column is split into an **Increase** and a **Decrease** column. For example, if I have Checking shown and the **Transfer** is "Groceries" and the **Decrease** is "42", it means that 42$ are taken from Checking and sent to Groceries. If the shown account is an asset or liability, there is also a **Balance** column, which shows the running balance of the account. The graph below shows the balance of the account for each day of the date range. If the shown account is an income or an expense, a bar chart similar to the Profit & Loss chart will be shown.
+This view displays transactions *from the perspective of a specific account*. You can open an Account view by clicking on the ![](../images/basics_show_account_arrow.png) in other views. It lists transactions similarly to the Transactions view, but it only lists transactions that affect the shown account. Instead of a **From** and a **To** column, there is only a **Transfer** column (the *other side(s)* of the transaction). However, the **Amount** column is split into an **Increase** and a **Decrease** column. For example, if I have Checking shown and the **Transfer** is "Groceries" and the **Decrease** is "42", it means that 42$ are taken from Checking and sent to Groceries. If the shown account is an asset or liability, there is also a **Balance** column, which shows the running balance of the account. The graph below shows the balance of the account for each day of the date range. If the shown account is an income or an expense, a bar chart similar to the Profit & Loss chart will be shown.
 
 The Account view also has a filter bar, which behaves similarly to the one in the Transactions view, but with slight differences.
 
@@ -106,7 +106,7 @@ The Account view also has a filter bar, which behaves similarly to the one in th
 
 The *Reconciliation* button in the filter bar (only enabled for assets/liabilities) lets you toggle [reconciliation](reconciliation.htm) mode on and off.
 
-**Transfer** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the other views, you can click on it to show the account displayed in the cell. Unlike arrows from the Transaction view, this only *cycles through* the transaction's split. Therefore, even when a transaction has more than 2 splits, continually clicking on that arrow will show all affected accounts, not just the first 2.
+**Transfer** cells have a little ![](../images/basics_show_account_arrow.png) at their right. Similarly to the other views, you can click on it to show the account displayed in the cell. Unlike arrows from the Transaction view, this only *cycles through* the transaction's split. Therefore, even when a transaction has more than 2 splits, continually clicking on that arrow will show all affected accounts, not just the first 2.
 
 Filtering
 -----
@@ -116,7 +116,7 @@ The filter field in the toolbar allows you to see all transactions that match th
 View Options
 -----
 
-![](images/basics_view_options.png)
+![](../images/basics_view_options.png)
 
 moneyGuru has a View options panel allowing you to hide some elements (such as charts). You can toggle its visibility with ${cmd}J.
 

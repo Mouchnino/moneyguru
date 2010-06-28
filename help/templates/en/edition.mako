@@ -2,14 +2,14 @@
 	title = 'Editing a moneyGuru document'
 	selected_menu_item = 'editing'
 %>
-<%inherit file="/base_mg.mako"/>
+<%inherit file="/en/base_mg.mako"/>
 
 The Basics
 -----
 
 There are a few keystrokes and clicks that work the same way for everything in moneyGuru. First, there is this set of 3 buttons at the bottom left corner:
 
-![](images/edition_buttons.png)
+![](../images/edition_buttons.png)
 
 The + button creates a new thing, the - button removes the selected thing and the "i" button shows info about the selected thing. The "thing" depends on the current view. In the Balance Sheet and the Income Statement, it is an account. In the Transactions and Account views, it is a transaction. Also, if you select more than one transaction and click on the "i" button, the Mass Editing panel will show up rather than the transaction details panel.
 
@@ -26,7 +26,7 @@ Accounts are edited from the Balance Sheet and the Income Statement. When you cr
 
 You can also use drag & drop to change an account type or group (yeah, account group. use ${cmd_shift}N to create one).
 
-![](images/edition_account_panel.png)
+![](../images/edition_account_panel.png)
 
 Using Show Info on an account will bring the account editing panel shown above. From there, you can edit an account name, but also change its type, its [currency](currencies.htm) and its account number. An account number is a numerical reference to an account. Use this if your accounting has account number (you know, 1000-1999 is for assets, 8000-8999 is for expenses, stuff like that). When an account has an account number, that number will be displayed along with the name in the Transaction and Account views. Moreover, you can type the number instead of the name to reference to that account (if you know the numbers by heart, it will make typing much faster).
 
@@ -41,7 +41,7 @@ It's possible to re-order a transaction within other transactions of the same da
 
 If you type the name of an account that doesn't exist in an Account column, this account will automatically be created as an income or expense account (depending on the amount of the transaction). Don't worry about typos creating tons of accounts that you'll have to clean up. If you fix a typo in a transaction, the automatically created account will automatically be removed.
 
-![](images/edition_transaction_panel.png)
+![](../images/edition_transaction_panel.png)
 
 Using Show Info on a single transaction brings the panel above up. With it, you can edit everything that you can edit from the Transactions and Account views, and additionally, you can create and edit transaction with more than 2 entries (commonly called a "Split Transaction") with the table at the bottom.
 
@@ -52,11 +52,11 @@ One thing to remember about this entry editing table is that it's constantly aut
 1. Change the Utilities debit to 20$. This will create a 3rd unassigned row with a 20$ debit.
 1. Change the 3rd row account to Cash.
 
-![](images/edition_three_way_split.png)
+![](../images/edition_three_way_split.png)
 
 Congratulations, you just made a 3 ways split transaction. This transaction correctly reflect reality where 40$ are out of your checking account, internet had a net cost of 20$ for you and you end up with 20 more dollars in your pocket.
 
-![](images/edition_mass_edition_panel.png)
+![](../images/edition_mass_edition_panel.png)
 
 Using Show Info with more than one transaction selected bring up the panel above. It allows you to perform mass editing. When you press on Save, all selected transactions will have the attributes that have the checkboxes next to them checked changed to the value of the field next to it.
 
@@ -70,7 +70,7 @@ Whenever a date is edited, it is edited using a special widget. This widget has 
 * Whatever your system date format is, you can type a date by padding your values with 0. For example, even if your date format is mm/dd/yy, you can enter the date "07/06/08" by typing "060708".
 * Whatever your system date format is, you can type a date by using separators. For example, even if your date format is yyyy-mm-dd, you can type "2008-07-06" by typing "6-7-08"
 
-While editing a transaction or entry, if you set the date to something outside the current date range, you will get a ![](images/backward_16.png) or a ![](images/forward_16.png) showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when editing ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when editing ends.
+While editing a transaction or entry, if you set the date to something outside the current date range, you will get a ![](../images/backward_16.png) or a ![](../images/forward_16.png) showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when editing ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when editing ends.
 
 Amount Editing
 -----

@@ -2,7 +2,7 @@
 	title = 'Currencies'
 	selected_menu_item = 'Currencies'
 %>
-<%inherit file="/base_mg.mako"/>
+<%inherit file="/en/base_mg.mako"/>
 
 moneyGuru has strong support for multiple currencies. Every amount has a currency information. Any amount you type can be in any currency. A lot of efforts have been made to make sure that you always know what currency any amount is without hurting your eyes and putting explicit currency codes everywhere.
 

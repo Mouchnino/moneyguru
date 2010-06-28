@@ -2,7 +2,7 @@
 	title = 'Introduction to moneyGuru'
 	selected_menu_item = 'introduction'
 %>
-<%inherit file="/base_mg.mako"/>
+<%inherit file="/en/base_mg.mako"/>
 
 moneyGuru is a personal finance management application. With it, you can evaluate your current financial situation so you can make informed (and thus better) financial decisions. Most finance applications have the same goal, but moneyGuru's difference is in the way it achieves it. Rather than having reports which you have to configure (or find out which pre-configured report is the right one), your important financial data (net worth, profit) is constantly up-to-date and "in your face". This allows you to constantly make informed decision rather than doing so periodically.
 

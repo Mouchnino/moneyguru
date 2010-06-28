@@ -2,7 +2,7 @@
 	title = 'Credits'
 	selected_menu_item = 'Credits'
 %>
-<%inherit file="/base_mg.mako"/>
+<%inherit file="/en/base_mg.mako"/>
 Below is the list of direct or indirect contributors to moneyGuru. Thanks!
 
 ${self.credit('Virgil Dupras', 'Developer', website='www.hardcoded.net', email='hsoft@hardcoded.net')}

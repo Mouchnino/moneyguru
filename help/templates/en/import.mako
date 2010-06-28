@@ -2,11 +2,11 @@
 	title = 'Importing data into moneyGuru'
 	selected_menu_item = 'Import'
 %>
-<%inherit file="/base_mg.mako"/>
+<%inherit file="/en/base_mg.mako"/>
 
 moneyGuru support QIF, OFX, QFX and CSV formats for import. To import a file, use the "Import..." item in the "File" menu, then select a file to import. When you do so, the import window will appear, which looks like this:
 
-![](images/import_window.png)
+![](../images/import_window.png)
 
 For each account present in the import file a tab will be added in the import window. This dialog is rather straightforward to use. The leftmost column with a checkbox determines which transactions will be imported. Review the transaction to import, uncheck any transaction you don't want to import, click on import. Only one account (the selected one) is imported at once.
 
@@ -25,7 +25,7 @@ Importing into an existing account
 
 By default, transactions are imported in a new account. However, if you want, you can import transactions in an existing account by changing the target account. When importing OFX files, the target account is automatically selected if appropriate. If you select a target account, the matching table changes slightly and becomes something like this:
 
-![](images/import_match_table.png)
+![](../images/import_match_table.png)
 
 The reason why the table changes like this is because when you import in an existing account, it is possible that you import transactions that already exist in your account. You must tell moneyGuru which transactions go with which. If you import an OFX file, all of this is done automatically, but you still can change the matching manually if you want.
 
@@ -38,7 +38,7 @@ CSV Import
 
 Importing CSV files is the same thing as importing another type of file, but before you can get to the main Import window, you have to tell moneyGuru what each CSV column is about.
 
-![](images/import_csv_options.png)
+![](../images/import_csv_options.png)
 
 The problem with CSV is that there is absolutely no standard as to how the file is structured. This window lets you tell moneyGuru what column is what. To use it, look at the data displayed, and when you figured out what one column is about (for example, the date), click on that column's header and select the appropriate transaction field for it. The Date and Amount columns are mandatory.
 
