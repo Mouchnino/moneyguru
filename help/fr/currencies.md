@@ -1,9 +1,3 @@
-<%!
-	title = 'Devises'
-	selected_menu_item = 'devises'
-%>
-<%inherit file="/fr/base_mg.mako"/>
-
 moneyGuru a support solide pour la gestion des devises multiple. Chaque montant, quel qu'il soit, est d'une devise particulière. Tout montant que vous tapez peut être de n'importe laquelle devise. Beaucoup d'effort ont été déployés dans moneyGuru pour être sûr que l'information de devise soit claire sans être envahissante. Il suffit de connaître les règles de base.
 
 Il y a deux types de devises dans moneyGuru. La devise **native** et les devises **étrangères**. La devise native est déterminé par vos préférences système (dans "International"). Les devises étrangères sont toutes les autres.

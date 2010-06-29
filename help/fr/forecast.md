@@ -1,15 +1,9 @@
-<%!
-	title = 'Récurrences et budgets'
-	selected_menu_item = 'prévisions'
-%>
-<%inherit file="/fr/base_mg.mako"/>
-
 Certaines transactions arrivent d'une manière régulière comme les salaires, les factures, le loyer, les paiements de prêts, etc.. Celles-ci sont appropriées pour les **récurrences**. Certains revenus et dépenses peuvent seulement être estimés, comme l'épicerie, l'habillement, resto, etc.. C'est alors le temps pour des **budgets**. Avec les fonctionnalités de récurrence et de budget dans moneyGuru, vous pouvez faire des prévisions sur votre situation financière.
 
 Comment ça marche
 -----
 
-Les récurrences et les budgets fonctionne avec un système d'"occurrences". Quand vous créez une récurrence ou un budget (dans les vues Récurrences et Budgets), vous créez en fait une transaction "modèle". À partir de ce modèle, des occurrences sont ajoutés dans les vues Transactions et Compte pour chaque date à laquelle le modèle est exécuté (avec un icône ![](../images/clock.png)). Par exemple, si vous créez une récurrence mensuelle, vous n'aurez qu'un seul modèle dans la vue Récurrences, mais vous aurez une occurrence de ce modèle chaque mois dans les vues Transactions et Compte.
+Les récurrences et les budgets fonctionne avec un système d'"occurrences". Quand vous créez une récurrence ou un budget (dans les vues Récurrences et Budgets), vous créez en fait une transaction "modèle". À partir de ce modèle, des occurrences sont ajoutés dans les vues Transactions et Compte pour chaque date à laquelle le modèle est exécuté (avec un icône ![](images/clock.png)). Par exemple, si vous créez une récurrence mensuelle, vous n'aurez qu'un seul modèle dans la vue Récurrences, mais vous aurez une occurrence de ce modèle chaque mois dans les vues Transactions et Compte.
 
 Les occurrences ne sont pas statiques. Elles peuvent être modifiées individuellement si besoin est (si, par exemple, votre salaire est plus élevé à un moment donné). Quand vous modifiez une occurrence, moneyGuru vous demandera quelle est la portée de votre modification. En effet, si vous voulez, vous pouvez affecter toutes les futures occurrences en une seule modification (si, par exemple, votre loyer a augmenté).
 

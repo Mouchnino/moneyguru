@@ -1,10 +1,3 @@
-<%!
-	title = 'moneyGuru F.A.Q.'
-	selected_menu_item = 'F.A.Q.'
-%>
-<%inherit file="/en/base_mg.mako"/>
-
-<%text filter="md">
 ### What is moneyGuru?
 
 moneyGuru is a personal finance management and planning tool. With it, you can evaluate your current financial situation so you can make informed (and thus better) financial decisions.
@@ -39,10 +32,8 @@ QIF files don't contain currency information. Therefore, moneyGuru always import
 
 ### Some of my accounts are grayed out in Net Worth and Profit views, why?
 
-When accounts are grayed out, it means that they're excluded. Excluded accounts are not counted in totals. To include accounts back, select it and click on the little ![](../images/basics_account_in.png) icon.
+When accounts are grayed out, it means that they're excluded. Excluded accounts are not counted in totals. To include accounts back, select it and click on the little ![](images/basics_account_in.png) icon.
 
 ### I have another question. What can I do?
 
 You can always send an e-mail to support@hardcoded.net, but the best way to ask a question is to go on [Hardcoded Software's Get Satisfaction site](http://getsatisfaction.com/hardcodedsoftware). Who knows, your question might already have been answered there!
-
-</%text>

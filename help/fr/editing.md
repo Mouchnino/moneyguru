@@ -1,15 +1,9 @@
-<%!
-	title = 'Modifier un document'
-	selected_menu_item = 'édition'
-%>
-<%inherit file="/fr/base_mg.mako"/>
-
 Concepts de base
 -----
 
 La modification de donnée se passe à peu près de la même façon dans toutes les vues de moneyGuru. D'abord, il y a ces trois boutons au bas de la fenêtre qui servent à la même chose partout:
 
-![](../images/edition_buttons.png)
+![](images/edition_buttons.png)
 
 Le + crée un nouveau truc, le - supprime le truc sélectionné, le "i" invoque un dialogue de détail pour le truc sélectionné. Le "truc" en question dépend de la vue courante (compte, transaction, récurrence, budget...). Dans le cas des transactions, si vous appuyez sur "i" alors que plus d'une transaction est sélectionnée, le dialogue invoqué sera le dialogue de modification multiple.
 
@@ -22,7 +16,7 @@ Comptes
 
 Les comptes sont modifier à partir des vues de Valeur nette et de Profits/Pertes. Quand vous créez un compte, ce compte sera créé sous le type présentement sélectionné. Vous pouvez toujours changer ce type en glissant le compte ailleurs.
 
-![](../images/edition_account_panel.png)
+![](images/edition_account_panel.png)
 
 Le dialogue de détails de compte permet de changer la [devise](currencies.htm) du compte. Il permet aussi de lui assigner un numéro de compte. Ce numéro peut alors être utilisé comme référence partout dans l'application (vous pouvez donc taper ce numéro au lieu du nom de compte). Ce numéro sera aussi affiché à côté du compte.
 
@@ -37,17 +31,17 @@ Vous pouvez changer l'ordre de transaction ayant la même date en les glissant o
 
 Si vous tapez un nom de compte inexistant, ce compte sera automatiquement créé. Ne vous en faites pas à propos des erreurs de frappe créant pleins de comptes à la rien à voir, moneyGuru fera le ménage des compte vides quand vous corrigerez vos erreurs.
 
-![](../images/edition_transaction_panel.png)
+![](images/edition_transaction_panel.png)
 
 Le dialogue ci-dessus est le détails d'une seule transaction. À partir de la, vous pouvez modifier les mêmes données que dans les table. De plus, vous pouvez aussi modifier les entrées de façon individuelle, vous permettant ainsi de créer une transaction avec plus de deux entrée ("split transaction").
 
 Une chose à retenir à propos de cette table d'entrée est qu'elle est constamment balancée. Chaque entrée que vous modifier déclenche une opération de re-balancement créant ou modifiant une entrée non-assignée. Par exemple, imaginons que vous partagez internet avec un colocataire. L'internet coute 40$ et vous voulez assigner 20$ à un compte "Compte à recevoir coloc". Vous allez d'abord créer une transaction normale de 40$ "Compte Courant" --> "Internet". Puis, vous ouvrez le dialogue de détails et vous changez la ligne "Internet" de 40$ à 20$. Automatiquement, une 3e ligne non-assignée de 20$ apparaitra. Assignez cette ligne à "Compte à recevoir coloc". Votre table ressemblera à:
 
-![](../images/edition_three_way_split.png)
+![](images/edition_three_way_split.png)
 
 Voilà, vous avez une transaction à 3 entrées.
 
-![](../images/edition_mass_edition_panel.png)
+![](images/edition_mass_edition_panel.png)
 
 Le dialogue ci-dessus est invoqué quand vous avez plusieurs transactions sélectionnées. Il permet de modifier toutes ces transactions en même temps. Choisissez les champs à modifier en cochant la case appropriée, entrez la nouvelle valeur désiré, puis cliquez sur Enregistrer.
 
@@ -61,7 +55,7 @@ Partout où les dates sont modifiable, un composant spécifique est utiliser ren
 * Quelque soit votre format, vous pouvez taper les dates sans séparateur en utilisant le 0. Par exemple, si vous voulez entrer le 07/06/2010, vous pouvez taper "070610"
 * Quelque soit votre format, vous taper un séparateur change de champ. Par exemple, si vous voulez entrer le 07/06/2010, vous pouvez taper "7/6/10".
 
-Si vous changez la date d'une transaction pour une date qui est hors de l'intervalle courant, un petit ![](../images/backward_16.png) ou ![](../images/forward_16.png) apparaîtra. Ça indiquera que l'intervalle sera changé, si il est navigable, pour suivre la transaction. Si l'intervalle n'est pas navigable, la transaction deviendra invisible.
+Si vous changez la date d'une transaction pour une date qui est hors de l'intervalle courant, un petit ![](images/backward_16.png) ou ![](images/forward_16.png) apparaîtra. Ça indiquera que l'intervalle sera changé, si il est navigable, pour suivre la transaction. Si l'intervalle n'est pas navigable, la transaction deviendra invisible.
 
 Modification de montants
 -----

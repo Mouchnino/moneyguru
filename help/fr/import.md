@@ -1,12 +1,6 @@
-<%!
-	title = 'Importing data into moneyGuru'
-	selected_menu_item = 'Import'
-%>
-<%inherit file="/fr/base_mg.mako"/>
-
 moneyGuru peut importer les formats QIF, OFX, QFX et CSV. Pour importer un fichier, cliquez sur "Importer..." et choisissez un fichier à importer. La fenêtre d'importation apparaîtra:
 
-![](../images/import_window.png)
+![](images/import_window.png)
 
 Il y a un onglet pour chaque compte présent dans le fichier importé. Vérifiez que les données que vous voulez importer ont du sens, décochez les lignes que vous ne voulez pas importer, puis cliquez sur Importer pour importer le compte sélectionné.
 
@@ -25,7 +19,7 @@ Importer dans un compte existant
 
 Si le fichier importé provient d'une banque, il est bien possible que vous vouliez l'importer dans un compte déjà existant. Pour ce faire, choisissez ce compte dans Compte Cible. Vous aurez alors a jumeler les transactions des deux comptes ensemble. En effet, il est tout à fait possible que votre fichier importé contienne des transactions déjà présentes dans votre document. La table se transformera en table à deux côté comme celle là:
 
-![](../images/import_match_table.png)
+![](images/import_match_table.png)
 
 Du côté gauche, il y a toutes les transactions **non-réconciliées** présente dans votre compte. Du côté droit, il y a les transactions à importer. Il faut alors jumeler les transactions identiques. Vous pouvez le faire en glissant l'une sur l'autre. Vous pouvez aussi dé-jumeler des transactions en cliquant sur leur petit cadenas.
 
@@ -34,7 +28,7 @@ Importation CSV
 
 L'importation des fichiers CSV fonctionne comme avec les autres fichiers, mais il faut passer par une étape intermédiaire dans laquelle vous devez définir la signification des colonnes de votre CSV:
 
-![](../images/import_csv_options.png)
+![](images/import_csv_options.png)
 
 Le problème avec CSV c'est qu'il n'y a aucun standard. Cette fenêtre permet de dire à moneyGuru comment interpréter le fichier. D'abord, regardez les données affichées et déterminez quelle colonne fait quoi. Cliquez sur une colonne pour pouvoir déterminer son type. Les colonnes Date et Montant sont obligatoires.
 

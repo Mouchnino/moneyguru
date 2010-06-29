@@ -1,9 +1,3 @@
-<%!
-	title = 'Forecasting'
-	selected_menu_item = 'Forecasting'
-%>
-<%inherit file="/en/base_mg.mako"/>
-
 Some transactions happen in a regular manner, like salaries, utility bills, rent, loan payment, etc.. These are fit for **schedules**. Some expenses, you can estimate, like groceries, clothing, dining out, etc.. These are fit for **budgets**. With the scheduling and budgeting features in moneyGuru, you can forecast your financial situation.
 
 How it works
@@ -26,7 +20,7 @@ To create a scheduled transaction, go the the Schedules view and click on the Ne
 
 If you already have a "model transaction" from which you want a schedule to be created, there's a shortcut for this in the menu called Make Schedule From Selected. This will create a new schedule and copy all info from the selected transaction to populate it.
 
-When you create a scheduled transaction, all future occurrences of that schedule for the current date range will be displayed with a little ![](../images/clock.png) next to them indicating that they are scheduled.
+When you create a scheduled transaction, all future occurrences of that schedule for the current date range will be displayed with a little ![](images/clock.png) next to them indicating that they are scheduled.
 
 Editing a schedule
 -----
@@ -40,7 +34,7 @@ In addition to being able to edit your schedules through the Schedules view, you
 
 As you can see, the concept is rather simple: You can edit scheduled transactions like any other transaction, but by holding Shift, the changes you make affect all future occurrences of the schedule.
 
-**When occurrences happen:** Scheduling transactions is all nice, but they have to happen at some point. In moneyGuru, they "happen" when the transaction is reconciled. When you reconcile a scheduled occurrence, it becomes a normal transaction (it loses its ![](../images/clock.png) and it can't be used to change future occurrences of the schedule anymore).
+**When occurrences happen:** Scheduling transactions is all nice, but they have to happen at some point. In moneyGuru, they "happen" when the transaction is reconciled. When you reconcile a scheduled occurrence, it becomes a normal transaction (it loses its ![](images/clock.png) and it can't be used to change future occurrences of the schedule anymore).
 
 Budgeting
 -----

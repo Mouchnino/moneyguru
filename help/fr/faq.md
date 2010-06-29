@@ -1,10 +1,3 @@
-<%!
-	title = 'Foire aux questions'
-	selected_menu_item = 'F.A.Q.'
-%>
-<%inherit file="/fr/base_mg.mako"/>
-
-<%text filter="md">
 ### Qu'est-ce que moneyGuru?
 
 moneyGuru est une application de gestion de finances personnelles. Elle permet de mieux évaluer votre situation financière et donc de prendre de meilleures décisions.
@@ -39,9 +32,8 @@ Premièrement, changez la devise de votre compte, puis ensuite ouvrez une vue Co
 
 ### Certains de mes comptes sont gris et ne sont pas comptés dans les totaux, pourquoi?
 
-Quand les comptes sont gris, ça veut dire qu'ils sont exclus. Vous les avez peut-être exclus par erreur. Vous pouvez simplement cliquer sur ![](../images/basics_account_in.png) pour les ramener.
+Quand les comptes sont gris, ça veut dire qu'ils sont exclus. Vous les avez peut-être exclus par erreur. Vous pouvez simplement cliquer sur ![](images/basics_account_in.png) pour les ramener.
 
 ### J'ai une autre question.
 
 Vous pouvez toujours envoyer un courriel à support@hardcoded.net ou vous pouvez aller sur le [forum de support](http://getsatisfaction.com/hardcodedsoftware).
-</%text>

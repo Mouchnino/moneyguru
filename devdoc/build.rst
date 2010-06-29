@@ -11,7 +11,6 @@ General dependencies
 --------------------
 
 - Python 2.6 (http://www.python.org)
-- Mako, to generate help files. (http://www.makotemplates.org/)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
 - Nose, to run unit tests. (http://somethingaboutorange.com/mrl/projects/nose/)
 

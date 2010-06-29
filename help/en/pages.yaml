@@ -1,0 +1,55 @@
+- 
+    name: intro
+    title: Introduction to moneyGuru
+    menutitle: Introduction
+    menudesc: Introduction to moneyGuru
+- 
+    name: basics
+    title: moneyGuru Basics
+    menutitle: Basics
+    menudesc: Basic concepts in moneyGuru
+- 
+    name: editing
+    title: Editing a moneyGuru document
+    menutitle: Editing
+    menudesc: How to edit a moneyGuru document
+- 
+    name: import
+    title: Importing data into moneyGuru
+    menutitle: Import
+    menudesc: "Import data from your bank & old application"
+- 
+    name: currencies
+    title: Currencies
+    menutitle: Currencies
+    menudesc: How currencies work
+- 
+    name: cash
+    title: Cash Management
+    menutitle: Cash
+    menudesc: Cash management strategies
+- 
+    name: reconciliation
+    title: Reconciliation
+    menutitle: Reconciliation
+    menudesc: How reconciliation works
+- 
+    name: forecast
+    title: Forecasting
+    menutitle: Forecasting
+    menudesc: Scheduling and budgeting
+- 
+    name: faq
+    title: moneyGuru F.A.Q.
+    menutitle: F.A.Q.
+    menudesc: Frequently Asked Questions
+- 
+    name: versions
+    title: Version History
+    menutitle: Version History
+    menudesc: Changes moneyGuru went through
+- 
+    name: credits
+    title: Credits
+    menutitle: Credits
+    menudesc: People who contributed to moneyGuru
