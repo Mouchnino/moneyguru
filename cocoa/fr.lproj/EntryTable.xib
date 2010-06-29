@@ -354,7 +354,7 @@
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
 													<int key="NSCellFlags2">67110912</int>
-													<string key="NSContents">Diminution</string>
+													<string key="NSContents">Augmentation</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSBackgroundColor" ref="930174830"/>
 													<reference key="NSTextColor" ref="405612679"/>
@@ -386,7 +386,7 @@
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
 													<int key="NSCellFlags2">67110912</int>
-													<string key="NSContents">Augmentation</string>
+													<string key="NSContents">Diminution</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSBackgroundColor" ref="930174830"/>
 													<reference key="NSTextColor" ref="405612679"/>
