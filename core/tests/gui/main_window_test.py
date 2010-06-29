@@ -100,6 +100,12 @@ def test_move_pane(app):
     eq_(app.mw.pane_label(3), "Profit & Loss")
 
 @with_app(TestApp)
+def test_move_pane_before_selected(app):
+    # When a non-selected pane is moved before the selected one, update the selected index
+    app.mw.move_pane(1, 0)
+    eq_(app.mw.current_pane_index, 1)
+
+@with_app(TestApp)
 def test_move_pane_selected(app):
     # When the moved pane is selected, the selection follows the pane.
     app.mw.move_pane(0, 3)

@@ -226,8 +226,7 @@ class MainWindow(Repeater):
         pane = self.panes[pane_index]
         del self.panes[pane_index]
         self.panes.insert(dest_index, pane)
-        if pane_index == self.current_pane_index:
-            self.current_pane_index = dest_index
+        self.current_pane_index = self.panes.index(self._current_pane)
     
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""
