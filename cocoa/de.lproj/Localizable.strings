@@ -1,0 +1,44 @@
+"New Item" = "Neuer Posten";
+"New Account" = "Neues Konto";
+"New Transaction" = "Neue Transaktion";
+"New Schedule" = "Neue Wiederholung";
+"New Budget" = "Neues Budget";
+
+"Account Lookup" = "Kontoauswahl";
+"Completion Lookup" = "Eingabehilfen anzeigen";
+
+"All" = "Alles";
+"Increase" = "Haben";
+"Decrease" = "Soll";
+"Income" = "Einkommen";
+"Expenses" = "Ausgaben";
+"Transfers" = "Transfers";
+"Unassigned" = "nicht übertragbar";
+"Reconciled" = "wertgestellt";
+"Not Reconciled" = "nicht wertgestellt";
+
+"Filter" = "Filter";
+"Date Range" = "Datumsintervall";
+"Net Worth" = "Eigenkapital";
+"Profit/Loss" = "Profit/Verlust";
+"Schedules" = "Wiederholung";
+"Budgets" = "Budgets";
+
+/* Print titles */
+"NetWorthPrintTitle" = "Eigenkapital vom %@, beginnend am %@";
+"ProfitPrintTitle" = "Profit und Verlust vom %@ bis %@";
+"TransactionPrintTitle" = "Transaktionen vom %@ bis %@";
+"EntryPrintTitle" = "Eintrag vom %@ bis %@";
+"SchedulePrintTitle" = "Wiederholung vom %@ bis %@";
+"BudgetPrintTitle" = "Budgets vom %@ bis %@";
+
+/* Messages */
+"FirstRunMsg" = "Sie benutzen moneyGuru zum erste Mal. Möchten sie die Beispielsdatei ansehen?";
+"AboutToRestartMsg" = "moneyGuru schießt";
+"ThanksForBuyingMsg" = "Vielen Dank für den Kauf von moneyGuru!";
+"DemoLimitReachedMsg" = "Vous avez atteint les limites de la démo. Vous devez acheter moneyGuru pour sauvegarder votre document.";
+"DemoLimitReachedMsg" = "Sie haben die Grenze des Probeprogramms erreicht. Sie müssen MoneyGuru erwerben, um ihre Dokumente zu sichern. ";
+"SelectFileToImportMsg" = "Selectionner un fichier à importer";
+"SelectFileToImportMsg" = "Wählen sie eine Datei zum Importieren aus";
+"ExportToQIFMsg" = "Exporter vers QIF";
+"ExportToQIFMsg" = "Nach QIF exportieren";
