@@ -127,7 +127,10 @@ class Undoer(object):
     
     def _do_deletes(self, accounts, groups, transactions, schedules, budgets):
         for account in accounts:
-            self._accounts.remove(account)
+            try: # XXX this has no test. I got this crash without being able to figure how to reproduce it.
+                self._accounts.remove(account)
+            except ValueError:
+                pass
         for group in groups:
             self._groups.remove(group)
         for txn in transactions:
