@@ -13,11 +13,14 @@ from hsutil.misc import first
 from ..exception import OperationAborted
 from ..model.recurrence import Recurrence, RepeatType
 from ..model.transaction import Transaction
+from ..trans import tr
 from .transaction_panel import PanelWithTransaction
 
 REPEAT_OPTIONS_ORDER = [RepeatType.Daily, RepeatType.Weekly, RepeatType.Monthly, RepeatType.Yearly,
     RepeatType.Weekday, RepeatType.WeekdayLast]
 
+# i18n note: We don't call tr() here because these descriptions are pluralized. We call tr() on the
+# final desc
 REPEAT_EVERY_DESCS = {
     RepeatType.Daily: 'day',
     RepeatType.Weekly: 'week',
@@ -69,7 +72,7 @@ class PanelWithScheduleMixIn(object):
         desc = REPEAT_EVERY_DESCS[repeat_option]
         if desc and self.schedule.repeat_every > 1:
             desc += 's'
-        return desc
+        return tr(desc)
     
     @property
     def repeat_options(self):

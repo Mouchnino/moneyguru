@@ -241,3 +241,13 @@
 /* core/model/recurrence.py:114 */
 "Every last %s of the month" = "Jeden letzten %s im Monat";
 
+/* core/model/schedule_panel */
+"day" = "Tag";
+"days" = "Tage";
+"week" = "Woche";
+"weeks" = "Wochen";
+"month" = "Monat";
+"months" = "Monate";
+"year" = "Jahr";
+"years" = "Jahre";
+
