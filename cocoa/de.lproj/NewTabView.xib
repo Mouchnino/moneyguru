@@ -256,7 +256,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="27960792">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">272630784</int>
-									<string key="NSContents">Choisissez un type d'onglet:</string>
+									<string key="NSContents">Wählen sie eine Tabart:</string>
 									<object class="NSFont" key="NSSupport">
 										<string key="NSName">LucidaGrande</string>
 										<double key="NSSize">13</double>
