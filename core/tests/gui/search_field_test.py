@@ -8,6 +8,7 @@
 
 from nose.tools import eq_
 
+from ...const import PaneType
 from ..base import TestApp, with_app
 
 #--- Pristine
@@ -16,6 +17,14 @@ def test_set_query(app):
     # Setting the 'query' property works"""
     app.sfield.query = 'foobar'
     eq_(app.sfield.query, 'foobar')
+
+@with_app(TestApp)    
+def test_set_query_selects_transaction_pane(app):
+    # Setting the search query selects the transaction tab specifically. Previously, the tab that
+    # was selected was always the 3rd one, regardless of the type.
+    app.mw.close_pane(2) # we close the transactions pane
+    app.sfield.query = 'foo'
+    app.check_current_pane(PaneType.Transaction)
 
 #--- Two transactions
 def app_two_transactions():

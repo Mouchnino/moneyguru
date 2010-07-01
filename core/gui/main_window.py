@@ -267,8 +267,9 @@ class MainWindow(Repeater):
         pane = self.panes[index]
         return pane.view.VIEW_TYPE
     
-    def select_pane_of_type(self, pane_type):
-        self.document.filter_string = ''
+    def select_pane_of_type(self, pane_type, clear_filter=True):
+        if clear_filter:
+            self.document.filter_string = ''
         index = first(i for i, p in enumerate(self.panes) if p.view.VIEW_TYPE == pane_type)
         if index is None:
             self._add_pane(self._create_pane(pane_type))
@@ -443,7 +444,7 @@ class MainWindow(Repeater):
     
     def filter_applied(self):
         if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):
-            self.current_pane_index = 2
+            self.select_pane_of_type(PaneType.Transaction, clear_filter=False)
     
     def performed_undo_or_redo(self):
         self._close_irrelevant_account_panes()
