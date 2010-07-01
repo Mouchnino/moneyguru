@@ -520,23 +520,30 @@ http://www.hardcoded.net/licenses/hs_license
         NSInteger paneType = [[self py] paneTypeAtIndex:i];
         NSString *label = [[self py] paneLabelAtIndex:i];
         MGBaseView *view = nil;
+        NSImage *tabIcon = nil;
         if (paneType == MGPaneTypeNetWorth) {
             view = netWorthView;
+            tabIcon = [NSImage imageNamed:@"balance_sheet_16"];
         }
         else if (paneType == MGPaneTypeProfit) {
             view = profitView;
+            tabIcon = [NSImage imageNamed:@"income_statement_16"];
         }
         else if (paneType == MGPaneTypeTransaction) {
             view = transactionView;
+            tabIcon = [NSImage imageNamed:@"transaction_table_16"];
         }
         else if (paneType == MGPaneTypeAccount) {
             view = accountView;
+            tabIcon = [NSImage imageNamed:@"entry_table_16"];
         }
         else if (paneType == MGPaneTypeSchedule) {
             view = scheduleView;
+            tabIcon = [NSImage imageNamed:@"schedules_16"];
         }
         else if (paneType == MGPaneTypeBudget) {
             view = budgetView;
+            tabIcon = [NSImage imageNamed:@"budget_16"];
         }
         else if (paneType == MGPaneTypeEmpty) {
             view = emptyView;
@@ -546,6 +553,8 @@ http://www.hardcoded.net/licenses/hs_license
         [item setLabel:label];
         [item setView:[view view]];
         [tabView addTabViewItem:item];
+        PSMTabBarCell *tabCell = [tabBar cellAtIndex:i];
+        [tabCell setIcon:tabIcon];
     }
     [tabBar setDelegate:self];
 }

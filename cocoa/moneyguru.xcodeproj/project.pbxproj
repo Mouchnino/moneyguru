@@ -142,7 +142,6 @@
 		CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */; };
 		CEB93C430E5C622E006923EB /* entry_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3E0E5C622E006923EB /* entry_table_48.png */; };
 		CEB93C440E5C622E006923EB /* income_statement_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3F0E5C622E006923EB /* income_statement_48.png */; };
-		CEB93C450E5C622E006923EB /* reconcile_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C400E5C622E006923EB /* reconcile_48.png */; };
 		CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C410E5C622E006923EB /* transaction_table_48.png */; };
 		CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */; };
 		CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA331911294DE5009C782F /* HSGUIController.m */; };
@@ -195,6 +194,11 @@
 		CEEED1CF0E3F5FD100BBA154 /* MGReconciliationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */; };
 		CEEED1D50E3F763100BBA154 /* check_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEED1D40E3F763100BBA154 /* check_16.png */; };
 		CEF4C5060F22274B004FDC9D /* popup_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF4C5050F22274B004FDC9D /* popup_arrows.png */; };
+		CEF5E63911DCCEE80048C9DF /* balance_sheet_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */; };
+		CEF5E63A11DCCEE80048C9DF /* entry_table_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63511DCCEE80048C9DF /* entry_table_16.png */; };
+		CEF5E63B11DCCEE80048C9DF /* income_statement_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63611DCCEE80048C9DF /* income_statement_16.png */; };
+		CEF5E63C11DCCEE80048C9DF /* schedules_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63711DCCEE80048C9DF /* schedules_16.png */; };
+		CEF5E63D11DCCEE80048C9DF /* transaction_table_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */; };
 		CEF674AF0F4C76F7003E5283 /* MGCustomDateRangePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */; };
 		CEF93B1B11D2142E00F49321 /* core.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF93B1911D2142E00F49321 /* core.strings */; };
 		CEF93B2311D2230000F49321 /* registration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF93B2111D2230000F49321 /* registration.xib */; };
@@ -507,7 +511,6 @@
 		CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balance_sheet_48.png; sourceTree = "<group>"; };
 		CEB93C3E0E5C622E006923EB /* entry_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = entry_table_48.png; sourceTree = "<group>"; };
 		CEB93C3F0E5C622E006923EB /* income_statement_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = income_statement_48.png; sourceTree = "<group>"; };
-		CEB93C400E5C622E006923EB /* reconcile_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reconcile_48.png; sourceTree = "<group>"; };
 		CEB93C410E5C622E006923EB /* transaction_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transaction_table_48.png; sourceTree = "<group>"; };
 		CEBA330811294D09009C782F /* PyGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGUI.h; sourceTree = "<group>"; };
 		CEBA330911294D09009C782F /* PyOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline.h; sourceTree = "<group>"; };
@@ -622,6 +625,11 @@
 		CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGReconciliationCell.m; sourceTree = "<group>"; };
 		CEEED1D40E3F763100BBA154 /* check_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_16.png; sourceTree = "<group>"; };
 		CEF4C5050F22274B004FDC9D /* popup_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popup_arrows.png; sourceTree = "<group>"; };
+		CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balance_sheet_16.png; sourceTree = "<group>"; };
+		CEF5E63511DCCEE80048C9DF /* entry_table_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = entry_table_16.png; sourceTree = "<group>"; };
+		CEF5E63611DCCEE80048C9DF /* income_statement_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = income_statement_16.png; sourceTree = "<group>"; };
+		CEF5E63711DCCEE80048C9DF /* schedules_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedules_16.png; sourceTree = "<group>"; };
+		CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transaction_table_16.png; sourceTree = "<group>"; };
 		CEF674AD0F4C76F7003E5283 /* MGCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCustomDateRangePanel.h; sourceTree = "<group>"; };
 		CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCustomDateRangePanel.m; sourceTree = "<group>"; };
 		CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCustomDateRangePanel.h; sourceTree = "<group>"; };
@@ -1204,6 +1212,11 @@
 		CEEED1D30E3F763100BBA154 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */,
+				CEF5E63511DCCEE80048C9DF /* entry_table_16.png */,
+				CEF5E63611DCCEE80048C9DF /* income_statement_16.png */,
+				CEF5E63711DCCEE80048C9DF /* schedules_16.png */,
+				CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */,
 				CE8CD7AC1042E340004B30E0 /* budget_16.png */,
 				CEB1E0B21031A386001FC4B4 /* budget_48.png */,
 				CEB1E0B31031A386001FC4B4 /* schedules_48.png */,
@@ -1223,7 +1236,6 @@
 				CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */,
 				CEB93C3E0E5C622E006923EB /* entry_table_48.png */,
 				CEB93C3F0E5C622E006923EB /* income_statement_48.png */,
-				CEB93C400E5C622E006923EB /* reconcile_48.png */,
 				CEB93C410E5C622E006923EB /* transaction_table_48.png */,
 				CEB93C390E5C6162006923EB /* main_icon.icns */,
 				0795A42B0E4217970053F2FC /* right_arrow_gray_12.png */,
@@ -1295,7 +1307,6 @@
 				CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */,
 				CEB93C430E5C622E006923EB /* entry_table_48.png in Resources */,
 				CEB93C440E5C622E006923EB /* income_statement_48.png in Resources */,
-				CEB93C450E5C622E006923EB /* reconcile_48.png in Resources */,
 				CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */,
 				CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */,
 				CE107C760E619A8B0064AF17 /* info_gray_12.png in Resources */,
@@ -1369,6 +1380,11 @@
 				CEC367D811D10EE500EB0222 /* SearchField.xib in Resources */,
 				CEF93B1B11D2142E00F49321 /* core.strings in Resources */,
 				CEF93B2311D2230000F49321 /* registration.xib in Resources */,
+				CEF5E63911DCCEE80048C9DF /* balance_sheet_16.png in Resources */,
+				CEF5E63A11DCCEE80048C9DF /* entry_table_16.png in Resources */,
+				CEF5E63B11DCCEE80048C9DF /* income_statement_16.png in Resources */,
+				CEF5E63C11DCCEE80048C9DF /* schedules_16.png in Resources */,
+				CEF5E63D11DCCEE80048C9DF /* transaction_table_16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
