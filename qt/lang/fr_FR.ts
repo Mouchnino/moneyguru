@@ -121,7 +121,7 @@
     </message>
     <message>
         <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
-        <translation>{0} / {1} sélectionnés. Augmentation: {2} Diminution: {3}</translation>
+        <translation>{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}</translation>
     </message>
     <message>
         <source>ASSETS</source>
@@ -169,11 +169,11 @@
     </message>
     <message>
         <source>Increase</source>
-        <translation>Augmentation</translation>
+        <translation>Dépôt</translation>
     </message>
     <message>
         <source>Decrease</source>
-        <translation>Diminution</translation>
+        <translation>Retrait</translation>
     </message>
     <message>
         <source>Currency</source>

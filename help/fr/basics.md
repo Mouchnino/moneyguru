@@ -87,12 +87,12 @@ Compte
 
 ![](images/basics_account.png)
 
-Cette vue contient les transactions *de la perspective d'un compte spécifique*. Chaque ligne, au lieu de représenter la transaction en entier, représente **l'entrée** au sein de la transaction qui affecte le compte sélectionné. Vous pouvez ouvrir cette vue en cliquant sur ![](images/basics_show_account_arrow.png) dans les autres vues. Les informations contenues dans cette vue sont semblable à celle de la vue Transactions, excepté pour ce qui est des comptes et des montants. Dans la colonne "Transfert" est affiché les compte de l"autre côté" de la transaction. C'est-à-dire toutes les autres entrées de la transaction. La colonne "Montant" est séparée en deux colonnes, "Augmentation" et "Diminution", semblable au format des relevés bancaires. Si le compte sélectionné est une actif ou un passif, il y a aussi une colonne "Balance" qui donne la balance du compte après chaque entrée.
+Cette vue contient les transactions *de la perspective d'un compte spécifique*. Chaque ligne, au lieu de représenter la transaction en entier, représente **l'entrée** au sein de la transaction qui affecte le compte sélectionné. Vous pouvez ouvrir cette vue en cliquant sur ![](images/basics_show_account_arrow.png) dans les autres vues. Les informations contenues dans cette vue sont semblable à celle de la vue Transactions, excepté pour ce qui est des comptes et des montants. Dans la colonne "Transfert" est affiché les compte de l"autre côté" de la transaction. C'est-à-dire toutes les autres entrées de la transaction. La colonne "Montant" est séparée en deux colonnes, "Dépôt" et "Retrait", semblable au format des relevés bancaires. Si le compte sélectionné est une actif ou un passif, il y a aussi une colonne "Balance" qui donne la balance du compte après chaque entrée.
 
 À l'instar de la vue Transactions, cette vue a une barre de filtres. Les filtres disponibles sont semblables, mais il y a quand même quelques différences.
 
-* **Augmentation:** Montrer seulement les entrées dont le montant est une augmentation.
-* **Decrease:** Montrer seulement les entrées dont le montant est une diminution.
+* **Dépôt:** Montrer seulement les entrées dont le montant est un dépôt.
+* **Retrait:** Montrer seulement les entrées dont le montant est un retrait.
 * **Transfert:** Montrer seulement les entrée faisant partie d'une transaction affectant au moins deux comptes d'actifs ou passifs.
 * **Non-assigné:** Montrer seulement les entrées non assignées.
 * **Reconcilié:** Montrer seulement les entrées réconciliées.

@@ -612,7 +612,7 @@
 					</object>
 					<object class="NSMenuItem" id="471298067">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Augmentation</string>
+						<string key="NSTitle">Dépôt</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -621,7 +621,7 @@
 					</object>
 					<object class="NSMenuItem" id="127374354">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Diminution</string>
+						<string key="NSTitle">Retrait</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>

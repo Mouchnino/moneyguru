@@ -86,7 +86,7 @@
 "No Account" = "Aucun compte";
 
 /* core/gui/account_view.py:77 */
-"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} / {1} sélectionnés. Augmentation: {2} Diminution: {3}";
+"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}";
 
 /* core/gui/balance_sheet.py:63 */
 "ASSETS" = "ACTIFS";
@@ -122,10 +122,10 @@
 "Amount" = "Montant";
 
 /* core/gui/csv_options.py:26 */
-"Increase" = "Augmentation";
+"Increase" = "Dépôt";
 
 /* core/gui/csv_options.py:27 */
-"Decrease" = "Diminution";
+"Decrease" = "Retrait";
 
 /* core/gui/csv_options.py:28 */
 "Currency" = "Devise";
