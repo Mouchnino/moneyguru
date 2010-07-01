@@ -18,7 +18,7 @@
 "Not Reconciled" = "nicht wertgestellt";
 
 "Filter" = "Filter";
-"Date Range" = "Datumsintervall";
+"Date Range" = "Zeitraum";
 "Net Worth" = "Eigenkapital";
 "Profit/Loss" = "Profit/Verlust";
 "Schedules" = "Wiederholung";
@@ -35,10 +35,7 @@
 /* Messages */
 "FirstRunMsg" = "Sie benutzen moneyGuru zum erste Mal. Möchten sie die Beispielsdatei ansehen?";
 "AboutToRestartMsg" = "moneyGuru schießt";
-"ThanksForBuyingMsg" = "Vielen Dank für den Kauf von moneyGuru!";
-"DemoLimitReachedMsg" = "Vous avez atteint les limites de la démo. Vous devez acheter moneyGuru pour sauvegarder votre document.";
-"DemoLimitReachedMsg" = "Sie haben die Grenze des Probeprogramms erreicht. Sie müssen MoneyGuru erwerben, um ihre Dokumente zu sichern. ";
-"SelectFileToImportMsg" = "Selectionner un fichier à importer";
+"ThanksForBuyingMsg" = "Wir danken ihnen, dass sie sich für moneyGuru entschieden haben!";
+"DemoLimitReachedMsg" = "Ihre kostenlose Testversion ist abgelaufen. Sie müssen MoneyGuru erwerben, um ihre Daten weiterhin sichern zu können.";
 "SelectFileToImportMsg" = "Wählen sie eine Datei zum Importieren aus";
-"ExportToQIFMsg" = "Exporter vers QIF";
 "ExportToQIFMsg" = "Nach QIF exportieren";

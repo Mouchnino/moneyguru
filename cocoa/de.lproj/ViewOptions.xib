@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 196}, {471, 314}}</string>
 				<int key="NSWTFlags">1677721600</int>
-				<string key="NSWindowTitle">Options de visibilité</string>
+				<string key="NSWindowTitle">Ansichtsoptionen anzeigen</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -60,7 +60,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="679302167">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Transactions</string>
+								<string key="NSContents">Transaktionen</string>
 								<object class="NSFont" key="NSSupport" id="383358482">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">11</double>
@@ -91,7 +91,7 @@
 							<object class="NSButtonCell" key="NSCell" id="80333986">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Description</string>
+								<string key="NSContents">Beschreibung</string>
 								<object class="NSFont" key="NSSupport" id="26">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -122,7 +122,7 @@
 							<object class="NSButtonCell" key="NSCell" id="800904803">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Wechselnehmer</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="53691617"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -144,7 +144,7 @@
 							<object class="NSButtonCell" key="NSCell" id="377518385">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents"># Chèque</string>
+								<string key="NSContents">Scheck #</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="904914257"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -166,7 +166,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="200965047">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Récurrences</string>
+								<string key="NSContents">Wiederholungen</string>
 								<reference key="NSSupport" ref="383358482"/>
 								<reference key="NSControlView" ref="793267028"/>
 								<reference key="NSBackgroundColor" ref="30182419"/>
@@ -185,7 +185,7 @@
 							<object class="NSButtonCell" key="NSCell" id="415815332">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Description</string>
+								<string key="NSContents">Beschreibung</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="970417886"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -207,7 +207,7 @@
 							<object class="NSButtonCell" key="NSCell" id="411933171">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Wechselnehmer</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="386946478"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -229,7 +229,7 @@
 							<object class="NSButtonCell" key="NSCell" id="931607146">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents"># Chèque</string>
+								<string key="NSContents">Scheck #</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="732213890"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -251,7 +251,7 @@
 							<object class="NSButtonCell" key="NSCell" id="632621367">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Début</string>
+								<string key="NSContents">Anfang</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="350816729"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -317,7 +317,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="301800096">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Valeur nette</string>
+								<string key="NSContents">Eigenkapital</string>
 								<reference key="NSSupport" ref="383358482"/>
 								<reference key="NSControlView" ref="184465871"/>
 								<reference key="NSBackgroundColor" ref="30182419"/>
@@ -358,7 +358,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="904546159">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Profits &amp; Pertes</string>
+								<string key="NSContents">Profit &amp; Verlust</string>
 								<reference key="NSSupport" ref="383358482"/>
 								<reference key="NSControlView" ref="636385610"/>
 								<reference key="NSBackgroundColor" ref="30182419"/>
@@ -377,7 +377,7 @@
 							<object class="NSButtonCell" key="NSCell" id="523932739">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Fin</string>
+								<string key="NSContents">Ende</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="999661508"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -421,7 +421,7 @@
 							<object class="NSButtonCell" key="NSCell" id="5632807">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Budgeté</string>
+								<string key="NSContents">Budgetanteil</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="112973581"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -443,7 +443,7 @@
 							<object class="NSButtonCell" key="NSCell" id="72795768">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents"># Compte</string>
+								<string key="NSContents">Konto #</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="1019717434"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -465,7 +465,7 @@
 							<object class="NSButtonCell" key="NSCell" id="702628302">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Date réconciliation</string>
+								<string key="NSContents">Wertstellungsdatum</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="661529464"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -487,7 +487,7 @@
 							<object class="NSButtonCell" key="NSCell" id="388301560">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Budgeté</string>
+								<string key="NSContents">Budgetanteil</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="256661265"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -509,7 +509,7 @@
 							<object class="NSButtonCell" key="NSCell" id="80791410">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents"># Compte</string>
+								<string key="NSContents">Konto #</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="898302584"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -553,7 +553,7 @@
 							<object class="NSButtonCell" key="NSCell" id="616319920">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Dia. Circ.</string>
+								<string key="NSContents">Kreis</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="146202194"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -575,7 +575,7 @@
 							<object class="NSButtonCell" key="NSCell" id="239486765">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Graphe</string>
+								<string key="NSContents">Graph</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="348031153"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -597,7 +597,7 @@
 							<object class="NSButtonCell" key="NSCell" id="9833589">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Dia. Circ.</string>
+								<string key="NSContents">Kreis</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="842185498"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -619,7 +619,7 @@
 							<object class="NSButtonCell" key="NSCell" id="870205128">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents"># Chèque</string>
+								<string key="NSContents">Scheck #</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="705065579"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -641,7 +641,7 @@
 							<object class="NSButtonCell" key="NSCell" id="108574141">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Wechselnehmer</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="846544596"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -663,7 +663,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="320820119">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Compte</string>
+								<string key="NSContents">Konto</string>
 								<reference key="NSSupport" ref="383358482"/>
 								<reference key="NSControlView" ref="743356353"/>
 								<reference key="NSBackgroundColor" ref="30182419"/>
@@ -682,7 +682,7 @@
 							<object class="NSButtonCell" key="NSCell" id="829100684">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Description</string>
+								<string key="NSContents">Beschreibung</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="230718989"/>
 								<int key="NSButtonFlags">1211912703</int>

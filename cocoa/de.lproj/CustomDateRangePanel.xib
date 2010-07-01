@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 333}, {351, 177}}</string>
 				<int key="NSWTFlags">1610612736</int>
-				<string key="NSWindowTitle">Intervalle personnalisé</string>
+				<string key="NSWindowTitle">Personalisierter Zeitraum</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -60,7 +60,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="871218073">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Selectionnez un intervalle de dates:</string>
+								<string key="NSContents">Zeitraum bestimmen:</string>
 								<object class="NSFont" key="NSSupport" id="925362386">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -96,7 +96,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="79246221">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Assigner l'intervalle à la case:</string>
+								<string key="NSContents">Zeitraum an dieser Stelle sichern:</string>
 								<reference key="NSSupport" ref="925362386"/>
 								<reference key="NSControlView" ref="734814227"/>
 								<reference key="NSBackgroundColor" ref="508437664"/>
@@ -112,7 +112,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="42109387">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Sous le nom:</string>
+								<string key="NSContents">unter:</string>
 								<reference key="NSSupport" ref="925362386"/>
 								<reference key="NSControlView" ref="287823896"/>
 								<reference key="NSBackgroundColor" ref="508437664"/>
@@ -128,7 +128,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="141852760">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Début</string>
+								<string key="NSContents">Beginn</string>
 								<object class="NSFont" key="NSSupport" id="612896153">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">11</double>
@@ -202,7 +202,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="619418785">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">Fin</string>
+								<string key="NSContents">Ende</string>
 								<reference key="NSSupport" ref="612896153"/>
 								<reference key="NSControlView" ref="113981405"/>
 								<reference key="NSBackgroundColor" ref="508437664"/>
@@ -238,7 +238,7 @@
 							<object class="NSButtonCell" key="NSCell" id="483728290">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">OK</string>
+								<string key="NSContents">Ok</string>
 								<reference key="NSSupport" ref="925362386"/>
 								<reference key="NSControlView" ref="494795310"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -258,7 +258,7 @@
 							<object class="NSButtonCell" key="NSCell" id="810954793">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="925362386"/>
 								<reference key="NSControlView" ref="709508610"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -288,7 +288,7 @@
 								<int key="NSPeriodicInterval">75</int>
 								<object class="NSMenuItem" key="NSMenuItem" id="100238016">
 									<reference key="NSMenu" ref="51034222"/>
-									<string key="NSTitle">Aucune</string>
+									<string key="NSTitle">Keine</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>

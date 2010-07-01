@@ -91,7 +91,7 @@
 									<reference ref="450153851"/>
 									<object class="NSMenuItem" id="18087594">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Mois</string>
+										<string key="NSTitle">Monat</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -105,7 +105,7 @@
 									</object>
 									<object class="NSMenuItem" id="4820495">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Trimestre</string>
+										<string key="NSTitle">Quartal</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -116,7 +116,7 @@
 									</object>
 									<object class="NSMenuItem" id="23290090">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Année</string>
+										<string key="NSTitle">Jahr</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -127,7 +127,7 @@
 									</object>
 									<object class="NSMenuItem" id="577720132">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Année en cours</string>
+										<string key="NSTitle">Seit Jahresbeginn bis heute</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -138,7 +138,7 @@
 									</object>
 									<object class="NSMenuItem" id="858943237">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Année flottante</string>
+										<string key="NSTitle">laufendes Jahr</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -149,7 +149,7 @@
 									</object>
 									<object class="NSMenuItem" id="903200523">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Toutes les transactions</string>
+										<string key="NSTitle">Alle Transaktionen</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<reference key="NSOnImage" ref="225972019"/>
@@ -159,7 +159,7 @@
 									</object>
 									<object class="NSMenuItem" id="705716877">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Intervalle personnalisé...</string>
+										<string key="NSTitle">Personalisierter Zeitraum...</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>

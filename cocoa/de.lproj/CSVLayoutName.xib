@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 408}, {376, 102}}</string>
 				<int key="NSWTFlags">1610612736</int>
-				<string key="NSWindowTitle">Nom de configuration</string>
+				<string key="NSWindowTitle">Layoutname</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -60,7 +60,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="372506519">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Nouveau nom:</string>
+								<string key="NSContents">Layoutname:</string>
 								<object class="NSFont" key="NSSupport" id="372141804">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -126,7 +126,7 @@
 							<object class="NSButtonCell" key="NSCell" id="227837585">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">OK</string>
+								<string key="NSContents">Ok</string>
 								<reference key="NSSupport" ref="372141804"/>
 								<reference key="NSControlView" ref="790414727"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -146,7 +146,7 @@
 							<object class="NSButtonCell" key="NSCell" id="632745389">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="372141804"/>
 								<reference key="NSControlView" ref="696839559"/>
 								<int key="NSButtonFlags">-2038284033</int>

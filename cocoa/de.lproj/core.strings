@@ -1,71 +1,71 @@
 /* core/app.py:36 */
-"In the demo version, documents with more than 100 transactions cannot be saved." = "Dans cette version démo, les documents de plus de 100 transactions ne peuvent pas être enregistrés.";
+"In the demo version, documents with more than 100 transactions cannot be saved." = "Es ist nicht möglich mehr als 100 Transaktionen in der kostenlosen Testversion zusichern";
 
 /* core/document.py:169 */
-"Add transaction" = "Ajouter transaction";
+"Add transaction" = "Transaktion hinzufügen";
 
 /* core/document.py:172 core/document.py:355 */
-"Change transaction" = "Modifier transaction";
+"Change transaction" = "Transaktion ändern";
 
 /* core/document.py:246 */
-"Change account" = "Modifier compte";
+"Change account" = "Konto ändern";
 
 /* core/document.py:264 */
-"Remove account" = "Supprimer compte";
+"Remove account" = "Konto löschen";
 
 /* core/document.py:291 */
-"New account" = "Nouveau compte";
+"New account" = "Neues Konto";
 
 /* core/document.py:294 */
-"Add account" = "Ajouter compte";
+"Add account" = "Konto hinzufügen";
 
 /* core/document.py:311 */
-"Change group" = "Modifier groupe";
+"Change group" = "Gruppe ändern";
 
 /* core/document.py:320 */
-"Remove group" = "Supprimer groupe";
+"Remove group" = "Gruppe löschen";
 
 /* core/document.py:330 */
-"New group" = "Nouveau groupe";
+"New group" = "Neue Gruppe";
 
 /* core/document.py:332 */
-"Add group" = "Ajouter groupe";
+"Add group" = "Gruppe hinzufügen";
 
 /* core/document.py:403 */
-"Remove transaction" = "Supprimer transaction";
+"Remove transaction" = "Transaktion löschen";
 
 /* core/document.py:428 */
-"Duplicate transactions" = "Dupliquer transactions";
+"Duplicate transactions" = "Transaktion duplizieren";
 
 /* core/document.py:443 */
-"Move transaction" = "Déplacer transactions";
+"Move transaction" = "Transaktion verschieben";
 
 /* core/document.py:491 */
-"Change reconciliation" = "Modifier la réconciliation";
+"Change reconciliation" = "Wertstellung ändern";
 
 /* core/document.py:536 */
-"Change Budget" = "Modifier budget";
+"Change Budget" = "Budget ändern";
 
 /* core/document.py:539 */
-"Add Budget" = "Ajouter budget";
+"Add Budget" = "Budget hinzufügen";
 
 /* core/document.py:560 */
-"Remove Budget" = "Supprimer budget";
+"Remove Budget" = "Budget löschen";
 
 /* core/document.py:576 */
-"Change Schedule" = "Modifier récurrence";
+"Change Schedule" = "Wiederholung ändern";
 
 /* core/document.py:579 */
-"Add Schedule" = "Ajouter récurrence";
+"Add Schedule" = "Wiederholung hinzufügen";
 
 /* core/document.py:600 */
-"Remove Schedule" = "Supprimer récurrence";
+"Remove Schedule" = "Wiederholung löschen";
 
 /* core/document.py:654 */
-"\"%s\" is not a moneyGuru file" = "\"%s\" n'est pas un fichier moneyGuru";
+"\"%s\" is not a moneyGuru file" = "\"%s\" ist keine moneyGuru-Datei";
 
 /* core/document.py:696 */
-"%s is of an unknown format." = "%s est d'un format inconnu";
+"%s is of an unknown format." = "%s ist ein unbekanntes Format";
 
 /* core/document.py:739 */
 "Import" = "Importieren";
@@ -83,10 +83,10 @@
 "Expenses" = "Ausgaben";
 
 /* core/gui/account_reassign_panel.py:19 */
-"No Account" = "Aucun compte";
+"No Account" = "Kein Konto";
 
 /* core/gui/account_view.py:77 */
-"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} / {1} sélectionnés. Augmentation: {2} Diminution: {3}";
+"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} von {1} ausgewählt. Haben: {2} Soll: {3}";
 
 /* core/gui/balance_sheet.py:63 */
 "ASSETS" = "ACTIVA";
@@ -98,44 +98,44 @@
 "NET WORTH" = "EIGENKAPITAL";
 
 /* core/gui/budget_panel.py:47 */
-"Income/Expense accounts must be created before budgets can be set." = "Des comptes de revenu et dépenses doivent être créés avant de faire un budget.";
+"Income/Expense accounts must be created before budgets can be set." = "Einkommen- und/oder Ausgabenkonten müssen vor der Budgeterstellung angelegt sein.";
 
 /* core/gui/budget_panel.py:54 core/gui/csv_options.py:19 */
-"None" = "Aucun";
+"None" = "Keine";
 
 /* core/gui/csv_options.py:20 */
-"Date" = "Date";
+"Date" = "Datum";
 
 /* core/gui/csv_options.py:21 */
-"Description" = "Description";
+"Description" = "Beschreibung";
 
 /* core/gui/csv_options.py:22 */
-"Payee" = "Provenance";
+"Payee" = "Wechselnehmer";
 
 /* core/gui/csv_options.py:23 */
-"Check #" = "# Chèque";
+"Check #" = "Scheck #";
 
 /* core/gui/csv_options.py:24 */
-"Transfer" = "Transfert";
+"Transfer" = "Transfer";
 
 /* core/gui/csv_options.py:25 */
-"Amount" = "Montant";
+"Amount" = "Betrag";
 
 /* core/gui/csv_options.py:26 */
-"Increase" = "Augmentation";
+"Increase" = "Haben";
 
 /* core/gui/csv_options.py:27 */
-"Decrease" = "Diminution";
+"Decrease" = "Soll";
 
 /* core/gui/csv_options.py:28 */
 "Currency" = "Devise";
 
 /* core/gui/csv_options.py:29 */
-"Transaction ID" = "ID transaction";
+"Transaction ID" = "Transaktionsidentität";
 
 /* core/gui/csv_options.py:104 core/gui/csv_options.py:228 */
 /* core/gui/csv_options.py:248 */
-"Default" = "Défaut";
+"Default" = "Verzug";
 
 /* core/gui/csv_options.py:244 core/gui/import_window.py:244 */
 "< New Account >" = "< Neues Konto >";
@@ -146,7 +146,7 @@
 "Unassigned" = "nicht übertragbar";
 
 /* core/gui/entry_table.py:433 */
-"Previous Balance" = "Balance précédente";
+"Previous Balance" = "vorheriger Saldo";
 
 /* core/gui/entry_table.py:442 core/gui/transaction_table.py:231 */
 "TOTAL" = "TOTAL";
@@ -158,7 +158,7 @@
 "EXPENSES" = "AUSGABEN";
 
 /* core/gui/income_statement.py:58 */
-"NET INCOME" = "REVENU NET";
+"NET INCOME" = "NETTOEINKOMMEN";
 
 /* core/gui/main_window.py:81 core/gui/net_worth_graph.py:39 */
 "Net Worth" = "Eigenkapital";
@@ -179,7 +179,7 @@
 "New Tab" = "Neuer Tab";
 
 /* core/gui/pie_chart.py:34 */
-"Others" = "Autres";
+"Others" = "andere";
 
 /* core/gui/report.py:192 */
 "Total " = "Total ";
@@ -188,56 +188,56 @@
 "TOTAL " = "TOTAL ";
 
 /* core/gui/report.py:250 */
-"The account '{0}' already exists." = "Le compte '{0}' existe déjà.";
+"The account '{0}' already exists." = "Das Konto '{0}' existiert schon.";
 
 /* core/gui/transaction_view.py:46 */
-"{0} out of {1} selected. Amount: {2}" = "{0} / {1} sélectionnés. Montant: {2}";
+"{0} out of {1} selected. Amount: {2}" = "{0} von {1} ausgewählt. Betrag: {2}";
 
 /* core/loader/csv.py:85 */
-"The Date and Amount columns must be set." = "Les colonnes Date et Montant doivent être définis.";
+"The Date and Amount columns must be set." = "Die Datums-und Betragspalte muss definiert werden.";
 
 /* core/loader/csv.py:100 */
-"The Date column has been set on a column that doesn't contain dates." = "La colonne Date ne contient pas de valeurs pouvant être des dates.";
+"The Date column has been set on a column that doesn't contain dates." = "Die Datumsspalte wurde für eine Spalte ausgewählt, die keine Daten enthählt.";
 
 /* core/model/date.py:186 */
-"{0} - Now" = "{0} - Aujourd'hui";
+"{0} - Now" = "{0} - Heute";
 
 /* core/model/date.py:210 */
-"Running year ({0} - {1})" = "Année flottante ({0} - {1})";
+"Running year ({0} - {1})" = "laufendes Jahr ({0} - {1})";
 
 /* core/model/date.py:224 */
 "All Transactions" = "Alle Transaktionen";
 
 /* core/model/recurrence.py:90 */
-"Daily" = "Quotidiennement";
+"Daily" = "täglich";
 
 /* core/model/recurrence.py:91 */
-"Weekly" = "Hebdomadairement";
+"Weekly" = "wöchentlich";
 
 /* core/model/recurrence.py:92 */
-"Monthly" = "Mensuellement";
+"Monthly" = "monatlich";
 
 /* core/model/recurrence.py:93 */
-"Yearly" = "Annuellement";
+"Yearly" = "jährlich";
 
 /* core/model/recurrence.py:110 */
-"fifth" = "cinquième";
+"fifth" = "fünften";
 
 /* core/model/recurrence.py:110 */
-"first" = "premier";
+"first" = "ersten";
 
 /* core/model/recurrence.py:110 */
-"fourth" = "quatrième";
+"fourth" = "vierten";
 
 /* core/model/recurrence.py:110 */
-"second" = "deuxième";
+"second" = "zweiten";
 
 /* core/model/recurrence.py:110 */
-"third" = "troisième";
+"third" = "dritten";
 
 /* core/model/recurrence.py:111 */
-"Every %s %s of the month" = "Chaque %s %s du mois";
+"Every %s %s of the month" = "Jeden %s %s im Monat";
 
 /* core/model/recurrence.py:114 */
-"Every last %s of the month" = "Chaque dernier %s du mois";
+"Every last %s of the month" = "Jeden letzten %s im Monat";
 

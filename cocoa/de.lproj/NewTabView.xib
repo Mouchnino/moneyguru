@@ -92,7 +92,7 @@
 								<object class="NSButtonCell" key="NSCell" id="636763002">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">134217728</int>
-									<string key="NSContents">Récurrences</string>
+									<string key="NSContents">Wiederholungen</string>
 									<object class="NSFont" key="NSSupport" id="586540727">
 										<string key="NSName">LucidaGrande-Bold</string>
 										<double key="NSSize">14</double>
@@ -120,7 +120,7 @@
 								<object class="NSButtonCell" key="NSCell" id="751144909">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">134217728</int>
-									<string key="NSContents">Profits &amp; Pertes</string>
+									<string key="NSContents">Profit &amp; Verlust</string>
 									<reference key="NSSupport" ref="586540727"/>
 									<reference key="NSControlView" ref="902513615"/>
 									<int key="NSButtonFlags">-2034482945</int>
@@ -184,7 +184,7 @@
 								<object class="NSButtonCell" key="NSCell" id="1071773773">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">134217728</int>
-									<string key="NSContents">Transactions</string>
+									<string key="NSContents">Transaktionen</string>
 									<reference key="NSSupport" ref="586540727"/>
 									<reference key="NSControlView" ref="522102835"/>
 									<int key="NSButtonFlags">-2034482945</int>
@@ -276,7 +276,7 @@
 								<object class="NSButtonCell" key="NSCell" id="399652919">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">134217728</int>
-									<string key="NSContents">Valeur Nette</string>
+									<string key="NSContents">Eigenkapital</string>
 									<reference key="NSSupport" ref="586540727"/>
 									<reference key="NSControlView" ref="170405070"/>
 									<int key="NSButtonFlags">-2034482945</int>

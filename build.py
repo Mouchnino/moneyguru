@@ -16,7 +16,7 @@ from setuptools import setup, Extension
 import yaml
 
 from hsdocgen import helpgen
-from hsutil.build import print_and_do, build_all_qt_ui, copy_packages
+from hsutil.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
 from core.app import Application as MoneyGuruApp
 
 def move(src, dst):
@@ -33,6 +33,14 @@ def build_cocoa(dev):
         help_path = op.abspath('help/moneyguru_help')
         os.system('open -a /Developer/Applications/Utilities/Help\\ Indexer.app {0}'.format(help_path))
     
+    locs = [name for name in os.listdir('cocoa') if name.endswith('.lproj')]
+    locs.remove('en.lproj')
+    model_path = op.join('cocoa', 'en.lproj')
+    for loc in locs:
+        print "Building {0} cocoa localizations".format(loc)
+        loc_path = op.join('cocoa', loc)
+        build_cocoa_localization(model_path, loc_path)
+        
     print "Building mg_cocoa.plugin"
     if op.exists('build'):
         shutil.rmtree('build')

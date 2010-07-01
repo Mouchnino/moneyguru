@@ -61,7 +61,7 @@
 							<object class="NSButtonCell" key="NSCell" id="90291121">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<object class="NSFont" key="NSSupport" id="426082981">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -85,7 +85,7 @@
 							<object class="NSButtonCell" key="NSCell" id="855578087">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Enregistrer</string>
+								<string key="NSContents">Ok</string>
 								<reference key="NSSupport" ref="426082981"/>
 								<reference key="NSControlView" ref="962963534"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -105,7 +105,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="237830007">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">138412032</int>
-								<string key="NSContents">Détails de transaction</string>
+								<string key="NSContents">Transaktiondetails</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">18</double>
@@ -155,7 +155,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="350125239">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents">Date</string>
+													<string key="NSContents">Datum</string>
 													<object class="NSFont" key="NSSupport" id="31487456">
 														<string key="NSName">LucidaGrande-Bold</string>
 														<double key="NSSize">11</double>
@@ -212,7 +212,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="136095318">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents">Description</string>
+													<string key="NSContents">Beschreibung</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<reference key="NSControlView" ref="429658240"/>
 													<reference key="NSBackgroundColor" ref="459028066"/>
@@ -265,7 +265,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="74103763">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents">Provenance</string>
+													<string key="NSContents">Wechselnehmer</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<reference key="NSControlView" ref="75804444"/>
 													<reference key="NSBackgroundColor" ref="459028066"/>
@@ -301,7 +301,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="1036182782">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents"># Chèque</string>
+													<string key="NSContents">Scheck #</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<reference key="NSControlView" ref="222811701"/>
 													<reference key="NSBackgroundColor" ref="459028066"/>
@@ -320,7 +320,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="923510204">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents">Transferts</string>
+													<string key="NSContents">Transfers</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<reference key="NSControlView" ref="419813320"/>
 													<reference key="NSBackgroundColor" ref="459028066"/>
@@ -339,7 +339,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="727354944">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">138544128</int>
-													<string key="NSContents">L'onglet actif se change avec ⌘⌥→ et ⌘⌥←</string>
+													<string key="NSContents">Sie können Tabs mit ⌘⌥→ und ⌘⌥← navigieren</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<string key="NSPlaceholderString">No entry selected</string>
 													<reference key="NSControlView" ref="1031419791"/>
@@ -389,7 +389,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75628096</int>
 																			<int key="NSCellFlags2">2048</int>
-																			<string key="NSContents">Compte</string>
+																			<string key="NSContents">Konto</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<object class="NSColor" key="NSBackgroundColor" id="236844804">
 																				<int key="NSColorSpace">3</int>
@@ -411,7 +411,7 @@
 																				<double key="NSSize">11</double>
 																				<int key="NSfFlags">16</int>
 																			</object>
-																			<string key="NSPlaceholderString">Non-assigné</string>
+																			<string key="NSPlaceholderString">nicht übertragbar</string>
 																			<reference key="NSControlView" ref="352860623"/>
 																			<object class="NSColor" key="NSBackgroundColor" id="747064107">
 																				<int key="NSColorSpace">6</int>
@@ -434,7 +434,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75628096</int>
 																			<int key="NSCellFlags2">2048</int>
-																			<string key="NSContents">Mémo</string>
+																			<string key="NSContents">Memo</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<object class="NSColor" key="NSBackgroundColor" id="850848049">
 																				<int key="NSColorSpace">6</int>
@@ -466,7 +466,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75628096</int>
 																			<int key="NSCellFlags2">67110912</int>
-																			<string key="NSContents">Débit</string>
+																			<string key="NSContents">Debit</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<reference key="NSBackgroundColor" ref="236844804"/>
 																			<reference key="NSTextColor" ref="269182953"/>
@@ -493,7 +493,7 @@
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
 																			<int key="NSCellFlags">75628096</int>
 																			<int key="NSCellFlags2">67110912</int>
-																			<string key="NSContents">Crédit</string>
+																			<string key="NSContents">kredit</string>
 																			<reference key="NSSupport" ref="26"/>
 																			<reference key="NSBackgroundColor" ref="850848049"/>
 																			<reference key="NSTextColor" ref="269182953"/>
@@ -648,7 +648,7 @@
 												<object class="NSButtonCell" key="NSCell" id="693600660">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">134348800</int>
-													<string key="NSContents">Balancer les devises</string>
+													<string key="NSContents">Devisensaldo</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="51420124"/>
 													<int key="NSButtonFlags">-2038284033</int>
@@ -663,7 +663,7 @@
 										<string key="NSFrame">{{10, 33}, {439, 231}}</string>
 										<reference key="NSSuperview" ref="759440250"/>
 									</object>
-									<string key="NSLabel">Détails</string>
+									<string key="NSLabel">Details</string>
 									<reference key="NSColor" ref="459028066"/>
 									<reference key="NSTabView" ref="759440250"/>
 								</object>
@@ -700,7 +700,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="583671935">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">138544128</int>
-													<string key="NSContents">Utilisez ⌥+Entrée pour insérer une nouvelle ligne.</string>
+													<string key="NSContents">Zum Beginnen einer neuen Zeile drücken sie ⌥+Eingabetaste.</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<string key="NSPlaceholderString">No entry selected</string>
 													<reference key="NSControlView" ref="706881313"/>
@@ -714,7 +714,7 @@
 										</object>
 										<string key="NSFrame">{{10, 33}, {439, 231}}</string>
 									</object>
-									<string key="NSLabel">Notes</string>
+									<string key="NSLabel">Bemerkungen</string>
 									<reference key="NSColor" ref="459028066"/>
 									<reference key="NSTabView" ref="759440250"/>
 								</object>

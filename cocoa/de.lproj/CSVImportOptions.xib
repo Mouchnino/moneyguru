@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 106}, {510, 404}}</string>
 				<int key="NSWTFlags">1610612736</int>
-				<string key="NSWindowTitle">Options d'importation CSV</string>
+				<string key="NSWindowTitle">CSV Importmöglichkeiten</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -61,7 +61,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="370812710">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Spécifiez quelles colonnes CSV correspondent à quel champ. Vous devez aussi décocher les cases de la colonne "Imp." pour chaque ligne n'étant pas une transaction (entête, commentaire).</string>
+								<string key="NSContents">Bestimmen sie welche CSV Spalte zu welchem Transaktionsfeld gehört. Sie müssen ebenfalls sämtliche Importspalten entwählen, welche keine Transaktionen repräsentieren (Titel, Fußzeile, Kommentare).</string>
 								<object class="NSFont" key="NSSupport" id="560826899">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">12</double>
@@ -127,7 +127,7 @@
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
 														<int key="NSCellFlags">75628096</int>
 														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">Imp.</string>
+														<string key="NSContents">Import</string>
 														<object class="NSFont" key="NSSupport" id="26">
 															<string key="NSName">LucidaGrande</string>
 															<double key="NSSize">11</double>
@@ -261,7 +261,7 @@
 							<object class="NSButtonCell" key="NSCell" id="993575846">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Importer</string>
+								<string key="NSContents">Importieren</string>
 								<object class="NSFont" key="NSSupport" id="150058320">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -285,7 +285,7 @@
 							<object class="NSButtonCell" key="NSCell" id="1008521074">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="150058320"/>
 								<reference key="NSControlView" ref="44398848"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -305,7 +305,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="392009996">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Config.:</string>
+								<string key="NSContents">Layout:</string>
 								<reference key="NSSupport" ref="560826899"/>
 								<reference key="NSControlView" ref="583291654"/>
 								<reference key="NSBackgroundColor" ref="973909894"/>
@@ -331,7 +331,7 @@
 								<int key="NSPeriodicInterval">75</int>
 								<object class="NSMenuItem" key="NSMenuItem" id="989947246">
 									<reference key="NSMenu" ref="364928751"/>
-									<string key="NSTitle">Défaut</string>
+									<string key="NSTitle">Verzug</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -367,7 +367,7 @@
 										</object>
 										<object class="NSMenuItem" id="777152046">
 											<reference key="NSMenu" ref="364928751"/>
-											<string key="NSTitle">Nouvelle configuration...</string>
+											<string key="NSTitle">Neues Layout...</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
@@ -378,7 +378,7 @@
 										</object>
 										<object class="NSMenuItem" id="315980469">
 											<reference key="NSMenu" ref="364928751"/>
-											<string key="NSTitle">Renommer la configuration sélectionnée...</string>
+											<string key="NSTitle">Ausgewähltes Layout umbennen...</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
@@ -389,7 +389,7 @@
 										</object>
 										<object class="NSMenuItem" id="183557422">
 											<reference key="NSMenu" ref="364928751"/>
-											<string key="NSTitle">Supprimer la configuration sélectionnée</string>
+											<string key="NSTitle">Ausgewähltes Layout löschen</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSMnemonicLoc">2147483647</int>
 											<reference key="NSOnImage" ref="443050752"/>
@@ -414,7 +414,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="851376956">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Cible:</string>
+								<string key="NSContents">Ziel:</string>
 								<reference key="NSSupport" ref="560826899"/>
 								<reference key="NSControlView" ref="123758281"/>
 								<reference key="NSBackgroundColor" ref="973909894"/>
@@ -440,7 +440,7 @@
 								<int key="NSPeriodicInterval">75</int>
 								<object class="NSMenuItem" key="NSMenuItem" id="1038498499">
 									<reference key="NSMenu" ref="282182329"/>
-									<string key="NSTitle">Nouveau compte</string>
+									<string key="NSTitle">Neues Konto</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -473,7 +473,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1032612267">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">71304192</int>
-								<string key="NSContents">Séparateur:</string>
+								<string key="NSContents">Satzzeichen:</string>
 								<reference key="NSSupport" ref="150058320"/>
 								<reference key="NSControlView" ref="679876190"/>
 								<reference key="NSBackgroundColor" ref="973909894"/>
@@ -516,7 +516,7 @@
 							<object class="NSButtonCell" key="NSCell" id="355975532">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Rescanner</string>
+								<string key="NSContents">Rescannen</string>
 								<reference key="NSSupport" ref="560826899"/>
 								<reference key="NSControlView" ref="918352706"/>
 								<int key="NSButtonFlags">-2038152961</int>
@@ -540,7 +540,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="4236534">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Aucun</string>
+						<string key="NSTitle">Keine</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -558,7 +558,7 @@
 					</object>
 					<object class="NSMenuItem" id="168104209">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Date</string>
+						<string key="NSTitle">Datum</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -567,7 +567,7 @@
 					</object>
 					<object class="NSMenuItem" id="498933170">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Description</string>
+						<string key="NSTitle">Beschreibung</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -576,7 +576,7 @@
 					</object>
 					<object class="NSMenuItem" id="1048949140">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Provenance</string>
+						<string key="NSTitle">Wechselnehmer</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -585,7 +585,7 @@
 					</object>
 					<object class="NSMenuItem" id="615573961">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle"># Chèque</string>
+						<string key="NSTitle">Scheck #</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -594,7 +594,7 @@
 					</object>
 					<object class="NSMenuItem" id="215938095">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Transfert</string>
+						<string key="NSTitle">Transfer</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -603,7 +603,7 @@
 					</object>
 					<object class="NSMenuItem" id="661226007">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Montant</string>
+						<string key="NSTitle">Betrag</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -612,7 +612,7 @@
 					</object>
 					<object class="NSMenuItem" id="471298067">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Augmentation</string>
+						<string key="NSTitle">Haben</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -621,7 +621,7 @@
 					</object>
 					<object class="NSMenuItem" id="127374354">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Diminution</string>
+						<string key="NSTitle">Soll</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -639,7 +639,7 @@
 					</object>
 					<object class="NSMenuItem" id="658095161">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">ID Transaction</string>
+						<string key="NSTitle">Transaktionsidentität</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>

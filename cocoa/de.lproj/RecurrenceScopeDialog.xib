@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{490, 359}, {442, 182}}</string>
 				<int key="NSWTFlags">544735232</int>
-				<string key="NSWindowTitle">Portée de la modification</string>
+				<string key="NSWindowTitle">Änderungsbereich</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -60,7 +60,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="128779882">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Voulez-vous appliquer cette modification à toutes les occurrences futures?</string>
+								<string key="NSContents">Wollen sie diese Änderung auf alle zukünftigen Vorgänge dieser Transaktion anwenden?</string>
 								<object class="NSFont" key="NSSupport" id="200997517">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -96,7 +96,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="370870580">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272760832</int>
-								<string key="NSContents">Vous pouvez forcer une portée globale (changer les occurrences futures) en appuyant sur ⇧ lors du changement.</string>
+								<string key="NSContents">Sie können den Änderungsbereich auf alle zukünftigen Vorgänge erweitern, indem sie während der Änderung ⇧ gedrückt halten.</string>
 								<object class="NSFont" key="NSSupport" id="26">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -116,7 +116,7 @@
 							<object class="NSButtonCell" key="NSCell" id="690015006">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Montrer ce dialogue la prochaine fois</string>
+								<string key="NSContents">Dialogfenster beim nächsten Mal anzeigen</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="562136065"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -143,7 +143,7 @@
 							<object class="NSButtonCell" key="NSCell" id="536975141">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Non</string>
+								<string key="NSContents">Nur diesen</string>
 								<reference key="NSSupport" ref="200997517"/>
 								<reference key="NSControlView" ref="403908101"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -163,7 +163,7 @@
 							<object class="NSButtonCell" key="NSCell" id="878951938">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Oui, toutes</string>
+								<string key="NSContents">Ja, alle</string>
 								<reference key="NSSupport" ref="200997517"/>
 								<reference key="NSControlView" ref="229118427"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -183,7 +183,7 @@
 							<object class="NSButtonCell" key="NSCell" id="5233649">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="200997517"/>
 								<reference key="NSControlView" ref="262807376"/>
 								<int key="NSButtonFlags">-2038284033</int>

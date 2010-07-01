@@ -406,6 +406,7 @@
 		CE873AA00E21622F004F63E9 /* MGGradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGradientBar.m; sourceTree = "<group>"; };
 		CE873AA70E21622F004F63E9 /* MGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableView.h; sourceTree = "<group>"; };
 		CE873AA80E21622F004F63E9 /* MGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableView.m; sourceTree = "<group>"; };
+		CE88336F11DC8BD700AA6F51 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/core.strings; sourceTree = "<group>"; };
 		CE88544711A1819C00268FBD /* MGMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindowController.h; sourceTree = "<group>"; };
 		CE88544811A1819C00268FBD /* MGMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindowController.m; sourceTree = "<group>"; };
 		CE88544F11A1837B00268FBD /* MGMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindow.h; sourceTree = "<group>"; };
@@ -577,6 +578,7 @@
 		CEC5CE580F45F8670042E33F /* MGDoubleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDoubleView.m; sourceTree = "<group>"; };
 		CEC6593E0FC9354A0045E4C8 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = ../cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
+		CECBBC9211DB77530083BD13 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = ../cocoalib/de.lproj/registration.xib; sourceTree = SOURCE_ROOT; };
 		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
 		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
 		CECF31D811D0B27400B786F7 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
@@ -1746,6 +1748,7 @@
 			children = (
 				CEF93B1A11D2142E00F49321 /* en */,
 				CEF93B2011D2144A00F49321 /* fr */,
+				CE88336F11DC8BD700AA6F51 /* de */,
 			);
 			name = core.strings;
 			sourceTree = "<group>";
@@ -1755,6 +1758,7 @@
 			children = (
 				CEF93B2211D2230000F49321 /* en */,
 				CEF93B2411D2231500F49321 /* fr */,
+				CECBBC9211DB77530083BD13 /* de */,
 			);
 			name = registration.xib;
 			path = ../cocoalib/xib;

@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 96}, {576, 414}}</string>
 				<int key="NSWTFlags">1610613760</int>
-				<string key="NSWindowTitle">Importer</string>
+				<string key="NSWindowTitle">Importieren</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -122,7 +122,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="794646000">
 							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Compte cible:</string>
+							<string key="NSContents">Zielkonto:</string>
 							<reference key="NSSupport" ref="141398786"/>
 							<reference key="NSControlView" ref="886863787"/>
 							<reference key="NSBackgroundColor" ref="195413335"/>
@@ -156,7 +156,7 @@
 							<int key="NSPeriodicInterval">75</int>
 							<object class="NSMenuItem" key="NSMenuItem" id="1064820083">
 								<reference key="NSMenu" ref="293043450"/>
-								<string key="NSTitle">&lt; Nouveau compte &gt;</string>
+								<string key="NSTitle">&lt; Neues Konto &gt;</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
@@ -217,7 +217,7 @@
 						<object class="NSButtonCell" key="NSCell" id="564427384">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Importer</string>
+							<string key="NSContents">Importieren</string>
 							<reference key="NSSupport" ref="141398786"/>
 							<reference key="NSControlView" ref="284404514"/>
 							<int key="NSButtonFlags">-2038284033</int>
@@ -264,7 +264,7 @@
 											<int key="NSPeriodicInterval">75</int>
 											<object class="NSMenuItem" key="NSMenuItem" id="17895963">
 												<reference key="NSMenu" ref="976417440"/>
-												<string key="NSTitle">Jour &lt;--&gt; Mois</string>
+												<string key="NSTitle">Tag &lt;--&gt; Monat</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
@@ -282,7 +282,7 @@
 													<reference ref="17895963"/>
 													<object class="NSMenuItem" id="1019007056">
 														<reference key="NSMenu" ref="976417440"/>
-														<string key="NSTitle">Mois &lt;--&gt; Année</string>
+														<string key="NSTitle">Monat &lt;--&gt; Jahr</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSKeyEquivModMask">1048576</int>
 														<int key="NSMnemonicLoc">2147483647</int>
@@ -293,7 +293,7 @@
 													</object>
 													<object class="NSMenuItem" id="668302017">
 														<reference key="NSMenu" ref="976417440"/>
-														<string key="NSTitle">Jour &lt;--&gt; Année</string>
+														<string key="NSTitle">Tag &lt;--&gt; Jahr</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSKeyEquivModMask">1048576</int>
 														<int key="NSMnemonicLoc">2147483647</int>
@@ -304,7 +304,7 @@
 													</object>
 													<object class="NSMenuItem" id="305537988">
 														<reference key="NSMenu" ref="976417440"/>
-														<string key="NSTitle">Description &lt;--&gt; Provenance</string>
+														<string key="NSTitle">Beschreibung &lt;--&gt; Wechselnehmer</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSMnemonicLoc">2147483647</int>
 														<reference key="NSOnImage" ref="668660200"/>
@@ -329,7 +329,7 @@
 										<object class="NSButtonCell" key="NSCell" id="129569263">
 											<int key="NSCellFlags">67239424</int>
 											<int key="NSCellFlags2">134217728</int>
-											<string key="NSContents">Zap!</string>
+											<string key="NSContents">Tausch</string>
 											<reference key="NSSupport" ref="141398786"/>
 											<reference key="NSControlView" ref="687569255"/>
 											<int key="NSButtonFlags">-2038284033</int>
@@ -349,7 +349,7 @@
 										<object class="NSButtonCell" key="NSCell" id="708721783">
 											<int key="NSCellFlags">67239424</int>
 											<int key="NSCellFlags2">0</int>
-											<string key="NSContents">Appliquer à tous</string>
+											<string key="NSContents">Auf alle Konten anwenden</string>
 											<reference key="NSSupport" ref="141398786"/>
 											<reference key="NSControlView" ref="897621736"/>
 											<int key="NSButtonFlags">1211912703</int>
@@ -378,7 +378,7 @@
 						<object class="NSTextFieldCell" key="NSTitleCell">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Champs incorrectes? Interchangez!</string>
+							<string key="NSContents">Inkorrekte Felder? Tauschen sie sie aus!</string>
 							<object class="NSFont" key="NSSupport" id="26">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -488,7 +488,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Date</string>
+											<string key="NSContents">Datum</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -521,7 +521,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Description</string>
+											<string key="NSContents">Beschreibung</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -547,7 +547,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Provenance</string>
+											<string key="NSContents">Wechselnehmer</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -576,7 +576,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents"># Chèque</string>
+											<string key="NSContents">Scheck #</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -605,7 +605,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Transfert</string>
+											<string key="NSContents">Transfer</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -634,7 +634,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">67110912</int>
-											<string key="NSContents">Montant</string>
+											<string key="NSContents">Betrag</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -803,7 +803,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Date</string>
+											<string key="NSContents">Datum</string>
 											<reference key="NSSupport" ref="26"/>
 											<object class="NSColor" key="NSBackgroundColor" id="742470326">
 												<int key="NSColorSpace">3</int>
@@ -835,7 +835,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Description</string>
+											<string key="NSContents">Beschreibung</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="742470326"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -864,7 +864,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Montant</string>
+											<string key="NSContents">Betrag</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -920,7 +920,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Date</string>
+											<string key="NSContents">Datum</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -946,7 +946,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Description</string>
+											<string key="NSContents">Beschreibung</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>
@@ -972,7 +972,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">67110912</int>
-											<string key="NSContents">Montant</string>
+											<string key="NSContents">Betrag</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>

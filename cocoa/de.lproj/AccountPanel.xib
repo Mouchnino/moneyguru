@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 321}, {296, 189}}</string>
 				<int key="NSWTFlags">1610612736</int>
-				<string key="NSWindowTitle">Détails de compte</string>
+				<string key="NSWindowTitle">Kontodetails</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -107,7 +107,7 @@
 								<int key="NSPeriodicInterval">75</int>
 								<object class="NSMenuItem" key="NSMenuItem" id="465161225">
 									<reference key="NSMenu" ref="396558299"/>
-									<string key="NSTitle">Actif</string>
+									<string key="NSTitle">Activa</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -131,7 +131,7 @@
 										<reference ref="465161225"/>
 										<object class="NSMenuItem" id="557331026">
 											<reference key="NSMenu" ref="396558299"/>
-											<string key="NSTitle">Passif</string>
+											<string key="NSTitle">Passiva</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
@@ -142,7 +142,7 @@
 										</object>
 										<object class="NSMenuItem" id="889974444">
 											<reference key="NSMenu" ref="396558299"/>
-											<string key="NSTitle">Revenu</string>
+											<string key="NSTitle">Einkommen</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
@@ -153,7 +153,7 @@
 										</object>
 										<object class="NSMenuItem" id="174699140">
 											<reference key="NSMenu" ref="396558299"/>
-											<string key="NSTitle">Dépense</string>
+											<string key="NSTitle">Ausgaben</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
@@ -179,7 +179,7 @@
 							<object class="NSButtonCell" key="NSCell" id="491909255">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Enregistrer</string>
+								<string key="NSContents">Ok</string>
 								<reference key="NSSupport" ref="120967100"/>
 								<reference key="NSControlView" ref="724026879"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -199,7 +199,7 @@
 							<object class="NSButtonCell" key="NSCell" id="195461913">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="120967100"/>
 								<reference key="NSControlView" ref="684215650"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -322,7 +322,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="27387351">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">138412032</int>
-								<string key="NSContents">Détails de compte</string>
+								<string key="NSContents">Kontodetails</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">18</double>
@@ -347,7 +347,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="269787029">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Nom</string>
+								<string key="NSContents">Name</string>
 								<object class="NSFont" key="NSSupport" id="7421729">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">11</double>
@@ -387,7 +387,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="363304189">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents"># Compte</string>
+								<string key="NSContents">Konto #</string>
 								<reference key="NSSupport" ref="7421729"/>
 								<reference key="NSControlView" ref="804230384"/>
 								<reference key="NSBackgroundColor" ref="458396315"/>
@@ -406,7 +406,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="203884959">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Type</string>
+								<string key="NSContents">Typ</string>
 								<reference key="NSSupport" ref="7421729"/>
 								<reference key="NSControlView" ref="672335026"/>
 								<reference key="NSBackgroundColor" ref="458396315"/>

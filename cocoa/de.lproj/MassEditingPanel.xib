@@ -97,7 +97,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="74602058">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents"># Chèque</string>
+								<string key="NSContents">Scheck #</string>
 								<object class="NSFont" key="NSSupport" id="457994295">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">11</double>
@@ -146,7 +146,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="764825935">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Wechselnehmer</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="449851290"/>
@@ -183,7 +183,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="415244119">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Description</string>
+								<string key="NSContents">Beschreibung</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="239631451"/>
@@ -220,7 +220,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="884309073">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Date</string>
+								<string key="NSContents">Datum</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<reference key="NSControlView" ref="828192456"/>
 								<reference key="NSBackgroundColor" ref="958408075"/>
@@ -336,7 +336,7 @@
 							<object class="NSButtonCell" key="NSCell" id="194879676">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="936344112"/>
 								<reference key="NSControlView" ref="519658114"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -356,7 +356,7 @@
 							<object class="NSButtonCell" key="NSCell" id="153225795">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Enregistrer</string>
+								<string key="NSContents">Ok</string>
 								<reference key="NSSupport" ref="936344112"/>
 								<reference key="NSControlView" ref="416533211"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -415,7 +415,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="418074417">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Cp. crédités</string>
+								<string key="NSContents">von</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="408663519"/>
@@ -474,7 +474,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="177147695">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Cp. débités</string>
+								<string key="NSContents">nach</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="823863895"/>
@@ -533,7 +533,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1018043125">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Montant</string>
+								<string key="NSContents">Betrag</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="436977500"/>
@@ -553,7 +553,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="9289965">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">138412032</int>
-								<string key="NSContents">Édition multiple</string>
+								<string key="NSContents">Mehrfachbearbeitung</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">18</double>

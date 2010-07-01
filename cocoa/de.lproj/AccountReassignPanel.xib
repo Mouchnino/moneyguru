@@ -60,7 +60,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="697983894">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Vous supprimez un compte qui n'est pas vide. Sélectionnez un compte pour réassigner les transactions.</string>
+								<string key="NSContents">Sie sind dabei ein nicht leeres Konto zu löschen. Wählen sie ein anderes Konto aus, um ihre Transaktionen zu übertragen.</string>
 								<object class="NSFont" key="NSSupport" id="162608878">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -106,7 +106,7 @@
 								<int key="NSPeriodicInterval">75</int>
 								<object class="NSMenuItem" key="NSMenuItem" id="816939552">
 									<reference key="NSMenu" ref="947951836"/>
-									<string key="NSTitle">Aucun compte</string>
+									<string key="NSTitle">Kein Konto</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -145,7 +145,7 @@
 							<object class="NSButtonCell" key="NSCell" id="207178871">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Continuer</string>
+								<string key="NSContents">Weiter</string>
 								<reference key="NSSupport" ref="162608878"/>
 								<reference key="NSControlView" ref="480130376"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -165,7 +165,7 @@
 							<object class="NSButtonCell" key="NSCell" id="719758998">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Annuler</string>
+								<string key="NSContents">Abbrechen</string>
 								<reference key="NSSupport" ref="162608878"/>
 								<reference key="NSControlView" ref="893417614"/>
 								<int key="NSButtonFlags">-2038284033</int>
