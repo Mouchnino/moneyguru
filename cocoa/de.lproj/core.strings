@@ -1,5 +1,5 @@
 /* core/app.py:36 */
-"In the demo version, documents with more than 100 transactions cannot be saved." = "Es ist nicht möglich mehr als 100 Transaktionen in der kostenlosen Testversion zusichern";
+"In the demo version, documents with more than 100 transactions cannot be saved." = "Es ist nicht möglich mehr als 100 Transaktionen in der kostenlosen Testversion zu sichern";
 
 /* core/document.py:169 */
 "Add transaction" = "Transaktion hinzufügen";
@@ -71,7 +71,7 @@
 "Import" = "Importieren";
 
 /* core/gui/account_pie_chart.py:78 */
-"Assets" = "Activa";
+"Assets" = "Aktiva";
 
 /* core/gui/account_pie_chart.py:83 */
 "Liabilities" = "Passiva";
@@ -89,7 +89,7 @@
 "{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} von {1} ausgewählt. Haben: {2} Soll: {3}";
 
 /* core/gui/balance_sheet.py:63 */
-"ASSETS" = "ACTIVA";
+"ASSETS" = "AKTIVA";
 
 /* core/gui/balance_sheet.py:64 */
 "LIABILITIES" = "PASSIVA";
@@ -110,7 +110,7 @@
 "Description" = "Beschreibung";
 
 /* core/gui/csv_options.py:22 */
-"Payee" = "Wechselnehmer";
+"Payee" = "Empfänger";
 
 /* core/gui/csv_options.py:23 */
 "Check #" = "Scheck #";
@@ -128,10 +128,10 @@
 "Decrease" = "Soll";
 
 /* core/gui/csv_options.py:28 */
-"Currency" = "Devise";
+"Currency" = "Währung";
 
 /* core/gui/csv_options.py:29 */
-"Transaction ID" = "Transaktionsidentität";
+"Transaction ID" = "Transaktionsnummer";
 
 /* core/gui/csv_options.py:104 core/gui/csv_options.py:228 */
 /* core/gui/csv_options.py:248 */
@@ -143,7 +143,7 @@
 /* core/gui/entry_print.py:23 core/gui/schedule_table.py:78 */
 /* core/gui/schedule_table.py:80 core/gui/transaction_print.py:23 */
 /* core/gui/transaction_table.py:137 core/gui/transaction_table.py:140 */
-"Unassigned" = "nicht übertragbar";
+"Unassigned" = "nicht zugeordnet";
 
 /* core/gui/entry_table.py:433 */
 "Previous Balance" = "vorheriger Saldo";
@@ -188,13 +188,13 @@
 "TOTAL " = "TOTAL ";
 
 /* core/gui/report.py:250 */
-"The account '{0}' already exists." = "Das Konto '{0}' existiert schon.";
+"The account '{0}' already exists." = "Das Konto '{0}' existiert bereits.";
 
 /* core/gui/transaction_view.py:46 */
 "{0} out of {1} selected. Amount: {2}" = "{0} von {1} ausgewählt. Betrag: {2}";
 
 /* core/loader/csv.py:85 */
-"The Date and Amount columns must be set." = "Die Datums-und Betragspalte muss definiert werden.";
+"The Date and Amount columns must be set." = "Es müssen Werte für Datum und Betrag eingegeben werden.";
 
 /* core/loader/csv.py:100 */
 "The Date column has been set on a column that doesn't contain dates." = "Die Datumsspalte wurde für eine Spalte ausgewählt, die keine Daten enthählt.";
