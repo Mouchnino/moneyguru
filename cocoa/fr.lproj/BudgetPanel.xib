@@ -741,6 +741,14 @@
 					</object>
 					<int key="connectionID">317</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="1005290599"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">318</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1321,7 +1329,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">317</int>
+			<int key="maxID">318</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1421,13 +1429,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">support/NSCellAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
