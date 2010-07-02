@@ -36,7 +36,7 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
-        langindex = {'fr_FR': 1, 'de_DE': 2}.get(self.app.prefs.language, 0)
+        langindex = {'fr': 1, 'de': 2}.get(self.app.prefs.language, 0)
         self.languageComboBox.setCurrentIndex(langindex)
     
     def save(self):
@@ -49,11 +49,11 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
             appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
-        langs = ['en_US', 'fr_FR', 'de_DE']
+        langs = ['en', 'fr', 'de']
         lang = langs[self.languageComboBox.currentIndex()]
         oldlang = self.app.prefs.language
         if oldlang not in langs:
-            oldlang = 'en_US'
+            oldlang = 'en'
         if lang != oldlang:
             QMessageBox.information(self, "", tr("moneyGuru has to restart for language changes to take effect"))
         self.app.prefs.language = lang

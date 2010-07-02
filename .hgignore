@@ -20,6 +20,6 @@ qt/dist
 qt/install
 qt/warnmg.txt
 qt/logdict*.log
-qt/lang/fr_FR.qm
-qt/lang/de_DE.qm
+qt/lang/fr.qm
+qt/lang/de.qm
 help/moneyguru_help
