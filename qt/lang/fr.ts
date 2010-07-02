@@ -490,6 +490,43 @@
         <translation>Voulez-vous sauvegarder vos changement avant de continuer?</translation>
     </message>
 		
+		<!-- Date Range Selector -->
+		<message>
+        <source>Next</source>
+        <translation>Suivant</translation>
+    </message>
+		<message>
+        <source>Previous</source>
+        <translation>Précédent</translation>
+    </message>
+		<message>
+        <source>Today</source>
+        <translation>Aujourd'hui</translation>
+    </message>
+		<message>
+        <source>Month</source>
+        <translation>Mois</translation>
+    </message>
+		<message>
+        <source>Quarter</source>
+        <translation>Trimestre</translation>
+    </message>
+		<message>
+        <source>Year</source>
+        <translation>Année</translation>
+    </message>
+		<message>
+        <source>Year To Date</source>
+        <translation>Année en cours</translation>
+    </message>
+		<message>
+        <source>Running Year</source>
+        <translation>Année flottante</translation>
+    </message>
+		<message>
+        <source>Custom...</source>
+        <translation>Personnalisé...</translation>
+    </message>
 		<!-- Filters -->
 		<message>
         <source>All</source>

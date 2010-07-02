@@ -11,6 +11,7 @@ from PyQt4.QtCore import QObject
 from PyQt4.QtGui import QMenu, QAction
 
 from core.gui.date_range_selector import DateRangeSelector as DateRangeSelectorModel
+from core.trans import tr
 
 class DateRangeSelector(QObject):
     def __init__(self, mainwindow, view):
@@ -22,34 +23,34 @@ class DateRangeSelector(QObject):
     
     def _setupUi(self):
         # Create actions
-        self.actionNext = QAction("Next", self)
+        self.actionNext = QAction(tr("Next"), self)
         self.actionNext.setShortcut("Ctrl+Alt+]")
         self.actionNext.triggered.connect(self.model.select_next_date_range)
-        self.actionPrevious = QAction("Previous", self)
+        self.actionPrevious = QAction(tr("Previous"), self)
         self.actionPrevious.setShortcut("Ctrl+Alt+[")
         self.actionPrevious.triggered.connect(self.model.select_prev_date_range)
-        self.actionToday = QAction("Today", self)
+        self.actionToday = QAction(tr("Today"), self)
         self.actionToday.setShortcut("Ctrl+Alt+T")
         self.actionToday.triggered.connect(self.model.select_today_date_range)
-        self.actionChangeToMonth = QAction("Month", self)
+        self.actionChangeToMonth = QAction(tr("Month"), self)
         self.actionChangeToMonth.setShortcut("Ctrl+Alt+1")
         self.actionChangeToMonth.triggered.connect(self.model.select_month_range)
-        self.actionChangeToQuarter = QAction("Quarter", self)
+        self.actionChangeToQuarter = QAction(tr("Quarter"), self)
         self.actionChangeToQuarter.setShortcut("Ctrl+Alt+2")
         self.actionChangeToQuarter.triggered.connect(self.model.select_quarter_range)
-        self.actionChangeToYear = QAction("Year", self)
+        self.actionChangeToYear = QAction(tr("Year"), self)
         self.actionChangeToYear.setShortcut("Ctrl+Alt+3")
         self.actionChangeToYear.triggered.connect(self.model.select_year_range)
-        self.actionChangeToYearToDate = QAction("Year to date", self)
+        self.actionChangeToYearToDate = QAction(tr("Year To Date"), self)
         self.actionChangeToYearToDate.setShortcut("Ctrl+Alt+4")
         self.actionChangeToYearToDate.triggered.connect(self.model.select_year_to_date_range)
-        self.actionChangeToRunningYear = QAction("Running Year", self)
+        self.actionChangeToRunningYear = QAction(tr("Running Year"), self)
         self.actionChangeToRunningYear.setShortcut("Ctrl+Alt+5")
         self.actionChangeToRunningYear.triggered.connect(self.model.select_running_year_range)
-        self.actionChangeToAllTransactions = QAction("All Transactions", self)
+        self.actionChangeToAllTransactions = QAction(tr("All Transactions"), self)
         self.actionChangeToAllTransactions.setShortcut("Ctrl+Alt+6")
         self.actionChangeToAllTransactions.triggered.connect(self.model.select_all_transactions_range)
-        self.actionChangeToCustom = QAction("Custom...", self)
+        self.actionChangeToCustom = QAction(tr("Custom..."), self)
         self.actionChangeToCustom.setShortcut("Ctrl+Alt+7")
         self.actionChangeToCustom.triggered.connect(self.model.select_custom_date_range)
         self.actionChangeToCustom1 = QAction("Custom1", self)

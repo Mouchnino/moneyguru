@@ -486,6 +486,44 @@
         <translation>Möchten Sie Ihre Änderungen sparen, bevor Sie fortfahren?</translation>
     </message>
 		
+		<!-- Date Range Selector -->
+		<message>
+        <source>Next</source>
+        <translation>nächster Zeitraum</translation>
+    </message>
+		<message>
+        <source>Previous</source>
+        <translation>vorheriger Zeitraum</translation>
+    </message>
+		<message>
+        <source>Today</source>
+        <translation>heutiger Zeitraum</translation>
+    </message>
+		<message>
+        <source>Month</source>
+        <translation>Monat</translation>
+    </message>
+		<message>
+        <source>Quarter</source>
+        <translation>Quartal</translation>
+    </message>
+		<message>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+		<message>
+        <source>Year To Date</source>
+        <translation>Ab Jahresbeginn bis heute</translation>
+    </message>
+		<message>
+        <source>Running Year</source>
+        <translation>laufendes Jahr</translation>
+    </message>
+		<message>
+        <source>Custom...</source>
+        <translation>Benutzerdefinierter Zeitraum...</translation>
+    </message>
+    
 		<!-- Filters -->
 		<message>
         <source>All</source>
