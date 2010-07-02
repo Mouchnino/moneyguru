@@ -6,4 +6,4 @@ moneyGuru has a very efficient [navigation](basics.htm) and [editing](edition.ht
 
 moneyGuru is loosely based on the [double-entry accounting](http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) system, where every account -- including income and expenses -- is a first class account, not just a category. It allows for a lot of flexibility in finance management strategies (such as [cash management](cash.htm)).
 
-moneyGuru's support for [currencies](currencies.htm) is way ahead all competitors. Where those who bother with currencies at all do it half-heartedly with poorly thought out designs, currencies are at the core of moneyGuru's design.
+moneyGuru has very strong support for [currencies](currencies.htm). Unlike most other application, currency information is defined at the amount level rather than at the account level. This gives you a lot of flexibility for transactions with multiple currencies.

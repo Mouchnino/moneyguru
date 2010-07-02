@@ -4,7 +4,7 @@ moneyGuru is a personal finance management and planning tool. With it, you can e
 
 ### How much does it cost?
 
-The price for moneyGuru is 29.95. You can buy moneyGuru at the [Hardcoded Software purchase page.](http://www.hardcoded.net/purchase.htm)
+The price for moneyGuru is 29.95 USD. You can buy moneyGuru at the [Hardcoded Software purchase page.](http://www.hardcoded.net/purchase.htm)
 
 ### What makes it better than other finance management applications?
 
