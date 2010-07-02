@@ -323,6 +323,38 @@
         <source>Every last %s of the month</source>
         <translation>Chaque dernier %s du mois</translation>
     </message>
+    <message>
+        <source>day</source>
+        <translation>jour</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translation>jours</translation>
+    </message>
+    <message>
+        <source>week</source>
+        <translation>semaine</translation>
+    </message>
+    <message>
+        <source>weeks</source>
+        <translation>semaines</translation>
+    </message>
+    <message>
+        <source>month</source>
+        <translation>mois</translation>
+    </message>
+    <message>
+        <source>months</source>
+        <translation>mois</translation>
+    </message>
+    <message>
+        <source>year</source>
+        <translation>année</translation>
+    </message>
+    <message>
+        <source>years</source>
+        <translation>années</translation>
+    </message>
 
     <!-- Main Window -->
     <message>
@@ -1281,6 +1313,18 @@
         <location filename="preferences_panel.ui" line="246"/>
         <source>Automatically place decimals when typing</source>
         <translation>Placement automatique de décimale</translation>
+    </message>
+		<message>
+        <source>English</source>
+        <translation>Anglais</translation>
+    </message>
+		<message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+		<message>
+        <source>German</source>
+        <translation>Allemand</translation>
     </message>
 </context>
 <context>

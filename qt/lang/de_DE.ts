@@ -1305,6 +1305,18 @@
         <source>Automatically place decimals when typing</source>
         <translation>Dezimalstellen automatisch setzen</translation>
     </message>
+    <message>
+        <source>English</source>
+        <translation>Englisch</translation>
+    </message>
+		<message>
+        <source>French</source>
+        <translation>Französisch</translation>
+    </message>
+		<message>
+        <source>German</source>
+        <translation>Deutsch</translation>
+    </message>
 </context>
 <context>
     <name>SchedulePanel</name>

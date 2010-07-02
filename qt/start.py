@@ -12,14 +12,15 @@ import sys
 import gc
 import locale
 
-from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale
+from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
 import core.trans
 from qtlib.error_report_dialog import install_excepthook
 import mg_rc
 
-SUPPORTED_LOCALES = ['fr_FR', 'de_DE']
+LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
+SUPPORTED_LOCALES = LANG2LOCALENAME.values()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -35,15 +36,19 @@ if __name__ == "__main__":
     style = textStream.readAll()
     stylesheetFile.close()
     app.setStyleSheet(style)
-    localeName = QLocale.system().name()
-    if localeName in SUPPORTED_LOCALES:
+    settings = QSettings()
+    lang = unicode(settings.value('Language').toString())
+    if not lang:
+        localeName = unicode(QLocale.system().name())[:2]
+        lang = LANG2LOCALENAME.get(localeName, 'en_US')
+    if lang in SUPPORTED_LOCALES:
         # for date formatting
-        locale.setlocale(locale.LC_ALL, str(localeName))
+        locale.setlocale(locale.LC_ALL, str(lang))
         qtr1 = QTranslator()
-        qtr1.load(':/qt_%s' % localeName)
+        qtr1.load(':/qt_%s' % lang)
         app.installTranslator(qtr1)
         qtr2 = QTranslator()
-        qtr2.load(':/%s' % localeName)
+        qtr2.load(':/%s' % lang)
         app.installTranslator(qtr2)
         def qt_tr(s):
             return unicode(app.translate('core', s, None))

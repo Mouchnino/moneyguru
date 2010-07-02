@@ -31,6 +31,7 @@ class Preferences(PreferencesBase):
         self.recentDocuments = filter(op.exists, self.recentDocuments)
         self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         self.nativeCurrency = get('NativeCurrency', self.nativeCurrency)
+        self.language = get('Language', self.language)
         
         self.networthColumnWidths = get('NetworthColumnWidths', self.networthColumnWidths)
         self.profitColumnWidths = get('ProfitColumnWidths', self.profitColumnWidths)
@@ -72,6 +73,7 @@ class Preferences(PreferencesBase):
         self.recentDocuments = []
         self.showScheduleScopeDialog = True # XXX Push down this pref at the model level
         self.nativeCurrency = 'USD'
+        self.language = ''
         
         self.networthColumnWidths = None
         self.profitColumnWidths = None
@@ -111,6 +113,7 @@ class Preferences(PreferencesBase):
         set_('RecentDocuments', self.recentDocuments)
         set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         set_('NativeCurrency', self.nativeCurrency)
+        set_('Language', self.language)
         
         set_('NetworthColumnWidths', self.networthColumnWidths)
         set_('ProfitColumnWidths', self.profitColumnWidths)
