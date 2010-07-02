@@ -146,7 +146,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="764825935">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Wechselnehmer</string>
+								<string key="NSContents">Empfänger</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="449851290"/>
@@ -600,7 +600,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="33808762">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Devise</string>
+								<string key="NSContents">Währung</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="442962121"/>

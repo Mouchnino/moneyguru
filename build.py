@@ -27,19 +27,23 @@ def move(src, dst):
     print 'Moving %s --> %s' % (src, dst)
     os.rename(src, dst)
 
+def build_all_cocoa_locs(basedir):
+    locs = [name for name in os.listdir(basedir) if name.endswith('.lproj')]
+    locs.remove('en.lproj')
+    model_path = op.join(basedir, 'en.lproj')
+    for loc in locs:
+        loc_path = op.join(basedir, loc)
+        print "Building {0} localizations".format(loc_path)
+        build_cocoa_localization(model_path, loc_path)
+
 def build_cocoa(dev):
     if not dev:
         print "Building help index"
         help_path = op.abspath('help/moneyguru_help')
         os.system('open -a /Developer/Applications/Utilities/Help\\ Indexer.app {0}'.format(help_path))
     
-    locs = [name for name in os.listdir('cocoa') if name.endswith('.lproj')]
-    locs.remove('en.lproj')
-    model_path = op.join('cocoa', 'en.lproj')
-    for loc in locs:
-        print "Building {0} cocoa localizations".format(loc)
-        loc_path = op.join('cocoa', loc)
-        build_cocoa_localization(model_path, loc_path)
+    build_all_cocoa_locs('cocoalib')
+    build_all_cocoa_locs('cocoa')
         
     print "Building mg_cocoa.plugin"
     if op.exists('build'):

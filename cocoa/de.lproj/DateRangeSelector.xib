@@ -127,7 +127,7 @@
 									</object>
 									<object class="NSMenuItem" id="577720132">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Seit Jahresbeginn bis heute</string>
+										<string key="NSTitle">Ab Jahresbeginn bis heute</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -159,7 +159,7 @@
 									</object>
 									<object class="NSMenuItem" id="705716877">
 										<reference key="NSMenu" ref="1033883689"/>
-										<string key="NSTitle">Personalisierter Zeitraum...</string>
+										<string key="NSTitle">Benutzerdefinierter Zeitraum...</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>

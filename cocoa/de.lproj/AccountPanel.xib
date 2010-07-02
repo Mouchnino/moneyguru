@@ -107,7 +107,7 @@
 								<int key="NSPeriodicInterval">75</int>
 								<object class="NSMenuItem" key="NSMenuItem" id="465161225">
 									<reference key="NSMenu" ref="396558299"/>
-									<string key="NSTitle">Activa</string>
+									<string key="NSTitle">Aktiva</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -179,7 +179,7 @@
 							<object class="NSButtonCell" key="NSCell" id="491909255">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Ok</string>
+								<string key="NSContents">Speichern</string>
 								<reference key="NSSupport" ref="120967100"/>
 								<reference key="NSControlView" ref="724026879"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -425,7 +425,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="120759992">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Devise</string>
+								<string key="NSContents">Währung</string>
 								<reference key="NSSupport" ref="7421729"/>
 								<reference key="NSControlView" ref="411170490"/>
 								<reference key="NSBackgroundColor" ref="458396315"/>

@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 308}, {362, 202}}</string>
 				<int key="NSWTFlags">1610612736</int>
-				<string key="NSWindowTitle">Personalisierter Zeitraum</string>
+				<string key="NSWindowTitle">Benutzerdefinierter Zeitraum</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>

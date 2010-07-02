@@ -265,7 +265,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="74103763">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">71435264</int>
-													<string key="NSContents">Wechselnehmer</string>
+													<string key="NSContents">Empfänger</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<reference key="NSControlView" ref="75804444"/>
 													<reference key="NSBackgroundColor" ref="459028066"/>
@@ -339,7 +339,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="727354944">
 													<int key="NSCellFlags">67239488</int>
 													<int key="NSCellFlags2">138544128</int>
-													<string key="NSContents">Sie können Tabs mit ⌘⌥→ und ⌘⌥← navigieren</string>
+													<string key="NSContents">Sie können zwischen den Tabs mit ⌘⌥→ und ⌘⌥← navigieren</string>
 													<reference key="NSSupport" ref="31487456"/>
 													<string key="NSPlaceholderString">No entry selected</string>
 													<reference key="NSControlView" ref="1031419791"/>
@@ -411,7 +411,7 @@
 																				<double key="NSSize">11</double>
 																				<int key="NSfFlags">16</int>
 																			</object>
-																			<string key="NSPlaceholderString">nicht übertragbar</string>
+																			<string key="NSPlaceholderString">nicht zugeordnet</string>
 																			<reference key="NSControlView" ref="352860623"/>
 																			<object class="NSColor" key="NSBackgroundColor" id="747064107">
 																				<int key="NSColorSpace">6</int>
@@ -648,7 +648,7 @@
 												<object class="NSButtonCell" key="NSCell" id="693600660">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">134348800</int>
-													<string key="NSContents">Devisensaldo</string>
+													<string key="NSContents">Währungssaldo</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="51420124"/>
 													<int key="NSButtonFlags">-2038284033</int>

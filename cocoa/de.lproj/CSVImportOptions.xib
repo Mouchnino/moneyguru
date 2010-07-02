@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 106}, {510, 404}}</string>
 				<int key="NSWTFlags">1610612736</int>
-				<string key="NSWindowTitle">CSV Importmöglichkeiten</string>
+				<string key="NSWindowTitle">CSV Import Optionen</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -61,7 +61,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="370812710">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Bestimmen sie welche CSV Spalte zu welchem Transaktionsfeld gehört. Sie müssen ebenfalls sämtliche Importspalten entwählen, welche keine Transaktionen repräsentieren (Titel, Fußzeile, Kommentare).</string>
+								<string key="NSContents">Bestimmen Sie, welches Feld der CSV Datei zu welchem Transaktionsfeld gehört. Sie müssen ebenfalls sämtliche Zeilen abwählen, die keine Transaktionen repräsentieren (z.B.: Titel, Fußzeile, Kommentare).</string>
 								<object class="NSFont" key="NSSupport" id="560826899">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">12</double>
@@ -261,7 +261,7 @@
 							<object class="NSButtonCell" key="NSCell" id="993575846">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Importieren</string>
+								<string key="NSContents">Importieren fortsetzen</string>
 								<object class="NSFont" key="NSSupport" id="150058320">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -473,7 +473,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1032612267">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">71304192</int>
-								<string key="NSContents">Satzzeichen:</string>
+								<string key="NSContents">Feldtrenner:</string>
 								<reference key="NSSupport" ref="150058320"/>
 								<reference key="NSControlView" ref="679876190"/>
 								<reference key="NSBackgroundColor" ref="973909894"/>
@@ -516,7 +516,7 @@
 							<object class="NSButtonCell" key="NSCell" id="355975532">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Rescannen</string>
+								<string key="NSContents">Neu einlesen</string>
 								<reference key="NSSupport" ref="560826899"/>
 								<reference key="NSControlView" ref="918352706"/>
 								<int key="NSButtonFlags">-2038152961</int>
@@ -576,7 +576,7 @@
 					</object>
 					<object class="NSMenuItem" id="1048949140">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Wechselnehmer</string>
+						<string key="NSTitle">Empfänger</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -630,7 +630,7 @@
 					</object>
 					<object class="NSMenuItem" id="988100136">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Devise</string>
+						<string key="NSTitle">Währung</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>
@@ -639,7 +639,7 @@
 					</object>
 					<object class="NSMenuItem" id="658095161">
 						<reference key="NSMenu" ref="944922818"/>
-						<string key="NSTitle">Transaktionsidentität</string>
+						<string key="NSTitle">Transaktionsnummer</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="443050752"/>

@@ -243,7 +243,7 @@
 							<object class="NSButtonCell" key="NSCell" id="855578087">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Ok</string>
+								<string key="NSContents">Speichern</string>
 								<reference key="NSSupport" ref="426082981"/>
 								<reference key="NSControlView" ref="962963534"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -441,7 +441,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="648542514">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Ziel</string>
+								<string key="NSContents">Zielkonto</string>
 								<reference key="NSSupport" ref="31487456"/>
 								<reference key="NSControlView" ref="1022414717"/>
 								<reference key="NSBackgroundColor" ref="459028066"/>

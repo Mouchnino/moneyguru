@@ -253,7 +253,7 @@
 											<bool key="EncodedWithXMLCoder">YES</bool>
 											<object class="NSMenuItem" id="241499059">
 												<reference key="NSMenu" ref="806621157"/>
-												<string key="NSTitle">Einträge löchen</string>
+												<string key="NSTitle">Einträge löschen</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
@@ -354,7 +354,7 @@
 								</object>
 								<object class="NSMenuItem" id="661541229">
 									<reference key="NSMenu" ref="882329256"/>
-									<string key="NSTitle">Papierformat...</string>
+									<string key="NSTitle">Seiteneinstellungen...</string>
 									<string key="NSKeyEquiv">P</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -829,7 +829,7 @@
 								</object>
 								<object class="NSMenuItem" id="707732137">
 									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Personalisierter Zeitraum</string>
+									<string key="NSTitle">Benutzerdefinierter Zeitraum</string>
 									<string key="NSKeyEquiv">7</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1001,7 +1001,7 @@
 								</object>
 								<object class="NSMenuItem" id="330942111">
 									<reference key="NSMenu" ref="505591318"/>
-									<string key="NSTitle">Hardcoded Software website</string>
+									<string key="NSTitle">Hardcoded Software Website</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1052,7 +1052,7 @@
 								<reference key="NSControlView" ref="569786493"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="578633840">
+								<object class="NSCustomResource" key="NSNormalImage" id="685870577">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSSwitch</string>
 								</object>
@@ -1240,7 +1240,7 @@
 								<reference key="NSControlView" ref="37537141"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="578633840"/>
+								<reference key="NSNormalImage" ref="685870577"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -1262,7 +1262,7 @@
 								<reference key="NSControlView" ref="125175313"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="578633840"/>
+								<reference key="NSNormalImage" ref="685870577"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -1598,7 +1598,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="337427705">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4195328</int>
-								<string key="NSContents">Minute(n) (0 = inaktif)</string>
+								<string key="NSContents">Minute(n) (0 = inaktiv)</string>
 								<reference key="NSSupport" ref="23706826"/>
 								<reference key="NSControlView" ref="685349008"/>
 								<reference key="NSBackgroundColor" ref="570653158"/>

@@ -329,7 +329,7 @@
 										<object class="NSButtonCell" key="NSCell" id="129569263">
 											<int key="NSCellFlags">67239424</int>
 											<int key="NSCellFlags2">134217728</int>
-											<string key="NSContents">Tausch</string>
+											<string key="NSContents">Tauschen</string>
 											<reference key="NSSupport" ref="141398786"/>
 											<reference key="NSControlView" ref="687569255"/>
 											<int key="NSButtonFlags">-2038284033</int>
@@ -378,7 +378,7 @@
 						<object class="NSTextFieldCell" key="NSTitleCell">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Inkorrekte Felder? Tauschen sie sie aus!</string>
+							<string key="NSContents">Inkorrekte Felder? Tauschen Sie sie aus!</string>
 							<object class="NSFont" key="NSSupport" id="26">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -547,7 +547,7 @@
 										<object class="NSTableHeaderCell" key="NSHeaderCell">
 											<int key="NSCellFlags">75628096</int>
 											<int key="NSCellFlags2">2048</int>
-											<string key="NSContents">Wechselnehmer</string>
+											<string key="NSContents">Empfänger</string>
 											<reference key="NSSupport" ref="26"/>
 											<reference key="NSBackgroundColor" ref="216649102"/>
 											<reference key="NSTextColor" ref="766241593"/>

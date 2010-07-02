@@ -285,7 +285,7 @@
 												<object class="NSTableHeaderCell" key="NSHeaderCell">
 													<int key="NSCellFlags">75628096</int>
 													<int key="NSCellFlags2">2048</int>
-													<string key="NSContents">Ziel</string>
+													<string key="NSContents">Zielkonto</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSBackgroundColor" ref="994731422"/>
 													<reference key="NSTextColor" ref="102853526"/>

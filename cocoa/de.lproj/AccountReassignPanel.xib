@@ -60,7 +60,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="697983894">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Sie sind dabei ein nicht leeres Konto zu löschen. Wählen sie ein anderes Konto aus, um ihre Transaktionen zu übertragen.</string>
+								<string key="NSContents">Sie sind dabei ein nicht leeres Konto zu löschen. Wählen sie ein anderes Konto aus, um ihre Transaktionen dorthin zu übertragen.</string>
 								<object class="NSFont" key="NSSupport" id="162608878">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
