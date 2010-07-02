@@ -8,6 +8,7 @@
 
 from __future__ import division, unicode_literals
 
+import locale
 import re
 from calendar import monthrange
 from datetime import date, datetime, timedelta
@@ -338,4 +339,4 @@ def strftime(fmt, date):
     Under some locales, the result of strftime() can contain non-ascii letters, resulting in a
     crash when mixed with unicode string.
     """
-    return unicode(date.strftime(fmt), 'utf-8', 'replace')
+    return unicode(date.strftime(fmt), locale.getpreferredencoding(), 'replace')
