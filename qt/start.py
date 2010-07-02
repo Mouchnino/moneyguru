@@ -19,8 +19,10 @@ import core.trans
 from qtlib.error_report_dialog import install_excepthook
 import mg_rc
 
-LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
-SUPPORTED_LOCALES = LANG2LOCALENAME.values()
+if sys.platform == 'win32':
+    LANG2LOCALENAME = {'fr': 'fra_fra', 'de': 'deu_deu'}
+else:
+    LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -39,11 +41,11 @@ if __name__ == "__main__":
     settings = QSettings()
     lang = unicode(settings.value('Language').toString())
     if not lang:
-        localeName = unicode(QLocale.system().name())[:2]
-        lang = LANG2LOCALENAME.get(localeName, 'en_US')
-    if lang in SUPPORTED_LOCALES:
+        lang = unicode(QLocale.system().name())[:2]
+    if lang in LANG2LOCALENAME:
         # for date formatting
-        locale.setlocale(locale.LC_ALL, str(lang))
+        localeName = LANG2LOCALENAME[lang]
+        locale.setlocale(locale.LC_ALL, str(localeName))
         qtr1 = QTranslator()
         qtr1.load(':/qt_%s' % lang)
         app.installTranslator(qtr1)
