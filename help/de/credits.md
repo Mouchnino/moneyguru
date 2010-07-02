@@ -13,19 +13,19 @@ Das beste der besten
 <http://www.python.org>
 
 **PyObjC, Python-to-Cocoa bridge**
-Für die Mac OS X Version
+FÃ¼r die Mac OS X Version
 <http://pyobjc.sourceforge.net>
 
 **Sparkle, Auto-update library**
-Für die Mac OS X Version
+FÃ¼r die Mac OS X Version
 <http://andymatuschak.org/pages/sparkle>
 
 **AMButtonBar, Filter bar component**
-Für die Mac OS X Version
+FÃ¼r die Mac OS X Version
 <http://www.harmless.de>
 
 **PSMTabBarControl, Tab bar component**
-Für die Mac OS X Version
+FÃ¼r die Mac OS X Version
 <http://www.positivespinmedia.com>
 
 **Sie, als moneyGuru Benutzer**
