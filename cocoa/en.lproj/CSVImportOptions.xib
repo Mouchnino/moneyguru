@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="25"/>
 			<integer value="2"/>
+			<integer value="25"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -257,7 +257,7 @@
 						<object class="NSButton" id="38600595">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{352, 12}, {144, 32}}</string>
+							<string key="NSFrame">{{327, 12}, {169, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="993575846">
@@ -281,7 +281,7 @@
 						<object class="NSButton" id="44398848">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{256, 12}, {96, 32}}</string>
+							<string key="NSFrame">{{231, 12}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1008521074">
@@ -512,7 +512,7 @@
 						<object class="NSButton" id="918352706">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">265</int>
-							<string key="NSFrame">{{411, 278}, {79, 19}}</string>
+							<string key="NSFrame">{{398, 278}, {92, 19}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="355975532">
@@ -944,10 +944,10 @@
 							<reference ref="537960929"/>
 							<reference ref="151205238"/>
 							<reference ref="38600595"/>
-							<reference ref="44398848"/>
 							<reference ref="177486378"/>
 							<reference ref="918352706"/>
 							<reference ref="679876190"/>
+							<reference ref="44398848"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -1501,13 +1501,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">controllers/MGCSVImportOptions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">support/NSCellAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

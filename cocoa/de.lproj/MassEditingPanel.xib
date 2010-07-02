@@ -356,7 +356,7 @@
 							<object class="NSButtonCell" key="NSCell" id="153225795">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Ok</string>
+								<string key="NSContents">Speichern</string>
 								<reference key="NSSupport" ref="936344112"/>
 								<reference key="NSControlView" ref="416533211"/>
 								<int key="NSButtonFlags">-2038284033</int>

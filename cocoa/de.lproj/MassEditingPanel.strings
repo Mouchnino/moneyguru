@@ -11,7 +11,7 @@
 "20.title" = "Scheck #";
 
 /* Class = "NSButtonCell"; title = "Save"; ObjectID = "58"; */
-"58.title" = "Ok";
+"58.title" = "Speichern";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "59"; */
 "59.title" = "Abbrechen";

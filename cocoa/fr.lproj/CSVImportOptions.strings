@@ -9,7 +9,7 @@
 "10.headerCell.title" = "Imp.";
 
 /* Class = "NSButtonCell"; title = "Continue Import"; ObjectID = "19"; */
-"19.title" = "Importer";
+"19.title" = "Continuer d'importer";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "21"; */
 "21.title" = "Annuler";
