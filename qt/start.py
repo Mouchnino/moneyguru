@@ -19,7 +19,7 @@ import core.trans
 from qtlib.error_report_dialog import install_excepthook
 import mg_rc
 
-SUPPORTED_LOCALES = ['fr_FR']
+SUPPORTED_LOCALES = ['fr_FR', 'de_DE']
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

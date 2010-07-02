@@ -21,4 +21,5 @@ qt/install
 qt/warnmg.txt
 qt/logdict*.log
 qt/lang/fr_FR.qm
+qt/lang/de_DE.qm
 help/moneyguru_help

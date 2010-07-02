@@ -5,6 +5,8 @@
     <file alias="stylesheet_lnx">../data/stylesheet_lnx.css</file>
     <file alias="fr_FR.qm">lang/fr_FR.qm</file>
     <file alias="qt_fr_FR.qm">lang/qt_fr_FR.qm</file>
+    <file alias="de_DE.qm">lang/de_DE.qm</file>
+    <file alias="qt_de_DE.qm">lang/qt_de_DE.qm</file>
     <file alias="logo_big">../images/logo_big.png</file>
     <file alias="logo_small">../images/logo_small.png</file>
     <file alias="balance_sheet_48">../images/balance_sheet_48.png</file>
@@ -13,8 +15,6 @@
     <file alias="entry_table_48">../images/entry_table_48.png</file>
     <file alias="schedules_48">../images/schedules_48.png</file>
     <file alias="budget_48">../images/budget_48.png</file>
-    <file alias="reconcile_48">../images/reconcile_48.png</file>
-    <file alias="reconcile_check_48">../images/reconcile_check_48.png</file>
     <file alias="lock_12">../images/lock_12.png</file>
     <file alias="budget_16">../images/budget_16.png</file>
     <file alias="check_16">../images/check_16.png</file>
