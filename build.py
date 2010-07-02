@@ -17,7 +17,6 @@ import yaml
 
 from hsdocgen import helpgen
 from hsutil.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
-from core.app import Application as MoneyGuruApp
 
 def move(src, dst):
     if not op.exists(src):
@@ -71,6 +70,8 @@ def build_cocoa(dev):
         open(pthpath, 'w').write(op.abspath('.'))
     os.chdir('cocoa')
     print 'Generating Info.plist'
+    # We import this here because we don't want opened module to prevent us replacing .pyd files.
+    from core.app import Application as MoneyGuruApp
     contents = open('InfoTemplate.plist').read()
     contents = contents.replace('{version}', MoneyGuruApp.VERSION)
     open('Info.plist', 'w').write(contents)
