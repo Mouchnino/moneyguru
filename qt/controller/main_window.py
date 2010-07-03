@@ -371,6 +371,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tabBar.addTab('')
         for i in xrange(self.model.pane_count):
             pane_label = self.model.pane_label(i)
+            pane_label = pane_label.replace('&', '&&')
             self.tabBar.setTabText(i, pane_label)
             pane_type = self.model.pane_type(i)
             iconname = PANETYPE2ICON.get(pane_type)
