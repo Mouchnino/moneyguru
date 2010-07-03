@@ -8,3 +8,4 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 HELP_PATH = 'help'
+LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}

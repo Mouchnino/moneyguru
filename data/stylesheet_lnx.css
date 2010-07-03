@@ -2,3 +2,11 @@ RegSubmitDialog {
 	/* Under linux, the dialog is not high enough */
 	min-height: 180px;
 }
+
+/* We want the buttons in the NewView to be aligned on the left
+rather than in the middle.
+*/
+
+QWidget#NewView QPushButton {
+    text-align: left;
+}

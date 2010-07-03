@@ -221,7 +221,7 @@
     </message>
     <message>
         <source>Profit &amp; Loss</source>
-        <translation>Profit &amp; Verlust</translation>
+        <translation>Profit / Verlust</translation>
     </message>
     <message>
         <source>Transactions</source>
@@ -1603,7 +1603,7 @@
     <message>
         <location filename="reg_demo_dialog.ui" line="87"/>
         <source>Try Demo</source>
-        <translation>Probeversion testen</translation>
+        <translation>Ausprobieren</translation>
     </message>
     <message>
         <location filename="reg_demo_dialog.ui" line="100"/>
