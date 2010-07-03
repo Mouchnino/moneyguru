@@ -8,3 +8,4 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 HELP_PATH = '/usr/local/share/moneyguru/help'
+LANG2LOCALENAME = {'fr': 'fr_FR.UTF-8', 'de': 'de_DE.UTF-8'}

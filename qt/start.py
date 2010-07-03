@@ -11,18 +11,15 @@
 import sys
 import gc
 import locale
+import logging
 
 from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
 import core.trans
 from qtlib.error_report_dialog import install_excepthook
+from plat import LANG2LOCALENAME
 import mg_rc
-
-if sys.platform == 'win32':
-    LANG2LOCALENAME = {'fr': 'fra_fra', 'de': 'deu_deu'}
-else:
-    LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -45,7 +42,10 @@ if __name__ == "__main__":
     if lang in LANG2LOCALENAME:
         # for date formatting
         localeName = LANG2LOCALENAME[lang]
-        locale.setlocale(locale.LC_ALL, str(localeName))
+        try:
+            locale.setlocale(locale.LC_ALL, str(localeName))
+        except locale.Error:
+            logging.warning("Couldn't set locale %s", localeName)
         qtr1 = QTranslator()
         qtr1.load(':/qt_%s' % lang)
         app.installTranslator(qtr1)
