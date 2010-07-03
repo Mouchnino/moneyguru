@@ -43,7 +43,7 @@ A budget can be created from the Budgets view. The Repeat fields work exactly li
 
 It's important to remember that setting a Target account **does not** limit your budget to that target account. For example, if you create a 200$ budget for *Clothes*, with a target to your *Checking* account, buying 50$ worth of clothes with your *Credit Card* account will still correctly affect your budget occurrence for that month and make it go down to 150$.
 
-Normally, the best account to use as budget target is your main checking account since it's where the money is coming from and going to in the end. The purpose of the budget target is to let budgets affect your future balances, so if you target, for example, your credit card account, unless you hace a scheduled transaction that regularly pays off the card, your future balance for that credit card will simply grow up indefinitely.
+Normally, the best account to use as budget target is your main checking account since it's where the money is coming from and going to in the end. The purpose of the budget target is to let budgets affect your future balances, so if you target, for example, your credit card account, unless you have a scheduled transaction that regularly pays off the card, your future balance for that credit card will simply grow up indefinitely.
 
 Forecasting
 -----
