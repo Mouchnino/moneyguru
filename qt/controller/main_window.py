@@ -10,7 +10,7 @@
 import sys
 
 from PyQt4.QtCore import QProcess
-from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox
+from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap
 
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
@@ -36,6 +36,15 @@ from .custom_date_range_panel import CustomDateRangePanel
 from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
 from ui.main_window_ui import Ui_MainWindow
+
+PANETYPE2ICON = {
+    PaneType.NetWorth: 'balance_sheet_16',
+    PaneType.Profit: 'income_statement_16',
+    PaneType.Transaction: 'transaction_table_16',
+    PaneType.Account: 'entry_table_16',
+    PaneType.Schedule: 'schedules_16',
+    PaneType.Budget: 'budget_16',
+}
 
 # IMPORTANT NOTE ABOUT TABS
 # Why don't we use a QTabWidget? Because it doesn't allow to add the same widget twice.
@@ -363,6 +372,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for i in xrange(self.model.pane_count):
             pane_label = self.model.pane_label(i)
             self.tabBar.setTabText(i, pane_label)
+            pane_type = self.model.pane_type(i)
+            iconname = PANETYPE2ICON.get(pane_type)
+            if iconname:
+                self.tabBar.setTabIcon(i, QIcon(QPixmap(':/{0}'.format(iconname))))
     
     def refresh_status_line(self):
         self.statusLabel.setText(self.model.status_line)
