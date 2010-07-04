@@ -171,6 +171,18 @@ def app_one_account():
     return app
 
 @with_app(app_one_account)
+def test_rename_opened_account_changes_tab_label(app):
+    # Renaming the account with an opened tab renames that tab.
+    app.mw.show_account()
+    index = app.mw.current_pane_index
+    app.mw.select_balance_sheet()
+    app.clear_gui_calls()
+    app.bsheet.selected.name = 'renamed'
+    app.bsheet.save_edits()
+    eq_(app.mw.pane_label(index), 'renamed')
+    app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'refresh_undo_actions'])
+
+@with_app(app_one_account)
 def test_show_account_opens_a_new_tab(app):
     # Showing an account opens a new tab with the account shown in it.
     app.mw.show_account()

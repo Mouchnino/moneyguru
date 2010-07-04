@@ -6,8 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from collections import namedtuple
-
 from hsutil.misc import first, minmax
 from hsutil.notify import Repeater, Listener
 
@@ -20,7 +18,12 @@ from ..trans import tr
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
 
-ViewPane = namedtuple('ViewPane', 'view label account')
+class ViewPane(object):
+    def __init__(self, view, label, account=None):
+        self.view = view
+        self.label = label
+        self.account = account
+    
 
 class MainWindow(Repeater):
     def __init__(self, view, document):
@@ -78,19 +81,19 @@ class MainWindow(Repeater):
     
     def _create_pane(self, pane_type, account=None):
         if pane_type == PaneType.NetWorth:
-            return ViewPane(self.nwview, tr("Net Worth"), None)
+            return ViewPane(self.nwview, tr("Net Worth"))
         elif pane_type == PaneType.Profit:
-            return ViewPane(self.pview, tr("Profit & Loss"), None)
+            return ViewPane(self.pview, tr("Profit & Loss"))
         elif pane_type == PaneType.Transaction:
-            return ViewPane(self.tview, tr("Transactions"), None)
+            return ViewPane(self.tview, tr("Transactions"))
         elif pane_type == PaneType.Account:
             return ViewPane(self.aview, account.name, account)
         elif pane_type == PaneType.Schedule:
-            return ViewPane(self.scview, tr("Schedules"), None)
+            return ViewPane(self.scview, tr("Schedules"))
         elif pane_type == PaneType.Budget:
-            return ViewPane(self.bview, tr("Budgets"), None)
+            return ViewPane(self.bview, tr("Budgets"))
         elif pane_type == PaneType.Empty:
-            return ViewPane(self.emptyview, tr("New Tab"), None)
+            return ViewPane(self.emptyview, tr("New Tab"))
         else:
             raise ValueError("Cannot create pane of type {0}".format(pane_type))
     
@@ -410,7 +413,14 @@ class MainWindow(Repeater):
         self.view.refresh_undo_actions()
     
     account_added = _undo_stack_changed
-    account_changed = _undo_stack_changed
+    
+    def account_changed(self):
+        self._undo_stack_changed()
+        tochange = first(p for p in self.panes if p.account is not None and p.account.name != p.label)
+        if tochange is not None:
+            tochange.label = tochange.account.name
+            self.view.refresh_panes()
+    
     account_deleted = _undo_stack_changed
     budget_changed = _undo_stack_changed
     budget_deleted = _undo_stack_changed

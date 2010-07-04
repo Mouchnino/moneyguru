@@ -513,11 +513,13 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [tabBar setDelegate:nil];
     [subviews removeAllObjects];
-    while ([tabView numberOfTabViewItems] > 0) {
-        NSTabViewItem *item = [tabView tabViewItemAtIndex:0];
+    NSInteger paneCount = [[self py] paneCount];
+    while ([tabView numberOfTabViewItems] > paneCount) {
+        NSTabViewItem *item = [tabView tabViewItemAtIndex:paneCount];
         [tabView removeTabViewItem:item];
     }
-    for (NSInteger i=0; i<[[self py] paneCount]; i++) {
+    
+    for (NSInteger i=0; i<paneCount; i++) {
         NSInteger paneType = [[self py] paneTypeAtIndex:i];
         NSString *label = [[self py] paneLabelAtIndex:i];
         MGBaseView *view = nil;
@@ -550,10 +552,17 @@ http://www.hardcoded.net/licenses/hs_license
             view = emptyView;
         }
         [subviews addObject:view];
-        NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-        [item setLabel:label];
-        [item setView:[view view]];
-        [tabView addTabViewItem:item];
+        if (i < [tabView numberOfTabViewItems]) {
+            NSTabViewItem *item = [tabView tabViewItemAtIndex:i];
+            [item setLabel:label];
+            [item setView:[view view]];
+        }
+        else {
+            NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+            [item setLabel:label];
+            [item setView:[view view]];
+            [tabView addTabViewItem:item];
+        }
         PSMTabBarCell *tabCell = [tabBar cellAtIndex:i];
         [tabCell setIcon:tabIcon];
     }
