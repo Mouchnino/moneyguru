@@ -8,7 +8,7 @@ moneyGuru is based around different views (the main ones are explained below) th
 The date range
 -----
 
-The currently selected date range affects the whole application. Everything you see in the views is for the current date range. For example, if August 2008 is selected, everything that you see in all the views is data from 2008/08/01 to 2008/08/31. The range is controlled by this little widget:
+The currently selected date range affects the whole application. Everything you see in the views is for the current date range. For example, if "Jan 2010 - Dec 2010" is selected, everything that you see in all the views is data from 2010/01/01 to 2010/12/31. The range is controlled by this little widget:
 
 ![](images/basics_date_range.png)
 

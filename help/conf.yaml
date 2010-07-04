@@ -11,8 +11,15 @@ win_en:
     env: env_win.yaml
 osx_fr:
     pages: fr/pages.yaml
-    firstpage_meta: "<meta name=\"AppleTitle\" content=\"moneyGuru Help\"></meta>"
+    firstpage_meta: "<meta name=\"AppleTitle\" content=\"Aide moneyGuru\"></meta>"
 win_fr:
     skeleton: skeleton_win
     pages: fr/pages.yaml
+    env: env_win.yaml
+osx_de:
+    pages: de/pages.yaml
+    firstpage_meta: "<meta name=\"AppleTitle\" content=\"moneyGuru-Hilfe\"></meta>"
+win_fr:
+    skeleton: skeleton_win
+    pages: de/pages.yaml
     env: env_win.yaml

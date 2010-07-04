@@ -1,33 +1,37 @@
 Liste aller direkten sowie indirekten Personen / Projekte, die einen Beitrag geleistet haben. Vielen Dank!
 
-**Virgil Dupras, Entwickler**
+**Virgil Dupras, Entwickler**<br/>
 <http://www.hardcoded.net>
 
 **Eric Mc Sween, Entwickler**
 
-**Mike Rohde, Icon Designer**
+**Mike Rohde, Icon Designer**<br/>
 <http://www.rohdesign.com>
 
-**Python, programming language**
-Das beste der besten
+**Mariann Landsberger, German localization**
+
+**Michael Pitra, German localization**
+
+**Python, programming language**<br/>
+Das beste der besten<br/>
 <http://www.python.org>
 
-**PyObjC, Python-to-Cocoa bridge**
-Für die Mac OS X Version
+**PyObjC, Python-to-Cocoa bridge**<br/>
+Für die Mac OS X Version<br/>
 <http://pyobjc.sourceforge.net>
 
-**Sparkle, Auto-update library**
-Für die Mac OS X Version
+**Sparkle, Auto-update library**<br/>
+Für die Mac OS X Version<br/>
 <http://andymatuschak.org/pages/sparkle>
 
-**AMButtonBar, Filter bar component**
-Für die Mac OS X Version
+**AMButtonBar, Filter bar component**<br/>
+Für die Mac OS X Version<br/>
 <http://www.harmless.de>
 
-**PSMTabBarControl, Tab bar component**
-Für die Mac OS X Version
+**PSMTabBarControl, Tab bar component**<br/>
+Für die Mac OS X Version<br/>
 <http://www.positivespinmedia.com>
 
-**Sie, als moneyGuru Benutzer**
+**Sie, als moneyGuru Benutzer**<br/>
 You rock.
 
