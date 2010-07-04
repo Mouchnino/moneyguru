@@ -23,6 +23,11 @@ class AccountSheetView(BaseView):
     def delete_item(self):
         self.sheet.delete()
     
+    def edit_item(self):
+        selected_account = self.sheet.selected_account
+        if selected_account is not None:
+            self.mainwindow.apanel.load(selected_account)
+    
     def expand_group(self, group):
         group.expanded = True
         self.notify('group_expanded_state_changed')

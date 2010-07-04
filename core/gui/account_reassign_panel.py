@@ -11,8 +11,8 @@ from ..trans import tr
 from .base import MainWindowPanel
 
 class AccountReassignPanel(MainWindowPanel):
-    def _load(self):
-        self.account = self.mainwindow.selected_account
+    def _load(self, account):
+        self.account = account
         accounts = self.document.accounts[:]
         accounts.remove(self.account)
         sort_accounts(accounts)
@@ -23,7 +23,6 @@ class AccountReassignPanel(MainWindowPanel):
         self.account_index = 0
     
     def _save(self):
-        assert self.account is self.mainwindow.selected_account
         reassign_to = self._accounts[self.account_index]
         self.document.delete_account(self.account, reassign_to=reassign_to)
     

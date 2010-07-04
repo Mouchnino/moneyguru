@@ -202,11 +202,11 @@ class GUIPanel(object):
     def _save(self):
         raise NotImplementedError()
     
-    def load(self):
+    def load(self, *args, **kwargs):
         # If the panel can't load, OperationAborted will be raised. If a message to the user is
         # required, the OperationAborted exception will have a non-empty message
         self.view.pre_load()
-        self._load()
+        self._load(*args, **kwargs)
         self.view.post_load()
     
     def new(self):

@@ -58,7 +58,8 @@ class LoadFile(TestCase):
     
     def test_change_account_currency(self):
         # Changing an account currency sets the modified flag.
-        self.apanel.load()
+        self.mainwindow.select_balance_sheet()
+        self.mainwindow.edit_item()
         self.apanel.currency = PLN
         self.apanel.save()
         assert self.document.is_dirty()

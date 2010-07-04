@@ -106,6 +106,19 @@ class Pristine(TestCase):
         self.document.undo() # no crash
     
 
+class OneNamelessAccount(TestCase):
+    def setUp(self):
+        self.create_instances()
+        self.add_account()
+    
+    @save_state_then_verify
+    def test_undo_set_account_currency(self):
+        # Undoing a set_account_currency works.
+        self.mainwindow.edit_item()
+        self.apanel.currency = EUR
+        self.apanel.save()
+    
+
 class OneNamedAccount(TestCase):
     def setUp(self):
         self.create_instances()
@@ -212,7 +225,6 @@ class OneNamedAccount(TestCase):
         self.bsheet.show_selected_account()
         self.clear_gui_calls()
         self.document.redo()
-        assert self.mainwindow.selected_account is None
         self.ta.check_current_pane(PaneType.NetWorth)
         expected = ['view_closed', 'change_current_pane', 'refresh_undo_actions', 'refresh_status_line']
         self.check_gui_calls(self.mainwindow_gui, expected)
@@ -244,20 +256,12 @@ class OneNamedAccount(TestCase):
         self.bsheet.selected.name = 'foobaz'
         self.bsheet.save_edits()
     
-    @save_state_then_verify
-    def test_undo_set_account_currency(self):
-        # Undoing a set_account_currency works.
-        self.apanel.load()
-        self.apanel.currency = EUR
-        self.apanel.save()
-    
     def test_undo_add_while_in_etable(self):
         # If we're in etable and perform an undo that removes the account we're in, go back to the bsheet
         self.mainwindow.select_entry_table()
         self.document.undo()
         self.clear_gui_calls()
         self.document.undo()
-        assert self.mainwindow.selected_account is None
         self.ta.check_current_pane(PaneType.NetWorth)
         expected = ['view_closed', 'change_current_pane', 'refresh_undo_actions', 'refresh_status_line']
         self.check_gui_calls(self.mainwindow_gui, expected)

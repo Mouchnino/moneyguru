@@ -73,7 +73,7 @@ def test_empty_account_name(app):
 @with_app(app_one_empty_account)
 def test_get_account_attribute_value(app):
     # get_account_*() returns the correct values.
-    app.apanel.load()
+    app.mw.edit_item()
     eq_(app.apanel.name, 'Checking')
     eq_(app.apanel.currency, EUR)
     eq_(app.apanel.type, AccountType.Asset)
@@ -254,7 +254,7 @@ def test_change_account_type(app):
     # When changing the account type through apanel, an account under a group wouldn't want to
     # leave its group, thus refusing to go to its real type's base node.
     app.bsheet.selected = app.bsheet.assets[0][0]
-    app.apanel.load()
+    app.mw.edit_item()
     app.apanel.type_index = 1 # liability
     app.apanel.save()
     eq_(app.account_node_subaccount_count(app.bsheet.assets[0]), 0) # group is empty

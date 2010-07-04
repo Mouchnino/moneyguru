@@ -22,12 +22,6 @@ class SomeAccount(TestCase):
         self.mainwindow.select_income_statement()
         self.clear_gui_calls()
     
-    def test_can_load(self):
-        # Make sure that OperationAborted is raised when appropriate
-        self.apanel.load() # no OperationAborted
-        self.istatement.selected = self.istatement.expenses
-        assert_raises(OperationAborted, self.apanel.load)
-    
     def test_change_currency_index(self):
         # Changing currency_index correctly updates the currency.
         self.apanel.currency_index = 0
@@ -52,7 +46,7 @@ class SomeAccount(TestCase):
     
     def test_fields(self):
         # The base field values.
-        self.apanel.load()
+        self.mainwindow.edit_item()
         eq_(self.apanel.name, 'foobar')
         eq_(self.apanel.type, AccountType.Expense)
         eq_(self.apanel.currency, CAD)
@@ -66,13 +60,13 @@ class SomeAccount(TestCase):
     
     def test_load_stops_edition(self):
         # edition must be stop on apanel load or else an account type change can result in a crash
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.check_gui_calls(self.istatement_gui, ['stop_editing'])
     
     def test_save(self):
         # save() calls document.change_account with the correct arguments and triggers a refresh on
         # all GUI components.
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.apanel.type_index = 2
         self.apanel.currency_index = 42
         self.apanel.name = 'foobaz'
@@ -80,7 +74,7 @@ class SomeAccount(TestCase):
         self.apanel.save()
         # To test the currency, we have to load again
         self.istatement.selected = self.istatement.income[0]
-        self.apanel.load()
+        self.mainwindow.edit_item()
         eq_(self.apanel.currency, Currency.all[42])
         eq_(self.apanel.type, AccountType.Income)
         eq_(self.apanel.name, 'foobaz')
@@ -96,7 +90,7 @@ class TwoAccounts(TestCase):
     
     def test_duplicate_name(self):
         # setting a duplicate account name makes the dialog show a warning label
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.apanel.name = 'foobar'
         self.apanel.save() # the exception doesn't propagate
     

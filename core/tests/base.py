@@ -317,23 +317,40 @@ class TestApp(object):
     
     def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None,
             account_number=None):
-        # I wanted to use the panel here, it messes with the undo tests, we'll have to fix this eventually
+        # This method simulates what a user would do to add an account with the specified attributes
+        # Note that, undo-wise, this operation is not atomic.
         if account_type in (AccountType.Income, AccountType.Expense):
             self.mw.select_income_statement()
+            sheet = self.istatement
+            if account_type == AccountType.Income:
+                sheet.selected = sheet.income
+            else:
+                sheet.selected = sheet.expenses
         else:
             self.mw.select_balance_sheet()
-        group = self.doc.groups.find(group_name, account_type) if group_name else None
-        account = self.doc.new_account(account_type, group)
-        attrs = {}
-        if name is not None:
-            attrs['name'] = name
-        if currency is not None:
-            attrs['currency'] = currency
-        if account_number is not None:
-            attrs['account_number'] = account_number
-        if attrs:
-            self.doc.change_account(account, **attrs)
-        self.mw.selected_account = account
+            sheet = self.bsheet
+            if account_type == AccountType.Asset:
+                sheet.selected = sheet.assets
+            else:
+                sheet.selected = sheet.liabilities
+        if group_name:
+            predicate = lambda n: n.name == group_name
+            group_node = sheet.find(predicate, include_self=False)
+            if group_node:
+                sheet.selected = group_node
+        self.mw.new_item()
+        if currency or account_number:
+            self.mw.edit_item()
+            if name:
+                self.apanel.name = name
+            if currency:
+                self.apanel.currency = currency
+            if account_number:
+                self.apanel.account_number = account_number
+            self.apanel.save()
+        elif name is not None:
+            sheet.selected.name = name
+            sheet.save_edits()
     
     def add_accounts(self, *names):
         # add a serie of simple accounts, *names being names for each account
