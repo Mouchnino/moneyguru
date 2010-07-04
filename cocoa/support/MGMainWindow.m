@@ -32,8 +32,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event 
 {
+    BOOL isEditing = [[[self firstResponder] class] isSubclassOfClass:[NSTextView class]];
     SEL action = nil;
-    if ([event modifierKeysFlags] == (NSCommandKeyMask | NSShiftKeyMask)) {
+    if ((!isEditing) && ([event modifierKeysFlags] == (NSCommandKeyMask | NSShiftKeyMask))) {
         if ([event isLeft]) {
             action = @selector(showPreviousView:);
         }
@@ -41,7 +42,7 @@ http://www.hardcoded.net/licenses/hs_license
             action = @selector(showNextView:);
         }
     }
-    else if ([event modifierKeysFlags] == NSCommandKeyMask) {
+    else if ((!isEditing) && ([event modifierKeysFlags] == NSCommandKeyMask)) {
         if ([event isLeft]) {
             action = @selector(navigateBack:);
         }
