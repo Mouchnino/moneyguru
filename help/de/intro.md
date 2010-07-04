@@ -6,4 +6,4 @@ Zur Verwaltung Ihrer Daten hat moneyGuru ein effizientes System zur [Navigation]
 
 Das Transaktionssystem von moneyGuru basiert auf der [doppelten Buchführung](http://de.wikipedia.org/wiki/Buchführung). Jedes Konto (inklusive aller Eingabe- bzw. Ausgabekonten) kann für Transaktionen herangezogen werden, ist somit ein "echtes" Konto und nicht nur eine Kategorie. Dies erlaubt eine hohe Flexibilität bei der Verwaltung von Geld, das Sie bei sich tragen (siehe auch [Cash Management](cash.htm)).
 
-Die Unterstützung von [Währungen](currencies.htm) in moneyGuru ist vielen Konkurrenzprodukten überlegen, denn es ist sogar möglich, mehrere Währungen auf Transaktionsebene einzugeben.
+Die Unterstützung von [Währungen](currencies.htm) in moneyGuru ist vielen Konkurrenzprodukten überlegen, denn es ist sogar möglich, unterschiedliche Währungen auf Transaktionsebene einzugeben.
