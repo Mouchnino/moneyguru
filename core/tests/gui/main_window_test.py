@@ -12,6 +12,7 @@ from nose.tools import eq_
 
 from ..base import TestApp, with_app
 from ...const import PaneType
+from ...model.account import AccountType
 from ...model.date import YearRange
 
 #--- Pristine
@@ -112,6 +113,17 @@ def test_move_pane_selected(app):
     eq_(app.mw.current_pane_index, 3)
 
 @with_app(TestApp)
+def test_selected_account_is_updated_on_nonrevalidating_show(app):
+    # When navigating between sheet-panes, the selected account (used for show_account and apanel)
+    # is correctly updated
+    app.add_account('Asset')
+    app.add_account('Income', account_type=AccountType.Income)
+    app.mw.select_balance_sheet()
+    app.mw.select_income_statement() # no revalidation since nothing has changed
+    app.mw.show_account()
+    app.check_current_pane(PaneType.Account, account_name='Income')
+
+@with_app(TestApp)
 def test_select_pane_of_type_creates_new_pane_if_needed(app):
     # calling select_pane_of_type() creates a new pane if needed
     app.mw.close_pane(0) # net worth
@@ -169,8 +181,8 @@ def test_show_account_opens_a_new_tab(app):
     expected = ['refresh_panes', 'change_current_pane']
     app.check_gui_calls_partial(app.mainwindow_gui, expected, verify_order=True)
 
-#--- Asset and Income accounts
-def app_asset_and_income_accounts():
+#--- Asset and Income accounts with txn
+def app_asset_and_income_accounts_with_txn():
     app = TestApp()
     app.add_account('Checking')
     app.mw.show_account()
@@ -179,7 +191,7 @@ def app_asset_and_income_accounts():
     app.clear_gui_calls()
     return app
 
-@with_app(app_asset_and_income_accounts)
+@with_app(app_asset_and_income_accounts_with_txn)
 def test_close_pane_of_autocleaned_accounts(app):
     # When an account is auto cleaned, close its pane if it's opened
     app.etable.show_transfer_account() # the Salary account, which is auto-created
@@ -188,7 +200,7 @@ def test_close_pane_of_autocleaned_accounts(app):
     eq_(app.mw.pane_count, 6)
     eq_(app.mw.current_pane_index, 5) # we stay on the current index
 
-@with_app(app_asset_and_income_accounts)
+@with_app(app_asset_and_income_accounts_with_txn)
 def test_delete_account(app):
     # deleting a non-empty account shows the account reassign panel
     app.mw.select_balance_sheet()
@@ -197,7 +209,7 @@ def test_delete_account(app):
     app.bsheet.delete()
     app.check_gui_calls(app.arpanel_gui, ['pre_load', 'post_load'])
 
-@with_app(app_asset_and_income_accounts)
+@with_app(app_asset_and_income_accounts_with_txn)
 def test_navigate_back(app):
     # navigate_back() shows the appropriate sheet depending on which account entry table shows
     app.mw.select_balance_sheet()
@@ -213,7 +225,7 @@ def test_navigate_back(app):
     app.mw.navigate_back()
     eq_(app.mw.current_pane_index, 1)
 
-@with_app(app_asset_and_income_accounts)
+@with_app(app_asset_and_income_accounts_with_txn)
 def test_show_account_when_in_sheet(app):
     # When a sheet is selected, show_account() shows the selected account. If the account already
     # has a tab opened, re-use that tab.
@@ -226,7 +238,7 @@ def test_show_account_when_in_sheet(app):
     app.mw.show_account()
     eq_(app.mw.current_pane_index, 6) # a new tab is opened for this one
 
-@with_app(app_asset_and_income_accounts)
+@with_app(app_asset_and_income_accounts_with_txn)
 def test_switch_panes_through_show_account(app):
     # Views shown in the main window depend on what's selected in the account tree.
     app.mw.select_income_statement()
@@ -246,7 +258,7 @@ def test_switch_panes_through_show_account(app):
     app.mainwindow.select_transaction_table()
     eq_(app.mw.current_pane_index, 2)
 
-@with_app(app_asset_and_income_accounts)
+@with_app(app_asset_and_income_accounts_with_txn)
 def test_switch_panes_through_pane_index(app):
     app.etable.show_transfer_account()
     eq_(app.mw.pane_count, 7) # Now, the two last views are our 2 accounts

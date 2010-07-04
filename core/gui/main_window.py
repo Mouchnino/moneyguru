@@ -27,7 +27,6 @@ class MainWindow(Repeater):
         Repeater.__init__(self, document)
         self.view = view
         self.document = document
-        self._selected_account = None
         self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
@@ -170,7 +169,7 @@ class MainWindow(Repeater):
         try:
             current_view = self._current_pane.view
             if current_view in (self.nwview, self.pview):
-                self.apanel.load()
+                current_view.edit_item()
             elif current_view in (self.aview, self.tview):
                 editable_txns = [txn for txn in self.selected_transactions if not isinstance(txn, BudgetSpawn)]
                 if len(editable_txns) > 1:
@@ -327,9 +326,6 @@ class MainWindow(Repeater):
     def show_message(self, message):
         self.view.show_message(message)
     
-    def show_reassign_panel(self):
-        self.arpanel.load()
-    
     def update_status_line(self):
         self.view.refresh_status_line()
     
@@ -350,14 +346,6 @@ class MainWindow(Repeater):
     @property
     def pane_count(self):
         return len(self.panes)
-    
-    @property
-    def selected_account(self):
-        return self._selected_account
-    
-    @selected_account.setter
-    def selected_account(self, account):
-        self._selected_account = account
     
     @property
     def selected_schedules(self):

@@ -401,7 +401,7 @@ class AccountsAndEntries(_AccountsAndEntries):
         self.mock_today(2008, 1, 15)
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
         self.add_budget('income', 'Account 1', '400 cad')
@@ -488,7 +488,7 @@ class MultipleCurrencies(TestCase):
         self.add_entry('1/1/2007', 'USD entry', increase='50.00')
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
-        eq_(self.mainwindow.selected_account.balance(), Amount(150, USD))
+        eq_(self.mainwindow.shown_account.balance(), Amount(150, USD))
         self.add_account('CAD account', currency=CAD, group_name='Group')
         self.mainwindow.show_account()
         self.add_entry('1/1/2008', 'USD entry', increase='100.00')

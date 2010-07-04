@@ -40,12 +40,6 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             self._expanded_paths = set([(0, ), (1, )])
     
     #--- Override
-    def _select_nodes(self, nodes):
-        tree.Tree._select_nodes(self, nodes)
-        node = first(nodes)
-        account = node.account if isinstance(node, Node) and node.is_account else None
-        self.mainwindow.selected_account = account
-    
     def _revalidate(self):
         self.refresh()
         self._update_selection()
@@ -154,7 +148,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         if node.is_account:
             account = node.account
             if account.entries:
-                self.mainwindow.show_reassign_panel()
+                self.mainwindow.arpanel.load(account)
             else:
                 self.document.delete_account(account)
         else:
@@ -225,10 +219,11 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             self.document.change_account(account, group=dest_node.group, type=dest_node.group.type)
     
     def refresh(self):
+        selected_account = self.selected_account
         selected_path = self.selected_path
         self._refresh()
-        if self.mainwindow.selected_account is not None:
-            node_of_account = self._node_of_account(self.mainwindow.selected_account)
+        if selected_account is not None:
+            node_of_account = self._node_of_account(selected_account)
             if node_of_account is not None:
                 self.selected = node_of_account
             else:
@@ -254,7 +249,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             self.mainwindow.show_message(msg)
     
     def show_selected_account(self):
-        self.mainwindow.shown_account = self.mainwindow.selected_account
+        self.mainwindow.shown_account = self.selected_account
     
     def toggle_excluded(self):
         node = self.selected
@@ -323,7 +318,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     #--- Properties
     @property
     def can_show_selected_account(self):
-        return self.mainwindow.selected_account is not None
+        return self.selected_account is not None
     
     @property
     def expanded_paths(self):
@@ -333,6 +328,14 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         return paths
     
     selected = tree.Tree.selected_node
+    
+    @property
+    def selected_account(self):
+        node = self.selected_node
+        if (node is not None) and node.is_account:
+            return node.account
+        else:
+            return None
     
 
 class Node(tree.Node):

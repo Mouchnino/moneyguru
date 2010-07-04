@@ -88,7 +88,7 @@ class QIFImport(TestCase):
         """This QIF has no currency. Therefore, the default currency should be used for accounts"""
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.assertEqual(self.apanel.currency, PLN)
     
     def test_default_entry_currency(self):
@@ -97,7 +97,7 @@ class QIFImport(TestCase):
         """
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[2]
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.apanel.currency = CAD
         self.apanel.save()
         self.bsheet.show_selected_account()

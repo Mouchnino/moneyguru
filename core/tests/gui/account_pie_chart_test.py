@@ -60,7 +60,7 @@ class SomeAssetsAndLiabilities(_SomeAssetsAndLiabilities):
     def test_budget_multiple_currency(self):
         # just make sure it doesn't crash
         self.bsheet.selected = self.bsheet.assets[0]
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.apanel.currency_index = Currency.all.index(CAD)
         self.apanel.save()
         self.add_account_legacy('income', account_type=AccountType.Income)

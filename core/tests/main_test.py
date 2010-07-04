@@ -588,12 +588,12 @@ class OneEntryInPreviousRange(TestCase):
         """If we make the account an income account, the previous balance entry disappears"""
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
-        self.apanel.load()
+        self.mainwindow.edit_item()
         self.apanel.type_index = 2 # income
         self.apanel.save()
         self.mainwindow.select_income_statement()
         self.istatement.selected = self.istatement.income[0]
-        self.bsheet.show_selected_account()
+        self.istatement.show_selected_account()
         self.assertEqual(self.ta.etable_count(), 0)
     
     def test_new_entry_are_inserted_after_previous_balance_entry(self):
