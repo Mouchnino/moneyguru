@@ -45,7 +45,7 @@ Die Auswahl eines Zielkontos beeinflusst jedoch nicht die Funktionsweise des Bud
 
 Das Konto, das sich am besten für ein Zielkonto eignet, ist üblicherweise das "Hauptkonto", dort laufen alle Finanzein- und -ausgänge zusammen. Die richtige Konfiguration erlaubt eine bessere Berechnung der zukünftigen Gesamtsalden.
 
-Finanzplanung
+Prognosen & Finanzplanung
 -----
 
 Wiederholungen und Budgets erlauben eine bessere Finanzplanung. Man sieht dadurch besser, wie sich die Finanzen vorraussichtlich in der Zukunft entwickeln, des weiteren kann man auch einplanen, wann grössere Anschaffungen wirklich Sinn machen. Planen Sie eine teure Urlaubsreise um 6000 Euro? In der jeweiligen Grafik lässt sich genau der Zeitpunkt bestimmen, ab wann diese Summe verfügbar wird. Wollen Sie sich einen schicken Sportwagen leisten? Die Finanzplanung erlaubt die Entscheidung, ob Neukauf oder doch Leasing die richtige Variante für Sie ist. Natürlich gilt: je besser die Einrichtung der Budgets und Wiederholungen, desto besser die Vorschau auf die zukünftige Finanzsituation.

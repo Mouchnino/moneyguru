@@ -8,12 +8,12 @@ Liste aller direkten sowie indirekten Personen / Projekte, die einen Beitrag gel
 **Mike Rohde, Icon Designer**<br/>
 <http://www.rohdesign.com>
 
-**Mariann Landsberger, German localization**
+**Mariann Landsberger, deutsche Übersetzung**
 
-**Michael Pitra, German localization**
+**Michael Pitra, deutsche Übersetzung**
 
 **Python, programming language**<br/>
-Das beste der besten<br/>
+Die beste der Besten<br/>
 <http://www.python.org>
 
 **PyObjC, Python-to-Cocoa bridge**<br/>

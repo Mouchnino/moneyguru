@@ -17,11 +17,13 @@
 - 
     name: currencies
     title: Währungen
-    menutitle: Unterstützung von Währungen
+    menutitle: Währungen
+    menudesc: Unterstützung von Währungen
 - 
     name: cash
     title: Cash Management
-    menutitle: Verwaltung von Bargeld
+    menutitle: Cash Management
+    menudesc: Die Verwaltung von Bargeld
 - 
     name: reconciliation
     title: Wertstellung
@@ -41,7 +43,9 @@
     name: versions
     title: Versionen
     menutitle: Versionen
+    menudest: Was sich getan hat...
 - 
     name: credits
     title: Danksagung
     menutitle: Danksagung
+    menudesc: Die Mitwirkenden
