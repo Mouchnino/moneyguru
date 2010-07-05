@@ -58,8 +58,8 @@ if __name__ == "__main__":
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed
     from app import MoneyGuru
+    app.setApplicationVersion(MoneyGuru.VERSION)
     mgapp =  MoneyGuru()
-    app.setApplicationVersion(mgapp.VERSION)
     install_excepthook()
     exec_result = app.exec_()
     del mgapp
