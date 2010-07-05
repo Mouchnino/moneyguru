@@ -136,3 +136,120 @@ The Document class
         
         :param transactions: a collection of :class:`Transaction`
         :param to_transaction: :class:`Transaction`
+
+    .. rubric:: Entry-related methods
+    
+    .. method:: change_entry(entry[, date=NOEDIT, reconciliation_date=NOEDIT, description=NOEDIT, payee=NOEDIT, checkno=NOEDIT, transfer=NOEDIT, amount=NOEDIT])
+    
+        Changes the attributes of ``entry`` (and the transaction in which ``entry`` is) to specified values and then post a ``transaction_changed`` notification. Attributes with ``NOEDIT`` values are not touched.
+        
+        ``transfer`` is the name of the transfer to assign the entry to. If it's not found, a new account will be created.
+        
+        :param entry: :class:`Entry`
+        :param date: ``datetime.date``
+        :param reconciliation_date: ``datetime.date``
+        :param description: ``str``
+        :param payee: ``str``
+        :param checkno: ``str``
+        :param transfer: ``str``
+        :param amount: :class:`Amount`
+    
+    .. method:: delete_entries(entries)
+    
+        Remove transactions in which ``entries`` belong from the document's transaction list.
+        
+        :param entries: list of :class:`Entry`
+    
+    .. method:: toggle_entries_reconciled(entries)
+    
+        Toggles the reconciliation flag (sets the ``reconciliation_date`` to the entry's date, or unset it when turning the flag off) of ``entries``.
+        
+        :param entries: list of :class:`Entry`
+    
+    .. rubric:: Budget-related methods
+    
+    .. method:: budgeted_amount_for_target(target, date_range)
+    
+        Returns the amount budgeted for **all** budgets targeting ``target``. The amount is pro-rated according to ``date_range``.
+        
+        :param target: :class:`Account`
+        :param date_range: :class:`DateRange`
+
+    .. method:: change_budget(original, new)
+    
+        Changes the attributes of ``original`` so that they match those of ``new``. This is used by the :class:`BudgetPanel`, and ``new`` is originally a copy of ``original`` which has been changed.
+        
+        :param original: :class:`Budget`
+        :param new: :class:`Budget`
+    
+    .. method:: delete_budgets(budgets)
+    
+        Removes ``budgets`` from the document.
+        
+        :param budgets: list of :class:`Budget`
+    
+    .. rubric:: Schedule-related methods
+    
+    .. method:: change_schedule(schedule, new_ref, repeat_type, repeat_every, stop_date)
+    
+        Change attributes of ``schedule``. ``new_ref`` is a reference transaction that the schedule is going to repeat.
+        
+        :param schedule: :class:`Schedule`
+        :param new_ref: :class:`Transaction`
+        :param repeat_type: :const:`RepeatType`
+        :param stop_date: ``datetime.date``
+    
+    .. method:: delete_schedules(schedules)
+    
+        Removes ``schedules`` from the document.
+        
+        :param schedules: list of :class:`Schedule`
+    
+    .. rubric:: Load/Save/Import methods
+    
+    .. method:: adjust_example_file()
+    
+        Adjusts all document's transactions so that they become current. This is used when loading the example document so that it's not necessary to do it manually.
+    
+    .. method:: clear()
+    
+        Removes all data from the document (transactions, accounts, schedules, etc.).
+    
+    .. method:: load_from_xml(filename)
+    
+        Clears the document and loads data from ``filename``, which must be a path to a moneyGuru XML document.
+        
+        :param filename: ``str``
+    
+    .. method:: save_to_xml(filename[, autosave=False])
+    
+        Saves the document to ``filename`` in moneyGuru's XML document format. If ``autosave`` is true, the operation will not affect the document's modified state and will not make editing stop, if editing there is (like it normally does without the autosave flag to make sure that the input being currently done by the user is saved).
+        
+        :param filename: ``str``
+        :param autosave: ``bool``
+    
+    .. method:: save_to_qif(filename)
+    
+        Saves the document to ``filename`` in the QIF format.
+        
+        :param filename: ``str``
+    
+    .. method:: parse_file_for_import(filename)
+    
+        Opens and parses ``filename`` and try to determine its format by successively trying to read is as a moneyGuru file, an OFX, a QIF and finally a CSV. Once parsed, take the appropriate action for the file which is either to show the CSV options window or to call :meth:`load_parsed_file_for_import`
+        
+    .. method:: load_parsed_file_for_import()
+    
+        When the document's ``loader`` has finished parsing (either after having done CSV configuration or directly after :meth:`parse_file_for_import`), call this method to load the parsed data into model instances, ready to be shown in the Import window.
+    
+    .. method:: import_entries(target_account, ref_account, matches)
+    
+        Imports entries in ``mathes`` into ``target_account``. ``target_account`` can be either an existing account in the document or not. ``ref_account`` is a reference to the temporary :class:`Account` created by the loader.
+        
+        ``matches`` is a list of tuples ``(entry, ref)`` with ``entry`` being the entry being imported and ``ref`` being an existing entry in the ``target_account`` bound to ``entry``. ``ref`` can be ``None`` and it's only possible to have a ``ref`` side when the target account already exists in the document.
+        
+    .. method:: is_dirty()
+    
+        Returns whether the document has been modified since the last time it was saved.
+    
+    
