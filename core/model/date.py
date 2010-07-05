@@ -8,6 +8,7 @@
 
 from __future__ import division, unicode_literals
 
+import sys
 import locale
 import re
 from calendar import monthrange
@@ -333,10 +334,17 @@ def format_year_month_day(year, month, day, format):
     return result
 
 #--- Misc
+if sys.platform == 'darwin':
+    # On OS X 10.5, locale behave strangely, and while the locale is set on utf-8, getpreferredencoding
+    # returns mac-roman, leading to trashy decodings. On OS X, we're always on utf-8 anyway.
+    strftime_enc = lambda: 'utf-8'
+else:
+    strftime_enc = locale.getpreferredencoding
+
 def strftime(fmt, date):
     """Returns a *unicode* string resulting from date.strftime().
     
     Under some locales, the result of strftime() can contain non-ascii letters, resulting in a
     crash when mixed with unicode string.
     """
-    return unicode(date.strftime(fmt), locale.getpreferredencoding(), 'replace')
+    return unicode(date.strftime(fmt), strftime_enc(), 'replace')
