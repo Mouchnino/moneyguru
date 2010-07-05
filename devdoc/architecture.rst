@@ -35,9 +35,9 @@ Example
 
 Let's use a complete example. Let's see what happens in the code when you press on Show Info on an account, change its name, then press Save. Follow this example through the code, or else you won't understand crap.
 
-When you press Show Info under Cocoa, ``editItemInfo:`` in ``MGMainWindow`` is called. This causes the main window to call its core gui's ``edit_item()``. Because we are currently in an account view, ``self.apanel.load()`` is called.
+When you press Show Info under Cocoa, ``editItemInfo:`` in ``MGMainWindow`` is called. This causes the main window to call its core gui's ``edit_item()``. Because we are currently in an account view, ``self.apanel.load()`` is called with the currently selected account as an argument.
 
-The ``AccountPanel`` instance then queries ``self.document.selected_account`` to know what account was selected and loads information relative to that account in its own field (in ``_load()``). After that, ``post_load()`` (this is in ``core.gui.base.Panel``) is called on the view so that it brings up all this information in the GUI.
+The ``AccountPanel`` loads information relative to that account in its own field (in ``_load()``). After that, ``post_load()`` (this is in ``core.gui.base.Panel``) is called on the view so that it brings up all this information in the GUI.
 
 When the ``NSTextField`` corresponding to the name is changed, nothing happens just yet (at some points, Cocoa binding were used to send values directly to the python side, but it caused problems. I'm trying to phase those out). The new name stays on the Cocoa side. However, when the Save button is clicked and ``MGAccountProperties.saveFields`` is called, the values of all the fields are sent to the ``[self py]`` proxy and then ``AccountPanel.save()`` is called.
 

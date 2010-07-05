@@ -112,6 +112,9 @@ def main():
     basepath = op.abspath('help')
     destpath = op.abspath(op.join('help', 'moneyguru_help'))
     helpgen.gen(basepath, destpath, profile=profile)
+    if dev:
+        print "Generating devdocs"
+        print_and_do('sphinx-build devdoc devdoc_html')
     print "Building C extensions"
     exts = []
     exts.append(Extension('_amount', [op.join('core', 'modules', 'amount.c')]))

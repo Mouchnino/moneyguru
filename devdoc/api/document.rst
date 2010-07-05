@@ -8,9 +8,7 @@ The Document class
 
     The ``Document`` is the core class of moneyGuru. It represents a new or opened document and holds all model instances associated to it (accounts, transactions, etc.). The ``Document`` is also responsible for notifying all gui instances of changes. While it's OK for :doc:`GUI instances <gui/index>` to directly access models (through ``Document.transactions`` and ``Document.accounts``, for example), any modification to those models have to go through ``Document``'s public methods.
 
-    Another important role of ``Document`` is to manage selection. Transaction and account selection is shared among gui instances. That is how the :class:`AccountPanel` can know, without holding a reference to the account sheets, which account to load when :meth:`MainWindow.edit_item` is called.
-    
-    Finally, another important role of the ``Document`` is to manage undo points. For undo to work properly, every mutative action must be properly recorded, and that's what the ``Document`` does.
+    Another important role of the ``Document`` is to manage undo points. For undo to work properly, every mutative action must be properly recorded, and that's what the ``Document`` does.
 
     When calling methods that take "hard values" (dates, descriptions, etc..), it is expected that these values have already been parsed (it's the role of the GUI instances to parse data). So dates are ``datetime.date`` instances, amounts are :class:`Amount` instances, indexes are ``int``.
     
@@ -39,12 +37,6 @@ The Document class
         :param group: :class:`Group`
         :rtype: :class:`Account`
     
-    .. method:: reassign_and_delete_selected_account(reassign_to)
-    
-        Reassign all splits having for account :attr:`selected_account` and change their account to ``reassign_to``. After that, it deletes :attr:`selected_account`.
-        
-        :param reassign_to: :class:`Account`
-    
     .. method:: toggle_accounts_exclusion(accounts)
     
         Toggles the excluded state (in sheets, when accounts ar grayed out) of ``accounts``. Afterwards, ``accounts_excluded`` is broadcasted.
@@ -60,25 +52,11 @@ The Document class
         :param group: :class:`Group`
         :param name: ``str``
     
-    .. method:: collapse_group(group)
-    
-        Sets the expanded state of ``group`` to a collapsed state. This state is used by the pie charts to determine if accounts of a group must belong to the same pie slice or not. It is also used during save/load operations so that these states are restored.
-        
-        :param group: :class:`Group`
-    
     .. method:: delete_group(group)
     
         Removes ``group`` from the group list and broadcasts ``account_deleted``. All accounts belonging to the deleted group have their :attr:`Account.group` attribute set to ``None``.
         
         :param group: :class:`Group`
-    
-    .. method:: expand_group(group)
-    
-        Sets the expanded state of ``group`` to an expanded state.
-        
-        :param group: :class:`Group`
-        
-        .. seealso:: :meth:`collapse_group`
     
     .. method:: new_group(type)
     
@@ -158,16 +136,3 @@ The Document class
         
         :param transactions: a collection of :class:`Transaction`
         :param to_transaction: :class:`Transaction`
-        
-    .. method:: new_transaction
-    
-        Creates a new transaction and returns it. It does **not** add this transaction to the document.
-        
-        :rtype: :class:`Transaction`
-        
-    .. attribute:: visible_transactions
-    
-        Returns a list of transactions that match the current :attr:`filter_string`. If there's no filter, this returns all transactions in the date range.
-        
-        :rtype: list of :class:`Transaction`
-    
