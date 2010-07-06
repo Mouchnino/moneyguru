@@ -1,9 +1,9 @@
-moneyGuru est basé sur la [comptabilité en partie double](http://fr.wikipedia.org/wiki/Comptabilité_en_partie_double). Au centre de ce système se trouve la **transaction** qui représente un mouvement d'argent d'un ou plusieurs comptes vers un ou plusieurs autres comptes à une date précise. Une transaction consiste en un ensemble balancé de deux entrées ou plus, chacune affectant un compte. N'importe quel compte, quelque soit son type, peut envoyer de l'argent à n'importe quel autre compte. Ça peut devenir utile dans des cas comme la [gestion de liquidités](cash.htm). Le système central de moneyGuru n'est pas bien plus compliqué que ça. Quand les devises s'en mêlent, certains nouvelles règles s'appliquent, mais ces règles sont deecrite dans la [page sur les devises](currencies.htm).
+moneyGuru est basé sur la [comptabilité en partie double](http://fr.wikipedia.org/wiki/Comptabilité_en_partie_double). Au centre de ce système se trouve la **transaction** qui représente un mouvement d'argent d'un ou plusieurs comptes vers un ou plusieurs autres comptes à une date précise. Une transaction consiste en un ensemble balancé de deux entrées ou plus, chacune affectant un compte. N'importe quel compte, quelque soit son type, peut envoyer de l'argent à n'importe quel autre compte. Ça peut devenir utile dans des cas comme la [gestion de liquidités](cash.htm). Le système central de moneyGuru n'est pas bien plus compliqué que ça. Quand les devises s'en mêlent, certains nouvelles règles s'appliquent, mais ces règles sont décrite dans la [page sur les devises](currencies.htm).
 
 Onglets et vues
 -----
 
-La gestion de vos documents moneyGuru se fait à l'aide des différentes vues disponibles dans l'application, les principales étant décrites ci-dessous. Ces vues sont gérées à l'aide d'onglets. Ces onglet s'utilise de la même façon que dans n'importe quelle autre application à onglet. Vous créez un onglet avec ${cmd}T, vous le fermez avec ${cmd}W et vous y naviguez avec ${cmd_shift}&#8592;&#8594;. Quand vous ouvrez un compte avec ![](images/basics_show_account_arrow.png), un nouvel onglet est créé pour ce compte.
+La gestion de vos documents moneyGuru se fait à l'aide des différentes vues disponibles dans l'application, les principales étant décrites ci-dessous. Ces vues sont gérées à l'aide d'onglets. Ces onglets s'utilisent de la même façon que dans n'importe quelle autre application à onglets. Vous créez un onglet avec {cmd}T, vous le fermez avec {cmd}W et vous y naviguez avec {cmd_shift}&#8592;&#8594;. Quand vous ouvrez un compte avec ![](images/basics_show_account_arrow.png), un nouvel onglet est créé pour ce compte.
 
 L'intervalle de dates
 -----
@@ -22,14 +22,14 @@ Il y a 7 types d'intervalle:
 1. **Toutes les transactions:** Commence à la première transaction et se termine a "aujourd'hui + mois flottants".
 1. **Personnalisé:** Permet de choisir de dates précises d'intervalle.
 
-Lorsqu'un intervalle "navigable" est sélectionné (Mois, Trimestre, Année), les flèches peuvent être utilisée pour naviguer dans le temps (sur le clavier, c'est ${cmd_opt}[ et ${cmd_opt}]). Il y a aussi des raccourcis clavier pour les types d'intervalle aux mêmes (${cmd_opt}1-7). ${cmd_opt}T ramène l'intervalle à aujourd'hui.
+Lorsqu'un intervalle "navigable" est sélectionné (Mois, Trimestre, Année), les flèches peuvent être utilisée pour naviguer dans le temps (sur le clavier, c'est {cmd_opt}[ et {cmd_opt}]). Il y a aussi des raccourcis clavier pour les types d'intervalle aux mêmes ({cmd_opt}1-7). {cmd_opt}T ramène l'intervalle à aujourd'hui.
 
-Pour les intervalles personnalisés, il est possible de sauvegarder ces intervalles dans une des 3 cases disponible afin de les ré-invoquer plus tard.
+Pour les intervalles personnalisés, il est possible de sauvegarder ces intervalles dans une des 3 cases disponibles afin de les ré-invoquer plus tard.
 
 La mince ligne rouge
 -----
 
-Toute l'information dans moneyGuru est affichée selon l'intervalle courante. Les choses deviennent intéressante quand cet intervalle se termine dans le futur. Si vous avez des récurrences ou des budgets, les chiffres et les graphes que vous allez voir seront en fonction de ces prédictions. Dans les graphes, il y a une nette différence entre le passé et le future grâce à un ligne rouge verticale. Ce qui est à gauche est le passé, ce qui est à droite est le futur.
+Toute l'information dans moneyGuru est affichée selon l'intervalle courant. Les choses deviennent intéressantes quand cet intervalle se termine dans le futur. Si vous avez des récurrences ou des budgets, les chiffres et les graphes que vous allez voir seront en fonction de ces prédictions. Dans les graphes, il y a une nette différence entre le passé et le future grâce à un ligne rouge verticale. Ce qui est à gauche est le passé, ce qui est à droite est le futur.
 
 Valeur nette et Profits/Pertes
 -----
@@ -40,7 +40,7 @@ Les vues "Valeur nette" et "Profits/Pertes" sont là où les comptes sont géré
 
 **Liste de comptes:** La liste de compte permet [d'ajouter, de modifier et de supprimer](edition.htm) vos comptes. Cette liste vous donne aussi les statistiques générales pour chaque compte, ainsi que les totaux correspondants.
 
-**Show Account:** À côté de chaque compte, il y a un petit ![](images/basics_show_account_arrow.png). Vous pouvez cliquer dessus pour ouvrir ce compte dans un nouvel onglet. Vous pouvez aussi appuyer sur ${cmd}&#8594;.
+**Show Account:** À côté de chaque compte, il y a un petit ![](images/basics_show_account_arrow.png). Vous pouvez cliquer dessus pour ouvrir ce compte dans un nouvel onglet. Vous pouvez aussi appuyer sur {cmd}&#8594;.
 
 **Account Exclusion:** Vous pouvez "exclure" des compte avec le petit ![](images/basics_account_out.png), ou en pressant sur Espace. Les compte exclus ne comptent pas dans le totaux et dans le graphes.
 
@@ -48,7 +48,7 @@ Les vues "Valeur nette" et "Profits/Pertes" sont là où les comptes sont géré
 
 **Graphe:** Le graphe représente la progression de la statistique principale de la vue (valeur nette, profit) dans le temps.
 
-**Colonnes:** Chaque liste de comptes a des colonnes différentes (personnalisable avec ${cmd}J).
+**Colonnes:** Chaque liste de comptes a des colonnes différentes (personnalisable avec {cmd}J).
 
 - **Valeur nette:**
     - **# Compte:** Un numéro optionnel lié au compte. Voir la [page sur les éditions](edition.htm) pour plus de détails.
@@ -112,9 +112,9 @@ Options de visibilité
 
 ![](images/basics_view_options.png)
 
-moneyGuru a une fenêtre controllant la visibilité de certaines colonnes et des graphiques. Vous pouvez invoquer cette fenêtre avec ${cmd}J.
+moneyGuru a une fenêtre controllant la visibilité de certaines colonnes et des graphiques. Vous pouvez invoquer cette fenêtre avec {cmd}J.
 
 Impression
 -----
 
-Dans moneyGuru, vous pouvez imprimer n'importe quelle vue. Vous voulez la liste de vos transactions de l'an passé? Ouvrez la bonne vue, ajustez l'intervalle, et appuyez sur ${cmd}P. Voilà.
+Dans moneyGuru, vous pouvez imprimer n'importe quelle vue. Vous voulez la liste de vos transactions de l'an passé? Ouvrez la bonne vue, ajustez l'intervalle, et appuyez sur {cmd}P. Voilà.

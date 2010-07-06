@@ -9,7 +9,7 @@ Arranger les dates
 
 moneyGuru détermine le format de date des fichiers automatiquement. La plupart du temps, c'est sans problème. Mais des fois, les dates sont ambiguës et il se peut que moneyGuru ne choisisse pas le bon format de date. Si vous voyez que vos dates ne sont pas correctes, vous pouvez interchanger les champs des dates. Si par exemple les mois sont à la place des jours et vice versa, vous pouvez utiliser la fonction "Jour <--> Mois". Si vous cochez "Appliquer à tous", le changement sera appliqué à tout les comptes.
 
-Arranger les descriptions et provennces
+Arranger les descriptions et provenances
 -----
 
 Il arrive qu'un fichier mal généré par une autre application se trompe de champ et que vous ayez ainsi les champs Description et Provenance interchangés. Vous n'avez qu'à utiliser la fonction "Description <--> Provenance" pour régler tout ça.
@@ -21,7 +21,7 @@ Si le fichier importé provient d'une banque, il est bien possible que vous voul
 
 ![](images/import_match_table.png)
 
-Du côté gauche, il y a toutes les transactions **non-réconciliées** présente dans votre compte. Du côté droit, il y a les transactions à importer. Il faut alors jumeler les transactions identiques. Vous pouvez le faire en glissant l'une sur l'autre. Vous pouvez aussi dé-jumeler des transactions en cliquant sur leur petit cadenas.
+Du côté gauche, il y a toutes les transactions **non-réconciliées** présentes dans votre compte. Du côté droit, il y a les transactions à importer. Il faut alors jumeler les transactions identiques. Vous pouvez le faire en glissant l'une sur l'autre. Vous pouvez aussi dé-jumeler des transactions en cliquant sur leur petit cadenas.
 
 Importation CSV
 -----

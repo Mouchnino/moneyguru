@@ -3,7 +3,7 @@ Certaines transactions arrivent d'une manière régulière comme les salaires, l
 Comment ça marche
 -----
 
-Les récurrences et les budgets fonctionne avec un système d'"occurrences". Quand vous créez une récurrence ou un budget (dans les vues Récurrences et Budgets), vous créez en fait une transaction "modèle". À partir de ce modèle, des occurrences sont ajoutés dans les vues Transactions et Compte pour chaque date à laquelle le modèle est exécuté (avec un icône ![](images/clock.png)). Par exemple, si vous créez une récurrence mensuelle, vous n'aurez qu'un seul modèle dans la vue Récurrences, mais vous aurez une occurrence de ce modèle chaque mois dans les vues Transactions et Compte.
+Les récurrences et les budgets fonctionnent avec un système d'"occurrences". Quand vous créez une récurrence ou un budget (dans les vues Récurrences et Budgets), vous créez en fait une transaction "modèle". À partir de ce modèle, des occurrences sont ajoutées dans les vues Transactions et Compte pour chaque date à laquelle le modèle est exécuté (avec un icône ![](images/clock.png)). Par exemple, si vous créez une récurrence mensuelle, vous n'aurez qu'un seul modèle dans la vue Récurrences, mais vous aurez une occurrence de ce modèle chaque mois dans les vues Transactions et Compte.
 
 Les occurrences ne sont pas statiques. Elles peuvent être modifiées individuellement si besoin est (si, par exemple, votre salaire est plus élevé à un moment donné). Quand vous modifiez une occurrence, moneyGuru vous demandera quelle est la portée de votre modification. En effet, si vous voulez, vous pouvez affecter toutes les futures occurrences en une seule modification (si, par exemple, votre loyer a augmenté).
 
@@ -26,7 +26,7 @@ Modifier une récurrence
 En plus de pouvoir modifier votre récurrence modèle dans la vue Récurrences, vous pouvez aussi modifier les occurrences individuelles. Elles se modifient comme n'importe quelle transaction, mais vous pouvez modifier la portée de vos modifications avec la touche Shift.
 
 * **Modifier une seule occurrence:** Si vous modifiez une occurrence normalement, seulement cette occurrence sera modifiée.
-* **Modifier toutes les occurrences futures:** Si vous tenez Shift au moment où vous terminez votre modification, celle-ci s'appliquera `à toutes les occurrences futures.
+* **Modifier toutes les occurrences futures:** Si vous tenez Shift au moment où vous terminez votre modification, celle-ci s'appliquera à toutes les occurrences futures.
 * **Passer une occurrence:** Si vous voulez exceptionnellement enlever une occurrence sans enlever les occurrences futures, vous pouvez simplement supprimer celle-ci comme vous le feriez avec une transaction.
 * **Arrêter une récurrence:** Pour arrêter une récurrence à partir d'une certaine date, supprimez l'occurrence qui arrive après la dernière tout en tenant Shift.
 
@@ -35,4 +35,4 @@ Le concept est simple: Vous modifiez vos occurrences comme vous le faites avec u
 Budgets
 -----
 
-Un budget peut être créé dans la vue Budgets. Les options de répétitions sont les mêmes que pour les récurrences. Le champ Compte est le compte ciblé par le budget et le champ Cible est le champ dans lequel le budget "prend" son argent. Si par exemple vous utilisez votre compte courant comme cible, c'est ce compte dont la balance sera diminuée ou augmentée dans les graphes. Notez que d'avoir une cible ne change *pas* la façon dont les transactions affectent les comptes avec budgets. Même si votre budget a comme cible votre compte courant, les dépense faites avec votre carte de crédit seront comptabilisées dans le budget.
+Un budget peut être créé dans la vue Budgets. Les options de répétition sont les mêmes que pour les récurrences. Le champ Compte est le compte ciblé par le budget et le champ Cible est le champ dans lequel le budget "prend" son argent. Si par exemple vous utilisez votre compte courant comme cible, c'est ce compte dont la balance sera diminuée ou augmentée dans les graphes. Notez que d'avoir une cible ne change *pas* la façon dont les transactions affectent les comptes avec budgets. Même si votre budget a comme cible votre compte courant, les dépense faites avec votre carte de crédit seront comptabilisées dans le budget.
