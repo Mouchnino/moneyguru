@@ -13,7 +13,7 @@ import os.path as op
 from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString, QUrl
 from PyQt4.QtGui import QDialog, QDesktopServices
 
-from hsutil.currency import Currency
+from hscommon.currency import Currency
 
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase

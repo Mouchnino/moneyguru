@@ -10,7 +10,7 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog, QMessageBox
 
-from hsutil.currency import Currency
+from hscommon.currency import Currency
 from core.trans import tr
 
 from ui.preferences_panel_ui import Ui_PreferencesPanel
