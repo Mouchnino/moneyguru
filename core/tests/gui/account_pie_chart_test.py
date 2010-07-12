@@ -12,7 +12,7 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import Currency, USD, CAD
+from hscommon.currency import Currency, USD, CAD
 
 from ..base import TestCase, ApplicationGUI
 from ...app import Application

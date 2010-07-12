@@ -8,7 +8,7 @@
 
 from nose.tools import eq_
 
-from hsutil.currency import EUR
+from hscommon.currency import EUR
 from hsutil.testutil import with_tmpdir, Patcher
 
 from ...const import PaneType

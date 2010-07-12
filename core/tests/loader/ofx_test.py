@@ -10,7 +10,7 @@
 import os.path
 from datetime import date
 
-from hsutil.currency import USD, CAD, EUR
+from hscommon.currency import USD, CAD, EUR
 
 from ..base import TestCase
 from ...exception import FileFormatError

@@ -4,7 +4,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.notify import Listener, Repeater
+from hscommon.notify import Listener, Repeater
 
 class DocumentNotificationsMixin(object):
     def account_added(self):

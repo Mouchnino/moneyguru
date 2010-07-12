@@ -14,7 +14,7 @@ import re
 from itertools import groupby
 from operator import attrgetter
 
-from hsutil.currency import Currency
+from hscommon.currency import Currency
 from hsutil.misc import nonone, flatten
 
 from ..exception import FileFormatError

@@ -10,7 +10,7 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import USD
+from hscommon.currency import USD
 from hsutil.testutil import Patcher
 
 from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app, TestData

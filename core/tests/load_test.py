@@ -10,7 +10,7 @@
 from datetime import date
 
 from nose.tools import eq_
-from hsutil.currency import PLN, CAD
+from hscommon.currency import PLN, CAD
 from hsutil.testutil import with_tmpdir
 
 from ..model.account import AccountType

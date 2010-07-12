@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hsutil.currency import CAD, USD
+from hscommon.currency import CAD, USD
 
 from ..base import TestCase
 from ...model.account import AccountType

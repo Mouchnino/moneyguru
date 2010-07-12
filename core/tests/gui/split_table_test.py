@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from nose.tools import eq_
-from hsutil.currency import CAD, EUR
+from hscommon.currency import CAD, EUR
 
 from ..base import TestApp, with_app
 

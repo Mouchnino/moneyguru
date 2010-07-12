@@ -16,7 +16,7 @@ from setuptools import setup, Extension
 import yaml
 
 from hsdocgen import helpgen
-from hsutil.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
+from hscommon.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
 
 def move(src, dst):
     if not op.exists(src):
@@ -49,7 +49,7 @@ def build_cocoa(dev):
         shutil.rmtree('build')
     os.mkdir('build')
     if not dev:
-        copy_packages(['core', 'hsutil', 'hsgui'], 'build')
+        copy_packages(['core', 'hscommon', 'hsgui'], 'build')
     shutil.copy('cocoa/mg_cocoa.py', 'build')
     os.chdir('build')
     script_args = ['py2app', '-A'] if dev else ['py2app']

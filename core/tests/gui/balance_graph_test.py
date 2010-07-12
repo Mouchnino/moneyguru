@@ -6,7 +6,7 @@
 
 from nose.tools import eq_
 
-from hsutil.currency import CAD
+from hscommon.currency import CAD
 
 from ..base import TestCase
 from ...model.account import AccountType

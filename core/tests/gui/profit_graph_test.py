@@ -9,7 +9,7 @@
 from __future__ import division
 from datetime import date
 
-from hsutil.currency import USD
+from hscommon.currency import USD
 
 from ..base import TestCase
 

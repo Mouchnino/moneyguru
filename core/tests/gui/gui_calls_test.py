@@ -11,7 +11,7 @@
 # in every test unit can get tedious, so this test unit is a "theme based" unit which tests calls
 # made to GUIs' view.
 
-from hsutil.currency import EUR
+from hscommon.currency import EUR
 
 from ...document import FilterType
 from ...model.account import AccountType

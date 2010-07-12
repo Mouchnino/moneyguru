@@ -11,7 +11,7 @@ import os.path as op
 
 from nose.tools import eq_
 
-from hsutil.currency import PLN, CAD
+from hscommon.currency import PLN, CAD
 
 from .base import ApplicationGUI, TestCase as TestCaseBase, TestQIFExportImportMixin, TestApp
 from ..app import Application

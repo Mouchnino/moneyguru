@@ -10,7 +10,7 @@ from datetime import date
 
 from nose.tools import eq_, assert_raises
 
-from hsutil.currency import USD, EUR
+from hscommon.currency import USD, EUR
 
 from ...exception import FileFormatError
 from ...loader.csv import Loader, CsvField

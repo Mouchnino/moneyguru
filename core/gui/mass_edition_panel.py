@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hsutil.currency import Currency
+from hscommon.currency import Currency
 from hsutil.misc import allsame, nonone, flatten
 
 from ..exception import OperationAborted

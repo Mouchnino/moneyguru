@@ -8,7 +8,7 @@
 
 from nose.tools import eq_, assert_raises
 
-from hsutil.currency import Currency, CAD
+from hscommon.currency import Currency, CAD
 
 from ..base import TestCase
 from ...exception import OperationAborted

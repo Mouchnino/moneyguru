@@ -10,7 +10,7 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import USD
+from hscommon.currency import USD
 from hsutil.testutil import with_tmpdir
 
 from ..base import TestApp, TestData

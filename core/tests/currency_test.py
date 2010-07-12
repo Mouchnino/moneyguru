@@ -13,8 +13,8 @@ from datetime import date
 
 from nose.tools import eq_
 
+from hscommon.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil import io
-from hsutil.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil.decorators import log_calls
 from hsutil.testutil import Patcher, with_tmpdir
 

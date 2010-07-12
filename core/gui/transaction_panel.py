@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hsutil.notify import Broadcaster
+from hscommon.notify import Broadcaster
 from hsutil.misc import first
 
 from ..exception import OperationAborted

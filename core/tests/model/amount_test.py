@@ -10,7 +10,7 @@ import operator as op
 
 from nose.tools import eq_, assert_raises
 
-from hsutil.currency import CAD, EUR, PLN, USD, CZK, TND, JPY
+from hscommon.currency import CAD, EUR, PLN, USD, CZK, TND, JPY
 
 from ...model.amount import format_amount, parse_amount, Amount
 

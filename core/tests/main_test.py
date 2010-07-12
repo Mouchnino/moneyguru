@@ -14,7 +14,7 @@ from datetime import date
 from nose.tools import eq_, assert_raises
 
 from hsutil import io
-from hsutil.currency import EUR
+from hscommon.currency import EUR
 from hsutil.testutil import Patcher, with_tmpdir
 
 from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app

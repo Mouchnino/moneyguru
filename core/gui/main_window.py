@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from hscommon.notify import Repeater, Listener
 from hsutil.misc import first, minmax
-from hsutil.notify import Repeater, Listener
 
 from ..const import PaneType
 from ..exception import OperationAborted

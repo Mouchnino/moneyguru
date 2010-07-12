@@ -8,7 +8,7 @@
 import xmlrpclib
 from datetime import date
 
-from hsutil.currency import USD, CAD
+from hscommon.currency import USD, CAD
 
 from ..base import TestCase
 from ...model import currency

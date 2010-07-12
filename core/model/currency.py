@@ -13,7 +13,7 @@ import xmlrpclib
 from Queue import Queue, Empty
 from datetime import timedelta, date, datetime
 
-from hsutil.currency import Currency, RatesDB as RatesDBBase
+from hscommon.currency import Currency, RatesDB as RatesDBBase
 
 CURRENCY_SERVER = 'http://currency.hardcoded.net/'
 

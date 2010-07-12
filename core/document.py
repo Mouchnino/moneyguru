@@ -9,9 +9,9 @@
 import datetime
 import time
 
+from hscommon.currency import Currency
+from hscommon.notify import Repeater
 from hsutil import io
-from hsutil.currency import Currency
-from hsutil.notify import Repeater
 from hsutil.misc import nonone, allsame, dedupe, extract, first
 
 from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES

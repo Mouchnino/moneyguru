@@ -11,7 +11,7 @@ from __future__ import division
 import re
 from itertools import groupby
 
-from hsutil.currency import Currency
+from hscommon.currency import Currency
 
 try:
     from _amount import Amount

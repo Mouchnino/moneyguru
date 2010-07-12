@@ -7,16 +7,16 @@
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
 
-from hsutil.cocoa import install_exception_hook, pythonify
-from hsutil.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyRegistrable
-from hsutil.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
+from hscommon.cocoa import install_exception_hook, pythonify
+from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyRegistrable
+from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4, NSBundle)
+from hscommon.reg import InvalidCodeError
+from hscommon.currency import Currency, USD
 from hsutil.path import Path
-from hsutil.currency import Currency, USD
 from hsutil.misc import nonone
-from hsutil.reg import InvalidCodeError
 
 # Set translation func. This has to be set before core modules are initialized
 import core.trans
@@ -77,7 +77,7 @@ from core.model.date import clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
 import csv
-from hsutil import job
+from hscommon import job
 from core import const
 from core.gui import base, chart, graph, report, table
 from core.loader import base, csv, native, ofx, qif

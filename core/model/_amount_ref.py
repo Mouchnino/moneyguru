@@ -11,7 +11,7 @@ from __future__ import division
 
 import operator
 
-from hsutil.currency import Currency
+from hscommon.currency import Currency
 
 def cmp_wrap(op):
     def wrapper(self, other):

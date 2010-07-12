@@ -8,7 +8,7 @@
 
 from nose.tools import eq_
 
-from hsutil.currency import USD, EUR
+from hscommon.currency import USD, EUR
 
 from ..base import TestApp, with_app
 

@@ -11,7 +11,7 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import Currency, USD, CAD
+from hscommon.currency import Currency, USD, CAD
 from hsutil.testutil import Patcher
 
 from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, ApplicationGUI, TestApp, with_app

@@ -10,8 +10,8 @@ from datetime import date, timedelta, datetime
 import xmlrpclib
 import time
 
+from hscommon.currency import Currency, USD, CAD
 from hsutil.testcase import TestCase
-from hsutil.currency import Currency, USD, CAD
 
 from ...model.amount import convert_amount
 from ...model.currency import RatesDB

@@ -11,7 +11,7 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import USD, PLN
+from hscommon.currency import USD, PLN
 
 from ..base import TestCase
 from ...exception import FileFormatError

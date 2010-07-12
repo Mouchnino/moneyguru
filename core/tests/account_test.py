@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 
 from nose.tools import eq_
 
-from hsutil.currency import EUR
+from hscommon.currency import EUR
 
 from .base import TestApp, with_app, TestData
 from ..exception import FileFormatError

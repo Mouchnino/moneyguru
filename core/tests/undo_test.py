@@ -12,7 +12,7 @@ from datetime import date
 
 from nose.tools import eq_
 
-from hsutil.currency import EUR
+from hscommon.currency import EUR
 
 from ..const import PaneType
 from ..document import ScheduleScope
