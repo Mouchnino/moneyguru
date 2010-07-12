@@ -13,7 +13,7 @@
 "Income" = "Einkommen";
 "Expenses" = "Ausgaben";
 "Transfers" = "Transfers";
-"Unassigned" = "nicht übertragbar";
+"Unassigned" = "nicht zugeordnet";
 "Reconciled" = "wertgestellt";
 "Not Reconciled" = "nicht wertgestellt";
 
