@@ -15,7 +15,7 @@ import shutil
 from setuptools import setup, Extension
 import yaml
 
-from hsdocgen import helpgen
+from hscommon import helpgen
 from hscommon.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
 
 def move(src, dst):
