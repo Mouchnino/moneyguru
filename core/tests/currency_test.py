@@ -11,7 +11,7 @@ import time
 import xmlrpclib
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hscommon.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hsutil import io
@@ -24,7 +24,7 @@ from ..model.account import AccountType
 from ..model.currency import RatesDB
 from ..model.date import MonthRange
 from . import get_original_rates_db_ensure_rates
-from .base import ApplicationGUI, TestCase, TestSaveLoadMixin, TestApp
+from .base import ApplicationGUI, TestCase, TestApp
 from .model.currency_test import FakeServer
 
 def with_fake_server(func):
@@ -254,12 +254,10 @@ class CADAssetAndUSDIncome(TestCase):
         self.assertEqual(self.etable[0].increase, 'CAD 40.00')
     
 
-class DifferentCurrencies(TestCase, TestSaveLoadMixin):
+class DifferentCurrencies(TestCase):
     """2 accounts. One with the default app currency and the other with another currency.
     2 transactions. One with the default currency and one with a different currency. Both 
     transaction have a transfer to the second account.
-    
-    Mixed with TestSaveLoadMixin to make sure currency information is correctly saved/loaded
     """
     def setUp(self):
         self.app = Application(ApplicationGUI(), default_currency=CAD)
@@ -271,6 +269,10 @@ class DifferentCurrencies(TestCase, TestSaveLoadMixin):
         self.bsheet.show_selected_account()
         self.add_entry(description='first entry', transfer='second account', increase='42 usd')
         self.add_entry(description='second entry', transfer='second account', increase='42 eur')
+    
+    def test_save_load(self):
+        # make sure currency information is correctly saved/loaded
+        self.do_test_save_load()
     
     def test_entries_amount(self):
         """All entries have the appropriate currency"""

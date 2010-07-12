@@ -9,7 +9,7 @@
 
 # Tests that make sure preferences are correctly saved/restored
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hsutil.testutil import with_tmpdir
 

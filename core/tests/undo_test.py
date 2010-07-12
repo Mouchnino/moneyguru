@@ -10,16 +10,16 @@ import copy
 import time
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hscommon.currency import EUR
 
 from ..const import PaneType
 from ..document import ScheduleScope
 from ..model.date import MonthRange
-from .base import TestCase as TestCaseBase, CommonSetup, TestAppCompareMixin
+from .base import TestCase as TestCaseBase, CommonSetup, compare_apps
 
-class TestCase(TestCaseBase, TestAppCompareMixin):
+class TestCase(TestCaseBase):
     """Provides an easy way to test undo/redo
     
     Set your app up and then, just before you perform the step you want to
@@ -32,9 +32,9 @@ class TestCase(TestCaseBase, TestAppCompareMixin):
     def _test_undo_redo(self):
         before_undo = copy.deepcopy(self.document)
         self.document.undo()
-        self._compareapps(self._previous_state, self.document)
+        compare_apps(self._previous_state, self.document)
         self.document.redo()
-        self._compareapps(before_undo, self.document)
+        compare_apps(before_undo, self.document)
     
 
 def save_state_then_verify(testmethod):

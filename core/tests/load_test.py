@@ -9,13 +9,13 @@
 
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 from hscommon.currency import PLN, CAD
 from hsutil.testutil import with_tmpdir
 
 from ..model.account import AccountType
 from ..model.date import MonthRange
-from .base import TestCase, TestSaveLoadMixin, TestQIFExportImportMixin, compare_apps, TestApp
+from .base import TestCase, compare_apps, TestApp
 
 #--- Pristine
 @with_tmpdir
@@ -121,15 +121,18 @@ class LoadFile(TestCase):
         assert not self.document.is_dirty()
     
 
-class LoadTwice(TestCase, TestSaveLoadMixin):
-    # Loads 'simple.moneyguru' twice. Mixed in with TestSaveLoadMixin to make sure that loading 
-    # completely wipes out previous transactions (If it doesn't, old transaction end up in the save 
-    # file, making them being re-added to the account in the next load).
+class LoadTwice(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
         self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
         self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
+    
+    def test_save_load(self):
+        # make sure that loading completely wipes out previous transactions (If it doesn't, old
+        # transaction end up in the save file, making them being re-added to the account in the next
+        # load).
+        self.do_test_save_load()
     
 
 class LoadMultiCurrency(TestCase):
@@ -172,13 +175,10 @@ class LoadPayeeDescription(TestCase):
         eq_(self.ttable[2].payee, 'payee')
     
 
-class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase, TestSaveLoadMixin, TestQIFExportImportMixin):
+class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase):
     # Two accounts, two entries in each. Descriptions, categories and account names contain
     # non-latin characters (a polish 'l'). currencies are set to non-default values. first account
     # is selected.
-    
-    # Mixin with TestSaveLoadMixin to make sure all those values come back up alright
-    # Same for TestQIFExportImportMixin
     def setUp(self):
         self.create_instances()
         self.add_account(u'first_account\u0142', currency=PLN)
@@ -189,6 +189,13 @@ class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase, TestSaveLoadMixin,
         self.mainwindow.show_account()
         self.add_entry('5/10/2007', u'third\u0142', transfer=u'first_account\u0142', decrease='1 usd')
         self.add_entry('6/10/2007', u'fourth\u0142', transfer='yet another account', decrease='2 usd')
+    
+    def test_save_load(self):
+        # make sure all those values come back up alright
+        self.do_test_save_load()
+    
+    def test_qif_export_import(self):
+        self.do_test_qif_export_import()
     
 
 class LoadInvalidAccountType(TestCase):

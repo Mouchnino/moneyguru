@@ -8,7 +8,7 @@
 
 import operator as op
 
-from nose.tools import eq_, assert_raises
+from hsutil.testutil import eq_, assert_raises
 
 from hscommon.currency import CAD, EUR, PLN, USD, CZK, TND, JPY
 

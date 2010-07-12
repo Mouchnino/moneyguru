@@ -6,12 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 from hsutil.testutil import Patcher
 
 from ..const import PaneType
 from ..document import ScheduleScope
-from .base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app
+from .base import TestCase, CommonSetup, TestApp, with_app
 
 #--- One transaction
 def app_one_transaction():
@@ -287,15 +287,18 @@ def test_ttable_attrs(app):
     # Also test amount. Previously, the spawns would have their amount attributes stuck at 0.
     eq_(app.ttable[0].amount, '1.00')
 
-class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup, TestSaveLoadMixin):
-    # TestSaveLoadMixin: The native loader was loading the wrong split element into the Recurrence's
-    # ref txn. So the recurrences were always getting splits from the last loaded normal txn
+class OneDailyRecurrentTransactionWithAnotherOne(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
         self.drsel.select_month_range()
         self.add_account_legacy('account')
         self.add_entry('19/09/2008', description='bar', increase='2')
         self.setup_scheduled_transaction(description='foo', account='account', debit='1', repeat_every=3)
+    
+    def test_save_load(self):
+        # The native loader was loading the wrong split element into the Recurrence's
+        # ref txn. So the recurrences were always getting splits from the last loaded normal txn
+        self.do_test_save_load()
     
     def test_ttable_attrs(self):
         self.assertEqual(self.ttable.row_count, 7)
@@ -344,7 +347,7 @@ class OneDailyRecurrentTransactionWithLocalChange(TestCase, CommonSetup):
         self.assertEqual(self.ttable[2].description, 'changed')
     
 
-class OneDailyRecurrentTransactionWithGlobalChange(TestCase, CommonSetup, TestSaveLoadMixin):
+class OneDailyRecurrentTransactionWithGlobalChange(TestCase, CommonSetup):
     def setUp(self):
         self.mock_today(2008, 9, 30)
         self.create_instances()
@@ -355,6 +358,9 @@ class OneDailyRecurrentTransactionWithGlobalChange(TestCase, CommonSetup, TestSa
         self.document_gui.query_for_schedule_scope_result = ScheduleScope.Global
         self.ttable.save_edits()
     
+    def test_save_load(self):
+        self.do_test_save_load()
+    
     def test_perform_another_global_change_before(self):
         # Previously, the second global change would not override the first
         self.ttable.select([1])
@@ -364,13 +370,16 @@ class OneDailyRecurrentTransactionWithGlobalChange(TestCase, CommonSetup, TestSa
         self.assertEqual(self.ttable[2].description, 'changed again')
     
 
-class OneDailyRecurrentTransactionWithLocalDeletion(TestCase, CommonSetup, TestSaveLoadMixin):
+class OneDailyRecurrentTransactionWithLocalDeletion(TestCase, CommonSetup):
     def setUp(self):
         self.mock_today(2008, 9, 30)
         self.create_instances()
         self.setup_scheduled_transaction(account='account', debit='1', repeat_every=3)
         self.ttable.select([2])
         self.ttable.delete()
+    
+    def test_save_load(self):
+        self.do_test_save_load()
     
     def test_perform_another_global_change_before(self):
         # Don't remove the local deletion

@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from ...const import PaneType
 from ..base import TestApp, with_app

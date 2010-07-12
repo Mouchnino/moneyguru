@@ -8,12 +8,12 @@
 
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hscommon.currency import USD
 from hsutil.testutil import Patcher
 
-from ..base import TestCase, TestSaveLoadMixin, CommonSetup, TestApp, with_app, TestData
+from ..base import TestCase, CommonSetup, TestApp, with_app, TestData
 from ...const import PaneType
 from ...gui.transaction_table import TransactionTable
 from ...model.date import MonthRange, YearRange
@@ -115,14 +115,17 @@ class EditionMode(TestCase):
         assert self.ttable.edited is None
     
 
-class UnassignedTransactionWithAmount(TestCase, TestSaveLoadMixin):
-    # TestSaveLoadMixin: Make sure that unassigned transactions are loaded
+class UnassignedTransactionWithAmount(TestCase):
     def setUp(self):
         self.create_instances()
         self.mainwindow.select_transaction_table()
         self.ttable.add()
         self.ttable[0].amount = '42'
         self.ttable.save_edits()
+    
+    def test_save_load(self):
+        # Make sure that unassigned transactions are loaded
+        self.do_test_save_load()
     
     def test_show_from_account(self):
         # show_from_account() when the selected txn has no assigned account does nothing

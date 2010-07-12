@@ -9,7 +9,7 @@
 
 from __future__ import unicode_literals
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 from hsutil.testutil import Patcher
 
 from ...model.account import AccountType

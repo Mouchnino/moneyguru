@@ -8,7 +8,7 @@
 
 import time
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 from hsutil.testutil import Patcher, patch_today, with_tmpdir
 
 from .base import TestApp, with_app

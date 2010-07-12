@@ -13,7 +13,7 @@ General dependencies
 - Python 2.6 (http://www.python.org)
 - hsutil 1.0.0 (it's on PyPI). (http://hg.hardcoded.net/hsutil)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
-- Nose, to run unit tests. (http://somethingaboutorange.com/mrl/projects/nose/)
+- py.test, to run unit tests. (http://codespeak.net/py/dist/test/)
 
 OS X prerequisites
 ------------------

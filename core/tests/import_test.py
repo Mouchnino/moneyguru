@@ -9,11 +9,11 @@
 from datetime import date
 import os.path as op
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hscommon.currency import PLN, CAD
 
-from .base import ApplicationGUI, TestCase as TestCaseBase, TestQIFExportImportMixin, TestApp
+from .base import ApplicationGUI, TestCase as TestCaseBase, TestApp
 from ..app import Application
 from ..exception import FileFormatError
 from ..model.date import MonthRange, YearRange
@@ -28,10 +28,13 @@ class TestCase(TestCaseBase):
         importall(self.ta, filename)
     
 
-class Pristine(TestCase, TestQIFExportImportMixin):
-    # TestQIFExportImportMixin: Make sure nothing is wrong when the file is empty
+class Pristine(TestCase):
     def setUp(self):
         self.create_instances()
+    
+    def test_qif_export_import(self):
+        # Make sure nothing is wrong when the file is empty
+        self.do_test_qif_export_import()
     
     def test_import_empty(self):
         # Trying to import an empty file results in a FileFormatError

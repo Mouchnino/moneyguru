@@ -9,12 +9,12 @@ from __future__ import division
 
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hscommon.currency import Currency, USD, CAD
 from hsutil.testutil import Patcher
 
-from ..base import DocumentGUI, TestCase, TestSaveLoadMixin, ApplicationGUI, TestApp, with_app
+from ..base import DocumentGUI, TestCase, ApplicationGUI, TestApp, with_app
 from ...app import Application
 from ...const import PaneType
 from ...document import Document
@@ -306,14 +306,17 @@ class OneGroupInEditionMode(TestCase):
         eq_(self.bsheet.assets[0].name, 'foo')
     
 
-class OneAccountAndOneGroup(TestCase, TestSaveLoadMixin):
-    # TestSaveLoadMixin is to make sure that empty groups are kept when saving/loading
+class OneAccountAndOneGroup(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_account()
         self.add_group()
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # the group
+    
+    def test_save_load(self):
+        # make sure that empty groups are kept when saving/loading
+        self.do_test_save_load()
     
     def test_add_account(self):
         # New accounts are created under the selected user created group.

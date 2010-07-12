@@ -11,7 +11,12 @@ import os.path as op
 from datetime import date, datetime
 from operator import attrgetter
 
-from nose.tools import nottest, istest, eq_
+from hsutil.testutil import eq_
+try:
+    from nose.tools import nottest, istest
+except ImportError:
+    nottest = lambda func: func
+    istest = lambda func: func
 
 from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
@@ -675,6 +680,29 @@ class TestCase(TestCaseBase):
         self.document = Document(self.document_gui, self.app)
         self.create_instances()
     
+    @nottest
+    def do_test_save_load(self):
+        newdoc = self.save_and_load()
+        newdoc.date_range = self.document.date_range
+        newdoc._cook()
+        compare_apps(self.document, newdoc)
+    
+    @nottest
+    def do_test_qif_export_import(self):
+        filepath = op.join(self.tmpdir(), 'foo.qif')
+        self.document.save_to_qif(filepath)
+        newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
+        newdoc = Document(DocumentGUI(), newapp)
+        iwin = ImportWindow(self.iwin_gui, newdoc)
+        iwin.connect()
+        try:
+            newdoc.parse_file_for_import(filepath)
+            while iwin.panes:
+                iwin.import_selected_pane()
+        except FileFormatError:
+            pass
+        compare_apps(self.document, newdoc, qif_mode=True)
+    
     def entry_descriptions(self):
         return [self.etable[i].description for i in range(len(self.etable))]
     
@@ -806,37 +834,6 @@ def compare_apps(first, second, qif_mode=False):
         eq_(budget1.start_date, budget2.start_date)
         eq_(budget1.stop_date, budget2.stop_date)
         eq_(budget1.repeat_every, budget2.repeat_every)
-
-@nottest
-class TestAppCompareMixin(object):
-    # qif_mode: don't compare reconciliation status and, don't compare memos
-    def _compareapps(self, first, second, qif_mode=False):
-        compare_apps(first, second, qif_mode)
-
-class TestSaveLoadMixin(TestAppCompareMixin):
-    def test_save_load(self):
-        newdoc = self.save_and_load()
-        newdoc.date_range = self.document.date_range
-        newdoc._cook()
-        self._compareapps(self.document, newdoc)
-    
-
-class TestQIFExportImportMixin(TestAppCompareMixin):
-    def test_qif_export_import(self):
-        filepath = op.join(self.tmpdir(), 'foo.qif')
-        self.document.save_to_qif(filepath)
-        newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
-        newdoc = Document(DocumentGUI(), newapp)
-        iwin = ImportWindow(self.iwin_gui, newdoc)
-        iwin.connect()
-        try:
-            newdoc.parse_file_for_import(filepath)
-            while iwin.panes:
-                iwin.import_selected_pane()
-        except FileFormatError:
-            pass
-        self._compareapps(self.document, newdoc, qif_mode=True)
-    
 
 class CommonSetup(object):
     def setup_scheduled_transaction(self, start_date='13/09/2008', description='foobar', 

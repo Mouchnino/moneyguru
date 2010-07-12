@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from ..base import TestApp, with_app
 from ...const import PaneType

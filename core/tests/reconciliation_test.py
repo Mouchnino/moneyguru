@@ -6,9 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
-from .base import TestCase, TestSaveLoadMixin, CommonSetup as CommonSetupBase, TestApp
+from .base import TestCase, CommonSetup as CommonSetupBase, TestApp
 from ..model.account import AccountType
 
 class CommonSetup(CommonSetupBase):
@@ -212,7 +212,7 @@ class ThreeEntries(TestCase, CommonSetup):
         assert self.etable[1].reconciled
     
 
-class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
+class ThreeEntriesOneReconciled(TestCase, CommonSetup):
     # 3 entries, in reconciliation mode, with the entry at index 1 having its reconciliation pending.
     def setUp(self):
         self.create_instances()
@@ -220,6 +220,9 @@ class ThreeEntriesOneReconciled(TestCase, CommonSetup, TestSaveLoadMixin):
         self.etable.select([1])
         row = self.etable.selected_row
         row.toggle_reconciled()
+    
+    def test_save_load(self):
+        self.do_test_save_load()
     
     def test_toggle_entries_reconciled_with_none_reconciled(self):
         # When none of the selected entries are reconciled, all selected entries get reconciled.

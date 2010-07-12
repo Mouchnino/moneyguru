@@ -11,7 +11,7 @@ import os.path as op
 import sys
 from datetime import date
 
-from nose.tools import eq_, assert_raises
+from hsutil.testutil import eq_, assert_raises
 
 from hsutil import io
 from hscommon.currency import EUR

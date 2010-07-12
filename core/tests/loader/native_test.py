@@ -9,7 +9,7 @@
 from StringIO import StringIO
 from datetime import date
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 from hscommon.currency import USD, PLN
 

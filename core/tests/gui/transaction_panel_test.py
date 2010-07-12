@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from nose.tools import eq_, assert_raises
+from hsutil.testutil import eq_, assert_raises
 
 from hscommon.currency import USD
 
