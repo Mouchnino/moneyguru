@@ -14,10 +14,10 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGTextFieldCell.h"
 
 @implementation MGTransactionTable
-
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyTransactionTable" pyParent:aPyParent view:aTableView];
+    [self initializeColumns];
     [[self tableView] registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
@@ -31,7 +31,30 @@ http://www.hardcoded.net/licenses/hs_license
     [self changeColumns]; // initial set
     return self;
 }
-        
+
+- (void)initializeColumns
+{
+    MGColumnDef defs[] = {
+        {@"status", @"", 16, 16, 16, [MGReconciliationCell class]},
+        {@"date", @"Date", 80, 60, 0, nil},
+        {@"checkno", @"Check #", 72, 40, 0, nil},
+        {@"description", @"Description", 310, 80, 0, nil},
+        {@"payee", @"Payee", 85, 80, 0, nil},
+        {@"from", @"From", 136, 70, 0, [MGTextFieldCell class]},
+        {@"to", @"To", 135, 70, 0, [MGTextFieldCell class]},
+        {@"amount", @"Amount", 90, 70, 0, nil},
+        nil
+    };
+    [super initializeColumns:defs];
+    NSTableColumn *c = [[[self tableView] tableColumns] objectAtIndex:0]; /* status */
+    [c setResizingMask:NSTableColumnNoResizing];
+    [[c dataCell] setImagePosition:NSImageOnly];
+    [[c dataCell] setBordered:NO];
+    c = [[[self tableView] tableColumns] objectAtIndex:6]; /* amount */
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+}
+
 - (void)dealloc
 {
     [customFieldEditor release];

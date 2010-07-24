@@ -45,6 +45,7 @@
 		CE3040DA0F86094400884424 /* MGEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D70F86094400884424 /* MGEntryPrint.m */; };
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
+		CE33E33E11FB58B800444435 /* columns.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE33E33C11FB58B800444435 /* columns.strings */; };
 		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
 		CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41C98F0E2B52CD006D3BEA /* MGTable.m */; };
@@ -299,6 +300,9 @@
 		CE3040D90F86094400884424 /* MGTransactionPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTransactionPrint.m; path = print/MGTransactionPrint.m; sourceTree = "<group>"; };
 		CE31C65B0E851CF400BBA82E /* MGRecurrenceScopeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGRecurrenceScopeDialog.h; sourceTree = "<group>"; };
 		CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog.m; sourceTree = "<group>"; };
+		CE33E33D11FB58B800444435 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/columns.strings; sourceTree = "<group>"; };
+		CE33E33F11FB58C900444435 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/columns.strings; sourceTree = "<group>"; };
+		CE33E34011FB58D500444435 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/columns.strings; sourceTree = "<group>"; };
 		CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitGraph.h; sourceTree = "<group>"; };
 		CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		CE3F6A7610F903640046B2D2 /* PyProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitView.h; sourceTree = "<group>"; };
@@ -795,6 +799,7 @@
 			children = (
 				CEFEA33111E1DEA70034AB46 /* Localizable.strings */,
 				CEF93B1911D2142E00F49321 /* core.strings */,
+				CE33E33C11FB58B800444435 /* columns.strings */,
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
 				CEEED1D30E3F763100BBA154 /* images */,
@@ -1385,6 +1390,7 @@
 				CEF5E63C11DCCEE80048C9DF /* schedules_16.png in Resources */,
 				CEF5E63D11DCCEE80048C9DF /* transaction_table_16.png in Resources */,
 				CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */,
+				CE33E33E11FB58B800444435 /* columns.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1508,6 +1514,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		CE33E33C11FB58B800444435 /* columns.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE33E33D11FB58B800444435 /* en */,
+				CE33E33F11FB58C900444435 /* fr */,
+				CE33E34011FB58D500444435 /* de */,
+			);
+			name = columns.strings;
+			sourceTree = SOURCE_ROOT;
+		};
 		CEC3677B11D10E1D00EB0222 /* AccountPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

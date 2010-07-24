@@ -10,9 +10,24 @@ http://www.hardcoded.net/licenses/hs_license
 #import "HSTable.h"
 #import "MGTableView.h"
 
+/*
+    This structure is to define constants describing table columns (it's easier to maintain in code
+    than in XIB files).
+*/
+typedef struct {
+    NSString *attrname;
+    NSString *title; /* Untranslated. It will be translated on column instantiation. */
+    NSUInteger defaultWidth;
+    NSUInteger minWidth;
+    NSUInteger maxWidth;
+    Class cellClass;
+} MGColumnDef;
+
 @interface MGTable : HSTable {}
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView;
 
+/* Protected */
+- (void)initializeColumns:(MGColumnDef *)columns;
 /* Public */
 - (MGTableView *)tableView;
 @end
