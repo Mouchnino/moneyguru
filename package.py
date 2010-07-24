@@ -65,7 +65,7 @@ def package_debian():
     srcpath = op.join(destpath, 'src')
     os.makedirs(destpath)
     shutil.copytree('qt', srcpath)
-    copy_packages(['hscommon', 'hsgui', 'core', 'qtlib'], srcpath)
+    copy_packages(['hscommon', 'hsgui', 'core', 'qtlib', 'hsutil'], srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
     build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('help', 'moneyguru_help'), op.join(srcpath, 'help'))
