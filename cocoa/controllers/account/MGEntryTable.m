@@ -49,7 +49,7 @@ http://www.hardcoded.net/licenses/hs_license
         {@"balance", @"Balance", 90, 90, 0, nil},
         nil
     };
-    [super initializeColumns:defs];
+    [[self columns] initializeColumns:defs];
     NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"status"];
     [c setResizingMask:NSTableColumnNoResizing];
     [[c dataCell] setImagePosition:NSImageOnly];

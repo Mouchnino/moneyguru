@@ -13,38 +13,14 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
+    columns = [[MGColumns alloc] initWithTableView:aTableView];
     return self;
 }
 
-/* Protected */
-- (void)initializeColumns:(MGColumnDef *)columns
+- (void)dealloc
 {
-    for (NSTableColumn *c in [[[tableView tableColumns] copy] autorelease]) {
-        [tableView removeTableColumn:c];
-    }
-    NSUserDefaults *udc = [NSUserDefaultsController sharedUserDefaultsController];
-    MGColumnDef *cdef = columns;
-    while (cdef->attrname != nil) {
-        NSTableColumn *c = [[[NSTableColumn alloc] initWithIdentifier:cdef->attrname] autorelease];
-        NSString *title = NSLocalizedStringFromTable(cdef->title, @"columns", @"");
-        [[c headerCell] setStringValue:title];
-        [c setSortDescriptorPrototype:[[[NSSortDescriptor alloc] initWithKey:cdef->attrname ascending:YES] autorelease]];
-        [c setWidth:cdef->defaultWidth];
-        [c setMinWidth:cdef->minWidth];
-        NSUInteger maxWidth = cdef->maxWidth;
-        if (maxWidth == 0) {
-            maxWidth = 0xffffff;
-        }
-        [c setMaxWidth:maxWidth];
-        if (cdef->cellClass != nil) {
-            id cell = [[[cdef->cellClass alloc] initTextCell:@""] autorelease];
-            [cell setEditable:YES];
-            [c setDataCell:cell];
-        }
-        [c bind:@"fontSize" toObject:udc withKeyPath:@"values.TableFontSize" options:nil];
-        [tableView addTableColumn:c];
-        cdef++;
-    }
+    [columns release];
+    [super dealloc];
 }
 
 /* MGTableView delegate */
@@ -57,5 +33,10 @@ http://www.hardcoded.net/licenses/hs_license
 - (MGTableView *)tableView
 {
     return (MGTableView *)tableView;
+}
+
+- (MGColumns *)columns
+{
+    return columns;
 }
 @end

@@ -45,7 +45,7 @@ http://www.hardcoded.net/licenses/hs_license
         {@"amount", @"Amount", 90, 70, 0, nil},
         nil
     };
-    [super initializeColumns:defs];
+    [[self columns] initializeColumns:defs];
     NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"status"];
     [c setResizingMask:NSTableColumnNoResizing];
     [[c dataCell] setImagePosition:NSImageOnly];

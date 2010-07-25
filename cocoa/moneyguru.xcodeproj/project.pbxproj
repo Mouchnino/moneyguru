@@ -35,6 +35,7 @@
 		CE14AF790E6FB3B500E75B76 /* MGPieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14AF780E6FB3B500E75B76 /* MGPieChartView.m */; };
 		CE16B0260E715B3F001290F7 /* backward_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16B0240E715B3F001290F7 /* backward_32.png */; };
 		CE16B0270E715B3F001290F7 /* forward_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16B0250E715B3F001290F7 /* forward_32.png */; };
+		CE17DBD011FC3D9E008E74DE /* MGColumns.m in Sources */ = {isa = PBXBuildFile; fileRef = CE17DBCF11FC3D9E008E74DE /* MGColumns.m */; };
 		CE1BD3E20FDE4DE2005FB7B9 /* BRSingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */; };
 		CE2DD6300E4C684000AB107B /* MGImportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DD62F0E4C684000AB107B /* MGImportTable.m */; };
 		CE2F0BF411295E1A00F6FB55 /* HSOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */; };
@@ -277,6 +278,8 @@
 		CE14AF910E7042C800E75B76 /* PyBalancePieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBalancePieChart.h; sourceTree = "<group>"; };
 		CE16B0240E715B3F001290F7 /* backward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward_32.png; sourceTree = "<group>"; };
 		CE16B0250E715B3F001290F7 /* forward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward_32.png; sourceTree = "<group>"; };
+		CE17DBCE11FC3D9E008E74DE /* MGColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGColumns.h; path = controllers/MGColumns.h; sourceTree = SOURCE_ROOT; };
+		CE17DBCF11FC3D9E008E74DE /* MGColumns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGColumns.m; path = controllers/MGColumns.m; sourceTree = SOURCE_ROOT; };
 		CE1BD3DE0FDE4DE1005FB7B9 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
 		CE1BD3DF0FDE4DE1005FB7B9 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
 		CE1E88D810F89FB1003BB329 /* PyTransactionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionView.h; sourceTree = "<group>"; };
@@ -830,6 +833,8 @@
 				CE036D63103AE51100E172F8 /* MGPanel.m */,
 				CE41C98E0E2B52CD006D3BEA /* MGTable.h */,
 				CE41C98F0E2B52CD006D3BEA /* MGTable.m */,
+				CE17DBCE11FC3D9E008E74DE /* MGColumns.h */,
+				CE17DBCF11FC3D9E008E74DE /* MGColumns.m */,
 				CE873A8A0E21622F004F63E9 /* MGSplitTable.h */,
 				CE873A8B0E21622F004F63E9 /* MGSplitTable.m */,
 				CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */,
@@ -1508,6 +1513,7 @@
 				CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */,
 				CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */,
 				CE88545111A1837B00268FBD /* MGMainWindow.m in Sources */,
+				CE17DBD011FC3D9E008E74DE /* MGColumns.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
