@@ -10,3 +10,10 @@
 "Decrease" = "Decrease";
 "Increase" = "Increase";
 "Reconciliation Date" = "Reconciliation Date";
+"Account" = "Account";
+"Start" = "Start";
+"End" = "End";
+"Change" = "Change";
+"Change %" = "Change %";
+"Budgeted" = "Budgeted";
+"Account #" = "Account #";

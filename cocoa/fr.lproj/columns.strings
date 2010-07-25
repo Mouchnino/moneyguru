@@ -10,3 +10,10 @@
 "Decrease" = "Retrait";
 "Increase" = "Dépôt";
 "Reconciliation Date" = "Date réconciliation";
+"Account" = "Compte";
+"Start" = "Début";
+"End" = "Fin";
+"Change" = "Variation";
+"Change %" = "Variation %";
+"Budgeted" = "Budgeté";
+"Account #" = "# Compte";

@@ -35,14 +35,14 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)initializeColumns
 {
     MGColumnDef defs[] = {
-        {@"status", @"", 16, 16, 16, [MGReconciliationCell class]},
-        {@"date", @"Date", 80, 60, 0, nil},
-        {@"checkno", @"Check #", 72, 40, 0, nil},
-        {@"description", @"Description", 310, 80, 0, nil},
-        {@"payee", @"Payee", 85, 80, 0, nil},
-        {@"from", @"From", 136, 70, 0, [MGTextFieldCell class]},
-        {@"to", @"To", 135, 70, 0, [MGTextFieldCell class]},
-        {@"amount", @"Amount", 90, 70, 0, nil},
+        {@"status", @"", 16, 16, 16, NO, [MGReconciliationCell class]},
+        {@"date", @"Date", 80, 60, 0, YES, nil},
+        {@"checkno", @"Check #", 72, 40, 0, YES, nil},
+        {@"description", @"Description", 310, 80, 0, YES, nil},
+        {@"payee", @"Payee", 85, 80, 0, YES, nil},
+        {@"from", @"From", 136, 70, 0, YES, [MGTextFieldCell class]},
+        {@"to", @"To", 135, 70, 0, YES, [MGTextFieldCell class]},
+        {@"amount", @"Amount", 90, 70, 0, YES, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

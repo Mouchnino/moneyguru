@@ -10,3 +10,10 @@
 "Decrease" = "Soll";
 "Increase" = "Haben";
 "Reconciliation Date" = "Wertstellungsdatum";
+"Account" = "Konto";
+"Start" = "Anfang";
+"End" = "Ende";
+"Change" = "Variation";
+"Change %" = "Variation %";
+"Budgeted" = "Budgetiert";
+"Account #" = "Konto #";

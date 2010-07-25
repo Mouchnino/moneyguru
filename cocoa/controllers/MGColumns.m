@@ -22,18 +22,35 @@ http://www.hardcoded.net/licenses/hs_license
     [super dealloc];
 }
 
+/*
+    It is assumed, when this method is used, that the table/outline is empty *OR* that it is not
+    defined in the column list.
+    
+    Special note about NSOutlineView. You can use MGColumns on outline views, but you be aware that
+    the "main" column (the one having the tree disclosure buttons) cannot be removed. Therefore,
+    it has to be defined in the XIB and it must *not* be in column defs.
+*/
 - (void)initializeColumns:(MGColumnDef *)columns
 {
-    for (NSTableColumn *c in [[[tableView tableColumns] copy] autorelease]) {
-        [tableView removeTableColumn:c];
+    /* Translate the title of columns (needed for outlines) present already */
+    for (NSTableColumn *c in [tableView tableColumns]) {
+        NSString *title = NSLocalizedStringFromTable([[c headerCell] stringValue], @"columns", @"");
+        [[c headerCell] setStringValue:title];
     }
     NSUserDefaults *udc = [NSUserDefaultsController sharedUserDefaultsController];
     MGColumnDef *cdef = columns;
     while (cdef->attrname != nil) {
+        if ([tableView tableColumnWithIdentifier:cdef->attrname] != nil) {
+            cdef++;
+            continue;
+        }
         NSTableColumn *c = [[[NSTableColumn alloc] initWithIdentifier:cdef->attrname] autorelease];
         NSString *title = NSLocalizedStringFromTable(cdef->title, @"columns", @"");
         [[c headerCell] setStringValue:title];
-        [c setSortDescriptorPrototype:[[[NSSortDescriptor alloc] initWithKey:cdef->attrname ascending:YES] autorelease]];
+        if (cdef->sortable) {
+            NSSortDescriptor *d = [[[NSSortDescriptor alloc] initWithKey:cdef->attrname ascending:YES] autorelease];
+            [c setSortDescriptorPrototype:d];
+        }
         [c setWidth:cdef->defaultWidth];
         [c setMinWidth:cdef->minWidth];
         NSUInteger maxWidth = cdef->maxWidth;

@@ -8,11 +8,13 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGBalanceSheet.h"
 #import "MGConst.h"
+#import "MGAmountCell.h"
 
 @implementation MGBalanceSheet
 - (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithPyClassName:@"PyBalanceSheet" pyParent:aPyParent view:aOutlineView];
+    [self initializeColumns];
     columnsManager = [[HSTableColumnManager alloc] initWithTable:aOutlineView];
     [columnsManager linkColumn:@"delta" toUserDefault:BalanceSheetDeltaColumnVisible];
     [columnsManager linkColumn:@"delta_perc" toUserDefault:BalanceSheetDeltaPercColumnVisible];
@@ -20,6 +22,35 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"budgeted" toUserDefault:BalanceSheetBudgetedColumnVisible];
     [columnsManager linkColumn:@"account_number" toUserDefault:BalanceSheetAccountNumberColumnVisible];
     return self;
+}
+
+- (void)initializeColumns
+{
+    MGColumnDef defs[] = {
+        /* Account column is defined in XIB */
+        {@"account_number", @"Account #", 64, 10, 0, NO, nil},
+        {@"end", @"End", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"delta", @"Change", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"delta_perc", @"Change %", 60, 10, 0, NO, [MGAmountCell class]},
+        {@"start", @"Start", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"budgeted", @"Budgeted", 100, 10, 0, NO, [MGAmountCell class]},
+        nil
+    };
+    [[self columns] initializeColumns:defs];
+    NSTableColumn *c = [[self outlineView] tableColumnWithIdentifier:@"end"];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    NSFontManager *fontManager = [NSFontManager sharedFontManager];
+    NSFont *font = [[c dataCell] font];
+    font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
+    [[c dataCell] setFont:font];
+    c = [[self outlineView] tableColumnWithIdentifier:@"delta"];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self outlineView] tableColumnWithIdentifier:@"delta_perc"];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self outlineView] tableColumnWithIdentifier:@"start"];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self outlineView] tableColumnWithIdentifier:@"budgeted"];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
 }
 
 - (void)dealloc

@@ -18,6 +18,7 @@ typedef struct {
     NSUInteger defaultWidth;
     NSUInteger minWidth;
     NSUInteger maxWidth;
+    BOOL sortable;
     Class cellClass;
 } MGColumnDef;
 

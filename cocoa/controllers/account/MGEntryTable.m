@@ -37,16 +37,16 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)initializeColumns
 {
     MGColumnDef defs[] = {
-        {@"status", @"", 16, 16, 16, [MGReconciliationCell class]},
-        {@"date", @"Date", 80, 60, 0, nil},
-        {@"reconciliation_date", @"Reconciliation Date", 110, 60, 0, nil},
-        {@"checkno", @"Check #", 72, 40, 0, nil},
-        {@"description", @"Description", 278, 80, 0, nil},
-        {@"payee", @"Payee", 80, 80, 0, nil},
-        {@"transfer", @"Transfer", 140, 80, 0, [MGTextFieldCell class]},
-        {@"increase", @"Increase", 80, 80, 0, nil},
-        {@"decrease", @"Decrease", 80, 80, 0, nil},
-        {@"balance", @"Balance", 90, 90, 0, nil},
+        {@"status", @"", 16, 16, 16, NO, [MGReconciliationCell class]},
+        {@"date", @"Date", 80, 60, 0, YES, nil},
+        {@"reconciliation_date", @"Reconciliation Date", 110, 60, 0, YES, nil},
+        {@"checkno", @"Check #", 72, 40, 0, YES, nil},
+        {@"description", @"Description", 278, 80, 0, YES, nil},
+        {@"payee", @"Payee", 80, 80, 0, YES, nil},
+        {@"transfer", @"Transfer", 140, 80, 0, YES, [MGTextFieldCell class]},
+        {@"increase", @"Increase", 80, 80, 0, YES, nil},
+        {@"decrease", @"Decrease", 80, 80, 0, YES, nil},
+        {@"balance", @"Balance", 90, 90, 0, YES, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

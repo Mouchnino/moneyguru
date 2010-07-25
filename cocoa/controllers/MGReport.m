@@ -16,13 +16,25 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aOutlineView];
+    columns = [[MGColumns alloc] initWithTableView:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
     return self;
+}
+
+- (void)dealloc
+{
+    [columns release];
+    [super dealloc];
 }
 
 - (PyReport *)py
 {
     return (PyReport *)py;
+}
+
+- (MGColumns *)columns
+{
+    return columns;
 }
 
 /* Overrides */
