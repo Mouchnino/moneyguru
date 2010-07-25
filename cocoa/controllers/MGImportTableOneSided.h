@@ -14,5 +14,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGImportTableOneSided : MGEditableTable {}
 - (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView;
+- (void)initializeColumns;
 - (PyImportTable *)py;
 @end

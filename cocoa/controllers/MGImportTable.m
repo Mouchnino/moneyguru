@@ -9,17 +9,51 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGImportTable.h"
 #import "Utils.h"
 #import "MGConst.h"
+#import "MGImportBindingCell.h"
 
 @implementation MGImportTable
 - (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow view:aTableView];
+    [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGImportEntryPasteboardType]];
     NSTableColumn *boundColumn = [[aTableView tableColumns] objectAtIndex:4];
     NSActionCell *cell = [boundColumn dataCell];
     [cell setTarget:self];
     [cell setAction:@selector(bindLockClick:)];
     return self;
+}
+
+- (void)initializeColumns
+{
+    MGColumnDef defs[] = {
+        {@"will_import", @"", 14, 14, 14, NO, [NSButtonCell class]},
+        {@"date", @"Date", 68, 40, 0, NO, nil},
+        {@"description", @"Description", 142, 40, 0, NO, nil},
+        {@"amount", @"Amount", 60, 10, 0, NO, nil},
+        {@"bound", @"", 14, 14, 14, NO, [MGImportBindingCell class]},
+        {@"date_import", @"Date", 55, 10, 0, NO, nil},
+        {@"description_import", @"Description", 106, 10, 0, NO, nil},
+        {@"amount_import", @"Amount", 60, 10, 0, NO, nil},
+        nil
+    };
+    [[self columns] initializeColumns:defs];
+    NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"will_import"];
+    [[c dataCell] setButtonType:NSSwitchButton];
+    [[c dataCell] setControlSize:NSSmallControlSize];
+    c = [[self tableView] tableColumnWithIdentifier:@"bound"];
+    /* I'm not too sure why NSSwitchButton type is needed here, but it is (otherwise clicking on
+       the cell has no effect).
+    */
+    [[c dataCell] setButtonType:NSSwitchButton];
+    [[c dataCell] setControlSize:NSSmallControlSize];
+    [[c dataCell] setBordered:NO];
+    c = [[self tableView] tableColumnWithIdentifier:@"amount"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self tableView] tableColumnWithIdentifier:@"amount_import"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
 }
 
 - (PyImportTable *)py

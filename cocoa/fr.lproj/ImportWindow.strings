@@ -31,39 +31,3 @@
 
 /* Class = "NSMenuItem"; title = "Description <--> Payee"; ObjectID = "105"; */
 "105.title" = "Description <--> Provenance";
-
-/* Class = "NSTableColumn"; headerCell.title = "Transfer"; ObjectID = "112"; */
-"112.headerCell.title" = "Transfert";
-
-/* Class = "NSTableColumn"; headerCell.title = "Check #"; ObjectID = "113"; */
-"113.headerCell.title" = "# Chèque";
-
-/* Class = "NSTableColumn"; headerCell.title = "Payee"; ObjectID = "114"; */
-"114.headerCell.title" = "Provenance";
-
-/* Class = "NSTableColumn"; headerCell.title = "Date"; ObjectID = "116"; */
-"116.headerCell.title" = "Date";
-
-/* Class = "NSTableColumn"; headerCell.title = "Description"; ObjectID = "117"; */
-"117.headerCell.title" = "Description";
-
-/* Class = "NSTableColumn"; headerCell.title = "Amount"; ObjectID = "118"; */
-"118.headerCell.title" = "Montant";
-
-/* Class = "NSTableColumn"; headerCell.title = "Date"; ObjectID = "132"; */
-"132.headerCell.title" = "Date";
-
-/* Class = "NSTableColumn"; headerCell.title = "Description"; ObjectID = "133"; */
-"133.headerCell.title" = "Description";
-
-/* Class = "NSTableColumn"; headerCell.title = "Amount"; ObjectID = "134"; */
-"134.headerCell.title" = "Montant";
-
-/* Class = "NSTableColumn"; headerCell.title = "Date"; ObjectID = "136"; */
-"136.headerCell.title" = "Date";
-
-/* Class = "NSTableColumn"; headerCell.title = "Description"; ObjectID = "137"; */
-"137.headerCell.title" = "Description";
-
-/* Class = "NSTableColumn"; headerCell.title = "Amount"; ObjectID = "138"; */
-"138.headerCell.title" = "Montant";
