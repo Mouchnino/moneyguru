@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
     HSTableColumnManager *columnsManager;
 }
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (void)initializeColumns;
 
 /* Public */
 - (PyScheduleTable *)py;

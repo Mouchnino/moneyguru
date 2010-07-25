@@ -26,6 +26,7 @@ http://www.hardcoded.net/licenses/hs_license
         {@"repeat_type", @"Repeat Type", 80, 60, 0, YES, nil},
         {@"interval", @"Interval", 60, 60, 0, YES, nil},
         {@"account", @"Account", 136, 70, 0, YES, nil},
+        {@"target", @"Target", 120, 70, 0, YES, nil},
         {@"amount", @"Amount", 90, 80, 0, YES, nil},
         nil
     };
