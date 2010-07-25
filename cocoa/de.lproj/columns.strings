@@ -5,3 +5,8 @@
 "From" = "von";
 "To" = "nach";
 "Amount" = "Betrag";
+"Transfer" = "Transfer";
+"Balance" = "Saldo";
+"Decrease" = "Soll";
+"Increase" = "Haben";
+"Reconciliation Date" = "Wertstellungsdatum";

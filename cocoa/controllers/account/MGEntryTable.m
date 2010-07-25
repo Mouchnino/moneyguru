@@ -18,6 +18,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyEntryTable" pyParent:aPyParent view:aTableView];
+    [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
@@ -32,7 +33,38 @@ http://www.hardcoded.net/licenses/hs_license
     [self changeColumns]; // initial set
     return self;
 }
-        
+
+- (void)initializeColumns
+{
+    MGColumnDef defs[] = {
+        {@"status", @"", 16, 16, 16, [MGReconciliationCell class]},
+        {@"date", @"Date", 80, 60, 0, nil},
+        {@"reconciliation_date", @"Reconciliation Date", 110, 60, 0, nil},
+        {@"checkno", @"Check #", 72, 40, 0, nil},
+        {@"description", @"Description", 278, 80, 0, nil},
+        {@"payee", @"Payee", 80, 80, 0, nil},
+        {@"transfer", @"Transfer", 140, 80, 0, [MGTextFieldCell class]},
+        {@"increase", @"Increase", 80, 80, 0, nil},
+        {@"decrease", @"Decrease", 80, 80, 0, nil},
+        {@"balance", @"Balance", 90, 90, 0, nil},
+        nil
+    };
+    [super initializeColumns:defs];
+    NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"status"];
+    [c setResizingMask:NSTableColumnNoResizing];
+    [[c dataCell] setImagePosition:NSImageOnly];
+    [[c dataCell] setBordered:NO];
+    c = [[self tableView] tableColumnWithIdentifier:@"increase"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self tableView] tableColumnWithIdentifier:@"decrease"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self tableView] tableColumnWithIdentifier:@"balance"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+}
+
 - (void)dealloc
 {
     [customFieldEditor release];

@@ -5,3 +5,8 @@
 "From" = "Comptes crédités";
 "To" = "Comptes débités";
 "Amount" = "Montant";
+"Transfer" = "Transfert";
+"Balance" = "Balance";
+"Decrease" = "Retrait";
+"Increase" = "Dépôt";
+"Reconciliation Date" = "Date réconciliation";

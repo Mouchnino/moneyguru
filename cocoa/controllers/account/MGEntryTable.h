@@ -20,6 +20,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGDateFieldEditor *customDateFieldEditor;
 }
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (void)initializeColumns;
 
 /* Public */
 - (PyEntryTable *)py;

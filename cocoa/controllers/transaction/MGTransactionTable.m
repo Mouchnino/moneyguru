@@ -46,11 +46,11 @@ http://www.hardcoded.net/licenses/hs_license
         nil
     };
     [super initializeColumns:defs];
-    NSTableColumn *c = [[[self tableView] tableColumns] objectAtIndex:0]; /* status */
+    NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"status"];
     [c setResizingMask:NSTableColumnNoResizing];
     [[c dataCell] setImagePosition:NSImageOnly];
     [[c dataCell] setBordered:NO];
-    c = [[[self tableView] tableColumns] objectAtIndex:6]; /* amount */
+    c = [[self tableView] tableColumnWithIdentifier:@"amount"];
     [[c headerCell] setAlignment:NSRightTextAlignment];
     [[c dataCell] setAlignment:NSRightTextAlignment];
 }

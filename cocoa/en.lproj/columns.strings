@@ -5,3 +5,8 @@
 "From" = "From";
 "To" = "To";
 "Amount" = "Amount";
+"Transfer" = "Transfer";
+"Balance" = "Balance";
+"Decrease" = "Decrease";
+"Increase" = "Increase";
+"Reconciliation Date" = "Reconciliation Date";
