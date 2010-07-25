@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGSplitTable.h"
+#import "MGConst.h"
 #import "NSEventAdditions.h"
 
 #define MGSplitPasteboardType @"MGSplitPasteboardType"
@@ -15,8 +16,29 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithTransactionPanel:(PyPanel *)aPanel view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PySplitTable" pyParent:aPanel view:aTableView];
+    [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGSplitPasteboardType]];
     return self;
+}
+
+- (void)initializeColumns
+{
+    MGColumnDef defs[] = {
+        {@"account", @"Account", 90, 40, 0, NO, nil},
+        {@"memo", @"Memo #", 44, 10, 0, NO, nil},
+        {@"debit", @"Debit", 90, 40, 0, NO, nil},
+        {@"credit", @"Credit", 90, 40, 0, NO, nil},
+        nil
+    };
+    [[self columns] initializeColumns:defs];
+    NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"account"];
+    [[c dataCell] setPlaceholderString:TR(@"Unassigned")];
+    c = [[self tableView] tableColumnWithIdentifier:@"debit"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self tableView] tableColumnWithIdentifier:@"credit"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
 }
 
 - (PySplitTable *)py

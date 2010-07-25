@@ -64,30 +64,3 @@
 
 /* Class = "NSButtonCell"; title = "Multi-Currency Balance"; ObjectID = "388"; */
 "388.title" = "Multi-Currency Balance";
-
-/* Class = "NSTableColumn"; headerCell.title = "Account"; ObjectID = "395"; */
-"395.headerCell.title" = "Account";
-
-/* Class = "NSTableColumn"; headerCell.title = "Debit"; ObjectID = "396"; */
-"396.headerCell.title" = "Debit";
-
-/* Class = "NSTableColumn"; headerCell.title = "Credit"; ObjectID = "397"; */
-"397.headerCell.title" = "Credit";
-
-/* Class = "NSTableColumn"; headerCell.title = "Memo"; ObjectID = "398"; */
-"398.headerCell.title" = "Memo";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "399"; */
-"399.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "400"; */
-"400.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "401"; */
-"401.title" = "Text Cell";
-
-/* Class = "NSTextFieldCell"; placeholderString = "Unassigned"; ObjectID = "402"; */
-"402.placeholderString" = "Unassigned";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "402"; */
-"402.title" = "Text Cell";

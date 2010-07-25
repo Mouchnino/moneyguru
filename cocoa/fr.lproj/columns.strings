@@ -24,3 +24,6 @@
 "Stop Date" = "Date fin";
 "Repeat Type" = "Type récurrence";
 "Interval" = "Intervalle";
+"Debit" = "Débit";
+"Credit" = "Crédit";
+"Memo" = "Mémo";

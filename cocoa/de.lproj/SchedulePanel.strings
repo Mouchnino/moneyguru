@@ -42,18 +42,3 @@
 
 /* Class = "NSTextFieldCell"; title = "Use ⌥+Return to insert a new line."; ObjectID = "329"; */
 "329.title" = "Zum Beginnen einer neuen Zeile drücken sie ⌥+Eingabetaste.";
-
-/* Class = "NSTableColumn"; headerCell.title = "Account"; ObjectID = "341"; */
-"341.headerCell.title" = "Konto";
-
-/* Class = "NSTableColumn"; headerCell.title = "Debit"; ObjectID = "342"; */
-"342.headerCell.title" = "Debit";
-
-/* Class = "NSTableColumn"; headerCell.title = "Credit"; ObjectID = "343"; */
-"343.headerCell.title" = "Kredit";
-
-/* Class = "NSTableColumn"; headerCell.title = "Memo"; ObjectID = "344"; */
-"344.headerCell.title" = "Memo";
-
-/* Class = "NSTextFieldCell"; placeholderString = "Unassigned"; ObjectID = "348"; */
-"348.placeholderString" = "nicht zugeordnet";

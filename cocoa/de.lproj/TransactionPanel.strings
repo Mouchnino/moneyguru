@@ -36,18 +36,3 @@
 
 /* Class = "NSButtonCell"; title = "Multi-Currency Balance"; ObjectID = "388"; */
 "388.title" = "Währungssaldo";
-
-/* Class = "NSTableColumn"; headerCell.title = "Account"; ObjectID = "395"; */
-"395.headerCell.title" = "Konto";
-
-/* Class = "NSTableColumn"; headerCell.title = "Debit"; ObjectID = "396"; */
-"396.headerCell.title" = "Debit";
-
-/* Class = "NSTableColumn"; headerCell.title = "Credit"; ObjectID = "397"; */
-"397.headerCell.title" = "Kredit";
-
-/* Class = "NSTableColumn"; headerCell.title = "Memo"; ObjectID = "398"; */
-"398.headerCell.title" = "Memo";
-
-/* Class = "NSTextFieldCell"; placeholderString = "Unassigned"; ObjectID = "402"; */
-"402.placeholderString" = "nicht zugeordnet";

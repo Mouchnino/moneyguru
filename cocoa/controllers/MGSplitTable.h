@@ -14,5 +14,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGSplitTable : MGEditableTable {}
 - (id)initWithTransactionPanel:(PyPanel *)aPanel view:(MGTableView *)aTableView;
+- (void)initializeColumns;
 - (PySplitTable *)py;
 @end
