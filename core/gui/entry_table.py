@@ -17,6 +17,7 @@ from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
+    ALL_ATTRS = ['description', 'payee', 'transfer', 'increase', 'decrease']
     INVALIDATING_MESSAGES = TransactionTableBase.INVALIDATING_MESSAGES | set(['shown_account_changed'])
     
     def __init__(self, view, account_view):

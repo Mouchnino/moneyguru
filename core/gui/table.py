@@ -12,9 +12,16 @@ from hsgui.table import Table, GUITable as GUITableBase, Row as RowBase
 
 from ..model.amount import Amount
 from ..model.sort import sort_string
+from .column import Columns
 
 # Subclasses of this class must have a "view" and a "document" attribute
 class GUITable(GUITableBase):
+    ALL_ATTRS = []
+    
+    def __init__(self):
+        GUITableBase.__init__(self)
+        self.columns = Columns(self.ALL_ATTRS)
+    
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):
             return False
@@ -83,10 +90,8 @@ class Row(RowBase):
     def _get_autofill_dest_attrs(self, key_attr, all_attrs):
         """Returns a set of attrs to fill depending on which columns are right to key_attr
         """
-        columns = self.table._columns
-        if columns:
-            column_index = columns.index(key_attr)
-            right_columns = set(columns[column_index + 1:])
+        if self.table.columns.colnames:
+            right_columns = set(self.table.columns.columns_to_right(key_attr))
             return set(all_attrs) & right_columns
         else:
             return set(all_attrs)

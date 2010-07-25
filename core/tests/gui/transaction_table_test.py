@@ -868,6 +868,7 @@ def test_autofill_ignores_blank(app):
 @with_app(app_autofill)
 def test_autofill_on_set_from(app):
     # Setting 'from' autocompletes the rest.
+    app.ttable.columns.move_column('from', 0)
     app.ttable.add()
     row = app.ttable.edited
     row.from_ = 'Salary'
@@ -878,7 +879,8 @@ def test_autofill_on_set_from(app):
 
 @with_app(app_autofill)
 def test_autofill_on_set_to(app):
-    # Setting 'from' autocompletes the rest.
+    # Setting 'to' autocompletes the rest.
+    app.ttable.columns.move_column('to', 0)
     app.ttable.add()
     row = app.ttable.edited
     row.to = 'Checking'
@@ -901,6 +903,7 @@ def test_autofill_on_set_description(app):
 @with_app(app_autofill)
 def test_autofill_on_set_payee(app):
     # Setting a transfer autocompletes the amount and the description.
+    app.ttable.columns.move_column('payee', 0)
     app.ttable.add()
     row = app.ttable.edited
     row.payee = 'Payee'
@@ -932,7 +935,7 @@ def test_autofill_uses_the_latest_entered(app):
 def test_change_columns_fixed_from(app):
     # When 'from_' is passed in change_columns(), it is automatically changed to 'from'
     app.mw.select_transaction_table()
-    app.ttable.change_columns(['from_', 'description', 'to', 'amount'])
+    app.ttable.change_columns(['from', 'description', 'to', 'amount'])
     app.ttable[0].from_ = 'foo' # no crash
 
 

@@ -200,6 +200,7 @@ def test_field_completion_is_case_sensitive(app):
 @with_app(app_one_entry)
 def test_field_completion_on_set_entry_transfer(app):
     # Setting a transfer autocompletes the amount and the description.
+    app.etable.columns.move_column('transfer', 0)
     app.etable.add()
     row = app.etable.selected_row
     row.transfer = 'Salary'
@@ -222,6 +223,7 @@ def test_field_completion_on_set_entry_description(app):
 @with_app(app_one_entry)
 def test_field_completion_on_set_entry_payee(app):
     # Setting a transfer autocompletes the amount and the description.
+    app.etable.columns.move_column('payee', 0)
     app.etable.add()
     row = app.etable.selected_row
     row.payee = 'Payee'
@@ -345,16 +347,19 @@ def assert_completion_order_changed(app):
     eq_(complete_etable(app, 'd', 'description'), 'esc1')
     eq_(complete_etable(app, 'c', 'transfer'), 'at1')
     eq_(complete_etable(app, 'p', 'payee'), 'ay1')
+    app.etable.columns.move_column('description', 0)
     app.etable.add()
     row = app.etable.selected_row
     row.description = 'desc1'
     eq_(app.etable[app.etable.selected_indexes[0]].payee, 'pay1')
     eq_(app.etable[app.etable.selected_indexes[0]].transfer, 'cat1')
+    app.etable.columns.move_column('transfer', 0)
     app.etable.add()
     row = app.etable.selected_row
     row.transfer = 'cat1'
     eq_(app.etable[app.etable.selected_indexes[0]].description, 'desc1')
     eq_(app.etable[app.etable.selected_indexes[0]].payee, 'pay1')
+    app.etable.columns.move_column('payee', 0)
     app.etable.add()
     row = app.etable.selected_row
     row.payee = 'pay1'

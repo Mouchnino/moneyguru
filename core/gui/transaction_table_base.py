@@ -19,7 +19,6 @@ class TransactionTableBase(GUITable, ViewChild):
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         GUITable.__init__(self)
-        self._columns = [] # empty columns == unrestricted autofill
     
     #--- Override
     def _is_edited_new(self):
@@ -58,10 +57,7 @@ class TransactionTableBase(GUITable, ViewChild):
         return self.document.can_move_transactions(transactions, before, after)
     
     def change_columns(self, columns):
-        """Call this when the order or the visibility of the columns change"""
-        
-        columns = [c if c != 'from_' else 'from' for c in columns]
-        self._columns = columns
+        self.columns.set_columns(columns)
     
     def duplicate_selected(self):
         self.document.duplicate_transactions(self.selected_transactions)

@@ -17,6 +17,8 @@ from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class TransactionTable(TransactionTableBase):
+    ALL_ATTRS = ['description', 'payee', 'from', 'to', 'amount']
+    
     def __init__(self, view, transaction_view):
         TransactionTableBase.__init__(self, view, transaction_view)
     
