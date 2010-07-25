@@ -19,5 +19,6 @@ http://www.hardcoded.net/licenses/hs_license
     HSTableColumnManager *columnsManager;
 }
 - (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView;
+- (void)initializeColumns;
 - (PyIncomeStatement *)py;
 @end
