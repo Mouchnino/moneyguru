@@ -13,8 +13,26 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:@"PyBudgetTable" pyParent:aPyParent view:aTableView];
+    [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
     return self;
+}
+
+- (void)initializeColumns
+{
+    MGColumnDef defs[] = {
+        {@"start_date", @"Start Date", 80, 60, 0, YES, nil},
+        {@"stop_date", @"Stop Date", 80, 60, 0, YES, nil},
+        {@"repeat_type", @"Repeat Type", 80, 60, 0, YES, nil},
+        {@"interval", @"Interval", 60, 60, 0, YES, nil},
+        {@"account", @"Account", 136, 70, 0, YES, nil},
+        {@"amount", @"Amount", 90, 80, 0, YES, nil},
+        nil
+    };
+    [[self columns] initializeColumns:defs];
+    NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"amount"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
 }
 
 /* Overrides */

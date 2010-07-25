@@ -19,3 +19,8 @@
 "Account #" = "Konto #";
 "Current" = "laufend";
 "Last" = "vorherig";
+"Start Date" = "Anfangsdatum";
+"Target" = "Zielkonto";
+"Stop Date" = "Enddatum";
+"Repeat Type" = "Wiederholungsart";
+"Interval" = "Intervall";

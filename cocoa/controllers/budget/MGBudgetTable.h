@@ -12,5 +12,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGBudgetTable : MGTable {}
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (void)initializeColumns;
 - (PyBudgetTable *)py;
 @end

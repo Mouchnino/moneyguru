@@ -19,3 +19,8 @@
 "Account #" = "Account #";
 "Current" = "Current";
 "Last" = "Last";
+"Start Date" = "Start Date";
+"Target" = "Target";
+"Stop Date" = "Stop Date";
+"Repeat Type" = "Repeat Type";
+"Interval" = "Interval";

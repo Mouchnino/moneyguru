@@ -19,3 +19,8 @@
 "Account #" = "# Compte";
 "Current" = "Courant";
 "Last" = "Précédent";
+"Start Date" = "Date début";
+"Target" = "Cible";
+"Stop Date" = "Date fin";
+"Repeat Type" = "Type récurrence";
+"Interval" = "Intervalle";
