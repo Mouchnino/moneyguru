@@ -7,15 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGTableView.h"
-#import "MGTable.h"
+#import "PyTable.h"
 
-@interface MGEditableTable : MGTable
-{
-}
-/* Public */
-- (void)startEditing;
-- (void)stopEditing;
-- (NSString *)editedFieldname;
-
+@interface PyTableWithColumns : PyTable {}
+- (void)moveColumn:(NSString *)colName toIndex:(NSInteger)index;
 @end

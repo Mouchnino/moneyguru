@@ -28,7 +28,6 @@ http://www.hardcoded.net/licenses/hs_license
     [columnsManager linkColumn:@"checkno" toUserDefault:TransactionChecknoColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPyParent];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
-    [self changeColumns]; // initial set
     return self;
 }
 

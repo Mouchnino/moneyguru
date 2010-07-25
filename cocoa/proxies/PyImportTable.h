@@ -7,10 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTable.h"
+#import "PyTableWithColumns.h"
 #import "PyImportWindow.h"
 
-@interface PyImportTable : PyTable {}
+@interface PyImportTable : PyTableWithColumns {}
 - (BOOL)canBindRow:(NSInteger)source to:(NSInteger)dest;
 - (void)bindRow:(NSInteger)source to:(NSInteger)dest;
 - (void)unbindRow:(NSInteger)row;

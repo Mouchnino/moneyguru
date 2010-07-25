@@ -7,8 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTable.h"
+#import "PyTableWithColumns.h"
 
-@interface PyScheduleTable : PyTable {}
+@interface PyScheduleTable : PyTableWithColumns {}
 - (void)editItem;
 @end

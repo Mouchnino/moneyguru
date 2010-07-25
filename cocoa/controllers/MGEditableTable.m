@@ -10,21 +10,6 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGEditableTable
-
-/* Private */
-
-- (void)changeColumns
-{
-    NSMutableArray *columnNames = [NSMutableArray array];
-    NSEnumerator *e = [[[self tableView] tableColumns] objectEnumerator];
-    NSTableColumn *col;
-    while (col = [e nextObject])
-    {
-        [columnNames addObject:[col identifier]];
-    }
-    [[self py] changeColumns:columnNames];
-}
-
 /* Data source */
 
 - (void)tableView:(NSTableView *)tableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
@@ -37,11 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     return [[self py] canEditColumn:[column identifier] atRow:row];
-}
-
-- (void)tableViewColumnDidMove:(NSNotification *)notification
-{
-    [self changeColumns];
 }
 
 /* MGTableView delegate */

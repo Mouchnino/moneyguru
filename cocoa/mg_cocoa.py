@@ -282,7 +282,13 @@ class PyGUIContainer(PyListener):
 class PyWindowController(PyListener):
     pass
 
-class PyTableWithDate(PyTable):
+class PyTableWithColumns(PyTable):
+    @signature('v@:@i')
+    def moveColumn_toIndex_(self, colname, index):
+        self.py.columns.move_column(colname, index)
+    
+
+class PyTableWithDate(PyTableWithColumns):
     @signature('c@:')
     def isEditedRowInTheFuture(self):
         if self.py.edited is None:
@@ -508,14 +514,14 @@ class PyTransactionTable(PyTableWithDate):
         self.py.show_to_account()
     
 
-class PyScheduleTable(PyTable):
+class PyScheduleTable(PyTableWithColumns):
     py_class = ScheduleTable
     
     def editItem(self):
         self.py.edit()
     
 
-class PyBudgetTable(PyTable):
+class PyBudgetTable(PyTableWithColumns):
     py_class = BudgetTable
     
     def editItem(self):
@@ -615,7 +621,7 @@ class PyAccountPanel(PyPanel):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
 
-class PySplitTable(PyTable):
+class PySplitTable(PyTableWithColumns):
     py_class = SplitTable
     # pyparent is a PyTransactionPanel
     
@@ -1290,7 +1296,7 @@ class PyCSVImportOptions(PyWindowController):
         self.cocoa.showMessage_(msg)
     
 
-class PyImportTable(PyTable):
+class PyImportTable(PyTableWithColumns):
     py_class = ImportTable
     
     # pyparent is a PyImportWindow

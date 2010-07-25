@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "HSTable.h"
 #import "MGTableView.h"
 #import "MGColumns.h"
+#import "PyTableWithColumns.h"
 
 @interface MGTable : HSTable
 {
@@ -18,6 +19,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView;
 
 /* Public */
+- (PyTableWithColumns *)py;
 - (MGTableView *)tableView;
 - (MGColumns *)columns;
 @end
