@@ -23,7 +23,7 @@ class ScheduleTable(Table):
         Column('description', tr('Description'), 110),
         Column('payee', tr('Payee'), 110),
         Column('checkno', tr('Check #'), 70),
-        Column('from_', tr('From'), 100),
+        Column('from', tr('From'), 100),
         Column('to', tr('To'), 100),
         Column('amount', tr('Amount'), 97, alignment=Qt.AlignRight),
     ]

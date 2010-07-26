@@ -99,9 +99,6 @@ class EntryTable(TableWithTransactions):
             if row.can_reconcile() and row.reconciled:
                 row.toggle_reconciled()
     
-    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
-        self.model.change_columns(self.visibleRowAttrs())
-    
     #--- model --> view
     def refresh(self):
         TableWithTransactions.refresh(self)

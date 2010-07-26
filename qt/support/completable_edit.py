@@ -28,7 +28,7 @@ class CompletableEdit(QLineEdit):
         if self.selectionStart() == -1:
             return unicode(self.text())
         else:
-            return unicode(self.text()[:self.selectionStart()])
+            return unicode(self.text())[:self.selectionStart()]
     
     #--- QLineEdit overrides
     def focusInEvent(self, event):

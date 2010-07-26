@@ -48,3 +48,8 @@ class Table(TableBase):
         self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
     
+    #--- Event Handling
+    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
+        attrname = self.COLUMNS[logicalIndex].attrname
+        self.model.columns.move_column(attrname, newVisualIndex)
+    

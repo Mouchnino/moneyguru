@@ -29,7 +29,7 @@ class TransactionTableDelegate(TableDelegate):
     
     def _get_decorations(self, index, isSelected):
         column = self._columns[index.column()]
-        if column.attrname == 'from_':
+        if column.attrname == 'from':
             return [self._decoFromArrowSelected if isSelected else self._decoFromArrow]
         elif column.attrname == 'to':
             return [self._decoToArrowSelected if isSelected else self._decoToArrow]
@@ -44,7 +44,7 @@ class TransactionTable(TableWithTransactions):
         Column('description', tr('Description'), 230, editor=DESCRIPTION_EDIT),
         Column('payee', tr('Payee'), 150, editor=PAYEE_EDIT),
         Column('checkno', tr('Check #'), 80),
-        Column('from_', tr('From'), 120, editor=ACCOUNT_EDIT),
+        Column('from', tr('From'), 120, editor=ACCOUNT_EDIT),
         Column('to', tr('To'), 120, editor=ACCOUNT_EDIT),
         Column('amount', tr('Amount'), 100, alignment=Qt.AlignRight),
     ]
@@ -63,9 +63,5 @@ class TransactionTable(TableWithTransactions):
         # There doesn't seem to be a signal for column hide. Since we only hide column through this
         # call, we can call change_columns() here.
         TableWithTransactions.setHiddenColumns(self, hiddenColumns)
-        self.model.change_columns(self.visibleRowAttrs())
-    
-    #--- Event Handling
-    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         self.model.change_columns(self.visibleRowAttrs())
     
