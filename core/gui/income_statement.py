@@ -9,7 +9,9 @@ from ..trans import tr
 from .report import Report, get_delta_perc
 
 class IncomeStatement(Report):
-    PREFERENCE_PREFIX = 'IncomeStatement'
+    SAVENAME = 'IncomeStatement'
+    ALL_ATTRS = ['name', 'account_number', 'cash_flow', 'delta', 'delta_perc', 'last_cash_flow',
+        'budgeted']
     
     def __init__(self, view, profit_view):
         Report.__init__(self, view, profit_view)

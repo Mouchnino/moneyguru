@@ -36,14 +36,12 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
         self.sctable.setColumnsWidth(self.doc.app.prefs.scheduleColumnWidths)
-        self.sctable.setColumnsOrder(self.doc.app.prefs.scheduleColumnOrder)
+        self.sctable.setColumnsOrder()
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.sctable.COLUMNS))]
         self.doc.app.prefs.scheduleColumnWidths = widths
-        order = [h.logicalIndex(index) for index in xrange(len(self.sctable.COLUMNS))]
-        self.doc.app.prefs.scheduleColumnOrder = order
     
     #--- QWidget override
     def setFocus(self):

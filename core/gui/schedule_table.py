@@ -14,6 +14,9 @@ from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
 class ScheduleTable(GUITable, ViewChild):
+    SAVENAME = 'ScheduleTable'
+    ALL_ATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'checkno', 'description',
+        'payee', 'from', 'to', 'amount']
     INVALIDATING_MESSAGES = set(['schedule_changed', 'schedule_deleted', 'account_deleted'])
     
     def __init__(self, view, schedule_view):

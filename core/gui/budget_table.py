@@ -12,6 +12,8 @@ from .base import ViewChild
 from .table import GUITable, Row, rowattr
 
 class BudgetTable(GUITable, ViewChild):
+    SAVENAME = 'BudgetTable'
+    ALL_ATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'account', 'target', 'amount']
     INVALIDATING_MESSAGES = set(['budget_changed', 'budget_deleted', 'account_deleted'])
     
     def __init__(self, view, budget_view):

@@ -17,6 +17,7 @@ from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
+    SAVENAME = 'EntryTable'
     ALL_ATTRS = ['status', 'date', 'reconciliation_date', 'checkno', 'description', 'payee',
         'transfer', 'increase', 'decrease', 'balance']
     INVALIDATING_MESSAGES = TransactionTableBase.INVALIDATING_MESSAGES | set(['shown_account_changed'])

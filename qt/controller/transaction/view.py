@@ -38,14 +38,12 @@ class TransactionView(BaseView, Ui_TransactionView):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
         self.ttable.setColumnsWidth(self.doc.app.prefs.transactionColumnWidths)
-        self.ttable.setColumnsOrder(self.doc.app.prefs.transactionColumnOrder)
+        self.ttable.setColumnsOrder()
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.ttable.COLUMNS))]
         self.doc.app.prefs.transactionColumnWidths = widths
-        order = [h.logicalIndex(index) for index in xrange(len(self.ttable.COLUMNS))]
-        self.doc.app.prefs.transactionColumnOrder = order
     
     #--- QWidget override
     def setFocus(self):

@@ -51,6 +51,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[c dataCell] setAlignment:NSRightTextAlignment];
     c = [[self outlineView] tableColumnWithIdentifier:@"budgeted"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
+    [[self columns] restoreColumns];
 }
 
 - (void)dealloc

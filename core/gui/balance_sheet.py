@@ -14,7 +14,8 @@ from ..trans import tr
 from .report import Report, get_delta_perc
 
 class BalanceSheet(Report):
-    PREFERENCE_PREFIX = 'BalanceSheet'
+    SAVENAME = 'BalanceSheet'
+    ALL_ATTRS = ['name', 'account_number', 'end', 'delta', 'delta_perc', 'start', 'budgeted']
     
     def __init__(self, view, networth_view):
         Report.__init__(self, view, networth_view)

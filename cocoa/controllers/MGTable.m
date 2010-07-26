@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
-    columns = [[MGColumns alloc] initWithTableView:aTableView];
+    columns = [[MGColumns alloc] initWithPy:[self py] tableView:aTableView];
     return self;
 }
 
@@ -27,18 +27,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSIndexSet *)selectedIndexes
 {
     return [Utils array2IndexSet:[[self py] selectedRows]];
-}
-
-/* NSTablewView delegate */
-- (void)tableViewColumnDidMove:(NSNotification *)notification
-{
-    /* We only get this call after the move. Although there's "NSOldColumn" and "NSNewColumn",
-       the old index is irrelevant since we have to find the moved column's name.
-    */
-    NSInteger index = n2i([[notification userInfo] objectForKey:@"NSNewColumn"]);
-    NSTableColumn *c = [[tableView tableColumns] objectAtIndex:index];
-    NSString *colName = [c identifier];
-    [[self py] moveColumn:colName toIndex:index];
 }
 
 /* Public */

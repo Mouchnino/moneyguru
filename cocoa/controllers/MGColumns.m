@@ -7,17 +7,27 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGColumns.h"
+#import "Utils.h"
+#import "PyTableWithColumns.h"
 
 @implementation MGColumns
-- (id)initWithTableView:(NSTableView *)aTableView
+- (id)initWithPy:(id)aPy tableView:(NSTableView *)aTableView
 {
     self = [super init];
+    py = [aPy retain];
     tableView = [aTableView retain];
+    isRestoring = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
+        name:NSTableViewColumnDidMoveNotification object:aTableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
+        name:NSOutlineViewColumnDidMoveNotification object:aTableView];
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [py release];
     [tableView release];
     [super dealloc];
 }
@@ -68,4 +78,37 @@ http://www.hardcoded.net/licenses/hs_license
         cdef++;
     }
 }
+
+/* Call this after initializeColumns to query the core and see if column data has been restored from
+   preferences. If there is, we apply these changes.
+*/
+- (void)restoreColumns
+{
+    isRestoring = YES;
+    NSArray *columnOrder = [py columnNamesInOrder];
+    for (NSInteger i=0; i<[columnOrder count]; i++) {
+        NSString *colName = [columnOrder objectAtIndex:i];
+        NSInteger index = [tableView columnWithIdentifier:colName];
+        if ((index != -1) && (index != i)) {
+            [tableView moveColumn:index toColumn:i];
+        }
+    }
+    isRestoring = NO;
+}
+
+/* Notifications */
+- (void)columnMoved:(NSNotification *)notification
+{
+    /* We only get this call after the move. Although there's "NSOldColumn" and "NSNewColumn",
+       the old index is irrelevant since we have to find the moved column's name.
+    */
+    if (isRestoring) {
+        return;
+    }
+    NSInteger index = n2i([[notification userInfo] objectForKey:@"NSNewColumn"]);
+    NSTableColumn *c = [[tableView tableColumns] objectAtIndex:index];
+    NSString *colName = [c identifier];
+    [py moveColumn:colName toIndex:index];
+}
+
 @end

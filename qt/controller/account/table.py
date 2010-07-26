@@ -54,7 +54,6 @@ class EntryTable(TableWithTransactions):
         self.view.setItemDelegate(self.tableDelegate)
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.clicked.connect(self.cellClicked)
-        self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.spacePressed.connect(self.model.toggle_reconciled)
         self.view.deletePressed.connect(self.model.delete)
     

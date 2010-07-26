@@ -150,10 +150,9 @@
 											</object>
 										</object>
 										<double key="NSRowHeight">15</double>
-										<int key="NSTvFlags">-750780416</int>
+										<int key="NSTvFlags">-767557632</int>
 										<reference key="NSDelegate"/>
 										<reference key="NSDataSource"/>
-										<string key="NSAutosaveName">IncomeStatement</string>
 										<int key="NSColumnAutoresizingStyle">4</int>
 										<int key="NSDraggingSourceMaskForLocal">15</int>
 										<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -182,7 +181,6 @@
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{0, 251}, {465, 15}}</string>
 								<reference key="NSSuperview" ref="400460044"/>
-								<bool key="NSEnabled">YES</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="400460044"/>
 								<string key="NSAction">_doScroller:</string>
@@ -207,7 +205,7 @@
 						<string key="NSFrame">{{0, 258}, {465, 266}}</string>
 						<reference key="NSSuperview" ref="263671401"/>
 						<reference key="NSNextKeyView" ref="691668067"/>
-						<int key="NSsFlags">688</int>
+						<int key="NSsFlags">560</int>
 						<reference key="NSVScroller" ref="171493846"/>
 						<reference key="NSHScroller" ref="783396296"/>
 						<reference key="NSContentView" ref="691668067"/>

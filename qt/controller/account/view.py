@@ -44,14 +44,12 @@ class EntryView(BaseView, Ui_EntryView):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
         self.etable.setColumnsWidth(self.doc.app.prefs.entryColumnWidths)
-        self.etable.setColumnsOrder(self.doc.app.prefs.entryColumnOrder)
+        self.etable.setColumnsOrder()
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.etable.COLUMNS))]
         self.doc.app.prefs.entryColumnWidths = widths
-        order = [h.logicalIndex(index) for index in xrange(len(self.etable.COLUMNS))]
-        self.doc.app.prefs.entryColumnOrder = order
     
     #--- QWidget override
     def setFocus(self):

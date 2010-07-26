@@ -44,6 +44,38 @@ def test_mainwindow_panes_reopen_except_nonexistant_accounts(app):
     # since we don't have enough tabs to restore last selected index, select the last one
     eq_(newapp.mw.current_pane_index, 4)
 
+#--- Columns save/restore
+
+def assert_column_save_restore(app, tablename, colname):
+    getattr(app, tablename).columns.move_column(colname, 0)
+    app.doc.close()
+    newapp = TestApp(app=app.app)
+    eq_(getattr(newapp, tablename).columns.colnames[0], colname)
+
+@with_app(TestApp)
+def test_ttable_restores_columns(app):
+    assert_column_save_restore(app, 'ttable', 'payee')
+
+@with_app(TestApp)
+def test_etable_restores_columns(app):
+    assert_column_save_restore(app, 'etable', 'payee')
+
+@with_app(TestApp)
+def test_sctable_restores_columns(app):
+    assert_column_save_restore(app, 'sctable', 'payee')
+
+@with_app(TestApp)
+def test_btable_restores_columns(app):
+    assert_column_save_restore(app, 'btable', 'target')
+
+@with_app(TestApp)
+def test_bsheet_restores_columns(app):
+    assert_column_save_restore(app, 'bsheet', 'end')
+
+@with_app(TestApp)
+def test_istatement_restores_columns(app):
+    assert_column_save_restore(app, 'istatement', 'last_cash_flow')
+
 #--- Expanded group
 def app_expanded_group():
     app = TestApp()

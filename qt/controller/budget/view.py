@@ -36,14 +36,12 @@ class BudgetView(BaseView, Ui_BudgetView):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
         self.btable.setColumnsWidth(self.doc.app.prefs.budgetColumnWidths)
-        self.btable.setColumnsOrder(self.doc.app.prefs.budgetColumnOrder)
+        self.btable.setColumnsOrder()
     
     def _savePrefs(self):
         h = self.tableView.horizontalHeader()
         widths = [h.sectionSize(index) for index in xrange(len(self.btable.COLUMNS))]
         self.doc.app.prefs.budgetColumnWidths = widths
-        order = [h.logicalIndex(index) for index in xrange(len(self.btable.COLUMNS))]
-        self.doc.app.prefs.budgetColumnOrder = order
     
     #--- QWidget override
     def setFocus(self):

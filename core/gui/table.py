@@ -16,11 +16,12 @@ from .column import Columns
 
 # Subclasses of this class must have a "view" and a "document" attribute
 class GUITable(GUITableBase):
+    SAVENAME = ''
     ALL_ATTRS = []
     
     def __init__(self):
         GUITableBase.__init__(self)
-        self.columns = Columns(self.ALL_ATTRS)
+        self.columns = Columns(self.document.app, self.SAVENAME, self.ALL_ATTRS)
     
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):
@@ -42,6 +43,9 @@ class GUITable(GUITableBase):
     def document_changed(self):
         self.refresh()
         self.view.refresh()
+    
+    def document_will_close(self):
+        self.columns.save_columns()
     
     def performed_undo_or_redo(self):
         self.refresh()

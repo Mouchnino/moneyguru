@@ -40,14 +40,12 @@ class ProfitView(BaseView, Ui_ProfitView):
     
     def _setupColumns(self):
         self.psheet.setColumnsWidth(self.doc.app.prefs.profitColumnWidths)
-        self.psheet.setColumnsOrder(self.doc.app.prefs.profitColumnOrder)
+        self.psheet.setColumnsOrder()
     
     def _savePrefs(self):
         h = self.treeView.header()
         widths = [h.sectionSize(index) for index in xrange(len(self.psheet.COLUMNS))]
         self.doc.app.prefs.profitColumnWidths = widths
-        order = [h.logicalIndex(index) for index in xrange(len(self.psheet.COLUMNS))]
-        self.doc.app.prefs.profitColumnOrder = order
     
     #--- QWidget override
     def setFocus(self):

@@ -55,7 +55,6 @@ class TransactionTable(TableWithTransactions):
         self.tableDelegate = TransactionTableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
-        self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
         self.view.deletePressed.connect(self.model.delete)
     
     #--- ColumnBearer override

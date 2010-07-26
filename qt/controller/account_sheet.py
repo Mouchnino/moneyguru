@@ -109,6 +109,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.deletePressed.connect(self.model.delete)
         self.view.spacePressed.connect(self.model.toggle_excluded)
         self.view.doubleClicked.connect(self.model.show_selected_account)
+        self.view.header().sectionMoved.connect(self.headerSectionMoved)
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):
@@ -125,6 +126,12 @@ class AccountSheet(TreeModel, ColumnBearer):
             return
         modelIndex = self.findIndex(selectedPath)
         self.view.setCurrentIndex(modelIndex)
+    
+    #--- Public
+    def setColumnsOrder(self):
+        colnames = self.model.columns.colnames
+        indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
+        ColumnBearer.setColumnsOrder(self, indexes)
     
     #--- Data Model methods
     def columnCount(self, parent):
@@ -235,6 +242,10 @@ class AccountSheet(TreeModel, ColumnBearer):
             return
         node = current.internalPointer()
         self.model.selected = node.ref
+    
+    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
+        attrname = self.COLUMNS[logicalIndex].attrname
+        self.model.columns.move_column(attrname, newVisualIndex)
     
     def nodeCollapsed(self, index):
         node = index.internalPointer()

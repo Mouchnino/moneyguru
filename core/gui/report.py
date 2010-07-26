@@ -12,8 +12,7 @@ from hsutil.misc import first
 from ..exception import DuplicateAccountNameError
 from ..trans import tr
 from .base import ViewChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
-
-EXPANDED_PATHS_PREFERENCE = 'ExpandedPaths'
+from .column import Columns
 
 # used in both bsheet and istatement
 def get_delta_perc(delta_amount, start_amount):
@@ -23,16 +22,18 @@ def get_delta_perc(delta_amount, start_amount):
         return '---'
 
 class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
-    PREFERENCE_PREFIX = 'Sheet'
+    SAVENAME = ''
+    ALL_ATTRS = []
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['accounts_excluded',
         'date_range_changed'])
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         tree.Tree.__init__(self)
+        self.columns = Columns(self.document.app, self.SAVENAME, self.ALL_ATTRS)
         self.edited = None
         
-        prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
+        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
         expanded = self.app.get_default(prefname, list())
         if expanded:
             self._expanded_paths = set(map(tuple, expanded))
@@ -293,8 +294,9 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     def document_will_close(self):
         # Save node expansion state
-        prefname = '_'.join([self.PREFERENCE_PREFIX, EXPANDED_PATHS_PREFERENCE])
+        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
         self.app.set_default(prefname, self.expanded_paths)
+        self.columns.save_columns()
     
     def edition_must_stop(self):
         self.view.stop_editing()

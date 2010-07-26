@@ -62,6 +62,7 @@ http://www.hardcoded.net/licenses/hs_license
     c = [[self tableView] tableColumnWithIdentifier:@"balance"];
     [[c headerCell] setAlignment:NSRightTextAlignment];
     [[c dataCell] setAlignment:NSRightTextAlignment];
+    [[self columns] restoreColumns];
 }
 
 - (void)dealloc

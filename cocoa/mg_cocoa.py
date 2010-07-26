@@ -283,6 +283,9 @@ class PyWindowController(PyListener):
     pass
 
 class PyTableWithColumns(PyTable):
+    def columnNamesInOrder(self):
+        return self.py.columns.colnames
+    
     @signature('v@:@i')
     def moveColumn_toIndex_(self, colname, index):
         self.py.columns.move_column(colname, index)
@@ -380,6 +383,14 @@ class PyReport(PyOutline):
     
     def expandedPaths(self):
         return self.py.expanded_paths
+    
+    #--- Columns
+    def columnNamesInOrder(self):
+        return self.py.columns.colnames
+    
+    @signature('v@:@i')
+    def moveColumn_toIndex_(self, colname, index):
+        self.py.columns.move_column(colname, index)
     
 
 class PyPanel(PyGUIObject):

@@ -40,13 +40,6 @@ class Preferences(PreferencesBase):
         self.scheduleColumnWidths = get('ScheduleColumnWidths', self.scheduleColumnWidths)
         self.budgetColumnWidths = get('BudgetColumnWidths', self.budgetColumnWidths)
         
-        self.networthColumnOrder = get('NetworthColumnOrder', self.networthColumnOrder)
-        self.profitColumnOrder = get('ProfitColumnOrder', self.profitColumnOrder)
-        self.transactionColumnOrder = get('TransactionColumnOrder', self.transactionColumnOrder)
-        self.entryColumnOrder = get('EntryColumnOrder', self.entryColumnOrder)
-        self.scheduleColumnOrder = get('ScheduleColumnOrder', self.scheduleColumnOrder)
-        self.budgetColumnOrder = get('BudgetColumnOrder', self.budgetColumnOrder)
-        
         self.networthHiddenColumns = set(get('NetworthHiddenColumns', self.networthHiddenColumns))
         self.profitHiddenColumns = set(get('ProfitHiddenColumns', self.profitHiddenColumns))
         self.transactionHiddenColumns = set(get('TransactionHiddenColumns', self.transactionHiddenColumns))
@@ -82,13 +75,6 @@ class Preferences(PreferencesBase):
         self.scheduleColumnWidths = None
         self.budgetColumnWidths = None
         
-        self.networthColumnOrder = None
-        self.profitColumnOrder = None
-        self.transactionColumnOrder = None
-        self.entryColumnOrder = None
-        self.scheduleColumnOrder = None
-        self.budgetColumnOrder = None
-        
         self.networthHiddenColumns = set(['delta', 'delta_perc', 'account_number'])
         self.profitHiddenColumns = set(['delta', 'delta_perc', 'account_number'])
         self.transactionHiddenColumns = set(['payee', 'checkno'])
@@ -121,13 +107,6 @@ class Preferences(PreferencesBase):
         set_('EntryColumnWidths', self.entryColumnWidths)
         set_('ScheduleColumnWidths', self.scheduleColumnWidths)
         set_('BudgetColumnWidths', self.budgetColumnWidths)
-        
-        set_('NetworthColumnOrder', self.networthColumnOrder)
-        set_('ProfitColumnOrder', self.profitColumnOrder)
-        set_('TransactionColumnOrder', self.transactionColumnOrder)
-        set_('EntryColumnOrder', self.entryColumnOrder)
-        set_('ScheduleColumnOrder', self.scheduleColumnOrder)
-        set_('BudgetColumnOrder', self.budgetColumnOrder)
         
         set_('NetworthHiddenColumns', self.networthHiddenColumns)
         set_('ProfitHiddenColumns', self.profitHiddenColumns)

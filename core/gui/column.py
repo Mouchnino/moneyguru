@@ -8,8 +8,11 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 class Columns(object):
-    def __init__(self, colnames):
+    def __init__(self, app, savename, colnames):
+        self.app = app
+        self.savename = savename
         self.colnames = colnames[:] # We're altering the list, make a copy
+        self.restore_columns()
     
     def columns_to_right(self, colname):
         column_index = self.colnames.index(colname)
@@ -22,6 +25,24 @@ class Columns(object):
             pass # move nothing
         else:
             self.colnames.insert(index, colname)
+    
+    def restore_columns(self):
+        if not (self.savename and self.colnames):
+            return
+        orderpref_name = '{0}.ColumnOrder'.format(self.savename)
+        columnorder = self.app.get_default(orderpref_name)
+        if columnorder:
+            allcols = set(self.colnames)
+            newcolumns = [col for col in columnorder if col in allcols]
+            # now, add the columns which weren't in the order prefs at the end
+            newcolumns += list(allcols - set(newcolumns))
+            self.colnames = newcolumns
+    
+    def save_columns(self):
+        if not (self.savename and self.colnames):
+            return
+        orderpref_name = '{0}.ColumnOrder'.format(self.savename)
+        self.app.set_default(orderpref_name, self.colnames)
     
     def set_columns(self, colnames):
         self.colnames = colnames

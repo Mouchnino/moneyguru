@@ -24,8 +24,11 @@ typedef struct {
 
 @interface MGColumns : NSObject
 {
+    id py; /* We can't have a specific class here because we support both PyTable and PyOutline */
     NSTableView *tableView;
+    BOOL isRestoring;
 }
-- (id)initWithTableView:(NSTableView *)aTableView;
+- (id)initWithPy:(id)aPy tableView:(NSTableView *)aTableView;
 - (void)initializeColumns:(MGColumnDef *)columns;
+- (void)restoreColumns;
 @end

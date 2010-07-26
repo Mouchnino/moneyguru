@@ -47,6 +47,13 @@ class Table(TableBase):
         TableBase.__init__(self, model, view)
         self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
+        self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
+    
+    #--- Public
+    def setColumnsOrder(self):
+        colnames = self.model.columns.colnames
+        indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
+        TableBase.setColumnsOrder(self, indexes)
     
     #--- Event Handling
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):

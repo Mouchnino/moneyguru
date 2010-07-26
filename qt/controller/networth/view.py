@@ -40,14 +40,12 @@ class NetWorthView(BaseView, Ui_NetWorthView):
     
     def _setupColumns(self):
         self.nwsheet.setColumnsWidth(self.doc.app.prefs.networthColumnWidths)
-        self.nwsheet.setColumnsOrder(self.doc.app.prefs.networthColumnOrder)
+        self.nwsheet.setColumnsOrder()
     
     def _savePrefs(self):
         h = self.treeView.header()
         widths = [h.sectionSize(index) for index in xrange(len(self.nwsheet.COLUMNS))]
         self.doc.app.prefs.networthColumnWidths = widths
-        order = [h.logicalIndex(index) for index in xrange(len(self.nwsheet.COLUMNS))]
-        self.doc.app.prefs.networthColumnOrder = order
     
     #--- QWidget override
     def setFocus(self):

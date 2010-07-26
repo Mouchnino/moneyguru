@@ -13,9 +13,9 @@ from .table import GUITable, RowWithDebitAndCredit
 class SplitTable(GUITable, TransactionPanelGUIObject):
     def __init__(self, view, transaction_panel):
         TransactionPanelGUIObject.__init__(self, view, transaction_panel)
-        GUITable.__init__(self)
         self.mainwindow = transaction_panel.mainwindow # CompletableEdit on Qt requires a mainwindow member
         self.document = transaction_panel.document
+        GUITable.__init__(self)
     
     #--- Override
     def _do_add(self):

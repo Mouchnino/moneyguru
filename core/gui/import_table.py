@@ -12,8 +12,8 @@ from .table import GUITable, Row
 class ImportTable(ImportWindowGUIObject, GUITable):
     def __init__(self, view, import_window):
         ImportWindowGUIObject.__init__(self, view, import_window)
-        GUITable.__init__(self)
         self.document = self.window.document
+        GUITable.__init__(self)
         self._is_two_sided = False
     
     #--- Override
