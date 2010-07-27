@@ -7,43 +7,73 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+class Column(object):
+    def __init__(self, name):
+        self.name = name
+        self.index = 0
+        self.width = 0
+    
+
 class Columns(object):
     def __init__(self, app, savename, colnames):
         self.app = app
         self.savename = savename
-        self.colnames = colnames[:] # We're altering the list, make a copy
+        columns = [Column(name) for name in colnames]
+        for i, column in enumerate(columns):
+            column.index = i
+        self.coldata = dict((col.name, col) for col in columns)
         self.restore_columns()
     
+    def column_width(self, colname):
+        try:
+            return self.coldata[colname].width
+        except KeyError:
+            return 0
+    
     def columns_to_right(self, colname):
-        column_index = self.colnames.index(colname)
-        return self.colnames[column_index+1:]
+        column = self.coldata[colname]
+        index = column.index
+        return [col.name for col in self.coldata.itervalues() if col.index > index]
     
     def move_column(self, colname, index):
+        colnames = self.colnames
+        colnames.remove(colname)
+        colnames.insert(index, colname)
+        self.set_column_order(colnames)
+    
+    def resize_column(self, colname, newwidth):
         try:
-            self.colnames.remove(colname)
-        except ValueError:
-            pass # move nothing
-        else:
-            self.colnames.insert(index, colname)
+            col = self.coldata[colname]
+            col.width = newwidth
+        except KeyError:
+            pass
     
     def restore_columns(self):
-        if not (self.savename and self.colnames):
+        if not (self.savename and self.coldata):
             return
-        orderpref_name = '{0}.ColumnOrder'.format(self.savename)
-        columnorder = self.app.get_default(orderpref_name)
-        if columnorder:
-            allcols = set(self.colnames)
-            newcolumns = [col for col in columnorder if col in allcols]
-            # now, add the columns which weren't in the order prefs at the end
-            newcolumns += list(allcols - set(newcolumns))
-            self.colnames = newcolumns
+        for col in self.coldata.itervalues():
+            pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
+            coldata = self.app.get_default(pref_name)
+            if coldata:
+                col.index = coldata.get('index', 0)
+                col.width = coldata.get('width', 0)
     
     def save_columns(self):
-        if not (self.savename and self.colnames):
+        if not (self.savename and self.coldata):
             return
-        orderpref_name = '{0}.ColumnOrder'.format(self.savename)
-        self.app.set_default(orderpref_name, self.colnames)
+        for col in self.coldata.itervalues():
+            pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
+            coldata = {'index': col.index, 'width': col.width}
+            self.app.set_default(pref_name, coldata)
     
-    def set_columns(self, colnames):
-        self.colnames = colnames
+    def set_column_order(self, colnames):
+        colnames = (name for name in colnames if name in self.coldata)
+        for i, colname in enumerate(colnames):
+            col = self.coldata[colname]
+            col.index = i
+    
+    #--- Properties
+    @property
+    def colnames(self):
+        return [col.name for col in sorted(self.coldata.itervalues(), key=lambda col: col.index)]
     

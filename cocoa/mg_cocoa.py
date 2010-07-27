@@ -286,9 +286,17 @@ class PyTableWithColumns(PyTable):
     def columnNamesInOrder(self):
         return self.py.columns.colnames
     
+    @signature('i@:@')
+    def columnWidth_(self, colname):
+        return self.py.columns.column_width(colname)
+    
     @signature('v@:@i')
     def moveColumn_toIndex_(self, colname, index):
         self.py.columns.move_column(colname, index)
+    
+    @signature('v@:@i')
+    def resizeColumn_toWidth_(self, colname, newwidth):
+        self.py.columns.resize_column(colname, newwidth)
     
 
 class PyTableWithDate(PyTableWithColumns):
@@ -388,9 +396,17 @@ class PyReport(PyOutline):
     def columnNamesInOrder(self):
         return self.py.columns.colnames
     
+    @signature('i@:@')
+    def columnWidth_(self, colname):
+        return self.py.columns.column_width(colname)
+    
     @signature('v@:@i')
     def moveColumn_toIndex_(self, colname, index):
         self.py.columns.move_column(colname, index)
+    
+    @signature('v@:@i')
+    def resizeColumn_toWidth_(self, colname, newwidth):
+        self.py.columns.resize_column(colname, newwidth)
     
 
 class PyPanel(PyGUIObject):

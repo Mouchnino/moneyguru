@@ -29,7 +29,7 @@ class SplitTable(Table):
     def __init__(self, transactionPanel, view):
         model = SplitTableModel(view=self, transaction_panel=transactionPanel.model)
         Table.__init__(self, model, view)
-        self.setColumnsWidth(None)
+        self.setColumnsWidth()
         view.keyPressed.connect(self.keyPressed)
     
     def _getFlags(self, row, column):

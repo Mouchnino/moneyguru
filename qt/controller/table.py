@@ -48,6 +48,7 @@ class Table(TableBase):
         self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
+        self.view.horizontalHeader().sectionResized.connect(self.headerSectionResized)
     
     #--- Public
     def setColumnsOrder(self):
@@ -55,8 +56,18 @@ class Table(TableBase):
         indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
         TableBase.setColumnsOrder(self, indexes)
     
+    def setColumnsWidth(self):
+        widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
+        if not any(widths):
+            widths = None
+        TableBase.setColumnsWidth(self, widths)
+    
     #--- Event Handling
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         attrname = self.COLUMNS[logicalIndex].attrname
         self.model.columns.move_column(attrname, newVisualIndex)
+    
+    def headerSectionResized(self, logicalIndex, oldSize, newSize):
+        attrname = self.COLUMNS[logicalIndex].attrname
+        self.model.columns.resize_column(attrname, newSize)
     

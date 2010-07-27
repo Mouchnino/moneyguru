@@ -110,6 +110,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.spacePressed.connect(self.model.toggle_excluded)
         self.view.doubleClicked.connect(self.model.show_selected_account)
         self.view.header().sectionMoved.connect(self.headerSectionMoved)
+        self.view.header().sectionResized.connect(self.headerSectionResized)
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):
@@ -132,6 +133,10 @@ class AccountSheet(TreeModel, ColumnBearer):
         colnames = self.model.columns.colnames
         indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
         ColumnBearer.setColumnsOrder(self, indexes)
+    
+    def setColumnsWidth(self):
+        widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
+        ColumnBearer.setColumnsWidth(self, widths)
     
     #--- Data Model methods
     def columnCount(self, parent):
@@ -246,6 +251,10 @@ class AccountSheet(TreeModel, ColumnBearer):
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         attrname = self.COLUMNS[logicalIndex].attrname
         self.model.columns.move_column(attrname, newVisualIndex)
+    
+    def headerSectionResized(self, logicalIndex, oldSize, newSize):
+        attrname = self.COLUMNS[logicalIndex].attrname
+        self.model.columns.resize_column(attrname, newSize)
     
     def nodeCollapsed(self, index):
         node = index.internalPointer()

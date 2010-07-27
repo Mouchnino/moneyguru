@@ -34,7 +34,6 @@ class EntryView(BaseView, Ui_EntryView):
         self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         
-        self.doc.app.willSavePrefs.connect(self._savePrefs)
         self.reconciliationButton.clicked.connect(self.model.toggle_reconciliation_mode)
     
     def _setupUi(self):
@@ -43,13 +42,8 @@ class EntryView(BaseView, Ui_EntryView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.etable.setColumnsWidth(self.doc.app.prefs.entryColumnWidths)
+        self.etable.setColumnsWidth()
         self.etable.setColumnsOrder()
-    
-    def _savePrefs(self):
-        h = self.tableView.horizontalHeader()
-        widths = [h.sectionSize(index) for index in xrange(len(self.etable.COLUMNS))]
-        self.doc.app.prefs.entryColumnWidths = widths
     
     #--- QWidget override
     def setFocus(self):

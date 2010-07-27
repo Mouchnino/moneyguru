@@ -11,5 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface PyTableWithColumns : PyTable {}
 - (NSArray *)columnNamesInOrder;
+- (NSInteger)columnWidth:(NSString *)colName;
 - (void)moveColumn:(NSString *)colName toIndex:(NSInteger)index;
+- (void)resizeColumn:(NSString *)colName toWidth:(NSInteger)newWidth;
 @end

@@ -32,20 +32,13 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         children = [self.nwsheet.model, self.nwgraph.model, self.apiechart.model, self.lpiechart.model]
         self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
-        
-        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
     
     def _setupColumns(self):
-        self.nwsheet.setColumnsWidth(self.doc.app.prefs.networthColumnWidths)
+        self.nwsheet.setColumnsWidth()
         self.nwsheet.setColumnsOrder()
-    
-    def _savePrefs(self):
-        h = self.treeView.header()
-        widths = [h.sectionSize(index) for index in xrange(len(self.nwsheet.COLUMNS))]
-        self.doc.app.prefs.networthColumnWidths = widths
     
     #--- QWidget override
     def setFocus(self):

@@ -21,6 +21,10 @@ http://www.hardcoded.net/licenses/hs_license
         name:NSTableViewColumnDidMoveNotification object:aTableView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
         name:NSOutlineViewColumnDidMoveNotification object:aTableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnResized:)
+        name:NSTableViewColumnDidResizeNotification object:aTableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnResized:)
+        name:NSOutlineViewColumnDidResizeNotification object:aTableView];
     return self;
 }
 
@@ -93,6 +97,12 @@ http://www.hardcoded.net/licenses/hs_license
             [tableView moveColumn:index toColumn:i];
         }
     }
+    for (NSTableColumn *c in [tableView tableColumns]) {
+        NSInteger width = [py columnWidth:[c identifier]];
+        if (width > 0) {
+            [c setWidth:width];
+        }
+    }
     isRestoring = NO;
 }
 
@@ -111,4 +121,12 @@ http://www.hardcoded.net/licenses/hs_license
     [py moveColumn:colName toIndex:index];
 }
 
+- (void)columnResized:(NSNotification *)notification
+{
+    if (isRestoring) {
+        return;
+    }
+    NSTableColumn *c = [[notification userInfo] objectForKey:@"NSTableColumn"];
+    [py resizeColumn:[c identifier] toWidth:[c width]];
+}
 @end

@@ -32,20 +32,13 @@ class ProfitView(BaseView, Ui_ProfitView):
         children = [self.psheet.model, self.pgraph.model, self.ipiechart.model, self.epiechart.model]
         self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
-        
-        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
     
     def _setupColumns(self):
-        self.psheet.setColumnsWidth(self.doc.app.prefs.profitColumnWidths)
+        self.psheet.setColumnsWidth()
         self.psheet.setColumnsOrder()
-    
-    def _savePrefs(self):
-        h = self.treeView.header()
-        widths = [h.sectionSize(index) for index in xrange(len(self.psheet.COLUMNS))]
-        self.doc.app.prefs.profitColumnWidths = widths
     
     #--- QWidget override
     def setFocus(self):

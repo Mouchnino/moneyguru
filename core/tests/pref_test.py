@@ -47,10 +47,14 @@ def test_mainwindow_panes_reopen_except_nonexistant_accounts(app):
 #--- Columns save/restore
 
 def assert_column_save_restore(app, tablename, colname):
-    getattr(app, tablename).columns.move_column(colname, 0)
+    table = getattr(app, tablename)
+    table.columns.move_column(colname, 0)
+    table.columns.resize_column(colname, 999)
     app.doc.close()
     newapp = TestApp(app=app.app)
-    eq_(getattr(newapp, tablename).columns.colnames[0], colname)
+    table = getattr(newapp, tablename)
+    eq_(table.columns.colnames[0], colname)
+    eq_(table.columns.column_width(colname), 999)
 
 @with_app(TestApp)
 def test_ttable_restores_columns(app):

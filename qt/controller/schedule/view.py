@@ -26,8 +26,6 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         children = [self.sctable.model]
         self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
-        
-        self.doc.app.willSavePrefs.connect(self._savePrefs)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -35,13 +33,8 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.sctable.setColumnsWidth(self.doc.app.prefs.scheduleColumnWidths)
+        self.sctable.setColumnsWidth()
         self.sctable.setColumnsOrder()
-    
-    def _savePrefs(self):
-        h = self.tableView.horizontalHeader()
-        widths = [h.sectionSize(index) for index in xrange(len(self.sctable.COLUMNS))]
-        self.doc.app.prefs.scheduleColumnWidths = widths
     
     #--- QWidget override
     def setFocus(self):
