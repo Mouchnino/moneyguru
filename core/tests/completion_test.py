@@ -117,7 +117,6 @@ def test_autofill_column_selection_for_description(app):
 def test_autofill_convert_amount_field(app):
     # autofill_columns can be given 'increase' and 'decrease'. It will all be converted into
     # 'amount'.
-    app.etable.change_columns(['description', 'increase', 'decrease'])
     app.etable.add()
     row = app.etable.selected_row
     row.description = 'Deposit'

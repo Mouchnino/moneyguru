@@ -56,9 +56,6 @@ class TransactionTableBase(GUITable, ViewChild):
         after = after.transaction if hasattr(after, 'transaction') else None
         return self.document.can_move_transactions(transactions, before, after)
     
-    def change_columns(self, columns):
-        self.columns.set_column_order(columns)
-    
     def duplicate_selected(self):
         self.document.duplicate_transactions(self.selected_transactions)
     

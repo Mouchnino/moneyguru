@@ -162,7 +162,6 @@ def app_one_entry():
 @with_app(app_one_entry)
 def test_autofill_only_the_right_side(app):
     # When editing an attribute, only attributes to the right of it are autofilled
-    app.etable.change_columns(['description', 'payee', 'transfer', 'increase', 'decrease'])
     app.etable.add()
     row = app.etable.selected_row
     row.payee = 'payee'
