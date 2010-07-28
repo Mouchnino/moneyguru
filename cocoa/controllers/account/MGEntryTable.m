@@ -23,11 +23,6 @@ http://www.hardcoded.net/licenses/hs_license
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
     [aTableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:aTableView];
-    [columnsManager linkColumn:@"description" toUserDefault:AccountDescriptionColumnVisible];
-    [columnsManager linkColumn:@"payee" toUserDefault:AccountPayeeColumnVisible];
-    [columnsManager linkColumn:@"checkno" toUserDefault:AccountChecknoColumnVisible];
-    [columnsManager linkColumn:@"reconciliation_date" toUserDefault:AccountReconciliationDateColumnVisible];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPyParent];
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
@@ -69,7 +64,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [customFieldEditor release];
     [customDateFieldEditor release];
-    [columnsManager release];
     [super dealloc];
 }
 
@@ -229,7 +223,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refresh
 {
-    [columnsManager setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
+    [self setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
     [super refresh];
 }
 

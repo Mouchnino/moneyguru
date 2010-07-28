@@ -42,8 +42,7 @@ class EntryView(BaseView, Ui_EntryView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.etable.setColumnsWidth()
-        self.etable.setColumnsOrder()
+        self.etable.restoreColumns()
     
     #--- QWidget override
     def setFocus(self):
@@ -56,7 +55,6 @@ class EntryView(BaseView, Ui_EntryView):
     
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
-        self.etable.setHiddenColumns(prefs.entryHiddenColumns)
         self.graphView.setHidden(not prefs.entryGraphVisible)
     
     #--- model --> view

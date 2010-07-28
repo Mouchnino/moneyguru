@@ -51,16 +51,17 @@ class Table(TableBase):
         self.view.horizontalHeader().sectionResized.connect(self.headerSectionResized)
     
     #--- Public
-    def setColumnsOrder(self):
+    def restoreColumns(self):
         colnames = self.model.columns.colnames
         indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
-        TableBase.setColumnsOrder(self, indexes)
-    
-    def setColumnsWidth(self):
+        self.setColumnsOrder(indexes)
         widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
         if not any(widths):
             widths = None
-        TableBase.setColumnsWidth(self, widths)
+        self.setColumnsWidth(widths)
+        for column in self.COLUMNS:
+            visible = self.model.columns.column_is_visible(column.attrname)
+            self.view.horizontalHeader().setSectionHidden(column.index, not visible)
     
     #--- Event Handling
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
@@ -70,4 +71,9 @@ class Table(TableBase):
     def headerSectionResized(self, logicalIndex, oldSize, newSize):
         attrname = self.COLUMNS[logicalIndex].attrname
         self.model.columns.resize_column(attrname, newSize)
+    
+    #--- model --> view
+    def set_column_visible(self, colname, visible):
+        column = self.ATTR2COLUMN[colname]
+        self.view.horizontalHeader().setSectionHidden(column.index, not visible)
     

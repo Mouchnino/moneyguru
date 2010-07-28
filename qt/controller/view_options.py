@@ -10,6 +10,8 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog
 
+from core.gui.view_options import ViewOptions as ViewOptionsModel
+
 from ui.view_options_dialog_ui import Ui_ViewOptionsDialog
 
 class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
@@ -20,59 +22,51 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
         'plPieChartsCheckBox': 'profitPieChartsVisible',
         'accGraphCheckBox': 'entryGraphVisible',
     }
-    # widgetName: (prefName, columnName)
-    # The preference refers to *hidden* columns!
+    # widgetName: attrname
     WIDGET2COLUMN = {
-        'nwChangeCheckBox': ('networthHiddenColumns', 'delta'),
-        'nwChangePercCheckBox': ('networthHiddenColumns', 'delta_perc'),
-        'nwStartCheckBox': ('networthHiddenColumns', 'start'),
-        'nwBudgetedCheckBox': ('networthHiddenColumns', 'budgeted'),
-        'nwAccountNumberCheckBox': ('networthHiddenColumns', 'account_number'),
-        'plChangeCheckBox': ('profitHiddenColumns', 'delta'),
-        'plChangePercCheckBox': ('profitHiddenColumns', 'delta_perc'),
-        'plLastCheckBox': ('profitHiddenColumns', 'last_cash_flow'),
-        'plBudgetedCheckBox': ('profitHiddenColumns', 'budgeted'),
-        'plAccountNumberCheckBox': ('profitHiddenColumns', 'account_number'),
-        'txnDescriptionCheckBox': ('transactionHiddenColumns', 'description'),
-        'txnPayeeCheckBox': ('transactionHiddenColumns', 'payee'),
-        'txnChecknoCheckBox': ('transactionHiddenColumns', 'checkno'),
-        'accDescriptionCheckBox': ('entryHiddenColumns', 'description'),
-        'accPayeeCheckBox': ('entryHiddenColumns', 'payee'),
-        'accChecknoCheckBox': ('entryHiddenColumns', 'checkno'),
-        'accReconciliationDateCheckBox': ('entryHiddenColumns', 'reconciliation_date'),
-        'schDescriptionCheckBox': ('scheduleHiddenColumns', 'description'),
-        'schPayeeCheckBox': ('scheduleHiddenColumns', 'payee'),
-        'schChecknoCheckBox': ('scheduleHiddenColumns', 'checkno'),
+        'nwChangeCheckBox': 'networth_sheet_delta',
+        'nwChangePercCheckBox': 'networth_sheet_delta_perc',
+        'nwStartCheckBox': 'networth_sheet_start',
+        'nwBudgetedCheckBox': 'networth_sheet_budgeted',
+        'nwAccountNumberCheckBox': 'networth_sheet_account_number',
+        'plChangeCheckBox': 'profit_sheet_delta',
+        'plChangePercCheckBox': 'profit_sheet_delta_perc',
+        'plLastCheckBox': 'profit_sheet_last_cash_flow',
+        'plBudgetedCheckBox': 'profit_sheet_budgeted',
+        'plAccountNumberCheckBox': 'profit_sheet_account_number',
+        'txnDescriptionCheckBox': 'transaction_table_description',
+        'txnPayeeCheckBox': 'transaction_table_payee',
+        'txnChecknoCheckBox': 'transaction_table_checkno',
+        'accDescriptionCheckBox': 'entry_table_description',
+        'accPayeeCheckBox': 'entry_table_payee',
+        'accChecknoCheckBox': 'entry_table_checkno',
+        'accReconciliationDateCheckBox': 'entry_table_reconciliation_date',
+        'schDescriptionCheckBox': 'schedule_table_description',
+        'schPayeeCheckBox': 'schedule_table_payee',
+        'schChecknoCheckBox': 'schedule_table_checkno',
     }
     
-    def __init__(self, parent, app):
+    def __init__(self, mainwindow):
         # The flags we pass are that so we don't get the "What's this" button in the title bar
-        QDialog.__init__(self, parent, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
-        self.app = app
-        self._setupUi()
-    
-    def _setupUi(self):
+        QDialog.__init__(self, mainwindow, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
+        self.mainwindow = mainwindow
+        self.app = mainwindow.app
         self.setupUi(self)
+        self.model = ViewOptionsModel(view=self, mainwindow=mainwindow.model)
     
     def loadFromPrefs(self):
         for widgetName, prefName in self.WIDGET2PREF.items():
             widget = getattr(self, widgetName)
             widget.setChecked(getattr(self.app.prefs, prefName))
-        for widgetName, (prefName, columnName) in self.WIDGET2COLUMN.items():
+        for widgetName, attrName in self.WIDGET2COLUMN.items():
             widget = getattr(self, widgetName)
-            hiddenColumns = getattr(self.app.prefs, prefName)
-            # We use "not in" because the preference stores hidden columns
-            widget.setChecked(columnName not in hiddenColumns)
+            widget.setChecked(getattr(self.model, attrName))
     
     def saveToPrefs(self):
         for widgetName, prefName in self.WIDGET2PREF.items():
             widget = getattr(self, widgetName)
             setattr(self.app.prefs, prefName, bool(widget.isChecked()))
-        for widgetName, (prefName, columnName) in self.WIDGET2COLUMN.items():
+        for widgetName, attrName in self.WIDGET2COLUMN.items():
             widget = getattr(self, widgetName)
-            hiddenColumns = getattr(self.app.prefs, prefName)
-            if widget.isChecked():
-                hiddenColumns.discard(columnName)
-            else:
-                hiddenColumns.add(columnName)
+            setattr(self.model, attrName, bool(widget.isChecked()))
     

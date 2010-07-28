@@ -102,6 +102,8 @@ http://www.hardcoded.net/licenses/hs_license
         if (width > 0) {
             [c setWidth:width];
         }
+        BOOL isVisible = [py columnIsVisible:[c identifier]];
+        [c setHidden:!isVisible];
     }
     isRestoring = NO;
 }

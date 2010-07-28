@@ -15,12 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyBalanceSheet" pyParent:aPyParent view:aOutlineView];
     [self initializeColumns];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:aOutlineView];
-    [columnsManager linkColumn:@"delta" toUserDefault:BalanceSheetDeltaColumnVisible];
-    [columnsManager linkColumn:@"delta_perc" toUserDefault:BalanceSheetDeltaPercColumnVisible];
-    [columnsManager linkColumn:@"start" toUserDefault:BalanceSheetStartColumnVisible];
-    [columnsManager linkColumn:@"budgeted" toUserDefault:BalanceSheetBudgetedColumnVisible];
-    [columnsManager linkColumn:@"account_number" toUserDefault:BalanceSheetAccountNumberColumnVisible];
     return self;
 }
 
@@ -52,12 +46,6 @@ http://www.hardcoded.net/licenses/hs_license
     c = [[self outlineView] tableColumnWithIdentifier:@"budgeted"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     [[self columns] restoreColumns];
-}
-
-- (void)dealloc
-{
-    [columnsManager release];
-    [super dealloc];
 }
 
 /* Overrides */

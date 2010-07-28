@@ -59,6 +59,15 @@ def test_add_transaction():
     app.ttable.save_edits()
     app.check_gui_calls(app.mainwindow_gui, ['refresh_undo_actions', 'refresh_status_line'])
 
+@with_app(app_cleared_gui_calls)
+def test_change_column_visibility(app):
+    # Changing the visibility option of a column calls the table's gui to actually hide the thing.
+    app.vopts.transaction_table_description = False
+    app.check_gui_calls(app.ttable_gui, ['set_column_visible'])
+    # Also works for sheets
+    app.vopts.networth_sheet_delta = True
+    app.check_gui_calls(app.bsheet_gui, ['set_column_visible'])
+
 def test_change_default_currency():
     # When the default currency is changed, all gui refresh themselves
     app = app_cleared_gui_calls()

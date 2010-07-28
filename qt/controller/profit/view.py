@@ -37,8 +37,7 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.setupUi(self)
     
     def _setupColumns(self):
-        self.psheet.setColumnsWidth()
-        self.psheet.setColumnsOrder()
+        self.psheet.restoreColumns()
     
     #--- QWidget override
     def setFocus(self):
@@ -53,7 +52,6 @@ class ProfitView(BaseView, Ui_ProfitView):
     
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
-        self.psheet.setHiddenColumns(prefs.profitHiddenColumns)
         self.graphView.setHidden(not prefs.profitGraphVisible)
         self.incomePieChart.setHidden(not prefs.profitPieChartsVisible)
         self.expensePieChart.setHidden(not prefs.profitPieChartsVisible)

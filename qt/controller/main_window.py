@@ -10,7 +10,7 @@
 import sys
 
 from PyQt4.QtCore import QProcess
-from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap
+from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap, QDialog
 
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
@@ -35,6 +35,7 @@ from .budget_panel import BudgetPanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
+from .view_options import ViewOptionsDialog
 from ui.main_window_ui import Ui_MainWindow
 
 PANETYPE2ICON = {
@@ -76,6 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.alookup = AccountLookup(self, mainwindow=self)
         self.clookup = CompletionLookup(self, mainwindow=self)
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
+        self.vopts = ViewOptionsDialog(self)
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
         
@@ -91,7 +93,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # set_children() and connect() calls have to happen after _setupUiPost()
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview,
             self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
-            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel]
+            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel, self.vopts]
         self.model.set_children([child.model for child in children])
         self.model.connect()
         self.sfield.model.connect()
@@ -162,7 +164,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
         self.actionShowPreferences.triggered.connect(self.app.showPreferences)
-        self.actionShowViewOptions.triggered.connect(self.app.showViewOptions)
+        self.actionShowViewOptions.triggered.connect(self.showViewOptions)
         self.actionPrint.triggered.connect(self._print)
         self.actionShowHelp.triggered.connect(self.app.showHelp)
         self.actionRegister.triggered.connect(self.registerTriggered)
@@ -332,6 +334,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def toggleReconciliationModeTriggered(self):
         self.eview.model.toggle_reconciliation_mode()
+    
+    def showViewOptions(self):
+        self.vopts.loadFromPrefs()
+        if self.vopts.exec_() == QDialog.Accepted:
+            self.vopts.saveToPrefs()
+            self.updateOptionalWidgetsVisibility()
     
     def registerTriggered(self):
         self.app.askForRegCode()

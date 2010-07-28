@@ -57,10 +57,3 @@ class TransactionTable(TableWithTransactions):
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.deletePressed.connect(self.model.delete)
     
-    #--- ColumnBearer override
-    def setHiddenColumns(self, hiddenColumns):
-        # There doesn't seem to be a signal for column hide. Since we only hide column through this
-        # call, we can call change_columns() here.
-        TableWithTransactions.setHiddenColumns(self, hiddenColumns)
-        self.model.change_columns(self.visibleRowAttrs())
-    

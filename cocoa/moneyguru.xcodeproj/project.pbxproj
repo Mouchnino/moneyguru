@@ -61,7 +61,6 @@
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38070F93648E00FA8460 /* Dialogs.m */; };
 		CE6D38130F93648E00FA8460 /* HSErrorReportWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */; };
-		CE6D38140F93648E00FA8460 /* HSTableColumnManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D380B0F93648E00FA8460 /* HSTableColumnManager.m */; };
 		CE6D38150F93648E00FA8460 /* RegistrationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D380D0F93648E00FA8460 /* RegistrationInterface.m */; };
 		CE6D38160F93648E00FA8460 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D380F0F93648E00FA8460 /* Utils.m */; };
 		CE6D38170F93648E00FA8460 /* ValueTransformers.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38110F93648E00FA8460 /* ValueTransformers.m */; };
@@ -70,6 +69,7 @@
 		CE720A5B0F84BF71005C4D5B /* MGOutlinePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */; };
 		CE720A5F0F84CB39005C4D5B /* MGTablePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */; };
 		CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74808C11995EF400D59C50 /* MGEmptyView.m */; };
+		CE7DA76B11FF482E00E10DED /* MGViewOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7DA76A11FF482E00E10DED /* MGViewOptions.m */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
 		CE873AB30E21622F004F63E9 /* MGAccountProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A710E21622F004F63E9 /* MGAccountProperties.m */; };
 		CE873AB50E21622F004F63E9 /* MGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A750E21622F004F63E9 /* MGAppDelegate.m */; };
@@ -341,8 +341,6 @@
 		CE6D38070F93648E00FA8460 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = ../cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
 		CE6D38080F93648E00FA8460 /* HSErrorReportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSErrorReportWindow.h; path = ../cocoalib/HSErrorReportWindow.h; sourceTree = SOURCE_ROOT; };
 		CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSErrorReportWindow.m; path = ../cocoalib/HSErrorReportWindow.m; sourceTree = SOURCE_ROOT; };
-		CE6D380A0F93648E00FA8460 /* HSTableColumnManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSTableColumnManager.h; path = ../cocoalib/HSTableColumnManager.h; sourceTree = SOURCE_ROOT; };
-		CE6D380B0F93648E00FA8460 /* HSTableColumnManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSTableColumnManager.m; path = ../cocoalib/HSTableColumnManager.m; sourceTree = SOURCE_ROOT; };
 		CE6D380C0F93648E00FA8460 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = ../cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
 		CE6D380D0F93648E00FA8460 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = ../cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
 		CE6D380E0F93648E00FA8460 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
@@ -361,6 +359,8 @@
 		CE74808A11995EDF00D59C50 /* PyEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEmptyView.h; sourceTree = "<group>"; };
 		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
 		CE74808C11995EF400D59C50 /* MGEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEmptyView.m; sourceTree = "<group>"; };
+		CE7DA76911FF482E00E10DED /* MGViewOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewOptions.h; sourceTree = "<group>"; };
+		CE7DA76A11FF482E00E10DED /* MGViewOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewOptions.m; sourceTree = "<group>"; };
 		CE80D93C11DA3964007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CE80D94911DA399E007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		CE80D94A11DA39AA007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
@@ -783,8 +783,6 @@
 				CE6D38070F93648E00FA8460 /* Dialogs.m */,
 				CE6D38080F93648E00FA8460 /* HSErrorReportWindow.h */,
 				CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */,
-				CE6D380A0F93648E00FA8460 /* HSTableColumnManager.h */,
-				CE6D380B0F93648E00FA8460 /* HSTableColumnManager.m */,
 				CE2F0C1E112965C600F6FB55 /* NSEventAdditions.h */,
 				CE2F0C1F112965C600F6FB55 /* NSEventAdditions.m */,
 				CEC6593E0FC9354A0045E4C8 /* PyRegistrable.h */,
@@ -877,6 +875,8 @@
 				CE14535C0E4B0A99009517B6 /* PyImportWindow.h */,
 				CE1453440E4AFE1D009517B6 /* MGImportWindow.h */,
 				CE1453450E4AFE1D009517B6 /* MGImportWindow.m */,
+				CE7DA76911FF482E00E10DED /* MGViewOptions.h */,
+				CE7DA76A11FF482E00E10DED /* MGViewOptions.m */,
 				CE873A740E21622F004F63E9 /* MGAppDelegate.h */,
 				CE873A750E21622F004F63E9 /* MGAppDelegate.m */,
 				CE873A7C0E21622F004F63E9 /* MGDateFieldEditor.h */,
@@ -1457,7 +1457,6 @@
 				CEE46FC40F91E58500D08E40 /* MGAccountReassignPanel.m in Sources */,
 				CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */,
 				CE6D38130F93648E00FA8460 /* HSErrorReportWindow.m in Sources */,
-				CE6D38140F93648E00FA8460 /* HSTableColumnManager.m in Sources */,
 				CE6D38150F93648E00FA8460 /* RegistrationInterface.m in Sources */,
 				CE6D38160F93648E00FA8460 /* Utils.m in Sources */,
 				CE6D38170F93648E00FA8460 /* ValueTransformers.m in Sources */,
@@ -1516,6 +1515,7 @@
 				CE88544911A1819C00268FBD /* MGMainWindowController.m in Sources */,
 				CE88545111A1837B00268FBD /* MGMainWindow.m in Sources */,
 				CE17DBD011FC3D9E008E74DE /* MGColumns.m in Sources */,
+				CE7DA76B11FF482E00E10DED /* MGViewOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

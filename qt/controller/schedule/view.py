@@ -33,8 +33,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.sctable.setColumnsWidth()
-        self.sctable.setColumnsOrder()
+        self.sctable.restoreColumns()
     
     #--- QWidget override
     def setFocus(self):
@@ -43,7 +42,4 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTable(self.sctable)
-    
-    def updateOptionalWidgetsVisibility(self):
-        self.sctable.setHiddenColumns(self.doc.app.prefs.scheduleHiddenColumns)
     

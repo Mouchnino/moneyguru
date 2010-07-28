@@ -13,13 +13,24 @@ from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from ..model.transaction import Transaction, Entry
 from ..trans import tr
+from .column import Column
 from .table import RowWithDebitAndCredit, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
     SAVENAME = 'EntryTable'
-    ALL_ATTRS = ['status', 'date', 'reconciliation_date', 'checkno', 'description', 'payee',
-        'transfer', 'increase', 'decrease', 'balance']
+    COLUMNS = [
+        Column('status'),
+        Column('date'),
+        Column('reconciliation_date', optional=True, visible=False),
+        Column('checkno', optional=True, visible=False),
+        Column('description', optional=True),
+        Column('payee', optional=True, visible=False),
+        Column('transfer'),
+        Column('increase'),
+        Column('decrease'),
+        Column('balance'),
+    ]
     INVALIDATING_MESSAGES = TransactionTableBase.INVALIDATING_MESSAGES | set(['shown_account_changed'])
     
     def __init__(self, view, account_view):

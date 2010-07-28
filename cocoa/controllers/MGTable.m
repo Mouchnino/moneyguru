@@ -44,4 +44,17 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return columns;
 }
+
+/* Python --> Cocoa */
+- (void)setColumn:(NSString *)colname visible:(BOOL)visible
+{
+    NSTableColumn *col = [[self tableView] tableColumnWithIdentifier:colname];
+    if (col == nil)
+        return;
+    if ([col isHidden] == !visible)
+        return;
+    // Before changing the columns, we must stop edition if it is ongoing
+    [[self tableView] stopEditing];
+    [col setHidden:!visible];
+}
 @end

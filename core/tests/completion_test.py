@@ -105,34 +105,13 @@ def test_amount_completion_uses_the_latest_entered(app):
     eq_(app.etable[app.etable.selected_indexes[0]].increase, '12.34')
 
 @with_app(app_one_entry)
-def xtest_autofill_column_selection_for_description(app):
-    # XXX temporarily disabled until Columns support hiding.
-    # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
+def test_autofill_column_selection_for_description(app):
+    # Hidden columns are not autofilled
+    app.vopts.entry_table_payee = False
     app.etable.add()
-    app.etable.change_columns(['description', 'payee', 'amount'])
     row = app.etable.selected_row
     row.description = 'Deposit'
-    eq_(app.etable[1].transfer, '')
-
-@with_app(app_one_entry)
-def xtest_autofill_column_selection_for_transfer(app):
-    # XXX temporarily disabled until Columns support hiding.
-    # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
-    app.etable.change_columns(['transfer', 'payee', 'amount'])
-    app.etable.add()
-    row = app.etable.selected_row
-    row.transfer = 'Salary'
-    eq_(app.etable[1].description, '')
-
-@with_app(app_one_entry)
-def xtest_autofill_column_selection_for_payee(app):
-    # XXX temporarily disabled until Columns support hiding.
-    # It's possible to pass a list of columns to be autofilled (instead of autofilling all).
-    app.etable.change_columns(['payee', 'description', 'amount'])
-    app.etable.add()
-    row = app.etable.selected_row
-    row.payee = 'Payee'
-    eq_(app.etable[1].transfer, '')
+    eq_(app.etable[1].payee, '')
 
 @with_app(app_one_entry)
 def test_autofill_convert_amount_field(app):
@@ -143,17 +122,6 @@ def test_autofill_convert_amount_field(app):
     row = app.etable.selected_row
     row.description = 'Deposit'
     eq_(app.etable[1].increase, '42.00')
-
-@with_app(app_one_entry)
-def xtest_autofill_garbage_columns(app):
-    # XXX temporarily disabled until Columns support hiding.
-    # autofill ignores column that can be auto filled.
-    app.etable.change_columns(['description', 'payee', 'amount', 'foo', 'bar'])
-    app.etable.add()
-    row = app.etable.selected_row
-    row.description = 'Deposit' # no crash
-    eq_(app.etable[1].payee, 'Payee') # The rest of the columns were filled anyway
-    eq_(app.etable[1].transfer, '') #... and only the selected ones
 
 @with_app(app_one_entry)
 def test_complete_case_insensitive(app):
@@ -204,6 +172,7 @@ def test_field_completion_is_case_sensitive(app):
 @with_app(app_one_entry)
 def test_field_completion_on_set_entry_transfer(app):
     # Setting a transfer autocompletes the amount and the description.
+    app.vopts.entry_table_payee = True
     app.etable.columns.move_column('transfer', 0)
     app.etable.add()
     row = app.etable.selected_row
@@ -216,6 +185,7 @@ def test_field_completion_on_set_entry_transfer(app):
 @with_app(app_one_entry)
 def test_field_completion_on_set_entry_description(app):
     # Setting a description autocompletes the amount and the transfer.
+    app.vopts.entry_table_payee = True
     app.etable.add()
     row = app.etable.selected_row
     row.description = 'Deposit'
@@ -348,6 +318,7 @@ def app_four_entries_with_description_and_category_collision():
 def assert_completion_order_changed(app):
     # complete() returns descriptions for the second entry, and field completion also is based
     # on the second entry.
+    app.vopts.entry_table_payee = True
     eq_(complete_etable(app, 'd', 'description'), 'esc1')
     eq_(complete_etable(app, 'c', 'transfer'), 'at1')
     eq_(complete_etable(app, 'p', 'payee'), 'ay1')

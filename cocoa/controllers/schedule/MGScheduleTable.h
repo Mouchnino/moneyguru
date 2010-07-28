@@ -9,11 +9,9 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyScheduleTable.h"
 #import "MGTable.h"
-#import "HSTableColumnManager.h"
 
 @interface MGScheduleTable : MGTable
 {
-    HSTableColumnManager *columnsManager;
 }
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 - (void)initializeColumns;

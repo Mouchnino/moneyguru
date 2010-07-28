@@ -11,11 +11,20 @@ from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange, ONE_DAY
 from ..trans import tr
+from .column import Column
 from .report import Report, get_delta_perc
 
 class BalanceSheet(Report):
     SAVENAME = 'BalanceSheet'
-    ALL_ATTRS = ['name', 'account_number', 'end', 'delta', 'delta_perc', 'start', 'budgeted']
+    COLUMNS = [
+        Column('name'),
+        Column('account_number', optional=True, visible=False),
+        Column('end'),
+        Column('delta', optional=True, visible=False),
+        Column('delta_perc', optional=True, visible=False),
+        Column('start', optional=True),
+        Column('budgeted', optional=True),
+    ]
     
     def __init__(self, view, networth_view):
         Report.__init__(self, view, networth_view)

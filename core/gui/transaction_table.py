@@ -13,12 +13,22 @@ from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from ..model.transaction import Transaction
 from ..trans import tr
+from .column import Column
 from .table import Row, RowWithDate, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class TransactionTable(TransactionTableBase):
     SAVENAME = 'TransactionTable'
-    ALL_ATTRS = ['status', 'date', 'checkno', 'description', 'payee', 'from', 'to', 'amount']
+    COLUMNS = [
+        Column('status'),
+        Column('date'),
+        Column('checkno', optional=True, visible=False),
+        Column('description', optional=True),
+        Column('payee', optional=True, visible=False),
+        Column('from'),
+        Column('to'),
+        Column('amount'),
+    ]
     
     def __init__(self, view, transaction_view):
         TransactionTableBase.__init__(self, view, transaction_view)

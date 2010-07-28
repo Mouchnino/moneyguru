@@ -26,7 +26,6 @@ from controller.main_window import MainWindow
 from controller.import_.window import ImportWindow
 from controller.import_.csv_options import CSVOptionsWindow
 from controller.preferences_panel import PreferencesPanel
-from controller.view_options import ViewOptionsDialog
 from support.date_edit import DateEdit
 from preferences import Preferences
 from plat import HELP_PATH
@@ -60,7 +59,6 @@ class MoneyGuru(ApplicationBase):
         self.csvOptionsWindow = CSVOptionsWindow(self.mainWindow, doc=self.doc)
         self.csvOptionsWindow.model.connect()
         self.preferencesPanel = PreferencesPanel(self.mainWindow, app=self)
-        self.viewOptions = ViewOptionsDialog(self.mainWindow, app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)
         self.reg = Registration(self.model)
         self.model.set_registration(self.prefs.registration_code, self.prefs.registration_email)
@@ -88,12 +86,6 @@ class MoneyGuru(ApplicationBase):
         self.preferencesPanel.load()
         if self.preferencesPanel.exec_() == QDialog.Accepted:
             self.preferencesPanel.save()    
-    
-    def showViewOptions(self):
-        self.viewOptions.loadFromPrefs()
-        if self.viewOptions.exec_() == QDialog.Accepted:
-            self.viewOptions.saveToPrefs()
-            self.mainWindow.updateOptionalWidgetsVisibility()
     
     #--- Event Handling
     def applicationFinishedLaunching(self):

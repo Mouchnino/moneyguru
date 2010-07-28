@@ -731,156 +731,12 @@
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.TransactionDescriptionColumnVisible</string>
-						<reference key="source" ref="613766263"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="613766263"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.TransactionDescriptionColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.TransactionDescriptionColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">14</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">window</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="937315869"/>
 					</object>
 					<int key="connectionID">15</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.TransactionPayeeColumnVisible</string>
-						<reference key="source" ref="53691617"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="53691617"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.TransactionPayeeColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.TransactionPayeeColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">16</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.TransactionChecknoColumnVisible</string>
-						<reference key="source" ref="904914257"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="904914257"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.TransactionChecknoColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.TransactionChecknoColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">17</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.BalanceSheetDeltaPercColumnVisible</string>
-						<reference key="source" ref="55855191"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="55855191"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.BalanceSheetDeltaPercColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.BalanceSheetDeltaPercColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">27</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.BalanceSheetDeltaColumnVisible</string>
-						<reference key="source" ref="927673578"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="927673578"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.BalanceSheetDeltaColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.BalanceSheetDeltaColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.BalanceSheetStartColumnVisible</string>
-						<reference key="source" ref="350816729"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="350816729"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.BalanceSheetStartColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.BalanceSheetStartColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">29</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.IncomeStatementDeltaColumnVisible</string>
-						<reference key="source" ref="504822573"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="504822573"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.IncomeStatementDeltaColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.IncomeStatementDeltaColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">38</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.IncomeStatementDeltaPercColumnVisible</string>
-						<reference key="source" ref="51274143"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="51274143"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.IncomeStatementDeltaPercColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.IncomeStatementDeltaPercColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">39</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.IncomeStatementLastColumnVisible</string>
-						<reference key="source" ref="999661508"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="999661508"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.IncomeStatementLastColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.IncomeStatementLastColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">40</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -948,54 +804,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.AccountDescriptionColumnVisible</string>
-						<reference key="source" ref="230718989"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="230718989"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.AccountDescriptionColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.AccountDescriptionColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">63</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.AccountPayeeColumnVisible</string>
-						<reference key="source" ref="846544596"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="846544596"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.AccountPayeeColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.AccountPayeeColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">64</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.AccountChecknoColumnVisible</string>
-						<reference key="source" ref="705065579"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="705065579"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.AccountChecknoColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.AccountChecknoColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">65</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.AccountGraphVisible</string>
 						<reference key="source" ref="304444806"/>
 						<reference key="destination" ref="763883162"/>
@@ -1012,131 +820,323 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.BalanceSheetBudgetedColumnVisible</string>
+						<string key="label">value: py.networthSheetStart</string>
+						<reference key="source" ref="350816729"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="350816729"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.networthSheetStart</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.networthSheetStart</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">107</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.networthSheetDelta</string>
+						<reference key="source" ref="927673578"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="927673578"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.networthSheetDelta</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.networthSheetDelta</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">109</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.networthSheetDeltaPerc</string>
+						<reference key="source" ref="55855191"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="55855191"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.networthSheetDeltaPerc</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.networthSheetDeltaPerc</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">111</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.networthSheetBudgeted</string>
 						<reference key="source" ref="256661265"/>
-						<reference key="destination" ref="763883162"/>
+						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="256661265"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.BalanceSheetBudgetedColumnVisible</string>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.networthSheetBudgeted</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.BalanceSheetBudgetedColumnVisible</string>
+							<string key="NSKeyPath">py.networthSheetBudgeted</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">75</int>
+					<int key="connectionID">113</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.IncomeStatementBudgetedColumnVisible</string>
-						<reference key="source" ref="112973581"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="112973581"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.IncomeStatementBudgetedColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.IncomeStatementBudgetedColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">76</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.ScheduleDescriptionColumnVisible</string>
-						<reference key="source" ref="970417886"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="970417886"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.ScheduleDescriptionColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.ScheduleDescriptionColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">88</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.SchedulePayeeColumnVisible</string>
-						<reference key="source" ref="386946478"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="386946478"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.SchedulePayeeColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.SchedulePayeeColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">89</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.ScheduleChecknoColumnVisible</string>
-						<reference key="source" ref="732213890"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="732213890"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.ScheduleChecknoColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.ScheduleChecknoColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">90</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.AccountReconciliationDateColumnVisible</string>
-						<reference key="source" ref="661529464"/>
-						<reference key="destination" ref="763883162"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="661529464"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.AccountReconciliationDateColumnVisible</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.AccountReconciliationDateColumnVisible</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">94</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.BalanceSheetAccountNumberColumnVisible</string>
+						<string key="label">value: py.networthSheetAccountNumber</string>
 						<reference key="source" ref="898302584"/>
-						<reference key="destination" ref="763883162"/>
+						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="898302584"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.BalanceSheetAccountNumberColumnVisible</string>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.networthSheetAccountNumber</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.BalanceSheetAccountNumberColumnVisible</string>
+							<string key="NSKeyPath">py.networthSheetAccountNumber</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">101</int>
+					<int key="connectionID">115</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.IncomeStatementAccountNumberColumnVisible</string>
-						<reference key="source" ref="1019717434"/>
-						<reference key="destination" ref="763883162"/>
+						<string key="label">value: py.profitSheetLastCashFlow</string>
+						<reference key="source" ref="999661508"/>
+						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1019717434"/>
-							<reference key="NSDestination" ref="763883162"/>
-							<string key="NSLabel">value: values.IncomeStatementAccountNumberColumnVisible</string>
+							<reference key="NSSource" ref="999661508"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.profitSheetLastCashFlow</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.IncomeStatementAccountNumberColumnVisible</string>
+							<string key="NSKeyPath">py.profitSheetLastCashFlow</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">105</int>
+					<int key="connectionID">117</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.profitSheetDelta</string>
+						<reference key="source" ref="504822573"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="504822573"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.profitSheetDelta</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.profitSheetDelta</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">119</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.profitSheetDeltaPerc</string>
+						<reference key="source" ref="51274143"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="51274143"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.profitSheetDeltaPerc</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.profitSheetDeltaPerc</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">121</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.profitSheetBudgeted</string>
+						<reference key="source" ref="112973581"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="112973581"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.profitSheetBudgeted</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.profitSheetBudgeted</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">123</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.profitSheetAccountNumber</string>
+						<reference key="source" ref="1019717434"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1019717434"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.profitSheetAccountNumber</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.profitSheetAccountNumber</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">125</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.transactionTableDescription</string>
+						<reference key="source" ref="613766263"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="613766263"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.transactionTableDescription</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.transactionTableDescription</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">127</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.transactionTablePayee</string>
+						<reference key="source" ref="53691617"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="53691617"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.transactionTablePayee</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.transactionTablePayee</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">129</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.transactionTableCheckno</string>
+						<reference key="source" ref="904914257"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="904914257"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.transactionTableCheckno</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.transactionTableCheckno</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">131</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.entryTableDescription</string>
+						<reference key="source" ref="230718989"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="230718989"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.entryTableDescription</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.entryTableDescription</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">133</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.entryTablePayee</string>
+						<reference key="source" ref="846544596"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="846544596"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.entryTablePayee</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.entryTablePayee</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">135</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.entryTableCheckno</string>
+						<reference key="source" ref="705065579"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="705065579"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.entryTableCheckno</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.entryTableCheckno</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">137</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.entryTableReconciliationDate</string>
+						<reference key="source" ref="661529464"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="661529464"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.entryTableReconciliationDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.entryTableReconciliationDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">139</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.scheduleTableDescription</string>
+						<reference key="source" ref="970417886"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="970417886"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.scheduleTableDescription</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.scheduleTableDescription</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">141</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.scheduleTablePayee</string>
+						<reference key="source" ref="386946478"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="386946478"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.scheduleTablePayee</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.scheduleTablePayee</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">143</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.scheduleTableCheckno</string>
+						<reference key="source" ref="732213890"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="732213890"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.scheduleTableCheckno</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.scheduleTableCheckno</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">145</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1807,7 +1807,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">105</int>
+			<int key="maxID">145</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -1052,7 +1052,7 @@
 								<reference key="NSControlView" ref="569786493"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="501039025">
+								<object class="NSCustomResource" key="NSNormalImage" id="174793651">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSSwitch</string>
 								</object>
@@ -1240,7 +1240,7 @@
 								<reference key="NSControlView" ref="37537141"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="501039025"/>
+								<reference key="NSNormalImage" ref="174793651"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -1262,7 +1262,7 @@
 								<reference key="NSControlView" ref="125175313"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="501039025"/>
+								<reference key="NSNormalImage" ref="174793651"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -2285,14 +2285,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleViewOptionsVisible:</string>
-						<reference key="source" ref="1071329777"/>
-						<reference key="destination" ref="853742698"/>
-					</object>
-					<int key="connectionID">1304</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">makeKeyAndOrderFront:</string>
 						<reference key="source" ref="459769551"/>
 						<reference key="destination" ref="912107078"/>
@@ -2578,6 +2570,14 @@
 						<reference key="destination" ref="627886453"/>
 					</object>
 					<int key="connectionID">1447</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleViewOptionsVisible:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="853742698"/>
+					</object>
+					<int key="connectionID">1448</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4325,7 +4325,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1447</int>
+			<int key="maxID">1448</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4491,12 +4491,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>openExampleDocument:</string>
 							<string>openWebsite:</string>
-							<string>toggleViewOptionsVisible:</string>
 							<string>unlockApp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4685,9 +4683,11 @@
 							<string>showTransactionTable:</string>
 							<string>toggleEntriesReconciled:</string>
 							<string>toggleReconciliationMode:</string>
+							<string>toggleViewOptionsVisible:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

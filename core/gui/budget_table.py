@@ -9,11 +9,20 @@
 import datetime
 
 from .base import ViewChild
+from .column import Column
 from .table import GUITable, Row, rowattr
 
 class BudgetTable(GUITable, ViewChild):
     SAVENAME = 'BudgetTable'
-    ALL_ATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'account', 'target', 'amount']
+    COLUMNS = [
+        Column('start_date'),
+        Column('stop_date'),
+        Column('repeat_type'),
+        Column('interval'),
+        Column('account'),
+        Column('target'),
+        Column('amount'),
+    ]
     INVALIDATING_MESSAGES = set(['budget_changed', 'budget_deleted', 'account_deleted'])
     
     def __init__(self, view, budget_view):

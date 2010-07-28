@@ -810,10 +810,11 @@ def app_autofill():
     return app
 
 @with_app(app_autofill)
-def xtest_autofill_after_column_change(app):
-    # XXX temporarily disabled until Columns support hiding.
-    # When setting the Table's columns, only the columns to the right of the edited are auto-filled.
-    app.ttable.change_columns(['from', 'description', 'to', 'amount']) # payee is not there
+def test_autofill_after_column_change(app):
+    # When setting the Table's columns, only the visible columns to the right of the edited one are
+    # auto-filled.
+    app.vopts.transaction_table_payee = False
+    app.ttable.columns.move_column('from', 0)
     app.ttable.add()
     row = app.ttable.edited
     row.description = 'Deposit'
@@ -869,6 +870,7 @@ def test_autofill_ignores_blank(app):
 @with_app(app_autofill)
 def test_autofill_on_set_from(app):
     # Setting 'from' autocompletes the rest.
+    app.vopts.transaction_table_payee = True
     app.ttable.columns.move_column('from', 0)
     app.ttable.add()
     row = app.ttable.edited
@@ -881,6 +883,7 @@ def test_autofill_on_set_from(app):
 @with_app(app_autofill)
 def test_autofill_on_set_to(app):
     # Setting 'to' autocompletes the rest.
+    app.vopts.transaction_table_payee = True
     app.ttable.columns.move_column('to', 0)
     app.ttable.add()
     row = app.ttable.edited
@@ -893,6 +896,7 @@ def test_autofill_on_set_to(app):
 @with_app(app_autofill)
 def test_autofill_on_set_description(app):
     # Setting a description autocompletes the amount and the transfer.
+    app.vopts.transaction_table_payee = True
     app.ttable.add()
     row = app.ttable.edited
     row.description = 'Deposit'
@@ -904,6 +908,7 @@ def test_autofill_on_set_description(app):
 @with_app(app_autofill)
 def test_autofill_on_set_payee(app):
     # Setting a transfer autocompletes the amount and the description.
+    app.vopts.transaction_table_payee = True
     app.ttable.columns.move_column('payee', 0)
     app.ttable.add()
     row = app.ttable.edited
@@ -931,15 +936,6 @@ def test_autofill_uses_the_latest_entered(app):
     row = app.ttable.edited
     row.description = 'Deposit'
     eq_(row.amount, '12.34')
-
-@with_app(app_autofill)
-def xtest_change_columns_fixed_from(app):
-    # XXX temporarily disabled until Columns support hiding.
-    # When 'from_' is passed in change_columns(), it is automatically changed to 'from'
-    app.mw.select_transaction_table()
-    app.ttable.change_columns(['from', 'description', 'to', 'amount'])
-    app.ttable[0].from_ = 'foo' # no crash
-
 
 class SevenEntries(TestCase):
     def setUp(self):

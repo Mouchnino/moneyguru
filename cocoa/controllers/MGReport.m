@@ -298,4 +298,15 @@ http://www.hardcoded.net/licenses/hs_license
     [super outlineViewSelectionDidChange:notification];
     toggleExcludedIsEnabled = YES;
 }
+
+/* Python --> Cocoa */
+- (void)setColumn:(NSString *)colname visible:(BOOL)visible
+{
+    NSTableColumn *col = [[self outlineView] tableColumnWithIdentifier:colname];
+    if (col == nil)
+        return;
+    if ([col isHidden] == !visible)
+        return;
+    [col setHidden:!visible];
+}
 @end

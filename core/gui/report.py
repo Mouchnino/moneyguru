@@ -23,14 +23,14 @@ def get_delta_perc(delta_amount, start_amount):
 
 class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     SAVENAME = ''
-    ALL_ATTRS = []
+    COLUMNS = []
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['accounts_excluded',
         'date_range_changed'])
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         tree.Tree.__init__(self)
-        self.columns = Columns(self.document.app, self.SAVENAME, self.ALL_ATTRS)
+        self.columns = Columns(self.document.app, self.SAVENAME, self.COLUMNS)
         self.edited = None
         
         prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
@@ -248,6 +248,10 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             # we use _name because we don't want to change self.edited
             node._name = node.account.name if node.is_account else node.group.name
             self.mainwindow.show_message(msg)
+    
+    def set_column_visible(self, colname, visible):
+        self.columns.set_column_visible(colname, visible)
+        self.view.set_column_visible(colname, visible)
     
     def show_selected_account(self):
         self.mainwindow.shown_account = self.selected_account

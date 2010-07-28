@@ -22,4 +22,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyTableWithColumns *)py;
 - (MGTableView *)tableView;
 - (MGColumns *)columns;
+
+/* Python --> Cocoa */
+- (void)setColumn:(NSString *)colname visible:(BOOL)visible;
 @end

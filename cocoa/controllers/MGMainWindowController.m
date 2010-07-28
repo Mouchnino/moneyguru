@@ -40,6 +40,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py];
+    viewOptions = [[MGViewOptions alloc] initWithPyParent:py];
     subviews = [[NSMutableArray alloc] init];
     
     // Setup the toolbar
@@ -54,7 +55,7 @@ http://www.hardcoded.net/licenses/hs_license
         [transactionView py], [accountView py], [scheduleView py], [budgetView py],
         [emptyView py], [accountProperties py], [transactionPanel py],  [massEditionPanel py],
         [schedulePanel py], [budgetPanel py], [customDateRangePanel py], [accountReassignPanel py],
-        [accountLookup py], [completionLookup py], [dateRangeSelector py], nil];
+        [accountLookup py], [completionLookup py], [dateRangeSelector py], [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
@@ -90,6 +91,7 @@ http://www.hardcoded.net/licenses/hs_license
     [accountReassignPanel release];
     [accountLookup release];
     [dateRangeSelector release];
+    [viewOptions release];
     [subviews release];
     [super dealloc];
 }
@@ -315,6 +317,16 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)toggleReconciliationMode:(id)sender
 {
     [(MGAccountView *)top toggleReconciliationMode];
+}
+
+- (IBAction)toggleViewOptionsVisible:(id)sender
+{
+    if ([[viewOptions window] isVisible]) {
+        [[viewOptions window] orderOut:sender];
+    }
+    else {
+        [[viewOptions window] makeKeyAndOrderFront:sender];
+    }
 }
 
 /* Public */

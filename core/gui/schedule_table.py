@@ -11,12 +11,23 @@ import datetime
 from ..model.amount import convert_amount
 from ..trans import tr
 from .base import ViewChild
+from .column import Column
 from .table import GUITable, Row, rowattr
 
 class ScheduleTable(GUITable, ViewChild):
     SAVENAME = 'ScheduleTable'
-    ALL_ATTRS = ['start_date', 'stop_date', 'repeat_type', 'interval', 'checkno', 'description',
-        'payee', 'from', 'to', 'amount']
+    COLUMNS = [
+        Column('start_date'),
+        Column('stop_date'),
+        Column('repeat_type'),
+        Column('interval'),
+        Column('checkno', optional=True, visible=False),
+        Column('description', optional=True),
+        Column('payee', optional=True, visible=False),
+        Column('from'),
+        Column('to'),
+        Column('amount'),
+    ]
     INVALIDATING_MESSAGES = set(['schedule_changed', 'schedule_deleted', 'account_deleted'])
     
     def __init__(self, view, schedule_view):

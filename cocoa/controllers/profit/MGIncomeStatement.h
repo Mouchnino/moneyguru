@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSTableColumnManager.h"
 #import "MGReport.h"
 #import "MGPieChart.h"
 #import "MGBarGraph.h"
@@ -16,7 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGIncomeStatement : MGReport
 {
-    HSTableColumnManager *columnsManager;
 }
 - (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView;
 - (void)initializeColumns;

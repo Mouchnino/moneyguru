@@ -17,11 +17,11 @@ from .column import Columns
 # Subclasses of this class must have a "view" and a "document" attribute
 class GUITable(GUITableBase):
     SAVENAME = ''
-    ALL_ATTRS = []
+    COLUMNS = []
     
     def __init__(self):
         GUITableBase.__init__(self)
-        self.columns = Columns(self.document.app, self.SAVENAME, self.ALL_ATTRS)
+        self.columns = Columns(self.document.app, self.SAVENAME, self.COLUMNS)
     
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):
@@ -34,6 +34,10 @@ class GUITable(GUITableBase):
         if not has_gap and position in (row_indexes + [last_index + 1]):
             return False
         return True
+    
+    def set_column_visible(self, colname, visible):
+        self.columns.set_column_visible(colname, visible)
+        self.view.set_column_visible(colname, visible)
     
     #--- Event handlers
     def edition_must_stop(self):

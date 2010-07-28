@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSTableColumnManager.h"
 #import "PyTransactionTable.h"
 #import "MGEditableTable.h"
 #import "MGTableView.h"
@@ -16,7 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGTransactionTable : MGEditableTable 
 {
-    HSTableColumnManager *columnsManager;
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
 }

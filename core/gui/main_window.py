@@ -42,7 +42,8 @@ class MainWindow(Repeater):
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.emptyview,
             self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
-            self.arpanel, self.alookup, self.completion_lookup, self.daterange_selector) = children
+            self.arpanel, self.alookup, self.completion_lookup, self.daterange_selector,
+            self.view_options) = children
         self._restore_opened_panes()
         for child in children:
             # Panels are not listeners

@@ -57,11 +57,6 @@ class EntryTable(TableWithTransactions):
         self.view.spacePressed.connect(self.model.toggle_reconciled)
         self.view.deletePressed.connect(self.model.delete)
     
-    #--- ColumnBearer override
-    def setHiddenColumns(self, hiddenColumns):
-        TableWithTransactions.setHiddenColumns(self, hiddenColumns)
-        self.model.change_columns(self.visibleRowAttrs())
-    
     #--- Data methods override
     def _getStatusData(self, row, role):
         # DecorationRole is handled in TableWithTransactions

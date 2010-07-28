@@ -129,14 +129,15 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.setCurrentIndex(modelIndex)
     
     #--- Public
-    def setColumnsOrder(self):
+    def restoreColumns(self):
         colnames = self.model.columns.colnames
         indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
-        ColumnBearer.setColumnsOrder(self, indexes)
-    
-    def setColumnsWidth(self):
+        self.setColumnsOrder(indexes)
         widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
-        ColumnBearer.setColumnsWidth(self, widths)
+        self.setColumnsWidth(widths)
+        for column in self.COLUMNS:
+            visible = self.model.columns.column_is_visible(column.attrname)
+            self.view.header().setSectionHidden(column.index, not visible)
     
     #--- Data Model methods
     def columnCount(self, parent):
@@ -274,6 +275,10 @@ class AccountSheet(TreeModel, ColumnBearer):
     
     def start_editing(self):
         self.view.editSelected()
+    
+    def set_column_visible(self, colname, visible):
+        column = self.ATTR2COLUMN[colname]
+        self.view.header().setSectionHidden(column.index, not visible)
     
     def stop_editing(self):
         self.view.setFocus() # enough to stop editing

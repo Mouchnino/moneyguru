@@ -6,12 +6,20 @@
 
 from ..model.account import AccountType
 from ..trans import tr
+from .column import Column
 from .report import Report, get_delta_perc
 
 class IncomeStatement(Report):
     SAVENAME = 'IncomeStatement'
-    ALL_ATTRS = ['name', 'account_number', 'cash_flow', 'delta', 'delta_perc', 'last_cash_flow',
-        'budgeted']
+    COLUMNS = [
+        Column('name'),
+        Column('account_number', optional=True, visible=False),
+        Column('cash_flow'),
+        Column('delta', optional=True, visible=False),
+        Column('delta_perc', optional=True, visible=False),
+        Column('last_cash_flow', optional=True),
+        Column('budgeted', optional=True),
+    ]
     
     def __init__(self, view, profit_view):
         Report.__init__(self, view, profit_view)

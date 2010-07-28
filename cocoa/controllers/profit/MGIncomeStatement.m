@@ -16,12 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithPyClassName:@"PyIncomeStatement" pyParent:aPyParent view:aOutlineView];
     [self initializeColumns];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:aOutlineView];
-    [columnsManager linkColumn:@"delta" toUserDefault:IncomeStatementDeltaColumnVisible];
-    [columnsManager linkColumn:@"delta_perc" toUserDefault:IncomeStatementDeltaPercColumnVisible];
-    [columnsManager linkColumn:@"last_cash_flow" toUserDefault:IncomeStatementLastColumnVisible];
-    [columnsManager linkColumn:@"budgeted" toUserDefault:IncomeStatementBudgetedColumnVisible];
-    [columnsManager linkColumn:@"account_number" toUserDefault:IncomeStatementAccountNumberColumnVisible];
     return self;
 }
 
@@ -53,12 +47,6 @@ http://www.hardcoded.net/licenses/hs_license
     c = [[self outlineView] tableColumnWithIdentifier:@"budgeted"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     [[self columns] restoreColumns];
-}
-
-- (void)dealloc
-{
-    [columnsManager release];
-    [super dealloc];
 }
 
 /* Overrides */

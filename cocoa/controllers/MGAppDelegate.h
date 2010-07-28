@@ -21,7 +21,6 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSMenuItem *customDateRangeItem2;
     IBOutlet NSMenuItem *customDateRangeItem3;
     
-    NSWindowController *viewOptionsWindow;
     NSInvocation *continueUpdate;
     PyMoneyGuruApp *py;
 }
@@ -30,7 +29,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)openExampleDocument:(id)sender;
 - (IBAction)openWebsite:(id)sender;
-- (IBAction)toggleViewOptionsVisible:(id)sender;
 - (IBAction)unlockApp:(id)sender;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;

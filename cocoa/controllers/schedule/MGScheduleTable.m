@@ -16,10 +16,6 @@ http://www.hardcoded.net/licenses/hs_license
     self = [super initWithPyClassName:@"PyScheduleTable" pyParent:aPyParent view:aTableView];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
-    columnsManager = [[HSTableColumnManager alloc] initWithTable:aTableView];
-    [columnsManager linkColumn:@"description" toUserDefault:ScheduleDescriptionColumnVisible];
-    [columnsManager linkColumn:@"payee" toUserDefault:SchedulePayeeColumnVisible];
-    [columnsManager linkColumn:@"checkno" toUserDefault:ScheduleChecknoColumnVisible];
     return self;
 }
 

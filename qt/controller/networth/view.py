@@ -37,8 +37,7 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.setupUi(self)
     
     def _setupColumns(self):
-        self.nwsheet.setColumnsWidth()
-        self.nwsheet.setColumnsOrder()
+        self.nwsheet.restoreColumns()
     
     #--- QWidget override
     def setFocus(self):
@@ -53,7 +52,6 @@ class NetWorthView(BaseView, Ui_NetWorthView):
     
     def updateOptionalWidgetsVisibility(self):
         prefs = self.doc.app.prefs
-        self.nwsheet.setHiddenColumns(prefs.networthHiddenColumns)
         self.graphView.setHidden(not prefs.networthGraphVisible)
         self.assetPieChart.setHidden(not prefs.networthPieChartsVisible)
         self.liabilityPieChart.setHidden(not prefs.networthPieChartsVisible)

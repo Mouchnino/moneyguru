@@ -7,13 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGReport.h"
-#import "PyBalanceSheet.h"
+#import "HSWindowController.h"
 
-@interface MGBalanceSheet : MGReport
+@interface MGViewOptions : HSWindowController
 {
 }
-- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView;
-- (void)initializeColumns;
-- (PyBalanceSheet *)py;
+- (id)initWithPyParent:(id)aPyParent;
 @end

@@ -33,8 +33,7 @@ class BudgetView(BaseView, Ui_BudgetView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.btable.setColumnsWidth()
-        self.btable.setColumnsOrder()
+        self.btable.restoreColumns()
     
     #--- QWidget override
     def setFocus(self):

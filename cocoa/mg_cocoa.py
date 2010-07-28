@@ -73,6 +73,7 @@ from core.gui.transaction_panel import TransactionPanel
 from core.gui.transaction_print import TransactionPrint
 from core.gui.transaction_table import TransactionTable
 from core.gui.transaction_view import TransactionView
+from core.gui.view_options import ViewOptions
 from core.model.date import clean_format
 
 # These imports below are a workaround for py2app, which doesn't like relative imports
@@ -287,6 +288,10 @@ class PyTableWithColumns(PyTable):
         return self.py.columns.colnames
     
     @signature('i@:@')
+    def columnIsVisible_(self, colname):
+        return self.py.columns.column_is_visible(colname)
+    
+    @signature('i@:@')
     def columnWidth_(self, colname):
         return self.py.columns.column_width(colname)
     
@@ -297,6 +302,13 @@ class PyTableWithColumns(PyTable):
     @signature('v@:@i')
     def resizeColumn_toWidth_(self, colname, newwidth):
         self.py.columns.resize_column(colname, newwidth)
+    
+    @signature('v@:@i')
+    def setColumn_visible_(self, colname, visible):
+        self.py.columns.set_column_visible(colname, visible)
+    
+    def set_column_visible(self, colname, visible):
+        self.cocoa.setColumn_visible_(colname, visible)
     
 
 class PyTableWithDate(PyTableWithColumns):
@@ -397,6 +409,10 @@ class PyReport(PyOutline):
         return self.py.columns.colnames
     
     @signature('i@:@')
+    def columnIsVisible_(self, colname):
+        return self.py.columns.column_is_visible(colname)
+    
+    @signature('i@:@')
     def columnWidth_(self, colname):
         return self.py.columns.column_width(colname)
     
@@ -407,6 +423,13 @@ class PyReport(PyOutline):
     @signature('v@:@i')
     def resizeColumn_toWidth_(self, colname, newwidth):
         self.py.columns.resize_column(colname, newwidth)
+    
+    @signature('v@:@i')
+    def setColumn_visible_(self, colname, visible):
+        self.py.columns.set_column_visible(colname, visible)
+    
+    def set_column_visible(self, colname, visible):
+        self.cocoa.setColumn_visible_(colname, visible)
     
 
 class PyPanel(PyGUIObject):
@@ -1522,6 +1545,174 @@ class PyDateRangeSelector(PyGUIObject):
     
     def refresh_custom_ranges(self):
         self.cocoa.refreshCustomRanges()
+    
+
+class PyViewOptions(PyGUIObject):
+    py_class = ViewOptions
+    
+    @signature('i@:')
+    def networthSheetDelta(self):
+        return self.py.networth_sheet_delta
+    
+    @signature('v@:i')
+    def setNetworthSheetDelta_(self, value):
+        self.py.networth_sheet_delta = bool(value)
+    
+    @signature('i@:')
+    def networthSheetDeltaPerc(self):
+        return self.py.networth_sheet_delta_perc
+    
+    @signature('v@:i')
+    def setNetworthSheetDeltaPerc_(self, value):
+        self.py.networth_sheet_delta_perc = bool(value)
+    
+    @signature('i@:')
+    def networthSheetStart(self):
+        return self.py.networth_sheet_start
+    
+    @signature('v@:i')
+    def setNetworthSheetStart_(self, value):
+        self.py.networth_sheet_start = bool(value)
+    
+    @signature('i@:')
+    def networthSheetBudgeted(self):
+        return self.py.networth_sheet_budgeted
+    
+    @signature('v@:i')
+    def setNetworthSheetBudgeted_(self, value):
+        self.py.networth_sheet_budgeted = bool(value)
+    
+    @signature('i@:')
+    def networthSheetAccountNumber(self):
+        return self.py.networth_sheet_account_number
+    
+    @signature('v@:i')
+    def setNetworthSheetAccountNumber_(self, value):
+        self.py.networth_sheet_account_number = bool(value)
+    
+    
+    @signature('i@:')
+    def profitSheetDelta(self):
+        return self.py.profit_sheet_delta
+    
+    @signature('v@:i')
+    def setProfitSheetDelta_(self, value):
+        self.py.profit_sheet_delta = bool(value)
+    
+    @signature('i@:')
+    def profitSheetDeltaPerc(self):
+        return self.py.profit_sheet_delta_perc
+    
+    @signature('v@:i')
+    def setProfitSheetDeltaPerc_(self, value):
+        self.py.profit_sheet_delta_perc = bool(value)
+    
+    @signature('i@:')
+    def profitSheetLastCashFlow(self):
+        return self.py.profit_sheet_last_cash_flow
+    
+    @signature('v@:i')
+    def setProfitSheetLastCashFlow_(self, value):
+        self.py.profit_sheet_last_cash_flow = bool(value)
+    
+    @signature('i@:')
+    def profitSheetBudgeted(self):
+        return self.py.profit_sheet_budgeted
+    
+    @signature('v@:i')
+    def setProfitSheetBudgeted_(self, value):
+        self.py.profit_sheet_budgeted = bool(value)
+    
+    @signature('i@:')
+    def profitSheetAccountNumber(self):
+        return self.py.profit_sheet_account_number
+    
+    @signature('v@:i')
+    def setProfitSheetAccountNumber_(self, value):
+        self.py.profit_sheet_account_number = bool(value)
+    
+    
+    @signature('i@:')
+    def transactionTableDescription(self):
+        return self.py.transaction_table_description
+    
+    @signature('v@:i')
+    def setTransactionTableDescription_(self, value):
+        self.py.transaction_table_description = bool(value)
+    
+    @signature('i@:')
+    def transactionTablePayee(self):
+        return self.py.transaction_table_payee
+    
+    @signature('v@:i')
+    def setTransactionTablePayee_(self, value):
+        self.py.transaction_table_payee = bool(value)
+    
+    @signature('i@:')
+    def transactionTableCheckno(self):
+        return self.py.transaction_table_checkno
+    
+    @signature('v@:i')
+    def setTransactionTableCheckno_(self, value):
+        self.py.transaction_table_checkno = bool(value)
+    
+    
+    @signature('i@:')
+    def entryTableDescription(self):
+        return self.py.entry_table_description
+    
+    @signature('v@:i')
+    def setEntryTableDescription_(self, value):
+        self.py.entry_table_description = bool(value)
+    
+    @signature('i@:')
+    def entryTablePayee(self):
+        return self.py.entry_table_payee
+    
+    @signature('v@:i')
+    def setEntryTablePayee_(self, value):
+        self.py.entry_table_payee = bool(value)
+    
+    @signature('i@:')
+    def entryTableCheckno(self):
+        return self.py.entry_table_checkno
+    
+    @signature('v@:i')
+    def setEntryTableCheckno_(self, value):
+        self.py.entry_table_checkno = bool(value)
+    
+    @signature('i@:')
+    def entryTableReconciliationDate(self):
+        return self.py.entry_table_reconciliation_date
+    
+    @signature('v@:i')
+    def setEntryTableReconciliationDate_(self, value):
+        self.py.entry_table_reconciliation_date = bool(value)
+    
+    
+    @signature('i@:')
+    def scheduleTableDescription(self):
+        return self.py.schedule_table_description
+    
+    @signature('v@:i')
+    def setScheduleTableDescription_(self, value):
+        self.py.schedule_table_description = bool(value)
+    
+    @signature('i@:')
+    def scheduleTablePayee(self):
+        return self.py.schedule_table_payee
+    
+    @signature('v@:i')
+    def setScheduleTablePayee_(self, value):
+        self.py.schedule_table_payee = bool(value)
+    
+    @signature('i@:')
+    def scheduleTableCheckno(self):
+        return self.py.schedule_table_checkno
+    
+    @signature('v@:i')
+    def setScheduleTableCheckno_(self, value):
+        self.py.schedule_table_checkno = bool(value)
     
 
 #--- Printing

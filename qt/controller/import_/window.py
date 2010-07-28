@@ -38,7 +38,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.tabView.setUsesScrollButtons(True)
     
     def _setupColumns(self):
-        self.table.setColumnsWidth()
+        self.table.setColumnsWidth(None)
         
         # Can't set widget alignment in a layout in the Designer
         l = self.targetAccountLayout

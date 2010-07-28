@@ -44,31 +44,11 @@ http://www.hardcoded.net/licenses/hs_license
 /* Preferences */
 
 // Visibility
-#define BalanceSheetDeltaColumnVisible @"BalanceSheetDeltaColumnVisible"
-#define BalanceSheetDeltaPercColumnVisible @"BalanceSheetDeltaPercColumnVisible"
-#define BalanceSheetStartColumnVisible @"BalanceSheetStartColumnVisible"
-#define BalanceSheetBudgetedColumnVisible @"BalanceSheetBudgetedColumnVisible"
-#define BalanceSheetAccountNumberColumnVisible @"BalanceSheetAccountNumberColumnVisible"
 #define NetWorthGraphVisible @"NetWorthGraphVisible"
 #define AssetLiabilityPieChartVisible @"AssetLiabilityPieChartVisible"
-#define IncomeStatementDeltaColumnVisible @"IncomeStatementDeltaColumnVisible"
-#define IncomeStatementDeltaPercColumnVisible @"IncomeStatementDeltaPercColumnVisible"
-#define IncomeStatementLastColumnVisible @"IncomeStatementLastColumnVisible"
-#define IncomeStatementBudgetedColumnVisible @"IncomeStatementBudgetedColumnVisible"
-#define IncomeStatementAccountNumberColumnVisible @"IncomeStatementAccountNumberColumnVisible"
 #define ProfitGraphVisible @"ProfitGraphVisible"
 #define IncomeExpensePieChartVisible @"IncomeExpensePieChartVisible"
-#define TransactionDescriptionColumnVisible @"TransactionDescriptionColumnVisible"
-#define TransactionPayeeColumnVisible @"TransactionPayeeColumnVisible"
-#define TransactionChecknoColumnVisible @"TransactionChecknoColumnVisible"
-#define AccountDescriptionColumnVisible @"AccountDescriptionColumnVisible"
-#define AccountPayeeColumnVisible @"AccountPayeeColumnVisible"
-#define AccountChecknoColumnVisible @"AccountChecknoColumnVisible"
-#define AccountReconciliationDateColumnVisible @"AccountReconciliationDateColumnVisible"
 #define AccountGraphVisible @"AccountGraphVisible"
-#define ScheduleDescriptionColumnVisible @"ScheduleDescriptionColumnVisible"
-#define SchedulePayeeColumnVisible @"SchedulePayeeColumnVisible"
-#define ScheduleChecknoColumnVisible @"ScheduleChecknoColumnVisible"
 
 // Others
 #define ShowRecurrenceScopeDialog @"ShowRecurrenceScopeDialog"

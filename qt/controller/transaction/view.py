@@ -35,8 +35,7 @@ class TransactionView(BaseView, Ui_TransactionView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.ttable.setColumnsWidth()
-        self.ttable.setColumnsOrder()
+        self.ttable.restoreColumns()
     
     #--- QWidget override
     def setFocus(self):
@@ -45,7 +44,4 @@ class TransactionView(BaseView, Ui_TransactionView):
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fitTable(self.ttable)
-    
-    def updateOptionalWidgetsVisibility(self):
-        self.ttable.setHiddenColumns(self.doc.app.prefs.transactionHiddenColumns)
     

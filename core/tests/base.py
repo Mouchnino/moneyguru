@@ -61,6 +61,7 @@ from ..gui.split_table import SplitTable
 from ..gui.transaction_panel import TransactionPanel
 from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
+from ..gui.view_options import ViewOptions
 from ..loader import base
 from ..model.account import AccountType
 from ..model.date import MonthRange
@@ -240,6 +241,8 @@ class TestApp(object):
         self.alookup = AccountLookup(self.alookup_gui, self.mw)
         self.clookup_gui = CallLogger()
         self.clookup = CompletionLookup(self.clookup_gui, self.mw)
+        self.vopts_gui = CallLogger()
+        self.vopts = ViewOptions(self.vopts_gui, self.mw)
         # set children
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
         self.nwview.set_children(children)
@@ -255,7 +258,7 @@ class TestApp(object):
         self.bview.set_children(children)
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
             self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
-            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel]
+            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel, self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
