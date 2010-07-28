@@ -44,6 +44,8 @@ class EntryTable(TableWithTransactions):
         Column('transfer', tr('Transfer'), 120, editor=ACCOUNT_EDIT),
         Column('increase', tr('Increase'), 95, alignment=Qt.AlignRight),
         Column('decrease', tr('Decrease'), 95, alignment=Qt.AlignRight),
+        Column('debit', tr('Debit'), 95, alignment=Qt.AlignRight),
+        Column('credit', tr('Credit'), 95, alignment=Qt.AlignRight),
         Column('balance', tr('Balance'), 110, alignment=Qt.AlignRight),
     ]
     

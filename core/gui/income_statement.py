@@ -13,12 +13,12 @@ class IncomeStatement(Report):
     SAVENAME = 'IncomeStatement'
     COLUMNS = [
         Column('name'),
-        Column('account_number', optional=True, visible=False),
+        Column('account_number', visible=False),
         Column('cash_flow'),
-        Column('delta', optional=True, visible=False),
-        Column('delta_perc', optional=True, visible=False),
-        Column('last_cash_flow', optional=True),
-        Column('budgeted', optional=True),
+        Column('delta', visible=False),
+        Column('delta_perc', visible=False),
+        Column('last_cash_flow'),
+        Column('budgeted'),
     ]
     
     def __init__(self, view, profit_view):

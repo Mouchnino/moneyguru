@@ -91,3 +91,6 @@
 
 /* Class = "NSButtonCell"; title = "Account #"; ObjectID = "103"; */
 "103.title" = "# Compte";
+
+/* Class = "NSButtonCell"; title = "Debit/Credit"; ObjectID = "147"; */
+"147.title" = "Débit/Crédit";

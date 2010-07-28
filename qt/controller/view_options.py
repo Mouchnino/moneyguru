@@ -41,6 +41,7 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
         'accPayeeCheckBox': 'entry_table_payee',
         'accChecknoCheckBox': 'entry_table_checkno',
         'accReconciliationDateCheckBox': 'entry_table_reconciliation_date',
+        'accDebitCreditCheckBox': 'entry_table_debit_credit',
         'schDescriptionCheckBox': 'schedule_table_description',
         'schPayeeCheckBox': 'schedule_table_payee',
         'schChecknoCheckBox': 'schedule_table_checkno',

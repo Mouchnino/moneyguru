@@ -10,11 +10,10 @@
 import copy
 
 class Column(object):
-    def __init__(self, name, optional=False, visible=True):
+    def __init__(self, name, visible=True):
         self.name = name
         self.index = 0
         self.width = 0
-        self.optional = optional # If not optional, a column is never restored as invisible
         self.visible = visible
     
 
@@ -70,21 +69,20 @@ class Columns(object):
             return
         for col in self.coldata.itervalues():
             pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
-            coldata = self.app.get_default(pref_name)
-            if coldata:
-                col.index = coldata.get('index', 0)
-                col.width = coldata.get('width', 0)
-                if col.optional:
-                    col.visible = coldata.get('visible', True)
+            coldata = self.app.get_default(pref_name, fallback_value={})
+            if 'index' in coldata:
+                col.index = coldata['index']
+            if 'width' in coldata:
+                col.width = coldata['width']
+            if 'visible' in coldata:
+                col.visible = coldata['visible']
     
     def save_columns(self):
         if not (self.savename and self.coldata):
             return
         for col in self.coldata.itervalues():
             pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
-            coldata = {'index': col.index, 'width': col.width}
-            if col.optional:
-                coldata['visible'] = col.visible
+            coldata = {'index': col.index, 'width': col.width, 'visible': col.visible}
             self.app.set_default(pref_name, coldata)
     
     def set_column_order(self, colnames):

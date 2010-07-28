@@ -201,16 +201,23 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QCheckBox" name="accGraphCheckBox">
-        <property name="text">
-         <string>Graph</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
        <widget class="QCheckBox" name="accReconciliationDateCheckBox">
         <property name="text">
          <string>Reconciliation Date</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="accDebitCreditCheckBox">
+        <property name="text">
+         <string>Debit/Credit</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="accGraphCheckBox">
+        <property name="text">
+         <string>Graph</string>
         </property>
        </widget>
       </item>

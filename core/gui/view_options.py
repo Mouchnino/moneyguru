@@ -51,3 +51,17 @@ class ViewOptions(DocumentGUIObject):
     schedule_table_description = column_prop('scview', 'sctable', 'description')
     schedule_table_payee = column_prop('scview', 'sctable', 'payee')
     schedule_table_checkno = column_prop('scview', 'sctable', 'checkno')
+    
+    @property
+    def entry_table_debit_credit(self):
+        columns = self.mainwindow.aview.etable.columns
+        return columns.column_is_visible('credit') and columns.column_is_visible('debit')
+    
+    @entry_table_debit_credit.setter
+    def entry_table_debit_credit(self, value):
+        columns = self.mainwindow.aview.etable.columns
+        columns.set_column_visible('increase', not value)
+        columns.set_column_visible('decrease', not value)
+        columns.set_column_visible('debit', value)
+        columns.set_column_visible('credit', value)
+    

@@ -201,6 +201,29 @@ def test_change_transfer(app):
     app.etable.save_edits()
 
 @with_app(app_one_entry)
+def test_debit_credit_columns(app):
+    # when enabling the credit/debit columns option, increase/decrease columns are replaced with
+    # credit/debit columns
+    app.vopts.entry_table_debit_credit = True
+    assert app.etable.columns.column_is_visible('debit')
+    assert app.etable.columns.column_is_visible('credit')
+    assert not app.etable.columns.column_is_visible('increase')
+    assert not app.etable.columns.column_is_visible('decrease')
+    eq_(app.etable[0].credit, '42.00')
+    eq_(app.etable[0].debit, '')
+    # credit/debit in total row works too
+    eq_(app.etable.footer.credit, '42.00')
+
+@with_app(app_one_entry)
+def test_debit_credit_columns_edit(app):
+    # editing a debit/credit columns work
+    app.vopts.entry_table_debit_credit = True
+    app.etable[0].debit = '43'
+    app.etable.save_edits()
+    app.vopts.entry_table_debit_credit = False
+    eq_(app.etable[0].increase, '43.00')
+
+@with_app(app_one_entry)
 def test_delete_when_entry_selected(app):
     # Before deleting an entry, make sure the entry table is not in edition mode.
     app.etable.delete()

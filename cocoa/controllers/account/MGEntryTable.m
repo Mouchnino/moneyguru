@@ -40,6 +40,8 @@ http://www.hardcoded.net/licenses/hs_license
         {@"transfer", @"Transfer", 140, 80, 0, YES, [MGTextFieldCell class]},
         {@"increase", @"Increase", 80, 80, 0, YES, nil},
         {@"decrease", @"Decrease", 80, 80, 0, YES, nil},
+        {@"debit", @"Debit", 80, 80, 0, YES, nil},
+        {@"credit", @"Credit", 80, 80, 0, YES, nil},
         {@"balance", @"Balance", 90, 90, 0, YES, nil},
         nil
     };
@@ -52,6 +54,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[c headerCell] setAlignment:NSRightTextAlignment];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     c = [[self tableView] tableColumnWithIdentifier:@"decrease"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self tableView] tableColumnWithIdentifier:@"debit"];
+    [[c headerCell] setAlignment:NSRightTextAlignment];
+    [[c dataCell] setAlignment:NSRightTextAlignment];
+    c = [[self tableView] tableColumnWithIdentifier:@"credit"];
     [[c headerCell] setAlignment:NSRightTextAlignment];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     c = [[self tableView] tableColumnWithIdentifier:@"balance"];

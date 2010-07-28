@@ -22,13 +22,15 @@ class EntryTable(TransactionTableBase):
     COLUMNS = [
         Column('status'),
         Column('date'),
-        Column('reconciliation_date', optional=True, visible=False),
-        Column('checkno', optional=True, visible=False),
-        Column('description', optional=True),
-        Column('payee', optional=True, visible=False),
+        Column('reconciliation_date', visible=False),
+        Column('checkno', visible=False),
+        Column('description'),
+        Column('payee', visible=False),
         Column('transfer'),
         Column('increase'),
         Column('decrease'),
+        Column('debit', visible=False),
+        Column('credit', visible=False),
         Column('balance'),
     ]
     INVALIDATING_MESSAGES = TransactionTableBase.INVALIDATING_MESSAGES | set(['shown_account_changed'])
@@ -70,15 +72,15 @@ class EntryTable(TransactionTableBase):
                 balance = prev_entry.balance
                 rbalance = prev_entry.reconciled_balance
                 self.header = PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
-        total_increase = 0
-        total_decrease = 0
+        total_debit = 0
+        total_credit = 0
         for entry in self.parent_view.visible_entries:
             row = EntryTableRow(self, entry, account)
             self.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)
-            total_increase += convert(row._increase)
-            total_decrease += convert(row._decrease)
-        self.footer = TotalRow(self, date_range.end, total_increase, total_decrease)
+            total_debit += convert(row._debit)
+            total_credit += convert(row._credit)
+        self.footer = TotalRow(self, date_range.end, total_debit, total_credit)
         balance_visible = account.is_balance_sheet_account()
         self.columns.set_column_visible('balance', balance_visible)
     
@@ -291,6 +293,14 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         return self.table.document.app.format_amount(self._decrease, blank_zero=True)
     
     @property
+    def debit(self):
+        return self.table.document.app.format_amount(self._debit, blank_zero=True)
+    
+    @property
+    def credit(self):
+        return self.table.document.app.format_amount(self._credit, blank_zero=True)
+    
+    @property
     def balance(self):
         account_currency = self.table.account.currency
         return self.table.document.app.format_amount(self._the_balance(), zero_currency=account_currency)
@@ -351,6 +361,15 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
                 continue
             yield EntryTableRow(self.table, entry, self.account)
     
+    def _set_amount_property(self, propname, stramount):
+        try:
+            currency = self.table.mainwindow.shown_account.currency
+            parsed = self.table.document.app.parse_amount(stramount, default_currency=currency)
+        except ValueError:
+            return
+        if parsed != getattr(self, propname):
+            setattr(self, propname, parsed)
+    
     def can_edit(self):
         return not self.is_budget
     
@@ -410,25 +429,19 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     
     @BaseEntryTableRow.increase.setter
     def increase(self, value):
-        try:
-            currency = self.table.mainwindow.shown_account.currency
-            increase = self.table.document.app.parse_amount(value, default_currency=currency)
-        except ValueError:
-            return
-        if increase == self._increase:
-            return
-        self._increase = increase
+        self._set_amount_property('_increase', value)
     
     @BaseEntryTableRow.decrease.setter
     def decrease(self, value):
-        try:
-            currency = self.table.mainwindow.shown_account.currency
-            decrease = self.table.document.app.parse_amount(value, default_currency=currency)
-        except ValueError:
-            return
-        if decrease == self._decrease:
-            return
-        self._decrease = decrease
+        self._set_amount_property('_decrease', value)
+    
+    @BaseEntryTableRow.debit.setter
+    def debit(self, value):
+        self._set_amount_property('_debit', value)
+    
+    @BaseEntryTableRow.credit.setter
+    def credit(self, value):
+        self._set_amount_property('_credit', value)
     
     @property
     def can_edit_transfer(self):
@@ -449,15 +462,17 @@ class PreviousBalanceRow(BaseEntryTableRow):
     
 
 class TotalRow(BaseEntryTableRow):
-    def __init__(self, table, date, total_increase, total_decrease):
+    def __init__(self, table, date, total_debit, total_credit):
         super(TotalRow, self).__init__(table)
         self._date = date
         self._description = tr('TOTAL')
         # don't touch _increase and _decrease, they trigger editing.
-        self._increase_fmt = table.document.app.format_amount(total_increase, blank_zero=True)
-        self._decrease_fmt = table.document.app.format_amount(total_decrease, blank_zero=True)
-        delta = total_increase - total_decrease
+        self._debit_fmt = table.document.app.format_amount(total_debit, blank_zero=True)
+        self._credit_fmt = table.document.app.format_amount(total_credit, blank_zero=True)
+        delta = total_debit - total_credit
         if delta:
+            if self.table.account.is_credit_account():
+                delta *= -1
             positive = delta > 0
             delta_fmt = table.document.app.format_amount(abs(delta))
             delta_fmt = ('+' if positive else '-') + delta_fmt
@@ -468,11 +483,19 @@ class TotalRow(BaseEntryTableRow):
     
     @property
     def increase(self):
-        return self._increase_fmt
+        return self._credit_fmt if self.table.account.is_credit_account() else self._debit_fmt
     
     @property
     def decrease(self):
-        return self._decrease_fmt
+        return self._debit_fmt if self.table.account.is_credit_account() else self._credit_fmt
+    
+    @property
+    def debit(self):
+        return self._debit_fmt
+    
+    @property
+    def credit(self):
+        return self._credit_fmt
     
     @property
     def balance(self):

@@ -18,12 +18,12 @@ class BalanceSheet(Report):
     SAVENAME = 'BalanceSheet'
     COLUMNS = [
         Column('name'),
-        Column('account_number', optional=True, visible=False),
+        Column('account_number', visible=False),
         Column('end'),
-        Column('delta', optional=True, visible=False),
-        Column('delta_perc', optional=True, visible=False),
-        Column('start', optional=True),
-        Column('budgeted', optional=True),
+        Column('delta', visible=False),
+        Column('delta_perc', visible=False),
+        Column('start'),
+        Column('budgeted'),
     ]
     
     def __init__(self, view, networth_view):

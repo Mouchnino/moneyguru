@@ -478,6 +478,28 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
+						<object class="NSButton" id="197912605">
+							<reference key="NSNextResponder" ref="45188462"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{150, 123}, {266, 18}}</string>
+							<reference key="NSSuperview" ref="45188462"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="465207099">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">131072</int>
+								<string key="NSContents">Debit/kredit</string>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="197912605"/>
+								<int key="NSButtonFlags">1211912703</int>
+								<int key="NSButtonFlags2">2</int>
+								<reference key="NSNormalImage" ref="329833725"/>
+								<reference key="NSAlternateImage" ref="141542944"/>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
 						<object class="NSButton" id="256661265">
 							<reference key="NSNextResponder" ref="45188462"/>
 							<int key="NSvFlags">268</int>
@@ -698,7 +720,7 @@
 						<object class="NSButton" id="304444806">
 							<reference key="NSNextResponder" ref="45188462"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{151, 123}, {265, 18}}</string>
+							<string key="NSFrame">{{151, 103}, {265, 18}}</string>
 							<reference key="NSSuperview" ref="45188462"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="262221300">
@@ -1138,6 +1160,22 @@
 					</object>
 					<int key="connectionID">145</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: py.entryTableDebitCredit</string>
+						<reference key="source" ref="197912605"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="197912605"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: py.entryTableDebitCredit</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">py.entryTableDebitCredit</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">149</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1210,6 +1248,7 @@
 							<reference ref="386946478"/>
 							<reference ref="732213890"/>
 							<reference ref="304444806"/>
+							<reference ref="197912605"/>
 						</object>
 						<reference key="parent" ref="937315869"/>
 					</object>
@@ -1638,6 +1677,20 @@
 						<reference key="object" ref="72795768"/>
 						<reference key="parent" ref="1019717434"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">146</int>
+						<reference key="object" ref="197912605"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="465207099"/>
+						</object>
+						<reference key="parent" ref="45188462"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">147</int>
+						<reference key="object" ref="465207099"/>
+						<reference key="parent" ref="197912605"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1652,6 +1705,8 @@
 					<string>103.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>12.IBPluginDependency</string>
+					<string>146.IBPluginDependency</string>
+					<string>147.IBPluginDependency</string>
 					<string>18.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
 					<string>20.IBPluginDependency</string>
@@ -1718,6 +1773,8 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1807,7 +1864,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">145</int>
+			<int key="maxID">149</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -645,6 +645,18 @@
         <source>To</source>
         <translation>nach</translation>
     </message>
+    <message>
+        <source>Memo</source>
+        <translation>Memo</translation>
+    </message>
+    <message>
+        <source>Debit</source>
+        <translation>Debit</translation>
+    </message>
+    <message>
+        <source>Credit</source>
+        <translation>Kredit</translation>
+    </message>
 </context>
 <context>
     <name>AccountPanel</name>
@@ -1581,6 +1593,10 @@
         <location filename="view_options_dialog.ui" line="213"/>
         <source>Reconciliation Date</source>
         <translation>Wertstellungsdatum</translation>
+    </message>
+    <message>
+        <source>Debit/Credit</source>
+        <translation>Debit/Kredit</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="223"/>

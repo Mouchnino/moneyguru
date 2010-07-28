@@ -22,9 +22,9 @@ class TransactionTable(TransactionTableBase):
     COLUMNS = [
         Column('status'),
         Column('date'),
-        Column('checkno', optional=True, visible=False),
-        Column('description', optional=True),
-        Column('payee', optional=True, visible=False),
+        Column('checkno', visible=False),
+        Column('description'),
+        Column('payee', visible=False),
         Column('from'),
         Column('to'),
         Column('amount'),

@@ -1664,6 +1664,14 @@ class PyViewOptions(PyGUIObject):
     def setEntryTableReconciliationDate_(self, value):
         self.py.entry_table_reconciliation_date = bool(value)
     
+    @signature('i@:')
+    def entryTableDebitCredit(self):
+        return self.py.entry_table_debit_credit
+    
+    @signature('v@:i')
+    def setEntryTableDebitCredit_(self, value):
+        self.py.entry_table_debit_credit = bool(value)
+    
     
     @signature('i@:')
     def scheduleTableDescription(self):
