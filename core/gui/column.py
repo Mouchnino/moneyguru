@@ -23,6 +23,8 @@ class Columns(object):
         self.table = table
         self.app = table.document.app
         self.savename = table.SAVENAME
+        # Set this view as soon as the GUI layer column instance is created
+        self.view = None
         # We use copy here for test isolation. If we don't, changing a column affects all tests.
         columns = map(copy.copy, table.COLUMNS)
         for i, column in enumerate(columns):
@@ -93,7 +95,7 @@ class Columns(object):
     
     def set_column_visible(self, colname, visible):
         self._set_colname_attr(colname, 'visible', visible)
-        self.table.view.set_column_visible(colname, visible)
+        self.view.set_column_visible(colname, visible)
     
     #--- Properties
     @property

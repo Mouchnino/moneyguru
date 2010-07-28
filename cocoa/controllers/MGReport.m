@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aOutlineView];
-    columns = [[MGColumns alloc] initWithPy:[self py] tableView:aOutlineView];
+    columns = [[MGColumns alloc] initWithPyParent:[self py] tableView:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
     return self;
 }
@@ -297,16 +297,5 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [super outlineViewSelectionDidChange:notification];
     toggleExcludedIsEnabled = YES;
-}
-
-/* Python --> Cocoa */
-- (void)setColumn:(NSString *)colname visible:(BOOL)visible
-{
-    NSTableColumn *col = [[self outlineView] tableColumnWithIdentifier:colname];
-    if (col == nil)
-        return;
-    if ([col isHidden] == !visible)
-        return;
-    [col setHidden:!visible];
 }
 @end

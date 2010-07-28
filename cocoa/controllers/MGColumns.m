@@ -8,13 +8,12 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "MGColumns.h"
 #import "Utils.h"
-#import "PyTableWithColumns.h"
+#import "MGTableView.h"
 
 @implementation MGColumns
-- (id)initWithPy:(id)aPy tableView:(NSTableView *)aTableView
+- (id)initWithPyParent:(id)aPyParent tableView:(NSTableView *)aTableView
 {
-    self = [super init];
-    py = [aPy retain];
+    self = [super initWithPyClassName:@"PyColumns" pyParent:(id)aPyParent];
     tableView = [aTableView retain];
     isRestoring = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
@@ -31,9 +30,13 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [py release];
     [tableView release];
     [super dealloc];
+}
+
+- (PyColumns *)py
+{
+    return (PyColumns *)py;
 }
 
 /*
@@ -89,7 +92,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)restoreColumns
 {
     isRestoring = YES;
-    NSArray *columnOrder = [py columnNamesInOrder];
+    NSArray *columnOrder = [[self py] columnNamesInOrder];
     for (NSInteger i=0; i<[columnOrder count]; i++) {
         NSString *colName = [columnOrder objectAtIndex:i];
         NSInteger index = [tableView columnWithIdentifier:colName];
@@ -98,11 +101,11 @@ http://www.hardcoded.net/licenses/hs_license
         }
     }
     for (NSTableColumn *c in [tableView tableColumns]) {
-        NSInteger width = [py columnWidth:[c identifier]];
+        NSInteger width = [[self py] columnWidth:[c identifier]];
         if (width > 0) {
             [c setWidth:width];
         }
-        BOOL isVisible = [py columnIsVisible:[c identifier]];
+        BOOL isVisible = [[self py] columnIsVisible:[c identifier]];
         [c setHidden:!isVisible];
     }
     isRestoring = NO;
@@ -120,7 +123,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSInteger index = n2i([[notification userInfo] objectForKey:@"NSNewColumn"]);
     NSTableColumn *c = [[tableView tableColumns] objectAtIndex:index];
     NSString *colName = [c identifier];
-    [py moveColumn:colName toIndex:index];
+    [[self py] moveColumn:colName toIndex:index];
 }
 
 - (void)columnResized:(NSNotification *)notification
@@ -129,6 +132,20 @@ http://www.hardcoded.net/licenses/hs_license
         return;
     }
     NSTableColumn *c = [[notification userInfo] objectForKey:@"NSTableColumn"];
-    [py resizeColumn:[c identifier] toWidth:[c width]];
+    [[self py] resizeColumn:[c identifier] toWidth:[c width]];
+}
+
+/* Python --> Cocoa */
+- (void)setColumn:(NSString *)colname visible:(BOOL)visible
+{
+    NSTableColumn *col = [tableView tableColumnWithIdentifier:colname];
+    if (col == nil)
+        return;
+    if ([col isHidden] == !visible)
+        return;
+    if ([tableView respondsToSelector:@selector(stopEditing)]) {
+        [(id)tableView stopEditing];
+    }
+    [col setHidden:!visible];
 }
 @end

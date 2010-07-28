@@ -45,6 +45,7 @@ class TableDelegate(ItemDelegate):
 class Table(TableBase):
     def __init__(self, model, view):
         TableBase.__init__(self, model, view)
+        self.model.columns.view = self
         self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
         self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)

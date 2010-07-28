@@ -7,6 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "HSGUIController.h"
+#import "PyColumns.h"
 
 /*
     This structure is to define constants describing table columns (it's easier to maintain in code
@@ -22,13 +24,14 @@ typedef struct {
     Class cellClass;
 } MGColumnDef;
 
-@interface MGColumns : NSObject
+@interface MGColumns : HSGUIController
 {
-    id py; /* We can't have a specific class here because we support both PyTable and PyOutline */
     NSTableView *tableView;
     BOOL isRestoring;
 }
-- (id)initWithPy:(id)aPy tableView:(NSTableView *)aTableView;
+- (id)initWithPyParent:(id)aPyParent tableView:(NSTableView *)aTableView;
+- (PyColumns *)py;
 - (void)initializeColumns:(MGColumnDef *)columns;
 - (void)restoreColumns;
+- (void)setColumn:(NSString *)colname visible:(BOOL)visible;
 @end

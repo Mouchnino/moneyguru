@@ -7,8 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTableWithColumns.h"
+#import "PyTable.h"
 
-@interface PyBudgetTable : PyTableWithColumns {}
+@interface PyBudgetTable : PyTable {}
 - (void)editItem;
 @end

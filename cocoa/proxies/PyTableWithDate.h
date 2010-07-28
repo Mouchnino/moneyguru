@@ -7,9 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTableWithColumns.h"
+#import "PyTable.h"
 
-@interface PyTableWithDate : PyTableWithColumns {}
+@interface PyTableWithDate : PyTable {}
 
 - (BOOL)isEditedRowInTheFuture;
 - (BOOL)isEditedRowInThePast;

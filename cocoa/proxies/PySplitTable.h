@@ -7,9 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTableWithColumns.h"
+#import "PyTable.h"
 #import "PyTransactionPanel.h"
 
-@interface PySplitTable : PyTableWithColumns {}
+@interface PySplitTable : PyTable {}
 - (void)moveSplitFromRow:(NSInteger)fromRow toRow:(NSInteger)toRow;
 @end

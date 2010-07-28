@@ -283,31 +283,41 @@ class PyGUIContainer(PyListener):
 class PyWindowController(PyListener):
     pass
 
-class PyTableWithColumns(PyTable):
+# PyColumns is special because when it is instantiated, the table it belongs to, as well as the
+# columns in it, is already instantiated. We thus use a trick with py_class to just fetch the
+# columns instead of creating a new instance like with all other Py-classes
+class PyColumns(PyGUIObject):
+    @staticmethod
+    def py_class(view, parent):
+        # view is self, and parent is the table instance.
+        result = parent.columns
+        result.view = view
+        return result
+    
     def columnNamesInOrder(self):
-        return self.py.columns.colnames
+        return self.py.colnames
     
     @signature('i@:@')
     def columnIsVisible_(self, colname):
-        return self.py.columns.column_is_visible(colname)
+        return self.py.column_is_visible(colname)
     
     @signature('i@:@')
     def columnWidth_(self, colname):
-        return self.py.columns.column_width(colname)
+        return self.py.column_width(colname)
     
     @signature('v@:@i')
     def moveColumn_toIndex_(self, colname, index):
-        self.py.columns.move_column(colname, index)
+        self.py.move_column(colname, index)
     
     @signature('v@:@i')
     def resizeColumn_toWidth_(self, colname, newwidth):
-        self.py.columns.resize_column(colname, newwidth)
+        self.py.resize_column(colname, newwidth)
     
     def set_column_visible(self, colname, visible):
         self.cocoa.setColumn_visible_(colname, visible)
     
 
-class PyTableWithDate(PyTableWithColumns):
+class PyTableWithDate(PyTable):
     @signature('c@:')
     def isEditedRowInTheFuture(self):
         if self.py.edited is None:
@@ -399,29 +409,6 @@ class PyReport(PyOutline):
     
     def expandedPaths(self):
         return self.py.expanded_paths
-    
-    #--- Columns
-    def columnNamesInOrder(self):
-        return self.py.columns.colnames
-    
-    @signature('i@:@')
-    def columnIsVisible_(self, colname):
-        return self.py.columns.column_is_visible(colname)
-    
-    @signature('i@:@')
-    def columnWidth_(self, colname):
-        return self.py.columns.column_width(colname)
-    
-    @signature('v@:@i')
-    def moveColumn_toIndex_(self, colname, index):
-        self.py.columns.move_column(colname, index)
-    
-    @signature('v@:@i')
-    def resizeColumn_toWidth_(self, colname, newwidth):
-        self.py.columns.resize_column(colname, newwidth)
-    
-    def set_column_visible(self, colname, visible):
-        self.cocoa.setColumn_visible_(colname, visible)
     
 
 class PyPanel(PyGUIObject):
@@ -556,14 +543,14 @@ class PyTransactionTable(PyTableWithDate):
         self.py.show_to_account()
     
 
-class PyScheduleTable(PyTableWithColumns):
+class PyScheduleTable(PyTable):
     py_class = ScheduleTable
     
     def editItem(self):
         self.py.edit()
     
 
-class PyBudgetTable(PyTableWithColumns):
+class PyBudgetTable(PyTable):
     py_class = BudgetTable
     
     def editItem(self):
@@ -663,7 +650,7 @@ class PyAccountPanel(PyPanel):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
 
-class PySplitTable(PyTableWithColumns):
+class PySplitTable(PyTable):
     py_class = SplitTable
     # pyparent is a PyTransactionPanel
     
@@ -1338,7 +1325,7 @@ class PyCSVImportOptions(PyWindowController):
         self.cocoa.showMessage_(msg)
     
 
-class PyImportTable(PyTableWithColumns):
+class PyImportTable(PyTable):
     py_class = ImportTable
     
     # pyparent is a PyImportWindow

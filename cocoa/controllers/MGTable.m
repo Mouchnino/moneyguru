@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
-    columns = [[MGColumns alloc] initWithPy:[self py] tableView:aTableView];
+    columns = [[MGColumns alloc] initWithPyParent:[self py] tableView:aTableView];
     return self;
 }
 
@@ -30,9 +30,9 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Public */
-- (PyTableWithColumns *)py
+- (PyTable *)py
 {
-    return (PyTableWithColumns *)py;
+    return (PyTable *)py;
 }
 
 - (MGTableView *)tableView
@@ -43,18 +43,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (MGColumns *)columns
 {
     return columns;
-}
-
-/* Python --> Cocoa */
-- (void)setColumn:(NSString *)colname visible:(BOOL)visible
-{
-    NSTableColumn *col = [[self tableView] tableColumnWithIdentifier:colname];
-    if (col == nil)
-        return;
-    if ([col isHidden] == !visible)
-        return;
-    // Before changing the columns, we must stop edition if it is ongoing
-    [[self tableView] stopEditing];
-    [col setHidden:!visible];
 }
 @end

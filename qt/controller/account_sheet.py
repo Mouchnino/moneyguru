@@ -99,6 +99,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.app = doc.app
         self.view = view
         self.model = model
+        self.model.columns.view = self
         self.view.setModel(self)
         self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)

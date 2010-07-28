@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyTable.h"
 
-@interface PyTableWithColumns : PyTable {}
+@interface PyColumns : PyTable {}
 - (NSArray *)columnNamesInOrder;
 - (NSInteger)columnWidth:(NSString *)colName;
 - (BOOL)columnIsVisible:(NSString *)colName;

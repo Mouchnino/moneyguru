@@ -223,7 +223,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)refresh
 {
-    [self setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
+    [columns setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
     [super refresh];
 }
 
