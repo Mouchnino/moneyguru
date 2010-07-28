@@ -79,6 +79,8 @@ class EntryTable(TransactionTableBase):
             total_increase += convert(row._increase)
             total_decrease += convert(row._decrease)
         self.footer = TotalRow(self, date_range.end, total_increase, total_decrease)
+        balance_visible = account.is_balance_sheet_account()
+        self.columns.set_column_visible('balance', balance_visible)
     
     def _restore_selection(self, previous_selection):
         if self.mainwindow.explicitly_selected_transactions:
@@ -132,10 +134,6 @@ class EntryTable(TransactionTableBase):
             last_delta = delta
         else:
             self.selected_index = len(self) - 1
-    
-    def should_show_balance_column(self):
-        account = self.mainwindow.shown_account
-        return account is not None and self.mainwindow.shown_account.is_balance_sheet_account()
     
     def show_transfer_account(self):
         if not self.selected_entries:

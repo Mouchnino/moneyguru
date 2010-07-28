@@ -11,11 +11,12 @@ import os.path as op
 import sys
 from datetime import date
 
-from hsutil.testutil import eq_, assert_raises
+from py.test import config
 
 from hsutil import io
 from hscommon.currency import EUR
-from hsutil.testutil import Patcher, with_tmpdir
+from hsutil.testutil import Patcher
+from hsutil.testutil import eq_, assert_raises
 
 from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app
 from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
@@ -101,11 +102,10 @@ def test_graph_yaxis():
     eq_(list(app.nwgraph.ytickmarks), range(0, 101, 20))
     eq_(list(app.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
 
-@with_tmpdir
-def test_load_inexistant(tmppath):
+def test_load_inexistant():
     # Raise FileFormatError when filename doesn't exist
     app = TestApp()
-    filename = unicode(tmppath + 'does_not_exist.xml')
+    filename = unicode(config.mktemp(u'foo').join('does_not_exist.xml'))
     assert_raises(FileFormatError, app.doc.load_from_xml, filename)
 
 def test_load_invalid():
@@ -223,17 +223,6 @@ class OneEmptyAccountRangeOnOctober2007(TestCase):
         assert not self.document.is_dirty()
     
 
-class OneGroup(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_group()
-    
-    def test_should_show_balance_column(self):
-        # When a group is selected, False is returned (not None).
-        assert not self.etable.should_show_balance_column()
-        assert isinstance(self.etable.should_show_balance_column(), bool)
-    
-
 class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
@@ -335,6 +324,7 @@ class OneEntryYearRange2007(TestCase):
         self.etable.save_edits()
         # Make sure that the values really made it down in the model by using a spanking new gui
         etable = EntryTable(self.etable_gui, self.aview)
+        etable.columns.view = self.etable_gui
         etable.connect()
         etable.show()
         eq_(getattr(etable[0], column), value)

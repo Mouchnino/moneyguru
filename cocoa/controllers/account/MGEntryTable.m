@@ -218,13 +218,4 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [[self py] showTransferAccount];
 }
-
-/* Callbacks for python */
-
-- (void)refresh
-{
-    [columns setColumn:@"balance" visible:[[self py] shouldShowBalanceColumn]];
-    [super refresh];
-}
-
 @end

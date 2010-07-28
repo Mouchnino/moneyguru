@@ -93,10 +93,3 @@ class EntryTable(TableWithTransactions):
             if row.can_reconcile() and row.reconciled:
                 row.toggle_reconciled()
     
-    #--- model --> view
-    def refresh(self):
-        TableWithTransactions.refresh(self)
-        balanceColumn = self.ATTR2COLUMN['balance']
-        shouldShow = self.model.should_show_balance_column()
-        self._headerView.setSectionHidden(balanceColumn.index, not shouldShow)
-    

@@ -242,7 +242,7 @@ def test_show_transfer_account_entry_with_transfer_selected(app):
     app.etable.show_transfer_account()
     app.check_current_pane(PaneType.Account, account_name='second')
     # Previously, this was based on selected_account rather than shown_account
-    assert not app.etable.should_show_balance_column()
+    assert not app.etable.columns.column_is_visible('balance')
 
 @with_app(app_one_entry)
 def test_show_transfer_account_then_add_entry(app):
@@ -627,7 +627,7 @@ def test_amount_of_selected_entry():
 
 def test_should_show_balance_column():
     def check(app, expected):
-        eq_(app.etable.should_show_balance_column(), expected)
+        eq_(app.etable.columns.column_is_visible('balance'), expected)
     
     # When a liability account is selected, we show the balance column.
     app = app_liability_account()

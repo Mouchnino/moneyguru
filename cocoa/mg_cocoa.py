@@ -506,10 +506,6 @@ class PyEntryTable(PyTableWithDate):
     def moveRows_to_(self, rows, position):
         self.py.move(list(rows), position)
 
-    @signature('c@:')
-    def shouldShowBalanceColumn(self):
-        return self.py.should_show_balance_column()
-    
     def showTransferAccount(self):
         self.py.show_transfer_account()
     
