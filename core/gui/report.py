@@ -30,7 +30,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         tree.Tree.__init__(self)
-        self.columns = Columns(self.document.app, self.SAVENAME, self.COLUMNS)
+        self.columns = Columns(self)
         self.edited = None
         
         prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
@@ -248,10 +248,6 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             # we use _name because we don't want to change self.edited
             node._name = node.account.name if node.is_account else node.group.name
             self.mainwindow.show_message(msg)
-    
-    def set_column_visible(self, colname, visible):
-        self.columns.set_column_visible(colname, visible)
-        self.view.set_column_visible(colname, visible)
     
     def show_selected_account(self):
         self.mainwindow.shown_account = self.selected_account

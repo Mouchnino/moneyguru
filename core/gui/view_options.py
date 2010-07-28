@@ -18,7 +18,7 @@ def column_prop(viewname, tablename, colname):
     def fset(self, visible):
         view = getattr(self.mainwindow, viewname)
         table = getattr(view, tablename)
-        return table.set_column_visible(colname, visible)
+        return table.columns.set_column_visible(colname, visible)
     
     return property(fget, fset)
 

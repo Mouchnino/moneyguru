@@ -19,11 +19,12 @@ class Column(object):
     
 
 class Columns(object):
-    def __init__(self, app, savename, columns):
-        self.app = app
-        self.savename = savename
+    def __init__(self, table):
+        self.table = table
+        self.app = table.document.app
+        self.savename = table.SAVENAME
         # We use copy here for test isolation. If we don't, changing a column affects all tests.
-        columns = map(copy.copy, columns)
+        columns = map(copy.copy, table.COLUMNS)
         for i, column in enumerate(columns):
             column.index = i
         self.coldata = dict((col.name, col) for col in columns)
@@ -92,6 +93,7 @@ class Columns(object):
     
     def set_column_visible(self, colname, visible):
         self._set_colname_attr(colname, 'visible', visible)
+        self.table.view.set_column_visible(colname, visible)
     
     #--- Properties
     @property

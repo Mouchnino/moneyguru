@@ -303,10 +303,6 @@ class PyTableWithColumns(PyTable):
     def resizeColumn_toWidth_(self, colname, newwidth):
         self.py.columns.resize_column(colname, newwidth)
     
-    @signature('v@:@i')
-    def setColumn_visible_(self, colname, visible):
-        self.py.columns.set_column_visible(colname, visible)
-    
     def set_column_visible(self, colname, visible):
         self.cocoa.setColumn_visible_(colname, visible)
     
@@ -423,10 +419,6 @@ class PyReport(PyOutline):
     @signature('v@:@i')
     def resizeColumn_toWidth_(self, colname, newwidth):
         self.py.columns.resize_column(colname, newwidth)
-    
-    @signature('v@:@i')
-    def setColumn_visible_(self, colname, visible):
-        self.py.columns.set_column_visible(colname, visible)
     
     def set_column_visible(self, colname, visible):
         self.cocoa.setColumn_visible_(colname, visible)
