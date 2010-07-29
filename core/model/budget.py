@@ -106,5 +106,5 @@ class BudgetList(list):
     
     def normal_amount_for_account(self, account, date_range, currency=None):
         budgeted_amount = self.amount_for_account(account, date_range, currency)
-        return account._normalize_amount(budgeted_amount)
+        return account.normalize_amount(budgeted_amount)
     

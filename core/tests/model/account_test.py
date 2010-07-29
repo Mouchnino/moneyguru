@@ -5,18 +5,16 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import xmlrpclib
 from datetime import date
 
 from hscommon.currency import USD, CAD
 
 from ..base import TestCase
-from ...model import currency
 from ...model.account import Account, Group, AccountList, AccountType
 from ...model.amount import Amount
 from ...model.date import MonthRange
 from ...model.oven import Oven
-from ...model.transaction import Transaction, Entry
+from ...model.transaction import Transaction
 from ...model.transaction_list import TransactionList
 
 class AccountComparison(TestCase):
@@ -76,16 +74,16 @@ class OneAccount(TestCase):
         oven.cook(date.min, date.max)
     
     def test_balance(self):
-        self.assertEqual(self.account.balance(date(2007, 12, 31)), Amount(20, USD))
+        self.assertEqual(self.account.entries.balance(date(2007, 12, 31)), Amount(20, USD))
         
         # The balance is converted using the rate on the day the balance is
         # requested.
-        self.assertEqual(self.account.balance(date(2007, 12, 31), currency=CAD), Amount(20 * 1.1, CAD))
+        self.assertEqual(self.account.entries.balance(date(2007, 12, 31), currency=CAD), Amount(20 * 1.1, CAD))
 
     def test_cash_flow(self):
         range = MonthRange(date(2008, 1, 1))
-        self.assertEqual(self.account.cash_flow(range), Amount(252, USD))
+        self.assertEqual(self.account.entries.cash_flow(range), Amount(252, USD))
 
         # Each entry is converted using the entry's day rate.
-        self.assertEqual(self.account.cash_flow(range, CAD), Amount(201.40, CAD))
+        self.assertEqual(self.account.entries.cash_flow(range, CAD), Amount(201.40, CAD))
 

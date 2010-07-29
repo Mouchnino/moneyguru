@@ -29,10 +29,10 @@ class IncomeStatement(Report):
         account = node.account
         date_range = self.document.date_range
         currency = self.app.default_currency
-        cash_flow = account.normal_cash_flow(date_range)
-        cash_flow_native = account.normal_cash_flow(date_range, currency)
-        last_cash_flow = account.normal_cash_flow(date_range.prev())
-        last_cash_flow_native = account.normal_cash_flow(date_range.prev(), currency)
+        cash_flow = account.entries.normal_cash_flow(date_range)
+        cash_flow_native = account.entries.normal_cash_flow(date_range, currency)
+        last_cash_flow = account.entries.normal_cash_flow(date_range.prev())
+        last_cash_flow_native = account.entries.normal_cash_flow(date_range.prev(), currency)
         remaining = self.document.budgets.normal_amount_for_account(account, date_range)
         remaining_native = self.document.budgets.normal_amount_for_account(account, date_range, currency)
         delta = cash_flow - last_cash_flow

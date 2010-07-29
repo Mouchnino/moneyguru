@@ -14,9 +14,9 @@ from operator import attrgetter
 from hsutil.misc import flatten
 
 from .amount import convert_amount
+from .entry import Entry, EntryList
 from .budget import Budget, BudgetSpawn
 from .date import inc_month
-from .transaction import Entry
 
 class Oven(object):
     """The Oven takes "raw data" from accounts and transactions and "cooks" calculated data out of
@@ -52,17 +52,18 @@ class Oven(object):
         account = split.account
         if account is None:
             return
+        entries = account.entries
         amount = split.amount
         converted_amount = convert_amount(amount, account.currency, split.transaction.date)
-        balance = account.balance()
-        reconciled_balance = account.balance_of_reconciled()
-        balance_with_budget = account.balance_with_budget()
+        balance = entries.balance()
+        reconciled_balance = entries.balance_of_reconciled()
+        balance_with_budget = entries.balance_with_budget()
         balance_with_budget += converted_amount
         if not isinstance(split.transaction, BudgetSpawn):
             balance += converted_amount
             if split.reconciled:
                 reconciled_balance += split.amount
-        account.add_entry(Entry(split, amount, balance, reconciled_balance, balance_with_budget))
+        entries.add_entry(Entry(split, amount, balance, reconciled_balance, balance_with_budget))
     
     def _cook_transaction(self, txn):
         for split in txn.splits:
@@ -80,7 +81,7 @@ class Oven(object):
                     If we don't, we might end up in an infinite loop.
         """
         for account in self._accounts:
-            account.clear(from_date)
+            account.entries.clear(from_date)
         if from_date is None:
             self.transactions = []
         else:

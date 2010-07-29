@@ -10,8 +10,9 @@ import datetime
 from operator import attrgetter
 
 from ..model.amount import convert_amount
+from ..model.entry import Entry
 from ..model.recurrence import Spawn
-from ..model.transaction import Transaction, Entry
+from ..model.transaction import Transaction
 from ..trans import tr
 from .column import Column
 from .table import RowWithDebitAndCredit, RowWithDate, rowattr
@@ -99,7 +100,7 @@ class EntryTable(TransactionTableBase):
         balance = 0
         reconciled_balance = 0
         balance_with_budget = 0
-        previous_entry = account.last_entry(date=date)
+        previous_entry = account.entries.last_entry(date=date)
         if previous_entry:
             balance = previous_entry.balance
             reconciled_balance = previous_entry.reconciled_balance

@@ -529,7 +529,7 @@ class Document(Repeater):
             return 0
         budgeted_amount = sum(-b.amount_for_date_range(date_range, currency=currency) for b in budgets)
         if target is not None:
-            budgeted_amount = target._normalize_amount(budgeted_amount)
+            budgeted_amount = target.normalize_amount(budgeted_amount)
         return budgeted_amount
     
     def change_budget(self, original, new):

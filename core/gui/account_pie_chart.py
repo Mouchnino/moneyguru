@@ -65,7 +65,7 @@ class _BalancePieChart(_AccountPieChart):
         date = self.document.date_range.end
         currency = self.app.default_currency
         def get_value(account):
-            balance = account.normal_balance(date=date, currency=currency)
+            balance = account.entries.normal_balance(date=date, currency=currency)
             budget_date_range = DateRange(date.min, self.document.date_range.end)
             budgeted = self.document.budgeted_amount_for_target(account, budget_date_range)
             budgeted = convert_amount(budgeted, currency, date)
@@ -90,7 +90,7 @@ class _CashFlowPieChart(_AccountPieChart):
         date_range = self.document.date_range
         currency = self.app.default_currency
         def get_value(account):
-            cash_flow = account.normal_cash_flow(date_range, currency=currency)
+            cash_flow = account.entries.normal_cash_flow(date_range, currency=currency)
             budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)
             return cash_flow + budgeted
         

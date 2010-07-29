@@ -24,7 +24,7 @@ class AccountFlowGraph(BarGraph):
         self.document.oven.continue_cooking(date_range.end) # it's possible that the overflow is not cooked
         account = self.mainwindow.shown_account
         currency = self._currency()
-        cash_flow = account.normal_cash_flow(date_range, currency=currency)
+        cash_flow = account.entries.normal_cash_flow(date_range, currency=currency)
         budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)
         return cash_flow + budgeted
     

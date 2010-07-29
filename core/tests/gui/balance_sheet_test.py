@@ -491,7 +491,6 @@ class MultipleCurrencies(TestCase):
         self.add_entry('1/1/2007', 'USD entry', increase='50.00')
         self.add_entry('1/1/2008', 'USD entry', increase='80.00')
         self.add_entry('31/1/2008', 'USD entry', increase='20.00')
-        eq_(self.mainwindow.shown_account.balance(), Amount(150, USD))
         self.add_account('CAD account', currency=CAD, group_name='Group')
         self.mainwindow.show_account()
         self.add_entry('1/1/2008', 'USD entry', increase='100.00')
