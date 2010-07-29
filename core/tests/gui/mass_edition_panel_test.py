@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from hsutil.testutil import eq_, assert_raises
-from hsutil.testutil import with_tmpdir, patch_today
+from hsutil.testutil import patch_today
 
 from ..base import TestApp, with_app
 from ...exception import OperationAborted
@@ -126,11 +126,9 @@ def test_change_field_to_none():
     eq_(app.mepanel.to, '')
     eq_(app.mepanel.amount, '0.00')
 
-@with_tmpdir
-def test_change_and_save(tmppath):
+def test_change_and_save():
     # save() performs mass edits on selected transactions.
     app = app_two_transactions_different_value()
-    app.tmppath = tmppath
     app.save_file()
     app.mepanel.date = '08/07/2008'
     app.mepanel.description = 'description3'

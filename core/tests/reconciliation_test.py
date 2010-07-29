@@ -6,146 +6,142 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.testutil import eq_
+from hsutil.testutil import Patcher, eq_
 
-from .base import TestCase, CommonSetup as CommonSetupBase, TestApp
+from .base import TestApp, with_app, compare_apps
 from ..model.account import AccountType
 
-class CommonSetup(CommonSetupBase):
-    def setup_three_entries_reconciliation_mode(self):
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry('1/1/2008', 'one')
-        self.add_entry('20/1/2008', 'two')
-        self.add_entry('31/1/2008', 'three')
-        self.aview.toggle_reconciliation_mode()
-    
+#--- Pristine
+@with_app(TestApp)
+def test_reconciliation_mode(app):
+    #Toggling reconciliation mode on and off
+    app.clear_gui_calls()
+    assert not app.aview.reconciliation_mode
+    app.aview.toggle_reconciliation_mode()
+    app.check_gui_calls(app.aview_gui, ['refresh_reconciliation_button'])
+    assert app.aview.reconciliation_mode
+    app.aview.toggle_reconciliation_mode()
+    assert not app.aview.reconciliation_mode
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.clear_gui_calls()
-    
-    def test_reconciliation_mode(self):
-        #Toggling reconciliation mode on and off
-        assert not self.aview.reconciliation_mode
-        self.aview.toggle_reconciliation_mode()
-        self.check_gui_calls(self.aview_gui, ['refresh_reconciliation_button'])
-        assert self.aview.reconciliation_mode
-        self.aview.toggle_reconciliation_mode()
-        assert not self.aview.reconciliation_mode
-    
+#--- One entry
+def app_one_entry():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('11/07/2008', decrease='42')
+    return app
 
-class OneEntry(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry('11/07/2008', decrease='42')
-    
-    def test_initial_attrs(self):
-        # initially, an entry is not reconciled
-        assert not self.etable[0].reconciled
-        eq_(self.etable[0].reconciliation_date, '')
-    
-    def test_set_reconciliation_date(self):
-        # It's possible to set any date as a reconciliation date (even when not in reconciliation
-        # mode).
-        self.etable[0].reconciliation_date = '12/07/2008'
-        self.etable.save_edits()
-        eq_(self.etable[0].reconciliation_date, '12/07/2008')
-    
-    def test_toggle_entries_reconciled(self):
-        # When reconciliation mode is off, doesn't do anything.
-        self.etable.toggle_reconciled()
-        assert not self.etable[0].reconciled
-    
+@with_app(app_one_entry)
+def test_initial_attrs(app):
+    # initially, an entry is not reconciled
+    assert not app.etable[0].reconciled
+    eq_(app.etable[0].reconciliation_date, '')
 
-class OneEntryInReconciliationMode(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry('11/07/2008', decrease='42')
-        self.aview.toggle_reconciliation_mode()
-    
-    def test_can_reconcile_entry(self):
-        # An entry today is reconciliable.
-        assert not self.etable[0].reconciled
-        assert self.etable[0].can_reconcile()
-    
-    def test_cant_reconcile_previous_balance_entry(self):
-        # It's not possible to reconcile a previous balance entry.
-        self.drsel.select_next_date_range()
-        # The first entry is not a "Previous Balance" entry
-        assert not self.etable[0].can_reconcile()
-    
-    def test_commit_reconciliation(self):
-        # committing reconciliation sets the entry's reconciliation date to the txn's date
-        self.etable.selected_row.toggle_reconciled()
-        self.aview.toggle_reconciliation_mode()
-        assert self.etable[0].reconciled
-        eq_(self.etable[0].reconciliation_date, '11/07/2008')
-    
-    def test_reconciling_sets_dirty_flag(self):
-        # Reconciling an entry sets the dirty flag.
-        self.save_file()
-        self.etable.selected_row.toggle_reconciled()
-        assert self.document.is_dirty()
-    
-    def test_reconciliation_balance(self):
-        # Unreconcilied entries return a None balance, and reconciled entries return a 
-        # reconciliation balance
-        eq_(self.etable[0].balance, '')
-        row = self.etable.selected_row
-        row.toggle_reconciled()
-        eq_(self.etable[0].balance, '-42.00')
-    
-    def test_toggle_reconciled(self):
-        # calling toggle_reconciled() on a row toggles reconciliation and shows a reconciliation
-        # balance.
-        self.etable.selected_row.toggle_reconciled()
-        assert self.etable[0].reconciled
-        eq_(self.etable[0].balance, '-42.00')
-    
-    def test_toggle_entries_reconciled_sets_dirty_flag(self):
-        # Toggling reconciliation sets the dirty flag.
-        self.save_file()
-        self.etable.toggle_reconciled()
-        assert self.document.is_dirty()
-    
+@with_app(app_one_entry)
+def test_set_reconciliation_date(app):
+    # It's possible to set any date as a reconciliation date (even when not in reconciliation
+    # mode).
+    app.etable[0].reconciliation_date = '12/07/2008'
+    app.etable.save_edits()
+    eq_(app.etable[0].reconciliation_date, '12/07/2008')
 
-class OneEntryInTheFuture(TestCase):
-    def setUp(self):
-        self.mock_today(2009, 12, 26)
-        self.create_instances()
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry('27/12/2009', increase='42')
-        self.aview.toggle_reconciliation_mode()
-    
-    def test_can_reconcile_entry(self):
-        # It's not possible to reconcile an entry in the future.
-        assert not self.etable[0].can_reconcile()
-    
-    def test_can_set_entry_balance(self):
-        # It's not possible to set an entry's reconciliation balance.
-        assert not self.etable.can_edit_cell('balance', 0)
-    
+@with_app(app_one_entry)
+def test_toggle_entries_reconciled(app):
+    # When reconciliation mode is off, doesn't do anything.
+    app.etable.toggle_reconciled()
+    assert not app.etable[0].reconciled
 
-class OneEntryInLiability(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account(account_type=AccountType.Liability)
-        self.mainwindow.show_account()
-        self.add_entry(increase='42')
-        self.aview.toggle_reconciliation_mode()
-    
-    def test_entry_balance(self):
-        # The balance of the entry is empty.
-        # Previously, it would crash because it would try to negate None
-        eq_(self.etable[0].balance, '')
-    
+#--- One entry in reconciliation mode
+def app_one_entry_reconciliation_mode():
+    app = TestApp()    
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('11/07/2008', decrease='42')
+    app.aview.toggle_reconciliation_mode()
+    return app
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_can_reconcile_entry(app):
+    # An entry today is reconciliable.
+    assert not app.etable[0].reconciled
+    assert app.etable[0].can_reconcile()
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_cant_reconcile_previous_balance_entry(app):
+    # It's not possible to reconcile a previous balance entry.
+    app.drsel.select_next_date_range()
+    # The first entry is not a "Previous Balance" entry
+    assert not app.etable[0].can_reconcile()
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_commit_reconciliation(app):
+    # committing reconciliation sets the entry's reconciliation date to the txn's date
+    app.etable.selected_row.toggle_reconciled()
+    app.aview.toggle_reconciliation_mode()
+    assert app.etable[0].reconciled
+    eq_(app.etable[0].reconciliation_date, '11/07/2008')
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_reconciling_sets_dirty_flag(app):
+    # Reconciling an entry sets the dirty flag.
+    app.save_file()
+    app.etable.selected_row.toggle_reconciled()
+    assert app.doc.is_dirty()
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_reconciliation_balance(app):
+    # Unreconcilied entries return a None balance, and reconciled entries return a 
+    # reconciliation balance
+    eq_(app.etable[0].balance, '')
+    row = app.etable.selected_row
+    row.toggle_reconciled()
+    eq_(app.etable[0].balance, '-42.00')
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_toggle_reconciled(app):
+    # calling toggle_reconciled() on a row toggles reconciliation and shows a reconciliation
+    # balance.
+    app.etable.selected_row.toggle_reconciled()
+    assert app.etable[0].reconciled
+    eq_(app.etable[0].balance, '-42.00')
+
+@with_app(app_one_entry_reconciliation_mode)
+def test_toggle_entries_reconciled_sets_dirty_flag(app):
+    # Toggling reconciliation sets the dirty flag.
+    app.save_file()
+    app.etable.toggle_reconciled()
+    assert app.doc.is_dirty()
+
+#--- Entry in future
+def app_entry_in_future():
+    p = Patcher()
+    p.patch_today(2009, 12, 26)
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('27/12/2009', increase='42')
+    app.aview.toggle_reconciliation_mode()
+    return app, p
+
+@with_app(app_entry_in_future)
+def test_can_reconcile_entry_in_future(app):
+    # It's not possible to reconcile an entry in the future.
+    assert not app.etable[0].can_reconcile()
+
+#--- Entry in liability
+def app_entry_in_liability():
+    app = TestApp()
+    app.add_account(account_type=AccountType.Liability)
+    app.mw.show_account()
+    app.add_entry(increase='42')
+    app.aview.toggle_reconciliation_mode()
+    return app
+
+@with_app(app_entry_in_liability)
+def test_entry_balance_in_liability(app):
+    # The balance of the entry is empty.
+    # Previously, it would crash because it would try to negate None
+    eq_(app.etable[0].balance, '')
 
 #--- Reconciled entry
 def app_reconciled_entry():
@@ -158,92 +154,109 @@ def app_reconciled_entry():
     app.aview.toggle_reconciliation_mode()
     return app
 
-def test_change_amount_currency_dereconciles_entry():
+@with_app(app_reconciled_entry)
+def test_change_amount_currency_dereconciles_entry(app):
     # Changing an antry's amount to another currency de-reconciles it.
-    app = app_reconciled_entry()
     app.etable[0].decrease = '12eur'
     app.etable.save_edits()
     assert not app.etable[0].reconciled
 
-def test_change_amount_currency_from_other_side_dereconciles_entry():
+@with_app(app_reconciled_entry)
+def test_change_amount_currency_from_other_side_dereconciles_entry(app):
     # Changing an entry's amount from the "other side" also de-reconcile that entry
-    app = app_reconciled_entry()
     app.mainwindow.show_account()
     app.etable[0].increase = '12eur'
     app.etable.save_edits()
     app.mainwindow.show_account()
     assert not app.etable[0].reconciled
 
-class OneEntryReconciledDifferentDate(TestCase):
-    # 1 entry, reconciled at a different date than its own date
-    def setUp(self):
-        self.mock_today(2008, 7, 20)
-        self.create_instances()
-        self.add_account()
-        self.mainwindow.show_account()
-        self.add_entry('11/07/2008', decrease='42')
-        self.etable[0].reconciliation_date = '12/07/2008'
-        self.etable.save_edits()
-    
-    def test_save_and_load(self):
-        # reconciliation date is correctly saved and loaded
-        self.document = self.save_and_load()
-        self.create_instances()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.mainwindow.show_account()
-        eq_(self.etable[0].reconciliation_date, '12/07/2008')
-    
+#--- Entry different reconciliation date
+def app_entry_different_reconciliation_date():
+    app = TestApp()
+    p = Patcher()
+    p.patch_today(2008, 7, 20)
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('11/07/2008', decrease='42')
+    app.etable[0].reconciliation_date = '12/07/2008'
+    app.etable.save_edits()
+    return app, p
 
-class ThreeEntries(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_three_entries_reconciliation_mode()
-    
-    def test_reconcile_not_selected(self):
-        # Reconciling also selects the entry.
-        # current selection is the last entry.
-        self.etable[0].toggle_reconciled()
-        eq_(self.etable.selected_index, 0)
-    
-    def test_toggle_reconcile_then_save(self):
-        # saving the file commits reconciliation
-        self.etable[1].toggle_reconciled()
-        self.save_file()
-        assert self.etable[1].reconciled
-    
+@with_app(app_entry_different_reconciliation_date)
+def test_save_and_load_different_reconciliation_date(app):
+    # reconciliation date is correctly saved and loaded
+    newapp = app.save_and_load()
+    newapp.bsheet.selected = newapp.bsheet.assets[0]
+    newapp.mw.show_account()
+    eq_(newapp.etable[0].reconciliation_date, '12/07/2008')
 
-class ThreeEntriesOneReconciled(TestCase, CommonSetup):
-    # 3 entries, in reconciliation mode, with the entry at index 1 having its reconciliation pending.
-    def setUp(self):
-        self.create_instances()
-        self.setup_three_entries_reconciliation_mode()
-        self.etable.select([1])
-        row = self.etable.selected_row
-        row.toggle_reconciled()
-    
-    def test_save_load(self):
-        self.do_test_save_load()
-    
-    def test_toggle_entries_reconciled_with_none_reconciled(self):
-        # When none of the selected entries are reconciled, all selected entries get reconciled.
-        self.etable.select([0, 2])
-        self.etable.toggle_reconciled()
-        assert self.etable[0].reconciled
-        assert self.etable[2].reconciled
-    
-    def test_toggle_entries_reconciled_with_all_reconciled(self):
-        # When all of the selected entries are reconciled, all selected entries get de-reconciled
-        self.etable.select([0, 2])
-        self.etable.toggle_reconciled() # Both reconciled now
-        self.etable.toggle_reconciled()
-        assert not self.etable[0].reconciled
-        assert not self.etable[2].reconciled
-    
-    def test_toggle_entries_reconciled_with_some_reconciled(self):
-        # When some of the selected entries are reconciled, all selected entries get reconciled
-        self.etable.select([0, 1, 2]) # entry at index 1 is pending reconciliation
-        self.etable.toggle_reconciled()
-        assert self.etable[0].reconciled
-        assert self.etable[1].reconciled
-        assert self.etable[2].reconciled
-    
+#--- Three entries
+def app_three_entries():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('1/1/2008', 'one')
+    app.add_entry('20/1/2008', 'two')
+    app.add_entry('31/1/2008', 'three')
+    app.aview.toggle_reconciliation_mode()
+    return app
+
+@with_app(app_three_entries)
+def test_reconcile_not_selected(app):
+    # Reconciling also selects the entry.
+    # current selection is the last entry.
+    app.etable[0].toggle_reconciled()
+    eq_(app.etable.selected_index, 0)
+
+@with_app(app_three_entries)
+def test_toggle_reconcile_then_save(app):
+    # saving the file commits reconciliation
+    app.etable[1].toggle_reconciled()
+    app.save_file()
+    assert app.etable[1].reconciled
+
+#--- Three entries one reconciled
+def app_three_entries_one_reconciled():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('1/1/2008', 'one')
+    app.add_entry('20/1/2008', 'two')
+    app.add_entry('31/1/2008', 'three')
+    app.aview.toggle_reconciliation_mode()
+    app.etable.select([1])
+    app.etable.selected_row.toggle_reconciled()
+    return app
+
+@with_app(app_three_entries_one_reconciled)
+def test_save_load_with_one_reconciled_entry(app):
+    newapp = app.save_and_load()
+    newapp.doc.date_range = app.doc.date_range
+    newapp.doc._cook()
+    compare_apps(app.doc, newapp.doc)
+
+@with_app(app_three_entries_one_reconciled)
+def test_toggle_entries_reconciled_with_none_reconciled(app):
+    # When none of the selected entries are reconciled, all selected entries get reconciled.
+    app.etable.select([0, 2])
+    app.etable.toggle_reconciled()
+    assert app.etable[0].reconciled
+    assert app.etable[2].reconciled
+
+@with_app(app_three_entries_one_reconciled)
+def test_toggle_entries_reconciled_with_all_reconciled(app):
+    # When all of the selected entries are reconciled, all selected entries get de-reconciled
+    app.etable.select([0, 2])
+    app.etable.toggle_reconciled() # Both reconciled now
+    app.etable.toggle_reconciled()
+    assert not app.etable[0].reconciled
+    assert not app.etable[2].reconciled
+
+@with_app(app_three_entries_one_reconciled)
+def test_toggle_entries_reconciled_with_some_reconciled(app):
+    # When some of the selected entries are reconciled, all selected entries get reconciled
+    app.etable.select([0, 1, 2]) # entry at index 1 is pending reconciliation
+    app.etable.toggle_reconciled()
+    assert app.etable[0].reconciled
+    assert app.etable[1].reconciled
+    assert app.etable[2].reconciled

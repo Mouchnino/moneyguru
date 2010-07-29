@@ -11,16 +11,11 @@ import os.path as op
 from datetime import date, datetime
 from operator import attrgetter
 
-from hsutil.testutil import eq_
-try:
-    from nose.tools import nottest, istest
-except ImportError:
-    nottest = lambda func: func
-    istest = lambda func: func
+from py.test import config
 
 from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
-from hsutil.testutil import TestData as TestDataBase, with_tmpdir
+from hsutil.testutil import TestData as TestDataBase, eq_
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
@@ -146,7 +141,6 @@ class DictLoader(base.Loader):
                     value = datetime.strptime(value, '%d/%m/%Y').date()
                 setattr(self.transaction_info, attr, value)
 
-@nottest
 class TestApp(object):
     def __init__(self, app=None, doc=None, tmppath=None):
         def make_gui(name, class_, view=None, parent=None):
@@ -166,7 +160,7 @@ class TestApp(object):
             gui.columns.view = colview
         
         ensure_ratesdb_patched()
-        self.tmppath = tmppath
+        self._tmppath = tmppath
         if app is None:
             app = Application(ApplicationGUI())
         self.app = app
@@ -242,6 +236,11 @@ class TestApp(object):
         self.iwin.connect()
         self.itable.connect()
         self.csvopt.connect()
+    
+    def tmppath(self):
+        if self._tmppath is None:
+            self._tmppath = Path(unicode(config.ensuretemp('mgtest')))
+        return self._tmppath
     
     def check_current_pane(self, pane_type, account_name=None):
         """Asserts that the currently selecte pane in the main window is of the specified type and,
@@ -490,10 +489,9 @@ class TestApp(object):
         app = Application(self.app_gui)
         return TestApp(app=app)
     
-    @with_tmpdir
-    def save_and_load(self, tmppath):
+    def save_and_load(self):
         # saves the current document and returns a new app with that document loaded
-        filepath = tmppath + 'foo.xml'
+        filepath = self.tmppath() + 'foo.xml'
         self.doc.save_to_xml(unicode(filepath))
         self.doc.close()
         newapp = TestApp(app=self.app)
@@ -501,8 +499,7 @@ class TestApp(object):
         return newapp
     
     def save_file(self):
-        assert self.tmppath is not None
-        filename = self.tmppath + 'foo.xml'
+        filename = self.tmppath() + 'foo.xml'
         self.doc.save_to_xml(unicode(filename)) # reset the dirty flag
     
     def show_account(self, account_name):
@@ -560,7 +557,6 @@ class TestData(TestDataBase):
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
 # now, not all convenience methods have been moved to TestApp, but if you need one, just move it
 # from TestCase to there and make the old method call the one in TestApp.
-@istest # nose is sometimes confused. This is to make sure that no test is ignored.
 class TestCase(TestCaseBase):
     cls_tested_module = document_module # for mocks
     
@@ -658,14 +654,12 @@ class TestCase(TestCaseBase):
         self.document = Document(self.document_gui, self.app)
         self.create_instances()
     
-    @nottest
     def do_test_save_load(self):
         newdoc = self.save_and_load()
         newdoc.date_range = self.document.date_range
         newdoc._cook()
         compare_apps(self.document, newdoc)
     
-    @nottest
     def do_test_qif_export_import(self):
         filepath = op.join(self.tmpdir(), 'foo.qif')
         self.document.save_to_qif(filepath)

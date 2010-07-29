@@ -9,7 +9,6 @@
 from hsutil.testutil import eq_
 
 from ..base import TestCase, TestApp
-from ..reconciliation_test import CommonSetup
 from ...document import FilterType
 from ...model.account import AccountType
 
@@ -120,10 +119,15 @@ class TransactionsOfEachType(TestCase):
         eq_(self.ttable.row_count, 0)
     
 
-class ThreeEntriesOneReconciled(TestCase, CommonSetup):
+class ThreeEntriesOneReconciled(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_three_entries_reconciliation_mode()
+        self.add_account()
+        self.mainwindow.show_account()
+        self.add_entry('1/1/2008', 'one')
+        self.add_entry('20/1/2008', 'two')
+        self.add_entry('31/1/2008', 'three')
+        self.aview.toggle_reconciliation_mode()
         self.etable.select([1])
         row = self.etable.selected_row
         row.toggle_reconciled()
