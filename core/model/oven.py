@@ -14,9 +14,8 @@ from operator import attrgetter
 from hsutil.misc import flatten
 
 from .amount import convert_amount
-from .entry import Entry, EntryList
-from .budget import Budget, BudgetSpawn
-from .date import inc_month
+from .entry import Entry
+from .budget import BudgetSpawn
 
 class Oven(object):
     """The Oven takes "raw data" from accounts and transactions and "cooks" calculated data out of
@@ -48,26 +47,35 @@ class Oven(object):
             result += spawns
         return result
     
-    def _cook_split(self, split):
-        account = split.account
-        if account is None:
-            return
-        entries = account.entries
-        amount = split.amount
-        converted_amount = convert_amount(amount, account.currency, split.transaction.date)
-        balance = entries.balance()
-        reconciled_balance = entries.balance_of_reconciled()
-        balance_with_budget = entries.balance_with_budget()
-        balance_with_budget += converted_amount
-        if not isinstance(split.transaction, BudgetSpawn):
-            balance += converted_amount
+    def _cook_reconciliation_balances(self, splits, start_balance):
+        balance = start_balance
+        result = {} # split: reconciliation balance
+        def recdate_key(s):
+            t = s.transaction
+            rdate = s.reconciliation_date
+            if rdate is None:
+                rdate = t.date
+            return (rdate, t.date, t.position)
+        by_recdate = sorted(splits, key=recdate_key)
+        for split in by_recdate:
             if split.reconciled:
-                reconciled_balance += split.amount
-        entries.add_entry(Entry(split, amount, balance, reconciled_balance, balance_with_budget))
+                balance += split.amount
+            result[split] = balance
+        return result
     
-    def _cook_transaction(self, txn):
-        for split in txn.splits:
-            self._cook_split(split)
+    def _cook_splits(self, account, splits):
+        entries = account.entries
+        balance = entries.balance()
+        balance_with_budget = entries.balance_with_budget()
+        split2reconciledbal = self._cook_reconciliation_balances(splits, entries.balance_of_reconciled())
+        for split in splits:
+            amount = split.amount
+            converted_amount = convert_amount(amount, account.currency, split.transaction.date)
+            balance_with_budget += converted_amount
+            if not isinstance(split.transaction, BudgetSpawn):
+                balance += converted_amount
+            reconciled_balance = split2reconciledbal[split]
+            entries.add_entry(Entry(split, amount, balance, reconciled_balance, balance_with_budget))
     
     def continue_cooking(self, until_date):
         if until_date > self._cooked_until:
@@ -80,19 +88,28 @@ class Oven(object):
         until_date: because of recurrence, we must always have a date at which we stop cooking.
                     If we don't, we might end up in an infinite loop.
         """
-        for account in self._accounts:
-            account.entries.clear(from_date)
-        if from_date is None:
-            self.transactions = []
-        else:
-            self.transactions = [t for t in self.transactions if t.date < from_date]
-        if not (self or self._scheduled):
-            return
+        # Determine from/until dates
         if from_date is None:
             from_date = date.min
+        else:
+            # it's possible that we have to reduce from_date a bit. If a split from before as a
+            # reconciled date >= from_date, we have to set from_date to that split's normal date
+            splits = flatten(t.splits for t in self.transactions) # splits from *cooked* txns
+            for split in splits:
+                rdate = split.reconciliation_date
+                if rdate is not None and rdate >= from_date:
+                    from_date = min(from_date, split.transaction.date)
         self._transactions.sort(key=attrgetter('date', 'position')) # needed in case until_date is None
         if until_date is None:
             until_date = self._transactions[-1].date if self._transactions else from_date
+        # Clear old cooked data
+        for account in self._accounts:
+            account.entries.clear(from_date)
+        if from_date == date.min:
+            self.transactions = []
+        else:
+            self.transactions = [t for t in self.transactions if t.date < from_date]
+        # Cook
         spawns = flatten(recurrence.get_spawns(until_date) for recurrence in self._scheduled)
         spawns += self._budget_spawns(until_date, spawns)
         txns = self._transactions + spawns
@@ -100,8 +117,14 @@ class Oven(object):
         # XXX now that budget's base date is the start date, isn't this untrue?
         tocook = [t for t in txns if from_date <= t.date]
         tocook.sort(key=attrgetter('date'))
-        for txn in tocook:
-            self._cook_transaction(txn)
-            self.transactions.append(txn)
+        splits = flatten(t.splits for t in tocook)
+        account2splits = defaultdict(list)
+        for split in splits:
+            account = split.account
+            if account is not None:
+                account2splits[account].append(split)
+        for account, splits in account2splits.iteritems():
+            self._cook_splits(account, splits)
+        self.transactions += tocook
         self._cooked_until = until_date
     

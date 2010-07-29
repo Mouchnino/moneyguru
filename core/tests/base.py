@@ -359,7 +359,7 @@ class TestApp(object):
         self.bpanel.save()
     
     def add_entry(self, date=None, description=None, payee=None, transfer=None, increase=None, 
-            decrease=None, checkno=None):
+            decrease=None, checkno=None, reconciliation_date=None):
         # This whole "if not None" thing allows to simulate a user tabbing over fields leaving the
         # default value.
         self.etable.add()
@@ -378,6 +378,8 @@ class TestApp(object):
             row.decrease = decrease
         if checkno is not None:
             row.checkno = checkno
+        if reconciliation_date is not None:
+            row.reconciliation_date = reconciliation_date
         self.etable.save_edits()
     
     def add_group(self, name=None, account_type=AccountType.Asset):

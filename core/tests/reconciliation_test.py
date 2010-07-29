@@ -260,3 +260,29 @@ def test_toggle_entries_reconciled_with_some_reconciled(app):
     assert app.etable[0].reconciled
     assert app.etable[1].reconciled
     assert app.etable[2].reconciled
+
+#--- Entries with a different order under reconciliation date sorting
+def app_different_reconciliation_date_order():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    # when sorting by reconciliation date, 'two' comes first.
+    app.add_entry('19/1/2008', 'one', increase='1', reconciliation_date='22/1/2008')
+    app.add_entry('20/1/2008', 'two', increase='2', reconciliation_date='20/1/2008')
+    app.add_entry('21/1/2008', 'three', increase='3')
+    app.aview.toggle_reconciliation_mode()
+    return app
+
+@with_app(app_different_reconciliation_date_order)
+def test_reconciliation_balance_is_determined_by_reconciliation_date(app):
+    # The order in which balances are computed in reconciliation mode is determined by entries'
+    # reconciliation date, not base date.
+    eq_(app.etable[0].balance, '3.00')
+    eq_(app.etable[1].balance, '2.00')
+
+@with_app(app_different_reconciliation_date_order)
+def test_toggle_reconciliation_of_second(app):
+    # toggling the reconciliation of the second entry invalidates cooked data of the first one, even
+    # if its date is before the second entry's date
+    app.etable[1].toggle_reconciled()
+    eq_(app.etable[0].balance, '1.00')

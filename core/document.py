@@ -625,6 +625,9 @@ class Document(Repeater):
             txn.date = inc_month_overflow(txn.date, month_diff)
             if txn.date > TODAY:
                 self.transactions.remove(txn)
+            for split in txn.splits:
+                if split.reconciliation_date is not None:
+                    split.reconciliation_date = txn.date
         for schedule in self.schedules:
             date2exception = schedule.date2exception
             schedule.start_date = inc_month_overflow(schedule.start_date, month_diff)
