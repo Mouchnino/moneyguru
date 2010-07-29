@@ -47,9 +47,11 @@ http://www.hardcoded.net/licenses/hs_license
     };
     [[self columns] initializeColumns:defs];
     NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"status"];
+    NSButtonCell *cell = [c dataCell];
     [c setResizingMask:NSTableColumnNoResizing];
-    [[c dataCell] setImagePosition:NSImageOnly];
-    [[c dataCell] setBordered:NO];
+    [cell setBordered:NO];
+    [cell setButtonType:NSSwitchButton];
+    [cell setControlSize:NSSmallControlSize];
     c = [[self tableView] tableColumnWithIdentifier:@"increase"];
     [[c headerCell] setAlignment:NSRightTextAlignment];
     [[c dataCell] setAlignment:NSRightTextAlignment];
