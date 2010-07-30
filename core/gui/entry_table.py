@@ -249,8 +249,11 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     def sort_key_for_column(self, column_name):
         if column_name == 'date':
             return (self._date, self._position)
-        elif column_name == 'reconciliation_date' and self._reconciliation_date is None:
-            return datetime.date.min
+        elif column_name == 'reconciliation_date':
+            rdate =  self._reconciliation_date
+            if rdate is None:
+                rdate = self._date
+            return (rdate, self._position)
         elif column_name == 'status':
             # First reconciled, then plain ones, then schedules, then budgets
             if self.reconciled:

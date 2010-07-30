@@ -633,6 +633,25 @@ def test_budget_spawns(app):
     # Budget spawns can't be edited
     assert not app.etable.can_edit_cell('date', 0)
 
+#--- Unreconciled entry in the middle of two reconciled entries
+def app_unreconciled_between_two_reconciled():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('01/07/2010', description='one', reconciliation_date='01/07/2010')
+    app.add_entry('02/07/2010', description='two')
+    app.add_entry('03/07/2010', description='three', reconciliation_date='02/07/2010')
+    return app
+
+@with_app(app_unreconciled_between_two_reconciled)
+def test_sort_by_reconciliation_date_with_unreconciled_in_middle(app):
+    # When an entry is not reconciled, the reconciliation date sorting order falls back on entry
+    # date.
+    app.etable.sort_by('reconciliation_date')
+    eq_(app.etable[0].description, 'one')
+    eq_(app.etable[1].description, 'two')
+    eq_(app.etable[2].description, 'three')
+
 #--- Generators
 def test_amount_of_selected_entry():
     def check(app, expected_increase, expected_decrease):
