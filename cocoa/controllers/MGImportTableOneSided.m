@@ -22,12 +22,12 @@ http://www.hardcoded.net/licenses/hs_license
 {
     MGColumnDef defs[] = {
         {@"will_import", @"", 14, 14, 14, NO, [NSButtonCell class]},
-        {@"date_import", @"Date", 55, 10, 0, NO, nil},
-        {@"description_import", @"Description", 107, 10, 0, NO, nil},
-        {@"payee_import", @"Payee", 106, 10, 0, NO, nil},
+        {@"date_import", @"Date", 80, 10, 0, NO, nil},
+        {@"description_import", @"Description", 110, 10, 0, NO, nil},
+        {@"payee_import", @"Payee", 110, 10, 0, NO, nil},
         {@"checkno_import", @"Check #", 60, 10, 0, NO, nil},
-        {@"transfer_import", @"Transfer", 95, 10, 0, NO, nil},
-        {@"amount_import", @"Amount", 71, 10, 0, NO, nil},
+        {@"transfer_import", @"Transfer", 100, 10, 0, NO, nil},
+        {@"amount_import", @"Amount", 80, 10, 0, NO, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

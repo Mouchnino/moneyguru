@@ -40,7 +40,7 @@
 			<object class="NSWindowTemplate" id="1005">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{196, 96}, {610, 414}}</string>
+				<string key="NSWindowRect">{{196, 96}, {673, 414}}</string>
 				<int key="NSWTFlags">1610613760</int>
 				<string key="NSWindowTitle">Importer</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -55,7 +55,7 @@
 						<object class="NSTabView" id="559868389">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">18</int>
-							<string key="NSFrameSize">{610, 392}</string>
+							<string key="NSFrameSize">{673, 392}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
@@ -64,7 +64,7 @@
 									<object class="NSView" key="NSView" id="116508396">
 										<reference key="NSNextResponder" ref="559868389"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrameSize">{610, 392}</string>
+										<string key="NSFrameSize">{673, 392}</string>
 										<reference key="NSSuperview" ref="559868389"/>
 									</object>
 									<string key="NSLabel">Tab</string>
@@ -97,12 +97,12 @@
 						<object class="NSCustomView" id="1062595434">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{0, 392}, {610, 22}}</string>
+							<string key="NSFrame">{{0, 392}, {673, 22}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<string key="NSClassName">PSMTabBarControl</string>
 						</object>
 					</object>
-					<string key="NSFrameSize">{610, 414}</string>
+					<string key="NSFrameSize">{673, 414}</string>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{576, 436}</string>
@@ -1208,9 +1208,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{84, 431}, {610, 414}}</string>
+					<string>{{84, 431}, {673, 414}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{84, 431}, {610, 414}}</string>
+					<string>{{84, 431}, {673, 414}}</string>
 					<integer value="0"/>
 					<string>{196, 240}</string>
 					<string>{{236, 136}, {576, 414}}</string>

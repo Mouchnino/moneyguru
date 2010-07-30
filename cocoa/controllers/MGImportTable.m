@@ -28,13 +28,14 @@ http://www.hardcoded.net/licenses/hs_license
 {
     MGColumnDef defs[] = {
         {@"will_import", @"", 14, 14, 14, NO, [NSButtonCell class]},
-        {@"date", @"Date", 68, 40, 0, NO, nil},
-        {@"description", @"Description", 142, 40, 0, NO, nil},
-        {@"amount", @"Amount", 60, 10, 0, NO, nil},
+        {@"date", @"Date", 80, 40, 0, NO, nil},
+        {@"description", @"Description", 100, 40, 0, NO, nil},
+        {@"amount", @"Amount", 80, 10, 0, NO, nil},
         {@"bound", @"", 14, 14, 14, NO, [MGImportBindingCell class]},
-        {@"date_import", @"Date", 55, 10, 0, NO, nil},
-        {@"description_import", @"Description", 106, 10, 0, NO, nil},
-        {@"amount_import", @"Amount", 60, 10, 0, NO, nil},
+        {@"date_import", @"Date", 80, 10, 0, NO, nil},
+        {@"description_import", @"Description", 100, 10, 0, NO, nil},
+        {@"payee_import", @"Payee", 80, 10, 0, NO, nil},
+        {@"amount_import", @"Amount", 80, 10, 0, NO, nil},
         nil
     };
     [[self columns] initializeColumns:defs];
