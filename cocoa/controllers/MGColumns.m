@@ -49,6 +49,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 - (void)initializeColumns:(MGColumnDef *)columns
 {
+    /* We don't want default widths to overwrite stored with in the core code */
+    isRestoring = YES;
     /* Translate the title of columns (needed for outlines) present already */
     for (NSTableColumn *c in [tableView tableColumns]) {
         NSString *title = NSLocalizedStringFromTable([[c headerCell] stringValue], @"columns", @"");
@@ -62,6 +64,9 @@ http://www.hardcoded.net/licenses/hs_license
             continue;
         }
         NSTableColumn *c = [[[NSTableColumn alloc] initWithIdentifier:cdef->attrname] autorelease];
+        [c setResizingMask:NSTableColumnUserResizingMask];
+        /* If the column is not added right away, it causes glitches under 10.5 (minwidths instead of default widths) */
+        [tableView addTableColumn:c]; 
         NSString *title = NSLocalizedStringFromTable(cdef->title, @"columns", @"");
         [[c headerCell] setStringValue:title];
         if (cdef->sortable) {
@@ -81,9 +86,9 @@ http://www.hardcoded.net/licenses/hs_license
             [c setDataCell:cell];
         }
         [c bind:@"fontSize" toObject:udc withKeyPath:@"values.TableFontSize" options:nil];
-        [tableView addTableColumn:c];
         cdef++;
     }
+    isRestoring = NO;
 }
 
 /* Call this after initializeColumns to query the core and see if column data has been restored from
