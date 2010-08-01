@@ -11,7 +11,7 @@ General dependencies
 --------------------
 
 - Python 2.6 (http://www.python.org)
-- hsutil 1.0.0 (it's on PyPI). (http://hg.hardcoded.net/hsutil)
+- hsutil 1.0.1 (it's on PyPI). (http://hg.hardcoded.net/hsutil)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
 - Markdown, for help files. (http://www.freewisdom.org/projects/python-markdown/)
 - py.test, to run unit tests. (http://codespeak.net/py/dist/test/)
@@ -21,11 +21,9 @@ OS X prerequisites
 
 - XCode 3.1 (http://developer.apple.com/TOOLS/xcode/)
 - Sparkle (http://sparkle.andymatuschak.org/)
-- PyObjC 2.2. (http://pyobjc.sourceforge.net/)
-- py2app (http://svn.pythonmac.org/py2app/py2app/trunk/doc/index.html)
+- PyObjC 2.3. (http://pyobjc.sourceforge.net/)
+- py2app 0.5.2 (http://svn.pythonmac.org/py2app/py2app/trunk/doc/index.html)
   
-If you want to build moneyGuru in 64-bit, you'll have to use HS's own forks of py2app, available at http://hg.hardcoded.net/py2app. More details about this at http://www.hardcoded.net/articles/building-64-bit-pyobjc-applications-with-py2app.htm
-
 Windows prerequisites
 ---------------------
 
