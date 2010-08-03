@@ -26,6 +26,10 @@ from ..model.date import MonthRange
 from .base import BaseView
 
 MONTHS_TO_FILL = 4
+MSG_NO_DB = u"Exported database not present. Click on Export Accounts first."
+MSG_NO_BASE_DB = u"Base Cashculator database not present. You must run and quit Cashculator at least "\
+    "once before using the export feature."
+
 
 class CashculatorView(BaseView):
     VIEW_TYPE = PaneType.Cashculator
@@ -36,6 +40,7 @@ class CashculatorView(BaseView):
         self._ccdbpath = None
         self._db = None
         self._categories = None # name: cat
+        self._needs_reset = False
     
     def set_children(self, children):
         BaseView.set_children(self, children)
@@ -64,6 +69,10 @@ class CashculatorView(BaseView):
     
     #--- Public
     def export_db(self):
+        self._ensure_paths()
+        if self._ccdbpath is None or not io.exists(self._ccdbpath):
+            self.mainwindow.show_message(MSG_NO_BASE_DB)
+            return
         # Determine date ranges for which we compute amounts
         dr = MonthRange(date.today())
         dateranges = [dr]
@@ -97,11 +106,14 @@ class CashculatorView(BaseView):
     def launch_cc(self):
         # Launch CC with moneyGuru's database as an argument. Don't forget to call reset_ccdb a
         # little while afterwards.
-        self._ensure_paths()
+        if not self.has_db():
+            self.mainwindow.show_message(MSG_NO_DB)
+            return
         cmd = u"defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
         cmd = cmd.format(unicode(self._mgccdbpath[:-1]))
         p = subprocess.Popen(cmd, shell=True)
         p.wait()
+        self._needs_reset = True
         cmd = "open -a Cashculator"
         p = subprocess.Popen(cmd, shell=True)
         p.wait()
@@ -125,7 +137,7 @@ class CashculatorView(BaseView):
     
     def has_db(self):
         self._ensure_paths()
-        return io.exists(self._mgccdbpath)
+        return (self._mgccdbpath is not None) and io.exists(self._mgccdbpath)
     
     def reset_ccdb(self):
         # Sets CC's db back to its old value
@@ -133,4 +145,10 @@ class CashculatorView(BaseView):
         cmd = cmd.format(unicode(self._ccdbpath[:-1]))
         p = subprocess.Popen(cmd, shell=True)
         p.wait()
+        self._needs_reset = False
+    
+    #--- Events
+    def document_will_close(self):
+        if self._needs_reset:
+            self.reset_ccdb()
     
