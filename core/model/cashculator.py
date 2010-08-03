@@ -59,13 +59,6 @@ class Category(object):
             cell.load_data()
             self.month2cell[cell.date] = cell
     
-    def delete(self):
-        sql = "delete from ZCELL where ZCATEGORY = ?"
-        self.con.execute(sql, [self.pk])
-        sql = "delete from ZCATEGORY where Z_PK = ?"
-        self.con.execute(sql, [self.pk])
-        self.con.commit()
-    
     def get_cell(self, month):
         if month in self.month2cell:
             return self.month2cell[month]
@@ -93,7 +86,6 @@ class Category(object):
         isincomeval = 1 if self.is_income else 0
         isrecval = 1 if self.is_recurring else 0
         self.con.execute(sql, [self.name, isincomeval, isrecval, self.pk])
-        self.con.commit()
     
 
 class Cell(object):
@@ -127,7 +119,6 @@ class Cell(object):
         sql = "update ZCELL set ZMONTH=?, ZPLANSTARTMONTH=?, ZACTUALAMOUNT=? where Z_PK=?"
         month = encode_date(self.date)
         self.con.execute(sql, [month, month, self.amount, self.pk])
-        self.con.commit()
     
 
 class CashculatorDB(object):

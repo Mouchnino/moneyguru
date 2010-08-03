@@ -21,10 +21,14 @@ class CashculatorAccountTable(GUITable, ViewChild):
     def __init__(self, view, cc_view):
         ViewChild.__init__(self, view, cc_view)
         GUITable.__init__(self)
-        self.nonrecurring_accounts = set()
+        self.nonrecurring_names = set()
     
     #--- Override
     def _fill(self):
+        if self.parent_view.has_db():
+            categories = self.parent_view.get_categories()
+            nonrec = (cat for cat in categories.itervalues() if not cat.is_recurring)
+            self.nonrecurring_names = set(cat.name for cat in nonrec)
         accounts = [a for a in self.document.accounts if a.is_income_statement_account()]
         sort_accounts(accounts)
         for account in accounts:
@@ -35,14 +39,14 @@ class CashculatorAccountTable(GUITable, ViewChild):
         self.view.refresh()
     
     #--- Public
-    def is_recurring(self, account):
-        return account not in self.nonrecurring_accounts
+    def is_recurring(self, name):
+        return name not in self.nonrecurring_names
     
-    def set_recurring(self, account, value):
+    def set_recurring(self, name, value):
         if value:
-            self.nonrecurring_accounts.discard(account)
+            self.nonrecurring_names.discard(name)
         else:
-            self.nonrecurring_accounts.add(account)
+            self.nonrecurring_names.add(name)
     
 
 class CashculatorAccountTableRow(Row):
@@ -64,9 +68,9 @@ class CashculatorAccountTableRow(Row):
     
     @property
     def recurring(self):
-        return self.table.is_recurring(self.account)
+        return self.table.is_recurring(self.account.name)
     
     @recurring.setter
     def recurring(self, value):
-        self.table.set_recurring(self.account, value)
+        self.table.set_recurring(self.account.name, value)
     
