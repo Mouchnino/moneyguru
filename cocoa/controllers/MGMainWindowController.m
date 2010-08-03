@@ -564,6 +564,7 @@ http://www.hardcoded.net/licenses/hs_license
         }
         else if (paneType == MGPaneTypeCashculator) {
             view = cashculatorView;
+            tabIcon = [NSImage imageNamed:@"cashculator_16"];
         }
         else if (paneType == MGPaneTypeEmpty) {
             view = emptyView;

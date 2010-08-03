@@ -44,11 +44,8 @@ class CashculatorView(BaseView):
     
     #--- Private
     def _open_db(self):
-        # If there's no CC db in moneyGuru's appdata folder, copy a model from CC's appdata,
-        # and re-initialize it.
+        # If there's no CC db in moneyGuru's appdata folder, copy a model from CC's appdata.
         if not self.has_db():
-            ccpath = appsupport + 'cashculator'
-            ccdb = ccpath + 'CCDB'
             if not io.exists(self._mgccdbpath[:-1]):
                 io.makedirs(self._mgccdbpath[:-1])
             io.copy(self._ccdbpath, self._mgccdbpath)

@@ -71,7 +71,9 @@
 		CE6E00160F4ED61800FE7628 /* MGGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E00150F4ED61800FE7628 /* MGGraph.m */; };
 		CE720A5B0F84BF71005C4D5B /* MGOutlinePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */; };
 		CE720A5F0F84CB39005C4D5B /* MGTablePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */; };
+		CE74544612082C5B003A2794 /* cashculator_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE74544512082C5B003A2794 /* cashculator_16.png */; };
 		CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74808C11995EF400D59C50 /* MGEmptyView.m */; };
+		CE7990B212082D53000A4846 /* cashculator_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7990B112082D53000A4846 /* cashculator_48.png */; };
 		CE7DA76B11FF482E00E10DED /* MGViewOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7DA76A11FF482E00E10DED /* MGViewOptions.m */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
 		CE873AB30E21622F004F63E9 /* MGAccountProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A710E21622F004F63E9 /* MGAccountProperties.m */; };
@@ -368,9 +370,11 @@
 		CE720A5D0F84CB39005C4D5B /* MGTablePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTablePrint.h; path = print/MGTablePrint.h; sourceTree = "<group>"; };
 		CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTablePrint.m; path = print/MGTablePrint.m; sourceTree = "<group>"; };
 		CE7311D41040361C00DB8B30 /* PyBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetTable.h; sourceTree = "<group>"; };
+		CE74544512082C5B003A2794 /* cashculator_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_16.png; sourceTree = "<group>"; };
 		CE74808A11995EDF00D59C50 /* PyEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEmptyView.h; sourceTree = "<group>"; };
 		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
 		CE74808C11995EF400D59C50 /* MGEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEmptyView.m; sourceTree = "<group>"; };
+		CE7990B112082D53000A4846 /* cashculator_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_48.png; sourceTree = "<group>"; };
 		CE7DA76911FF482E00E10DED /* MGViewOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewOptions.h; sourceTree = "<group>"; };
 		CE7DA76A11FF482E00E10DED /* MGViewOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewOptions.m; sourceTree = "<group>"; };
 		CE80D93C11DA3964007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -1247,8 +1251,10 @@
 				CEF5E63711DCCEE80048C9DF /* schedules_16.png */,
 				CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */,
 				CE8CD7AC1042E340004B30E0 /* budget_16.png */,
+				CE74544512082C5B003A2794 /* cashculator_16.png */,
 				CEB1E0B21031A386001FC4B4 /* budget_48.png */,
 				CEB1E0B31031A386001FC4B4 /* schedules_48.png */,
+				CE7990B112082D53000A4846 /* cashculator_48.png */,
 				CE40239E0F4C737D0083BAD2 /* doc_icon.icns */,
 				CEF4C5050F22274B004FDC9D /* popup_arrows.png */,
 				CEE674D10E7A7C0300941332 /* recurrent_16.png */,
@@ -1416,6 +1422,8 @@
 				CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */,
 				CE33E33E11FB58B800444435 /* columns.strings in Resources */,
 				CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */,
+				CE74544612082C5B003A2794 /* cashculator_16.png in Resources */,
+				CE7990B212082D53000A4846 /* cashculator_48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
