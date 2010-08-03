@@ -7,20 +7,18 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyEmptyView.h"
+#import "PyCashculatorView.h"
 #import "MGBaseView.h"
+#import "MGCashculatorAccountTable.h"
 
-@interface MGEmptyView : MGBaseView
+@interface MGCashculatorView : MGBaseView
 {
+    IBOutlet MGTableView *accountTableView;
+    
+    MGCashculatorAccountTable *accountTable;
 }
 - (id)initWithPyParent:(id)aPyParent;
-- (PyEmptyView *)py;
+- (PyCashculatorView *)py;
 
-/* Actions */
-- (IBAction)selectNetWorthView:(id)sender;
-- (IBAction)selectProfitView:(id)sender;
-- (IBAction)selectTransactionView:(id)sender;
-- (IBAction)selectScheduleView:(id)sender;
-- (IBAction)selectBudgetView:(id)sender;
-- (IBAction)selectCashculatorView:(id)sender;
+- (IBAction)updateDB:(id)sender;
 @end

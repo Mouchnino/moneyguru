@@ -17,4 +17,5 @@ class PaneType(object):
     Account = 3
     Schedule = 4
     Budget = 5
+    Cashculator = 6
     Empty = 100

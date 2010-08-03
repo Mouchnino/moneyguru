@@ -29,6 +29,7 @@ http://www.hardcoded.net/licenses/hs_license
     accountView = [[MGAccountView alloc] initWithPyParent:py];
     scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
     budgetView = [[MGBudgetView alloc] initWithPyParent:py];
+    cashculatorView = [[MGCashculatorView alloc] initWithPyParent:py];
     emptyView = [[MGEmptyView alloc] initWithPyParent:py];
     searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
@@ -52,7 +53,7 @@ http://www.hardcoded.net/licenses/hs_license
     [[self window] setToolbar:toolbar];
     
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
-        [transactionView py], [accountView py], [scheduleView py], [budgetView py],
+        [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
         [emptyView py], [accountProperties py], [transactionPanel py],  [massEditionPanel py],
         [schedulePanel py], [budgetPanel py], [customDateRangePanel py], [accountReassignPanel py],
         [accountLookup py], [completionLookup py], [dateRangeSelector py], [viewOptions py], nil];
@@ -83,6 +84,7 @@ http://www.hardcoded.net/licenses/hs_license
     [transactionView release];
     [scheduleView release];
     [budgetView release];
+    [cashculatorView release];
     [emptyView release];
     [searchField release];
     [importWindow release];
@@ -559,6 +561,9 @@ http://www.hardcoded.net/licenses/hs_license
         else if (paneType == MGPaneTypeBudget) {
             view = budgetView;
             tabIcon = [NSImage imageNamed:@"budget_16"];
+        }
+        else if (paneType == MGPaneTypeCashculator) {
+            view = cashculatorView;
         }
         else if (paneType == MGPaneTypeEmpty) {
             view = emptyView;

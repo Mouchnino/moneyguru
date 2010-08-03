@@ -40,10 +40,10 @@ class MainWindow(Repeater):
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
     def set_children(self, children):
-        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.emptyview,
-            self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel, self.cdrpanel,
-            self.arpanel, self.alookup, self.completion_lookup, self.daterange_selector,
-            self.view_options) = children
+        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
+            self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
+            self.cdrpanel, self.arpanel, self.alookup, self.completion_lookup,
+            self.daterange_selector, self.view_options) = children
         self._restore_opened_panes()
         for child in children:
             # Panels are not listeners
@@ -93,6 +93,8 @@ class MainWindow(Repeater):
             return ViewPane(self.scview, tr("Schedules"))
         elif pane_type == PaneType.Budget:
             return ViewPane(self.bview, tr("Budgets"))
+        elif pane_type == PaneType.Cashculator:
+            return ViewPane(self.ccview, tr("Cashculator"))
         elif pane_type == PaneType.Empty:
             return ViewPane(self.emptyview, tr("New Tab"))
         else:

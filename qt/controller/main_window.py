@@ -91,10 +91,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.newview)
         
         # set_children() and connect() calls have to happen after _setupUiPost()
-        children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview,
+        # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
+        children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
             self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
             self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel, self.vopts]
-        self.model.set_children([child.model for child in children])
+        self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         self.sfield.model.connect()
         

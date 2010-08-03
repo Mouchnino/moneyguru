@@ -49,4 +49,9 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] selectPaneType:MGPaneTypeBudget];
 }
 
+- (IBAction)selectCashculatorView:(id)sender
+{
+    [[self py] selectPaneType:MGPaneTypeCashculator];
+}
+
 @end

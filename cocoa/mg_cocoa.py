@@ -44,6 +44,8 @@ from core.gui.balance_sheet import BalanceSheet
 from core.gui.budget_table import BudgetTable
 from core.gui.budget_panel import BudgetPanel
 from core.gui.budget_view import BudgetView
+from core.gui.cashculator_view import CashculatorView
+from core.gui.cashculator_account_table import CashculatorAccountTable
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
 from core.gui.completable_edit import CompletableEdit
 from core.gui.completion_lookup import CompletionLookup
@@ -467,6 +469,13 @@ class PyBudgetView(PyGUIContainer):
 class PyScheduleView(PyGUIContainer):
     py_class = ScheduleView
 
+class PyCashculatorView(PyGUIContainer):
+    py_class = CashculatorView
+    
+    def updateDB(self):
+        self.py.update_db()
+    
+
 class PyEmptyView(PyGUIContainer):
     py_class = EmptyView
     
@@ -552,6 +561,9 @@ class PyBudgetTable(PyTable):
     def editItem(self):
         self.py.edit()
     
+
+class PyCashculatorAccountTable(PyTable):
+    py_class = CashculatorAccountTable
 
 class PySearchField(PyListener):
     py_class = SearchField

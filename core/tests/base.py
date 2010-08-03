@@ -225,7 +225,8 @@ class TestApp(object):
         self.scview.set_children(children)
         children = [self.btable]
         self.bview.set_children(children)
-        children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview,
+        # None between bview and empty view is the Cashculator view, which isn't tested
+        children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
             self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
             self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel, self.vopts]
         self.mainwindow.set_children(children)

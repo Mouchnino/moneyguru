@@ -66,4 +66,5 @@ http://www.hardcoded.net/licenses/hs_license
 #define MGPaneTypeAccount 3
 #define MGPaneTypeSchedule 4
 #define MGPaneTypeBudget 5
+#define MGPaneTypeCashculator 6
 #define MGPaneTypeEmpty 100
