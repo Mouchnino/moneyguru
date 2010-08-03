@@ -10,5 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyGUIContainer.h"
 
 @interface PyCashculatorView : PyGUIContainer {}
-- (void)updateDB;
+- (void)exportDB;
+- (void)launchCC;
+- (void)resetCCDB;
 @end

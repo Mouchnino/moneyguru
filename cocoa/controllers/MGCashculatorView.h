@@ -20,5 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (id)initWithPyParent:(id)aPyParent;
 - (PyCashculatorView *)py;
 
-- (IBAction)updateDB:(id)sender;
+- (IBAction)exportDB:(id)sender;
+- (IBAction)launchCC:(id)sender;
 @end

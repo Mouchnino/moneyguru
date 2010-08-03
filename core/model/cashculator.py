@@ -128,13 +128,22 @@ class CashculatorDB(object):
         cur = self.con.execute(sql)
         firstrow = cur.fetchone()
         if firstrow is None:
-            sql = "select ZSETTINGS, ZVISIBLEHORIZON from ZSCENARIO"
+            # It seems that to really be the "default scenario", all other scenarios must have a
+            # NULL ZSETTINGS column
+            sql = "update ZSCENARIO set ZSETTINGS = NULL"
+            self.con.execute(sql)
+            sql = "select ZVISIBLEHORIZON from ZSCENARIO"
             cur = self.con.execute(sql)
-            settings_pk, visiblehor = cur.fetchone()
+            visiblehor = cur.fetchone()[0]
+            sql = "select Z_PK from ZSETTINGS"
+            cur = self.con.execute(sql)
+            settings_pk = cur.fetchone()[0]
             sql = "insert into ZSCENARIO(Z_ENT, Z_OPT, ZROWINDEX, ZSETTINGS, ZVISIBLEHORIZON, ZNAME) "\
-                "values(5, 1, 42, ?, ?, 'moneyGuru')"
+                "values(5, 1, 0, ?, ?, 'moneyGuru')"
             cur = self.con.execute(sql, [settings_pk, visiblehor])
             self.main_scenario_pk = cur.lastrowid
+            sql = "update ZSETTINGS set ZDEFAULTSCENARIO = ?"
+            self.con.execute(sql, [self.main_scenario_pk])
             self.con.commit()
         else:
             self.main_scenario_pk = firstrow[0]

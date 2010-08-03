@@ -472,8 +472,14 @@ class PyScheduleView(PyGUIContainer):
 class PyCashculatorView(PyGUIContainer):
     py_class = CashculatorView
     
-    def updateDB(self):
-        self.py.update_db()
+    def exportDB(self):
+        self.py.export_db()
+    
+    def launchCC(self):
+        self.py.launch_cc()
+    
+    def resetCCDB(self):
+        self.py.reset_ccdb()
     
 
 class PyEmptyView(PyGUIContainer):

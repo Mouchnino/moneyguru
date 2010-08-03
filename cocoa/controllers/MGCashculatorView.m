@@ -31,8 +31,15 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyCashculatorView *)py;
 }
 
-- (IBAction)updateDB:(id)sender
+- (IBAction)exportDB:(id)sender
 {
-    [[self py] updateDB];
+    [[self py] exportDB];
+}
+
+- (IBAction)launchCC:(id)sender
+{
+    [[self py] launchCC];
+    /* We have to reset the DB path pref after cashculator has launched. 10 seconds should be enough. */
+    [NSTimer scheduledTimerWithTimeInterval:10 target:[self py] selector:@selector(resetCCDB) userInfo:nil repeats:NO];
 }
 @end

@@ -11,6 +11,7 @@
 # and the wanted database values are so much subject to change that I found maintaining tests
 # beside it counter-productive. Therefore, be careful when modifying this code, there's no safety net.
 
+import subprocess
 from datetime import date
 
 from hsutil import io
@@ -31,10 +32,8 @@ class CashculatorView(BaseView):
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
-        appsupport = Path(NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
-            NSUserDomainMask, True)[0])
-        self._mgccdbpath = appsupport + 'moneyGuru/cc/CCDB'
-        self._ccdbpath = appsupport + 'cashculator/CCDB'
+        self._mgccdbpath = None
+        self._ccdbpath = None
         self._db = None
         self._categories = None # name: cat
     
@@ -43,6 +42,18 @@ class CashculatorView(BaseView):
         [self.atable] = children
     
     #--- Private
+    def _ensure_paths(self):
+        if self._ccdbpath is not None:
+            return
+        cmd = "defaults read com.apparentsoft.cashculator CCDB_Folder"
+        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        if p.wait() != 0:
+            return
+        self._ccdbpath = Path(p.communicate()[0].strip()) + 'CCDB'
+        appsupport = Path(NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+            NSUserDomainMask, True)[0])
+        self._mgccdbpath = appsupport + 'moneyGuru/cc/CCDB'
+    
     def _open_db(self):
         # If there's no CC db in moneyGuru's appdata folder, copy a model from CC's appdata.
         if not self.has_db():
@@ -52,28 +63,7 @@ class CashculatorView(BaseView):
         self._db = CashculatorDB(unicode(self._mgccdbpath))
     
     #--- Public
-    def get_db(self):
-        if self._db is None:
-            self._open_db()
-        return self._db
-    
-    def get_categories(self): # name: cat
-        if self._categories is None:
-            db = self.get_db()
-            categories = db.get_categories()
-            for cat in categories:
-                cat.load_data()
-            categories = [c for c in categories if not c.is_total]
-            self._categories = {}
-            for cat in categories:
-                self._categories[cat.name] = cat
-        return self._categories
-    
-    def has_db(self):
-        return io.exists(self._mgccdbpath)
-    
-    def update_db(self):
-        db = self.get_db()
+    def export_db(self):
         # Determine date ranges for which we compute amounts
         dr = MonthRange(date.today())
         dateranges = [dr]
@@ -83,8 +73,8 @@ class CashculatorView(BaseView):
         # Update CC db with actual data from moneyGuru.
         self.document.oven.continue_cooking(until_date=date.today())
         currency = self.document.app.default_currency
+        db = self.get_db()
         accounts = [row.account for row in self.atable]
-        accountnames = set(a.name for a in accounts)
         categories = self.get_categories()
         for account in accounts:
             if account.name not in categories:
@@ -105,7 +95,42 @@ class CashculatorView(BaseView):
         db.fix_category_order()
     
     def launch_cc(self):
-        # Launch CC with moneyGuru's database as an argument
-        pass
+        # Launch CC with moneyGuru's database as an argument. Don't forget to call reset_ccdb a
+        # little while afterwards.
+        self._ensure_paths()
+        cmd = u"defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
+        cmd = cmd.format(unicode(self._mgccdbpath[:-1]))
+        p = subprocess.Popen(cmd, shell=True)
+        p.wait()
+        cmd = "open -a Cashculator"
+        p = subprocess.Popen(cmd, shell=True)
+        p.wait()
     
+    def get_db(self):
+        if self._db is None:
+            self._open_db()
+        return self._db
+    
+    def get_categories(self): # name: cat
+        if self._categories is None:
+            db = self.get_db()
+            categories = db.get_categories()
+            for cat in categories:
+                cat.load_data()
+            categories = [c for c in categories if not c.is_total]
+            self._categories = {}
+            for cat in categories:
+                self._categories[cat.name] = cat
+        return self._categories
+    
+    def has_db(self):
+        self._ensure_paths()
+        return io.exists(self._mgccdbpath)
+    
+    def reset_ccdb(self):
+        # Sets CC's db back to its old value
+        cmd = u"defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
+        cmd = cmd.format(unicode(self._ccdbpath[:-1]))
+        p = subprocess.Popen(cmd, shell=True)
+        p.wait()
     
