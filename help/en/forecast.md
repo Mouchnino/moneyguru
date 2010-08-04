@@ -45,9 +45,21 @@ It's important to remember that setting a Target account **does not** limit your
 
 Normally, the best account to use as budget target is your main checking account since it's where the money is coming from and going to in the end. The purpose of the budget target is to let budgets affect your future balances, so if you target, for example, your credit card account, unless you have a scheduled transaction that regularly pays off the card, your future balance for that credit card will simply grow up indefinitely.
 
-Forecasting
+Cashculator Integration
 -----
 
-The scheduling and budgeting features allow for interesting forecasting. First, you can see how sound your budget is by looking at your forecasted net worth for the end of the current year. Also, you can use it to estimate at which point you can afford important financial moves. Planning a 8000$ trip? Look at your balance graph and see at which point you should be able to afford it, then schedule a transaction for it. Planning on buying a house afterwards? Look at which point in the future you'll have enough money for the cash down on the mortgage. Of course, all of this depends on a sound budget...
+The budgeting and scheduling features in moneyGuru are good if you already know what kind of budgets you want to stick to. However, moneyGuru doesn't let you play around with hypothetical budgets in order to design the budget you're going to adopt. There's a nice app from another developer that specializes in that: [Cashculator](http://www.apparentsoft.com/cashculator).
 
-Forecasting features in moneyGuru are in an embryonate stage. Lots of other nice stuff is coming.
+moneyGuru integrates with Cashculator to make it easy for you to export "Actual" (that's what they call it) data to Cashculator, design your budgets, and then add those budgets back to moneyGuru. To use this integration feature, follow these steps:
+
+1. Download Cashculator, run it once (moneyGuru needs Cashculator's skeleton of its database) and close it.
+2. Open your moneyGuru document, open a new tab and click on the "Cashculator" button.
+3. The tab will show a list of your income and expense accounts. Through this list, you have to choose which of your accounts are Recurring and which and Non-Recurring (it's an important distinction in Cashculator).
+4. Click on "Export Accounts". This will export all your income and expense accounts as well as their cash flow for the last 4 months. Don't worry about your regular Cashculator data. moneyGuru makes its own copy of Cashculator's database and exports its data there.
+5. Make sure that Cashculator is closed, then click on "Launch CC" which will launch Cashculator. You need to use this button to launch it because it tells Cashculator to use moneyGuru's database instead of its own.
+6. In Cashculator, there's going to be a scenario called "moneyGuru" which contains all your accounts as well as their "Actual" data for the last 4 months. Use this data to design yourself a budget (please refer to Cashculator's documentation for that)
+7. Once you're done, you can create budgets and schedules according to your design in moneyGuru. You'll have to do it manually, but that's a temporary limitation of the feature (see below).
+
+**For now, the Cashculator integration only works one way (export).** The way Cashculator works is very different from the way moneyGuru works. Exporting data isn't so complicated, but when comes the time to import back budgets in moneyGuru, things get a little trickier. There're lots of ways you can fill "Plan" cells out in Cashculator and there's no obvious ways to automatically convert that into budgets and schedules.
+
+This feature is brand new (introduced in v2.1) and what I'd like to do is to test the waters a little bit. If you use this feature, please let me know how you use Cashculator and how you think your data should look like back in moneyGuru. Please, use the [support forums](http://getsatisfaction.com/hardcodedsoftware) for that. Thanks!
