@@ -40,6 +40,8 @@ Un budget peut être créé dans la vue Budgets. Les options de répétition son
 Intégration à Cashculator
 -----
 
+**Cette fonctionnalité requière Cashculator v1.2.2 ou plus récent.**
+
 Les budgets et récurrences dans moneyGuru sont bien si vous savez déjà quel budget vous voulez adopter. Par contre, moneyGuru ne permet pas vraiment d'expérimenter avec des budgets hypothétiques afin de designer le budget le plus approprié. Il existe une application d'un autre développeur qui se spécialise dans le design de budgets: [Cashculator](http://www.apparentsoft.com/cashculator).
 
 moneyGuru peut exporter vos données vers Cashculator afin de vous permettre de designer vos budgets encore plus facilement. Pour utiliser cette fonctionnalité, suivez ces instructions:

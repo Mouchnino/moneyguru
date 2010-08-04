@@ -48,6 +48,8 @@ Das Konto, das sich am besten für ein Zielkonto eignet, ist üblicherweise das 
 Cashculator Integration
 -----
 
+**This feature requires Cashculator v1.2.2 or later.**
+
 The budgeting and scheduling features in moneyGuru are good if you already know what kind of budgets you want to stick to. However, moneyGuru doesn't let you play around with hypothetical budgets in order to design the budget you're going to adopt. There's a nice app from another developer that specializes in that: [Cashculator](http://www.apparentsoft.com/cashculator).
 
 moneyGuru integrates with Cashculator to make it easy for you to export "Actual" (that's what they call it) data to Cashculator, design your budgets, and then add those budgets back to moneyGuru. To use this integration feature, follow these steps:
