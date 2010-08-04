@@ -461,7 +461,8 @@ class Document(Repeater):
         action = self._get_action_from_changed_transactions([entry.transaction])
         self._undoer.record(action)
         
-        min_date = entry.date if date is NOEDIT else min(entry.date, date)
+        candidate_dates = [entry.date, date, reconciliation_date, entry.reconciliation_date]
+        min_date = min(d for d in candidate_dates if d is not NOEDIT and d is not None)
         if reconciliation_date is not NOEDIT:
             entry.split.reconciliation_date = reconciliation_date
         if (amount is not NOEDIT) and (len(entry.splits) == 1):

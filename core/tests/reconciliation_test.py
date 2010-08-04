@@ -220,9 +220,9 @@ def app_three_entries_one_reconciled():
     app = TestApp()
     app.add_account()
     app.mw.show_account()
-    app.add_entry('1/1/2008', 'one')
-    app.add_entry('20/1/2008', 'two')
-    app.add_entry('31/1/2008', 'three')
+    app.add_entry('1/1/2008', 'one', increase='1')
+    app.add_entry('20/1/2008', 'two', increase='2')
+    app.add_entry('31/1/2008', 'three', increase='3')
     app.aview.toggle_reconciliation_mode()
     app.etable.select([1])
     app.etable.selected_row.toggle_reconciled()
@@ -234,6 +234,17 @@ def test_save_load_with_one_reconciled_entry(app):
     newapp.doc.date_range = app.doc.date_range
     newapp.doc._cook()
     compare_apps(app.doc, newapp.doc)
+
+@with_app(app_three_entries_one_reconciled)
+def test_set_reconciliation_date_lower_than_other(app):
+    # When setting a reconciliation date lower than others', be sure to recook others
+    app.etable[2].reconciliation_date = '19/1/2008' # lower than 'two'
+    app.etable.save_edits()
+    eq_(app.etable[1].balance, '5.00')
+    # then, when setting it to a later date, update the second entry as well
+    app.etable[2].reconciliation_date = '31/1/2008'
+    app.etable.save_edits()
+    eq_(app.etable[1].balance, '2.00')
 
 @with_app(app_three_entries_one_reconciled)
 def test_toggle_entries_reconciled_with_none_reconciled(app):

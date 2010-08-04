@@ -252,8 +252,8 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         elif column_name == 'reconciliation_date':
             rdate =  self._reconciliation_date
             if rdate is None:
-                rdate = self._date
-            return (rdate, self._position)
+                rdate = datetime.date.max
+            return (rdate, self._date, self._position)
         elif column_name == 'status':
             # First reconciled, then plain ones, then schedules, then budgets
             if self.reconciled:

@@ -103,8 +103,8 @@ def app_entries_with_reconciliation_date():
 def test_sort_by_reconciliation_date(app):
     # Don't crash because some dates are None.
     app.etable.sort_by('reconciliation_date') # no crash
-    eq_(app.etable[0].reconciliation_date, '')
-    eq_(app.etable[1].reconciliation_date, '05/01/2010')
+    eq_(app.etable[0].reconciliation_date, '05/01/2010')
+    eq_(app.etable[1].reconciliation_date, '')
 
 #--- Two budgets with one stop date
 def app_two_budgets_one_stop_date():

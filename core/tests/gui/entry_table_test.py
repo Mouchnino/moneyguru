@@ -70,6 +70,19 @@ def test_show_transfer_account_on_empty_row_does_nothing():
     app = app_one_account()
     app.etable.show_transfer_account() # no crash
 
+    return app
+
+@with_app(app_one_account)
+def test_sort_by_reconciliation_date_same_recdate_different_entry_date_and_position(app):
+    # When the reconciliation date is the same, the sort order is the entry date, THEN the position
+    app.add_entry('01/07/2010', description='one', reconciliation_date='03/07/2010')
+    app.add_entry('01/07/2010', description='two', reconciliation_date='03/07/2010')
+    app.add_entry('02/07/2010', description='three', reconciliation_date='03/07/2010')
+    app.etable.sort_by('reconciliation_date')
+    eq_(app.etable[0].description, 'one')
+    eq_(app.etable[1].description, 'two')
+    eq_(app.etable[2].description, 'three')
+
 @with_app(app_one_account)
 def test_toggle_reconciliation(app):
     # Toggling reconciliation when no entry is selected doesn't cause a crash.
@@ -645,12 +658,11 @@ def app_unreconciled_between_two_reconciled():
 
 @with_app(app_unreconciled_between_two_reconciled)
 def test_sort_by_reconciliation_date_with_unreconciled_in_middle(app):
-    # When an entry is not reconciled, the reconciliation date sorting order falls back on entry
-    # date.
+    # When an entry is not reconciled, it goes at the end
     app.etable.sort_by('reconciliation_date')
     eq_(app.etable[0].description, 'one')
-    eq_(app.etable[1].description, 'two')
-    eq_(app.etable[2].description, 'three')
+    eq_(app.etable[1].description, 'three')
+    eq_(app.etable[2].description, 'two')
 
 #--- Generators
 def test_amount_of_selected_entry():
