@@ -56,7 +56,7 @@ moneyGuru integrates with Cashculator to make it easy for you to export "Actual"
 2. Open your moneyGuru document, open a new tab and click on the "Cashculator" button.
 3. The tab will show a list of your income and expense accounts. Through this list, you have to choose which of your accounts are Recurring and which and Non-Recurring (it's an important distinction in Cashculator).
 4. Click on "Export Accounts". This will export all your income and expense accounts as well as their cash flow for the last 4 months. Don't worry about your regular Cashculator data. moneyGuru makes its own copy of Cashculator's database and exports its data there.
-5. Make sure that Cashculator is closed, then click on "Launch CC" which will launch Cashculator. You need to use this button to launch it because it tells Cashculator to use moneyGuru's database instead of its own.
+5. Make sure that Cashculator is closed, then click on "Launch Cashculator" which will launch Cashculator. You need to use this button to launch it because it tells Cashculator to use moneyGuru's database instead of its own.
 6. In Cashculator, there's going to be a scenario called "moneyGuru" which contains all your accounts as well as their "Actual" data for the last 4 months. Use this data to design yourself a budget (please refer to Cashculator's documentation for that)
 7. Once you're done, you can create budgets and schedules according to your design in moneyGuru. You'll have to do it manually, but that's a temporary limitation of the feature (see below).
 

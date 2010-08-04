@@ -3,16 +3,15 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">762</string>
+			<string key="NS.object.0">788</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -39,7 +38,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -56,7 +55,7 @@
 									<object class="NSTableView" id="866301259">
 										<reference key="NSNextResponder" ref="194909670"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrameSize">{511, 184}</string>
+										<string key="NSFrameSize">{511, 209}</string>
 										<reference key="NSSuperview" ref="194909670"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTableHeaderView" key="NSHeaderView" id="305406248">
@@ -171,7 +170,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="315293913">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Please read instructions in the Forecast section of the help file.</string>
+							<string key="NSContents">Veuillez lire les instructions dans la section Prévisions du fichier d'aide.</string>
 							<object class="NSFont" key="NSSupport" id="21647980">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -204,7 +203,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="35784902">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Export accounts to Cashculator</string>
+							<string key="NSContents">Exporter les comptes vers Cashculator</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">14</double>
@@ -224,7 +223,7 @@
 						<object class="NSButtonCell" key="NSCell" id="635070363">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Launch Cashculator</string>
+							<string key="NSContents">Ouvrir Cashculator</string>
 							<reference key="NSSupport" ref="21647980"/>
 							<reference key="NSControlView" ref="386918830"/>
 							<int key="NSButtonFlags">-2038284033</int>
@@ -244,7 +243,7 @@
 						<object class="NSButtonCell" key="NSCell" id="1027152286">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Export Accounts</string>
+							<string key="NSContents">Exporter</string>
 							<reference key="NSSupport" ref="21647980"/>
 							<reference key="NSControlView" ref="1015239580"/>
 							<int key="NSButtonFlags">-2038284033</int>
@@ -257,7 +256,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{553, 344}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</object>
@@ -534,6 +532,25 @@
 							<string>NSView</string>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>mainResponder</string>
+							<string>wholeView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">mainResponder</string>
+								<string key="candidateClassName">NSResponder</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">wholeView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">controllers/MGBaseView.h</string>
@@ -555,9 +572,35 @@
 							<string>id</string>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>exportDB:</string>
+							<string>launchCC:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">exportDB:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">launchCC:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">accountTableView</string>
 						<string key="NS.object.0">MGTableView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">accountTableView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">accountTableView</string>
+							<string key="candidateClassName">MGTableView</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>

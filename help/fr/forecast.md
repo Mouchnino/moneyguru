@@ -36,3 +36,22 @@ Budgets
 -----
 
 Un budget peut être créé dans la vue Budgets. Les options de répétition sont les mêmes que pour les récurrences. Le champ Compte est le compte ciblé par le budget et le champ Cible est le champ dans lequel le budget "prend" son argent. Si par exemple vous utilisez votre compte courant comme cible, c'est ce compte dont la balance sera diminuée ou augmentée dans les graphes. Notez que d'avoir une cible ne change *pas* la façon dont les transactions affectent les comptes avec budgets. Même si votre budget a comme cible votre compte courant, les dépense faites avec votre carte de crédit seront comptabilisées dans le budget.
+
+Intégration à Cashculator
+-----
+
+Les budgets et récurrences dans moneyGuru sont bien si vous savez déjà quel budget vous voulez adopter. Par contre, moneyGuru ne permet pas vraiment d'expérimenter avec des budgets hypothétiques afin de designer le budget le plus approprié. Il existe une application d'un autre développeur qui se spécialise dans le design de budgets: [Cashculator](http://www.apparentsoft.com/cashculator).
+
+moneyGuru peut exporter vos données vers Cashculator afin de vous permettre de designer vos budgets encore plus facilement. Pour utiliser cette fonctionnalité, suivez ces instructions:
+
+1. Téléchargez Cashculator et démarrez le au moins une fois (moneyGuru a besoin de la structure principale de sa base de donnée). Ensuite, quittez Cashculator.
+2. Ouvrez votre document moneyGuru, ouvrez un nouvel onglet, puis cliquez sur le bouton "Cashculator".
+3. L'onglet montrera une liste de vos compte de revenus et dépenses. Avec cette liste, vous devez indiquez quels comptes sont récurrents et lesquels ne le sont pas. Cette distinction est importante dans Cashculator.
+4. Cliquez sur "Exporter". Vos compes seront exportés ainsi que les statistiques de revenus et dépenses de vos compte pour les 4 derniers mois. Ne vous inquiétez pas si vous avez déjà des données dans Cashculator. moneyGuru utilise une copie séparée de la base de donnée principale et laisse l'originale intouchée.
+5. Assurez vous que Cashculator est fermé, puis cliquez sur "Ouvrir Cashculator". Casuculator sera alors ouvert avec la base de donnée de moneyGuru (c'est pourquoi il faut utiliser ce bouton, autrement Cashculator s'ouvre sur sa propre base de donnée).
+6. Dans Cashculator, il y aura un scénario appellé "moneyGuru". C'est ce scénario qui contient vos donnée. Utilisez le pour faire le design de votre budget (veuillez vous référer à la documentation de Cashculator pour cela).
+7. Ensuite, vous pouvez recréer les budgets de Cashculator dans moneyGuru. Il faut le faire manuellement, mais c'est une limitation temporaire.
+
+**Pour tout de suite, seule la fonctionnalité d'exportation est disponible.** La façon de fonctionner de Cashculator est très différente de celle de moneyGuru. Pour l'exportation de donnée, ça va encore, mais pour une importation automatique de budgets à partir des données de Cashculator, les choses se corsent. Il y a plusieurs façon de remplir les cellules "Plan" dans Cashculator et il n'est pas évident de définir une procédure d'importation claire.
+
+Cette fonctionnalité est toute neuve (v2.1) et ce que je veux faire c'est de tester la chose un peu. Si vous utiliser l'exportation vers Cashculator, veuillez me laisser savoir comment vous faites vos budgets et comment vous pensez que l'information que vous mettez dans Cashculator devrait être transférée dans moneyGuru. Veuillez me faire part de tout ça sur [le forum de support](http://getsatisfaction.com/hardcodedsoftware). Merci!
