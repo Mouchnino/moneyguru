@@ -109,6 +109,7 @@ class CashculatorView(BaseView):
             if nw:
                 nw = int(nw.value*100)
             db.set_balance(dr.start, nw)
+        self._categories = None
     
     def launch_cc(self):
         # Launch CC with moneyGuru's database as an argument. Don't forget to call reset_ccdb a
