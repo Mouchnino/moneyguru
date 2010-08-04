@@ -61,6 +61,7 @@ moneyGuru integrates with Cashculator to make it easy for you to export "Actual"
 5. Make sure that Cashculator is closed, then click on "Launch Cashculator" which will launch Cashculator. You need to use this button to launch it because it tells Cashculator to use moneyGuru's database instead of its own.
 6. In Cashculator, there's going to be a scenario called "moneyGuru" which contains all your accounts as well as their "Actual" data for the last 4 months. Use this data to design yourself a budget (please refer to Cashculator's documentation for that)
 7. Once you're done, you can create budgets and schedules according to your design in moneyGuru. You'll have to do it manually, but that's a temporary limitation of the feature (see below).
+8. Cashculator will be reverted to normal mode (its regular database) when you quit moneyGuru.
 
 **For now, the Cashculator integration only works one way (export).** The way Cashculator works is very different from the way moneyGuru works. Exporting data isn't so complicated, but when comes the time to import back budgets in moneyGuru, things get a little trickier. There're lots of ways you can fill "Plan" cells out in Cashculator and there's no obvious ways to automatically convert that into budgets and schedules.
 

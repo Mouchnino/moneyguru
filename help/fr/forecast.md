@@ -53,6 +53,7 @@ moneyGuru peut exporter vos données vers Cashculator afin de vous permettre de 
 5. Assurez vous que Cashculator est fermé, puis cliquez sur "Ouvrir Cashculator". Casuculator sera alors ouvert avec la base de donnée de moneyGuru (c'est pourquoi il faut utiliser ce bouton, autrement Cashculator s'ouvre sur sa propre base de donnée).
 6. Dans Cashculator, il y aura un scénario appellé "moneyGuru". C'est ce scénario qui contient vos donnée. Utilisez le pour faire le design de votre budget (veuillez vous référer à la documentation de Cashculator pour cela).
 7. Ensuite, vous pouvez recréer les budgets de Cashculator dans moneyGuru. Il faut le faire manuellement, mais c'est une limitation temporaire.
+8. Cashculator retournera en mode normal (avec sa base de donnée régulière) lorsque vous quitterez moneyGuru.
 
 **Pour tout de suite, seule la fonctionnalité d'exportation est disponible.** La façon de fonctionner de Cashculator est très différente de celle de moneyGuru. Pour l'exportation de donnée, ça va encore, mais pour une importation automatique de budgets à partir des données de Cashculator, les choses se corsent. Il y a plusieurs façon de remplir les cellules "Plan" dans Cashculator et il n'est pas évident de définir une procédure d'importation claire.
 
