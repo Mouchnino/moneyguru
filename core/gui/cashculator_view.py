@@ -102,6 +102,13 @@ class CashculatorView(BaseView):
                 cell.amount = int(cash_flow.value*100)
                 cell.save_data()
         db.fix_category_order()
+        # Now set starting balances
+        accounts = set(a for a in self.document.accounts if a.is_balance_sheet_account())
+        for dr in dateranges:
+            nw =  sum(a.entries.balance(date=dr.start, currency=currency) for a in accounts)
+            if nw:
+                nw = int(nw.value*100)
+            db.set_balance(dr.start, nw)
     
     def launch_cc(self):
         # Launch CC with moneyGuru's database as an argument. Don't forget to call reset_ccdb a

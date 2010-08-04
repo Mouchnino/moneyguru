@@ -188,3 +188,19 @@ class CashculatorDB(object):
     def new_category(self):
         return Category(self)
     
+    def set_balance(self, balance_date, amount):
+        # balance_date has to be the first day of the month
+        # amount is an integer
+        balance_month = encode_date(balance_date)
+        sql = "select Z_PK from ZBALANCE where ZSCENARIO = ? and ZMONTH = ?"
+        cur = self.con.execute(sql, [self.main_scenario_pk, balance_month])
+        row = cur.fetchone()
+        if row is None:
+            sql = "insert into ZBALANCE(Z_ENT, Z_OPT, ZSCENARIO, ZMONTH, ZSTARTBALANCE) "\
+                "values(1, 1, ?, ?, ?)"
+            self.con.execute(sql, [self.main_scenario_pk, balance_month, amount])
+        else:
+            sql = "update ZBALANCE set ZSTARTBALANCE = ? where Z_PK = ?"
+            self.con.execute(sql, [amount, row[0]])
+        self.con.commit()
+    
