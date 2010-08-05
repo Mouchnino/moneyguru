@@ -102,6 +102,8 @@ Le bouton "Réconciliation" dans la barre de filtre sert à changer le mode de [
 
 Comme partout ailleurs, le petit ![](images/basics_show_account_arrow.png) sert a ouvrir le compte correspondant. Une particularité de cette vue par contre est que l'usage répété de cette flèche pour la même transaction garantie l'ordre d'ouverture. Ça veut dire que cette flèche peut être utilisée pour "cycler" au travers de toutes les entrées d'une transaction.
 
+La table d'entrée commence la plupart du temps par une entrée "Balance précédente". Cette entrée, à l'instar des extraits bancaires, indique la balance du compte au début de l'intervalle de date sélectionné.
+
 Filtre
 -----
 

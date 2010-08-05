@@ -102,6 +102,8 @@ The *Reconciliation* button in the filter bar (only enabled for assets/liabiliti
 
 **Transfer** cells have a little ![](images/basics_show_account_arrow.png) at their right. Similarly to the other views, you can click on it to show the account displayed in the cell. Unlike arrows from the Transaction view, this only *cycles through* the transaction's split. Therefore, even when a transaction has more than 2 splits, continually clicking on that arrow will show all affected accounts, not just the first 2.
 
+Depending on the selected date range, there might be a **Previous Balance** entry at the top of the table. This entry, like with bank account statements, shows the balance of the account at the beginning of the date range.
+
 Filtering
 -----
 
