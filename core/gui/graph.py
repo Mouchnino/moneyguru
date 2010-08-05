@@ -46,10 +46,19 @@ class Graph(Chart):
 
     def compute_y_axis(self):
         ymin, ymax = self.yrange()
+        if ymin >= ymax: # max must always be higher than min
+            ymax = ymin + 1
         ydelta = float(ymax - ymin)
-        yfactor = 10 ** int(log10(ydelta))
-        ymin = int(yfactor * floor(float(ymin) / yfactor))
-        ymax = int(yfactor * ceil(float(ymax) / yfactor))
+        # our minimum yfactor is 100 or else the graphs are too squeezed with low datapoints
+        yfactor = max(100, 10 ** int(log10(ydelta)))
+        # We add/remove 0.05 so that datapoints being exactly on yfactors get some wiggle room.
+        def adjust(amount, by):
+            if amount == 0:
+                return 0
+            result = amount + by
+            return result if (amount > 0) == (result > 0) else 0
+        ymin = int(yfactor * floor(adjust(ymin/yfactor, -0.05)))
+        ymax = int(yfactor * ceil(adjust(ymax/yfactor, 0.05)))
         ydelta = ymax - ymin
         ydelta_msd = ydelta // yfactor
         if ydelta_msd == 1:

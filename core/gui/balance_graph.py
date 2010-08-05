@@ -62,11 +62,11 @@ class BalanceGraph(Graph):
     
     def yrange(self):
         if self._data:
-            ymin = min(0, min(point[1] for point in self._data))
-            ymax = max(0, ymin + 100, max(point[1] for point in self._data))
+            ymin = min(point[1] for point in self._data)
+            ymax = max(0, max(point[1] for point in self._data))
             return (ymin, ymax)
         else:
-            return (0, 100)
+            return (0, 1)
     
     @property
     def title(self):

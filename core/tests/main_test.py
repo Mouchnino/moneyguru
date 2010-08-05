@@ -732,23 +732,6 @@ class TwoEntriesInRange(TestCase):
         self.assertEqual(self.etable.selected_indexes, [0])
     
 
-class TwoEntriesInRangeBalanceGoesNegative(TestCase):
-    """Two entries, both on October 2007. The balance first goes to -100, then at 100"""
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy()
-        self.document.date_range = MonthRange(date(2007, 10, 1))
-        self.add_entry('3/10/2007', 'first', decrease='100')
-        self.add_entry('4/10/2007', 'second', increase='200')
-    
-    def test_graph_yaxis(self):
-        self.assertEqual(self.balgraph.ymin, -100)
-        self.assertEqual(self.balgraph.ymax, 100)
-        self.assertEqual(list(self.balgraph.ytickmarks), range(-100, 101, 50))
-        expected = [dict(text=str(x), pos=x) for x in range(-100, 101, 50)]
-        self.assertEqual(list(self.balgraph.ylabels), expected)
-    
-
 class TwoEntryOnTheSameDate(TestCase):
     """Two entries, both having the same date. The first entry takes the balance very high, but the
     second entry is a credit that takes it back. The first entry is selected.
@@ -784,13 +767,6 @@ class TwoEntryOnTheSameDate(TestCase):
         self.add_entry('3/10/2007', description='baz')
         self.assertEqual(self.etable[2].description, 'baz')
     
-    def test_graph_yaxis(self):
-        """The balance went at 10000 with the first entry, but it went back to 1000 it with the
-        second. The yaxis should only take the final 1000 into account
-        """
-        self.assertEqual(self.balgraph.ymin, 0)
-        self.assertEqual(self.balgraph.ymax, 1000)
-
 
 class TwoAccountsTwoEntriesInTheFirst(TestCase):
     """First account has 2 entries in it, the second is empty. The entries are in the date range.

@@ -78,10 +78,10 @@ class BarGraph(Graph):
     def yrange(self):
         if self._data:
             ymin = min(0, min(min(h1, h2, h1+h2) for x1, x2, h1, h2 in self._data))
-            ymax = max(0, ymin + 100, max(max(h1, h2, h1+h2) for x1, x2, h1, h2 in self._data))
+            ymax = max(0, max(max(h1, h2, h1+h2) for x1, x2, h1, h2 in self._data))
             return (ymin, ymax)
         else:
-            return (0, 100)
+            return (0, 1)
     
     @property
     def title(self):

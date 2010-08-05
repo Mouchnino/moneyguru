@@ -26,6 +26,13 @@ class LineGraphView(GraphView):
         painter.drawPolyline(*points)
         
         # close the polygons and fill them.
+        # The closing point depends if we have a positive grapg, a negative one or a mixed up
+        if ds.ymin >= 0: # positive
+            yClose = round(ds.ymin * yFactor)
+        elif ds.ymax < 0: # negative
+            yClose = round(ds.ymax * yFactor)
+        else: # mixed up
+            yClose = 0
         painter.setPen(QPen(Qt.NoPen))
         xTodayFactored = ds.xtoday * xFactor;
         pastPoints = [p for p in points if p.x() <= xTodayFactored]
@@ -40,20 +47,20 @@ class LineGraphView(GraphView):
         if pastPoints:
             firstPoint = pastPoints[0]
             lastPoint = pastPoints[-1]
-            pastPoints.append(QPointF(lastPoint.x(), 0))
-            pastPoints.append(QPointF(firstPoint.x(), 0))
+            pastPoints.append(QPointF(lastPoint.x(), yClose))
+            pastPoints.append(QPointF(firstPoint.x(), yClose))
             painter.setBrush(self.graphBrush)
             painter.drawPolygon(*pastPoints)
         if futurePoints:
             firstPoint = futurePoints[0]
             lastPoint = futurePoints[-1]
-            futurePoints.append(QPointF(lastPoint.x(), 0))
-            futurePoints.append(QPointF(firstPoint.x(), 0))
+            futurePoints.append(QPointF(lastPoint.x(), yClose))
+            futurePoints.append(QPointF(firstPoint.x(), yClose))
             painter.setBrush(self.graphFutureBrush)
             painter.drawPolygon(*futurePoints)
         if meetingPoint is not None:
             pen = QPen(self.linePen)
             pen.setColor(Qt.red)
             painter.setPen(pen)
-            painter.drawLine(QPointF(xTodayFactored, 0), meetingPoint)
+            painter.drawLine(QPointF(xTodayFactored, yClose), meetingPoint)
     
