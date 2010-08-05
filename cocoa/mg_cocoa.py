@@ -84,7 +84,7 @@ from hscommon import job
 from core import const
 from core.gui import base, chart, graph, report, table
 from core.loader import base, csv, native, ofx, qif
-from core.model import (account, amount, currency, date, oven, recurrence, transaction,
+from core.model import (account, amount, cashculator, currency, date, oven, recurrence, transaction,
     transaction_list, completion, undo)
 
 class PyMoneyGuruApp(PyRegistrable):
