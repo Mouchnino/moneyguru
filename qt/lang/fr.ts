@@ -708,6 +708,10 @@
         <source>Account #</source>
         <translation># Compte</translation>
     </message>
+    <message>
+        <source>Notes:</source>
+        <translation>Notes:</translation>
+    </message>
 </context>
 <context>
     <name>AccountReassignPanel</name>

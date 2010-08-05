@@ -337,6 +337,16 @@ def app_budget_with_all_fields_set():
         repeat_every=2, stop_date='01/01/2022')
     return app
 
+#--- Account with apanel attrs set (account number, notes)
+def app_account_with_apanel_attrs():
+    app = TestApp()
+    app.add_account()
+    app.mw.edit_item()
+    app.apanel.account_number = '1234'
+    app.apanel.notes = 'some notes'
+    app.apanel.save()
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -381,6 +391,10 @@ def test_save_load():
     
     # make sure that all budget fields are correctly saved
     app = app_budget_with_all_fields_set()
+    yield check, app
+    
+    # apanel attributes are saved/loaded
+    app = app_account_with_apanel_attrs()
     yield check, app
 
 def test_save_load_qif():

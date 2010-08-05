@@ -55,6 +55,7 @@ def test_fields(app):
     eq_(app.apanel.type_index, 3) # Expense type is last in the list
     eq_(app.apanel.currency_index, Currency.all.index(CAD))
     eq_(app.apanel.account_number, '4242')
+    eq_(app.apanel.notes, '')
 
 @with_app(app_some_account)
 def test_fields_before_load(app):
@@ -66,24 +67,6 @@ def test_load_stops_edition(app):
     # edition must be stop on apanel load or else an account type change can result in a crash
     app.mw.edit_item()
     app.check_gui_calls(app.istatement_gui, ['stop_editing'])
-
-@with_app(app_some_account)
-def test_save(app):
-    # save() calls document.change_account with the correct arguments and triggers a refresh on
-    # all GUI components.
-    app.mw.edit_item()
-    app.apanel.type_index = 2
-    app.apanel.currency_index = 42
-    app.apanel.name = 'foobaz'
-    app.apanel.account_number = '4241'
-    app.apanel.save()
-    # To test the currency, we have to load again
-    app.istatement.selected = app.istatement.income[0]
-    app.mw.edit_item()
-    eq_(app.apanel.currency, Currency.all[42])
-    eq_(app.apanel.type, AccountType.Income)
-    eq_(app.apanel.name, 'foobaz')
-    eq_(app.apanel.account_number, '4241')
 
 #--- Two accounts
 def app_two_accounts():
@@ -99,3 +82,32 @@ def test_duplicate_name(app):
     app.mw.edit_item()
     app.apanel.name = 'foobar'
     app.apanel.save() # the exception doesn't propagate
+
+@with_app(app_two_accounts)
+def test_save_then_load(app):
+    # save() calls document.change_account with the correct arguments and triggers a refresh on
+    # all GUI components. We have to test this on two accounts to make sure that the values we test
+    # on load aren't just leftovers from past assignments
+    app.mw.edit_item() # foobaz
+    app.apanel.type_index = 1
+    app.apanel.currency_index = 42
+    app.apanel.name = 'changed name'
+    app.apanel.account_number = '4241'
+    app.apanel.notes = 'some notes'
+    app.apanel.save()
+    app.bsheet.selected = app.bsheet.assets[0] # foobar
+    app.mw.edit_item()
+    app.apanel.type_index = 0
+    app.apanel.currency_index = 0
+    app.apanel.name = 'whatever'
+    app.apanel.account_number = '1234'
+    app.apanel.notes = 'other notes'
+    app.apanel.save()
+    # To test the currency, we have to load again
+    app.bsheet.selected = app.bsheet.liabilities[0] # foobaz
+    app.mw.edit_item()
+    eq_(app.apanel.currency, Currency.all[42])
+    eq_(app.apanel.type, AccountType.Liability)
+    eq_(app.apanel.name, 'changed name')
+    eq_(app.apanel.account_number, '4241')
+    eq_(app.apanel.notes, 'some notes')

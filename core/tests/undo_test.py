@@ -112,10 +112,12 @@ class OneNamelessAccount(TestCase):
         self.add_account()
     
     @save_state_then_verify
-    def test_undo_set_account_currency(self):
-        # Undoing a set_account_currency works.
+    def test_undo_apanel_attrs(self):
+        # Undoing a changes made from apanel work
         self.mainwindow.edit_item()
         self.apanel.currency = EUR
+        self.apanel.account_number = '1234'
+        self.apanel.notes = 'some notes'
         self.apanel.save()
     
 

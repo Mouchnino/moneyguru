@@ -242,7 +242,7 @@ class Document(Repeater):
     
     #--- Account
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
-            account_number=NOEDIT):
+            account_number=NOEDIT, notes=NOEDIT):
         assert account is not None
         action = Action(tr('Change account'))
         action.change_accounts([account])
@@ -257,6 +257,8 @@ class Document(Repeater):
             account.group = group
         if account_number is not NOEDIT:
             account.account_number = account_number
+        if notes is not NOEDIT:
+            account.notes = notes
         self._undoer.record(action)
         self._cook()
         self.notify('account_changed')

@@ -705,6 +705,10 @@
         <source>Account #</source>
         <translation>Konto #</translation>
     </message>
+    <message>
+        <source>Notes:</source>
+        <translation>Bemerkungen:</translation>
+    </message>
 </context>
 <context>
     <name>AccountReassignPanel</name>

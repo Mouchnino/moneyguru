@@ -64,6 +64,8 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
             attrib['reference'] = account.reference
         if account.account_number:
             attrib['account_number'] = account.account_number
+        if account.notes:
+            attrib['notes'] = account.notes
     for transaction in transactions:
         write_transaction_element(root, transaction)
     # the functionality of the line below is untested because it's an optimisation

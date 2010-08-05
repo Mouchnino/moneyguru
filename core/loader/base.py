@@ -232,6 +232,7 @@ class Loader(object):
                 self.budget_infos.append(BudgetInfo(info.name, info.budget_target, info.budget))
             account.reference = info.reference
             account.account_number = info.account_number
+            account.notes = info.notes
             currencies.add(account.currency)
             self.accounts.add(account)
         
@@ -322,6 +323,7 @@ class AccountInfo(object):
         self.reference = None
         self.balance = None
         self.account_number = ''
+        self.notes = ''
     
     def is_valid(self):
         return bool(self.name)

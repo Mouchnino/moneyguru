@@ -34,3 +34,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Account #"; ObjectID = "73"; */
 "73.title" = "# Compte";
+
+/* Class = "NSTextFieldCell"; title = "Notes"; ObjectID = "79"; */
+"79.title" = "Notes";

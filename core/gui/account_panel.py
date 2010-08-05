@@ -25,6 +25,7 @@ class AccountPanel(MainWindowPanel):
         self.type = account.type
         self.currency = account.currency
         self.account_number = account.account_number
+        self.notes = account.notes
         self.type_index = AccountType.InOrder.index(self.type)
         self.currency_index = Currency.all.index(self.currency)
         self.account = account # for the save() assert
@@ -32,7 +33,7 @@ class AccountPanel(MainWindowPanel):
     def _save(self):
         try:
             self.document.change_account(self.account, name=self.name, type=self.type, 
-                currency=self.currency, account_number=self.account_number)
+                currency=self.currency, account_number=self.account_number, notes=self.notes)
         except DuplicateAccountNameError:
             pass
     

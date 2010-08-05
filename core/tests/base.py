@@ -772,6 +772,8 @@ def compare_apps(first, second, qif_mode=False):
             eq_(account1.type, account2.type)
             if not qif_mode:
                 eq_(account1.currency, account2.currency)
+                eq_(account1.account_number, account2.account_number)
+                eq_(account1.notes, account2.notes)
             eq_(len(account1.entries), len(account2.entries))
         except AssertionError:
             raise

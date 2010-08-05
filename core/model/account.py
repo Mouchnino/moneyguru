@@ -38,6 +38,7 @@ class Account(object):
         self.reference = None
         self.group = None
         self.account_number = ''
+        self.notes = ''
         # entries are filled by the Oven
         self.entries = EntryList(self)
         

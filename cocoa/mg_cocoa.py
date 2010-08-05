@@ -660,6 +660,12 @@ class PyAccountPanel(PyPanel):
     def setAccountNumber_(self, accountNumber):
         self.py.account_number = accountNumber
     
+    def notes(self):
+        return self.py.notes
+    
+    def setNotes_(self, notes):
+        self.py.notes = notes
+    
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     

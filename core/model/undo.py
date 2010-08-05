@@ -12,7 +12,7 @@ from hsutil.misc import extract
 
 from ..model.recurrence import Spawn
 
-ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group']
+ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group', 'account_number', 'notes']
 GROUP_SWAP_ATTRS = ['name', 'type']
 TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'notes', 'position', 'splits']
 SPLIT_SWAP_ATTRS = ['account', 'amount', 'reconciliation_date']
