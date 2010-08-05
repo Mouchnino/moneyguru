@@ -106,6 +106,10 @@ http://www.hardcoded.net/licenses/hs_license
     return [incomeStatement canShowSelectedAccount];
 }
 
+- (void)toggleExcluded
+{
+    [[incomeStatement py] toggleExcluded];
+}
 
 /* Delegate */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

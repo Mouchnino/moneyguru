@@ -35,4 +35,5 @@ http://www.hardcoded.net/licenses/hs_license
 
 /* Public */
 - (BOOL)canShowSelectedAccount;
+- (void)toggleExcluded;
 @end

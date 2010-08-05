@@ -1132,6 +1132,10 @@
         <source>Close Tab</source>
         <translation>Tab Schließen</translation>
     </message>
+    <message>
+        <source>Toggle Exclusion Status of Account</source>
+        <translation>Toggle Exclusion Status of Account</translation>
+    </message>
 </context>
 
 

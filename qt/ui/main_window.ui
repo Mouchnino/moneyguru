@@ -237,6 +237,7 @@
     <addaction name="actionMakeScheduleFromSelected"/>
     <addaction name="actionReconcileSelected"/>
     <addaction name="actionToggleReconciliationMode"/>
+    <addaction name="actionToggleAccountExclusion"/>
     <addaction name="separator"/>
     <addaction name="actionShowSelectedAccount"/>
     <addaction name="actionNavigateBack"/>
@@ -432,6 +433,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionToggleAccountExclusion">
+   <property name="text">
+    <string>Toggle Exclusion Status of Account</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+X</string>
    </property>
   </action>
   <action name="actionShowSchedules">

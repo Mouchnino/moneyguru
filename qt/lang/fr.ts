@@ -1140,6 +1140,10 @@
         <source>Close Tab</source>
         <translation>Fermer l&apos;onglet</translation>
     </message>
+    <message>
+        <source>Toggle Exclusion Status of Account</source>
+        <translation>Exclure/Inclure le compte</translation>
+    </message>
 </context>
 
 

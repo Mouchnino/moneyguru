@@ -164,6 +164,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionMakeScheduleFromSelected.triggered.connect(self.makeScheduleFromSelectedTriggered)
         self.actionReconcileSelected.triggered.connect(self.reconcileSelectedTriggered)
         self.actionToggleReconciliationMode.triggered.connect(self.toggleReconciliationModeTriggered)
+        self.actionToggleAccountExclusion.triggered.connect(self.toggleAccountExclusionTriggered)
         self.actionShowPreferences.triggered.connect(self.app.showPreferences)
         self.actionShowViewOptions.triggered.connect(self.showViewOptions)
         self.actionPrint.triggered.connect(self._print)
@@ -253,6 +254,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionShowSelectedAccount.setEnabled(isSheet or isTransactionOrEntryTable)
         self.actionNavigateBack.setEnabled(viewType == PaneType.Account)
         self.actionToggleReconciliationMode.setEnabled(canToggleReconciliation)
+        self.actionToggleAccountExclusion.setEnabled(isSheet)
     
     def _updateUndoActions(self):
         if self.doc.model.can_undo():
@@ -335,6 +337,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def toggleReconciliationModeTriggered(self):
         self.eview.model.toggle_reconciliation_mode()
+    
+    def toggleAccountExclusionTriggered(self):
+        viewType = self.model.pane_type(self.model.current_pane_index)
+        if viewType == PaneType.NetWorth:
+            self.nwview.nwsheet.model.toggle_excluded()
+        elif viewType == PaneType.Profit:
+            self.pview.psheet.model.toggle_excluded()
     
     def showViewOptions(self):
         self.vopts.loadFromPrefs()

@@ -111,7 +111,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Private */
 - (BOOL)validateAction:(SEL)action
 {
-    if (action == @selector(newGroup:))
+    if ((action == @selector(newGroup:)) || (action == @selector(toggleExcluded:)))
         return [top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]];
     else if ((action == @selector(moveUp:)) ||
              (action == @selector(moveDown:)) ||
@@ -314,6 +314,11 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)toggleEntriesReconciled:(id)sender
 {
     [(MGAccountView *)top toggleReconciled];
+}
+
+- (IBAction)toggleExcluded:(id)sender
+{
+    [(id)top toggleExcluded];
 }
 
 - (IBAction)toggleReconciliationMode:(id)sender

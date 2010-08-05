@@ -42,7 +42,7 @@ The Net Worth and Profit &amp; Loss views are where you do account management an
 
 **Show Account:** Next to each account, there is a little ![](images/basics_show_account_arrow.png). You can click on it to show this account in the Account view. You can also select it and press {cmd}&#8594;.
 
-**Account Exclusion:** You can also "exclude" accounts by clicking on the little ![](images/basics_account_out.png) icon, or by pressing space. Excluded accounts are not counted in the sheet's totals or in the charts.
+**Account Exclusion:** You can also "exclude" accounts by clicking on the little ![](images/basics_account_out.png) icon, or by pressing {cmd_shift}X. Excluded accounts are not counted in the sheet's totals or in the charts.
 
 **Pie Chart:** At the right of the sheet of each view are two pie charts showing the weight of every account for each type. If you have account groups, you can collapse one of these groups in the sheet to have the account values grouped in the pie chart. For example, if you have a "Automobile" group with a few related accounts under it, you can collapse the group in the sheet to have "Automobile" as one slice (rather than having one slice for Gas, one slice for Insurance, etc..).
 

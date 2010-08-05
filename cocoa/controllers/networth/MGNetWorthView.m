@@ -106,6 +106,11 @@ http://www.hardcoded.net/licenses/hs_license
     return [balanceSheet canShowSelectedAccount];
 }
 
+- (void)toggleExcluded
+{
+    [[balanceSheet py] toggleExcluded];
+}
+
 /* Delegate */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {

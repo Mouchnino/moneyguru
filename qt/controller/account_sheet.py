@@ -108,7 +108,6 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.collapsed.connect(self.nodeCollapsed)
         self.view.expanded.connect(self.nodeExpanded)
         self.view.deletePressed.connect(self.model.delete)
-        self.view.spacePressed.connect(self.model.toggle_excluded)
         self.view.doubleClicked.connect(self.model.show_selected_account)
         self.view.header().sectionMoved.connect(self.headerSectionMoved)
         self.view.header().sectionResized.connect(self.headerSectionResized)

@@ -42,7 +42,7 @@ Les vues "Valeur nette" et "Profits/Pertes" sont là où les comptes sont géré
 
 **Show Account:** À côté de chaque compte, il y a un petit ![](images/basics_show_account_arrow.png). Vous pouvez cliquer dessus pour ouvrir ce compte dans un nouvel onglet. Vous pouvez aussi appuyer sur {cmd}&#8594;.
 
-**Account Exclusion:** Vous pouvez "exclure" des compte avec le petit ![](images/basics_account_out.png), ou en pressant sur Espace. Les compte exclus ne comptent pas dans le totaux et dans le graphes.
+**Account Exclusion:** Vous pouvez "exclure" des compte avec le petit ![](images/basics_account_out.png), ou en pressant sur {cmd_shift}X. Les compte exclus ne comptent pas dans le totaux et dans le graphes.
 
 **Diagrammes circulaires:** Les diagrammes circulaires représentent le poids relatif de vos comptes. Si vous avez de groupe de compte, le fait de fermer ce groupe dans la liste de compte va regrouper ces comptes dans le diagramme circulaire.
 

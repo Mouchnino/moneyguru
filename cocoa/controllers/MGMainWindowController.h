@@ -107,6 +107,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)showSelectedAccount:(id)sender;
 - (IBAction)toggleReconciliationMode:(id)sender;
 - (IBAction)toggleEntriesReconciled:(id)sender;
+- (IBAction)toggleExcluded:(id)sender;
 - (IBAction)toggleViewOptionsVisible:(id)sender;
 
 /* Public */

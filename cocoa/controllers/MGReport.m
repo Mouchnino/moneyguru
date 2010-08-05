@@ -253,12 +253,6 @@ http://www.hardcoded.net/licenses/hs_license
     return YES;
 }
 
-- (BOOL)tableViewHadSpacePressed:(NSTableView *)tableView
-{
-    [[self py] toggleExcluded];
-    return YES;
-}
-
 - (void)outlineViewWasDoubleClicked:(HSOutlineView *)sender
 {
     if ([outlineView clickedRow] != -1)
