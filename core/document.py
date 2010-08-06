@@ -459,7 +459,10 @@ class Document(Repeater):
         assert entry is not None
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
             Currency.get_rates_db().ensure_rates(date, [amount.currency.code, entry.account.currency.code])
-        global_scope = self._query_for_scope_if_needed([entry.transaction])
+        if reconciliation_date is NOEDIT:
+            global_scope = self._query_for_scope_if_needed([entry.transaction])
+        else:
+            global_scope = False # It doesn't make sense to set a reconciliation date globally
         action = self._get_action_from_changed_transactions([entry.transaction])
         self._undoer.record(action)
         
@@ -467,6 +470,9 @@ class Document(Repeater):
         min_date = min(d for d in candidate_dates if d is not NOEDIT and d is not None)
         if reconciliation_date is not NOEDIT:
             entry.split.reconciliation_date = reconciliation_date
+            if isinstance(entry.split.transaction, Spawn):
+                entry.split.transaction.recurrence.delete(entry.split.transaction)
+                self.transactions.add(entry.split.transaction.replicate())
         if (amount is not NOEDIT) and (len(entry.splits) == 1):
             entry.change_amount(amount)
         if (transfer is not NOEDIT) and (len(entry.splits) == 1) and (transfer != entry.transfer):

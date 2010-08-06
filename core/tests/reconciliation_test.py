@@ -272,6 +272,28 @@ def test_toggle_entries_reconciled_with_some_reconciled(app):
     assert app.etable[1].reconciled
     assert app.etable[2].reconciled
 
+#--- Three entries all reconciled
+def app_three_entries_all_reconciled():
+    app = TestApp()
+    app.add_account('account')
+    app.mw.show_account()
+    app.add_entry('1/1/2008', 'one', increase='1', reconciliation_date='1/1/2008')
+    app.add_entry('2/1/2008', 'two', increase='2', reconciliation_date='2/1/2008')
+    app.add_entry('3/1/2008', 'three', increase='4', reconciliation_date='3/1/2008')
+    return app
+
+@with_app(app_three_entries_all_reconciled)
+def test_reconcile_schedule_spawn_by_setting_recdate(app):
+    # When the user only changes the reconciliation date of a spawn, don't ask for scope and
+    # correctly materialize the spawn.
+    app.add_schedule(start_date='4/1/2008', account='account', amount='8', repeat_every=10)
+    app.show_account('account')
+    app.aview.toggle_reconciliation_mode()
+    app.etable[3].reconciliation_date = '4/1/2008'
+    app.etable.save_edits()
+    app.check_gui_calls_partial(app.doc_gui, not_expected=['query_for_schedule_scope'])
+    assert not app.etable[3].recurrent
+
 #--- Entries with a different order under reconciliation date sorting
 def app_different_reconciliation_date_order():
     app = TestApp()
