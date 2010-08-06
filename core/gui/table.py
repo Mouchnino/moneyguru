@@ -104,6 +104,24 @@ class Row(RowBase):
         # generator
         raise NotImplementedError()
     
+    def _get_changed_fields(self, target, fields):
+        # Returns a dict {fieldname: value} for all `fields` that changed in target. `fields` is a
+        # list of tuples (row_attr, target_attr).
+        result = {}
+        for row_attr, target_attr in fields:
+            target_value = getattr(target, target_attr)
+            row_value = getattr(self, row_attr)
+            if row_value != target_value:
+                result[target_attr] = row_value
+        return result
+    
+    def _load_from_fields(self, target, fields):
+        # Sets row fields based of `fields` which is a list of tuples (row_attr, target_attr)
+        # In lots of case, you can't cover every field with it, but you can always load the rest 
+        # manually.
+        for row_attr, target_attr in fields:
+            setattr(self, row_attr, getattr(target, target_attr))
+    
     #--- Override
     def sort_key_for_column(self, column_name):
         value = RowBase.sort_key_for_column(self, column_name)

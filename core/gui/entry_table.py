@@ -334,6 +334,14 @@ AUTOFILL_ATTRS = frozenset(['description', 'payee', 'transfer', 'increase', 'dec
 AMOUNT_AUTOFILL_ATTRS = frozenset(['increase', 'decrease'])
 
 class EntryTableRow(RowWithDate, BaseEntryTableRow):
+    FIELDS = [
+        ('_date', 'date'),
+        ('_description', 'description'),
+        ('_payee', 'payee'),
+        ('_checkno', 'checkno'),
+        ('_amount', 'amount'),
+        ('_reconciliation_date', 'reconciliation_date'),
+    ]
     def __init__(self, table, entry, account):
         super(EntryTableRow, self).__init__(table)
         self.entry = entry
@@ -387,25 +395,23 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
     
     def load(self):
         entry = self.entry
-        self._date = entry.date
+        self._load_from_fields(entry, self.FIELDS)
         self._position = entry.transaction.position
-        self._description = entry.description
-        self._payee = entry.payee
-        self._checkno = entry.checkno
-        self._amount = entry.amount
         self._transfer = ', '.join(s.combined_display for s in entry.transfer)
         self._balance = entry.balance_with_budget
         self._reconciled_balance = entry.reconciled_balance if entry.reconciled else None
         self._reconciled = entry.reconciled
-        self._reconciliation_date = entry.reconciliation_date
         self._recurrent = isinstance(entry.transaction, Spawn)
         self._is_budget = getattr(entry.transaction, 'is_budget', False)
     
     def save(self):
-        change = self.table.document.change_entry
-        change(self.entry, date=self._date, reconciliation_date=self._reconciliation_date, 
-            description=self._description, payee=self._payee, checkno=self._checkno,
-            transfer=self._transfer, amount=self._amount)
+        entry = self.entry
+        changed_fields = self._get_changed_fields(entry, self.FIELDS)
+        if len(entry.transfer) <= 1:
+            oldvalue = entry.transfer[0].combined_display if entry.transfer else ''
+            if self._transfer != oldvalue:
+                changed_fields['transfer'] = self._transfer
+        self.table.document.change_entry(entry, **changed_fields)
         self.load()
     
     def toggle_reconciled(self):

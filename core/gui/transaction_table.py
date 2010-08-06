@@ -107,6 +107,12 @@ class TransactionTable(TransactionTableBase):
 AUTOFILL_ATTRS = frozenset(['description', 'payee', 'from', 'to', 'amount'])
 
 class TransactionTableRow(RowWithDate):
+    FIELDS = [
+        ('_date', 'date'),
+        ('_description', 'description'),
+        ('_payee', 'payee'),
+        ('_checkno', 'checkno'),
+    ]
     def __init__(self, table, transaction):
         super(TransactionTableRow, self).__init__(table)
         self.document = table.document
@@ -138,12 +144,9 @@ class TransactionTableRow(RowWithDate):
     
     def load(self):
         transaction = self.transaction
-        self._date = self.transaction.date
+        self._load_from_fields(transaction, self.FIELDS)
         self._date_fmt = None
         self._position = transaction.position
-        self._description = self.transaction.description
-        self._payee = self.transaction.payee
-        self._checkno = self.transaction.checkno
         splits = transaction.splits
         froms, tos = self.transaction.splitted_splits()
         self._from_count = len(froms)
@@ -162,15 +165,15 @@ class TransactionTableRow(RowWithDate):
         self._can_set_amount = transaction.can_set_amount
     
     def save(self):
-        kw = {'date': self._date, 'description': self._description, 'payee': self._payee,
-              'checkno': self._checkno}
+        transaction = self.transaction
+        changed_fields = self._get_changed_fields(transaction, self.FIELDS)
         if self.can_edit_from:
-            kw['from_'] = self._from
+            changed_fields['from_'] = self._from
         if self.can_edit_to == 1:
-            kw['to'] = self._to
+            changed_fields['to'] = self._to
         if self.can_edit_amount:
-            kw['amount'] = self._amount
-        self.document.change_transactions([self.transaction], **kw)
+            changed_fields['amount'] = self._amount
+        self.document.change_transactions([transaction], **changed_fields)
         self.load()
     
     def sort_key_for_column(self, column_name):
