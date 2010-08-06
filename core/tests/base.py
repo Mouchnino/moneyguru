@@ -487,6 +487,12 @@ class TestApp(object):
         # add one to the expected count, we use this method that subtract 1 to the len of etable.
         return len(self.etable) - 1 
     
+    def navigate_to_date(self, year, month, day):
+        # navigate the current date range until target_date is in it. We use year month day to avoid
+        # having to import datetime.date in tests.
+        assert self.doc.date_range.can_navigate
+        self.doc.date_range = self.doc.date_range.around(date(year, month, day))
+    
     def new_app_same_prefs(self):
         # Returns a new TestApp() but with the same app_gui as before, thus preserving preferences.
         app = Application(self.app_gui)
@@ -813,27 +819,6 @@ def compare_apps(first, second, qif_mode=False):
         eq_(budget1.repeat_every, budget2.repeat_every)
 
 class CommonSetup(object):
-    def setup_scheduled_transaction(self, start_date='13/09/2008', description='foobar', 
-            account=None, debit=None, repeat_type_index=0, repeat_every=1, stop_date=None):
-        # 0 = daily, 1 = weekly, etc..
-        # This setup also wraps a monthly range around the newly created schedule
-        self.document.date_range = MonthRange(self.app.parse_date(start_date))
-        self.mainwindow.select_schedule_table()
-        self.scpanel.new()
-        self.scpanel.start_date = start_date
-        self.scpanel.description = description
-        self.scpanel.repeat_type_index = repeat_type_index
-        self.scpanel.repeat_every = repeat_every
-        self.scpanel.stop_date = stop_date
-        if account:
-            self.scsplittable.add()
-            self.scsplittable.edited.account = account
-            if debit:
-                self.scsplittable.edited.debit = debit
-            self.scsplittable.save_edits()
-        self.scpanel.save()
-        self.mainwindow.select_transaction_table()
-    
     def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_name=None):
         # 4 days left to the month, 100$ monthly budget
         self.mock_today(2008, 1, 27)

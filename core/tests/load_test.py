@@ -9,10 +9,11 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
+from hsutil.testutil import eq_, Patcher
 from hscommon.currency import PLN, CAD
 from hsutil.testutil import with_tmpdir
 
+from ..document import ScheduleScope
 from ..model.account import AccountType
 from ..model.date import MonthRange
 from .base import TestCase, compare_apps, TestApp
@@ -347,6 +348,42 @@ def app_account_with_apanel_attrs():
     app.apanel.save()
     return app
 
+#--- One Schedule and one normal txn
+def app_one_schedule_and_one_normal_txn():
+    app = TestApp()
+    app.drsel.select_month_range()
+    app.add_account('account')
+    app.mw.show_account()
+    app.add_entry('19/09/2008', description='bar', increase='2')
+    app.add_schedule(start_date='13/09/2008', description='foo', account='account', amount='1',
+        repeat_every=3)
+    return app
+
+#--- Schedule with global change
+def app_schedule_with_global_change():
+    p = Patcher()
+    p.patch_today(2008, 9, 30)
+    app = TestApp()
+    app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
+    app.mw.select_transaction_table()
+    app.ttable.select([2])
+    app.ttable[2].date = '17/09/2008'
+    app.ttable[2].description = 'changed'
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
+    app.ttable.save_edits()
+    return app, p
+
+#--- Schedule with local deletion
+def app_schedule_with_local_deletion():
+    p = Patcher()
+    p.patch_today(2008, 9, 30)
+    app = TestApp()
+    app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
+    app.mw.select_transaction_table()
+    app.ttable.select([2])
+    app.ttable.delete()
+    return app, p
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -396,6 +433,19 @@ def test_save_load():
     # apanel attributes are saved/loaded
     app = app_account_with_apanel_attrs()
     yield check, app
+    
+    # The native loader was loading the wrong split element into the Recurrence's
+    # ref txn. So the recurrences were always getting splits from the last loaded normal txn
+    app = app_one_schedule_and_one_normal_txn()
+    yield check, app
+    
+    app, p = app_schedule_with_global_change()
+    yield check, app
+    p.unpatch()
+    
+    app, p = app_schedule_with_local_deletion()
+    yield check, app
+    p.unpatch()
 
 def test_save_load_qif():
     @with_tmpdir

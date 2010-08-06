@@ -32,8 +32,7 @@ class Pristine(TestCase):
 class OneDailyScheduledTransaction(TestCase, CommonSetup):
     def setUp(self):
         self.create_instances()
-        self.setup_scheduled_transaction(repeat_every=3)
-        self.mainwindow.select_schedule_table()
+        self.add_schedule(start_date='13/09/2008', repeat_every=3)
         self.sctable.select([0])
         self.clear_gui_calls()
     
