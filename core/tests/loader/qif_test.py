@@ -312,6 +312,14 @@ def test_transfer():
     eq_(len(loader.account_infos), 2)
     eq_(len(loader.transaction_infos), 1)
 
+def test_extra_dline():
+    loader = Loader(USD)
+    loader.parse(TestData.filepath('qif', 'extra_dline.qif'))
+    loader.load() # no crash
+    eq_(len(loader.transactions), 1)
+    txn = loader.transactions[0]
+    eq_(txn.date, date(2010, 8, 7))
+
 @with_tmpdir
 def test_save_to_qif(tmppath):
     # When there's a transfer between 2 assets, only put an entry in one of the accounts

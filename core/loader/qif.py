@@ -140,7 +140,10 @@ class Loader(base.Loader):
         
         def parse_entry_line(header, data):
             if header == 'D':
-                self.transaction_info.date = datetime.strptime(data, self.date_format).date()
+                try:
+                    self.transaction_info.date = datetime.strptime(data, self.date_format).date()
+                except ValueError:
+                    pass
             elif header == 'M':
                 self.transaction_info.description = data
             elif header == 'P':
