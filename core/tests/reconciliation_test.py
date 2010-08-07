@@ -293,6 +293,8 @@ def test_reconcile_schedule_spawn_by_setting_recdate(app):
     app.etable.save_edits()
     app.check_gui_calls_partial(app.doc_gui, not_expected=['query_for_schedule_scope'])
     assert not app.etable[3].recurrent
+    # There was a bug that caused the spawn to be duplicated when setting a reconciliation date for it.
+    assert not app.etable[4].reconciled
 
 #--- Entries with a different order under reconciliation date sorting
 def app_different_reconciliation_date_order():
@@ -302,9 +304,15 @@ def app_different_reconciliation_date_order():
     # when sorting by reconciliation date, 'two' comes first.
     app.add_entry('19/1/2008', 'one', increase='1', reconciliation_date='22/1/2008')
     app.add_entry('20/1/2008', 'two', increase='2', reconciliation_date='20/1/2008')
-    app.add_entry('21/1/2008', 'three', increase='3')
+    app.add_entry('23/1/2008', 'three', increase='3')
     app.aview.toggle_reconciliation_mode()
     return app
+
+@with_app(app_different_reconciliation_date_order)
+def test_reconciling_third_entry_makes_the_oven_start_off_with_correct_entry_as_base(app):
+    app.etable.select([2])
+    app.etable.toggle_reconciled()
+    eq_(app.etable[2].balance, '6.00')
 
 @with_app(app_different_reconciliation_date_order)
 def test_reconciliation_balance_is_determined_by_reconciliation_date(app):

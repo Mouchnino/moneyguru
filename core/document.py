@@ -472,7 +472,12 @@ class Document(Repeater):
             entry.split.reconciliation_date = reconciliation_date
             if isinstance(entry.split.transaction, Spawn):
                 entry.split.transaction.recurrence.delete(entry.split.transaction)
-                self.transactions.add(entry.split.transaction.replicate())
+                materialized = entry.split.transaction.replicate()
+                self.transactions.add(materialized)
+                # At this point we have to hijack the entry so we modify the materialized transaction
+                # It's a little hackish, but well... it takes what it takes
+                split_index = entry.transaction.splits.index(entry.split)
+                entry.split = materialized.splits[split_index]
         if (amount is not NOEDIT) and (len(entry.splits) == 1):
             entry.change_amount(amount)
         if (transfer is not NOEDIT) and (len(entry.splits) == 1) and (transfer != entry.transfer):

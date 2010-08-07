@@ -8,7 +8,8 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import bisect
-from collections import Sequence
+import datetime
+from collections import defaultdict, Sequence
 from itertools import takewhile
 
 from hsutil.misc import flatten
@@ -90,6 +91,13 @@ class Entry(object):
         return self.split.reconciliation_date
     
     @property
+    def reconciliation_key(self):
+        recdate = self.reconciliation_date
+        if recdate is None:
+            recdate = datetime.date.min
+        return (recdate, self.date, self.transaction.position)
+    
+    @property
     def reference(self):
         return self.split.reference
     
@@ -98,10 +106,11 @@ class EntryList(Sequence):
     def __init__(self, account):
         self.account = account
         self._entries = []
-        self._date2entries = {}
+        self._date2entries = defaultdict(list)
         self._sorted_entry_dates = []
         # the key for this dict is (date_range, currency)
         self._daterange2cashflow = {}
+        self._last_reconciled = None
     
     def __getitem__(self, key):
         return self._entries.__getitem__(key)
@@ -133,18 +142,21 @@ class EntryList(Sequence):
         # add_entry() calls must *always* be made in order
         self._entries.append(entry)
         date = entry.date
-        try:
-            self._date2entries[date].append(entry)
-        except KeyError:
-            self._date2entries[date] = [entry]
+        self._date2entries[date].append(entry)
         if not self._sorted_entry_dates or self._sorted_entry_dates[-1] < date:
             self._sorted_entry_dates.append(date)
+        if (self._last_reconciled is None) or (entry.reconciliation_key >= self._last_reconciled.reconciliation_key):
+            self._last_reconciled = entry
     
     def balance(self, date=None, currency=None):
         return self._balance('balance', date, currency=currency)
     
-    def balance_of_reconciled(self, date=None, currency=None):
-        return self._balance('reconciled_balance', date, currency=currency)
+    def balance_of_reconciled(self):
+        entry = self._last_reconciled
+        if entry is not None:
+            return entry.reconciled_balance
+        else:
+            return 0
     
     def balance_with_budget(self, date=None, currency=None):
         return self._balance('balance_with_budget', date, currency=currency)
@@ -160,11 +172,9 @@ class EntryList(Sequence):
     def clear(self, from_date):
         if from_date is None:
             self._entries = []
-            self._date2entries = {}
-            self._daterange2cashflow = {}
-            self._sorted_entry_dates = []
         else:
             self._entries = list(takewhile(lambda e: e.date < from_date, self._entries))
+        if self._entries:
             index = bisect.bisect_left(self._sorted_entry_dates, from_date)
             for date in self._sorted_entry_dates[index:]:
                 del self._date2entries[date]
@@ -172,6 +182,12 @@ class EntryList(Sequence):
                 if date_range.end >= from_date:
                     del self._daterange2cashflow[(date_range, currency)]
             del self._sorted_entry_dates[index:]
+            self._last_reconciled = max(self._entries, key=lambda e: e.reconciliation_key)
+        else:
+            self._date2entries = defaultdict(list)
+            self._daterange2cashflow = {}
+            self._sorted_entry_dates = []
+            self._last_reconciled = None
     
     def last_entry(self, date=None):
         if self._entries:
@@ -190,8 +206,8 @@ class EntryList(Sequence):
         balance = self.balance(date=date, currency=currency)
         return self.account.normalize_amount(balance)
     
-    def normal_balance_of_reconciled(self, date=None, currency=None):
-        balance = self.balance_of_reconciled(date=date, currency=currency)
+    def normal_balance_of_reconciled(self):
+        balance = self.balance_of_reconciled()
         return self.account.normalize_amount(balance)
     
     def normal_cash_flow(self, date_range, currency=None):
