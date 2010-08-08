@@ -665,6 +665,20 @@ class ScheduledTransaction(TestCase):
         self.ttable.delete()
         eq_(self.ttable.row_count, len_before-1)
     
+    @save_state_then_verify
+    def test_reconcile_spawn_by_changing_recdate(self):
+        # Undoing a spawn reconciliation correctly removes the materialized txn.
+        self.show_account('account')
+        self.etable[0].reconciliation_date = self.etable[0].date
+        self.etable.save_edits()
+    
+    @save_state_then_verify
+    def test_reconcile_spawn_by_toggling(self):
+        # Undoing a spawn reconciliation correctly removes the materialized txn.
+        self.show_account('account')
+        self.aview.toggle_reconciliation_mode()
+        self.etable[0].toggle_reconciled()
+    
 
 class Budget(TestCase, CommonSetup):
     def setUp(self):

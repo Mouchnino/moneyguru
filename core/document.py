@@ -188,6 +188,16 @@ class Document(Repeater):
         else:
             return False
     
+    def _reconcile_spawn_split(self, split, reconciliation_date):
+        # returns a reference to the corresponding materialized split
+        split.transaction.recurrence.delete(split.transaction)
+        materialized = split.transaction.replicate()
+        self.transactions.add(materialized)
+        split_index = split.transaction.splits.index(split)
+        materialized_split = materialized.splits[split_index]
+        materialized_split.reconciliation_date = reconciliation_date
+        return materialized_split
+    
     def _restore_preferences(self):
         start_date = self.app.get_default(SELECTED_DATE_RANGE_START_PREFERENCE)
         if start_date:
@@ -469,15 +479,13 @@ class Document(Repeater):
         candidate_dates = [entry.date, date, reconciliation_date, entry.reconciliation_date]
         min_date = min(d for d in candidate_dates if d is not NOEDIT and d is not None)
         if reconciliation_date is not NOEDIT:
-            entry.split.reconciliation_date = reconciliation_date
             if isinstance(entry.split.transaction, Spawn):
-                entry.split.transaction.recurrence.delete(entry.split.transaction)
-                materialized = entry.split.transaction.replicate()
-                self.transactions.add(materialized)
                 # At this point we have to hijack the entry so we modify the materialized transaction
                 # It's a little hackish, but well... it takes what it takes
-                split_index = entry.transaction.splits.index(entry.split)
-                entry.split = materialized.splits[split_index]
+                entry.split = self._reconcile_spawn_split(entry.split, reconciliation_date)
+                action.added_transactions.add(entry.split.transaction)
+            else:
+                entry.split.reconciliation_date = reconciliation_date
         if (amount is not NOEDIT) and (len(entry.splits) == 1):
             entry.change_amount(amount)
         if (transfer is not NOEDIT) and (len(entry.splits) == 1) and (transfer != entry.transfer):
@@ -505,19 +513,18 @@ class Document(Repeater):
         newvalue = not all_reconciled
         action = Action(tr('Change reconciliation'))
         action.change_splits([e.split for e in entries])
-        self._undoer.record(action)
-        
         min_date = min(entry.date for entry in entries)
         splits = [entry.split for entry in entries]
         spawns, splits = extract(lambda s: isinstance(s.transaction, Spawn), splits)
+        action.change_transactions([s.transaction for s in spawns]) # They're being deleted when materialized
+        self._undoer.record(action)
         if newvalue:
             for split in splits:
                 split.reconciliation_date = split.transaction.date
             for spawn in spawns:
                 #XXX update transaction selection
-                spawn.reconciliation_date = spawn.transaction.date
-                spawn.transaction.recurrence.delete(spawn.transaction)
-                self.transactions.add(spawn.transaction.replicate())
+                materialized_split = self._reconcile_spawn_split(spawn, spawn.transaction.date)
+                action.added_transactions.add(materialized_split.transaction)
         else:
             for split in splits:
                 split.reconciliation_date = None
