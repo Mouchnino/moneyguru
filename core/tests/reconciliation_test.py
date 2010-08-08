@@ -32,6 +32,18 @@ def app_one_entry():
     return app
 
 @with_app(app_one_entry)
+def test_disallow_reconciliation_date_lower_than_entry_date(app):
+    # Reconciliation dates that are lower than entry dates don't make any sense and are the cause
+    # of bugs in the reconciliation balance counting mechanism. Don't allow that.
+    app.etable[0].reconciliation_date = '10/07/2008'
+    app.etable.save_edits()
+    eq_(app.etable[0].reconciliation_date, '11/07/2008')
+    # Also adjust recdate if tdate changes
+    app.etable[0].date = '12/07/2008'
+    app.etable.save_edits()
+    eq_(app.etable[0].reconciliation_date, '12/07/2008')
+
+@with_app(app_one_entry)
 def test_initial_attrs(app):
     # initially, an entry is not reconciled
     assert not app.etable[0].reconciled
@@ -236,17 +248,6 @@ def test_save_load_with_one_reconciled_entry(app):
     compare_apps(app.doc, newapp.doc)
 
 @with_app(app_three_entries_one_reconciled)
-def test_set_reconciliation_date_lower_than_other(app):
-    # When setting a reconciliation date lower than others', be sure to recook others
-    app.etable[2].reconciliation_date = '19/1/2008' # lower than 'two'
-    app.etable.save_edits()
-    eq_(app.etable[1].balance, '5.00')
-    # then, when setting it to a later date, update the second entry as well
-    app.etable[2].reconciliation_date = '31/1/2008'
-    app.etable.save_edits()
-    eq_(app.etable[1].balance, '2.00')
-
-@with_app(app_three_entries_one_reconciled)
 def test_toggle_entries_reconciled_with_none_reconciled(app):
     # When none of the selected entries are reconciled, all selected entries get reconciled.
     app.etable.select([0, 2])
@@ -312,6 +313,8 @@ def app_different_reconciliation_date_order():
 def test_reconciling_third_entry_makes_the_oven_start_off_with_correct_entry_as_base(app):
     app.etable.select([2])
     app.etable.toggle_reconciled()
+    print repr(app.etable[0].reconciliation_date)
+    print repr(app.etable[2].reconciliation_date)
     eq_(app.etable[2].balance, '6.00')
 
 @with_app(app_different_reconciliation_date_order)
@@ -327,3 +330,14 @@ def test_toggle_reconciliation_of_second(app):
     # if its date is before the second entry's date
     app.etable[1].toggle_reconciled()
     eq_(app.etable[0].balance, '1.00')
+
+@with_app(app_three_entries_one_reconciled)
+def test_set_reconciliation_date_lower_than_other(app):
+    # When setting a reconciliation date lower than others', be sure to recook others
+    app.etable[0].reconciliation_date = '19/1/2008' # lower than 'two'
+    app.etable.save_edits()
+    eq_(app.etable[1].balance, '3.00')
+    # then, when setting it to a later date, update the second entry as well
+    app.etable[0].reconciliation_date = '32/1/2008'
+    app.etable.save_edits()
+    eq_(app.etable[1].balance, '2.00')

@@ -135,6 +135,10 @@ class Transaction(object):
             for split in tochange:
                 split.amount = Amount(split.amount.value, currency)
                 split.reconciliation_date = None
+        # Reconciliation can never be lower than txn date
+        for split in self.splits:
+            if split.reconciliation_date is not None:
+                split.reconciliation_date = max(split.reconciliation_date, self.date)
         self.mtime = time.time()
     
     def matches(self, query):
