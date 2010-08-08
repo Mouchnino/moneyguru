@@ -122,7 +122,7 @@ class Loader(base.Loader):
         
         def parse_account_line(header, data):
             if header == 'N':
-                self.account_info.name = data
+                self.account_info.name = data.strip()
             if header == 'T' and data in ('Oth L', 'CCard'):
                 self.account_info.type = AccountType.Liability
         
@@ -152,7 +152,7 @@ class Loader(base.Loader):
                 self.transaction_info.checkno = data
             elif header == 'L':
                 if data.startswith('[') and data.endswith(']'):
-                    data = data[1:-1]
+                    data = data[1:-1].strip()
                 if data in seen_account_names:
                     # This transaction has already been added from the other account(s)
                     self.cancel_transaction()

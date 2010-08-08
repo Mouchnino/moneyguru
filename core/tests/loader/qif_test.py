@@ -313,6 +313,7 @@ def test_transfer():
     eq_(len(loader.transaction_infos), 1)
 
 def test_extra_dline():
+    # Ignore extra D lines which don't contain dates. Previously, these lines would cause a crash.
     loader = Loader(USD)
     loader.parse(TestData.filepath('qif', 'extra_dline.qif'))
     loader.load() # no crash
@@ -320,6 +321,14 @@ def test_extra_dline():
     txn = loader.transactions[0]
     eq_(txn.date, date(2010, 8, 7))
 
+def test_transfer_space_in_account_names():
+    # When "L" lines have a space character at the end (bfore the "]" bracket) it doesn't prevent
+    # us from correctly matching the account with seen account names.
+    loader = Loader(USD)
+    loader.parse(TestData.filepath('qif', 'transfer_space_in_account_names.qif'))
+    loader.load()
+    eq_(len(loader.transactions), 1) # the transactions hasn't been doubled.
+    
 @with_tmpdir
 def test_save_to_qif(tmppath):
     # When there's a transfer between 2 assets, only put an entry in one of the accounts
