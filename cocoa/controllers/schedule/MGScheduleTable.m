@@ -27,10 +27,10 @@ http://www.hardcoded.net/licenses/hs_license
         {@"repeat_type", @"Repeat Type", 80, 60, 0, YES, nil},
         {@"interval", @"Interval", 60, 60, 0, YES, nil},
         {@"checkno", @"Check #", 72, 40, 0, YES, nil},
-        {@"description", @"Description", 310, 80, 0, YES, nil},
+        {@"description", @"Description", 150, 80, 0, YES, nil},
         {@"payee", @"Payee", 85, 80, 0, YES, nil},
-        {@"from", @"From", 136, 70, 0, YES, nil},
-        {@"to", @"To", 135, 70, 0, YES, nil},
+        {@"from", @"From", 118, 70, 0, YES, nil},
+        {@"to", @"To", 118, 70, 0, YES, nil},
         {@"amount", @"Amount", 90, 80, 0, YES, nil},
         nil
     };
