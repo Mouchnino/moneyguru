@@ -22,7 +22,7 @@ from hscommon.cocoa.objcmin import (NSSearchPathForDirectoriesInDomains, NSAppli
 from ..const import PaneType
 from ..model.account import AccountType
 from ..model.cashculator import CashculatorDB
-from ..model.date import MonthRange
+from ..model.date import MonthRange, ONE_DAY
 from .base import BaseView
 
 MONTHS_TO_FILL = 4
@@ -105,7 +105,8 @@ class CashculatorView(BaseView):
         # Now set starting balances
         accounts = set(a for a in self.document.accounts if a.is_balance_sheet_account())
         for dr in dateranges:
-            nw =  sum(a.entries.balance(date=dr.start, currency=currency) for a in accounts)
+            baldate = dr.start - ONE_DAY
+            nw =  sum(a.entries.balance(date=baldate, currency=currency) for a in accounts)
             if nw:
                 nw = int(nw.value*100)
             db.set_balance(dr.start, nw)
