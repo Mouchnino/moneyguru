@@ -23,6 +23,31 @@ def test_reconciliation_mode(app):
     app.aview.toggle_reconciliation_mode()
     assert not app.aview.reconciliation_mode
 
+#--- One account
+def app_one_account():
+    app = TestApp()
+    app.add_account()
+    app.mw.show_account()
+    return app
+
+@with_app(app_one_account)
+def test_multiple_recdate_overlapping(app):
+    # Oven invalidations take place correctly even when there are multiple overlapping in dates and
+    # reconciliation dates. That's a tricky one.
+    # Here we have 4 entries, a first one overlapping the 2nd, and the second overlapping the third.
+    # then, we have a 4th entry with a date and recdate equal to the recdate of the last. When we
+    # reconcile the last entry, the oven must correctly chain invalidations to go up to the first
+    # one.
+    app.aview.toggle_reconciliation_mode()
+    app.add_entry('03/08/2010', increase='1', reconciliation_date='06/08/2010')
+    app.add_entry('04/08/2010', increase='2', reconciliation_date='07/08/2010')
+    app.add_entry('05/08/2010', increase='4', reconciliation_date='05/08/2010')
+    app.add_entry('07/08/2010', increase='8')
+    # We do the last one in two steps because otherwise, we are over-invalidated by the add_entry
+    # operation, causing the test to incorrectly pass.
+    app.etable[3].toggle_reconciled()
+    eq_(app.etable[3].balance, '15.00')
+
 #--- One entry
 def app_one_entry():
     app = TestApp()

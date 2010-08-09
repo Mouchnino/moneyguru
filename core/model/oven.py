@@ -94,7 +94,8 @@ class Oven(object):
         else:
             # it's possible that we have to reduce from_date a bit. If a split from before as a
             # reconciled date >= from_date, we have to set from_date to that split's normal date
-            splits = flatten(t.splits for t in self.transactions) # splits from *cooked* txns
+            # We reverse the transactions to correctly detect chained overlappings in date/recdate
+            splits = flatten(t.splits for t in reversed(self.transactions)) # splits from *cooked* txns
             for split in splits:
                 rdate = split.reconciliation_date
                 if rdate is not None and rdate >= from_date:
