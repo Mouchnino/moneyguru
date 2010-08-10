@@ -42,9 +42,9 @@ install: build
 	dh_installdirs
 
 	chmod +x src/start.py
-	cp -R src/ $(CURDIR)/debian/tmp/usr/local/share/moneyguru
-	cp $(CURDIR)/debian/moneyguru.desktop $(CURDIR)/debian/tmp/usr/share/applications
-	ln -s /usr/local/share/moneyguru/start.py $(CURDIR)/debian/tmp/usr/local/bin/moneyguru
+	cp -R src/ $(CURDIR)/debian/moneyguru/usr/local/share/moneyguru
+	cp $(CURDIR)/debian/moneyguru.desktop $(CURDIR)/debian/moneyguru/usr/share/applications
+	ln -s /usr/local/share/moneyguru/start.py $(CURDIR)/debian/moneyguru/usr/local/bin/moneyguru
 
 
 # Build architecture-independent files here.
