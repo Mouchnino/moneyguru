@@ -33,7 +33,7 @@ SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
-    VERSION = '2.0.0'
+    VERSION = '2.1.0'
     DEMO_LIMIT_DESC = tr("In the demo version, documents with more than 100 transactions cannot be saved.")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
