@@ -46,7 +46,7 @@
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
-         <normaloff>:/balance_sheet_48</normaloff>:/balance_sheet_48</iconset>
+         <normaloff>:/balance_sheet_16</normaloff>:/balance_sheet_16</iconset>
        </property>
       </widget>
      </item>
@@ -57,7 +57,7 @@
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
-         <normaloff>:/income_statement_48</normaloff>:/income_statement_48</iconset>
+         <normaloff>:/income_statement_16</normaloff>:/income_statement_16</iconset>
        </property>
       </widget>
      </item>
@@ -68,7 +68,7 @@
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
-         <normaloff>:/transaction_table_48</normaloff>:/transaction_table_48</iconset>
+         <normaloff>:/transaction_table_16</normaloff>:/transaction_table_16</iconset>
        </property>
       </widget>
      </item>
@@ -79,7 +79,7 @@
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
-         <normaloff>:/schedules_48</normaloff>:/schedules_48</iconset>
+         <normaloff>:/schedules_16</normaloff>:/schedules_16</iconset>
        </property>
       </widget>
      </item>
@@ -90,7 +90,7 @@
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
-         <normaloff>:/budget_48</normaloff>:/budget_48</iconset>
+         <normaloff>:/budget_16</normaloff>:/budget_16</iconset>
        </property>
       </widget>
      </item>
