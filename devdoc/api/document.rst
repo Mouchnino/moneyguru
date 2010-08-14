@@ -252,4 +252,72 @@ The Document class
     
         Returns whether the document has been modified since the last time it was saved.
     
+    .. rubric:: Date Range
     
+    .. method:: select_month_range(starting_point)
+    .. method:: select_quarter_range(starting_point)
+    .. method:: select_year_range(starting_point)
+    .. method:: select_year_to_date_range()
+    .. method:: select_running_year_range()
+    .. method:: select_all_transactions_range()
+    
+        Sets the document's date range to the date range corresponding to the method called. For navigable date ranges, a ``starting_point`` has to be given, which can be either a date or a date range. The resulting date range will contain the starting point (or its start date, if it's a date range).
+        
+    .. method:: select_custom_date_range([start_date, end_date])
+    
+        Sets the document's date range to a range with arbirtrary start and end dates. If these dates are not given, the document will send a notification for the custom date range panel to show up.
+        
+    .. method:: select_prev_date_range()
+    .. method:: select_next_date_range()
+    
+        If the current date range is navigable, select the date range coming before/after the current one.
+    
+    .. method:: select_today_date_range()
+    
+        If the current date range is navigable, select a date range that contains today's date.
+    
+    .. attribute:: date_range
+    
+        The currently selected date range for the document.
+    
+    .. rubric:: Undo/Redo
+    
+    .. method:: can_undo()
+    .. method:: can_redo()
+    
+        Returns wether the document has something to undo or redo.
+    
+    .. method:: undo_description()
+    .. method:: redo_description()
+    
+        Returns a string describing the action that would be undone or redone if :meth:`undo` or :meth:`redo` was called.
+    
+    .. method:: undo()
+    
+        Undo the last undoable action.
+    
+    .. method:: redo()
+    
+        Redo the last undone action.
+    
+    .. rubric:: Misc
+    
+    .. method:: close()
+    
+        Saves preferences and tells GUI elements about the document closing (so that they can save their own preferences if needed).
+    
+    .. method:: stop_edition()
+    
+        Tells GUI elements to stop editing. Some actions create glitches if they are done while a table/outline is being edited, so it's necessary to stop editing before that action is done.
+    
+    .. attribute:: filter_string
+    
+        When set to an non empty string, it restricts visible transactions/entries in :class:`TransactionTable` and :class:`EntryTable` to those matching with the string.
+    
+    .. attribute:: filter_type
+    
+        When set to something else than ``None``, it restricts visible transactions in :class:`TransactionTable` and :class:`EntryTable` to those matching the :data:`FilterType` set.
+    
+.. data:: FilterType
+
+    A class in which available filter constants are defined: ``Unassigned``, ``Income``, ``Expense``, ``Transfer``, ``Reconciled`` and ``NotReconciled``.
