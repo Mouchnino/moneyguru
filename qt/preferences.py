@@ -33,12 +33,6 @@ class Preferences(PreferencesBase):
         self.nativeCurrency = get('NativeCurrency', self.nativeCurrency)
         self.language = get('Language', self.language)
         
-        self.networthHiddenColumns = set(get('NetworthHiddenColumns', self.networthHiddenColumns))
-        self.profitHiddenColumns = set(get('ProfitHiddenColumns', self.profitHiddenColumns))
-        self.transactionHiddenColumns = set(get('TransactionHiddenColumns', self.transactionHiddenColumns))
-        self.entryHiddenColumns = set(get('EntryHiddenColumns', self.entryHiddenColumns))
-        self.scheduleHiddenColumns = set(get('ScheduleHiddenColumns', self.scheduleHiddenColumns))
-        
         self.networthGraphVisible = get('NetworthGraphVisible', self.networthGraphVisible)
         self.networthPieChartsVisible = get('NetworthPieChartsVisible', self.networthPieChartsVisible)
         self.profitGraphVisible = get('ProfitGraphVisible', self.profitGraphVisible)
@@ -61,12 +55,6 @@ class Preferences(PreferencesBase):
         self.nativeCurrency = 'USD'
         self.language = ''
         
-        self.networthHiddenColumns = set(['delta', 'delta_perc', 'account_number'])
-        self.profitHiddenColumns = set(['delta', 'delta_perc', 'account_number'])
-        self.transactionHiddenColumns = set(['payee', 'checkno'])
-        self.entryHiddenColumns = set(['payee', 'checkno', 'reconciliation_date'])
-        self.scheduleHiddenColumns = set(['payee', 'checkno'])
-        
         self.networthGraphVisible = True
         self.networthPieChartsVisible = True
         self.profitGraphVisible = True
@@ -86,12 +74,6 @@ class Preferences(PreferencesBase):
         set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         set_('NativeCurrency', self.nativeCurrency)
         set_('Language', self.language)
-        
-        set_('NetworthHiddenColumns', self.networthHiddenColumns)
-        set_('ProfitHiddenColumns', self.profitHiddenColumns)
-        set_('TransactionHiddenColumns', self.transactionHiddenColumns)
-        set_('EntryHiddenColumns', self.entryHiddenColumns)
-        set_('ScheduleHiddenColumns', self.scheduleHiddenColumns)
         
         set_('NetworthGraphVisible', self.networthGraphVisible)
         set_('NetworthPieChartsVisible', self.networthPieChartsVisible)
