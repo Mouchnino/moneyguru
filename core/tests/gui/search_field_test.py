@@ -135,7 +135,7 @@ def app_split():
     app = TestApp()
     splits = [
         ('first', 'memo1', '42', ''),
-        ('second', 'memo2', '', '42'),
+        ('second', 'Memo2', '', '42'),
         ('third', '', '12', ''),
     ]
     app.add_txn_with_splits(splits)
