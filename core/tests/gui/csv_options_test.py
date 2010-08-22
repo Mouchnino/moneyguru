@@ -452,7 +452,7 @@ class AmountWithDollarSign(TestCase):
         # No crash and the correct amounts are parsed
         self.csvopt.continue_import() # no crash
         eq_(self.itable[0].amount_import, '10.00')
-        eq_(self.itable[1].amount_import, '42.00')
+        eq_(self.itable[1].amount_import, '-42.00')
     
 
 class ShortDates(TestCase):

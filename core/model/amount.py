@@ -109,6 +109,8 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
             if m is None:
                 raise ValueError("'{0}' is not an amount".format(string))
             value = float(string[m.start():m.end()])
+            if '-' in string[:m.start()]:
+                value = -value
     if value == 0:
         return 0
     elif currency is not None:
