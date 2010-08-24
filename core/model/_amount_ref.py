@@ -7,8 +7,6 @@
 
 # This is a reference implementation for the amount.c module
 
-from __future__ import division
-
 import operator
 
 from hscommon.currency import Currency
@@ -58,7 +56,7 @@ class Amount(object):
     
     __slots__ = ['_value', '_shifted_value', '_currency']
     
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self._shifted_value)
     
     def __float__(self):
@@ -139,7 +137,7 @@ class Amount(object):
     def __rmul__(self, other):
         return self * other
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         if isinstance(other, Amount):
             if self._currency != other._currency:
                 raise ValueError('Cannot coerce amounts of currency %s and %s' % (self.currency, other.currency))

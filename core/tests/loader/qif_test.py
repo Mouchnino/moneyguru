@@ -337,7 +337,7 @@ def test_save_to_qif(tmppath):
     app.add_account('second')
     app.mw.show_account()
     app.add_entry(date='03/01/2009', description='transfer', transfer='first', increase='42')
-    export_filename = unicode(tmppath + 'export.qif')
+    export_filename = str(tmppath + 'export.qif')
     app.doc.save_to_qif(export_filename)
     exported = open(export_filename).read()
     reference = open(TestData.filepath('qif', 'export_ref_transfer.qif')).read()

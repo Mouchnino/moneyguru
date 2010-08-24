@@ -16,4 +16,4 @@ elif sys.platform == 'linux2':
 elif sys.platform == 'darwin':
     from plat_osx import *
 else:
-    print "Unsupported platform"
+    print("Unsupported platform")

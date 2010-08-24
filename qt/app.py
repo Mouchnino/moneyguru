@@ -10,7 +10,7 @@
 import sys
 import os.path as op
 
-from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QString, QUrl
+from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QUrl
 from PyQt4.QtGui import QDialog, QDesktopServices
 
 from hscommon.currency import Currency
@@ -39,14 +39,14 @@ class MoneyGuru(ApplicationBase):
         self.prefs = Preferences()
         self.prefs.load()
         locale = QLocale.system()
-        dateFormat = unicode(locale.dateFormat(QLocale.ShortFormat))
-        decimalSep = unicode(QString(locale.decimalPoint()))
-        groupingSep = unicode(QString(locale.groupSeparator()))
+        dateFormat = str(locale.dateFormat(QLocale.ShortFormat))
+        decimalSep = str(locale.decimalPoint())
+        groupingSep = str(locale.groupSeparator())
         try:
             defaultCurrency = Currency(self.prefs.nativeCurrency)
         except ValueError:
             defaultCurrency = Currency('USD')
-        cachePath = unicode(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
+        cachePath = str(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
         DateEdit.DATE_FORMAT = dateFormat
         self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,
             grouping_sep=groupingSep, default_currency=defaultCurrency, cache_path=cachePath)

@@ -9,8 +9,8 @@
 import logging
 import socket
 import threading
-import xmlrpclib
-from Queue import Queue, Empty
+import xmlrpc.client
+from queue import Queue, Empty
 from datetime import timedelta, date, datetime
 
 from hscommon.currency import Currency, RatesDB as RatesDBBase
@@ -31,15 +31,15 @@ class RatesDB(RatesDBBase):
         are made asynchronously.
         """
         def do():
-            server = xmlrpclib.ServerProxy(CURRENCY_SERVER)
+            server = xmlrpc.client.ServerProxy(CURRENCY_SERVER)
             for currency, fetch_start, fetch_end in currencies_and_range:
                 try:
                     # dates passed to xmlrpclib *have* to be xmlrpclib.DateTime instances since 2.6
-                    start = xmlrpclib.DateTime(datetime(fetch_start.year, fetch_start.month, fetch_start.day))
-                    end = xmlrpclib.DateTime(datetime(fetch_end.year, fetch_end.month, fetch_end.day))
+                    start = xmlrpc.client.DateTime(datetime(fetch_start.year, fetch_start.month, fetch_start.day))
+                    end = xmlrpc.client.DateTime(datetime(fetch_end.year, fetch_end.month, fetch_end.day))
                     values = server.get_CAD_values(start, end, currency)
-                except (socket.gaierror, socket.error, xmlrpclib.Error), e:
-                    logging.warning('Communication problem with currency.hardcoded.net: %s' % unicode(e))
+                except (socket.gaierror, socket.error, xmlrpc.client.Error) as e:
+                    logging.warning('Communication problem with currency.hardcoded.net: %s' % str(e))
                     return # We can't connect
                 else:
                     self._fetched_values.put((values, currency))
@@ -90,4 +90,4 @@ class RatesDB(RatesDBBase):
 
 def initialize_db(path):
     """Initialize the app wide currency db if not already initialized."""
-    Currency.set_rates_db(RatesDB(unicode(path)))
+    Currency.set_rates_db(RatesDB(str(path)))

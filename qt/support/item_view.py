@@ -37,7 +37,7 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         h = self._headerView()
         editedRow = originalIndex.row()
         if columnIndexes is None:
-            columnIndexes = (h.logicalIndex(i) for i in xrange(h.count()))
+            columnIndexes = (h.logicalIndex(i) for i in range(h.count()))
         create = lambda col: model.createIndex(editedRow, col, originalIndex.internalPointer())
         scannedIndexes = (create(i) for i in columnIndexes if not h.isSectionHidden(i))
         editableIndex = first(index for index in scannedIndexes if model.flags(index) & Qt.ItemIsEditable)
@@ -48,7 +48,7 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         """
         h = self._headerView()
         myCol = originalIndex.column()
-        columnIndexes = [h.logicalIndex(i) for i in xrange(h.count())]
+        columnIndexes = [h.logicalIndex(i) for i in range(h.count())]
         # keep only columns before myCol
         columnIndexes = columnIndexes[:columnIndexes.index(myCol)]
         # We want the previous item, the columns have to be in reverse order
@@ -60,7 +60,7 @@ class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
         """
         h = self._headerView()
         myCol = originalIndex.column()
-        columnIndexes = [h.logicalIndex(i) for i in xrange(h.count())]
+        columnIndexes = [h.logicalIndex(i) for i in range(h.count())]
         # keep only columns after myCol
         columnIndexes = columnIndexes[columnIndexes.index(myCol)+1:]
         return self._firstEditableIndex(originalIndex, columnIndexes)

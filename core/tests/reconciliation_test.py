@@ -338,8 +338,6 @@ def app_different_reconciliation_date_order():
 def test_reconciling_third_entry_makes_the_oven_start_off_with_correct_entry_as_base(app):
     app.etable.select([2])
     app.etable.toggle_reconciled()
-    print repr(app.etable[0].reconciliation_date)
-    print repr(app.etable[2].reconciliation_date)
     eq_(app.etable[2].balance, '6.00')
 
 @with_app(app_different_reconciliation_date_order)

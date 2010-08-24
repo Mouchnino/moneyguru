@@ -124,7 +124,7 @@ class Oven(object):
             account = split.account
             if account is not None:
                 account2splits[account].append(split)
-        for account, splits in account2splits.iteritems():
+        for account, splits in account2splits.items():
             self._cook_splits(account, splits)
         self.transactions += tocook
         self._cooked_until = until_date

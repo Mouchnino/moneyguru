@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division, unicode_literals
+
 
 from functools import partial
 
@@ -45,16 +45,8 @@ class Account(object):
     def __repr__(self):
         return '<Account %r>' % self.name
     
-    def __eq__(self, other):
-        return self is other
-
-    def __ne__(self, other):
-        return self is not other
-
-    def __cmp__(self, other):
-        # This will be called only for inequalities because __eq__() and
-        # __ne__() are defined for this class too.
-        return cmp(sort_string(self.name), sort_string(other.name))
+    def __lt__(self, other):
+        return sort_string(self.name) < sort_string(other.name)
     
     #--- Public
     def normalize_amount(self, amount):
@@ -90,16 +82,8 @@ class Group(object):
     def __repr__(self):
         return '<Group %s>' % self.name
     
-    def __eq__(self, other):
-        return self is other
-    
-    def __ne__(self, other):
-        return self is not other
-    
-    def __cmp__(self, other):
-        # This will be called only for inequalities because __eq__() and
-        # __ne__() are defined for this class too.
-        return cmp(sort_string(self.name), sort_string(other.name))
+    def __lt__(self, other):
+        return sort_string(self.name) < sort_string(other.name)
     
 
 def new_name(base_name, search_func):

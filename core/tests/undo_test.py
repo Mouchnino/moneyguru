@@ -43,7 +43,7 @@ def save_state_then_verify(testmethod):
         testmethod(self)
         self._test_undo_redo()
     
-    wrapper.func_name = testmethod.func_name
+    wrapper.__name__ = testmethod.__name__
     return wrapper
 
 class Pristine(TestCase):
@@ -198,7 +198,7 @@ class OneNamedAccount(TestCase):
         self.check_gui_calls(self.bsheet_gui, ['refresh', 'stop_editing'])
     
     def test_modified_status(self):
-        filepath = unicode(self.tmppath() + 'foo.moneyguru')
+        filepath = str(self.tmppath() + 'foo.moneyguru')
         self.document.save_to_xml(filepath)
         assert not self.document.is_dirty()
         self.add_entry()

@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap, QPalette, QFont, QMessageBox
@@ -206,7 +206,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         if role == Qt.EditRole:
             node = index.internalPointer()
             rowattr = self.COLUMNS[index.column()].attrname
-            value = unicode(value.toString())
+            value = str(value.toString())
             setattr(node.ref, rowattr, value)
             return True
         return False
@@ -221,7 +221,7 @@ class AccountSheet(TreeModel, ColumnBearer):
             return False
         if not parentIndex.isValid():
             return False
-        path = map(int, unicode(mimeData.data(MIME_NODEPATH)).split(','))
+        path = list(map(int, str(mimeData.data(MIME_NODEPATH)).split(',')))
         destPath = self.pathForIndex(parentIndex)
         if not self.model.can_move(path, destPath):
             return False
@@ -231,7 +231,7 @@ class AccountSheet(TreeModel, ColumnBearer):
     def mimeData(self, indexes):
         index = indexes[0]
         path = self.pathForIndex(index)
-        data = ','.join(map(unicode, path))
+        data = ','.join(map(str, path))
         mimeData = QMimeData()
         mimeData.setData(MIME_NODEPATH, QByteArray(data))
         return mimeData

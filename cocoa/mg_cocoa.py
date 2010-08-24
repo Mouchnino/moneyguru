@@ -221,7 +221,7 @@ class PyDocument(NSObject):
         try:
             self.py.load_from_xml(filename)
         except FileFormatError as e:
-            return unicode(e)
+            return str(e)
     
     def saveToFile_(self, filename):
         self.py.save_to_xml(filename)
@@ -232,8 +232,8 @@ class PyDocument(NSObject):
     def import_(self, filename):
         try:
             self.py.parse_file_for_import(filename)
-        except FileFormatError, e:
-            return unicode(e)
+        except FileFormatError as e:
+            return str(e)
     
     @signature('c@:')
     def isDirty(self):
@@ -1463,7 +1463,7 @@ class PyCompletableEdit(NSObject):
     def setText_(self, value):
         # Don't send value directly to the py side! NSString are mutable and weird stuff will
         # happen if you do that!
-        self.py.text = unicode(value)
+        self.py.text = str(value)
     
     def completion(self):
         return self.py.completion

@@ -49,7 +49,7 @@ class Recent(QObject):
     
     #--- Public
     def insertItem(self, item):
-        self._insertItem(unicode(item))
+        self._insertItem(str(item))
         self._refreshMenu()
     
     #--- Event Handlers
@@ -61,6 +61,6 @@ class Recent(QObject):
             self._refreshMenu()
     
     #--- Signals
-    mustOpenItem = pyqtSignal(unicode)
+    mustOpenItem = pyqtSignal(str)
 
     

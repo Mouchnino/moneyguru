@@ -48,7 +48,7 @@ class DateCounter(object):
     def __iter__(self):
         return self
     
-    def next(self):
+    def __next__(self):
         if self.current_date is None: # first date of the iteration is base_date
             self.current_date = self.base_date
             return self.current_date
@@ -121,10 +121,10 @@ class Recurrence(object):
         self.date2exception[spawn.recurrence_date] = spawn
     
     def change_globally(self, spawn):
-        for date in self.date2globalchange.keys():
+        for date in list(self.date2globalchange.keys()):
             if date >= spawn.recurrence_date:
                 del self.date2globalchange[date]
-        for date, exception in self.date2exception.items():
+        for date, exception in list(self.date2exception.items()):
             # we don't want to remove local deletions
             if exception is not None and date >= spawn.recurrence_date:
                 del self.date2exception[date]
@@ -142,7 +142,7 @@ class Recurrence(object):
         # if a changed date end up being smaller than the "spawn date", it's possible that a spawn
         # that should have been spawned for the date range is not spawned. Therefore, we always
         # spawn at least until the date of the last exception or global change.
-        changed_dates = self.date2exception.keys() + self.date2globalchange.keys()
+        changed_dates = list(self.date2exception.keys()) + list(self.date2globalchange.keys())
         if changed_dates:
             end = max(end, max(changed_dates))
         end = min(end, nonone(self.stop_date, datetime.date.max))

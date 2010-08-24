@@ -76,7 +76,7 @@ class BudgetTableRow(Row):
         self._stop_date = budget.stop_date
         self._stop_date_fmt = self.document.app.format_date(self._stop_date) if self._stop_date is not None else ''
         self._repeat_type = budget.repeat_type_desc
-        self._interval = unicode(budget.repeat_every)
+        self._interval = str(budget.repeat_every)
         self._account = budget.account.name
         self._target = budget.target.name if budget.target else ''
         self._amount = budget.amount

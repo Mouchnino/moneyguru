@@ -83,7 +83,7 @@ class CallLogger(object):
 def log(method):
     def wrapper(self, *args, **kw):
         result = method(self, *args, **kw)
-        self.calls.append(method.func_name)
+        self.calls.append(method.__name__)
         return result
     
     return wrapper
@@ -240,7 +240,7 @@ class TestApp(object):
     
     def tmppath(self):
         if self._tmppath is None:
-            self._tmppath = Path(unicode(config.ensuretemp('mgtest')))
+            self._tmppath = Path(str(config.ensuretemp('mgtest')))
         return self._tmppath
     
     def check_current_pane(self, pane_type, account_name=None):
@@ -278,7 +278,7 @@ class TestApp(object):
         """
         if expected is not None:
             not_called = set(expected) - set(gui.calls)
-            assert not not_called, u"These calls haven't been made: {0}".format(not_called)
+            assert not not_called, "These calls haven't been made: {0}".format(not_called)
             if verify_order:
                 max_index = 0
                 for call in expected:
@@ -288,7 +288,7 @@ class TestApp(object):
                     max_index = index
         if not_expected is not None:
             called = set(not_expected) & set(gui.calls)
-            assert not called, u"These calls shouldn't have been made: {0}".format(called)
+            assert not called, "These calls shouldn't have been made: {0}".format(called)
         gui.clear_calls()
     
     def clear_gui_calls(self):
@@ -501,15 +501,15 @@ class TestApp(object):
     def save_and_load(self):
         # saves the current document and returns a new app with that document loaded
         filepath = self.tmppath() + 'foo.xml'
-        self.doc.save_to_xml(unicode(filepath))
+        self.doc.save_to_xml(str(filepath))
         self.doc.close()
         newapp = TestApp(app=self.app)
-        newapp.doc.load_from_xml(unicode(filepath))
+        newapp.doc.load_from_xml(str(filepath))
         return newapp
     
     def save_file(self):
         filename = self.tmppath() + 'foo.xml'
-        self.doc.save_to_xml(unicode(filename)) # reset the dirty flag
+        self.doc.save_to_xml(str(filename)) # reset the dirty flag
     
     def show_account(self, account_name):
         # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
@@ -761,8 +761,8 @@ def compare_apps(first, second, qif_mode=False):
                 raise
     
     eq_(len(first.groups), len(second.groups))
-    group_pairs = zip(sorted(first.groups, key=attrgetter('name')),
-        sorted(second.groups, key=attrgetter('name')))
+    group_pairs = list(zip(sorted(first.groups, key=attrgetter('name')),
+        sorted(second.groups, key=attrgetter('name'))))
     for group1, group2 in group_pairs:
         try:
             eq_(group1.name, group2.name)
@@ -770,8 +770,8 @@ def compare_apps(first, second, qif_mode=False):
         except AssertionError:
             raise
     eq_(len(first.accounts), len(second.accounts))
-    account_pairs = zip(sorted(first.accounts, key=attrgetter('name')),
-        sorted(second.accounts, key=attrgetter('name')))
+    account_pairs = list(zip(sorted(first.accounts, key=attrgetter('name')),
+        sorted(second.accounts, key=attrgetter('name'))))
     for account1, account2 in account_pairs:
         try:
             eq_(account1.name, account2.name)

@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 from ..const import PaneType
 from ..document import FilterType
@@ -67,7 +67,7 @@ class TransactionView(BaseView):
         elif filter_type is FilterType.Transfer:
             def is_transfer(t):
                 return len([s for s in t.splits if s.account is not None and s.account.is_balance_sheet_account()]) >= 2
-            txns = filter(is_transfer, txns)
+            txns = list(filter(is_transfer, txns))
         elif filter_type is FilterType.Reconciled:
             txns = [t for t in txns if any(s.reconciled for s in t.splits)]
         elif filter_type is FilterType.NotReconciled:

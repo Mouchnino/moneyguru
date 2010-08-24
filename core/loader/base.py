@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 import datetime
 import logging
@@ -15,7 +15,7 @@ from itertools import groupby
 from operator import attrgetter
 
 from hscommon.currency import Currency
-from hsutil.misc import nonone, flatten
+from hsutil.misc import nonone, flatten, stripfalse
 
 from ..exception import FileFormatError
 from ..model.account import Account, Group, AccountList, GroupList, AccountType
@@ -43,7 +43,8 @@ class Loader(object):
     To use it, just call load() and then fetch the accounts & transactions. This information is in
     the form of lists of dicts. The transactions are sorted in order of date.
     """
-    FILE_OPEN_MODE = 'r'
+    FILE_OPEN_MODE = 'rt'
+    FILE_ENCODING = 'utf-8'
     
     def __init__(self, default_currency):
         self.default_currency = default_currency
@@ -162,7 +163,11 @@ class Loader(object):
     def parse(self, filename):
         """Parses 'filename' and raises FileFormatError if appropriate."""
         try:
-            with open(filename, self.FILE_OPEN_MODE) as infile:
+            if 't' in self.FILE_OPEN_MODE:
+                kw = {'encoding': self.FILE_ENCODING, 'errors': 'ignore'}
+            else:
+                kw = {}
+            with open(filename, self.FILE_OPEN_MODE, **kw) as infile:
                 self._parse(infile)
         except IOError:
             raise FileFormatError()
@@ -238,7 +243,7 @@ class Loader(object):
         
         # Pre-parse transaction info. We bring all relevant info recorded at the txn level into the split level
         all_txn = self.transaction_infos + [r.transaction_info for r in self.recurrence_infos] +\
-                  flatten([filter(None, r.date2exception.values()) for r in self.recurrence_infos]) +\
+                  flatten([stripfalse(r.date2exception.values()) for r in self.recurrence_infos]) +\
                   flatten([r.date2globalchange.values() for r in self.recurrence_infos])
         for info in all_txn:
             split_accounts = [s.account for s in info.splits]

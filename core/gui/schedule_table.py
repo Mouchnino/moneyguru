@@ -82,7 +82,7 @@ class ScheduleTableRow(Row):
         self._stop_date = schedule.stop_date
         self._stop_date_fmt = self.table.document.app.format_date(self._stop_date) if self._stop_date is not None else ''
         self._repeat_type = schedule.repeat_type_desc
-        self._interval = unicode(schedule.repeat_every)
+        self._interval = str(schedule.repeat_every)
         self._description = txn.description
         self._payee = txn.payee
         self._checkno = txn.checkno

@@ -23,7 +23,7 @@ def move(src, dst):
         return
     if op.exists(dst):
         os.remove(dst)
-    print 'Moving %s --> %s' % (src, dst)
+    print('Moving %s --> %s' % (src, dst))
     os.rename(src, dst)
 
 def build_all_cocoa_locs(basedir):
@@ -32,19 +32,19 @@ def build_all_cocoa_locs(basedir):
     model_path = op.join(basedir, 'en.lproj')
     for loc in locs:
         loc_path = op.join(basedir, loc)
-        print "Building {0} localizations".format(loc_path)
+        print("Building {0} localizations".format(loc_path))
         build_cocoa_localization(model_path, loc_path)
 
 def build_cocoa(dev):
     if not dev:
-        print "Building help index"
+        print("Building help index")
         help_path = op.abspath('help/moneyguru_help')
         os.system('open -a /Developer/Applications/Utilities/Help\\ Indexer.app {0}'.format(help_path))
     
     build_all_cocoa_locs('cocoalib')
     build_all_cocoa_locs('cocoa')
         
-    print "Building mg_cocoa.plugin"
+    print("Building mg_cocoa.plugin")
     if op.exists('build'):
         shutil.rmtree('build')
     os.mkdir('build')
@@ -69,13 +69,13 @@ def build_cocoa(dev):
         pthpath = op.join(pluginpath, 'Contents/Resources/dev.pth')
         open(pthpath, 'w').write(op.abspath('.'))
     os.chdir('cocoa')
-    print 'Generating Info.plist'
+    print('Generating Info.plist')
     # We import this here because we don't want opened module to prevent us replacing .pyd files.
     from core.app import Application as MoneyGuruApp
     contents = open('InfoTemplate.plist').read()
     contents = contents.replace('{version}', MoneyGuruApp.VERSION)
     open('Info.plist', 'w').write(contents)
-    print "Building the XCode project"
+    print("Building the XCode project")
     args = []
     if dev:
         args.append('-configuration dev')
@@ -86,36 +86,36 @@ def build_cocoa(dev):
     os.chdir('..')
 
 def build_qt(dev):
-    print "Converting .ts to .qm"
+    print("Converting .ts to .qm")
     langdir = op.join('qt', 'lang')
     tsfiles = [fn for fn in os.listdir(langdir) if fn.endswith('.ts')]
     for ts in tsfiles:
-        print "Converting {0}".format(ts)
+        print("Converting {0}".format(ts))
         os.system('lrelease {0}'.format(op.join(langdir, ts)))
-    print "Building UI units"
+    print("Building UI units")
     build_all_qt_ui(op.join('qtlib', 'ui'))
     build_all_qt_ui(op.join('qt', 'ui'))
     qrc_path = op.join('qt', 'mg.qrc')
     pyrc_path = op.join('qt', 'mg_rc.py')
-    print_and_do("pyrcc4 {0} > {1}".format(qrc_path, pyrc_path))
+    print_and_do("pyrcc4 -py3 {0} > {1}".format(qrc_path, pyrc_path))
 
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    print "Building moneyGuru with UI {0}".format(ui)
+    print("Building moneyGuru with UI {0}".format(ui))
     if dev:
-        print "Building in Dev mode"
-    print "Generating Help"
+        print("Building in Dev mode")
+    print("Generating Help")
     windows = sys.platform == 'win32'
     profile = 'win_en' if windows else 'osx_en'
     basepath = op.abspath('help')
     destpath = op.abspath(op.join('help', 'moneyguru_help'))
     helpgen.gen(basepath, destpath, profile=profile)
     if dev:
-        print "Generating devdocs"
+        print("Generating devdocs")
         print_and_do('sphinx-build devdoc devdoc_html')
-    print "Building C extensions"
+    print("Building C extensions")
     exts = []
     exts.append(Extension('_amount', [op.join('core', 'modules', 'amount.c')]))
     setup(

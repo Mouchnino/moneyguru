@@ -17,10 +17,12 @@ from .base import SplitInfo, TransactionInfo
 from . import base
 
 class Loader(base.Loader):
+    FILE_OPEN_MODE = 'rb'
+    
     def _parse(self, infile):
         try:
             root = ET.parse(infile).getroot()
-        except SyntaxError:
+        except SyntaxError as e:
             raise FileFormatError()
         if root.tag != 'moneyguru-file':
             raise FileFormatError()

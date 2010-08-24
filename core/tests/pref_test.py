@@ -94,7 +94,7 @@ def test_expanded_nodes_are_restored_on_load(app, tmppath):
     # the document. This test also makes sure that the nodes expansion state are saved even if the
     # sheet is not connected at close (and thus doesn't receive the document_will_close msg).
     app.mw.select_income_statement()
-    filepath = unicode(tmppath + 'foo.xml')
+    filepath = str(tmppath + 'foo.xml')
     app.doc.save_to_xml(filepath)
     app.doc.close()
     newapp = TestApp(app=app.app)

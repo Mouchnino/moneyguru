@@ -19,14 +19,14 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    print "Running moneyGuru with UI {0}".format(ui)
+    print("Running moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
         subfolder = 'dev' if dev else 'release'
         os.system('open cocoa/build/{0}/moneyGuru.app'.format(subfolder))
     elif ui == 'qt':
         add_to_pythonpath('.')
         os.chdir('qt')
-        os.system('python start.py')
+        os.system('{0} start.py'.format(sys.executable))
         os.chdir('..')
 
 if __name__ == '__main__':

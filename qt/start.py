@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
@@ -12,6 +12,8 @@ import sys
 import gc
 import locale
 import logging
+import sip
+sip.setapi('QVariant', 1)
 
 from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap
@@ -36,9 +38,9 @@ if __name__ == "__main__":
     stylesheetFile.close()
     app.setStyleSheet(style)
     settings = QSettings()
-    lang = unicode(settings.value('Language').toString())
+    lang = str(settings.value('Language').toString())
     if not lang:
-        lang = unicode(QLocale.system().name())[:2]
+        lang = str(QLocale.system().name())[:2]
     if lang in LANG2LOCALENAME:
         # for date formatting
         localeName = LANG2LOCALENAME[lang]
@@ -53,7 +55,7 @@ if __name__ == "__main__":
         qtr2.load(':/%s' % lang)
         app.installTranslator(qtr2)
         def qt_tr(s):
-            return unicode(app.translate('core', s, None))
+            return str(app.translate('core', s, None))
         core.trans.set_tr(qt_tr)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed

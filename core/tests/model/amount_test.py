@@ -58,7 +58,7 @@ def test_div_with_amount():
     # Amounts can be divided by other amounts if they all amounts share the same currency. That
     # yields a plain number.
     eq_(Amount(1, CAD) / Amount(2, CAD), 0.5)
-    assert_raises(ValueError, op.div, Amount(1, CAD), Amount(2, USD))
+    assert_raises(ValueError, op.truediv, Amount(1, CAD), Amount(2, USD))
 
 def test_div_with_number():
     # Amounts can be divided by a number, yielding an amount.
@@ -67,7 +67,7 @@ def test_div_with_number():
 
 def test_div_number_with_amount():
     # You can't divide a number with an amount.
-    assert_raises(TypeError, op.div, 10, Amount(3, CAD))
+    assert_raises(TypeError, op.truediv, 10, Amount(3, CAD))
 
 def test_eq():
     # Amounts are equal if they have the same value and the same

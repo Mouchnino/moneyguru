@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 
 from collections import namedtuple
 
@@ -193,7 +193,7 @@ class ItemViewLayoutElement(LayoutElement):
         painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
         painter.save()
         painter.setFont(self.ds.rowFont())
-        for rowIndex in xrange(startRow, self.endRow+1):
+        for rowIndex in range(startRow, self.endRow+1):
             top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
             left = self.rect.left()
             for colIndex, colWidth in enumerate(columnWidths):
@@ -245,13 +245,13 @@ class ItemViewPrintStats(object):
         self.rowHeight = rowFM.height() + CELL_MARGIN * 2
         self.headerHeight = headerFM.height() + CELL_MARGIN * 2
         self.columns = []
-        for colIndex in xrange(ds.columnCount()):
+        for colIndex in range(ds.columnCount()):
             colTitle = ds.header(colIndex)
             sumWidth = 0
             maxWidth = 0
             maxPixWidth = 0
             headerWidth = headerFM.width(colTitle) + CELL_MARGIN * 2
-            for rowIndex in xrange(ds.rowCount()):
+            for rowIndex in range(ds.rowCount()):
                 data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
                     font = ds.data(rowIndex, colIndex, Qt.FontRole)

@@ -272,7 +272,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     #--- Public
     def updateOptionalWidgetsVisibility(self):
-        for i in xrange(self.mainView.count()):
+        for i in range(self.mainView.count()):
             view = self.mainView.widget(i)
             if hasattr(view, 'updateOptionalWidgetsVisibility'):
                 view.updateOptionalWidgetsVisibility()
@@ -387,7 +387,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tabBar.removeTab(self.tabBar.count()-1)
         while self.tabBar.count() < self.model.pane_count:
             self.tabBar.addTab('')
-        for i in xrange(self.model.pane_count):
+        for i in range(self.model.pane_count):
             pane_label = self.model.pane_label(i)
             pane_label = pane_label.replace('&', '&&')
             self.tabBar.setTabText(i, pane_label)

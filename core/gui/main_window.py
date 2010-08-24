@@ -103,7 +103,7 @@ class MainWindow(Repeater):
     def _restore_default_panes(self):
         pane_types = [PaneType.NetWorth, PaneType.Profit, PaneType.Transaction,
             PaneType.Schedule, PaneType.Budget]
-        pane_data = zip(pane_types, [None] * len(pane_types))
+        pane_data = list(zip(pane_types, [None] * len(pane_types)))
         self._set_panes(pane_data)
     
     def _restore_opened_panes(self):

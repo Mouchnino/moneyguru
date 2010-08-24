@@ -20,17 +20,17 @@ from ...model.transaction_list import TransactionList
 class AccountComparison(TestCase):
     def test_comparison(self):
         """Accounts are sorted by name. The sort is insensitive to case and accents."""
-        bell = Account(u'Bell', USD, AccountType.Asset)
-        belarus = Account(u'Bélarus', USD, AccountType.Asset)
-        achigan = Account(u'achigan', USD, AccountType.Asset)
+        bell = Account('Bell', USD, AccountType.Asset)
+        belarus = Account('Bélarus', USD, AccountType.Asset)
+        achigan = Account('achigan', USD, AccountType.Asset)
         accounts = [bell, belarus, achigan]
         self.assertEqual(sorted(accounts), [achigan, belarus, bell])
 
     def test_equality(self):
         """Two different account objects are never equal."""
-        zoo1 = Account(u'Zoo', USD, AccountType.Asset)
-        zoo2 = Account(u'Zoo', USD, AccountType.Asset)
-        zoo3 = Account(u'Zoö', USD, AccountType.Asset)
+        zoo1 = Account('Zoo', USD, AccountType.Asset)
+        zoo2 = Account('Zoo', USD, AccountType.Asset)
+        zoo3 = Account('Zoö', USD, AccountType.Asset)
         self.assertEqual(zoo1, zoo1)
         self.assertNotEqual(zoo1, zoo2)
         self.assertNotEqual(zoo1, zoo3)
@@ -38,17 +38,17 @@ class AccountComparison(TestCase):
 class GroupComparison(TestCase):
     def test_comparison(self):
         """Groups are sorted by name. The sort is insensitive to case and accents."""
-        bell = Group(u'Bell', AccountType.Asset)
-        belarus = Group(u'Bélarus', AccountType.Asset)
-        achigan = Group(u'achigan', AccountType.Asset)
+        bell = Group('Bell', AccountType.Asset)
+        belarus = Group('Bélarus', AccountType.Asset)
+        achigan = Group('achigan', AccountType.Asset)
         groups = [bell, belarus, achigan]
         self.assertEqual(sorted(groups), [achigan, belarus, bell])
 
     def test_equality(self):
         """Two different group objects are never equal."""
-        zoo1 = Group(u'Zoo', AccountType.Asset)
-        zoo2 = Group(u'Zoo', AccountType.Asset)
-        zoo3 = Group(u'Zoö', AccountType.Asset)
+        zoo1 = Group('Zoo', AccountType.Asset)
+        zoo2 = Group('Zoo', AccountType.Asset)
+        zoo3 = Group('Zoö', AccountType.Asset)
         self.assertEqual(zoo1, zoo1)
         self.assertNotEqual(zoo1, zoo2)
         self.assertNotEqual(zoo1, zoo3)

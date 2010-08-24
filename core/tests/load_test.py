@@ -24,18 +24,18 @@ def test_dont_save_invalid_xml_characters(tmppath):
     # It's possible that characters that are invalid in an XML file end up in a moneyGuru document
     # (mostly through imports). Don't let this happen.
     app = TestApp()
-    app.add_txn(description=u"foo\0bar")
-    filepath = unicode(tmppath + 'foo.xml')
+    app.add_txn(description="foo\0bar")
+    filepath = str(tmppath + 'foo.xml')
     app.doc.save_to_xml(filepath)
     app.doc.load_from_xml(filepath) # no exception
-    eq_(app.ttable[0].description, u"foo bar")
+    eq_(app.ttable[0].description, "foo bar")
 
 @with_tmpdir
 def test_saved_file_starts_with_xml_header(tmppath):
     # Make sure that moneyGuru files start with an xml header, something that elementtree doesn't
     # do automatically.
     app = TestApp()
-    filepath = unicode(tmppath + 'foo.xml')
+    filepath = str(tmppath + 'foo.xml')
     app.doc.save_to_xml(filepath)
     fp = open(filepath)
     contents = fp.read()
@@ -182,14 +182,14 @@ class TwoAccountTwoEntriesInEachWithNonAsciiStrings(TestCase):
     # is selected.
     def setUp(self):
         self.create_instances()
-        self.add_account(u'first_account\u0142', currency=PLN)
+        self.add_account('first_account\u0142', currency=PLN)
         self.mainwindow.show_account()
-        self.add_entry('3/10/2007', u'first\u0142', transfer='other account', increase='1 usd')
-        self.add_entry('4/10/2007', u'second\u0142', increase='2 usd') # Imbalance
-        self.add_account(u'second_account\u0142', currency=CAD)
+        self.add_entry('3/10/2007', 'first\u0142', transfer='other account', increase='1 usd')
+        self.add_entry('4/10/2007', 'second\u0142', increase='2 usd') # Imbalance
+        self.add_account('second_account\u0142', currency=CAD)
         self.mainwindow.show_account()
-        self.add_entry('5/10/2007', u'third\u0142', transfer=u'first_account\u0142', decrease='1 usd')
-        self.add_entry('6/10/2007', u'fourth\u0142', transfer='yet another account', decrease='2 usd')
+        self.add_entry('5/10/2007', 'third\u0142', transfer='first_account\u0142', decrease='1 usd')
+        self.add_entry('6/10/2007', 'fourth\u0142', transfer='yet another account', decrease='2 usd')
     
     def test_save_load(self):
         # make sure all those values come back up alright
@@ -214,7 +214,7 @@ class LoadImportWithTransactionInTheFuture(TestCase):
     def setUp(self):
         self.mock_today(2008, 2, 1) # before any txn date
         self.create_instances()
-        self.document.parse_file_for_import(unicode(self.filepath('moneyguru', 'simple.moneyguru')))
+        self.document.parse_file_for_import(str(self.filepath('moneyguru', 'simple.moneyguru')))
     
     def test_transactions_show_up(self):
         # even when there are txns in the future, they show up in the import panel
@@ -392,7 +392,7 @@ def test_save_load():
     # so I kept them, but I'm not sure what they're testing.
     @with_tmpdir
     def check(app, tmppath):
-        filepath = unicode(tmppath + 'foo.xml')
+        filepath = str(tmppath + 'foo.xml')
         app.doc.save_to_xml(filepath)
         app.doc.close()
         newapp = TestApp()
@@ -450,7 +450,7 @@ def test_save_load():
 def test_save_load_qif():
     @with_tmpdir
     def check(app, tmppath):
-        filepath = unicode(tmppath + 'foo.qif')
+        filepath = str(tmppath + 'foo.qif')
         app.doc.save_to_qif(filepath)
         app.doc.close()
         newapp = TestApp()

@@ -136,7 +136,7 @@ class CSVOptions(DocumentGUIObject):
         try:
             self.document.load_parsed_file_for_import()
         except FileLoadError as e:
-            self.view.show_message(unicode(e))
+            self.view.show_message(str(e))
         else:
             self.view.hide()
     
@@ -219,7 +219,7 @@ class CSVOptions(DocumentGUIObject):
     @field_separator.setter
     def field_separator(self, value):
         try:
-            delimiter = value[0].encode('latin-1')
+            delimiter = value[0]
             self.document.loader.dialect.delimiter = delimiter
         except (UnicodeEncodeError, IndexError):
             pass
@@ -268,6 +268,6 @@ class CSVOptions(DocumentGUIObject):
                 result['target_account'] = layout.target_account_name
             return result
         
-        layouts = map(layout2preference, self._layouts)
+        layouts = list(map(layout2preference, self._layouts))
         self.app.set_default(LAYOUT_PREFERENCE_NAME, layouts)
     

@@ -11,7 +11,7 @@ import re
 from collections import namedtuple
 from datetime import datetime
 
-from hsutil.misc import flatten, first
+from hsutil.misc import flatten, first, stripfalse
 
 from ..exception import FileFormatError
 from ..model.account import AccountType
@@ -57,11 +57,9 @@ class Block(object):
     
 
 class Loader(base.Loader):
-    FILE_OPEN_MODE = 'U' # universal line-ends. Deals with \r and \n
-    
     def _parse(self, infile):
         content = infile.read()
-        lines = filter(None, content.split('\n'))
+        lines = stripfalse(content.split('\n'))
         blocks = []
         autoswitch_blocks = [] # blocks in the middle of an AutoSwitch option
         block = Block()
@@ -69,7 +67,6 @@ class Loader(base.Loader):
         autoswitch_mode = False
         for line in lines:
             header, data = line[0], line[1:].strip()
-            data = unicode(data, 'utf-8', 'ignore')
             if header == '!':
                 if data == 'Account':
                     current_block_type = BlockType.Account

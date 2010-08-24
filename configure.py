@@ -16,7 +16,7 @@ def main(ui, dev):
     if ui not in ('cocoa', 'qt'):
         ui = 'cocoa' if sys.platform == 'darwin' else 'qt'
     build_type = 'Dev' if dev else 'Release'
-    print "Configuring moneyGuru for UI {0} ({1})".format(ui, build_type)
+    print("Configuring moneyGuru for UI {0} ({1})".format(ui, build_type))
     conf = {
         'ui': ui,
         'dev': dev,

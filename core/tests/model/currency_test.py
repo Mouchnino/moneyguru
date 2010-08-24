@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from datetime import date, timedelta, datetime
-import xmlrpclib
+import xmlrpc.client
 import time
 
 from hscommon.currency import Currency, USD, CAD
@@ -19,7 +19,7 @@ from ...model.amount import Amount
 from .. import get_original_rates_db_ensure_rates
 
 #--- ServerProxy mock
-# We have to mock xmlrpclib.ServerProxy for every single test because if we don't, a xmlrpc call will
+# We have to mock xmlrpc.client.ServerProxy for every single test because if we don't, a xmlrpc call will
 # be made for every single time we load a file. You must also mock it in test units of all modules 
 # that import moneyguru.currency.
 
@@ -32,9 +32,9 @@ class FakeServer(object):
     def hooklog(cls, log):
         cls.log = log
     
-    def get_CAD_values(self, start, end, currency): # start and end are xmlrpclib.DateTime instances
-        assert isinstance(start, xmlrpclib.DateTime)
-        assert isinstance(end, xmlrpclib.DateTime)
+    def get_CAD_values(self, start, end, currency): # start and end are xmlrpc.client.DateTime instances
+        assert isinstance(start, xmlrpc.client.DateTime)
+        assert isinstance(end, xmlrpc.client.DateTime)
         t = start.timetuple()
         start = date(t.tm_year, t.tm_mon, t.tm_mday)
         t = end.timetuple()
@@ -42,7 +42,7 @@ class FakeServer(object):
         FakeServer.log.append((start, end, currency))
         number_of_days = (end - start).days + 1
         start = datetime(start.year, start.month, start.day)
-        return [(xmlrpclib.DateTime(start + timedelta(i)), 1.42 + (.01 * i)) for i in range(number_of_days)]
+        return [(xmlrpc.client.DateTime(start + timedelta(i)), 1.42 + (.01 * i)) for i in range(number_of_days)]
 
 
 def slow_down(func):
@@ -62,7 +62,7 @@ class CurrencyTest(TestCase):
 class AsyncRatesDB(TestCase):
     def setUp(self):
         self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
-        self.mock(xmlrpclib, 'ServerProxy', FakeServer)
+        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
         self.db = RatesDB(':memory:', True)
     
     def test_async_and_repeat(self):
@@ -81,7 +81,7 @@ class AsyncRatesDB(TestCase):
 class NotAsyncRatesDB(TestCase):
     def setUp(self):
         self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
-        self.mock(xmlrpclib, 'ServerProxy', FakeServer)
+        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
         self.db = RatesDB(':memory:', False)
     
     def test_ask_for_rates_in_the_past(self):
@@ -127,18 +127,18 @@ class NotAsyncRatesDB(TestCase):
     def test_xmlrpc_error(self):
         """No crash occur when there's an error on the xmlrpc level"""
         def mock_get_CAD_values(self, start, end, currency):
-            raise xmlrpclib.Error()
+            raise xmlrpc.client.Error()
         self.mock(FakeServer, 'get_CAD_values', mock_get_CAD_values)
         try:
             self.db.ensure_rates(date(2008, 5, 20), ['USD'])
-        except xmlrpclib.Error:
+        except xmlrpc.client.Error:
             self.fail()
     
 
 class NotAsyncRatesDBWithRates(TestCase):
     def setUp(self):
         self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
-        self.mock(xmlrpclib, 'ServerProxy', FakeServer)
+        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
         Currency.set_rates_db(RatesDB(':memory:', False))
         USD.set_CAD_value(0.98, date(2008, 5, 20))
     

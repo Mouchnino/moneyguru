@@ -8,8 +8,9 @@
 
 import os.path as op
 import time
-import xmlrpclib
+import xmlrpc.client
 from datetime import date
+import threading
 
 from hsutil.testutil import eq_
 
@@ -23,15 +24,17 @@ from ..model import currency
 from ..model.account import AccountType
 from ..model.currency import RatesDB
 from ..model.date import MonthRange
+from .. import tests as testsinit
 from . import get_original_rates_db_ensure_rates
-from .base import ApplicationGUI, TestCase, TestApp
+from .base import ApplicationGUI, TestCase, TestApp, with_app
 from .model.currency_test import FakeServer
 
 def with_fake_server(func):
     def wrapper(*args, **kwargs):
         with Patcher() as p:
             p.patch(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
-            p.patch(xmlrpclib, 'ServerProxy', FakeServer)
+            p.patch(testsinit, 'is_ratesdb_patched', True)
+            p.patch(xmlrpc.client, 'ServerProxy', FakeServer)
             p.patch(Currency, 'rates_db', RatesDB(':memory:', False)) # async
             p.patch(currency, 'initialize_db', lambda path: None)
             func(*args, **kwargs)
@@ -43,7 +46,7 @@ class TestCase(TestCase):
         # The package-level setup patched RatesDB.ensure_rates so that it does nothing. We have to
         # unpatch it now.
         self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
-        self.mock(xmlrpclib, 'ServerProxy', FakeServer)
+        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
         self.mock(Currency, 'rates_db', RatesDB(':memory:', False)) # async
         self.mock(currency, 'initialize_db', lambda path: None)
     
@@ -84,40 +87,45 @@ class NoSetup(TestCase):
         self.assertEqual(self.app.default_currency, PLN)
     
 
-class OneEmptyAccountEUR(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('Checking', EUR)
-        self.document.date_range = MonthRange(date(2007, 10, 1))
-    
-    def test_add_entry_with_foreign_amount(self):
-        """Saving an entry triggers an ensure_rates"""
-        log = []
-        FakeServer.hooklog(log)
-        self.add_entry('20/5/2008', increase='12 usd')
-        # A request is made for both the amount that has just been written and the account of the entry
-        expected = set([
-            (date(2008, 5, 20), date.today(), 'USD'),
-            (date(2008, 5, 20), date.today(), 'EUR'),
-        ])
-        self.assertEqual(set(log), expected)
-    
-    def test_add_transaction_with_foreign_amount(self):
-        """Saving an entry triggers an ensure_rates"""
-        log = []
-        FakeServer.hooklog(log)
-        self.mainwindow.select_transaction_table()
-        self.ttable.add()
-        self.ttable.edited.date = '20/5/2008'
-        self.ttable.edited.amount = '12 eur'
-        self.ttable.save_edits()
-        # A request is made for both the amount that has just been written and the account of the entry
-        expected = set([
-            (date(2008, 5, 20), date.today(), 'EUR'),
-            (date(2008, 5, 20), date.today(), 'USD'),
-        ])
-        self.assertEqual(set(log), expected)
-    
+#--- One empty account EUR
+def app_one_empty_account_eur():
+    app = TestApp()
+    app.add_account('Checking', EUR)
+    app.mw.show_account()
+    app.doc.date_range = MonthRange(date(2007, 10, 1))
+    return app
+
+@with_app(app_one_empty_account_eur)
+@with_fake_server
+def test_add_entry_with_foreign_amount(app):
+    # Saving an entry triggers an ensure_rates.
+    log = []
+    FakeServer.hooklog(log)
+    app.add_entry('20/5/2008', increase='12 usd')
+    # A request is made for both the amount that has just been written and the account of the entry
+    expected = set([
+        (date(2008, 5, 20), date.today(), 'USD'),
+        (date(2008, 5, 20), date.today(), 'EUR'),
+    ])
+    eq_(set(log), expected)
+
+@with_app(app_one_empty_account_eur)
+@with_fake_server
+def test_add_transaction_with_foreign_amount(app):
+    # Saving an entry triggers an ensure_rates
+    log = []
+    FakeServer.hooklog(log)
+    app.mw.select_transaction_table()
+    app.ttable.add()
+    app.ttable.edited.date = '20/5/2008'
+    app.ttable.edited.amount = '12 eur'
+    app.ttable.save_edits()
+    # A request is made for both the amount that has just been written and the account of the entry
+    expected = set([
+        (date(2008, 5, 20), date.today(), 'EUR'),
+        (date(2008, 5, 20), date.today(), 'USD'),
+    ])
+    eq_(set(log), expected)
 
 class CADAssetAndUSDAsset(TestCase):
     def setUp(self):
@@ -209,7 +217,7 @@ def test_ensures_rates(tmppath):
     rates_db = Currency.get_rates_db()
     with Patcher() as p:
         p.patch(rates_db, 'ensure_rates', log_calls(rates_db.ensure_rates))
-        filename = unicode(tmppath + 'foo.xml')
+        filename = str(tmppath + 'foo.xml')
         app.doc.save_to_xml(filename)
         app.doc.load_from_xml(filename)
         calls = rates_db.ensure_rates.calls
@@ -285,66 +293,64 @@ class DifferentCurrencies(TestCase):
         self.assertEqual(self.etable[1].decrease, 'EUR 42.00')
     
 
-class ThreeCurrenciesTwoEntriesSaveLoad(TestCase):
-    """Three account of different currencies, and 2 entries on differenet date. The app is saved, 
-    and then loaded (The goal of this is to test that moneyguru ensures it got the rates it needs).
-    """ 
-    def setUp(self):
-        self.app = Application(ApplicationGUI(), default_currency=CAD)
-        self.create_instances()
-        self.add_account_legacy('first account')
-        self.add_account_legacy('second account', USD)
-        self.add_account_legacy('third account', EUR)
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.add_entry(date='20/4/2008', increase='42 cad')
-        self.add_entry(date='25/4/2008', increase='42 cad')
+#--- Three currencies two entries
+def app_three_currencies_two_entries():
+    # Three account of different currencies, and 2 entries on differenet date. The app is saved, 
+    # and then loaded (The goal of this is to test that moneyguru ensures it got the rates it needs).
+    theapp = Application(ApplicationGUI(), default_currency=CAD)
+    app = TestApp(app=theapp)
+    app.add_account('first account')
+    app.add_account('second account', USD)
+    app.add_account('third account', EUR)
+    app.show_account('first account')
+    app.add_entry(date='20/4/2008', increase='42 cad')
+    app.add_entry(date='25/4/2008', increase='42 cad')
+    return app
+
+@with_app(app_three_currencies_two_entries)
+@with_fake_server
+def test_ensures_rates_multiple_currencies(app):
+    # Upon calling save and load, rates are asked for the 20-today range for both USD and EUR.
+    log = []
+    FakeServer.hooklog(log)
+    app.save_and_load()
+    expected = set([
+        (date(2008, 4, 20), date.today(), 'USD'), 
+        (date(2008, 4, 20), date.today(), 'EUR'),
+    ])
+    eq_(set(log), expected)
+    # Now let's test that the rates are in the DB
+    eq_(USD.value_in(CAD, date(2008, 4, 20)), 1.42)
+    eq_(EUR.value_in(CAD, date(2008, 4, 22)), 1.44)
+    eq_(EUR.value_in(USD, date(2008, 4, 24)), 1.0)
+    eq_(USD.value_in(CAD, date(2008, 4, 25)), 1.47)
+    eq_(USD.value_in(CAD, date(2008, 4, 27)), 1.49)
+
+@with_app(app_three_currencies_two_entries)
+@with_fake_server
+def test_ensures_rates_async(app):
+    # ensure_rates() executes asynchronously
+    # I can't think of any graceful way to test something like that, so I assume that if I make
+    # the mocked get_CAD_values() to sleep for a little while, the next line after it in the test will
+    # be executed first. If this test starts to fail randomly, we'll have to think about a better
+    # way to test that (or increase the sleep time).
+    old_func = FakeServer.get_CAD_values
+    def mock_get_CAD_values(self, start, end, currency):
+        time.sleep(0.05)
+        return old_func(self, start, end, currency)
     
-    def save_and_load(self):
-        """Save the app somewhere, the loads it"""
-        filename = op.join(self.tmpdir(), 'foo.xml')
-        self.document.save_to_xml(filename)
-        self.document.load_from_xml(filename)
-    
-    def test_ensures_rates(self):
-        """Upon calling save and load, rates are asked for the 20-today range for both USD and EUR"""
-        log = []
-        FakeServer.hooklog(log)
-        self.save_and_load()
-        expected = set([
-            (date(2008, 4, 20), date.today(), 'USD'), 
-            (date(2008, 4, 20), date.today(), 'EUR'),
-        ])
-        self.assertEqual(set(log), expected)
-        # Now let's test that the rates are in the DB
-        self.assertEqual(USD.value_in(CAD, date(2008, 4, 20)), 1.42)
-        self.assertEqual(EUR.value_in(CAD, date(2008, 4, 22)), 1.44)
-        self.assertEqual(EUR.value_in(USD, date(2008, 4, 24)), 1.0)
-        self.assertEqual(USD.value_in(CAD, date(2008, 4, 25)), 1.47)
-        self.assertEqual(USD.value_in(CAD, date(2008, 4, 27)), 1.49)
-    
-    def test_ensures_rates_async(self):
-        """ensure_rates() executes asynchronously"""
-        # I can't think of any graceful way to test something like that, so I assume that if I make
-        # the mocked get_CAD_values() to sleep for a little while, the next line after it in the test will
-        # be executed first. If this test starts to fail randomly, we'll have to think about a better
-        # way to test that (or increase the sleep time).
-        old_func = FakeServer.get_CAD_values
-        def mock_get_CAD_values(self, start, end, currency):
-            time.sleep(0.05)
-            return old_func(self, start, end, currency)
-        
-        self.mock(FakeServer, 'get_CAD_values', mock_get_CAD_values)
+    with Patcher() as p:
+        p.patch(FakeServer, 'get_CAD_values', mock_get_CAD_values)
         rates_db = Currency.get_rates_db()
-        self.mock(rates_db, 'async', True) # Turn async on
-        self.save_and_load()
+        p.patch(rates_db, 'async', True) # Turn async on
+        app.save_and_load()
         # This is a weird way to test that we don't have the rate yet. No need to import fallback 
         # rates just for that.
-        self.assertNotEqual(rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD'), 1.42)
-        self.jointhreads()
-        self.assertEqual(rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD'), 1.42)
-    
+        assert rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD') != 1.42
+        for thread in threading.enumerate():
+            if thread.getName() != 'MainThread' and thread.isAlive():
+                thread.join(1)
+        eq_(rates_db.get_rate(date(2008, 4, 20), 'USD', 'CAD'), 1.42)
 
 #--- Multi-currency transaction
 def app_multi_currency_transaction():

@@ -178,7 +178,7 @@ class EntryList(Sequence):
             index = bisect.bisect_left(self._sorted_entry_dates, from_date)
             for date in self._sorted_entry_dates[index:]:
                 del self._date2entries[date]
-            for date_range, currency in self._daterange2cashflow.keys():
+            for date_range, currency in list(self._daterange2cashflow.keys()):
                 if date_range.end >= from_date:
                     del self._daterange2cashflow[(date_range, currency)]
             del self._sorted_entry_dates[index:]

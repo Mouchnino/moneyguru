@@ -79,7 +79,7 @@ class ImportTable(Table):
             return False
         if not parentIndex.isValid():
             return False
-        indexes = map(int, unicode(mimeData.data(MIME_INDEXES)).split(','))
+        indexes = list(map(int, str(mimeData.data(MIME_INDEXES)).split(',')))
         if len(indexes) != 1:
             return False
         index = indexes[0]
@@ -89,7 +89,7 @@ class ImportTable(Table):
         return True
     
     def mimeData(self, indexes):
-        rows = set(unicode(index.row()) for index in indexes)
+        rows = set(str(index.row()) for index in indexes)
         data = ','.join(rows)
         mimeData = QMimeData()
         mimeData.setData(MIME_INDEXES, QByteArray(data))

@@ -45,8 +45,8 @@ class Budget(Recurrence):
         # `recurrence_date` is the date at which the budget *starts*.
         # We need a date counter to see which date is next (so we can know when our period ends
         date_counter = DateCounter(recurrence_date, self.repeat_type, self.repeat_every, date.max)
-        date_counter.next() # first next() is the start_date
-        end_date = date_counter.next() - ONE_DAY
+        next(date_counter) # first next() is the start_date
+        end_date = next(date_counter) - ONE_DAY
         return BudgetSpawn(self, ref, recurrence_date=recurrence_date, date=end_date)
     
     def get_spawns(self, end, transactions, consumedtxns):

@@ -93,7 +93,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         attrib = budget_element.attrib
         attrib['account'] = budget.account.name
         attrib['type'] = budget.repeat_type
-        attrib['every'] = unicode(budget.repeat_every)
+        attrib['every'] = str(budget.repeat_every)
         attrib['amount'] = format_amount(budget.amount)
         attrib['notes'] = budget.notes
         if budget.target is not None:
@@ -103,9 +103,9 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
             attrib['stop_date'] = date2str(budget.stop_date)
     for elem in root.getiterator():
         attrib = elem.attrib
-        for key, value in attrib.iteritems():
+        for key, value in attrib.items():
             attrib[key] = remove_invalid_xml(value)
     tree = ET.ElementTree(root)
-    fp = open(filename, 'w')
+    fp = open(filename, 'wt', encoding='utf-8')
     fp.write('<?xml version="1.0" encoding="utf-8"?>\n')
-    tree.write(fp, 'utf-8')
+    tree.write(fp)

@@ -43,15 +43,15 @@ class Desjardins(TestCase):
         self.assertEqual(len(account.entries), 3)
         entry = account.entries[0]
         self.assertEqual(entry.date, date(2008, 1, 31))
-        self.assertEqual(entry.description, u'Intérêt sur EOP/')
+        self.assertEqual(entry.description, 'Intérêt sur EOP/')
         self.assertEqual(entry.amount, Amount(0.02, USD))
         entry = account.entries[1]
         self.assertEqual(entry.date, date(2008, 2, 1))
-        self.assertEqual(entry.description, u'Dépôt au comptoir/')
+        self.assertEqual(entry.description, 'Dépôt au comptoir/')
         self.assertEqual(entry.amount, Amount(5029.50, USD))
         entry = account.entries[2]
         self.assertEqual(entry.date, date(2008, 2, 1))
-        self.assertEqual(entry.description, u'Retrait au comptoir/')
+        self.assertEqual(entry.description, 'Retrait au comptoir/')
         self.assertEqual(entry.amount, Amount(-2665, USD))
 
     def test_reference(self):
@@ -85,7 +85,7 @@ class ING(TestCase):
         self.assertEqual(len(account.entries), 1)
         entry = account.entries[0]
         self.assertEqual(entry.date, date(2005, 9, 23))
-        self.assertEqual(entry.description, u'Dépôt')
+        self.assertEqual(entry.description, 'Dépôt')
         self.assertEqual(entry.amount, Amount(100, CAD))
 
 class InvalidCurrency(TestCase):

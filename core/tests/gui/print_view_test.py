@@ -13,7 +13,7 @@ from ...gui.print_view import PrintView
 
 class DateRangeOnApril2009(TestCase):
     def setUp(self):
-        self.mock_today(2009, 04, 01)
+        self.mock_today(2009, 4, 1)
         self.create_instances()
         self.drsel.select_month_range()
         self.pv = PrintView(self.ttable)

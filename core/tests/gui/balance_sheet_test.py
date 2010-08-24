@@ -5,7 +5,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 
 from datetime import date
 
@@ -279,9 +279,9 @@ class OnlyOneGroup(TestCase):
         # Accounts inside a group are sorted alphabetically.
         self.add_account('Zorg', group_name='Group')
         self.add_account('Albany', group_name='Group')
-        self.add_account(u'Réal', group_name='Group')
+        self.add_account('Réal', group_name='Group')
         self.add_account('Rex', group_name='Group')
-        eq_([x.name for x in self.bsheet.assets[0][:4]], ['Albany', u'Réal', 'Rex', 'Zorg'])
+        eq_([x.name for x in self.bsheet.assets[0][:4]], ['Albany', 'Réal', 'Rex', 'Zorg'])
     
     def test_balance_sheet(self):
         eq_(self.bsheet.assets[0].name, 'Group')

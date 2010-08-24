@@ -22,7 +22,7 @@ def has_letters(s, query):
         query_letters[letter] += 1
     for letter in s:
         s_letters[letter] += 1
-    for letter, count in query_letters.iteritems():
+    for letter, count in query_letters.items():
         if s_letters[letter] < count:
             return False
     return True

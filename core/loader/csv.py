@@ -6,11 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import absolute_import
+
 
 import csv
 import logging
 from datetime import datetime
+from hsutil.misc import stripfalse
 
 from ..exception import FileFormatError, FileLoadError
 from ..trans import tr
@@ -29,7 +30,7 @@ class CsvField(object):
     Reference = 'reference'
 
 class Loader(base.Loader):
-    FILE_OPEN_MODE = 'U' # universal line-ends. Deals with \r and \n
+    FILE_ENCODING = 'latin-1'
     def __init__(self, default_currency):
         base.Loader.__init__(self, default_currency)
         self.column_indexes = {}
@@ -57,14 +58,11 @@ class Loader(base.Loader):
         self.rawlines = lines
     
     def _scan_lines(self):
-        def decode_line(line):
-            return [unicode(cell, 'latin-1') for cell in line]
-        
         try:
             reader = csv.reader(iter(self.rawlines), self.dialect)
         except TypeError:
-            logging.warning(u"Invalid Dialect (strangely...). Delimiter: %r", self.dialect.delimiter)
-        lines = [decode_line(line) for line in reader if line]
+            logging.warning("Invalid Dialect (strangely...). Delimiter: %r", self.dialect.delimiter)
+        lines = stripfalse(reader)
         # complete smaller lines and strip whitespaces
         maxlen = max(len(line) for line in lines)
         for line in (l for l in lines if len(l) < maxlen):
@@ -79,7 +77,7 @@ class Loader(base.Loader):
     def _load(self):
         ci = self.column_indexes
         colcount = len(self.lines[0]) if self.lines else 0
-        ci = dict((attr, index) for attr, index in ci.iteritems() if index < colcount)
+        ci = dict((attr, index) for attr, index in ci.items() if index < colcount)
         hasdate = CsvField.Date in ci
         hasamount = (CsvField.Amount in ci) or (CsvField.Increase in ci and CsvField.Decrease in ci)
         if not (hasdate and hasamount):
@@ -91,7 +89,7 @@ class Loader(base.Loader):
             line = line[:]
             cleaned_str_date = self.clean_date(line[date_index])
             if cleaned_str_date is None:
-                logging.warning(u'{0} is not a date. Ignoring line'.format(line[date_index]))
+                logging.warning('{0} is not a date. Ignoring line'.format(line[date_index]))
             else:
                 line[date_index] = cleaned_str_date
                 lines_to_load.append(line)
@@ -111,7 +109,7 @@ class Loader(base.Loader):
                     attr = CsvField.Amount
                     if value.strip() and not value.startswith('-'):
                         value = '-' + value
-                if isinstance(value, basestring):
+                if isinstance(value, str):
                     value = value.strip()
                 if value:
                     setattr(self.transaction_info, attr, value)

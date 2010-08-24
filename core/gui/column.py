@@ -25,7 +25,7 @@ class Columns(object):
         # Set this view as soon as the GUI layer column instance is created
         self.view = None
         # We use copy here for test isolation. If we don't, changing a column affects all tests.
-        columns = map(copy.copy, table.COLUMNS)
+        columns = list(map(copy.copy, table.COLUMNS))
         for i, column in enumerate(columns):
             column.index = i
         self.coldata = dict((col.name, col) for col in columns)
@@ -53,7 +53,7 @@ class Columns(object):
     def columns_to_right(self, colname):
         column = self.coldata[colname]
         index = column.index
-        return [col.name for col in self.coldata.itervalues() if (col.visible and col.index > index)]
+        return [col.name for col in self.coldata.values() if (col.visible and col.index > index)]
     
     def move_column(self, colname, index):
         colnames = self.colnames
@@ -67,7 +67,7 @@ class Columns(object):
     def restore_columns(self):
         if not (self.savename and self.coldata):
             return
-        for col in self.coldata.itervalues():
+        for col in self.coldata.values():
             pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
             coldata = self.app.get_default(pref_name, fallback_value={})
             if 'index' in coldata:
@@ -80,7 +80,7 @@ class Columns(object):
     def save_columns(self):
         if not (self.savename and self.coldata):
             return
-        for col in self.coldata.itervalues():
+        for col in self.coldata.values():
             pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
             coldata = {'index': col.index, 'width': col.width, 'visible': col.visible}
             self.app.set_default(pref_name, coldata)
@@ -98,5 +98,5 @@ class Columns(object):
     #--- Properties
     @property
     def colnames(self):
-        return [col.name for col in sorted(self.coldata.itervalues(), key=lambda col: col.index)]
+        return [col.name for col in sorted(iter(self.coldata.values()), key=lambda col: col.index)]
     

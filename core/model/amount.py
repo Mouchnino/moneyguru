@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 
 import re
 from itertools import groupby
@@ -14,9 +14,10 @@ from itertools import groupby
 from hscommon.currency import Currency
 
 try:
-    from _amount import Amount
+    from ._amount import Amount
 except ImportError:
-    from _amount_ref import Amount
+    print("Using amount_ref")
+    from ._amount_ref import Amount
 
 # The dash "-" has to be escaped even in []
 re_expression = re.compile(r'^[+\-*/()\d\s.]*$')

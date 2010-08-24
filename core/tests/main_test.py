@@ -99,13 +99,13 @@ def test_graph_yaxis():
     app = TestApp()
     eq_(app.nwgraph.ymin, 0)
     eq_(app.nwgraph.ymax, 100)
-    eq_(list(app.nwgraph.ytickmarks), range(0, 101, 20))
+    eq_(list(app.nwgraph.ytickmarks), list(range(0, 101, 20)))
     eq_(list(app.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
 
 def test_load_inexistant():
     # Raise FileFormatError when filename doesn't exist
     app = TestApp()
-    filename = unicode(config.mktemp(u'foo').join('does_not_exist.xml'))
+    filename = str(config.mktemp('foo').join('does_not_exist.xml'))
     assert_raises(FileFormatError, app.doc.load_from_xml, filename)
 
 def test_load_invalid():

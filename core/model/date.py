@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division, unicode_literals
+
 
 import sys
 import locale
@@ -29,7 +29,7 @@ class DateRange(object):
         start_date_str = strftime('%Y/%m/%d', self.start) if self.start.year > 1900 else 'MINDATE'
         return '<%s %s - %s>' % (type(self).__name__, start_date_str, strftime('%Y/%m/%d', self.end))
     
-    def __nonzero__(self):
+    def __bool__(self):
         return self.start <= self.end
     
     def __and__(self, other):
@@ -193,7 +193,7 @@ class YearToDateRange(DateRange):
 def compute_ahead_months(ahead_months):
     assert ahead_months < 12
     month_range = MonthRange(date.today())
-    for _ in xrange(ahead_months):
+    for _ in range(ahead_months):
         month_range = month_range.next()
     return month_range.end
 
@@ -334,17 +334,8 @@ def format_year_month_day(year, month, day, format):
     return result
 
 #--- Misc
-if sys.platform == 'darwin':
-    # On OS X 10.5, locale behave strangely, and while the locale is set on utf-8, getpreferredencoding
-    # returns mac-roman, leading to trashy decodings. On OS X, we're always on utf-8 anyway.
-    strftime_enc = lambda: 'utf-8'
-else:
-    strftime_enc = locale.getpreferredencoding
-
 def strftime(fmt, date):
-    """Returns a *unicode* string resulting from date.strftime().
-    
-    Under some locales, the result of strftime() can contain non-ascii letters, resulting in a
-    crash when mixed with unicode string.
-    """
-    return unicode(date.strftime(fmt), strftime_enc(), 'replace')
+    # Under Python 2, there used to be problems with unicode/str results and strftime, problems that
+    # aren't there under Python3 anymore. Use of this function should be phased out and replaced
+    # with a simple date.strftime() call.
+    return date.strftime(fmt)

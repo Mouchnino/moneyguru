@@ -58,7 +58,7 @@ def test_balance_goes_negative(app):
     app.add_entry('4/10/2007', increase='200')
     eq_(app.balgraph.ymin, -200)
     eq_(app.balgraph.ymax, 200)
-    eq_(list(app.balgraph.ytickmarks), range(-200, 201, 50))
+    eq_(list(app.balgraph.ytickmarks), list(range(-200, 201, 50)))
     expected = [dict(text=str(x), pos=x) for x in range(-200, 201, 50)]
     eq_(list(app.balgraph.ylabels), expected)
 

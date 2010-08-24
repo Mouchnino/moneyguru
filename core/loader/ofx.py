@@ -17,6 +17,7 @@ from ..exception import FileFormatError
 from . import base
 
 class Loader(SGMLParser, base.Loader):
+    FILE_ENCODING = 'cp1252'
     def __init__(self, default_currency):
         SGMLParser.__init__(self)
         base.Loader.__init__(self, default_currency)
@@ -36,7 +37,7 @@ class Loader(SGMLParser, base.Loader):
     def _load(self):
         is_header = lambda line: not line.startswith('<')
         for line in dropwhile(is_header, self.lines):
-            self.feed(line.decode('cp1252'))
+            self.feed(line)
         self.close()
     
     #--- Helper methods

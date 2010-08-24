@@ -52,7 +52,6 @@ def save(filename, accounts):
                 if entry.reconciled:
                     lines.append('CR')
             lines.append('^')
-    fd = open(filename, 'w')
-    data = u'\n'.join(lines)
-    fd.write(data.encode('utf-8'))
+    fd = open(filename, 'wt', encoding='utf-8')
+    fd.write('\n'.join(lines))
     fd.close()

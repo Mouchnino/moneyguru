@@ -24,11 +24,12 @@ from qtlib.preferences import Preferences as PreferencesBase
 # to rely on it and stay with generic structures.
 
 class Preferences(PreferencesBase):
-    def _load_values(self, settings, get):
+    def _load_values(self, settings):
+        get = self.get_value
         self.registration_code = get('RegistrationCode', self.registration_code)
         self.registration_email = get('RegistrationEmail', self.registration_email)
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
-        self.recentDocuments = filter(op.exists, self.recentDocuments)
+        self.recentDocuments = list(filter(op.exists, self.recentDocuments))
         self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         self.nativeCurrency = get('NativeCurrency', self.nativeCurrency)
         self.language = get('Language', self.language)
@@ -67,7 +68,8 @@ class Preferences(PreferencesBase):
         self.mainWindowIsMaximized = False
         self.mainWindowRect = None
     
-    def _save_values(self, settings, set_):
+    def _save_values(self, settings):
+        set_ = self.set_value
         set_('RegistrationCode', self.registration_code)
         set_('RegistrationEmail', self.registration_email)
         set_('RecentDocuments', self.recentDocuments)

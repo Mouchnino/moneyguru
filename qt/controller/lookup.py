@@ -46,7 +46,7 @@ class Lookup(QWidget, Ui_Lookup):
         self.model.go()
     
     def searchChanged(self):
-        self.model.search_query = unicode(self.searchEdit.text())
+        self.model.search_query = str(self.searchEdit.text())
     
     def currentRowChanged(self, row):
         if row >= 0:

@@ -44,7 +44,7 @@ get_currency_exponent(PyObject *currency)
     if (tmp == NULL) {
         return -1;
     }
-    r = PyInt_AsLong(tmp);
+    r = PyLong_AsLong(tmp);
     Py_DECREF(tmp);
     return r;
 }
@@ -79,10 +79,10 @@ check_amount(PyObject *o)
     if (PyObject_TypeCheck(o, &Amount_Type)) {
         return 1;
     }
-    if (!PyInt_Check(o)) {
+    if (!PyLong_Check(o)) {
         return 0;
     }
-    return PyInt_AS_LONG(o) == 0;
+    return PyLong_AS_LONG(o) == 0;
 }
 
 static int
@@ -136,7 +136,7 @@ Amount_dealloc(Amount *self)
 {
     Py_XDECREF(self->currency);
     Py_XDECREF(self->rval);
-    self->ob_type->tp_free((PyObject*)self);
+    Py_TYPE(self)->tp_free((PyObject *)self);
 }
 
 static PyObject *
@@ -236,8 +236,8 @@ Amount_repr(Amount *self)
     
     exponent = get_currency_exponent(self->currency);
     args = Py_BuildValue("(iOO)", exponent, self->rval, self->currency);
-    fmt = PyString_FromString("Amount(%.*f, %r)");
-    r = PyString_Format(fmt, args);
+    fmt = PyUnicode_FromString("Amount(%.*f, %r)");
+    r = PyUnicode_Format(fmt, args);
     Py_DECREF(fmt);
     Py_DECREF(args);
     return r;
@@ -290,7 +290,7 @@ Amount_neg(Amount* self)
 }
 
 static int
-Amount_nonzero(Amount *self)
+Amount_bool(Amount *self)
 {
     return self->ival != 0;
 }
@@ -393,7 +393,7 @@ Amount_mul(PyObject *a, PyObject *b)
     }
     
     if (dval == 0) {
-        return PyInt_FromLong(0);
+        return PyLong_FromLong(0);
     }
     
     ival = rint(((Amount *)a)->ival * dval);
@@ -401,7 +401,7 @@ Amount_mul(PyObject *a, PyObject *b)
 }
 
 static PyObject *
-Amount_div(PyObject *a, PyObject *b)
+Amount_true_divide(PyObject *a, PyObject *b)
 {
     double dval;
     int64_t ival;
@@ -471,30 +471,26 @@ static PyNumberMethods Amount_as_number = {
 	(binaryfunc)Amount_add, /* nb_add */
 	(binaryfunc)Amount_sub, /* nb_subtract */
 	(binaryfunc)Amount_mul, /* nb_multiply */
-	(binaryfunc)Amount_div, /* nb_divide */
 	0, /* nb_remainder */
 	0, /* nb_divmod */
 	0, /* nb_power */
 	(unaryfunc)Amount_neg, /* nb_negative */
 	0, /* nb_positive */
 	(unaryfunc)Amount_abs, /* nb_absolute */
-	(inquiry)Amount_nonzero, /* nb_nonzero */
+	(inquiry)Amount_bool, /* nb_bool */
 	0,					/*nb_invert*/
 	0,					/*nb_lshift*/
 	0,					/*nb_rshift*/
 	0,					/*nb_and*/
 	0,					/*nb_xor*/
 	0,					/*nb_or*/
-	0,					/*nb_coerce*/
 	0,					/*nb_int*/
-	0,					/*nb_long*/
+	0,  				/*reserved*/
 	(unaryfunc)Amount_float, /*nb_float*/
-	0,					/*nb_oct*/
-	0, 					/*nb_hex*/
+	
 	0,					/*nb_inplace_add*/
 	0,					/*nb_inplace_subtract*/
 	0,					/*nb_inplace_multiply*/
-	0,					/*nb_inplace_divide*/
 	0,					/*nb_inplace_remainder*/
 	0,					/*nb_inplace_power*/
 	0,					/*nb_inplace_lshift*/
@@ -502,15 +498,16 @@ static PyNumberMethods Amount_as_number = {
 	0,					/*nb_inplace_and*/
 	0,					/*nb_inplace_xor*/
 	0,					/*nb_inplace_or*/
+	
 	0,  				/* nb_floor_divide */
-	0,					/* nb_true_divide */
+	(binaryfunc)Amount_true_divide,	/* nb_true_divide */
 	0,					/* nb_inplace_floor_divide */
 	0,					/* nb_inplace_true_divide */
+	0                   /* nb_index */
 };
 
 static PyTypeObject Amount_Type = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "_amount.Amount",             /*tp_name*/
     sizeof(Amount),             /*tp_basicsize*/
     0,                         /*tp_itemsize*/
@@ -518,7 +515,7 @@ static PyTypeObject Amount_Type = {
     0,                         /*tp_print*/
     0,                         /*tp_getattr*/
     0,                         /*tp_setattr*/
-    0,                         /*tp_compare*/
+    0,                         /*tp_reserved*/
     (reprfunc)Amount_repr,     /*tp_repr*/
     &Amount_as_number,          /*tp_as_number*/
     0,                         /*tp_as_sequence*/
@@ -529,7 +526,7 @@ static PyTypeObject Amount_Type = {
     0,                         /*tp_getattro*/
     0,                         /*tp_setattro*/
     0,                         /*tp_as_buffer*/
-    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_RICHCOMPARE | Py_TPFLAGS_CHECKTYPES, /*tp_flags*/
+    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /*tp_flags*/
     "Amount object",           /* tp_doc */
     (traverseproc)Amount_traverse,       /* tp_traverse */
     (inquiry)Amount_clear,            /* tp_clear */
@@ -548,26 +545,44 @@ static PyTypeObject Amount_Type = {
     (initproc)Amount_init,      /* tp_init */
     0,                         /* tp_alloc */
     Amount_new,                 /* tp_new */
+    0,                          /* tp_free */
+    0,                          /* tp_is_gcc */
+    0,                          /* tp_bases */
+    0,                          /* tp_mro */
+    0,                          /* tp_cache */
+    0,                          /* tp_subclasses */
+    0                          /* tp_weaklist */
 };
 
 static PyMethodDef module_methods[] = {
     {NULL}  /* Sentinel */
 };
 
-PyMODINIT_FUNC
-init_amount(void) 
-{
-    PyObject *m;
+static struct PyModuleDef AmountDef = {
+    PyModuleDef_HEAD_INIT,
+    "_amount",
+    NULL,
+    -1,
+    module_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+};
 
+PyObject *
+PyInit__amount(void)
+{
     if (PyType_Ready(&Amount_Type) < 0) {
-        return;
+        return NULL;
     }
     
-    m = Py_InitModule3("_amount", module_methods, "Home of the Amount class.");
-
-    if (m == NULL)
-      return;
+    PyObject *m = PyModule_Create(&AmountDef);
+    if (m == NULL) {
+        return NULL;
+    }
     
     Py_INCREF(&Amount_Type);
     PyModule_AddObject(m, "Amount", (PyObject *)&Amount_Type);
+    return m;
 }

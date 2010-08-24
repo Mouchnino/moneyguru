@@ -29,7 +29,7 @@ class GUITable(GUITableBase):
         row_indexes.sort()
         first_index = row_indexes[0]
         last_index = row_indexes[-1]
-        has_gap = row_indexes != range(first_index, first_index + len(row_indexes))
+        has_gap = row_indexes != list(range(first_index, first_index + len(row_indexes)))
         # When there is a gap, position can be in the middle of row_indexes
         if not has_gap and position in (row_indexes + [last_index + 1]):
             return False
@@ -125,7 +125,7 @@ class Row(RowBase):
     #--- Override
     def sort_key_for_column(self, column_name):
         value = RowBase.sort_key_for_column(self, column_name)
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             value = sort_string(value)
         elif isinstance(value, Amount):
             value = value.value

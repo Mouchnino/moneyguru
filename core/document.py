@@ -123,7 +123,7 @@ class Document(Repeater):
         while autosave_name in existing_names:
             timestamp += 1
             autosave_name = 'autosave{0}.moneyguru'.format(timestamp)
-        self.save_to_xml(unicode(self.app.cache_path + autosave_name), autosave=True)
+        self.save_to_xml(str(self.app.cache_path + autosave_name), autosave=True)
         if len(existing_names) >= AUTOSAVE_BUFFER_COUNT:
             io.remove(self.app.cache_path + existing_names[0])
     
@@ -277,12 +277,14 @@ class Document(Repeater):
         action = Action(tr('Remove account'))
         action.delete_account(account)
         affected_schedules = [s for s in self.schedules if account in s.ref.affected_accounts()]
-        map(action.change_schedule, affected_schedules)
+        for schedule in affected_schedules:
+            action.change_schedule(schedule)
         affected_budgets = [b for b in self.budgets if b.account is account or b.target is account]
         if account.is_income_statement_account() and reassign_to is None:
             action.deleted_budgets |= set(affected_budgets)
         else:
-            map(action.change_budget, affected_budgets)
+            for budget in affected_budgets:
+                action.change_budget(budget)
         self._undoer.record(action)
         self.transactions.reassign_account(account, reassign_to)
         for schedule in affected_schedules:
@@ -545,7 +547,7 @@ class Document(Repeater):
             currency = target.currency
         # we must remove any budget touching an excluded account.
         is_not_excluded = lambda b: b.account not in self.excluded_accounts and b.target not in self.excluded_accounts
-        budgets = filter(is_not_excluded, budgets)
+        budgets = list(filter(is_not_excluded, budgets))
         if not budgets:
             return 0
         budgeted_amount = sum(-b.amount_for_date_range(date_range, currency=currency) for b in budgets)
@@ -659,7 +661,7 @@ class Document(Repeater):
                 schedule.delete(spawn)
             # This will not work for weekly schedules, but the only reason we have this here is
             # for then the student loan stops in the example document (last payment is different)
-            for date, exception in date2exception.items():
+            for date, exception in list(date2exception.items()):
                 if exception is None:
                     continue
                 newdate = inc_month_overflow(date, month_diff)

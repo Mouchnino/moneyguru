@@ -43,14 +43,14 @@ class DateEdit(QLineEdit):
             # We want keypresses like Escape to go through.
             QLineEdit.keyPressEvent(self, event)
         else:
-            text = unicode(event.text())
+            text = str(event.text())
             if text in "0123456789/-.":
                 self.widget.type(text)
                 self._refresh()
     
     def focusInEvent(self, event):
         QLineEdit.focusInEvent(self, event)
-        self.widget.text = unicode(self.text())
+        self.widget.text = str(self.text())
         # A timer is used here because a mouse event following the focusInEvent messes up the
         # selection (so the refresh *has* to happen after the mouse event).
         QTimer.singleShot(0, self._refresh)

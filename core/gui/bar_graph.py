@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 from datetime import date, timedelta
 
 from ..model.date import DateRange, MonthRange, YearToDateRange

@@ -27,7 +27,7 @@ class CashculatorAccountTable(GUITable, ViewChild):
     def _fill(self):
         if self.parent_view.has_db():
             categories = self.parent_view.get_categories()
-            nonrec = (cat for cat in categories.itervalues() if not cat.is_recurring)
+            nonrec = (cat for cat in categories.values() if not cat.is_recurring)
             self.nonrecurring_names = set(cat.name for cat in nonrec)
         accounts = [a for a in self.document.accounts if a.is_income_statement_account()]
         sort_accounts(accounts)

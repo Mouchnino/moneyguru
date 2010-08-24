@@ -503,7 +503,7 @@ def test_persistence_of_completion(app, tmppath):
     row = app.etable.selected_row
     row.transfer = 'cat1'
     app.etable.save_edits()
-    filepath = unicode(tmppath + 'foo.xml')
+    filepath = str(tmppath + 'foo.xml')
     app.doc.save_to_xml(filepath)
     app = TestApp()
     app.add_txn(description='Duh, that shouldn\'t be here!')

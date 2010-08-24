@@ -21,7 +21,7 @@ from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, ad
 
 def package_windows(dev):
     if sys.platform != "win32":
-        print "Qt packaging only works under Windows."
+        print("Qt packaging only works under Windows.")
         return
     add_to_pythonpath('.')
     add_to_pythonpath('qt')
@@ -45,7 +45,7 @@ def package_windows(dev):
             print_and_do("upx --best \"dist\\{0}\"".format(lib))
     
     help_path = '..\\help\\moneyguru_help'
-    print "Copying {0} to dist\\help".format(help_path)
+    print("Copying {0} to dist\\help".format(help_path))
     shutil.copytree(help_path, 'dist\\help')
     
     if not dev:
@@ -78,7 +78,7 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    print "Packaging moneyGuru with UI {0}".format(ui)
+    print("Packaging moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
         build_dmg('cocoa/build/release/moneyGuru.app', '.')
     elif ui == 'qt':
@@ -87,7 +87,7 @@ def main():
         elif sys.platform == "linux2":
             package_debian()
         else:
-            print "Qt packaging only works under Windows or Linux."
+            print("Qt packaging only works under Windows or Linux.")
 
 if __name__ == '__main__':
     main()

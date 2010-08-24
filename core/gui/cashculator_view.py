@@ -26,8 +26,8 @@ from ..model.date import MonthRange, ONE_DAY
 from .base import BaseView
 
 MONTHS_TO_FILL = 4
-MSG_NO_DB = u"Exported database not present. Click on Export Accounts first."
-MSG_NO_BASE_DB = u"Base Cashculator database not present. You must run and quit Cashculator at least "\
+MSG_NO_DB = "Exported database not present. Click on Export Accounts first."
+MSG_NO_BASE_DB = "Base Cashculator database not present. You must run and quit Cashculator at least "\
     "once before using the export feature."
 
 
@@ -65,7 +65,7 @@ class CashculatorView(BaseView):
             if not io.exists(self._mgccdbpath[:-1]):
                 io.makedirs(self._mgccdbpath[:-1])
             io.copy(self._ccdbpath, self._mgccdbpath)
-        self._db = CashculatorDB(unicode(self._mgccdbpath))
+        self._db = CashculatorDB(str(self._mgccdbpath))
     
     #--- Public
     def export_db(self):
@@ -76,7 +76,7 @@ class CashculatorView(BaseView):
         # Determine date ranges for which we compute amounts
         dr = MonthRange(date.today())
         dateranges = [dr]
-        for _ in xrange(MONTHS_TO_FILL-1):
+        for _ in range(MONTHS_TO_FILL-1):
             dr = dr.prev()
             dateranges.append(dr)
         # Update CC db with actual data from moneyGuru.
@@ -118,8 +118,8 @@ class CashculatorView(BaseView):
         if not self.has_db():
             self.mainwindow.show_message(MSG_NO_DB)
             return
-        cmd = u"defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
-        cmd = cmd.format(unicode(self._mgccdbpath[:-1]))
+        cmd = "defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
+        cmd = cmd.format(str(self._mgccdbpath[:-1]))
         p = subprocess.Popen(cmd, shell=True)
         p.wait()
         self._needs_reset = True
@@ -150,8 +150,8 @@ class CashculatorView(BaseView):
     
     def reset_ccdb(self):
         # Sets CC's db back to its old value
-        cmd = u"defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
-        cmd = cmd.format(unicode(self._ccdbpath[:-1]))
+        cmd = "defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
+        cmd = cmd.format(str(self._ccdbpath[:-1]))
         p = subprocess.Popen(cmd, shell=True)
         p.wait()
         self._needs_reset = False

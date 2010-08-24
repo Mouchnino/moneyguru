@@ -90,12 +90,12 @@ class Panel(QDialog):
     def lineEditEditingFinished(self):
         sender = self.sender()
         modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, unicode(sender.text()))
+        setattr(self.model, modelAttr, str(sender.text()))
     
     def plainEditTextChanged(self):
         sender = self.sender()
         modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, unicode(sender.toPlainText()))
+        setattr(self.model, modelAttr, str(sender.toPlainText()))
     
     def spinBoxValueChanged(self):
         sender = self.sender()

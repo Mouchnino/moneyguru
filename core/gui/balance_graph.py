@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 from datetime import date
 
 from ..model.date import ONE_DAY
@@ -45,7 +45,7 @@ class BalanceGraph(Graph):
                     date2value[date_point] = last_balance
                 date2value[date_point + ONE_DAY] = balance
                 last_balance = balance
-        for date_point, value in date2value.items():
+        for date_point, value in list(date2value.items()):
             if date_point <= TODAY:
                 continue
             budget = self._budget_for_date(date_point - ONE_DAY)

@@ -55,11 +55,11 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         if index < 0:
             return
         elif index < len(self.model.layout_names):
-            layout_name = None if index == 0 else unicode(self.layoutComboBox.itemText(index))
+            layout_name = None if index == 0 else str(self.layoutComboBox.itemText(index))
             self.model.select_layout(layout_name)
         else:
             self.layoutComboBox.setCurrentIndex(self.layoutComboBox.findText(self.model.layout.name))
-            data = unicode(self.layoutComboBox.itemData(index).toString())
+            data = str(self.layoutComboBox.itemData(index).toString())
             if data == NEW_LAYOUT:
                 self._newLayout()
             elif data == RENAME_LAYOUT:
@@ -68,7 +68,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
                 self.model.delete_selected_layout()
     
     def rescanClicked(self):
-        self.model.field_separator = unicode(self.fieldSeparatorEdit.text())
+        self.model.field_separator = str(self.fieldSeparatorEdit.text())
         self.model.rescan()
     
     def targetIndexChanged(self, index):

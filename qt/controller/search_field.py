@@ -21,7 +21,7 @@ class SearchField(QObject):
     
     #--- Event Handling
     def searchChanged(self):
-        self.model.query = unicode(self.view.text())
+        self.model.query = str(self.view.text())
     
     #--- model --> view
     def refresh(self):

@@ -7,29 +7,30 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import xmlrpclib
+import xmlrpc.client
 
 from hsutil.testutil import Patcher
 
 from ..model.currency import RatesDB
 from ..model import currency as currency_module
 
+global patcher
+global original_rates_db_ensure_rates
+global is_ratesdb_patched
+patcher = None
+original_rates_db_ensure_rates = RatesDB.ensure_rates
 is_ratesdb_patched = False
 
 def setup_package():
-    global patcher
     patcher = Patcher()
     # The vast majority of moneyGuru's tests require that ensure_rates is patched to nothing to
     # avoid hitting the currency server during tests. However, some tests still need it. This is
     # why we keep it around so that those tests can re-patch it.
-    global original_rates_db_ensure_rates
-    original_rates_db_ensure_rates = RatesDB.ensure_rates
-    patcher.patch(RatesDB, 'ensure_rates', lambda *a, **kw: None)
+    patcher.patch(RatesDB, 'ensure_rates', lambda self, start_date, currencies: None)
     currency_module.initialize_db(':memory:')
     def raise_if_called(*args, **kwargs):
         raise Exception('This is not supposed to be used in a test case')
-    patcher.patch(xmlrpclib, 'ServerProxy', raise_if_called)
-    global is_ratesdb_patched
+    patcher.patch(xmlrpc.client, 'ServerProxy', raise_if_called)
     is_ratesdb_patched = True
 
 def ensure_ratesdb_patched():
@@ -42,9 +43,8 @@ def ensure_ratesdb_patched():
         setup_package()
 
 def teardown_package():
-    global patcher
     patcher.unpatch()
 
 def get_original_rates_db_ensure_rates():
-    global original_rates_db_ensure_rates
+    
     return original_rates_db_ensure_rates

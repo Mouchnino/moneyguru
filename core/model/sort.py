@@ -11,9 +11,9 @@ import re
 import unicodedata
 
 # The range of diacritics in Unicode
-diacritics = re.compile(u'[\u0300-\u036f\u1dc0-\u1dff]')
+diacritics = re.compile('[\u0300-\u036f\u1dc0-\u1dff]')
 
 def sort_string(s):
     """Returns a normalized version of 's' to be used for sorting.
     """
-    return diacritics.sub('', unicodedata.normalize('NFD', unicode(s)).lower())
+    return diacritics.sub('', unicodedata.normalize('NFD', str(s)).lower())

@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 
 from datetime import date
 from math import ceil, floor, log10
@@ -69,7 +69,7 @@ class Graph(Chart):
             ystep = yfactor
         self._ymin = ymin
         self._ymax = ymax
-        self._ytickmarks = range(ymin, ymax + 1, ystep)
+        self._ytickmarks = list(range(ymin, ymax + 1, ystep))
         self._ylabels = [dict(text=str(x), pos=x) for x in self.ytickmarks]
 
     def compute(self):

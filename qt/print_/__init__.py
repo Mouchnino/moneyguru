@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import division
+
 
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QPainter

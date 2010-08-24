@@ -26,9 +26,9 @@ class CompletableEdit(QLineEdit):
     def _prefix(self):
         # Returns the text before the selection
         if self.selectionStart() == -1:
-            return unicode(self.text())
+            return str(self.text())
         else:
-            return unicode(self.text())[:self.selectionStart()]
+            return str(self.text())[:self.selectionStart()]
     
     #--- QLineEdit overrides
     def focusInEvent(self, event):

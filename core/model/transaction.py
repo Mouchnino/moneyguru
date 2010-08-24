@@ -10,7 +10,7 @@ import time
 from collections import defaultdict
 from copy import copy
 
-from hsutil.misc import allsame, first, nonone
+from hsutil.misc import allsame, first, nonone, stripfalse
 
 from ..const import NOEDIT
 from .amount import Amount, convert_amount, same_currency, of_currency
@@ -89,7 +89,7 @@ class Transaction(object):
         currency2balance = defaultdict(int)
         for split in splits_with_amount:
             currency2balance[split.amount.currency] += split.amount
-        imbalanced = filter(None, currency2balance.values()) # filters out zeros (balances currencies)
+        imbalanced = stripfalse(currency2balance.values()) # filters out zeros (balances currencies)
         # For a logical imbalance to be possible, all imbalanced amounts must be on the same side
         if imbalanced and allsame(amount > 0 for amount in imbalanced):
             unassigned = [s for s in self.splits if s.account is None and s is not strong_split]

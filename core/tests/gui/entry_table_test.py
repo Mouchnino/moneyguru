@@ -156,7 +156,7 @@ def test_entry_is_added_before_total_line(app):
 @with_tmpdir
 def test_save(app, tmppath):
     # Saving the document ends the edition mode and save the edits
-    filepath = unicode(tmppath + 'foo')
+    filepath = str(tmppath + 'foo')
     app.doc.save_to_xml(filepath)
     app.check_gui_calls(app.etable_gui, ['stop_editing', 'refresh', 'show_selected_row'])
     assert app.etable.edited is None

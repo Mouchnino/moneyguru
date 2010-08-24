@@ -63,19 +63,19 @@ class Document(QObject):
     def exportToQIF(self):
         title = tr("Export to QIF")
         filters = tr("QIF Files (*.qif)")
-        docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', '', filters))
+        docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', '', filters))
         if docpath:
             self.model.save_to_qif(docpath)
     
     def importDocument(self):
         title = tr("Select a document to import")
         filters = tr("Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)")
-        docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
+        docpath = str(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             try:
                 self.model.parse_file_for_import(docpath)
             except FileFormatError as e:
-                QMessageBox.warning(self.app.mainWindow, tr("Cannot import file"), unicode(e))
+                QMessageBox.warning(self.app.mainWindow, tr("Cannot import file"), str(e))
     
     def new(self):
         if not self.confirmDestructiveAction():
@@ -91,13 +91,13 @@ class Document(QObject):
             self.model.load_from_xml(docpath)
             self.documentPath = docpath
         except FileFormatError as e:
-            QMessageBox.warning(self.app.mainWindow, tr("Cannot load file"), unicode(e))
+            QMessageBox.warning(self.app.mainWindow, tr("Cannot load file"), str(e))
         self.documentOpened.emit(docpath)
     
     def openDocument(self):
         title = tr("Select a document to load")
         filters = tr("moneyGuru Documents (*.moneyguru)")
-        docpath = unicode(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
+        docpath = str(QFileDialog.getOpenFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             self.open(docpath)
     
@@ -121,7 +121,7 @@ class Document(QObject):
     def saveAs(self):
         title = tr("Save As")
         filters = tr("moneyGuru Documents (*.moneyguru)")
-        docpath = unicode(QFileDialog.getSaveFileName(self.app.mainWindow, title, '', filters))
+        docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, '', filters))
         if docpath:
             if self._save(docpath):
                 self.documentPath = docpath
@@ -137,5 +137,5 @@ class Document(QObject):
         return dialog.queryForScope()
     
     #--- Signals
-    documentOpened = pyqtSignal(unicode)
-    documentSavedAs = pyqtSignal(unicode)
+    documentOpened = pyqtSignal(str)
+    documentSavedAs = pyqtSignal(str)

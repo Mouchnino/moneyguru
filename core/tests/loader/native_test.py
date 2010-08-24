@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from StringIO import StringIO
+from io import BytesIO
 from datetime import date
 
 from hsutil.testutil import eq_
@@ -25,32 +25,32 @@ class NativeLoader(TestCase):
         self.loader = native.Loader(USD)
     
     def test_parse_non_xml(self):
-        content = 'this is not xml content'
-        self.assertRaises(FileFormatError, self.loader._parse, StringIO(content))
+        content = b'this is not xml content'
+        self.assertRaises(FileFormatError, self.loader._parse, BytesIO(content))
     
     def test_parse_wrong_root_name(self):
-        content = '<foobar></foobar>'
-        self.assertRaises(FileFormatError, self.loader._parse, StringIO(content))
+        content = b'<foobar></foobar>'
+        self.assertRaises(FileFormatError, self.loader._parse, BytesIO(content))
     
     def test_parse_minimal(self):
-        content = '<moneyguru-file></moneyguru-file>'
+        content = b'<moneyguru-file></moneyguru-file>'
         try:
-            self.loader._parse(StringIO(content))
+            self.loader._parse(BytesIO(content))
         except FileFormatError:
             self.fail()
     
     def test_wrong_date(self):
         # these used to raise FileFormatError, but now, we just want to make sure that there is no
         # crash.
-        content = '<moneyguru-file><transaction date="bobsleigh" /></moneyguru-file>'
-        self.loader._parse(StringIO(content))
+        content = b'<moneyguru-file><transaction date="bobsleigh" /></moneyguru-file>'
+        self.loader._parse(BytesIO(content))
         self.loader.load() # no crash
 
     def test_wrong_mtime(self):
         # these used to raise FileFormatError, but now, we just want to make sure that there is no
         # crash.
-        content = '<moneyguru-file><transaction date="2008-01-01" mtime="abc" /></moneyguru-file>'
-        self.loader._parse(StringIO(content))
+        content = b'<moneyguru-file><transaction date="2008-01-01" mtime="abc" /></moneyguru-file>'
+        self.loader._parse(BytesIO(content))
         self.loader.load() # no crash
 
     def test_account_and_entry_values(self):
