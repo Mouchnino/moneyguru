@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
-			<integer value="129"/>
 			<integer value="110"/>
-			<integer value="70"/>
+			<integer value="129"/>
+			<integer value="23"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -310,6 +310,16 @@
 													<object class="NSMenuItem" id="305537988">
 														<reference key="NSMenu" ref="976417440"/>
 														<string key="NSTitle">Description &lt;--&gt; Payee</string>
+														<string key="NSKeyEquiv"/>
+														<int key="NSMnemonicLoc">2147483647</int>
+														<reference key="NSOnImage" ref="668660200"/>
+														<reference key="NSMixedImage" ref="883986290"/>
+														<string key="NSAction">_popUpItemAction:</string>
+														<reference key="NSTarget" ref="834721627"/>
+													</object>
+													<object class="NSMenuItem" id="282883880">
+														<reference key="NSMenu" ref="976417440"/>
+														<string key="NSTitle">Invert Amounts</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSMnemonicLoc">2147483647</int>
 														<reference key="NSOnImage" ref="668660200"/>
@@ -1001,6 +1011,7 @@
 							<reference ref="1019007056"/>
 							<reference ref="668302017"/>
 							<reference ref="305537988"/>
+							<reference ref="282883880"/>
 						</object>
 						<reference key="parent" ref="834721627"/>
 					</object>
@@ -1124,6 +1135,11 @@
 						<reference key="object" ref="278271257"/>
 						<reference key="parent" ref="345196265"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">154</int>
+						<reference key="object" ref="282883880"/>
+						<reference key="parent" ref="976417440"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1161,6 +1177,7 @@
 					<string>129.CustomClassName</string>
 					<string>129.IBPluginDependency</string>
 					<string>130.IBPluginDependency</string>
+					<string>154.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
 					<string>23.IBEditorWindowLastContentRect</string>
 					<string>23.IBPluginDependency</string>
@@ -1228,6 +1245,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{104, 409}, {610, 413}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{242, 389}, {585, 367}}</string>
@@ -1282,7 +1300,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{423, 696}, {233, 83}}</string>
+					<string>{{411, 676}, {259, 103}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1308,7 +1326,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">153</int>
+			<int key="maxID">154</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

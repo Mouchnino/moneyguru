@@ -7,6 +7,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from datetime import date
+from hsutil.testutil import eq_
 
 from ..base import TestCase, DictLoader
 from ...model.date import YearRange
@@ -87,6 +88,13 @@ class ImportCheckbookQIF(TestCase):
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
         self.assertEqual(self.ta.etable_count(), 4)
+    
+    def test_invert_amounts(self):
+        self.iwin.swap_type_index = SwapType.InvertAmount
+        self.iwin.perform_swap()
+        eq_(self.itable[0].amount_import, '-42.32')
+        eq_(self.itable[1].amount_import, '-100.00')
+        eq_(self.itable[2].amount_import, '60.00')
     
     def test_remember_target_account_selection(self):
         """When selecting a target account, it's specific to the ane we're in"""

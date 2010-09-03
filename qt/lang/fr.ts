@@ -908,6 +908,10 @@
         <translation>Description &lt;--&gt; Provenance</translation>
     </message>
     <message>
+        <source>Invert Amounts</source>
+        <translation>Inverser les montants</translation>
+    </message>
+    <message>
         <location filename="import_window.ui" line="92"/>
         <source>Apply to all accounts</source>
         <translation>Appliquer à tous</translation>

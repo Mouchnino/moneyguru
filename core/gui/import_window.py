@@ -22,6 +22,7 @@ class SwapType(object):
     MonthYear = 1
     DayYear = 2
     DescriptionPayee = 3
+    InvertAmount = 4
 
 def last_two_digits(year):
     return year - ((year // 100) * 100)
@@ -126,6 +127,21 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             return False
         return pane.can_swap_date_fields(first, second)
     
+    def _invert_amounts(self, apply_to_all):
+        if apply_to_all:
+            panes = self.panes
+        else:
+            panes = [self.selected_pane]
+        entries = flatten(p.account.entries for p in panes)
+        txns = dedupe(e.transaction for e in entries)
+        for txn in txns:
+            for split in txn.splits:
+                split.amount = -split.amount
+        # Entries, I don't remember why, hold a copy of their split's amount. It has to be updated.
+        for entry in entries:
+            entry.amount = entry.split.amount
+        self.notify('fields_switched')
+    
     def _refresh_target_selection(self):
         if not self.panes:
             return
@@ -137,7 +153,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             except ValueError:
                 pass
     
-    def _swap_date_fields(self, first, second, apply_to_all=False): # 'day', 'month', 'year'
+    def _swap_date_fields(self, first, second, apply_to_all): # 'day', 'month', 'year'
         assert self._can_swap_date_fields(first, second)
         if apply_to_all:
             panes = [p for p in self.panes if p.can_swap_date_fields(first, second)]
@@ -149,7 +165,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
         
         self._swap_fields(panes, switch_func)
     
-    def _swap_description_payee(self, apply_to_all=False):
+    def _swap_description_payee(self, apply_to_all):
         if apply_to_all:
             panes = self.panes
         else:
@@ -214,8 +230,10 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             self._swap_date_fields(MONTH, YEAR, apply_to_all=apply_to_all)
         elif index == SwapType.DayYear:
             self._swap_date_fields(DAY, YEAR, apply_to_all=apply_to_all)
-        else:
+        elif index == SwapType.DescriptionPayee:
             self._swap_description_payee(apply_to_all=apply_to_all)
+        elif index == SwapType.InvertAmount:
+            self._invert_amounts(apply_to_all=apply_to_all)
     
     def refresh_targets(self):
         self.target_accounts = [a for a in self.document.accounts if a.is_balance_sheet_account()]
