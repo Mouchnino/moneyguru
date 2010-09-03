@@ -12,18 +12,14 @@ http://www.hardcoded.net/licenses/hs_license
 @interface PyImportWindow : PyGUI {}
 - (NSInteger)accountCountAtIndex:(NSInteger)index;
 - (NSString *)accountNameAtIndex:(NSInteger)index;
-- (BOOL)canSwitchDayMonth;
-- (BOOL)canSwitchMonthYear;
-- (BOOL)canSwitchDayYear;
+- (BOOL)canPerformSwap;
 - (void)closePaneAtIndex:(NSInteger)index;
 - (void)importSelectedPane;
 - (NSInteger)numberOfAccounts;
+- (void)performSwap:(BOOL)applyToAll;
 - (NSInteger)selectedTargetAccountIndex;
-- (void)setSelectedAccountIndex:(NSInteger)index;
 - (void)setSelectedTargetAccountIndex:(NSInteger)index;
-- (void)switchDayMonth:(BOOL)applyToAll;
-- (void)switchMonthYear:(BOOL)applyToAll;
-- (void)switchDayYear:(BOOL)applyToAll;
-- (void)switchDescriptionPayee:(BOOL)applyToAll;
+- (void)setSelectedAccountIndex:(NSInteger)index;
+- (void)setSwapTypeIndex:(NSInteger)index;
 - (NSArray *)targetAccountNames;
 @end
