@@ -45,8 +45,8 @@ class ItemPrintDatasource(object):
         """Returns model data for the index at the *printable* (rowIndex, colIndex) cell."""
         raise NotImplementedError()
     
-    def header(self, colIndex):
-        """Returns the *printable* column header at index `colIndex`"""
+    def columnAtIndex(self, colIndex):
+        """Returns the Column instance at index `colIndex`"""
         raise NotImplementedError()
     
     def indentation(self, rowIndex, colIndex):
@@ -81,8 +81,8 @@ class TablePrintDatasource(ItemPrintDatasource):
         index = self.table.index(rowIndex, self.columns[colIndex].index)
         return self.table.data(index, role)
     
-    def header(self, colIndex):
-        return self.columns[colIndex].title
+    def columnAtIndex(self, colIndex):
+        return self.columns[colIndex]
     
     def rowFont(self):
         return self._rowFont
@@ -127,8 +127,8 @@ class TreePrintDatasource(ItemPrintDatasource):
         index = self._getIndex(rowIndex, colIndex)
         return self.tree.data(index, role)
     
-    def header(self, colIndex):
-        return self.columns[colIndex].title
+    def columnAtIndex(self, colIndex):
+        return self.columns[colIndex]
     
     def indentation(self, rowIndex, colIndex):
         if colIndex != 0:
@@ -183,11 +183,11 @@ class ItemViewLayoutElement(LayoutElement):
         left = self.rect.left()
         painter.save()
         painter.setFont(self.ds.headerFont())
-        for col, colWidth in zip(self.stats.columns, columnWidths):
-            title = col.title
+        for colStats, colWidth in zip(self.stats.columns, columnWidths):
+            col = colStats.col
             headerRect = QRect(left, self.rect.top(), colWidth, headerHeight)
             headerRect = applyMargin(headerRect, CELL_MARGIN)
-            painter.drawText(headerRect, Qt.AlignLeft, title)
+            painter.drawText(headerRect, col.alignment, col.title)
             left += colWidth
         painter.restore()
         painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
@@ -239,18 +239,18 @@ class ItemViewLayoutElement(LayoutElement):
 
 class ItemViewPrintStats(object):
     def __init__(self, ds):
-        ColumnStats = namedtuple('ColumnStats', 'index title avgWidth maxWidth maxPixWidth headerWidth')
+        ColumnStats = namedtuple('ColumnStats', 'index col avgWidth maxWidth maxPixWidth headerWidth')
         rowFM = QFontMetrics(ds.rowFont())
         headerFM = QFontMetrics(ds.headerFont())
         self.rowHeight = rowFM.height() + CELL_MARGIN * 2
         self.headerHeight = headerFM.height() + CELL_MARGIN * 2
         self.columns = []
         for colIndex in xrange(ds.columnCount()):
-            colTitle = ds.header(colIndex)
+            col = ds.columnAtIndex(colIndex)
             sumWidth = 0
             maxWidth = 0
             maxPixWidth = 0
-            headerWidth = headerFM.width(colTitle) + CELL_MARGIN * 2
+            headerWidth = headerFM.width(col.title) + CELL_MARGIN * 2
             for rowIndex in xrange(ds.rowCount()):
                 data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
@@ -266,7 +266,7 @@ class ItemViewPrintStats(object):
                     maxPixWidth = max(maxPixWidth, width)
             avgWidth = sumWidth // ds.rowCount()
             maxWidth = max(maxWidth, maxPixWidth, headerWidth)
-            cs = ColumnStats(colIndex, colTitle, avgWidth, maxWidth, maxPixWidth, headerWidth)
+            cs = ColumnStats(colIndex, col, avgWidth, maxWidth, maxPixWidth, headerWidth)
             self.columns.append(cs)
         self.maxWidth = sum(cs.maxWidth for cs in self.columns)
         # When pictures are involved, they get priority

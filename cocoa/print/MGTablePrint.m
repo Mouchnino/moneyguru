@@ -14,6 +14,24 @@ http://www.hardcoded.net/licenses/hs_license
 
 #define CELL_PADDING 8
 
+static NSParagraphStyle* makeParagraphRightAligned(NSParagraphStyle *p)
+{
+    if (p == nil) {
+        p = [NSParagraphStyle defaultParagraphStyle];
+    }
+    NSMutableParagraphStyle *mp = [p mutableCopy];
+    [mp setAlignment:NSRightTextAlignment];
+    return [mp autorelease];
+}
+
+static NSDictionary* makeAttributesRightAligned(NSDictionary *attrs)
+{
+    NSParagraphStyle *p = [attrs objectForKey:NSParagraphStyleAttributeName];
+    NSMutableDictionary *result = [attrs mutableCopy];
+    [result setObject:makeParagraphRightAligned(p) forKey:NSParagraphStyleAttributeName];
+    return [result autorelease];
+}
+
 @implementation MGTablePrint
 - (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView
 {
@@ -279,7 +297,11 @@ http://www.hardcoded.net/licenses/hs_license
         CGFloat colWidth = n2f([columnWidths objectAtIndex:i]);
         NSString *headerToDraw = [[c headerCell] stringValue];
         NSRect drawRect = NSMakeRect(cumulativeHeaderX, headerY, colWidth, headerTextHeight);
-        [headerToDraw drawInRect:drawRect withAttributes:headerAttributes];
+        NSDictionary *attrs = headerAttributes;
+        if ([[c headerCell] alignment] == NSRightTextAlignment) {
+            attrs = makeAttributesRightAligned(attrs);
+        }
+        [headerToDraw drawInRect:drawRect withAttributes:attrs];
         cumulativeHeaderX += colWidth;
     }
     
