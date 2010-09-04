@@ -275,9 +275,9 @@ class Loader(object):
                 if transaction_info is not None:
                     exception = load_transaction_info(transaction_info)
                     spawn = Spawn(recurrence, exception, date, exception.date)
+                    recurrence.date2exception[date] = spawn
                 else:
-                    spawn = None
-                recurrence.date2exception[date] = spawn
+                    recurrence.delete_at(date)
             for date, transaction_info in info.date2globalchange.items():
                 change = load_transaction_info(transaction_info)
                 spawn = Spawn(recurrence, change, date, change.date)

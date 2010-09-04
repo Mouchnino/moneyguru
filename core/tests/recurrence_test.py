@@ -42,6 +42,16 @@ def test_make_schedule_from_selected(app):
     app.mw.select_transaction_table()
     eq_(app.ttable.row_count, 1)
 
+@with_app(app_one_transaction)
+def test_make_schedule_from_selected_weekly(app):
+    # Previously, making a non-monthly schedule from a transaction would result in a duplicate
+    # of the model txn.
+    app.mw.make_schedule_from_selected()
+    app.scpanel.repeat_type_index = 1 # weekly
+    app.scpanel.save()
+    app.mw.select_transaction_table()
+    eq_(app.ttable[1].date, '18/07/2008')
+
 #--- Daily schedule
 def app_daily_schedule():
     p = Patcher()

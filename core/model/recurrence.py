@@ -83,6 +83,9 @@ class Recurrence(object):
         self.ref = ref
         self._repeat_type = repeat_type
         self._repeat_every = repeat_every
+        # Schedules with their first spawn deleted are a special case that we want to preserve
+        # even when we reset all exceptions.
+        self._skip_first = False
         self.stop_date = None
         self.date2exception = {}
         self.date2globalchange = {}
@@ -136,6 +139,8 @@ class Recurrence(object):
         self.date2exception[spawn.recurrence_date] = None
     
     def delete_at(self, date):
+        if date == self.start_date:
+            self._skip_first = True
         self.date2exception[date] = None
     
     def get_spawns(self, end):
@@ -173,6 +178,8 @@ class Recurrence(object):
     def reset_exceptions(self):
         self.date2exception = {}
         self.date2globalchange = {}
+        if self._skip_first:
+            self.delete_at(self.start_date)
     
     def reset_spawn_cache(self):
         self.date2instances = {}
