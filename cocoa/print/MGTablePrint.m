@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import <math.h>
 
-#define CELL_PADDING 8
+#define CELL_PADDING 12
 
 static NSParagraphStyle* makeParagraphRightAligned(NSParagraphStyle *p)
 {
