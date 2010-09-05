@@ -28,6 +28,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.tabView.currentChanged.connect(self.currentTabChanged)
         self.targetAccountComboBox.currentIndexChanged.connect(self.targetAccountChanged)
         self.importButton.clicked.connect(self.importClicked)
+        self.swapOptionsComboBox.currentIndexChanged.connect(self.swapTypeChanged)
         self.swapButton.clicked.connect(self.swapClicked)
     
     def _setupUi(self):
@@ -53,14 +54,13 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.model.import_selected_pane()
     
     def swapClicked(self):
-        swapType = self.swapOptionsComboBox.currentIndex()
-        applyToAll = self.applyToAllCheckBox.isChecked()
-        if swapType in (0, 1, 2):
-            first, second = [(DAY, MONTH), (MONTH, YEAR), (DAY, YEAR)][swapType]
-            if self.model.can_switch_date_fields(first, second):
-                self.model.switch_date_fields(first, second, applyToAll)
-        else:
-            self.model.switch_description_payee(applyToAll)
+        if self.model.can_perform_swap():
+            applyToAll = self.applyToAllCheckBox.isChecked()
+            self.model.perform_swap(applyToAll)
+    
+    def swapTypeChanged(self, index):
+        self.model.swap_type_index = index
+        self.swapButton.setEnabled(self.model.can_perform_swap())
     
     def tabCloseRequested(self, index):
         self.model.close_pane(index)
@@ -103,4 +103,5 @@ class ImportWindow(QWidget, Ui_ImportWindow):
             self.tabView.setCurrentIndex(index)
         self.targetAccountComboBox.setCurrentIndex(self.model.selected_target_account_index)
         self.table.updateColumnsVisibility()
+        self.swapButton.setEnabled(self.model.can_perform_swap())
     

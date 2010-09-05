@@ -384,6 +384,14 @@ def app_schedule_with_local_deletion():
     app.ttable.delete()
     return app, p
 
+#--- Schedule made from txn
+def app_schedule_made_from_txn():
+    app = TestApp()
+    app.add_txn('11/07/2008', 'description', 'payee', from_='first', to='second', amount='42')
+    app.mw.make_schedule_from_selected()
+    app.scpanel.save()
+    return app
+
 #--- Generators
 def test_save_load():
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
@@ -446,6 +454,10 @@ def test_save_load():
     app, p = app_schedule_with_local_deletion()
     yield check, app
     p.unpatch()
+    
+    # The first spawn (corresponding to the original txn) is still skipped when we save/load
+    app = app_schedule_made_from_txn()
+    yield check, app
 
 def test_save_load_qif():
     @with_tmpdir

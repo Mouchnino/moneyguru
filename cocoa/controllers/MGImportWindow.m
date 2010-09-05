@@ -75,18 +75,18 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] importSelectedPane];
 }
 
+- (IBAction)selectSwapType:(id)sender
+{
+    [[self py] setSwapTypeIndex:[switchDateFieldsPopup indexOfSelectedItem]];
+    [swapButton setEnabled:[[self py] canPerformSwap]];
+}
+
 - (IBAction)switchDateFields:(id)sender
 {
     BOOL applyToAll = [applySwapToAllCheckbox state] == NSOnState;
-    NSMenuItem *item = [switchDateFieldsPopup selectedItem];
-    if ((item == switchDayMonthMenuItem) && ([[self py] canSwitchDayMonth]))
-        [[self py] switchDayMonth:applyToAll];
-    else if ((item == switchMonthYearMenuItem) && ([[self py] canSwitchMonthYear]))
-        [[self py] switchMonthYear:applyToAll];
-    else if ((item == switchDayYearMenuItem) && ([[self py] canSwitchDayYear]))
-        [[self py] switchDayYear:applyToAll];
-    else if ((item == switchDescriptionPayeeMenuItem))
-        [[self py] switchDescriptionPayee:applyToAll];
+    if ([[self py] canPerformSwap]) {
+        [[self py] performSwap:applyToAll];
+    }
 }
 
 /* Delegate */
@@ -165,9 +165,7 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [targetAccountsPopup selectItemAtIndex:[[self py] selectedTargetAccountIndex]];
     [self updateVisibleTable];
-    [switchDayMonthMenuItem setEnabled:[[self py] canSwitchDayMonth]];
-    [switchMonthYearMenuItem setEnabled:[[self py] canSwitchMonthYear]];
-    [switchDayYearMenuItem setEnabled:[[self py] canSwitchDayYear]];
+    [swapButton setEnabled:[[self py] canPerformSwap]];
 }
 
 @end

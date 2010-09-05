@@ -900,6 +900,10 @@
         <translation>Beschreibung &lt;--&gt; Wechselnehmer</translation>
     </message>
     <message>
+        <source>Invert Amounts</source>
+        <translation>Invert Amounts</translation>
+    </message>
+    <message>
         <location filename="import_window.ui" line="92"/>
         <source>Apply to all accounts</source>
         <translation>Auf alle Konten anwenden</translation>

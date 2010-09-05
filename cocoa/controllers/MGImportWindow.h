@@ -24,11 +24,8 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSPopUpButton *targetAccountsPopup;
     IBOutlet NSView *importTablePlaceholder;
     IBOutlet NSPopUpButton *switchDateFieldsPopup;
-    IBOutlet NSMenuItem *switchDayMonthMenuItem;
-    IBOutlet NSMenuItem *switchMonthYearMenuItem;
-    IBOutlet NSMenuItem *switchDayYearMenuItem;
-    IBOutlet NSMenuItem *switchDescriptionPayeeMenuItem;
     IBOutlet NSButton *applySwapToAllCheckbox;
+    IBOutlet NSButton *swapButton;
     IBOutlet MGTableView *importTableView;
     IBOutlet MGTableView *importTableOneSidedView;
     IBOutlet NSScrollView *importTableScrollView;
@@ -46,6 +43,7 @@ http://www.hardcoded.net/licenses/hs_license
 /* Actions */
 - (IBAction)changeTargetAccount:(id)sender;
 - (IBAction)importSelectedPane:(id)sender;
+- (IBAction)selectSwapType:(id)sender;
 - (IBAction)switchDateFields:(id)sender;
 
 /* Python callbacks */

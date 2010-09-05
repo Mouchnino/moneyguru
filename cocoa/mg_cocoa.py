@@ -1173,16 +1173,8 @@ class PyImportWindow(PyListener):
         return self.py.panes[index].name
     
     @signature('c@:')
-    def canSwitchDayMonth(self):
-        return self.py.can_switch_date_fields(DAY, MONTH)
-    
-    @signature('c@:')
-    def canSwitchDayYear(self):
-        return self.py.can_switch_date_fields(DAY, YEAR)
-    
-    @signature('c@:')
-    def canSwitchMonthYear(self):
-        return self.py.can_switch_date_fields(MONTH, YEAR)
+    def canPerformSwap(self):
+        return self.py.can_perform_swap()
     
     @signature('@@:i')
     def closePaneAtIndex_(self, index):
@@ -1195,33 +1187,25 @@ class PyImportWindow(PyListener):
     def numberOfAccounts(self):
         return len(self.py.panes)
     
+    @signature('v@:c')
+    def performSwap_(self, applyToAll):
+        return self.py.perform_swap(apply_to_all=applyToAll)
+    
     @signature('i@:')
     def selectedTargetAccountIndex(self):
         return self.py.selected_target_account_index
+    
+    @signature('v@:i')
+    def setSelectedTargetAccountIndex_(self, index):
+        self.py.selected_target_account_index = index
     
     @signature('v@:i')
     def setSelectedAccountIndex_(self, index):
         self.py.selected_pane_index = index
     
     @signature('v@:i')
-    def setSelectedTargetAccountIndex_(self, index):
-        self.py.selected_target_account_index = index
-    
-    @signature('v@:c')
-    def switchDayMonth_(self, applyToAll):
-        return self.py.switch_date_fields(DAY, MONTH, apply_to_all=applyToAll)
-    
-    @signature('v@:c')
-    def switchDayYear_(self, applyToAll):
-        return self.py.switch_date_fields(DAY, YEAR, apply_to_all=applyToAll)
-    
-    @signature('v@:c')
-    def switchMonthYear_(self, applyToAll):
-        return self.py.switch_date_fields(MONTH, YEAR, apply_to_all=applyToAll)
-    
-    @signature('v@:c')
-    def switchDescriptionPayee_(self, applyToAll):
-        return self.py.switch_description_payee(apply_to_all=applyToAll)
+    def setSwapTypeIndex_(self, index):
+        self.py.swap_type_index = index
     
     def targetAccountNames(self):
         return self.py.target_account_names

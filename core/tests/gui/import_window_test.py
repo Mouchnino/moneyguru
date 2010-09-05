@@ -7,9 +7,11 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from datetime import date
+from hsutil.testutil import eq_
 
 from ..base import TestCase, DictLoader
 from ...model.date import YearRange
+from ...gui.import_window import SwapType
 
 class ImportCheckbookQIF(TestCase):
     def setUp(self):
@@ -87,6 +89,13 @@ class ImportCheckbookQIF(TestCase):
         self.bsheet.show_selected_account()
         self.assertEqual(self.ta.etable_count(), 4)
     
+    def test_invert_amounts(self):
+        self.iwin.swap_type_index = SwapType.InvertAmount
+        self.iwin.perform_swap()
+        eq_(self.itable[0].amount_import, '-42.32')
+        eq_(self.itable[1].amount_import, '-100.00')
+        eq_(self.itable[2].amount_import, '60.00')
+    
     def test_remember_target_account_selection(self):
         """When selecting a target account, it's specific to the ane we're in"""
         self.add_account_legacy('foo')
@@ -110,7 +119,8 @@ class ImportCheckbookQIF(TestCase):
         self.assertEqual(self.iwin.selected_pane_index, 0)
     
     def test_switch_description_payee(self):
-        self.iwin.switch_description_payee()
+        self.iwin.swap_type_index = SwapType.DescriptionPayee
+        self.iwin.perform_swap()
         # the 4th entry is the Hydro Quebec entry
         self.assertEqual(self.itable[3].description_import, 'Hydro-Quebec')
         self.assertEqual(self.itable[3].payee_import, 'Power Bill')
@@ -145,7 +155,8 @@ class ImportCheckbookQIFTwice(TestCase):
         self.assertEqual(len(self.iwin.panes), 4)
     
     def test_switch_description_payee_apply_to_all(self):
-        self.iwin.switch_description_payee(apply_to_all=True)
+        self.iwin.swap_type_index = SwapType.DescriptionPayee
+        self.iwin.perform_swap(apply_to_all=True)
         # the 4th entry is the Hydro Quebec entry
         self.iwin.selected_pane_index = 2
         self.assertEqual(self.itable[3].description_import, 'Hydro-Quebec')
@@ -300,18 +311,23 @@ class ImportTransactionsWithLowDateFields(TestCase):
     
     def test_can_switch_fields(self):
         # all fields can be switched
-        self.assertTrue(self.iwin.can_switch_date_fields('day', 'month'))
-        self.assertTrue(self.iwin.can_switch_date_fields('day', 'year'))
-        self.assertTrue(self.iwin.can_switch_date_fields('year', 'month'))
+        self.iwin.swap_type_index = SwapType.DayMonth
+        assert self.iwin.can_perform_swap()
+        self.iwin.swap_type_index = SwapType.DayYear
+        assert self.iwin.can_perform_swap()
+        self.iwin.swap_type_index = SwapType.MonthYear
+        assert self.iwin.can_perform_swap()
     
     def test_switch_day_month(self):
-        self.iwin.switch_date_fields('day', 'month')
+        self.iwin.swap_type_index = SwapType.DayMonth
+        self.iwin.perform_swap()
         self.assertEqual(self.itable[0].date_import, '11/05/2008')
         self.assertEqual(self.itable[1].date_import, '01/12/2009')
         self.assertEqual(self.itable[2].date_import, '02/01/2009')
     
     def test_switch_day_year(self):
-        self.iwin.switch_date_fields('day', 'year')
+        self.iwin.swap_type_index = SwapType.DayYear
+        self.iwin.perform_swap()
         self.assertEqual(self.itable[0].date_import, '08/11/2005')
         self.assertEqual(self.itable[1].date_import, '09/01/2012')
         self.assertEqual(self.itable[2].date_import, '09/02/2001')
@@ -324,9 +340,12 @@ class ImportTransactionsWithHighDayField(TestCase):
     
     def test_can_switch_fields(self):
         # the day can't be switched with month
-        self.assertFalse(self.iwin.can_switch_date_fields('day', 'month'))
-        self.assertTrue(self.iwin.can_switch_date_fields('day', 'year'))
-        self.assertTrue(self.iwin.can_switch_date_fields('year', 'month'))
+        self.iwin.swap_type_index = SwapType.DayMonth
+        assert not self.iwin.can_perform_swap()
+        self.iwin.swap_type_index = SwapType.DayYear
+        assert self.iwin.can_perform_swap()
+        self.iwin.swap_type_index = SwapType.MonthYear
+        assert self.iwin.can_perform_swap()
     
 
 class ImportTransactionsWithHighYearField(TestCase):
@@ -336,9 +355,12 @@ class ImportTransactionsWithHighYearField(TestCase):
     
     def test_can_switch_fields(self):
         # the year can't be switched because 99 is too high
-        self.assertFalse(self.iwin.can_switch_date_fields('day', 'month'))
-        self.assertFalse(self.iwin.can_switch_date_fields('day', 'year'))
-        self.assertFalse(self.iwin.can_switch_date_fields('year', 'month'))
+        self.iwin.swap_type_index = SwapType.DayMonth
+        assert not self.iwin.can_perform_swap()
+        self.iwin.swap_type_index = SwapType.DayYear
+        assert not self.iwin.can_perform_swap()
+        self.iwin.swap_type_index = SwapType.MonthYear
+        assert not self.iwin.can_perform_swap()
     
 
 class ImportTransactionWithDayOn31stAndYearCorrespondingToLowMonth(TestCase):
@@ -350,7 +372,8 @@ class ImportTransactionWithDayOn31stAndYearCorrespondingToLowMonth(TestCase):
     
     def test_can_switch_fields(self):
         # September has 30 days, so it's impossible to swap the month and the year.
-        assert not self.iwin.can_switch_date_fields('year', 'month')
+        self.iwin.swap_type_index = SwapType.MonthYear
+        assert not self.iwin.can_perform_swap()
 
 class ThreeImportsTwoOfThemWithLowDateFields(TestCase):
     def setUp(self):
@@ -361,7 +384,8 @@ class ThreeImportsTwoOfThemWithLowDateFields(TestCase):
     
     def test_switch_apply_to_all(self):
         # when the 'apply_to_all' argument is passed, the swucth happens in all applicable accounts
-        self.iwin.switch_date_fields('day', 'month', apply_to_all=True)
+        self.iwin.swap_type_index = SwapType.DayMonth
+        self.iwin.perform_swap(apply_to_all=True)
         self.iwin.selected_pane_index = 1
         self.assertEqual(self.itable[0].date_import, '11/05/2008') # switched
         self.iwin.selected_pane_index = 2
@@ -390,12 +414,14 @@ class TwoAccountsWithCommonTransaction(TestCase):
     
     def test_switch_date(self):
         # the transaction in the 2 accounts is the same. *don't* switch it twice!
-        self.iwin.switch_date_fields('day', 'month', apply_to_all=True)
+        self.iwin.swap_type_index = SwapType.DayMonth
+        self.iwin.perform_swap(apply_to_all=True)
         self.assertEqual(self.itable[0].date_import, '11/05/2008')
     
     def test_switch_description_payee(self):
         # same as with dates: don't switch twice
-        self.iwin.switch_description_payee()
+        self.iwin.swap_type_index = SwapType.DescriptionPayee
+        self.iwin.perform_swap(apply_to_all=True)
         self.assertEqual(self.itable[0].description_import, 'bar')
         self.assertEqual(self.itable[0].payee_import, 'foo')
     

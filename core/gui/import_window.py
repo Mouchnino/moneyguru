@@ -17,6 +17,13 @@ DAY = 'day'
 MONTH = 'month'
 YEAR = 'year'
 
+class SwapType(object):
+    DayMonth = 0
+    MonthYear = 1
+    DayYear = 2
+    DescriptionPayee = 3
+    InvertAmount = 4
+
 def last_two_digits(year):
     return year - ((year // 100) * 100)
 
@@ -86,7 +93,7 @@ class AccountPane(object):
         match1[1] = match2[1]
         self.matches.remove(match2)
     
-    def can_switch_date_fields(self, first, second): # 'day', 'month', 'year'
+    def can_swap_date_fields(self, first, second): # 'day', 'month', 'year'
         return (first, second) in self._swap_possibilities or (second, first) in self._swap_possibilities
     
     def unbind(self, existing, imported):
@@ -111,7 +118,29 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
         Broadcaster.__init__(self)
         self._selected_pane_index = 0
         self._selected_target_index = 0
+        self.swap_type_index = SwapType.DayMonth
         self.panes = []
+    
+    def _can_swap_date_fields(self, first, second): # 'day', 'month', 'year'
+        pane = self.selected_pane
+        if pane is None:
+            return False
+        return pane.can_swap_date_fields(first, second)
+    
+    def _invert_amounts(self, apply_to_all):
+        if apply_to_all:
+            panes = self.panes
+        else:
+            panes = [self.selected_pane]
+        entries = flatten(p.account.entries for p in panes)
+        txns = dedupe(e.transaction for e in entries)
+        for txn in txns:
+            for split in txn.splits:
+                split.amount = -split.amount
+        # Entries, I don't remember why, hold a copy of their split's amount. It has to be updated.
+        for entry in entries:
+            entry.amount = entry.split.amount
+        self.notify('fields_switched')
     
     def _refresh_target_selection(self):
         if not self.panes:
@@ -124,18 +153,46 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             except ValueError:
                 pass
     
-    def _switch_fields(self, panes, switch_func):
+    def _swap_date_fields(self, first, second, apply_to_all): # 'day', 'month', 'year'
+        assert self._can_swap_date_fields(first, second)
+        if apply_to_all:
+            panes = [p for p in self.panes if p.can_swap_date_fields(first, second)]
+        else:
+            panes = [self.selected_pane]
+        
+        def switch_func(txn):
+            txn.date = swapped_date(txn.date, first, second)
+        
+        self._swap_fields(panes, switch_func)
+    
+    def _swap_description_payee(self, apply_to_all):
+        if apply_to_all:
+            panes = self.panes
+        else:
+            panes = [self.selected_pane]
+        
+        def switch_func(txn):
+            txn.description, txn.payee = txn.payee, txn.description
+        
+        self._swap_fields(panes, switch_func)
+    
+    def _swap_fields(self, panes, switch_func):
         entries = flatten(p.account.entries for p in panes)
         txns = dedupe(e.transaction for e in entries)
         for txn in txns:
             switch_func(txn)
         self.notify('fields_switched')
     
-    def can_switch_date_fields(self, first, second): # 'day', 'month', 'year'
-        pane = self.selected_pane
-        if pane is None:
-            return False
-        return pane.can_switch_date_fields(first, second)
+    def can_perform_swap(self):
+        index = self.swap_type_index
+        if index == SwapType.DayMonth:
+            return self._can_swap_date_fields(DAY, MONTH)
+        elif index == SwapType.MonthYear:
+            return self._can_swap_date_fields(MONTH, YEAR)
+        elif index == SwapType.DayYear:
+            return self._can_swap_date_fields(DAY, YEAR)
+        else:
+            return True
     
     def close_pane(self, index):
         was_selected = index == self.selected_pane_index
@@ -165,6 +222,19 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             self.close_pane(self.selected_pane_index)
             self.view.close_selected_tab()
     
+    def perform_swap(self, apply_to_all=False):
+        index = self.swap_type_index
+        if index == SwapType.DayMonth:
+            self._swap_date_fields(DAY, MONTH, apply_to_all=apply_to_all)
+        elif index == SwapType.MonthYear:
+            self._swap_date_fields(MONTH, YEAR, apply_to_all=apply_to_all)
+        elif index == SwapType.DayYear:
+            self._swap_date_fields(DAY, YEAR, apply_to_all=apply_to_all)
+        elif index == SwapType.DescriptionPayee:
+            self._swap_description_payee(apply_to_all=apply_to_all)
+        elif index == SwapType.InvertAmount:
+            self._invert_amounts(apply_to_all=apply_to_all)
+    
     def refresh_targets(self):
         self.target_accounts = [a for a in self.document.accounts if a.is_balance_sheet_account()]
         self.target_accounts.sort(key=lambda a: a.name.lower())
@@ -183,29 +253,6 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             self.panes.append(AccountPane(account, target_account))
         self._refresh_target_selection()
         self.notify('pane_selected')
-    
-    def switch_date_fields(self, first, second, apply_to_all=False): # 'day', 'month', 'year'
-        assert self.can_switch_date_fields(first, second)
-        if apply_to_all:
-            panes = [p for p in self.panes if p.can_switch_date_fields(first, second)]
-        else:
-            panes = [self.selected_pane]
-        
-        def switch_func(txn):
-            txn.date = swapped_date(txn.date, first, second)
-        
-        self._switch_fields(panes, switch_func)
-    
-    def switch_description_payee(self, apply_to_all=False):
-        if apply_to_all:
-            panes = self.panes
-        else:
-            panes = [self.selected_pane]
-        
-        def switch_func(txn):
-            txn.description, txn.payee = txn.payee, txn.description
-        
-        self._switch_fields(panes, switch_func)
     
     #--- Properties
     @property

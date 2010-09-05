@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">762</string>
+			<string key="NS.object.0">788</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -305,6 +305,16 @@
 													<object class="NSMenuItem" id="305537988">
 														<reference key="NSMenu" ref="976417440"/>
 														<string key="NSTitle">Beschreibung &lt;--&gt; Wechselnehmer</string>
+														<string key="NSKeyEquiv"/>
+														<int key="NSMnemonicLoc">2147483647</int>
+														<reference key="NSOnImage" ref="668660200"/>
+														<reference key="NSMixedImage" ref="883986290"/>
+														<string key="NSAction">_popUpItemAction:</string>
+														<reference key="NSTarget" ref="834721627"/>
+													</object>
+													<object class="NSMenuItem" id="282883880">
+														<reference key="NSMenu" ref="976417440"/>
+														<string key="NSTitle">Invert Amounts</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSMnemonicLoc">2147483647</int>
 														<reference key="NSOnImage" ref="668660200"/>
@@ -713,30 +723,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">switchDayMonthMenuItem</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="17895963"/>
-					</object>
-					<int key="connectionID">97</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">switchMonthYearMenuItem</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="1019007056"/>
-					</object>
-					<int key="connectionID">98</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">switchDayYearMenuItem</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="668302017"/>
-					</object>
-					<int key="connectionID">99</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">switchDateFieldsPopup</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="605819615"/>
@@ -758,14 +744,6 @@
 						<reference key="destination" ref="897621736"/>
 					</object>
 					<int key="connectionID">104</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">switchDescriptionPayeeMenuItem</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="305537988"/>
-					</object>
-					<int key="connectionID">106</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -798,6 +776,22 @@
 						<reference key="destination" ref="759841692"/>
 					</object>
 					<int key="connectionID">150</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">swapButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="687569255"/>
+					</object>
+					<int key="connectionID">152</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectSwapType:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="605819615"/>
+					</object>
+					<int key="connectionID">153</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1009,6 +1003,7 @@
 							<reference ref="1019007056"/>
 							<reference ref="668302017"/>
 							<reference ref="305537988"/>
+							<reference ref="282883880"/>
 						</object>
 						<reference key="parent" ref="834721627"/>
 					</object>
@@ -1132,6 +1127,11 @@
 						<reference key="object" ref="278271257"/>
 						<reference key="parent" ref="345196265"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">154</int>
+						<reference key="object" ref="282883880"/>
+						<reference key="parent" ref="976417440"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1170,6 +1170,7 @@
 					<string>129.CustomClassName</string>
 					<string>129.IBPluginDependency</string>
 					<string>130.IBPluginDependency</string>
+					<string>154.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
 					<string>23.IBEditorWindowLastContentRect</string>
 					<string>23.IBPluginDependency</string>
@@ -1238,6 +1239,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{104, 409}, {610, 413}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{242, 389}, {585, 367}}</string>
@@ -1292,7 +1294,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{423, 696}, {233, 83}}</string>
+					<string>{{411, 676}, {259, 103}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1318,7 +1320,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">151</int>
+			<int key="maxID">154</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1340,6 +1342,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>changeTargetAccount:</string>
 							<string>importSelectedPane:</string>
+							<string>selectSwapType:</string>
 							<string>switchDateFields:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1347,6 +1350,36 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>changeTargetAccount:</string>
+							<string>importSelectedPane:</string>
+							<string>selectSwapType:</string>
+							<string>switchDateFields:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">changeTargetAccount:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">importSelectedPane:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectSwapType:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">switchDateFields:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -1360,11 +1393,8 @@
 							<string>importTableScrollView</string>
 							<string>importTableView</string>
 							<string>mainView</string>
+							<string>swapButton</string>
 							<string>switchDateFieldsPopup</string>
-							<string>switchDayMonthMenuItem</string>
-							<string>switchDayYearMenuItem</string>
-							<string>switchDescriptionPayeeMenuItem</string>
-							<string>switchMonthYearMenuItem</string>
 							<string>tabBar</string>
 							<string>tabView</string>
 							<string>targetAccountsPopup</string>
@@ -1380,16 +1410,92 @@
 							<string>NSScrollView</string>
 							<string>MGTableView</string>
 							<string>NSView</string>
+							<string>NSButton</string>
 							<string>NSPopUpButton</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
 							<string>PSMTabBarControl</string>
 							<string>NSTabView</string>
 							<string>NSPopUpButton</string>
 							<string>id</string>
 							<string>NSWindow</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>applySwapToAllCheckbox</string>
+							<string>importTableOneSidedScrollView</string>
+							<string>importTableOneSidedView</string>
+							<string>importTablePlaceholder</string>
+							<string>importTableScrollView</string>
+							<string>importTableView</string>
+							<string>mainView</string>
+							<string>swapButton</string>
+							<string>switchDateFieldsPopup</string>
+							<string>tabBar</string>
+							<string>tabView</string>
+							<string>targetAccountsPopup</string>
+							<string>visibleTable</string>
+							<string>window</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">applySwapToAllCheckbox</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">importTableOneSidedScrollView</string>
+								<string key="candidateClassName">NSScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">importTableOneSidedView</string>
+								<string key="candidateClassName">MGTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">importTablePlaceholder</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">importTableScrollView</string>
+								<string key="candidateClassName">NSScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">importTableView</string>
+								<string key="candidateClassName">MGTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">mainView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">swapButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">switchDateFieldsPopup</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabBar</string>
+								<string key="candidateClassName">PSMTabBarControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabView</string>
+								<string key="candidateClassName">NSTabView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">targetAccountsPopup</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">visibleTable</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">window</string>
+								<string key="candidateClassName">NSWindow</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1473,6 +1579,35 @@
 							<string>id</string>
 							<string>id</string>
 							<string>NSTabView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delegate</string>
+							<string>partnerView</string>
+							<string>style</string>
+							<string>tabView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">delegate</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">partnerView</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">style</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabView</string>
+								<string key="candidateClassName">NSTabView</string>
+							</object>
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="412679402"/>

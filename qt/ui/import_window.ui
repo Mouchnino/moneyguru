@@ -84,6 +84,11 @@
             <string>Description &lt;--&gt; Payee</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>Invert Amounts</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item row="1" column="0">
