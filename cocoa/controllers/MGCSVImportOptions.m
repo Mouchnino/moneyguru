@@ -15,12 +15,8 @@ http://www.hardcoded.net/licenses/hs_license
 {
     self = [super initWithNibName:@"CSVImportOptions" pyClassName:@"PyCSVImportOptions" pyParent:[aDocument py]];
     [self window];
+    [encodingSelector addItemsWithTitles:[[self py] supportedEncodings]];
     return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 - (PyCSVImportOptions *)py
@@ -66,6 +62,7 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)rescan:(id)sender
 {
     [[self py] setFieldSeparator:[delimiterTextField stringValue]];
+    [[self py] setEncodingIndex:[encodingSelector indexOfSelectedItem]];
     [[self py] rescan];
 }
 

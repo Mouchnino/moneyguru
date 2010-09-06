@@ -831,6 +831,10 @@
         <source>Continue Import</source>
         <translation>Continuer l&apos;importation</translation>
     </message>
+    <message>
+        <source>Encoding:</source>
+        <translation>Encodage:</translation>
+    </message>
 </context>
 <context>
     <name>CustomDateRangePanel</name>

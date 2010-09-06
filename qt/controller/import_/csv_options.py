@@ -10,7 +10,8 @@
 from PyQt4.QtCore import Qt, QAbstractTableModel
 from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog, QMessageBox
 
-from core.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER
+from core.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER, \
+    SUPPORTED_ENCODINGS
 from core.trans import tr
 from ui.csv_options_ui import Ui_CSVOptionsWindow
 
@@ -25,6 +26,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
         self.doc = doc
         self.model = CSVOptionsModel(view=self, document=doc.model)
         self.tableModel = CSVOptionsTableModel(self.model, self.tableView)
+        self.encodingComboBox.addItems(SUPPORTED_ENCODINGS)
         
         self.cancelButton.clicked.connect(self.hide)
         self.continueButton.clicked.connect(self.model.continue_import)
@@ -68,6 +70,7 @@ class CSVOptionsWindow(QWidget, Ui_CSVOptionsWindow):
                 self.model.delete_selected_layout()
     
     def rescanClicked(self):
+        self.model.encoding_index = self.encodingComboBox.currentIndex()
         self.model.field_separator = str(self.fieldSeparatorEdit.text())
         self.model.rescan()
     

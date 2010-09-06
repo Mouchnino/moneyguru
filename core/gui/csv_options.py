@@ -34,6 +34,11 @@ FIELD_ORDER = [None, CsvField.Date, CsvField.Description, CsvField.Payee, CsvFie
     CsvField.Transfer, CsvField.Amount, CsvField.Increase, CsvField.Decrease, CsvField.Currency,
     CsvField.Reference]
 
+SUPPORTED_ENCODINGS = [
+    'latin-1',
+    'utf-8',
+]
+
 class Layout(object):
     def __init__(self, name):
         self.name = name
@@ -103,6 +108,7 @@ class CSVOptions(DocumentGUIObject):
         self._colcount = 0
         self._target_accounts = []
         self._default_layout = Layout(tr('Default'))
+        self.encoding_index = 0
         preferences = self.app.get_default(LAYOUT_PREFERENCE_NAME)
         try:    
             self._layouts = [preference2layout(pref) for pref in preferences]
@@ -176,7 +182,11 @@ class CSVOptions(DocumentGUIObject):
         self.view.refresh_layout_menu()
     
     def rescan(self):
-        self.document.loader.rescan()
+        try:
+            encoding = SUPPORTED_ENCODINGS[self.encoding_index]
+        except IndexError:
+            encoding = None
+        self.document.loader.rescan(encoding=encoding)
         self._refresh_columns()
         self._refresh_lines()
     

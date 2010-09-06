@@ -25,8 +25,10 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSInteger)selectedTargetIndex;
 - (void)selectLayout:(NSString *)name;
 - (void)setColumn:(NSInteger)index fieldForTag:(NSInteger)tag;
+- (void)setEncodingIndex:(NSInteger)aIndex;
 - (void)setFieldSeparator:(NSString *)fieldSep;
 - (void)setSelectedTargetIndex:(NSInteger)aIndex;
+- (NSArray *)supportedEncodings;
 - (NSArray *)targetAccountNames;
 - (void)toggleLineExclusion:(NSInteger)index;
 - (NSString *)valueForRow:(NSInteger)row column:(NSInteger)column;

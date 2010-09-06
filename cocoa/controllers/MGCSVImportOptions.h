@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/hs_license
     IBOutlet NSTableView *csvDataTable;
     IBOutlet NSMenu *columnMenu;
     IBOutlet NSPopUpButton *layoutSelector;
+    IBOutlet NSPopUpButton *encodingSelector;
     IBOutlet NSPopUpButton *targetSelector;
     IBOutlet NSTextField *delimiterTextField;
     

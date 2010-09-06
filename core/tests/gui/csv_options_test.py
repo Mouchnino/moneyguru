@@ -467,3 +467,20 @@ class ShortDates(TestCase):
         eq_(self.itable[0].date_import, '04/01/2010')
         eq_(self.itable[1].date_import, '29/01/2010')
     
+
+class Utf8Encoded(TestCase):
+    def setUp(self):
+        # This file has utf8-encoded non-ascii descriptions
+        self.create_instances()
+        self.document.parse_file_for_import(self.filepath('csv/utf8_encoded.csv'))
+        # At this point, the CSV file is parsed with latin-1 encoding, it's normal. The user is
+        # supposed to select the utf-8 encoding and click Rescan.
+    
+    def test_rescan_with_utf8_encoding(self):
+        # Selecting the utf-8 encoding and clicking rescan re-opens the file with the correct
+        # encoding.
+        self.csvopt.encoding_index = 1
+        self.csvopt.rescan()
+        eq_(self.csvopt.lines[1][1], 'fôø')
+        eq_(self.csvopt.lines[2][1], 'bàr')
+    

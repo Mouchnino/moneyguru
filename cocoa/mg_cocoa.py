@@ -46,7 +46,8 @@ from core.gui.budget_panel import BudgetPanel
 from core.gui.budget_view import BudgetView
 from core.gui.cashculator_view import CashculatorView
 from core.gui.cashculator_account_table import CashculatorAccountTable
-from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER
+from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
+    SUPPORTED_ENCODINGS as CSV_SUPPORTED_ENCODINGS
 from core.gui.completable_edit import CompletableEdit
 from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
@@ -1285,12 +1286,19 @@ class PyCSVImportOptions(PyWindowController):
         field = CSV_FIELD_ORDER[tag]
         self.py.set_column_field(index, field)
     
+    @signature('v@:i')
+    def setEncodingIndex_(self, index):
+        self.py.encoding_index = index
+    
     def setFieldSeparator_(self, fieldSep):
         self.py.field_separator = fieldSep
     
     @signature('v@:i')
     def setSelectedTargetIndex_(self, index):
         self.py.selected_target_index = index
+    
+    def supportedEncodings(self):
+        return CSV_SUPPORTED_ENCODINGS
     
     def targetAccountNames(self):
         return self.py.target_account_names

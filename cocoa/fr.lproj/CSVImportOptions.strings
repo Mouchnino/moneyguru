@@ -73,3 +73,9 @@
 
 /* Class = "NSButtonCell"; title = "Rescan"; ObjectID = "94"; */
 "94.title" = "Rescanner";
+
+/* Class = "NSBox"; title = "Rescan"; ObjectID = "97"; */
+"97.title" = "Rescaner";
+
+/* Class = "NSTextFieldCell"; title = "Encoding:"; ObjectID = "99"; */
+"99.title" = "Encodage:";

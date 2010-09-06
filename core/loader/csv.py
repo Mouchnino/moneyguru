@@ -57,9 +57,14 @@ class Loader(base.Loader):
                 raise FileFormatError()
         self.rawlines = lines
     
-    def _scan_lines(self):
+    def _scan_lines(self, encoding=None):
+        rawlines = self.rawlines
+        if encoding and encoding != self.FILE_ENCODING:
+            # rawlines is a list of ustrings decoded using latin-1, so if we want to re-decode them
+            # using another encoding, we have to re-encode them and the decode them using our encoding
+            rawlines = (line.encode(self.FILE_ENCODING).decode(encoding) for line in rawlines)
         try:
-            reader = csv.reader(iter(self.rawlines), self.dialect)
+            reader = csv.reader(iter(rawlines), self.dialect)
         except TypeError:
             logging.warning("Invalid Dialect (strangely...). Delimiter: %r", self.dialect.delimiter)
         lines = stripfalse(reader)
@@ -115,6 +120,6 @@ class Loader(base.Loader):
                     setattr(self.transaction_info, attr, value)
     
     #--- Public
-    def rescan(self):
-        self._scan_lines()
+    def rescan(self, encoding=None):
+        self._scan_lines(encoding=encoding)
     
