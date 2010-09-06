@@ -573,11 +573,13 @@ static struct PyModuleDef AmountDef = {
 PyObject *
 PyInit__amount(void)
 {
+    PyObject *m;
+    
     if (PyType_Ready(&Amount_Type) < 0) {
         return NULL;
     }
     
-    PyObject *m = PyModule_Create(&AmountDef);
+    m = PyModule_Create(&AmountDef);
     if (m == NULL) {
         return NULL;
     }
