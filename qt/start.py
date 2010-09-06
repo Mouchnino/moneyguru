@@ -23,7 +23,7 @@ from qtlib.error_report_dialog import install_excepthook
 from plat import LANG2LOCALENAME
 import mg_rc
 
-if __name__ == "__main__":
+def main(argv):
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(QPixmap(":/logo_small")))
     app.setOrganizationName('Hardcoded Software')
@@ -70,5 +70,7 @@ if __name__ == "__main__":
     # The worst part is that Phil seems to say this is expected behavior. So, whatever, this
     # gc.collect() below is required to avoid a crash.
     gc.collect()
-    del app
-    sys.exit(exec_result)
+    return exec_result
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
