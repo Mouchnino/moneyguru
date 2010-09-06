@@ -9,11 +9,21 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGGraphView.h"
 #import "Utils.h"
 
+static NSArray* arrayWithoutLastElement(NSArray *a) {
+    if ([a count]) {
+        return [a subarrayWithRange:NSMakeRange(0, [a count]-1)];
+    }
+    else {
+        return a;
+    }
+}
+
 @implementation MGGraphView
 
 - (id)init
 {
     self = [super init];
+    axisColor = [NSColor darkGrayColor];
     NSColor *darkGreen = [NSColor colorWithDeviceRed:0.365 green:0.737 blue:0.337 alpha:1.0];
     NSColor *lightGreen = [NSColor colorWithDeviceRed:0.643 green:0.847 blue:0.62 alpha:1.0];
     fillGradient = [[NSGradient alloc] initWithStartingColor:darkGreen endingColor:lightGreen];
@@ -55,7 +65,6 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [super drawRect:rect];
     // Setup some colors and fonts
-    NSColor *axisColor = [NSColor darkGrayColor];
     NSFont *labelFont = [NSFont labelFontOfSize:GRAPH_LABEL_FONT_SIZE];
     NSDictionary *labelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:labelFont, NSFontAttributeName, axisColor, NSForegroundColorAttributeName, nil];
     NSFont *titleFont = [NSFont boldSystemFontOfSize:GRAPH_TITLE_FONT_SIZE];
@@ -65,12 +74,6 @@ http://www.hardcoded.net/licenses/hs_license
     CGFloat dataWidth = maxX - minX;
     CGFloat dataHeight = maxY - minY;
     NSSize viewSize = [self bounds].size;
-    
-    // Loop variables
-    NSEnumerator *labelsEnumerator;
-    NSDictionary *label;
-    NSEnumerator *tickMarksEnumerator;
-    NSNumber *tickMark;
     
     // Draw the title
     NSString *titleToDraw = [NSString stringWithFormat:@"%@ (%@)",title,currency];
@@ -84,13 +87,10 @@ http://www.hardcoded.net/licenses/hs_license
     // Calculate the space taken by labels
     CGFloat labelsHeight = [labelFont pointSize];
     CGFloat yLabelsWidth = 0;
-    labelsEnumerator = [yLabels objectEnumerator];
-    while (label = [labelsEnumerator nextObject])
-    {
+    for (NSDictionary *label in yLabels) {
         NSString *labelText = [label objectForKey:@"text"];
         NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
-        if (labelSize.width > yLabelsWidth) 
-        {
+        if (labelSize.width > yLabelsWidth) {
             yLabelsWidth = labelSize.width;
         }
     }
@@ -137,9 +137,7 @@ http://www.hardcoded.net/licenses/hs_license
     // Draw the X tick marks
     NSBezierPath *xTickMarksPath = [NSBezierPath bezierPath];
     [xTickMarksPath setLineWidth:GRAPH_LINE_WIDTH];
-    tickMarksEnumerator = [xTickMarks objectEnumerator];
-    while (tickMark = [tickMarksEnumerator nextObject])
-    {
+    for (NSNumber *tickMark in xTickMarks) {
         CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * xFactor));
         [xTickMarksPath moveToPoint:NSMakePoint(tickMarkPos, graphBottom)];
         [xTickMarksPath lineToPoint:NSMakePoint(tickMarkPos, graphBottom - GRAPH_TICKMARKS_LENGTH)];
@@ -149,9 +147,7 @@ http://www.hardcoded.net/licenses/hs_license
     // Draw the Y tick marks
     NSBezierPath *yTickMarksPath = [NSBezierPath bezierPath];
     [yTickMarksPath setLineWidth:GRAPH_LINE_WIDTH];
-    tickMarksEnumerator = [yTickMarks objectEnumerator];
-    while (tickMark = [tickMarksEnumerator nextObject])
-    {
+    for (NSNumber *tickMark in yTickMarks) {
         CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * yFactor));
         [yTickMarksPath moveToPoint:NSMakePoint(graphLeft, tickMarkPos)];
         [yTickMarksPath lineToPoint:NSMakePoint(graphLeft - GRAPH_TICKMARKS_LENGTH, tickMarkPos)];
@@ -159,9 +155,7 @@ http://www.hardcoded.net/licenses/hs_license
     [yTickMarksPath stroke];
     
     // Draw the X labels
-    labelsEnumerator = [xLabels objectEnumerator];
-    while (label = [labelsEnumerator nextObject])
-    {
+    for (NSDictionary *label in xLabels) {
         NSString *labelText = [label objectForKey:@"text"];
         CGFloat labelPos = n2f([label objectForKey:@"pos"]) * xFactor;
         NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
@@ -169,9 +163,7 @@ http://www.hardcoded.net/licenses/hs_license
     }
 
     // Draw the Y labels
-    labelsEnumerator = [yLabels objectEnumerator];
-    while (label = [labelsEnumerator nextObject])
-    {
+    for (NSDictionary *label in yLabels) {
         NSString *labelText = [label objectForKey:@"text"];
         CGFloat labelPos = n2f([label objectForKey:@"pos"]) * yFactor;
         NSSize labelSize = [labelText sizeWithAttributes:labelAttributes];
@@ -180,6 +172,36 @@ http://www.hardcoded.net/licenses/hs_license
     
     [moveOrigin invert];
     [moveOrigin concat];
+}
+
+- (void)drawAxisOverlayX
+{
+    [NSGraphicsContext saveGraphicsState];
+    [axisColor setStroke];
+    NSBezierPath *xOverlayAxisPath = [NSBezierPath bezierPath];
+    [xOverlayAxisPath setLineWidth:GRAPH_AXIS_OVERLAY_WIDTH];
+    for (NSNumber *tickMark in arrayWithoutLastElement(xTickMarks)) {
+        CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * xFactor));
+        [xOverlayAxisPath moveToPoint:NSMakePoint(tickMarkPos, NSMinY(graphBounds))];
+        [xOverlayAxisPath lineToPoint:NSMakePoint(tickMarkPos, NSMaxY(graphBounds))];
+    }
+    [xOverlayAxisPath stroke];
+    [NSGraphicsContext restoreGraphicsState];
+}
+
+- (void)drawAxisOverlayY
+{
+    [NSGraphicsContext saveGraphicsState];
+    [axisColor setStroke];
+    NSBezierPath *yOverlayAxisPath = [NSBezierPath bezierPath];
+    [yOverlayAxisPath setLineWidth:GRAPH_AXIS_OVERLAY_WIDTH];
+    for (NSNumber *tickMark in arrayWithoutLastElement(yTickMarks)) {
+        CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * yFactor));
+        [yOverlayAxisPath moveToPoint:NSMakePoint(NSMinX(graphBounds), tickMarkPos)];
+        [yOverlayAxisPath lineToPoint:NSMakePoint(NSMaxX(graphBounds), tickMarkPos)];
+    }
+    [yOverlayAxisPath stroke];
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 - (void)setMinX:(CGFloat)aMinX

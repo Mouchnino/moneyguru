@@ -12,6 +12,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #define GRAPH_PADDING 20.0
 #define GRAPH_LINE_WIDTH 2.0
+#define GRAPH_AXIS_OVERLAY_WIDTH 0.2
 #define GRAPH_LABEL_FONT_SIZE 10.0
 #define GRAPH_TITLE_FONT_SIZE 15.0
 #define GRAPH_TICKMARKS_LENGTH 5.0
@@ -33,9 +34,12 @@ http://www.hardcoded.net/licenses/hs_license
     CGFloat xFactor;
     CGFloat yFactor;
     NSRect graphBounds;
+    NSColor *axisColor;
     NSGradient *fillGradient;
     NSGradient *futureGradient;
 }
+- (void)drawAxisOverlayX;
+- (void)drawAxisOverlayY;
 - (void)setMinX:(CGFloat)aMinX;
 - (void)setMaxX:(CGFloat)aMaxX;
 - (void)setMinY:(CGFloat)aMinY;

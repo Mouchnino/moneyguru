@@ -7,19 +7,19 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-
-
 from PyQt4.QtCore import Qt, QPoint
 from PyQt4.QtGui import QWidget, QPainter, QFont, QFontMetrics, QPen, QColor, QBrush, QLinearGradient
 
 class GraphView(QWidget):
     PADDING = 16
     LINE_WIDTH = 2
+    OVERLAY_AXIS_WIDTH = 0.2
     LABEL_FONT_SIZE = 8
     TITLE_FONT_SIZE = 12
     TICKMARKS_LENGTH = 5
     XLABELS_PADDING = 3
     YLABELS_PADDING = 8
+    DRAW_XAXIS_OVERLAY = True
     
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -79,7 +79,9 @@ class GraphView(QWidget):
             graphBottom -= 2 * self.LINE_WIDTH
         graphTop = round(ds.ymax * yFactor)
 
+        # High level save, restored just before drawing the title
         painter.save()
+        
         shiftX = yLabelsWidth + self.PADDING - graphLeft
         shiftY = self.PADDING + graphTop
         painter.translate(shiftX, shiftY)
@@ -108,11 +110,25 @@ class GraphView(QWidget):
             tickY = tickPos * yFactor
             painter.drawLine(graphLeft, tickY, tickLeftX, tickY)
         
+        # Overlay axis
+        painter.save()
+        overlayPen = QPen(axisPen)
+        overlayPen.setWidthF(self.OVERLAY_AXIS_WIDTH)
+        painter.setPen(overlayPen)
+        if self.DRAW_XAXIS_OVERLAY:
+            for tickPos in ds.xtickmarks[:-1]:
+                tickX = tickPos * xFactor
+                painter.drawLine(tickX, graphBottom, tickX, graphTop)
+        for tickPos in ds.ytickmarks[:-1]:
+            tickY = tickPos * yFactor
+            painter.drawLine(graphLeft, tickY, graphRight, tickY)
+        painter.restore()
+        
         # X Labels
         # We have to invert the Y scale again or else the text is drawn upside down
         labelY = graphBottom - labelsFontM.ascent() - self.XLABELS_PADDING
-        painter.save()
         painter.setFont(labelsFont)
+        painter.save()
         painter.translate(0, labelY)
         painter.scale(1, -1)
         for label in ds.xlabels:
@@ -134,8 +150,10 @@ class GraphView(QWidget):
             painter.scale(1, -1)
             painter.drawText(QPoint(labelX, 0), labelText)
             painter.restore()
-        painter.restore()
         
+        # High level restore
+        painter.restore()
+                
         # title
         painter.save()
         titleFont = QFont(painter.font())

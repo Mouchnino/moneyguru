@@ -15,6 +15,8 @@ from PyQt4.QtGui import QPen
 from .graph_view import GraphView
 
 class BarGraphView(GraphView):
+    DRAW_XAXIS_OVERLAY = False
+    
     def _drawGraph(self, painter, xFactor, yFactor):
         ds = self.dataSource
         for x1, x2, h1, h2 in ds.data:

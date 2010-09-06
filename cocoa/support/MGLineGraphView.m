@@ -39,7 +39,7 @@ http://www.hardcoded.net/licenses/hs_license
     {
         NSRect futureBounds = NSMakeRect(xTodayFactored, graphBounds.origin.y, NSMaxX(graphBounds) - xTodayFactored, graphBounds.size.height);
         [futureGradient drawInRect:futureBounds angle:90];
-    }
+    }    
     if ((xTodayFactored >= firstX) && (xTodayFactored <= lastX))
     {
         NSBezierPath *redLine = [NSBezierPath bezierPath];
@@ -50,6 +50,9 @@ http://www.hardcoded.net/licenses/hs_license
         [redLine stroke];
     }
     [NSGraphicsContext restoreGraphicsState];
+    /* It looks better if we draw axis overlay before we draw our main line */
+    [self drawAxisOverlayX];
+    [self drawAxisOverlayY];
     [dataPath setLineWidth:GRAPH_LINE_WIDTH];
     [[NSColor colorWithDeviceRed:0.078 green:0.62 blue:0.043 alpha:1.0] setStroke];
     [dataPath stroke];

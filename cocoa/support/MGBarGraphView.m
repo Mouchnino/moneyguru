@@ -11,10 +11,7 @@ http://www.hardcoded.net/licenses/hs_license
 @implementation MGBarGraphView
 - (void)drawGraph
 {
-    NSEnumerator *dataEnumerator = [data objectEnumerator];
-    NSArray *dataPoint;
-    while (dataPoint = [dataEnumerator nextObject])
-    {
+    for (NSArray *dataPoint in data) {
         CGFloat x1 = [[dataPoint objectAtIndex:0] floatValue] * xFactor;
         CGFloat x2 = [[dataPoint objectAtIndex:1] floatValue] * xFactor;
         CGFloat h1 = [[dataPoint objectAtIndex:2] floatValue] * yFactor;
@@ -77,6 +74,8 @@ http://www.hardcoded.net/licenses/hs_license
         [[NSColor colorWithDeviceRed:0.078 green:0.62 blue:0.043 alpha:1.0] setStroke];
         [path stroke];
     }
+    [self drawAxisOverlayY];
+    /* We don't draw the X overlay in a bar graph */
 }
 
 @end
