@@ -57,7 +57,8 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSArray *)unresizableColumns
 {
-    return [NSArray arrayWithObjects:@"status",@"date",@"increase",@"decrease",@"balance",nil];
+    return [NSArray arrayWithObjects:@"status",@"date",@"increase",@"decrease",@"balance",
+        @"debit",@"credit",nil];
 }
 
 - (NSArray *)accountColumnNames

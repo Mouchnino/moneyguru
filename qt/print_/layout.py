@@ -101,7 +101,8 @@ class LayoutPage(object):
                     newAvailableRects.append(previous)
             # At this point, we might have "duplicate" available rects (some rects are contained
             # in others). We want to eliminate them.
-            duplicates = set(r1 for r1, r2 in combinations(newAvailableRects, 2) if r2.contains(r1))
+            # We use a list instead of a set because QRect is unhashable. Screw performance!
+            duplicates = [r1 for r1, r2 in combinations(newAvailableRects, 2) if r2.contains(r1)]
             availableRects = [r for r in newAvailableRects if r not in duplicates]
         self.availableRects = availableRects
     

@@ -239,7 +239,7 @@ class ItemViewLayoutElement(LayoutElement):
 
 class ItemViewPrintStats(object):
     def __init__(self, ds):
-        ColumnStats = namedtuple('ColumnStats', 'index col avgWidth maxWidth maxPixWidth headerWidth')
+        ColumnStats = namedtuple('ColumnStats', 'index col avgWidth maxWidth minWidth')
         rowFM = QFontMetrics(ds.rowFont())
         headerFM = QFontMetrics(ds.headerFont())
         self.rowHeight = rowFM.height() + CELL_MARGIN * 2
@@ -249,8 +249,8 @@ class ItemViewPrintStats(object):
             col = ds.columnAtIndex(colIndex)
             sumWidth = 0
             maxWidth = 0
-            maxPixWidth = 0
-            headerWidth = headerFM.width(col.title) + CELL_MARGIN * 2
+            # We need to have *at least* the width of the header.
+            minWidth = headerFM.width(col.title) + CELL_MARGIN * 2
             for rowIndex in range(ds.rowCount()):
                 data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
@@ -263,27 +263,28 @@ class ItemViewPrintStats(object):
                 pixmap = ds.data(rowIndex, colIndex, Qt.DecorationRole)
                 if pixmap is not None:
                     width = pixmap.width() + CELL_MARGIN * 2
-                    maxPixWidth = max(maxPixWidth, width)
+                    maxWidth = max(maxWidth, width)
             avgWidth = sumWidth // ds.rowCount()
-            maxWidth = max(maxWidth, maxPixWidth, headerWidth)
-            cs = ColumnStats(colIndex, col, avgWidth, maxWidth, maxPixWidth, headerWidth)
+            maxWidth = max(maxWidth, minWidth)
+            if col.cantTruncate: # if it's a "can't truncate" column, we make no concession
+                minWidth = maxWidth
+            cs = ColumnStats(colIndex, col, avgWidth, maxWidth, minWidth)
             self.columns.append(cs)
         self.maxWidth = sum(cs.maxWidth for cs in self.columns)
-        # When pictures are involved, they get priority
-        self.minWidth = sum(max(cs.headerWidth, cs.maxPixWidth) for cs in self.columns)
+        self.minWidth = sum(cs.minWidth for cs in self.columns)
     
     def columnWidths(self, maxWidth):
         # Returns a list of recommended widths for columns if the table has `maxWidth` for
         # rendering. If it's possible to have maxWidth everywhere, each column will get it. If not,
-        # We try to get at least `headerWidth` for each column. Then, the rest of the width is split
+        # We try to get at least `minWidth` for each column. Then, the rest of the width is split
         # between the columns depending on the relative weight of avgWidth.
         if self.maxWidth <= maxWidth:
             return [cs.maxWidth for cs in self.columns]
         if self.minWidth <= maxWidth:
             leftOver = maxWidth - self.minWidth
         else:
-            leftOver = 0 # Don't bother considering the headerWidths, we're screwed anyway
-        baseWidths = [max(cs.headerWidth, cs.maxPixWidth) for cs in self.columns]
+            leftOver = 0 # Don't bother considering the minWidths, we're screwed anyway
+        baseWidths = [cs.minWidth for cs in self.columns]
         sumAvgs = sum(cs.avgWidth for cs in self.columns)
         ratios = [(cs.avgWidth/sumAvgs) for cs in self.columns]
         extraWidths = [int(ratio*leftOver) for ratio in ratios[:-1]]

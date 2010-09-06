@@ -35,18 +35,18 @@ class EntryTableDelegate(TableDelegate):
 
 class EntryTable(TableWithTransactions):
     COLUMNS = [
-        Column('status', '', 25),
-        Column('date', tr('Date'), 86, editor=DATE_EDIT),
-        Column('reconciliation_date', tr('Reconciliation Date'), 110, editor=DATE_EDIT),
+        Column('status', '', 25, cantTruncate=True),
+        Column('date', tr('Date'), 86, editor=DATE_EDIT, cantTruncate=True),
+        Column('reconciliation_date', tr('Reconciliation Date'), 110, editor=DATE_EDIT, cantTruncate=True),
         Column('description', tr('Description'), 150, editor=DESCRIPTION_EDIT),
         Column('payee', tr('Payee'), 150, editor=PAYEE_EDIT),
         Column('checkno', tr('Check #'), 100),
-        Column('transfer', tr('Transfer'), 120, editor=ACCOUNT_EDIT),
-        Column('increase', tr('Increase'), 95, alignment=Qt.AlignRight),
-        Column('decrease', tr('Decrease'), 95, alignment=Qt.AlignRight),
-        Column('debit', tr('Debit'), 95, alignment=Qt.AlignRight),
-        Column('credit', tr('Credit'), 95, alignment=Qt.AlignRight),
-        Column('balance', tr('Balance'), 110, alignment=Qt.AlignRight),
+        Column('transfer', tr('Transfer'), 120, editor=ACCOUNT_EDIT, cantTruncate=True),
+        Column('increase', tr('Increase'), 95, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('decrease', tr('Decrease'), 95, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('debit', tr('Debit'), 95, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('credit', tr('Credit'), 95, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('balance', tr('Balance'), 110, alignment=Qt.AlignRight, cantTruncate=True),
     ]
     
     def __init__(self, account_view, view):
