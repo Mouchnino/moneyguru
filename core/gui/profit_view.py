@@ -8,10 +8,12 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..const import PaneType
+from ..trans import tr
 from .account_sheet_view import AccountSheetView
 
 class ProfitView(AccountSheetView):
     VIEW_TYPE = PaneType.Profit
+    PRINT_TITLE_FORMAT = tr('Profit and Loss from {start_date} to {end_date}')
     
     def set_children(self, children):
         AccountSheetView.set_children(self, children)

@@ -7,8 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-
-
 from ..const import PaneType
 from ..document import FilterType
 from ..model.account import AccountType
@@ -18,6 +16,7 @@ from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
+    PRINT_TITLE_FORMAT = tr('Transactions from {start_date} to {end_date}')
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
         'date_range_changed'])
     

@@ -17,8 +17,6 @@ from .base_view import BaseView
 from ui.new_view_ui import Ui_NewView
 
 class NewView(BaseView, Ui_NewView):
-    PRINT_TITLE_FORMAT = "New Tab"
-    
     def __init__(self, mainwindow):
         BaseView.__init__(self)
         self._setupUi()

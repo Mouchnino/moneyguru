@@ -24,14 +24,6 @@
 "Schedules" = "Wiederholung";
 "Budgets" = "Budgets";
 
-/* Print titles */
-"NetWorthPrintTitle" = "Eigenkapital vom %@, beginnend am %@";
-"ProfitPrintTitle" = "Profit und Verlust vom %@ bis %@";
-"TransactionPrintTitle" = "Transaktionen vom %@ bis %@";
-"EntryPrintTitle" = "Eintrag vom %@ bis %@";
-"SchedulePrintTitle" = "Wiederholung vom %@ bis %@";
-"BudgetPrintTitle" = "Budgets vom %@ bis %@";
-
 /* Messages */
 "FirstRunMsg" = "Sie benutzen moneyGuru zum ersten Mal. Möchten sie die Beispielsdatei verwenden?";
 "AboutToRestartMsg" = "moneyGuru schließt";

@@ -188,7 +188,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return
         printer = dialog.printer()
         currentView = self.mainView.currentWidget()
-        viewPrinter = ViewPrinter(printer, self.doc, currentView.PRINT_TITLE_FORMAT)
+        viewPrinter = ViewPrinter(printer, currentView)
         currentView.fitViewsForPrint(viewPrinter)
         viewPrinter.render()
     

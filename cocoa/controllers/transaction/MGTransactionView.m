@@ -36,7 +36,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGTransactionPrint alloc] initWithPyParent:[transactionTable py] 
+    return [[[MGTransactionPrint alloc] initWithPyParent:[self py] 
         tableView:[transactionTable tableView]] autorelease];
 }
 

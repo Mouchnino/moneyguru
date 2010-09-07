@@ -49,7 +49,10 @@ class LayoutTitleElement(LayoutElement):
         font = QFont(QApplication.font())
         font.setBold(True)
         fm = QFontMetrics(font)
-        rect = QRect(page.pageRect.topLeft(), QSize(page.pageRect.width(), fm.height()))
+        titleBase = page.viewPrinter.title
+        titleLineCount = len(titleBase.split('\n'))
+        titleHeight = fm.height() * titleLineCount
+        rect = QRect(page.pageRect.topLeft(), QSize(page.pageRect.width(), titleHeight))
         LayoutElement.__init__(self, rect)
         self.page = page
         self.font = font

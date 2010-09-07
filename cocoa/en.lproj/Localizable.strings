@@ -24,14 +24,6 @@
 "Schedules" = "Schedules";
 "Budgets" = "Budgets";
 
-/* Print titles */
-"NetWorthPrintTitle" = "Net Worth at %@, starting from %@";
-"ProfitPrintTitle" = "Profit and loss from %@ to %@";
-"TransactionPrintTitle" = "Transactions from %@ to %@";
-"EntryPrintTitle" = "Entries from %@ to %@";
-"SchedulePrintTitle" = "Schedules from %@ to %@";
-"BudgetPrintTitle" = "Budgets from %@ to %@";
-
 /* Messages */
 "FirstRunMsg" = "This is your first time running moneyGuru. Do you want to open the example file?";
 "AboutToRestartMsg" = "moneyGuru is about to restart";

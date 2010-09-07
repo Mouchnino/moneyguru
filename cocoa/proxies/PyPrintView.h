@@ -12,7 +12,5 @@ http://www.hardcoded.net/licenses/hs_license
 // mechanism of the normal GUI objects (it's a one shot object)
 @interface PyPrintView : NSObject {}
 - (id)initWithPyParent:(id)pyParent;
-
-- (NSString *)startDate;
-- (NSString *)endDate;
+- (NSString *)title;
 @end

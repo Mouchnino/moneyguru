@@ -10,8 +10,6 @@
 from PyQt4.QtGui import QWidget
 
 class BaseView(QWidget):
-    PRINT_TITLE_FORMAT = "Some Title {startDate} - {endDate}"
-    
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fit(self, 42, 42, expandH=True, expandV=True)
     

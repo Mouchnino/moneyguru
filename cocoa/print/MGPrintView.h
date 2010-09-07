@@ -10,6 +10,8 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDocument.h"
 #import "PyPrintView.h"
 
+NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment align);
+
 @interface MGPrintView : NSView
 {
     PyPrintView *py;
@@ -23,6 +25,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSDictionary *headerAttributes;
     CGFloat headerTextHeight;
     CGFloat headerHeight;
+    NSString *baseTitle;
 }
 - (id)initWithPyParent:(id)pyParent;
 
@@ -30,5 +33,4 @@ http://www.hardcoded.net/licenses/hs_license
 - (PyPrintView *)py;
 
 - (void)setUpWithPrintInfo:(NSPrintInfo *)pi;
-- (NSString *)pageTitle;
 @end

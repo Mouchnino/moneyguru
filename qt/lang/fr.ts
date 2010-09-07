@@ -397,34 +397,36 @@
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
-
-		<!-- Print Titles -->
+    
+    <!-- Print Titles -->
     <message>
-        <source>Net Worth at {endDate}, starting from {startDate}</source>
-        <translation>Valeur Nette à {startDate}, commençant à {endDate}</translation>
+        <source>Net Worth at {start_date}, starting from {end_date}</source>
+        <translation>Valeur Nette à {start_date}, commençant à {end_date}</translation>
     </message>
     <message>
-        <source>Profit and loss from {startDate} to {endDate}</source>
-        <translation>Profits et pertes de {startDate} à {endDate}</translation>
+        <source>Profit and Loss from {start_date} to {end_date}</source>
+        <translation>Profits et Pertes de {start_date} à {end_date}</translation>
     </message>
     <message>
-        <source>Transactions from {startDate} to {endDate}</source>
-        <translation>Transactions de {startDate} à {endDate}</translation>
+        <source>Transactions from {start_date} to {end_date}</source>
+        <translation>Transactions de {start_date} à {end_date}</translation>
     </message>
     <message>
-        <source>Entries from {startDate} to {endDate}</source>
-        <translation>Entrées de {startDate} à {endDate}</translation>
+        <source>{account_name}
+Entries from {start_date} to {end_date}</source>
+        <translation>{account_name}
+Entrées de {start_date} à {end_date}</translation>
     </message>
     <message>
-        <source>Schedules from {startDate} to {endDate}</source>
-        <translation>Récurrences de {startDate} à {endDate}</translation>
+        <source>Schedules from {start_date} to {end_date}</source>
+        <translation>Récurrences de {start_date} à {end_date}</translation>
     </message>
     <message>
-        <source>Budgets from {startDate} to {endDate}</source>
-        <translation>Budgets de {startDate} à {endDate}</translation>
+        <source>Budgets from {start_date} to {end_date}</source>
+        <translation>Budgets de {start_date} à {end_date}</translation>
     </message>
-
-		<!-- Document -->
+    
+    <!-- Document -->
     <message>
         <source>FirstRunMsg</source>
         <translation>Vous utilisez moneyGuru pour la première fois. Voulez-vous ouvrir le fichier d'exemple?</translation>

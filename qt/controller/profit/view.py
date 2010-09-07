@@ -8,7 +8,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from core.gui.profit_view import ProfitView as ProfitViewModel
-from core.trans import tr
 
 from ..base_view import BaseView
 from .sheet import ProfitSheet
@@ -18,8 +17,6 @@ from .expense_pie_chart import ExpensePieChart
 from ui.profit_view_ui import Ui_ProfitView
 
 class ProfitView(BaseView, Ui_ProfitView):
-    PRINT_TITLE_FORMAT = tr("Profit and loss from {startDate} to {endDate}")
-    
     def __init__(self, mainwindow):
         BaseView.__init__(self)
         self.doc = mainwindow.doc

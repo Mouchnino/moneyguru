@@ -50,11 +50,6 @@ http://www.hardcoded.net/licenses/hs_license
     return @"PyEntryPrint";
 }
 
-- (NSString *)pageTitle
-{
-    return [NSString stringWithFormat:TR(@"EntryPrintTitle"),[py startDate],[py endDate]];
-}
-
 - (NSArray *)unresizableColumns
 {
     return [NSArray arrayWithObjects:@"status",@"date",@"increase",@"decrease",@"balance",

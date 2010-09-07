@@ -11,6 +11,19 @@ from hsutil.testutil import eq_
 from ..base import TestApp, with_app
 from ...gui.entry_print import EntryPrint
 
+#--- Some account
+def app_with_account():
+    app = TestApp()
+    app.add_account('foobar')
+    app.mw.show_account()
+    app.pv = EntryPrint(app.aview)
+    return app
+
+@with_app(app_with_account)
+def test_title(app):
+    # In the EntryView, the title is in two lines, the first line being the account name
+    assert app.pv.title.startswith('foobar\n')
+
 #--- Split transaction
 def app_split_transaction():
     app = TestApp()
@@ -24,7 +37,7 @@ def app_split_transaction():
     app.add_txn_with_splits(splits)
     app.add_txn(from_='foo', to='bar', amount='42')
     app.mw.show_account()
-    app.pv = EntryPrint(app.etable)
+    app.pv = EntryPrint(app.aview)
     return app
 
 @with_app(app_split_transaction)
@@ -45,7 +58,7 @@ def app_entry_in_previous_range():
     app.mw.show_account()
     app.add_entry('1/1/2008')
     app.drsel.select_next_date_range()
-    app.pv = EntryPrint(app.etable)
+    app.pv = EntryPrint(app.aview)
     return app
 
 @with_app(app_entry_in_previous_range)    

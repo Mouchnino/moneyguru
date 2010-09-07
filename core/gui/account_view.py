@@ -16,6 +16,7 @@ from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
+    PRINT_TITLE_FORMAT = tr('{account_name}\nEntries from {start_date} to {end_date}')
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
         'date_range_changed', 'transactions_selected', 'shown_account_changed'])
     

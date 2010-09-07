@@ -8,10 +8,12 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..const import PaneType
+from ..trans import tr
 from .account_sheet_view import AccountSheetView
 
 class NetWorthView(AccountSheetView):
     VIEW_TYPE = PaneType.NetWorth
+    PRINT_TITLE_FORMAT = tr('Net Worth at {start_date}, starting from {end_date}')
     
     def set_children(self, children):
         AccountSheetView.set_children(self, children)

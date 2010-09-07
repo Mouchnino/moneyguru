@@ -24,14 +24,6 @@
 "Schedules" = "Récurrences";
 "Budgets" = "Budgets";
 
-/* Print titles */
-"NetWorthPrintTitle" = "Valeur Nette à %@, commençant à %@";
-"ProfitPrintTitle" = "Profits et pertes de %@ à %@";
-"TransactionPrintTitle" = "Transactions de %@ à %@";
-"EntryPrintTitle" = "Entrées de %@ à %@";
-"SchedulePrintTitle" = "Récurrences de %@ à %@";
-"BudgetPrintTitle" = "Budgets de %@ à %@";
-
 /* Messages */
 "FirstRunMsg" = "Vous utilisez moneyGuru pour la première fois. Voulez-vous ouvrir le fichier d'exemple?";
 "AboutToRestartMsg" = "moneyGuru va fermer";

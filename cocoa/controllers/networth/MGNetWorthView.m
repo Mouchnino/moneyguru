@@ -57,7 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[balanceSheet py] outlineView:outlineView
+    MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[self py] outlineView:outlineView
         graphView:[netWorthGraph view] pieViews:pieChartsView];
     return [p autorelease];
 }

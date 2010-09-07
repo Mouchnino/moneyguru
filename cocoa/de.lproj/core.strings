@@ -251,3 +251,10 @@
 "year" = "Jahr";
 "years" = "Jahre";
 
+/* Print titles */
+"Net Worth at {start_date}, starting from {end_date}" = "Eigenkapital vom {start_date}, beginnend am {end_date}";
+"Profit and Loss from {start_date} to {end_date}" = "Profit und Verlust vom {start_date} bis {end_date}";
+"Transactions from {start_date} to {end_date}" = "Transaktionen vom {start_date} bis {end_date}";
+"{account_name}\nEntries from {start_date} to {end_date}" = "{account_name}\nEintrag vom {start_date} bis {end_date}";
+"Schedules from {start_date} to {end_date}" = "Wiederholung vom {start_date} bis {end_date}";
+"Budgets from {start_date} to {end_date}" = "Budgets vom {start_date} bis {end_date}";

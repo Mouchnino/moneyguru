@@ -8,10 +8,12 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..const import PaneType
+from ..trans import tr
 from .base import BaseView
 
 class BudgetView(BaseView):
     VIEW_TYPE = PaneType.Budget
+    PRINT_TITLE_FORMAT = tr('Budgets from {start_date} to {end_date}')
     
     def set_children(self, children):
         BaseView.set_children(self, children)

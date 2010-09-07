@@ -34,7 +34,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGSchedulePrint alloc] initWithPyParent:[scheduleTable py] 
+    return [[[MGSchedulePrint alloc] initWithPyParent:[self py] 
         tableView:[scheduleTable tableView]] autorelease];
 }
 @end

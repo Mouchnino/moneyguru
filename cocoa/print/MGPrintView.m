@@ -10,6 +10,24 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 #import "MGConst.h"
 
+static NSParagraphStyle* changeParagraphAlignment(NSParagraphStyle *p, NSTextAlignment align)
+{
+    if (p == nil) {
+        p = [NSParagraphStyle defaultParagraphStyle];
+    }
+    NSMutableParagraphStyle *mp = [p mutableCopy];
+    [mp setAlignment:align];
+    return [mp autorelease];
+}
+
+NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment align)
+{
+    NSParagraphStyle *p = [attrs objectForKey:NSParagraphStyleAttributeName];
+    NSMutableDictionary *result = [attrs mutableCopy];
+    [result setObject:changeParagraphAlignment(p, align) forKey:NSParagraphStyleAttributeName];
+    return [result autorelease];
+}
+
 @implementation MGPrintView
 - (id)initWithPyParent:(id)pyParent
 {
@@ -19,8 +37,10 @@ http://www.hardcoded.net/licenses/hs_license
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     fontSize = [ud integerForKey:TableFontSize];
     headerFont = [[NSFont boldSystemFontOfSize:fontSize] retain];
-    headerAttributes = [[NSDictionary dictionaryWithObjectsAndKeys:headerFont, NSFontAttributeName,
-        [NSColor blackColor], NSForegroundColorAttributeName, nil] retain];
+    headerAttributes = [NSDictionary dictionaryWithObjectsAndKeys:headerFont, NSFontAttributeName,
+        [NSColor blackColor], NSForegroundColorAttributeName, nil];
+    headerAttributes = [changeAttributesAlignment(headerAttributes, NSCenterTextAlignment) retain];
+    baseTitle = [@"" retain];
     
     return self;
 }
@@ -30,6 +50,7 @@ http://www.hardcoded.net/licenses/hs_license
     [py release];
     [headerFont release];
     [headerAttributes release];
+    [baseTitle release];
     [super dealloc];
 }
 
@@ -52,25 +73,18 @@ http://www.hardcoded.net/licenses/hs_license
     
     pageCount = 1;
     
-    headerTextHeight = [@"foo" sizeWithAttributes:headerAttributes].height;
+    [baseTitle release];
+    baseTitle = [[[self py] title] retain];
+    headerTextHeight = [baseTitle sizeWithAttributes:headerAttributes].height;
     headerHeight = headerTextHeight + 2;
-}
-
-- (NSString *)pageTitle
-{
-    return @"Title";
 }
 
 - (void)drawRect:(NSRect)rect
 {
     [super drawRect:rect];
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    CGFloat titleY = 0;
-    NSString *title = [self pageTitle];
-    title = [NSString stringWithFormat:@"%@ (Page %d of %d)",title,pageNumber,pageCount];
-    CGFloat titleWidth = [title sizeWithAttributes:headerAttributes].width;
-    CGFloat titleX = (pageWidth - titleWidth) / 2;
-    
-    [title drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:headerAttributes];
+    NSString *title = [NSString stringWithFormat:@"%@ (Page %d of %d)",baseTitle,pageNumber,pageCount];
+    NSRect titleRect = NSMakeRect(rect.origin.x, rect.origin.y, rect.size.width, headerHeight);
+    [title drawInRect:titleRect withAttributes:headerAttributes];
 }
 @end

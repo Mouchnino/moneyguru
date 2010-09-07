@@ -8,15 +8,12 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from core.gui.schedule_view import ScheduleView as ScheduleViewModel
-from core.trans import tr
 
 from ..base_view import BaseView
 from .table import ScheduleTable
 from ui.schedule_view_ui import Ui_ScheduleView
 
 class ScheduleView(BaseView, Ui_ScheduleView):
-    PRINT_TITLE_FORMAT = tr("Schedules from {startDate} to {endDate}")
-    
     def __init__(self, mainwindow):
         BaseView.__init__(self)
         self.doc = mainwindow.doc

@@ -6,7 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-# XXX take directly a document as an argument
 class PrintView(object):
     def __init__(self, parent):
         self.parent = parent
@@ -14,10 +13,13 @@ class PrintView(object):
         self.app = parent.app
     
     @property
-    def start_date(self):
-        return self.app.format_date(self.document.date_range.start)
-    
-    @property
-    def end_date(self):
-        return self.app.format_date(self.document.date_range.end)
+    def title(self):
+        if not hasattr(self.parent, 'PRINT_TITLE_FORMAT'):
+            return ''
+        if self.parent.mainwindow.shown_account is not None:
+            account_name = self.parent.mainwindow.shown_account.name
+        title_format = self.parent.PRINT_TITLE_FORMAT
+        start_date = self.app.format_date(self.document.date_range.start)
+        end_date = self.app.format_date(self.document.date_range.end)
+        return title_format.format(**locals())
     

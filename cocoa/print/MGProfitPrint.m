@@ -15,11 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
     return [NSArray arrayWithObjects:@"current",@"last",nil];
 }
 
-- (NSString *)pageTitle
-{
-    return [NSString stringWithFormat:TR(@"ProfitPrintTitle"),[py startDate],[py endDate]];
-}
-
 -(void)setUpWithPrintInfo:(NSPrintInfo *)pi
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

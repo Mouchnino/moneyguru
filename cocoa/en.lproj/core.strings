@@ -241,3 +241,10 @@
 /* core/model/recurrence.py:114 */
 "Every last %s of the month" = "Every last %s of the month";
 
+/* Print titles */
+"Net Worth at {start_date}, starting from {end_date}" = "Net Worth at {start_date}, starting from {end_date}";
+"Profit and Loss from {start_date} to {end_date}" = "Profit and Loss from {start_date} to {end_date}";
+"Transactions from {start_date} to {end_date}" = "Transactions from {start_date} to {end_date}";
+"{account_name}\nEntries from {start_date} to {end_date}" = "{account_name}\nEntries from {start_date} to {end_date}";
+"Schedules from {start_date} to {end_date}" = "Schedules from {start_date} to {end_date}";
+"Budgets from {start_date} to {end_date}" = "Budgets from {start_date} to {end_date}";

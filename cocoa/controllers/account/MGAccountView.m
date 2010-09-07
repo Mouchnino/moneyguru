@@ -55,7 +55,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGEntryPrint alloc] initWithPyParent:[entryTable py] tableView:tableView
+    return [[[MGEntryPrint alloc] initWithPyParent:[self py] tableView:tableView
         graphView:currentGraphView] autorelease];
 }
 

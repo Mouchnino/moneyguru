@@ -400,28 +400,30 @@
 
 		<!-- Print Titles -->
     <message>
-        <source>Net Worth at {endDate}, starting from {startDate}</source>
-        <translation>Eigenkapital vom {startDate}, beginnend am {endDate}</translation>
+        <source>Net Worth at {start_date}, starting from {end_date}</source>
+        <translation>Eigenkapital vom {start_date}, beginnend am {end_date}</translation>
     </message>
     <message>
-        <source>Profit and loss from {startDate} to {endDate}</source>
-        <translation>Profit und Verlust vom {startDate} bis {endDate}</translation>
+        <source>Profit and Loss from {start_date} to {end_date}</source>
+        <translation>Profit und Verlust vom {start_date} bis {end_date}</translation>
     </message>
     <message>
-        <source>Transactions from {startDate} to {endDate}</source>
-        <translation>Transaktionen vom {startDate} bis {endDate}</translation>
+        <source>Transactions from {start_date} to {end_date}</source>
+        <translation>Transaktionen vom {start_date} bis {end_date}</translation>
     </message>
     <message>
-        <source>Entries from {startDate} to {endDate}</source>
-        <translation>Eintrag vom {startDate} bis {endDate}</translation>
+        <source>{account_name}
+Entries from {start_date} to {end_date}</source>
+        <translation>{account_name}
+Eintrag vom {start_date} bis {end_date}</translation>
     </message>
     <message>
-        <source>Schedules from {startDate} to {endDate}</source>
-        <translation>Wiederholung vom {startDate} bis {endDate}</translation>
+        <source>Schedules from {start_date} to {end_date}</source>
+        <translation>Wiederholung vom {start_date} bis {end_date}</translation>
     </message>
     <message>
-        <source>Budgets from {startDate} to {endDate}</source>
-        <translation>Budgets vom {startDate} bis {endDate}</translation>
+        <source>Budgets from {start_date} to {end_date}</source>
+        <translation>Budgets vom {start_date} bis {end_date}</translation>
     </message>
 
 		<!-- Document -->

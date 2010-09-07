@@ -250,3 +250,11 @@
 "months" = "mois";
 "year" = "année";
 "years" = "années";
+
+/* Print titles */
+"Net Worth at {start_date}, starting from {end_date}" = "Valeur Nette à {start_date}, commençant à {end_date}";
+"Profit and Loss from {start_date} to {end_date}" = "Profits et Pertes de {start_date} à {end_date}";
+"Transactions from {start_date} to {end_date}" = "Transactions de {start_date} à {end_date}";
+"{account_name}\nEntries from {start_date} to {end_date}" = "{account_name}\nEntrées de {start_date} à {end_date}";
+"Schedules from {start_date} to {end_date}" = "Récurrences de {start_date} à {end_date}";
+"Budgets from {start_date} to {end_date}" = "Budgets de {start_date} à {end_date}";

@@ -20,11 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyPrintView *)py;
 }
 
-- (NSString *)pageTitle
-{
-    return [NSString stringWithFormat:TR(@"BudgetPrintTitle"),[py startDate],[py endDate]];
-}
-
 - (NSArray *)unresizableColumns
 {
     return [NSArray arrayWithObjects:@"start_date",@"stop_date",@"amount",nil];

@@ -16,9 +16,9 @@ class DateRangeOnApril2009(TestCase):
         self.mock_today(2009, 4, 1)
         self.create_instances()
         self.drsel.select_month_range()
-        self.pv = PrintView(self.ttable)
+        self.pv = PrintView(self.tview)
     
     def test_attributes(self):
-        self.assertEqual(self.pv.start_date, '01/04/2009')
-        self.assertEqual(self.pv.end_date, '30/04/2009')
+        # We don't bother testing other views, but they're expected to have PRINT_TITLE_FORMAT
+        self.assertEqual(self.pv.title, 'Transactions from 01/04/2009 to 30/04/2009')
     

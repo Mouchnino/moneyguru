@@ -57,7 +57,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (MGPrintView *)viewToPrint
 {
-    MGProfitPrint *p = [[MGProfitPrint alloc] initWithPyParent:[incomeStatement py] outlineView:outlineView
+    MGProfitPrint *p = [[MGProfitPrint alloc] initWithPyParent:[self py] outlineView:outlineView
         graphView:[profitGraph view] pieViews:pieChartsView];
     return [p autorelease];
 }

@@ -20,11 +20,6 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyTransactionPrint *)py;
 }
 
-- (NSString *)pageTitle
-{
-    return [NSString stringWithFormat:TR(@"TransactionPrintTitle"),[py startDate],[py endDate]];
-}
-
 - (NSArray *)unresizableColumns
 {
     return [NSArray arrayWithObjects:@"status",@"date",@"amount",nil];

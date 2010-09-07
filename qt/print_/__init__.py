@@ -25,13 +25,11 @@ from .item_view import (ItemViewLayoutElement, ItemViewPrintStats, TablePrintDat
 #http://lists.trolltech.com/pipermail/qt-interest/2009-November/015375.html
 
 class ViewPrinter(object):
-    def __init__(self, printer, document, titleFormat):
-        # title format has 2 placeholders, {startDate} and {endDate}
-        # hack, see moneyguru.gui.print_view
-        self.document = document.model
-        self.app = document.app.model
-        self.model = PrintViewModel(self)
-        self.title = titleFormat.format(startDate=self.model.start_date, endDate=self.model.end_date)
+    def __init__(self, printer, baseView):
+        self.document = baseView.model.document
+        self.app = self.document.app
+        self.model = PrintViewModel(baseView.model)
+        self.title = self.model.title
         self.printer = printer
         self.pageSize = printer.pageRect().size()
         self.layoutPages = [LayoutPage(self)]

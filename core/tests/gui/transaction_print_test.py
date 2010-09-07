@@ -23,7 +23,7 @@ def app_split_transaction():
     ]
     app.add_txn_with_splits(splits)
     app.add_txn(from_='foo', to='bar', amount='42')
-    app.pv = TransactionPrint(app.ttable)
+    app.pv = TransactionPrint(app.tview)
     return app
 
 @with_app(app_split_transaction)

@@ -1719,17 +1719,14 @@ class PyViewOptions(PyGUIObject):
 class PyPrintView(NSObject):
     py_class = PrintView
     
-    # The parent of the PyPrintView is a Document GUI object (*not* the document itself!)
+    # The parent of the PyPrintView is a View object
     def initWithPyParent_(self, pyparent):
         super(PyPrintView, self).init()
         self.py = self.py_class(pyparent.py)
         return self
     
-    def startDate(self):
-        return self.py.start_date
-    
-    def endDate(self):
-        return self.py.end_date
+    def title(self):
+        return self.py.title
     
 
 class PySplitPrint(PyPrintView):
