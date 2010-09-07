@@ -56,6 +56,12 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] setNotes:[notesTextField stringValue]];
 }
 
+/* NSWindowController Overrides */
+- (NSString *)windowFrameAutosaveName
+{
+    return @"AccountPanel";
+}
+
 /* Delegate */
 
 - (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
