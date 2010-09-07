@@ -237,7 +237,7 @@ class LoadWithReferences1(TestCase):
         assert self.etable[1].reconciled
     
 
-#--- Account with budget
+#--- All app functions below are tested in the following test generators
 def app_account_with_budget():
     app = TestApp()
     app.add_account('asset')
@@ -248,7 +248,6 @@ def app_account_with_budget():
     app.bpanel.save()
     return app
 
-#--- Transaction with payee and checkno
 def app_transaction_with_payee_and_checkno():
     app = TestApp()
     app.add_account('Checking')
@@ -259,7 +258,6 @@ def app_transaction_with_payee_and_checkno():
     app.tpanel.save()
     return app
 
-#--- Entry with blank description
 def app_entry_with_blank_description():
     app = TestApp()
     app.add_account()
@@ -267,7 +265,6 @@ def app_entry_with_blank_description():
     app.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
     return app
 
-#--- Account in group
 def app_account_in_group():
     app = TestApp()
     app.add_group('group')
@@ -275,7 +272,6 @@ def app_account_in_group():
     app.bsheet.selected = app.bsheet.assets[0][0] # the account in the group
     return app
 
-#--- Transaction_with_memos
 def app_transaction_with_memos():
     app = TestApp()
     app.add_account('first')
@@ -294,7 +290,6 @@ def app_transaction_with_memos():
     app.tpanel.save()
     return app
 
-#--- Entry in liability
 def app_entry_in_liability():
     app = TestApp()
     app.add_account('Credit card', account_type=AccountType.Liability)
@@ -302,7 +297,6 @@ def app_entry_in_liability():
     app.add_entry('1/1/2008', 'Payment', increase='10')
     return app
 
-#--- Split with null amount
 def app_split_with_null_amount():
     app = TestApp()
     app.add_account('foo')
@@ -316,21 +310,18 @@ def app_split_with_null_amount():
     app.tpanel.save()
     return app
 
-#--- One account and one group
 def app_one_account_and_one_group():
     app = TestApp()
     app.add_account()
     app.add_group() # The group is selected
     return app
 
-#--- One account in one group
 def app_one_account_in_one_group():
     app = TestApp()
     app.add_group('group')
     app.add_account(group_name='group')
     return app
 
-#--- Budget with all fields set
 def app_budget_with_all_fields_set():
     app = TestApp()
     app.add_account('income', account_type=AccountType.Income)
@@ -338,7 +329,6 @@ def app_budget_with_all_fields_set():
         repeat_every=2, stop_date='01/01/2022')
     return app
 
-#--- Account with apanel attrs set (account number, notes)
 def app_account_with_apanel_attrs():
     app = TestApp()
     app.add_account()
@@ -348,7 +338,6 @@ def app_account_with_apanel_attrs():
     app.apanel.save()
     return app
 
-#--- One Schedule and one normal txn
 def app_one_schedule_and_one_normal_txn():
     app = TestApp()
     app.drsel.select_month_range()
@@ -359,7 +348,6 @@ def app_one_schedule_and_one_normal_txn():
         repeat_every=3)
     return app
 
-#--- Schedule with global change
 def app_schedule_with_global_change():
     p = Patcher()
     p.patch_today(2008, 9, 30)
@@ -373,7 +361,6 @@ def app_schedule_with_global_change():
     app.ttable.save_edits()
     return app, p
 
-#--- Schedule with local deletion
 def app_schedule_with_local_deletion():
     p = Patcher()
     p.patch_today(2008, 9, 30)
@@ -384,12 +371,17 @@ def app_schedule_with_local_deletion():
     app.ttable.delete()
     return app, p
 
-#--- Schedule made from txn
 def app_schedule_made_from_txn():
     app = TestApp()
     app.add_txn('11/07/2008', 'description', 'payee', from_='first', to='second', amount='42')
     app.mw.make_schedule_from_selected()
     app.scpanel.save()
+    return app
+
+def app_account_and_group():
+    app = TestApp()
+    app.add_account()
+    app.add_group()
     return app
 
 #--- Generators
@@ -457,6 +449,10 @@ def test_save_load():
     
     # The first spawn (corresponding to the original txn) is still skipped when we save/load
     app = app_schedule_made_from_txn()
+    yield check, app
+    
+    # make sure that empty groups are kept when saving/loading
+    app = app_account_and_group()
     yield check, app
 
 def test_save_load_qif():
