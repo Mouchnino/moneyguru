@@ -16,8 +16,8 @@ from .column import Columns
 
 # used in both bsheet and istatement
 def get_delta_perc(delta_amount, start_amount):
-    if start_amount > 0:
-        return '%+1.1f%%' % (delta_amount.value / start_amount.value * 100)
+    if start_amount:
+        return '%+1.1f%%' % (delta_amount.value / abs(start_amount.value) * 100)
     else:
         return '---'
 

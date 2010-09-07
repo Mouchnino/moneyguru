@@ -141,7 +141,8 @@ def test_show_account_then_select_other_report(app):
 
 @with_app(TestApp)
 def test_delta_perc_with_negative_start(app):
-    # When the balance at the start is negative, don't display a delta %
+    # When the balance at the start is negative, use the absolute starting value as a base to
+    # compute the change %
     app.add_account('Loan', account_type=AccountType.Liability)
     app.mw.show_account()
     app.add_entry(date='31/12/2007', description='Starting balance', increase='1000')
@@ -149,7 +150,7 @@ def test_delta_perc_with_negative_start(app):
     app.mw.show_account()
     app.add_entry(date='1/1/2008', description='Salary', increase='1500.00')
     app.mw.select_balance_sheet()
-    eq_(app.bsheet.net_worth.delta_perc, '---')
+    eq_(app.bsheet.net_worth.delta_perc, '+150.0%')
 
 #--- Account hierarchy
 def app_account_hierarchy():
