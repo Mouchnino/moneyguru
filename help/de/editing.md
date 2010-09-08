@@ -62,6 +62,7 @@ Ein Datum besteht aus den Komponenten Tag, Monat und Jahr. Sobald Sie in den Edi
 * Das Eingabeformat folgt immer der Reihenfolge Tag --> Monat --> Jahr.
 * Unabhängig der Konfiguration des Datumsformates können Sie immer die Variante mit führenden Nullen eingeben. Wenn Ihr Datumsformat nach der Form "dd.mm.yy" konfiguriert ist, so können Sie die Eingabe des 7. Juni 2008 mit der Ziffernfolge "070608" erzielen.
 * Einen Wechsel zwischen Komponenten erzielen Sie auch mit der Eingabe des Trenners. Sollte Ihr Datumsformat nach der Form "yyyy-mm-dd" konfiguriert sein, so können Sie die Eingabe des 7. Juni 2008 auch mit der Tastenfolge "7-6-08" erzielen.
+* You can press the letter "T" to quickly set the date to today.
 
 Sollten Sie beim Eingeben eines Datums Werte eingeben, die ausserhalb des aktuell ausgewählten Zeitraums liegen, bekommen Sie ein Symbol der Form ![](images/backward_16.png) oder ![](images/forward_16.png) angezeigt. Sobald der Änderungsmodus beendet ist, wird der ausgewählte Zeitraum auf einen Zeitraum gesetzt, in dem die soeben modifizierte Transaktion liegt, und die Transaktion wird angezeigt. Dies gilt jedoch nur für "navigierbare" Zeiträume (Monat, Quartal, Jahr). Im Fall von nicht navigierbaren Zeiträumen (laufendes Jahr, benutzerdefiniert, ...) "verschwindet" die Transaktion vom aktuell dargestellten Zeitraum (bleibt jedoch selbstverständlich gespeichert).
 

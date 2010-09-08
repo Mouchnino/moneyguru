@@ -63,6 +63,7 @@ Whenever a date is edited, it is edited using a special widget. This widget has 
 * The **input** format is always day --> month --> year.
 * Whatever your system date format is, you can type a date by padding your values with 0. For example, even if your date format is mm/dd/yy, you can enter the date "07/06/08" by typing "060708".
 * Whatever your system date format is, you can type a date by using separators. For example, even if your date format is yyyy-mm-dd, you can type "2008-07-06" by typing "6-7-08"
+* You can press the letter "T" to quickly set the date to today.
 
 While editing a transaction or entry, if you set the date to something outside the current date range, you will get a ![](images/backward_16.png) or a ![](images/forward_16.png) showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when editing ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when editing ends.
 

@@ -54,6 +54,7 @@ Partout où les dates sont modifiables, un composant spécifique est utilisé re
 * Le format d'entrée est **toujours** jour --> mois --> année.
 * Quelque soit votre format, vous pouvez taper les dates sans séparateur en utilisant le 0. Par exemple, si vous voulez entrer le 07/06/2010, vous pouvez taper "070610"
 * Quelque soit votre format, taper un séparateur change de champ. Par exemple, si vous voulez entrer le 07/06/2010, vous pouvez taper "7/6/10".
+* Vous pouvez taper "T" pour changer la date pour la date d'aujourd'hui.
 
 Si vous changez la date d'une transaction pour une date qui est hors de l'intervalle courant, un petit ![](images/backward_16.png) ou ![](images/forward_16.png) apparaîtra. Ça indiquera que l'intervalle sera changé, si il est navigable, pour suivre la transaction. Si l'intervalle n'est pas navigable, la transaction deviendra invisible.
 
