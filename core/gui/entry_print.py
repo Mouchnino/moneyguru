@@ -11,16 +11,19 @@ from .print_view import PrintView
 
 # the parent of this view must be a EntryTable
 class EntryPrint(PrintView):
-    def split_count_at_row(self, row_index):
+    def _get_splits_at_row(self, row_index):
         try:
             entry = self.parent.etable[row_index].entry
-            return len(entry.splits)
+            return [entry.split] + entry.splits
         except AttributeError: # Previous Balance
-            return 0
+            return []
+    
+    def split_count_at_row(self, row_index):
+        return len(self._get_splits_at_row(row_index))
     
     def split_values(self, row_index, split_row_index):
-        entry = self.parent.etable[row_index].entry
-        split = entry.splits[split_row_index]
+        splits = self._get_splits_at_row(row_index)
+        split = splits[split_row_index]
         account_name = split.account.name if split.account is not None else tr('Unassigned')
         return [account_name, split.memo, self.app.format_amount(split.amount)]
     

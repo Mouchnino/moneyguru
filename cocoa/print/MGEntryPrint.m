@@ -63,7 +63,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (NSInteger)splitCountThreshold
 {
-    return 2;
+    return 3;
 }
 
 - (void)drawRect:(NSRect)rect
