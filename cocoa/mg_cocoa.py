@@ -1430,7 +1430,9 @@ class PyDateWidget(NSObject):
         self.w.type(something)
     
     def setDate_(self, str_date):
-        self.w.text = str_date
+        # There's a strange bug in PyObjC that sometimes causes crashes with strptime, so we have to
+        # explicitly convert str_date.
+        self.w.text = str(str_date)
     
     def text(self):
         return self.w.text
