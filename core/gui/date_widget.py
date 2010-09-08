@@ -116,6 +116,10 @@ class DateWidget(object):
             if self._flush_buffer():
                 self._next()
             return
+        if stuff in {'t', 'T'}:
+            self._buffer = ''
+            self.date = date.today()
+            return
         if not stuff.isdigit(): # invalid
             return
         self._buffer += stuff

@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
+from hsutil.testutil import eq_, patch_today
 from hsutil.testcase import TestCase
 
 from ...gui.date_widget import DateWidget, DAY, MONTH, YEAR
@@ -127,6 +127,25 @@ class DDMMYYYYWithSlash(TestCase):
         """Typing the separator doesn't do anything because we're not buffering"""
         self.w.type('/')
         self._assert_unchanged()
+    
+    @patch_today(2010, 9, 8)
+    def test_type_t(self):
+        # Typing 't' sets the date to today
+        self.w.type('t')
+        eq_(self.w.text, '08/09/2010')
+    
+    @patch_today(2010, 9, 8)
+    def test_type_T(self):
+        # The 't' shortcut is case insensitive
+        self.w.type('T')
+        eq_(self.w.text, '08/09/2010')
+    
+    @patch_today(2010, 9, 8)
+    def test_type_t_with_buffer(self):
+        # Typing 't' resets the current buffer
+        self.w.type('1') # buffering mode
+        self.w.type('t')
+        eq_(self.w.text, '08/09/2010')
     
 
 class DDMMYYYYWithSlashMonthSelected(TestCase):
