@@ -251,6 +251,9 @@
 /* Class = "NSTextFieldCell"; title = "Font size:"; ObjectID = "1330"; */
 "1330.title" = "Schriftgrad:";
 
+/* Class = "NSTextFieldCell"; title = "Printing Font size:"; ObjectID = "1454"; */
+"1454.title" = "Printing Font size:";
+
 /* Class = "NSMenuItem"; title = "Today's Date Range"; ObjectID = "1338"; */
 "1338.title" = "heutiger Zeitraum";
 

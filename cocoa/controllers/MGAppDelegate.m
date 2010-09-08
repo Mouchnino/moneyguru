@@ -34,6 +34,7 @@ http://www.hardcoded.net/licenses/hs_license
     // Others
     [d setObject:b2n(YES) forKey:ShowRecurrenceScopeDialog];
     [d setObject:i2n(11) forKey:TableFontSize];
+    [d setObject:i2n(11) forKey:PrintFontSize];
     
     [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:d];
     [ud registerDefaults:d];

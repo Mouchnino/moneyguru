@@ -53,6 +53,7 @@ http://www.hardcoded.net/licenses/hs_license
 // Others
 #define ShowRecurrenceScopeDialog @"ShowRecurrenceScopeDialog"
 #define TableFontSize @"TableFontSize"
+#define PrintFontSize @"PrintFontSize"
 
 // ScheduleScope **Synced with the core**
 #define ScheduleScopeLocal 0

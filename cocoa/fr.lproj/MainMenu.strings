@@ -251,6 +251,9 @@
 /* Class = "NSTextFieldCell"; title = "Font size:"; ObjectID = "1330"; */
 "1330.title" = "Taille police:";
 
+/* Class = "NSTextFieldCell"; title = "Printing Font size:"; ObjectID = "1454"; */
+"1454.title" = "Taille police (impression):";
+
 /* Class = "NSMenuItem"; title = "Today's Date Range"; ObjectID = "1338"; */
 "1338.title" = "Intervalle pour aujourd'hui";
 

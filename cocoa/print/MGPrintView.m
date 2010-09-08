@@ -35,7 +35,7 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
     Class pyClass = [Utils classNamed:[[self class] pyClassName]];
     py = [[pyClass alloc] initWithPyParent:pyParent];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    fontSize = [ud integerForKey:TableFontSize];
+    fontSize = [ud integerForKey:PrintFontSize];
     headerFont = [[NSFont boldSystemFontOfSize:fontSize] retain];
     headerAttributes = [NSDictionary dictionaryWithObjectsAndKeys:headerFont, NSFontAttributeName,
         [NSColor blackColor], NSForegroundColorAttributeName, nil];
