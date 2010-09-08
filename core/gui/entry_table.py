@@ -458,6 +458,12 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         return len(self.entry.splits) == 1
     can_edit_increase = can_edit_transfer
     can_edit_decrease = can_edit_transfer
+    
+    @property
+    def can_edit_reconciliation_date(self):
+        foreign = self._amount != 0 and self._amount.currency != self.account.currency
+        return not foreign
+    
 
 class PreviousBalanceRow(BaseEntryTableRow):
     def __init__(self, table, date, balance, reconciled_balance, account):

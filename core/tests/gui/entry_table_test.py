@@ -70,8 +70,6 @@ def test_show_transfer_account_on_empty_row_does_nothing():
     app = app_one_account()
     app.etable.show_transfer_account() # no crash
 
-    return app
-
 @with_app(app_one_account)
 def test_sort_by_reconciliation_date_same_recdate_different_entry_date_and_position(app):
     # When the reconciliation date is the same, the sort order is the entry date, THEN the position
@@ -527,6 +525,11 @@ def test_can_reconcile(app):
     # an entry with a foreign currency can't be reconciled.
     app.aview.toggle_reconciliation_mode()
     assert not app.etable[1].can_reconcile()
+
+@with_app(app_two_entries_two_currencies)
+def test_can_edit_reconciliation_date(app):
+    # an entry with a foreign currency can't edit reconciliation date
+    assert not app.etable[1].can_edit_cell('reconciliation_date')
 
 @with_app(app_two_entries_two_currencies)
 def test_toggle_reconcilitation_on_both(app):
