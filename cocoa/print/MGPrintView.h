@@ -23,7 +23,8 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
     NSInteger fontSize;
     NSFont *headerFont;
     NSDictionary *headerAttributes;
-    CGFloat headerTextHeight;
+    CGFloat baseHeaderTextHeight; // header text height for one line
+    CGFloat headerTextHeight; // header text height
     CGFloat headerHeight;
     NSString *baseTitle;
 }

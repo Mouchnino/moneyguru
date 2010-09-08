@@ -51,7 +51,7 @@ http://www.hardcoded.net/licenses/hs_license
     
     columnHeaderY = headerHeight;
     // Add the height of the column header to the header height
-    headerHeight += headerTextHeight + 6;
+    headerHeight += baseHeaderTextHeight + 6;
     
     typicalRowHeight = rowTextHeight + 2;
     rowCount = [tableView numberOfRows];
@@ -239,7 +239,7 @@ http://www.hardcoded.net/licenses/hs_license
     [super drawRect:rect];
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
     CGFloat headerY = columnHeaderY;
-    CGFloat lineY = headerY + headerTextHeight + 2;
+    CGFloat lineY = headerY + baseHeaderTextHeight + 2;
     NSInteger page = 1;
     NSInteger startRow = pageNumber == 1 ? 0 : -1;
     NSInteger endRow = -1;
@@ -278,7 +278,7 @@ http://www.hardcoded.net/licenses/hs_license
         NSTableColumn *c = [visibleColumns objectAtIndex:i];
         CGFloat colWidth = n2f([columnWidths objectAtIndex:i]);
         NSString *headerToDraw = [[c headerCell] stringValue];
-        NSRect drawRect = NSMakeRect(cumulativeHeaderX, headerY, colWidth, headerTextHeight);
+        NSRect drawRect = NSMakeRect(cumulativeHeaderX, headerY, colWidth, baseHeaderTextHeight);
         NSDictionary *attrs = headerAttributes;
         if ([[c headerCell] alignment] == NSRightTextAlignment) {
             attrs = changeAttributesAlignment(attrs, NSRightTextAlignment);

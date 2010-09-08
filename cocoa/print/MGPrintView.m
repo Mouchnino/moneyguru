@@ -75,6 +75,7 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
     
     [baseTitle release];
     baseTitle = [[[self py] title] retain];
+    baseHeaderTextHeight = [@"foo" sizeWithAttributes:headerAttributes].height;
     headerTextHeight = [baseTitle sizeWithAttributes:headerAttributes].height;
     headerHeight = headerTextHeight + 2;
 }
