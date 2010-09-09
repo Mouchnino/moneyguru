@@ -585,6 +585,8 @@ def test_dont_allow_amount_change_for_splits(app):
     # Amount of entries belonging to splits can't be set.
     assert not app.etable[0].can_edit_cell('increase')
     assert not app.etable[0].can_edit_cell('decrease')
+    assert not app.etable[0].can_edit_cell('debit')
+    assert not app.etable[0].can_edit_cell('credit')
 
 def test_show_transfer_account():
     # show_transfer_account() cycles through all splits of the entry

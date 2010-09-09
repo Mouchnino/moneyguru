@@ -458,6 +458,8 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         return len(self.entry.splits) == 1
     can_edit_increase = can_edit_transfer
     can_edit_decrease = can_edit_transfer
+    can_edit_debit = can_edit_transfer
+    can_edit_credit = can_edit_transfer
     
     @property
     def can_edit_reconciliation_date(self):
