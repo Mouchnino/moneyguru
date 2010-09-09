@@ -135,4 +135,9 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
     [[self py] toggleImportStatus];
     return YES;
 }
+
+- (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
+{
+    return YES;
+}
 @end

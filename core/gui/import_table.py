@@ -99,6 +99,12 @@ class ImportTableRow(Row):
         return ((self.imported is None) != (other.imported is None)) and \
                ((self.entry is None) != (other.entry is None))
     
+    def can_edit_cell(self, column_name):
+        if column_name == 'will_import':
+            return Row.can_edit_cell(self, column_name)
+        else:
+            return False
+    
     def load(self):
         self._date = self.entry.date if self.entry else None
         self._description = self.entry.description if self.entry else ''

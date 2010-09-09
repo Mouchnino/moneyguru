@@ -24,6 +24,12 @@ def app_import_checkbook_qif():
     return app
 
 @with_app(app_import_checkbook_qif)
+def test_can_edit_fields(app):
+    # all fields except will_import are read-only
+    assert not app.itable[0].can_edit_cell('amount')
+    assert not app.itable[0].can_edit_cell('description')
+
+@with_app(app_import_checkbook_qif)
 def test_delete_is_linked_to_will_import(app):
     # calling delete() (the std API for all tables), set "will_import" to False
     app.itable.select([3, 4])
