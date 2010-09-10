@@ -19,6 +19,18 @@ from ..document import ScheduleScope
 from ..model.date import MonthRange
 from .base import TestCase as TestCaseBase, CommonSetup, compare_apps
 
+def copydoc(doc):
+    # doing a deepcopy on the document itself makes a deepcopy of *all* guis because they're
+    # listeners. What we do is a shallow copy of it, *then* a deepcopy of stuff we compare
+    # afterwards.
+    newdoc = copy.copy(doc)
+    newdoc.accounts = copy.deepcopy(newdoc.accounts)
+    newdoc.groups = copy.deepcopy(newdoc.groups)
+    newdoc.transactions = copy.deepcopy(newdoc.transactions)
+    newdoc.schedules = copy.deepcopy(newdoc.schedules)
+    newdoc.budgets = copy.deepcopy(newdoc.budgets)
+    return newdoc
+
 class TestCase(TestCaseBase):
     """Provides an easy way to test undo/redo
     
@@ -27,10 +39,10 @@ class TestCase(TestCaseBase):
     step, call _test_undo_redo().
     """
     def _save_state(self):
-        self._previous_state = copy.deepcopy(self.document)
+        self._previous_state = copydoc(self.document)
     
     def _test_undo_redo(self):
-        before_undo = copy.deepcopy(self.document)
+        before_undo = copydoc(self.document)
         self.document.undo()
         compare_apps(self._previous_state, self.document)
         self.document.redo()

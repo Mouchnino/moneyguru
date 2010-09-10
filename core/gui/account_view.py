@@ -10,7 +10,6 @@
 
 
 from ..const import PaneType
-from ..document import FilterType
 from ..trans import tr
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
@@ -24,7 +23,6 @@ class AccountView(BaseView):
         BaseView.__init__(self, view, mainwindow)
         self._shown_graph = None
         self._reconciliation_mode = False
-        self._visible_entries = None
     
     def set_children(self, children):
         self.etable, self.balgraph, self.bargraph, self.efbar = children
@@ -35,11 +33,7 @@ class AccountView(BaseView):
         self.bargraph.connect()
     
     def _revalidate(self):
-        # XXX Huh oh, this is very inefficient (but for now the only way to make tests pass)! Once
-        # the view refactoring is over, the views will have to be connected at all times to make
-        # the invalidation of their cache more efficient. Then, we'll have show()/hide() methods
-        # where children will be refreshed.
-        self._invalidate_cache()
+        self._refresh_totals()
         self.view.refresh_reconciliation_button()
     
     def show(self):
@@ -61,16 +55,12 @@ class AccountView(BaseView):
         self.bargraph.hide()
     
     #--- Private
-    def _invalidate_cache(self):
-        self._visible_entries = None
-        self._refresh_totals()
-    
     def _refresh_totals(self):
         account = self.mainwindow.shown_account
         if account is None:
             return
         selected = len(self.mainwindow.selected_transactions)
-        total = len(self.visible_entries)
+        total = len(self.mainwindow.visible_entries_for_account(account))
         amounts = [t.amount_for_account(account, account.currency) for t in self.mainwindow.selected_transactions]
         total_increase = sum(a for a in amounts if a > 0)
         total_decrease = abs(sum(a for a in amounts if a < 0))
@@ -78,38 +68,6 @@ class AccountView(BaseView):
         total_decrease_fmt = self.app.format_amount(total_decrease)
         msg = tr("{0} out of {1} selected. Increase: {2} Decrease: {3}")
         self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
-    
-    def _set_visible_entries(self):
-        account = self.mainwindow.shown_account
-        if account is None:
-            self._visible_entries = []
-            return
-        date_range = self.document.date_range
-        entries = [e for e in account.entries if e.date in date_range]
-        query_string = self.document.filter_string
-        filter_type = self.document.filter_type
-        if query_string:
-            query = self.app.parse_search_query(query_string)
-            entries = [e for e in entries if e.transaction.matches(query)]
-        if filter_type is FilterType.Unassigned:
-            entries = [e for e in entries if not e.transfer]
-        elif (filter_type is FilterType.Income) or (filter_type is FilterType.Expense):
-            if account.is_credit_account():
-                want_positive = filter_type is FilterType.Expense
-            else:
-                want_positive = filter_type is FilterType.Income
-            if want_positive:
-                entries = [e for e in entries if e.amount > 0]
-            else:
-                entries = [e for e in entries if e.amount < 0]
-        elif filter_type is FilterType.Transfer:
-            entries = [e for e in entries if
-                any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
-        elif filter_type is FilterType.Reconciled:
-            entries = [e for e in entries if e.reconciled]
-        elif filter_type is FilterType.NotReconciled:
-            entries = [e for e in entries if not e.reconciled]
-        self._visible_entries = entries
     
     #--- Public
     def delete_item(self):
@@ -145,24 +103,18 @@ class AccountView(BaseView):
     def reconciliation_mode(self):
         return self._reconciliation_mode
     
-    @property
-    def visible_entries(self):
-        if self._visible_entries is None:
-            self._set_visible_entries()
-        return self._visible_entries
-    
     #--- Event Handlers
     def date_range_changed(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     
     def document_changed(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     
     def filter_applied(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     
     def performed_undo_or_redo(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     
     # If the account view is visible when the message is broadcasted, we won't get automatically
     # invalidated, so we have to do it automatically.
@@ -173,11 +125,11 @@ class AccountView(BaseView):
         self._refresh_totals()
     
     def transaction_changed(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     
     def transaction_deleted(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     
     def transactions_imported(self):
-        self._invalidate_cache()
+        self._refresh_totals()
     

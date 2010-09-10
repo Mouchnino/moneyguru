@@ -9,7 +9,8 @@
 
 from ..model.account import sort_accounts
 from ..model.amount import convert_amount
-from .entry_table import EntryTableRow, TotalRow
+from ..model.date import ONE_DAY
+from .entry_table import EntryTableRow, TotalRow, PreviousBalanceRow
 from .table import Row
 from .transaction_table_base import TransactionTableBase
 
@@ -27,9 +28,16 @@ class GeneralLedgerTable(TransactionTableBase):
     #--- Private
     def _get_account_rows(self, account):
         date_range = self.document.date_range
+        if account.is_balance_sheet_account():
+            prev_entry = account.entries.last_entry(date_range.start-ONE_DAY)
+            if prev_entry is not None:
+                balance = prev_entry.balance
+                rbalance = prev_entry.reconciled_balance
+                yield PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
         total_debit = 0
         total_credit = 0
-        for entry in account.entries:
+        entries = self.mainwindow.visible_entries_for_account(account)
+        for entry in entries:
             row = EntryTableRow(self, entry, account)
             yield row
             convert = lambda a: convert_amount(a, account.currency, entry.date)
@@ -43,7 +51,7 @@ class GeneralLedgerTable(TransactionTableBase):
         return isinstance(self[row_index], AccountRow)
     
     def is_bold_row(self, row_index):
-        return isinstance(self[row_index], TotalRow)
+        return isinstance(self[row_index], (TotalRow, PreviousBalanceRow))
     
     #--- Properties
     @property
@@ -53,6 +61,16 @@ class GeneralLedgerTable(TransactionTableBase):
     @property
     def selected_transactions(self):
         return [entry.transaction for entry in self.selected_entries]
+    
+    #--- Event Handlers
+    def edition_must_stop(self):
+        pass # the view doesn't have a stop_editing method
+    
+    def date_range_changed(self):
+        self.refresh()
+        self._update_selection()
+        self.view.refresh()
+        self.view.show_selected_row()
     
 
 class AccountRow(Row):

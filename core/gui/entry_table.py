@@ -75,7 +75,7 @@ class EntryTable(TransactionTableBase):
                 self.header = PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
         total_debit = 0
         total_credit = 0
-        for entry in self.parent_view.visible_entries:
+        for entry in self.mainwindow.visible_entries_for_account(account):
             row = EntryTableRow(self, entry, account)
             self.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)

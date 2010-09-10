@@ -36,3 +36,26 @@ def test_rows_data_with_two_sided_txn(app):
     eq_(app.gltable[4].description, 'hello')
     eq_(app.gltable[4].credit, '42.00')
 
+#---
+def app_txns_in_different_date_ranges():
+    app = TestApp()
+    app.drsel.select_month_range()
+    app.add_accounts('foo', 'bar')
+    app.add_txn(date='10/08/2010', description='first', from_='foo', to='bar', amount='42')
+    app.add_txn(date='10/09/2010', description='second', from_='foo', to='bar', amount='42')
+    app.drsel.select_prev_date_range()
+    app.show_glview()
+    return app
+
+@with_app(app_txns_in_different_date_ranges)
+def test_only_show_rows_in_date_range(app):
+    # Rows that are out of the date range aren't shown.
+    eq_(app.gltable[1].description, 'first')
+
+@with_app(app_txns_in_different_date_ranges)
+def test_previous_balance_rows(app):
+    # We show previous balance rows where appropriate
+    app.drsel.select_next_date_range()
+    eq_(app.gltable[1].description, 'Previous Balance')
+    eq_(app.gltable[1].balance, '42.00')
+    assert app.gltable.is_bold_row(1)

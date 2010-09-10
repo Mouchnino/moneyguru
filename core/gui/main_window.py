@@ -10,10 +10,12 @@ from hscommon.notify import Repeater, Listener
 from hsutil.misc import first, minmax
 
 from ..const import PaneType
+from ..document import FilterType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
 from ..trans import tr
+from .base import MESSAGES_DOCUMENT_CHANGED
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
@@ -30,12 +32,17 @@ class MainWindow(Repeater):
         Repeater.__init__(self, document)
         self.view = view
         self.document = document
+        self.app = document.app
         self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
         self._selected_schedules = []
         self._selected_budgets = []
         self._panes_were_restored = False
+        self._account2visibleentries = {}
+        
+        msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
+        self.bind_messages(msgs, self._invalidate_visible_entries)
     
     # After having created the main window, you *have* to call this method. This scheme is to allow
     # children to have reference to the main window.
@@ -102,6 +109,9 @@ class MainWindow(Repeater):
         else:
             raise ValueError("Cannot create pane of type {0}".format(pane_type))
     
+    def _invalidate_visible_entries(self):
+        self._account2visibleentries = {}
+    
     def _restore_default_panes(self):
         pane_types = [PaneType.NetWorth, PaneType.Profit, PaneType.Transaction,
             PaneType.Schedule, PaneType.Budget]
@@ -156,6 +166,34 @@ class MainWindow(Repeater):
             self.panes.append(self._create_pane(pane_type, account=account))
         self.view.refresh_panes()
         self.current_pane_index = 0
+    
+    def _visible_entries_for_account(self, account):
+        date_range = self.document.date_range
+        entries = [e for e in account.entries if e.date in date_range]
+        query_string = self.document.filter_string
+        filter_type = self.document.filter_type
+        if query_string:
+            query = self.app.parse_search_query(query_string)
+            entries = [e for e in entries if e.transaction.matches(query)]
+        if filter_type is FilterType.Unassigned:
+            entries = [e for e in entries if not e.transfer]
+        elif (filter_type is FilterType.Income) or (filter_type is FilterType.Expense):
+            if account.is_credit_account():
+                want_positive = filter_type is FilterType.Expense
+            else:
+                want_positive = filter_type is FilterType.Income
+            if want_positive:
+                entries = [e for e in entries if e.amount > 0]
+            else:
+                entries = [e for e in entries if e.amount < 0]
+        elif filter_type is FilterType.Transfer:
+            entries = [e for e in entries if
+                any(s.account is not None and s.account.is_balance_sheet_account() for s in e.splits)]
+        elif filter_type is FilterType.Reconciled:
+            entries = [e for e in entries if e.reconciled]
+        elif filter_type is FilterType.NotReconciled:
+            entries = [e for e in entries if not e.reconciled]
+        return entries
     
     #--- Public
     def close_pane(self, index):
@@ -336,6 +374,13 @@ class MainWindow(Repeater):
     
     def update_status_line(self):
         self.view.refresh_status_line()
+    
+    def visible_entries_for_account(self, account):
+        if account is None:
+            return []
+        if account not in self._account2visibleentries:
+            self._account2visibleentries[account] = self._visible_entries_for_account(account)
+        return self._account2visibleentries[account]
     
     #--- Properties
     @property
