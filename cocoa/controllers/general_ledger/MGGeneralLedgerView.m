@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MGGeneralLedgerView.h"
-// #import "MGBudgetPrint.h"
+#import "MGGeneralLedgerPrint.h"
 #import "Utils.h"
 
 @implementation MGGeneralLedgerView
@@ -32,8 +32,8 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyGeneralLedgerView *)py;
 }
 
-// - (MGPrintView *)viewToPrint
-// {
-//     return [[[MGBudgetPrint alloc] initWithPyParent:[self py] tableView:[budgetTable tableView]] autorelease];
-// }
+- (MGPrintView *)viewToPrint
+{
+    return [[[MGGeneralLedgerPrint alloc] initWithPyParent:[self py] tableView:[ledgerTable tableView]] autorelease];
+}
 @end

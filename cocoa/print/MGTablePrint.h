@@ -33,6 +33,8 @@ http://www.hardcoded.net/licenses/hs_license
 - (CGFloat)indentForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow;
 - (CGFloat)heightForRow:(NSInteger)aRow;
 - (NSArray *)unresizableColumns;
+- (NSArray *)fetchDataForRow:(NSInteger)row;
+- (BOOL)shouldComputeRowWidths:(NSInteger)row;
 - (void)drawRow:(NSInteger)aRow inRect:(NSRect)aRect;
 - (CGFloat)columnsTotalWidth;
 @end

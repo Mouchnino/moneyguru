@@ -16,5 +16,6 @@ class GeneralLedgerView(BaseView):
     #--- Overrides
     def set_children(self, children):
         [self.gltable] = children
+        self.maintable = self.gltable
         BaseView.set_children(self, children)
     

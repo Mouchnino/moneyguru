@@ -26,6 +26,7 @@ class AccountView(BaseView):
     
     def set_children(self, children):
         self.etable, self.balgraph, self.bargraph, self.efbar = children
+        self.maintable = self.etable
         self._shown_graph = self.balgraph
         # we count the graphs separately because the show/hide rules for them are special
         BaseView.set_children(self, [self.etable, self.efbar])

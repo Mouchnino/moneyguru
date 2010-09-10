@@ -19,6 +19,7 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		CE036D64103AE51100E172F8 /* MGPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE036D63103AE51100E172F8 /* MGPanel.m */; };
+		CE051CF2123A904F00D31D18 /* MGGeneralLedgerPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */; };
 		CE0E85C60F875C1800549758 /* MGBalancePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C10F875C1800549758 /* MGBalancePrint.m */; };
 		CE0E85C70F875C1800549758 /* MGProfitPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C30F875C1800549758 /* MGProfitPrint.m */; };
 		CE0E85C80F875C1800549758 /* MGSheetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C50F875C1800549758 /* MGSheetPrint.m */; };
@@ -258,6 +259,8 @@
 		CE00BDC20F890A9E00EB18BE /* PyTransactionPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPrint.h; sourceTree = "<group>"; };
 		CE036D62103AE51100E172F8 /* MGPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPanel.h; sourceTree = "<group>"; };
 		CE036D63103AE51100E172F8 /* MGPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPanel.m; sourceTree = "<group>"; };
+		CE051CF0123A904F00D31D18 /* MGGeneralLedgerPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerPrint.h; path = print/MGGeneralLedgerPrint.h; sourceTree = SOURCE_ROOT; };
+		CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerPrint.m; path = print/MGGeneralLedgerPrint.m; sourceTree = SOURCE_ROOT; };
 		CE0E85C00F875C1800549758 /* MGBalancePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBalancePrint.h; path = print/MGBalancePrint.h; sourceTree = "<group>"; };
 		CE0E85C10F875C1800549758 /* MGBalancePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBalancePrint.m; path = print/MGBalancePrint.m; sourceTree = "<group>"; };
 		CE0E85C20F875C1800549758 /* MGProfitPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGProfitPrint.h; path = print/MGProfitPrint.h; sourceTree = "<group>"; };
@@ -751,6 +754,8 @@
 		CE1016020F7F747F0099DA3C /* print */ = {
 			isa = PBXGroup;
 			children = (
+				CE051CF0123A904F00D31D18 /* MGGeneralLedgerPrint.h */,
+				CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */,
 				CE55EB8A1047DE0C00F3390F /* MGBudgetPrint.h */,
 				CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */,
 				CE55EB871047DC8500F3390F /* MGSchedulePrint.h */,
@@ -1580,6 +1585,7 @@
 				CEB6020A123930BF002218CF /* MGGeneralLedgerTable.m in Sources */,
 				CEB6020B123930BF002218CF /* MGGeneralLedgerView.m in Sources */,
 				CEB6021412393827002218CF /* MGGeneralLedgerTableView.m in Sources */,
+				CE051CF2123A904F00D31D18 /* MGGeneralLedgerPrint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

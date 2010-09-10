@@ -68,13 +68,7 @@ http://www.hardcoded.net/licenses/hs_license
     [rowHeights removeAllObjects];
     for (NSInteger i=0; i<rowCount; i++)
     {
-        NSMutableArray *row = [NSMutableArray array];
-        for (NSTableColumn *c in visibleColumns) {
-            NSString *value = [self objectValueForTableColumn:c row:i];
-            if (value == nil)
-                value = @"";
-            [row addObject:value];
-        }
+        NSArray *row = [self fetchDataForRow:i];
         [cellData addObject:row];
         [rowHeights addObject:f2n([self heightForRow:i])];
     }
@@ -99,14 +93,16 @@ http://www.hardcoded.net/licenses/hs_license
     [columnWidths removeAllObjects];
     CGFloat totalWidths = 0;
     CGFloat removableWidth = 0; // difference between max and avg for columns going over the threshold
-    for (NSInteger i=0; i<[visibleColumns count]; i++)
-    {
+    for (NSInteger i=0; i<[visibleColumns count]; i++) {
         NSTableColumn *c = [visibleColumns objectAtIndex:i];
         NSString *headerTitle = [[c headerCell] stringValue];
         CGFloat maxWidth = [headerTitle sizeWithAttributes:headerAttributes].width + (CELL_PADDING*2);
         CGFloat totalWidth = 0;
-        for (NSInteger j=0; j<rowCount; j++)
-        {
+        NSUInteger computedRowCount = 0;
+        for (NSInteger j=0; j<rowCount; j++) {
+            if (![self shouldComputeRowWidths:j]) {
+                continue;
+            }
             NSArray *row = [cellData objectAtIndex:j];
             id value = [row objectAtIndex:i];
             NSString *stringValue = value;
@@ -116,21 +112,22 @@ http://www.hardcoded.net/licenses/hs_license
             width += [self indentForTableColumn:c row:j];
             maxWidth = MAX(maxWidth, width);
             totalWidth += width;
+            computedRowCount++;
         }
         CGFloat avgWidth = 0;
-        if (maxWidth == 0) // A column with no value. keep the NSTableColumn's width
-        {
+        if (maxWidth == 0) { // A column with no value. keep the NSTableColumn's width
             maxWidth = [c width];
             avgWidth = [c width];
         }
         else
-            avgWidth = totalWidth / rowCount;
+            avgWidth = totalWidth / computedRowCount;
         [maxWidths addObject:f2n(maxWidth)];
         [avgWidths addObject:f2n(avgWidth)];
         [columnWidths addObject:f2n(maxWidth)];
         totalWidths += maxWidth;
-        if (![cantResize containsObject:[c identifier]])
+        if (![cantResize containsObject:[c identifier]]) {
             removableWidth += maxWidth - avgWidth;
+        }
     }
     
     // Fitting column widths to the page width
@@ -157,7 +154,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow
 {
-    id d = [tableView delegate];
+    id d = [tableView dataSource];
     return [d tableView:tableView objectValueForTableColumn:aColumn row:aRow];
 }
 
@@ -181,6 +178,23 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSArray *)unresizableColumns
 {
     return [NSArray array];
+}
+
+- (NSArray *)fetchDataForRow:(NSInteger)rowIndex
+{
+    NSMutableArray *row = [NSMutableArray array];
+    for (NSTableColumn *c in visibleColumns) {
+        NSString *value = [self objectValueForTableColumn:c row:rowIndex];
+        if (value == nil)
+            value = @"";
+        [row addObject:value];
+    }
+    return row;
+}
+
+- (BOOL)shouldComputeRowWidths:(NSInteger)row
+{
+    return YES;
 }
 
 - (void)drawRow:(NSInteger)aRow inRect:(NSRect)aRect

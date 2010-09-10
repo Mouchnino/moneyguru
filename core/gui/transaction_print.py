@@ -27,7 +27,7 @@ class TransactionPrintBase(PrintView):
 
 class TransactionPrint(TransactionPrintBase):
     def _get_splits_at_row(self, row_index):
-        row = self.parent.ttable[row_index]
+        row = self.parent.maintable[row_index]
         if hasattr(row, 'transaction'):
             return row.transaction.splits
         else:
@@ -37,7 +37,7 @@ class TransactionPrint(TransactionPrintBase):
 class EntryPrint(TransactionPrintBase):
     def _get_splits_at_row(self, row_index):
         try:
-            entry = self.parent.etable[row_index].entry
+            entry = self.parent.maintable[row_index].entry
             return [entry.split] + entry.splits
         except AttributeError: # Previous Balance
             return []
