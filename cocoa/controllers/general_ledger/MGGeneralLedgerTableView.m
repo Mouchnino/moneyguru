@@ -18,13 +18,20 @@ http://www.hardcoded.net/licenses/hs_license
     BOOL isGroup = [[self delegate] tableView:self isGroupRow:rowIndex];
     if (isGroup) {
         NSRect r = [self rectOfRow:rowIndex];
-        [[NSColor lightGrayColor] setFill];
-        [[NSColor blackColor] setStroke];
+        NSColor *bgColor = [NSColor lightGrayColor];
+        NSColor *textColor = [NSColor controlTextColor];
+        NSColor *lineColor = [NSColor blackColor];
+        if ([self isRowSelected:rowIndex]) {
+            bgColor = [NSColor alternateSelectedControlColor];
+            textColor = [NSColor alternateSelectedControlTextColor];
+        }
+        [bgColor setFill];
+        [lineColor setStroke];
 	    [NSBezierPath fillRect:r];
         SIMPLE_LINE(NSMinX(r), NSMinY(r)+1, NSMaxX(r), NSMinY(r)+1, ACCOUNTROW_LINEWIDTH);
         NSFont *font = [NSFont boldSystemFontOfSize:[self rowHeight]-4];
         NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName,
-            [NSColor blackColor], NSForegroundColorAttributeName, nil];
+            textColor, NSForegroundColorAttributeName, nil];
         r.origin.x += ACCOUNTROW_XPADDING;
         r.size.width -= ACCOUNTROW_XPADDING;
         r.origin.y += ACCOUNTROW_LINEWIDTH;
