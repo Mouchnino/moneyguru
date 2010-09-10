@@ -132,7 +132,7 @@ class Row(RowBase):
         return value
     
 
-class RowWithDebitAndCredit(Row):
+class RowWithDebitAndCreditMixIn:
     @property
     def _debit(self):
         return self._amount if self._amount > 0 else 0
@@ -178,9 +178,8 @@ class RowWithDebitAndCredit(Row):
             self._debit = increase
     
 
-class RowWithDate(Row):
-    def __init__(self, table):
-        super(RowWithDate, self).__init__(table)
+class RowWithDateMixIn:
+    def __init__(self):
         self._date = datetime.date.today()
         self._date_fmt = None
     

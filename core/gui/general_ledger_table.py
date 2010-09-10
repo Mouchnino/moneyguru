@@ -7,7 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import logging
 from ..model.account import sort_accounts
 from ..model.amount import convert_amount
 from .entry_table import EntryTableRow, TotalRow

@@ -12,7 +12,6 @@ from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class GeneralLedgerView(BaseView):
     VIEW_TYPE = PaneType.GeneralLedger
-    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'date_range_changed'}
     
     #--- Overrides
     def set_children(self, children):

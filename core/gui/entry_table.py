@@ -15,7 +15,7 @@ from ..model.recurrence import Spawn
 from ..model.transaction import Transaction
 from ..trans import tr
 from .column import Column
-from .table import RowWithDebitAndCredit, RowWithDate, rowattr
+from .table import Row, RowWithDebitAndCreditMixIn, RowWithDateMixIn, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class EntryTable(TransactionTableBase):
@@ -209,10 +209,11 @@ class EntryTable(TransactionTableBase):
     def transactions_imported(self):
         self.refresh_and_restore_selection()
 
-class BaseEntryTableRow(RowWithDebitAndCredit):
-    def __init__(self, table):
-        super(BaseEntryTableRow, self).__init__(table)
-        self.account = None # has to be set
+class BaseEntryTableRow(Row, RowWithDateMixIn, RowWithDebitAndCreditMixIn):
+    def __init__(self, table, account):
+        Row.__init__(self, table)
+        RowWithDateMixIn.__init__(self)
+        self.account = account
         self._date = datetime.date.today()
         self._position = 0
         self._description = ''
@@ -267,13 +268,9 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
             else:
                 return 1
         else:
-            return RowWithDebitAndCredit.sort_key_for_column(self, column_name)
+            return Row.sort_key_for_column(self, column_name)
     
     #--- Properties
-    @property
-    def date(self):
-        return self.table.document.app.format_date(self._date)
-    
     @property
     def description(self):
         return self._description
@@ -335,7 +332,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
 AUTOFILL_ATTRS = frozenset(['description', 'payee', 'transfer', 'increase', 'decrease'])
 AMOUNT_AUTOFILL_ATTRS = frozenset(['increase', 'decrease'])
 
-class EntryTableRow(RowWithDate, BaseEntryTableRow):
+class EntryTableRow(BaseEntryTableRow):
     FIELDS = [
         ('_date', 'date'),
         ('_description', 'description'),
@@ -345,11 +342,10 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
         ('_reconciliation_date', 'reconciliation_date'),
     ]
     def __init__(self, table, entry, account):
-        super(EntryTableRow, self).__init__(table)
+        BaseEntryTableRow.__init__(self, table, account)
         self.entry = entry
         # makes possible to move more code down to TransactionTableBase
         self.transaction = entry.transaction
-        self.account = account
         self.load()
     
     def _autofill_row(self, ref_row, dest_attrs):
@@ -471,8 +467,7 @@ class EntryTableRow(RowWithDate, BaseEntryTableRow):
 
 class PreviousBalanceRow(BaseEntryTableRow):
     def __init__(self, table, date, balance, reconciled_balance, account):
-        super(PreviousBalanceRow, self).__init__(table)
-        self.account = account
+        super(PreviousBalanceRow, self).__init__(table, account)
         self._date = date
         self._balance = balance
         self._reconciled_balance = reconciled_balance
@@ -483,8 +478,7 @@ class PreviousBalanceRow(BaseEntryTableRow):
 
 class TotalRow(BaseEntryTableRow):
     def __init__(self, table, account, date, total_debit, total_credit):
-        super(TotalRow, self).__init__(table)
-        self.account = account
+        super(TotalRow, self).__init__(table, account)
         self._date = date
         self._description = tr('TOTAL')
         # don't touch _increase and _decrease, they trigger editing.

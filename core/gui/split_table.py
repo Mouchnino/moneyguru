@@ -8,7 +8,7 @@
 
 from ..model.amount import parse_amount
 from .base import TransactionPanelGUIObject
-from .table import GUITable, RowWithDebitAndCredit
+from .table import GUITable, Row, RowWithDebitAndCreditMixIn
 
 class SplitTable(GUITable, TransactionPanelGUIObject):
     def __init__(self, view, transaction_panel):
@@ -57,9 +57,9 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
     
     split_changed = GUITable._item_changed
 
-class SplitTableRow(RowWithDebitAndCredit):
+class SplitTableRow(Row, RowWithDebitAndCreditMixIn):
     def __init__(self, table, split):
-        RowWithDebitAndCredit.__init__(self, table)
+        Row.__init__(self, table)
         self.split = split
         self.load()
     

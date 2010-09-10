@@ -14,7 +14,7 @@ from ..model.recurrence import Spawn
 from ..model.transaction import Transaction
 from ..trans import tr
 from .column import Column
-from .table import Row, RowWithDate, rowattr
+from .table import Row, RowWithDateMixIn, rowattr
 from .transaction_table_base import TransactionTableBase
 
 class TransactionTable(TransactionTableBase):
@@ -106,7 +106,7 @@ class TransactionTable(TransactionTableBase):
 
 AUTOFILL_ATTRS = frozenset(['description', 'payee', 'from', 'to', 'amount'])
 
-class TransactionTableRow(RowWithDate):
+class TransactionTableRow(Row, RowWithDateMixIn):
     FIELDS = [
         ('_date', 'date'),
         ('_description', 'description'),
@@ -114,7 +114,8 @@ class TransactionTableRow(RowWithDate):
         ('_checkno', 'checkno'),
     ]
     def __init__(self, table, transaction):
-        super(TransactionTableRow, self).__init__(table)
+        Row.__init__(self, table)
+        RowWithDateMixIn.__init__(self)
         self.document = table.document
         self.transaction = transaction
         self.is_bold = False
@@ -190,7 +191,7 @@ class TransactionTableRow(RowWithDate):
             else:
                 return 1
         else:
-            return RowWithDate.sort_key_for_column(self, column_name)
+            return Row.sort_key_for_column(self, column_name)
     
     #--- Properties
     # The "get" part of those properies below are called *very* often, hence, the format caching
