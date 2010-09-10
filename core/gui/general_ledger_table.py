@@ -20,31 +20,36 @@ class GeneralLedgerTable(TransactionTableBase):
         accounts = self.document.accounts
         sort_accounts(accounts)
         for account in accounts:
-            self.append(AccountRow(self, account))
             rows = self._get_account_rows(account)
+            if not rows:
+                continue
+            self.append(AccountRow(self, account))
             for row in rows:
                 self.append(row)
     
     #--- Private
     def _get_account_rows(self, account):
+        result = []
         date_range = self.document.date_range
         if account.is_balance_sheet_account():
             prev_entry = account.entries.last_entry(date_range.start-ONE_DAY)
             if prev_entry is not None:
                 balance = prev_entry.balance
                 rbalance = prev_entry.reconciled_balance
-                yield PreviousBalanceRow(self, date_range.start, balance, rbalance, account)
+                result.append(PreviousBalanceRow(self, date_range.start, balance, rbalance, account))
         total_debit = 0
         total_credit = 0
         entries = self.mainwindow.visible_entries_for_account(account)
         for entry in entries:
             row = EntryTableRow(self, entry, account)
-            yield row
+            result.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)
             total_debit += convert(row._debit)
             total_credit += convert(row._credit)
-        total_row = TotalRow(self, account, date_range.end, total_debit, total_credit)
-        yield total_row
+        if result:
+            total_row = TotalRow(self, account, date_range.end, total_debit, total_credit)
+            result.append(total_row)
+        return result
     
     #--- Public
     def is_account_row(self, row_index):

@@ -84,13 +84,13 @@ class EntryTable(TransactionTableBase):
         self.footer = TotalRow(self, self.account, date_range.end, total_debit, total_credit)
         balance_visible = account.is_balance_sheet_account()
         self.columns.set_column_visible('balance', balance_visible)
+        self._restore_from_explicit_selection()
     
-    def _restore_selection(self, previous_selection):
+    def _restore_from_explicit_selection(self):
         if self.mainwindow.explicitly_selected_transactions:
             self.select_transactions(self.mainwindow.explicitly_selected_transactions)
             if not self.selected_indexes:
                 self.select_nearest_date(self.mainwindow.explicitly_selected_transactions[0].date)
-        TransactionTableBase._restore_selection(self, previous_selection)
     
     #--- Private
     def _new_entry(self):
@@ -207,7 +207,10 @@ class EntryTable(TransactionTableBase):
         self._update_selection()
     
     def transactions_imported(self):
-        self.refresh_and_restore_selection()
+        self.refresh()
+        self.mainwindow.selected_transactions = self.selected_transactions
+        self.view.refresh()
+        self.view.show_selected_row()
 
 class BaseEntryTableRow(Row, RowWithDateMixIn, RowWithDebitAndCreditMixIn):
     def __init__(self, table, account):

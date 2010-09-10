@@ -675,7 +675,7 @@ def test_selection(app):
     app.etable.hide()
     app.ttable.show()
     eq_(app.ttable.selected_indexes, [0, 1])
-    app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row'])
+    app.check_gui_calls(app.ttable_gui, ['show_selected_row'])
 
 @with_app(app_three_transactions)
 def test_selection_changed_when_filtering_out(app):

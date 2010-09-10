@@ -13,8 +13,7 @@ from .table import GUITable
 class TransactionTableBase(GUITable, ViewChild):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
     """
-    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
-        'date_range_changed', 'transactions_selected'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
@@ -38,7 +37,19 @@ class TransactionTableBase(GUITable, ViewChild):
         GUITable.add(self)
     
     def _revalidate(self):
-        self.refresh_and_restore_selection()
+        self.refresh()
+        self.view.refresh()
+    
+    def show(self):
+        ViewChild.show(self)
+        self._restore_from_explicit_selection()
+        self.mainwindow.selected_transactions = self.selected_transactions
+        self.view.show_selected_row()
+    
+    #--- Private
+    def _restore_from_explicit_selection(self):
+        if self.mainwindow.explicitly_selected_transactions:
+            self.select_transactions(self.mainwindow.explicitly_selected_transactions)
     
     #--- Public
     def can_move(self, row_indexes, position):
@@ -84,12 +95,6 @@ class TransactionTableBase(GUITable, ViewChild):
         position = self.selected_indexes[0] - 1
         if self.can_move(self.selected_indexes, position):
             self.move(self.selected_indexes, position)
-    
-    def refresh_and_restore_selection(self):
-        self.refresh()
-        self.mainwindow.selected_transactions = self.selected_transactions
-        self.view.refresh()
-        self.view.show_selected_row()
     
     def select_transactions(self, transactions):
         selected_indexes = []

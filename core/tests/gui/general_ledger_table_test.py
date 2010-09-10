@@ -20,6 +20,12 @@ def app_two_sided_txn():
     return app
 
 @with_app(app_two_sided_txn)
+def test_dont_show_empty_accounts(app):
+    # When accounts have nothing to show, don't put them in the table.
+    app.drsel.select_prev_date_range()
+    eq_(len(app.gltable), 0)
+
+@with_app(app_two_sided_txn)
 def test_rows_data_with_two_sided_txn(app):
     # In a general ledger, we end up with 6 lines: 2 account lines (titles), two entry lines as well
     # as two total lines.

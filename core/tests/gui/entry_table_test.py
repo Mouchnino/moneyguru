@@ -417,7 +417,7 @@ def test_selection(app):
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.etable.selected_indexes, [0])
-    app.check_gui_calls(app.etable_gui, ['refresh', 'show_selected_row'])
+    app.check_gui_calls(app.etable_gui, ['show_selected_row'])
 
 @with_app(app_two_entries)
 def test_total_row(app):

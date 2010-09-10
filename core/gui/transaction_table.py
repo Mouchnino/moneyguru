@@ -60,8 +60,7 @@ class TransactionTable(TransactionTableBase):
             convert = lambda a: convert_amount(a, self.document.app.default_currency, transaction.date)
             total_amount += convert(transaction.amount)
         self.footer = TotalRow(self, self.document.date_range.end, total_amount)
-        if self.mainwindow.explicitly_selected_transactions:
-            self.select_transactions(self.mainwindow.explicitly_selected_transactions)
+        self._restore_from_explicit_selection()
     
     #--- Private
     def _show_account(self, use_to_column=False):
