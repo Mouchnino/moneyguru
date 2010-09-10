@@ -29,6 +29,11 @@ http://www.hardcoded.net/licenses/hs_license
     return [Utils array2IndexSet:[[self py] selectedRows]];
 }
 
+- (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+    return NO;
+}
+
 /* Public */
 - (PyTable *)py
 {

@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGScheduleView.h"
 #import "MGBudgetView.h"
 #import "MGCashculatorView.h"
+#import "MGGeneralLedgerView.h"
 #import "MGEmptyView.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
@@ -48,6 +49,7 @@ http://www.hardcoded.net/licenses/hs_license
     MGScheduleView *scheduleView;
     MGBudgetView *budgetView;
     MGCashculatorView *cashculatorView;
+    MGGeneralLedgerView *ledgerView;
     MGEmptyView *emptyView;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;

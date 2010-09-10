@@ -57,6 +57,8 @@ from core.gui.entry_print import EntryPrint
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
 from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
+from core.gui.general_ledger_table import GeneralLedgerTable
+from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
 from core.gui.import_table import ImportTable
 from core.gui.import_window import ImportWindow, DAY, MONTH, YEAR
@@ -483,6 +485,9 @@ class PyCashculatorView(PyGUIContainer):
         self.py.reset_ccdb()
     
 
+class PyGeneralLedgerView(PyGUIContainer):
+    py_class = GeneralLedgerView
+
 class PyEmptyView(PyGUIContainer):
     py_class = EmptyView
     
@@ -571,6 +576,18 @@ class PyBudgetTable(PyTable):
 
 class PyCashculatorAccountTable(PyTable):
     py_class = CashculatorAccountTable
+
+class PyGeneralLedgerTable(PyTableWithDate):
+    py_class = GeneralLedgerTable
+
+    @signature('c@:i')
+    def isAccountRow_(self, row):
+        return self.py.is_account_row(row)
+    
+    @signature('c@:i')
+    def isBoldRow_(self, row):
+        return self.py.is_bold_row(row)
+    
 
 class PySearchField(PyListener):
     py_class = SearchField

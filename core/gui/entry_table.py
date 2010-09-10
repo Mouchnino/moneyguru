@@ -81,7 +81,7 @@ class EntryTable(TransactionTableBase):
             convert = lambda a: convert_amount(a, account.currency, entry.date)
             total_debit += convert(row._debit)
             total_credit += convert(row._credit)
-        self.footer = TotalRow(self, date_range.end, total_debit, total_credit)
+        self.footer = TotalRow(self, self.account, date_range.end, total_debit, total_credit)
         balance_visible = account.is_balance_sheet_account()
         self.columns.set_column_visible('balance', balance_visible)
     
@@ -212,6 +212,7 @@ class EntryTable(TransactionTableBase):
 class BaseEntryTableRow(RowWithDebitAndCredit):
     def __init__(self, table):
         super(BaseEntryTableRow, self).__init__(table)
+        self.account = None # has to be set
         self._date = datetime.date.today()
         self._position = 0
         self._description = ''
@@ -228,11 +229,12 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
         self.is_bold = False
     
     def _the_balance(self):
-        if self.table.reconciliation_mode:
+        reconciliation_mode = getattr(self.table, 'reconciliation_mode', False)
+        if reconciliation_mode:
             balance = self._reconciled_balance
         else:
             balance = self._balance
-        if balance and self.table.mainwindow.shown_account.is_credit_account():
+        if balance and self.account.is_credit_account():
             balance = -balance
         return balance
     
@@ -306,7 +308,7 @@ class BaseEntryTableRow(RowWithDebitAndCredit):
     
     @property
     def balance(self):
-        account_currency = self.table.account.currency
+        account_currency = self.account.currency
         return self.table.document.app.format_amount(self._the_balance(), zero_currency=account_currency)
     can_edit_balance = False
     
@@ -480,8 +482,9 @@ class PreviousBalanceRow(BaseEntryTableRow):
     
 
 class TotalRow(BaseEntryTableRow):
-    def __init__(self, table, date, total_debit, total_credit):
+    def __init__(self, table, account, date, total_debit, total_credit):
         super(TotalRow, self).__init__(table)
+        self.account = account
         self._date = date
         self._description = tr('TOTAL')
         # don't touch _increase and _decrease, they trigger editing.
@@ -489,7 +492,7 @@ class TotalRow(BaseEntryTableRow):
         self._credit_fmt = table.document.app.format_amount(total_credit, blank_zero=True)
         delta = total_debit - total_credit
         if delta:
-            if self.table.account.is_credit_account():
+            if account.is_credit_account():
                 delta *= -1
             positive = delta > 0
             delta_fmt = table.document.app.format_amount(abs(delta))

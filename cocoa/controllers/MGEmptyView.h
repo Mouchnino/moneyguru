@@ -23,4 +23,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)selectScheduleView:(id)sender;
 - (IBAction)selectBudgetView:(id)sender;
 - (IBAction)selectCashculatorView:(id)sender;
+- (IBAction)selectGeneralLedgerView:(id)sender;
 @end

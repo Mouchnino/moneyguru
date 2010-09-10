@@ -145,6 +145,10 @@
 		CEB1E0B51031A386001FC4B4 /* schedules_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1E0B31031A386001FC4B4 /* schedules_48.png */; };
 		CEB2FA1A0F223C4100A09E4C /* MGCSVImportOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */; };
 		CEB3AD6F10F9C8A60014EC80 /* MGBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */; };
+		CEB6020112393080002218CF /* GeneralLedger.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB601FF12393080002218CF /* GeneralLedger.xib */; };
+		CEB6020A123930BF002218CF /* MGGeneralLedgerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60207123930BF002218CF /* MGGeneralLedgerTable.m */; };
+		CEB6020B123930BF002218CF /* MGGeneralLedgerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60209123930BF002218CF /* MGGeneralLedgerView.m */; };
+		CEB6021412393827002218CF /* MGGeneralLedgerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB6021312393827002218CF /* MGGeneralLedgerTableView.m */; };
 		CEB93C3A0E5C6162006923EB /* main_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C390E5C6162006923EB /* main_icon.icns */; };
 		CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */; };
 		CEB93C430E5C622E006923EB /* entry_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3E0E5C622E006923EB /* entry_table_48.png */; };
@@ -529,6 +533,17 @@
 		CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVImportOptions.m; sourceTree = "<group>"; };
 		CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBaseView.h; sourceTree = "<group>"; };
 		CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBaseView.m; sourceTree = "<group>"; };
+		CEB6020012393080002218CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
+		CEB60203123930A1002218CF /* PyGeneralLedgerTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyGeneralLedgerTable.h; path = proxies/PyGeneralLedgerTable.h; sourceTree = SOURCE_ROOT; };
+		CEB60204123930A1002218CF /* PyGeneralLedgerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyGeneralLedgerView.h; path = proxies/PyGeneralLedgerView.h; sourceTree = SOURCE_ROOT; };
+		CEB60206123930BF002218CF /* MGGeneralLedgerTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerTable.h; path = controllers/general_ledger/MGGeneralLedgerTable.h; sourceTree = SOURCE_ROOT; };
+		CEB60207123930BF002218CF /* MGGeneralLedgerTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerTable.m; path = controllers/general_ledger/MGGeneralLedgerTable.m; sourceTree = SOURCE_ROOT; };
+		CEB60208123930BF002218CF /* MGGeneralLedgerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerView.h; path = controllers/general_ledger/MGGeneralLedgerView.h; sourceTree = SOURCE_ROOT; };
+		CEB60209123930BF002218CF /* MGGeneralLedgerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerView.m; path = controllers/general_ledger/MGGeneralLedgerView.m; sourceTree = SOURCE_ROOT; };
+		CEB6020D123931EE002218CF /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
+		CEB6020E123931F9002218CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
+		CEB6021212393827002218CF /* MGGeneralLedgerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerTableView.h; path = controllers/general_ledger/MGGeneralLedgerTableView.h; sourceTree = SOURCE_ROOT; };
+		CEB6021312393827002218CF /* MGGeneralLedgerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerTableView.m; path = controllers/general_ledger/MGGeneralLedgerTableView.m; sourceTree = SOURCE_ROOT; };
 		CEB93C390E5C6162006923EB /* main_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = main_icon.icns; sourceTree = "<group>"; };
 		CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balance_sheet_48.png; sourceTree = "<group>"; };
 		CEB93C3E0E5C622E006923EB /* entry_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = entry_table_48.png; sourceTree = "<group>"; };
@@ -837,6 +852,7 @@
 				CE95AFC810F769D2007AC512 /* account */,
 				CEBB300210F76E3600FC4C7A /* schedule */,
 				CEBB2FFA10F76BD100FC4C7A /* budget */,
+				CEB60205123930AA002218CF /* general_ledger */,
 				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
 				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
 				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
@@ -920,6 +936,8 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CEB60203123930A1002218CF /* PyGeneralLedgerTable.h */,
+				CEB60204123930A1002218CF /* PyGeneralLedgerView.h */,
 				CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */,
 				CE9805DD11403F4400CB3693 /* PyCompletionLookup.h */,
 				CE9805DE11403F4400CB3693 /* PyLookup.h */,
@@ -1118,6 +1136,19 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		CEB60205123930AA002218CF /* general_ledger */ = {
+			isa = PBXGroup;
+			children = (
+				CEB6021212393827002218CF /* MGGeneralLedgerTableView.h */,
+				CEB6021312393827002218CF /* MGGeneralLedgerTableView.m */,
+				CEB60206123930BF002218CF /* MGGeneralLedgerTable.h */,
+				CEB60207123930BF002218CF /* MGGeneralLedgerTable.m */,
+				CEB60208123930BF002218CF /* MGGeneralLedgerView.h */,
+				CEB60209123930BF002218CF /* MGGeneralLedgerView.m */,
+			);
+			name = general_ledger;
+			sourceTree = "<group>";
+		};
 		CEBA330711294D09009C782F /* proxies */ = {
 			isa = PBXGroup;
 			children = (
@@ -1189,6 +1220,7 @@
 				CEC3678D11D10E1E00EB0222 /* EntryTable.xib */,
 				CEC367A111D10E1E00EB0222 /* ScheduleTable.xib */,
 				CEC3678311D10E1E00EB0222 /* BudgetTable.xib */,
+				CEB601FF12393080002218CF /* GeneralLedger.xib */,
 				CE44BA721207045300F4BAE9 /* CashculatorView.xib */,
 				CEC3679B11D10E1E00EB0222 /* NewTabView.xib */,
 				CEC3677B11D10E1D00EB0222 /* AccountPanel.xib */,
@@ -1424,6 +1456,7 @@
 				CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */,
 				CE74544612082C5B003A2794 /* cashculator_16.png in Resources */,
 				CE7990B212082D53000A4846 /* cashculator_48.png in Resources */,
+				CEB6020112393080002218CF /* GeneralLedger.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1544,6 +1577,9 @@
 				CE7DA76B11FF482E00E10DED /* MGViewOptions.m in Sources */,
 				CE44BA711207042E00F4BAE9 /* MGCashculatorView.m in Sources */,
 				CE2BFF381207F02B0098A2EC /* MGCashculatorAccountTable.m in Sources */,
+				CEB6020A123930BF002218CF /* MGGeneralLedgerTable.m in Sources */,
+				CEB6020B123930BF002218CF /* MGGeneralLedgerView.m in Sources */,
+				CEB6021412393827002218CF /* MGGeneralLedgerTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1568,6 +1604,16 @@
 				CE44BAB912070BB200F4BAE9 /* fr */,
 			);
 			name = CashculatorView.xib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CEB601FF12393080002218CF /* GeneralLedger.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEB6020012393080002218CF /* en */,
+				CEB6020D123931EE002218CF /* de */,
+				CEB6020E123931F9002218CF /* fr */,
+			);
+			name = GeneralLedger.xib;
 			sourceTree = SOURCE_ROOT;
 		};
 		CEC3677B11D10E1D00EB0222 /* AccountPanel.xib */ = {

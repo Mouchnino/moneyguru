@@ -54,4 +54,9 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] selectPaneType:MGPaneTypeCashculator];
 }
 
+- (IBAction)selectGeneralLedgerView:(id)sender;
+{
+    [[self py] selectPaneType:MGPaneTypeGeneralLedger];
+}
+
 @end

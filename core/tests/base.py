@@ -20,6 +20,7 @@ from hsutil.testutil import TestData as TestDataBase, eq_
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
+from ..const import PaneType
 from ..gui.account_balance_graph import AccountBalanceGraph
 from ..gui.account_flow_graph import AccountFlowGraph
 from ..gui.account_lookup import AccountLookup
@@ -39,6 +40,8 @@ from ..gui.date_range_selector import DateRangeSelector
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
 from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
+from ..gui.general_ledger_table import GeneralLedgerTable
+from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.income_statement import IncomeStatement
 from ..gui.import_table import ImportTable
 from ..gui.import_window import ImportWindow
@@ -177,11 +180,13 @@ class TestApp(object):
         make_gui('aview', AccountView)
         make_gui('scview', ScheduleView)
         make_gui('bview', BudgetView)
+        make_gui('glview', GeneralLedgerView)
         make_gui('emptyview', EmptyView)
         make_table_gui('etable', EntryTable, parent=self.aview)
         make_table_gui('ttable', TransactionTable, parent=self.tview)
         make_table_gui('sctable', ScheduleTable, parent=self.scview)
         make_table_gui('btable', BudgetTable, parent=self.bview)
+        make_table_gui('gltable', GeneralLedgerTable, parent=self.glview)
         make_gui('apanel', AccountPanel)
         make_gui('scpanel', SchedulePanel)
         make_gui('tpanel', TransactionPanel)
@@ -225,10 +230,13 @@ class TestApp(object):
         self.scview.set_children(children)
         children = [self.btable]
         self.bview.set_children(children)
+        children = [self.gltable]
+        self.glview.set_children(children)
         # None between bview and empty view is the Cashculator view, which isn't tested
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
-            self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
-            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel, self.vopts]
+            self.glview, self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
+            self.bpanel, self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel,
+            self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
@@ -531,6 +539,10 @@ class TestApp(object):
     
     def transaction_descriptions(self):
         return [row.description for row in self.ttable.rows]
+    
+    #--- Shortcut for selecting a view type.
+    def show_glview(self):
+        self.mw.select_pane_of_type(PaneType.GeneralLedger)
     
 
 def with_app(appfunc):

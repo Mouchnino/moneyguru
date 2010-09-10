@@ -30,6 +30,7 @@ http://www.hardcoded.net/licenses/hs_license
     scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
     budgetView = [[MGBudgetView alloc] initWithPyParent:py];
     cashculatorView = [[MGCashculatorView alloc] initWithPyParent:py];
+    ledgerView = [[MGGeneralLedgerView alloc] initWithPyParent:py];
     emptyView = [[MGEmptyView alloc] initWithPyParent:py];
     searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
@@ -54,9 +55,10 @@ http://www.hardcoded.net/licenses/hs_license
     
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
-        [emptyView py], [accountProperties py], [transactionPanel py],  [massEditionPanel py],
-        [schedulePanel py], [budgetPanel py], [customDateRangePanel py], [accountReassignPanel py],
-        [accountLookup py], [completionLookup py], [dateRangeSelector py], [viewOptions py], nil];
+        [ledgerView py], [emptyView py], [accountProperties py], [transactionPanel py],
+        [massEditionPanel py], [schedulePanel py], [budgetPanel py], [customDateRangePanel py],
+        [accountReassignPanel py], [accountLookup py], [completionLookup py], [dateRangeSelector py],
+        [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
@@ -85,6 +87,7 @@ http://www.hardcoded.net/licenses/hs_license
     [scheduleView release];
     [budgetView release];
     [cashculatorView release];
+    [ledgerView release];
     [emptyView release];
     [searchField release];
     [importWindow release];
@@ -570,6 +573,10 @@ http://www.hardcoded.net/licenses/hs_license
         else if (paneType == MGPaneTypeCashculator) {
             view = cashculatorView;
             tabIcon = [NSImage imageNamed:@"cashculator_16"];
+        }
+        else if (paneType == MGPaneTypeGeneralLedger) {
+            view = ledgerView;
+            tabIcon = [NSImage imageNamed:@"transaction_table_16"];
         }
         else if (paneType == MGPaneTypeEmpty) {
             view = emptyView;
