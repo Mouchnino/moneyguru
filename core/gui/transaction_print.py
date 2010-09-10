@@ -9,18 +9,36 @@
 from ..trans import tr
 from .print_view import PrintView
 
-# the parent of this view must be a TransactionTable
-class TransactionPrint(PrintView):
+class TransactionPrintBase(PrintView):
+    #--- Virtual
+    def _get_splits_at_row(self, row_index):
+        return []
+    
+    #--- Public
     def split_count_at_row(self, row_index):
-        row = self.parent.ttable[row_index]
-        if hasattr(row, 'transaction'):
-            return len(row.transaction.splits)
-        else:
-            return 0
+        return len(self._get_splits_at_row(row_index))
     
     def split_values(self, row_index, split_row_index):
-        txn = self.parent.ttable[row_index].transaction
-        split = txn.splits[split_row_index]
+        splits = self._get_splits_at_row(row_index)
+        split = splits[split_row_index]
         account_name = split.account.name if split.account is not None else tr('Unassigned')
         return [account_name, split.memo, self.app.format_amount(split.amount)]
+    
+
+class TransactionPrint(TransactionPrintBase):
+    def _get_splits_at_row(self, row_index):
+        row = self.parent.ttable[row_index]
+        if hasattr(row, 'transaction'):
+            return row.transaction.splits
+        else:
+            return []
+    
+
+class EntryPrint(TransactionPrintBase):
+    def _get_splits_at_row(self, row_index):
+        try:
+            entry = self.parent.etable[row_index].entry
+            return [entry.split] + entry.splits
+        except AttributeError: # Previous Balance
+            return []
     

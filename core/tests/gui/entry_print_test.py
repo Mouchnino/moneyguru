@@ -9,7 +9,7 @@
 from hsutil.testutil import eq_
 
 from ..base import TestApp, with_app
-from ...gui.entry_print import EntryPrint
+from ...gui.transaction_print import EntryPrint
 
 #--- Some account
 def app_with_account():

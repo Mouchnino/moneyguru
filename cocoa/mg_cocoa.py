@@ -53,7 +53,6 @@ from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
-from core.gui.entry_print import EntryPrint
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
 from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
@@ -75,7 +74,7 @@ from core.gui.schedule_view import ScheduleView
 from core.gui.search_field import SearchField
 from core.gui.split_table import SplitTable
 from core.gui.transaction_panel import TransactionPanel
-from core.gui.transaction_print import TransactionPrint
+from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.gui.transaction_table import TransactionTable
 from core.gui.transaction_view import TransactionView
 from core.gui.view_options import ViewOptions
