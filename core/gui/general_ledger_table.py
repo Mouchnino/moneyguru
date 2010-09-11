@@ -62,19 +62,7 @@ class GeneralLedgerTable(EntryTableBase):
     def is_bold_row(self, row_index):
         return isinstance(self[row_index], (TotalRow, PreviousBalanceRow))
     
-    #--- Properties
-    @property
-    def selected_entries(self):
-        return [row.entry for row in self.selected_rows if hasattr(row, 'entry')]
-    
-    @property
-    def selected_transactions(self):
-        return [entry.transaction for entry in self.selected_entries]
-    
     #--- Event Handlers
-    def edition_must_stop(self):
-        pass # the view doesn't have a stop_editing method
-    
     def date_range_changed(self):
         self.refresh()
         self._update_selection()

@@ -100,15 +100,6 @@ class EntryTable(EntryTableBase):
         entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
         return entry
     
-    @property
-    def _previous_entry(self): # the entry just before the date range
-        account = self.mainwindow.shown_account
-        if account is None:
-            return None
-        date_range = self.document.date_range
-        prev_entries = [entry for entry in account.entries if entry.date < date_range.start]
-        return prev_entries[-1] if prev_entries else None
-    
     #--- Public
     def add(self):
         if self.account is None:
@@ -160,14 +151,6 @@ class EntryTable(EntryTableBase):
         self._reconciliation_mode = value
         self.refresh()
         self.view.refresh()
-    
-    @property
-    def selected_entries(self):
-        return [row.entry for row in self.selected_rows if hasattr(row, 'entry')]
-    
-    @property
-    def selected_transactions(self):
-        return [entry.transaction for entry in self.selected_entries]
     
     #--- Event Handlers
     def date_range_changed(self):

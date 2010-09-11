@@ -352,3 +352,12 @@ class EntryTableBase(TransactionTableBase):
             result.append(total_row)
         return result
     
+    #--- Properties
+    @property
+    def selected_entries(self):
+        return [row.entry for row in self.selected_rows if hasattr(row, 'entry')]
+    
+    @property
+    def selected_transactions(self):
+        return [entry.transaction for entry in self.selected_entries]
+    
