@@ -12,9 +12,24 @@ from ..model.amount import convert_amount
 from ..model.date import ONE_DAY
 from .entry_table import EntryTableRow, TotalRow, PreviousBalanceRow
 from .table import Row
+from .column import Column
 from .transaction_table_base import TransactionTableBase
 
 class GeneralLedgerTable(TransactionTableBase):
+    SAVENAME = 'GeneralLedgerTable'
+    COLUMNS = [
+        Column('status'),
+        Column('date'),
+        Column('reconciliation_date', visible=False),
+        Column('checkno', visible=False),
+        Column('description'),
+        Column('payee', visible=False),
+        Column('transfer'),
+        Column('debit'),
+        Column('credit'),
+        Column('balance'),
+    ]
+    
     #--- Override
     def _fill(self):
         accounts = self.document.accounts

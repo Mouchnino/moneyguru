@@ -8,10 +8,12 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from ..const import PaneType
+from ..trans import tr
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class GeneralLedgerView(BaseView):
     VIEW_TYPE = PaneType.GeneralLedger
+    PRINT_TITLE_FORMAT = tr('General Ledger from {start_date} to {end_date}')
     
     #--- Overrides
     def set_children(self, children):

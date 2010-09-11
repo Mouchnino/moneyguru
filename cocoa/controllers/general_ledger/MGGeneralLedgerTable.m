@@ -25,10 +25,10 @@ http://www.hardcoded.net/licenses/hs_license
     MGColumnDef defs[] = {
         {@"status", @"", 16, 16, 16, NO, [MGReconciliationCell class]},
         {@"date", @"Date", 80, 60, 0, NO, nil},
-        // {@"reconciliation_date", @"Reconciliation Date", 110, 60, 0, NO, nil},
-        // {@"checkno", @"Check #", 72, 40, 0, NO, nil},
+        {@"reconciliation_date", @"Reconciliation Date", 110, 60, 0, NO, nil},
+        {@"checkno", @"Check #", 72, 40, 0, NO, nil},
         {@"description", @"Description", 278, 80, 0, NO, nil},
-        // {@"payee", @"Payee", 80, 80, 0, NO, nil},
+        {@"payee", @"Payee", 80, 80, 0, NO, nil},
         {@"transfer", @"Transfer", 140, 80, 0, NO, nil},
         {@"debit", @"Debit", 80, 80, 0, NO, nil},
         {@"credit", @"Credit", 80, 80, 0, NO, nil},

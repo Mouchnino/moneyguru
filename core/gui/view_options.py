@@ -52,6 +52,11 @@ class ViewOptions(DocumentGUIObject):
     schedule_table_payee = column_prop('scview', 'sctable', 'payee')
     schedule_table_checkno = column_prop('scview', 'sctable', 'checkno')
     
+    gledger_table_description = column_prop('glview', 'gltable', 'description')
+    gledger_table_payee = column_prop('glview', 'gltable', 'payee')
+    gledger_table_checkno = column_prop('glview', 'gltable', 'checkno')
+    gledger_table_reconciliation_date = column_prop('glview', 'gltable', 'reconciliation_date')
+    
     @property
     def entry_table_debit_credit(self):
         columns = self.mainwindow.aview.etable.columns

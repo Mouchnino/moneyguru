@@ -1731,6 +1731,39 @@ class PyViewOptions(PyGUIObject):
     def setScheduleTableCheckno_(self, value):
         self.py.schedule_table_checkno = bool(value)
     
+    
+    @signature('i@:')
+    def gledgerTableDescription(self):
+        return self.py.gledger_table_description
+    
+    @signature('v@:i')
+    def setGledgerTableDescription_(self, value):
+        self.py.gledger_table_description = bool(value)
+    
+    @signature('i@:')
+    def gledgerTablePayee(self):
+        return self.py.gledger_table_payee
+    
+    @signature('v@:i')
+    def setGledgerTablePayee_(self, value):
+        self.py.gledger_table_payee = bool(value)
+    
+    @signature('i@:')
+    def gledgerTableCheckno(self):
+        return self.py.gledger_table_checkno
+    
+    @signature('v@:i')
+    def setGledgerTableCheckno_(self, value):
+        self.py.gledger_table_checkno = bool(value)
+    
+    @signature('i@:')
+    def gledgerTableReconciliationDate(self):
+        return self.py.gledger_table_reconciliation_date
+    
+    @signature('v@:i')
+    def setGledgerTableReconciliationDate_(self, value):
+        self.py.gledger_table_reconciliation_date = bool(value)
+    
 
 #--- Printing
 
