@@ -41,7 +41,7 @@ class GeneralLedgerTable(TransactionTableBase):
         total_credit = 0
         entries = self.mainwindow.visible_entries_for_account(account)
         for entry in entries:
-            row = EntryTableRow(self, entry, account)
+            row = GeneralLedgerRow(self, entry, account)
             result.append(row)
             convert = lambda a: convert_amount(a, account.currency, entry.date)
             total_debit += convert(row._debit)
@@ -82,4 +82,13 @@ class AccountRow(Row):
     def __init__(self, table, account):
         Row.__init__(self, table)
         self.account_name = account.name
+    
+
+class GeneralLedgerRow(EntryTableRow):
+    @property
+    def balance(self):
+        if self.account.is_balance_sheet_account():
+            return EntryTableRow.balance.fget(self)
+        else:
+            return ''
     

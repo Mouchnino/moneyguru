@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1306"/>
-			<integer value="1138"/>
+			<integer value="1145"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -747,24 +747,6 @@
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
 								</object>
-								<object class="NSMenuItem" id="994774801">
-									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Schedules</string>
-									<string key="NSKeyEquiv">4</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="640623815"/>
-									<reference key="NSMixedImage" ref="176664579"/>
-								</object>
-								<object class="NSMenuItem" id="262649211">
-									<reference key="NSMenu" ref="644935139"/>
-									<string key="NSTitle">Budgets</string>
-									<string key="NSKeyEquiv">5</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="640623815"/>
-									<reference key="NSMixedImage" ref="176664579"/>
-								</object>
 								<object class="NSMenuItem" id="311891534">
 									<reference key="NSMenu" ref="644935139"/>
 									<string key="NSTitle">Previous Tab</string>
@@ -1456,16 +1438,15 @@
 								<object class="NSComboTableView" key="NSTableView" id="209857209">
 									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">274</int>
-									<string key="NSFrameSize">{62, 126}</string>
+									<string key="NSFrameSize">{13, 126}</string>
 									<reference key="NSSuperview"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSMutableArray" key="NSTableColumns">
 										<bool key="EncodedWithXMLCoder">YES</bool>
 										<object class="NSTableColumn">
 											<integer value="0" key="NSIdentifier"/>
-											<double key="NSWidth">59</double>
+											<double key="NSWidth">10</double>
 											<double key="NSMinWidth">10</double>
 											<double key="NSMaxWidth">1000</double>
 											<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -1500,7 +1481,7 @@
 									<reference key="NSGridColor" ref="5989851"/>
 									<double key="NSRowHeight">19</double>
 									<string key="NSAction">tableViewAction:</string>
-									<int key="NSTvFlags">-767524864</int>
+									<int key="NSTvFlags">-765427712</int>
 									<reference key="NSDelegate" ref="167189485"/>
 									<reference key="NSDataSource" ref="167189485"/>
 									<reference key="NSTarget" ref="167189485"/>
@@ -1982,10 +1963,6 @@
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="158739690">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>PrintFontSize</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
@@ -2514,14 +2491,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showScheduleTable:</string>
-						<reference key="source" ref="954832501"/>
-						<reference key="destination" ref="994774801"/>
-					</object>
-					<int key="connectionID">1381</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">makeScheduleFromSelected:</string>
 						<reference key="source" ref="954832501"/>
 						<reference key="destination" ref="226242958"/>
@@ -2535,14 +2504,6 @@
 						<reference key="destination" ref="64943508"/>
 					</object>
 					<int key="connectionID">1384</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">showBudgetTable:</string>
-						<reference key="source" ref="954832501"/>
-						<reference key="destination" ref="262649211"/>
-					</object>
-					<int key="connectionID">1386</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3213,8 +3174,6 @@
 							<reference ref="112536226"/>
 							<reference ref="808918758"/>
 							<reference ref="707732137"/>
-							<reference ref="994774801"/>
-							<reference ref="262649211"/>
 							<reference ref="311891534"/>
 							<reference ref="549891574"/>
 							<reference ref="914250853"/>
@@ -3700,19 +3659,9 @@
 						<reference key="parent" ref="882329256"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1380</int>
-						<reference key="object" ref="994774801"/>
-						<reference key="parent" ref="644935139"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1382</int>
 						<reference key="object" ref="226242958"/>
 						<reference key="parent" ref="657949865"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1385</int>
-						<reference key="object" ref="262649211"/>
-						<reference key="parent" ref="644935139"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1387</int>
@@ -4096,9 +4045,7 @@
 					<string>1375.IBPluginDependency</string>
 					<string>1376.IBPluginDependency</string>
 					<string>1378.IBPluginDependency</string>
-					<string>1380.IBPluginDependency</string>
 					<string>1382.IBPluginDependency</string>
-					<string>1385.IBPluginDependency</string>
 					<string>1387.IBPluginDependency</string>
 					<string>1388.IBPluginDependency</string>
 					<string>1389.IBPluginDependency</string>
@@ -4256,7 +4203,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{378, 372}, {236, 443}}</string>
+					<string>{{378, 412}, {236, 403}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{658, 387}, {236, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4346,8 +4293,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5308,11 +5253,9 @@
 							<string>selectYearRange:</string>
 							<string>selectYearToDateRange:</string>
 							<string>showBalanceSheet:</string>
-							<string>showBudgetTable:</string>
 							<string>showIncomeStatement:</string>
 							<string>showNextView:</string>
 							<string>showPreviousView:</string>
-							<string>showScheduleTable:</string>
 							<string>showSelectedAccount:</string>
 							<string>showTransactionTable:</string>
 							<string>toggleEntriesReconciled:</string>
@@ -5322,8 +5265,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -5389,11 +5330,9 @@
 							<string>selectYearRange:</string>
 							<string>selectYearToDateRange:</string>
 							<string>showBalanceSheet:</string>
-							<string>showBudgetTable:</string>
 							<string>showIncomeStatement:</string>
 							<string>showNextView:</string>
 							<string>showPreviousView:</string>
-							<string>showScheduleTable:</string>
 							<string>showSelectedAccount:</string>
 							<string>showTransactionTable:</string>
 							<string>toggleEntriesReconciled:</string>
@@ -5504,10 +5443,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">showBudgetTable:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">showIncomeStatement:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -5517,10 +5452,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showPreviousView:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showScheduleTable:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

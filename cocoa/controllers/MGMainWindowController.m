@@ -289,16 +289,6 @@ http://www.hardcoded.net/licenses/hs_license
     [[self py] showPaneOfType:MGPaneTypeTransaction];
 }
 
-- (IBAction)showScheduleTable:(id)sender
-{
-    [[self py] showPaneOfType:MGPaneTypeSchedule];
-}
-
-- (IBAction)showBudgetTable:(id)sender
-{
-    [[self py] showPaneOfType:MGPaneTypeBudget];
-}
-
 - (IBAction)showNextView:(id)sender
 {
     [[self py] selectNextView];
@@ -427,8 +417,6 @@ http://www.hardcoded.net/licenses/hs_license
             MGBalanceSheetToolbarItemIdentifier,
             MGIncomeStatementToolbarItemIdentifier,
             MGTransactionsToolbarItemIdentifier,
-            MGSchedulesToolbarItemIdentifier,
-            MGBudgetToolbarItemIdentifier,
             nil];
 }
 
@@ -479,20 +467,6 @@ http://www.hardcoded.net/licenses/hs_license
         [toolbarItem setImage:[NSImage imageNamed:@"transaction_table_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showTransactionTable:)];
-    }
-    else if ([itemIdentifier isEqual:MGSchedulesToolbarItemIdentifier])
-    {
-        [toolbarItem setLabel:TR(@"Schedules")];
-        [toolbarItem setImage:[NSImage imageNamed:@"schedules_48"]];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showScheduleTable:)];
-    }
-    else if ([itemIdentifier isEqual:MGBudgetToolbarItemIdentifier])
-    {
-        [toolbarItem setLabel:TR(@"Budgets")];
-        [toolbarItem setImage:[NSImage imageNamed:@"budget_48"]];
-        [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showBudgetTable:)];
     }
     else {
         toolbarItem = nil;
@@ -576,7 +550,7 @@ http://www.hardcoded.net/licenses/hs_license
         }
         else if (paneType == MGPaneTypeGeneralLedger) {
             view = ledgerView;
-            tabIcon = [NSImage imageNamed:@"transaction_table_16"];
+            tabIcon = [NSImage imageNamed:@"gledger_16"];
         }
         else if (paneType == MGPaneTypeEmpty) {
             view = emptyView;

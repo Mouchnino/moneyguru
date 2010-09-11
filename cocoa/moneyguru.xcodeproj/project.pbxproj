@@ -150,9 +150,10 @@
 		CEB6020A123930BF002218CF /* MGGeneralLedgerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60207123930BF002218CF /* MGGeneralLedgerTable.m */; };
 		CEB6020B123930BF002218CF /* MGGeneralLedgerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60209123930BF002218CF /* MGGeneralLedgerView.m */; };
 		CEB6021412393827002218CF /* MGGeneralLedgerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB6021312393827002218CF /* MGGeneralLedgerTableView.m */; };
+		CEB7CCEC123B61270020DAF6 /* gledger_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7CCEA123B61270020DAF6 /* gledger_16.png */; };
+		CEB7CCED123B61270020DAF6 /* gledger_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7CCEB123B61270020DAF6 /* gledger_48.png */; };
 		CEB93C3A0E5C6162006923EB /* main_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C390E5C6162006923EB /* main_icon.icns */; };
 		CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */; };
-		CEB93C430E5C622E006923EB /* entry_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3E0E5C622E006923EB /* entry_table_48.png */; };
 		CEB93C440E5C622E006923EB /* income_statement_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3F0E5C622E006923EB /* income_statement_48.png */; };
 		CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C410E5C622E006923EB /* transaction_table_48.png */; };
 		CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */; };
@@ -547,9 +548,10 @@
 		CEB6020E123931F9002218CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
 		CEB6021212393827002218CF /* MGGeneralLedgerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerTableView.h; path = controllers/general_ledger/MGGeneralLedgerTableView.h; sourceTree = SOURCE_ROOT; };
 		CEB6021312393827002218CF /* MGGeneralLedgerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerTableView.m; path = controllers/general_ledger/MGGeneralLedgerTableView.m; sourceTree = SOURCE_ROOT; };
+		CEB7CCEA123B61270020DAF6 /* gledger_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gledger_16.png; path = ../images/gledger_16.png; sourceTree = SOURCE_ROOT; };
+		CEB7CCEB123B61270020DAF6 /* gledger_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gledger_48.png; path = ../images/gledger_48.png; sourceTree = SOURCE_ROOT; };
 		CEB93C390E5C6162006923EB /* main_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = main_icon.icns; sourceTree = "<group>"; };
 		CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balance_sheet_48.png; sourceTree = "<group>"; };
-		CEB93C3E0E5C622E006923EB /* entry_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = entry_table_48.png; sourceTree = "<group>"; };
 		CEB93C3F0E5C622E006923EB /* income_statement_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = income_statement_48.png; sourceTree = "<group>"; };
 		CEB93C410E5C622E006923EB /* transaction_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transaction_table_48.png; sourceTree = "<group>"; };
 		CEBA330811294D09009C782F /* PyGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGUI.h; sourceTree = "<group>"; };
@@ -1289,9 +1291,11 @@
 				CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */,
 				CE8CD7AC1042E340004B30E0 /* budget_16.png */,
 				CE74544512082C5B003A2794 /* cashculator_16.png */,
+				CEB7CCEA123B61270020DAF6 /* gledger_16.png */,
 				CEB1E0B21031A386001FC4B4 /* budget_48.png */,
 				CEB1E0B31031A386001FC4B4 /* schedules_48.png */,
 				CE7990B112082D53000A4846 /* cashculator_48.png */,
+				CEB7CCEB123B61270020DAF6 /* gledger_48.png */,
 				CE40239E0F4C737D0083BAD2 /* doc_icon.icns */,
 				CEF4C5050F22274B004FDC9D /* popup_arrows.png */,
 				CEE674D10E7A7C0300941332 /* recurrent_16.png */,
@@ -1306,7 +1310,6 @@
 				CE107C740E619A8B0064AF17 /* nav_right_9.png */,
 				CE107C750E619A8B0064AF17 /* plus_8.png */,
 				CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */,
-				CEB93C3E0E5C622E006923EB /* entry_table_48.png */,
 				CEB93C3F0E5C622E006923EB /* income_statement_48.png */,
 				CEB93C410E5C622E006923EB /* transaction_table_48.png */,
 				CEB93C390E5C6162006923EB /* main_icon.icns */,
@@ -1377,7 +1380,6 @@
 				0795A42C0E4217970053F2FC /* right_arrow_gray_12.png in Resources */,
 				CEB93C3A0E5C6162006923EB /* main_icon.icns in Resources */,
 				CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */,
-				CEB93C430E5C622E006923EB /* entry_table_48.png in Resources */,
 				CEB93C440E5C622E006923EB /* income_statement_48.png in Resources */,
 				CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */,
 				CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */,
@@ -1462,6 +1464,8 @@
 				CE74544612082C5B003A2794 /* cashculator_16.png in Resources */,
 				CE7990B212082D53000A4846 /* cashculator_48.png in Resources */,
 				CEB6020112393080002218CF /* GeneralLedger.xib in Resources */,
+				CEB7CCEC123B61270020DAF6 /* gledger_16.png in Resources */,
+				CEB7CCED123B61270020DAF6 /* gledger_48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

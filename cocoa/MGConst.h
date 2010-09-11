@@ -25,8 +25,6 @@ http://www.hardcoded.net/licenses/hs_license
 #define MGBalanceSheetToolbarItemIdentifier @"MGBalanceSheetToolbarItemIdentifier"
 #define MGIncomeStatementToolbarItemIdentifier @"MGIncomeStatementToolbarItemIdentifier"
 #define MGTransactionsToolbarItemIdentifier @"MGTransactionsToolbarItemIdentifier"
-#define MGSchedulesToolbarItemIdentifier @"MGSchedulesToolbarItemIdentifier"
-#define MGBudgetToolbarItemIdentifier @"MGBudgetToolbarItemIdentifier"
 
 /* Menu Item Tags */
 

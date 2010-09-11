@@ -206,9 +206,9 @@
 									<reference key="NSControlView" ref="505801609"/>
 									<int key="NSButtonFlags">-2034482945</int>
 									<int key="NSButtonFlags2">130</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="64914352">
+									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">transaction_table_48</string>
+										<string key="NSResourceName">gledger_48</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent">4</string>
@@ -270,7 +270,10 @@
 									<reference key="NSControlView" ref="522102835"/>
 									<int key="NSButtonFlags">-2034482945</int>
 									<int key="NSButtonFlags2">130</int>
-									<reference key="NSNormalImage" ref="64914352"/>
+									<object class="NSCustomResource" key="NSNormalImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">transaction_table_48</string>
+									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent">3</string>
 									<int key="NSPeriodicDelay">400</int>
@@ -1428,12 +1431,14 @@
 				<string>balance_sheet_48</string>
 				<string>budget_48</string>
 				<string>cashculator_48</string>
+				<string>gledger_48</string>
 				<string>income_statement_48</string>
 				<string>schedules_48</string>
 				<string>transaction_table_48</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{48, 48}</string>
 				<string>{48, 48}</string>
 				<string>{48, 48}</string>
 				<string>{48, 48}</string>

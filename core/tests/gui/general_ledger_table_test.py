@@ -9,6 +9,7 @@
 
 from hsutil.testutil import eq_
 
+from ...model.account import AccountType
 from ..base import TestApp, with_app
 
 #---
@@ -65,3 +66,18 @@ def test_previous_balance_rows(app):
     eq_(app.gltable[1].description, 'Previous Balance')
     eq_(app.gltable[1].balance, '42.00')
     assert app.gltable.is_bold_row(1)
+
+#---
+def app_txn_in_income():
+    app = TestApp()
+    app.add_account('foo', account_type=AccountType.Income)
+    app.add_account('bar')
+    app.add_txn(description='hello', from_='foo', to='bar', amount='42')
+    app.show_glview()
+    return app
+
+@with_app(app_txn_in_income)
+def test_balance_cell_is_empty_for_income_entries(app):
+    # Balance doesn't make any sense in income/expense, so don't show it
+    row = app.gltable[4] # income account shown second
+    eq_(row.balance, '')
