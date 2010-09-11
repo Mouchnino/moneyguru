@@ -60,6 +60,16 @@ http://www.hardcoded.net/licenses/hs_license
     return (PyGeneralLedgerTable *)py;
 }
 
+- (NSArray *)dateColumns
+{
+    return [NSArray arrayWithObjects:@"date", @"reconciliation_date", nil];
+}
+
+- (NSArray *)completableColumns
+{
+    return [NSArray arrayWithObjects:@"description", @"payee", @"transfer", nil];
+}
+
 /* Delegate */
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
 {

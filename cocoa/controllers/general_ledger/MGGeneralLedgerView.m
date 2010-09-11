@@ -36,4 +36,9 @@ http://www.hardcoded.net/licenses/hs_license
 {
     return [[[MGGeneralLedgerPrint alloc] initWithPyParent:[self py] tableView:[ledgerTable tableView]] autorelease];
 }
+
+- (id)fieldEditorForObject:(id)asker
+{
+    return [ledgerTable fieldEditorForObject:asker];
+}
 @end

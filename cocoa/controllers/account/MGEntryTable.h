@@ -9,19 +9,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "PyEntryTable.h"
 #import "MGEditableTable.h"
-#import "MGFieldEditor.h"
-#import "MGDateFieldEditor.h"
 
-@interface MGEntryTable : MGEditableTable 
-{   
-    MGFieldEditor *customFieldEditor;
-    MGDateFieldEditor *customDateFieldEditor;
-}
+@interface MGEntryTable : MGEditableTable {}
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 
 /* Public */
 - (PyEntryTable *)py;
-- (id)fieldEditorForObject:(id)asker;
 - (void)showTransferAccount:(id)sender;
 @end

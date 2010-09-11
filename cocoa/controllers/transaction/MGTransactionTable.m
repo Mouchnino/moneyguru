@@ -22,8 +22,6 @@ http://www.hardcoded.net/licenses/hs_license
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
     [[self tableView] setSortDescriptors:[NSArray arrayWithObject:sd]];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPyParent];
-    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }
 
@@ -51,18 +49,21 @@ http://www.hardcoded.net/licenses/hs_license
     [[self columns] restoreColumns];
 }
 
-- (void)dealloc
-{
-    [customFieldEditor release];
-    [customDateFieldEditor release];
-    [super dealloc];
-}
-
 /* Overrides */
 
 - (PyTransactionTable *)py
 {
     return (PyTransactionTable *)py;
+}
+
+- (NSArray *)dateColumns
+{
+    return [NSArray arrayWithObjects:@"date", nil];
+}
+
+- (NSArray *)completableColumns
+{
+    return [NSArray arrayWithObjects:@"description", @"payee", @"from", @"to", nil];
 }
 
 /* Data source */
@@ -120,27 +121,6 @@ http://www.hardcoded.net/licenses/hs_license
 }
 
 /* Public */
-
-- (id)fieldEditorForObject:(id)asker
-{
-    if (asker == [self tableView])
-    {
-        NSInteger editedColumn = [[self tableView] editedColumn];
-        if (editedColumn > -1) {
-            NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
-            NSString *name = [column identifier];
-            if ([name isEqualTo:@"date"]) {
-                return customDateFieldEditor;
-            }
-            else if ([name isEqualTo:@"description"] || [name isEqualTo:@"payee"] || [name isEqualTo:@"from"] || [name isEqualTo:@"to"]) {
-                [customFieldEditor setAttrname:name];
-                return customFieldEditor;
-            }
-        }
-    }
-    return nil;
-}
-
 - (void)showFromAccount:(id)sender
 {
     [[self py] showFromAccount];

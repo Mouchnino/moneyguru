@@ -9,13 +9,20 @@ http://www.hardcoded.net/licenses/hs_license
 #import <Cocoa/Cocoa.h>
 #import "MGTableView.h"
 #import "MGTable.h"
+#import "MGFieldEditor.h"
+#import "MGDateFieldEditor.h"
 
 @interface MGEditableTable : MGTable
 {
+    MGFieldEditor *customFieldEditor;
+    MGDateFieldEditor *customDateFieldEditor;
 }
+/* Virtual */
+- (NSArray *)dateColumns;
+- (NSArray *)completableColumns;
 /* Public */
 - (void)startEditing;
 - (void)stopEditing;
 - (NSString *)editedFieldname;
-
+- (id)fieldEditorForObject:(id)asker;
 @end

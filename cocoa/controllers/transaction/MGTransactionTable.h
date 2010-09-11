@@ -10,20 +10,13 @@ http://www.hardcoded.net/licenses/hs_license
 #import "PyTransactionTable.h"
 #import "MGEditableTable.h"
 #import "MGTableView.h"
-#import "MGFieldEditor.h"
-#import "MGDateFieldEditor.h"
 
-@interface MGTransactionTable : MGEditableTable 
-{
-    MGFieldEditor *customFieldEditor;
-    MGDateFieldEditor *customDateFieldEditor;
-}
+@interface MGTransactionTable : MGEditableTable {}
 - (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 
 /* Public */
 - (PyTransactionTable *)py;
-- (id)fieldEditorForObject:(id)asker;
 - (void)showFromAccount:(id)sender;
 - (void)showToAccount:(id)sender;
 @end

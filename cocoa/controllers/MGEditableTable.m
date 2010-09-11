@@ -10,21 +10,32 @@ http://www.hardcoded.net/licenses/hs_license
 #import "Utils.h"
 
 @implementation MGEditableTable
-/* Data source */
+- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
+{
+    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPyParent];
+    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
+    return self;
+}
 
+- (void)dealloc
+{
+    [customFieldEditor release];
+    [customDateFieldEditor release];
+    [super dealloc];
+}
+
+/* Data source */
 - (void)tableView:(NSTableView *)tableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     [[self py] setValue:value forColumn:[column identifier] row:row];
 }
 
-/* NSTableView Delegate */
-
+/* Delegate */
 - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     return [[self py] canEditColumn:[column identifier] atRow:row];
 }
-
-/* MGTableView delegate */
 
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
@@ -47,6 +58,36 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)tableViewCancelsEdition:(MGTableView *)tableView
 {
     [[self py] cancelEdits];
+}
+
+- (id)fieldEditorForObject:(id)asker
+{
+    if (asker == [self tableView]) {   
+        NSInteger editedColumn = [[self tableView] editedColumn];
+        if (editedColumn > -1) {
+            NSTableColumn *column = [[[self tableView] tableColumns] objectAtIndex:editedColumn];
+            NSString *name = [column identifier];
+            if ([[self dateColumns] containsObject:name]) {
+                return customDateFieldEditor;
+            }
+            else if ([[self completableColumns] containsObject:name]) {
+                [customFieldEditor setAttrname:name];
+                return customFieldEditor;
+            }
+        }
+    }
+    return nil;
+}
+
+/* Virtual */
+- (NSArray *)dateColumns
+{
+    return [NSArray array];
+}
+
+- (NSArray *)completableColumns
+{
+    return [NSArray array];
 }
 
 /* Public */

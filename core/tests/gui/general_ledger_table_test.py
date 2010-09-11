@@ -33,9 +33,11 @@ def test_rows_data_with_two_sided_txn(app):
     eq_(len(app.gltable), 6)
     ACCOUNT_ROWS = {0, 3}
     BOLD_ROWS = {2, 5}
+    EDITABLE_ROWS = {1, 4}
     for i in range(6):
         eq_(app.gltable.is_account_row(i), i in ACCOUNT_ROWS)
         eq_(app.gltable.is_bold_row(i), i in BOLD_ROWS)
+        eq_(app.gltable.can_edit_cell('description', i), i in EDITABLE_ROWS)
     eq_(app.gltable[0].account_name, 'bar')
     eq_(app.gltable[3].account_name, 'foo')
     eq_(app.gltable[1].description, 'hello')
