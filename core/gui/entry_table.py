@@ -8,9 +8,6 @@
 
 import datetime
 
-from ..model.amount import convert_amount
-from ..model.entry import Entry
-from ..model.transaction import Transaction
 from .column import Column
 from .entry_table_base import EntryTableBase, EntryTableRow, PreviousBalanceRow, TotalRow
 
@@ -38,25 +35,6 @@ class EntryTable(EntryTableBase):
         self._reconciliation_mode = False
     
     #--- Override
-    def _do_add(self):
-        entry = self._new_entry()
-        rows = self[:-1] # ignore total row
-        for index, row in enumerate(rows):
-            if not isinstance(row, EntryTableRow):
-                continue
-            if row._date > entry.date:
-                insert_index = index
-                break
-        else:
-            insert_index = len(rows)
-        row = EntryTableRow(self, entry, entry.account)
-        return row, insert_index
-    
-    def _do_delete(self):
-        entries = self.selected_entries
-        if entries:
-            self.document.delete_entries(entries)
-    
     def _fill(self):
         account = self.mainwindow.shown_account
         if account is None:
@@ -76,36 +54,16 @@ class EntryTable(EntryTableBase):
         self.columns.set_column_visible('balance', balance_visible)
         self._restore_from_explicit_selection()
     
+    def _get_current_account(self):
+        return self.mainwindow.shown_account
+    
     def _restore_from_explicit_selection(self):
         if self.mainwindow.explicitly_selected_transactions:
             self.select_transactions(self.mainwindow.explicitly_selected_transactions)
             if not self.selected_indexes:
                 self.select_nearest_date(self.mainwindow.explicitly_selected_transactions[0].date)
     
-    #--- Private
-    def _new_entry(self):
-        account = self.mainwindow.shown_account
-        transactions = self.mainwindow.selected_transactions
-        date = transactions[0].date if transactions else datetime.date.today()
-        balance = 0
-        reconciled_balance = 0
-        balance_with_budget = 0
-        previous_entry = account.entries.last_entry(date=date)
-        if previous_entry:
-            balance = previous_entry.balance
-            reconciled_balance = previous_entry.reconciled_balance
-            balance_with_budget = previous_entry.balance_with_budget
-        transaction = Transaction(date, account=self.mainwindow.shown_account, amount=0)
-        split = transaction.splits[0]
-        entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
-        return entry
-    
     #--- Public
-    def add(self):
-        if self.account is None:
-            return
-        EntryTableBase.add(self)
-    
     def select_nearest_date(self, target_date):
         # This method assumes that self is sorted by date
         last_delta = datetime.timedelta.max

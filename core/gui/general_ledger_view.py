@@ -21,3 +21,9 @@ class GeneralLedgerView(BaseView):
         self.maintable = self.gltable
         BaseView.set_children(self, children)
     
+    def delete_item(self):
+        self.gltable.delete()
+    
+    def new_item(self):
+        self.gltable.add()
+    

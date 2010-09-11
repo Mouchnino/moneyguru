@@ -239,6 +239,14 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         self.app = mainwindow.document.app
         self._status_line = ""
     
+    #--- Virtual
+    def delete_item(self):
+        pass
+    
+    def new_item(self):
+        pass
+    
+    #--- Public
     def dispatch(self, msg):
         if self._process_message(msg):
             Repeater.dispatch(self, msg)

@@ -15,6 +15,7 @@ from .entry_table_base import EntryTableBase, EntryTableRow, TotalRow, PreviousB
 class AccountRow(Row):
     def __init__(self, table, account):
         Row.__init__(self, table)
+        self.account = account
         self.account_name = account.name
     
 
@@ -54,6 +55,10 @@ class GeneralLedgerTable(EntryTableBase):
             self.append(AccountRow(self, account))
             for row in rows:
                 self.append(row)
+    
+    def _get_current_account(self):
+        row = self.selected_row
+        return row.account if row is not None else None
     
     #--- Public
     def is_account_row(self, row_index):

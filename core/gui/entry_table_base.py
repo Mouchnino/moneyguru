@@ -12,7 +12,9 @@ from operator import attrgetter
 
 from ..model.amount import convert_amount
 from ..model.date import ONE_DAY
+from ..model.entry import Entry
 from ..model.recurrence import Spawn
+from ..model.transaction import Transaction
 from ..trans import tr
 from .table import Row, RowWithDebitAndCreditMixIn, RowWithDateMixIn, rowattr
 from .transaction_table_base import TransactionTableBase
@@ -328,6 +330,38 @@ class TotalRow(BaseEntryTableRow):
 class EntryTableBase(TransactionTableBase):
     ENTRY_ROWCLASS = EntryTableRow
     
+    #--- Overrides
+    def _do_add(self):
+        entry = self._new_entry()
+        account = entry.account
+        last_suitable_index = -1
+        for index, row in enumerate(self):
+            if not isinstance(row, EntryTableRow):
+                continue
+            if row.account is not account:
+                continue
+            last_suitable_index = index
+            if row._date > entry.date:
+                insert_index = index
+                break
+        else:
+            insert_index = last_suitable_index + 1
+        row = EntryTableRow(self, entry, entry.account)
+        return row, insert_index
+    
+    def _do_delete(self):
+        entries = self.selected_entries
+        if entries:
+            self.document.delete_entries(entries)
+    
+    def add(self):
+        if self._get_current_account() is not None:
+            TransactionTableBase.add(self)
+    
+    #--- Virtual
+    def _get_current_account(self):
+        raise NotImplementedError()
+    
     #--- Private
     def _get_account_rows(self, account):
         result = []
@@ -351,6 +385,23 @@ class EntryTableBase(TransactionTableBase):
             total_row = TotalRow(self, account, date_range.end, total_debit, total_credit)
             result.append(total_row)
         return result
+    
+    def _new_entry(self):
+        account = self._get_current_account()
+        transactions = self.mainwindow.selected_transactions
+        date = transactions[0].date if transactions else datetime.date.today()
+        balance = 0
+        reconciled_balance = 0
+        balance_with_budget = 0
+        previous_entry = account.entries.last_entry(date=date)
+        if previous_entry:
+            balance = previous_entry.balance
+            reconciled_balance = previous_entry.reconciled_balance
+            balance_with_budget = previous_entry.balance_with_budget
+        transaction = Transaction(date, account=account, amount=0)
+        split = transaction.splits[0]
+        entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
+        return entry
     
     #--- Properties
     @property

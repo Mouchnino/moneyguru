@@ -216,7 +216,7 @@ class MainWindow(Repeater):
             current_view = self._current_pane.view
             if current_view in (self.nwview, self.pview):
                 current_view.edit_item()
-            elif current_view in (self.aview, self.tview):
+            elif current_view in (self.aview, self.tview, self.glview):
                 editable_txns = [txn for txn in self.selected_transactions if not isinstance(txn, BudgetSpawn)]
                 if len(editable_txns) > 1:
                     self.mepanel.load()
@@ -230,9 +230,7 @@ class MainWindow(Repeater):
             pass
     
     def delete_item(self):
-        current_view = self._current_pane.view
-        if current_view in (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview):
-            current_view.delete_item()
+        self._current_pane.view.delete_item()
     
     def duplicate_item(self):
         current_view = self._current_pane.view
@@ -284,7 +282,7 @@ class MainWindow(Repeater):
     def new_item(self):
         try:
             current_view = self._current_pane.view
-            if current_view in (self.nwview, self.pview, self.tview, self.aview):
+            if current_view in (self.nwview, self.pview, self.tview, self.aview, self.glview):
                 current_view.new_item()
             elif current_view is self.scview:
                 self.scpanel.new()

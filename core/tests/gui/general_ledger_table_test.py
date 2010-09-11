@@ -13,6 +13,15 @@ from ...model.account import AccountType
 from ..base import TestApp, with_app
 
 #---
+@with_app(TestApp)
+def test_new_item_in_empty_table(app):
+    # Since we have no txn, we have nothing to show in the gltable. Performing new item has no
+    # effect.
+    app.show_glview()
+    app.mw.new_item() # no crash
+    eq_(len(app.gltable), 0)
+
+#---
 def app_two_sided_txn():
     app = TestApp()
     app.add_accounts('foo', 'bar')
@@ -21,10 +30,26 @@ def app_two_sided_txn():
     return app
 
 @with_app(app_two_sided_txn)
+def test_delete_entry(app):
+    app.gltable.select([4]) # the 'foo' entry of 'hello'
+    app.mw.delete_item()
+    # both entries were removed
+    eq_(len(app.gltable), 0)
+
+@with_app(app_two_sided_txn)
 def test_dont_show_empty_accounts(app):
     # When accounts have nothing to show, don't put them in the table.
     app.drsel.select_prev_date_range()
     eq_(len(app.gltable), 0)
+
+@with_app(app_two_sided_txn)
+def test_new_entry_with_account_row_selected(app):
+    # Adding a new entry when the account row is selected doesn't cause a crash and creates a new
+    # entry.
+    app.gltable.select([0])
+    app.mw.new_item() # no crash
+    eq_(len(app.gltable), 7)
+    eq_(app.gltable.selected_indexes, [2])
 
 @with_app(app_two_sided_txn)
 def test_rows_data_with_two_sided_txn(app):
@@ -55,6 +80,13 @@ def app_txns_in_different_date_ranges():
     app.drsel.select_prev_date_range()
     app.show_glview()
     return app
+
+@with_app(app_txns_in_different_date_ranges)
+def test_edit_item(app):
+    # the table correctly updates txn selection so that when edit item is called, the right txn
+    # shown up in the panel.
+    app.mw.edit_item()
+    eq_(app.tpanel.description, 'first')
 
 @with_app(app_txns_in_different_date_ranges)
 def test_only_show_rows_in_date_range(app):
