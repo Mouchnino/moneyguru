@@ -60,13 +60,15 @@ class AccountView(BaseView):
         account = self.mainwindow.shown_account
         if account is None:
             return
-        selected = len(self.mainwindow.selected_transactions)
-        total = len(self.mainwindow.visible_entries_for_account(account))
-        amounts = [t.amount_for_account(account, account.currency) for t in self.mainwindow.selected_transactions]
-        total_increase = sum(a for a in amounts if a > 0)
-        total_decrease = abs(sum(a for a in amounts if a < 0))
-        total_increase_fmt = self.app.format_amount(total_increase)
-        total_decrease_fmt = self.app.format_amount(total_decrease)
+        selected, total, total_debit, total_credit = self.etable.get_totals()
+        if account.is_debit_account():
+            increase = total_debit
+            decrease = total_credit
+        else:
+            increase = total_credit
+            decrease = total_debit
+        total_increase_fmt = self.app.format_amount(increase)
+        total_decrease_fmt = self.app.format_amount(decrease)
         msg = tr("{0} out of {1} selected. Increase: {2} Decrease: {3}")
         self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     

@@ -57,6 +57,9 @@ class EntryTable(EntryTableBase):
     def _get_current_account(self):
         return self.mainwindow.shown_account
     
+    def _get_totals_currency(self):
+        return self._get_current_account().currency
+    
     def _restore_from_explicit_selection(self):
         if self.mainwindow.explicitly_selected_transactions:
             self.select_transactions(self.mainwindow.explicitly_selected_transactions)

@@ -60,6 +60,9 @@ class GeneralLedgerTable(EntryTableBase):
         row = self.selected_row
         return row.account if row is not None else None
     
+    def _get_totals_currency(self):
+        return self.app.default_currency
+    
     #--- Public
     def is_account_row(self, row_index):
         return isinstance(self[row_index], AccountRow)

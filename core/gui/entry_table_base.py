@@ -362,6 +362,9 @@ class EntryTableBase(TransactionTableBase):
     def _get_current_account(self):
         raise NotImplementedError()
     
+    def _get_totals_currency(self):
+        raise NotImplementedError()
+    
     #--- Private
     def _get_account_rows(self, account):
         result = []
@@ -402,6 +405,18 @@ class EntryTableBase(TransactionTableBase):
         split = transaction.splits[0]
         entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
         return entry
+    
+    #--- Public
+    def get_totals(self):
+        # returns (selected_count, total_count, total_debit, total_credit)
+        entries = self.selected_entries
+        selected = len(entries)
+        total = sum(1 for row in self if isinstance(row, EntryTableRow))
+        total_currency = self._get_totals_currency()
+        amounts = [convert_amount(e.amount, total_currency, e.date) for e in entries]
+        total_debit = sum(a for a in amounts if a > 0)
+        total_credit = abs(sum(a for a in amounts if a < 0))
+        return (selected, total, total_debit, total_credit)
     
     #--- Properties
     @property
