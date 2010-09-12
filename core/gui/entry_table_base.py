@@ -183,7 +183,7 @@ class EntryTableRow(BaseEntryTableRow):
     
     def _set_amount_property(self, propname, stramount):
         try:
-            currency = self.table.mainwindow.shown_account.currency
+            currency = self.entry.account.currency
             parsed = self.table.document.app.parse_amount(stramount, default_currency=currency)
         except ValueError:
             return

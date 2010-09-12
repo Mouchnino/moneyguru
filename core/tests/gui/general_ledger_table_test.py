@@ -70,6 +70,12 @@ def test_rows_data_with_two_sided_txn(app):
     eq_(app.gltable[4].description, 'hello')
     eq_(app.gltable[4].credit, '42.00')
 
+@with_app(app_two_sided_txn)
+def test_set_amount_without_shown_account(app):
+    # Previously, setting an amount while mainwindow.shown_account to None resulted in a crash
+    app.gltable[1].debit = '42' # no crash
+    eq_(app.gltable[1].debit, '42.00')
+
 #---
 def app_txns_in_different_date_ranges():
     app = TestApp()
