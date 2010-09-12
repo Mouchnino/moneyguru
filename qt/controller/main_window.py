@@ -24,6 +24,7 @@ from .networth.view import NetWorthView
 from .profit.view import ProfitView
 from .transaction.view import TransactionView
 from .schedule.view import ScheduleView
+from .general_ledger.view import GeneralLedgerView
 from .new_view import NewView
 from .lookup import AccountLookup, CompletionLookup
 from .account_panel import AccountPanel
@@ -45,6 +46,7 @@ PANETYPE2ICON = {
     PaneType.Account: 'entry_table_16',
     PaneType.Schedule: 'schedules_16',
     PaneType.Budget: 'budget_16',
+    PaneType.GeneralLedger: 'gledger_16',
 }
 
 # IMPORTANT NOTE ABOUT TABS
@@ -66,6 +68,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.eview = EntryView(mainwindow=self)
         self.scview = ScheduleView(mainwindow=self)
         self.bview = BudgetView(mainwindow=self)
+        self.glview = GeneralLedgerView(mainwindow=self)
         self.newview = NewView(mainwindow=self)
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
@@ -88,13 +91,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.eview)
         self.mainView.addWidget(self.scview)
         self.mainView.addWidget(self.bview)
+        self.mainView.addWidget(self.glview)
         self.mainView.addWidget(self.newview)
         
         # set_children() and connect() calls have to happen after _setupUiPost()
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
-            self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel, self.bpanel,
-            self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel, self.vopts]
+            self.glview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
+            self.bpanel, self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel,
+            self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         self.sfield.model.connect()
@@ -215,6 +220,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             view = self.scview
         elif pane_type == PaneType.Budget:
             view = self.bview
+        elif pane_type == PaneType.GeneralLedger:
+            view = self.glview
         elif pane_type == PaneType.Empty:
             view = self.newview
         self.mainView.setCurrentWidget(view)
@@ -239,6 +246,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             PaneType.Account: tr("New Transaction"),
             PaneType.Schedule: tr("New Schedule"),
             PaneType.Budget: tr("New Budget"),
+            PaneType.GeneralLedger: tr("New Transaction"),
             PaneType.Empty: tr("New Item"), #XXX make disabled
         }[viewType]
         self.actionNewItem.setText(newItemLabel)

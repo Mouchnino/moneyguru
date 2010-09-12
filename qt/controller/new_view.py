@@ -26,21 +26,21 @@ class NewView(BaseView, Ui_NewView):
         self.networthButton.clicked.connect(self.networthButtonClicked)
         self.profitButton.clicked.connect(self.profitButtonClicked)
         self.transactionButton.clicked.connect(self.transactionButtonClicked)
+        self.gledgerButton.clicked.connect(self.gledgerButtonClicked)
         self.scheduleButton.clicked.connect(self.scheduleButtonClicked)
         self.budgetButton.clicked.connect(self.budgetButtonClicked)
         self.shortcut1.activated.connect(self.networthButtonClicked)
         self.shortcut2.activated.connect(self.profitButtonClicked)
         self.shortcut3.activated.connect(self.transactionButtonClicked)
-        self.shortcut4.activated.connect(self.scheduleButtonClicked)
-        self.shortcut5.activated.connect(self.budgetButtonClicked)
+        self.shortcut4.activated.connect(self.gledgerButtonClicked)
+        self.shortcut5.activated.connect(self.scheduleButtonClicked)
+        self.shortcut6.activated.connect(self.budgetButtonClicked)
     
     def _setupUi(self):
         self.setupUi(self)
-        self.shortcut1 = QShortcut(QKeySequence('1'), self, None, None, Qt.WidgetShortcut)
-        self.shortcut2 = QShortcut(QKeySequence('2'), self, None, None, Qt.WidgetShortcut)
-        self.shortcut3 = QShortcut(QKeySequence('3'), self, None, None, Qt.WidgetShortcut)
-        self.shortcut4 = QShortcut(QKeySequence('4'), self, None, None, Qt.WidgetShortcut)
-        self.shortcut5 = QShortcut(QKeySequence('5'), self, None, None, Qt.WidgetShortcut)
+        for i in range(1, 7):
+            shortcut = QShortcut(QKeySequence(str(i)), self, None, None, Qt.WidgetShortcut)
+            setattr(self, 'shortcut{0}'.format(i), shortcut)
     
     #--- Event Handlers
     def networthButtonClicked(self):
@@ -51,6 +51,9 @@ class NewView(BaseView, Ui_NewView):
     
     def transactionButtonClicked(self):
         self.model.select_pane_type(PaneType.Transaction)
+    
+    def gledgerButtonClicked(self):
+        self.model.select_pane_type(PaneType.GeneralLedger)
     
     def scheduleButtonClicked(self):
         self.model.select_pane_type(PaneType.Schedule)

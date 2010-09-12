@@ -580,12 +580,12 @@ class PyGeneralLedgerTable(PyTableWithDate):
     py_class = GeneralLedgerTable
 
     @signature('c@:i')
-    def isAccountRow_(self, row):
-        return self.py.is_account_row(row)
+    def isAccountRow_(self, row_index):
+        return self.py.is_account_row(self.py[row_index])
     
     @signature('c@:i')
-    def isBoldRow_(self, row):
-        return self.py.is_bold_row(row)
+    def isBoldRow_(self, row_index):
+        return self.py.is_bold_row(self.py[row_index])
     
 
 class PySearchField(PyListener):

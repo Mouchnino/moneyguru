@@ -60,8 +60,8 @@ def test_rows_data_with_two_sided_txn(app):
     BOLD_ROWS = {2, 5}
     EDITABLE_ROWS = {1, 4}
     for i in range(6):
-        eq_(app.gltable.is_account_row(i), i in ACCOUNT_ROWS)
-        eq_(app.gltable.is_bold_row(i), i in BOLD_ROWS)
+        eq_(app.gltable.is_account_row(app.gltable[i]), i in ACCOUNT_ROWS)
+        eq_(app.gltable.is_bold_row(app.gltable[i]), i in BOLD_ROWS)
         eq_(app.gltable.can_edit_cell('description', i), i in EDITABLE_ROWS)
     eq_(app.gltable[0].account_name, 'bar')
     eq_(app.gltable[3].account_name, 'foo')
@@ -105,7 +105,7 @@ def test_previous_balance_rows(app):
     app.drsel.select_next_date_range()
     eq_(app.gltable[1].description, 'Previous Balance')
     eq_(app.gltable[1].balance, '42.00')
-    assert app.gltable.is_bold_row(1)
+    assert app.gltable.is_bold_row(app.gltable[1])
 
 #---
 def app_txn_in_income():

@@ -64,11 +64,11 @@ class GeneralLedgerTable(EntryTableBase):
         return self.app.default_currency
     
     #--- Public
-    def is_account_row(self, row_index):
-        return isinstance(self[row_index], AccountRow)
+    def is_account_row(self, row):
+        return isinstance(row, AccountRow)
     
-    def is_bold_row(self, row_index):
-        return isinstance(self[row_index], (TotalRow, PreviousBalanceRow))
+    def is_bold_row(self, row):
+        return isinstance(row, (TotalRow, PreviousBalanceRow))
     
     #--- Event Handlers
     def date_range_changed(self):

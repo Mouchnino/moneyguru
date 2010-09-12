@@ -16,7 +16,8 @@ from PyQt4.QtGui import QFont, QFontMetrics
 
 from hsutil.misc import nonone
 
-from const import INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE
+from const import (INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE,
+    EXTRA_SPAN_ALL_COLUMNS)
 from .layout import LayoutElement
 
 CELL_MARGIN = 2
@@ -173,6 +174,44 @@ class ItemViewLayoutElement(LayoutElement):
         # stuff under it.
         self.rect.setHeight(self.stats.headerHeight+(self.stats.rowHeight*rowCount))
     
+    def renderCell(self, painter, rowIndex, colIndex, itemRect):
+        extraFlags = nonone(self.ds.data(rowIndex, colIndex, EXTRA_ROLE), 0)
+        pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
+        if pixmap:
+            painter.drawPixmap(itemRect.topLeft(), pixmap)
+        else:
+            # we don't support drawing pixmap and text in the same cell (don't need it)
+            bgbrush = self.ds.data(rowIndex, colIndex, Qt.BackgroundRole)
+            if bgbrush is not None:
+                painter.fillRect(itemRect, bgbrush)
+            text = self.ds.data(rowIndex, colIndex, Qt.DisplayRole)
+            if text:
+                alignment = self.ds.data(rowIndex, colIndex, Qt.TextAlignmentRole)
+                if not alignment:
+                    alignment = Qt.AlignLeft|Qt.AlignVCenter
+                font = self.ds.data(rowIndex, colIndex, Qt.FontRole)
+                if font is None:
+                    font = self.ds.rowFont()
+                fm = QFontMetrics(font)
+                # elidedText has a tendency to "over-elide" that's why we have "+1"
+                text = fm.elidedText(text, Qt.ElideRight, itemRect.width()+1)
+                painter.save()
+                painter.setFont(font)
+                painter.drawText(itemRect, alignment, text)
+                painter.restore()
+        if extraFlags & (EXTRA_UNDERLINED | EXTRA_UNDERLINED_DOUBLE):
+            p1 = itemRect.bottomLeft()
+            p2 = itemRect.bottomRight()
+            # Things get crowded with double lines and we have to cheat a little bit on 
+            # item rects.
+            p1.setY(p1.y()+2)
+            p2.setY(p2.y()+2)
+            painter.drawLine(p1, p2)
+            if extraFlags & EXTRA_UNDERLINED_DOUBLE:
+                p1.setY(p1.y()-3)
+                p2.setY(p2.y()-3)
+                painter.drawLine(p1, p2)
+    
     def render(self, painter):
         # We used to re-use itemDelegate() for cell drawing, but it turned out to me more
         # complex than anything (with margins being too wide and all...)
@@ -196,44 +235,17 @@ class ItemViewLayoutElement(LayoutElement):
         for rowIndex in range(startRow, self.endRow+1):
             top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
             left = self.rect.left()
-            for colIndex, colWidth in enumerate(columnWidths):
-                indentation = self.ds.indentation(rowIndex, colIndex)
-                extraFlags = nonone(self.ds.data(rowIndex, colIndex, EXTRA_ROLE), 0)
-                itemRect = QRect(left+indentation, top, colWidth, rowHeight)
-                itemRect = applyMargin(itemRect, CELL_MARGIN)
-                pixmap = self.ds.data(rowIndex, colIndex, Qt.DecorationRole)
-                if pixmap:
-                    painter.drawPixmap(itemRect.topLeft(), pixmap)
-                else:
-                    # we don't support drawing pixmap and text in the same cell (don't need it)
-                    text = self.ds.data(rowIndex, colIndex, Qt.DisplayRole)
-                    if text:
-                        alignment = self.ds.data(rowIndex, colIndex, Qt.TextAlignmentRole)
-                        if not alignment:
-                            alignment = Qt.AlignLeft|Qt.AlignVCenter
-                        font = self.ds.data(rowIndex, colIndex, Qt.FontRole)
-                        if font is None:
-                            font = self.ds.rowFont()
-                        fm = QFontMetrics(font)
-                        # elidedText has a tendency to "over-elide" that's why we have "+1"
-                        text = fm.elidedText(text, Qt.ElideRight, itemRect.width()+1)
-                        painter.save()
-                        painter.setFont(font)
-                        painter.drawText(itemRect, alignment, text)
-                        painter.restore()
-                if extraFlags & (EXTRA_UNDERLINED | EXTRA_UNDERLINED_DOUBLE):
-                    p1 = itemRect.bottomLeft()
-                    p2 = itemRect.bottomRight()
-                    # Things get crowded with double lines and we have to cheat a little bit on 
-                    # item rects.
-                    p1.setY(p1.y()+2)
-                    p2.setY(p2.y()+2)
-                    painter.drawLine(p1, p2)
-                    if extraFlags & EXTRA_UNDERLINED_DOUBLE:
-                        p1.setY(p1.y()-3)
-                        p2.setY(p2.y()-3)
-                        painter.drawLine(p1, p2)
-                left += colWidth
+            rowIsSpanning = self.ds.data(rowIndex, 0, EXTRA_ROLE) & EXTRA_SPAN_ALL_COLUMNS
+            if rowIsSpanning:
+                itemRect = QRect(left, top, self.rect.width(), rowHeight)
+                self.renderCell(painter, rowIndex, 0, itemRect)
+            else:
+                for colIndex, colWidth in enumerate(columnWidths):
+                    indentation = self.ds.indentation(rowIndex, colIndex)
+                    itemRect = QRect(left+indentation, top, colWidth, rowHeight)
+                    itemRect = applyMargin(itemRect, CELL_MARGIN)
+                    self.renderCell(painter, rowIndex, colIndex, itemRect)
+                    left += colWidth
         painter.restore()
     
 
@@ -244,6 +256,10 @@ class ItemViewPrintStats(object):
         headerFM = QFontMetrics(ds.headerFont())
         self.rowHeight = rowFM.height() + CELL_MARGIN * 2
         self.headerHeight = headerFM.height() + CELL_MARGIN * 2
+        spannedRowIndexes = set()
+        for rowIndex in range(ds.rowCount()):
+            if ds.data(rowIndex, 0, EXTRA_ROLE) & EXTRA_SPAN_ALL_COLUMNS:
+                spannedRowIndexes.add(rowIndex)
         self.columns = []
         for colIndex in range(ds.columnCount()):
             col = ds.columnAtIndex(colIndex)
@@ -252,6 +268,8 @@ class ItemViewPrintStats(object):
             # We need to have *at least* the width of the header.
             minWidth = headerFM.width(col.title) + CELL_MARGIN * 2
             for rowIndex in range(ds.rowCount()):
+                if rowIndex in spannedRowIndexes:
+                    continue
                 data = ds.data(rowIndex, colIndex, Qt.DisplayRole)
                 if data:
                     font = ds.data(rowIndex, colIndex, Qt.FontRole)

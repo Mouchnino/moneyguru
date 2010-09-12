@@ -73,9 +73,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="gledgerButton">
+       <property name="text">
+        <string>4. General Ledger</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../mg.qrc">
+         <normaloff>:/gledger_16</normaloff>:/gledger_16</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="scheduleButton">
        <property name="text">
-        <string>4. Schedules</string>
+        <string>5. Schedules</string>
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
@@ -86,7 +97,7 @@
      <item>
       <widget class="QPushButton" name="budgetButton">
        <property name="text">
-        <string>5. Budgets</string>
+        <string>6. Budgets</string>
        </property>
        <property name="icon">
         <iconset resource="../mg.qrc">
