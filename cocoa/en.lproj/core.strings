@@ -160,22 +160,13 @@
 /* core/gui/income_statement.py:58 */
 "NET INCOME" = "NET INCOME";
 
-/* core/gui/main_window.py:81 core/gui/net_worth_graph.py:39 */
+/* Tab names */
 "Net Worth" = "Net Worth";
-
-/* core/gui/main_window.py:83 core/gui/profit_graph.py:41 */
 "Profit & Loss" = "Profit & Loss";
-
-/* core/gui/main_window.py:85 */
 "Transactions" = "Transactions";
-
-/* core/gui/main_window.py:89 */
 "Schedules" = "Schedules";
-
-/* core/gui/main_window.py:91 */
 "Budgets" = "Budgets";
-
-/* core/gui/main_window.py:93 */
+"General Ledger" = "General Ledger";
 "New Tab" = "New Tab";
 
 /* core/gui/pie_chart.py:34 */
@@ -248,3 +239,4 @@
 "{account_name}\nEntries from {start_date} to {end_date}" = "{account_name}\nEntries from {start_date} to {end_date}";
 "Schedules from {start_date} to {end_date}" = "Schedules from {start_date} to {end_date}";
 "Budgets from {start_date} to {end_date}" = "Budgets from {start_date} to {end_date}";
+"General Ledger from {start_date} to {end_date}" = "General Ledger from {start_date} to {end_date}";

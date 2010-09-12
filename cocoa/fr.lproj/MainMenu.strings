@@ -275,14 +275,8 @@
 /* Class = "NSMenuItem"; title = "Page Setup..."; ObjectID = "1378"; */
 "1378.title" = "Options d'impression...";
 
-/* Class = "NSMenuItem"; title = "Schedules"; ObjectID = "1380"; */
-"1380.title" = "Récurrences";
-
 /* Class = "NSMenuItem"; title = "Make Schedule from Selected"; ObjectID = "1382"; */
 "1382.title" = "Créer une récurrence à partir de la sélection";
-
-/* Class = "NSMenuItem"; title = "Budgets"; ObjectID = "1385"; */
-"1385.title" = "Budgets";
 
 /* Class = "NSMenuItem"; title = "December"; ObjectID = "1391"; */
 "1391.title" = "Décembre";

@@ -200,7 +200,7 @@
 								<object class="NSButtonCell" key="NSCell" id="824316399">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">134217728</int>
-									<string key="NSContents">General Ledger</string>
+									<string key="NSContents">Grand Livre</string>
 									<reference key="NSSupport" ref="586540727"/>
 									<reference key="NSControlView" ref="505801609"/>
 									<int key="NSButtonFlags">-2034482945</int>

@@ -251,7 +251,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="768874368">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">General Ledger</string>
+								<string key="NSContents">Grand Livre</string>
 								<reference key="NSSupport" ref="383358482"/>
 								<reference key="NSControlView" ref="123807425"/>
 								<reference key="NSBackgroundColor" ref="30182419"/>
@@ -292,7 +292,7 @@
 							<object class="NSButtonCell" key="NSCell" id="821271300">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Payee</string>
+								<string key="NSContents">Provenance</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="373205423"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -314,7 +314,7 @@
 							<object class="NSButtonCell" key="NSCell" id="92018589">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Check #</string>
+								<string key="NSContents"># Chèque</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="475297661"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -572,7 +572,7 @@
 							<object class="NSButtonCell" key="NSCell" id="13621186">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Reconciliation Date</string>
+								<string key="NSContents">Date réconciliation</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="540108644"/>
 								<int key="NSButtonFlags">1211912703</int>

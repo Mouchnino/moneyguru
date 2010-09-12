@@ -94,3 +94,18 @@
 
 /* Class = "NSButtonCell"; title = "Debit/Credit"; ObjectID = "147"; */
 "147.title" = "Débit/Crédit";
+
+/* Class = "NSButtonCell"; title = "Check #"; ObjectID = "156"; */
+"156.title" = "# Chèque";
+
+/* Class = "NSButtonCell"; title = "Payee"; ObjectID = "157"; */
+"157.title" = "Provenance";
+
+/* Class = "NSButtonCell"; title = "Description"; ObjectID = "158"; */
+"158.title" = "Description";
+
+/* Class = "NSTextFieldCell"; title = "General Ledger"; ObjectID = "159"; */
+"159.title" = "Grand Livre";
+
+/* Class = "NSButtonCell"; title = "Reconciliation Date"; ObjectID = "167"; */
+"167.title" = "Date réconciliation";

@@ -160,22 +160,13 @@
 /* core/gui/income_statement.py:58 */
 "NET INCOME" = "REVENU NET";
 
-/* core/gui/main_window.py:81 core/gui/net_worth_graph.py:39 */
+/* Tab Names */
 "Net Worth" = "Valeur nette";
-
-/* core/gui/main_window.py:83 core/gui/profit_graph.py:41 */
 "Profit & Loss" = "Profits & pertes";
-
-/* core/gui/main_window.py:85 */
 "Transactions" = "Transactions";
-
-/* core/gui/main_window.py:89 */
 "Schedules" = "Récurrences";
-
-/* core/gui/main_window.py:91 */
 "Budgets" = "Budgets";
-
-/* core/gui/main_window.py:93 */
+"General Ledger" = "Grand Livre";
 "New Tab" = "Nouvel onglet";
 
 /* core/gui/pie_chart.py:34 */
@@ -258,3 +249,4 @@
 "{account_name}\nEntries from {start_date} to {end_date}" = "{account_name}\nEntrées de {start_date} à {end_date}";
 "Schedules from {start_date} to {end_date}" = "Récurrences de {start_date} à {end_date}";
 "Budgets from {start_date} to {end_date}" = "Budgets de {start_date} à {end_date}";
+"General Ledger from {start_date} to {end_date}" = "Grand Livre de {start_date} à {end_date}";
