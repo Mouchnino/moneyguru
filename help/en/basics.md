@@ -104,6 +104,11 @@ The *Reconciliation* button in the filter bar (only enabled for assets/liabiliti
 
 Depending on the selected date range, there might be a **Previous Balance** entry at the top of the table. This entry, like with bank account statements, shows the balance of the account at the beginning of the date range.
 
+General Ledger
+-----
+
+This view puts all accounts together and displays their entries for the current date range. The way it presents entries is pretty much identical to the Account view. This view is mainly for reporting purposes.
+
 Filtering
 -----
 

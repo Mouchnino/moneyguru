@@ -104,6 +104,11 @@ Comme partout ailleurs, le petit ![](images/basics_show_account_arrow.png) sert 
 
 La table d'entrée commence la plupart du temps par une entrée "Balance précédente". Cette entrée, à l'instar des extraits bancaires, indique la balance du compte au début de l'intervalle de date sélectionné.
 
+Grand Livre
+-----
+
+Cette vue met tout les comptes ensemble en montre leurs entrées respectives. La façon dont ces entrées sont présentées est pratiquement identique à la vue Compte. Cette vue est surtout la pour faire des rapports.
+
 Filtre
 -----
 
