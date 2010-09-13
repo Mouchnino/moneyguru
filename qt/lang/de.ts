@@ -236,6 +236,10 @@
         <translation>Budgets</translation>
     </message>
     <message>
+        <source>General Ledger</source>
+        <translation>General Ledger</translation>
+    </message>
+    <message>
         <source>New Tab</source>
         <translation>Neuer Tab</translation>
     </message>
@@ -424,6 +428,10 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <source>Budgets from {start_date} to {end_date}</source>
         <translation>Budgets vom {start_date} bis {end_date}</translation>
+    </message>
+    <message>
+        <source>General Ledger from {start_date} to {end_date}</source>
+        <translation>General Ledger from {start_date} to {end_date}</translation>
     </message>
 
 		<!-- Document -->
@@ -1201,34 +1209,32 @@ Eintrag vom {start_date} bis {end_date}</translation>
 <context>
     <name>NewView</name>
     <message>
-        <location filename="new_view.ui" line="20"/>
         <source>Choose a type for this tab:</source>
         <translation>Wählen sie eine Ansicht für den Tab:</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="45"/>
         <source>1. Net Worth</source>
         <translation>1. Eigenkapital</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="56"/>
         <source>2. Profit &amp;&amp; Loss</source>
         <translation>2. Profit / Verlust</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="67"/>
         <source>3. Transactions</source>
         <translation>3. Transaktionen</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="78"/>
-        <source>4. Schedules</source>
-        <translation>4. Wiederholung</translation>
+        <source>4. General Ledger</source>
+        <translation>4. General Ledger</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="89"/>
-        <source>5. Budgets</source>
-        <translation>5. Budgets</translation>
+        <source>5. Schedules</source>
+        <translation>5. Wiederholung</translation>
+    </message>
+    <message>
+        <source>6. Budgets</source>
+        <translation>6. Budgets</translation>
     </message>
 </context>
 <context>
@@ -1620,6 +1626,10 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <location filename="view_options_dialog.ui" line="223"/>
         <source>Schedules</source>
         <translation>Wiederholung</translation>
+    </message>
+    <message>
+        <source>General Ledger</source>
+        <translation>General Ledger</translation>
     </message>
 </context>
 <context>

@@ -236,6 +236,10 @@
         <translation>Budgets</translation>
     </message>
     <message>
+        <source>General Ledger</source>
+        <translation>Grand Livre</translation>
+    </message>
+    <message>
         <source>New Tab</source>
         <translation>Nouvel onglet</translation>
     </message>
@@ -424,6 +428,10 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <source>Budgets from {start_date} to {end_date}</source>
         <translation>Budgets de {start_date} à {end_date}</translation>
+    </message>
+    <message>
+        <source>General Ledger from {start_date} to {end_date}</source>
+        <translation>Grand Livre de {start_date} à {end_date}</translation>
     </message>
     
     <!-- Document -->
@@ -1209,34 +1217,32 @@ Entrées de {start_date} à {end_date}</translation>
 <context>
     <name>NewView</name>
     <message>
-        <location filename="new_view.ui" line="20"/>
         <source>Choose a type for this tab:</source>
         <translation>Choisissez un type d&apos;onglet:</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="45"/>
         <source>1. Net Worth</source>
         <translation>1. Valeur nette</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="56"/>
         <source>2. Profit &amp;&amp; Loss</source>
         <translation>2. Profits / Pertes</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="67"/>
         <source>3. Transactions</source>
         <translation>3. Transactions</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="78"/>
-        <source>4. Schedules</source>
-        <translation>4. Récurrences</translation>
+        <source>4. General Ledger</source>
+        <translation>4. Grand Livre</translation>
     </message>
     <message>
-        <location filename="new_view.ui" line="89"/>
-        <source>5. Budgets</source>
-        <translation>5. Budgets</translation>
+        <source>5. Schedules</source>
+        <translation>5. Récurrences</translation>
+    </message>
+    <message>
+        <source>6. Budgets</source>
+        <translation>6. Budgets</translation>
     </message>
 </context>
 <context>
@@ -1628,6 +1634,10 @@ Entrées de {start_date} à {end_date}</translation>
         <location filename="view_options_dialog.ui" line="223"/>
         <source>Schedules</source>
         <translation>Récurrences</translation>
+    </message>
+    <message>
+        <source>General Ledger</source>
+        <translation>Grand Livre</translation>
     </message>
 </context>
 <context>

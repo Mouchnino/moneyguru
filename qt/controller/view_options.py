@@ -45,6 +45,10 @@ class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
         'schDescriptionCheckBox': 'schedule_table_description',
         'schPayeeCheckBox': 'schedule_table_payee',
         'schChecknoCheckBox': 'schedule_table_checkno',
+        'gldDescriptionCheckBox': 'gledger_table_description',
+        'gldPayeeCheckBox': 'gledger_table_payee',
+        'gldChecknoCheckBox': 'gledger_table_checkno',
+        'gldReconciliationDateCheckBox': 'gledger_table_reconciliation_date',
     }
     
     def __init__(self, mainwindow):
