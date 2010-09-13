@@ -163,7 +163,10 @@ class MainWindow(Repeater):
         self._current_pane_index = -1
         self.panes = []
         for pane_type, account in pane_data:
-            self.panes.append(self._create_pane(pane_type, account=account))
+            try:
+                self.panes.append(self._create_pane(pane_type, account=account))
+            except ValueError:
+                self.panes.append(self._create_pane(PaneType.NetWorth))
         self.view.refresh_panes()
         self.current_pane_index = 0
     
