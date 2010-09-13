@@ -62,7 +62,8 @@ class TableWithTransactions(Table):
         # to know where the drop took place.
         if parentIndex.isValid():
             return False
-        indexes = list(map(int, str(mimeData.data(MIME_INDEXES)).split(',')))
+        strMimeData = bytes(mimeData.data(MIME_INDEXES)).decode()
+        indexes = list(map(int, strMimeData.split(',')))
         if not self.model.can_move(indexes, row):
             return False
         self.model.move(indexes, row)
@@ -72,7 +73,7 @@ class TableWithTransactions(Table):
         rows = set(str(index.row()) for index in indexes)
         data = ','.join(rows)
         mimeData = QMimeData()
-        mimeData.setData(MIME_INDEXES, QByteArray(data))
+        mimeData.setData(MIME_INDEXES, QByteArray(data.encode()))
         return mimeData
     
     def mimeTypes(self):

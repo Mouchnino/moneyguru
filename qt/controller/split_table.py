@@ -44,14 +44,14 @@ class SplitTable(Table):
         # to know where the drop took place.
         if parentIndex.isValid():
             return False
-        index = int(str(mimeData.data(MIME_INDEX)))
+        index = int(bytes(mimeData.data(MIME_INDEX)).decode())
         self.model.move_split(index, row)
         return True
     
     def mimeData(self, indexes):
         data = str(indexes[0].row())
         mimeData = QMimeData()
-        mimeData.setData(MIME_INDEX, QByteArray(data))
+        mimeData.setData(MIME_INDEX, QByteArray(data.encode()))
         return mimeData
     
     def mimeTypes(self):

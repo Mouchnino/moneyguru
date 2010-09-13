@@ -224,7 +224,8 @@ class AccountSheet(TreeModel, ColumnBearer):
             return False
         if not parentIndex.isValid():
             return False
-        path = list(map(int, str(mimeData.data(MIME_NODEPATH)).split(',')))
+        strMimeData = bytes(mimeData.data(MIME_NODEPATH)).decode()
+        path = list(map(int, strMimeData.split(',')))
         destPath = self.pathForIndex(parentIndex)
         if not self.model.can_move(path, destPath):
             return False
@@ -236,7 +237,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         path = self.pathForIndex(index)
         data = ','.join(map(str, path))
         mimeData = QMimeData()
-        mimeData.setData(MIME_NODEPATH, QByteArray(data))
+        mimeData.setData(MIME_NODEPATH, QByteArray(data.encode()))
         return mimeData
     
     def mimeTypes(self):
