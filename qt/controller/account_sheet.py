@@ -151,7 +151,10 @@ class AccountSheet(TreeModel, ColumnBearer):
         column = self.COLUMNS[index.column()]
         rowattr = column.attrname
         if role in (Qt.DisplayRole, Qt.EditRole):
-            return getattr(node.ref, rowattr)
+            if (rowattr == 'name') or (not ref.is_expanded):
+                return getattr(node.ref, rowattr)
+            else:
+                return ''
         elif role == Qt.FontRole:
             isBold = False
             if rowattr == 'name':
