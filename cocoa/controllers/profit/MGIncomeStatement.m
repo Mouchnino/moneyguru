@@ -32,7 +32,12 @@ http://www.hardcoded.net/licenses/hs_license
         nil
     };
     [[self columns] initializeColumns:defs];
-    NSTableColumn *c = [[self outlineView] tableColumnWithIdentifier:@"cash_flow"];
+    for (NSTableColumn *c in [[self outlineView] tableColumns]) {
+        [c setEditable:NO];
+    }
+    NSTableColumn *c = [[self outlineView] tableColumnWithIdentifier:@"name"];
+    [c setEditable:YES]; // Only account name is editable.
+    c = [[self outlineView] tableColumnWithIdentifier:@"cash_flow"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
     NSFont *font = [[c dataCell] font];
