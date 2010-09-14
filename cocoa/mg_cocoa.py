@@ -80,15 +80,6 @@ from core.gui.transaction_view import TransactionView
 from core.gui.view_options import ViewOptions
 from core.model.date import clean_format
 
-# These imports below are a workaround for py2app, which doesn't like relative imports
-import csv
-from hscommon import job
-from core import const
-from core.gui import base, chart, graph, report, table
-from core.loader import base, csv, native, ofx, qif
-from core.model import (account, amount, cashculator, currency, date, oven, recurrence, transaction,
-    transaction_list, completion, undo)
-
 class PyMoneyGuruApp(PyRegistrable):
     def initWithCocoa_(self, cocoa):
         super(PyMoneyGuruApp, self).init()
