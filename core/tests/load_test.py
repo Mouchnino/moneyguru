@@ -334,7 +334,7 @@ def app_account_with_apanel_attrs():
     app.add_account()
     app.mw.edit_item()
     app.apanel.account_number = '1234'
-    app.apanel.notes = 'some notes'
+    app.apanel.notes = 'some\nnotes'
     app.apanel.save()
     return app
 

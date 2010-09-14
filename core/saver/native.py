@@ -19,6 +19,8 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
     def handle_newlines(s):
         # etree doesn't correctly save newlines. In fields that allow it, we have to escape them so
         # that we can restore them during load.
+        # XXX It seems like newer version of etree do escape newlines. When we use Python 3.2, we
+        # can probably remove this.
         if not s:
             return s
         return s.replace('\n', '\\n')
@@ -65,7 +67,7 @@ def save(filename, accounts, groups, transactions, schedules, budgets):
         if account.account_number:
             attrib['account_number'] = account.account_number
         if account.notes:
-            attrib['notes'] = account.notes
+            attrib['notes'] = handle_newlines(account.notes)
     for transaction in transactions:
         write_transaction_element(root, transaction)
     # the functionality of the line below is untested because it's an optimisation

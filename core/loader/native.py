@@ -39,6 +39,8 @@ class Loader(base.Loader):
         def handle_newlines(s):
             # etree doesn't correctly save newlines. During save, we escape them. Now's the time to
             # restore them.
+            # XXX After a while, when most users will have used a moneyGuru version that doesn't
+            # need newline escaping on save, we can remove this one as well.
             if not s:
                 return s
             return s.replace('\\n', '\n')
@@ -89,7 +91,7 @@ class Loader(base.Loader):
             self.account_info.budget_target = attrib.get('budget_target')
             self.account_info.reference = attrib.get('reference')
             self.account_info.account_number = attrib.get('account_number', '')
-            self.account_info.notes = attrib.get('notes', '')
+            self.account_info.notes = handle_newlines(attrib.get('notes', ''))
             self.flush_account()
         elements = [e for e in root if e.tag == 'transaction'] # we only want transaction element *at the root*
         for transaction_element in elements:
