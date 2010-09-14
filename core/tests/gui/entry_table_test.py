@@ -108,27 +108,6 @@ def test_add_transfer_entry(app):
     app.bsheet.show_selected_account()
     eq_(app.etable_count(), 1)
 
-#--- Liability account
-def app_liability_account():
-    app = TestApp()
-    app.add_account(account_type=AccountType.Liability)
-    app.mw.show_account()
-    return app
-
-#--- Income account
-def app_income_account():
-    app = TestApp()
-    app.add_account(account_type=AccountType.Income)
-    app.mw.show_account()
-    return app
-
-#--- Expense account
-def app_expense_account():
-    app = TestApp()
-    app.add_account(account_type=AccountType.Expense)
-    app.mw.show_account()
-    return app
-
 #--- Entry being added
 def app_entry_being_added():
     app = TestApp()
@@ -670,6 +649,12 @@ def test_sort_by_reconciliation_date_with_unreconciled_in_middle(app):
     eq_(app.etable[2].description, 'two')
 
 #--- Generators
+def app_with_account_of_type(account_type):
+    app = TestApp()
+    app.add_account(account_type=account_type)
+    app.mw.show_account()
+    return app
+
 def test_amount_of_selected_entry():
     def check(app, expected_increase, expected_decrease):
         eq_(app.etable.selected_row.increase, expected_increase)
@@ -688,17 +673,17 @@ def test_should_show_balance_column():
         eq_(app.etable.columns.column_is_visible('balance'), expected)
     
     # When a liability account is selected, we show the balance column.
-    app = app_liability_account()
+    app = app_with_account_of_type(AccountType.Liability)
     yield check, app, True
     
     # When an income account is selected, we don't show the balance column.
-    app = app_income_account()
+    app = app_with_account_of_type(AccountType.Income)
     yield check, app, False
     
     # When an expense account is selected, we don't show the balance column.
-    app = app_expense_account()
+    app = app_with_account_of_type(AccountType.Expense)
     yield check, app, False
     
     # When an asset account is selected, we show the balance column.
-    app = app_one_account()
+    app = app_with_account_of_type(AccountType.Asset)
     yield check, app, True
