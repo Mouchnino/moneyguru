@@ -228,6 +228,13 @@ def test_duplicate_transaction(app):
     # assume the rest is correct, torough tests in transaction_table_test
 
 @with_app(app_one_entry)
+def test_is_balance_negative_under_reconciliation_mode(app):
+    # is_balance_negative() used to compare None to 0 under reconciliation mode for an unreconciled
+    # entry. It's ok under Python 2.x, but causes a crash under Python 3.x.
+    app.aview.toggle_reconciliation_mode()
+    assert not app.etable[0].is_balance_negative() # no crash
+
+@with_app(app_one_entry)
 def test_normal_row_is_not_bold(app):
     assert not app.etable[0].is_bold
 

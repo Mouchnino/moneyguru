@@ -9,6 +9,7 @@
 
 import datetime
 from operator import attrgetter
+from hsutil.misc import nonone
 
 from ..model.amount import convert_amount
 from ..model.date import ONE_DAY
@@ -57,7 +58,7 @@ class BaseEntryTableRow(Row, RowWithDateMixIn, RowWithDebitAndCreditMixIn):
         return False
     
     def is_balance_negative(self):
-        return self._the_balance() < 0
+        return nonone(self._the_balance(), 0) < 0
     
     def sort_key_for_column(self, column_name):
         if column_name == 'date':
