@@ -66,7 +66,7 @@ def package_debian():
     os.makedirs(destpath)
     shutil.copytree('qt', srcpath)
     copy_packages(['hscommon', 'hsgui', 'core', 'qtlib', 'hsutil'], srcpath)
-    import sip, PyQt4
+    import sip, PyQt4, sgmllib
     shutil.copy(sip.__file__, srcpath)
     qtsrcpath = op.dirname(PyQt4.__file__)
     qtdestpath = op.join(srcpath, 'PyQt4')
@@ -75,6 +75,7 @@ def package_debian():
     shutil.copy(op.join(qtsrcpath, 'Qt.so'), qtdestpath)
     shutil.copy(op.join(qtsrcpath, 'QtCore.so'), qtdestpath)
     shutil.copy(op.join(qtsrcpath, 'QtGui.so'), qtdestpath)
+    shutil.copy(sgmllib.__file__, srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
     build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('help', 'moneyguru_help'), op.join(srcpath, 'help'))
