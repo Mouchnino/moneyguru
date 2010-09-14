@@ -1,3 +1,13 @@
+- date: 2010-09-14
+  version: 2.2.0
+  description: |
+    * Added the General Ledger view. (#134)
+    * Improved printing. (#140, #141, #143 and #173)
+    * Correctly imports UTF-8 encoded CSV files. (#177)
+    * Improved graphs readability by drawing overlay axis lines. (#178)
+    * Improved the date input widget by adding a "T" shortcut to set the date to today. (#174)
+    * Display a value in the "Change %" column even if the start value is negative. (#176)
+    * Fixed columns which were mistakenly editable. (#179, #180, #181)
 - date: 2010-09-05
   version: 2.1.2
   description: |
