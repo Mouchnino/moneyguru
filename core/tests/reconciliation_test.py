@@ -207,6 +207,14 @@ def test_change_amount_currency_from_other_side_dereconciles_entry(app):
     app.mainwindow.show_account()
     assert not app.etable[0].reconciled
 
+@with_app(app_reconciled_entry)
+def test_change_date_makes_reconciliation_date_follow(app):
+    # Changing the date of an entry makes the reconciliation date follow. This is to make sure that
+    # people not using the reconciliation date field will not end up with date != recdate.
+    app.etable[0].date = '10/07/2008'
+    app.etable.save_edits()
+    eq_(app.etable[0].reconciliation_date, '10/07/2008')
+
 #--- Entry different reconciliation date
 def app_entry_different_reconciliation_date():
     app = TestApp()
@@ -364,3 +372,25 @@ def test_set_reconciliation_date_lower_than_other(app):
     app.etable[0].reconciliation_date = '32/1/2008'
     app.etable.save_edits()
     eq_(app.etable[1].balance, '2.00')
+
+#---
+def app_entries_linked_to_same_txn_and_same_account():
+    app = TestApp()
+    app.add_account('foo')
+    app.add_txn('14/09/2010', from_='foo', to='foo', amount='42')
+    app.add_txn('15/09/2010', from_='bar', to='foo', amount='10')
+    app.show_account('foo')
+    return app
+
+@with_app(app_entries_linked_to_same_txn_and_same_account)
+def test_reconcile_all(app):
+    # When having two entries linked to the same account in the same transaction, pick the correct
+    # split to resume balance calculations
+    app.aview.toggle_reconciliation_mode()
+    app.etable.select([0, 1])
+    app.etable.toggle_reconciled()
+    app.etable.select([2])
+    app.etable.toggle_reconciled()
+    # Previously, the first entry would be used as a base to resume the computations instead of the
+    # second.
+    eq_(app.etable[2].balance, '10.00')

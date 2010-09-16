@@ -107,6 +107,10 @@ class Transaction(object):
             to=NOEDIT, amount=NOEDIT, currency=NOEDIT, notes=NOEDIT):
         # from_ and to are Account instances
         if date is not NOEDIT:
+            # If reconciliation dates were equal to txn date, make it follow
+            for split in self.splits:
+                if split.reconciliation_date == self.date:
+                    split.reconciliation_date = date
             self.date = date
         if description is not NOEDIT:
             self.description = description

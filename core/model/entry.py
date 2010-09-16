@@ -22,6 +22,9 @@ class Entry(object):
         self.balance = balance
         self.reconciled_balance = reconciled_balance
         self.balance_with_budget = balance_with_budget
+        # Index in the EntryList. Set by EntryList.add_entry() and used as a tie breaker in case we
+        # have more than one entry from the same transaction.
+        self.index = -1
     
     def __repr__(self):
         return '<Entry %r %r>' % (self.date, self.description)
@@ -95,7 +98,7 @@ class Entry(object):
         recdate = self.reconciliation_date
         if recdate is None:
             recdate = datetime.date.min
-        return (recdate, self.date, self.transaction.position)
+        return (recdate, self.date, self.transaction.position, self.index)
     
     @property
     def reference(self):
@@ -140,6 +143,7 @@ class EntryList(Sequence):
     #--- Public
     def add_entry(self, entry):
         # add_entry() calls must *always* be made in order
+        entry.index = len(self)
         self._entries.append(entry)
         date = entry.date
         self._date2entries[date].append(entry)
