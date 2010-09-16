@@ -300,8 +300,17 @@ class TotalRow(BaseEntryTableRow):
             if account.is_credit_account():
                 delta *= -1
             positive = delta > 0
+            # format_amount doesn't explicitly put positive signs, so we have to put it ourselves.
+            # However, if the delta is of foreign currency, we want the sign to be in front of the
+            # amount, not in front of the currency code.
             delta_fmt = table.document.app.format_amount(abs(delta))
-            delta_fmt = ('+' if positive else '-') + delta_fmt
+            sign = '+' if positive else '-'
+            if delta_fmt[0].isdigit():
+                delta_fmt = sign + delta_fmt
+            else:
+                # we have a currency code in front of our amount, a little trick is to replace the
+                # only space character we have by space + sign
+                delta_fmt = delta_fmt.replace(' ', ' ' + sign)
             self._balance_fmt = delta_fmt
         else:
             self._balance_fmt = ''

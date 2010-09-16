@@ -92,6 +92,19 @@ def test_total_line_balance_is_empty(app):
     # When there's no change in the balance, the balance cell of the total row shows nothing
     eq_(app.etable[0].balance, '')
 
+#---
+def app_eur_account():
+    app = TestApp()
+    app.add_account(currency=EUR)
+    app.mw.show_account()
+    return app
+
+@with_app(app_eur_account)
+def test_total_line_balance_has_sign_in_front_of_amount(app):
+    # The +/- sign is in front of the amount rather than in front of the EUR code.
+    app.add_entry(increase='42')
+    eq_(app.etable.footer.balance, 'EUR +42.00')
+
 #--- Three accounts
 def app_three_accounts():
     app = TestApp()
