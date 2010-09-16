@@ -27,7 +27,9 @@ def decode_date(encoded_date):
 
 def encode_date(decoded_date):
     td = decoded_date - EPOCH
-    return td.total_seconds()
+    # In v2.1, which used Python 2.7, I used total_seconds, which was new to 2.7. However, it's not
+    # there in 3.1. Until 3.2 is out, we have to use an equivalent
+    return td.seconds + td.days * 24 * 3600
 
 class Category(object):
     def __init__(self, db, pk=None):
