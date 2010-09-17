@@ -1,3 +1,9 @@
+- date: 2010-09-17
+  version: 2.2.1
+  description: |
+    * Fixed reconciliation balance miscalculation issues. (#186)
+    * Fixed amount formatting inconsistency in total rows. (#185)
+    * Fixed crash when exporting data to Cashculator.
 - date: 2010-09-14
   version: 2.2.0
   description: |
