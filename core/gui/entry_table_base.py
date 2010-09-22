@@ -287,6 +287,12 @@ class PreviousBalanceRow(BaseEntryTableRow):
         self.is_bold = True
     
 
+class NewEntryTableRow(EntryTableRow):
+    @property
+    def balance(self):
+        return ''
+    
+
 class TotalRow(BaseEntryTableRow):
     def __init__(self, table, account, date, total_debit, total_credit):
         super(TotalRow, self).__init__(table, account)
@@ -344,7 +350,7 @@ class EntryTableBase(TransactionTableBase):
     def _do_add(self):
         entry = self._new_entry()
         account = entry.account
-        last_suitable_index = -1
+        last_suitable_index = 0 if self.header is not None else -1
         for index, row in enumerate(self):
             if not isinstance(row, EntryTableRow):
                 continue
@@ -356,7 +362,7 @@ class EntryTableBase(TransactionTableBase):
                 break
         else:
             insert_index = last_suitable_index + 1
-        row = EntryTableRow(self, entry, entry.account)
+        row = NewEntryTableRow(self, entry, entry.account)
         return row, insert_index
     
     def _do_delete(self):
@@ -403,18 +409,9 @@ class EntryTableBase(TransactionTableBase):
         account = self._get_current_account()
         transactions = self.mainwindow.selected_transactions
         date = transactions[0].date if transactions else datetime.date.today()
-        balance = 0
-        reconciled_balance = 0
-        balance_with_budget = 0
-        previous_entry = account.entries.last_entry(date=date)
-        if previous_entry:
-            balance = previous_entry.balance
-            reconciled_balance = previous_entry.reconciled_balance
-            balance_with_budget = previous_entry.balance_with_budget
         transaction = Transaction(date, account=account, amount=0)
         split = transaction.splits[0]
-        entry = Entry(split, 0, balance, reconciled_balance, balance_with_budget)
-        return entry
+        return Entry(split, 0, 0, 0, 0)
     
     #--- Public
     def get_totals(self):

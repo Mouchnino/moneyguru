@@ -252,6 +252,14 @@ def test_normal_row_is_not_bold(app):
     assert not app.etable[0].is_bold
 
 @with_app(app_one_entry)
+def test_new_entry_in_empty_table_with_previous_entry(app):
+    # When adding a new entry in an empty table with a previous entry only, correctly select the
+    # new entry (previously, it would select the first row instead).
+    app.drsel.select_next_date_range()
+    app.etable.add()
+    eq_(app.etable.selected_indexes, [1])
+
+@with_app(app_one_entry)
 def test_set_invalid_amount(app):
     # setting an invalid amount reverts to the old amount
     app.etable[0].increase = 'foo' # no exception

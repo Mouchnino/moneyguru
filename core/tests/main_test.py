@@ -432,9 +432,9 @@ class OneEntryYearRange2007(TestCase):
         eq_(self.graph_data(), [('11/10/2007', '42.00'), ('01/01/2008', '42.00')])
     
     def test_new_entry_balance(self):
-        # A newly added entry has a correct balance.
+        # A newly added entry has a blank balance.
         self.etable.add()
-        eq_(self.etable[1].balance, '42.00')
+        eq_(self.etable[1].balance, '')
     
     def test_new_entry_date(self):
         # A newly added entry has the same date as the selected entry.
@@ -712,12 +712,6 @@ class TwoEntriesInRange(TestCase):
         """selected_entries() return back all indexes given to select_entries()"""
         self.etable.select([0, 1])
         self.assertEqual(self.etable.selected_indexes, [0, 1])
-    
-    def test_new_entry_balance(self):
-        """Newly added entries' balance don't include balance in the future"""
-        self.etable.add()
-        self.assertEqual(self.etable.selected_indexes[0], 1) # The new entry is in the middle
-        self.assertEqual(self.etable[1].balance, '102.00')
     
     def test_new_entry_date(self):
         """A newly added entry's date is the same date as the selected entry"""
