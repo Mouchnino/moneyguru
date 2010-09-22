@@ -137,31 +137,28 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [RegistrationInterface showNagWithApp:[self py]];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if ([ud boolForKey:@"MGHadFirstLaunch"])
+    NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+    BOOL hadFirstLaunch = [ud boolForKey:@"MGHadFirstLaunch"];
+    if (hadFirstLaunch)
     {
-        NSArray *recentURLs = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
-        if ([recentURLs count] > 0)
-        {
-            NSError *error;
-            NSURL *url = [recentURLs objectAtIndex:0];
-            NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
-            [documentController openDocumentWithContentsOfURL:url display:YES error:&error];
-        }
-        else
-        {
-            NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-            [dc openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
+        BOOL hasOpenedDocument = [[dc documents] count] > 0; // Could ave been opened through app arguments
+        if (!hasOpenedDocument) {
+            NSArray *recentURLs = [dc recentDocumentURLs];
+            if ([recentURLs count] > 0) {
+                NSError *error;
+                NSURL *url = [recentURLs objectAtIndex:0];
+                [dc openDocumentWithContentsOfURL:url display:YES error:&error];
+            }
+            else {
+                [dc openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
+            }
         }
     }
-    else
-    {
-        if ([Dialogs askYesNo:TR(@"FirstRunMsg")] == NSAlertFirstButtonReturn)
-        {
+    else {
+        if ([Dialogs askYesNo:TR(@"FirstRunMsg")] == NSAlertFirstButtonReturn) {
             [self openExampleDocument:self];
         }
-        else
-        {
-            NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+        else {
             [dc openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
         }
         [ud setBool:YES forKey:@"MGHadFirstLaunch"];
