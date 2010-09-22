@@ -1,3 +1,8 @@
+- date: 2010-09-22
+  version: 2.2.2
+  description: |
+    * Fixed glitches when creating new entries in Account tabs. (#190)
+    * Fixed bug causing moneyGuru to sometimes open a new document on startup when it shouldn't. [Mac OS X] (#189)
 - date: 2010-09-17
   version: 2.2.1
   description: |
