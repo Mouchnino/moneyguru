@@ -8,7 +8,7 @@
 import logging
 
 from hscommon.cocoa import install_exception_hook, pythonify
-from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyRegistrable
+from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyFairware
 from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
@@ -80,7 +80,7 @@ from core.gui.transaction_view import TransactionView
 from core.gui.view_options import ViewOptions
 from core.model.date import clean_format
 
-class PyMoneyGuruApp(PyRegistrable):
+class PyMoneyGuruApp(PyFairware):
     def initWithCocoa_(self, cocoa):
         super(PyMoneyGuruApp, self).init()
         self.cocoa = cocoa
@@ -174,7 +174,7 @@ class PyMoneyGuruApp(PyRegistrable):
     
     #--- Python -> Cocoa
     def setup_as_registered(self):
-        self.cocoa.setupAsRegistered()
+        pass # does nothing on Cocoa
     
 
 class PyDocument(NSObject):
@@ -234,10 +234,6 @@ class PyDocument(NSObject):
     
     def stopEdition(self):
         self.py.stop_edition()
-    
-    @signature('i@:')
-    def transactionCount(self):
-        return len(self.py.transactions)
     
     def close(self):
         self.py.close()

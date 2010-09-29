@@ -11,7 +11,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 @interface MGAppDelegate : NSObject
 {
-    IBOutlet NSMenuItem *unlockMenuItem;
     IBOutlet NSPopUpButton *firstWeekdayPopup;
     IBOutlet NSPopUpButton *aheadMonthsPopup;
     IBOutlet NSPopUpButton *yearStartMonthPopup;
@@ -29,7 +28,6 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)openExampleDocument:(id)sender;
 - (IBAction)openWebsite:(id)sender;
-- (IBAction)unlockApp:(id)sender;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 @end

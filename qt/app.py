@@ -89,7 +89,7 @@ class MoneyGuru(ApplicationBase):
     
     #--- Event Handling
     def applicationFinishedLaunching(self):
-        if not self.model.registered:
+        if not self.model.registered and self.model.unpaid_hours >= 1:
             self.reg.show_nag()
         if self.prefs.mainWindowIsMaximized:
             self.mainWindow.showMaximized()

@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "MGDocument.h"
 #import "MGConst.h"
 #import "Utils.h"
-#import "RegistrationInterface.h"
+#import "HSFairwareReminder.h"
 #import "Dialogs.h"
 #import "ValueTransformers.h"
 #import <Sparkle/SUUpdater.h>
@@ -93,15 +93,6 @@ http://www.hardcoded.net/licenses/hs_license
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.hardcoded.net/moneyguru/"]];
 }
 
-- (IBAction)unlockApp:(id)sender
-{
-    if ([[self py] isRegistered])
-        return;
-    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:[self py]];
-    [ri enterCode];    
-    [ri release];
-}
-
 /* Public */
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot
 {
@@ -135,7 +126,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [RegistrationInterface showNagWithApp:[self py]];
+    [HSFairwareReminder showNagWithApp:[self py]];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSDocumentController *dc = [NSDocumentController sharedDocumentController];
     BOOL hadFirstLaunch = [ud boolForKey:@"MGHadFirstLaunch"];
@@ -190,11 +181,5 @@ http://www.hardcoded.net/licenses/hs_license
         [continueUpdate invoke];
         [continueUpdate release];
     }
-}
-
-// Python -> Cocoa
-- (void)setupAsRegistered
-{
-    [unlockMenuItem setTitle:TR(@"ThanksForBuyingMsg")];
 }
 @end

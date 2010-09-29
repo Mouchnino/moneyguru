@@ -34,12 +34,11 @@ SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
     VERSION = '2.2.2'
-    DEMO_LIMIT_DESC = tr("In the demo version, documents with more than 100 transactions cannot be saved.")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
         default_currency=USD, cache_path=None):
         Broadcaster.__init__(self)
-        RegistrableApplication.__init__(self, appid=6)
+        RegistrableApplication.__init__(self, appid=2)
         self.view = view
         self.cache_path = cache_path
         # cache_path is required, but for tests, we don't want to bother specifying it. When 

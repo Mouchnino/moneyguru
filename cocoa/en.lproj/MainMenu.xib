@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1306"/>
-			<integer value="1145"/>
+			<integer value="57"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -68,15 +68,6 @@
 									<reference key="NSMenu" ref="342460988"/>
 									<string key="NSTitle">About moneyGuru</string>
 									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="640623815"/>
-									<reference key="NSMixedImage" ref="176664579"/>
-								</object>
-								<object class="NSMenuItem" id="152760393">
-									<reference key="NSMenu" ref="342460988"/>
-									<string key="NSTitle">Unlock moneyGuru</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
@@ -2354,22 +2345,6 @@
 					<int key="connectionID">1294</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">unlockMenuItem</string>
-						<reference key="source" ref="1071329777"/>
-						<reference key="destination" ref="152760393"/>
-					</object>
-					<int key="connectionID">1296</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">unlockApp:</string>
-						<reference key="source" ref="1071329777"/>
-						<reference key="destination" ref="152760393"/>
-					</object>
-					<int key="connectionID">1297</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">openExampleDocument:</string>
 						<reference key="source" ref="954832501"/>
@@ -2800,7 +2775,6 @@
 							<reference ref="323079926"/>
 							<reference ref="235087317"/>
 							<reference ref="937462810"/>
-							<reference ref="152760393"/>
 						</object>
 						<reference key="parent" ref="438945031"/>
 					</object>
@@ -3313,11 +3287,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1293</int>
 						<reference key="object" ref="937462810"/>
-						<reference key="parent" ref="342460988"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1295</int>
-						<reference key="object" ref="152760393"/>
 						<reference key="parent" ref="342460988"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3978,7 +3947,6 @@
 					<string>129.ImportedFromIB2</string>
 					<string>1290.IBPluginDependency</string>
 					<string>1293.IBPluginDependency</string>
-					<string>1295.IBPluginDependency</string>
 					<string>1298.IBPluginDependency</string>
 					<string>130.IBPluginDependency</string>
 					<string>130.ImportedFromIB2</string>
@@ -4157,6 +4125,7 @@
 					<string>5.ImportedFromIB2</string>
 					<string>56.IBPluginDependency</string>
 					<string>56.ImportedFromIB2</string>
+					<string>57.IBEditorWindowLastContentRect</string>
 					<string>57.IBPluginDependency</string>
 					<string>57.ImportedFromIB2</string>
 					<string>57.editorWindowContentRectSynchronizationRect</string>
@@ -4237,7 +4206,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4418,6 +4386,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
+					<string>{{102, 612}, {224, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{382, 467}, {227, 223}}</string>
@@ -4854,11 +4823,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>openExampleDocument:</string>
 							<string>openWebsite:</string>
-							<string>unlockApp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -4869,7 +4836,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>openExampleDocument:</string>
 							<string>openWebsite:</string>
-							<string>unlockApp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4879,10 +4845,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openWebsite:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">unlockApp:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -4898,7 +4860,6 @@
 							<string>customDateRangeItem2</string>
 							<string>customDateRangeItem3</string>
 							<string>firstWeekdayPopup</string>
-							<string>unlockMenuItem</string>
 							<string>yearStartMonthPopup</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4910,7 +4871,6 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSPopUpButton</string>
-							<string>NSMenuItem</string>
 							<string>NSPopUpButton</string>
 						</object>
 					</object>
@@ -4925,7 +4885,6 @@
 							<string>customDateRangeItem2</string>
 							<string>customDateRangeItem3</string>
 							<string>firstWeekdayPopup</string>
-							<string>unlockMenuItem</string>
 							<string>yearStartMonthPopup</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4957,10 +4916,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">firstWeekdayPopup</string>
 								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">unlockMenuItem</string>
-								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">yearStartMonthPopup</string>

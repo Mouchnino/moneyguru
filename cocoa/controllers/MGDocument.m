@@ -111,22 +111,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)outError
 {
-    if ([url isFileURL])
-    {
-        NSString *error = nil;
-        // Eventually, it might be a good idea to make core.document raise RegistrationRequired,
-        // which would then be caught in mg_cocoa and which would return a proper NSError to use here.
-        MGAppDelegate *app = [NSApp delegate];
-        if (![[app py] isRegistered])
-        {
-            if ([py transactionCount] > 100)
-            {
-                error = TR(@"DemoLimitReachedMsg");
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:error forKey:NSLocalizedFailureReasonErrorKey];
-                *outError = [NSError errorWithDomain:MGErrorDomain code:MGDemoLimitErrorCode userInfo:userInfo];
-                return NO;
-            }
-        }
+    if ([url isFileURL]) {
         [py saveToFile:[url path]];
         [[self windowForSheet] setDocumentEdited:[self isDocumentEdited]];
         return YES;

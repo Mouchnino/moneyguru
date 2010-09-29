@@ -26,6 +26,5 @@ http://www.hardcoded.net/licenses/hs_license
 - (NSString *)import:(NSString *)path;
 - (BOOL)isDirty;
 - (void)stopEdition;
-- (NSInteger)transactionCount;
 - (void)close;
 @end;

@@ -7,9 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyRegistrable.h"
+#import "PyFairware.h"
 
-@interface PyMoneyGuruApp : PyRegistrable {}
+@interface PyMoneyGuruApp : PyFairware {}
 
 - (id)initWithCocoa:(id)cocoa;
 - (void)free;
