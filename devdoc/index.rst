@@ -4,7 +4,7 @@ moneyGuru Developer Documentation
 
 :Author: `Hardcoded Software <http://www.hardcoded.net>`_
 :Dev website: http://hg.hardcoded.net/moneyguru
-:License: `HS License <http://www.hardcoded.net/licenses/hs_license>`_
+:License: `HS License <http://www.hardcoded.net/licenses/bsd_license>`_
 
 Introduction
 ============

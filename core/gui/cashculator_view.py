@@ -3,9 +3,9 @@
 # Created On: 2010-08-02
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
 # 
-# This software is licensed under the "HS" License as described in the "LICENSE" file, 
+# This software is licensed under the "BSD" License as described in the "LICENSE" file, 
 # which should be included with this package. The terms are also available at 
-# http://www.hardcoded.net/licenses/hs_license
+# http://www.hardcoded.net/licenses/bsd_license
 
 # NOTE: The cashculator integration code has no automated tests. Developing it is so much try/error
 # and the wanted database values are so much subject to change that I found maintaining tests
