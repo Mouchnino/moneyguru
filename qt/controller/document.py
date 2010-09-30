@@ -26,14 +26,6 @@ class Document(QObject):
         self.documentPath = None
         self.model = DocumentModel(view=self, app=app.model)
     
-    def _save(self, docpath):
-        if not self.app.model.registered and len(self.model.transactions) > 100:
-            msg = tr("You have reached the limits of this demo version. You must buy moneyGuru to save the document.")
-            QMessageBox.warning(self.app.mainWindow, tr("Registration Required"), msg)
-            return False
-        self.model.save_to_xml(docpath)
-        return True
-    
     #--- Public
     def close(self):
         if self.documentPath:
@@ -114,7 +106,7 @@ class Document(QObject):
     
     def save(self):
         if self.documentPath is not None:
-            self._save(self.documentPath)
+            self.model.save_to_xml(self.documentPath)
         else:
             self.saveAs()
     
@@ -123,9 +115,9 @@ class Document(QObject):
         filters = tr("moneyGuru Documents (*.moneyguru)")
         docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, '', filters))
         if docpath:
-            if self._save(docpath):
-                self.documentPath = docpath
-                self.documentSavedAs.emit(docpath)
+            self.model.save_to_xml(docpath)
+            self.documentPath = docpath
+            self.documentSavedAs.emit(docpath)
     
     # model --> view
     def query_for_schedule_scope(self):
