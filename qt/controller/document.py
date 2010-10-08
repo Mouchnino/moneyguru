@@ -55,7 +55,7 @@ class Document(QObject):
     def exportToQIF(self):
         title = tr("Export to QIF")
         filters = tr("QIF Files (*.qif)")
-        docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', '', filters))
+        docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', filters))
         if docpath:
             self.model.save_to_qif(docpath)
     
