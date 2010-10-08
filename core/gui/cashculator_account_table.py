@@ -7,12 +7,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from ..model.account import sort_accounts
+from ..model.account import ACCOUNT_SORT_KEY
 from .base import ViewChild
 from .column import Column
 from .table import GUITable, Row
 
 class CashculatorAccountTable(GUITable, ViewChild):
+    INVALIDATING_MESSAGES = {'account_added', 'account_changed', 'account_deleted',
+        'accounts_excluded'}
     COLUMNS = [
         Column('name'),
         Column('recurring'),
@@ -29,8 +31,9 @@ class CashculatorAccountTable(GUITable, ViewChild):
             categories = self.parent_view.get_categories()
             nonrec = (cat for cat in categories.values() if not cat.is_recurring)
             self.nonrecurring_names = set(cat.name for cat in nonrec)
-        accounts = [a for a in self.document.accounts if a.is_income_statement_account()]
-        sort_accounts(accounts)
+        accounts = {a for a in self.document.accounts if a.is_income_statement_account()}
+        accounts -= self.document.excluded_accounts
+        accounts = sorted(accounts, key=ACCOUNT_SORT_KEY)
         for account in accounts:
             self.append(CashculatorAccountTableRow(self, account))
     

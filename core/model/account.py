@@ -24,11 +24,12 @@ class AccountType(object):
 
 # Placeholder when an argument is not given
 NOT_GIVEN = object()
+ACCOUNT_SORT_KEY = lambda a: (AccountType.InOrder.index(a.type), sort_string(a.name))
 
 def sort_accounts(accounts):
     """Sort accounts according first to their type, then to their name.
     """
-    accounts.sort(key=lambda a: (AccountType.InOrder.index(a.type), sort_string(a.name)))
+    accounts.sort(key=ACCOUNT_SORT_KEY)
 
 class Account(object):
     def __init__(self, name, currency, type):

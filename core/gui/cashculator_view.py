@@ -103,7 +103,8 @@ class CashculatorView(BaseView):
                 cell.save_data()
         db.fix_category_order()
         # Now set starting balances
-        accounts = set(a for a in self.document.accounts if a.is_balance_sheet_account())
+        accounts = {a for a in self.document.accounts if a.is_balance_sheet_account()}
+        accounts -= self.document.excluded_accounts
         for dr in dateranges:
             baldate = dr.start - ONE_DAY
             nw =  sum(a.entries.balance(date=baldate, currency=currency) for a in accounts)
