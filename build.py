@@ -93,7 +93,6 @@ def build_qt(dev):
         print("Converting {0}".format(ts))
         os.system('lrelease {0}'.format(op.join(langdir, ts)))
     print("Building UI units")
-    build_all_qt_ui(op.join('qtlib', 'ui'))
     build_all_qt_ui(op.join('qt', 'ui'))
     qrc_path = op.join('qt', 'mg.qrc')
     pyrc_path = op.join('qt', 'mg_rc.py')
