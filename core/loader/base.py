@@ -31,11 +31,19 @@ from ..model.transaction_list import TransactionList
 # The order of the fields depending on the separator is different because we try to minimize the
 # possibility of errors. Most american users use the slash separator with month as a first field
 # and most european users have dot or hyphen seps with the first field being the day.
-DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%Y/%m/%d', '%d.%m.%Y', '%d.%m.%y',
-    '%m.%d.%y', '%m.%d.%Y', '%Y.%m.%d', '%m-%d-%y', '%m-%d-%Y', '%d-%m-%Y', '%d-%m-%y', '%Y-%m-%d',
-    '%Y%m%d']
 
-re_possibly_a_date = re.compile(r'[\d/.-]{6,10}')
+BASE_DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%Y/%m/%d', '%d/%b/%Y',
+    '%d/%b/%y']
+EXTRA_DATE_SEPS = ['.', '-']
+DATE_FORMATS = BASE_DATE_FORMATS[:]
+# Re-add all date formats with their separator replaced
+for sep in EXTRA_DATE_SEPS:
+    for base_format in BASE_DATE_FORMATS:
+        DATE_FORMATS.append(base_format.replace('/', sep))
+# Finally, add special formats
+DATE_FORMATS.append('%Y%m%d')
+
+re_possibly_a_date = re.compile(r'[\d/.-]{6,10}|\d{1,2}[/.-]\w{3}[/.-]\d{2,4}')
 
 class Loader(object):
     """Base interface for loading files containing financial information to load into moneyGuru.

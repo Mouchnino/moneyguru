@@ -9,7 +9,8 @@
 from datetime import date
 import os.path as op
 
-from hsutil.testutil import eq_
+from hsutil.testutil import eq_, with_tmpdir
+from hsutil import io as hsio
 
 from hscommon.currency import PLN, CAD
 
@@ -349,3 +350,19 @@ class ImportFileWithMultipleTransferReferences(TestCase):
         self.assertEqual(self.istatement.income[0].name, 'income')
         self.assertEqual(self.istatement.expenses[0].name, 'expense')
     
+
+
+@with_tmpdir
+def test_date_format_guessing(tmppath):
+    filepath = tmppath + 'foo.qif'
+    def check(str_date, expected_date):
+        # To test the date format guessing part, we create a QIF, which uses date guessing.
+        app = TestApp()
+        contents = "!Type:Bank\nD{str_date}\nT42.32\n^".format(str_date=str_date)
+        hsio.open(filepath, 'wt', encoding='utf-8').write(contents)
+        app.doc.parse_file_for_import(str(filepath))
+        eq_(app.itable[0].date_import, expected_date)
+    
+    check('12/20/2010', '20/12/2010')
+    check('28/Jun/2010', '28/06/2010')
+    check('12/Jan/10', '12/01/2010')
