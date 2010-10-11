@@ -7,8 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from collections import namedtuple
 
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
@@ -235,7 +233,8 @@ class ItemViewLayoutElement(LayoutElement):
         for rowIndex in range(startRow, self.endRow+1):
             top = self.rect.top() + rowHeight + ((rowIndex - startRow) * rowHeight)
             left = self.rect.left()
-            rowIsSpanning = self.ds.data(rowIndex, 0, EXTRA_ROLE) & EXTRA_SPAN_ALL_COLUMNS
+            extraRole = nonone(self.ds.data(rowIndex, 0, EXTRA_ROLE), 0)
+            rowIsSpanning = extraRole & EXTRA_SPAN_ALL_COLUMNS
             if rowIsSpanning:
                 itemRect = QRect(left, top, self.rect.width(), rowHeight)
                 self.renderCell(painter, rowIndex, 0, itemRect)
@@ -258,7 +257,8 @@ class ItemViewPrintStats(object):
         self.headerHeight = headerFM.height() + CELL_MARGIN * 2
         spannedRowIndexes = set()
         for rowIndex in range(ds.rowCount()):
-            if ds.data(rowIndex, 0, EXTRA_ROLE) & EXTRA_SPAN_ALL_COLUMNS:
+            extraRole = nonone(ds.data(rowIndex, 0, EXTRA_ROLE), 0)
+            if extraRole & EXTRA_SPAN_ALL_COLUMNS:
                 spannedRowIndexes.add(rowIndex)
         self.columns = []
         for colIndex in range(ds.columnCount()):
