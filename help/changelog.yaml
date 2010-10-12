@@ -1,9 +1,15 @@
+- date: 2010-10-12
+  version: 2.2.5
+  description: |
+    * Improved CSV imports by supporting addition date formats. (#195)
+    * Fixed crash on printing the Account view. [Windows, Linux] (#196)
+    * Fixed occasional crash on startup.
 - date: 2010-10-08
   version: 2.2.4
   description: |
     * Fixed occasional crash on startup.
     * Export to Cashculator is now affected by excluded accounts. [Mac OS X] (#192)
-    * Fixed crash on Export to QIF. [Windows] (#193)
+    * Fixed crash on Export to QIF. [Windows, Linux] (#193)
 - date: 2010-09-30
   version: 2.2.3
   description: |
