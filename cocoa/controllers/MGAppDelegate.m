@@ -13,6 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSFairwareReminder.h"
 #import "Dialogs.h"
 #import "ValueTransformers.h"
+#import "MGDocumentController.h"
 #import <Sparkle/SUUpdater.h>
 
 @implementation MGAppDelegate
@@ -124,26 +125,22 @@ http://www.hardcoded.net/licenses/bsd_license
     return NO;
 }
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
+{
+    // We create the first NSDocumentController instance here, which sets the shared instance used
+    // throughout the app.
+    [[MGDocumentController alloc] init];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     [HSFairwareReminder showNagWithApp:[self py]];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+    MGDocumentController *dc = [NSDocumentController sharedDocumentController];
     BOOL hadFirstLaunch = [ud boolForKey:@"MGHadFirstLaunch"];
     if (hadFirstLaunch)
     {
-        BOOL hasOpenedDocument = [[dc documents] count] > 0; // Could ave been opened through app arguments
-        if (!hasOpenedDocument) {
-            NSArray *recentURLs = [dc recentDocumentURLs];
-            if ([recentURLs count] > 0) {
-                NSError *error;
-                NSURL *url = [recentURLs objectAtIndex:0];
-                [dc openDocumentWithContentsOfURL:url display:YES error:&error];
-            }
-            else {
-                [dc openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
-            }
-        }
+        [dc openFirstDocument];
     }
     else {
         if ([Dialogs askYesNo:TR(@"FirstRunMsg")] == NSAlertFirstButtonReturn) {

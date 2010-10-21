@@ -50,6 +50,7 @@
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
 		CE33E33E11FB58B800444435 /* columns.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE33E33C11FB58B800444435 /* columns.strings */; };
 		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
+		CE3BF14C1270845E000D141C /* MGDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF14B1270845E000D141C /* MGDocumentController.m */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
 		CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41C98F0E2B52CD006D3BEA /* MGTable.m */; };
 		CE44BA711207042E00F4BAE9 /* MGCashculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44BA701207042E00F4BAE9 /* MGCashculatorView.m */; };
@@ -324,6 +325,8 @@
 		CE33E34011FB58D500444435 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/columns.strings; sourceTree = "<group>"; };
 		CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitGraph.h; sourceTree = "<group>"; };
 		CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		CE3BF14A1270845E000D141C /* MGDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGDocumentController.h; path = controllers/MGDocumentController.h; sourceTree = SOURCE_ROOT; };
+		CE3BF14B1270845E000D141C /* MGDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGDocumentController.m; path = controllers/MGDocumentController.m; sourceTree = SOURCE_ROOT; };
 		CE3F6A7610F903640046B2D2 /* PyProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitView.h; sourceTree = "<group>"; };
 		CE40239E0F4C737D0083BAD2 /* doc_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_icon.icns; sourceTree = "<group>"; };
 		CE41C98E0E2B52CD006D3BEA /* MGTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTable.h; sourceTree = "<group>"; };
@@ -925,6 +928,8 @@
 				CE873A7D0E21622F004F63E9 /* MGDateFieldEditor.m */,
 				CE873A7E0E21622F004F63E9 /* MGDocument.h */,
 				CE873A7F0E21622F004F63E9 /* MGDocument.m */,
+				CE3BF14A1270845E000D141C /* MGDocumentController.h */,
+				CE3BF14B1270845E000D141C /* MGDocumentController.m */,
 				CE873A820E21622F004F63E9 /* MGFieldEditor.h */,
 				CE873A830E21622F004F63E9 /* MGFieldEditor.m */,
 				CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */,
@@ -1350,6 +1355,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moneyguru" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -1590,6 +1596,7 @@
 				CEB6021412393827002218CF /* MGGeneralLedgerTableView.m in Sources */,
 				CE051CF2123A904F00D31D18 /* MGGeneralLedgerPrint.m in Sources */,
 				CE6E77A512538AF200A1754B /* HSFairwareReminder.m in Sources */,
+				CE3BF14C1270845E000D141C /* MGDocumentController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

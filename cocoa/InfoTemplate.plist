@@ -24,6 +24,54 @@
 			<key>NSPersistentStoreTypeKey</key>
 			<string>XML</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ofx</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>doc_icon</string>
+			<key>CFBundleTypeName</key>
+			<string>OFX</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>MGImport</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>csv</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>doc_icon</string>
+			<key>CFBundleTypeName</key>
+			<string>CSV</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>MGImport</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>qif</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>doc_icon</string>
+			<key>CFBundleTypeName</key>
+			<string>QIF</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>MGImport</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
