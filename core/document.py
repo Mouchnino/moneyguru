@@ -8,6 +8,7 @@
 
 import datetime
 import time
+import uuid
 
 from hscommon.currency import Currency
 from hscommon.notify import Repeater
@@ -86,6 +87,7 @@ class Document(Repeater):
         self._date_range = YearRange(datetime.date.today())
         self._filter_string = ''
         self._filter_type = None
+        self._document_id = None
         self._restore_preferences()
     
     #--- Private
@@ -153,6 +155,7 @@ class Document(Repeater):
                 self.accounts.remove(account)
     
     def _clear(self):
+        self._document_id = None
         self.accounts.clear()
         self.transactions.clear()
         self.groups.clear()
@@ -221,11 +224,12 @@ class Document(Repeater):
     
     def _restore_preferences_after_load(self):
         # some preference need the file loaded before attempting a restore
-        excluded_account_names = set(nonone(self.app.get_default(EXCLUDED_ACCOUNTS_PREFERENCE), []))
-        self.excluded_accounts = set(a for a in self.accounts if a.name in excluded_account_names)
+        excluded_account_names = set(nonone(self.get_default(EXCLUDED_ACCOUNTS_PREFERENCE), []))
+        self.excluded_accounts = {a for a in self.accounts if a.name in excluded_account_names}
         selected_range = self.app.get_default(SELECTED_DATE_RANGE_PREFERENCE)
         if selected_range == DATE_RANGE_ALL_TRANSACTIONS: # only works after load
             self.select_all_transactions_range()
+        self.notify('document_restoring_preferences')
     
     def _save_preferences(self):
         dr = self.date_range
@@ -248,7 +252,16 @@ class Document(Repeater):
         str_end_date = dr.end.strftime(DATE_FORMAT_FOR_PREFERENCES)
         self.app.set_default(SELECTED_DATE_RANGE_END_PREFERENCE, str_end_date)
         excluded_account_names = [a.name for a in self.excluded_accounts]
-        self.app.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
+        self.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
+    
+    #--- Override
+    def add_listener(self, listener):
+        # Under Cocoa, load_from_xml() is called before children are connected. However, we want
+        # preferences to be restored after load, so what we do is that if we have a document ID,
+        # we re-issue the 'document_restoring_preferences' notification to that listener.
+        Repeater.add_listener(self, listener)
+        if self._document_id is not None:
+            listener.dispatch('document_restoring_preferences')
     
     #--- Account
     def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
@@ -365,7 +378,6 @@ class Document(Repeater):
     
     @handle_abort
     def change_transaction(self, original, new):
-        date_changed = new.date != original.date
         global_scope = self._query_for_scope_if_needed([original])
         action = Action(tr('Change transaction'))
         action.change_transactions([original])
@@ -681,6 +693,7 @@ class Document(Repeater):
             raise FileFormatError(tr('"%s" is not a moneyGuru file') % filename)
         loader.load()
         self._clear()
+        self._document_id = loader.document_id
         for group in loader.groups:
             self.groups.append(group)
         for account in loader.accounts:
@@ -694,7 +707,6 @@ class Document(Repeater):
         self._cook()
         self._restore_preferences_after_load()
         self.notify('document_changed')
-        self.notify('document_loaded')
         self._undoer.set_save_point()
     
     def save_to_xml(self, filename, autosave=False):
@@ -702,8 +714,10 @@ class Document(Repeater):
         # change in the save state.
         if not autosave:
             self.stop_edition()
-        save_native(filename, self.accounts, self.groups, self.transactions, self.schedules,
-            self.budgets)
+        if self._document_id is None:
+            self._document_id = uuid.uuid4().hex
+        save_native(filename, self._document_id, self.accounts, self.groups, self.transactions,
+            self.schedules, self.budgets)
         if not autosave:
             self._undoer.set_save_point()
     
@@ -881,6 +895,18 @@ class Document(Repeater):
         their edits and stop edition.
         """
         self.notify('edition_must_stop')
+    
+    def get_default(self, key, fallback_value=None):
+        if self._document_id is None:
+            return fallback_value
+        key = 'Doc{0}.{1}'.format(self._document_id, key)
+        return self.app.get_default(key, fallback_value=fallback_value)
+    
+    def set_default(self, key, value):
+        if self._document_id is None:
+            return
+        key = 'Doc{0}.{1}'.format(self._document_id, key)
+        self.app.set_default(key, value)
     
     #--- Properties
     @property

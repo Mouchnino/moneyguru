@@ -6,7 +6,7 @@
 
 from hscommon.notify import Listener, Repeater
 
-class DocumentNotificationsMixin(object):
+class DocumentNotificationsMixin:
     def account_added(self):
         pass
     
@@ -37,11 +37,11 @@ class DocumentNotificationsMixin(object):
     def date_range_will_change(self):
         pass
     
-    # When the whole document changed
-    def document_changed(self): 
+    def document_restoring_preferences(self):
         pass
     
-    def document_loaded(self):
+    # When the whole document changed
+    def document_changed(self): 
         pass
     
     def document_will_close(self):
@@ -83,7 +83,7 @@ class DocumentNotificationsMixin(object):
         pass
     
 
-class MainWindowNotificationsMixin(object):
+class MainWindowNotificationsMixin:
     def shown_account_changed(self):
         pass
     
@@ -91,22 +91,22 @@ class MainWindowNotificationsMixin(object):
         pass
     
 
-class SheetViewNotificationsMixin(object):
+class SheetViewNotificationsMixin:
     def group_expanded_state_changed(self):
         pass
     
 
-MESSAGES_DOCUMENT_CHANGED = set(['account_added', 'account_changed', 'account_deleted',
+MESSAGES_DOCUMENT_CHANGED = {'account_added', 'account_changed', 'account_deleted',
     'transaction_changed', 'transaction_deleted', 'transactions_imported', 'budget_changed',
     'budget_deleted', 'schedule_changed', 'schedule_deleted', 'document_changed',
-    'performed_undo_or_redo'])
+    'performed_undo_or_redo'}
 
-class HideableObject(object):
+class HideableObject:
     # Messages that invalidates the view if received while it's hidden (its cache will be
     # revalidated upon show)
     INVALIDATING_MESSAGES = set()
     # Messages that are always passed, even if the object is hidden.
-    ALWAYSON_MESSAGES = set(['document_will_close'])
+    ALWAYSON_MESSAGES = {'document_will_close', 'document_restoring_preferences'}
     
     def __init__(self):
         self._hidden = True
@@ -187,7 +187,7 @@ class ImportWindowGUIObject(Listener):
         pass
     
 
-class GUIPanel(object):
+class GUIPanel:
     def __init__(self, view, document):
         self.view = view
         self.document = document

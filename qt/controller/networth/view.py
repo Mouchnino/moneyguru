@@ -34,7 +34,7 @@ class NetWorthView(BaseView, Ui_NetWorthView):
         self.setupUi(self)
     
     def _setupColumns(self):
-        self.nwsheet.restoreColumns()
+        self.nwsheet.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

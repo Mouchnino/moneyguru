@@ -30,7 +30,7 @@ class GeneralLedgerView(BaseView, Ui_GeneralLedgerView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.gltable.restoreColumns()
+        self.gltable.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

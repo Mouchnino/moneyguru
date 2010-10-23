@@ -77,6 +77,7 @@ class Loader(object):
         self.split_info = SplitInfo()
         self.recurrence_info = RecurrenceInfo()
         self.budget_info = BudgetInfo()
+        self.document_id = None
     
     #--- Virtual
     def _parse(self, infile):

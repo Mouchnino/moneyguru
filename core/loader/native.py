@@ -74,6 +74,7 @@ class Loader(base.Loader):
             return info
         
         root = self.root
+        self.document_id = root.attrib.get('document_id')
         for group_element in root.getiterator('group'):
             self.start_group()
             attrib = group_element.attrib

@@ -32,7 +32,7 @@ class TransactionView(BaseView, Ui_TransactionView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.ttable.restoreColumns()
+        self.ttable.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

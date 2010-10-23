@@ -128,17 +128,6 @@ class AccountSheet(TreeModel, ColumnBearer):
         modelIndex = self.findIndex(selectedPath)
         self.view.setCurrentIndex(modelIndex)
     
-    #--- Public
-    def restoreColumns(self):
-        colnames = self.model.columns.colnames
-        indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
-        self.setColumnsOrder(indexes)
-        widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
-        self.setColumnsWidth(widths)
-        for column in self.COLUMNS:
-            visible = self.model.columns.column_is_visible(column.attrname)
-            self.view.header().setSectionHidden(column.index, not visible)
-    
     #--- Data Model methods
     def columnCount(self, parent):
         return len(self.COLUMNS)
@@ -276,6 +265,16 @@ class AccountSheet(TreeModel, ColumnBearer):
             index = self.findIndex(path)
             self.view.expand(index)
         self._updateViewSelection()
+    
+    def restore_columns(self):
+        colnames = self.model.columns.colnames
+        indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
+        self.setColumnsOrder(indexes)
+        widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
+        self.setColumnsWidth(widths)
+        for column in self.COLUMNS:
+            visible = self.model.columns.column_is_visible(column.attrname)
+            self.view.header().setSectionHidden(column.index, not visible)
     
     def start_editing(self):
         self.view.editSelected()

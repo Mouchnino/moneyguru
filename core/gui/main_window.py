@@ -38,7 +38,6 @@ class MainWindow(Repeater):
         self._explicitly_selected_transactions = []
         self._selected_schedules = []
         self._selected_budgets = []
-        self._panes_were_restored = False
         self._account2visibleentries = {}
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
@@ -51,7 +50,7 @@ class MainWindow(Repeater):
             self.glview, self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
             self.bpanel, self.cdrpanel, self.arpanel, self.alookup, self.completion_lookup,
             self.daterange_selector, self.view_options) = children
-        self._restore_opened_panes()
+        self._restore_default_panes()
         for child in children:
             # Panels are not listeners
             if isinstance(child, Listener):
@@ -119,18 +118,8 @@ class MainWindow(Repeater):
         self._set_panes(pane_data)
     
     def _restore_opened_panes(self):
-        # Depending on the platform, it's possible to have set_children called either before
-        # the initial document load, or after it. That is why we check here to see if we can restore
-        # pane, but we also check on document_loaded.
-        if self._panes_were_restored:
-            return
-        if not self.document.accounts:
-            self._restore_default_panes()
-            return
-        self._panes_were_restored = True
-        stored_panes = self.document.app.get_default(OPENED_PANES_PREFERENCE)
+        stored_panes = self.document.get_default(OPENED_PANES_PREFERENCE)
         if not stored_panes:
-            self._restore_default_panes()
             return
         pane_data = []
         for data in stored_panes:
@@ -142,7 +131,7 @@ class MainWindow(Repeater):
             pane_data.append((pane_type, account))
         if pane_data:
             self._set_panes(pane_data)
-            selected_pane_index = self.document.app.get_default(SELECTED_PANE_PREFERENCE)
+            selected_pane_index = self.document.get_default(SELECTED_PANE_PREFERENCE)
             if selected_pane_index is not None:
                 self.current_pane_index = selected_pane_index
     
@@ -154,8 +143,8 @@ class MainWindow(Repeater):
             if pane.account is not None:
                 data['account_name'] = pane.account.name
             opened_panes.append(data)
-        self.document.app.set_default(OPENED_PANES_PREFERENCE, opened_panes)
-        self.document.app.set_default(SELECTED_PANE_PREFERENCE, self._current_pane_index)
+        self.document.set_default(OPENED_PANES_PREFERENCE, opened_panes)
+        self.document.set_default(SELECTED_PANE_PREFERENCE, self._current_pane_index)
     
     def _set_panes(self, pane_data):
         # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, account)]
@@ -483,13 +472,11 @@ class MainWindow(Repeater):
         self._close_irrelevant_account_panes()
         self._undo_stack_changed()
     
-    def document_loaded(self):
-        # We can only restore opened panes after load because if we have account panes opened,
-        # we need these accounts to be loaded first.
-        self._restore_opened_panes()
-    
     def document_will_close(self):
         self._save_preferences()
+    
+    def document_restoring_preferences(self):
+        self._restore_opened_panes()
     
     def filter_applied(self):
         if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):

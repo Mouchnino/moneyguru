@@ -304,6 +304,10 @@ class PyColumns(PyGUIObject):
     def resizeColumn_toWidth_(self, colname, newwidth):
         self.py.resize_column(colname, newwidth)
     
+    #--- Python --> Cocoa
+    def restore_columns(self):
+        self.cocoa.restoreColumns()
+    
     def set_column_visible(self, colname, visible):
         self.cocoa.setColumn_visible_(colname, visible)
     

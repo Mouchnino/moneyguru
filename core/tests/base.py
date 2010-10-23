@@ -516,8 +516,9 @@ class TestApp(object):
         return newapp
     
     def save_file(self):
-        filename = self.tmppath() + 'foo.xml'
-        self.doc.save_to_xml(str(filename)) # reset the dirty flag
+        filename = str(self.tmppath() + 'foo.xml')
+        self.doc.save_to_xml(filename) # reset the dirty flag
+        return filename
     
     def show_account(self, account_name):
         # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()

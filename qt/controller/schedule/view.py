@@ -30,7 +30,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.sctable.restoreColumns()
+        self.sctable.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

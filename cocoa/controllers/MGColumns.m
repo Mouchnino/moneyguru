@@ -91,31 +91,6 @@ http://www.hardcoded.net/licenses/bsd_license
     isRestoring = NO;
 }
 
-/* Call this after initializeColumns to query the core and see if column data has been restored from
-   preferences. If there is, we apply these changes.
-*/
-- (void)restoreColumns
-{
-    isRestoring = YES;
-    NSArray *columnOrder = [[self py] columnNamesInOrder];
-    for (NSInteger i=0; i<[columnOrder count]; i++) {
-        NSString *colName = [columnOrder objectAtIndex:i];
-        NSInteger index = [tableView columnWithIdentifier:colName];
-        if ((index != -1) && (index != i)) {
-            [tableView moveColumn:index toColumn:i];
-        }
-    }
-    for (NSTableColumn *c in [tableView tableColumns]) {
-        NSInteger width = [[self py] columnWidth:[c identifier]];
-        if (width > 0) {
-            [c setWidth:width];
-        }
-        BOOL isVisible = [[self py] columnIsVisible:[c identifier]];
-        [c setHidden:!isVisible];
-    }
-    isRestoring = NO;
-}
-
 /* Notifications */
 - (void)columnMoved:(NSNotification *)notification
 {
@@ -141,6 +116,28 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Python --> Cocoa */
+- (void)restoreColumns
+{
+    isRestoring = YES;
+    NSArray *columnOrder = [[self py] columnNamesInOrder];
+    for (NSInteger i=0; i<[columnOrder count]; i++) {
+        NSString *colName = [columnOrder objectAtIndex:i];
+        NSInteger index = [tableView columnWithIdentifier:colName];
+        if ((index != -1) && (index != i)) {
+            [tableView moveColumn:index toColumn:i];
+        }
+    }
+    for (NSTableColumn *c in [tableView tableColumns]) {
+        NSInteger width = [[self py] columnWidth:[c identifier]];
+        if (width > 0) {
+            [c setWidth:width];
+        }
+        BOOL isVisible = [[self py] columnIsVisible:[c identifier]];
+        [c setHidden:!isVisible];
+    }
+    isRestoring = NO;
+}
+
 - (void)setColumn:(NSString *)colname visible:(BOOL)visible
 {
     NSTableColumn *col = [tableView tableColumnWithIdentifier:colname];

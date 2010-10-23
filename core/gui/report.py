@@ -32,13 +32,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         tree.Tree.__init__(self)
         self.columns = Columns(self)
         self.edited = None
-        
-        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
-        expanded = self.app.get_default(prefname, list())
-        if expanded:
-            self._expanded_paths = set(map(tuple, expanded))
-        else:
-            self._expanded_paths = set([(0, ), (1, )])
+        self._expanded_paths = {(0, ), (1, )}
     
     #--- Override
     def _revalidate(self):
@@ -295,8 +289,15 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     def document_will_close(self):
         # Save node expansion state
         prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
-        self.app.set_default(prefname, self.expanded_paths)
+        self.document.set_default(prefname, self.expanded_paths)
         self.columns.save_columns()
+    
+    def document_restoring_preferences(self):
+        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
+        expanded = self.document.get_default(prefname, list())
+        if expanded:
+            self._expanded_paths = {tuple(p) for p in expanded}
+        self.columns.restore_columns()
     
     def edition_must_stop(self):
         self.view.stop_editing()

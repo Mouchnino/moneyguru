@@ -47,6 +47,9 @@ class GUITable(GUITableBase):
     def document_will_close(self):
         self.columns.save_columns()
     
+    def document_restoring_preferences(self):
+        self.columns.restore_columns()
+    
     def performed_undo_or_redo(self):
         self.refresh()
         self.view.refresh()

@@ -34,7 +34,7 @@ class ProfitView(BaseView, Ui_ProfitView):
         self.setupUi(self)
     
     def _setupColumns(self):
-        self.psheet.restoreColumns()
+        self.psheet.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

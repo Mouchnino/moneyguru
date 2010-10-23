@@ -9,7 +9,7 @@
 
 import copy
 
-class Column(object):
+class Column:
     def __init__(self, name, visible=True):
         self.name = name
         self.index = 0
@@ -17,10 +17,10 @@ class Column(object):
         self.visible = visible
     
 
-class Columns(object):
+class Columns:
     def __init__(self, table):
         self.table = table
-        self.app = table.document.app
+        self.document = table.document
         self.savename = table.SAVENAME
         # Set this view as soon as the GUI layer column instance is created
         self.view = None
@@ -28,8 +28,7 @@ class Columns(object):
         columns = list(map(copy.copy, table.COLUMNS))
         for i, column in enumerate(columns):
             column.index = i
-        self.coldata = dict((col.name, col) for col in columns)
-        self.restore_columns()
+        self.coldata = {col.name: col for col in columns}
     
     def _get_colname_attr(self, colname, attrname, default):
         try:
@@ -69,13 +68,14 @@ class Columns(object):
             return
         for col in self.coldata.values():
             pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
-            coldata = self.app.get_default(pref_name, fallback_value={})
+            coldata = self.document.get_default(pref_name, fallback_value={})
             if 'index' in coldata:
                 col.index = coldata['index']
             if 'width' in coldata:
                 col.width = coldata['width']
             if 'visible' in coldata:
                 col.visible = coldata['visible']
+        self.view.restore_columns()
     
     def save_columns(self):
         if not (self.savename and self.coldata):
@@ -83,7 +83,7 @@ class Columns(object):
         for col in self.coldata.values():
             pref_name = '{0}.Columns.{1}'.format(self.savename, col.name)
             coldata = {'index': col.index, 'width': col.width, 'visible': col.visible}
-            self.app.set_default(pref_name, coldata)
+            self.document.set_default(pref_name, coldata)
     
     def set_column_order(self, colnames):
         colnames = (name for name in colnames if name in self.coldata)
