@@ -6,10 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
-import sys
-import locale
 import re
 from calendar import monthrange
 from datetime import date, datetime, timedelta
@@ -183,7 +179,9 @@ class YearToDateRange(DateRange):
         DateRange.__init__(self, start, end)
     
     def prev(self): # for income statement's Last column
-        return YearRange(self).prev()
+        start = inc_year(self.start, -1)
+        end = inc_year(self.end, -1)
+        return DateRange(start, end)
     
     @property
     def display(self):

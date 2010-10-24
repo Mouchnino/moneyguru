@@ -7,14 +7,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from datetime import date
-import time
 
 from hsutil.testutil import eq_
 from hsutil.testutil import Patcher
 
+from ..const import PaneType
+from ..model.account import AccountType
 from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
 from .base import TestCase, TestApp, with_app, TestData
 
@@ -158,39 +157,53 @@ class RangeOnYearStartsOnApril(TestCase):
         eq_(self.document.date_range.start, date(2007, 4, 1))
     
 
-class RangeOnYearToDate(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mock_today(2008, 11, 12)
-        self.drsel.select_year_to_date_range()
-    
-    def test_close_and_load(self):
-        # The date range preference is correctly restored
-        self.close_and_load()
-        eq_(self.document.date_range, YearToDateRange())
-    
-    def test_select_next_prev_today_range(self):
-        # next/prev/today do nothing in YTD
-        self.drsel.select_next_date_range()
-        eq_(self.document.date_range.start, date(2008, 1, 1))
-        self.drsel.select_prev_date_range()
-        eq_(self.document.date_range.start, date(2008, 1, 1))
-        self.drsel.select_today_date_range()
-        eq_(self.document.date_range.start, date(2008, 1, 1))
-    
-    def test_year_start_month_at_4(self):
-        # when setting year_start_month at 4, the year-to-date range will start on april 1st
-        self.app.year_start_month = 4
-        eq_(self.document.date_range.start, date(2008, 4, 1))
-        eq_(self.document.date_range.end, date(2008, 11, 12))
-    
-    def test_year_start_month_at_12(self):
-        # when the year_start_month is higher than the current month in YTD, the date range will
-        # start in the previous year
-        self.app.year_start_month = 12
-        eq_(self.document.date_range.start, date(2007, 12, 1))
-        eq_(self.document.date_range.end, date(2008, 11, 12))
-    
+#---
+def app_range_on_year_to_date():
+    p = Patcher()
+    p.patch_today(2008, 11, 12)
+    app = TestApp()
+    app.drsel.select_year_to_date_range()
+    return app, p
+
+@with_app(app_range_on_year_to_date)
+def test_close_and_load(app):
+    # The date range preference is correctly restored
+    newapp = app.save_and_load()
+    eq_(newapp.doc.date_range, YearToDateRange())
+
+@with_app(app_range_on_year_to_date)
+def test_select_next_prev_today_range(app):
+    # next/prev/today do nothing in YTD
+    app.drsel.select_next_date_range()
+    eq_(app.doc.date_range.start, date(2008, 1, 1))
+    app.drsel.select_prev_date_range()
+    eq_(app.doc.date_range.start, date(2008, 1, 1))
+    app.drsel.select_today_date_range()
+    eq_(app.doc.date_range.start, date(2008, 1, 1))
+
+@with_app(app_range_on_year_to_date)
+def test_year_start_month_at_4(app):
+    # when setting year_start_month at 4, the year-to-date range will start on april 1st
+    app.app.year_start_month = 4
+    eq_(app.doc.date_range.start, date(2008, 4, 1))
+    eq_(app.doc.date_range.end, date(2008, 11, 12))
+
+@with_app(app_range_on_year_to_date)
+def test_year_start_month_at_12(app):
+    # when the year_start_month is higher than the current month in YTD, the date range will
+    # start in the previous year
+    app.app.year_start_month = 12
+    eq_(app.doc.date_range.start, date(2007, 12, 1))
+    eq_(app.doc.date_range.end, date(2008, 11, 12))
+
+@with_app(app_range_on_year_to_date)
+def test_computations_for_prev_range_are_also_for_ytd(app):
+    # In account sheets, the "Last" column shows data for last year *to date*, not the whole year.
+    app.add_account('foo', account_type=AccountType.Expense)
+    app.add_txn('01/01/2007', to='foo', amount='1') # in last-YTD range
+    app.add_txn('01/12/2007', to='foo', amount='1') # out of last-YTD range
+    app.mw.select_pane_of_type(PaneType.Profit)
+    eq_(app.istatement.expenses[0].last_cash_flow, '1.00')
 
 class RangeOnRunningYear(TestCase):
     def setUp(self):
