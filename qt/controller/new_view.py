@@ -14,7 +14,7 @@ from core.const import PaneType
 from core.gui.empty_view import EmptyView as EmptyViewModel
 
 from .base_view import BaseView
-from ui.new_view_ui import Ui_NewView
+from ..ui.new_view_ui import Ui_NewView
 
 class NewView(BaseView, Ui_NewView):
     def __init__(self, mainwindow):

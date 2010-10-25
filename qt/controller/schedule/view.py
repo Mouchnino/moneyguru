@@ -11,7 +11,7 @@ from core.gui.schedule_view import ScheduleView as ScheduleViewModel
 
 from ..base_view import BaseView
 from .table import ScheduleTable
-from ui.schedule_view_ui import Ui_ScheduleView
+from ...ui.schedule_view_ui import Ui_ScheduleView
 
 class ScheduleView(BaseView, Ui_ScheduleView):
     def __init__(self, mainwindow):

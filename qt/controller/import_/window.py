@@ -12,7 +12,7 @@ from PyQt4.QtGui import QWidget
 
 from core.gui.import_window import ImportWindow as ImportWindowModel, DAY, MONTH, YEAR
 from .table import ImportTable
-from ui.import_window_ui import Ui_ImportWindow
+from ...ui.import_window_ui import Ui_ImportWindow
 
 class ImportWindow(QWidget, Ui_ImportWindow):
     def __init__(self, parent, doc):

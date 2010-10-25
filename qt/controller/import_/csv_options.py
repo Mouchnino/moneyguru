@@ -13,7 +13,7 @@ from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog, QMessage
 from core.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER, \
     SUPPORTED_ENCODINGS
 from core.trans import tr
-from ui.csv_options_ui import Ui_CSVOptionsWindow
+from ...ui.csv_options_ui import Ui_CSVOptionsWindow
 
 NEW_LAYOUT = 'new_layout'
 RENAME_LAYOUT = 'rename_layout'

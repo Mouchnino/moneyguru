@@ -9,9 +9,9 @@
 
 from qtlib.table import Table as TableBase
 
-from support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
-from support.date_edit import DateEdit
-from support.item_delegate import ItemDelegate
+from ..support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
+from ..support.date_edit import DateEdit
+from ..support.item_delegate import ItemDelegate
 
 DATE_EDIT = 'date_edit'
 DESCRIPTION_EDIT = 'description_edit'

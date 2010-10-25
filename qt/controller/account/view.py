@@ -14,7 +14,7 @@ from .filter_bar import EntryFilterBar
 from .table import EntryTable
 from .bar_graph import AccountBarGraph
 from .line_graph import AccountLineGraph
-from ui.entry_view_ui import Ui_EntryView
+from ...ui.entry_view_ui import Ui_EntryView
 
 class EntryView(BaseView, Ui_EntryView):
     def __init__(self, mainwindow):

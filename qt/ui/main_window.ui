@@ -578,7 +578,7 @@
   <customwidget>
    <class>DateRangeSelectorView</class>
    <extends>QWidget</extends>
-   <header>support.date_range_selector_view</header>
+   <header>qt.support.date_range_selector_view</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -590,7 +590,7 @@
   <customwidget>
    <class>SearchEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.search_edit</header>
+   <header>qt.support.search_edit</header>
   </customwidget>
  </customwidgets>
  <resources>

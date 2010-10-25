@@ -139,7 +139,7 @@
   <customwidget>
    <class>DateEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.date_edit</header>
+   <header>qt.support.date_edit</header>
   </customwidget>
  </customwidgets>
  <resources/>

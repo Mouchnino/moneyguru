@@ -11,7 +11,7 @@ from core.gui.budget_view import BudgetView as BudgetViewModel
 
 from ..base_view import BaseView
 from .table import BudgetTable
-from ui.budget_view_ui import Ui_BudgetView
+from ...ui.budget_view_ui import Ui_BudgetView
 
 class BudgetView(BaseView, Ui_BudgetView):
     def __init__(self, mainwindow):

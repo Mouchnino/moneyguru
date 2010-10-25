@@ -10,7 +10,7 @@
 from core.gui.budget_panel import BudgetPanel as BudgetPanelModel
 
 from .panel import Panel
-from ui.budget_panel_ui import Ui_BudgetPanel
+from ..ui.budget_panel_ui import Ui_BudgetPanel
 
 class BudgetPanel(Panel, Ui_BudgetPanel):
     FIELDS = [

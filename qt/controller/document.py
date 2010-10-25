@@ -17,7 +17,7 @@ from core.exception import FileFormatError
 from core.document import Document as DocumentModel, ScheduleScope
 from core.trans import tr
 
-from controller.schedule_scope_dialog import ScheduleScopeDialog
+from ..controller.schedule_scope_dialog import ScheduleScopeDialog
 
 class Document(QObject):
     def __init__(self, app):

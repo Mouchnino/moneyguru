@@ -21,14 +21,14 @@ from qtlib.reg import Registration
 
 from core.app import Application as MoneyGuruModel
 
-from controller.document import Document
-from controller.main_window import MainWindow
-from controller.import_.window import ImportWindow
-from controller.import_.csv_options import CSVOptionsWindow
-from controller.preferences_panel import PreferencesPanel
-from support.date_edit import DateEdit
-from preferences import Preferences
-from plat import HELP_PATH
+from .controller.document import Document
+from .controller.main_window import MainWindow
+from .controller.import_.window import ImportWindow
+from .controller.import_.csv_options import CSVOptionsWindow
+from .controller.preferences_panel import PreferencesPanel
+from .support.date_edit import DateEdit
+from .preferences import Preferences
+from .plat import HELP_PATH
 
 class MoneyGuru(ApplicationBase):
     VERSION = MoneyGuruModel.VERSION

@@ -11,7 +11,7 @@ from core.gui.schedule_panel import SchedulePanel as SchedulePanelModel
 
 from .panel import Panel
 from .split_table import SplitTable
-from ui.schedule_panel_ui import Ui_SchedulePanel
+from ..ui.schedule_panel_ui import Ui_SchedulePanel
 
 class SchedulePanel(Panel, Ui_SchedulePanel):
     FIELDS = [

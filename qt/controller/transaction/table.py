@@ -13,7 +13,7 @@ from PyQt4.QtGui import QPixmap
 from qtlib.column import Column
 from core.gui.transaction_table import TransactionTable as TransactionTableModel
 from core.trans import tr
-from support.item_delegate import ItemDecoration
+from ...support.item_delegate import ItemDecoration
 from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions
 

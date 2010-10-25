@@ -84,6 +84,12 @@ def build_cocoa(dev):
     args = ' '.join(args)
     os.system('xcodebuild {0}'.format(args))
     os.chdir('..')
+    print("Creating the run.py file")
+    subfolder = 'dev' if dev else 'release'
+    app_path = 'cocoa/build/{0}/moneyGuru.app'.format(subfolder)
+    tmpl = open('run_template_cocoa.py', 'rt').read()
+    run_contents = tmpl.replace('{{app_path}}', app_path)
+    open('run.py', 'wt').write(run_contents)
 
 def build_qt(dev):
     print("Converting .ts to .qm")
@@ -93,10 +99,22 @@ def build_qt(dev):
         print("Converting {0}".format(ts))
         os.system('lrelease {0}'.format(op.join(langdir, ts)))
     print("Building UI units")
-    build_all_qt_ui(op.join('qt', 'ui'))
+    uipath = op.join('qt', 'ui')
+    build_all_qt_ui(uipath)
+    # This below is a ugly hack to work around the broken resource import system in pyuic
+    for filename in os.listdir(uipath):
+        if not filename.endswith('.py'):
+            continue
+        contents = open(op.join(uipath, filename), 'rt', encoding='utf-8').read()
+        if 'import mg_rc' not in contents:
+            continue
+        contents = contents.replace('import mg_rc', 'from .. import mg_rc')
+        open(op.join(uipath, filename), 'wt', encoding='utf-8').write(contents)
     qrc_path = op.join('qt', 'mg.qrc')
     pyrc_path = op.join('qt', 'mg_rc.py')
     print_and_do("pyrcc4 -py3 {0} > {1}".format(qrc_path, pyrc_path))
+    print("Creating the run.py file")
+    shutil.copy('run_template_qt.py', 'run.py')
 
 def main():
     conf = yaml.load(open('conf.yaml'))

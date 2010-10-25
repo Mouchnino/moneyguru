@@ -10,7 +10,7 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox, QPlainTextEdit
 
-from support.completable_edit import CompletableEdit
+from ..support.completable_edit import CompletableEdit
 
 class Panel(QDialog):
     # A list of two-sized tuples (QWidget's name, model field name).

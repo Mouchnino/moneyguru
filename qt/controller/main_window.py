@@ -16,8 +16,8 @@ from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
 from core.trans import tr
 
-from print_ import ViewPrinter
-from support.recent import Recent
+from ..print_ import ViewPrinter
+from ..support.recent import Recent
 from .account.view import EntryView
 from .budget.view import BudgetView
 from .networth.view import NetWorthView
@@ -38,7 +38,7 @@ from .custom_date_range_panel import CustomDateRangePanel
 from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
 from .view_options import ViewOptionsDialog
-from ui.main_window_ui import Ui_MainWindow
+from ..ui.main_window_ui import Ui_MainWindow
 
 PANETYPE2ICON = {
     PaneType.NetWorth: 'balance_sheet_16',

@@ -12,7 +12,7 @@ from hscommon.currency import Currency
 from core.gui.mass_edition_panel import MassEditionPanel as MassEditionPanelModel
 
 from .panel import Panel
-from ui.mass_edition_panel_ui import Ui_MassEditionPanel
+from ..ui.mass_edition_panel_ui import Ui_MassEditionPanel
 
 class MassEditionPanel(Panel, Ui_MassEditionPanel):
     FIELDS = [

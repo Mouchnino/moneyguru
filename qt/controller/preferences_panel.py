@@ -13,7 +13,7 @@ from PyQt4.QtGui import QDialog, QMessageBox
 from hscommon.currency import Currency
 from core.trans import tr
 
-from ui.preferences_panel_ui import Ui_PreferencesPanel
+from ..ui.preferences_panel_ui import Ui_PreferencesPanel
 
 class PreferencesPanel(QDialog, Ui_PreferencesPanel):
     def __init__(self, parent, app):

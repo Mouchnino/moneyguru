@@ -13,7 +13,7 @@ from PyQt4.QtGui import QWidget, QShortcut, QKeySequence
 from core.gui.account_lookup import AccountLookup as AccountLookupModel
 from core.gui.completion_lookup import CompletionLookup as CompletionLookupModel
 
-from ui.lookup_ui import Ui_Lookup
+from ..ui.lookup_ui import Ui_Lookup
 
 class Lookup(QWidget, Ui_Lookup):
     MODEL_CLASS = None

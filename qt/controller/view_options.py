@@ -12,7 +12,7 @@ from PyQt4.QtGui import QDialog
 
 from core.gui.view_options import ViewOptions as ViewOptionsModel
 
-from ui.view_options_dialog_ui import Ui_ViewOptionsDialog
+from ..ui.view_options_dialog_ui import Ui_ViewOptionsDialog
 
 class ViewOptionsDialog(QDialog, Ui_ViewOptionsDialog):
     WIDGET2PREF = {

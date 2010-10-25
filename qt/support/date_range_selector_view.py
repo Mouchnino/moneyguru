@@ -9,7 +9,7 @@
 
 from PyQt4.QtGui import QWidget
 
-from ui.date_range_selector_view_ui import Ui_DateRangeSelectorView
+from ..ui.date_range_selector_view_ui import Ui_DateRangeSelectorView
 
 class DateRangeSelectorView(QWidget, Ui_DateRangeSelectorView):
     def __init__(self, parent=None):

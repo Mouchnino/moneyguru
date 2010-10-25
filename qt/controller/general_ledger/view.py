@@ -11,7 +11,7 @@ from core.gui.general_ledger_view import GeneralLedgerView as GeneralLedgerViewM
 
 from ..base_view import BaseView
 from .table import GeneralLedgerTable
-from ui.general_ledger_view_ui import Ui_GeneralLedgerView
+from ...ui.general_ledger_view_ui import Ui_GeneralLedgerView
 
 class GeneralLedgerView(BaseView, Ui_GeneralLedgerView):
     def __init__(self, mainwindow):

@@ -14,7 +14,7 @@ from .sheet import ProfitSheet
 from .graph import ProfitGraph
 from .income_pie_chart import IncomePieChart
 from .expense_pie_chart import ExpensePieChart
-from ui.profit_view_ui import Ui_ProfitView
+from ...ui.profit_view_ui import Ui_ProfitView
 
 class ProfitView(BaseView, Ui_ProfitView):
     def __init__(self, mainwindow):

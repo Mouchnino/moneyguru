@@ -133,19 +133,19 @@
   <customwidget>
    <class>LineGraphView</class>
    <extends>QWidget</extends>
-   <header>support.line_graph_view</header>
+   <header>qt.support.line_graph_view</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>BarGraphView</class>
    <extends>QWidget</extends>
-   <header>support.bar_graph_view</header>
+   <header>qt.support.bar_graph_view</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TableView</class>
    <extends>QTableView</extends>
-   <header>support.item_view</header>
+   <header>qt.support.item_view</header>
   </customwidget>
   <customwidget>
    <class>RadioBox</class>

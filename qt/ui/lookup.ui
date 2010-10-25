@@ -39,7 +39,7 @@
   <customwidget>
    <class>SearchEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.search_edit</header>
+   <header>qt.support.search_edit</header>
   </customwidget>
  </customwidgets>
  <resources/>

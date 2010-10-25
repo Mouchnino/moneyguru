@@ -94,19 +94,19 @@
   <customwidget>
    <class>LineGraphView</class>
    <extends>QWidget</extends>
-   <header>support.line_graph_view</header>
+   <header>qt.support.line_graph_view</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>PieChartView</class>
    <extends>QWidget</extends>
-   <header>support.pie_chart_view</header>
+   <header>qt.support.pie_chart_view</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TreeView</class>
    <extends>QTreeView</extends>
-   <header>support.item_view</header>
+   <header>qt.support.item_view</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -12,7 +12,7 @@ from hscommon.currency import Currency
 from core.gui.account_panel import AccountPanel as AccountPanelModel
 
 from .panel import Panel
-from ui.account_panel_ui import Ui_AccountPanel
+from ..ui.account_panel_ui import Ui_AccountPanel
 
 class AccountPanel(Panel, Ui_AccountPanel):
     FIELDS = [

@@ -20,8 +20,8 @@ from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
 import core.trans
 from qtlib.error_report_dialog import install_excepthook
-from plat import LANG2LOCALENAME
-import mg_rc
+from qt.plat import LANG2LOCALENAME
+import qt.mg_rc
 
 def main(argv):
     app = QApplication(sys.argv)
@@ -59,7 +59,7 @@ def main(argv):
         core.trans.set_tr(qt_tr)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed
-    from app import MoneyGuru
+    from qt.app import MoneyGuru
     app.setApplicationVersion(MoneyGuru.VERSION)
     mgapp =  MoneyGuru()
     install_excepthook()

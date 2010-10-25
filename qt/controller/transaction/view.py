@@ -12,7 +12,7 @@ from core.gui.transaction_view import TransactionView as TransactionViewModel
 from ..base_view import BaseView
 from .filter_bar import TransactionFilterBar
 from .table import TransactionTable
-from ui.transaction_view_ui import Ui_TransactionView
+from ...ui.transaction_view_ui import Ui_TransactionView
 
 class TransactionView(BaseView, Ui_TransactionView):
     def __init__(self, mainwindow):

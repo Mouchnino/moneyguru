@@ -12,7 +12,7 @@ from PyQt4.QtGui import QDialog
 
 from core.document import ScheduleScope
 
-from ui.schedule_scope_dialog_ui import Ui_ScheduleScopeDialog
+from ..ui.schedule_scope_dialog_ui import Ui_ScheduleScopeDialog
 
 class ScheduleScopeDialog(QDialog, Ui_ScheduleScopeDialog):
     def __init__(self, parent=None):

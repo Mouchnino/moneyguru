@@ -10,10 +10,10 @@
 import sys
 
 if sys.platform == 'win32':
-    from plat_win import *
+    from .plat_win import *
 elif sys.platform == 'linux2':
-    from plat_lnx import *
+    from .plat_lnx import *
 elif sys.platform == 'darwin':
-    from plat_osx import *
+    from .plat_osx import *
 else:
     print("Unsupported platform")

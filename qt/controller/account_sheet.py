@@ -7,8 +7,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap, QPalette, QFont, QMessageBox
 
@@ -16,9 +14,9 @@ from hsutil.misc import nonone
 from qtlib.column import ColumnBearer
 from qtlib.tree_model import TreeNode, TreeModel
 
-from const import (MIME_NODEPATH, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
+from ..const import (MIME_NODEPATH, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
     EXTRA_UNDERLINED_DOUBLE)
-from support.item_delegate import ItemDelegate, ItemDecoration
+from ..support.item_delegate import ItemDelegate, ItemDecoration
 
 class Node(TreeNode):
     def __init__(self, model, parent, ref, row):

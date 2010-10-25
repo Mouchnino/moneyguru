@@ -236,22 +236,22 @@
   <customwidget>
    <class>DateEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.date_edit</header>
+   <header>qt.support.date_edit</header>
   </customwidget>
   <customwidget>
    <class>DescriptionEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.completable_edit</header>
+   <header>qt.support.completable_edit</header>
   </customwidget>
   <customwidget>
    <class>PayeeEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.completable_edit</header>
+   <header>qt.support.completable_edit</header>
   </customwidget>
   <customwidget>
    <class>AccountEdit</class>
    <extends>QLineEdit</extends>
-   <header>support.completable_edit</header>
+   <header>qt.support.completable_edit</header>
   </customwidget>
  </customwidgets>
  <resources/>

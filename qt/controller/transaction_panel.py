@@ -13,7 +13,7 @@ from core.gui.transaction_panel import TransactionPanel as TransactionPanelModel
 
 from .panel import Panel
 from .split_table import SplitTable
-from ui.transaction_panel_ui import Ui_TransactionPanel
+from ..ui.transaction_panel_ui import Ui_TransactionPanel
 
 class TransactionPanel(Panel, Ui_TransactionPanel):
     FIELDS = [

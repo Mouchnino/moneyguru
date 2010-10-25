@@ -14,7 +14,7 @@ from PyQt4.QtGui import QFont, QFontMetrics
 
 from hsutil.misc import nonone
 
-from const import (INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE,
+from ..const import (INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE,
     EXTRA_SPAN_ALL_COLUMNS)
 from .layout import LayoutElement
 

@@ -14,7 +14,7 @@ from .sheet import NetWorthSheet
 from .graph import NetWorthGraph
 from .asset_pie_chart import AssetPieChart
 from .liability_pie_chart import LiabilityPieChart
-from ui.networth_view_ui import Ui_NetWorthView
+from ...ui.networth_view_ui import Ui_NetWorthView
 
 class NetWorthView(BaseView, Ui_NetWorthView):
     def __init__(self, mainwindow):
