@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/bsd_license
     massEditionPanel = [[MGMassEditionPanel alloc] initWithParent:self];
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
+    exportPanel = [[MGExportPanel alloc] initWithParent:self];
     netWorthView = [[MGNetWorthView alloc] initWithPyParent:py];
     profitView = [[MGProfitView alloc] initWithPyParent:py];
     transactionView = [[MGTransactionView alloc] initWithPyParent:py];
@@ -57,12 +58,12 @@ http://www.hardcoded.net/licenses/bsd_license
         [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
         [ledgerView py], [emptyView py], [accountProperties py], [transactionPanel py],
         [massEditionPanel py], [schedulePanel py], [budgetPanel py], [customDateRangePanel py],
-        [accountReassignPanel py], [accountLookup py], [completionLookup py], [dateRangeSelector py],
-        [viewOptions py], nil];
+        [accountReassignPanel py], [exportPanel py], [accountLookup py], [completionLookup py],
+        [dateRangeSelector py], [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     [searchField connect];
-    /* Don't set the delegate in the XIB or else delegates methods are called to soon and cause
+    /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause
        crashes.
     */
     [tabBar setShowAddTabButton:YES];
@@ -80,6 +81,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [massEditionPanel release];
     [schedulePanel release];
     [accountProperties release];
+    [budgetPanel release];
+    [exportPanel release];
     [netWorthView release];
     [profitView release];
     [accountView release];
@@ -95,6 +98,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [customDateRangePanel release];
     [accountReassignPanel release];
     [accountLookup release];
+    [completionLookup release];
     [dateRangeSelector release];
     [viewOptions release];
     [subviews release];
@@ -327,6 +331,11 @@ http://www.hardcoded.net/licenses/bsd_license
     else {
         [[viewOptions window] makeKeyAndOrderFront:sender];
     }
+}
+
+- (IBAction)export:(id)sender
+{
+    [[self py] export];
 }
 
 /* Public */

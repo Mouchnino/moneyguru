@@ -7,21 +7,11 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyDocument.h"
+#import "PyPanel.h"
 
-@interface MGDocument : NSDocument
-{
-    PyDocument *py;
-}
-
-- (PyDocument *)py;
-
-/* Actions */
-- (IBAction)import:(id)sender;
-
-/* Misc */
-- (void)stopEdition;
-
-/* Python -> Cocoa */
-- (BOOL)queryForScheduleScope;
+@interface PyExportPanel : PyPanel {}
+- (BOOL)exportAll;
+- (void)setExportAll:(BOOL)value;
+- (NSString *)exportPath;
+- (void)setExportPath:(NSString *)value;
 @end

@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGMassEditionPanel.h"
 #import "MGSchedulePanel.h"
 #import "MGBudgetPanel.h"
+#import "MGExportPanel.h"
 #import "MGAccountView.h"
 #import "MGNetWorthView.h"
 #import "MGProfitView.h"
@@ -56,6 +57,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGMassEditionPanel *massEditionPanel;
     MGSchedulePanel *schedulePanel;
     MGBudgetPanel *budgetPanel;
+    MGExportPanel *exportPanel;
     MGSearchField *searchField;
     MGImportWindow *importWindow;
     MGCSVImportOptions *csvOptionsWindow;
@@ -109,6 +111,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)toggleEntriesReconciled:(id)sender;
 - (IBAction)toggleExcluded:(id)sender;
 - (IBAction)toggleViewOptionsVisible:(id)sender;
+- (IBAction)export:(id)sender;
 
 /* Public */
 

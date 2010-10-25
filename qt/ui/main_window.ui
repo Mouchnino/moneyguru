@@ -198,7 +198,7 @@
     <addaction name="actionCloseTab"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
-    <addaction name="actionExportToQIF"/>
+    <addaction name="actionExport"/>
     <addaction name="actionPrint"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -396,9 +396,9 @@
     <string>Import...</string>
    </property>
   </action>
-  <action name="actionExportToQIF">
+  <action name="actionExport">
    <property name="text">
-    <string>Export to QIF...</string>
+    <string>Export...</string>
    </property>
   </action>
   <action name="actionSave">

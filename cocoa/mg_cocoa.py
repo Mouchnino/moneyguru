@@ -55,6 +55,8 @@ from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
+from core.gui.export_panel import ExportPanel
+from core.gui.export_account_table import ExportAccountTable
 from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
@@ -218,9 +220,6 @@ class PyDocument(NSObject):
     
     def saveToFile_(self, filename):
         self.py.save_to_xml(filename)
-    
-    def saveToQIF_(self, filename):
-        self.py.save_to_qif(filename)
     
     def import_(self, filename):
         try:
@@ -566,6 +565,9 @@ class PyBudgetTable(PyTable):
 
 class PyCashculatorAccountTable(PyTable):
     py_class = CashculatorAccountTable
+
+class PyExportAccountTable(PyTable):
+    py_class = ExportAccountTable
 
 class PyGeneralLedgerTable(PyTableWithDate):
     py_class = GeneralLedgerTable
@@ -1040,6 +1042,31 @@ class PyAccountReassignPanel(PyPanel):
         self.py.account_index = value
     
 
+class PyExportPanel(PyPanel):
+    py_class = ExportPanel
+    
+    @signature('c@:')
+    def exportAll(self):
+        return self.py.export_all
+    
+    @signature('v@:i')
+    def setExportAll_(self, value):
+        self.py.export_all = value
+    
+    def exportPath(self):
+        return self.py.export_path
+    
+    def setExportPath_(self, value):
+        self.py.export_path = value
+    
+    #--- Python --> Cocoa
+    def set_table_enabled(self, enabled):
+        self.cocoa.setTableEnabled_(enabled)
+    
+    def set_export_button_enabled(self, enabled):
+        self.cocoa.setExportButtonEnabled_(enabled)
+    
+
 class PyAccountBalanceGraph(PyGraph):
     py_class = AccountBalanceGraph
 
@@ -1143,6 +1170,9 @@ class PyMainWindow(PyGUIContainer):
         self.py.new_group()
     
     #--- Other
+    def export(self):
+        self.py.export()
+    
     def statusLine(self):
         return self.py.status_line
     

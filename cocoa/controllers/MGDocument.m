@@ -139,18 +139,6 @@ http://www.hardcoded.net/licenses/bsd_license
     }
 }
 
-- (IBAction)saveToQIF:(id)sender
-{
-    NSSavePanel *sp = [NSSavePanel savePanel];
-    [sp setCanCreateDirectories:YES];
-    [sp setTitle:TR(@"ExportToQIFMsg")];
-    if ([sp runModalForDirectory:nil file:@"export.qif"] == NSOKButton)
-    {
-        NSString *filename = [sp filename];
-        [py saveToQIF:filename];
-    }
-}
-
 /* Misc */
 - (BOOL)isDirty
 {

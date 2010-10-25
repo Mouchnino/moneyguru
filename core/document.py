@@ -27,7 +27,6 @@ from .model.recurrence import Spawn
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
 from .saver.native import save as save_native
-from .saver.qif import save as save_qif
 from .trans import tr
 
 SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
@@ -720,9 +719,6 @@ class Document(Repeater):
             self.schedules, self.budgets)
         if not autosave:
             self._undoer.set_save_point()
-    
-    def save_to_qif(self, filename):
-        save_qif(filename, self.accounts)
     
     def parse_file_for_import(self, filename):
         for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv.Loader):

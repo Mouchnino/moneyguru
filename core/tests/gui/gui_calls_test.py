@@ -204,6 +204,16 @@ def test_jump_to_account():
     app.alookup.go()
     app.check_gui_calls(app.alookup_gui, ['hide'])
 
+@with_app(app_one_account)
+def test_export_panel(app):
+    app.mw.export()
+    app.check_gui_calls_partial(app.expanel_gui, ['set_table_enabled'])
+    app.expanel.export_all = False
+    # We enable the table, and because there's no account selected, we disable the export button
+    app.check_gui_calls(app.expanel_gui, ['set_table_enabled', 'set_export_button_enabled'])    
+    app.expanel.table[0].export = True
+    app.check_gui_calls(app.expanel_gui, ['set_export_button_enabled'])    
+
 #--- One transaction
 def app_one_transaction():
     app = TestApp()

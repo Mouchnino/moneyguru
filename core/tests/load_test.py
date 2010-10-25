@@ -459,7 +459,9 @@ def test_save_load_qif():
     @with_tmpdir
     def check(app, tmppath):
         filepath = str(tmppath + 'foo.qif')
-        app.doc.save_to_qif(filepath)
+        app.mw.export()
+        app.expanel.export_path = filepath
+        app.expanel.save()
         app.doc.close()
         newapp = TestApp()
         newapp.doc.parse_file_for_import(filepath)

@@ -7,21 +7,9 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyDocument.h"
+#import "MGEditableTable.h"
 
-@interface MGDocument : NSDocument
-{
-    PyDocument *py;
-}
-
-- (PyDocument *)py;
-
-/* Actions */
-- (IBAction)import:(id)sender;
-
-/* Misc */
-- (void)stopEdition;
-
-/* Python -> Cocoa */
-- (BOOL)queryForScheduleScope;
+@interface MGExportAccountTable : MGEditableTable {}
+- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (void)initializeColumns;
 @end

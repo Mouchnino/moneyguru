@@ -39,6 +39,8 @@ from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.date_range_selector import DateRangeSelector
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
+from ..gui.export_panel import ExportPanel
+from ..gui.export_account_table import ExportAccountTable
 from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from ..gui.general_ledger_table import GeneralLedgerTable
 from ..gui.general_ledger_view import GeneralLedgerView
@@ -62,7 +64,6 @@ from ..gui.transaction_view import TransactionView
 from ..gui.view_options import ViewOptions
 from ..loader import base
 from ..model.account import AccountType
-from ..model.date import MonthRange
 from .. import document as document_module
 from . import ensure_ratesdb_patched
 
@@ -146,20 +147,24 @@ class DictLoader(base.Loader):
 
 class TestApp(object):
     def __init__(self, app=None, doc=None, tmppath=None):
-        def make_gui(name, class_, view=None, parent=None):
+        def make_gui(name, class_, view=None, parent=None, holder=None):
             if view is None:
                 view = CallLogger()
             if parent is None:
                 parent = self.mw
-            setattr(self, '{0}_gui'.format(name), view)
+            if holder is None:
+                holder = self
+            setattr(holder, '{0}_gui'.format(name), view)
             gui = class_(view, parent)
-            setattr(self, name, gui)
+            setattr(holder, name, gui)
             return gui
         
-        def make_table_gui(name, class_, view=None, parent=None):
-            gui = make_gui(name, class_, view, parent)
+        def make_table_gui(name, class_, view=None, parent=None, holder=None):
+            gui = make_gui(name, class_, view, parent, holder)
+            if holder is None:
+                holder = self
             colview = CallLogger()
-            setattr(self, '{0}col_gui'.format(name), colview)
+            setattr(holder, '{0}col_gui'.format(name), colview)
             gui.columns.view = colview
         
         ensure_ratesdb_patched()
@@ -194,6 +199,8 @@ class TestApp(object):
         make_gui('bpanel', BudgetPanel)
         make_gui('cdrpanel', CustomDateRangePanel)
         make_gui('arpanel', AccountReassignPanel)
+        make_gui('expanel', ExportPanel)
+        make_table_gui('table', ExportAccountTable, parent=self.expanel, holder=self.expanel)
         make_table_gui('stable', SplitTable, parent=self.tpanel)
         make_table_gui('scsplittable', SplitTable, parent=self.scpanel)
         make_gui('balgraph', AccountBalanceGraph, parent=self.aview)
@@ -235,8 +242,8 @@ class TestApp(object):
         # None between bview and empty view is the Cashculator view, which isn't tested
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
             self.glview, self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel,
-            self.vopts]
+            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup,
+            self.drsel, self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
@@ -245,6 +252,7 @@ class TestApp(object):
         self.iwin.connect()
         self.itable.connect()
         self.csvopt.connect()
+        self.expanel.table.connect()
     
     def tmppath(self):
         if self._tmppath is None:
@@ -684,7 +692,9 @@ class TestCase(TestCaseBase):
     
     def do_test_qif_export_import(self):
         filepath = op.join(self.tmpdir(), 'foo.qif')
-        self.document.save_to_qif(filepath)
+        self.mainwindow.export()
+        self.ta.expanel.export_path = filepath
+        self.ta.expanel.save()
         newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
         newdoc = Document(DocumentGUI(), newapp)
         iwin = ImportWindow(self.iwin_gui, newdoc)

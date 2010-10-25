@@ -33,6 +33,7 @@ from .transaction_panel import TransactionPanel
 from .mass_edition_panel import MassEditionPanel
 from .schedule_panel import SchedulePanel
 from .budget_panel import BudgetPanel
+from .export_panel import ExportPanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
@@ -77,6 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bpanel = BudgetPanel(mainwindow=self)
         self.cdrpanel = CustomDateRangePanel(self, mainwindow=self)
         self.arpanel = AccountReassignPanel(self, mainwindow=self)
+        self.expanel = ExportPanel(mainwindow=self)
         self.alookup = AccountLookup(self, mainwindow=self)
         self.clookup = CompletionLookup(self, mainwindow=self)
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
@@ -98,8 +100,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
             self.glview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.alookup, self.clookup, self.drsel,
-            self.vopts]
+            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup,
+            self.drsel, self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         self.sfield.model.connect()
@@ -158,7 +160,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionImport.triggered.connect(self.doc.importDocument)
         self.actionSave.triggered.connect(self.doc.save)
         self.actionSaveAs.triggered.connect(self.doc.saveAs)
-        self.actionExportToQIF.triggered.connect(self.doc.exportToQIF)
+        self.actionExport.triggered.connect(self.model.export)
         
         # Misc
         self.actionNewTab.triggered.connect(self.model.new_tab)

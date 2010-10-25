@@ -48,8 +48,8 @@ class MainWindow(Repeater):
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
             self.glview, self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.alookup, self.completion_lookup,
-            self.daterange_selector, self.view_options) = children
+            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
+            self.completion_lookup, self.daterange_selector, self.view_options) = children
         self._restore_default_panes()
         for child in children:
             # Panels are not listeners
@@ -203,6 +203,14 @@ class MainWindow(Repeater):
             self._current_pane_index = newindex
             self.view.change_current_pane()
     
+    def delete_item(self):
+        self._current_pane.view.delete_item()
+    
+    def duplicate_item(self):
+        current_view = self._current_pane.view
+        if current_view in (self.tview, self.aview):
+            current_view.duplicate_item()
+    
     def edit_item(self):
         try:
             current_view = self._current_pane.view
@@ -221,13 +229,8 @@ class MainWindow(Repeater):
         except OperationAborted:
             pass
     
-    def delete_item(self):
-        self._current_pane.view.delete_item()
-    
-    def duplicate_item(self):
-        current_view = self._current_pane.view
-        if current_view in (self.tview, self.aview):
-            current_view.duplicate_item()
+    def export(self):
+        self.expanel.load()
     
     def jump_to_account(self):
         self.alookup.show()

@@ -63,6 +63,9 @@
 		CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
 		CE647EA311730765006D28BA /* HSTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE647EA211730765006D28BA /* HSTable.m */; };
+		CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE66BD111275751B008EFA8A /* ExportPanel.xib */; };
+		CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1812757587008EFA8A /* MGExportAccountTable.m */; };
+		CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1A12757587008EFA8A /* MGExportPanel.m */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38070F93648E00FA8460 /* Dialogs.m */; };
 		CE6D38130F93648E00FA8460 /* HSErrorReportWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */; };
@@ -360,6 +363,12 @@
 		CE647EA01173074C006D28BA /* PyTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTable.h; sourceTree = "<group>"; };
 		CE647EA111730765006D28BA /* HSTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTable.h; sourceTree = "<group>"; };
 		CE647EA211730765006D28BA /* HSTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTable.m; sourceTree = "<group>"; };
+		CE66BD121275751B008EFA8A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ExportPanel.xib; sourceTree = "<group>"; };
+		CE66BD1612757567008EFA8A /* PyExportPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyExportPanel.h; path = proxies/PyExportPanel.h; sourceTree = SOURCE_ROOT; };
+		CE66BD1712757587008EFA8A /* MGExportAccountTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGExportAccountTable.h; path = controllers/MGExportAccountTable.h; sourceTree = SOURCE_ROOT; };
+		CE66BD1812757587008EFA8A /* MGExportAccountTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGExportAccountTable.m; path = controllers/MGExportAccountTable.m; sourceTree = SOURCE_ROOT; };
+		CE66BD1912757587008EFA8A /* MGExportPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGExportPanel.h; path = controllers/MGExportPanel.h; sourceTree = SOURCE_ROOT; };
+		CE66BD1A12757587008EFA8A /* MGExportPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGExportPanel.m; path = controllers/MGExportPanel.m; sourceTree = SOURCE_ROOT; };
 		CE6C6FEF0E74324B003B5062 /* MGChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChart.h; sourceTree = "<group>"; };
 		CE6C6FF00E74324B003B5062 /* MGChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChart.m; sourceTree = "<group>"; };
 		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
@@ -940,6 +949,10 @@
 				CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */,
 				CE873A8E0E21622F004F63E9 /* MGUndoManager.h */,
 				CE873A8F0E21622F004F63E9 /* MGUndoManager.m */,
+				CE66BD1712757587008EFA8A /* MGExportAccountTable.h */,
+				CE66BD1812757587008EFA8A /* MGExportAccountTable.m */,
+				CE66BD1912757587008EFA8A /* MGExportPanel.h */,
+				CE66BD1A12757587008EFA8A /* MGExportPanel.m */,
 			);
 			includeInIndex = 1;
 			path = controllers;
@@ -948,6 +961,7 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
+				CE66BD1612757567008EFA8A /* PyExportPanel.h */,
 				CEB60203123930A1002218CF /* PyGeneralLedgerTable.h */,
 				CEB60204123930A1002218CF /* PyGeneralLedgerView.h */,
 				CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */,
@@ -1240,6 +1254,7 @@
 				CEC3679911D10E1E00EB0222 /* MassEditingPanel.xib */,
 				CEC3679F11D10E1E00EB0222 /* SchedulePanel.xib */,
 				CEC3678111D10E1E00EB0222 /* BudgetPanel.xib */,
+				CE66BD111275751B008EFA8A /* ExportPanel.xib */,
 				CEC3678F11D10E1E00EB0222 /* ImportWindow.xib */,
 				CEC3678511D10E1E00EB0222 /* CSVImportOptions.xib */,
 				CEC3678711D10E1E00EB0222 /* CSVLayoutName.xib */,
@@ -1472,6 +1487,7 @@
 				CEB7CCEC123B61270020DAF6 /* gledger_16.png in Resources */,
 				CEB7CCED123B61270020DAF6 /* gledger_48.png in Resources */,
 				CE6E77AB12538B0F00A1754B /* FairwareReminder.xib in Resources */,
+				CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1597,6 +1613,8 @@
 				CE051CF2123A904F00D31D18 /* MGGeneralLedgerPrint.m in Sources */,
 				CE6E77A512538AF200A1754B /* HSFairwareReminder.m in Sources */,
 				CE3BF14C1270845E000D141C /* MGDocumentController.m in Sources */,
+				CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */,
+				CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1622,6 +1640,14 @@
 			);
 			name = CashculatorView.xib;
 			sourceTree = SOURCE_ROOT;
+		};
+		CE66BD111275751B008EFA8A /* ExportPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE66BD121275751B008EFA8A /* en */,
+			);
+			name = ExportPanel.xib;
+			sourceTree = "<group>";
 		};
 		CE6E77A912538B0F00A1754B /* FairwareReminder.xib */ = {
 			isa = PBXVariantGroup;

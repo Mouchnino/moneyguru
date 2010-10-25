@@ -330,7 +330,7 @@ def test_transfer_space_in_account_names():
     eq_(len(loader.transactions), 1) # the transactions hasn't been doubled.
     
 @with_tmpdir
-def test_save_to_qif(tmppath):
+def test_export_to_qif(tmppath):
     # When there's a transfer between 2 assets, only put an entry in one of the accounts
     app = TestApp()
     app.add_account('first')
@@ -338,7 +338,9 @@ def test_save_to_qif(tmppath):
     app.mw.show_account()
     app.add_entry(date='03/01/2009', description='transfer', transfer='first', increase='42')
     export_filename = str(tmppath + 'export.qif')
-    app.doc.save_to_qif(export_filename)
+    app.mw.export()
+    app.expanel.export_path = export_filename
+    app.expanel.save()
     exported = open(export_filename).read()
     reference = open(TestData.filepath('qif', 'export_ref_transfer.qif')).read()
     eq_(exported, reference)

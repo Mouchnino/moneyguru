@@ -52,13 +52,6 @@ class Document(QObject):
         elif result == QMessageBox.Discard:
             return True
     
-    def exportToQIF(self):
-        title = tr("Export to QIF")
-        filters = tr("QIF Files (*.qif)")
-        docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, 'export.qif', filters))
-        if docpath:
-            self.model.save_to_qif(docpath)
-    
     def importDocument(self):
         title = tr("Select a document to import")
         filters = tr("Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)")

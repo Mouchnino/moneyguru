@@ -38,5 +38,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)newItem;
 
 // Other
+- (void)export;
 - (NSString *)statusLine;
 @end
