@@ -12,13 +12,16 @@
 
 _trfunc = None
 
-def tr(s):
+def tr(s, context=None):
     # We use this double call so that we can do "from trans import tr" and still change the tr func
     # afterwards (otherwise, modules that imported the tr func are stuck with the old one)
     if _trfunc is None:
         return s
     else:
-        return _trfunc(s)
+        if context:
+            return _trfunc(s, context)
+        else:
+            return _trfunc(s)
 
 def set_tr(new_tr):
     global _trfunc

@@ -275,7 +275,7 @@
 								</object>
 								<object class="NSMenuItem" id="697507701">
 									<reference key="NSMenu" ref="882329256"/>
-									<string key="NSTitle">Exporter vers QIF...</string>
+									<string key="NSTitle">Exporter...</string>
 									<string key="NSKeyEquiv">e</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1221,7 +1221,7 @@
 								<reference key="NSControlView" ref="37537141"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="778565105">
+								<object class="NSCustomResource" key="NSNormalImage" id="57629202">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSSwitch</string>
 								</object>
@@ -1246,7 +1246,7 @@
 								<reference key="NSControlView" ref="125175313"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="778565105"/>
+								<reference key="NSNormalImage" ref="57629202"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>

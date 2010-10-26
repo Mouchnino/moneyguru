@@ -670,6 +670,10 @@ Entrées de {start_date} à {end_date}</translation>
         <source>Credit</source>
         <translation>Crédit</translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation>Exporter</translation>
+    </message>
 </context>
 <context>
     <name>AccountPanel</name>
@@ -1641,31 +1645,30 @@ Entrées de {start_date} à {end_date}</translation>
     </message>
 </context>
 <context>
-    <name>RegDemoDialog</name>
+    <name>ExportPanel</name>
     <message>
-        <location filename="reg_demo_dialog.ui" line="26"/>
-        <source>$appname Demo Version</source>
-        <translation>Version démo de $appname</translation>
+        <source>Export</source>
+        <translation>Exporter</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="33"/>
-        <source>You are currently running a demo version of $appname. This version has limited functionalities, and you need to buy it to have access to these functionalities.</source>
-        <translation>Vous utilisez une version démo de $appname. Cette version a des fonctionnalités limitées et vous devez l'acheter pour enlever ces limites.</translation>
+        <source>Export Options</source>
+        <translation>Options d'exportation</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="87"/>
-        <source>Try Demo</source>
-        <translation>Essayer</translation>
+        <source>Which accounts do you want to export?</source>
+        <translation>Quels comptes coulez-vous exporter?</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="100"/>
-        <source>Enter Code</source>
-        <translation>Entrer code</translation>
+        <source>All</source>
+        <translation>Tous</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="113"/>
-        <source>Purchase</source>
-        <translation>Acheter</translation>
+        <source>Selected</source>
+        <translation>Sélection</translation>
+    </message>
+    <message>
+        <source>Export format:</source>
+        <translation>Format d'exportation:</translation>
     </message>
 </context>
 <context>

@@ -667,6 +667,10 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <source>Credit</source>
         <translation>Kredit</translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation>Export</translation>
+    </message>
 </context>
 <context>
     <name>AccountPanel</name>
@@ -1633,31 +1637,30 @@ Eintrag vom {start_date} bis {end_date}</translation>
     </message>
 </context>
 <context>
-    <name>RegDemoDialog</name>
+    <name>ExportPanel</name>
     <message>
-        <location filename="reg_demo_dialog.ui" line="26"/>
-        <source>$appname Demo Version</source>
-        <translation>Testversion von $appname</translation>
+        <source>Export</source>
+        <translation>Export</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="33"/>
-        <source>You are currently running a demo version of $appname. This version has limited functionalities, and you need to buy it to have access to these functionalities.</source>
-        <translation>Sie nutzen die Testversion von $appname. Diese Version enthält nur eine beschränkte Anzahl an Funktionen. Sie müssen moneyGuru kaufen, um sämtliche Funktionen nutzen zu können.</translation>
+        <source>Export Options</source>
+        <translation>Export Options</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="87"/>
-        <source>Try Demo</source>
-        <translation>Ausprobieren</translation>
+        <source>Which accounts do you want to export?</source>
+        <translation>Which accounts do you want to export?</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="100"/>
-        <source>Enter Code</source>
-        <translation>Code eingeben</translation>
+        <source>All</source>
+        <translation>All</translation>
     </message>
     <message>
-        <location filename="reg_demo_dialog.ui" line="113"/>
-        <source>Purchase</source>
-        <translation>Jetzt kaufen</translation>
+        <source>Selected</source>
+        <translation>Selected</translation>
+    </message>
+    <message>
+        <source>Export format:</source>
+        <translation>Export format:</translation>
     </message>
 </context>
 <context>

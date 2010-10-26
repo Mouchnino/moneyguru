@@ -30,4 +30,4 @@
 "ThanksForBuyingMsg" = "Wir danken Ihnen, dass Sie sich für moneyGuru entschieden haben!";
 "DemoLimitReachedMsg" = "Ihre kostenlose Testversion ist abgelaufen. Sie müssen moneyGuru erwerben, um ihre Daten weiterhin sichern zu können.";
 "SelectFileToImportMsg" = "Wählen sie eine Datei zum Importieren aus";
-"ExportToQIFMsg" = "Nach QIF exportieren";
+"ExportToFileMsg" = "Export to file";

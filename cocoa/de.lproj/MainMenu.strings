@@ -173,8 +173,8 @@
 /* Class = "NSMenuItem"; title = "Search..."; ObjectID = "1258"; */
 "1258.title" = "Suchen...";
 
-/* Class = "NSMenuItem"; title = "Export to QIF..."; ObjectID = "1260"; */
-"1260.title" = "Nach QIF exportieren...";
+/* Class = "NSMenuItem"; title = "Export..."; ObjectID = "1260"; */
+"1260.title" = "Export...";
 
 /* Class = "NSMenuItem"; title = "Show Account"; ObjectID = "1271"; */
 "1271.title" = "Konto öffnen";

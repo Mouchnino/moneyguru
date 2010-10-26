@@ -11,10 +11,13 @@ from PyQt4.QtGui import (QVBoxLayout, QLabel, QButtonGroup, QRadioButton, QTable
     QAbstractItemView, QDialogButtonBox, QApplication, QDialog, QFileDialog)
 
 from core.gui.export_panel import ExportPanel as ExportPanelModel, ExportFormat
-from core.trans import tr
+from core.trans import tr as trplain
 
 from .panel import Panel
 from .export_account_table import ExportAccountTable
+
+def tr(s):
+    return trplain(s, 'ExportPanel')
 
 class ExportType:
     All = 0
@@ -37,17 +40,17 @@ class ExportPanel(Panel):
         self.exportButton.clicked.connect(self.exportButtonClicked)
     
     def _setupUi(self):
-        self.setWindowTitle("Export Options")
+        self.setWindowTitle(tr("Export Options"))
         self.mainLayout = QVBoxLayout(self)
         
-        self.label1 = QLabel("Which accounts do you want to export?", self)
+        self.label1 = QLabel(tr("Which accounts do you want to export?"), self)
         self.mainLayout.addWidget(self.label1)
         self.exportTypeButtons = QButtonGroup(self)
-        self.exportAllButton = QRadioButton("All", self)
+        self.exportAllButton = QRadioButton(tr("All"), self)
         self.mainLayout.addWidget(self.exportAllButton)
         self.exportTypeButtons.addButton(self.exportAllButton, ExportType.All)
         self.exportAllButton.setChecked(True)
-        self.exportSelectedButton = QRadioButton("Selected", self)
+        self.exportSelectedButton = QRadioButton(tr("Selected"), self)
         self.mainLayout.addWidget(self.exportSelectedButton)
         self.exportTypeButtons.addButton(self.exportSelectedButton, ExportType.Selected)
         
@@ -58,7 +61,7 @@ class ExportPanel(Panel):
         self.tableView.verticalHeader().setDefaultSectionSize(18)
         self.mainLayout.addWidget(self.tableView)
         
-        self.label2 = QLabel("Export format:", self)
+        self.label2 = QLabel(tr("Export format:"), self)
         self.mainLayout.addWidget(self.label2)
         self.exportFormatButtons = QButtonGroup(self)
         self.exportAsQIFButton = QRadioButton("QIF", self)
@@ -72,7 +75,7 @@ class ExportPanel(Panel):
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel)
-        self.exportButton = self.buttonBox.addButton("Export", QDialogButtonBox.ActionRole)
+        self.exportButton = self.buttonBox.addButton(tr("Export"), QDialogButtonBox.ActionRole)
         self.mainLayout.addWidget(self.buttonBox)
     
     #--- Event Handlers

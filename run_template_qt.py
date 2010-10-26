@@ -54,8 +54,8 @@ def main(argv):
         qtr2 = QTranslator()
         qtr2.load(':/%s' % lang)
         app.installTranslator(qtr2)
-        def qt_tr(s):
-            return str(app.translate('core', s, None))
+        def qt_tr(s, context='core'):
+            return str(app.translate(context, s, None))
         core.trans.set_tr(qt_tr)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed

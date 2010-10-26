@@ -21,8 +21,8 @@ from hsutil.misc import nonone
 # Set translation func. This has to be set before core modules are initialized
 import core.trans
 mainBundle = NSBundle.mainBundle()
-def cocoa_tr(s):
-    return mainBundle.localizedStringForKey_value_table_(s, s, 'core')
+def cocoa_tr(s, context='core'):
+    return mainBundle.localizedStringForKey_value_table_(s, s, context)
 core.trans.set_tr(cocoa_tr)
 currentLang = NSBundle.preferredLocalizationsFromArray_(mainBundle.localizations())[0]
 LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
