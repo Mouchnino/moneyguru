@@ -19,7 +19,7 @@ class ExportAccountTable(GUITable, PanelGUIObject):
     
     #--- Override
     def _fill(self):
-        accounts = sorted(self.document.accounts, key=ACCOUNT_SORT_KEY)
+        accounts = sorted(self.panel.accounts, key=ACCOUNT_SORT_KEY)
         for account in accounts:
             self.append(ExportAccountTableRow(self, account))
     

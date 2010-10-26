@@ -9,6 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGExportPanel.h"
 #import "MGConst.h"
 
+// Synced with the core
+#define MGExportFormatQIF 0
+#define MGExportFormatCSV 1
+
 @implementation MGExportPanel
 - (id)initWithParent:(HSWindowController *)aParent
 {
@@ -39,6 +43,14 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSInteger exportAllRow = [[self py] exportAll] ? 0 : 1;
     [exportAllButtons selectCellAtRow:exportAllRow column:0];
+    NSInteger exportFormat = [[self py] exportFormat];
+    [exportFormatButtons selectCellAtRow:exportFormat column:0];
+}
+
+- (void)saveFields
+{
+    NSInteger exportFormat = [exportFormatButtons selectedRow] == 0 ? MGExportFormatQIF : MGExportFormatCSV;
+    [[self py] setExportFormat:exportFormat];
 }
 
 /* Actions */
@@ -53,9 +65,10 @@ http://www.hardcoded.net/licenses/bsd_license
     NSSavePanel *sp = [NSSavePanel savePanel];
     [sp setCanCreateDirectories:YES];
     [sp setTitle:TR(@"ExportToQIFMsg")];
-    if ([sp runModalForDirectory:nil file:@"export.qif"] == NSOKButton) {
-        NSString *filename = [[sp URL] path];
-        [[self py] setExportPath:filename];
+    NSString *filename = [exportFormatButtons selectedRow] == 0 ? @"export.qif" : @"export.csv";
+    if ([sp runModalForDirectory:nil file:filename] == NSOKButton) {
+        NSString *filepath = [[sp URL] path];
+        [[self py] setExportPath:filepath];
         [self save:sender];
     }
 }

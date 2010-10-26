@@ -1049,7 +1049,7 @@ class PyExportPanel(PyPanel):
     def exportAll(self):
         return self.py.export_all
     
-    @signature('v@:i')
+    @signature('v@:c')
     def setExportAll_(self, value):
         self.py.export_all = value
     
@@ -1058,6 +1058,14 @@ class PyExportPanel(PyPanel):
     
     def setExportPath_(self, value):
         self.py.export_path = value
+    
+    @signature('i@:')
+    def exportFormat(self):
+        return self.py.export_format
+    
+    @signature('v@:i')
+    def setExportFormat_(self, value):
+        self.py.export_format = value
     
     #--- Python --> Cocoa
     def set_table_enabled(self, enabled):

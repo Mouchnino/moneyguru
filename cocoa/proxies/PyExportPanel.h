@@ -14,4 +14,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setExportAll:(BOOL)value;
 - (NSString *)exportPath;
 - (void)setExportPath:(NSString *)value;
+- (NSInteger)exportFormat;
+- (void)setExportFormat:(NSInteger)value;
 @end

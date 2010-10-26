@@ -8,8 +8,13 @@
 
 from hscommon.notify import Broadcaster
 
+from ..saver.csv import save as save_csv
 from ..saver.qif import save as save_qif
 from .base import MainWindowPanel
+
+class ExportFormat:
+    QIF = 0
+    CSV = 1
 
 class ExportPanel(MainWindowPanel, Broadcaster):
     def __init__(self, view, mainwindow):
@@ -17,16 +22,22 @@ class ExportPanel(MainWindowPanel, Broadcaster):
         Broadcaster.__init__(self)
     
     def _load(self):
+        self.accounts = [a for a in self.document.accounts if a.is_balance_sheet_account()]
         self.exported_names = set()
         self.export_all = True
+        self.export_format = ExportFormat.QIF
         self.export_path = None
         self.notify('panel_loaded')
     
     def _save(self):
-        accounts = self.document.accounts
+        accounts = self.accounts
         if not self.export_all:
             accounts = [a for a in accounts if a.name in self.exported_names]
-        save_qif(self.export_path, accounts)
+        save_func = {
+            ExportFormat.QIF: save_qif,
+            ExportFormat.CSV: save_csv,
+        }[self.export_format]
+        save_func(self.export_path, accounts)
     
     #--- Public
     def is_exported(self, name):

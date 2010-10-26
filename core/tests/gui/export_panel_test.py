@@ -6,8 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import csv
+
 from hsutil.testutil import eq_
 
+from ...gui.export_panel import ExportFormat
 from ...model.account import AccountType
 from ..base import TestApp, with_app
 
@@ -16,15 +19,13 @@ from ..base import TestApp, with_app
 def test_account_table_order(app):
     app.add_account('d', account_type=AccountType.Asset)
     app.add_account('c', account_type=AccountType.Liability)
-    app.add_account('b', account_type=AccountType.Income)
-    app.add_account('a', account_type=AccountType.Expense)
+    app.add_account('b', account_type=AccountType.Income) # not shown
+    app.add_account('a', account_type=AccountType.Expense) # not shown
     app.mw.export()
     t = app.expanel.table
-    eq_(len(t), 4)
+    eq_(len(t), 2)
     eq_(t[0].name, 'd')
     eq_(t[1].name, 'c')
-    eq_(t[2].name, 'b')
-    eq_(t[3].name, 'a')
 
 @with_app(TestApp)
 def test_default_values(app):
@@ -45,3 +46,17 @@ def test_export_only_one_account(app):
     app.expanel.save()
     contents = open(expath, 'rt', encoding='utf-8').read()
     assert 'foobaz' not in contents
+
+@with_app(TestApp)
+def test_export_as_csv(app):
+    app.add_account('foo')
+    app.add_txn(to='foo', amount='42')
+    app.mw.export()
+    app.expanel.export_format = ExportFormat.CSV
+    expath = str(app.tmppath() + 'foo.csv')
+    app.expanel.export_path = expath
+    app.expanel.save()
+    # We just check that the resulting file is a CSV. whether it's a correct CSV file is tested
+    # elsewhere.
+    contents = open(expath, 'rt').read()
+    csv.Sniffer().sniff(contents) # no error? alright, it's a csv

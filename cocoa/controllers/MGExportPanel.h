@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSMatrix *exportAllButtons;
     IBOutlet NSButton *exportButton;
     IBOutlet MGTableView *accountTableView;
+    IBOutlet NSMatrix *exportFormatButtons;
     
     MGExportAccountTable *accountTable;
 }

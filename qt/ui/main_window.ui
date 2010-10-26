@@ -395,10 +395,16 @@
    <property name="text">
     <string>Import...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+I</string>
+   </property>
   </action>
   <action name="actionExport">
    <property name="text">
     <string>Export...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+E</string>
    </property>
   </action>
   <action name="actionSave">
