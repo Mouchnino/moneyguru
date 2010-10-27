@@ -26,11 +26,8 @@ def test_fortis():
     eq_(len(loader.lines[0]), 8)
     # the lines below until the load() are the equivalent of the user linking columns with fields
     # and removing the first line.
-    loader.column_indexes[CsvField.Date] = 1
-    loader.column_indexes[CsvField.Description] = 5
-    loader.column_indexes[CsvField.Amount] = 3
-    loader.column_indexes[CsvField.Currency] = 4
-    loader.column_indexes[CsvField.Reference] = 0
+    loader.columns = [CsvField.Reference, CsvField.Date, None, CsvField.Amount, CsvField.Currency,
+        CsvField.Description]
     loader.lines = loader.lines[1:]
     loader.load()
     eq_(len(loader.accounts), 1)

@@ -11,7 +11,7 @@ from itertools import dropwhile
 from hsutil.misc import first, nonone
 
 from ..exception import FileLoadError
-from ..loader.csv import CsvField
+from ..loader.csv import CsvField, MERGABLE_FIELDS
 from ..trans import tr
 from .base import DocumentGUIObject
 
@@ -62,7 +62,8 @@ class Layout(object):
     
     def set_column_field(self, index, field):
         assert field in FIELD_NAMES
-        if field in self.columns:
+        requires_unique = (field is not None) and (field not in MERGABLE_FIELDS)
+        if requires_unique and field in self.columns:
             self.columns[self.columns.index(field)] = None
         self.columns[index] = field
     
@@ -82,15 +83,6 @@ class Layout(object):
             if last_index - linecount not in self.excluded_lines:
                 break
             last_index -= 1
-    
-    #--- Properties
-    @property
-    def field_indexes(self): # {fieldname: index}
-        result = {}
-        for index, field in enumerate(self.columns):
-            if field is not None:
-                result[field] = index
-        return result
     
 
 class CSVOptions(DocumentGUIObject):
@@ -134,7 +126,7 @@ class CSVOptions(DocumentGUIObject):
     #--- Public
     def continue_import(self):
         loader = self.document.loader
-        loader.column_indexes = self.layout.field_indexes
+        loader.columns = self.layout.columns
         lines = [line for index, line in enumerate(self.lines) if not self.line_is_excluded(index)]
         loader.lines = lines
         target_name = self.layout.target_account_name

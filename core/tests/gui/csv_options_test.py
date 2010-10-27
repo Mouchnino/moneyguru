@@ -9,7 +9,7 @@
 
 from hsutil.testutil import eq_
 
-from ..base import TestCase, Document, DocumentGUI, ApplicationGUI
+from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, TestApp, with_app, TestData
 from ...app import Application
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
 from ...loader.csv import CsvField
@@ -484,3 +484,27 @@ class Utf8Encoded(TestCase):
         eq_(self.csvopt.lines[1][1], 'fôø')
         eq_(self.csvopt.lines[2][1], 'bàr')
     
+#---
+def app_simple_csv():
+    app = TestApp()
+    app.doc.parse_file_for_import(TestData.filepath('csv/simple.csv'))
+    app.csvopt.set_column_field(0, CsvField.Date)
+    app.csvopt.set_column_field(1, CsvField.Description)
+    app.csvopt.set_column_field(2, CsvField.Payee)
+    app.csvopt.set_column_field(4, CsvField.Transfer)
+    app.csvopt.set_column_field(5, CsvField.Amount)
+    return app
+
+@with_app(app_simple_csv)
+def test_two_columns_with_description(app):
+    # When two columns have a Description field, merge them together.
+    app.csvopt.set_column_field(3, CsvField.Description)
+    app.csvopt.continue_import()
+    eq_(app.itable[0].description_import, 'description whatever')
+
+@with_app(app_simple_csv)
+def test_two_columns_with_payee(app):
+    # When two columns have a Payee field, merge them together.
+    app.csvopt.set_column_field(3, CsvField.Payee)
+    app.csvopt.continue_import()
+    eq_(app.itable[0].payee_import, 'payee whatever')

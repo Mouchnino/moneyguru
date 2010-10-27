@@ -29,16 +29,36 @@ class CsvField(object):
     Currency = 'currency'
     Reference = 'reference'
 
+MERGABLE_FIELDS = {CsvField.Description, CsvField.Payee}
+
 class Loader(base.Loader):
     FILE_ENCODING = 'latin-1'
     def __init__(self, default_currency):
         base.Loader.__init__(self, default_currency)
-        self.column_indexes = {}
+        self.columns = []
         self.lines = []
         self.dialect = None # last used dialect
         self.rawlines = [] # last prepared file
     
     #--- Private
+    @staticmethod
+    def _merge_columns(columns, lines):
+        # For any columns that is there more than once, merge the data that goes with it
+        for field in MERGABLE_FIELDS:
+            indexes = [i for i, f in enumerate(columns) if f == field]
+            if len(indexes) <= 1:
+                continue
+            for line_index, line in enumerate(lines):
+                elems = [line[i] for i in indexes]
+                merged_data = ' '.join(elems)
+                new_line = line[:] # We don't want to touch original lines
+                new_line[indexes[0]] = merged_data
+                for index_to_remove in reversed(indexes[1:]):
+                    del new_line[index_to_remove]
+                lines[line_index] = new_line
+            for index_to_remove in reversed(indexes[1:]):
+                del columns[index_to_remove]
+    
     def _prepare(self, infile):
         # Comment lines can confuse the sniffer. We remove them
         content = infile.read()
@@ -80,9 +100,14 @@ class Loader(base.Loader):
         self._scan_lines()
     
     def _load(self):
-        ci = self.column_indexes
-        colcount = len(self.lines[0]) if self.lines else 0
-        ci = dict((attr, index) for attr, index in ci.items() if index < colcount)
+        lines = self.lines[:]
+        colcount = len(lines[0]) if lines else 0
+        columns = self.columns[:colcount]
+        self._merge_columns(columns, lines)
+        ci = {}
+        for index, field in enumerate(columns):
+            if field is not None:
+                ci[field] = index
         hasdate = CsvField.Date in ci
         hasamount = (CsvField.Amount in ci) or (CsvField.Increase in ci and CsvField.Decrease in ci)
         if not (hasdate and hasamount):
@@ -90,7 +115,7 @@ class Loader(base.Loader):
         self.account_info.name = 'CSV Import'
         date_index = ci[CsvField.Date]
         lines_to_load = []
-        for line in self.lines:
+        for line in lines:
             line = line[:]
             cleaned_str_date = self.clean_date(line[date_index])
             if cleaned_str_date is None:
