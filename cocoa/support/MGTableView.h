@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 - (void)updateSelection;
 - (void)stopEditing;
+- (IBAction)copy:(id)sender;
 @end
 
 @interface NSObject(MGTableViewDelegate)
@@ -24,6 +25,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSString *)prevValueForColumn:(NSTableColumn *)column;
 - (NSString *)nextValueForColumn:(NSTableColumn *)column;
 - (NSIndexSet *)selectedIndexes;
+- (NSString *)dataForCopyToPasteboard;
 - (void)tableViewDidEndEditing:(MGTableView *)tableView;
 - (void)tableViewCancelsEdition:(MGTableView *)tableView;
 - (void)tableViewWasDoubleClicked:(MGTableView *)tableView;

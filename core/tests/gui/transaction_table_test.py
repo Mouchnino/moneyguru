@@ -6,7 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import csv
 from datetime import date
+from io import StringIO
 
 from hsutil.testutil import eq_
 
@@ -373,6 +375,24 @@ def test_undo_redo_while_filtered(app):
     app.doc.redo()
     eq_(app.ttable.row_count, 0)
 
+@with_app(app_one_transaction)
+def test_selection_as_csv(app):
+    # selection_as_csv() return a CSV string representing the selection.
+    csvdata = app.ttable.selection_as_csv()
+    rows = list(csv.reader(StringIO(csvdata), delimiter='\t'))
+    # The contents of the columns, in order
+    expected = [['11/07/2008', 'description', 'first', 'second', '42.00']]
+    eq_(rows, expected)
+
+@with_app(app_one_transaction)
+def test_selection_as_csv_different_column_order(app):
+    # column order is followed when exporting selection to CSV.
+    app.ttable.columns.move_column('date', 3) # after description
+    csvdata = app.ttable.selection_as_csv()
+    rows = list(csv.reader(StringIO(csvdata), delimiter='\t'))
+    expected = [['description', '11/07/2008', 'first', 'second', '42.00']]
+    eq_(rows, expected)
+
 class TransactionLinkedToNumberedAccounts(TestCase):
     def setUp(self):
         self.create_instances()
@@ -455,7 +475,6 @@ def app_three_way_multi_currency_transaction():
     row.account = 'third'
     row.debit = '22 usd'
     app.stable.save_edits()
-    txn = app.tpanel.original
     app.tpanel.save()
     app.mainwindow.select_transaction_table()
     return app

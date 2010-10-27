@@ -34,6 +34,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return NO;
 }
 
+- (NSString *)dataForCopyToPasteboard
+{
+    return [[self py] selectionAsCSV];
+}
+
 /* Public */
 - (PyTable *)py
 {
@@ -48,5 +53,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGColumns *)columns
 {
     return columns;
+}
+
+- (IBAction)copy:(id)sender;
+{
+    NSLog(@"foo");
 }
 @end

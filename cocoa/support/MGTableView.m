@@ -62,8 +62,16 @@ http://www.hardcoded.net/licenses/bsd_license
 	return NO;
 }
 
-/* Public methods */
+/* Actions */
+- (IBAction)copy:(id)sender
+{
+    NSString *data = [[self delegate] dataForCopyToPasteboard];
+    NSPasteboard *p = [NSPasteboard generalPasteboard];
+    [p declareTypes:[NSArray arrayWithObjects:NSStringPboardType, nil] owner:nil];
+    [p setString:data forType:NSStringPboardType];
+}
 
+/* Public methods */
 - (void)updateSelection
 {
     NSIndexSet *selection = [[self delegate] selectedIndexes];

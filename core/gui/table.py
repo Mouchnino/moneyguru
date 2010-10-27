@@ -6,7 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import csv
 import datetime
+from io import StringIO
 
 from hsgui.table import Table, GUITable as GUITableBase, Row as RowBase
 
@@ -34,6 +36,23 @@ class GUITable(GUITableBase):
         if not has_gap and position in (row_indexes + [last_index + 1]):
             return False
         return True
+    
+    def selection_as_csv(self):
+        csvrows = []
+        columns = (self.columns.coldata[colname] for colname in self.columns.colnames)
+        columns = [col for col in columns if col.visible]
+        for row in self.selected_rows:
+            csvrow = []
+            for col in columns:
+                try:
+                    csvrow.append(row.get_cell_value(col.name))
+                except AttributeError:
+                    pass
+            csvrows.append(csvrow)
+        fp = StringIO()
+        csv.writer(fp, delimiter='\t', quotechar='"').writerows(csvrows)
+        fp.seek(0)
+        return fp.read()
     
     #--- Event handlers
     def edition_must_stop(self):
