@@ -39,7 +39,10 @@ class MassEditionPanel(MainWindowPanel):
         splits = flatten(t.splits for t in transactions)
         splits = [s for s in splits if s.amount]
         if splits and allsame(s.amount.currency for s in splits):
-            self._currency_index = Currency.all.index(splits[0].amount.currency)
+            currency = splits[0].amount.currency
+        else:
+            currency = self.app.default_currency
+        self._currency_index = Currency.all.index(currency)
         if self.can_change_accounts:
             def get_from(t):
                 s1, s2 = t.splits

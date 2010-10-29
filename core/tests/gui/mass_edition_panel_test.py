@@ -348,6 +348,21 @@ def test_currency_change_on_splits(app):
     app.mepanel.save() # no crash
     eq_(app.ttable[1].amount, 'GBP 20.00')
 
+#---
+def app_transactions_with_different_currencies():
+    app = TestApp()
+    app.add_txn(amount='42 eur')
+    app.add_txn(amount='42 cad')
+    app.ttable.select([0, 1])
+    return app
+
+@with_app(app_transactions_with_different_currencies)
+def test_set_currency_to_native_one_when_we_cant_choose_one_from_selection(app):
+    # There was a bug previously where the panel's currency could stay at -1, causing the mass panel
+    # to change all currencies to XPF (the last currency in the currency list).
+    app.mepanel.load()
+    eq_(app.mepanel.currency_index, 0) # USD
+
 #--- Generators
 def test_can_change_amount():
     def check(app, expected):
