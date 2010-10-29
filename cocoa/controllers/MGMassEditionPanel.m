@@ -118,8 +118,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
-    // When the popup list is never popped (when only typing is used), this is what is called on tabbing out.
-    NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
+    /* When the popup list is never popped (when only typing is used), this is what is called on
+       tabbing out. We can't rely on indexOfSelectedItem as it seems to be set *after*
+       controlTextDidEndEditing: is called.
+    */
+    NSInteger currencyIndex = [self comboBox:currencySelector indexOfItemWithStringValue:[currencySelector stringValue]];
     [[self py] setCurrencyIndex:currencyIndex];
 }
 
