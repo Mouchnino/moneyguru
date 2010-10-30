@@ -253,6 +253,7 @@
     <addaction name="actionShowHelp"/>
     <addaction name="actionRegister"/>
     <addaction name="actionCheckForUpdate"/>
+    <addaction name="actionOpenDebugLog"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
@@ -545,6 +546,11 @@
   <action name="actionCheckForUpdate">
    <property name="text">
     <string>Check for update</string>
+   </property>
+  </action>
+  <action name="actionOpenDebugLog">
+   <property name="text">
+    <string>Open Debug Log</string>
    </property>
   </action>
   <action name="actionDuplicateTransaction">

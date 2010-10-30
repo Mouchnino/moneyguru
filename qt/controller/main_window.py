@@ -8,9 +8,11 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 import sys
+import os.path as op
 
-from PyQt4.QtCore import QProcess
-from PyQt4.QtGui import QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap, QDialog
+from PyQt4.QtCore import QProcess, QUrl
+from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap, QDialog,
+    QDesktopServices)
 
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
@@ -179,6 +181,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionCheckForUpdate.triggered.connect(self.checkForUpdateTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
+        self.actionOpenDebugLog.triggered.connect(self.openDebugLogTriggered)
         self.actionQuit.triggered.connect(self.close)
     
     #--- QWidget overrides
@@ -369,6 +372,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def aboutTriggered(self):
         self.app.showAboutBox()
+    
+    def openDebugLogTriggered(self):
+        appdata = QDesktopServices.storageLocation(QDesktopServices.DataLocation)
+        debugLogPath = op.join(appdata, 'debug.log')
+        url = QUrl.fromLocalFile(debugLogPath)
+        QDesktopServices.openUrl(url)
     
     #--- Other Signals
     def currentTabChanged(self, index):
