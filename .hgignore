@@ -7,6 +7,7 @@ syntax: glob
 *.pbxuser
 *.mode1v3
 *.tm_build_errors
+*.back.aip
 build
 _build
 conf.yaml
@@ -15,11 +16,10 @@ cocoa/build
 cocoa/mg_cocoa.plugin
 qt/*_rc.py
 qt/ui/*_ui.py
-qt/build
-qt/dist
-qt/install
-qt/warnmg.txt
-qt/logdict*.log
+build
+dist
+install
+installer_tmp-cache
 qt/lang/fr.qm
 qt/lang/de.qm
 help/moneyguru_help
