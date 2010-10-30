@@ -59,9 +59,9 @@ def package_debian():
         shutil.rmtree('build')
     destpath = op.join('build', 'moneyguru-{0}'.format(MoneyGuru.VERSION))
     srcpath = op.join(destpath, 'src')
-    os.makedirs(destpath)
-    shutil.copytree('qt', srcpath)
-    copy_packages(['hscommon', 'hsgui', 'core', 'qtlib', 'hsutil'], srcpath)
+    os.makedirs(srcpath)
+    shutil.copy('run.py', op.join(srcpath, 'run.py'))
+    copy_packages(['qt', 'hscommon', 'hsgui', 'core', 'qtlib', 'hsutil'], srcpath)
     import sip, PyQt4, sgmllib
     shutil.copy(sip.__file__, srcpath)
     qtsrcpath = op.dirname(PyQt4.__file__)

@@ -41,10 +41,10 @@ install: build
 	dh_prep  
 	dh_installdirs
 
-	chmod +x src/start.py
+	chmod +x src/run.py
 	cp -R src/ $(CURDIR)/debian/moneyguru/usr/local/share/moneyguru
 	cp $(CURDIR)/debian/moneyguru.desktop $(CURDIR)/debian/moneyguru/usr/share/applications
-	ln -s /usr/local/share/moneyguru/start.py $(CURDIR)/debian/moneyguru/usr/local/bin/moneyguru
+	ln -s /usr/local/share/moneyguru/run.py $(CURDIR)/debian/moneyguru/usr/local/bin/moneyguru
 
 
 # Build architecture-independent files here.
