@@ -1,3 +1,16 @@
+- date: 2010-10-30
+  version: 2.3.0
+  description: |
+    * Improved exports by allowing account selection and by supporting CSV exports. (#162)
+    * Introduced document-based preferences (for column widths/position and opened tabs). (#191)
+    * When the Year to date range is selected, the "Last" column in Profit & Loss now shows YTD 
+        values for last year rather than showing the value for the whole year. (#188)
+    * During CSV imports, allow more than one column to be selected for Description and Payee. When
+        that happens, these columns will be merged. (#198)
+    * Selected table rows can be copied so that they can be quickly pasted in applications like
+        Numbers. [Mac OS X] (#24)
+    * It's now possible to associate OFX, QIF and CSV file extensions to moneyGuru so it's possible
+        to quickly import them by double-clicking on them. [Mac OS X] (#194)
 - date: 2010-10-12
   version: 2.2.5
   description: |
