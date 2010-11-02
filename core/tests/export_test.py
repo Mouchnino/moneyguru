@@ -61,3 +61,19 @@ def test_export_txn_with_splits_to_csv(app):
     eq_(len(lines), 2)
     expected = ['checking', '26/10/2010', '', '', '', 'split1, split2', '42.00', 'USD']
     eq_(lines[1], expected)
+
+#---
+def app_txn_with_null_amount():
+    app = TestApp()
+    app.add_account('checking')
+    app.add_txn(to='checking')
+    return app
+
+@with_app(app_txn_with_null_amount)
+def test_export_txn_with_null_amount(app):
+    # Don't crash on txns with null amounts
+    expath = export_to_csv(app) # don't crash
+    loader = CSVLoader(USD)
+    loader.parse(expath)
+    lines = [l for l in loader.lines if l]
+    eq_(len(lines), 2)

@@ -20,8 +20,14 @@ def save(filename, accounts):
         for entry in account.entries:
             date_str = format_date(entry.date, 'dd/MM/yyyy')
             transfer = ', '.join(a.name for a in entry.transfer)
-            amount_fmt = format_amount(entry.amount, entry.amount.currency)
+            amount = entry.amount
+            if amount:
+                amount_fmt = format_amount(amount, amount.currency)
+                currency_code = amount.currency.code
+            else:
+                amount_fmt = '0.00'
+                currency_code = ''
             row = [account.name, date_str, entry.description, entry.payee, entry.checkno, transfer,
-                amount_fmt, entry.amount.currency.code]
+                amount_fmt, currency_code]
             writer.writerow(row)
     fp.close()
