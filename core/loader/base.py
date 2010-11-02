@@ -41,9 +41,14 @@ for sep in EXTRA_DATE_SEPS:
     for base_format in BASE_DATE_FORMATS:
         DATE_FORMATS.append(base_format.replace('/', sep))
 # Finally, add special formats
-DATE_FORMATS.append('%Y%m%d')
+DATE_FORMATS += ['%m/%d\'%y', '%Y%m%d']
 
-re_possibly_a_date = re.compile(r'[\d/.-]{6,10}|\d{1,2}[/.-]\w{3}[/.-]\d{2,4}')
+POSSIBLE_PATTERNS = [
+    r'[\d/.-]{6,10}',
+    r'\d{1,2}[/.-]\w{3}[/.-]\d{2,4}',
+    r"\d{1,2}/\d{1,2}'\d{2,4}",
+]
+re_possibly_a_date = re.compile('|'.join(POSSIBLE_PATTERNS))
 
 class Loader(object):
     """Base interface for loading files containing financial information to load into moneyGuru.
