@@ -43,6 +43,22 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>qfx</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>doc_icon</string>
+			<key>CFBundleTypeName</key>
+			<string>QFX</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>MGImport</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>csv</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
