@@ -1,3 +1,8 @@
+- date: 2010-11-08
+  version: 2.3.2
+  description: |
+    * Fixed the process of restoring expanded paths in account sheets, which was broken in 2.3. (#202)
+    * Fixed crashes when double-clicking importable files. [Mac OS X] (#203)
 - date: 2010-11-02
   version: 2.3.1
   description: |
