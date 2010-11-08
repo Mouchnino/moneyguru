@@ -23,7 +23,12 @@ http://www.hardcoded.net/licenses/bsd_license
     if ((urlType != nil) && ([self documentClassForType:urlType] == nil)) {
         MGDocument *doc = (MGDocument *)[self currentDocument];
         if (doc == nil) {
-            doc = [self openFirstDocument];
+            if ([[self documents] count] > 0) {
+                doc = [[self documents] objectAtIndex:0];
+            }
+            else {
+                doc = [self openFirstDocument];
+            }
         }
         [[doc py] import:[absoluteURL path]];
         return doc;
