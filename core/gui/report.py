@@ -4,10 +4,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from hsgui import tree
-from hsutil.misc import first
 
 from ..exception import DuplicateAccountNameError
 from ..trans import tr
@@ -139,7 +136,6 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             return
         self.view.stop_editing()
         node = self.selected
-        selected_path = self.selected_path
         if node.is_account:
             account = node.account
             if account.entries:
@@ -297,6 +293,11 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         expanded = self.document.get_default(prefname, list())
         if expanded:
             self._expanded_paths = {tuple(p) for p in expanded}
+            # Expanded paths are refreshed on the basic refresh() call, but there are some
+            # synchronization problems when we load a document, which makes the refresh() call
+            # happen *before* the expanded paths are restored. Therefore, we must make a separate
+            # call to refresh paths.
+            self.view.refresh_expanded_paths()
         self.columns.restore_columns()
     
     def edition_must_stop(self):

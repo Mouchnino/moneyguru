@@ -404,6 +404,10 @@ class PyReport(PyOutline):
     def expandedPaths(self):
         return self.py.expanded_paths
     
+    # Python --> Cocoa
+    def refresh_expanded_paths(self):
+        self.cocoa.refreshExpandedPaths()
+    
 
 class PyPanel(PyGUIObject):
     def savePanel(self):

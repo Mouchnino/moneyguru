@@ -44,7 +44,7 @@ def main(argv):
     stylesheetFile.close()
     app.setStyleSheet(style)
     settings = QSettings()
-    lang = str(settings.value('Language').toString())
+    lang = settings.value('Language').toString()
     if not lang:
         lang = str(QLocale.system().name())[:2]
     if lang in LANG2LOCALENAME:

@@ -63,6 +63,7 @@ def test_gui_calls_after_pref_restore(app):
     app.clear_gui_calls()
     app = app.save_and_load()
     app.check_gui_calls(app.ttablecol_gui, ['restore_columns'])
+    app.check_gui_calls_partial(app.bsheet_gui, ['refresh_expanded_paths'])
 
 #--- Columns save/restore
 def assert_column_save_restore(app, tablename, colname):

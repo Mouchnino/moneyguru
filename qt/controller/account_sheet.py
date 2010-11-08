@@ -259,10 +259,13 @@ class AccountSheet(TreeModel, ColumnBearer):
     #--- model --> view
     def refresh(self):
         self.reset()
+        self.refresh_expanded_paths()
+        self._updateViewSelection()
+    
+    def refresh_expanded_paths(self):
         for path in self.model.expanded_paths:
             index = self.findIndex(path)
             self.view.expand(index)
-        self._updateViewSelection()
     
     def restore_columns(self):
         colnames = self.model.columns.colnames

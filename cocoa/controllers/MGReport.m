@@ -37,19 +37,6 @@ http://www.hardcoded.net/licenses/bsd_license
     return columns;
 }
 
-/* Overrides */
-- (void)refresh
-{
-    [super refresh];
-    NSArray *expandedPaths = [[self py] expandedPaths];
-    for (NSArray *arrayPath in expandedPaths) {
-        NSIndexPath *path = a2p(arrayPath);
-        if (path != nil) {
-            [outlineView expandItem:path];
-        }
-    }
-}
-
 /* Actions */
 - (IBAction)showSelectedAccount:(id)sender
 {
@@ -291,5 +278,25 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [super outlineViewSelectionDidChange:notification];
     toggleExcludedIsEnabled = YES;
+}
+
+// Python --> Cocoa
+
+- (void)refreshExpandedPaths
+{
+    NSArray *expandedPaths = [[self py] expandedPaths];
+    for (NSArray *arrayPath in expandedPaths) {
+        NSIndexPath *path = a2p(arrayPath);
+        if (path != nil) {
+            [outlineView expandItem:path];
+        }
+    }
+}
+
+// Override
+- (void)refresh
+{
+    [super refresh];
+    [self refreshExpandedPaths];
 }
 @end
