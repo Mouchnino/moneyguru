@@ -16,6 +16,7 @@ from py.test import config
 from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
 from hsutil.testutil import TestData as TestDataBase, eq_
+from hscommon.testutil import CallLogger, TestApp as TestAppBase, with_app
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
@@ -66,23 +67,6 @@ from ..loader import base
 from ..model.account import AccountType
 from .. import document as document_module
 from . import ensure_ratesdb_patched
-
-class CallLogger(object):
-    """This is a dummy object that logs all calls made to it.
-    
-    It is used to simulate the GUI layer.
-    """
-    def __init__(self):
-        self.calls = []
-    
-    def __getattr__(self, func_name):
-        def func(*args, **kw):
-            self.calls.append(func_name)
-        return func
-    
-    def clear_calls(self):
-        del self.calls[:]
-    
 
 def log(method):
     def wrapper(self, *args, **kw):
@@ -145,20 +129,9 @@ class DictLoader(base.Loader):
                     value = datetime.strptime(value, '%d/%m/%Y').date()
                 setattr(self.transaction_info, attr, value)
 
-class TestApp(object):
+class TestApp(TestAppBase):
     def __init__(self, app=None, doc=None, tmppath=None):
-        def make_gui(name, class_, view=None, parent=None, holder=None):
-            if view is None:
-                view = CallLogger()
-            if parent is None:
-                parent = self.mw
-            if holder is None:
-                holder = self
-            setattr(holder, '{0}_gui'.format(name), view)
-            gui = class_(view, parent)
-            setattr(holder, name, gui)
-            return gui
-        
+        make_gui = self.make_gui
         def make_table_gui(name, class_, view=None, parent=None, holder=None):
             gui = make_gui(name, class_, view, parent, holder)
             if holder is None:
@@ -271,48 +244,12 @@ class TestApp(object):
             eq_(self.mw.pane_label(index), account_name)
     
     @staticmethod
-    def check_gui_calls(gui, expected, verify_order=False):
-        """Checks that the expected calls have been made to 'gui', then clears the log.
-        
-        `expected` is an iterable of strings representing method names.
-        If `verify_order` is True, the order of the calls matters.
-        """
-        if verify_order:
-            eq_(gui.calls, expected)
-        else:
-            eq_(set(gui.calls), set(expected))
-        gui.clear_calls()
+    def check_gui_calls(gui, *args, **kwargs):
+        gui.check_gui_calls(*args, **kwargs)
     
     @staticmethod
-    def check_gui_calls_partial(gui, expected=None, not_expected=None, verify_order=False):
-        """Checks that the expected calls have been made to 'gui', then clears the log.
-        
-        `expected` is an iterable of strings representing method names. Order doesn't matter.
-        Moreover, if calls have been made that are not in expected, no failure occur.
-        `not_expected` can be used for a more explicit check (rather than calling `check_gui_calls`
-        with an empty `expected`) to assert that calls have *not* been made.
-        """
-        if expected is not None:
-            not_called = set(expected) - set(gui.calls)
-            assert not not_called, "These calls haven't been made: {0}".format(not_called)
-            if verify_order:
-                max_index = 0
-                for call in expected:
-                    index = gui.calls.index(call)
-                    if index < max_index:
-                        raise AssertionError("The call {0} hasn't been made in the correct order".format(call))
-                    max_index = index
-        if not_expected is not None:
-            called = set(not_expected) & set(gui.calls)
-            assert not called, "These calls shouldn't have been made: {0}".format(called)
-        gui.clear_calls()
-    
-    def clear_gui_calls(self):
-        for attr in dir(self):
-            if attr.endswith('_gui'):
-                gui = getattr(self, attr)
-                if hasattr(gui, 'calls'): # We might have test methods ending with '_gui'
-                    gui.clear_calls()
+    def check_gui_calls_partial(gui, *args, **kwargs):
+        gui.check_gui_calls_partial(*args, **kwargs)
     
     def add_account(self, name=None, currency=None, account_type=AccountType.Asset, group_name=None,
             account_number=None):
@@ -553,30 +490,6 @@ class TestApp(object):
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
     
-
-def with_app(appfunc):
-    # This decorator sends the app resulting from the `appfunc` call as an argument to the decorated
-    # `func`. `appfunc` must return a TestApp instance. Additionally, `appfunc` can also return a
-    # tuple (app, patcher). In this case, the patcher will perform unpatching after having called
-    # the decorated func.
-    def decorator(func):
-        def wrapper(): # a test is not supposed to take args
-            appresult = appfunc()
-            if isinstance(appresult, tuple):
-                app, patcher = appresult
-            else:
-                app = appresult
-                patcher = None
-            assert isinstance(app, TestApp)
-            try:
-                func(app)
-            finally:
-                if patcher is not None:
-                    patcher.unpatch()
-        
-        wrapper.__name__ = func.__name__
-        return wrapper
-    return decorator
 
 class TestData(TestDataBase):
     @classmethod
