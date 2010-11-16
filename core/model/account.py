@@ -6,15 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from functools import partial
 
 from .entry import EntryList
 from .sort import sort_string
 from ..exception import DuplicateAccountNameError
 
-class AccountType(object):
+class AccountType:
     Asset = 'asset'
     Liability = 'liability'
     Income = 'income'
@@ -31,7 +29,7 @@ def sort_accounts(accounts):
     """
     accounts.sort(key=ACCOUNT_SORT_KEY)
 
-class Account(object):
+class Account:
     def __init__(self, name, currency, type):
         self.name = name
         self.currency = currency
@@ -74,7 +72,7 @@ class Account(object):
             return self.name
     
 
-class Group(object):
+class Group:
     def __init__(self, name, type):
         self.name = name
         self.type = type
@@ -122,14 +120,14 @@ class AccountList(list):
         If 'auto_create_type' is not None and no account is found, create an account of type
         'auto_create_type' and return it.
         """
-        lowered = name.lower()
+        normalized = name.lower().strip()
         for account in self:
-            if account.name.lower() == lowered:
+            if account.name.lower().strip() == normalized:
                 return account
-            elif account.account_number and lowered.startswith(account.account_number):
+            elif account.account_number and normalized.startswith(account.account_number):
                 return account
         if auto_create_type:
-            account = Account(name, self.default_currency, type=auto_create_type)
+            account = Account(name.strip(), self.default_currency, type=auto_create_type)
             self.add(account)
             self.auto_created.add(account)
             return account
@@ -154,7 +152,7 @@ class AccountList(list):
         other = self.find(new_name)
         if (other is not None) and (other is not account):
             raise DuplicateAccountNameError()
-        account.name = new_name
+        account.name = new_name.strip()
     
 
 class GroupList(list):

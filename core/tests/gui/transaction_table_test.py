@@ -20,69 +20,86 @@ from ...const import PaneType
 from ...gui.transaction_table import TransactionTable
 from ...model.date import MonthRange, YearRange
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
-    
-    def test_add_and_cancel(self):
-        """Reverting after an add removes the transaction from the list"""
-        self.ttable.add()
-        self.ttable.cancel_edits()
-        eq_(self.ttable.row_count, 0)
-    
-    def test_add_change_and_save(self):
-        """The add mechanism works as expected"""
-        self.ttable.add()
-        eq_(self.ttable.row_count, 1)
-        eq_(self.ttable.selected_indexes, [0])    
-        row = self.ttable[0]
-        row.description = 'foobar'
-        row.from_ = 'some account'
-        row.amount = '42'
-        self.clear_gui_calls()
-        self.ttable.save_edits()
-        self.mainwindow.select_income_statement()
-        self.istatement.selected = self.istatement.income[0]
-        self.istatement.show_selected_account()
-        eq_(self.ta.etable_count(), 1)
-    
-    def test_add_twice_then_save(self):
-        """Calling add() while in edition calls save_edits()"""
-        # Previously, it wasn't called, causing the row to just stay in the buffer, disapearing at
-        # the next refresh
-        self.ttable.add()
-        self.ttable.add()
-        self.ttable.save_edits()
-        eq_(self.ttable.row_count, 2)
-    
-    def test_delete(self):
-        """Don't crash when trying to remove a transaction from an empty list"""
-        self.ttable.delete()
-        self.assertFalse(self.document.is_dirty())
-    
-    def test_gui_call_on_filter_applied(self):
-        """The ttable's view is refreshed on filter_applied"""
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
-        self.sfield.query = 'foobar'
-        self.check_gui_calls(self.ttable_gui, ['refresh'])
-    
-    def test_refresh_on_import(self):
-        # When entries are imported, ttable is refreshed
-        self.document.date_range = YearRange(date(2007, 1, 1))
-        self.clear_gui_calls()
-        self.document.parse_file_for_import(self.filepath('qif', 'checkbook.qif'))
-        self.iwin.import_selected_pane()
-        self.assertNotEqual(self.ttable.row_count, 0)
-        self.check_gui_calls(self.ttable_gui, ['refresh'])
-    
-    def test_show_from_account(self):
-        # show_from_account() when the selected txn has no assigned account does nothing
-        self.ttable.show_from_account() # no crash
-        self.check_gui_calls_partial(self.mainwindow_gui, not_expected=['show_entry_table'])
-    
+#---
+def app_tview_shown():
+    app = TestApp()
+    app.show_tview()
+    return app
+
+@with_app(app_tview_shown)
+def test_add_and_cancel(app):
+    # Reverting after an add removes the transaction from the list.
+    app.ttable.add()
+    app.ttable.cancel_edits()
+    eq_(app.ttable.row_count, 0)
+
+@with_app(app_tview_shown)
+def test_add_change_and_save(app):
+    # The add mechanism works as expected.
+    app.ttable.add()
+    eq_(app.ttable.row_count, 1)
+    eq_(app.ttable.selected_indexes, [0])    
+    row = app.ttable[0]
+    row.description = 'foobar'
+    row.from_ = 'some account'
+    row.amount = '42'
+    app.clear_gui_calls()
+    app.ttable.save_edits()
+    app.mw.select_income_statement()
+    app.istatement.selected = app.istatement.income[0]
+    app.istatement.show_selected_account()
+    eq_(app.etable_count(), 1)
+
+@with_app(app_tview_shown)
+def test_add_twice_then_save(app):
+    # Calling add() while in edition calls save_edits().
+    # Previously, it wasn't called, causing the row to just stay in the buffer, disapearing at
+    # the next refresh
+    app.ttable.add()
+    app.ttable.add()
+    app.ttable.save_edits()
+    eq_(app.ttable.row_count, 2)
+
+@with_app(app_tview_shown)
+def test_delete_up_to_empty_table_doesnt_cause_crash(app):
+    # Don't crash when trying to remove a transaction from an empty list.
+    app.ttable.delete()
+    assert not app.doc.is_dirty()
+
+@with_app(app_tview_shown)
+def test_gui_call_on_filter_applied(app):
+    # The ttable's view is refreshed on filter_applied.
+    app.mw.select_transaction_table()
+    app.clear_gui_calls()
+    app.sfield.query = 'foobar'
+    app.check_gui_calls(app.ttable_gui, ['refresh'])
+
+@with_app(app_tview_shown)
+def test_refresh_on_import(app):
+    # When entries are imported, ttable is refreshed
+    app.doc.date_range = YearRange(date(2007, 1, 1))
+    app.clear_gui_calls()
+    app.doc.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+    app.iwin.import_selected_pane()
+    assert app.ttable.row_count != 0
+    app.check_gui_calls(app.ttable_gui, ['refresh'])
+
+@with_app(app_tview_shown)
+def test_show_from_account_when_theres_none_does_nothing(app):
+    # show_from_account() when the selected txn has no assigned account does nothing
+    app.clear_gui_calls()
+    app.ttable.show_from_account() # no crash
+    app.check_gui_calls_partial(app.mainwindow_gui, not_expected=['show_entry_table'])
+
+@with_app(app_tview_shown)
+def test_strip_account_name_in_from_to_columns(app):
+    # String account names in from_to_columns.
+    app.add_txn(from_='foo ', to=' bar')
+    eq_(app.ttable[0].from_, 'foo')
+    eq_(app.ttable[0].to, 'bar')
+    # Now, we must make sure that account duplication is correctly detected here.
+    app.add_txn(from_='foo ', to=' bar') # reuse accounts
+    eq_(app.account_names(), ['foo', 'bar'])
 
 class EditionMode(TestCase):
     def setUp(self):

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2008-06-15
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -6,8 +5,6 @@
 # This software is licensed under the "BSD" License as described in the "LICENSE" file, 
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
-
-
 
 from hsutil.testutil import eq_
 
@@ -18,6 +15,13 @@ from ..exception import FileFormatError
 from ..model.account import AccountType
 
 #--- Pristine
+@with_app(TestApp)
+def test_account_names_are_stripped(app):
+    # Whitespaces are removed from account names when typed.
+    app.add_accounts('foo ', ' bar')
+    eq_(app.bsheet.assets[0].name, 'bar')
+    eq_(app.bsheet.assets[1].name, 'foo')
+
 @with_app(TestApp)
 def test_delete_account(app):
     # No crash occurs when trying to delete a group that can't be deleted.
@@ -69,6 +73,13 @@ def test_empty_account_name(app):
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = ''
     eq_(app.bsheet.assets[0].name, 'Checking')
+
+@with_app(app_one_empty_account)
+def test_detect_duplicate_account_names_with_whitespaces(app):
+    # Trying to add an account with the same name as another, with only whitespaces as difference
+    # is correctly detected as a duplicate account name.
+    app.add_account(' checking ')
+    eq_(app.account_names(), ['Checking', 'New account'])
 
 @with_app(app_one_empty_account)
 def test_get_account_attribute_value(app):
