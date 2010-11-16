@@ -6,8 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 import csv
 import logging
 from datetime import datetime
@@ -17,7 +15,7 @@ from ..exception import FileFormatError, FileLoadError
 from ..trans import tr
 from . import base
 
-class CsvField(object):
+class CsvField:
     Date = 'date'
     Description = 'description'
     Payee = 'payee'
@@ -82,7 +80,8 @@ class Loader(base.Loader):
         if encoding and encoding != self.FILE_ENCODING:
             # rawlines is a list of ustrings decoded using latin-1, so if we want to re-decode them
             # using another encoding, we have to re-encode them and the decode them using our encoding
-            rawlines = (line.encode(self.FILE_ENCODING).decode(encoding) for line in rawlines)
+            redecode = lambda s: s.encode(self.FILE_ENCODING).decode(encoding, 'ignore')
+            rawlines = (redecode(line) for line in rawlines)
         try:
             reader = csv.reader(iter(rawlines), self.dialect)
         except TypeError:

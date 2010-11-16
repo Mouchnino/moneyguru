@@ -14,14 +14,22 @@ from ...app import Application
 from ...gui.csv_options import LAYOUT_PREFERENCE_NAME
 from ...loader.csv import CsvField
 
-class NoSetup(TestCase):
-    def test_invalid_default(self):
-        self.app_gui = ApplicationGUI()
-        self.app_gui.defaults[LAYOUT_PREFERENCE_NAME] = 'invalid'
-        self.app = Application(self.app_gui)
-        self.create_instances() # no crash when CSVOptions is created
-    
+#---
+def test_invalid_default():
+    app_gui = ApplicationGUI()
+    app_gui.defaults[LAYOUT_PREFERENCE_NAME] = 'invalid'
+    TestApp(app=Application(app_gui)) # no crash when CSVOptions is created
 
+#---
+@with_app(TestApp)
+def test_dont_crash_on_invalid_utf8_characters(app):
+    app.doc.parse_file_for_import(TestData.filepath('csv/invalid_utf8_char.csv'))
+    app.csvopt.encoding_index = 1
+    app.csvopt.rescan() # no crash
+    eq_(app.csvopt.lines[0][1], 'description')
+    eq_(app.csvopt.lines[0][2], 'payee')
+
+#---
 class ImportFortisCSV(TestCase):
     def setUp(self):
         self.create_instances()
