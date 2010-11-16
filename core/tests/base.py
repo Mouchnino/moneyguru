@@ -487,6 +487,9 @@ class TestApp(TestAppBase):
         return [row.description for row in self.ttable.rows]
     
     #--- Shortcut for selecting a view type.
+    def show_tview(self):
+        self.mw.select_pane_of_type(PaneType.Transaction)
+    
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
     

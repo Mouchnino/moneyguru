@@ -92,6 +92,7 @@ class Columns:
             col.index = i
     
     def set_column_visible(self, colname, visible):
+        self.table.save_edits() # the table on the GUI side will stop editing when the columns change
         self._set_colname_attr(colname, 'visible', visible)
         self.view.set_column_visible(colname, visible)
     
