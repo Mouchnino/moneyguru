@@ -4,7 +4,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsgui import tree
+from hscommon.gui import tree
 
 from ..exception import DuplicateAccountNameError
 from ..trans import tr

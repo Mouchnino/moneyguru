@@ -10,7 +10,7 @@ import csv
 import datetime
 from io import StringIO
 
-from hsgui.table import GUITable as GUITableBase, Row as RowBase
+from hscommon.gui.table import GUITable as GUITableBase, Row as RowBase
 
 from ..model.amount import Amount
 from ..model.sort import sort_string
