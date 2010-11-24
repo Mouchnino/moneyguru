@@ -39,7 +39,6 @@ class BudgetTable(GUITable, ViewChild):
     
     def _revalidate(self):
         self.refresh()
-        self.view.refresh()
     
     #--- Public
     def delete(self):

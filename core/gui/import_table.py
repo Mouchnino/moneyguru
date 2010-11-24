@@ -20,7 +20,16 @@ class ImportTable(ImportWindowGUIObject, GUITable):
     def connect(self):
         ImportWindowGUIObject.connect(self)
         self.refresh()
-        self.view.refresh()
+    
+    def _fill(self):
+        self._is_two_sided = False
+        self.pane = self.window.selected_pane
+        if not self.pane:
+            return
+        for existing, imported in self.pane.matches:
+            if existing is not None:
+                self._is_two_sided = True
+            self.append(ImportTableRow(self, existing, imported))
     
     #--- Public
     def bind(self, source_index, dest_index):
@@ -28,7 +37,6 @@ class ImportTable(ImportWindowGUIObject, GUITable):
         dest = self[dest_index]
         source.bind(dest)
         self.refresh()
-        self.view.refresh()
     
     def can_bind(self, source_index, dest_index):
         source = self[source_index]
@@ -41,17 +49,6 @@ class ImportTable(ImportWindowGUIObject, GUITable):
             row.will_import = False
         self.view.refresh()
     
-    def refresh(self):
-        del self[:]
-        self._is_two_sided = False
-        self.pane = self.window.selected_pane
-        if not self.pane:
-            return
-        for existing, imported in self.pane.matches:
-            if existing is not None:
-                self._is_two_sided = True
-            self.append(ImportTableRow(self, existing, imported))
-    
     def toggle_import_status(self):
         for row in self.selected_rows:
             row.will_import = not row.will_import
@@ -63,7 +60,6 @@ class ImportTable(ImportWindowGUIObject, GUITable):
             return
         row.unbind()
         self.refresh()
-        self.view.refresh()
     
     #--- Properties
     @property
@@ -75,11 +71,9 @@ class ImportTable(ImportWindowGUIObject, GUITable):
     #--- Events
     def fields_switched(self):
         self.refresh()
-        self.view.refresh()
         
     def pane_selected(self):
         self.refresh()
-        self.view.refresh()
     
 
 class ImportTableRow(Row):

@@ -33,7 +33,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     #--- Override
     def _revalidate(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
     
@@ -209,7 +209,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         elif dest_node.is_group:
             self.document.change_account(account, group=dest_node.group, type=dest_node.group.type)
     
-    def refresh(self):
+    def refresh(self, refresh_view=True):
         selected_account = self.selected_account
         selected_path = self.selected_path
         self._refresh()
@@ -221,6 +221,8 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
                 self.selected_path = selected_path
         else:
             self.selected_path = selected_path
+        if refresh_view:
+            self.view.refresh()
     
     def save_edits(self):
         node = self.edited
@@ -257,15 +259,13 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     #--- Event handlers
     def account_added(self):
         self.refresh()
-        self.view.refresh()
     
     def account_changed(self):
         self.refresh()
-        self.view.refresh()
     
     def account_deleted(self):
         selected_path = self.selected_path
-        self.refresh()
+        self.refresh(refresh_view=False)
         next_node = self.get_node(selected_path)
         if not (next_node.is_account or next_node.is_group):
             selected_path[-1] -= 1
@@ -276,11 +276,9 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     def accounts_excluded(self):
         self.refresh()
-        self.view.refresh()
     
     def date_range_changed(self):
         self.refresh()
-        self.view.refresh()
     
     def document_will_close(self):
         # Save node expansion state
@@ -306,18 +304,17 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     # account might have been auto-created during import
     def transactions_imported(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._select_first()
         self.view.refresh()
     
     def document_changed(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._select_first()
         self.view.refresh()
     
     def performed_undo_or_redo(self):
         self.refresh()
-        self.view.refresh()
     
     #--- Properties
     @property

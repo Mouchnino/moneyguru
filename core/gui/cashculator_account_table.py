@@ -39,7 +39,6 @@ class CashculatorAccountTable(GUITable, ViewChild):
     
     def _revalidate(self):
         self.refresh()
-        self.view.refresh()
     
     #--- Public
     def is_recurring(self, name):

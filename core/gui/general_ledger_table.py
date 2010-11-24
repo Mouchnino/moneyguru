@@ -72,7 +72,7 @@ class GeneralLedgerTable(EntryTableBase):
     
     #--- Event Handlers
     def date_range_changed(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
         self.view.show_selected_row()

@@ -26,7 +26,6 @@ class ExportAccountTable(GUITable, PanelGUIObject):
     #--- Event Handlers
     def panel_loaded(self):
         self.refresh()
-        self.view.refresh()
     
 
 class ExportAccountTableRow(Row):

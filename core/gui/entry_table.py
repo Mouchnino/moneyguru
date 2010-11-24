@@ -111,12 +111,11 @@ class EntryTable(EntryTableBase):
             return
         self._reconciliation_mode = value
         self.refresh()
-        self.view.refresh()
     
     #--- Event Handlers
     def date_range_changed(self):
         date_range = self.document.date_range
-        self.refresh()
+        self.refresh(refresh_view=False)
         self.select_transactions(self.mainwindow.selected_transactions)
         if not self.selected_indexes:
             self.select_nearest_date(date_range.start + self._delta_before_change)
@@ -141,7 +140,7 @@ class EntryTable(EntryTableBase):
         self._update_selection()
     
     def transactions_imported(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self.mainwindow.selected_transactions = self.selected_transactions
         self.view.refresh()
         self.view.show_selected_row()

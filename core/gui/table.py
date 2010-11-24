@@ -10,7 +10,7 @@ import csv
 import datetime
 from io import StringIO
 
-from hsgui.table import Table, GUITable as GUITableBase, Row as RowBase
+from hsgui.table import GUITable as GUITableBase, Row as RowBase
 
 from ..model.amount import Amount
 from ..model.sort import sort_string
@@ -61,7 +61,6 @@ class GUITable(GUITableBase):
     
     def document_changed(self):
         self.refresh()
-        self.view.refresh()
     
     def document_will_close(self):
         self.columns.save_columns()
@@ -71,21 +70,19 @@ class GUITable(GUITableBase):
     
     def performed_undo_or_redo(self):
         self.refresh()
-        self.view.refresh()
     
     # Plug these below to the appropriate event in subclasses
     def _filter_applied(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
     
     def _item_changed(self):
         self.refresh()
-        self.view.refresh()
         self.view.show_selected_row()
     
     def _item_deleted(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
     

@@ -38,7 +38,6 @@ class TransactionTableBase(GUITable, ViewChild):
     
     def _revalidate(self):
         self.refresh()
-        self.view.refresh()
     
     def show(self):
         ViewChild.show(self)

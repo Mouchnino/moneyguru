@@ -26,7 +26,6 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
     def _do_delete(self):
         self.panel.delete_split(self.selected_row.split)
         self.refresh()
-        self.view.refresh()
     
     def _is_edited_new(self):
         split = self.edited.split
@@ -45,13 +44,13 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
     def move_split(self, from_index, to_index):
         row = self[from_index]
         row.split.move_to_index(to_index)
-        self.refresh()
+        self.refresh(refresh_view=False)
         self.select([to_index])
         self.view.refresh()
     
     #--- Event Handlers
     def panel_loaded(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self.select([0])
         self.view.refresh()
     

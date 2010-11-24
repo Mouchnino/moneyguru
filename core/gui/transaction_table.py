@@ -92,13 +92,13 @@ class TransactionTable(TransactionTableBase):
     
     #--- Event handlers
     def date_range_changed(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
         self.view.show_selected_row()
     
     def transactions_imported(self):
-        self.refresh()
+        self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
     
