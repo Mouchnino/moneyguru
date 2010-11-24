@@ -12,7 +12,7 @@ General dependencies
 
 - Python 3.1 (http://www.python.org)
 - hsutil3k 1.0.1 (http://hg.hardcoded.net/hsutil)
-- sgmllib3k (http://pypi.python.org/pypi/sgmllib3k)
+- sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
 - Markdown, for help files. (http://www.freewisdom.org/projects/python-markdown/)
 - py.test, to run unit tests. (http://codespeak.net/py/dist/test/)
@@ -23,7 +23,7 @@ OS X prerequisites
 - XCode 3.1 (http://developer.apple.com/TOOLS/xcode/)
 - Sparkle (http://sparkle.andymatuschak.org/)
 - PyObjC 2.3. (http://pyobjc.sourceforge.net/)
-- py2app 0.5.4 (http://svn.pythonmac.org/py2app/py2app/trunk/doc/index.html)
+- py2app 0.5.4 (http://bitbucket.org/ronaldoussoren/py2app)
   
 Windows prerequisites
 ---------------------
