@@ -695,6 +695,8 @@
 		CEFEA33211E1DEA70034AB46 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEFEA33411E1DEB70034AB46 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEFEA33511E1DEC30034AB46 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEFFC6A912B0E9EE003739F6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ExportPanel.xib; sourceTree = "<group>"; };
+		CEFFC6AA12B0E9FB003739F6 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ExportPanel.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1645,6 +1647,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				CE66BD121275751B008EFA8A /* en */,
+				CEFFC6A912B0E9EE003739F6 /* fr */,
+				CEFFC6AA12B0E9FB003739F6 /* de */,
 			);
 			name = ExportPanel.xib;
 			sourceTree = "<group>";
