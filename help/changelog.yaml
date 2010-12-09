@@ -1,3 +1,9 @@
+- date: 2010-12-09
+  version: 2.3.4
+  description: |
+    * Fixed crash on invalid date input. (#209)
+    * Fixed crash on moving columns around under French and German versions. [Mac OS X] (#211)
+    * Fixed the exporting feature which didn't work under French and German versions. [Mac OS X] (#210)
 - date: 2010-11-16
   version: 2.3.3
   description: |
