@@ -11,7 +11,7 @@ import os.path as op
 from datetime import date, datetime
 from operator import attrgetter
 
-from py.test import config
+import pytest
 
 from hsutil.path import Path
 from hsutil.testcase import TestCase as TestCaseBase
@@ -229,7 +229,7 @@ class TestApp(TestAppBase):
     
     def tmppath(self):
         if self._tmppath is None:
-            self._tmppath = Path(str(config.ensuretemp('mgtest')))
+            self._tmppath = Path(str(pytest.ensuretemp('mgtest')))
         return self._tmppath
     
     def check_current_pane(self, pane_type, account_name=None):

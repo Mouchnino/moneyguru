@@ -15,7 +15,7 @@ General dependencies
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
 - Markdown, for help files. (http://www.freewisdom.org/projects/python-markdown/)
-- py.test, to run unit tests. (http://codespeak.net/py/dist/test/)
+- pytest 2.0.0, to run unit tests. (http://pytest.org/)
 
 OS X prerequisites
 ------------------

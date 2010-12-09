@@ -65,10 +65,11 @@ class DateWidget(object):
             if valid:
                 self._month = value
         else:
-            valid = True
-            if value < 100:
-                value += 2000 if value < 69 else 1900
-            self._year = value
+            valid = (value < 100) or (value >= 1900)
+            if valid:
+                if value < 100:
+                    value += 2000 if value < 69 else 1900
+                self._year = value
         if valid or force:
             self._buffer = ''
         return valid

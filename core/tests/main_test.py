@@ -11,8 +11,6 @@ import os.path as op
 import sys
 from datetime import date
 
-from py.test import config
-
 from hsutil import io
 from hscommon.currency import EUR
 from hsutil.testutil import Patcher
@@ -102,10 +100,18 @@ def test_graph_yaxis():
     eq_(list(app.nwgraph.ytickmarks), list(range(0, 101, 20)))
     eq_(list(app.nwgraph.ylabels), [dict(text=str(x), pos=x) for x in range(0, 101, 20)])
 
-def test_load_inexistant():
+@with_app(TestApp)
+def test_invalid_date_input(app):
+    # Don't crash on invalid date input. Normally, the date widget is not supposed to result in
+    # invalid dates, but there have been such cases before.
+    app.show_tview()
+    app.ttable.add()
+    app.ttable[0].date = 'invalid' # no crash
+
+def test_load_inexistant(tmpdir):
     # Raise FileFormatError when filename doesn't exist
     app = TestApp()
-    filename = str(config.mktemp('foo').join('does_not_exist.xml'))
+    filename = str(tmpdir.join('does_not_exist.xml'))
     assert_raises(FileFormatError, app.doc.load_from_xml, filename)
 
 def test_load_invalid():

@@ -216,7 +216,10 @@ class RowWithDateMixIn:
     
     @date.setter
     def date(self, value):
-        parsed = self.table.document.app.parse_date(value)
+        try:
+            parsed = self.table.document.app.parse_date(value)
+        except ValueError:
+            return # Can't parse, don't set anything
         if parsed == self._date:
             return
         self._edit()
