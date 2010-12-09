@@ -15,21 +15,13 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyColumns" pyParent:(id)aPyParent];
     tableView = [aTableView retain];
-    isRestoring = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
-        name:NSTableViewColumnDidMoveNotification object:aTableView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
-        name:NSOutlineViewColumnDidMoveNotification object:aTableView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnResized:)
-        name:NSTableViewColumnDidResizeNotification object:aTableView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnResized:)
-        name:NSOutlineViewColumnDidResizeNotification object:aTableView];
+    [self connectNotifications];
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self disconnectNotifications];
     [tableView release];
     [super dealloc];
 }
@@ -37,6 +29,30 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyColumns *)py
 {
     return (PyColumns *)py;
+}
+
+- (void)connectNotifications
+{
+    if (tableView == nil) {
+        /* This can happen if there something broken somewhere, and even though when that happens,
+           it means that something serious is going on, the fact that we connect to all columnMoved:
+           events messes thigs up even MORE. Don't connect when tableView is nil!
+        */
+        return;
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
+        name:NSTableViewColumnDidMoveNotification object:tableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnMoved:)
+        name:NSOutlineViewColumnDidMoveNotification object:tableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnResized:)
+        name:NSTableViewColumnDidResizeNotification object:tableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(columnResized:)
+        name:NSOutlineViewColumnDidResizeNotification object:tableView];
+}
+
+- (void)disconnectNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*
@@ -50,7 +66,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns:(MGColumnDef *)columns
 {
     /* We don't want default widths to overwrite stored with in the core code */
-    isRestoring = YES;
+    [self disconnectNotifications];
     /* Translate the title of columns (needed for outlines) present already */
     for (NSTableColumn *c in [tableView tableColumns]) {
         NSString *title = NSLocalizedStringFromTable([[c headerCell] stringValue], @"columns", @"");
@@ -88,7 +104,7 @@ http://www.hardcoded.net/licenses/bsd_license
         [c bind:@"fontSize" toObject:udc withKeyPath:@"values.TableFontSize" options:nil];
         cdef++;
     }
-    isRestoring = NO;
+    [self connectNotifications];
 }
 
 /* Notifications */
@@ -97,9 +113,6 @@ http://www.hardcoded.net/licenses/bsd_license
     /* We only get this call after the move. Although there's "NSOldColumn" and "NSNewColumn",
        the old index is irrelevant since we have to find the moved column's name.
     */
-    if (isRestoring) {
-        return;
-    }
     NSInteger index = n2i([[notification userInfo] objectForKey:@"NSNewColumn"]);
     NSTableColumn *c = [[tableView tableColumns] objectAtIndex:index];
     NSString *colName = [c identifier];
@@ -108,9 +121,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)columnResized:(NSNotification *)notification
 {
-    if (isRestoring) {
-        return;
-    }
     NSTableColumn *c = [[notification userInfo] objectForKey:@"NSTableColumn"];
     [[self py] resizeColumn:[c identifier] toWidth:[c width]];
 }
@@ -118,7 +128,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Python --> Cocoa */
 - (void)restoreColumns
 {
-    isRestoring = YES;
+    [self disconnectNotifications];
     NSArray *columnOrder = [[self py] columnNamesInOrder];
     for (NSInteger i=0; i<[columnOrder count]; i++) {
         NSString *colName = [columnOrder objectAtIndex:i];
@@ -135,7 +145,7 @@ http://www.hardcoded.net/licenses/bsd_license
         BOOL isVisible = [[self py] columnIsVisible:[c identifier]];
         [c setHidden:!isVisible];
     }
-    isRestoring = NO;
+    [self connectNotifications];
 }
 
 - (void)setColumn:(NSString *)colname visible:(BOOL)visible

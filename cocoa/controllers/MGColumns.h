@@ -27,10 +27,11 @@ typedef struct {
 @interface MGColumns : HSGUIController
 {
     NSTableView *tableView;
-    BOOL isRestoring;
 }
 - (id)initWithPyParent:(id)aPyParent tableView:(NSTableView *)aTableView;
 - (PyColumns *)py;
+- (void)connectNotifications;
+- (void)disconnectNotifications;
 - (void)initializeColumns:(MGColumnDef *)columns;
 - (void)restoreColumns;
 - (void)setColumn:(NSString *)colname visible:(BOOL)visible;
