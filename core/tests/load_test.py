@@ -11,7 +11,6 @@ from datetime import date
 
 from hsutil.testutil import eq_, Patcher
 from hscommon.currency import PLN, CAD
-from hsutil.testutil import with_tmpdir
 
 from ..document import ScheduleScope
 from ..model.account import AccountType
@@ -19,23 +18,21 @@ from ..model.date import MonthRange
 from .base import TestCase, compare_apps, TestApp
 
 #--- Pristine
-@with_tmpdir
-def test_dont_save_invalid_xml_characters(tmppath):
+def test_dont_save_invalid_xml_characters(tmpdir):
     # It's possible that characters that are invalid in an XML file end up in a moneyGuru document
     # (mostly through imports). Don't let this happen.
     app = TestApp()
     app.add_txn(description="foo\0bar")
-    filepath = str(tmppath + 'foo.xml')
+    filepath = str(tmpdir.join('foo.xml'))
     app.doc.save_to_xml(filepath)
     app.doc.load_from_xml(filepath) # no exception
     eq_(app.ttable[0].description, "foo bar")
 
-@with_tmpdir
-def test_saved_file_starts_with_xml_header(tmppath):
+def test_saved_file_starts_with_xml_header(tmpdir):
     # Make sure that moneyGuru files start with an xml header, something that elementtree doesn't
     # do automatically.
     app = TestApp()
-    filepath = str(tmppath + 'foo.xml')
+    filepath = str(tmpdir.join('foo.xml'))
     app.doc.save_to_xml(filepath)
     fp = open(filepath)
     contents = fp.read()
@@ -384,15 +381,13 @@ def app_account_and_group():
     app.add_group()
     return app
 
-#--- Generators
-def test_save_load():
+def test_save_load(tmpdir):
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
     # because, in the old TestCase based system, had mixed in the TestCase with the TestSaveLoadMixin
     # without commenting on why I was doing that. When nose-ifying, I didn't want to lose coverage
     # so I kept them, but I'm not sure what they're testing.
-    @with_tmpdir
-    def check(app, tmppath):
-        filepath = str(tmppath + 'foo.xml')
+    def check(app):
+        filepath = str(tmpdir.join('foo.xml'))
         app.doc.save_to_xml(filepath)
         app.doc.close()
         newapp = TestApp()
@@ -402,63 +397,62 @@ def test_save_load():
         compare_apps(app.doc, newapp.doc)
     
     app = app_account_with_budget()
-    yield check, app
+    check(app)
     
     app = app_transaction_with_payee_and_checkno()
-    yield check, app
+    check(app)
     
     app = app_entry_with_blank_description()
-    yield check, app
+    check(app)
     
     # make sure that groups are saved
     app = app_account_in_group()
-    yield check, app
+    check(app)
     
     # Make sure memos are loaded/saved
     app = app_transaction_with_memos()
-    yield check, app
+    check(app)
     
     # make sure that empty groups are kept when saving/loading
     app = app_one_account_and_one_group()
-    yield check, app
+    check(app)
     
     # make sure that groups are saved
     app = app_one_account_in_one_group()
-    yield check, app
+    check(app)
     
     # make sure that all budget fields are correctly saved
     app = app_budget_with_all_fields_set()
-    yield check, app
+    check(app)
     
     # apanel attributes are saved/loaded
     app = app_account_with_apanel_attrs()
-    yield check, app
+    check(app)
     
     # The native loader was loading the wrong split element into the Recurrence's
     # ref txn. So the recurrences were always getting splits from the last loaded normal txn
     app = app_one_schedule_and_one_normal_txn()
-    yield check, app
+    check(app)
     
     app, p = app_schedule_with_global_change()
-    yield check, app
+    check(app)
     p.unpatch()
     
     app, p = app_schedule_with_local_deletion()
-    yield check, app
+    check(app)
     p.unpatch()
     
     # The first spawn (corresponding to the original txn) is still skipped when we save/load
-    app = app_schedule_made_from_txn()
-    yield check, app
+    app_schedule_made_from_txn()
+    check(app)
     
     # make sure that empty groups are kept when saving/loading
     app = app_account_and_group()
-    yield check, app
+    check(app)
 
-def test_save_load_qif():
-    @with_tmpdir
-    def check(app, tmppath):
-        filepath = str(tmppath + 'foo.qif')
+def test_save_load_qif(tmpdir):
+    def check(app):
+        filepath = str(tmpdir.join('foo.qif'))
         app.mw.export()
         app.expanel.export_path = filepath
         app.expanel.save()
@@ -472,16 +466,16 @@ def test_save_load_qif():
         compare_apps(app.doc, newapp.doc, qif_mode=True)
     
     app = app_transaction_with_payee_and_checkno()
-    yield check, app
+    check(app)
     
     # Make sure memos are loaded/saved
     app = app_transaction_with_memos()
-    yield check, app
+    check(app)
     
     # make sure liability accounts are exported/imported correctly.
     app = app_entry_in_liability()
-    yield check, app
+    check(app)
     
     # Splits with null amount are saved/loaded
     app = app_split_with_null_amount()
-    yield check, app
+    check(app)
