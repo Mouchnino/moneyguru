@@ -55,6 +55,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     // NSLog(@"AppDelegate dealloc");
     [py release];
+    [_aboutBox release];
     [super dealloc];
 }
 
@@ -92,6 +93,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)openWebsite:(id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.hardcoded.net/moneyguru/"]];
+}
+
+- (IBAction)showAboutBox:(id)sender
+{
+    if (_aboutBox == nil) {
+        _aboutBox = [[HSAboutBox alloc] initWithApp:py];
+    }
+    [[_aboutBox window] makeKeyAndOrderFront:sender];
 }
 
 /* Public */

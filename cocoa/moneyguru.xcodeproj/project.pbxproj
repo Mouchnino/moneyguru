@@ -192,6 +192,8 @@
 		CEC367D811D10EE500EB0222 /* SearchField.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC367D611D10EE500EB0222 /* SearchField.xib */; };
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
+		CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC941C912D32F7600816473 /* HSAboutBox.m */; };
+		CEC941CC12D32F8800816473 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC941CB12D32F8800816473 /* about.xib */; };
 		CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */; };
 		CED1FC6D10F7851600634D72 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6C10F7851600634D72 /* MGTransactionTable.m */; };
 		CED1FC7410F7852000634D72 /* MGBalanceGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6F10F7852000634D72 /* MGBalanceGraph.m */; };
@@ -637,6 +639,9 @@
 		CEC5CE4F0F45D8060042E33F /* MGPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPieChart.m; sourceTree = "<group>"; };
 		CEC5CE570F45F8670042E33F /* MGDoubleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDoubleView.h; sourceTree = "<group>"; };
 		CEC5CE580F45F8670042E33F /* MGDoubleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDoubleView.m; sourceTree = "<group>"; };
+		CEC941C812D32F7600816473 /* HSAboutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSAboutBox.h; path = ../cocoalib/HSAboutBox.h; sourceTree = SOURCE_ROOT; };
+		CEC941C912D32F7600816473 /* HSAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSAboutBox.m; path = ../cocoalib/HSAboutBox.m; sourceTree = SOURCE_ROOT; };
+		CEC941CB12D32F8800816473 /* about.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = about.xib; path = ../cocoalib/xib/about.xib; sourceTree = SOURCE_ROOT; };
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
 		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
 		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
@@ -837,6 +842,8 @@
 				CE6E77A212538AF200A1754B /* HSFairwareReminder.h */,
 				CE6E77A312538AF200A1754B /* HSFairwareReminder.m */,
 				CE6E77A412538AF200A1754B /* PyFairware.h */,
+				CEC941C812D32F7600816473 /* HSAboutBox.h */,
+				CEC941C912D32F7600816473 /* HSAboutBox.m */,
 				CE2F0C1E112965C600F6FB55 /* NSEventAdditions.h */,
 				CE2F0C1F112965C600F6FB55 /* NSEventAdditions.m */,
 				CE6D380E0F93648E00FA8460 /* Utils.h */,
@@ -1191,6 +1198,7 @@
 		CEBA330A11294D2B009C782F /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				CEC941CB12D32F8800816473 /* about.xib */,
 				CE6E77A912538B0F00A1754B /* FairwareReminder.xib */,
 				CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */,
 			);
@@ -1490,6 +1498,7 @@
 				CEB7CCED123B61270020DAF6 /* gledger_48.png in Resources */,
 				CE6E77AB12538B0F00A1754B /* FairwareReminder.xib in Resources */,
 				CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */,
+				CEC941CC12D32F8800816473 /* about.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1617,6 +1626,7 @@
 				CE3BF14C1270845E000D141C /* MGDocumentController.m in Sources */,
 				CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */,
 				CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */,
+				CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

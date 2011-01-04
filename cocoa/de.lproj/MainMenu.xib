@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1219,7 +1219,7 @@
 								<reference key="NSControlView" ref="37537141"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage" id="1050632420">
+								<object class="NSCustomResource" key="NSNormalImage" id="332063249">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSSwitch</string>
 								</object>
@@ -1244,7 +1244,7 @@
 								<reference key="NSControlView" ref="125175313"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
-								<reference key="NSNormalImage" ref="1050632420"/>
+								<reference key="NSNormalImage" ref="332063249"/>
 								<reference key="NSAlternateImage" ref="859599395"/>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -1995,14 +1995,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">orderFrontStandardAboutPanel:</string>
-						<reference key="source" ref="741599863"/>
-						<reference key="destination" ref="13967235"/>
-					</object>
-					<int key="connectionID">142</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">hideOtherApplications:</string>
 						<reference key="source" ref="741599863"/>
 						<reference key="destination" ref="918437243"/>
@@ -2656,6 +2648,14 @@
 						<reference key="destination" ref="697507701"/>
 					</object>
 					<int key="connectionID">1457</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showAboutBox:</string>
+						<reference key="source" ref="1071329777"/>
+						<reference key="destination" ref="13967235"/>
+					</object>
+					<int key="connectionID">1458</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4427,7 +4427,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1457</int>
+			<int key="maxID">1458</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4820,9 +4820,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>openExampleDocument:</string>
 							<string>openWebsite:</string>
+							<string>showAboutBox:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -4833,6 +4835,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>openExampleDocument:</string>
 							<string>openWebsite:</string>
+							<string>showAboutBox:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4842,6 +4845,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">openWebsite:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showAboutBox:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -5173,16 +5180,16 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>accountTableView</string>
-							<string>exportAllButton</string>
+							<string>exportAllButtons</string>
 							<string>exportButton</string>
-							<string>exportSelectedButton</string>
+							<string>exportFormatButtons</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>MGTableView</string>
-							<string>NSButtonCell</string>
+							<string>NSMatrix</string>
 							<string>NSButton</string>
-							<string>NSButtonCell</string>
+							<string>NSMatrix</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -5190,9 +5197,9 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>accountTableView</string>
-							<string>exportAllButton</string>
+							<string>exportAllButtons</string>
 							<string>exportButton</string>
-							<string>exportSelectedButton</string>
+							<string>exportFormatButtons</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -5201,16 +5208,16 @@
 								<string key="candidateClassName">MGTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">exportAllButton</string>
-								<string key="candidateClassName">NSButtonCell</string>
+								<string key="name">exportAllButtons</string>
+								<string key="candidateClassName">NSMatrix</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">exportButton</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">exportSelectedButton</string>
-								<string key="candidateClassName">NSButtonCell</string>
+								<string key="name">exportFormatButtons</string>
+								<string key="candidateClassName">NSMatrix</string>
 							</object>
 						</object>
 					</object>
@@ -5610,6 +5617,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MGTableView</string>
 					<string key="superclassName">NSTableView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">copy:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">copy:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">copy:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1015517887">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">support/MGTableView.h</string>

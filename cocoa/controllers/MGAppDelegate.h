@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyMoneyGuruApp.h"
+#import "HSAboutBox.h"
 
 @interface MGAppDelegate : NSObject
 {
@@ -22,12 +23,14 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSInvocation *continueUpdate;
     PyMoneyGuruApp *py;
+    HSAboutBox *_aboutBox;
 }
 
 - (PyMoneyGuruApp *)py;
 
 - (IBAction)openExampleDocument:(id)sender;
 - (IBAction)openWebsite:(id)sender;
+- (IBAction)showAboutBox:(id)sender;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 @end
