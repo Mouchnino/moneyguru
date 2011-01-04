@@ -22,6 +22,7 @@ from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
 from .trans import tr
 
+HAD_FIRST_LAUNCH_PREFERENCE = 'HadFirstLaunch'
 FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
 AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
 YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
@@ -50,6 +51,9 @@ class Application(Broadcaster, RegistrableApplication):
         else:
             db_path = ':memory:'
         currency.initialize_db(db_path)
+        self.is_first_run = not self.get_default(HAD_FIRST_LAUNCH_PREFERENCE, False)
+        if self.is_first_run:
+            self.set_default(HAD_FIRST_LAUNCH_PREFERENCE, True)
         self._default_currency = default_currency
         self._date_format = date_format
         self._decimal_sep = decimal_sep

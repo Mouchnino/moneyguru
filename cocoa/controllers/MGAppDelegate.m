@@ -135,21 +135,18 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     [HSFairwareReminder showNagWithApp:[self py]];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     MGDocumentController *dc = [NSDocumentController sharedDocumentController];
-    BOOL hadFirstLaunch = [ud boolForKey:@"MGHadFirstLaunch"];
-    if (hadFirstLaunch)
-    {
-        [dc openFirstDocument];
-    }
-    else {
+    BOOL isFirstRun = [[self py] isFirstRun];
+    if (isFirstRun) {
         if ([Dialogs askYesNo:TR(@"FirstRunMsg")] == NSAlertFirstButtonReturn) {
             [self openExampleDocument:self];
         }
         else {
             [dc openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
         }
-        [ud setBool:YES forKey:@"MGHadFirstLaunch"];
+    }
+    else {
+        [dc openFirstDocument];
     }
     // For some messed up reason, simply notifying of a 'py' change here crashes the app, so the 
     // binding cannot be done in the NIB, it has to be done manually here.
