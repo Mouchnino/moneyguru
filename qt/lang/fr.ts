@@ -1671,42 +1671,5 @@ Entrées de {start_date} à {end_date}</translation>
         <translation>Format d'exportation:</translation>
     </message>
 </context>
-<context>
-    <name>RegSubmitDialog</name>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="14"/>
-        <source>Enter your registration code</source>
-        <translation>Entrez votre code</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="20"/>
-        <source>Please enter your $appname registration code and registered e-mail (the e-mail you used for the purchase), then press &quot;Submit&quot;.</source>
-        <translation>Veuillez entrer votre code pour $appname ainsi que le courriel utilisé pour acheter ce code. Ensuite, appuyez sur &quot;Soumettre&quot;</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="47"/>
-        <source>Registration code:</source>
-        <translation>Code:</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="54"/>
-        <source>Registered e-mail:</source>
-        <translation>Courriel:</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="71"/>
-        <source>Purchase</source>
-        <translation>Acheter</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="100"/>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="116"/>
-        <source>Submit</source>
-        <translation>Soumettre</translation>
-    </message>
 </context>
 </TS>
