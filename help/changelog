@@ -1,0 +1,468 @@
+=== 2.3.4 (2010-12-09)
+
+* Fixed crash on invalid date input. (#209)
+* Fixed crash on moving columns around under French and German versions. [Mac OS X] (#211)
+* Fixed the exporting feature which didn't work under French and German versions. [Mac OS X] (#210)
+
+=== 2.3.3 (2010-11-16)
+
+* Fixed crash when toggling column visibility. (#205)
+* Fixed account duplication bug where whitespaces wouldn't be properly ignored. (#206)
+* Fixed crash on importing CSV files with invalid utf-8 characters. (#207)
+
+=== 2.3.2 (2010-11-08)
+
+* Fixed the process of restoring expanded paths in account sheets, which was broken in 2.3. (#202)
+* Fixed crashes when double-clicking importable files. [Mac OS X] (#203)
+
+=== 2.3.1 (2010-11-02)
+
+* Fixed a crash on CSV exports. (#200)
+* Improved QIF imports compatibility.
+* Added QFX to the list of files importable by double-clicking. [Mac OS X]
+
+=== 2.3.0 (2010-10-30)
+
+* Improved exports by allowing account selection and by supporting CSV exports. (#162)
+* Introduced document-based preferences (for column widths/position and opened tabs). (#191)
+* When the Year to date range is selected, the "Last" column in Profit & Loss now shows YTD 
+    values for last year rather than showing the value for the whole year. (#188)
+* During CSV imports, allow more than one column to be selected for Description and Payee. When
+    that happens, these columns will be merged. (#198)
+* Selected table rows can be copied so that they can be quickly pasted in applications like
+    Numbers. [Mac OS X] (#24)
+* It's now possible to associate OFX, QIF and CSV file extensions to moneyGuru so it's possible
+    to quickly import them by double-clicking on them. [Mac OS X] (#194)
+
+=== 2.2.5 (2010-10-12)
+
+* Improved CSV imports by supporting additional date formats. (#195)
+* Fixed crash on printing the Account view. [Windows, Linux] (#196)
+* Fixed occasional crash on startup.
+
+=== 2.2.4 (2010-10-08)
+
+* Fixed occasional crash on startup.
+* Export to Cashculator is now affected by excluded accounts. [Mac OS X] (#192)
+* Fixed crash on Export to QIF. [Windows, Linux] (#193)
+
+=== 2.2.3 (2010-09-30)
+
+* Re-licensed moneyGuru to BSD and made it [Fairware](http://open.hardcoded.net/about/)
+
+=== 2.2.2 (2010-09-22)
+
+* Fixed glitches when creating new entries in Account tabs. (#190)
+* Fixed bug causing moneyGuru to sometimes open a new document on startup when it shouldn't. [Mac OS X] (#189)
+
+=== 2.2.1 (2010-09-17)
+
+* Fixed reconciliation balance miscalculation issues. (#186)
+* Fixed amount formatting inconsistency in total rows. (#185)
+* Fixed crash when exporting data to Cashculator.
+
+=== 2.2.0 (2010-09-14)
+
+* Added the General Ledger view. (#134)
+* Improved printing. (#140, #141, #143 and #173)
+* Correctly imports UTF-8 encoded CSV files. (#177)
+* Improved graphs readability by drawing overlay axis lines. (#178)
+* Improved the date input widget by adding a "T" shortcut to set the date to today. (#174)
+* Display a value in the "Change %" column even if the start value is negative. (#176)
+* Fixed columns which were mistakenly editable. (#179, #180, #181)
+
+=== 2.1.2 (2010-09-05)
+
+* Added a new import fixer: Invert Amounts. (#169)
+* Fixed a duplication issue when making a schedule from a transaction. (#170)
+* Fixed layout glitches during printing. (#173 and #176)
+
+=== 2.1.1 (2010-08-23)
+
+* Fixed a bug in CSV import where some amounts wouldn't be read correctly. (#167)
+* Fixed a bug in search where some Memo fields in splits would never be found. (#168)
+
+=== 2.1.0 (2010-08-10)
+
+* Added Cashculator integration. [Mac OS X] (#159)
+* Improved reconciliation for cases where reconciliation date is different from transaction 
+  date. (#155)
+* Optionally display Debit/Credit columns instead of Increase/Decrease in Account tabs. (#80)
+* Show Payee column in two-sided import table. (#157)
+* Added a note field for accounts. (#142)
+* Balance graphs now have a relative Y axis. (#160)
+* Account exclusion keybinding changed to avoid accidental (and confusing) account exclusion. (#163)
+
+=== 2.0.0 (2010-07-05)
+
+* Views are now managed through tabs.
+* Added French and German localizations.
+* Sped up core operations.
+
+=== 1.8.3 (2010-06-20)
+
+* Fixed imports of some malformed QIF files. (#153)
+* Fixed a bug causing moneyGuru to save invalid files if importing files with invalid characters.
+
+=== 1.8.2 (2010-04-30)
+
+* Fixed a crash on currency mass editing. (#151)
+* Added support for UAH, LTL and BBD currencies.
+* Fixed a glitch in the currency system sometimes causing exchange rates to be wrong.
+
+=== 1.8.1 (2010-04-18)
+
+* Fixed a crash when reconciling entries. (#147)
+* Fixed glitches with the "Year starts in" preference. (#148)
+
+=== 1.8.0 (2010-03-26)
+
+* Added lookup lists for completable edit. [Mac OS X] (#98)
+* Added a lookup list for quick account jumping. (#118)
+* Added an option for auto decimal places when typing amounts. (#116)
+* It's now possible to save custom date range for quick invocation later. (#115)
+* Added a total row to tables in Account and Transactions view. (#136)
+* Added a Notes field for transactions. (#19)
+* The totals label in Account and Transactions view now show totals for selected transactions. (#130)
+* Fixed a crash on CSV import. (#144)
+
+=== 1.7.8 (2010-02-27)
+
+* Fixed a crash with accounts with accented letters in their name. (#138)
+* Fixed a glitch in account sheets making some clicks mistakenly exclude accounts. (#137)
+* Fixed a crash during date editing. [Windows] (#139)
+
+=== 1.7.7 (2010-02-16)
+
+* Fixed a crash during undo. (#132)
+* Fixed a crash during account sheet edition. [Windows] (#135)
+* Fixed a bug causing account nodes' expansion state not to be saved. [Mac OS X] (#133)
+* Tweaked header layout when printing tables. [Mac OS X] (#131)
+
+=== 1.7.6 (2010-02-01)
+
+* Fixed a bug preventing entries from being de-reconciled. (#127)
+* Fixed a crash when showing certain accounts. [Windows]
+* Fixed a crash during CSV imports. (#128)
+* Fixed a crash when creating new entries. (#129)
+
+=== 1.7.5 (2010-01-27)
+
+* Fixed crashes during CSV import. (#125 and #126)
+* Fixed bug with auto-updating sometimes preventing relaunching to work. [Mac OS X] (#124)
+
+=== 1.7.4 (2010-01-25)
+
+* Fixed a crash on Duplicate Transaction. (#123)
+
+=== 1.7.3 (2010-01-21)
+
+* moneyGuru is now 64-bit on Mac OS X!
+* Fixed a bug causing the totals labels in Account and Transaction to not always refresh
+  themselves. (#117)
+* Fixed crash when attempting to read currency preferences on some systems. [Mac OS X] (#119)
+* Remember if the window was maximized and restore that state on launch. [Windows] (#111)
+
+=== 1.7.2 (2010-01-17)
+
+* Fixed printing which had been broken in 1.7. [Mac OS X] (#112)
+* Fixed account group assignment through drag & drop (also broken in 1.7). [Mac OS X] (#114)
+* Fixed double-clicking in account sheets which now correctly shows the clicked account in the
+  Account view.
+
+=== 1.7.1 (2010-01-14)
+
+* Fixed a crash with Show Account in the Account view. (#109)
+* Fixed a bug preventing the Cmd-Left and Cmd-Right keybindings from working. [Mac OS X] (#109)
+* Fixed a bug sometimes preventing moneyGuru from saving documents before auto-updating. 
+  [Mac OS X] (#110)
+
+=== 1.7.0 (2010-01-12)
+
+* Allow tables' column sorting to be modified. (#48)
+* Added the "All Transactions" date range. (#52)
+* Added account jump arrows to Transaction and Account views. (#56)
+* Added the "Account #" field to accounts. (#81)
+* Significantly changed the way reconciliation works. (#99)
+* It's now possible to manually rescan a CSV file with a specific field delimiter. (#72)
+* Added a transaction duplication feature. (#83)
+* Improved pie charts legend placing. (#34)
+* Allow multiple selection in the import window. (#47)
+* Allow operation cancellation in schedule scoping dialog. (#82)
+* Fixed a crash in CSV options dialog. (#107)
+* Dropped OS X Tiger support.
+
+=== 1.6.10 (2010-01-04)
+
+* Fixed a crash during account name edition. (#106)
+
+=== 1.6.9 (2009-12-23)
+
+* Fixed a bug with QIF import causing some transfer transactions to be duplicated. (#54)
+* Fixed a bug with transaction drag & drop re-ordering where the transactions would be placed
+  wrongly. (#94)
+* Fixed a bug in moneyGuru files import where account in groups would not be imported. (#96)
+* Fixed a crash in csv imports when the layout would be too "wide" for the imported file. (#97)
+* Fixed a mislabeling of the "New Item" menu item for Schedules and Budgets. [OS X] (#102)
+* Fixed a bug in auto-completion where typed-text would always be made lowercase. [Windows] (#103)
+* Fixed nasty table edition glitches. [Windows] (#100)
+
+=== 1.6.8 (2009-12-14)
+
+Published the Windows version of moneyGuru... at last!
+
+=== 1.6.8 (2009-11-17)
+
+* Fixed a bug causing budget spawn transactions to linger around longer than they should. (#92)
+* Fixed a bug making moneyGuru confused about what transaction is selected after applying a
+  filter. (#91)
+* Fixed a crash on trying to delete an account when no account was selected. (#89)
+
+=== 1.6.7 (2009-10-09)
+
+* Fixed a crash during import undo. (#84)
+* Fixed a bug causing yearly date ranges not starting in January to go wrong after transaction 
+  edition. (#88)
+* Changed yearly date range descriptions so that they explicitly show start/end months. (#88)
+* Fixed a bug preventing certain scheduled transaction spawns from being deleted. (#87) 
+
+=== 1.6.6 (2009-09-26)
+
+* Fixed crashes on some account editions and deletions. (#77)
+* Fixed a bug preventing some budgets to be properly saved. (#79)
+
+=== 1.6.5 (2009-09-20)
+
+* Fixed a bug preventing non-monthly budgets to be properly saved. (#76)
+* Fixed a bug with accounts in groups where their base type couldn't be changed. (#58)
+
+=== 1.6.4 (2009-09-17)
+
+* Fixed bug preventing some CSV files to be imported. (#73)
+* Fixed crashes during budget creation. (#74)
+* Fixed bugs sometimes causing budgets and schedules corruption during account deletion. (#75)
+* Fixed bugs preventing account deletion's undo to restore budgets and schedules properly.
+
+=== 1.6.3 (2009-09-10)
+
+* Added Increase and Decrease column types in the CSV import dialog. (#9)
+* Fixed a glitch causing the Target Account selector to be flaky in the CSV import dialog. (#71)
+* Fixed crashes with the newly re-enabled arrow based shortcuts. (#70)
+* Fixed a bug causing scheduled transactions not to be counted in budgets. (#69)
+
+=== 1.6.2 (2009-09-09)
+
+* Fixed bugs preventing some CSV files to be imported. (#65)
+* Fixed a bug sometimes causing preferences not to be saved. (#62)
+* Fixed crashes happening during edition in Net Worth and Profit & Loss sheets. (#66)
+* Fixed crashes happening on startup due to corrupted preferences. (#63)
+* Re-enabled arrow based shortcuts (they don't conflict with text based ones anymore). (#59)
+
+=== 1.6.1 (2009-08-31)
+
+* Fixed a bug which prevented moneyGuru from loading files with target-less budgets.
+* Fixed a bug preventing schedules' splits from being edited.
+
+=== 1.6.0 (2009-08-31)
+
+* Revamped the budget system, giving it much more flexibility. (#2)
+* Added views to manage Schedules and Budgets. (#3)
+* Memo fields in splits are now included in the search process. (#46)
+* It's now possible to search the Account view. (#5)
+* Added a preference to indicate when your fiscal year starts (for Year and Year-to-date ranges). (#7)
+* Added a Budgeted column in the Net Worth and Profit & Loss views. (#4)
+* Added an Auto-Save preference. (#1)
+* Tweaked the view and date range navigation shortcuts so they don't interfere with the OS X 
+  text navigation ones. (#59)
+* Tweaked auto-completion. (#6)
+* Fixed a crash in date range navigation. (#8)
+* Fixed a bug preventing certain CSV files from being imported.
+
+=== 1.5.7 (2009-08-04)
+
+* Fixed inaccuracies in some currencies' conversion process.
+* Fixed a couple of interface glitches.
+
+=== 1.5.6 (2009-06-09)
+
+* Fixed a bug introduced in 1.5.5 which made moneyGuru choke on certain preferences.
+* Fixed a bug where changing the date range while editing a transaction would sometimes cause
+  a crash.
+
+=== 1.5.5 (2009-06-08)
+
+* Fixed a bug preventing some CSV files from being imported.
+
+=== 1.5.4 (2009-05-24)
+
+* Fixed a crash sometimes happening when using the Filter field.
+
+=== 1.5.3 (2009-05-17)
+
+* Fixed a few GUI glitches
+
+=== 1.5.2 (2009-05-14)
+
+* Added a "Description <--> Payee" switch in the import window.
+* Improved the CSV import layout system by removing some glitches.
+
+=== 1.5.1 (2009-04-26)
+
+* Fixed an exception triggered by totals line with some specific configurations.
+* Fixed incompatibilities with systems having some Accessibility features turned on.
+
+=== 1.5.0 (2009-04-22)
+
+* Added printing support.
+* Added a target account selector in the CSV options panel, making it possible to save it in 
+    the layouts.
+* Added a Multi-Currency Balance button in the Transaction Info panel.
+* Account deletion prompts for a transaction re-assignment before it happens.
+* Date swapping in the Import Window can now be applied on all accounts at once.
+* The search box allows "account:" and "group:" search types.
+* The position of the date range is remembered between sessions, not just its scope.
+* Added a statistics line in the filter bar in the Transactions and Account panels.
+* When an edition to a transaction will cause it to go out of the date range, an icon shows up
+    as an indicator of that fact.
+* Improved date format guessing during CSV import.
+* Added the "Reconciled" and "Not Reconciled" filters.
+* Changed the "Income" and "Expense" filters in the Account view to "Increase" and "Decrease".
+* Made a round of speed optimization. File loading and Net Worth / Profit calculations are now
+    significantly faster.
+* Fixed an exception happening when pressing the delete key in the Import Window.
+* Fixed an exception occasionally happening during split edition.
+* Fixed an exception occasionally happening during transaction deletion.
+* Fixed a crash on startup when the currency cache database was corrupted.
+* Fixed a bug where it was impossible to import transactions with a future date.
+* Fixed a bug where graph labels on the X axis would sometimes be wrong under a custom date
+    range.
+
+=== 1.4.3 (2009-04-09)
+
+* **Fixed** a few crashes.
+
+=== 1.4.2 (2009-03-20)
+
+* **Fixed** en encoding issue with CSV imports.
+* **Fixed** a bug in the account info panel.
+
+=== 1.4.1 (2009-03-14)
+
+* **Fixed** a column visibility bug on Tiger.
+* **Fixed** glitches in the CSV options dialog.
+* **Fixed** a display glitch with the date range control.
+* **Fixed** a bug in the account info panel.
+
+=== 1.4.0 (2009-02-22)
+
+* **Added** CSV imports.
+* **Added** a Running year date range.
+* **Added** a Custom date range.
+* **Added** a preference to disable reconciliation warnings.
+* **Improved** the way pie charts look.
+* Account exclusion states are now remembered between sessions.
+
+=== 1.3.2 (2009-01-08)
+
+* **Fixed** a budget calculation crash.
+* **Fixed** a bug where some scheduled transactions wouldn't show up after a reload.
+* **Improved** QIF imports.
+* **Improved** QIF exports.            
+
+=== 1.3.1 (2008-12-20)
+
+* **Improved** QIF imports.
+
+=== 1.3.0 (2008-12-13)
+
+* **Added** budgeting.         
+* **Added** a "Year to date" date range.            
+* **Added** a Today shortcut for date range navigation.      
+* **Improved** graphs so they clearly distinguish between past data and future data.
+* **Improved** the reconciliation warning so it gives the option to continue the action without
+    losing reconciliation.
+* **Fixed** a pie chart inaccuracy in multiple currencies contexts.
+* **Fixed** a bug causing scheduled transaction not to show up in searches.
+* The selected date range type is now remembered between sessions.
+
+=== 1.2.3 (2008-11-27)
+
+* **Added** support for the Egyptian pound.
+* **Fixed** a bug causing moneyGuru to not start at all on systems with an unusual date format.
+
+=== 1.2.2 (2008-11-22)
+
+* **Improved** QIF imports.
+
+=== 1.2.1 (2008-11-09)
+
+* **Added** support for the Bahraini dinar.
+* **Fixed** an autofill glitch.
+* The native currency now falls back to USD if the system currency is not supported.
+
+=== 1.2.0 (2008-11-03)
+
+* **Added** scheduled transactions.
+* **Added** a font size preference for tables and sheets.
+* **Improved** weekly bar chart by completing the bars over the date range limits.
+* Columns position and width are now remembered between sessions.
+
+=== 1.1.5 (2008-10-11)
+
+* **Fixed** an issue with Export to QIF.
+* **Fixed** an amount formatting issue.
+
+=== 1.1.4 (2008-10-05)
+
+* **Fixed** an issue with completion in the split table.
+
+=== 1.1.3 (2008-10-04)
+
+* **Fixed** issues with the Transaction Info panel.
+* **Fixed** issues with the pie charts.
+
+=== 1.1.2 (2008-09-17)
+
+* **Improved** OFX imports.
+
+=== 1.1.1 (2008-09-10)
+
+* **Fixed** an occasional crash when undoing.
+
+=== 1.1.0 (2008-09-08)
+
+* **Added** assets, liabilities, income and expenses pie charts.
+* **Added** the ability to exclude accounts from totals and charts.
+* **Added** Income, Expenses and Transfers filters in the Transactions and Account views.
+* **Added** view options for charts.       
+* **Improved** OFX imports.
+* **Fixed** a crash sometimes happening when editing dates.
+
+=== 1.0.5 (2008-09-03)
+
+* **Added** "Last", "Delta $" and "Delta %" to the income statement columns.
+
+=== 1.0.4 (2008-09-02)
+
+* **Improved** QIF import (again, yeah).
+
+=== 1.0.3 (2008-09-01)
+
+* **Improved** QIF import.
+* **Fixed** error sometimes happening when column visibility was toggled.
+
+=== 1.0.2 (2008-08-31)
+
+* **Added** "Delta $" and "Delta %" to the balance sheet columns.
+* **Added** a View Options panel for transactions and balance sheet columns.
+* Documents now remember their main window position and size.
+* **Improved** net worth chart computation speed. With a lot of transactions in the current date
+    range, it could get rather long to compute.
+
+=== 1.0.1 (2008-08-30)
+
+* **Improved** QIF import/export.
+
+=== 1.0.0 (2008-08-29)
+
+* Initial release

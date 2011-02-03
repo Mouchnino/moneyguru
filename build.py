@@ -15,7 +15,7 @@ import shutil
 from setuptools import setup, Extension
 import yaml
 
-from hscommon import helpgen
+from hscommon import sphinxgen
 from hscommon.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
 
 def move(src, dst):
@@ -116,6 +116,18 @@ def build_qt(dev):
     print("Creating the run.py file")
     shutil.copy('run_template_qt.py', 'run.py')
 
+def build_help():
+    print("Generating Help")
+    platform = 'osx' if sys.platform == 'darwin' else 'win'
+    current_path = op.abspath('.')
+    confpath = op.join(current_path, 'help', 'conf.tmpl')
+    help_basepath = op.join(current_path, 'help', 'en')
+    help_destpath = op.join(current_path, 'build', 'help')
+    changelog_path = op.join(current_path, 'help', 'changelog')
+    tixurl = "https://hardcoded.lighthouseapp.com/projects/31473-moneyguru/tickets/{0}"
+    confrepl = {'platform': platform}
+    sphinxgen.gen(help_basepath, help_destpath, changelog_path, tixurl, confrepl, confpath)
+
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
@@ -123,12 +135,8 @@ def main():
     print("Building moneyGuru with UI {0}".format(ui))
     if dev:
         print("Building in Dev mode")
-    print("Generating Help")
-    windows = sys.platform == 'win32'
-    profile = 'win_en' if windows else 'osx_en'
-    basepath = op.abspath('help')
-    destpath = op.abspath(op.join('help', 'moneyguru_help'))
-    helpgen.gen(basepath, destpath, profile=profile)
+    build_help()
+    return
     if dev:
         print("Generating devdocs")
         print_and_do('sphinx-build devdoc devdoc_html')

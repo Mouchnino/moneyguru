@@ -22,7 +22,8 @@ install
 installer_tmp-cache
 qt/lang/fr.qm
 qt/lang/de.qm
-help/moneyguru_help
 devdoc_html
 run.py
 tmtags
+help/*/conf.py
+help/*/changelog.rst
