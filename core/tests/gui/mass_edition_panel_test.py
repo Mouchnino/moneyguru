@@ -57,9 +57,9 @@ def app_two_transactions_different_value():
     app.mepanel.load()
     return app
 
-@patch_today(2010, 2, 20)
-def test_attributes():
+def test_attributes(monkeypatch):
     # All fields are disabled and empty.
+    patch_today(monkeypatch, 2010, 2, 20)
     app = app_two_transactions_different_value()
     assert app.mepanel.can_change_accounts
     assert app.mepanel.can_change_amount
@@ -235,9 +235,9 @@ def test_change_field_same(app):
     assert not app.mepanel.amount_enabled
 
 @with_app(app_two_transactions_same_values)
-@patch_today(2010, 2, 20)
-def test_load_again(app):
+def test_load_again(app, monkeypatch):
     # load() blanks values when necessary.
+    patch_today(monkeypatch, 2010, 2, 20)
     app.mepanel.date_enabled = True
     app.mepanel.description_enabled = True
     app.mepanel.payee_enabled = True

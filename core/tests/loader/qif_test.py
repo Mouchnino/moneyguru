@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, with_tmpdir
+from hscommon.testutil import eq_
 from hscommon.currency import USD
 
 from ..base import TestApp, TestData
@@ -331,15 +331,14 @@ def test_transfer_space_in_account_names():
     loader.load()
     eq_(len(loader.transactions), 1) # the transactions hasn't been doubled.
     
-@with_tmpdir
-def test_export_to_qif(tmppath):
+def test_export_to_qif(tmpdir):
     # When there's a transfer between 2 assets, only put an entry in one of the accounts
     app = TestApp()
     app.add_account('first')
     app.add_account('second')
     app.mw.show_account()
     app.add_entry(date='03/01/2009', description='transfer', transfer='first', increase='42')
-    export_filename = str(tmppath + 'export.qif')
+    export_filename = str(tmpdir.join('export.qif'))
     app.mw.export()
     app.expanel.export_path = export_filename
     app.expanel.save()

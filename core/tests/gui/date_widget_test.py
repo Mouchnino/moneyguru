@@ -9,12 +9,11 @@
 from datetime import date
 
 from hscommon.testutil import eq_, patch_today
-from hscommon.testcase import TestCase
 
 from ...gui.date_widget import DateWidget
 
-class Pristine(TestCase):
-    def setUp(self):
+class TestCasePristine:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
     
     def test_date(self):
@@ -27,8 +26,8 @@ class Pristine(TestCase):
         eq_(self.w.date, date(2009, 8, 12))
     
 
-class DDMMYYYYWithSlash(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlash:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
     
@@ -128,28 +127,28 @@ class DDMMYYYYWithSlash(TestCase):
         self.w.type('/')
         self._assert_unchanged()
     
-    @patch_today(2010, 9, 8)
-    def test_type_t(self):
+    def test_type_t(self, monkeypatch):
         # Typing 't' sets the date to today
+        patch_today(monkeypatch, 2010, 9, 8)
         self.w.type('t')
         eq_(self.w.text, '08/09/2010')
     
-    @patch_today(2010, 9, 8)
-    def test_type_T(self):
+    def test_type_T(self, monkeypatch):
         # The 't' shortcut is case insensitive
+        patch_today(monkeypatch, 2010, 9, 8)
         self.w.type('T')
         eq_(self.w.text, '08/09/2010')
     
-    @patch_today(2010, 9, 8)
-    def test_type_t_with_buffer(self):
+    def test_type_t_with_buffer(self, monkeypatch):
         # Typing 't' resets the current buffer
+        patch_today(monkeypatch, 2010, 9, 8)
         self.w.type('1') # buffering mode
         self.w.type('t')
         eq_(self.w.text, '08/09/2010')
     
 
-class DDMMYYYYWithSlashMonthSelected(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashMonthSelected:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.right()
@@ -189,8 +188,8 @@ class DDMMYYYYWithSlashMonthSelected(TestCase):
         eq_(self.w.selection, (3, 4))
     
 
-class DDMMYYYYWithSlashYearSelected(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashYearSelected:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.left()
@@ -240,8 +239,8 @@ class DDMMYYYYWithSlashYearSelected(TestCase):
         eq_(self.w.text, '12/06/2008')
     
 
-class DDMMYYYYWithSlashBuffering(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashBuffering:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.type('1')
@@ -290,8 +289,8 @@ class DDMMYYYYWithSlashBuffering(TestCase):
         eq_(self.w.selection, (3, 4))
     
 
-class DDMMYYYYWithSlashBufferingZero(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashBufferingZero:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.type('0')
@@ -306,8 +305,8 @@ class DDMMYYYYWithSlashBufferingZero(TestCase):
         eq_(self.w.selection, (3, 4))
     
 
-class DDMMYYYYWithSlashMonthSelectedBuffering(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashMonthSelectedBuffering:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.right()
@@ -328,8 +327,8 @@ class DDMMYYYYWithSlashMonthSelectedBuffering(TestCase):
         eq_(self.w.selection, (3, 4))
     
 
-class DDMMYYYYWithSlashYearSelectedBuffering(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashYearSelectedBuffering:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.left()
@@ -343,8 +342,8 @@ class DDMMYYYYWithSlashYearSelectedBuffering(TestCase):
         eq_(self.w.selection, (6, 9))
     
 
-class DDMMYYYYWithSlashYearSelectedDoubleBuffering(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithSlashYearSelectedDoubleBuffering:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.left()
@@ -372,8 +371,8 @@ class DDMMYYYYWithSlashYearSelectedDoubleBuffering(TestCase):
         eq_(self.w.selection, (6, 9))
     
 
-class DDMMYYYYWithHyphen(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYWithHyphen:
+    def setup_method(self, method):
         self.w = DateWidget('dd-MM-yyyy')
         self.w.date = date(2008, 6, 12)
     
@@ -388,8 +387,8 @@ class DDMMYYYYWithHyphen(TestCase):
         eq_(self.w.text, '02-06-2008')
     
 
-class YYYYMMDDWithDot(TestCase):
-    def setUp(self):
+class TestCaseYYYYMMDDWithDot:
+    def setup_method(self, method):
         self.w = DateWidget('yyyy.MM.dd')
         self.w.date = date(2008, 6, 12)
     
@@ -412,8 +411,8 @@ class YYYYMMDDWithDot(TestCase):
         eq_(self.w.text, '2008.06.12')
     
 
-class DDMMYYYYOnJanuaryFocusOnMonth(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYOnJanuaryFocusOnMonth:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 1, 12)
         self.w.right()
@@ -424,8 +423,8 @@ class DDMMYYYYOnJanuaryFocusOnMonth(TestCase):
         eq_(self.w.date, date(2007, 12, 12))
     
 
-class DDMMYYYYOnDecemberFocusOnMonth(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYOnDecemberFocusOnMonth:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 12, 12)
         self.w.right()
@@ -435,8 +434,8 @@ class DDMMYYYYOnDecemberFocusOnMonth(TestCase):
         self.w.increase()
         eq_(self.w.date, date(2009, 1, 12))
     
-class DDMMYYYYOnLastDayOfJanuary(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYOnLastDayOfJanuary:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 1, 31)
     
@@ -447,8 +446,8 @@ class DDMMYYYYOnLastDayOfJanuary(TestCase):
         eq_(self.w.date, date(2008, 2, 29))
     
 
-class DDMMYYYYOnLastDayOfMarch(TestCase):
-    def setUp(self):
+class TestCaseDDMMYYYYOnLastDayOfMarch:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 3, 31)
     
@@ -459,8 +458,8 @@ class DDMMYYYYOnLastDayOfMarch(TestCase):
         eq_(self.w.date, date(2008, 2, 29))
     
 
-class DDMMYY(TestCase):
-    def setUp(self):
+class TestCaseDDMMYY:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yy')
         self.w.date = date(2008, 11, 12)
     
@@ -469,8 +468,8 @@ class DDMMYY(TestCase):
         eq_(self.w.text, '12/11/08')
     
 
-class DMYY(TestCase):
-    def setUp(self):
+class TestCaseDMYY:
+    def setup_method(self, method):
         self.w = DateWidget('d/M/yy')
         self.w.date = date(2008, 1, 2)
     
@@ -489,8 +488,8 @@ class DMYY(TestCase):
         eq_(self.w.selection, (0, 1))
     
 
-class DMYYWideMonth(TestCase):
-    def setUp(self):
+class TestCaseDMYYWideMonth:
+    def setup_method(self, method):
         self.w = DateWidget('d/M/yy')
         self.w.date = date(2008, 11, 2)
     
@@ -508,8 +507,8 @@ class DMYYWideMonth(TestCase):
         eq_(self.w.text, '2/11/08')
     
 
-class SetInvalidDate(TestCase):
-    def setUp(self):
+class TestCaseSetInvalidDate:
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.text = '--'
     
@@ -534,9 +533,9 @@ class SetInvalidDate(TestCase):
         eq_(self.w.text, '1 /--/----')
     
 
-class InvalidBuffer(TestCase):
+class TestCaseInvalidBuffer:
     # The widget is currently in buffer mode, but with a "0" (invalid) in its buffer
-    def setUp(self):
+    def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
         self.w.date = date(2008, 6, 12)
         self.w.type('0')

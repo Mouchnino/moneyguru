@@ -241,10 +241,10 @@ def app_load_file_with_bsheet_selected():
     return app
 
 @with_app(app_load_file_with_bsheet_selected)
-def test_views_are_refreshed(self):
+def test_views_are_refreshed(app):
     # view.refresh() is called on file load
-    self.check_gui_calls_partial(self.bsheet_gui, ['refresh'])
-    self.check_gui_calls_partial(self.nwgraph_gui, ['refresh'])
+    app.check_gui_calls_partial(app.bsheet_gui, ['refresh'])
+    app.check_gui_calls_partial(app.nwgraph_gui, ['refresh'])
 
 #--- Transaction between income and expense
 def app_transaction_between_income_and_expense():

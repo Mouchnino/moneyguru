@@ -9,7 +9,7 @@
 import time
 
 from hscommon.testutil import eq_
-from hscommon.testutil import Patcher, patch_today, with_tmpdir
+from hscommon.testutil import Patcher, patch_today
 
 from .base import TestApp, with_app
 from ..model.account import AccountType
@@ -493,17 +493,16 @@ def test_previous_completion_twice(app):
     eq_(ce.completion, 'escription')
 
 @with_app(app_four_entries_with_description_and_category_collision)
-@patch_today(2007, 10, 6) # the test fails otherwise
-@with_tmpdir
-def test_persistence_of_completion(app, tmppath):
+def test_persistence_of_completion(app, tmpdir, monkeypatch):
     # Completion (including its order) is persistent.
+    patch_today(monkeypatch, 2007, 10, 6) # the test fails otherwise
     row = app.etable.selected_row
     row.transfer = 'cat12'
     app.etable.save_edits()
     row = app.etable.selected_row
     row.transfer = 'cat1'
     app.etable.save_edits()
-    filepath = str(tmppath + 'foo.xml')
+    filepath = str(tmpdir.join('foo.xml'))
     app.doc.save_to_xml(filepath)
     app = TestApp()
     app.add_txn(description='Duh, that shouldn\'t be here!')

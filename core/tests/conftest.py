@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-07-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,6 +9,7 @@
 # This unit is required to make tests work with py.test. When running
 
 import py
+from hscommon.testutil import pytest_funcarg__app
 
 def get_testunit(item):
     if hasattr(item, 'obj'):

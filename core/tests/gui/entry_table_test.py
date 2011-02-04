@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, with_tmpdir, Patcher
+from hscommon.testutil import eq_, Patcher
 from hscommon.currency import EUR
 
 from ...const import PaneType
@@ -141,10 +141,9 @@ def test_entry_is_added_before_total_line(app):
     eq_(app.etable.selected_index, 0)
 
 @with_app(app_entry_being_added)
-@with_tmpdir
-def test_save(app, tmppath):
+def test_save(app, tmpdir):
     # Saving the document ends the edition mode and save the edits
-    filepath = str(tmppath + 'foo')
+    filepath = str(tmpdir.join('foo'))
     app.doc.save_to_xml(filepath)
     app.check_gui_calls(app.etable_gui, ['stop_editing', 'refresh', 'show_selected_row'])
     assert app.etable.edited is None

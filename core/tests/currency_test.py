@@ -11,7 +11,7 @@ import xmlrpc.client
 from datetime import date
 import threading
 
-from hscommon.testutil import eq_, log_calls, Patcher, with_tmpdir
+from hscommon.testutil import eq_, log_calls, Patcher
 from hscommon.currency import Currency, USD, PLN, EUR, CAD, XPF
 from hscommon import io
 
@@ -25,17 +25,14 @@ from . import get_original_rates_db_ensure_rates
 from .base import ApplicationGUI, TestCase, TestApp, with_app
 from .model.currency_test import FakeServer
 
-def with_fake_server(func):
-    def wrapper(*args, **kwargs):
-        with Patcher() as p:
-            p.patch(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
-            p.patch(testsinit, 'is_ratesdb_patched', True)
-            p.patch(xmlrpc.client, 'ServerProxy', FakeServer)
-            p.patch(Currency, 'rates_db', RatesDB(':memory:', False)) # async
-            p.patch(currency, 'initialize_db', lambda path: None)
-            func(*args, **kwargs)
-    
-    return wrapper
+def pytest_funcarg__fake_server(request):
+    p = Patcher()
+    p.patch(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
+    p.patch(testsinit, 'is_ratesdb_patched', True)
+    p.patch(xmlrpc.client, 'ServerProxy', FakeServer)
+    p.patch(Currency, 'rates_db', RatesDB(':memory:', False)) # async
+    p.patch(currency, 'initialize_db', lambda path: None)
+    request.addfinalizer(p.unpatch)
 
 class TestCase(TestCase):
     def superSetUp(self):
@@ -92,8 +89,7 @@ def app_one_empty_account_eur():
     return app
 
 @with_app(app_one_empty_account_eur)
-@with_fake_server
-def test_add_entry_with_foreign_amount(app):
+def test_add_entry_with_foreign_amount(app, fake_server):
     # Saving an entry triggers an ensure_rates.
     log = []
     FakeServer.hooklog(log)
@@ -106,8 +102,7 @@ def test_add_entry_with_foreign_amount(app):
     eq_(set(log), expected)
 
 @with_app(app_one_empty_account_eur)
-@with_fake_server
-def test_add_transaction_with_foreign_amount(app):
+def test_add_transaction_with_foreign_amount(app, fake_server):
     # Saving an entry triggers an ensure_rates
     log = []
     FakeServer.hooklog(log)
@@ -205,15 +200,13 @@ def test_change_currency_from_income_account():
     app.mainwindow.show_account()
     eq_(app.etable[0].increase, 'PLN 12.00')
 
-@with_fake_server
-@with_tmpdir
-def test_ensures_rates(tmppath):
+def test_ensures_rates(tmpdir, fake_server):
     # Upon calling save and load, rates are asked for both EUR and PLN.
     app = app_entry_with_foreign_currency()
     rates_db = Currency.get_rates_db()
     with Patcher() as p:
         p.patch(rates_db, 'ensure_rates', log_calls(rates_db.ensure_rates))
-        filename = str(tmppath + 'foo.xml')
+        filename = str(tmpdir.join('foo.xml'))
         app.doc.save_to_xml(filename)
         app.doc.load_from_xml(filename)
         calls = rates_db.ensure_rates.calls
@@ -304,8 +297,7 @@ def app_three_currencies_two_entries():
     return app
 
 @with_app(app_three_currencies_two_entries)
-@with_fake_server
-def test_ensures_rates_multiple_currencies(app):
+def test_ensures_rates_multiple_currencies(app, fake_server):
     # Upon calling save and load, rates are asked for the 20-today range for both USD and EUR.
     log = []
     FakeServer.hooklog(log)
@@ -323,8 +315,7 @@ def test_ensures_rates_multiple_currencies(app):
     eq_(USD.value_in(CAD, date(2008, 4, 27)), 1.49)
 
 @with_app(app_three_currencies_two_entries)
-@with_fake_server
-def test_ensures_rates_async(app):
+def test_ensures_rates_async(app, fake_server):
     # ensure_rates() executes asynchronously
     # I can't think of any graceful way to test something like that, so I assume that if I make
     # the mocked get_CAD_values() to sleep for a little while, the next line after it in the test will
