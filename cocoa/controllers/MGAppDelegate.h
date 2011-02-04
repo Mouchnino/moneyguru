@@ -30,6 +30,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)openExampleDocument:(id)sender;
 - (IBAction)openWebsite:(id)sender;
+- (IBAction)openHelp:(id)sender;
 - (IBAction)showAboutBox:(id)sender;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;

@@ -95,6 +95,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.hardcoded.net/moneyguru/"]];
 }
 
+- (IBAction)openHelp:(id)sender
+{
+    NSBundle *b = [NSBundle mainBundle];
+    NSString *p = [b pathForResource:@"index" ofType:@"html" inDirectory:@"help"];
+    NSURL *u = [NSURL fileURLWithPath:p];
+    [[NSWorkspace sharedWorkspace] openURL:u];
+}
+
 - (IBAction)showAboutBox:(id)sender
 {
     if (_aboutBox == nil) {

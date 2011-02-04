@@ -45,9 +45,6 @@ def build_cocoa(dev):
     build_all_cocoa_locs('cocoa')
         
     print("Building mg_cocoa.plugin")
-    if op.exists('build'):
-        shutil.rmtree('build')
-    os.mkdir('build')
     if not dev:
         copy_packages(['core', 'hscommon'], 'build')
     shutil.copy('cocoa/mg_cocoa.py', 'build')
@@ -131,6 +128,9 @@ def main():
     print("Building moneyGuru with UI {0}".format(ui))
     if dev:
         print("Building in Dev mode")
+    if op.exists('build'):
+        shutil.rmtree('build')
+    os.mkdir('build')
     build_help()
     if dev:
         print("Generating devdocs")

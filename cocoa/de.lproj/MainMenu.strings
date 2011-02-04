@@ -203,9 +203,6 @@
 /* Class = "NSMenuItem"; title = "Check For Update..."; ObjectID = "1293"; */
 "1293.title" = "Nach Updates suchen...";
 
-/* Class = "NSMenuItem"; title = "Unlock moneyGuru"; ObjectID = "1295"; */
-"1295.title" = "moneyGuru freischalten";
-
 /* Class = "NSMenuItem"; title = "Open Example Document"; ObjectID = "1298"; */
 "1298.title" = "Beispielsdatei öffnen";
 

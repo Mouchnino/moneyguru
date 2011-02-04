@@ -56,7 +56,7 @@
 		CE44BA711207042E00F4BAE9 /* MGCashculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44BA701207042E00F4BAE9 /* MGCashculatorView.m */; };
 		CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE44BA721207045300F4BAE9 /* CashculatorView.xib */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
-		CE4B8C120E656DB70017432D /* moneyguru_help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* moneyguru_help */; };
+		CE4B8C120E656DB70017432D /* help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* help */; };
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
@@ -343,7 +343,7 @@
 		CE44BAB812070BA800F4BAE9 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/CashculatorView.xib; sourceTree = "<group>"; };
 		CE44BAB912070BB200F4BAE9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/CashculatorView.xib; sourceTree = "<group>"; };
 		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = ../data/example.moneyguru; sourceTree = "<group>"; };
-		CE4B8C000E656DB70017432D /* moneyguru_help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = moneyguru_help; path = ../help/moneyguru_help; sourceTree = "<group>"; };
+		CE4B8C000E656DB70017432D /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../build/help; sourceTree = "<group>"; };
 		CE4C22940F7FB37D00845640 /* MGGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraphic.h; sourceTree = "<group>"; };
 		CE4CD3870F2B7B0D003F1738 /* MGCSVLayoutNameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVLayoutNameDialog.h; sourceTree = "<group>"; };
 		CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVLayoutNameDialog.m; sourceTree = "<group>"; };
@@ -866,7 +866,7 @@
 				CEC3677011D10DC700EB0222 /* xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */,
-				CE4B8C000E656DB70017432D /* moneyguru_help */,
+				CE4B8C000E656DB70017432D /* help */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -1420,7 +1420,7 @@
 				CE107C790E619A8B0064AF17 /* nav_right_9.png in Resources */,
 				CE107C7A0E619A8B0064AF17 /* plus_8.png in Resources */,
 				CE107C8A0E619F780064AF17 /* lock_12.png in Resources */,
-				CE4B8C120E656DB70017432D /* moneyguru_help in Resources */,
+				CE4B8C120E656DB70017432D /* help in Resources */,
 				CE16B0260E715B3F001290F7 /* backward_32.png in Resources */,
 				CE16B0270E715B3F001290F7 /* forward_32.png in Resources */,
 				CEACD4FB0E73DCFA00E9A2AB /* account_in_16.png in Resources */,
