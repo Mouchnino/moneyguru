@@ -16,10 +16,6 @@ from ...exception import FileFormatError
 from ...loader.csv import Loader, CsvField
 from ...model.amount import Amount
 from ..base import testdata
-from .. import ensure_ratesdb_patched
-
-def setup_module(module):
-    ensure_ratesdb_patched()
 
 def test_fortis():
     # a fortis csv import. ';' delimiter, with headers.

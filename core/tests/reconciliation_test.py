@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import Patcher, eq_
+from hscommon.testutil import eq_, patch_today
 
 from .base import TestApp, with_app, compare_apps
 from ..model.account import AccountType
@@ -150,15 +150,14 @@ def test_toggle_entries_reconciled_sets_dirty_flag(app):
     assert app.doc.is_dirty()
 
 #--- Entry in future
-def app_entry_in_future():
-    p = Patcher()
-    p.patch_today(2009, 12, 26)
+def app_entry_in_future(monkeypatch):
+    patch_today(monkeypatch, 2009, 12, 26)
     app = TestApp()
     app.add_account()
     app.mw.show_account()
     app.add_entry('27/12/2009', increase='42')
     app.aview.toggle_reconciliation_mode()
-    return app, p
+    return app
 
 @with_app(app_entry_in_future)
 def test_can_reconcile_entry_in_future(app):
@@ -216,16 +215,15 @@ def test_change_date_makes_reconciliation_date_follow(app):
     eq_(app.etable[0].reconciliation_date, '10/07/2008')
 
 #--- Entry different reconciliation date
-def app_entry_different_reconciliation_date():
+def app_entry_different_reconciliation_date(monkeypatch):
     app = TestApp()
-    p = Patcher()
-    p.patch_today(2008, 7, 20)
+    patch_today(monkeypatch, 2008, 7, 20)
     app.add_account()
     app.mw.show_account()
     app.add_entry('11/07/2008', decrease='42')
     app.etable[0].reconciliation_date = '12/07/2008'
     app.etable.save_edits()
-    return app, p
+    return app
 
 @with_app(app_entry_different_reconciliation_date)
 def test_save_and_load_different_reconciliation_date(app):

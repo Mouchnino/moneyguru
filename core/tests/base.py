@@ -64,7 +64,6 @@ from ..gui.view_options import ViewOptions
 from ..loader import base
 from ..model.account import AccountType
 from .. import document as document_module
-from . import ensure_ratesdb_patched
 
 testdata = TestData(op.join(op.dirname(__file__), 'testdata'))
 
@@ -140,7 +139,6 @@ class TestApp(TestAppBase):
             setattr(holder, '{0}col_gui'.format(name), colview)
             gui.columns.view = colview
         
-        ensure_ratesdb_patched()
         self._tmppath = tmppath
         if app is None:
             app = Application(ApplicationGUI())

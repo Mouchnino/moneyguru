@@ -6,7 +6,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today, Patcher
+from hscommon.testutil import eq_, patch_today
 from hscommon.currency import Currency, USD, CAD
 
 from ..base import DocumentGUI, ApplicationGUI, TestApp, with_app, testdata
@@ -100,7 +100,7 @@ def test_root_nodes_initially_expanded(app):
     eq_(app.bsheet.expanded_paths, [(0, ), (1, )])
 
 @with_app(TestApp)
-def test_save_edits_doesnt_lead_to_infinite_loop(app):
+def test_save_edits_doesnt_lead_to_infinite_loop(app, monkeypatch):
     # in save_edits, self.edited must be put to None asap because changes in the document could
     # lead to refreshes in the views that would call save_edits again and create an infinite
     # loop
@@ -108,9 +108,8 @@ def test_save_edits_doesnt_lead_to_infinite_loop(app):
     app.bsheet.assets[0].name = 'foo'
     def fake_refresh():
         assert app.bsheet.edited is None
-    with Patcher() as p:
-        p.patch(app.bsheet_gui, 'refresh', fake_refresh)
-        app.bsheet.save_edits()
+    monkeypatch.setattr(app.bsheet_gui, 'refresh', fake_refresh)
+    app.bsheet.save_edits()
 
 def test_refresh_on_connect():
     # the account tree refreshes itself and selects the first asset. It is important in case the

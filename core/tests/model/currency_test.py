@@ -16,14 +16,14 @@ from hscommon.testcase import TestCase
 from ...model.amount import convert_amount
 from ...model.currency import RatesDB
 from ...model.amount import Amount
-from .. import get_original_rates_db_ensure_rates
+from ..conftest import get_original_rates_db_ensure_rates
 
 #--- ServerProxy mock
 # We have to mock xmlrpc.client.ServerProxy for every single test because if we don't, a xmlrpc call will
 # be made for every single time we load a file. You must also mock it in test units of all modules 
 # that import moneyguru.currency.
 
-class FakeServer(object):
+class FakeServer:
     log = []
     def __init__(self, url, use_datetime=False):
         pass

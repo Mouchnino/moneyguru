@@ -10,7 +10,7 @@ import csv
 from datetime import date
 from io import StringIO
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 from hscommon.currency import USD
 
 from ..base import TestCase, CommonSetup, TestApp, with_app, testdata
@@ -799,12 +799,11 @@ def test_completion(app):
     eq_(ce.completion, 'econd')
 
 #--- Transaction on last day of range
-def app_txn_on_last_day_of_range():
+def app_txn_on_last_day_of_range(monkeypatch):
     app = TestApp()
-    p = Patcher()
-    p.patch_today(2010, 3, 21)
+    patch_today(monkeypatch, 2010, 3, 21)
     app.add_txn('31/12/2010')
-    return app, p
+    return app
 
 @with_app(app_txn_on_last_day_of_range)
 def test_added_txn_is_correctly_selected(app):

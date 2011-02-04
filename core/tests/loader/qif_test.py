@@ -15,10 +15,6 @@ from ..base import TestApp, testdata
 from ...loader.qif import Loader
 from ...model.account import AccountType
 from ...model.amount import Amount
-from .. import ensure_ratesdb_patched
-
-def setup_module(module):
-    ensure_ratesdb_patched()
 
 def test_checkbook_values():
     loader = Loader(USD)

@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 from hscommon.currency import EUR
 
 from ...const import PaneType
@@ -637,15 +637,14 @@ def test_delete_both_entries(app):
     eq_(app.etable_count(), 0)
 
 #--- With budget
-def app_with_budget():
+def app_with_budget(monkeypatch):
     app = TestApp()
-    p = Patcher()
-    p.patch_today(2008, 1, 27)
+    patch_today(monkeypatch, 2008, 1, 27)
     app.drsel.select_today_date_range()
     app.add_account('foo', account_type=AccountType.Expense)
     app.add_budget('foo', None, '100')
     app.show_account('foo')
-    return app, p
+    return app
 
 @with_app(app_with_budget)
 def test_budget_spawns(app):

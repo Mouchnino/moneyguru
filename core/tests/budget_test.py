@@ -6,21 +6,19 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_
-from hscommon.testutil import Patcher
+from hscommon.testutil import eq_, patch_today
 
 from ..model.account import AccountType
 from .base import TestApp, with_app
 
 #-- Account with budget
-def app_account_with_budget():
+def app_account_with_budget(monkeypatch):
     # 4 days left to the month, 100$ monthly budget
-    p = Patcher()
-    p.patch_today(2008, 1, 27)
+    patch_today(monkeypatch, 2008, 1, 27)
     app = TestApp()
     app.add_account('Some Income', account_type=AccountType.Income)
     app.add_budget('Some Income', None, '100')
-    return app, p
+    return app
 
 @with_app(app_account_with_budget)
 def test_budget_amount_flow_direction(app):
@@ -62,13 +60,12 @@ def test_set_budget_again(app):
     eq_(app.ttable[0].from_, 'Some Income')
 
 #--- Income with budget in past
-def app_income_with_budget_in_past():
-    p = Patcher()
-    p.patch_today(2009, 11, 16)
+def app_income_with_budget_in_past(monkeypatch):
+    patch_today(monkeypatch, 2009, 11, 16)
     app = TestApp()
     app.add_account('income', account_type=AccountType.Income)
     app.add_budget('income', None, '100', start_date='01/09/2009')
-    return app, p
+    return app
 
 @with_app(app_income_with_budget_in_past)
 def test_spawns_dont_linger(app):
@@ -79,14 +76,13 @@ def test_spawns_dont_linger(app):
     eq_(app.ttable.row_count, 2)
 
 #--- Expense with budget and txn
-def app_budget_with_expense_and_txn():
-    p = Patcher()
-    p.patch_today(2008, 1, 27)
+def app_budget_with_expense_and_txn(monkeypatch):
+    patch_today(monkeypatch, 2008, 1, 27)
     app = TestApp()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')
     app.add_txn(date='27/01/2008', to='Some Expense', amount='42')
-    return app, p
+    return app
 
 @with_app(app_budget_with_expense_and_txn)
 def test_budget_transaction_is_adjusted(app):
@@ -104,14 +100,13 @@ def test_busted_budget_spaws_dont_show_up(app):
     
 
 #--- Expense with budget and target
-def app_expense_with_budget_and_target():
-    p = Patcher()
-    p.patch_today(2008, 1, 27)
+def app_expense_with_budget_and_target(monkeypatch):
+    patch_today(monkeypatch, 2008, 1, 27)
     app = TestApp()
     app.add_account('some asset')
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', 'some asset', '100')
-    return app, p
+    return app
 
 @with_app(app_expense_with_budget_and_target)
 def test_asset_is_in_the_from_column(app):
@@ -172,18 +167,17 @@ def test_delete_target_and_reassign(app):
     eq_(app.btable[0].target, 'other asset')
 
 #--- Two budgets from same account
-def app_two_budgets_from_same_account():
+def app_two_budgets_from_same_account(monkeypatch):
     # XXX this mock is because the test previously failed because we were currently on the last
     # day of the month. TODO: Re-create the last-day condition and fix the calculation bug
-    p = Patcher()
-    p.patch_today(2009, 8, 20)
+    patch_today(monkeypatch, 2009, 8, 20)
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('income', account_type=AccountType.Income)
     app.add_txn(from_='income', amount='25') # This txn must not be counted twice in budget calculations!
     app.add_budget('income', None, '100')
     app.add_budget('income', None, '100')
-    return app, p
+    return app
 
 @with_app(app_two_budgets_from_same_account)
 def test_both_budgets_are_counted(app):
@@ -192,15 +186,14 @@ def test_both_budgets_are_counted(app):
     eq_(app.istatement.income[0].budgeted, '175.00')
 
 #--- Yearly buget with txn before current month
-def app_yearly_budget_with_txn_before_current_month():
-    p = Patcher()
-    p.patch_today(2009, 8, 24)
+def app_yearly_budget_with_txn_before_current_month(monkeypatch):
+    patch_today(monkeypatch, 2009, 8, 24)
     app = TestApp()
     app.drsel.select_year_range()
     app.add_account('income', account_type=AccountType.Income)
     app.add_txn(date='01/07/2009', from_='income', amount='25')
     app.add_budget('income', None, '100', start_date='01/01/2009', repeat_type_index=3) # yearly
-    return app, p
+    return app
 
 @with_app(app_yearly_budget_with_txn_before_current_month)
 def test_entry_is_correctly_counted_in_budget(app):
@@ -216,15 +209,14 @@ def test_spawn_has_correct_date(app):
     eq_(app.ttable[1].date, '31/12/2009')
 
 #--- Scheduled txn and budget
-def app_scheduled_txn_and_budget():
-    p = Patcher()
-    p.patch_today(2009, 9, 10)
+def app_scheduled_txn_and_budget(monkeypatch):
+    patch_today(monkeypatch, 2009, 9, 10)
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('account', account_type=AccountType.Expense)
     app.add_schedule(start_date='10/09/2009', account='account', amount='1', repeat_type_index=2) # monthly
     app.add_budget('account', None, '10') # monthly
-    return app, p
+    return app
 
 @with_app(app_scheduled_txn_and_budget)
 def test_schedule_affects_budget(app):

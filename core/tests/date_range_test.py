@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 
 from ..const import PaneType
 from ..model.account import AccountType
@@ -116,11 +116,10 @@ class RangeOnOctober2007(TestCase):
     
 
 #--- Range on year 2007
-def app_range_on_year2007():
-    p = Patcher()
-    p.patch_today(2007, 1, 1)
+def app_range_on_year2007(monkeypatch):
+    patch_today(monkeypatch, 2007, 1, 1)
     app = TestApp()
-    return app, p
+    return app
 
 @with_app(app_range_on_year2007)
 def test_month_range(app):
@@ -156,12 +155,11 @@ class RangeOnYearStartsOnApril(TestCase):
     
 
 #---
-def app_range_on_year_to_date():
-    p = Patcher()
-    p.patch_today(2008, 11, 12)
+def app_range_on_year_to_date(monkeypatch):
+    patch_today(monkeypatch, 2008, 11, 12)
     app = TestApp()
     app.drsel.select_year_to_date_range()
-    return app, p
+    return app
 
 @with_app(app_range_on_year_to_date)
 def test_close_and_load(app):

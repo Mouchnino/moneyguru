@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 
 from ...model.account import AccountType
 from ..base import TestApp, with_app
@@ -147,9 +147,8 @@ def test_sort_by_amount(app):
 
 #--- Mixed up reconciled schedule and budget
 # A mix of 4 txns. One reconciled, one normal, one schedule spawn and one budget spawn.
-def app_mixed_up_schedule_and_budget():
-    p = Patcher()
-    p.patch_today(2010, 1, 1)
+def app_mixed_up_schedule_and_budget(monkeypatch):
+    patch_today(monkeypatch, 2010, 1, 1)
     app = TestApp()
     app.drsel.select_month_range() # we just want 4 transactions
     app.add_account('expense', account_type=AccountType.Expense)
@@ -161,7 +160,7 @@ def app_mixed_up_schedule_and_budget():
     app.add_txn('01/01/2010', description='plain', from_='asset')
     app.add_schedule(repeat_type_index=2, description='schedule', account='asset', amount='42') # monthly
     app.add_budget('expense', 'asset', '500', start_date='01/01/2010')
-    return app, p
+    return app
 
 @with_app(app_mixed_up_schedule_and_budget)
 def test_sort_etable_by_status(app):

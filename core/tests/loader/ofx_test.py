@@ -16,10 +16,6 @@ from ..base import TestCase, testdata
 from ...exception import FileFormatError
 from ...loader import ofx
 from ...model.amount import Amount
-from .. import ensure_ratesdb_patched
-
-def setup_module(module):
-    ensure_ratesdb_patched()
 
 class NoSetup(TestCase):
     def test_dont_choke_on_empty_files(self):

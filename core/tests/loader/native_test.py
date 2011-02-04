@@ -17,10 +17,6 @@ from ...exception import FileFormatError
 from ...loader import native
 from ...model.account import AccountType
 from ...model.amount import Amount
-from .. import ensure_ratesdb_patched
-
-def setup_module(module):
-    ensure_ratesdb_patched()
 
 class NativeLoader(TestCase):
     def setUp(self):

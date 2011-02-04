@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 
 from ..const import PaneType
 from ..document import ScheduleScope
@@ -53,9 +53,8 @@ def test_make_schedule_from_selected_weekly(app):
     eq_(app.ttable[1].date, '18/07/2008')
 
 #--- Daily schedule
-def app_daily_schedule():
-    p = Patcher()
-    p.patch_today(2008, 9, 13)
+def app_daily_schedule(monkeypatch):
+    patch_today(monkeypatch, 2008, 9, 13)
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('account')
@@ -63,7 +62,7 @@ def app_daily_schedule():
         repeat_every=3)
     app.mainwindow.select_transaction_table()
     app.clear_gui_calls()
-    return app, p
+    return app
 
 @with_app(app_daily_schedule)
 def test_change_schedule_transaction(app):
@@ -327,9 +326,8 @@ def test_etable_attrs_with_one_spawn_and_one_regular(app):
     eq_(app.etable[3].description, 'foo')
 
 #--- Schedule with local change
-def app_schedule_with_local_change():
-    p = Patcher()
-    p.patch_today(2008, 9, 30)
+def app_schedule_with_local_change(monkeypatch):
+    patch_today(monkeypatch, 2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
@@ -337,7 +335,7 @@ def app_schedule_with_local_change():
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
     app.ttable.save_edits()
-    return app, p
+    return app
 
 @with_app(app_schedule_with_local_change)
 def test_exceptions_still_hold_the_correct_recurrent_date_after_load(app):
@@ -359,9 +357,8 @@ def test_save_load_schedule_with_local_changes(app):
     eq_(newapp.ttable[2].description, 'changed')
 
 #--- Schedule with global change
-def app_schedule_with_global_change():
-    p = Patcher()
-    p.patch_today(2008, 9, 30)
+def app_schedule_with_global_change(monkeypatch):
+    patch_today(monkeypatch, 2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
@@ -370,7 +367,7 @@ def app_schedule_with_global_change():
     app.ttable[2].description = 'changed'
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.save_edits()
-    return app, p
+    return app
 
 @with_app(app_schedule_with_global_change)
 def test_perform_another_global_change_before_first_global_change(app):
@@ -382,15 +379,14 @@ def test_perform_another_global_change_before_first_global_change(app):
     eq_(app.ttable[2].description, 'changed again')
 
 #--- Schedule with local deletion
-def app_schedule_with_local_deletion():
-    p = Patcher()
-    p.patch_today(2008, 9, 30)
+def app_schedule_with_local_deletion(monkeypatch):
+    patch_today(monkeypatch, 2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
     app.ttable.select([2])
     app.ttable.delete()
-    return app, p
+    return app
 
 @with_app(app_schedule_with_local_deletion)
 def test_perform_another_global_change_before_local_deletion(app):

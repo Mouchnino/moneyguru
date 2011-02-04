@@ -13,7 +13,7 @@ from datetime import date
 from pytest import raises
 from hscommon import io
 from hscommon.currency import EUR
-from hscommon.testutil import Patcher, eq_
+from hscommon.testutil import eq_, patch_today
 
 from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app, testdata
 from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
@@ -126,13 +126,12 @@ def test_load_invalid():
     else:
         raise AssertionError()
 
-def test_load_empty():
+def test_load_empty(monkeypatch):
     # When loading an empty file (we mock it here), make sure no exception occur.
     app = TestApp()
-    with Patcher() as p:
-        p.patch(base.Loader, 'parse', lambda self, filename: None)
-        p.patch(base.Loader, 'load', lambda self: None)
-        app.doc.load_from_xml('filename does not matter here')
+    monkeypatch.setattr(base.Loader, 'parse', lambda self, filename: None)
+    monkeypatch.setattr(base.Loader, 'load', lambda self: None)
+    app.doc.load_from_xml('filename does not matter here')
 
 def test_modified_flag():
     # The modified flag is initially False.
@@ -140,12 +139,11 @@ def test_modified_flag():
     assert not app.doc.is_dirty()
 
 #--- Range on October 2007
-def app_range_on_october2007():
-    p = Patcher()
-    p.patch_today(2007, 10, 1)
+def app_range_on_october2007(monkeypatch):
+    patch_today(monkeypatch, 2007, 10, 1)
     app = TestApp()
     app.drsel.select_month_range()
-    return app, p
+    return app
 
 @with_app(app_range_on_october2007)
 def test_graph_xaxis(app):

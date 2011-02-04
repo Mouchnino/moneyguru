@@ -8,8 +8,7 @@
 
 import time
 
-from hscommon.testutil import eq_
-from hscommon.testutil import Patcher, patch_today
+from hscommon.testutil import eq_, patch_today
 
 from .base import TestApp, with_app
 from ..model.account import AccountType
@@ -291,7 +290,7 @@ def test_completion_from_other_accounts_show_up(app):
     eq_(complete_etable(app, 'f', 'description'), 'irst')
 
 #--- Four entries with description and category collision
-def app_four_entries_with_description_and_category_collision():
+def app_four_entries_with_description_and_category_collision(monkeypatch):
     # Four entries. Mostly for completion, I can't see any other use. The first is a 'booby trap'.
     # (simply having the completion iterate the list made all tests pass). The second is the base
     # entry. The third has the same description but a different transfer. The fourth has a different 
@@ -299,20 +298,19 @@ def app_four_entries_with_description_and_category_collision():
     # selected. Also, time.time() is mocked so that the time of the setUp is earlier than the time
     # of the tests.
     app = TestApp()
-    p = Patcher()
     app.add_account()
     app.mw.show_account()
-    p.patch(time, 'time', lambda: 42)
+    monkeypatch.setattr(time, 'time', lambda: 42)
     app.add_entry('2/10/2007', description='description', payee='payee', transfer='category', increase='42')
-    p.patch(time, 'time', lambda: 43)
+    monkeypatch.setattr(time, 'time', lambda: 43)
     app.add_entry('3/10/2007', description='desc1', payee='pay1', transfer='cat1', increase='1')
-    p.patch(time, 'time', lambda: 44)
+    monkeypatch.setattr(time, 'time', lambda: 44)
     app.add_entry('4/10/2007', description='desc1', payee='pay1', transfer='cat2', increase='2')
-    p.patch(time, 'time', lambda: 45)
+    monkeypatch.setattr(time, 'time', lambda: 45)
     app.add_entry('5/10/2007', description='desc2', payee='pay1', transfer='cat1', increase='3')
     app.etable.select([1])
-    p.patch(time, 'time', lambda: 46)
-    return app, p
+    monkeypatch.setattr(time, 'time', lambda: 46)
+    return app
 
 def assert_completion_order_changed(app):
     # complete() returns descriptions for the second entry, and field completion also is based

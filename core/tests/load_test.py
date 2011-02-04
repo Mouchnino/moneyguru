@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 from hscommon.currency import PLN, CAD
 
 from ..document import ScheduleScope
@@ -344,9 +344,8 @@ def app_one_schedule_and_one_normal_txn():
         repeat_every=3)
     return app
 
-def app_schedule_with_global_change():
-    p = Patcher()
-    p.patch_today(2008, 9, 30)
+def app_schedule_with_global_change(monkeypatch):
+    patch_today(monkeypatch, 2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
@@ -355,17 +354,16 @@ def app_schedule_with_global_change():
     app.ttable[2].description = 'changed'
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.save_edits()
-    return app, p
+    return app
 
-def app_schedule_with_local_deletion():
-    p = Patcher()
-    p.patch_today(2008, 9, 30)
+def app_schedule_with_local_deletion(monkeypatch):
+    patch_today(monkeypatch, 2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
     app.ttable.select([2])
     app.ttable.delete()
-    return app, p
+    return app
 
 def app_schedule_made_from_txn():
     app = TestApp()
@@ -380,7 +378,7 @@ def app_account_and_group():
     app.add_group()
     return app
 
-def test_save_load(tmpdir):
+def test_save_load(tmpdir, monkeypatch):
     # Some (if not all!) tests yielded here have no comments attached to it. This is, unfortunately
     # because, in the old TestCase based system, had mixed in the TestCase with the TestSaveLoadMixin
     # without commenting on why I was doing that. When nose-ifying, I didn't want to lose coverage
@@ -433,13 +431,11 @@ def test_save_load(tmpdir):
     app = app_one_schedule_and_one_normal_txn()
     check(app)
     
-    app, p = app_schedule_with_global_change()
+    app = app_schedule_with_global_change(monkeypatch)
     check(app)
-    p.unpatch()
     
-    app, p = app_schedule_with_local_deletion()
+    app = app_schedule_with_local_deletion(monkeypatch)
     check(app)
-    p.unpatch()
     
     # The first spawn (corresponding to the original txn) is still skipped when we save/load
     app_schedule_made_from_txn()

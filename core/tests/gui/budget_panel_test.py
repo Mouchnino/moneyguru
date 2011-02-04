@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, Patcher
+from hscommon.testutil import eq_, patch_today
 
 from ...model.account import AccountType
 from ..base import TestApp, with_app
@@ -27,9 +27,8 @@ def test_can_create_new():
     eq_(len(app.mainwindow_gui.messages), 1) # a message has been shown
 
 #--- One expense with budget
-def app_one_expense_with_budget():
-    p = Patcher()
-    p.patch_today(2008, 1, 27)
+def app_one_expense_with_budget(monkeypatch):
+    patch_today(monkeypatch, 2008, 1, 27)
     app = TestApp()
     app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
@@ -43,7 +42,7 @@ def app_one_expense_with_budget():
     app.mainwindow.select_budget_table()
     app.btable.select([0])
     app.mainwindow.edit_item()
-    return app, p
+    return app
 
 @with_app(app_one_expense_with_budget)
 def test_attrs(app):
