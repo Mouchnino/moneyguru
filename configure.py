@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-30
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,8 +8,7 @@
 
 import sys
 from optparse import OptionParser
-
-import yaml
+import json
 
 def main(ui, dev):
     if ui not in ('cocoa', 'qt'):
@@ -21,7 +19,7 @@ def main(ui, dev):
         'ui': ui,
         'dev': dev,
     }
-    yaml.dump(conf, open('conf.yaml', 'w'))
+    json.dump(conf, open('conf.json', 'w'))
 
 if __name__ == '__main__':
     usage = "usage: %prog [options]"

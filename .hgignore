@@ -10,7 +10,7 @@ syntax: glob
 *.back.aip
 build
 _build
-conf.yaml
+conf.json
 cocoa/Info.plist
 cocoa/build
 cocoa/mg_cocoa.plugin

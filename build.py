@@ -10,9 +10,9 @@ import sys
 import os
 import os.path as op
 import shutil
+import json
 
 from setuptools import setup, Extension
-import yaml
 
 from hscommon import sphinxgen
 from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
@@ -122,7 +122,7 @@ def build_help():
     sphinxgen.gen(help_basepath, help_destpath, changelog_path, tixurl, confrepl, confpath)
 
 def main():
-    conf = yaml.load(open('conf.yaml'))
+    conf = json.load(open('conf.json'))
     ui = conf['ui']
     dev = conf['dev']
     print("Building moneyGuru with UI {0}".format(ui))

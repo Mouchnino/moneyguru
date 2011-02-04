@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-30
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -12,12 +11,11 @@ import os
 import os.path as op
 import compileall
 import shutil
-
-import yaml
+import json
 
 from core.app import Application as MoneyGuru
-from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, add_to_pythonpath,
-    copy_qt_plugins, print_and_do)
+from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, copy_qt_plugins,
+    print_and_do)
 
 def package_windows(dev):
     if sys.platform != "win32":
@@ -73,7 +71,8 @@ def package_debian():
     shutil.copy(op.join(qtsrcpath, 'QtGui.so'), qtdestpath)
     shutil.copy(sgmllib.__file__, srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
-    build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'moneyguru', from_version='1.8.0')
+    build_debian_changelog(op.join('help', 'changelog'), op.join(destpath, 'debian', 'changelog'),
+        'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('help', 'moneyguru_help'), op.join(srcpath, 'help'))
     shutil.copy(op.join('images', 'logo_small.png'), srcpath)
     compileall.compile_dir(srcpath)
@@ -81,7 +80,7 @@ def package_debian():
     os.system("dpkg-buildpackage")
 
 def main():
-    conf = yaml.load(open('conf.yaml'))
+    conf = json.load(open('conf.json'))
     ui = conf['ui']
     dev = conf['dev']
     print("Packaging moneyGuru with UI {0}".format(ui))
