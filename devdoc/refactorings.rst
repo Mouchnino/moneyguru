@@ -28,17 +28,16 @@ Tests then invoke these setups with the ``@with_app`` decorator::
     def test_entry_count(app):
         eq_(len(app.etable.rows), 1)
 
-The reason why we use ``@with_app`` instead of simply doing ``app = app_with_entry()`` at the beginning of the tests is because the ``@with_app`` decorator supports setups with patchings. For example, if we want a test that patches today's date, we'd do::
+The reason why we use ``@with_app`` instead of simply doing ``app = app_with_entry()`` at the beginning of the tests is because the ``@with_app`` is integrated with pytest so the setup function can easily receive funcargs. For example::
 
-    def app_with_patched_today():
-        p = Patcher()
-        p.patch_today(2010, 3, 27)
+    def app_with_patched_today(monkeypatch):
+        patch_today(monkeypatch, 2010, 3, 27)
         app = TestApp()
-        return app, p
+        return app
 
-and any test using this setup with ``@with_app`` will have the patching effective for the duration of the test. The ``Patcher`` class comes from ``hscommon.testutil`` and replaces ``mock_*`` methods that ``hscommon.testcase.TestCase`` used to offer.
+Any test using this setup with ``@with_app`` will have the patching effective for the duration of the test.
 
-One other change in idioms are the cases where the same tests was made in different testcases. Nose-ificating those will result in a test function name clash. Fortunately, Nose supports test generators. So what used to be same-test-in-multiple-testcase becomes a test generator with multiple setup func calls. In some cases, there are name clashes for tests that don't do the same thing and for which generators don't apply. In these cases, we have to rename tests to something more specifically descriptive.
+One other change in idioms are the cases where the same tests was made in different testcases. Pytest-ificating those will result in a test function name clash. In these cases, tests have to be renamed to something more descriptive (even if it means repeating the setup description in the test name). In some cases, it might be useful to group tests in classes. Pytest supports that (even when classes are not ``unittest.TestCase`` subclasses. The class name just has to start with "Test").
 
 More responsibilities to the view classes
 =========================================
