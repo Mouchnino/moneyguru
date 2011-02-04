@@ -8,12 +8,12 @@
 
 from datetime import date
 
-from hsutil.misc import first
+from hscommon.util import first
+from hscommon.trans import tr
 
 from ..exception import OperationAborted
 from ..model.recurrence import Recurrence, RepeatType
 from ..model.transaction import Transaction
-from ..trans import tr
 from .transaction_panel import PanelWithTransaction
 
 REPEAT_OPTIONS_ORDER = [RepeatType.Daily, RepeatType.Weekly, RepeatType.Monthly, RepeatType.Yearly,
@@ -30,7 +30,7 @@ REPEAT_EVERY_DESCS = {
     RepeatType.WeekdayLast: 'month',
 }
 
-class PanelWithScheduleMixIn(object):
+class PanelWithScheduleMixIn:
     @property
     def start_date(self):
         return self.app.format_date(self.schedule.start_date)

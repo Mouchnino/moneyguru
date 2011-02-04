@@ -11,7 +11,6 @@ General dependencies
 --------------------
 
 - Python 3.1 (http://www.python.org)
-- hsutil3k 1.0.1 (http://hg.hardcoded.net/hsutil)
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
 - Markdown, for help files. (http://www.freewisdom.org/projects/python-markdown/)

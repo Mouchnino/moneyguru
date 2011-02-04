@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -13,9 +12,9 @@ import tempfile
 from PyQt4.QtCore import pyqtSignal, Qt, QObject, QFile
 from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
+from hscommon.trans import tr
 from core.exception import FileFormatError
 from core.document import Document as DocumentModel, ScheduleScope
-from core.trans import tr
 
 from ..controller.schedule_scope_dialog import ScheduleScopeDialog
 

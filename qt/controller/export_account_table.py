@@ -10,8 +10,8 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QHeaderView
 
 from qtlib.column import Column
+from hscommon.trans import tr
 from core.gui.export_account_table import ExportAccountTable as ExportAccountTableModel
-from core.trans import tr
 from .table import Table
 
 class ExportAccountTable(Table):

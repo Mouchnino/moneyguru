@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -14,12 +13,12 @@ from PyQt4.QtCore import QProcess, QUrl
 from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap, QDialog,
     QDesktopServices)
 
+from qtlib.recent import Recent
+from hscommon.trans import tr
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
-from core.trans import tr
 
 from ..print_ import ViewPrinter
-from ..support.recent import Recent
 from .account.view import EntryView
 from .budget.view import BudgetView
 from .networth.view import NetWorthView
@@ -86,7 +85,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
         self.vopts = ViewOptionsDialog(self)
         self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
-        self.recentDocuments = Recent(self.app, self.menuOpenRecent, 'recentDocuments')
+        self.recentDocuments = Recent(self.app, 'recentDocuments')
+        self.recentDocuments.addMenu(self.menuOpenRecent)
         
         # Set main views
         self.mainView.addWidget(self.nwview)

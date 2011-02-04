@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-06-01
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,7 +8,7 @@
 
 # Tests that make sure preferences are correctly saved/restored
 
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 
 from ..const import PaneType
 from ..gui.main_window import OPENED_PANES_PREFERENCE

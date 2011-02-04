@@ -6,8 +6,7 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_
 from hscommon.currency import CAD, USD
 
 from ..base import TestCase, ApplicationGUI

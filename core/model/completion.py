@@ -6,11 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.misc import dedupe
+from hscommon.util import dedupe
 
 from .sort import sort_string
 
-class CompletionList(object):
+class CompletionList:
     def __init__(self, partial, candidates):
         """Build a completion list.
 

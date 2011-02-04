@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -20,7 +19,7 @@ sip.setapi('QVariant', 1)
 from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap, QDesktopServices
 
-import core.trans
+import hscommon.trans
 from qtlib.error_report_dialog import install_excepthook
 from qt.plat import LANG2LOCALENAME
 import qt.mg_rc
@@ -62,7 +61,7 @@ def main(argv):
         app.installTranslator(qtr2)
         def qt_tr(s, context='core'):
             return str(app.translate(context, s, None))
-        core.trans.set_tr(qt_tr)
+        hscommon.trans.set_tr(qt_tr)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed
     from qt.app import MoneyGuru

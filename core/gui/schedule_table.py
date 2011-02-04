@@ -8,8 +8,8 @@
 
 import datetime
 
+from hscommon.trans import tr
 from ..model.amount import convert_amount
-from ..trans import tr
 from .base import ViewChild
 from .column import Column
 from .table import GUITable, Row, rowattr
@@ -28,7 +28,7 @@ class ScheduleTable(GUITable, ViewChild):
         Column('to'),
         Column('amount'),
     ]
-    INVALIDATING_MESSAGES = set(['schedule_changed', 'schedule_deleted', 'account_deleted'])
+    INVALIDATING_MESSAGES = {'schedule_changed', 'schedule_deleted', 'account_deleted'}
     
     def __init__(self, view, schedule_view):
         ViewChild.__init__(self, view, schedule_view)

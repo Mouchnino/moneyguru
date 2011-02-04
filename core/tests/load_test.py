@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-27
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,13 +8,13 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_, Patcher
+from hscommon.testutil import eq_, Patcher
 from hscommon.currency import PLN, CAD
 
 from ..document import ScheduleScope
 from ..model.account import AccountType
 from ..model.date import MonthRange
-from .base import TestCase, compare_apps, TestApp
+from .base import TestCase, compare_apps, TestApp, TestData
 
 #--- Pristine
 def test_dont_save_invalid_xml_characters(tmpdir):
@@ -44,7 +43,7 @@ class LoadFile(TestCase):
         self.mock_today(2008, 2, 20) # so that the entries are shown
         self.create_instances()
         self.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
-        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -123,8 +122,8 @@ class LoadTwice(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
-        self.document.load_from_xml(self.filepath('moneyguru', 'simple.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
     
     def test_save_load(self):
         # make sure that loading completely wipes out previous transactions (If it doesn't, old
@@ -138,7 +137,7 @@ class LoadMultiCurrency(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.load_from_xml(self.filepath('moneyguru', 'multi_currency.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'multi_currency.moneyguru'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -160,7 +159,7 @@ class LoadPayeeDescription(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 3, 1))
-        self.document.load_from_xml(self.filepath('moneyguru', 'payee_description.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'payee_description.moneyguru'))
         self.mainwindow.select_transaction_table()
     
     def test_attributes(self):
@@ -200,7 +199,7 @@ class LoadInvalidAccountType(TestCase):
     #Loads 'invalid_account_type.moneyguru' which contains a single account with an invalid type.
     def setUp(self):
         self.create_instances()
-        self.document.load_from_xml(self.filepath('moneyguru', 'invalid_account_type.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'invalid_account_type.moneyguru'))
     
     def test_account_type(self):
         # The account with the invalid type is imported as an asset account.
@@ -211,7 +210,7 @@ class LoadImportWithTransactionInTheFuture(TestCase):
     def setUp(self):
         self.mock_today(2008, 2, 1) # before any txn date
         self.create_instances()
-        self.document.parse_file_for_import(str(self.filepath('moneyguru', 'simple.moneyguru')))
+        self.document.parse_file_for_import(TestData.filepath('moneyguru', 'simple.moneyguru'))
     
     def test_transactions_show_up(self):
         # even when there are txns in the future, they show up in the import panel
@@ -223,7 +222,7 @@ class LoadWithReferences1(TestCase):
     def setUp(self):
         self.mock_today(2008, 2, 1) # before any txn date
         self.create_instances()
-        self.document.load_from_xml(self.filepath('moneyguru', 'with_references1.moneyguru'))
+        self.document.load_from_xml(TestData.filepath('moneyguru', 'with_references1.moneyguru'))
     
     def test_reconciliation(self):
         # legacy boolean reconciliation was correctly loaded

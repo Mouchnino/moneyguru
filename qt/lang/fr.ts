@@ -1671,5 +1671,4 @@ Entrées de {start_date} à {end_date}</translation>
         <translation>Format d'exportation:</translation>
     </message>
 </context>
-</context>
 </TS>

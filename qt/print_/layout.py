@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-06
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,16 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from itertools import combinations
 
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint
 from PyQt4.QtGui import QPixmap, QPainter, QApplication, QFont, QFontMetrics
 
-from hsutil.misc import first
+from hscommon.util import first
 
-class LayoutElement(object):
+class LayoutElement:
     def __init__(self, rect):
         self.rect = rect
     

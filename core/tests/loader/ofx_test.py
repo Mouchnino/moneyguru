@@ -12,22 +12,26 @@ from datetime import date
 
 from hscommon.currency import USD, CAD, EUR
 
-from ..base import TestCase
+from ..base import TestCase, TestData
 from ...exception import FileFormatError
 from ...loader import ofx
 from ...model.amount import Amount
+from .. import ensure_ratesdb_patched
+
+def setup_module(module):
+    ensure_ratesdb_patched()
 
 class NoSetup(TestCase):
     def test_dont_choke_on_empty_files(self):
         # The ofx loader doesn't choke on an empty file
         loader = ofx.Loader(USD)
-        self.assertRaises(FileFormatError, loader.parse, self.filepath('zerofile'))
+        self.assertRaises(FileFormatError, loader.parse, TestData.filepath('zerofile'))
     
 
 class Desjardins(TestCase):
     def setUp(self):
         loader = ofx.Loader(USD)
-        loader.parse(self.filepath('ofx', 'desjardins.ofx'))
+        loader.parse(TestData.filepath('ofx', 'desjardins.ofx'))
         loader.load()
         self.loader = loader
 
@@ -65,13 +69,13 @@ class Desjardins(TestCase):
 class Invalid(TestCase):
     def test_format_error(self):
         loader = ofx.Loader(USD)
-        self.assertRaises(FileFormatError, loader.parse, self.filepath('ofx', 'invalid.ofx'))
+        self.assertRaises(FileFormatError, loader.parse, TestData.filepath('ofx', 'invalid.ofx'))
 
 
 class ING(TestCase):
     def setUp(self):
         loader = ofx.Loader(USD)
-        loader.parse(self.filepath('ofx', 'ing.qfx'))
+        loader.parse(TestData.filepath('ofx', 'ing.qfx'))
         loader.load()
         self.loader = loader
 
@@ -91,7 +95,7 @@ class ING(TestCase):
 class InvalidCurrency(TestCase):
     def setUp(self):
         loader = ofx.Loader(USD)
-        loader.parse(self.filepath('ofx', 'invalid_currency.ofx'))
+        loader.parse(TestData.filepath('ofx', 'invalid_currency.ofx'))
         loader.load()
         self.loader = loader
     
@@ -105,7 +109,7 @@ class InvalidCurrency(TestCase):
 class Fortis(TestCase):
     def setUp(self):
         loader = ofx.Loader(EUR)
-        loader.parse(self.filepath('ofx', 'fortis.ofx'))
+        loader.parse(TestData.filepath('ofx', 'fortis.ofx'))
         loader.load()
         self.loader = loader
     
@@ -120,7 +124,7 @@ class Fortis(TestCase):
 class BlankFirstLine(TestCase):
     def setUp(self):
         loader = ofx.Loader(USD)
-        loader.parse(self.filepath('ofx', 'blank_first_line.ofx'))
+        loader.parse(TestData.filepath('ofx', 'blank_first_line.ofx'))
         loader.load()
         self.loader = loader
     

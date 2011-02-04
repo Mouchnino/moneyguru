@@ -8,8 +8,8 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_, assert_raises
-
+from pytest import raises
+from hscommon.testutil import eq_
 from hscommon.currency import USD
 
 from ...exception import OperationAborted
@@ -24,7 +24,8 @@ def test_attrs():
 def test_can_load():
     # When there's no selection, loading the panel raises OperationAborted
     app = TestApp()
-    assert_raises(OperationAborted, app.tpanel.load)
+    with raises(OperationAborted):
+        app.tpanel.load()
 
 #--- One Entry
 def app_one_entry():
@@ -108,7 +109,8 @@ def test_values_after_deselect():
     # When there is no selection, load() is not possible
     app = app_one_entry()
     app.etable.select([])
-    assert_raises(OperationAborted, app.tpanel.load)
+    with raises(OperationAborted):
+        app.tpanel.load()
 
 #--- Amountless Entry Panel Loaded
 def app_amountless_entry_panel_loaded():

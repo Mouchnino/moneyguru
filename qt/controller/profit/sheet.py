@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-01
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,8 +9,8 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
+from hscommon.trans import tr
 from core.gui.income_statement import IncomeStatement as IncomeStatementModel
-from core.trans import tr
 from ..account_sheet import AccountSheet, AccountSheetDelegate
 
 class ProfitSheet(AccountSheet):
@@ -24,8 +23,8 @@ class ProfitSheet(AccountSheet):
         Column('delta_perc', tr('Change %'), 100),
         Column('budgeted', tr('Budgeted'), 100, alignment=Qt.AlignRight),
     ]
-    AMOUNT_ATTRS = set(['cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'])
-    BOLD_ATTRS = set(['cash_flow'])
+    AMOUNT_ATTRS = {'cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'}
+    BOLD_ATTRS = {'cash_flow', }
     
     def __init__(self, profit_view, view):
         model = IncomeStatementModel(view=self, profit_view=profit_view.model)

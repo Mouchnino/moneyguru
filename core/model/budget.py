@@ -1,4 +1,3 @@
-# coding: utf-8 
 # Created By: Virgil Dupras
 # Created On: 2009-06-03
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -17,7 +16,7 @@
 
 from datetime import date
 
-from hsutil.misc import extract
+from hscommon.util import extract
 
 from .amount import prorate_amount
 from .date import DateRange, ONE_DAY

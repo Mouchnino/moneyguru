@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-06-04
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -13,9 +12,9 @@ from operator import attrgetter
 
 import pytest
 
-from hsutil.path import Path
-from hsutil.testcase import TestCase as TestCaseBase
-from hsutil.testutil import TestData as TestDataBase, eq_
+from hscommon.path import Path
+from hscommon.testcase import TestCase as TestCaseBase
+from hscommon.testutil import eq_
 from hscommon.testutil import CallLogger, TestApp as TestAppBase, with_app
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
@@ -494,10 +493,19 @@ class TestApp(TestAppBase):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
     
 
-class TestData(TestDataBase):
+class TestData:
     @classmethod
     def datadirpath(cls):
         return Path(__file__)[:-1] + 'testdata'
+    
+    @classmethod
+    def filepath(cls, relative_path, *args):
+        if args:
+            relative_path = op.join([relative_path] + list(args))
+        testpath = cls.datadirpath()
+        result = str(testpath + relative_path)
+        assert op.exists(result)
+        return result
     
 
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of

@@ -8,15 +8,17 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_, with_tmpdir
 from hscommon.currency import USD
-from hsutil.testutil import with_tmpdir
 
 from ..base import TestApp, TestData
 from ...loader.qif import Loader
 from ...model.account import AccountType
 from ...model.amount import Amount
+from .. import ensure_ratesdb_patched
+
+def setup_module(module):
+    ensure_ratesdb_patched()
 
 def test_checkbook_values():
     loader = Loader(USD)

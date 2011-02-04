@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-27
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,7 +8,7 @@
 
 from core.document import FilterType
 from core.gui.filter_bar import EntryFilterBar as EntryFilterBarModel
-from core.trans import tr
+from hscommon.trans import tr
 
 from ..filter_bar import FilterBar
 

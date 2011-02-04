@@ -6,12 +6,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import unittest
 from datetime import date
 
-from hsutil.testutil import eq_
-
-from hsutil.testcase import TestCase
+from hscommon.testutil import eq_
+from hscommon.testcase import TestCase
 
 from ...model.date import (parse_date, format_date, clean_format, DateRange, MonthRange,
     QuarterRange, YearRange, RunningYearRange, YearToDateRange)
@@ -166,6 +164,3 @@ class RangesNoSetup(TestCase):
         dr = YearRange(date(2009, 10, 7), year_start_month=5)
         eq_(dr.display, 'May 2009 - Apr 2010')
     
-
-if __name__ == '__main__':
-    unittest.main()

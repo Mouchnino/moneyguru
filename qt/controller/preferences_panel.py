@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-28
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -11,7 +10,7 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog, QMessageBox
 
 from hscommon.currency import Currency
-from core.trans import tr
+from hscommon.trans import tr
 
 from ..ui.preferences_panel_ui import Ui_PreferencesPanel
 

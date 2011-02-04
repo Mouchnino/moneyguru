@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-09-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,14 +8,15 @@
 
 import datetime
 from operator import attrgetter
-from hsutil.misc import nonone
+
+from hscommon.util import nonone
+from hscommon.trans import tr
 
 from ..model.amount import convert_amount
 from ..model.date import ONE_DAY
 from ..model.entry import Entry
 from ..model.recurrence import Spawn
 from ..model.transaction import Transaction
-from ..trans import tr
 from .table import Row, RowWithDebitAndCreditMixIn, RowWithDateMixIn, rowattr
 from .transaction_table_base import TransactionTableBase
 

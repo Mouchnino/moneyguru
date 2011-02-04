@@ -9,7 +9,7 @@
 from datetime import datetime
 import xml.etree.cElementTree as ET
 
-from hsutil.misc import tryint
+from hscommon.util import tryint
 
 from ..exception import FileFormatError
 from ..model.amount import parse_amount

@@ -6,18 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import os.path as op
 import time
 import xmlrpc.client
 from datetime import date
 import threading
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_, log_calls, Patcher, with_tmpdir
 from hscommon.currency import Currency, USD, PLN, EUR, CAD, XPF
-from hsutil import io
-from hsutil.decorators import log_calls
-from hsutil.testutil import Patcher, with_tmpdir
+from hscommon import io
 
 from ..app import Application
 from ..model import currency

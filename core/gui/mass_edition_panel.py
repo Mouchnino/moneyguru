@@ -9,7 +9,7 @@
 from datetime import date
 
 from hscommon.currency import Currency
-from hsutil.misc import allsame, nonone, flatten
+from hscommon.util import allsame, nonone, flatten
 
 from ..exception import OperationAborted
 from .base import MainWindowPanel

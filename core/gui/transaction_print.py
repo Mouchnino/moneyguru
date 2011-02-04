@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from ..trans import tr
+from hscommon.trans import tr
 from .print_view import PrintView
 
 class TransactionPrintBase(PrintView):

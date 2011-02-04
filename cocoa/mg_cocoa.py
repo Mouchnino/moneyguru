@@ -15,15 +15,15 @@ from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDir
     NSNumberFormatter, NSNumberFormatterBehavior10_4, NSBundle)
 from hscommon.reg import InvalidCodeError
 from hscommon.currency import Currency, USD
-from hsutil.path import Path
-from hsutil.misc import nonone
+from hscommon.path import Path
+from hscommon.util import nonone
 
 # Set translation func. This has to be set before core modules are initialized
-import core.trans
+import hscommon.trans
 mainBundle = NSBundle.mainBundle()
 def cocoa_tr(s, context='core'):
     return mainBundle.localizedStringForKey_value_table_(s, s, context)
-core.trans.set_tr(cocoa_tr)
+hscommon.trans.set_tr(cocoa_tr)
 currentLang = NSBundle.preferredLocalizationsFromArray_(mainBundle.localizations())[0]
 LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
 if currentLang in LANG2LOCALENAME:

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-29
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,9 +9,9 @@
 from PyQt4.QtCore import Qt, QAbstractTableModel
 from PyQt4.QtGui import QWidget, QMenu, QCursor, QPixmap, QInputDialog, QMessageBox
 
+from hscommon.trans import tr
 from core.gui.csv_options import CSVOptions as CSVOptionsModel, FIELD_NAMES, FIELD_ORDER, \
     SUPPORTED_ENCODINGS
-from core.trans import tr
 from ...ui.csv_options_ui import Ui_CSVOptionsWindow
 
 NEW_LAYOUT = 'new_layout'

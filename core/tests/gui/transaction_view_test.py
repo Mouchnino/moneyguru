@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-01-09
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,7 +8,7 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 from hscommon.currency import USD
 
 from ..base import TestApp, with_app

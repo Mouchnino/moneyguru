@@ -11,13 +11,13 @@ from datetime import date
 from itertools import dropwhile
 from operator import attrgetter
 
-from hsutil.misc import flatten
+from hscommon.util import flatten
 
 from .amount import convert_amount
 from .entry import Entry
 from .budget import BudgetSpawn
 
-class Oven(object):
+class Oven:
     """The Oven takes "raw data" from accounts and transactions and "cooks" calculated data out of
     them, such as running balance and scheduled transaction spawns.
     """

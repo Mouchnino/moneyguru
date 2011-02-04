@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.testutil import eq_, assert_raises
-from hsutil.testutil import patch_today
+from pytest import raises
+from hscommon.testutil import eq_, patch_today
 
 from ..base import TestApp, with_app
 from ...exception import OperationAborted
@@ -16,7 +16,8 @@ from ...exception import OperationAborted
 @with_app(TestApp)
 def test_can_load_when_empty(app):
     # When there's no selection, loading the panel raises OperationAborted
-    assert_raises(OperationAborted, app.mepanel.load)
+    with raises(OperationAborted):
+        app.mepanel.load()
 
 #--- Two Transactions
 def app_two_transactions():
@@ -31,7 +32,8 @@ def app_two_transactions():
 @with_app(app_two_transactions)
 def test_can_load_when_one_txn_selected(app):
     # When there is only one txn selected, loading the panel raises OperationAborted
-    assert_raises(OperationAborted, app.mepanel.load)
+    with raises(OperationAborted):
+        app.mepanel.load()
 
 @with_app(app_two_transactions)
 def test_can_load_after_selection(app):

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
 # 
 # This software is licensed under the "BSD" License as described in the "LICENSE" file, 
@@ -7,17 +6,14 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_, patch_today
-
+from hscommon.testutil import eq_, patch_today, Patcher
 from hscommon.currency import Currency, USD, CAD
-from hsutil.testutil import Patcher
 
 from ..base import DocumentGUI, ApplicationGUI, TestApp, with_app, TestData
 from ...app import Application
 from ...const import PaneType
 from ...document import Document
 from ...model.account import AccountType
-from ...model.amount import Amount
 from ...model.date import MonthRange
 
 # IMPORTANT NOTE: Keep in mind that every node count check in these tests take the total node and the

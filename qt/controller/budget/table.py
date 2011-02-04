@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-21
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,8 +9,8 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
+from hscommon.trans import tr
 from core.gui.budget_table import BudgetTable as BudgetTableModel
-from core.trans import tr
 from ..table import Table
 
 class BudgetTable(Table):

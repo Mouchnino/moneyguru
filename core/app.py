@@ -13,14 +13,13 @@ from collections import namedtuple
 from hscommon.currency import USD
 from hscommon.notify import Broadcaster
 from hscommon.reg import RegistrableApplication
-from hsutil import io
-from hsutil.misc import nonone
+from hscommon import io
+from hscommon.util import nonone
 
 from .const import DATE_FORMAT_FOR_PREFERENCES
 from .model import currency
 from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
-from .trans import tr
 
 HAD_FIRST_LAUNCH_PREFERENCE = 'HadFirstLaunch'
 FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'

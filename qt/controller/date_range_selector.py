@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-03-15
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,8 +9,8 @@
 from PyQt4.QtCore import QObject
 from PyQt4.QtGui import QMenu, QAction
 
+from hscommon.trans import tr
 from core.gui.date_range_selector import DateRangeSelector as DateRangeSelectorModel
-from core.trans import tr
 
 class DateRangeSelector(QObject):
     def __init__(self, mainwindow, view):

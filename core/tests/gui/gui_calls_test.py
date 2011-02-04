@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-07
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -15,7 +14,7 @@ from hscommon.currency import EUR
 
 from ...document import FilterType
 from ...model.account import AccountType
-from ..base import TestCase, TestApp, with_app
+from ..base import TestApp, with_app, TestData
 
 #--- No Setup
 def test_initial_gui_calls():
@@ -238,7 +237,7 @@ def app_load_file_with_bsheet_selected():
     app = TestApp()
     app.mainwindow.select_balance_sheet()
     app.clear_gui_calls()
-    app.doc.load_from_xml(TestCase.filepath('moneyguru', 'simple.moneyguru'))
+    app.doc.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
     return app
 
 @with_app(app_load_file_with_bsheet_selected)

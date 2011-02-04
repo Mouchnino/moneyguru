@@ -10,10 +10,8 @@ import csv
 from datetime import date
 from io import StringIO
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_, Patcher
 from hscommon.currency import USD
-from hsutil.testutil import Patcher
 
 from ..base import TestCase, CommonSetup, TestApp, with_app, TestData
 from ...const import PaneType

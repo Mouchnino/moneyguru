@@ -10,8 +10,8 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QVBoxLayout, QLabel, QButtonGroup, QRadioButton, QTableView,
     QAbstractItemView, QDialogButtonBox, QApplication, QDialog, QFileDialog)
 
+from hscommon.trans import tr as trplain
 from core.gui.export_panel import ExportPanel as ExportPanelModel, ExportFormat
-from core.trans import tr as trplain
 
 from .panel import Panel
 from .export_account_table import ExportAccountTable

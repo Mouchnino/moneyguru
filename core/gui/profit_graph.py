@@ -6,9 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.misc import flatten
+from hscommon.util import flatten
+from hscommon.trans import tr
 
-from ..trans import tr
 from .bar_graph import BarGraph
 from .base import SheetViewNotificationsMixin
 

@@ -9,12 +9,11 @@
 from datetime import date
 import os.path as op
 
-from hsutil.testutil import eq_, with_tmpdir
-from hsutil import io as hsio
-
+from hscommon.testutil import eq_
+from hscommon import io as hsio
 from hscommon.currency import PLN, CAD
 
-from .base import ApplicationGUI, TestCase as TestCaseBase, TestApp
+from .base import ApplicationGUI, TestCase as TestCaseBase, TestApp, TestData
 from ..app import Application
 from ..exception import FileFormatError
 from ..model.date import MonthRange, YearRange
@@ -39,7 +38,7 @@ class Pristine(TestCase):
     
     def test_import_empty(self):
         # Trying to import an empty file results in a FileFormatError
-        filename = self.filepath('zerofile')
+        filename = TestData.filepath('zerofile')
         self.assertRaises(FileFormatError, self.document.parse_file_for_import, filename)
     
     def test_import_inexistant(self):
@@ -51,12 +50,12 @@ class Pristine(TestCase):
         """Raise a FileFormatError if the file does not have the right format (for now, a valid 
         file is a file that starts with a '!Account' line)
         """
-        filename = self.filepath('qif', 'invalid.qif')
+        filename = TestData.filepath('qif', 'invalid.qif')
         self.assertRaises(FileFormatError, self.document.parse_file_for_import, filename)
     
     def test_import_moneyguru_file(self):
         # Importing a moneyguru file works.
-        self.importall(self.filepath('moneyguru', 'simple.moneyguru'))
+        self.importall(TestData.filepath('moneyguru', 'simple.moneyguru'))
         # 2 assets, 1 expense
         self.assertEqual(self.bsheet.assets.children_count, 4)
         self.mainwindow.select_income_statement()
@@ -74,7 +73,7 @@ class QIFImport(TestCase):
         self.document.date_range = YearRange(date(2007, 1, 1))
         self.add_account_legacy('Account 1')
         self.add_account_legacy('Account 1 1')
-        self.importall(self.filepath('qif', 'checkbook.qif'))
+        self.importall(TestData.filepath('qif', 'checkbook.qif'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -112,7 +111,7 @@ class OFXImport(TestCase):
     """A pristine app importing an OFX file"""
     def setUp(self):
         self.create_instances()
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins.ofx'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -143,7 +142,7 @@ class DoubleOFXImport(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins.ofx'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
         self.bsheet.show_selected_account()
@@ -154,7 +153,7 @@ class DoubleOFXImport(TestCase):
         row.description = 'Cash pour super party chez untel'
         row.transfer = 'Cash'
         self.etable.save_edits()
-        self.importall(self.filepath('ofx', 'desjardins2.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins2.ofx'))
 
     def test_account_names(self):
         """Non-empty accounts from both files are imported"""
@@ -177,7 +176,7 @@ class DoubleOFXImportAcrossSessions(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins.ofx'))
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0] # 815-30219-11111-EOP
         self.bsheet.selected.name = 'Desjardins EOP'
@@ -185,7 +184,7 @@ class DoubleOFXImportAcrossSessions(TestCase):
         filename = op.join(self.tmpdir(), 'foo.xml')
         self.document.save_to_xml(filename)
         self.document.load_from_xml(filename)
-        self.importall(self.filepath('ofx', 'desjardins2.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins2.ofx'))
 
     def test_account_names(self):
         """Non-empty accounts from both files are imported"""
@@ -197,8 +196,8 @@ class AnotherDoubleOFXImport(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('ofx', 'desjardins2.ofx'))
-        self.importall(self.filepath('ofx', 'desjardins3.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins2.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins3.ofx'))
 
     def test_account_names(self):
         """All non-empty accounts have been imported."""
@@ -221,12 +220,12 @@ class TripleOFXImportAcrossSessions(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins.ofx'))
         filename = op.join(self.tmpdir(), 'foo.xml')
         self.document.save_to_xml(filename)
         self.document.load_from_xml(filename)
-        self.importall(self.filepath('ofx', 'desjardins.ofx'))
+        self.importall(TestData.filepath('ofx', 'desjardins.ofx'))
     
     def test_entry_count(self):
         """The number of entries is the same as if the import was made once"""
@@ -242,7 +241,7 @@ class TripleOFXImportAcrossSessions(TestCase):
 def app_double_ofx_import_with_split_in_the_middle():
     app = TestApp()
     app.doc.date_range = MonthRange(date(2008, 2, 1))
-    importall(app, TestCase.filepath('ofx', 'desjardins.ofx'))
+    importall(app, TestData.filepath('ofx', 'desjardins.ofx'))
     app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
@@ -255,7 +254,7 @@ def app_double_ofx_import_with_split_in_the_middle():
     app.stable[2].credit = '1'
     app.stable.save_edits()
     app.tpanel.save()
-    importall(app, TestCase.filepath('ofx', 'desjardins.ofx'))
+    importall(app, TestData.filepath('ofx', 'desjardins.ofx'))
     return app
 
 def test_split_wasnt_touched():
@@ -268,7 +267,7 @@ def test_split_wasnt_touched():
 class ImportAccountInGroup(TestCase):
     def setUp(self):
         self.create_instances()
-        self.importall(self.filepath('moneyguru', 'account_in_group.moneyguru'))
+        self.importall(TestData.filepath('moneyguru', 'account_in_group.moneyguru'))
         self.mainwindow.select_balance_sheet()
     
     def test_account_was_imported(self):
@@ -306,7 +305,7 @@ class TransferBetweenTwoReferencedAccounts(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
+        self.importall(TestData.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
         self.add_account_legacy('Account 4') # Add it as an asset
         self.mainwindow.select_balance_sheet()
         self.bsheet.selected = self.bsheet.assets[0]
@@ -315,7 +314,7 @@ class TransferBetweenTwoReferencedAccounts(TestCase):
         row = self.etable[0]
         row.transfer = 'Account 4'
         self.etable.save_edits()
-        self.document.parse_file_for_import(self.filepath('moneyguru', 'with_references3.moneyguru')) # Contains Account 4
+        self.document.parse_file_for_import(TestData.filepath('moneyguru', 'with_references3.moneyguru')) # Contains Account 4
         # The entry from Account 4 doesn't match yet because they don't have the same reference, but
         # it will be fixed after the import
         self.iwin.selected_target_account_index = 3 # Account 4
@@ -325,13 +324,13 @@ class TransferBetweenTwoReferencedAccounts(TestCase):
     
     def test_first_side_matches(self):
         """When importing entries from Account 1, these entries are matched correctly"""
-        self.document.parse_file_for_import(self.filepath('moneyguru', 'with_references1.moneyguru'))
+        self.document.parse_file_for_import(TestData.filepath('moneyguru', 'with_references1.moneyguru'))
         # All entries should be matched
         self.assertEqual(len(self.itable), 2) # 2 entries means they all match
     
     def test_second_side_matches(self):
         """When importing entries from Account 3, these entries are matched correctly"""
-        self.document.parse_file_for_import(self.filepath('moneyguru', 'with_references3.moneyguru'))
+        self.document.parse_file_for_import(TestData.filepath('moneyguru', 'with_references3.moneyguru'))
         # target account should be correct, and all entries should be matched
         self.assertEqual(self.iwin.selected_target_account_index, 3) # Account 4
         self.assertEqual(len(self.itable), 1) # 1 entry means they all match
@@ -341,7 +340,7 @@ class ImportFileWithMultipleTransferReferences(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.importall(self.filepath('moneyguru', 'multiple_transfer_references.moneyguru'))
+        self.importall(TestData.filepath('moneyguru', 'multiple_transfer_references.moneyguru'))
     
     def test_account_names_are_correct(self):
         # the account names for the transfers are correctly imported. Previously, new_name() was
@@ -352,15 +351,14 @@ class ImportFileWithMultipleTransferReferences(TestCase):
     
 
 
-@with_tmpdir
-def test_date_format_guessing(tmppath):
-    filepath = tmppath + 'foo.qif'
+def test_date_format_guessing(tmpdir):
+    filepath = str(tmpdir.join('foo.qif'))
     def check(str_date, expected_date):
         # To test the date format guessing part, we create a QIF, which uses date guessing.
         app = TestApp()
         contents = "!Type:Bank\nD{str_date}\nT42.32\n^".format(str_date=str_date)
         hsio.open(filepath, 'wt', encoding='utf-8').write(contents)
-        app.doc.parse_file_for_import(str(filepath))
+        app.doc.parse_file_for_import(filepath)
         eq_(app.itable[0].date_import, expected_date)
     
     check('12/20/2010', '20/12/2010')

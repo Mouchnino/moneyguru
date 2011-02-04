@@ -8,14 +8,18 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_, assert_raises
-
+from pytest import raises
+from hscommon.testutil import eq_
 from hscommon.currency import USD, EUR
 
 from ...exception import FileFormatError
 from ...loader.csv import Loader, CsvField
 from ...model.amount import Amount
 from ..base import TestData
+from .. import ensure_ratesdb_patched
+
+def setup_module(module):
+    ensure_ratesdb_patched()
 
 def test_fortis():
     # a fortis csv import. ';' delimiter, with headers.
@@ -71,7 +75,8 @@ def test_lots_of_noise():
 def test_no_transactions():
     # a Deutsch Bank export without transactions in it. It would raise an error during sniffing
     loader = Loader(USD)
-    assert_raises(FileFormatError, loader.parse, TestData.filepath('csv/no_transaction.csv'))
+    with raises(FileFormatError):
+        loader.parse(TestData.filepath('csv/no_transaction.csv'))
 
 def test_unquoted_with_footer():
     # It seems that the sniffer has problems with regular csv files that end with a non-data

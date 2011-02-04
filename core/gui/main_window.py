@@ -7,20 +7,20 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.notify import Repeater, Listener
-from hsutil.misc import first, minmax
+from hscommon.util import first, minmax
+from hscommon.trans import tr
 
 from ..const import PaneType
 from ..document import FilterType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
-from ..trans import tr
 from .base import MESSAGES_DOCUMENT_CHANGED
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
 
-class ViewPane(object):
+class ViewPane:
     def __init__(self, view, label, account=None):
         self.view = view
         self.label = label

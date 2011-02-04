@@ -5,9 +5,9 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.gui import tree
+from hscommon.trans import tr
 
 from ..exception import DuplicateAccountNameError
-from ..trans import tr
 from .base import ViewChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
 from .column import Columns
 
@@ -21,8 +21,7 @@ def get_delta_perc(delta_amount, start_amount):
 class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     SAVENAME = ''
     COLUMNS = []
-    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['accounts_excluded',
-        'date_range_changed'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'accounts_excluded', 'date_range_changed'}
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)

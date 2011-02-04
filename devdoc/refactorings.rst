@@ -4,8 +4,8 @@ Ongoing Refactorings
 
 Some big refactorings take time. This is the page where the currently ongoing refactoring are listed so that you aren't surprised to see lack of consistency in these areas.
 
-Nose-ification
-==============
+Pytest-ification
+================
 
 Test units are migrating to TestCase-less tests. This has a lot of implications. The most obvious one is that setup code that was previously in ``TestCase.setUp()`` methods now go in setup functions. Previously, however, all test support instances were created through ``tests.base.TestCase.create_instances()``. This has changed, and now those instances are created by the ``tests.base.TestApp`` class. For example, a setup that looked like::
 
@@ -36,7 +36,7 @@ The reason why we use ``@with_app`` instead of simply doing ``app = app_with_ent
         app = TestApp()
         return app, p
 
-and any test using this setup with ``@with_app`` will have the patching effective for the duration of the test. The ``Patcher`` class comes from ``hsutil.testutil`` and replaces ``mock_*`` methods that ``hsutil.testcase.TestCase`` used to offer.
+and any test using this setup with ``@with_app`` will have the patching effective for the duration of the test. The ``Patcher`` class comes from ``hscommon.testutil`` and replaces ``mock_*`` methods that ``hscommon.testcase.TestCase`` used to offer.
 
 One other change in idioms are the cases where the same tests was made in different testcases. Nose-ificating those will result in a test function name clash. Fortunately, Nose supports test generators. So what used to be same-test-in-multiple-testcase becomes a test generator with multiple setup func calls. In some cases, there are name clashes for tests that don't do the same thing and for which generators don't apply. In these cases, we have to rename tests to something more specifically descriptive.
 

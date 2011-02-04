@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-30
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -16,7 +15,8 @@ from setuptools import setup, Extension
 import yaml
 
 from hscommon import sphinxgen
-from hscommon.build import print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization
+from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
+    build_all_qt_locs)
 
 def move(src, dst):
     if not op.exists(src):
@@ -93,11 +93,7 @@ def build_cocoa(dev):
 
 def build_qt(dev):
     print("Converting .ts to .qm")
-    langdir = op.join('qt', 'lang')
-    tsfiles = [fn for fn in os.listdir(langdir) if fn.endswith('.ts')]
-    for ts in tsfiles:
-        print("Converting {0}".format(ts))
-        os.system('lrelease {0}'.format(op.join(langdir, ts)))
+    build_all_qt_locs(op.join('qt', 'lang'), extradirs=[op.join('qtlib', 'lang')])
     print("Building UI units")
     uipath = op.join('qt', 'ui')
     build_all_qt_ui(uipath)
@@ -136,7 +132,6 @@ def main():
     if dev:
         print("Building in Dev mode")
     build_help()
-    return
     if dev:
         print("Generating devdocs")
         print_and_do('sphinx-build devdoc devdoc_html')

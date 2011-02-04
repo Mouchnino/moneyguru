@@ -9,16 +9,18 @@
 from io import BytesIO
 from datetime import date
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_
 from hscommon.currency import USD, PLN
 
-from ..base import TestCase
+from ..base import TestCase, TestData
 from ...exception import FileFormatError
 from ...loader import native
 from ...model.account import AccountType
 from ...model.amount import Amount
+from .. import ensure_ratesdb_patched
 
+def setup_module(module):
+    ensure_ratesdb_patched()
 
 class NativeLoader(TestCase):
     def setUp(self):
@@ -54,8 +56,8 @@ class NativeLoader(TestCase):
         self.loader.load() # no crash
 
     def test_account_and_entry_values(self):
-        """Make sure loaded values are correct"""
-        self.loader.parse(self.filepath('moneyguru', 'simple.moneyguru'))
+        # Make sure loaded values are correct.
+        self.loader.parse(TestData.filepath('moneyguru', 'simple.moneyguru'))
         self.loader.load()
         accounts = self.loader.accounts
         self.assertEqual(len(accounts), 3)

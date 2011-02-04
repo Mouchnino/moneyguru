@@ -12,10 +12,10 @@
 from collections import defaultdict
 from datetime import date
 
+from hscommon.trans import tr
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange
-from ..trans import tr
 from .base import SheetViewNotificationsMixin
 from .pie_chart import PieChart
 

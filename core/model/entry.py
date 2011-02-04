@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-07-29
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -12,10 +11,10 @@ import datetime
 from collections import defaultdict, Sequence
 from itertools import takewhile
 
-from hsutil.misc import flatten
+from hscommon.util import flatten
 from .amount import convert_amount, same_currency
 
-class Entry(object):
+class Entry:
     def __init__(self, split, amount, balance, reconciled_balance, balance_with_budget):
         self.split = split
         self.amount = amount

@@ -10,13 +10,13 @@ import re
 from calendar import monthrange
 from datetime import date, datetime, timedelta
 
-from ..trans import tr
+from hscommon.trans import tr
 
 ONE_DAY = timedelta(1)
 
 #--- Date Ranges
 
-class DateRange(object):
+class DateRange:
     def __init__(self, start, end):
         self.start = start
         self.end = end

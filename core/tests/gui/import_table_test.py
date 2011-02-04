@@ -7,7 +7,8 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from datetime import date
-from hsutil.testutil import eq_
+
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app, TestData
 from ...model.date import YearRange

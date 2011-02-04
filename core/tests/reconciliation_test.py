@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.testutil import Patcher, eq_
+from hscommon.testutil import Patcher, eq_
 
 from .base import TestApp, with_app, compare_apps
 from ..model.account import AccountType

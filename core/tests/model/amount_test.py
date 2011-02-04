@@ -6,10 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import operator as op
-
-from hsutil.testutil import eq_, assert_raises
-
+from pytest import raises
+from hscommon.testutil import eq_
 from hscommon.currency import CAD, EUR, PLN, USD, CZK, TND, JPY
 
 from ...model.amount import format_amount, parse_amount, Amount
@@ -22,12 +20,15 @@ def test_auto_quantize():
 def test_add():
     # Amounts can be added together, given that their currencies are the same.
     eq_(Amount(1, CAD) + Amount(2, CAD), Amount(3, CAD))
-    assert_raises(ValueError, op.add, Amount(1, CAD), Amount(2, USD))
+    with raises(ValueError):
+        Amount(1, CAD) + Amount(2, USD)
 
 def test_add_other_types():
     # You can't add something else to an amount and vice-versa.
-    assert_raises(TypeError, op.add, Amount(1, CAD), 2)
-    assert_raises(TypeError, op.add, 1, Amount(2, CAD))
+    with raises(TypeError):
+        Amount(1, CAD) + 2
+    with raises(TypeError):
+        1 + Amount(2, CAD)
 
 def test_add_zero():
     # It's possible to add 0 to an amount.
@@ -46,19 +47,24 @@ def test_cmp():
 def test_cmp_with_zero():
     # Amounts are comparable to zero, but not any other number.
     assert Amount(42, CAD) > 0
-    assert_raises(TypeError, op.gt, Amount(0, CAD), 42)
+    with raises(TypeError):
+        Amount(0, CAD) > 42
     assert Amount(42, CAD) >= 0
-    assert_raises(TypeError, op.ge, Amount(0, CAD), 42)
+    with raises(TypeError):
+        Amount(0, CAD) >= 42
     assert not Amount(42, CAD) < 0
-    assert_raises(TypeError, op.lt, Amount(0, CAD), 42)
+    with raises(TypeError):
+        Amount(0, CAD) < 42
     assert not Amount(42, CAD) <= 0
-    assert_raises(TypeError, op.le, Amount(0, CAD), 42)
+    with raises(TypeError):
+        Amount(0, CAD) <= 42
 
 def test_div_with_amount():
     # Amounts can be divided by other amounts if they all amounts share the same currency. That
     # yields a plain number.
     eq_(Amount(1, CAD) / Amount(2, CAD), 0.5)
-    assert_raises(ValueError, op.truediv, Amount(1, CAD), Amount(2, USD))
+    with raises(ValueError):
+        Amount(1, CAD) / Amount(2, USD)
 
 def test_div_with_number():
     # Amounts can be divided by a number, yielding an amount.
@@ -67,7 +73,8 @@ def test_div_with_number():
 
 def test_div_number_with_amount():
     # You can't divide a number with an amount.
-    assert_raises(TypeError, op.truediv, 10, Amount(3, CAD))
+    with raises(TypeError):
+        10 / Amount(3, CAD)
 
 def test_eq():
     # Amounts are equal if they have the same value and the same
@@ -113,7 +120,8 @@ def test_init_with_float():
 
 def test_mul_amount():
     # It doesn't make sense to multiply two amounts together.
-    assert_raises(TypeError, op.mul, Amount(2, CAD), Amount(2, CAD))
+    with raises(TypeError):
+        Amount(2, CAD) * Amount(2, CAD)
 
 def test_mul_number():
     # It's possible to multiply an amount by a number.
@@ -139,12 +147,15 @@ def test_op_float():
 def test_sub():
     # Amounts can be substracted one from another, given that their currencies are the same.
     eq_(Amount(10, CAD) - Amount(1, CAD), Amount(9, CAD))
-    assert_raises(ValueError, op.sub, Amount(10, CAD), Amount(1, USD))
+    with raises(ValueError):
+        Amount(10, CAD) - Amount(1, USD)
 
 def test_sub_other_type():
     # You can't subtract something else from an amount and vice-versa.
-    assert_raises(TypeError, op.sub, Amount(10, CAD), 1)
-    assert_raises(TypeError, op.sub, 10, Amount(1, CAD))
+    with raises(TypeError):
+        Amount(10, CAD) - 1
+    with raises(TypeError):
+        10 - Amount(1, CAD)
 
 def test_sub_zero():
     # It is possible to substract zero and from zero.
@@ -172,11 +183,13 @@ def test_parse_currency():
 
 def test_parse_currency_not_in_list():
     # If the currency is not in the list, the amount is invalid.
-    assert_raises(ValueError, parse_amount, '42.12 foo')
+    with raises(ValueError):
+        parse_amount('42.12 foo')
 
 def test_parse_currency_and_garbage():
     # If there is garbage in addition to the currency, the whole amount is invalid.
-    assert_raises(ValueError, parse_amount, '42.12 cadalala')
+    with raises(ValueError):
+        parse_amount('42.12 cadalala')
 
 def test_parse_division_result_in_a_float():
     # Dividing an amount by another amount gives a float.
@@ -199,10 +212,13 @@ def test_parse_garbage_around():
     eq_(parse_amount('$.42', USD, False), Amount(0.42, USD))
 
 def test_parse_invalid():
-    assert_raises(ValueError, parse_amount, 'asdf')
-    assert_raises(ValueError, parse_amount, '+-.')
+    with raises(ValueError):
+        parse_amount('asdf')
+    with raises(ValueError):
+        parse_amount('+-.')
     try:
-        assert_raises(ValueError, parse_amount, 'open(\'some_important_file\').read()')
+        with raises(ValueError):
+            parse_amount('open(\'some_important_file\').read()')
     except IOError:
         raise AssertionError("Something is very wrong with parse_amount. You must *not* perform an eval on a string like this.")
 

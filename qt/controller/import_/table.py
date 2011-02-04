@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-13
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -11,8 +10,8 @@ from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
+from hscommon.trans import tr
 from core.gui.import_table import ImportTable as ImportTableModel
-from core.trans import tr
 from ..table import Table
 
 MIME_INDEXES = 'application/moneyguru.rowindexes'

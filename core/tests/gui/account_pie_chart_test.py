@@ -6,12 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from datetime import date
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_
 from hscommon.currency import Currency, USD, CAD
 
 from ..base import TestCase, ApplicationGUI

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-01
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,7 +9,7 @@
 from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap, QPalette, QFont, QMessageBox
 
-from hsutil.misc import nonone
+from hscommon.util import nonone
 from qtlib.column import ColumnBearer
 from qtlib.tree_model import TreeNode, TreeModel
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-01-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,10 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import sys
 import xml.etree.cElementTree as ET
 
 from ..model.amount import format_amount
-from hsutil.str import remove_invalid_xml
+from hscommon.util import remove_invalid_xml
 
 def save(filename, document_id, accounts, groups, transactions, schedules, budgets):
     def date2str(date):
@@ -111,4 +111,8 @@ def save(filename, document_id, accounts, groups, transactions, schedules, budge
     tree = ET.ElementTree(root)
     fp = open(filename, 'wt', encoding='utf-8')
     fp.write('<?xml version="1.0" encoding="utf-8"?>\n')
-    tree.write(fp)
+    # This 'unicode' encoding thing is only available (and necessary) from Python 3.2
+    if sys.version_info[1] >= 2:
+        tree.write(fp, encoding='unicode')
+    else:
+        tree.write(fp)

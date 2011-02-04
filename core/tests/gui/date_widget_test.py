@@ -8,8 +8,8 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_, patch_today
-from hsutil.testcase import TestCase
+from hscommon.testutil import eq_, patch_today
+from hscommon.testcase import TestCase
 
 from ...gui.date_widget import DateWidget
 

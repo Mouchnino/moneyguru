@@ -7,17 +7,17 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.notify import Broadcaster
-from hsutil.misc import flatten, dedupe, first
+from hscommon.util import flatten, dedupe, first
+from hscommon.trans import tr
 
 from ..exception import OperationAborted
-from ..trans import tr
 from .base import DocumentGUIObject
 
 DAY = 'day'
 MONTH = 'month'
 YEAR = 'year'
 
-class SwapType(object):
+class SwapType:
     DayMonth = 0
     MonthYear = 1
     DayYear = 2
@@ -34,7 +34,7 @@ def swapped_date(date, first, second):
         newattrs[YEAR] += 2000
     return date.replace(**newattrs)
 
-class AccountPane(object):
+class AccountPane:
     def __init__(self, account, target_account):
         self.account = account
         self._selected_target = target_account

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-02-19
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,7 +8,7 @@
 
 import xmlrpc.client
 
-from hsutil.testutil import Patcher
+from hscommon.testutil import Patcher
 
 from ..model.currency import RatesDB
 from ..model import currency as currency_module

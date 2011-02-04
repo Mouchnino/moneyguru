@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-01-18
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 
 from ..base import TestCase, Document, DocumentGUI, ApplicationGUI, TestApp, with_app, TestData
 from ...app import Application
@@ -33,7 +32,7 @@ def test_dont_crash_on_invalid_utf8_characters(app):
 class ImportFortisCSV(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         expected_calls = ['refresh_layout_menu', 'refresh_columns', 'refresh_lines',
             'refresh_targets', 'show']
         self.check_gui_calls(self.csvopt_gui, expected_calls)
@@ -74,7 +73,7 @@ class ImportFortisCSV(TestCase):
 class ImportFortisCSVWithWrongDateColumn(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.set_column_field(5, CsvField.Date) #description
         self.csvopt.set_column_field(3, CsvField.Amount)
         self.clear_gui_calls()
@@ -94,7 +93,7 @@ class ImportFortisCSVWithWrongDateColumn(TestCase):
 class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_column_field(0, CsvField.Reference)
         self.csvopt.set_column_field(1, CsvField.Date)
@@ -156,7 +155,7 @@ class ImportFortisCSVWithoutFirstLineAndWithFieldsSet(TestCase):
 class LotsOfNoise(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/lots_of_noise.csv'))
     
     def test_use_latin1_encoding(self):
         # This file contains umlauts encoded in latin-1. Make sure they are correctly decoded
@@ -168,7 +167,7 @@ class LotsOfNoise(TestCase):
 class LotsOfNoiseReadyToImport(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/lots_of_noise.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_line_excluded(1, True)
         self.csvopt.set_line_excluded(2, True)
@@ -191,7 +190,7 @@ class LotsOfNoiseReadyToImport(TestCase):
         # when loading another CSV, keep line exclusions that happen to be last *last*
         self.csvopt.set_line_excluded(6, True) # should also work for the line before the last
         self.csvopt.new_layout('fortis') # let's save it
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.select_layout('fortis')
         assert not self.csvopt.line_is_excluded(6)
         assert not self.csvopt.line_is_excluded(7)
@@ -209,7 +208,7 @@ class FortisWithTwoLayouts(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_accounts('one', 'two', 'three')
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_column_field(0, CsvField.Reference)
         self.csvopt.set_column_field(1, CsvField.Date)
@@ -246,7 +245,7 @@ class FortisWithTwoLayouts(TestCase):
     
     def test_load_another_import(self):
         # when a file is loaded, select the default layout, and reset it
-        self.document.parse_file_for_import(self.filepath('csv/lots_of_noise.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/lots_of_noise.csv'))
         eq_(self.csvopt.layout.name, 'Default')
         assert self.csvopt.columns[5] is None
     
@@ -292,7 +291,7 @@ class FortisWithLoadedLayouts(TestCase):
         self.app_gui.set_default(LAYOUT_PREFERENCE_NAME, [default, foobar])
         self.create_instances()
         self.add_accounts('one', 'two', 'three')
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
     
     def test_layouts(self):
         # The layouts have been correctly loaded
@@ -310,7 +309,7 @@ class DateFieldWithGarbage(TestCase):
     # The date field in date_field_with_garbage.csv has a date value with non-date data around the date
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/date_field_with_garbage.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/date_field_with_garbage.csv'))
         self.csvopt.set_column_field(0, CsvField.Date)
         self.csvopt.set_column_field(2, CsvField.Description)
         self.csvopt.set_column_field(3, CsvField.Amount)
@@ -326,7 +325,7 @@ class FortisThreeEmptyAccounts(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_accounts('one', 'two', 'three')
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
     
     def test_remember_selected_target_in_layout(self):
         self.csvopt.selected_target_index = 2
@@ -343,7 +342,7 @@ class FortisImportedThreeEmptyAccounts(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_accounts('one', 'two', 'three')
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.set_line_excluded(0, True)
         self.csvopt.set_column_field(0, CsvField.Reference)
         self.csvopt.set_column_field(1, CsvField.Date)
@@ -360,10 +359,10 @@ class FortisImportedThreeEmptyAccounts(TestCase):
 class ImportFortisThenAnotherWithLessColumns(TestCase):
     def setUp(self):
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.new_layout('fortis')
         self.csvopt.set_column_field(6, CsvField.Transfer) # out of range of the other
-        self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv')) # less columns (3)
+        self.document.parse_file_for_import(TestData.filepath('csv/increase_decrease.csv')) # less columns (3)
     
     def test_access_last_column(self):
         # the columns are supposed to have been *reduced* so the gui doesn't try to access data that
@@ -377,7 +376,7 @@ class ImportFortisThenAnotherWithLessColumns(TestCase):
         # simply accessing a layout while having a csv with few columns loaded should not remove
         # columns from that layout
         self.csvopt.select_layout('fortis')
-        self.document.parse_file_for_import(self.filepath('csv/fortis.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/fortis.csv'))
         self.csvopt.select_layout('fortis')
         eq_(self.csvopt.columns[6], CsvField.Transfer)
     
@@ -396,7 +395,7 @@ class IncreaseDecrease(TestCase):
         # This file has two columns for amounts: increase and decrease. To make the matter worse,
         # it has a negative value in the decrease column, which must be ignored
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/increase_decrease.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/increase_decrease.csv'))
         self.csvopt.set_column_field(0, CsvField.Date)
         self.csvopt.set_column_field(1, CsvField.Increase)
         self.csvopt.set_column_field(2, CsvField.Decrease)
@@ -416,7 +415,7 @@ class WeirdSep(TestCase):
         # as a field sep, but through the csv options panel, it should be possible to specify
         # another field sep.
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/weird_sep.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/weird_sep.csv'))
     
     def test_field_separator(self):
         # the field_separator member contains the currently used field sep.
@@ -450,7 +449,7 @@ class AmountWithDollarSign(TestCase):
     def setUp(self):
         # This file has a $ sign in its amount values.
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/amount_with_dollar_sign.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/amount_with_dollar_sign.csv'))
         self.csvopt.set_column_field(0, CsvField.Date)
         self.csvopt.set_column_field(1, CsvField.Amount)
     
@@ -465,7 +464,7 @@ class ShortDates(TestCase):
     def setUp(self):
         # This file has very short dates in m/d/y format
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/short_dates.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/short_dates.csv'))
         self.csvopt.set_column_field(0, CsvField.Date)
         self.csvopt.set_column_field(1, CsvField.Amount)
     
@@ -480,7 +479,7 @@ class Utf8Encoded(TestCase):
     def setUp(self):
         # This file has utf8-encoded non-ascii descriptions
         self.create_instances()
-        self.document.parse_file_for_import(self.filepath('csv/utf8_encoded.csv'))
+        self.document.parse_file_for_import(TestData.filepath('csv/utf8_encoded.csv'))
         # At this point, the CSV file is parsed with latin-1 encoding, it's normal. The user is
         # supposed to select the utf-8 encoding and click Rescan.
     

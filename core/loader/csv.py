@@ -9,10 +9,11 @@
 import csv
 import logging
 from datetime import datetime
-from hsutil.misc import stripfalse
+
+from hscommon.util import stripfalse
+from hscommon.trans import tr
 
 from ..exception import FileFormatError, FileLoadError
-from ..trans import tr
 from . import base
 
 class CsvField:

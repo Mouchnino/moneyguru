@@ -10,14 +10,14 @@ import copy
 import datetime
 from calendar import monthrange
 
-from hsutil.misc import nonone
+from hscommon.util import nonone
+from hscommon.trans import tr
 
-from ..trans import tr
 from .date import (inc_day, inc_week, inc_month, inc_year, inc_weekday_in_month,
     inc_last_weekday_in_month, strftime)
 from .transaction import Transaction
 
-class RepeatType(object):
+class RepeatType:
     Daily = 'daily'
     Weekly = 'weekly'
     Monthly = 'monthly'
@@ -36,7 +36,7 @@ RTYPE2INCFUNC = {
 
 ONE_DAY = datetime.timedelta(1)
 
-class DateCounter(object):
+class DateCounter:
     def __init__(self, base_date, repeat_type, repeat_every, end):
         self.base_date = base_date
         self.end = end
@@ -75,7 +75,7 @@ class Spawn(Transaction):
         self.balance()
     
 
-class Recurrence(object):
+class Recurrence:
     def __init__(self, ref, repeat_type, repeat_every):
         if repeat_type not in RTYPE2INCFUNC:
             # invalid repeat type, default to monthly

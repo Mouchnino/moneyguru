@@ -6,9 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
-from ..trans import tr
+from hscommon.trans import tr
 from .chart import Chart
 
 # A pie chart's data is a list of (name, (float)amount). The name part is ready for display. It

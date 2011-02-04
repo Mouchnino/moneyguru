@@ -11,7 +11,7 @@ import re
 from collections import namedtuple
 from datetime import datetime
 
-from hsutil.misc import flatten, first, stripfalse
+from hscommon.util import flatten, first, stripfalse
 
 from ..exception import FileFormatError
 from ..model.account import AccountType
@@ -38,16 +38,16 @@ from . import base
 # anything that is not part of an amount
 re_not_amount = re.compile(r'[^\d.,\-]+')
 
-ENTRY_HEADERS = set(['Type:Bank', 'Type:Invst', 'Type:Cash', 'Type:Oth A', 'Type:CCard', 'Type:Oth L'])
+ENTRY_HEADERS = {'Type:Bank', 'Type:Invst', 'Type:Cash', 'Type:Oth A', 'Type:CCard', 'Type:Oth L'}
 
-class BlockType(object):
+class BlockType:
     Account = 1
     Entry = 2
     Other = 3
 
 Line = namedtuple('Line', 'header data')
 
-class Block(object):
+class Block:
     def __init__(self):
         self.type = BlockType.Other
         self.lines = []

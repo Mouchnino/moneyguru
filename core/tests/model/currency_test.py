@@ -11,7 +11,7 @@ import xmlrpc.client
 import time
 
 from hscommon.currency import Currency, USD, CAD
-from hsutil.testcase import TestCase
+from hscommon.testcase import TestCase
 
 from ...model.amount import convert_amount
 from ...model.currency import RatesDB

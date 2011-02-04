@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import tr
 from ..model.account import sort_accounts
-from ..trans import tr
 from .base import MainWindowPanel
 
 class AccountReassignPanel(MainWindowPanel):

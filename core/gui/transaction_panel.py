@@ -9,7 +9,7 @@
 from datetime import date
 
 from hscommon.notify import Broadcaster
-from hsutil.misc import first
+from hscommon.util import first
 
 from ..exception import OperationAborted
 from ..model.account import Account, AccountType

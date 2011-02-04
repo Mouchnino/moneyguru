@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-08-02
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -14,8 +13,8 @@
 import subprocess
 from datetime import date
 
-from hsutil import io
-from hsutil.path import Path
+from hscommon import io
+from hscommon.path import Path
 from hscommon.cocoa.objcmin import (NSSearchPathForDirectoriesInDomains, NSApplicationSupportDirectory,
     NSUserDomainMask)
 

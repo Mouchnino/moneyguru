@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app
 from ...model.date import MonthRange

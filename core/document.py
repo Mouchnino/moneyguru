@@ -12,8 +12,9 @@ import uuid
 
 from hscommon.currency import Currency
 from hscommon.notify import Repeater
-from hsutil import io
-from hsutil.misc import nonone, allsame, dedupe, extract, first
+from hscommon import io
+from hscommon.util import nonone, allsame, dedupe, extract, first
+from hscommon.trans import tr
 
 from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES
 from .exception import FileFormatError, OperationAborted
@@ -27,7 +28,6 @@ from .model.recurrence import Spawn
 from .model.transaction_list import TransactionList
 from .model.undo import Undoer, Action
 from .saver.native import save as save_native
-from .trans import tr
 
 SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
 SELECTED_DATE_RANGE_START_PREFERENCE = 'SelectedDateRangeStart'
@@ -42,7 +42,7 @@ DATE_RANGE_RUNNING_YEAR = 'running_year'
 DATE_RANGE_ALL_TRANSACTIONS = 'all_transactions'
 DATE_RANGE_CUSTOM = 'custom'
 
-class FilterType(object):
+class FilterType:
     Unassigned = object()
     Income = object() # in etable, the filter is for increase
     Expense = object() # in etable, the filter is for decrease
@@ -50,7 +50,7 @@ class FilterType(object):
     Reconciled = object()
     NotReconciled = object()
 
-class ScheduleScope(object):
+class ScheduleScope:
     Local = 0
     Global = 1
     Cancel = 2
@@ -67,7 +67,7 @@ def handle_abort(method):
     return wrapper
 
 class Document(Repeater):
-    REPEATED_NOTIFICATIONS = frozenset(['first_weekday_changed', 'saved_custom_ranges_changed'])
+    REPEATED_NOTIFICATIONS = {'first_weekday_changed', 'saved_custom_ranges_changed'}
     
     def __init__(self, view, app):
         Repeater.__init__(self, app)

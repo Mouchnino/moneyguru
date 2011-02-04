@@ -8,8 +8,8 @@
 
 import time
 
-from hsutil.testutil import eq_
-from hsutil.testutil import Patcher, patch_today, with_tmpdir
+from hscommon.testutil import eq_
+from hscommon.testutil import Patcher, patch_today, with_tmpdir
 
 from .base import TestApp, with_app
 from ..model.account import AccountType

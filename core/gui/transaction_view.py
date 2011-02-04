@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-01-09
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,18 +6,17 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import tr
 from ..const import PaneType
 from ..document import FilterType
 from ..model.account import AccountType
 from ..model.amount import convert_amount
-from ..trans import tr
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
     PRINT_TITLE_FORMAT = tr('Transactions from {start_date} to {end_date}')
-    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
-        'date_range_changed'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)

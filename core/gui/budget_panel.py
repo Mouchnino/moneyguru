@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-08-23
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,16 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from datetime import date
 
-from hsutil.misc import first
+from hscommon.util import first
 
+from hscommon.trans import tr
 from ..exception import OperationAborted
 from ..model.account import sort_accounts
 from ..model.budget import Budget
-from ..trans import tr
 from .base import MainWindowPanel
 from .schedule_panel import PanelWithScheduleMixIn, REPEAT_OPTIONS_ORDER
 

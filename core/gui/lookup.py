@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-03-04
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,7 +9,7 @@
 from collections import defaultdict
 from itertools import combinations
 
-from hsutil.misc import extract
+from hscommon.util import extract
 
 from ..model.sort import sort_string
 from .base import DocumentGUIObject

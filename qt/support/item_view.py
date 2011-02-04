@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-26
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,7 +9,7 @@
 from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect
 from PyQt4.QtGui import QAbstractItemView, QTableView, QTreeView, QAbstractItemDelegate
 
-from hsutil.misc import first
+from hscommon.util import first
 
 # The big problem with tableview/treeview and multiple inheritance...
 # Like with Cocoa, when you start to want to add common behavior to both your treeviews and
@@ -23,7 +22,7 @@ from hsutil.misc import first
 # contains helper methods and put as much common code together as possible. But even with that,
 # there's a lot of duplicated code.
 
-class ItemViewMixIn(object): # Must be mixed with a QAbstractItemView subclass
+class ItemViewMixIn: # Must be mixed with a QAbstractItemView subclass
     def _headerView(self):
         raise NotImplementedError()
     

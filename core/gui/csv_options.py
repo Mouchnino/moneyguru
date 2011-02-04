@@ -8,11 +8,11 @@
 
 from itertools import dropwhile
 
-from hsutil.misc import first, nonone
+from hscommon.util import first, nonone
+from hscommon.trans import tr
 
 from ..exception import FileLoadError
 from ..loader.csv import CsvField, MERGABLE_FIELDS
-from ..trans import tr
 from .base import DocumentGUIObject
 
 LAYOUT_PREFERENCE_NAME = 'CSVLayouts'
@@ -39,7 +39,7 @@ SUPPORTED_ENCODINGS = [
     'utf-8',
 ]
 
-class Layout(object):
+class Layout:
     def __init__(self, name):
         self.name = name
         self.columns = []

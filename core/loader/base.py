@@ -6,8 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 import datetime
 import logging
 import re
@@ -15,7 +13,7 @@ from itertools import groupby
 from operator import attrgetter
 
 from hscommon.currency import Currency
-from hsutil.misc import nonone, flatten, stripfalse
+from hscommon.util import nonone, flatten, stripfalse
 
 from ..exception import FileFormatError
 from ..model.account import Account, Group, AccountList, GroupList, AccountType
@@ -50,7 +48,7 @@ POSSIBLE_PATTERNS = [
 ]
 re_possibly_a_date = re.compile('|'.join(POSSIBLE_PATTERNS))
 
-class Loader(object):
+class Loader:
     """Base interface for loading files containing financial information to load into moneyGuru.
     
     To use it, just call load() and then fetch the accounts & transactions. This information is in
@@ -322,7 +320,7 @@ class Loader(object):
         Currency.get_rates_db().ensure_rates(start_date, [x.code for x in currencies])
     
 
-class GroupInfo(object):
+class GroupInfo:
     def __init__(self):
         self.name = None
         self.type = AccountType.Asset
@@ -331,7 +329,7 @@ class GroupInfo(object):
         return bool(self.name)
     
 
-class AccountInfo(object):
+class AccountInfo:
     def __init__(self):
         self.name = None
         self.currency = None
@@ -348,7 +346,7 @@ class AccountInfo(object):
         return bool(self.name)
     
 
-class TransactionInfo(object):
+class TransactionInfo:
     def __init__(self):
         self.date = None
         self.description = None
@@ -367,7 +365,7 @@ class TransactionInfo(object):
         return bool(self.date and ((self.account and self.amount) or self.splits))
     
 
-class SplitInfo(object):
+class SplitInfo:
     def __init__(self, account=None, amount=None, currency=None, amount_reversed=False):
         self.account = account
         self.amount = amount
@@ -385,7 +383,7 @@ class SplitInfo(object):
         return self.amount is not None
     
 
-class RecurrenceInfo(object):
+class RecurrenceInfo:
     def __init__(self):
         self.repeat_type = None
         self.repeat_every = 1
@@ -398,7 +396,7 @@ class RecurrenceInfo(object):
         return self.transaction_info.is_valid()
     
 
-class BudgetInfo(object):
+class BudgetInfo:
     def __init__(self, account=None, target=None, amount=None):
         self.account = account
         self.target = target

@@ -9,10 +9,10 @@
 import datetime
 from operator import attrgetter
 
+from hscommon.trans import tr
 from ..model.amount import convert_amount
 from ..model.recurrence import Spawn
 from ..model.transaction import Transaction
-from ..trans import tr
 from .column import Column
 from .table import Row, RowWithDateMixIn, rowattr
 from .transaction_table_base import TransactionTableBase

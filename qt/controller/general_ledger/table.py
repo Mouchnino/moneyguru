@@ -11,8 +11,8 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QFont, QBrush, QColor
 
 from qtlib.column import Column
+from hscommon.trans import tr
 from core.gui.general_ledger_table import GeneralLedgerTable as GeneralLedgerTableModel
-from core.trans import tr
 from ...const import EXTRA_ROLE, EXTRA_SPAN_ALL_COLUMNS
 from ..table import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions

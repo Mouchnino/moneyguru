@@ -10,12 +10,12 @@ import time
 from collections import defaultdict
 from copy import copy
 
-from hsutil.misc import allsame, first, nonone, stripfalse
+from hscommon.util import allsame, first, nonone, stripfalse
 
 from ..const import NOEDIT
 from .amount import Amount, convert_amount, same_currency, of_currency
 
-class Transaction(object):
+class Transaction:
     def __init__(self, date, description=None, payee=None, checkno=None, account=None, amount=None):
         self.date = date
         self.description = nonone(description, '')
@@ -266,7 +266,7 @@ class Transaction(object):
         return all(not s.amount for s in self.splits)
     
 
-class Split(object):
+class Split:
     def __init__(self, transaction, account, amount):
         self.transaction = transaction
         self.account = account

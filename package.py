@@ -61,7 +61,7 @@ def package_debian():
     srcpath = op.join(destpath, 'src')
     os.makedirs(srcpath)
     shutil.copy('run.py', op.join(srcpath, 'run.py'))
-    copy_packages(['qt', 'hscommon', 'core', 'qtlib', 'hsutil'], srcpath)
+    copy_packages(['qt', 'hscommon', 'core', 'qtlib'], srcpath)
     import sip, PyQt4, sgmllib
     shutil.copy(sip.__file__, srcpath)
     qtsrcpath = op.dirname(PyQt4.__file__)

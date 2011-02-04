@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-04
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -11,8 +10,8 @@ from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QFont
 
 from qtlib.column import Column
+from hscommon.trans import tr
 from core.gui.split_table import SplitTable as SplitTableModel
-from core.trans import tr
 from .table import Table, ACCOUNT_EDIT
 
 MIME_INDEX = 'application/moneyguru.splitindex'

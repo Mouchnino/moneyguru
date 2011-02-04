@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-06
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -12,7 +11,7 @@ from collections import namedtuple
 from PyQt4.QtCore import Qt, QRect, QSize, QPoint, QModelIndex
 from PyQt4.QtGui import QFont, QFontMetrics
 
-from hsutil.misc import nonone
+from hscommon.util import nonone
 
 from ..const import (INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED, EXTRA_UNDERLINED_DOUBLE,
     EXTRA_SPAN_ALL_COLUMNS)
@@ -28,7 +27,7 @@ def applyMargin(rect, margin):
     result.setBottom(result.bottom()-margin)
     return result
 
-class ItemPrintDatasource(object):
+class ItemPrintDatasource:
     # If we want to print tables and trees with a good code re-use, we've got to abstract away the
     # fact that trees have nodes and stuff and start treating it as rows and columns, with some
     # cells having more indentation than others. That's what this class is about.:

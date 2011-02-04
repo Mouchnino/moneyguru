@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-01-03
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,8 +8,7 @@
 
 from datetime import date
 
-from hsutil.testutil import eq_
-from hsutil.testutil import Patcher
+from hscommon.testutil import eq_, Patcher
 
 from ..const import PaneType
 from ..model.account import AccountType

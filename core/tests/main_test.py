@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Eric Mc Sween
 # Created On: 2008-01-02
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -11,12 +10,12 @@ import os.path as op
 import sys
 from datetime import date
 
-from hsutil import io
+from pytest import raises
+from hscommon import io
 from hscommon.currency import EUR
-from hsutil.testutil import Patcher
-from hsutil.testutil import eq_, assert_raises
+from hscommon.testutil import Patcher, eq_
 
-from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app
+from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app, TestData
 from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
@@ -112,13 +111,14 @@ def test_load_inexistant(tmpdir):
     # Raise FileFormatError when filename doesn't exist
     app = TestApp()
     filename = str(tmpdir.join('does_not_exist.xml'))
-    assert_raises(FileFormatError, app.doc.load_from_xml, filename)
+    with raises(FileFormatError):
+        app.doc.load_from_xml(filename)
 
 def test_load_invalid():
     # Raises FileFormatError, which gives a message kind of like: <filename> is not a moneyGuru
     # file.
     app = TestApp()
-    filename = TestCase.filepath('randomfile')
+    filename = TestData.filepath('randomfile')
     try:
         app.doc.load_from_xml(filename)
     except FileFormatError as e:

@@ -8,7 +8,7 @@
 
 import copy
 
-from hsutil.misc import extract
+from hscommon.util import extract
 
 from ..model.recurrence import Spawn
 
@@ -26,7 +26,7 @@ def swapvalues(first, second, attrs):
         setattr(first, attr, getattr(second, attr))
         setattr(second, attr, tmp)
 
-class Action(object):
+class Action:
     def __init__(self, description):
         self.description = description
         self.added_accounts = set()
@@ -76,7 +76,7 @@ class Action(object):
         self.change_splits(e.split for e in account.entries)
     
 
-class Undoer(object):
+class Undoer:
     def __init__(self, accounts, groups, transactions, scheduled, budgets):
         self._actions = []
         self._accounts = accounts

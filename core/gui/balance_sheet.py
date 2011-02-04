@@ -4,13 +4,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
 from datetime import timedelta, date
 
+from hscommon.trans import tr
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange, ONE_DAY
-from ..trans import tr
 from .column import Column
 from .report import Report, get_delta_perc
 

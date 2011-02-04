@@ -6,10 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_, with_tmpdir, Patcher
 from hscommon.currency import EUR
-from hsutil.testutil import with_tmpdir, Patcher
 
 from ...const import PaneType
 from ...model.account import AccountType
