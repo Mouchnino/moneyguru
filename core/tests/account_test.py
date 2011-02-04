@@ -9,7 +9,7 @@
 from hscommon.testutil import eq_
 from hscommon.currency import EUR
 
-from .base import TestApp, with_app, TestData
+from .base import TestApp, with_app, testdata
 from ..exception import FileFormatError
 from ..model.account import AccountType
 
@@ -91,7 +91,7 @@ def test_get_account_attribute_value(app):
 @with_app(app_one_empty_account)
 def test_keep_old_accounts_on_load_failure(app):
     # When a load result in a failure, keep the data that was there previously.
-    filename = TestData.filepath('randomfile')
+    filename = testdata.filepath('randomfile')
     try:
         app.doc.load_from_xml(filename)
     except FileFormatError:

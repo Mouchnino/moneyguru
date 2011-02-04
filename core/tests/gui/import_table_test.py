@@ -10,7 +10,7 @@ from datetime import date
 
 from hscommon.testutil import eq_
 
-from ..base import TestApp, with_app, TestData
+from ..base import TestApp, with_app, testdata
 from ...model.date import YearRange
 
 #---
@@ -19,7 +19,7 @@ def app_import_checkbook_qif():
     app.doc.date_range = YearRange(date(2007, 1, 1))
     # The cocoa side does some disconnect/connect stuff. We have to refreshthe table on connect()
     app.itable.disconnect()
-    app.doc.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+    app.doc.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
     app.itable.connect()
     app.clear_gui_calls()
     return app
@@ -115,7 +115,7 @@ def app_import_checkbook_qif_with_existing_txns():
     app.aview.toggle_reconciliation_mode() # commit
     app.add_entry(date='02/01/2007', description='second entry', increase='2')
     app.doc.date_range = YearRange(date(2007, 1, 1))
-    app.doc.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+    app.doc.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
     app.clear_gui_calls()
     app.iwin.selected_target_account_index = 1 # foo
     app.check_gui_calls(app.itable_gui, ['refresh'])
@@ -169,7 +169,7 @@ def test_rows_mixed_with_existing_rows(app):
 def app_import_with_empty_target_account():
     app = TestApp()
     app.add_account('foo')
-    app.doc.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+    app.doc.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
     app.iwin.selected_target_account_index = 1 # foo
     return app
 
@@ -183,9 +183,9 @@ def app_load_then_import_with_references():
     # with_reference1 and 2 have references that overlap. This is supposed to cause matching in the
     # import dialog.
     app = TestApp()
-    app.doc.load_from_xml(TestData.filepath('moneyguru', 'with_references1.moneyguru'))
+    app.doc.load_from_xml(testdata.filepath('moneyguru', 'with_references1.moneyguru'))
     app.doc.date_range = YearRange(date(2008, 1, 1))
-    app.doc.parse_file_for_import(TestData.filepath('moneyguru', 'with_references2.moneyguru'))
+    app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references2.moneyguru'))
     app.clear_gui_calls()
     return app
 

@@ -13,7 +13,7 @@ from hscommon.testutil import eq_, Patcher
 from ..const import PaneType
 from ..model.account import AccountType
 from ..model.date import MonthRange, QuarterRange, YearRange, YearToDateRange
-from .base import TestCase, TestApp, with_app, TestData
+from .base import TestCase, TestApp, with_app, testdata
 
 #--- Pristine
 @with_app(TestApp)
@@ -26,7 +26,7 @@ def test_load_while_on_ytd_range(app):
     # Previously, the document would try to call around() on the current date range, even if not
     # navigable, causing a crash.
     app.drsel.select_year_to_date_range()
-    filename = TestData.filepath('moneyguru/payee_description.moneyguru')
+    filename = testdata.filepath('moneyguru/payee_description.moneyguru')
     app.doc.load_from_xml(filename) # no crash
 
 @with_app(TestApp)

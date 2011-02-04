@@ -10,7 +10,7 @@ from datetime import date
 
 from hscommon.testutil import eq_
 
-from ..base import TestCase, DictLoader, TestData
+from ..base import TestCase, DictLoader, testdata
 from ...model.date import YearRange
 from ...gui.import_window import SwapType
 
@@ -18,7 +18,7 @@ class ImportCheckbookQIF(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('qif/checkbook.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
         self.check_gui_calls(self.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
     
     def test_account_tabs(self):
@@ -148,8 +148,8 @@ class ImportCheckbookQIFTwice(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('qif/checkbook.qif'))
-        self.document.parse_file_for_import(TestData.filepath('qif/checkbook.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
     
     def test_import_again(self):
         #Importing when there are already open tabs adds the new tabs to the iwin
@@ -174,7 +174,7 @@ class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
         self.aview.toggle_reconciliation_mode() # commit
         self.add_entry(date='02/01/2007', description='second entry', increase='2')
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('qif/checkbook.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
         self.clear_gui_calls()
         self.iwin.selected_target_account_index = 1 # foo
         self.check_gui_calls(self.itable_gui, ['refresh'])
@@ -220,8 +220,8 @@ class LoadThemImportWithReference(TestCase):
     def setUp(self):
         self.mock_today(2008, 1, 1)
         self.create_instances()
-        self.document.load_from_xml(TestData.filepath('moneyguru/with_references1.moneyguru'))
-        self.document.parse_file_for_import(TestData.filepath('moneyguru/with_references2.moneyguru'))
+        self.document.load_from_xml(testdata.filepath('moneyguru/with_references1.moneyguru'))
+        self.document.parse_file_for_import(testdata.filepath('moneyguru/with_references2.moneyguru'))
         self.clear_gui_calls()
     
     def test_selected_target_account(self):
@@ -233,7 +233,7 @@ class ImportMoneyguruFileWithExpenseAccount(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2008, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('moneyguru', 'simple.moneyguru'))
+        self.document.parse_file_for_import(testdata.filepath('moneyguru', 'simple.moneyguru'))
     
     def test_account_panes(self):
         # There are only 2 account panes (one for each asset account). the expense account is not there
@@ -246,7 +246,7 @@ class ImportAccountlessQIF(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('qif/accountless.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/accountless.qif'))
     
     def test_account_tabs(self):
         # The account is just imported as 'Account'
@@ -259,7 +259,7 @@ class ImportAccountlessWithSplitsQIF(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2008, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('qif/accountless_with_splits.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/accountless_with_splits.qif'))
     
     def test_account_tabs(self):
         # Previously, splits referring to account not present in the QIF has a None account
@@ -280,7 +280,7 @@ class ImportQIFWithEmptyAccount(TestCase): # like checkbook.qif, but with 2 extr
     def setUp(self):
         self.create_instances()
         self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(TestData.filepath('qif/empty_accounts.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif/empty_accounts.qif'))
     
     def test_account_tabs(self):
         # The account is just imported as 'Account'

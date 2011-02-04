@@ -16,7 +16,7 @@ from hscommon.currency import EUR
 from ..const import PaneType
 from ..document import ScheduleScope
 from ..model.date import MonthRange
-from .base import TestCase as TestCaseBase, CommonSetup, compare_apps, TestData
+from .base import TestCase as TestCaseBase, CommonSetup, compare_apps, testdata
 
 def copydoc(doc):
     # doing a deepcopy on the document itself makes a deepcopy of *all* guis because they're
@@ -105,7 +105,7 @@ class Pristine(TestCase):
     def test_import(self):
         # When undoing an import that creates income/expense accounts, don't crash on auto account
         # removal
-        self.document.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
         self.iwin.import_selected_pane()
     
     def test_undo_shown_account(self):
@@ -357,7 +357,7 @@ class LoadFile(TestCase):
         self.document.date_range = MonthRange(date(2008, 2, 1))
         # This is to set the modified flag to true so we can make sure it has been put back to false
         self.add_account()
-        self.document.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
+        self.document.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
         # we have to cheat here because the first save state is articifially
         # different than the second save state because the second state has
         # the currency rates fetched. So what we do here is wait a little bit
@@ -582,7 +582,7 @@ class OFXImport(TestCase):
     def setUp(self):
         self.create_instances()
         self.document.date_range = MonthRange(date(2008, 2, 1))
-        self.document.parse_file_for_import(TestData.filepath('ofx', 'desjardins.ofx'))
+        self.document.parse_file_for_import(testdata.filepath('ofx', 'desjardins.ofx'))
         self.iwin.import_selected_pane()
         # same cheat as in LoadFile
         time.sleep(0.05)
@@ -606,7 +606,7 @@ class OFXImport(TestCase):
     def test_undo_import(self):
         # Undoing an import removes all accounts and transactions added by  that import. It also
         # undo changes that have been made.
-        self.document.parse_file_for_import(TestData.filepath('ofx', 'desjardins2.ofx'))
+        self.document.parse_file_for_import(testdata.filepath('ofx', 'desjardins2.ofx'))
         # this is the pane that has stuff in it
         self.iwin.selected_target_account_index = 1
         self.iwin.import_selected_pane()

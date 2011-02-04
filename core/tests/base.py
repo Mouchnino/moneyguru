@@ -14,8 +14,7 @@ import pytest
 
 from hscommon.path import Path
 from hscommon.testcase import TestCase as TestCaseBase
-from hscommon.testutil import eq_
-from hscommon.testutil import CallLogger, TestApp as TestAppBase, with_app
+from hscommon.testutil import eq_, CallLogger, TestApp as TestAppBase, with_app, TestData
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
@@ -66,6 +65,8 @@ from ..loader import base
 from ..model.account import AccountType
 from .. import document as document_module
 from . import ensure_ratesdb_patched
+
+testdata = TestData(op.join(op.dirname(__file__), 'testdata'))
 
 def log(method):
     def wrapper(self, *args, **kw):
@@ -491,21 +492,6 @@ class TestApp(TestAppBase):
     
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
-    
-
-class TestData:
-    @classmethod
-    def datadirpath(cls):
-        return Path(__file__)[:-1] + 'testdata'
-    
-    @classmethod
-    def filepath(cls, relative_path, *args):
-        if args:
-            relative_path = op.join([relative_path] + list(args))
-        testpath = cls.datadirpath()
-        result = str(testpath + relative_path)
-        assert op.exists(result)
-        return result
     
 
 # TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of

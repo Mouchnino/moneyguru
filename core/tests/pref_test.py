@@ -12,7 +12,7 @@ from hscommon.testutil import eq_
 
 from ..const import PaneType
 from ..gui.main_window import OPENED_PANES_PREFERENCE
-from .base import TestApp, with_app, TestData
+from .base import TestApp, with_app, testdata
 
 #--- Pristine
 @with_app(TestApp)
@@ -53,7 +53,7 @@ def test_mainwindow_panes_reopen_except_nonexistant_accounts(app):
 def test_main_window_doent_choke_on_unexisting_pane_pref(app):
     app.app.set_default(OPENED_PANES_PREFERENCE, [{'pane_type': '99999'}])
     newapp = TestApp(app=app.app)
-    newapp.doc.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru')) # no crash on restore
+    newapp.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru')) # no crash on restore
     newapp.check_current_pane(PaneType.NetWorth) # been replaced with a Net Worth pane.
 
 @with_app(TestApp)

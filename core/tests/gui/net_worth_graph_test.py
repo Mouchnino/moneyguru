@@ -10,7 +10,7 @@ from datetime import date
 
 from hscommon.currency import CAD, USD
 
-from ..base import TestCase, TestData
+from ..base import TestCase, testdata
 from ...model.account import AccountType
 
 class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
@@ -132,7 +132,7 @@ class AssetsAndLiabilitiesInDifferentAccounts(TestCase):
     
     def test_refresh_on_import(self):
         # When entries are imported, charts are refreshed
-        self.document.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+        self.document.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
         self.iwin.import_selected_pane()
         # For the data itself, we just have to test that it changed. the QIF has data in 02/2008
         self.assertNotEqual(self.nw_graph_data()[0], ('01/07/2008', '10.00'))

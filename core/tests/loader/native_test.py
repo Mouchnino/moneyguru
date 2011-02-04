@@ -12,7 +12,7 @@ from datetime import date
 from hscommon.testutil import eq_
 from hscommon.currency import USD, PLN
 
-from ..base import TestCase, TestData
+from ..base import TestCase, testdata
 from ...exception import FileFormatError
 from ...loader import native
 from ...model.account import AccountType
@@ -57,7 +57,7 @@ class NativeLoader(TestCase):
 
     def test_account_and_entry_values(self):
         # Make sure loaded values are correct.
-        self.loader.parse(TestData.filepath('moneyguru', 'simple.moneyguru'))
+        self.loader.parse(testdata.filepath('moneyguru', 'simple.moneyguru'))
         self.loader.load()
         accounts = self.loader.accounts
         self.assertEqual(len(accounts), 3)

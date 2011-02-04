@@ -13,7 +13,7 @@ from io import StringIO
 from hscommon.testutil import eq_, Patcher
 from hscommon.currency import USD
 
-from ..base import TestCase, CommonSetup, TestApp, with_app, TestData
+from ..base import TestCase, CommonSetup, TestApp, with_app, testdata
 from ...const import PaneType
 from ...gui.transaction_table import TransactionTable
 from ...model.date import MonthRange, YearRange
@@ -77,7 +77,7 @@ def test_refresh_on_import(app):
     # When entries are imported, ttable is refreshed
     app.doc.date_range = YearRange(date(2007, 1, 1))
     app.clear_gui_calls()
-    app.doc.parse_file_for_import(TestData.filepath('qif', 'checkbook.qif'))
+    app.doc.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
     app.iwin.import_selected_pane()
     assert app.ttable.row_count != 0
     app.check_gui_calls(app.ttable_gui, ['refresh'])
@@ -819,7 +819,7 @@ def test_added_txn_is_correctly_selected(app):
 def app_load_file():
     app = TestApp()
     app.doc.date_range = MonthRange(date(2008, 2, 1))
-    app.doc.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
+    app.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
     app.mainwindow.select_transaction_table()
     return app
 

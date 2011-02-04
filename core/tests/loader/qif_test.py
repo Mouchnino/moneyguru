@@ -11,7 +11,7 @@ from datetime import date
 from hscommon.testutil import eq_
 from hscommon.currency import USD
 
-from ..base import TestApp, TestData
+from ..base import TestApp, testdata
 from ...loader.qif import Loader
 from ...model.account import AccountType
 from ...model.amount import Amount
@@ -22,7 +22,7 @@ def setup_module(module):
 
 def test_checkbook_values():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'checkbook.qif'))
+    loader.parse(testdata.filepath('qif', 'checkbook.qif'))
     loader.load()
     accounts = [a for a in loader.accounts if a.is_balance_sheet_account()]
     # Assets
@@ -102,7 +102,7 @@ def test_checkbook_values():
 
 def test_missing_values():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'missing_fields.qif'))
+    loader.parse(testdata.filepath('qif', 'missing_fields.qif'))
     loader.load()
     accounts = [a for a in loader.accounts if a.is_balance_sheet_account()]
     eq_(len(accounts), 1)
@@ -135,7 +135,7 @@ def test_missing_values():
 
 def test_four_digit_year():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'four_digit_year.qif'))
+    loader.parse(testdata.filepath('qif', 'four_digit_year.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -147,7 +147,7 @@ def test_four_digit_year():
 
 def test_ddmmyy():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'ddmmyy.qif'))
+    loader.parse(testdata.filepath('qif', 'ddmmyy.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -159,7 +159,7 @@ def test_ddmmyy():
 
 def test_ddmmyyyy():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'ddmmyyyy.qif'))
+    loader.parse(testdata.filepath('qif', 'ddmmyyyy.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -171,7 +171,7 @@ def test_ddmmyyyy():
 
 def test_ddmmyyyy_with_dots():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'ddmmyyyy_with_dots.qif'))
+    loader.parse(testdata.filepath('qif', 'ddmmyyyy_with_dots.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -183,7 +183,7 @@ def test_ddmmyyyy_with_dots():
 
 def test_yyyymmdd_without_sep():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'yyyymmdd_without_sep.qif'))
+    loader.parse(testdata.filepath('qif', 'yyyymmdd_without_sep.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -195,7 +195,7 @@ def test_yyyymmdd_without_sep():
 
 def test_yyyymmdd_with_sep():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'yyyymmdd_with_sep.qif'))
+    loader.parse(testdata.filepath('qif', 'yyyymmdd_with_sep.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -207,7 +207,7 @@ def test_yyyymmdd_with_sep():
 
 def test_chr13_line_sep():
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'chr13_line_sep.qif'))
+    loader.parse(testdata.filepath('qif', 'chr13_line_sep.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -220,7 +220,7 @@ def test_chr13_line_sep():
 def test_first_field_not_account():
     # Previously, when the first field was not an account, a dummy "Account" field was added
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'first_field_not_account.qif'))
+    loader.parse(testdata.filepath('qif', 'first_field_not_account.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -228,7 +228,7 @@ def test_first_field_not_account():
 def test_accountless_with_splits():
     # Previously, the split amounts would be reversed
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'accountless_with_splits.qif'))
+    loader.parse(testdata.filepath('qif', 'accountless_with_splits.qif'))
     loader.load()
     accounts = [a for a in loader.accounts if a.is_balance_sheet_account()]
     eq_(len(accounts), 1)
@@ -248,7 +248,7 @@ def test_accountless_with_splits():
 def test_other_sections():
     # Previously, other sections would confuse the qif loader
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'other_sections.qif'))
+    loader.parse(testdata.filepath('qif', 'other_sections.qif'))
     loader.load()
     eq_(len(loader.transactions), 3)
 
@@ -256,7 +256,7 @@ def test_missing_line_sep():
     # It is possible sometimes that some apps do bad exports that contain some missing line 
     # separators Make sure that it doesn't prevent the QIF from being loaded
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'missing_line_sep.qif'))
+    loader.parse(testdata.filepath('qif', 'missing_line_sep.qif'))
     loader.load()
     eq_(len(loader.transactions), 1)
     eq_(loader.transactions[0].splits[0].amount, Amount(42.32, USD))
@@ -264,7 +264,7 @@ def test_missing_line_sep():
 def test_credit_card():
     # A CCard account is imported as a liability
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'credit_card.qif'))
+    loader.parse(testdata.filepath('qif', 'credit_card.qif'))
     loader.load()
     accounts = loader.account_infos
     eq_(len(accounts), 1)
@@ -274,7 +274,7 @@ def test_credit_card():
 def test_autoswitch():
     # autoswitch.qif has an autoswitch section with accounts containing "D" lines
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'autoswitch.qif'))
+    loader.parse(testdata.filepath('qif', 'autoswitch.qif'))
     loader.load()
     eq_(len(loader.account_infos), 50)
     eq_(len(loader.transaction_infos), 37)
@@ -282,7 +282,7 @@ def test_autoswitch():
 def test_autoswitch_buggy():
     # sp,eQIF exporter put another !Option:AutoSwitch after having cleared it
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'autoswitch_buggy.qif'))
+    loader.parse(testdata.filepath('qif', 'autoswitch_buggy.qif'))
     loader.load()
     eq_(len(loader.account_infos), 50)
     eq_(len(loader.transaction_infos), 37)
@@ -291,7 +291,7 @@ def test_autoswitch_none():
     # Some QIF files don't have the autoswitch flag to indicate a list of accounts. The loader used
     # to crash when such an account block would contain a "D" line that couldn't parse to a date.
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'autoswitch_none.qif'))
+    loader.parse(testdata.filepath('qif', 'autoswitch_none.qif'))
     loader.load() # no crash
     # We don't test for account_info because in such buggy cases, we don't care much. We only care
     # that transactions are correctly loaded.
@@ -300,7 +300,7 @@ def test_autoswitch_none():
 def test_with_cat():
     # some file have a "!Type:Cat" section with buggy "D" lines
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'with_cat.qif'))
+    loader.parse(testdata.filepath('qif', 'with_cat.qif'))
     loader.load()
     eq_(len(loader.account_infos), 1)
     eq_(len(loader.transaction_infos), 1)
@@ -309,7 +309,7 @@ def test_transfer():
     # Transfer happen with 2 entries putting [] brackets arround the account names of the 'L'
     # sections.
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'transfer.qif'))
+    loader.parse(testdata.filepath('qif', 'transfer.qif'))
     loader.load()
     eq_(len(loader.account_infos), 2)
     eq_(len(loader.transaction_infos), 1)
@@ -317,7 +317,7 @@ def test_transfer():
 def test_extra_dline():
     # Ignore extra D lines which don't contain dates. Previously, these lines would cause a crash.
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'extra_dline.qif'))
+    loader.parse(testdata.filepath('qif', 'extra_dline.qif'))
     loader.load() # no crash
     eq_(len(loader.transactions), 1)
     txn = loader.transactions[0]
@@ -327,7 +327,7 @@ def test_transfer_space_in_account_names():
     # When "L" lines have a space character at the end (bfore the "]" bracket) it doesn't prevent
     # us from correctly matching the account with seen account names.
     loader = Loader(USD)
-    loader.parse(TestData.filepath('qif', 'transfer_space_in_account_names.qif'))
+    loader.parse(testdata.filepath('qif', 'transfer_space_in_account_names.qif'))
     loader.load()
     eq_(len(loader.transactions), 1) # the transactions hasn't been doubled.
     
@@ -343,5 +343,5 @@ def test_export_to_qif(tmpdir):
     app.expanel.export_path = export_filename
     app.expanel.save()
     exported = open(export_filename).read()
-    reference = open(TestData.filepath('qif', 'export_ref_transfer.qif')).read()
+    reference = open(testdata.filepath('qif', 'export_ref_transfer.qif')).read()
     eq_(exported, reference)

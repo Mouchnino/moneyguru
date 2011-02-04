@@ -9,7 +9,7 @@ from datetime import date
 from hscommon.testutil import eq_, patch_today, Patcher
 from hscommon.currency import Currency, USD, CAD
 
-from ..base import DocumentGUI, ApplicationGUI, TestApp, with_app, TestData
+from ..base import DocumentGUI, ApplicationGUI, TestApp, with_app, testdata
 from ...app import Application
 from ...const import PaneType
 from ...document import Document
@@ -118,7 +118,7 @@ def test_refresh_on_connect():
     mgapp = Application(ApplicationGUI())
     doc = Document(DocumentGUI(), mgapp)
     doc.date_range = MonthRange(date(2008, 2, 1))
-    doc.load_from_xml(TestData.filepath('moneyguru', 'simple.moneyguru'))
+    doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
     app = TestApp(app=mgapp, doc=doc)
     eq_(app.account_node_subaccount_count(app.bsheet.assets), 2)
     eq_(app.bsheet.selected, app.bsheet.assets[0])
