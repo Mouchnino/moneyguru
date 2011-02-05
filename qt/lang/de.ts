@@ -497,7 +497,7 @@ Eintrag vom {start_date} bis {end_date}</translation>
     </message>
 		<message>
         <source>Do you want to save your changes before continuing?</source>
-        <translation>Möchten Sie Ihre Änderungen sparen, bevor Sie fortfahren?</translation>
+        <translation>Möchten Sie Ihre Änderungen speichern, bevor Sie fortfahren?</translation>
     </message>
 		
 		<!-- Date Range Selector -->
