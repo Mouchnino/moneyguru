@@ -43,6 +43,23 @@ def test_can_load_after_selection(app):
     app.ttable.select([0, 1])
     app.mepanel.load() # No OperationAborted
 
+@with_app(app_two_transactions)
+def test_save_out_of_range_currency_index(app):
+    # When the currency index is out of range, don't crash.
+    # (On OS X, when typing a currency that doesn't exist in the box, the index ends up being an
+    # out of range one)
+    app.mw.edit_item()
+    app.mepanel.currency_index = 999999
+    app.mepanel.save() # no crash
+
+@with_app(app_two_transactions)
+def test_saving_nothing_does_nothing(app):
+    # Don't initiate a transaction change if nothing is changed in the panel.
+    app.save_file()
+    app.mw.edit_item()
+    app.mepanel.save()
+    assert not app.doc.is_dirty()
+
 #--- Two transactions different values
 def app_two_transactions_different_value():
     app = TestApp()

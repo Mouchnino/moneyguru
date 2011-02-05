@@ -81,8 +81,12 @@ class MassEditionPanel(MainWindowPanel):
         if self.amount_enabled:
             kw['amount'] = self._amount
         if self.currency_enabled:
-            kw['currency'] = Currency.all[self._currency_index]
-        self.document.change_transactions(transactions, **kw)
+            try:
+                kw['currency'] = Currency.all[self._currency_index]
+            except IndexError:
+                pass # invalid currency, just do nothing
+        if kw:
+            self.document.change_transactions(transactions, **kw)
     
     #--- Private
     def _init_fields(self):
