@@ -189,6 +189,7 @@
 
 /* core/loader/csv.py:100 */
 "The Date column has been set on a column that doesn't contain dates." = "Die Datumsspalte wurde für eine Spalte ausgewählt, die keine Daten enthählt.";
+"The Amount column has been set on a column that doesn't contain amounts." = "The Amount column has been set on a column that doesn't contain amounts.";
 
 /* core/model/date.py:186 */
 "{0} - Now" = "{0} - Heute";

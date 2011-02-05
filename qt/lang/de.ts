@@ -272,6 +272,10 @@
         <translation>Die Datumsspalte wurde für eine Spalte ausgewählt, die keine Daten enthählt.</translation>
     </message>
     <message>
+        <source>The Amount column has been set on a column that doesn't contain amounts.</source>
+        <translation>The Amount column has been set on a column that doesn't contain amounts.</translation>
+    </message>
+    <message>
         <source>{0} - Now</source>
         <translation>{0} - Heute</translation>
     </message>

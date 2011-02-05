@@ -94,6 +94,35 @@ class Loader(base.Loader):
             line += [''] * (maxlen - len(line))
         self.lines = lines
     
+    def _parse_date_format(self, lines, ci):
+        date_index = ci[CsvField.Date]
+        lines_to_load = []
+        for line in lines:
+            line = line[:]
+            cleaned_str_date = self.clean_date(line[date_index])
+            if cleaned_str_date is None:
+                logging.warning('{0} is not a date. Ignoring line'.format(line[date_index]))
+            else:
+                line[date_index] = cleaned_str_date
+                lines_to_load.append(line)
+        str_dates = [line[date_index] for line in lines_to_load]
+        date_format = self.guess_date_format(str_dates)
+        if date_format is None:
+            raise FileLoadError(tr("The Date column has been set on a column that doesn't contain dates."))
+        return date_format, lines_to_load
+    
+    def _check_amount_values(self, lines, ci):
+        for line in lines:
+            for attr in [CsvField.Amount, CsvField.Increase, CsvField.Decrease]:
+                if attr not in ci:
+                    continue
+                index = ci[attr]
+                value = line[index]
+                try:
+                    self.parse_amount(value, self.default_currency)
+                except ValueError:
+                    raise FileLoadError(tr("The Amount column has been set on a column that doesn't contain amounts."))
+    
     #--- Override
     def _parse(self, infile):
         self._prepare(infile)
@@ -113,20 +142,8 @@ class Loader(base.Loader):
         if not (hasdate and hasamount):
             raise FileLoadError(tr("The Date and Amount columns must be set."))
         self.account_info.name = 'CSV Import'
-        date_index = ci[CsvField.Date]
-        lines_to_load = []
-        for line in lines:
-            line = line[:]
-            cleaned_str_date = self.clean_date(line[date_index])
-            if cleaned_str_date is None:
-                logging.warning('{0} is not a date. Ignoring line'.format(line[date_index]))
-            else:
-                line[date_index] = cleaned_str_date
-                lines_to_load.append(line)
-        str_dates = [line[date_index] for line in lines_to_load]
-        date_format = self.guess_date_format(str_dates)
-        if date_format is None:
-            raise FileLoadError(tr("The Date column has been set on a column that doesn't contain dates."))
+        date_format, lines_to_load = self._parse_date_format(lines, ci)
+        self._check_amount_values(lines_to_load, ci)
         for line in lines_to_load:
             self.start_transaction()
             for attr, index in ci.items():

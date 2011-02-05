@@ -166,6 +166,25 @@ def test_set_same_field_on_another_column(app):
     app.csvopt.set_column_field(2, CsvField.Date)
     eq_(app.csvopt.get_column_name(1), 'None')
 
+@with_app(app_import_fortis_exclude_first_line_and_set_fields)
+def test_set_wrong_amount_column_and_continue_import(app):
+    # When setting the amount column on a wrong column, don't continue import and show an error
+    # message.
+    app.csvopt.set_column_field(5, CsvField.Amount)
+    app.clear_gui_calls()
+    app.csvopt.continue_import()
+    app.csvopt_gui.check_gui_calls(['show_message'])
+
+@with_app(app_import_fortis_exclude_first_line_and_set_fields)
+def test_set_wrong_increase_decrease_column_and_continue_import(app):
+    # When setting the amount column on a wrong column, don't continue import and show an error
+    # message.
+    app.csvopt.set_column_field(3, CsvField.Increase)
+    app.csvopt.set_column_field(4, CsvField.Decrease)
+    app.clear_gui_calls()
+    app.csvopt.continue_import()
+    app.csvopt_gui.check_gui_calls(['show_message'])
+
 #---
 def app_lots_of_noise():
     app = TestApp()

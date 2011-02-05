@@ -189,6 +189,7 @@
 
 /* core/loader/csv.py:100 */
 "The Date column has been set on a column that doesn't contain dates." = "La colonne Date ne contient pas de valeurs pouvant être des dates.";
+"The Amount column has been set on a column that doesn't contain amounts." = "La colonne Montant ne contient pas de valeurs pouvant être des montants.";
 
 /* core/model/date.py:186 */
 "{0} - Now" = "{0} - Aujourd'hui";
