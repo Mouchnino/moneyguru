@@ -578,11 +578,11 @@ class PyGeneralLedgerTable(PyTableWithDate):
 
     @signature('c@:i')
     def isAccountRow_(self, row_index):
-        return self.py.is_account_row(self.py[row_index])
+        return self.py.is_account_row(self._getrow(row_index))
     
     @signature('c@:i')
     def isBoldRow_(self, row_index):
-        return self.py.is_bold_row(self.py[row_index])
+        return self.py.is_bold_row(self._getrow(row_index))
     
 
 class PySearchField(PyListener):
