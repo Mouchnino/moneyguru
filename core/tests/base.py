@@ -438,6 +438,9 @@ class TestApp(TestAppBase):
         # add one to the expected count, we use this method that subtract 1 to the len of etable.
         return len(self.etable) - 1 
     
+    def graph_data(self):
+        return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.balgraph.data]
+    
     def navigate_to_date(self, year, month, day):
         # navigate the current date range until target_date is in it. We use year month day to avoid
         # having to import datetime.date in tests.
@@ -448,6 +451,9 @@ class TestApp(TestAppBase):
         # Returns a new TestApp() but with the same app_gui as before, thus preserving preferences.
         app = Application(self.app_gui)
         return TestApp(app=app)
+    
+    def nw_graph_data(self):
+        return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.nwgraph.data]
     
     def save_and_load(self):
         # saves the current document and returns a new app with that document loaded
@@ -627,10 +633,10 @@ class TestCase(TestCaseBase):
         self.document.notify('file_loaded_for_import')
     
     def graph_data(self):
-        return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.balgraph.data]
+        return self.ta.graph_data()
     
     def nw_graph_data(self):
-        return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.nwgraph.data]
+        return self.ta.nw_graph_data()
     
     def save_file(self):
         filename = op.join(self.tmpdir(), 'foo.xml')

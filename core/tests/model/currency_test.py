@@ -10,8 +10,9 @@ from datetime import date, timedelta, datetime
 import xmlrpc.client
 import time
 
+from pytest import raises
 from hscommon.currency import Currency, USD, CAD
-from hscommon.testcase import TestCase
+from hscommon.testutil import jointhreads, eq_
 
 from ...model.amount import convert_amount
 from ...model.currency import RatesDB
@@ -53,99 +54,94 @@ def slow_down(func):
     return wrapper
 
 
-class CurrencyTest(TestCase):
-    def test_unknown_currency(self):
-        """Only known currencies are accepted"""
-        self.assertRaises(ValueError, Currency, 'FOO')
+def test_unknown_currency():
+    # Only known currencies are accepted.
+    with raises(ValueError):
+        Currency('FOO')
 
+def test_async_and_repeat(monkeypatch):
+    # If you make an ensure_rates() call and then the same call right after (before the first one
+    # is finished, the server will not be hit twice.
+    monkeypatch.setattr(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
+    monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
+    db = RatesDB(':memory:', True)
+    monkeypatch.setattr(FakeServer, 'get_CAD_values', slow_down(FakeServer.get_CAD_values))
+    log = []
+    FakeServer.hooklog(log)
+    db.ensure_rates(date(2008, 5, 20), ['USD'])
+    db.ensure_rates(date(2008, 5, 20), ['USD'])
+    jointhreads()
+    eq_(len(log), 1)
 
-class AsyncRatesDB(TestCase):
-    def setUp(self):
-        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
-        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
-        self.db = RatesDB(':memory:', True)
-    
-    def test_async_and_repeat(self):
-        """If you make an ensure_rates() call and then the same call right after (before the first one
-        is finished, the server will not be hit twice.
-        """
-        self.mock(FakeServer, 'get_CAD_values', slow_down(FakeServer.get_CAD_values))
-        log = []
-        FakeServer.hooklog(log)
-        self.db.ensure_rates(date(2008, 5, 20), ['USD'])
-        self.db.ensure_rates(date(2008, 5, 20), ['USD'])
-        self.jointhreads()
-        self.assertEqual(len(log), 1)
-    
+def test_seek_rate(monkeypatch):
+    # Trying to get rate around the existing date gives the rate in question.
+    monkeypatch.setattr(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
+    monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
+    Currency.set_rates_db(RatesDB(':memory:', False))
+    USD.set_CAD_value(0.98, date(2008, 5, 20))
+    amount = Amount(42, USD)
+    expected = Amount(42 * .98, CAD)
+    eq_(convert_amount(amount, CAD, date(2008, 5, 21)), expected)
+    eq_(convert_amount(amount, CAD, date(2008, 5, 19)), expected)
 
-class NotAsyncRatesDB(TestCase):
-    def setUp(self):
-        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
-        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
-        self.db = RatesDB(':memory:', False)
-    
-    def test_ask_for_rates_in_the_past(self):
-        """If a rate is asked for a date lower than the lowest fetched date, fetch that range"""
-        self.db.ensure_rates(date(2008, 5, 20), ['USD']) # fetch some rates
-        log = []
-        FakeServer.hooklog(log)
-        self.db.ensure_rates(date(2008, 5, 19), ['USD']) # this one should also fetch rates
-        expected = [(date(2008, 5, 19), date(2008, 5, 19), 'USD')]
-        self.assertEqual(log, expected)
-    
-    def test_ask_for_rates_in_the_future(self):
-        """If a rate is asked for a date equal or higher than the lowest fetched date, fetch cached_end - today"""
-        self.db.set_CAD_value(date(2008, 5, 20), 'USD', 1.42)
-        log = []
-        FakeServer.hooklog(log)
-        self.db.ensure_rates(date(2008, 5, 20), ['USD']) # this one should fetch 2008-5-21 up to today
-        expected = [(date(2008, 5, 21), date.today(), 'USD')]
-        self.assertEqual(log, expected)
-    
-    def test_no_internet(self):
-        """No crash occur if the computer don't have access to internet"""
-        from socket import gaierror
-        def mock_get_CAD_values(self, start, end, currency):
-            raise gaierror()
-        self.mock(FakeServer, 'get_CAD_values', mock_get_CAD_values)
-        try:
-            self.db.ensure_rates(date(2008, 5, 20), ['USD'])
-        except gaierror:
-            self.fail()
-    
-    def test_connection_timeout(self):
-        """No crash occur the connection times out"""
-        from socket import error
-        def mock_get_CAD_values(self, start, end, currency):
-            raise error()
-        self.mock(FakeServer, 'get_CAD_values', mock_get_CAD_values)
-        try:
-            self.db.ensure_rates(date(2008, 5, 20), ['USD'])
-        except error:
-            self.fail()
-    
-    def test_xmlrpc_error(self):
-        """No crash occur when there's an error on the xmlrpc level"""
-        def mock_get_CAD_values(self, start, end, currency):
-            raise xmlrpc.client.Error()
-        self.mock(FakeServer, 'get_CAD_values', mock_get_CAD_values)
-        try:
-            self.db.ensure_rates(date(2008, 5, 20), ['USD'])
-        except xmlrpc.client.Error:
-            self.fail()
-    
+#---
+def setup_async_db(monkeypatch):
+    monkeypatch.setattr(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
+    monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
+    return RatesDB(':memory:', False)
 
-class NotAsyncRatesDBWithRates(TestCase):
-    def setUp(self):
-        self.mock(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates()) # See tests.currency_test
-        self.mock(xmlrpc.client, 'ServerProxy', FakeServer)
-        Currency.set_rates_db(RatesDB(':memory:', False))
-        USD.set_CAD_value(0.98, date(2008, 5, 20))
-    
-    def test_seek_rate(self):
-        """Trying to get rate around the existing date gives the rate in question"""
-        amount = Amount(42, USD)
-        expected = Amount(42 * .98, CAD)
-        self.assertEqual(convert_amount(amount, CAD, date(2008, 5, 21)), expected)
-        self.assertEqual(convert_amount(amount, CAD, date(2008, 5, 19)), expected)
-    
+def test_ask_for_rates_in_the_past(monkeypatch):
+    # If a rate is asked for a date lower than the lowest fetched date, fetch that range.
+    db = setup_async_db(monkeypatch)
+    db.ensure_rates(date(2008, 5, 20), ['USD']) # fetch some rates
+    log = []
+    FakeServer.hooklog(log)
+    db.ensure_rates(date(2008, 5, 19), ['USD']) # this one should also fetch rates
+    expected = [(date(2008, 5, 19), date(2008, 5, 19), 'USD')]
+    eq_(log, expected)
+
+def test_ask_for_rates_in_the_future(monkeypatch):
+    # If a rate is asked for a date equal or higher than the lowest fetched date, fetch cached_end - today.
+    db = setup_async_db(monkeypatch)
+    db.set_CAD_value(date(2008, 5, 20), 'USD', 1.42)
+    log = []
+    FakeServer.hooklog(log)
+    db.ensure_rates(date(2008, 5, 20), ['USD']) # this one should fetch 2008-5-21 up to today
+    expected = [(date(2008, 5, 21), date.today(), 'USD')]
+    eq_(log, expected)
+
+def test_no_internet(monkeypatch):
+    # No crash occur if the computer don't have access to internet.
+    db = setup_async_db(monkeypatch)
+    from socket import gaierror
+    def mock_get_CAD_values(self, start, end, currency):
+        raise gaierror()
+    monkeypatch.setattr(FakeServer, 'get_CAD_values', mock_get_CAD_values)
+    try:
+        db.ensure_rates(date(2008, 5, 20), ['USD'])
+    except gaierror:
+        assert False
+
+def test_connection_timeout(monkeypatch):
+    # No crash occur the connection times out.
+    db = setup_async_db(monkeypatch)
+    from socket import error
+    def mock_get_CAD_values(self, start, end, currency):
+        raise error()
+    monkeypatch.setattr(FakeServer, 'get_CAD_values', mock_get_CAD_values)
+    try:
+        db.ensure_rates(date(2008, 5, 20), ['USD'])
+    except error:
+        assert False
+
+def test_xmlrpc_error(monkeypatch):
+    # No crash occur when there's an error on the xmlrpc level.
+    db = setup_async_db(monkeypatch)
+    def mock_get_CAD_values(self, start, end, currency):
+        raise xmlrpc.client.Error()
+    monkeypatch.setattr(FakeServer, 'get_CAD_values', mock_get_CAD_values)
+    try:
+        db.ensure_rates(date(2008, 5, 20), ['USD'])
+    except xmlrpc.client.Error:
+        assert False
+

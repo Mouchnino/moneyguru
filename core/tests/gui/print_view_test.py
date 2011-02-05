@@ -6,19 +6,21 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from datetime import date
+from hscommon.testutil import eq_, patch_today
 
-from ..base import TestCase
+from ..base import TestApp, with_app
 from ...gui.print_view import PrintView
 
-class DateRangeOnApril2009(TestCase):
-    def setUp(self):
-        self.mock_today(2009, 4, 1)
-        self.create_instances()
-        self.drsel.select_month_range()
-        self.pv = PrintView(self.tview)
+class TestDateRangeOnApril2009:
+    def do_setup(self, monkeypatch):
+        patch_today(monkeypatch, 2009, 4, 1)
+        app = TestApp()
+        app.drsel.select_month_range()
+        app.pv = PrintView(app.tview)
+        return app
     
-    def test_attributes(self):
+    @with_app(do_setup)
+    def test_attributes(self, app):
         # We don't bother testing other views, but they're expected to have PRINT_TITLE_FORMAT
-        self.assertEqual(self.pv.title, 'Transactions from 01/04/2009 to 30/04/2009')
+        eq_(app.pv.title, 'Transactions from 01/04/2009 to 30/04/2009')
     

@@ -395,7 +395,7 @@ def test_set_fields_select_target_then_continue(app):
 
 #---
 class TestImportFortisThenAnotherWithLessColumns:
-    def setup(self):
+    def do_setup(self):
         app = TestApp()
         app.doc.parse_file_for_import(testdata.filepath('csv/fortis.csv'))
         app.csvopt.new_layout('fortis')
@@ -403,7 +403,7 @@ class TestImportFortisThenAnotherWithLessColumns:
         app.doc.parse_file_for_import(testdata.filepath('csv/increase_decrease.csv')) # less columns (3)
         return app
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_access_last_column(self, app):
         # the columns are supposed to have been *reduced* so the gui doesn't try to access data that
         # doesn't exist
@@ -412,7 +412,7 @@ class TestImportFortisThenAnotherWithLessColumns:
         except IndexError:
             assert False, "The number of columns should not be higher than what the lines contain"
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_select_fortis_layout_then_reload(self, app):
         # simply accessing a layout while having a csv with few columns loaded should not remove
         # columns from that layout
@@ -421,7 +421,7 @@ class TestImportFortisThenAnotherWithLessColumns:
         app.csvopt.select_layout('fortis')
         eq_(app.csvopt.columns[6], CsvField.Transfer)
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_set_date_and_amount_then_import(self, app):
         # The csv loading process must not crash either, even if out-of-range columns are fed to it.
         app.csvopt.select_layout('fortis')
@@ -434,7 +434,7 @@ class TestImportFortisThenAnotherWithLessColumns:
 
 #---
 class TestIncreaseDecrease:
-    def setup(self):
+    def do_setup(self):
         # This file has two columns for amounts: increase and decrease. To make the matter worse,
         # it has a negative value in the decrease column, which must be ignored
         app = TestApp()
@@ -445,7 +445,7 @@ class TestIncreaseDecrease:
         app.csvopt.set_line_excluded(0, True)
         return app
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_continue_import(self, app):
         app.csvopt.continue_import()
         eq_(len(app.itable), 3)
@@ -456,7 +456,7 @@ class TestIncreaseDecrease:
 
 #---
 class TestWeirdSep:
-    def setup(self):
+    def do_setup(self):
         # This file has mixed up field separators (, and ;). The sniffer will auto-detect the comma
         # as a field sep, but through the csv options panel, it should be possible to specify
         # another field sep.
@@ -464,33 +464,33 @@ class TestWeirdSep:
         app.doc.parse_file_for_import(testdata.filepath('csv/weird_sep.csv'))
         return app
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_field_separator(self, app):
         # the field_separator member contains the currently used field sep.
         eq_(app.csvopt.field_separator, ',')
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_rescan(self, app):
         # It's possible to specify a new field sep and then rescan the csv.
         app.csvopt.field_separator = ';'
         app.csvopt.rescan()
         eq_(app.csvopt.lines[0], ['foo,bar', 'foo,baz'])
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_set_long_separator(self, app):
         # csv dialect requires a char of 1 in length. If the input is bigger, just use the first char
         app.csvopt.field_separator = ';foo'
         app.csvopt.rescan()
         eq_(app.csvopt.lines[0], ['foo,bar', 'foo,baz'])
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_set_non_latin_separator(self, app):
         # a csv dialect requires a string delimiter, not a unicode one. encode unicode automatically,
         # an abort on errors.
         app.csvopt.field_separator = 'ł'
         app.csvopt.rescan() # no crash
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_set_null_separator(self, app):
         # ignore attemps to set an empty separator
         app.csvopt.field_separator = ''
@@ -499,7 +499,7 @@ class TestWeirdSep:
 
 #---
 class TestAmountWithDollarSign:
-    def setup(self):
+    def do_setup(self):
         # This file has a $ sign in its amount values.
         app = TestApp()
         app.doc.parse_file_for_import(testdata.filepath('csv/amount_with_dollar_sign.csv'))
@@ -507,7 +507,7 @@ class TestAmountWithDollarSign:
         app.csvopt.set_column_field(1, CsvField.Amount)
         return app
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_import(self, app):
         # No crash and the correct amounts are parsed
         app.csvopt.continue_import() # no crash
@@ -517,7 +517,7 @@ class TestAmountWithDollarSign:
 
 #---
 class TestShortDates:
-    def setup(self):
+    def do_setup(self):
         # This file has very short dates in m/d/y format
         app = TestApp()
         app.doc.parse_file_for_import(testdata.filepath('csv/short_dates.csv'))
@@ -525,7 +525,7 @@ class TestShortDates:
         app.csvopt.set_column_field(1, CsvField.Amount)
         return app
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_import(self, app):
         # No crash and the correct amounts are parsed
         app.csvopt.continue_import() # no crash
@@ -535,7 +535,7 @@ class TestShortDates:
 
 #---
 class TestUtf8Encoded:
-    def setup(self):
+    def do_setup(self):
         # This file has utf8-encoded non-ascii descriptions
         app = TestApp()
         app.doc.parse_file_for_import(testdata.filepath('csv/utf8_encoded.csv'))
@@ -543,7 +543,7 @@ class TestUtf8Encoded:
         # supposed to select the utf-8 encoding and click Rescan.
         return app
     
-    @with_app(setup)
+    @with_app(do_setup)
     def test_rescan_with_utf8_encoding(self, app):
         # Selecting the utf-8 encoding and clicking rescan re-opens the file with the correct
         # encoding.
