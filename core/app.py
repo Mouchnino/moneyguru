@@ -141,7 +141,7 @@ class Application(Broadcaster, RegistrableApplication):
             return {'group': groups}
         query = {'all': query_string}
         try:
-            query['amount'] = abs(self.parse_amount(query_string))
+            query['amount'] = abs(parse_amount(query_string, self._default_currency, with_expression=False))
         except ValueError:
             pass
         return query

@@ -212,10 +212,10 @@ def test_parse_garbage_around():
     eq_(parse_amount('$.42', USD, False), Amount(0.42, USD))
 
 def test_parse_invalid():
-    with raises(ValueError):
-        parse_amount('asdf')
-    with raises(ValueError):
-        parse_amount('+-.')
+    expressions = ['asdf', '+-.', '()']
+    for expression in expressions:
+        with raises(ValueError):
+            parse_amount(expression, USD)
     try:
         with raises(ValueError):
             parse_amount('open(\'some_important_file\').read()')

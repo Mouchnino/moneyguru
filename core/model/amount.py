@@ -101,6 +101,8 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
             value = eval(string)
         except SyntaxError:
             raise ValueError('Invalid expression %r' % string)
+        if not isinstance(value, (float, int)):
+            raise ValueError('Invalid expression %r' % string)
     else:
         try:
             value = float(string)

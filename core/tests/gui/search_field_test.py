@@ -116,6 +116,12 @@ def test_query_to(app):
     eq_(app.ttable.row_count, 1)
     eq_(app.ttable[0].description, 'a Deposit')
 
+@with_app(app_two_transactions)
+def test_dont_parse_amount_with_expression(app):
+    # Don't parse the amount with the 'with_expression' option. It doesn't make sense.
+    app.sfield.query = '100+40' # The txn with the '140' amount shouldn't show up.
+    eq_(app.ttable.row_count, 0)
+
 #--- Three txns with zero amount
 def app_three_txns_with_zero_amount():
     app = TestApp()
