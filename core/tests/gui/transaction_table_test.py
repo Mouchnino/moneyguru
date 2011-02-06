@@ -13,10 +13,11 @@ from io import StringIO
 from hscommon.testutil import eq_, patch_today
 from hscommon.currency import USD
 
-from ..base import TestCase, CommonSetup, TestApp, with_app, testdata
+from ..base import TestCase, TestApp, with_app, testdata
 from ...const import PaneType
 from ...gui.transaction_table import TransactionTable
 from ...model.date import MonthRange, YearRange
+from ...model.account import AccountType
 
 #---
 def app_tview_shown():
@@ -1121,25 +1122,30 @@ class FourEntriesOnTheSameDate(TestCase):
         eq_(self.transaction_descriptions(), ['txn 2', 'txn 1', 'txn 3', 'txn 4'])
     
 
-class WithBudget(TestCase, CommonSetup):
-    def setUp(self):
-        self.create_instances()
-        self.setup_account_with_budget()
-        self.mainwindow.select_transaction_table()
-        self.clear_gui_calls()
+class TestWithBudget:
+    def do_setup(self, monkeypatch):
+        app = TestApp()
+        patch_today(monkeypatch, 2008, 1, 27)
+        app.drsel.select_today_date_range()
+        app.add_account('Some Expense', account_type=AccountType.Expense)
+        app.add_budget('Some Expense', None, '100')
+        app.mw.select_transaction_table()
+        app.clear_gui_calls()
+        return app
     
-    def test_budget_spawns(self):
+    @with_app(do_setup)
+    def test_budget_spawns(self, app):
         # When a budget is set budget transaction spawns show up in ttable, at the end of each month.
-        eq_(self.ttable.row_count, 12)
-        eq_(self.ttable[0].amount, '100.00')
-        eq_(self.ttable[0].date, '31/01/2008')
-        eq_(self.ttable[0].to, 'Some Expense')
-        assert self.ttable[0].is_budget
-        eq_(self.ttable[11].date, '31/12/2008')
+        eq_(app.ttable.row_count, 12)
+        eq_(app.ttable[0].amount, '100.00')
+        eq_(app.ttable[0].date, '31/01/2008')
+        eq_(app.ttable[0].to, 'Some Expense')
+        assert app.ttable[0].is_budget
+        eq_(app.ttable[11].date, '31/12/2008')
         # Budget spawns can't be edited
-        assert not self.ttable.can_edit_cell('date', 0)
-        self.mainwindow.edit_item() # budget spawns can't be edited
-        self.check_gui_calls_partial(self.tpanel_gui, not_expected=['post_load'])
+        assert not app.ttable.can_edit_cell('date', 0)
+        app.mw.edit_item() # budget spawns can't be edited
+        app.tpanel_gui.check_gui_calls_partial(not_expected=['post_load'])
     
 
 #--- Generators

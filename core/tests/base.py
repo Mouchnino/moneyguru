@@ -754,14 +754,3 @@ def compare_apps(first, second, qif_mode=False):
         eq_(budget1.start_date, budget2.start_date)
         eq_(budget1.stop_date, budget2.stop_date)
         eq_(budget1.repeat_every, budget2.repeat_every)
-
-class CommonSetup(object):
-    def setup_account_with_budget(self, is_expense=True, account_name='Some Expense', target_name=None):
-        # 4 days left to the month, 100$ monthly budget
-        self.mock_today(2008, 1, 27)
-        self.drsel.select_today_date_range()
-        account_type = AccountType.Expense if is_expense else AccountType.Income
-        self.add_account_legacy(account_name, account_type=account_type)
-        self.add_budget(account_name, target_name, '100')
-        self.mainwindow.select_income_statement()
-    

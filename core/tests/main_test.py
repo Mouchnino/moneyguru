@@ -15,7 +15,7 @@ from hscommon import io
 from hscommon.currency import EUR
 from hscommon.testutil import eq_, patch_today
 
-from .base import TestCase, CommonSetup, ApplicationGUI, TestApp, with_app, testdata
+from .base import TestCase, ApplicationGUI, TestApp, with_app, testdata
 from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
@@ -227,7 +227,7 @@ class OneEmptyAccountRangeOnOctober2007(TestCase):
         assert not self.document.is_dirty()
     
 
-class ThreeAccountsAndOneEntry(TestCase, CommonSetup):
+class ThreeAccountsAndOneEntry(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_accounts('one', 'two')

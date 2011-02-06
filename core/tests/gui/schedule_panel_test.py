@@ -9,7 +9,7 @@
 from hscommon.testutil import eq_
 
 from ...model.date import MonthRange
-from ..base import TestCase, CommonSetup, TestApp
+from ..base import TestCase, TestApp
 
 class Pristine(TestCase):
     def setUp(self):
@@ -28,7 +28,7 @@ class Pristine(TestCase):
         self.mainwindow.edit_item() # no crash
     
 
-class OneDailyScheduledTransaction(TestCase, CommonSetup):
+class OneDailyScheduledTransaction(TestCase):
     def setUp(self):
         self.create_instances()
         self.add_schedule(start_date='13/09/2008', repeat_every=3)

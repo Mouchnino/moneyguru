@@ -16,7 +16,8 @@ from hscommon.currency import EUR
 from ..const import PaneType
 from ..document import ScheduleScope
 from ..model.date import MonthRange
-from .base import TestCase as TestCaseBase, CommonSetup, compare_apps, testdata
+from ..model.account import AccountType
+from .base import TestCase as TestCaseBase, compare_apps, testdata
 
 def copydoc(doc):
     # doing a deepcopy on the document itself makes a deepcopy of *all* guis because they're
@@ -691,10 +692,13 @@ class ScheduledTransaction(TestCase):
         self.etable[0].toggle_reconciled()
     
 
-class Budget(TestCase, CommonSetup):
+class Budget(TestCase):
     def setUp(self):
         self.create_instances()
-        self.setup_account_with_budget()
+        self.mock_today(2008, 1, 27)
+        self.drsel.select_today_date_range()
+        self.add_account('Some Expense', account_type=AccountType.Expense)
+        self.add_budget('Some Expense', None, '100')
         self.mainwindow.select_budget_table()
         self.btable.select([0])
     
