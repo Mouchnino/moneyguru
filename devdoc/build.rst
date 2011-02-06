@@ -12,6 +12,7 @@ General dependencies
 
 - Python 3.1 (http://www.python.org)
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
+- Sphinx 1.0.6 (http://sphinx.pocoo.org/)
 - pytest 2.0.0, to run unit tests. (http://pytest.org/)
 
 OS X prerequisites
