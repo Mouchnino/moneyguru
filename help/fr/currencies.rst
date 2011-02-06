@@ -81,10 +81,12 @@ Devises supportées
 * [KRW] South Korean won
 * [LKR] Sri Lanka rupee
 * [LTL] Lithuanian litas
+* [LVL] Latvian lats
 * [MAD] Moroccan dirham
 * [MMK] Myanmar (Burma) kyat
 * [MXN] Mexican peso
 * [MYR] Malaysian ringgit
+* [MZN] Mozambican metical
 * [NLG] Netherlands guild
 * [NOK] Norwegian krone
 * [PAB] Panamanian balboa

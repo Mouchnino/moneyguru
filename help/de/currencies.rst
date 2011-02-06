@@ -89,10 +89,12 @@ Unterstützte Währungen
 * [KRW] Won (Südkorea)
 * [LKR] Rupie (Sri Lanka)
 * [LTL] Litas (Litauen)
+* [LVL] Latvian lats
 * [MAD] Dirham (Marokko)
 * [MMK] Kyat (Myanmar, vormals Burma)
 * [MXN] Peso (Mexiko)
 * [MYR] Ringgit (Malaysia)
+* [MZN] Mozambican metical
 * [NLG] Gulden (Niederlande)
 * [NOK] Krone (Norwegen)
 * [PAB] Balboa (Panama)
