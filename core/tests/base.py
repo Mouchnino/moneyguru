@@ -427,10 +427,39 @@ class TestApp(TestAppBase):
             result.append((convert(x1), convert(x2), '%2.2f' % y1, '%2.2f' % y2))
         return result
     
+    def close_and_load(self):
+        self.doc.close()
+        app = Application(self.app_gui)
+        doc = Document(self.doc_gui, self.app)
+        return TestApp(app=app, doc=doc)
+    
     def completable_edit(self, attrname):
         ce = CompletableEdit(CallLogger(), self.mw)
         ce.attrname = attrname
         return ce
+    
+    def do_test_save_load(self):
+        newapp = self.save_and_load()
+        newapp.doc.date_range = self.doc.date_range
+        newapp.doc._cook()
+        compare_apps(self.doc, newapp.doc)
+    
+    def do_test_qif_export_import(self):
+        filepath = str(self.tmppath() + 'foo.qif')
+        self.mainwindow.export()
+        self.expanel.export_path = filepath
+        self.expanel.save()
+        newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
+        newdoc = Document(DocumentGUI(), newapp)
+        iwin = ImportWindow(self.iwin_gui, newdoc)
+        iwin.connect()
+        try:
+            newdoc.parse_file_for_import(filepath)
+            while iwin.panes:
+                iwin.import_selected_pane()
+        except FileFormatError:
+            pass
+        compare_apps(self.doc, newdoc, qif_mode=True)
     
     def etable_count(self):
         # Now that the entry table has a total row, it messes up all tests that check the length
@@ -592,34 +621,11 @@ class TestCase(TestCaseBase):
     def bar_graph_data(self, *args, **kw):
         return self.ta.bar_graph_data(*args, **kw)
     
-    def close_and_load(self):
-        self.document.close()
-        self.app = Application(self.app_gui)
-        self.document = Document(self.document_gui, self.app)
-        self.create_instances()
-    
     def do_test_save_load(self):
-        newdoc = self.save_and_load()
-        newdoc.date_range = self.document.date_range
-        newdoc._cook()
-        compare_apps(self.document, newdoc)
+        self.ta.do_test_save_load()
     
     def do_test_qif_export_import(self):
-        filepath = op.join(self.tmpdir(), 'foo.qif')
-        self.mainwindow.export()
-        self.ta.expanel.export_path = filepath
-        self.ta.expanel.save()
-        newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
-        newdoc = Document(DocumentGUI(), newapp)
-        iwin = ImportWindow(self.iwin_gui, newdoc)
-        iwin.connect()
-        try:
-            newdoc.parse_file_for_import(filepath)
-            while iwin.panes:
-                iwin.import_selected_pane()
-        except FileFormatError:
-            pass
-        compare_apps(self.document, newdoc, qif_mode=True)
+        self.ta.do_test_qif_export_import()
     
     def entry_descriptions(self):
         return [self.etable[i].description for i in range(len(self.etable))]
