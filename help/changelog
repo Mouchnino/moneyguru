@@ -1,3 +1,9 @@
+=== 2.3.5 (2011-02-07)
+
+* Fixed a few crashes here and there. (#228 #220 #216 #218 #217)
+* Fixed wrong german translation. (#219)
+* Added LVL and MZN currencies. (#221)
+
 === 2.3.4 (2010-12-09)
 
 * Fixed crash on invalid date input. (#209)
