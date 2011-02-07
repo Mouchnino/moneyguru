@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-04-02
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -8,4 +7,3 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 HELP_PATH = 'help'
-LANG2LOCALENAME = {'fr': 'fra_fra', 'de': 'deu_deu'}

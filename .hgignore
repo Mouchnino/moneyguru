@@ -20,8 +20,7 @@ build
 dist
 install
 installer_tmp-cache
-qt/lang/fr.qm
-qt/lang/de.qm
+qt/lang/??.qm
 devdoc_html
 run.py
 tmtags

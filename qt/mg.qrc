@@ -3,6 +3,7 @@
     <file alias="example.moneyguru">../data/example.moneyguru</file>
     <file alias="stylesheet_win">../data/stylesheet_win.css</file>
     <file alias="stylesheet_lnx">../data/stylesheet_lnx.css</file>
+    <file alias="en.qm">lang/en.qm</file>
     <file alias="fr.qm">lang/fr.qm</file>
     <file alias="qt_fr.qm">lang/qt_fr.qm</file>
     <file alias="de.qm">lang/de.qm</file>

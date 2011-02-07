@@ -9,19 +9,17 @@
 
 import sys
 import gc
-import locale
 import logging
 import os
 import os.path as op
 import sip
 sip.setapi('QVariant', 1)
 
-from PyQt4.QtCore import QFile, QTextStream, QTranslator, QLocale, QSettings
+from PyQt4.QtCore import QFile, QTextStream, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap, QDesktopServices
 
 import hscommon.trans
 from qtlib.error_report_dialog import install_excepthook
-from qt.plat import LANG2LOCALENAME
 import qt.mg_rc
 
 def main(argv):
@@ -44,24 +42,7 @@ def main(argv):
     app.setStyleSheet(style)
     settings = QSettings()
     lang = settings.value('Language').toString()
-    if not lang:
-        lang = str(QLocale.system().name())[:2]
-    if lang in LANG2LOCALENAME:
-        # for date formatting
-        localeName = LANG2LOCALENAME[lang]
-        try:
-            locale.setlocale(locale.LC_ALL, str(localeName))
-        except locale.Error:
-            logging.warning("Couldn't set locale %s", localeName)
-        qtr1 = QTranslator()
-        qtr1.load(':/qt_%s' % lang)
-        app.installTranslator(qtr1)
-        qtr2 = QTranslator()
-        qtr2.load(':/%s' % lang)
-        app.installTranslator(qtr2)
-        def qt_tr(s, context='core'):
-            return str(app.translate(context, s, None))
-        hscommon.trans.set_tr(qt_tr)
+    hscommon.trans.install_qt_trans(lang)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed
     from qt.app import MoneyGuru
