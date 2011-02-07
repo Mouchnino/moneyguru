@@ -108,7 +108,7 @@ The Account view also has a filter bar, which behaves similarly to the one in th
 * **Reconciled:** Show only reconciled entries.
 * **Not Reconciled:** Show only un-reconciled entries.
 
-The *Reconciliation* button in the filter bar (only enabled for assets/liabilities) lets you toggle :doc:`reconciliation <reconciliation.htm>` mode on and off.
+The *Reconciliation* button in the filter bar (only enabled for assets/liabilities) lets you toggle :doc:`reconciliation <reconciliation>` mode on and off.
 
 **Transfer** cells have a little |basics_show_account_arrow| at their right. Similarly to the other views, you can click on it to show the account displayed in the cell. Unlike arrows from the Transaction view, this only *cycles through* the transaction's split. Therefore, even when a transaction has more than 2 splits, continually clicking on that arrow will show all affected accounts, not just the first 2.
 
