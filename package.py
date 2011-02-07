@@ -39,7 +39,7 @@ def package_windows(dev):
         for lib in libs:
             print_and_do("upx --best \"dist\\{0}\"".format(lib))
     
-    help_path = 'help\\moneyguru_help'
+    help_path = 'build\\help'
     print("Copying {0} to dist\\help".format(help_path))
     shutil.copytree(help_path, 'dist\\help')
     
@@ -73,7 +73,7 @@ def package_debian():
     shutil.copytree('debian', op.join(destpath, 'debian'))
     build_debian_changelog(op.join('help', 'changelog'), op.join(destpath, 'debian', 'changelog'),
         'moneyguru', from_version='1.8.0')
-    shutil.copytree(op.join('help', 'moneyguru_help'), op.join(srcpath, 'help'))
+    shutil.copytree(op.join('build', 'help'), op.join(srcpath, 'help'))
     shutil.copy(op.join('images', 'logo_small.png'), srcpath)
     compileall.compile_dir(srcpath)
     os.chdir(destpath)

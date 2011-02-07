@@ -78,7 +78,7 @@ class MoneyGuru(ApplicationBase):
         self.aboutBox.show()
     
     def showHelp(self):
-        url = QUrl.fromLocalFile(op.abspath(op.join(HELP_PATH, 'intro.htm')))
+        url = QUrl.fromLocalFile(op.abspath(op.join(HELP_PATH, 'index.html')))
         QDesktopServices.openUrl(url)
     
     def showPreferences(self):
