@@ -71,6 +71,9 @@ def test_ignore_accents(app):
 
 #--- Edit with match
 def app_with_match():
+    # XXX This test is flaky on windows because time.time() is not guaranteed to always return a
+    # different value (completions are sorted by mtime). There should be a flag in add_txn to easily
+    # force a different mtime.
     app = TestApp()
     app.add_txn(description='Bazooka')
     app.add_txn(description='buz')
