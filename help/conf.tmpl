@@ -71,11 +71,11 @@ REPLACEMENT_STR = '\n'.join(['.. |%s| replace:: %s' % (key, value) for key, valu
 
 # We also need to set up substitutions for images.
 
-static_dir = '../static_%s' % platform
-all_images = os.listdir(static_dir)
+image_dir = '../image_%s' % platform
+all_images = os.listdir(image_dir)
 
 
-IMAGE_SUBSTS = '\n'.join(['.. |%s| image:: %s' % (op.splitext(img)[0], op.join(static_dir, img)) for img in all_images])
+IMAGE_SUBSTS = '\n'.join(['.. |%s| image:: %s' % (op.splitext(img)[0], op.join(image_dir, img)) for img in all_images])
 
 rst_epilog = u"""
 %s
@@ -150,7 +150,7 @@ html_theme = 'default'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = [static_dir]
+# html_static_path = []
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
