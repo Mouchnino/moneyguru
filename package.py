@@ -53,9 +53,9 @@ def package_windows(dev):
     
 
 def package_debian():
-    if op.exists('build'):
-        shutil.rmtree('build')
     destpath = op.join('build', 'moneyguru-{0}'.format(MoneyGuru.VERSION))
+    if op.exists(destpath):
+        shutil.rmtree(destpath)
     srcpath = op.join(destpath, 'src')
     os.makedirs(srcpath)
     shutil.copy('run.py', op.join(srcpath, 'run.py'))
