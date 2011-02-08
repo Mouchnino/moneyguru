@@ -8,285 +8,317 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_
+from hscommon.testutil import eq_, patch_today
 
-from ..base import TestCase, DictLoader, testdata
+from ..base import TestApp, with_app, DictLoader, testdata
 from ...model.date import YearRange
 from ...gui.import_window import SwapType
 
-class ImportCheckbookQIF(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
-        self.check_gui_calls(self.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
+class TestImportCheckbookQIF:
+    def do_setup(self):
+        app = TestApp()
+        app.doc.date_range = YearRange(date(2007, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
+        app.check_gui_calls(app.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
+        return app
     
-    def test_account_tabs(self):
-        """There is one account tab for each imported account, the first is selected, and each tab
-        has a counter indicating the number of entries in each account.
-        """
-        self.assertEqual(len(self.iwin.panes), 2)
-        self.assertEqual(self.iwin.panes[0].name, 'Account 1')
-        self.assertEqual(self.iwin.panes[1].name, 'Account 2')
-        self.assertEqual(self.iwin.panes[0].count, 5)
-        self.assertEqual(self.iwin.panes[1].count, 3)
-        self.assertEqual(self.iwin.selected_pane_index, 0)
+    @with_app(do_setup)
+    def test_account_tabs(self, app):
+        # There is one account tab for each imported account, the first is selected, and each tab
+        # has a counter indicating the number of entries in each account.
+        eq_(len(app.iwin.panes), 2)
+        eq_(app.iwin.panes[0].name, 'Account 1')
+        eq_(app.iwin.panes[1].name, 'Account 2')
+        eq_(app.iwin.panes[0].count, 5)
+        eq_(app.iwin.panes[1].count, 3)
+        eq_(app.iwin.selected_pane_index, 0)
     
-    def test_close_pane(self):
-        """It's possible to close any pane"""
-        self.iwin.close_pane(1) # It's not the selected pane
-        self.assertEqual(len(self.iwin.panes), 1)
-        self.assertEqual(self.iwin.panes[0].name, 'Account 1')
-        self.assertEqual(self.iwin.panes[0].count, 5)
+    @with_app(do_setup)
+    def test_close_pane(self, app):
+        # It's possible to close any pane
+        app.iwin.close_pane(1) # It's not the selected pane
+        eq_(len(app.iwin.panes), 1)
+        eq_(app.iwin.panes[0].name, 'Account 1')
+        eq_(app.iwin.panes[0].count, 5)
     
-    def test_close_selected_pane(self):
-        """When closing the selected pane, everything is correctly refreshed"""
-        self.add_account_legacy('bar')
-        self.iwin.selected_target_account_index = 1
-        self.iwin.close_pane(0)
-        self.assertEqual(len(self.iwin.panes), 1)
-        self.assertEqual(self.iwin.panes[0].name, 'Account 2')
-        self.assertEqual(self.iwin.panes[0].count, 3)
-        self.assertEqual(len(self.itable), 3)
+    @with_app(do_setup)
+    def test_close_selected_pane(self, app):
+        # When closing the selected pane, everything is correctly refreshed
+        app.add_account('bar')
+        app.iwin.selected_target_account_index = 1
+        app.iwin.close_pane(0)
+        eq_(len(app.iwin.panes), 1)
+        eq_(app.iwin.panes[0].name, 'Account 2')
+        eq_(app.iwin.panes[0].count, 3)
+        eq_(len(app.itable), 3)
     
-    def test_close_first_pane_when_selected_is_last(self):
-        """When the selected pane index is last, closing it decrements the selected pane index"""
-        self.iwin.selected_pane_index = 1
-        self.iwin.close_pane(0)
-        self.assertEqual(self.iwin.selected_pane_index, 0)
+    @with_app(do_setup)
+    def test_close_first_pane_when_selected_is_last(self, app):
+        # When the selected pane index is last, closing it decrements the selected pane index
+        app.iwin.selected_pane_index = 1
+        app.iwin.close_pane(0)
+        eq_(app.iwin.selected_pane_index, 0)
     
-    def test_close_selected_pane_when_last(self):
-        """When the selected pane index is last, closing it decrements the selected pane index"""
-        self.iwin.selected_pane_index = 1
-        self.iwin.close_pane(1)
-        self.assertEqual(self.iwin.selected_pane_index, 0)
+    @with_app(do_setup)
+    def test_close_selected_pane_when_last(self, app):
+        # When the selected pane index is last, closing it decrements the selected pane index
+        app.iwin.selected_pane_index = 1
+        app.iwin.close_pane(1)
+        eq_(app.iwin.selected_pane_index, 0)
     
-    def test_dirty(self):
-        """Simply loading a file for import doesn't make the document dirty"""
-        self.assertFalse(self.document.is_dirty())
+    @with_app(do_setup)
+    def test_dirty(self, app):
+        # Simply loading a file for import doesn't make the document dirty
+        assert not app.doc.is_dirty()
     
-    def test_import_selected_pane(self):
-        """import_selected_pane() imports the currenctly selected pane and closes it"""
-        self.iwin.import_selected_pane()
+    @with_app(do_setup)
+    def test_import_selected_pane(self, app):
+        # import_selected_pane() imports the currenctly selected pane and closes it
+        app.iwin.import_selected_pane()
         # The pane has been closed
-        self.assertEqual(len(self.iwin.panes), 1)
-        self.assertEqual(self.iwin.panes[0].name, 'Account 2')
-        self.check_gui_calls(self.iwin_gui, ['update_selected_pane', 'close_selected_tab'])
+        eq_(len(app.iwin.panes), 1)
+        eq_(app.iwin.panes[0].name, 'Account 2')
+        app.check_gui_calls(app.iwin_gui, ['update_selected_pane', 'close_selected_tab'])
         # The account & entries has been added
-        self.assertEqual(self.bsheet.assets[0].name, 'Account 1')
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertEqual(self.ta.etable_count(), 5)
+        eq_(app.bsheet.assets[0].name, 'Account 1')
+        app.bsheet.selected = app.bsheet.assets[0]
+        app.bsheet.show_selected_account()
+        eq_(app.etable_count(), 5)
         # When importing the last pane, the window should close
-        self.clear_gui_calls()
-        self.iwin.import_selected_pane()
-        self.check_gui_calls(self.iwin_gui, ['close_selected_tab', 'close'])
+        app.clear_gui_calls()
+        app.iwin.import_selected_pane()
+        app.check_gui_calls(app.iwin_gui, ['close_selected_tab', 'close'])
     
-    def test_import_selected_pane_with_some_entries_disabled(self):
+    @with_app(do_setup)
+    def test_import_selected_pane_with_some_entries_disabled(self, app):
         # When the will_import checkbox is unchecked, don't import the entry
-        self.itable[0].will_import = False
-        self.iwin.import_selected_pane()
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertEqual(self.ta.etable_count(), 4)
+        app.itable[0].will_import = False
+        app.iwin.import_selected_pane()
+        app.bsheet.selected = app.bsheet.assets[0]
+        app.bsheet.show_selected_account()
+        eq_(app.etable_count(), 4)
     
-    def test_invert_amounts(self):
-        self.iwin.swap_type_index = SwapType.InvertAmount
-        self.iwin.perform_swap()
-        eq_(self.itable[0].amount_import, '-42.32')
-        eq_(self.itable[1].amount_import, '-100.00')
-        eq_(self.itable[2].amount_import, '60.00')
+    @with_app(do_setup)
+    def test_invert_amounts(self, app):
+        app.iwin.swap_type_index = SwapType.InvertAmount
+        app.iwin.perform_swap()
+        eq_(app.itable[0].amount_import, '-42.32')
+        eq_(app.itable[1].amount_import, '-100.00')
+        eq_(app.itable[2].amount_import, '60.00')
     
-    def test_remember_target_account_selection(self):
-        """When selecting a target account, it's specific to the ane we're in"""
-        self.add_account_legacy('foo')
-        self.iwin.selected_target_account_index = 1
-        self.clear_gui_calls()
-        self.iwin.selected_pane_index = 1
-        self.check_gui_calls(self.iwin_gui, ['update_selected_pane'])
-        self.assertEqual(self.iwin.selected_target_account_index, 0)
-        self.iwin.selected_target_account_index = 1
-        self.iwin.selected_pane_index = 0
-        self.assertEqual(self.iwin.selected_target_account_index, 1)
+    @with_app(do_setup)
+    def test_remember_target_account_selection(self, app):
+        # When selecting a target account, it's specific to the ane we're in
+        app.add_account('foo')
+        app.iwin.selected_target_account_index = 1
+        app.clear_gui_calls()
+        app.iwin.selected_pane_index = 1
+        app.check_gui_calls(app.iwin_gui, ['update_selected_pane'])
+        eq_(app.iwin.selected_target_account_index, 0)
+        app.iwin.selected_target_account_index = 1
+        app.iwin.selected_pane_index = 0
+        eq_(app.iwin.selected_target_account_index, 1)
         # target account selection is instance based, not index based
-        self.add_account_legacy('bar')
-        self.assertEqual(self.iwin.selected_target_account_index, 2)
-        self.iwin.selected_pane_index = 1
-        self.assertEqual(self.iwin.selected_target_account_index, 2)
+        app.add_account('bar')
+        eq_(app.iwin.selected_target_account_index, 2)
+        app.iwin.selected_pane_index = 1
+        eq_(app.iwin.selected_target_account_index, 2)
     
-    def test_select_out_of_range_tab_index(self):
+    @with_app(do_setup)
+    def test_select_out_of_range_tab_index(self, app):
         # ignore index set that are out of range
-        self.iwin.selected_pane_index = 2
-        self.assertEqual(self.iwin.selected_pane_index, 0)
+        app.iwin.selected_pane_index = 2
+        eq_(app.iwin.selected_pane_index, 0)
     
-    def test_switch_description_payee(self):
-        self.iwin.swap_type_index = SwapType.DescriptionPayee
-        self.iwin.perform_swap()
+    @with_app(do_setup)
+    def test_switch_description_payee(self, app):
+        app.iwin.swap_type_index = SwapType.DescriptionPayee
+        app.iwin.perform_swap()
         # the 4th entry is the Hydro Quebec entry
-        self.assertEqual(self.itable[3].description_import, 'Hydro-Quebec')
-        self.assertEqual(self.itable[3].payee_import, 'Power Bill')
+        eq_(app.itable[3].description_import, 'Hydro-Quebec')
+        eq_(app.itable[3].payee_import, 'Power Bill')
     
-    def test_target_accounts(self):
-        """Target accounts are updated when accounts are added/removed"""
-        self.assertEqual(self.iwin.target_account_names, ['< New Account >'])
-        self.add_account('Foo')
-        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
-        self.add_account('bar')
-        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
-        self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
-        self.mainwindow.select_balance_sheet()
-        self.bsheet.selected = self.bsheet.assets[0] # bar
-        self.bsheet.delete()
-        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
-        self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo'])
-        self.add_account_legacy()
-        self.check_gui_calls(self.iwin_gui, ['refresh_target_accounts'])
-        self.assertEqual(self.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
+    @with_app(do_setup)
+    def test_target_accounts(self, app):
+        # Target accounts are updated when accounts are added/removed
+        eq_(app.iwin.target_account_names, ['< New Account >'])
+        app.add_account('Foo')
+        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        app.add_account('bar')
+        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        eq_(app.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
+        app.mainwindow.select_balance_sheet()
+        app.bsheet.selected = app.bsheet.assets[0] # bar
+        app.bsheet.delete()
+        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        eq_(app.iwin.target_account_names, ['< New Account >', 'Foo'])
+        app.add_account()
+        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        eq_(app.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
     
 
-class ImportCheckbookQIFTwice(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
-        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
+class TestImportCheckbookQIFTwice:
+    def do_setup(self):
+        app = TestApp()
+        app.doc.date_range = YearRange(date(2007, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
+        app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
+        return app
     
-    def test_import_again(self):
+    @with_app(do_setup)
+    def test_import_again(self, app):
         #Importing when there are already open tabs adds the new tabs to the iwin
-        self.assertEqual(len(self.iwin.panes), 4)
+        eq_(len(app.iwin.panes), 4)
     
-    def test_switch_description_payee_apply_to_all(self):
-        self.iwin.swap_type_index = SwapType.DescriptionPayee
-        self.iwin.perform_swap(apply_to_all=True)
+    @with_app(do_setup)
+    def test_switch_description_payee_apply_to_all(self, app):
+        app.iwin.swap_type_index = SwapType.DescriptionPayee
+        app.iwin.perform_swap(apply_to_all=True)
         # the 4th entry is the Hydro Quebec entry
-        self.iwin.selected_pane_index = 2
-        self.assertEqual(self.itable[3].description_import, 'Hydro-Quebec')
-        self.assertEqual(self.itable[3].payee_import, 'Power Bill')
+        app.iwin.selected_pane_index = 2
+        eq_(app.itable[3].description_import, 'Hydro-Quebec')
+        eq_(app.itable[3].payee_import, 'Power Bill')
     
 
-class ImportCheckbookQIFWithSomeExistingTransactions(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_account_legacy('foo')
-        self.add_entry(date='01/01/2007', description='first entry', increase='1')
-        self.aview.toggle_reconciliation_mode()
-        self.etable.toggle_reconciled()
-        self.aview.toggle_reconciliation_mode() # commit
-        self.add_entry(date='02/01/2007', description='second entry', increase='2')
-        self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
-        self.clear_gui_calls()
-        self.iwin.selected_target_account_index = 1 # foo
-        self.check_gui_calls(self.itable_gui, ['refresh'])
+class TestImportCheckbookQIFWithSomeExistingTransactions:
+    def do_setup(self):
+        app = TestApp()
+        app.add_account('foo')
+        app.mw.show_account()
+        app.add_entry(date='01/01/2007', description='first entry', increase='1')
+        app.aview.toggle_reconciliation_mode()
+        app.etable.toggle_reconciled()
+        app.aview.toggle_reconciliation_mode() # commit
+        app.add_entry(date='02/01/2007', description='second entry', increase='2')
+        app.doc.date_range = YearRange(date(2007, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
+        app.clear_gui_calls()
+        app.iwin.selected_target_account_index = 1 # foo
+        app.check_gui_calls(app.itable_gui, ['refresh'])
+        return app
     
-    def test_import(self):
-        """Import happens in the selected target account"""
-        self.iwin.import_selected_pane()
-        self.assertEqual(self.bsheet.assets.children_count, 3) # did not add a new account
-        self.bsheet.selected = self.bsheet.assets[0]
-        self.bsheet.show_selected_account()
-        self.assertEqual(self.ta.etable_count(), 7) # The entries have been added
+    @with_app(do_setup)
+    def test_import(self, app):
+        # Import happens in the selected target account
+        app.iwin.import_selected_pane()
+        eq_(app.bsheet.assets.children_count, 3) # did not add a new account
+        app.bsheet.selected = app.bsheet.assets[0]
+        app.bsheet.show_selected_account()
+        eq_(app.etable_count(), 7) # The entries have been added
     
-    def test_match_then_import(self):
-        """The entry matching has the correct effect on the import"""
-        self.itable.bind(2, 5) # second entry --> 04/02/2007 Transfer 80.00
-        self.iwin.import_selected_pane()
+    @with_app(do_setup)
+    def test_match_then_import(self, app):
+        # The entry matching has the correct effect on the import
+        app.itable.bind(2, 5) # second entry --> 04/02/2007 Transfer 80.00
+        app.iwin.import_selected_pane()
         # The merged entry is supposed to be the last because it changed its date
-        self.assertEqual(self.ta.etable_count(), 6)
-        row = self.etable[5]
-        self.assertEqual(row.date, '04/02/2007')
-        self.assertEqual(row.description, 'second entry')
-        self.assertEqual(row.increase, '80.00')
+        eq_(app.etable_count(), 6)
+        row = app.etable[5]
+        eq_(row.date, '04/02/2007')
+        eq_(row.description, 'second entry')
+        eq_(row.increase, '80.00')
     
 
-class LoadWithReference(TestCase):
-    def setUp(self):
-        self.create_instances()
+class TestLoadWithReference:
+    def do_setup(self):
+        app = TestApp()
         self.TXNS = [
             {'date': '20/07/2009', 'amount': '1', 'reference': 'txn1'},
             {'date': '20/07/2009', 'amount': '1', 'reference': 'txn1'},
         ]
-        self.fake_import('foo', self.TXNS)
-        self.iwin.import_selected_pane()
+        app.fake_import('foo', self.TXNS)
+        app.iwin.import_selected_pane()
+        return app
     
-    def test_import_with_same_reference_twice(self):
+    @with_app(do_setup)
+    def test_import_with_same_reference_twice(self, app):
         # When 2 txns have the same ref in an account, importing a file with the same ref would
         # cause a crash.
-        self.fake_import('foo', self.TXNS)
-        self.iwin.selected_target_account_index = 1 # no crash
+        app.fake_import('foo', self.TXNS)
+        app.iwin.selected_target_account_index = 1 # no crash
     
 
-class LoadThemImportWithReference(TestCase):
-    def setUp(self):
-        self.mock_today(2008, 1, 1)
-        self.create_instances()
-        self.document.load_from_xml(testdata.filepath('moneyguru/with_references1.moneyguru'))
-        self.document.parse_file_for_import(testdata.filepath('moneyguru/with_references2.moneyguru'))
-        self.clear_gui_calls()
+class TestLoadThemImportWithReference:
+    def do_setup(self, monkeypatch):
+        patch_today(monkeypatch, 2008, 1, 1)
+        app = TestApp()
+        app.doc.load_from_xml(testdata.filepath('moneyguru/with_references1.moneyguru'))
+        app.doc.parse_file_for_import(testdata.filepath('moneyguru/with_references2.moneyguru'))
+        return app
     
-    def test_selected_target_account(self):
-        """If a target account's reference matched the imported account, select it"""
-        self.assertEqual(self.iwin.selected_target_account_index, 1)
+    @with_app(do_setup)
+    def test_selected_target_account(self, app):
+        # If a target account's reference matched the imported account, select it
+        eq_(app.iwin.selected_target_account_index, 1)
     
 
-class ImportMoneyguruFileWithExpenseAccount(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2008, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('moneyguru', 'simple.moneyguru'))
+class TestImportMoneyguruFileWithExpenseAccount:
+    def do_setup(self):
+        app = TestApp()
+        app.doc.date_range = YearRange(date(2008, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'simple.moneyguru'))
+        return app
     
-    def test_account_panes(self):
+    @with_app(do_setup)
+    def test_account_panes(self, app):
         # There are only 2 account panes (one for each asset account). the expense account is not there
-        self.assertEqual(len(self.iwin.panes), 2)
-        self.assertEqual(self.iwin.panes[0].name, 'Account 1')
-        self.assertEqual(self.iwin.panes[1].name, 'Account 2')
+        eq_(len(app.iwin.panes), 2)
+        eq_(app.iwin.panes[0].name, 'Account 1')
+        eq_(app.iwin.panes[1].name, 'Account 2')
     
 
-class ImportAccountlessQIF(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('qif/accountless.qif'))
+class TestImportAccountlessQIF:
+    def do_setup(self):
+        app = TestApp()
+        app.doc.date_range = YearRange(date(2007, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('qif/accountless.qif'))
+        return app
     
-    def test_account_tabs(self):
+    @with_app(do_setup)
+    def test_account_tabs(self, app):
         # The account is just imported as 'Account'
-        self.assertEqual(len(self.iwin.panes), 1)
-        self.assertEqual(self.iwin.panes[0].name, 'Account')
-        self.assertEqual(self.iwin.panes[0].count, 5)
+        eq_(len(app.iwin.panes), 1)
+        eq_(app.iwin.panes[0].name, 'Account')
+        eq_(app.iwin.panes[0].count, 5)
     
 
-class ImportAccountlessWithSplitsQIF(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2008, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('qif/accountless_with_splits.qif'))
+class TestImportAccountlessWithSplitsQIF:
+    def do_setup(self):
+        app = TestApp()
+        app.doc.date_range = YearRange(date(2008, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('qif/accountless_with_splits.qif'))
+        return app
     
-    def test_account_tabs(self):
+    @with_app(do_setup)
+    def test_account_tabs(self, app):
         # Previously, splits referring to account not present in the QIF has a None account
-        self.assertEqual(len(self.iwin.panes), 1)
-        self.assertEqual(self.iwin.panes[0].name, 'Account')
-        self.assertEqual(self.iwin.panes[0].count, 2)
+        eq_(len(app.iwin.panes), 1)
+        eq_(app.iwin.panes[0].name, 'Account')
+        eq_(app.iwin.panes[0].count, 2)
     
-    def test_transfers(self):
+    @with_app(do_setup)
+    def test_transfers(self, app):
         # The transfer splits' account were correctly set
-        self.assertEqual(len(self.itable), 2)
-        self.assertEqual(self.itable[0].transfer_import, 'Payment Sent, Fee')
-        self.assertEqual(self.itable[0].amount_import, '-1000.00')
-        self.assertEqual(self.itable[1].transfer_import, 'Web Accept Payment Received, Fee')
-        self.assertEqual(self.itable[1].amount_import, '18.95')
+        eq_(len(app.itable), 2)
+        eq_(app.itable[0].transfer_import, 'Payment Sent, Fee')
+        eq_(app.itable[0].amount_import, '-1000.00')
+        eq_(app.itable[1].transfer_import, 'Web Accept Payment Received, Fee')
+        eq_(app.itable[1].amount_import, '18.95')
     
 
-class ImportQIFWithEmptyAccount(TestCase): # like checkbook.qif, but with 2 extra empty accounts
-    def setUp(self):
-        self.create_instances()
-        self.document.date_range = YearRange(date(2007, 1, 1))
-        self.document.parse_file_for_import(testdata.filepath('qif/empty_accounts.qif'))
+class TestImportQIFWithEmptyAccount: # like checkbook.qif, but with 2 extra empty accounts
+    def do_setup(self):
+        app = TestApp()
+        app.doc.date_range = YearRange(date(2007, 1, 1))
+        app.doc.parse_file_for_import(testdata.filepath('qif/empty_accounts.qif'))
+        return app
     
-    def test_account_tabs(self):
+    @with_app(do_setup)
+    def test_account_tabs(self, app):
         # The account is just imported as 'Account'
-        self.assertEqual(len(self.iwin.panes), 2)
-        self.assertEqual(self.iwin.panes[0].name, 'Account 1')
-        self.assertEqual(self.iwin.panes[1].name, 'Account 2')
+        eq_(len(app.iwin.panes), 2)
+        eq_(app.iwin.panes[0].name, 'Account 1')
+        eq_(app.iwin.panes[1].name, 'Account 2')
     
 
 LOW_DATE_FIELDS = [
@@ -305,97 +337,109 @@ HIGH_YEAR_FIELDS = [
     {'date': '13/01/1999', 'amount': '1'},
 ]
 
-class ImportTransactionsWithLowDateFields(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.fake_import('foo', LOW_DATE_FIELDS)
+class TestImportTransactionsWithLowDateFields:
+    def do_setup(self):
+        app = TestApp()
+        app.fake_import('foo', LOW_DATE_FIELDS)
+        return app
     
-    def test_can_switch_fields(self):
+    @with_app(do_setup)
+    def test_can_switch_fields(self, app):
         # all fields can be switched
-        self.iwin.swap_type_index = SwapType.DayMonth
-        assert self.iwin.can_perform_swap()
-        self.iwin.swap_type_index = SwapType.DayYear
-        assert self.iwin.can_perform_swap()
-        self.iwin.swap_type_index = SwapType.MonthYear
-        assert self.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.DayMonth
+        assert app.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.DayYear
+        assert app.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.MonthYear
+        assert app.iwin.can_perform_swap()
     
-    def test_switch_day_month(self):
-        self.iwin.swap_type_index = SwapType.DayMonth
-        self.iwin.perform_swap()
-        self.assertEqual(self.itable[0].date_import, '11/05/2008')
-        self.assertEqual(self.itable[1].date_import, '01/12/2009')
-        self.assertEqual(self.itable[2].date_import, '02/01/2009')
+    @with_app(do_setup)
+    def test_switch_day_month(self, app):
+        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.perform_swap()
+        eq_(app.itable[0].date_import, '11/05/2008')
+        eq_(app.itable[1].date_import, '01/12/2009')
+        eq_(app.itable[2].date_import, '02/01/2009')
     
-    def test_switch_day_year(self):
-        self.iwin.swap_type_index = SwapType.DayYear
-        self.iwin.perform_swap()
-        self.assertEqual(self.itable[0].date_import, '08/11/2005')
-        self.assertEqual(self.itable[1].date_import, '09/01/2012')
-        self.assertEqual(self.itable[2].date_import, '09/02/2001')
+    @with_app(do_setup)
+    def test_switch_day_year(self, app):
+        app.iwin.swap_type_index = SwapType.DayYear
+        app.iwin.perform_swap()
+        eq_(app.itable[0].date_import, '08/11/2005')
+        eq_(app.itable[1].date_import, '09/01/2012')
+        eq_(app.itable[2].date_import, '09/02/2001')
     
 
-class ImportTransactionsWithHighDayField(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.fake_import('foo', HIGH_DAY_FIELDS)
+class TestImportTransactionsWithHighDayField:
+    def do_setup(self):
+        app = TestApp()
+        app.fake_import('foo', HIGH_DAY_FIELDS)
+        return app
     
-    def test_can_switch_fields(self):
+    @with_app(do_setup)
+    def test_can_switch_fields(self, app):
         # the day can't be switched with month
-        self.iwin.swap_type_index = SwapType.DayMonth
-        assert not self.iwin.can_perform_swap()
-        self.iwin.swap_type_index = SwapType.DayYear
-        assert self.iwin.can_perform_swap()
-        self.iwin.swap_type_index = SwapType.MonthYear
-        assert self.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.DayMonth
+        assert not app.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.DayYear
+        assert app.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.MonthYear
+        assert app.iwin.can_perform_swap()
     
 
-class ImportTransactionsWithHighYearField(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.fake_import('foo', HIGH_YEAR_FIELDS)
+class TestImportTransactionsWithHighYearField:
+    def do_setup(self):
+        app = TestApp()
+        app.fake_import('foo', HIGH_YEAR_FIELDS)
+        return app
     
-    def test_can_switch_fields(self):
+    @with_app(do_setup)
+    def test_can_switch_fields(self, app):
         # the year can't be switched because 99 is too high
-        self.iwin.swap_type_index = SwapType.DayMonth
-        assert not self.iwin.can_perform_swap()
-        self.iwin.swap_type_index = SwapType.DayYear
-        assert not self.iwin.can_perform_swap()
-        self.iwin.swap_type_index = SwapType.MonthYear
-        assert not self.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.DayMonth
+        assert not app.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.DayYear
+        assert not app.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.MonthYear
+        assert not app.iwin.can_perform_swap()
     
 
-class ImportTransactionWithDayOn31stAndYearCorrespondingToLowMonth(TestCase):
+class TestImportTransactionWithDayOn31stAndYearCorrespondingToLowMonth:
     # The date 31/07/2009 has a high day, and if we were to swap year and month, we'd be ending up
     # with an invalid date (31/09/2007).
-    def setUp(self):
-        self.create_instances()
-        self.fake_import('foo', [{'date': '31/07/2009', 'amount': '1'}])
+    def do_setup(self):
+        app = TestApp()
+        app.fake_import('foo', [{'date': '31/07/2009', 'amount': '1'}])
+        return app
     
-    def test_can_switch_fields(self):
+    @with_app(do_setup)
+    def test_can_switch_fields(self, app):
         # September has 30 days, so it's impossible to swap the month and the year.
-        self.iwin.swap_type_index = SwapType.MonthYear
-        assert not self.iwin.can_perform_swap()
+        app.iwin.swap_type_index = SwapType.MonthYear
+        assert not app.iwin.can_perform_swap()
 
-class ThreeImportsTwoOfThemWithLowDateFields(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.fake_import('foo1', LOW_DATE_FIELDS)
-        self.fake_import('foo2', LOW_DATE_FIELDS)
-        self.fake_import('foo3', HIGH_DAY_FIELDS)
+class TestThreeImportsTwoOfThemWithLowDateFields:
+    def do_setup(self):
+        app = TestApp()
+        app.fake_import('foo1', LOW_DATE_FIELDS)
+        app.fake_import('foo2', LOW_DATE_FIELDS)
+        app.fake_import('foo3', HIGH_DAY_FIELDS)
+        return app
     
-    def test_switch_apply_to_all(self):
+    @with_app(do_setup)
+    def test_switch_apply_to_all(self, app):
         # when the 'apply_to_all' argument is passed, the swucth happens in all applicable accounts
-        self.iwin.swap_type_index = SwapType.DayMonth
-        self.iwin.perform_swap(apply_to_all=True)
-        self.iwin.selected_pane_index = 1
-        self.assertEqual(self.itable[0].date_import, '11/05/2008') # switched
-        self.iwin.selected_pane_index = 2
-        self.assertEqual(self.itable[0].date_import, '02/01/2009') # not switched
+        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.perform_swap(apply_to_all=True)
+        app.iwin.selected_pane_index = 1
+        eq_(app.itable[0].date_import, '11/05/2008') # switched
+        app.iwin.selected_pane_index = 2
+        eq_(app.itable[0].date_import, '02/01/2009') # not switched
     
 
-class TwoAccountsWithCommonTransaction(TestCase):
-    def setUp(self):
-        self.create_instances()
+class TestTwoAccountsWithCommonTransaction:
+    def do_setup(self):
+        app = TestApp()
         txns = [
             {
                 'date': '5/11/2008',
@@ -405,24 +449,27 @@ class TwoAccountsWithCommonTransaction(TestCase):
                 'amount': '1',
             },
         ]
-        loader = DictLoader(self.app.default_currency, 'first', txns)
+        loader = DictLoader(app.app.default_currency, 'first', txns)
         loader.start_account()
         loader.account_info.name = 'second'
         loader.flush_account()
         loader.load()
-        self.document.loader = loader
-        self.document.notify('file_loaded_for_import')
+        app.doc.loader = loader
+        app.doc.notify('file_loaded_for_import')
+        return app
     
-    def test_switch_date(self):
+    @with_app(do_setup)
+    def test_switch_date(self, app):
         # the transaction in the 2 accounts is the same. *don't* switch it twice!
-        self.iwin.swap_type_index = SwapType.DayMonth
-        self.iwin.perform_swap(apply_to_all=True)
-        self.assertEqual(self.itable[0].date_import, '11/05/2008')
+        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.perform_swap(apply_to_all=True)
+        eq_(app.itable[0].date_import, '11/05/2008')
     
-    def test_switch_description_payee(self):
+    @with_app(do_setup)
+    def test_switch_description_payee(self, app):
         # same as with dates: don't switch twice
-        self.iwin.swap_type_index = SwapType.DescriptionPayee
-        self.iwin.perform_swap(apply_to_all=True)
-        self.assertEqual(self.itable[0].description_import, 'bar')
-        self.assertEqual(self.itable[0].payee_import, 'foo')
+        app.iwin.swap_type_index = SwapType.DescriptionPayee
+        app.iwin.perform_swap(apply_to_all=True)
+        eq_(app.itable[0].description_import, 'bar')
+        eq_(app.itable[0].payee_import, 'foo')
     

@@ -13,7 +13,6 @@ from operator import attrgetter
 import pytest
 
 from hscommon.path import Path
-from hscommon.testcase import TestCase as TestCaseBase
 from hscommon.testutil import eq_, CallLogger, TestApp as TestAppBase, with_app, TestData
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
@@ -63,7 +62,6 @@ from ..gui.transaction_view import TransactionView
 from ..gui.view_options import ViewOptions
 from ..loader import base
 from ..model.account import AccountType
-from .. import document as document_module
 
 testdata = TestData(op.join(op.dirname(__file__), 'testdata'))
 
@@ -416,6 +414,9 @@ class TestApp(TestAppBase):
         # avoid putting a comment next to each len() test, just use this method.
         return len(node) - 2
     
+    def balances(self):
+        return [self.etable[i].balance for i in range(len(self.etable))]
+    
     def bar_graph_data(self):
         result = []
         for x1, x2, y1, y2 in self.bargraph.data:
@@ -461,11 +462,22 @@ class TestApp(TestAppBase):
             pass
         compare_apps(self.doc, newdoc, qif_mode=True)
     
+    def entry_descriptions(self):
+        return [self.etable[i].description for i in range(len(self.etable))]
+    
     def etable_count(self):
         # Now that the entry table has a total row, it messes up all tests that check the length
         # of etable. Rather than having confusing expected numbers with a comment explaining why we
         # add one to the expected count, we use this method that subtract 1 to the len of etable.
         return len(self.etable) - 1 
+    
+    def fake_import(self, account_name, transactions):
+        # When you want to test the post-parsing import process, rather than going through the hoops,
+        # use this methods. 'transactions' is a list of dicts, the dicts being attribute values.
+        # dates are strings in '%d/%m/%Y'.
+        self.doc.loader = DictLoader(self.app.default_currency, account_name, transactions)
+        self.doc.loader.load()
+        self.doc.notify('file_loaded_for_import')
     
     def graph_data(self):
         return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.balgraph.data]
@@ -525,149 +537,6 @@ class TestApp(TestAppBase):
     
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
-    
-
-# TestCase exists for legacy reasons. The preferred way of creating tests is to use TestApp. As of
-# now, not all convenience methods have been moved to TestApp, but if you need one, just move it
-# from TestCase to there and make the old method call the one in TestApp.
-class TestCase(TestCaseBase):
-    cls_tested_module = document_module # for mocks
-    
-    @classmethod
-    def datadirpath(cls):
-        return Path(__file__)[:-1] + 'testdata'
-    
-    def check_gui_calls(self, *args, **kw):
-        self.ta.check_gui_calls(*args, **kw)
-    
-    def check_gui_calls_partial(self, *args, **kw):
-        self.ta.check_gui_calls_partial(*args, **kw)
-    
-    def clear_gui_calls(self, *args, **kw):
-        self.ta.clear_gui_calls(*args, **kw)
-    
-    def create_instances(self):
-        """Creates a Document instance along with all gui layers attached to it.
-        
-        If you want to create an Application or a Document instance with non-blank args, create it 
-        first then call create_instance.
-        """
-        self.ta = TestApp(app=getattr(self, 'app', None), doc=getattr(self, 'document', None))
-        self.document = self.ta.doc
-        self.document_gui = self.ta.doc_gui
-        names = ['app', 'apanel', 'arpanel', 'etable', 'ttable', 'sctable', 'btable', 'scpanel',
-            'tpanel', 'mepanel', 'bpanel', 'stable', 'scsplittable', 'balgraph', 'bargraph',
-            'nwgraph', 'pgraph', 'bsheet', 'apie', 'lpie', 'ipie', 'epie', 'istatement', 'sfield',
-            'efbar', 'tfbar', 'drsel', 'csvopt', 'iwin', 'itable', 'cdrpanel', 'nwview', 'pview',
-            'tview', 'aview', 'scview', 'bview', 'mainwindow']
-        for name in names:
-            guiname = name + '_gui'
-            setattr(self, name, getattr(self.ta, name))
-            setattr(self, guiname, getattr(self.ta, guiname))
-    
-    def account_names(self, *args, **kw):
-        return self.ta.account_names(*args, **kw)
-    
-    def add_account(self, *args, **kw):
-        self.ta.add_account(*args, **kw)
-    
-    def add_account_legacy(self, *args, **kwargs):
-        # In the early development stages, moneyGuru's account were on a left section and when an
-        # account would be selected, its entries would show on the right. This means that a lot of
-        # early tests assume that adding an account (which selects it) means that an entry could be
-        # added right away. Then, a gui change was made, and the current "view" scheme was adopted.
-        # No longer would entries automatically be visible when an account was added, thus making a
-        # lot of tests fail. For simplicity, I had TestCase.add_account() automatically perform a
-        # show_selected_account() call, which made tests pass. However, with the new view based gui,
-        # I soon had to create tests that require the current view to stay on the sheet on which it
-        # was created. There was a "select" argument to add_account, but I was always forgetting
-        # about it, thus leading to most add_account() calls being followed by workarounds for the
-        # fact that the Entry view was selected. This would lead to generally uglier tests. This
-        # went for *way* too long. I'm now creating add_account_legacy method so that the default
-        # behavior is not the legacy one anymore. To avoid invalidating or messing with any tests,
-        # I made all existing tests (except those with an explicit "select=False") call
-        # add_account_legacy(), but this shouldn't be used anymore. From now on, when adding tests
-        # around such calls, calls to add_account_legacy() should be replaced by an add_account()
-        # call followed or not by a show_selected_account(), depending on the carefully evaluated
-        # situation. Such carefulness can hardly be achieved in a mass re-factoring, so it has to be
-        # made progressively.
-        self.add_account(*args, **kwargs)
-        self.mainwindow.show_account()
-    
-    def add_accounts(self, *args, **kw):
-        self.ta.add_accounts(*args, **kw)
-    
-    def add_budget(self, *args, **kw):
-        self.ta.add_budget(*args, **kw)
-    
-    def add_entry(self, *args, **kw):
-        self.ta.add_entry(*args, **kw)
-    
-    def add_group(self, *args, **kw):
-        self.ta.add_group(*args, **kw)
-    
-    def add_schedule(self, *args, **kw):
-        self.ta.add_schedule(*args, **kw)
-    
-    def add_txn(self, *args, **kw):
-        self.ta.add_txn(*args, **kw)
-    
-    def account_node_subaccount_count(self, *args, **kw):
-        return self.ta.account_node_subaccount_count(*args, **kw)
-    
-    def balances(self):
-        return [self.etable[i].balance for i in range(len(self.etable))]
-    
-    def bar_graph_data(self, *args, **kw):
-        return self.ta.bar_graph_data(*args, **kw)
-    
-    def do_test_save_load(self):
-        self.ta.do_test_save_load()
-    
-    def do_test_qif_export_import(self):
-        self.ta.do_test_qif_export_import()
-    
-    def entry_descriptions(self):
-        return [self.etable[i].description for i in range(len(self.etable))]
-    
-    def fake_import(self, account_name, transactions):
-        # When you want to test the post-parsing import process, rather than going through the hoops,
-        # use this methods. 'transactions' is a list of dicts, the dicts being attribute values.
-        # dates are strings in '%d/%m/%Y'.
-        self.document.loader = DictLoader(self.app.default_currency, account_name, transactions)
-        self.document.loader.load()
-        self.document.notify('file_loaded_for_import')
-    
-    def graph_data(self):
-        return self.ta.graph_data()
-    
-    def nw_graph_data(self):
-        return self.ta.nw_graph_data()
-    
-    def save_file(self):
-        filename = op.join(self.tmpdir(), 'foo.xml')
-        self.document.save_to_xml(filename) # reset the dirty flag
-    
-    def save_and_load(self, newapp=True):
-        # saves the current document and returns a document loaded with that saved file
-        filepath = op.join(self.tmpdir(), 'foo.xml')
-        self.document.save_to_xml(filepath)
-        self.document.close()
-        if newapp:
-            newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
-        else:
-            newapp = self.app
-        newdoc = Document(DocumentGUI(), newapp)
-        newdoc.new_account(AccountType.Asset, None) # shouldn't be there after the load
-        newdoc.load_from_xml(filepath)
-        self.document._cook() # Make sure the balances have been converted using the latest fetched rates
-        return newdoc
-    
-    def show_account(self, *args, **kw):
-        self.ta.show_account(*args, **kw)
-    
-    def transaction_descriptions(self, *args, **kw):
-        return self.ta.transaction_descriptions(*args, **kw)
     
 
 def compare_apps(first, second, qif_mode=False):

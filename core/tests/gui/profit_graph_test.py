@@ -6,56 +6,62 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
 from datetime import date
 
 from hscommon.currency import USD
+from hscommon.testutil import eq_, patch_today
 
-from ..base import TestCase
+from ..base import TestApp, with_app
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.drsel.select_month_range()
+class TestPristine:
+    def do_setup(self):
+        app = TestApp()
+        app.drsel.select_month_range()
+        return app
     
-    def test_cook_bar_overflow(self):
+    @with_app(do_setup)
+    def test_cook_bar_overflow(self, app):
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
         # until the end of the *overflow*, not the end of the date range.
-        self.add_account_legacy('Checking')
-        self.add_entry('01/11/2008', transfer='Income', increase='42') #sunday
-        self.drsel.select_prev_date_range() # oct 2008
-        self.add_entry('31/10/2008', transfer='Income', increase='42')
-        self.mainwindow.select_income_statement()
+        app.add_account('Checking')
+        app.mw.show_account()
+        app.add_entry('01/11/2008', transfer='Income', increase='42') #sunday
+        app.drsel.select_prev_date_range() # oct 2008
+        app.add_entry('31/10/2008', transfer='Income', increase='42')
+        app.mainwindow.select_income_statement()
         # now, the creation of the txn forced a recook. what we want to make sure is that both 
         # entries will be in the bar
-        self.assertEqual(self.pgraph.data[0][2], 84)
+        eq_(app.pgraph.data[0][2], 84)
     
     
-class IncomesAndExpensesInDifferentAccounts(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.drsel.select_month_range()
+class TestIncomesAndExpensesInDifferentAccounts:
+    def do_setup(self):
+        app = TestApp()
+        app.drsel.select_month_range()
         USD.set_CAD_value(1.42, date(2008, 7, 1))
         # in july 2008, the first mondy is the 7th
-        self.add_account_legacy('asset')
-        self.add_entry('12/6/2008', transfer='income1', increase='10') # will be ignored
-        self.add_entry('3/7/2008', transfer='income1', increase='50') # 1st week
-        self.add_entry('5/7/2008', transfer='income1', increase='80')
-        self.add_entry('7/7/2008', transfer='income1', increase='90') # 2nd week
-        self.add_entry('1/7/2008', transfer='income2', increase='32') # 1st week
-        self.add_entry('5/7/2008', transfer='income2', increase='22')
-        self.add_entry('15/7/2008', transfer='income2', increase='54') # 3rd week
-        self.add_entry('1/7/2008', transfer='expense1', decrease='10 cad')
-        self.add_entry('8/7/2008', transfer='expense2', decrease='100') # 2nd week
-        self.mainwindow.select_income_statement()
-        self.clear_gui_calls()
+        app.add_account('asset')
+        app.mw.show_account()
+        app.add_entry('12/6/2008', transfer='income1', increase='10') # will be ignored
+        app.add_entry('3/7/2008', transfer='income1', increase='50') # 1st week
+        app.add_entry('5/7/2008', transfer='income1', increase='80')
+        app.add_entry('7/7/2008', transfer='income1', increase='90') # 2nd week
+        app.add_entry('1/7/2008', transfer='income2', increase='32') # 1st week
+        app.add_entry('5/7/2008', transfer='income2', increase='22')
+        app.add_entry('15/7/2008', transfer='income2', increase='54') # 3rd week
+        app.add_entry('1/7/2008', transfer='expense1', decrease='10 cad')
+        app.add_entry('8/7/2008', transfer='expense2', decrease='100') # 2nd week
+        app.mainwindow.select_income_statement()
+        app.clear_gui_calls()
+        return app
     
-    def test_budget(self):
+    @with_app(do_setup)
+    def test_budget(self, app, monkeypatch):
         # budgets are counted in the pgraph
-        self.mock_today(2008, 7, 18)
-        self.add_budget('income1', 'asset', '400') # +180
-        self.mainwindow.select_income_statement()
-        amounts = [data[2:] for data in self.pgraph.data]
+        patch_today(monkeypatch, 2008, 7, 18)
+        app.add_budget('income1', 'asset', '400') # +180
+        app.mainwindow.select_income_statement()
+        amounts = [data[2:] for data in app.pgraph.data]
         first_week = 50 + 80 + 32 + 22 - 7.04
         second_week = 90 - 100
         third_week = 54
@@ -65,38 +71,41 @@ class IncomesAndExpensesInDifferentAccounts(TestCase):
         fifth_week_future = 55.38 + 38.71 # (180 / 13 * 4) + (400 / 31 * 3)
         expected = [(first_week, 0), (second_week, 0), (third_week, third_week_future), 
             (0, fourth_week_future), (0, fifth_week_future)]
-        self.assertEqual(amounts, expected)
+        eq_(amounts, expected)
     
-    def test_budget_and_exclusion(self):
+    @with_app(do_setup)
+    def test_budget_and_exclusion(self, app, monkeypatch):
         # when an account is excluded, it's budget is not counted
-        self.mock_today(2008, 7, 18)
-        self.add_budget('income1', 'asset', '400') # +180
-        self.mainwindow.select_income_statement()
-        self.istatement.toggle_excluded()
+        patch_today(monkeypatch, 2008, 7, 18)
+        app.add_budget('income1', 'asset', '400') # +180
+        app.mainwindow.select_income_statement()
+        app.istatement.toggle_excluded()
         # same as test_exclude_account
-        amounts = [data[2] for data in self.pgraph.data]
+        amounts = [data[2] for data in app.pgraph.data]
         expected = [32 + 22 - 7.04, -100, 54]
-        self.assertEqual(amounts, expected)
+        eq_(amounts, expected)
     
-    def test_exclude_account(self):
+    @with_app(do_setup)
+    def test_exclude_account(self, app):
         # excluding an account removes it from the net worth graph
-        self.istatement.selected = self.istatement.income[0]
-        self.istatement.toggle_excluded()
+        app.istatement.selected = app.istatement.income[0]
+        app.istatement.toggle_excluded()
         # We don't want to test the padding, so we only go for the amounts here
-        amounts = [data[2] for data in self.pgraph.data]
+        amounts = [data[2] for data in app.pgraph.data]
         # the mock conversion system is rather hard to predict, but the converted amount for 10 CAD
         # on 1/7/2008 is 7.04 USD
         expected = [32 + 22 - 7.04, -100, 54]
-        self.assertEqual(amounts, expected)
-        self.check_gui_calls(self.pgraph_gui, ['refresh'])
+        eq_(amounts, expected)
+        app.check_gui_calls(app.pgraph_gui, ['refresh'])
     
-    def test_profit_graph(self):
+    @with_app(do_setup)
+    def test_profit_graph(self, app):
         # We don't want to test the padding, so we only go for the amounts here
-        amounts = [data[2] for data in self.pgraph.data]
+        amounts = [data[2] for data in app.pgraph.data]
         # the mock conversion system is rather hard to predict, but the converted amount for 10 CAD
         # on 1/7/2008 is 7.04 USD
         expected = [50 + 80 + 32 + 22 - 7.04, 90 - 100, 54]
-        self.assertEqual(amounts, expected)
-        self.assertEqual(self.pgraph.title, 'Profit & Loss')
-        self.assertEqual(self.pgraph.currency, USD)
+        eq_(amounts, expected)
+        eq_(app.pgraph.title, 'Profit & Loss')
+        eq_(app.pgraph.currency, USD)
     

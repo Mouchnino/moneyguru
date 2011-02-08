@@ -9,73 +9,77 @@
 from hscommon.testutil import eq_
 
 from ...model.date import MonthRange
-from ..base import TestCase, TestApp
+from ..base import TestApp, with_app
 
-class Pristine(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.mainwindow.select_schedule_table()
-    
-    def test_add_schedule(self):
-        self.scpanel.new()
-        self.scpanel.description = 'foobar'
-        self.scpanel.save()
-        eq_(len(self.sctable), 1)
-        eq_(self.sctable[0].description, 'foobar')
-    
-    def test_edit_schedule(self):
-        # Initiating a schedule edition while none is selected doesn't crash
-        self.mainwindow.edit_item() # no crash
-    
+@with_app(TestApp)
+def test_add_schedule(app):
+    app.mainwindow.select_schedule_table()
+    app.scpanel.new()
+    app.scpanel.description = 'foobar'
+    app.scpanel.save()
+    eq_(len(app.sctable), 1)
+    eq_(app.sctable[0].description, 'foobar')
 
-class OneDailyScheduledTransaction(TestCase):
-    def setUp(self):
-        self.create_instances()
-        self.add_schedule(start_date='13/09/2008', repeat_every=3)
-        self.sctable.select([0])
-        self.clear_gui_calls()
-    
-    def test_calls_refresh_repeat_every_on_load(self):
-        # When the panel loads, make the panel call its refresh_repeat_every() view method so that
-        # the correct time unit escription shows up
-        self.scpanel.load()
-        self.check_gui_calls_partial(self.scpanel_gui, ['refresh_repeat_every'])
-    
-    def test_repeat_every(self):
-        # changing repeat every makes the desc plural if appropriate
-        self.assertEqual(self.scpanel.repeat_every, 3)
-        self.assertEqual(self.scpanel.repeat_every_desc, 'days')
-    
-    def test_repeat_type_index(self):
-        # changing the repeat_type_index changes the repeat_every_desc attribute
-        self.assertEqual(self.scpanel.repeat_every_desc, 'days')
-        self.scpanel.repeat_every = 1
-        self.assertEqual(self.scpanel.repeat_every_desc, 'day')
-        self.check_gui_calls(self.scpanel_gui, ['refresh_repeat_every'])
-        self.scpanel.repeat_type_index = 1
-        self.assertEqual(self.scpanel.repeat_every_desc, 'week')
-        self.scpanel.repeat_type_index = 2
-        self.assertEqual(self.scpanel.repeat_every_desc, 'month')
-        self.scpanel.repeat_type_index = 3
-        self.assertEqual(self.scpanel.repeat_every_desc, 'year')
-        self.scpanel.repeat_type_index = 4
-        self.assertEqual(self.scpanel.repeat_every_desc, 'month')
-        self.scpanel.repeat_type_index = 5
-        self.assertEqual(self.scpanel.repeat_every_desc, 'month')
-    
-    def test_repeat_options(self):
-        # Repeat options depend on the txn's date. 13/09/2008 is the second saturday of July.
-        expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every second Saturday of the month']
-        self.assertEqual(self.scpanel.repeat_options, expected)
-    
-    def test_repeat_options_on_last_week(self):
-        # When the txn's date is on the last week of the month, there's an extra 'last' option
-        self.scpanel.start_date = '29/07/2008'
-        expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every fifth Tuesday of the month',
-                    'Every last Tuesday of the month']
-        self.assertEqual(self.scpanel.repeat_options, expected)
-        self.check_gui_calls(self.scpanel_gui, ['refresh_repeat_options'])
-    
+@with_app(TestApp)
+def test_edit_schedule(app):
+    # Initiating a schedule edition while none is selected doesn't crash
+    app.mainwindow.select_schedule_table()
+    app.mainwindow.edit_item() # no crash
+
+#---
+def app_daily_scheduled_txn():
+    app = TestApp()
+    app.add_schedule(start_date='13/09/2008', repeat_every=3)
+    app.sctable.select([0])
+    app.clear_gui_calls()
+    return app
+
+@with_app(app_daily_scheduled_txn)
+def test_calls_refresh_repeat_every_on_load(app):
+    # When the panel loads, make the panel call its refresh_repeat_every() view method so that
+    # the correct time unit escription shows up
+    app.scpanel.load()
+    app.check_gui_calls_partial(app.scpanel_gui, ['refresh_repeat_every'])
+
+@with_app(app_daily_scheduled_txn)
+def test_repeat_every(app):
+    # changing repeat every makes the desc plural if appropriate
+    eq_(app.scpanel.repeat_every, 3)
+    eq_(app.scpanel.repeat_every_desc, 'days')
+
+@with_app(app_daily_scheduled_txn)
+def test_repeat_type_index(app):
+    # changing the repeat_type_index changes the repeat_every_desc attribute
+    eq_(app.scpanel.repeat_every_desc, 'days')
+    app.scpanel.repeat_every = 1
+    eq_(app.scpanel.repeat_every_desc, 'day')
+    app.check_gui_calls(app.scpanel_gui, ['refresh_repeat_every'])
+    app.scpanel.repeat_type_index = 1
+    eq_(app.scpanel.repeat_every_desc, 'week')
+    app.scpanel.repeat_type_index = 2
+    eq_(app.scpanel.repeat_every_desc, 'month')
+    app.scpanel.repeat_type_index = 3
+    eq_(app.scpanel.repeat_every_desc, 'year')
+    app.scpanel.repeat_type_index = 4
+    eq_(app.scpanel.repeat_every_desc, 'month')
+    app.scpanel.repeat_type_index = 5
+    eq_(app.scpanel.repeat_every_desc, 'month')
+
+@with_app(app_daily_scheduled_txn)
+def test_repeat_options(app):
+    # Repeat options depend on the txn's date. 13/09/2008 is the second saturday of July.
+    expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every second Saturday of the month']
+    eq_(app.scpanel.repeat_options, expected)
+
+@with_app(app_daily_scheduled_txn)
+def test_repeat_options_on_last_week(app):
+    # When the txn's date is on the last week of the month, there's an extra 'last' option
+    app.scpanel.start_date = '29/07/2008'
+    expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every fifth Tuesday of the month',
+                'Every last Tuesday of the month']
+    eq_(app.scpanel.repeat_options, expected)
+    app.check_gui_calls(app.scpanel_gui, ['refresh_repeat_options'])
+
 
 #--- Daily schedule loaded
 def app_daily_schedule_loaded():
