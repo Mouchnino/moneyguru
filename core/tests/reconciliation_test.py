@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from .base import TestApp, with_app, compare_apps
 from ..model.account import AccountType
@@ -151,7 +151,7 @@ def test_toggle_entries_reconciled_sets_dirty_flag(app):
 
 #--- Entry in future
 def app_entry_in_future(monkeypatch):
-    patch_today(monkeypatch, 2009, 12, 26)
+    monkeypatch.patch_today(2009, 12, 26)
     app = TestApp()
     app.add_account()
     app.mw.show_account()
@@ -217,7 +217,7 @@ def test_change_date_makes_reconciliation_date_follow(app):
 #--- Entry different reconciliation date
 def app_entry_different_reconciliation_date(monkeypatch):
     app = TestApp()
-    patch_today(monkeypatch, 2008, 7, 20)
+    monkeypatch.patch_today(2008, 7, 20)
     app.add_account()
     app.mw.show_account()
     app.add_entry('11/07/2008', decrease='42')

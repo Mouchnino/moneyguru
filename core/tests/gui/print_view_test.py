@@ -6,14 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app
 from ...gui.print_view import PrintView
 
 class TestDateRangeOnApril2009:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2009, 4, 1)
+        monkeypatch.patch_today(2009, 4, 1)
         app = TestApp()
         app.drsel.select_month_range()
         app.pv = PrintView(app.tview)

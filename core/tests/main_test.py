@@ -13,7 +13,7 @@ from pytest import raises
 from hscommon import io
 from hscommon.currency import EUR
 from hscommon.path import Path
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from .base import ApplicationGUI, TestApp, with_app, testdata
 from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
@@ -140,7 +140,7 @@ def test_modified_flag():
 
 #--- Range on October 2007
 def app_range_on_october2007(monkeypatch):
-    patch_today(monkeypatch, 2007, 10, 1)
+    monkeypatch.patch_today(2007, 10, 1)
     app = TestApp()
     app.drsel.select_month_range()
     return app
@@ -175,7 +175,7 @@ class TestRangeOnJuly2006:
 class TestRangeOnYearToDate:
     def do_setup(self, monkeypatch):
         app = TestApp()
-        patch_today(monkeypatch, 2008, 11, 12)
+        monkeypatch.patch_today(2008, 11, 12)
         app.drsel.select_year_to_date_range()
         return app
     
@@ -1422,7 +1422,7 @@ class TestEntrySelectionOnDateRangeChange:
 class TestExampleDocumentLoadTest:
     def do_setup(self, monkeypatch):
         # We're creating a couple of transactions with the latest being 4 months ago (in april).
-        patch_today(monkeypatch, 2009, 8, 27)
+        monkeypatch.patch_today(2009, 8, 27)
         app = TestApp()
         app.add_account()
         app.mw.show_account()

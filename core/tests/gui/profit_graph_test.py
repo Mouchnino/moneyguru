@@ -9,7 +9,7 @@
 from datetime import date
 
 from hscommon.currency import USD
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app
 
@@ -58,7 +58,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
     @with_app(do_setup)
     def test_budget(self, app, monkeypatch):
         # budgets are counted in the pgraph
-        patch_today(monkeypatch, 2008, 7, 18)
+        monkeypatch.patch_today(2008, 7, 18)
         app.add_budget('income1', 'asset', '400') # +180
         app.mainwindow.select_income_statement()
         amounts = [data[2:] for data in app.pgraph.data]
@@ -76,7 +76,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
     @with_app(do_setup)
     def test_budget_and_exclusion(self, app, monkeypatch):
         # when an account is excluded, it's budget is not counted
-        patch_today(monkeypatch, 2008, 7, 18)
+        monkeypatch.patch_today(2008, 7, 18)
         app.add_budget('income1', 'asset', '400') # +180
         app.mainwindow.select_income_statement()
         app.istatement.toggle_excluded()

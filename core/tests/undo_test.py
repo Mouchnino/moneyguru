@@ -10,7 +10,7 @@ import copy
 import time
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import EUR
 
 from ..const import PaneType
@@ -740,7 +740,7 @@ def test_reconcile_spawn_by_toggling(app, checkstate):
 #---
 def app_with_budget(monkeypatch):
     app = TestApp()
-    patch_today(monkeypatch, 2008, 1, 27)
+    monkeypatch.patch_today(2008, 1, 27)
     app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')

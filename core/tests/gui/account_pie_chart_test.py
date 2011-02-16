@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import Currency, USD, CAD
 
 from ..base import ApplicationGUI, TestApp, with_app
@@ -17,7 +17,7 @@ from ...gui.pie_chart import SLICE_COUNT
 from ...model.account import AccountType
 
 def app_some_assets_and_liabilities(monkeypatch):
-    patch_today(monkeypatch, 2009, 1, 29) # On the last day of the month, some tests fail
+    monkeypatch.patch_today(2009, 1, 29) # On the last day of the month, some tests fail
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('a1')
@@ -169,7 +169,7 @@ class TestSomeIncomeAndExpenses:
     @with_app(do_setup)
     def test_budget(self, app, monkeypatch):
         # budgeted amounts are also reflected in the pie chart
-        patch_today(monkeypatch, 2009, 1, 29) # On the last day of the month, this test fails
+        monkeypatch.patch_today(2009, 1, 29) # On the last day of the month, this test fails
         app.add_budget('e1', None, '5')
         app.mw.select_income_statement()
         expected = [

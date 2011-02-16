@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import PLN, CAD
 
 from ..document import ScheduleScope
@@ -41,7 +41,7 @@ def test_saved_file_starts_with_xml_header(tmpdir):
 class TestLoadFile:
     # Loads 'simple.moneyguru', a file with 2 accounts and 2 entries in each. Select the first entry.
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2008, 2, 20) # so that the entries are shown
+        monkeypatch.patch_today(2008, 2, 20) # so that the entries are shown
         app = TestApp()
         app.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
@@ -232,7 +232,7 @@ class TestLoadInvalidAccountType:
 
 class TestLoadImportWithTransactionInTheFuture:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2008, 2, 1) # before any txn date
+        monkeypatch.patch_today(2008, 2, 1) # before any txn date
         app = TestApp()
         app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'simple.moneyguru'))
         return app
@@ -246,7 +246,7 @@ class TestLoadImportWithTransactionInTheFuture:
 class TestLoadWithReferences1:
     def do_setup(self, monkeypatch):
         # Loads 'with_references1.moneyguru' which also have boolean (y/n) reconciliation attributes.
-        patch_today(monkeypatch, 2008, 2, 1) # before any txn date
+        monkeypatch.patch_today(2008, 2, 1) # before any txn date
         app = TestApp()
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'with_references1.moneyguru'))
         return app
@@ -373,7 +373,7 @@ def app_one_schedule_and_one_normal_txn():
     return app
 
 def app_schedule_with_global_change(monkeypatch):
-    patch_today(monkeypatch, 2008, 9, 30)
+    monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
@@ -385,7 +385,7 @@ def app_schedule_with_global_change(monkeypatch):
     return app
 
 def app_schedule_with_local_deletion(monkeypatch):
-    patch_today(monkeypatch, 2008, 9, 30)
+    monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()

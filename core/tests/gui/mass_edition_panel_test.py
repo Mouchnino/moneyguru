@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from pytest import raises
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app
 from ...exception import OperationAborted
@@ -76,7 +76,7 @@ def app_two_transactions_different_value():
 
 def test_attributes(monkeypatch):
     # All fields are disabled and empty.
-    patch_today(monkeypatch, 2010, 2, 20)
+    monkeypatch.patch_today(2010, 2, 20)
     app = app_two_transactions_different_value()
     assert app.mepanel.can_change_accounts
     assert app.mepanel.can_change_amount
@@ -254,7 +254,7 @@ def test_change_field_same(app):
 @with_app(app_two_transactions_same_values)
 def test_load_again(app, monkeypatch):
     # load() blanks values when necessary.
-    patch_today(monkeypatch, 2010, 2, 20)
+    monkeypatch.patch_today(2010, 2, 20)
     app.mepanel.date_enabled = True
     app.mepanel.description_enabled = True
     app.mepanel.payee_enabled = True

@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ...gui.date_widget import DateWidget
 
@@ -129,19 +129,19 @@ class TestCaseDDMMYYYYWithSlash:
     
     def test_type_t(self, monkeypatch):
         # Typing 't' sets the date to today
-        patch_today(monkeypatch, 2010, 9, 8)
+        monkeypatch.patch_today(2010, 9, 8)
         self.w.type('t')
         eq_(self.w.text, '08/09/2010')
     
     def test_type_T(self, monkeypatch):
         # The 't' shortcut is case insensitive
-        patch_today(monkeypatch, 2010, 9, 8)
+        monkeypatch.patch_today(2010, 9, 8)
         self.w.type('T')
         eq_(self.w.text, '08/09/2010')
     
     def test_type_t_with_buffer(self, monkeypatch):
         # Typing 't' resets the current buffer
-        patch_today(monkeypatch, 2010, 9, 8)
+        monkeypatch.patch_today(2010, 9, 8)
         self.w.type('1') # buffering mode
         self.w.type('t')
         eq_(self.w.text, '08/09/2010')

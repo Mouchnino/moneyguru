@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..const import PaneType
 from ..model.account import AccountType
@@ -51,7 +51,7 @@ def test_year_start_month_same_as_ahead_month(app):
 #---
 class TestRangeOnOctober2007:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2007, 10, 1)
+        monkeypatch.patch_today(2007, 10, 1)
         app = TestApp()
         app.drsel.select_month_range()
         app.clear_gui_calls()
@@ -128,7 +128,7 @@ class TestRangeOnOctober2007:
 
 #--- Range on year 2007
 def app_range_on_year2007(monkeypatch):
-    patch_today(monkeypatch, 2007, 1, 1)
+    monkeypatch.patch_today(2007, 1, 1)
     app = TestApp()
     return app
 
@@ -141,7 +141,7 @@ def test_month_range(app):
 #---
 class TestRangeOnYearStartsOnApril:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2007, 4, 1)
+        monkeypatch.patch_today(2007, 4, 1)
         app = TestApp()
         app.drsel.select_year_range()
         app.app.year_start_month = 4
@@ -174,7 +174,7 @@ class TestRangeOnYearStartsOnApril:
 
 #---
 def app_range_on_year_to_date(monkeypatch):
-    patch_today(monkeypatch, 2008, 11, 12)
+    monkeypatch.patch_today(2008, 11, 12)
     app = TestApp()
     app.drsel.select_year_to_date_range()
     return app
@@ -223,7 +223,7 @@ def test_computations_for_prev_range_are_also_for_ytd(app):
 class TestRangeOnRunningYear:
     def do_setup(self, monkeypatch):
         app = TestApp()
-        patch_today(monkeypatch, 2009, 1, 25)
+        monkeypatch.patch_today(2009, 1, 25)
         app.drsel.select_running_year_range()
         app.clear_gui_calls()
         return app
@@ -260,7 +260,7 @@ class TestRangeOnRunningYear:
 class TestRangeOnRunningYearWithAheadMonths:
     def do_setup(self, monkeypatch):
         app = TestApp()
-        patch_today(monkeypatch, 2009, 1, 25)
+        monkeypatch.patch_today(2009, 1, 25)
         app.app.ahead_months = 5
         app.drsel.select_running_year_range()
         app.clear_gui_calls()
@@ -394,7 +394,7 @@ class TestTwoEntriesInTwoMonthsRangeOnSecond:
 #---
 class TestAllTransactionsRangeWithOneTransactionFarInThePast:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2010, 1, 10)
+        monkeypatch.patch_today(2010, 1, 10)
         app = TestApp()
         app.add_txn('01/10/1981', from_='foo', to='bar', amount='42')
         app.add_txn('10/01/2010')

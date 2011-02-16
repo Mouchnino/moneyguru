@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..model.account import AccountType
 from .base import TestApp, with_app
@@ -14,7 +14,7 @@ from .base import TestApp, with_app
 #-- Account with budget
 def app_account_with_budget(monkeypatch):
     # 4 days left to the month, 100$ monthly budget
-    patch_today(monkeypatch, 2008, 1, 27)
+    monkeypatch.patch_today(2008, 1, 27)
     app = TestApp()
     app.add_account('Some Income', account_type=AccountType.Income)
     app.add_budget('Some Income', None, '100')
@@ -61,7 +61,7 @@ def test_set_budget_again(app):
 
 #--- Income with budget in past
 def app_income_with_budget_in_past(monkeypatch):
-    patch_today(monkeypatch, 2009, 11, 16)
+    monkeypatch.patch_today(2009, 11, 16)
     app = TestApp()
     app.add_account('income', account_type=AccountType.Income)
     app.add_budget('income', None, '100', start_date='01/09/2009')
@@ -77,7 +77,7 @@ def test_spawns_dont_linger(app):
 
 #--- Expense with budget and txn
 def app_budget_with_expense_and_txn(monkeypatch):
-    patch_today(monkeypatch, 2008, 1, 27)
+    monkeypatch.patch_today(2008, 1, 27)
     app = TestApp()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')
@@ -101,7 +101,7 @@ def test_busted_budget_spaws_dont_show_up(app):
 
 #--- Expense with budget and target
 def app_expense_with_budget_and_target(monkeypatch):
-    patch_today(monkeypatch, 2008, 1, 27)
+    monkeypatch.patch_today(2008, 1, 27)
     app = TestApp()
     app.add_account('some asset')
     app.add_account('Some Expense', account_type=AccountType.Expense)
@@ -170,7 +170,7 @@ def test_delete_target_and_reassign(app):
 def app_two_budgets_from_same_account(monkeypatch):
     # XXX this mock is because the test previously failed because we were currently on the last
     # day of the month. TODO: Re-create the last-day condition and fix the calculation bug
-    patch_today(monkeypatch, 2009, 8, 20)
+    monkeypatch.patch_today(2009, 8, 20)
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('income', account_type=AccountType.Income)
@@ -187,7 +187,7 @@ def test_both_budgets_are_counted(app):
 
 #--- Yearly buget with txn before current month
 def app_yearly_budget_with_txn_before_current_month(monkeypatch):
-    patch_today(monkeypatch, 2009, 8, 24)
+    monkeypatch.patch_today(2009, 8, 24)
     app = TestApp()
     app.drsel.select_year_range()
     app.add_account('income', account_type=AccountType.Income)
@@ -210,7 +210,7 @@ def test_spawn_has_correct_date(app):
 
 #--- Scheduled txn and budget
 def app_scheduled_txn_and_budget(monkeypatch):
-    patch_today(monkeypatch, 2009, 9, 10)
+    monkeypatch.patch_today(2009, 9, 10)
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('account', account_type=AccountType.Expense)

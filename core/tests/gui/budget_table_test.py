@@ -6,14 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app
 from ...model.account import AccountType
 
 def app_with_budget(monkeypatch):
     app = TestApp()
-    patch_today(monkeypatch, 2008, 1, 27)
+    monkeypatch.patch_today(2008, 1, 27)
     app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')

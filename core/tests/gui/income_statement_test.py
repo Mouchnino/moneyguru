@@ -6,7 +6,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import CAD, USD
 
 from ..base import TestApp, with_app, ApplicationGUI
@@ -76,7 +76,7 @@ class TestAccountsAndEntries:
     @with_app(do_setup)
     def test_attrs_with_budget(self, app, monkeypatch):
         # Must include the budget. 250 of the 400 are spent, there's 150 left to add
-        patch_today(monkeypatch, 2008, 1, 17)
+        monkeypatch.patch_today(2008, 1, 17)
         app.add_budget('Account 1', None, '400')
         app.mainwindow.select_income_statement()
         eq_(app.istatement.income[0].cash_flow, '250.00')
@@ -97,7 +97,7 @@ class TestAccountsAndEntries:
     
     @with_app(do_setup)
     def test_cash_flow_with_underestimated_budget(self, app, monkeypatch):
-        patch_today(monkeypatch, 2008, 1, 17)
+        monkeypatch.patch_today(2008, 1, 17)
         app.add_budget('Account 1', None, '200')
         app.mainwindow.select_income_statement()
         eq_(app.istatement.income[0].cash_flow, '250.00')
@@ -138,7 +138,7 @@ class TestAccountsAndEntries:
     def test_year_to_date_last_cash_flow(self, app, monkeypatch):
         # When the YTD range is selected, the "Last" column shows last year's value (here, 0) instead
         # of showing the exact same thing as this period.
-        patch_today(monkeypatch, 2008, 12, 12)
+        monkeypatch.patch_today(2008, 12, 12)
         app.drsel.select_year_to_date_range()
         eq_(app.istatement.income[0].last_cash_flow, '0.00')
     
@@ -165,7 +165,7 @@ class TestMultipleCurrencies:
     def test_with_budget(self, app, monkeypatch):
         # What this test is making sure of is that the account's budget is of the same currency than
         # the account itself
-        patch_today(monkeypatch, 2008, 1, 20)
+        monkeypatch.patch_today(2008, 1, 20)
         app.add_budget('USD account', None, '300usd')
         app.mainwindow.select_income_statement()
         eq_(app.istatement.income[0][1].cash_flow, 'USD 100.00')
@@ -244,7 +244,7 @@ class TestEntriesSpreadOverAYear:
     def test_select_running_year_range(self, app, monkeypatch):
         # the 'Last' column will correctly be set and will include amounts from a whole year before
         # the start of the running year.
-        patch_today(monkeypatch, 2008, 12, 1)
+        monkeypatch.patch_today(2008, 12, 1)
         app.drsel.select_running_year_range()
         # ahead_months is 2, so current is 01/03/2008-28/02/2009, which means 6 + 7 + 8 (21)
         eq_(app.istatement.income[0].cash_flow, '21.00')
@@ -254,7 +254,7 @@ class TestEntriesSpreadOverAYear:
 
 class TestBustedBudget:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2010, 1, 3)
+        monkeypatch.patch_today(2010, 1, 3)
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account('account', account_type=AccountType.Income)

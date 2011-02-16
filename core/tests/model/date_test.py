@@ -9,7 +9,7 @@
 from datetime import date
 
 from pytest import raises
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ...model.date import (parse_date, format_date, clean_format, DateRange, MonthRange,
     QuarterRange, YearRange, RunningYearRange, YearToDateRange)
@@ -151,14 +151,14 @@ class TestRangesNoSetup:
     def test_running_year(self, monkeypatch):
         # The running year ends at the end of the current month and adds 'ahead_months' to it. the
         # start date is then one year earlier.
-        patch_today(monkeypatch, 2009, 1, 25)
+        monkeypatch.patch_today(2009, 1, 25)
         dr = RunningYearRange(ahead_months=2)
         eq_(dr.end, date(2009, 3, 31))
         eq_(dr.start, date(2008, 4, 1))
         eq_(dr.display, 'Running year (Apr - Mar)')
     
     def test_year_to_date(self, monkeypatch):
-        patch_today(monkeypatch, 2009, 10, 7)
+        monkeypatch.patch_today(2009, 10, 7)
         dr = YearToDateRange(year_start_month=2)
         eq_(dr.display, 'Feb 2009 - Now')
     

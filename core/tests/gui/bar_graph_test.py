@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import CAD
 
 from ..base import TestApp, with_app
@@ -47,7 +47,7 @@ class TestForeignAccount:
 
 class TestSomeIncomeInTheFutureWithRangeOnYearToDate:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2010, 1, 12)
+        monkeypatch.patch_today(2010, 1, 12)
         app = TestApp()
         app.add_account('Checking')
         app.mainwindow.show_account()
@@ -64,7 +64,7 @@ class TestSomeIncomeInTheFutureWithRangeOnYearToDate:
 
 class TestSomeIncomeTodayAndInTheFuture:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2010, 1, 12)
+        monkeypatch.patch_today(2010, 1, 12)
         app = TestApp()
         app.add_account('Checking')
         app.add_account('Income', account_type=AccountType.Income)
@@ -87,7 +87,7 @@ class TestAccountAndEntriesAndBudget:
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account('Account 1', account_type=AccountType.Income)
-        patch_today(monkeypatch, 2008, 1, 17)
+        monkeypatch.patch_today(2008, 1, 17)
         app.add_budget('Account 1', None, '400')
         app.mainwindow.select_income_statement()
         app.istatement.selected = app.istatement.income[0]
@@ -108,7 +108,7 @@ class TestAccountAndEntriesAndBudget:
 
 class TestRunningYearWithSomeIncome:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2008, 11, 1)
+        monkeypatch.patch_today(2008, 11, 1)
         app = TestApp()
         app.add_account('Checking')
         app.mainwindow.show_account()

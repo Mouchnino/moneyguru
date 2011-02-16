@@ -9,7 +9,7 @@
 from datetime import date
 
 from hscommon.currency import CAD, USD
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app, testdata
 from ...model.account import AccountType
@@ -52,7 +52,7 @@ class TestAssetsAndLiabilitiesInDifferentAccounts:
     @with_app(do_setup)
     def test_budget(self, app, monkeypatch):
         # when we add a budget, the balance graph will show a regular progression throughout date range
-        patch_today(monkeypatch, 2008, 7, 27)
+        monkeypatch.patch_today(2008, 7, 27)
         app.add_account('income', account_type=AccountType.Income)
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('income', 'asset1', '300')
@@ -79,7 +79,7 @@ class TestAssetsAndLiabilitiesInDifferentAccounts:
     @with_app(do_setup)
     def test_budget_target_excluded(self, app, monkeypatch):
         # when the budget target is excluded, don't show it's budgeted data
-        patch_today(monkeypatch, 2008, 7, 27)
+        monkeypatch.patch_today(2008, 7, 27)
         app.add_account('asset3')
         app.add_account('income', account_type=AccountType.Income)
         without_budget = app.nw_graph_data()

@@ -19,22 +19,6 @@ from ..model import currency as currency_module
 global_monkeypatch = None
 original_rates_db_ensure_rates = RatesDB.ensure_rates
 
-def get_testunit(item):
-    if hasattr(item, 'obj'):
-        testunit = py.builtin._getimself(item.obj)
-        if hasattr(testunit, 'global_setup'):
-            return testunit
-
-def pytest_runtest_setup(item):
-    testunit = get_testunit(item)
-    if testunit is not None:
-        testunit.global_setup()
-
-def pytest_runtest_teardown(item):
-    testunit = get_testunit(item)
-    if testunit is not None:
-        testunit.global_teardown()
-
 def pytest_configure(config):
     global global_monkeypatch
     monkeypatch = config.pluginmanager.getplugin('monkeypatch')
@@ -54,3 +38,7 @@ def pytest_unconfigure(config):
 
 def get_original_rates_db_ensure_rates():
     return original_rates_db_ensure_rates
+
+def pytest_funcarg__monkeypatch(request):
+    monkeyplus = request.getfuncargvalue('monkeyplus')
+    return monkeyplus

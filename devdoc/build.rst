@@ -14,6 +14,7 @@ General dependencies
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
 - Sphinx 1.0.6 (http://sphinx.pocoo.org/)
 - pytest 2.0.0, to run unit tests. (http://pytest.org/)
+- pytest-monkeyplus, a pytest plugin. (http://bitbucket.org/hsoft/pytest-monkeyplus)
 
 OS X prerequisites
 ------------------

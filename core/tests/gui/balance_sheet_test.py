@@ -6,7 +6,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import Currency, USD, CAD
 
 from ..base import DocumentGUI, ApplicationGUI, TestApp, with_app, testdata
@@ -422,7 +422,7 @@ def test_balance_sheet_with_entries(app):
 def test_budget(app, monkeypatch):
     # Account 1 is the target of the expense budget, and Account 2 is the target of the income
     # Assign budgeted amounts to the appropriate accounts.
-    patch_today(monkeypatch, 2008, 1, 15)
+    monkeypatch.patch_today(2008, 1, 15)
     app.add_budget('income', 'Account 2', '400') # + 150
     app.add_budget('expense', 'Account 1', '100') # + 80
     app.mw.select_balance_sheet()
@@ -442,7 +442,7 @@ def test_budget(app, monkeypatch):
 @with_app(app_accounts_and_entries)
 def test_budget_multiple_currencies(app, monkeypatch):
     # budgeted amounts must be correctly converted to the target's currency
-    patch_today(monkeypatch, 2008, 1, 15)
+    monkeypatch.patch_today(2008, 1, 15)
     USD.set_CAD_value(0.8, date(2008, 1, 1))
     app.mw.select_income_statement()
     app.istatement.selected = app.istatement.income[0]
@@ -457,7 +457,7 @@ def test_budget_multiple_currencies(app, monkeypatch):
 @with_app(app_accounts_and_entries)
 def test_budget_target_liability(app, monkeypatch):
     # The budgeted amount must be normalized before being added to a liability amount
-    patch_today(monkeypatch, 2008, 1, 15)
+    monkeypatch.patch_today(2008, 1, 15)
     app.add_account('foo', account_type=AccountType.Liability)
     app.add_budget('income', 'foo', '400')
     app.mainwindow.select_balance_sheet()
@@ -467,7 +467,7 @@ def test_budget_target_liability(app, monkeypatch):
 @with_app(app_accounts_and_entries)
 def test_budget_without_target(app, monkeypatch):
     # The Net Worth's "budgeted" column counts all budgets, including target-less ones
-    patch_today(monkeypatch, 2008, 1, 15)
+    monkeypatch.patch_today(2008, 1, 15)
     app.add_budget('income', None, '400')
     app.mw.select_balance_sheet()
     eq_(app.bsheet.net_worth.budgeted, '150.00')

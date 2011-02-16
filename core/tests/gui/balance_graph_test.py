@@ -4,7 +4,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import CAD
 
 from ..base import TestApp, with_app
@@ -23,7 +23,7 @@ class TestTwoLiabilityTransactions:
     @with_app(do_setup)
     def test_budget(self, app, monkeypatch):
         # when we add a budget, the balance graph will show a regular progression throughout date range
-        patch_today(monkeypatch, 2008, 1, 27)
+        monkeypatch.patch_today(2008, 1, 27)
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('expense', 'Visa', '100')
         app.mw.select_balance_sheet()
@@ -38,7 +38,7 @@ class TestTwoLiabilityTransactions:
     @with_app(do_setup)
     def test_budget_on_last_day_of_the_range(self, app, monkeypatch):
         # don't raise a ZeroDivizionError
-        patch_today(monkeypatch, 2008, 1, 31)
+        monkeypatch.patch_today(2008, 1, 31)
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('expense', 'Visa', '100')
         app.mw.select_balance_sheet()
@@ -47,7 +47,7 @@ class TestTwoLiabilityTransactions:
     @with_app(do_setup)
     def test_budget_with_future_txn(self, app, monkeypatch):
         # when there's a future txn, we want the amount of that txn to be "sharply" displayed
-        patch_today(monkeypatch, 2008, 1, 15)
+        monkeypatch.patch_today(2008, 1, 15)
         app.add_entry('20/1/2008', decrease='10')
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('expense', 'Visa', '100')
@@ -82,7 +82,7 @@ class TestForeignAccount:
 
 class TestBudgetAndNoTranaction:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2008, 1, 1)
+        monkeypatch.patch_today(2008, 1, 1)
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account('asset')

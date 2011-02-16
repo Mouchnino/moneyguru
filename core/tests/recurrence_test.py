@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..const import PaneType
 from ..document import ScheduleScope
@@ -54,7 +54,7 @@ def test_make_schedule_from_selected_weekly(app):
 
 #--- Daily schedule
 def app_daily_schedule(monkeypatch):
-    patch_today(monkeypatch, 2008, 9, 13)
+    monkeypatch.patch_today(2008, 9, 13)
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('account')
@@ -327,7 +327,7 @@ def test_etable_attrs_with_one_spawn_and_one_regular(app):
 
 #--- Schedule with local change
 def app_schedule_with_local_change(monkeypatch):
-    patch_today(monkeypatch, 2008, 9, 30)
+    monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
@@ -358,7 +358,7 @@ def test_save_load_schedule_with_local_changes(app):
 
 #--- Schedule with global change
 def app_schedule_with_global_change(monkeypatch):
-    patch_today(monkeypatch, 2008, 9, 30)
+    monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()
@@ -380,7 +380,7 @@ def test_perform_another_global_change_before_first_global_change(app):
 
 #--- Schedule with local deletion
 def app_schedule_with_local_deletion(monkeypatch):
-    patch_today(monkeypatch, 2008, 9, 30)
+    monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
     app.mw.select_transaction_table()

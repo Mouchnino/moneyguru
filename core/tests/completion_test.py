@@ -8,7 +8,7 @@
 
 import time
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from .base import TestApp, with_app
 from ..model.account import AccountType
@@ -493,7 +493,7 @@ def test_previous_completion_twice(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_persistence_of_completion(app, tmpdir, monkeypatch):
     # Completion (including its order) is persistent.
-    patch_today(monkeypatch, 2007, 10, 6) # the test fails otherwise
+    monkeypatch.patch_today(2007, 10, 6) # the test fails otherwise
     row = app.etable.selected_row
     row.transfer = 'cat12'
     app.etable.save_edits()

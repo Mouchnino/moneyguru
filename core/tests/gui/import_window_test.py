@@ -8,7 +8,7 @@
 
 from datetime import date
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app, DictLoader, testdata
 from ...model.date import YearRange
@@ -240,7 +240,7 @@ class TestLoadWithReference:
 
 class TestLoadThemImportWithReference:
     def do_setup(self, monkeypatch):
-        patch_today(monkeypatch, 2008, 1, 1)
+        monkeypatch.patch_today(2008, 1, 1)
         app = TestApp()
         app.doc.load_from_xml(testdata.filepath('moneyguru/with_references1.moneyguru'))
         app.doc.parse_file_for_import(testdata.filepath('moneyguru/with_references2.moneyguru'))

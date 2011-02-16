@@ -10,7 +10,7 @@ import csv
 from datetime import date
 from io import StringIO
 
-from hscommon.testutil import eq_, patch_today
+from hscommon.testutil import eq_
 from hscommon.currency import USD
 
 from ..base import TestApp, with_app, testdata
@@ -827,7 +827,7 @@ def test_completion(app):
 #--- Transaction on last day of range
 def app_txn_on_last_day_of_range(monkeypatch):
     app = TestApp()
-    patch_today(monkeypatch, 2010, 3, 21)
+    monkeypatch.patch_today(2010, 3, 21)
     app.add_txn('31/12/2010')
     return app
 
@@ -1167,7 +1167,7 @@ class TestFourEntriesOnTheSameDate:
 class TestWithBudget:
     def do_setup(self, monkeypatch):
         app = TestApp()
-        patch_today(monkeypatch, 2008, 1, 27)
+        monkeypatch.patch_today(2008, 1, 27)
         app.drsel.select_today_date_range()
         app.add_account('Some Expense', account_type=AccountType.Expense)
         app.add_budget('Some Expense', None, '100')
