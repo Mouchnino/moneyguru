@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">788</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -477,14 +477,14 @@
 										<object class="NSTextField" id="679876190">
 											<reference key="NSNextResponder" ref="747321942"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{6, 16}, {77, 17}}</string>
+											<string key="NSFrame">{{6, 17}, {77, 16}}</string>
 											<reference key="NSSuperview" ref="747321942"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="1032612267">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">71304192</int>
 												<string key="NSContents">Feldtrenner:</string>
-												<reference key="NSSupport" ref="150058320"/>
+												<reference key="NSSupport" ref="560826899"/>
 												<reference key="NSControlView" ref="679876190"/>
 												<reference key="NSBackgroundColor" ref="973909894"/>
 												<reference key="NSTextColor" ref="173389210"/>
@@ -493,14 +493,14 @@
 										<object class="NSTextField" id="866472273">
 											<reference key="NSNextResponder" ref="747321942"/>
 											<int key="NSvFlags">265</int>
-											<string key="NSFrame">{{6, 50}, {77, 17}}</string>
+											<string key="NSFrame">{{6, 51}, {77, 16}}</string>
 											<reference key="NSSuperview" ref="747321942"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="548250646">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">71304192</int>
 												<string key="NSContents">Encoding:</string>
-												<reference key="NSSupport" ref="150058320"/>
+												<reference key="NSSupport" ref="560826899"/>
 												<reference key="NSControlView" ref="866472273"/>
 												<reference key="NSBackgroundColor" ref="973909894"/>
 												<reference key="NSTextColor" ref="173389210"/>

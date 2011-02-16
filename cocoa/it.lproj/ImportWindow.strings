@@ -1,0 +1,45 @@
+
+/* Class = "NSWindow"; title = "Import"; ObjectID = "1"; */
+"1.title" = "Importa";
+
+/* Class = "NSTabViewItem"; label = "Tab"; ObjectID = "5"; */
+"5.label" = "Scheda";
+
+/* Class = "NSTextFieldCell"; title = "Target Account:"; ObjectID = "25"; */
+"25.title" = "Conto Destinazione:";
+
+/* Class = "NSMenuItem"; title = "< New Account >"; ObjectID = "29"; */
+"29.title" = "< Nuovo Conto >";
+
+/* Class = "NSMenuItem"; title = "Foo"; ObjectID = "30"; */
+"30.title" = "Tizio";
+
+/* Class = "NSMenuItem"; title = "Bar"; ObjectID = "31"; */
+"31.title" = "Caio";
+
+/* Class = "NSButtonCell"; title = "Import"; ObjectID = "42"; */
+"42.title" = "Importa";
+
+/* Class = "NSBox"; title = "Are some fields wrong? Swap them!"; ObjectID = "70"; */
+"70.title" = "Ci sono cambi sbagliati? Scambiali!";
+
+/* Class = "NSMenuItem"; title = "Day <--> Month"; ObjectID = "80"; */
+"80.title" = "Giorno <--> Mese";
+
+/* Class = "NSMenuItem"; title = "Month <--> Year"; ObjectID = "81"; */
+"81.title" = "Mese <--> Anno";
+
+/* Class = "NSMenuItem"; title = "Day <--> Year"; ObjectID = "82"; */
+"82.title" = "Giorno <--> Anno";
+
+/* Class = "NSButtonCell"; title = "Swap"; ObjectID = "84"; */
+"84.title" = "Scambia";
+
+/* Class = "NSButtonCell"; title = "Apply to all accounts"; ObjectID = "103"; */
+"103.title" = "Applica a tutti i conti";
+
+/* Class = "NSMenuItem"; title = "Description <--> Payee"; ObjectID = "105"; */
+"105.title" = "Descrizione <--> Beneficiario";
+
+/* Class = "NSMenuItem"; title = "Invert Amounts"; ObjectID = "154"; */
+"154.title" = "Inverti Ammontare";

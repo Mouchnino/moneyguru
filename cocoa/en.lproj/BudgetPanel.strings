@@ -17,9 +17,6 @@
 /* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "226"; */
 "226.title" = "Repeat";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "229"; */
-"229.title" = "OtherViews";
-
 /* Class = "NSMenuItem"; title = "Never"; ObjectID = "230"; */
 "230.title" = "Never";
 
@@ -38,17 +35,11 @@
 /* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
 "279.title" = "Stop Date";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "294"; */
-"294.title" = "OtherViews";
-
 /* Class = "NSMenuItem"; title = "Account"; ObjectID = "297"; */
 "297.title" = "Account";
 
 /* Class = "NSTextFieldCell"; title = "Account"; ObjectID = "298"; */
 "298.title" = "Account";
-
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "302"; */
-"302.title" = "OtherViews";
 
 /* Class = "NSMenuItem"; title = "None"; ObjectID = "303"; */
 "303.title" = "None";

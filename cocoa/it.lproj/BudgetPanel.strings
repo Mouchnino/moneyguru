@@ -1,0 +1,54 @@
+
+/* Class = "NSTextFieldCell"; title = "Start Date"; ObjectID = "8"; */
+"8.title" = "Data Inizio";
+
+/* Class = "NSPanel"; title = "Budget Info"; ObjectID = "166"; */
+"166.title" = "Info Previsione";
+
+/* Class = "NSButtonCell"; title = "Save"; ObjectID = "215"; */
+"215.title" = "Salva";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "216"; */
+"216.title" = "Annulla";
+
+/* Class = "NSTextFieldCell"; title = "Budget Info"; ObjectID = "224"; */
+"224.title" = "Info Previsione";
+
+/* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "226"; */
+"226.title" = "Ripetizione";
+
+/* Class = "NSMenuItem"; title = "Never"; ObjectID = "230"; */
+"230.title" = "Mai";
+
+/* Class = "NSMenuItem"; title = "Daily"; ObjectID = "231"; */
+"231.title" = "Giornaliero";
+
+/* Class = "NSMenuItem"; title = "Montly"; ObjectID = "232"; */
+"232.title" = "Mensile";
+
+/* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
+"234.title" = "Ogni";
+
+/* Class = "NSTextFieldCell"; title = "Days"; ObjectID = "239"; */
+"239.title" = "Giorni";
+
+/* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
+"279.title" = "Data Fine";
+
+/* Class = "NSMenuItem"; title = "Account"; ObjectID = "297"; */
+"297.title" = "Conto";
+
+/* Class = "NSTextFieldCell"; title = "Account"; ObjectID = "298"; */
+"298.title" = "Conto";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "303"; */
+"303.title" = "Nessuno";
+
+/* Class = "NSTextFieldCell"; title = "Target"; ObjectID = "304"; */
+"304.title" = "Verso";
+
+/* Class = "NSTextFieldCell"; title = "Amount"; ObjectID = "308"; */
+"308.title" = "Ammontare";
+
+/* Class = "NSTextFieldCell"; title = "Notes"; ObjectID = "314"; */
+"314.title" = "Note";

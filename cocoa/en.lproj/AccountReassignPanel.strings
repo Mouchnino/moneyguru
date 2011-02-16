@@ -5,9 +5,6 @@
 /* Class = "NSTextFieldCell"; title = "You're about to delete a non-empty account. Select an account to re-assign its transactions to."; ObjectID = "4"; */
 "4.title" = "You're about to delete a non-empty account. Select an account to re-assign its transactions to.";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "7"; */
-"7.title" = "OtherViews";
-
 /* Class = "NSMenuItem"; title = "No Account"; ObjectID = "8"; */
 "8.title" = "No Account";
 

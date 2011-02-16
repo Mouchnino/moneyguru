@@ -20,9 +20,6 @@
 /* Class = "NSTextFieldCell"; title = "Save this custom range in slot:"; ObjectID = "28"; */
 "28.title" = "Save this custom range in slot:";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "31"; */
-"31.title" = "OtherViews";
-
 /* Class = "NSMenuItem"; title = "None"; ObjectID = "32"; */
 "32.title" = "None";
 

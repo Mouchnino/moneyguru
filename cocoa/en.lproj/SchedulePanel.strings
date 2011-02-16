@@ -35,9 +35,6 @@
 /* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "226"; */
 "226.title" = "Repeat";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "229"; */
-"229.title" = "OtherViews";
-
 /* Class = "NSMenuItem"; title = "Never"; ObjectID = "230"; */
 "230.title" = "Never";
 

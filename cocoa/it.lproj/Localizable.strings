@@ -1,0 +1,33 @@
+"New Item" = "Nuovo Elemento";
+"New Account" = "Nuovo Conto";
+"New Transaction" = "Nuova Transazione";
+"New Schedule" = "Nuova Pianificazione";
+"New Budget" = "Nuova Previsione";
+
+"Account Lookup" = "Cerca Conto";
+"Completion Lookup" = "Cerca completamento";
+
+"All" = "Tutti";
+"Increase" = "Incremento";
+"Decrease" = "Decremento";
+"Income" = "Entrate";
+"Expenses" = "Uscite";
+"Transfers" = "Trasferimento";
+"Unassigned" = "Non assegnato";
+"Reconciled" = "Riconciliato";
+"Not Reconciled" = "Non Riconciliato";
+
+"Filter" = "Filtro";
+"Date Range" = "Intervallo di Date";
+"Net Worth" = "Patrimonio Netto";
+"Profit/Loss" = "Guadagno/Perdita";
+"Schedules" = "Pianificazioni";
+"Budgets" = "Previsioni";
+
+/* Messages */
+"FirstRunMsg" = "Questa è la prima volta che eseguit moneyGuru. Vuoi aprire il file di esempio?";
+"AboutToRestartMsg" = "moneyGuru sta per riavviarsi";
+"ThanksForBuyingMsg" = "Grazie per aver acquistato moneyGuru!";
+"DemoLimitReachedMsg" = "Hai raggiunto i limiti di questa versione demo. Devi acquistare moneyGuru per salvare il documento.";
+"SelectFileToImportMsg" = "Scegli il file da importare";
+"ExportToFileMsg" = "Esporta al file";

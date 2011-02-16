@@ -12,23 +12,14 @@ from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyF
 from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
-    NSNumberFormatter, NSNumberFormatterBehavior10_4, NSBundle)
-from hscommon.reg import InvalidCodeError
+    NSNumberFormatter, NSNumberFormatterBehavior10_4)
 from hscommon.currency import Currency, USD
 from hscommon.path import Path
 from hscommon.util import nonone
 
 # Set translation func. This has to be set before core modules are initialized
 import hscommon.trans
-mainBundle = NSBundle.mainBundle()
-def cocoa_tr(s, context='core'):
-    return mainBundle.localizedStringForKey_value_table_(s, s, context)
-hscommon.trans.set_tr(cocoa_tr)
-currentLang = NSBundle.preferredLocalizationsFromArray_(mainBundle.localizations())[0]
-LANG2LOCALENAME = {'fr': 'fr_FR', 'de': 'de_DE'}
-if currentLang in LANG2LOCALENAME:
-    import locale
-    locale.setlocale(locale.LC_ALL, LANG2LOCALENAME[currentLang])
+hscommon.trans.install_cocoa_trans()
 
 from core.app import Application
 from core.document import Document, FilterType
@@ -62,7 +53,7 @@ from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
 from core.gui.import_table import ImportTable
-from core.gui.import_window import ImportWindow, DAY, MONTH, YEAR
+from core.gui.import_window import ImportWindow
 from core.gui.main_window import MainWindow
 from core.gui.mass_edition_panel import MassEditionPanel
 from core.gui.net_worth_graph import NetWorthGraph
