@@ -13,6 +13,8 @@ Voici la liste des contributeurs de moneyGuru. Merci!
 
 | **Michael Pitra, localisation allemande**
 
+| **Roberto Padovani, localisation italienne**
+
 | **Python, Langage de programmation** (`Site web <http://www.python.org>`__)
 | Le meilleur des meilleurs
 

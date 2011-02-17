@@ -13,6 +13,8 @@ Liste aller direkten sowie indirekten Personen / Projekte, die einen Beitrag gel
 
 | **Michael Pitra, deutsche Übersetzung**
 
+| **Roberto Padovani, Italian localization**
+
 | **Python, programming language** (`Website <http://www.python.org>`__)
 | Die beste der Besten
 

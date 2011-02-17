@@ -13,6 +13,8 @@ Below is the list of direct or indirect contributors to moneyGuru. Thanks!
 
 | **Michael Pitra, German localization**
 
+| **Roberto Padovani, Italian localization**
+
 | **Python, Programming language** (`Website <http://www.python.org>`__)
 | The bestest of the bests
 
