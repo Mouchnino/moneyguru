@@ -14,6 +14,14 @@ from hscommon.trans import tr
 
 from ..ui.preferences_panel_ui import Ui_PreferencesPanel
 
+SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it']
+LANG2NAME = {
+    'en': tr('English'),
+    'fr': tr('French'),
+    'de': tr('German'),
+    'it': tr('Italian'),
+}
+
 class PreferencesPanel(QDialog, Ui_PreferencesPanel):
     def __init__(self, parent, app):
         # The flags we pass are that so we don't get the "What's this" button in the title bar
@@ -25,6 +33,8 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         self.setupUi(self)
         availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
         self.nativeCurrencyComboBox.addItems(availableCurrencies)
+        for lang in SUPPORTED_LANGUAGES:
+            self.languageComboBox.addItem(LANG2NAME[lang])
     
     def load(self):
         appm = self.app.model
@@ -35,7 +45,10 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
         self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
-        langindex = {'fr': 1, 'de': 2}.get(self.app.prefs.language, 0)
+        try:
+            langindex = SUPPORTED_LANGUAGES.index(self.app.prefs.language)
+        except ValueError:
+            langindex = 0
         self.languageComboBox.setCurrentIndex(langindex)
     
     def save(self):
@@ -48,10 +61,9 @@ class PreferencesPanel(QDialog, Ui_PreferencesPanel):
             appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
-        langs = ['en', 'fr', 'de']
-        lang = langs[self.languageComboBox.currentIndex()]
+        lang = SUPPORTED_LANGUAGES[self.languageComboBox.currentIndex()]
         oldlang = self.app.prefs.language
-        if oldlang not in langs:
+        if oldlang not in SUPPORTED_LANGUAGES:
             oldlang = 'en'
         if lang != oldlang:
             QMessageBox.information(self, "", tr("moneyGuru has to restart for language changes to take effect"))

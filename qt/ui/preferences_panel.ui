@@ -246,21 +246,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <item>
-        <property name="text">
-         <string>English</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>French</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>German</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>

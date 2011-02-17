@@ -4,10 +4,6 @@
 <context>
     <name>core</name>
     <message>
-        <source>In the demo version, documents with more than 100 transactions cannot be saved.</source>
-        <translation>Dans cette version démo, les documents de plus de 100 transactions ne peuvent pas être enregistrés.</translation>
-    </message>
-    <message>
         <source>Add transaction</source>
         <translation>Ajouter transaction</translation>
     </message>
@@ -450,14 +446,6 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <source>ThanksForBuyingMsg</source>
         <translation>Merci d'avoir acheté moneyGuru!</translation>
-    </message>
-		<message>
-        <source>Registration Required</source>
-        <translation>Enregistrement requis</translation>
-    </message>
-    <message>
-        <source>You have reached the limits of this demo version. You must buy moneyGuru to save the document.</source>
-        <translation>Vous avez atteint les limites de la démo. Vous devez acheter moneyGuru pour sauvegarder votre document.</translation>
     </message>
     <message>
         <source>Export to QIF</source>

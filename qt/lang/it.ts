@@ -1,623 +1,617 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.0" language="it_IT">
 <context>
     <name>core</name>
     <message>
         <source>Add transaction</source>
-        <translation>Transaktion hinzufügen</translation>
+        <translation>Crea Transazione</translation>
     </message>
     <message>
         <source>Change transaction</source>
-        <translation>Transaktion ändern</translation>
+        <translation>Modifica Transazione</translation>
     </message>
     <message>
         <source>Change account</source>
-        <translation>Konto ändern</translation>
+        <translation>Modifica Conto</translation>
     </message>
     <message>
         <source>Remove account</source>
-        <translation>Konto löschen</translation>
+        <translation>Elimina Conto</translation>
     </message>
     <message>
         <source>New account</source>
-        <translation>Neues Konto</translation>
+        <translation>Nuovo Conto</translation>
     </message>
     <message>
         <source>Add account</source>
-        <translation>Konto hinzufügen</translation>
+        <translation>Crea Conto</translation>
     </message>
     <message>
         <source>Change group</source>
-        <translation>Gruppe ändern</translation>
+        <translation>Modifica Gruppo</translation>
     </message>
     <message>
         <source>Remove group</source>
-        <translation>Gruppe löschen</translation>
+        <translation>Elimina Gruppo</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation>Neue Gruppe</translation>
+        <translation>Nuovo Gruppo</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Gruppe hinzufügen</translation>
+        <translation>Crea Gruppo</translation>
     </message>
     <message>
         <source>Remove transaction</source>
-        <translation>Transaktion löschen</translation>
+        <translation>Elimina Transazione</translation>
     </message>
     <message>
         <source>Duplicate transactions</source>
-        <translation>Transaktion duplizieren</translation>
+        <translation>Duplica Transazione</translation>
     </message>
     <message>
         <source>Move transaction</source>
-        <translation>Transaktion verschieben</translation>
+        <translation>Sposta Transazione</translation>
     </message>
     <message>
         <source>Change reconciliation</source>
-        <translation>Wertstellung ändern</translation>
+        <translation>Modifica Riconciliazione</translation>
     </message>
     <message>
         <source>Change Budget</source>
-        <translation>Budget ändern</translation>
+        <translation>Modifica Previsione</translation>
     </message>
     <message>
         <source>Add Budget</source>
-        <translation>Budget hinzufügen</translation>
+        <translation>Crea Previsione</translation>
     </message>
     <message>
         <source>Remove Budget</source>
-        <translation>Budget löschen</translation>
+        <translation>Elimina Previsione</translation>
     </message>
     <message>
         <source>Change Schedule</source>
-        <translation>Wiederholung ändern</translation>
+        <translation>Modifica Pianificazione</translation>
     </message>
     <message>
         <source>Add Schedule</source>
-        <translation>Wiederholung hinzufügen</translation>
+        <translation>Crea Pianificazione</translation>
     </message>
     <message>
         <source>Remove Schedule</source>
-        <translation>Wiederholung löschen</translation>
+        <translation>Elimina Pianificazione</translation>
     </message>
     <message>
         <source>\"%s\" is not a moneyGuru file</source>
-        <translation>\"%s\" ist keine moneyGuru-Datei</translation>
+        <translation>\"%s\" non è un file moneyGuru</translation>
     </message>
     <message>
         <source>%s is of an unknown format.</source>
-        <translation>%s ist ein unbekanntes Format</translation>
+        <translation>%s ha un formato sconosciuto.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importieren</translation>
+        <translation>Importa</translation>
     </message>
     <message>
         <source>Assets</source>
-        <translation>Aktiva</translation>
+        <translation>Attivo</translation>
     </message>
     <message>
         <source>Liabilities</source>
-        <translation>Passiva</translation>
+        <translation>Passivo</translation>
     </message>
     <message>
         <source>Income</source>
-        <translation>Einkommen</translation>
+        <translation>Entrate</translation>
     </message>
     <message>
         <source>Expenses</source>
-        <translation>Ausgaben</translation>
+        <translation>Uscite</translation>
     </message>
     <message>
         <source>No Account</source>
-        <translation>Kein Konto</translation>
+        <translation>Nessun Conto</translation>
     </message>
     <message>
         <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
-        <translation>{0} von {1} ausgewählt. Haben: {2} Soll: {3}</translation>
+        <translation>{0} di {1} selezionato. Incremento: {2} Decremento: {3}</translation>
     </message>
     <message>
         <source>ASSETS</source>
-        <translation>AKTIVA</translation>
+        <translation>Attivo</translation>
     </message>
     <message>
         <source>LIABILITIES</source>
-        <translation>PASSIVA</translation>
+        <translation>Passivo</translation>
     </message>
     <message>
         <source>NET WORTH</source>
-        <translation>EIGENKAPITAL</translation>
+        <translation>Patrimonio Netto</translation>
     </message>
     <message>
         <source>Income/Expense accounts must be created before budgets can be set.</source>
-        <translation>Einkommen- und/oder Ausgabenkonten müssen vor der Budgeterstellung angelegt sein.</translation>
+        <translation>Creare un Conto Entrate/Uscite prima di poter impostare una Previsione.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Keine</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation>Datum</translation>
+        <translation>Data</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Beschreibung</translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <source>Payee</source>
-        <translation>Empfänger</translation>
+        <translation>Beneficiario</translation>
     </message>
     <message>
         <source>Check #</source>
-        <translation>Scheck #</translation>
+        <translation>Conto #</translation>
     </message>
     <message>
         <source>Transfer</source>
-        <translation>Transfer</translation>
+        <translation>Trasferimento</translation>
     </message>
     <message>
         <source>Amount</source>
-        <translation>Betrag</translation>
+        <translation>Ammontare</translation>
     </message>
     <message>
         <source>Increase</source>
-        <translation>Haben</translation>
+        <translation>Incremento</translation>
     </message>
     <message>
         <source>Decrease</source>
-        <translation>Soll</translation>
+        <translation>Decremento</translation>
     </message>
     <message>
         <source>Currency</source>
-        <translation>Währung</translation>
+        <translation>Valuta</translation>
     </message>
     <message>
         <source>Transaction ID</source>
-        <translation>Transaktionsnummer</translation>
+        <translation>ID Transazione</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Verzug</translation>
+        <translation>Default</translation>
     </message>
     <message>
         <source>&lt; New Account &gt;</source>
-        <translation>&lt; Neues Konto &gt;</translation>
+        <translation>&lt; Nuovo Conto &gt;</translation>
     </message>
     <message>
         <source>Unassigned</source>
-        <translation>nicht zugeordnet</translation>
+        <translation>Non assegnato</translation>
     </message>
     <message>
         <source>Previous Balance</source>
-        <translation>vorheriger Saldo</translation>
+        <translation>Saldo precedente</translation>
     </message>
     <message>
         <source>TOTAL</source>
-        <translation>TOTAL</translation>
+        <translation>TOTALE</translation>
     </message>
     <message>
         <source>INCOME</source>
-        <translation>EINKOMMEN</translation>
+        <translation>ENTRATE</translation>
     </message>
     <message>
         <source>EXPENSES</source>
-        <translation>AUSGABEN</translation>
+        <translation>USCITE</translation>
     </message>
     <message>
         <source>NET INCOME</source>
-        <translation>NETTOEINKOMMEN</translation>
+        <translation>ENTRATE NETTE</translation>
     </message>
     <message>
         <source>Net Worth</source>
-        <translation>Eigenkapital</translation>
+        <translation>Patrimonio Netto</translation>
     </message>
     <message>
         <source>Profit &amp; Loss</source>
-        <translation>Profit / Verlust</translation>
+        <translation>Guadagno &amp; Perdita</translation>
     </message>
     <message>
         <source>Transactions</source>
-        <translation>Transaktionen</translation>
+        <translation>Transazioni</translation>
     </message>
     <message>
         <source>Schedules</source>
-        <translation>Wiederholungen</translation>
+        <translation>Pianificazione</translation>
     </message>
     <message>
         <source>Budgets</source>
-        <translation>Budgets</translation>
+        <translation>Previsione</translation>
     </message>
     <message>
         <source>General Ledger</source>
-        <translation>General Ledger</translation>
+        <translation>Libro Mastro</translation>
     </message>
     <message>
         <source>New Tab</source>
-        <translation>Neuer Tab</translation>
+        <translation>Nuova Scheda</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation>andere</translation>
+        <translation>Altri</translation>
     </message>
     <message>
         <source>Total </source>
-        <translation>Total </translation>
+        <translation>Totale </translation>
     </message>
     <message>
         <source>TOTAL </source>
-        <translation>TOTAL </translation>
+        <translation>TOTALE </translation>
     </message>
     <message>
         <source>The account '{0}' already exists.</source>
-        <translation>Das Konto '{0}' existiert bereits.</translation>
+        <translation>Il Conto '{0}' esiste già.</translation>
     </message>
     <message>
         <source>{0} out of {1} selected. Amount: {2}</source>
-        <translation>{0} von {1} ausgewählt. Betrag: {2}</translation>
+        <translation>{0} di {1} selezionato. Ammontare: {2}</translation>
     </message>
     <message>
         <source>The Date and Amount columns must be set.</source>
-        <translation>Es müssen Werte für Datum und Betrag eingegeben werden.</translation>
+        <translation>Impostare le colonne Data e Ammontare.</translation>
     </message>
     <message>
         <source>The Date column has been set on a column that doesn't contain dates.</source>
-        <translation>Die Datumsspalte wurde für eine Spalte ausgewählt, die keine Daten enthählt.</translation>
+        <translation>La colonna Data è stata impostata ad una colonna che non contiene date.</translation>
     </message>
     <message>
         <source>The Amount column has been set on a column that doesn't contain amounts.</source>
-        <translation>The Amount column has been set on a column that doesn't contain amounts.</translation>
+        <translation>La colonna Ammontare è stata impostata ad una colonna che non contiene un ammontare.</translation>
     </message>
     <message>
         <source>{0} - Now</source>
-        <translation>{0} - Heute</translation>
+        <translation>{0} - Ora</translation>
     </message>
     <message>
         <source>Running year ({0} - {1})</source>
-        <translation>laufendes Jahr ({0} - {1})</translation>
+        <translation>Anno Corrente ({0} - {1})</translation>
     </message>
     <message>
         <source>All Transactions</source>
-        <translation>Alle Transaktionen</translation>
+        <translation>Tutte le Transazioni</translation>
     </message>
     <message>
         <source>Daily</source>
-        <translation>täglich</translation>
+        <translation>Giornaliero</translation>
     </message>
     <message>
         <source>Weekly</source>
-        <translation>wöchentlich</translation>
+        <translation>Settimanale</translation>
     </message>
     <message>
         <source>Monthly</source>
-        <translation>monatlich</translation>
+        <translation>Mensile</translation>
     </message>
     <message>
         <source>Yearly</source>
-        <translation>jährlich</translation>
+        <translation>Annuale</translation>
     </message>
     <message>
         <source>fifth</source>
-        <translation>fünften</translation>
+        <translation>quinto</translation>
     </message>
     <message>
         <source>first</source>
-        <translation>ersten</translation>
+        <translation>primo</translation>
     </message>
     <message>
         <source>fourth</source>
-        <translation>vierten</translation>
+        <translation>quarto</translation>
     </message>
     <message>
         <source>second</source>
-        <translation>zweiten</translation>
+        <translation>secondo</translation>
     </message>
     <message>
         <source>third</source>
-        <translation>dritten</translation>
+        <translation>terzo</translation>
     </message>
     <message>
         <source>Every %s %s of the month</source>
-        <translation>Jeden %s %s im Monat</translation>
+        <translation>Ogni %s %s del mese</translation>
     </message>
     <message>
         <source>Every last %s of the month</source>
-        <translation>Jeden letzten %s im Monat</translation>
+        <translation>Ogni ultimo %s del mese</translation>
     </message>
     <message>
         <source>day</source>
-        <translation>Tag</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>days</source>
-        <translation>Tage</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>week</source>
-        <translation>Woche</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>weeks</source>
-        <translation>Wochen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Monat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>months</source>
-        <translation>Monate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>year</source>
-        <translation>Jahr</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>years</source>
-        <translation>Jahre</translation>
+        <translation type="unfinished"></translation>
     </message>
 
     <!-- Main Window -->
     <message>
         <source>New Account</source>
-        <translation>Neues Konto</translation>
+        <translation>Nuovo Conto</translation>
     </message>
     <message>
         <source>New Transaction</source>
-        <translation>Neue Transaktion</translation>
+        <translation>Nuova Transazione</translation>
     </message>
     <message>
         <source>New Schedule</source>
-        <translation>Neue Wiederholung</translation>
+        <translation>Nuova Pianificazione</translation>
     </message>
     <message>
         <source>New Budget</source>
-        <translation>Neues Budget</translation>
+        <translation>Nuova Previsione</translation>
     </message>
 		<message>
         <source>New Item</source>
-        <translation>Neuer Posten</translation>
+        <translation>Nuovo Elemento</translation>
     </message>
 		<message>
         <source>Undo {0}</source>
-        <translation>Widerrufen {0}</translation>
+        <translation>Annulla {0}</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Widerrufen</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Redo {0}</source>
-        <translation>Wiederholen {0}</translation>
+        <translation>Ripristina {0}</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Wiederholen</translation>
+        <translation>Ripristina</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Achtung</translation>
+        <translation type="unfinished"></translation>
     </message>
-
-		<!-- Print Titles -->
+    
+    <!-- Print Titles -->
     <message>
         <source>Net Worth at {start_date}, starting from {end_date}</source>
-        <translation>Eigenkapital vom {start_date}, beginnend am {end_date}</translation>
+        <translation>Patrimonio Netto al {start_date}, partendo dal {end_date}</translation>
     </message>
     <message>
         <source>Profit and Loss from {start_date} to {end_date}</source>
-        <translation>Profit und Verlust vom {start_date} bis {end_date}</translation>
+        <translation>Guadagni e Perdite dal {start_date} al {end_date}</translation>
     </message>
     <message>
         <source>Transactions from {start_date} to {end_date}</source>
-        <translation>Transaktionen vom {start_date} bis {end_date}</translation>
+        <translation>Transazioni dal {start_date} al {end_date}</translation>
     </message>
     <message>
         <source>{account_name}
 Entries from {start_date} to {end_date}</source>
-        <translation>{account_name}
-Eintrag vom {start_date} bis {end_date}</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Schedules from {start_date} to {end_date}</source>
-        <translation>Wiederholung vom {start_date} bis {end_date}</translation>
+        <translation>Pianificazioni dal {start_date} al {end_date}</translation>
     </message>
     <message>
         <source>Budgets from {start_date} to {end_date}</source>
-        <translation>Budgets vom {start_date} bis {end_date}</translation>
+        <translation>Previsioni dal {start_date} al {end_date}</translation>
     </message>
     <message>
         <source>General Ledger from {start_date} to {end_date}</source>
-        <translation>General Ledger from {start_date} to {end_date}</translation>
+        <translation>Libro Mastro dal {start_date} al {end_date}</translation>
     </message>
-
-		<!-- Document -->
+    
+    <!-- Document -->
     <message>
         <source>FirstRunMsg</source>
-        <translation>Sie benutzen moneyGuru zum ersten Mal. Möchten sie die Beispielsdatei verwenden?</translation>
+        <translation>Questa è la prima volta che eseguit moneyGuru. Vuoi aprire il file di esempio?</translation>
     </message>
     <message>
         <source>AboutToRestartMsg</source>
-        <translation>moneyGuru schließt</translation>
+        <translation>moneyGuru sta per riavviarsi</translation>
     </message>
     <message>
         <source>ThanksForBuyingMsg</source>
-        <translation>Wir danken Ihnen, dass Sie sich für moneyGuru entschieden haben!</translation>
-    </message>
-    <message>
-        <source>You have reached the limits of this demo version. You must buy moneyGuru to save the document.</source>
-        <translation>Ihre kostenlose Testversion ist abgelaufen. Sie müssen moneyGuru erwerben, um ihre Daten weiterhin sichern zu können.</translation>
+        <translation>Grazie per aver acquistato moneyGuru!</translation>
     </message>
     <message>
         <source>Export to QIF</source>
-        <translation>Nach QIF exportieren</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>QIF Files (*.qif)</source>
-        <translation>QIF Dateien (*.qif)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a document to import</source>
-        <translation>Wählen sie eine Datei zum Importieren aus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)</source>
-        <translation>unterstützte Dateien (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Cannot import file</source>
-        <translation>Kann Datei nicht importieren</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Select a document to load</source>
-        <translation>Wählen Sie ein Dokument aus, um zu laden</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>moneyGuru Documents (*.moneyguru)</source>
-        <translation>moneyGuru Dokument (*.moneyguru)</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Cannot load file</source>
-        <translation>Kann Datei nicht laden</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Save As</source>
-        <translation>Sichern unter</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Unsaved Document</source>
-        <translation>geändertes Dokument</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Do you want to save your changes before continuing?</source>
-        <translation>Möchten Sie Ihre Änderungen speichern, bevor Sie fortfahren?</translation>
+        <translation type="unfinished"></translation>
     </message>
 		
 		<!-- Date Range Selector -->
 		<message>
         <source>Next</source>
-        <translation>nächster Zeitraum</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Previous</source>
-        <translation>vorheriger Zeitraum</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Today</source>
-        <translation>heutiger Zeitraum</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Month</source>
-        <translation>Monat</translation>
+        <translation>Mese</translation>
     </message>
 		<message>
         <source>Quarter</source>
-        <translation>Quartal</translation>
+        <translation>Quarto</translation>
     </message>
 		<message>
         <source>Year</source>
-        <translation>Jahr</translation>
+        <translation>Anno</translation>
     </message>
 		<message>
         <source>Year To Date</source>
-        <translation>Ab Jahresbeginn bis heute</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Running Year</source>
-        <translation>laufendes Jahr</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Custom...</source>
-        <translation>Benutzerdefinierter Zeitraum...</translation>
+        <translation type="unfinished"></translation>
     </message>
-    
 		<!-- Filters -->
 		<message>
         <source>All</source>
-        <translation>Alles</translation>
+        <translation>Tutti</translation>
     </message>
     <message>
         <source>Transfers</source>
-        <translation>Transfers</translation>
+        <translation>Trasferimenti</translation>
     </message>
     <message>
         <source>Reconciled</source>
-        <translation>wertgestellt</translation>
+        <translation>Riconciliato</translation>
     </message>
     <message>
         <source>Not Reconciled</source>
-        <translation>nicht wertgestellt</translation>
+        <translation>Non Riconciliato</translation>
     </message>
 
 		<!-- CSV -->
 		<message>
         <source>New Layout</source>
-        <translation>Neues Layout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose a name for your new layout:</source>
-        <translation>Wählen Sie einen Namen für Ihren Layout:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename Layout</source>
-        <translation>Ausgewähltes Layout umbennen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose a name for your layout:</source>
-        <translation>Wählen Sie einen Namen für Ihren Layout:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New Layout...</source>
-        <translation>Neues Layout</translation>
+        <translation>Nuova Disposizione…</translation>
     </message>
     <message>
         <source>Rename Selected Layout...</source>
-        <translation>Ausgewähltes Layout umbennen...</translation>
+        <translation>Rinomina la Disposizione selezionata…</translation>
     </message>
     <message>
         <source>Delete Selected Layout</source>
-        <translation>Ausgewähltes Layout löschen</translation>
+        <translation>Elimina la Disposizione selezionata</translation>
     </message>
 
 		<!-- Columns -->
 		<message>
         <source>Change</source>
-        <translation>Variation</translation>
+        <translation>Variazione</translation>
     </message>
     <message>
         <source>Change %</source>
-        <translation>Variation %</translation>
+        <translation>Variazione %</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Anfang</translation>
+        <translation>Inizio</translation>
     </message>
     <message>
         <source>Budgeted</source>
-        <translation>Budgetiert</translation>
+        <translation>Previsto</translation>
     </message>
     <message>
         <source>Account #</source>
-        <translation>Konto #</translation>
+        <translation>Conto #</translation>
     </message>
     <message>
         <source>Current</source>
-        <translation>laufend</translation>
+        <translation>Attuale</translation>
     </message>
     <message>
         <source>Last</source>
-        <translation>vorherig</translation>
+        <translation>Ultimo</translation>
     </message>
     <message>
         <source>Account</source>
-        <translation>Konto</translation>
+        <translation>Conto</translation>
     </message>
     <message>
         <source>Reconciliation Date</source>
-        <translation>Wertstellungsdatum</translation>
+        <translation>Data di Riconciliazione</translation>
     </message>
     <message>
         <source>Balance</source>
@@ -625,35 +619,35 @@ Eintrag vom {start_date} bis {end_date}</translation>
     </message>
     <message>
         <source>Start Date</source>
-        <translation>Anfangsdatum</translation>
+        <translation>Data Inizio</translation>
     </message>
     <message>
         <source>Stop Date</source>
-        <translation>Enddatum</translation>
+        <translation>Data Fine</translation>
     </message>
     <message>
         <source>Repeat Type</source>
-        <translation>Wiederholungsart</translation>
+        <translation>Tipo di Ripetizione</translation>
     </message>
     <message>
         <source>Interval</source>
-        <translation>Intervall</translation>
+        <translation>Intervallo</translation>
     </message>
     <message>
         <source>Target</source>
-        <translation>Zielkonto</translation>
+        <translation>Verso</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Ende</translation>
+        <translation>Fine</translation>
     </message>
     <message>
         <source>From</source>
-        <translation>von</translation>
+        <translation>Da</translation>
     </message>
     <message>
         <source>To</source>
-        <translation>nach</translation>
+        <translation>A</translation>
     </message>
     <message>
         <source>Memo</source>
@@ -661,15 +655,15 @@ Eintrag vom {start_date} bis {end_date}</translation>
     </message>
     <message>
         <source>Debit</source>
-        <translation>Debit</translation>
+        <translation>Debito</translation>
     </message>
     <message>
         <source>Credit</source>
-        <translation>Kredit</translation>
+        <translation>Credito</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Export</translation>
+        <translation>Esporta</translation>
     </message>
 </context>
 <context>
@@ -677,51 +671,51 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="account_panel.ui" line="14"/>
         <source>Account Info</source>
-        <translation>Kontodetails</translation>
+        <translation>Informazioni Conto</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="28"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="41"/>
         <source>Type</source>
-        <translation>Typ</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="52"/>
         <source>Asset</source>
-        <translation>Aktiva</translation>
+        <translation>Attivo</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="57"/>
         <source>Liability</source>
-        <translation>Passiva</translation>
+        <translation>Passivo</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="62"/>
         <source>Income</source>
-        <translation>Einkommen</translation>
+        <translation>Entrate</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="67"/>
         <source>Expense</source>
-        <translation>Ausgaben</translation>
+        <translation>Uscite</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="75"/>
         <source>Currency</source>
-        <translation>Währung</translation>
+        <translation>Valuta</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="101"/>
         <source>Account #</source>
-        <translation>Konto #</translation>
+        <translation>Conto #</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Bemerkungen:</translation>
+        <translation>Note:</translation>
     </message>
 </context>
 <context>
@@ -729,22 +723,27 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="account_reassign_panel.ui" line="14"/>
         <source>Re-assign Account</source>
-        <translation>Re-assign Account</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="20"/>
         <source>You&apos;re about to delete a non-empty account. Select an account to re-assign its transactions to.</source>
-        <translation>Sie sind dabei ein nicht leeres Konto zu löschen. Wählen sie ein anderes Konto aus, um ihre Transaktionen dorthin zu übertragen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="74"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <location filename="account_reassign_panel.ui" line="77"/>
+        <source>Esc</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="84"/>
         <source>Continue</source>
-        <translation>Weiter</translation>
+        <translation>Continua</translation>
     </message>
 </context>
 <context>
@@ -752,47 +751,47 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="budget_panel.ui" line="14"/>
         <source>Budget Info</source>
-        <translation>Budgetdetails</translation>
+        <translation>Info Previsione</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="28"/>
         <source>Start Date:</source>
-        <translation>Anfangsdatum:</translation>
+        <translation>Data Inizio:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="48"/>
         <source>Repeat Type:</source>
-        <translation>Wiederholung:</translation>
+        <translation>Tipo di Ripetizione:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="82"/>
         <source>Every:</source>
-        <translation>alle:</translation>
+        <translation>Ogni:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="110"/>
         <source>Stop Date:</source>
-        <translation>Enddatum:</translation>
+        <translation>Data Fine:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="133"/>
         <source>Account:</source>
-        <translation>Konto:</translation>
+        <translation>Conto:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="146"/>
         <source>Target:</source>
-        <translation>Zielkonto:</translation>
+        <translation>Target:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="166"/>
         <source>Amount:</source>
-        <translation>Betrag:</translation>
+        <translation>Ammontare:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="179"/>
         <source>Notes:</source>
-        <translation>Bemerkungen:</translation>
+        <translation>Note:</translation>
     </message>
 </context>
 <context>
@@ -800,46 +799,46 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="csv_options.ui" line="14"/>
         <source>CSV Options</source>
-        <translation>CSV Import Optionen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="20"/>
         <source>Specify which CSV columns correspond to which transaction fields. You must also uncheck the &quot;Import&quot; column for lines that don&apos;t represent a transaction (header, footer, comments).</source>
-        <translation>Bestimmen Sie, welches Feld der CSV Datei zu welchem Transaktionsfeld gehört. Sie müssen ebenfalls sämtliche Zeilen abwählen, die keine Transaktionen repräsentieren (z.B.: Titel, Fußzeile, Kommentare).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="32"/>
         <source>Layout:</source>
-        <translation>Layout:</translation>
+        <translation>Disposizione:</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="49"/>
         <source>Delimiter:</source>
-        <translation>Feldtrenner:</translation>
+        <translation>Delimitatore:</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="66"/>
         <source>Target:</source>
-        <translation>Zielkonto:</translation>
+        <translation>Target:</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="82"/>
         <source>Rescan</source>
-        <translation>Neu einlesen</translation>
+        <translation>Rianalizza</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="141"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="151"/>
         <source>Continue Import</source>
-        <translation>Importieren fortsetzen</translation>
+        <translation>Prosegui Importa</translation>
     </message>
     <message>
         <source>Encoding:</source>
-        <translation>Encoding:</translation>
+        <translation>Codifica:</translation>
     </message>
 </context>
 <context>
@@ -847,37 +846,37 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="custom_date_range_panel.ui" line="14"/>
         <source>Custom Date Range</source>
-        <translation>Benutzerdefinierter Zeitraum</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="23"/>
         <source>Select start and end dates from your custom range:</source>
-        <translation>Zeitraum bestimmen:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="32"/>
         <source>Start:</source>
-        <translation>Beginn:</translation>
+        <translation>Inizio:</translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="42"/>
         <source>End:</source>
-        <translation>Ende:</translation>
+        <translation>Fine:</translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="56"/>
         <source>Save this range under slot:</source>
-        <translation>Zeitraum an dieser Stelle sichern:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="70"/>
         <source>None</source>
-        <translation>Keine</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="110"/>
         <source>Under the name:</source>
-        <translation>unter:</translation>
+        <translation>Con il nome:</translation>
     </message>
 </context>
 <context>
@@ -885,51 +884,51 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="import_window.ui" line="157"/>
         <source>Import</source>
-        <translation>Importieren</translation>
+        <translation>Importa</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="32"/>
         <source>Target Account:</source>
-        <translation>Zielkonto:</translation>
+        <translation>Conto Destinazione:</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="62"/>
         <source>Some fields are wrong? Swap them!</source>
-        <translation>Inkorrekte Felder? Tauschen Sie sie aus!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="import_window.ui" line="69"/>
         <source>Day &lt;--&gt; Month</source>
-        <translation>Tag &lt;--&gt; Monat</translation>
+        <translation>Giorno &lt;--&gt; Mese</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="74"/>
         <source>Month &lt;--&gt; Year</source>
-        <translation>Monat &lt;--&gt; Jahr</translation>
+        <translation>Mese &lt;--&gt; Anno</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="79"/>
         <source>Day &lt;--&gt; Year</source>
-        <translation>Tag &lt;--&gt; Jahr</translation>
+        <translation>Giorno &lt;--&gt; Anno</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="84"/>
         <source>Description &lt;--&gt; Payee</source>
-        <translation>Beschreibung &lt;--&gt; Wechselnehmer</translation>
+        <translation>Descrizione &lt;--&gt; Beneficiario</translation>
     </message>
     <message>
         <source>Invert Amounts</source>
-        <translation>Invert Amounts</translation>
+        <translation>Inverti Ammontare</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="92"/>
         <source>Apply to all accounts</source>
-        <translation>Auf alle Konten anwenden</translation>
+        <translation>Applica a tutti i conti</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="99"/>
         <source>Swap</source>
-        <translation>Tauschen</translation>
+        <translation>Scambia</translation>
     </message>
 </context>
 <context>
@@ -937,226 +936,226 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="main_window.ui" line="184"/>
         <source>File</source>
-        <translation>Ablage</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="188"/>
         <source>Open Recent</source>
-        <translation>Benutzte Dokumente</translation>
+        <translation>Apri recente</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="207"/>
         <source>View</source>
-        <translation>Ansicht</translation>
+        <translation>Vista</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="211"/>
         <source>Date Range</source>
-        <translation>Intervall</translation>
+        <translation>Intervallo di Date</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="227"/>
         <source>Edit</source>
-        <translation>Bearbeiten</translation>
+        <translation>Modifica</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="250"/>
         <source>Help</source>
-        <translation>Hilfe</translation>
+        <translation>Aiuto</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="264"/>
         <source>Open...</source>
-        <translation>Öffnen...</translation>
+        <translation>Apri…</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="276"/>
         <source>Net Worth</source>
-        <translation>Eigenkapital</translation>
+        <translation>Patrimonio Netto</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="288"/>
         <source>Profit &amp; Loss</source>
-        <translation>Profit / Verlust</translation>
+        <translation>Guadagno &amp; Perdita</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="300"/>
         <source>Transactions</source>
-        <translation>Transaktionen</translation>
+        <translation>Transazioni</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="308"/>
         <source>Show Account</source>
-        <translation>Konto öffnen</translation>
+        <translation>Mostra Conto</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="324"/>
         <source>Remove Selected</source>
-        <translation>Remove Selected</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="329"/>
         <source>Show Info</source>
-        <translation>Details</translation>
+        <translation>Mostra Info</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="337"/>
         <source>Move Up</source>
-        <translation>nach oben veschieben</translation>
+        <translation>Sposta su</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="345"/>
         <source>Move Down</source>
-        <translation>nach unten verschieben</translation>
+        <translation>Sposta giù</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="353"/>
         <source>Go Back</source>
-        <translation>zurück</translation>
+        <translation>Torna indietro</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="361"/>
         <source>New Account Group</source>
-        <translation>Neue Kontogruppe</translation>
+        <translation>Nuovo Gruppo di Conti</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="369"/>
         <source>Next View</source>
-        <translation>Nächster Tab</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="377"/>
         <source>Previous View</source>
-        <translation>Vorheriger Tab</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="385"/>
         <source>New Document</source>
-        <translation>Neues Dokument</translation>
+        <translation>Nuovo Documento</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="390"/>
         <source>Open Example Document</source>
-        <translation>Beispielsdatei öffnen</translation>
+        <translation>Apri documento di esempio</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="395"/>
         <source>Import...</source>
-        <translation>Importieren...</translation>
+        <translation>Importa...</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="400"/>
         <source>Export to QIF...</source>
-        <translation>Nach QIF exportieren...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="405"/>
         <source>Save</source>
-        <translation>Sichern</translation>
+        <translation>Salva</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="413"/>
         <source>Save As...</source>
-        <translation>Sichern unter...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="421"/>
         <source>Register moneyGuru</source>
-        <translation>moneyGuru freischalten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="426"/>
         <source>About moneyGuru</source>
-        <translation>Über moneyGuru</translation>
+        <translation>Informazioni su moneyGuru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="431"/>
         <source>Toggle Reconciliation Mode</source>
-        <translation>Wertstellungsmodus ändern</translation>
+        <translation>Inverti modalità Riconciliazione</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="443"/>
         <source>Schedules</source>
-        <translation>Wiederholung</translation>
+        <translation>Pianificazione</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="455"/>
         <source>Budgets</source>
-        <translation>Budgets</translation>
+        <translation>Previsione</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="463"/>
         <source>View Options...</source>
-        <translation>Ansichtsoptionen anzeigen...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="471"/>
         <source>Reconcile Selection</source>
-        <translation>Auswahl wertstellen</translation>
+        <translation>Riconcilia selezione</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="479"/>
         <source>Make Schedule from Selected</source>
-        <translation>ausgewählte Transaktion wiederholen</translation>
+        <translation>Crea Pianificazione dalla selezione</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="487"/>
         <source>Preferences...</source>
-        <translation>Einstellungen...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="492"/>
         <source>Print...</source>
-        <translation>Drucken...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="500"/>
         <source>Quit moneyGuru</source>
-        <translation>moneyGuru beenden</translation>
+        <translation>Esci da moneyGuru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="508"/>
         <source>Undo</source>
-        <translation>Widerrufen</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="516"/>
         <source>Redo</source>
-        <translation>Wiederholen</translation>
+        <translation>Ripristina</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="524"/>
         <source>moneyGuru Help</source>
-        <translation>moneyGuru-Hilfe</translation>
+        <translation>Aiuto moneyGuru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="532"/>
         <source>Check for update</source>
-        <translation>Nach Updates suchen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="537"/>
         <source>Duplicate Transaction</source>
-        <translation>Duplizieren Transaktion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="545"/>
         <source>Jump to Account...</source>
-        <translation>Gehe zu Konto...</translation>
+        <translation>Salta al Conto…</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="553"/>
         <source>New Tab</source>
-        <translation>Neuer Tab</translation>
+        <translation>Nuova Scheda</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="561"/>
         <source>Close Tab</source>
-        <translation>Tab Schließen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Toggle Exclusion Status of Account</source>
-        <translation>Toggle Exclusion Status of Account</translation>
+        <translation>Inverti lo stato di esclusione del Conto</translation>
     </message>
 </context>
 
@@ -1167,78 +1166,78 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="mass_edition_panel.ui" line="14"/>
         <source>Mass Editing</source>
-        <translation>Mehrfachbearbeitung</translation>
+        <translation>Modifica di Massa</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="28"/>
         <source>Date:</source>
-        <translation>Datum:</translation>
+        <translation>Data:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="52"/>
         <source>Description:</source>
-        <translation>Beschreibung:</translation>
+        <translation>Descrizione:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="76"/>
         <source>Payee:</source>
-        <translation>Empfänger:</translation>
+        <translation>Beneficiario:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="100"/>
         <source>Check #:</source>
-        <translation>Scheck #:</translation>
+        <translation>Conto #:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="124"/>
         <source>From:</source>
-        <translation>von:</translation>
+        <translation>Da:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="148"/>
         <source>To:</source>
-        <translation>nach:</translation>
+        <translation>A:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="172"/>
         <source>Amount:</source>
-        <translation>Betrag:</translation>
+        <translation>Ammontare:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="196"/>
         <source>Currency:</source>
-        <translation>Währung:</translation>
+        <translation>Valuta:</translation>
     </message>
 </context>
 <context>
     <name>NewView</name>
     <message>
         <source>Choose a type for this tab:</source>
-        <translation>Wählen sie eine Ansicht für den Tab:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>1. Net Worth</source>
-        <translation>1. Eigenkapital</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>2. Profit &amp;&amp; Loss</source>
-        <translation>2. Profit / Verlust</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>3. Transactions</source>
-        <translation>3. Transaktionen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>4. General Ledger</source>
-        <translation>4. General Ledger</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>5. Schedules</source>
-        <translation>5. Wiederholung</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>6. Budgets</source>
-        <translation>6. Budgets</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1246,154 +1245,154 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="preferences_panel.ui" line="14"/>
         <source>Preferences</source>
-        <translation>Einstellungen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="22"/>
         <source>First day of the week:</source>
-        <translation>Ersten Tag der Woche festlegen:</translation>
+        <translation>Primo giorno della settimana:</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="39"/>
         <source>Monday</source>
-        <translation>Montag</translation>
+        <translation>Lunedì</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="44"/>
         <source>Tuesday</source>
-        <translation>Dienstag</translation>
+        <translation>Martedì</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="49"/>
         <source>Wednesday</source>
-        <translation>Mittwoch</translation>
+        <translation>Mercoledì</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="54"/>
         <source>Thursday</source>
-        <translation>Donnerstag</translation>
+        <translation>Giovedì</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="59"/>
         <source>Friday</source>
-        <translation>Freitag</translation>
+        <translation>Venerdì</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="64"/>
         <source>Saturday</source>
-        <translation>Samstag</translation>
+        <translation>Sabato</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="69"/>
         <source>Sunday</source>
-        <translation>Sonntag</translation>
+        <translation>Domenica</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="77"/>
         <source>Ahead months in Running Year:</source>
-        <translation>kommende Monate im laufenden Jahr:</translation>
+        <translation>Mesi avanti nell'anno corrente:</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="103"/>
         <source>Year starts in:</source>
-        <translation>Jahresbeginn:</translation>
+        <translation>L'anno comincia di:</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="120"/>
         <source>January</source>
-        <translation>Januar</translation>
+        <translation>Gennaio</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="125"/>
         <source>February</source>
-        <translation>Februar</translation>
+        <translation>Febbraio</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="130"/>
         <source>March</source>
-        <translation>März</translation>
+        <translation>Marzo</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="135"/>
         <source>April</source>
-        <translation>April</translation>
+        <translation>Aprile</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="140"/>
         <source>May</source>
-        <translation>Mai</translation>
+        <translation>Maggio</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="145"/>
         <source>June</source>
-        <translation>Juni</translation>
+        <translation>Giugno</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="150"/>
         <source>July</source>
-        <translation>Juli</translation>
+        <translation>Luglio</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="155"/>
         <source>August</source>
-        <translation>August</translation>
+        <translation>Agosto</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="160"/>
         <source>September</source>
-        <translation>September</translation>
+        <translation>Settembre</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="165"/>
         <source>October</source>
-        <translation>Oktober</translation>
+        <translation>Ottobre</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="170"/>
         <source>November</source>
-        <translation>November</translation>
+        <translation>Novembre</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="175"/>
         <source>December</source>
-        <translation>Dezember</translation>
+        <translation>Dicembre</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="183"/>
         <source>Auto-save interval:</source>
-        <translation>Zeitintervall der autom. Sicherung:</translation>
+        <translation>Intervallo di auto-salvataggio:</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="205"/>
         <source>minute(s) (0 for none)</source>
-        <translation>Minute(n) (0 = inaktif)</translation>
+        <translation>minuto(i) (0 per nessuno)</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="214"/>
         <source>Native Currency:</source>
-        <translation>gebürtige Währung:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="239"/>
         <source>Show scope dialog when modifying a scheduled transaction</source>
-        <translation>Bei Veränderung einer Wiederholung Dialogfenster anzeigen</translation>
+        <translation>Mostra l'applicabilità quando si modifica una transazione</translation>
     </message>
     <message>
         <location filename="preferences_panel.ui" line="246"/>
         <source>Automatically place decimals when typing</source>
-        <translation>Dezimalstellen automatisch setzen</translation>
+        <translation>Inserisci decimali automaticamente</translation>
     </message>
-    <message>
+		<message>
         <source>English</source>
-        <translation>Englisch</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>French</source>
-        <translation>Französisch</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>German</source>
-        <translation>Deutsch</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1401,57 +1400,57 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="schedule_panel.ui" line="14"/>
         <source>Schedule Info</source>
-        <translation>Wiederholungsdetail</translation>
+        <translation>Info Pianificazione</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="27"/>
         <source>Info</source>
-        <translation>Details</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="36"/>
         <source>Start Date:</source>
-        <translation>Anfangsdatum:</translation>
+        <translation>Data Inizio:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="56"/>
         <source>Repeat Type:</source>
-        <translation>Wiederholung:</translation>
+        <translation>Tipo di Ripetizione:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="90"/>
         <source>Every:</source>
-        <translation>alle:</translation>
+        <translation>Ogni:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="115"/>
         <source>Stop Date:</source>
-        <translation>Enddatum:</translation>
+        <translation>Data Fine:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="122"/>
         <source>Description:</source>
-        <translation>Beschreibung:</translation>
+        <translation>Descrizione:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="135"/>
         <source>Payee:</source>
-        <translation>Empfänger:</translation>
+        <translation>Beneficiario:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="148"/>
         <source>Check #:</source>
-        <translation>Scheck #:</translation>
+        <translation>Conto #:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="168"/>
         <source>Transfers:</source>
-        <translation>Transfers:</translation>
+        <translation>Trasferimenti:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="264"/>
         <source>Notes</source>
-        <translation>Bemerkungen</translation>
+        <translation>Note</translation>
     </message>
 </context>
 <context>
@@ -1459,32 +1458,32 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="schedule_scope_dialog.ui" line="14"/>
         <source>Schedule Modification Scope</source>
-        <translation>Änderungsbereich</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="26"/>
         <source>Do you want this change to affect all future occurrences of this schedule?</source>
-        <translation>Wollen sie diese Änderung auf alle zukünftigen Vorgänge dieser Transaktion anwenden?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="36"/>
         <source>You can force global scope (in other words, changing all future occurrences) by holding Shift when you perform the change.</source>
-        <translation>Sie können den Änderungsbereich auf alle zukünftigen Vorgänge erweitern, indem sie während der Änderung ⇧ gedrückt halten.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="48"/>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="71"/>
         <source>All future occurrences</source>
-        <translation>Ja, alle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="81"/>
         <source>Just this one</source>
-        <translation>Nur diesen</translation>
+        <translation>Solo questa</translation>
     </message>
 </context>
 <context>
@@ -1492,47 +1491,47 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="transaction_panel.ui" line="14"/>
         <source>Transaction Info</source>
-        <translation>Transaktiondetails</translation>
+        <translation>Info Transazione</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="27"/>
         <source>Info</source>
-        <translation>Details</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="36"/>
         <source>Date:</source>
-        <translation>Datum:</translation>
+        <translation>Data:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="56"/>
         <source>Description:</source>
-        <translation>Beschreibung:</translation>
+        <translation>Descrizione:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="69"/>
         <source>Payee:</source>
-        <translation>Empfänger:</translation>
+        <translation>Beneficiario:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="82"/>
         <source>Check #:</source>
-        <translation>Scheck #:</translation>
+        <translation>Conto #:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="102"/>
         <source>Transfers:</source>
-        <translation>Transfers:</translation>
+        <translation>Trasferimenti:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="171"/>
         <source>Multi-currency balance</source>
-        <translation>Devisensaldo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="204"/>
         <source>Notes</source>
-        <translation>Bemerkungen</translation>
+        <translation>Note</translation>
     </message>
 </context>
 <context>
@@ -1540,165 +1539,127 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <location filename="view_options_dialog.ui" line="14"/>
         <source>View Options</source>
-        <translation>Ansichtsoptionen anzeigen</translation>
+        <translation>Opzioni Vista</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="20"/>
         <source>Net Worth</source>
-        <translation>Eigenkapital</translation>
+        <translation>Patrimonio Netto</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="84"/>
         <source>Change</source>
-        <translation>Variation</translation>
+        <translation>Variazione</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="91"/>
         <source>Change %</source>
-        <translation>Variation %</translation>
+        <translation>Variazione %</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="40"/>
         <source>Start</source>
-        <translation>Anfang</translation>
+        <translation>Inizio</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="105"/>
         <source>Budgeted</source>
-        <translation>Budgetiert</translation>
+        <translation>Previsto</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="206"/>
         <source>Graph</source>
-        <translation>Graph</translation>
+        <translation>Grafico</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="119"/>
         <source>Pie Charts</source>
-        <translation>Kreisdiagramm</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="126"/>
         <source>Account #</source>
-        <translation>Konto #</translation>
+        <translation>Conto #</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="78"/>
         <source>Profit &amp; Loss</source>
-        <translation>Profit &amp; Verlust</translation>
+        <translation>Guadagno &amp; Perdita</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="98"/>
         <source>Last</source>
-        <translation>vorherig</translation>
+        <translation>Ultimo</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="136"/>
         <source>Transactions</source>
-        <translation>Transaktionen</translation>
+        <translation>Transazioni</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="229"/>
         <source>Description</source>
-        <translation>Beschreibung</translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="236"/>
         <source>Payee</source>
-        <translation>Empfänger</translation>
+        <translation>Beneficiario</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="243"/>
         <source>Check #</source>
-        <translation>Scheck #</translation>
+        <translation>Conto #</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="179"/>
         <source>Account</source>
-        <translation>Konto</translation>
+        <translation>Conto</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="213"/>
         <source>Reconciliation Date</source>
-        <translation>Wertstellungsdatum</translation>
+        <translation>Data di Riconciliazione</translation>
     </message>
-    <message>
+		<message>
         <source>Debit/Credit</source>
-        <translation>Debit/Kredit</translation>
+        <translation>Debito/Credito</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="223"/>
         <source>Schedules</source>
-        <translation>Wiederholung</translation>
+        <translation>Pianificazione</translation>
     </message>
     <message>
         <source>General Ledger</source>
-        <translation>General Ledger</translation>
+        <translation>Libro Mastro</translation>
     </message>
 </context>
 <context>
     <name>ExportPanel</name>
     <message>
         <source>Export</source>
-        <translation>Export</translation>
+        <translation>Esporta</translation>
     </message>
     <message>
         <source>Export Options</source>
-        <translation>Export Options</translation>
+        <translation>Opzioni di Esportazione</translation>
     </message>
     <message>
         <source>Which accounts do you want to export?</source>
-        <translation>Which accounts do you want to export?</translation>
+        <translation>Quali Conti vuoi esportare?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>All</translation>
+        <translation>Tutti</translation>
     </message>
     <message>
         <source>Selected</source>
-        <translation>Selected</translation>
+        <translation>Selezionati</translation>
     </message>
     <message>
         <source>Export format:</source>
-        <translation>Export format:</translation>
-    </message>
-</context>
-<context>
-    <name>RegSubmitDialog</name>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="14"/>
-        <source>Enter your registration code</source>
-        <translation>Geben sie ihren Code ein</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="20"/>
-        <source>Please enter your $appname registration code and registered e-mail (the e-mail you used for the purchase), then press &quot;Submit&quot;.</source>
-        <translation>Geben sie hier sowohl ihren erworbenen $appname Code als auch ihre zum Kauf genutzte Emailadresse ein.</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="47"/>
-        <source>Registration code:</source>
-        <translation>Code:</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="54"/>
-        <source>Registered e-mail:</source>
-        <translation>Email:</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="71"/>
-        <source>Purchase</source>
-        <translation>Jetzt kaufen</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="100"/>
-        <source>Cancel</source>
-        <translation>Abbrechen</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="116"/>
-        <source>Submit</source>
-        <translation>beantragen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
