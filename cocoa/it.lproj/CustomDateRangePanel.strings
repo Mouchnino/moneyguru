@@ -18,7 +18,7 @@
 "16.title" = "Annulla";
 
 /* Class = "NSTextFieldCell"; title = "Save this custom range in slot:"; ObjectID = "28"; */
-"28.title" = "Salva questo intervallo personalizzato nella posizione:";
+"28.title" = "Salva nella posizione:";
 
 /* Class = "NSMenuItem"; title = "None"; ObjectID = "32"; */
 "32.title" = "Nessuno";

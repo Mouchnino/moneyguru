@@ -106,7 +106,7 @@
 									<int key="NSTag">1</int>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">0</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="750409817">
+									<object class="NSCustomResource" key="NSNormalImage" id="874005150">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">NSRadioButton</string>
 									</object>
@@ -126,7 +126,7 @@
 									<reference key="NSControlView" ref="598426115"/>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">0</int>
-									<reference key="NSNormalImage" ref="750409817"/>
+									<reference key="NSNormalImage" ref="874005150"/>
 									<reference key="NSAlternateImage" ref="128508630"/>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>

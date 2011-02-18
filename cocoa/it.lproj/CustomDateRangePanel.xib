@@ -96,7 +96,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="79246221">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Salva questo intervallo personalizzato nella posizione:</string>
+								<string key="NSContents">Salva nella posizione:</string>
 								<reference key="NSSupport" ref="925362386"/>
 								<reference key="NSControlView" ref="734814227"/>
 								<reference key="NSBackgroundColor" ref="508437664"/>
