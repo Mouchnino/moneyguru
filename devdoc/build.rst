@@ -10,7 +10,7 @@ Before being able to build moneyGuru, a few dependencies have to be installed:
 General dependencies
 --------------------
 
-- Python 3.1 (http://www.python.org)
+- Python 3.1 (3.2 on Mac OS X) (http://www.python.org)
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
 - Sphinx 1.0.6 (http://sphinx.pocoo.org/)
 - pytest 2.0.0, to run unit tests. (http://pytest.org/)
@@ -22,7 +22,7 @@ OS X prerequisites
 - XCode 3.1 (http://developer.apple.com/TOOLS/xcode/)
 - Sparkle (http://sparkle.andymatuschak.org/)
 - PyObjC 2.3. (http://pyobjc.sourceforge.net/)
-- py2app 0.5.4 (http://bitbucket.org/ronaldoussoren/py2app)
+- pluginbuilder 1.0.0 (http://bitbucket.org/hsoft/pluginbuilder)
   
 Windows prerequisites
 ---------------------

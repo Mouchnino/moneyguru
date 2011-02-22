@@ -36,6 +36,7 @@ def build_all_cocoa_locs(basedir):
         build_cocoa_localization(model_path, loc_path)
 
 def build_cocoa(dev):
+    from pluginbuilder import build_plugin
     if not dev:
         print("Building help index")
         help_path = op.abspath('help/moneyguru_help')
@@ -49,12 +50,8 @@ def build_cocoa(dev):
         copy_packages(['core', 'hscommon'], 'build')
     shutil.copy('cocoa/mg_cocoa.py', 'build')
     os.chdir('build')
-    script_args = ['py2app', '-A'] if dev else ['py2app']
-    setup(
-        script_args = script_args,
-        plugin = ['mg_cocoa.py'],
-        setup_requires = ['py2app'],
-    )
+    # We have to exclude PyQt4 specifically because it's conditionally imported in hscommon.trans
+    build_plugin('mg_cocoa.py', excludes=['PyQt4'], alias=dev)
     os.chdir('..')
     pluginpath = 'cocoa/mg_cocoa.plugin'
     if op.exists(pluginpath):
