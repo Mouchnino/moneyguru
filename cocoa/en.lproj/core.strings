@@ -230,6 +230,16 @@
 /* core/model/recurrence.py:114 */
 "Every last %s of the month" = "Every last %s of the month";
 
+/* core/model/schedule_panel */
+"day" = "day";
+"days" = "days";
+"week" = "week";
+"weeks" = "weeks";
+"month" = "month";
+"months" = "months";
+"year" = "year";
+"years" = "years";
+
 /* Print titles */
 "Net Worth at {start_date}, starting from {end_date}" = "Net Worth at {start_date}, starting from {end_date}";
 "Profit and Loss from {start_date} to {end_date}" = "Profit and Loss from {start_date} to {end_date}";
