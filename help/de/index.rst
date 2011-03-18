@@ -1,7 +1,7 @@
 moneyGuru-Hilfe
 ===============
 
-Diese Hilfe ist auch in den Sprachen `Französisch <http://www.hardcoded.net/moneyguru/help/fr>`__ und `Englisch <http://www.hardcoded.net/moneyguru/help/en>`__ verfügbar.
+Diese Hilfe ist auch in den Sprachen `Französisch <http://www.hardcoded.net/moneyguru/help/fr>`__ , `Italienisch <http://www.hardcoded.net/moneyguru/help/it>`__ und `Englisch <http://www.hardcoded.net/moneyguru/help/en>`__ verfügbar.
 
 moneyGuru ist eine Anwendung zur Verwaltung Ihrer Finanzen und hilft, einen Überblick über Ihre aktuelle finanzielle Situation zu bekommen. Im Gegensatz zu anderen Anwendungen, bei denen oft mühsam Berichte konfiguriert werden müssen, haben Sie Ihre Daten immer tagesaktuell und direkt im Blick. Damit können Sie finanzielle Entscheidungen immer sofort, nicht erst nach Auswertung der Berichte, machen.
 
