@@ -1,11 +1,11 @@
-Cash Management
-===============
+Gestione dei Contanti
+=====================
 
-Managing cash is a tricky issue in all personal finance applications. The money you have in your wallet is technically an asset. So if you want to go by the book, you would create an account for each currency you have in your wallet. Every time you purchase something with cash, you add a transaction from your cash account to an expense account. However, you certainly don't want to start adding "chocolate bar for .99$" transactions. You don't want to ignore all cash transactions you make either, right? So what you will inevitably have to do is to periodically count the money in your wallet and make an adjustment entry to an expense account like "Undefined cash expenses".
+Gestire i contanti è un problema complicato in tutte le applicazioni di finanza personale. I soldi nel proprio portafoglio sono tecnicamente delle Attività, perciò se si volesse essere precisi, si dovrebbe creare un Conto per ogni valuta presente nel portafoglio. Ogni volta che si acquista qualcosa in contati, si aggiunge una transizione dal conto Contanti ad un conto delle uscite. D'altro canto spesso non vale la pena di aggiungere transazioni del tipo "cioccolatino 0.15 Euro", pur non volendo trascurarle tutte. Inevitabilmente si finirà a fare un conteggio periodico dei soldi nel portafoglio per poi aggiungere una voce di correzione verso un conto spese, del tipo "Spese non meglio documentate".
 
-Various finance management application have various solutions for this. Some of them have a hidden and special cash account with which you're not too sure what happens. Most of them have nothing. moneyGuru has the double-entry accounting system. Because all accounts, including income and expense accounts, are full fledged accounts, you can make transactions going from one expense to another expense. You're beginning to see where it leads...
+I vari software di gestione delle proprie finanze hanno diverse soluzioni per questo problema. Alcune hanno un conto specifico e nascosto solo per i contanti, ma di cui poi non si sa bene il funzionamento. I più non hanno una soluzione. moneyGuru al sistema tipo partita doppia tra i diversi Conti. Poiché tutti i conti sono Conti a tutti gli effetti, inclusi quelli di entrate e uscite, è possibile inserire delle transazioni da una spesa ad un'altra. Ecco che si intravede la soluzione...
 
-The Cash expense account
-------------------------
+Il conto Contanti come Uscita
+-----------------------------
 
-The proposed solution (because if you want, you can totally manage cash as an asset) is to create a "Cash" expense account. When you withdraw money, send it to that expense account. When you purchase something with cash, take it from that account. The leftover will be expenses you had paid in cash for which you never created a transaction (or pennies you lost in the couch).
+La soluzione proposta (solo proposta, perché volendo si può gestire il contante come una Attività) è di creare un conto "Contanti" tra quelli delle Uscite. Quando si prelevano i contanti, li si trasferisce in quel conto di uscita. Quando si acquista qualcosa in contanti, lo si prende da questo conto. Quello che rimane indietro, ovvero un eventuale saldo negativo di Contanti, è dato dalle spese delle quali non si è voluto tenere traccia (o gli spiccioli persi nel divano).

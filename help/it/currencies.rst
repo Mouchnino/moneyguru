@@ -1,123 +1,124 @@
-Currencies
-==========
+Valute
+======
 
-moneyGuru has strong support for multiple currencies. Every amount has a currency information. Any amount you type can be in any currency. A lot of efforts have been made to make sure that you always know what currency any amount is without hurting your eyes and putting explicit currency codes everywhere.
+moneyGuru ha un solido supporto per le valute multiple: ogni ammontare contiene la propria informazione di valuta, quindi qualsiasi somma può essere in una qualsiasi valuta. Sono stati fatti molti sforzi per garantire che si capisca sempre in quale valuta è espressa una somma, senza affaticare la vista con un codice di valuta per ogni cifra.
 
-One central concept in moneyGuru is that there are 2 types of currencies. The **native** currency and the **foreign** currencies. The native currency is your system's currency (defined in System Preferences --> International). The foreign currencies are all the others.
+Un elemento centrale in moneyGuru è che ci sono 2 tipi di valuta. La valuta **nativa** e le valute **straniere**. La valuta nativa è quella del sistema operativa. Le valute straniere sono tutte le altre.
 
-The display of these currencies works with a very simple rule: If the amount is in your native currency, it is shown plainly. If it's not, it is shown with the currency's 3 letter ISO code (USD, CAD, EUR, GBP, etc..).
+Le valute vengono mostrate con una regola molto semplice: se l'ammontare è nella valuta nativa, è mostra senza codice, altrimenti è mostrato con il codice ISO a tre lettere della valuta (USD, CAD, EUR, GBP, etc..).
 
-The rules for amount typing are just a little more complex: In almost all cases, typing a number without any currency code means that this amount will be of your native's currency. However, if you are on the Account view with an account that is not of your native's currency, typing an amount without any currency code will create an amount with the **account**'s currency. The reason for this is that even if your native currency is USD, when you are in a EUR account you **very** likely want to type a EUR amount. Of course, in **all cases**, explicitly typing a currency code either in front or after the number makes an amount of that currency.
+Le regole per l'inserimento delle somme è appena più complesso; nella maggior parte dei casi, digitando un numero senza un codice di valuta significa che sarà nella valuta nativa. Comunque, se si è nella vista di un conto che non è impostato alla valuta nativa, inserendo una cifra senza codice di valuta, si intenderà la valuta di quel conto. La ragione è che se anche la vostra valuta nativa è ad esempio USD, quando si sta operando un conto in EUR è **molto** probabile che si vogliano inserire somme in EUR. Ovviamente, **in tutti i casi** è possibile inserire esplicitamente il codice di una valuta prima o dopo le cifre per ottenere l'ammontare in quella valuta.
 
-Some other applications do automatic conversion of amount on transfer between accounts of different currencies. That doesn't make much sense because if you withdraw 200 EUR in an ATM while on a trip, the amount that will be removed from your USD account is pretty much **certain** not to be of the exact exchange rate for that day. Anyway, exchange rate information are estimates and must be treated as such. In moneyGuru, the currencies for an amount just stay as is (200 EUR) until you tell it otherwise (you change the amount to USD after having received your bank statement).
+Alcune altre applicazioni fanno una conversione automatica dell'ammontare di un trasferimento tra conti di diverse valute. Questo non ha molto senso, perché se prelevo 200 USD (dollari americani) da un bancomat durante un viaggio, l'ammontare che verrà detratto dal vostro conto sarà **certamente diverso** da quello calcolabile con il cambio del giorno. I tassi di cambio sono sempre delle stime e vanno trattate di conseguenza. In moneyGuru, la valuta di un ammontare rimane esattamente come è fino a che non lo si modifica diversamente; nel caso precedente, ad esempio dopo aver ricevuto l'estratto conto.
 
-Although moneyGuru doesn't use exchange rate to convert amounts in transactions, it does use them for another purposes: net worth, profit and running balances estimates. Your net worth and profits in moneyGuru are always displayed in your native currency. If you have an account of a foreign currency, you can't have exact values anymore. When this happens, moneyGuru automatically fetches the rates for each transaction's date and use those rates. For the running balance, it's possible that you temporarily have an amount of a foreign currency in one of your asset or liability. Until you reconcile this amount (and change it to the account's currency), the running balance that is shown will be an estimate.
+Anche se moneyGuru non usa i tassi di cambio per convertire le somme di una transazione, le utilizza per altre cose: patrimonio netto, guadagno e le stime del saldo corrente. In moneyGuru il proprio patrimonio netto o guadagno viene sempre mostrato nella valuta corrente. Se avete un conto in una valuta straniera, non è più possibile avere dei valori certi; in questi casi, moneyGuru recupera automaticamente i tassi per ogni data di transazione e li utilizza. Per il calcolo del saldo corrente, è possibile avere temporaneamente un'ammontare in valuta estera in una Attività o in una Passività. Fino a che non si riconcilia questa voce e la si cambia nella valuta naturale del conto, il saldo corrente sarà solo una stima.
 
-Multiple Currencies Transactions
---------------------------------
 
-The vast majority of your transactions, even if you use multiple currencies, will only contain one currency at once. If you buy a 200 EUR widget on Ebay with your USD credit card (which will create a Credit Card --> Widgets transaction for 200 EUR), when you reconcile your Credit Card account, that amount will be changed to USD (the credit card will charge you a USD amount for that 200 EUR).
+Transazioni con più valute
+--------------------------
 
-However, if you make a transfer from an asset or liability to another asset or liability of a different currency, the rules change. If for example you transfer 100 USD from your bank to a EUR bank account you have, then one side of the transaction has to stay in USD, and the other side has to stay in EUR.
+La stragrande maggioranza delle transazione, anche se si utilizzano più valute, conterrà una sola valuta alla volta. Se si acquista un aggeggio su Ebay per 200 USD con la carta di credito, ad esempio creando una transazione Carta di Credito --> Aggeggi Vari per 200 USD, quando si riconcilia il conto Carta di Credito, quell'ammontare andrà sostituito con la somma in EUR che vi sarà stata addebitata corrispondentemente.
 
-This is a tricky problem. Because exchange rates are estimates, there is no way to balance that transaction and, as you know, transaction must always balance. Therefore, an exception to the rule: **A transaction involving more than one currency always balances**. In the example above, we will end up with a transaction that credits 100 USD from one side and debits 65 EUR on the other side.
+Tuttavia, se si fa un trasferimento tra un'Attività e una Passività tra conti in diverse valute, il discorso cambia. Se ad esempio si trasferiscono 100 EUR dalla propria banca ad un'altra banca con un conto in dollari USD, allora i due lati della transazione avranno valute diverse.
 
-To create a multiple currencies transaction, just go to the "other side" of the transaction and type the amount in that other currency. You can also use the transaction panel to manually edit the entries. For example, to add that transaction described above, you would first go to Checking, add a transaction for 100 USD and a transfer to "EUR Account". Then you go to "EUR Account" and change the 100 USD amount to 65 EUR. moneyGuru will automatically detect that the "other side" is an asset of a different currency and that the 100 USD on that other side must be preserved thus, creating a multiple currencies transaction.
+Questo è un problema spinoso perché i tassi di cambio sono delle stime e non c'è modo di avere un bilancio nullo per quella transazione, mentre come si sa, le transazioni devono sempre dare un bilancio nullo. Quindi si crea un'eccezione stabilendo per definizione che **una transazione tra due valute diverse sarà sempre bilanciata**. Nell'esempio sopra, si avrà quindi una transazione che addebita 100 EUR da una parte e accredita 150 USD dall'altra. 
 
-Even if exchange rates are always estimates, banks and credit card companies have this tendency of always giving you a lower-than-the-current exchange rate for your transactions involving more than one currency. Therefore, even if multiple currencies transactions always balance, you sometimes want to use the exchange rate to be able to balance the transaction so that you can count this difference between the current exchange rate and the rate given to you by the bank as an expense. This is what the **Multi-Currency Balance** button in the Transaction Info panel is for. When you click on it, a new entry will be created in the transaction with the difference between the "two sides" of the transaction when using the exchange rates for the transaction's date.
+Per creare transazioni con più valute è sufficiente andare nell'"altro lato" della transazione e inserire l'ammontare nella valuta desiderata. Si può anche utilizzare il pannello di modifica delle transazioni; per esempio, volendo aggiungere la transazione di prima, innanzitutto si va in Conto Corrente e si aggiunge una transazione di 100 EUR verso l'altro "Conto in Dollari". Quindi si va nel "Conto in Dollari" e si cambia l'ammontare di 100 EUR in 150 USD. moneyGuru capirà automaticamente che l'"altro lato" della transazione è un'Attività in una valuta diversa e che quindi i corrispondenti 100 EUR devono essere mantenuti tali e quali.
 
-Currency Rules
---------------
+Anche se i tassi di cambio sono sempre delle stime, le banche e le compagnie delle carte di credito tendono sempre a darvi un tasso di conversione inferiore al reale nelle transazioni con più valute. Quindi, anche se le transazioni tra più valute sono sempre considerate bilanciate per definizione, a volte può tornare utile utilizzare il tasso di cambio per bilanciare realmente una transazione: questo può servire per esempio per valutare e registra la differenza tra il tasso di cambio effettivo e quello applicato dalla banca come una spesa. Questo è ciò a cui serve il pulsante **Bilancio Multi-valuta** nel pannello Info Transazione. Quando vi si fa click, una nuova voce verrà creata nella transazione con la differenza tra i "due lati" della transazione, utilizzando il tasso di conversione alla data.
 
-* Amounts of foreign currencies are **always** explicitly displayed with their ISO code.
-* Explicitly typing the ISO code of a currency for an amount **always** makes this amount an amount of the specified currency.
-* Typing a plain amount always results in a native amount, except when:
+Regole sulle valute
+-------------------
 
-    * editing an account of a foreign currency.
-    * editing splits of a foreign transaction.
+* Un ammontare in una valuta estera è **sempre** mostrato esplicitamente con il codice ISO.
+* Inserendo esplicitamente il codice ISO di una valuta per una certa cifra, si trasforma **sempre** questo ammontare nella valuta indicata.
+* Inserendo una cifra senza codice, si ottiene un ammontare nella valuta nativa, eccezion fatta per:
 
-* Net worth and profits are calculated in the native currency.
-* A transaction involving more than one currency always balances.
+    * la modifica di un conto in una valuta straniera.
+    * la modifica di una transazione multipla in valuta straniera.
 
-Supported Currencies
---------------------
+* Il Patrimonio Netto e il Guadagno sono sempre calcolati nella valuta nativa.
+* Una transazione tra più valute è sempre bilanciata per definizione.
 
-* [USD] U.S. dollar
-* [EUR] European Euro
-* [GBP] U.K. pound sterling
-* [CAD] Canadian dollar
-* [AUD] Australian dollar
-* [JPY] Japanese yen
-* [INR] Indian rupee
-* [NZD] New Zealand dollar
-* [CHF] Swiss franc
-* [ZAR] South African rand
-* [AED] U.A.E. dirham
-* [ANG] Neth. Antilles flori
-* [ARS] Argentine peso
-* [ATS] Austrian schillin
-* [BBD] Barbadian dollar
-* [BEF] Belgian franc
-* [BHD] Bahraini dinar
-* [BRL] Brazilian real
-* [BSD] Bahamian dollar
-* [CLP] Chilean peso
-* [CNY] Chinese renminbi
-* [COP] Colombian peso
-* [CZK] Czech Republic koruna
-* [DEM] German deutsche mark
-* [DKK] Danish krone
-* [EGP] Egyptian pound
-* [ESP] Spanish peseta
-* [FIM] Finnish mark
-* [FJD] Fiji dollar
-* [FRF] French franc
-* [GHC] Ghanaian
-* [GHS] Ghanaian cedi (new)
-* [GRD] Greek drach
-* [GTQ] Guatemalan quetzal
-* [HKD] Hong Kong dollar
-* [HNL] Honduran lempira
-* [HRK] Croatian kuna
-* [HUF] Hungarian forint
-* [IDR] Indonesian rupiah
-* [IEP] Irish pound
-* [ILS] Israeli new shekel
-* [ISK] Icelandic krona
-* [ITL] Italian lira
-* [JMD] Jamaican dollar
-* [KRW] South Korean won
-* [LKR] Sri Lanka rupee
-* [LTL] Lithuanian litas
-* [LVL] Latvian lats
-* [MAD] Moroccan dirham
-* [MMK] Myanmar (Burma) kyat
-* [MXN] Mexican peso
-* [MYR] Malaysian ringgit
-* [MZN] Mozambican metical
-* [NLG] Netherlands guild
-* [NOK] Norwegian krone
-* [PAB] Panamanian balboa
-* [PEN] Peruvian new sol
-* [PHP] Philippine peso
-* [PKR] Pakistan rupee
-* [PLN] Polish zloty
-* [PTE] Portuguese escudo
-* [RON] Romanian new leu
-* [RSD] Serbian dinar
-* [RUB] Russian rouble
-* [SEK] Swedish krona
-* [SGD] Singapore dollar
-* [SIT] Slovenian tolar
-* [SKK] Slovak koruna
-* [THB] Thai baht
-* [TND] Tunisian dinar
-* [TRL] Turkish lira
-* [TWD] Taiwanese new dollar
-* [UAH] Ukrainian hryvnia
-* [VEB] Venezuelan bolivar
-* [VEF] Venezuelan bolivar fuerte
-* [VND] Vietnamese dong
-* [XAF] CFA franc
-* [XCD] East Caribbean dollar
-* [XPF] CFP franc
+Valute supportate
+-----------------
+
+* [USD] Dollari U.S.A.
+* [EUR] Euro
+* [GBP] Sterlina Inglese
+* [CAD] Dollari Canadesi
+* [AUD] Dollari Australiani
+* [JPY] Yen Giapponesi
+* [INR] Rupia Indiana
+* [NZD] Dollari Neozelandesi
+* [CHF] Franchi Svizzeri
+* [ZAR] Rand Sudafricano
+* [AED] Dirham Emirati Arabi Uniti
+* [ANG] Fiorino delle Antille Olandesi
+* [ARS] Peso Argentino
+* [ATS] Scellini Austriaci
+* [BBD] Dollaro delle Barbados
+* [BEF] Franchi Belgi
+* [BHD] Dinaro del Bahrein
+* [BRL] Real Brasiliano
+* [BSD] Dollaro delle Bahamas
+* [CLP] Peso Cileno
+* [CNY] Yuan Renminbi Cinese
+* [COP] Peso Colombiano
+* [CZK] Corona Ceca
+* [DEM] Marchi Tedeschi
+* [DKK] Corone Danesi
+* [EGP] Sterlina Egiziana
+* [ESP] Peseta Spagnole
+* [FIM] Markka Finlandese
+* [FJD] Dollaro delle Fiji
+* [FRF] Franchi Francesi
+* [GHC] Cedi del Ghana (vecchio)
+* [GHS] Cedi del Ghana (nuovo)
+* [GRD] Dracme Greche
+* [GTQ] Quetzal Guatemalteco
+* [HKD] Dollari di Hong Kong
+* [HNL] Lempira Onduregna
+* [HRK] Kuna Croata
+* [HUF] Fiorino Ungherese
+* [IDR] Rupiah Indonesiana
+* [IEP] Sterline Irlandesi
+* [ILS] Nuovo Shekel Israeliano
+* [ISK] Corona Islandese
+* [ITL] Lire Italiane
+* [JMD] Dollari Giamaicani
+* [KRW] Won Sudcoreano
+* [LKR] Rupia di Sri Lanka
+* [LTL] Litas Lituano
+* [LVL] Lats Lettoni
+* [MAD] Dirham Marocchino
+* [MMK] Kyat Birmano
+* [MXN] Peso Messicano
+* [MYR] Ringgit Malese
+* [MZN] Metical Mozambicano
+* [NLG] Fiorino dei Paesi Bassi
+* [NOK] Corone Norvegesi
+* [PAB] Balboa Panamense
+* [PEN] New Sol Peruviano
+* [PHP] Peso Filippino
+* [PKR] Rupia Pakistana
+* [PLN] Zloty Polacco
+* [PTE] Scudi Portoghesi
+* [RON] Nuovo Leu Rumeno
+* [RSD] Dinaro Serbo
+* [RUB] Rubli Russi
+* [SEK] Corone Svedesi
+* [SGD] Dollaro di Singapore
+* [SIT] Tallero Sloveno
+* [SKK] Corona della Slovacchia
+* [THB] Baht Thailandese
+* [TND] Dinaro Tunisino
+* [TRL] Lira Turca
+* [TWD] Nuovo Dollaro Taiwanese
+* [UAH] Hryvnia Ukraina
+* [VEB] Bolivar Venezuelano
+* [VEF] Bolivar Forte Venezuelano
+* [VND] Dong Vietnamita
+* [XAF] Franco delle Colonie Francesi Africane
+* [XCD] Dollaro dei Caraibi Orientali
+* [XPF] Franco delle Colonie Francesi del Pacifico

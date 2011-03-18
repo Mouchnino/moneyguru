@@ -1,38 +1,39 @@
 Frequently Asked Questions
 ==========================
 
-.. topic:: What is moneyGuru?
+.. topic:: Cos'è moneyGuru?
 
-    moneyGuru is a personal finance management and planning tool. With it, you can evaluate your current financial situation so you can make informed (and thus better) financial decisions.
+    moneyGuru è un programma di gestione e pianificazione delle finanze personale. Ci si può valutare la propria situazione finanziaria per prendere delle decisioni più consapevoli (e quindi migliori).
 
-.. topic:: What makes it better than other finance management applications?
+.. topic:: Che cosa lo rende migliore degli altri programmi di gestione delle finanze?
 
-    Rather than having reports which you have to configure (or find out which pre-configured report is the right one), your important financial data (net worth, profit) is constantly up-to-date and "in your face". This allows you to constantly make informed decision rather than doing so periodically. moneyGuru also has a very efficient :doc:`navigation <basics>` and :doc:`editing <editing>` system, a strong support for :doc:`currencies <currencies>` and a system based on double-entry bookkeeping.
+    Piuttosto che avere dei rapporti da dover configurare (o capire quale pre-configurato è quello giusto), i vostri dati finanziari essenziali (patrimonio e guadagno) sono costantemente aggiornati e in vista. Ciò consente di poter prendere decisioni più consapevoli in qualsiasi momento, invece che periodicamente. moneyGuru ha anche un'efficiente sistema di :doc:`navigazione <basics>` e :doc:`modifica <editing>`, un solido supporto per le :doc:`valute <currencies>` ed un sistema basato sul concetto di partita doppia.
+    
+.. topic:: Quali sono i limiti della versione demo di moneyGuru^
 
-.. topic:: What are the demo limitations of moneyGuru?
+	Nessuno, moneyGuru è `Fairware <http://open.hardcoded.net/about/>`__.
 
-    None, moneyGuru is `Fairware <http://open.hardcoded.net/about/>`__.
+.. topic:: Come posso specificare la valuta di un certo ammontare?
 
-.. topic:: How to I specify the currency of an amount?
+	Basta scriverlo con la valuta in formato ISO prima o dopo le cifre, come "42 EUR" o "PLN 42".
 
-    Just write down the currency ISO code in front of it or after it, like "42 eur" or "pln 42".
+.. topic:: Cosa sono quei segni di spunta verdi nella vista Conto?
 
-.. topic:: What are those green check marks in the Account view?
+    Significano che la transazione è :doc:`riconciliata <reconciliation>`.
 
-    They indicate that the transaction is :doc:`reconciled <reconciliation>`.
+.. topic:: Come si imposta il saldo iniziale di un conto?
 
-.. topic:: How do I set the starting balance of an account?
+    Basta inserire una transazione nella data più vecchia possibile e lasciarne il conto Non Assegnato.
+    
+.. topic:: Ho importato un conto con una valuta straniera da un file QIF e la valuta è sbagliata in moneyGuru: come faccio?
 
-    Create a Starting Balance transaction at the earliest date possible and leave the transfer unassigned.
+	I file QIF non contengono le informazioni di valuta, perciò moneyGuru li importa sempre con la valuta **nativa** del sistema. Per correggerle, prima di tutto si deve cambiare la valuta del Conto tramite le impostazioni del conto. Questo non modificherà le transazioni, ma si deve fare una modifica di massa. Si va nel conto e si selezionano tutte le transazioni, dopodiché con Mostra Info (|cmd|\ I) comparirà il pannello di modifica di massa. Nel campo valuta si seleziona quindi la valuta del conto importato, facendo attenzione che il segno di spunta sia presente nella casellina, e si preme Salva.
 
-.. topic:: I imported an account with a foreign currency from a QIF and the currency is wrong in moneyGuru. What do I do?
+.. topic:: Alcuni dei miei Conti sono grigi nella vista Patrimonio Netto e Guadagno: come mai?
 
-    QIF files don't contain currency information. Therefore, moneyGuru always import such account as your **native** currency. To fix this, first change the currency of the account through the Account Details. However, this will **not** touch your amounts' currency. To change these, you have to perform a mass edition. Go into your account and select all transactions and Show Info (|cmd|\ I). This will bring the Mass Editing panel. In the currency field, select the currency of the account you imported, make sure the little checkbox is checked, and press Save.
+	Quando sono grigi, significa che sono stati esclusi, ovvero non compaiono nei totali calcolati. Per reincluderli, li si seleziona e si fa click sull'iconcina |basics_account_in|.
+	
+.. topic:: Ho un'altra domanda, come faccio?
 
-.. topic:: Some of my accounts are grayed out in Net Worth and Profit views, why?
-
-    When accounts are grayed out, it means that they're excluded. Excluded accounts are not counted in totals. To include accounts back, select it and click on the little |basics_account_in| icon.
-
-.. topic:: I have another question. What can I do?
-
-    You can always send an e-mail to support@hardcoded.net, but the best way to ask a question is to go on `Hardcoded Software's Get Satisfaction site <http://getsatisfaction.com/hardcodedsoftware>`__. Who knows, your question might already have been answered there!
+	Si può sempre inviare un'email a support@hardcoded.net, ma il modo migliore è di andare sul sito `Hardcoded Software's Get Satisfaction  <http://getsatisfaction.com/hardcodedsoftware>`__. Chissà, magari la vostra domanda è già stata fatta e risposta!
+	

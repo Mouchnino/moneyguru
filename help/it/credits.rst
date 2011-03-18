@@ -1,34 +1,34 @@
-Credits
-=======
+Ringraziamenti
+==============
 
-Below is the list of direct or indirect contributors to moneyGuru. Thanks!
+Di seguito la lista di chi ha contribuito direttamente o indirettamente a moneyGuru. Grazie!
 
-| **Virgil Dupras, Developer** (`Website <http://www.hardcoded.net>`__)
+| **Virgil Dupras, Sviluppatore** (`Website <http://www.hardcoded.net>`__)
 
-| **Eric Mc Sween, Developer**
+| **Eric Mc Sween, Sviluppatore**
 
-| **Mike Rohde, Main icon design** (`Website <http://www.rohdesign.com>`__)
+| **Mike Rohde, Disegnatore icona principale** (`Website <http://www.rohdesign.com>`__)
 
-| **Mariann Landsberger, German localization**
+| **Mariann Landsberger, traduzione in Tedesco**
 
-| **Michael Pitra, German localization**
+| **Michael Pitra, traduzione in Tedesco**
 
 | **Roberto Padovani, Italian localization**
 
-| **Python, Programming language** (`Website <http://www.python.org>`__)
-| The bestest of the bests
+| **Python, linguaggio di programmazione** (`Website <http://www.python.org>`__)
+| Il migliore tra i migliori
 
 | **PyObjC, Python-to-Cocoa bridge** (`Website <http://pyobjc.sourceforge.net>`__)
-| Used for the Mac OS X version
+| Utilizzato per la versione Mac OS X
 
-| **Sparkle, Auto-update library** (`Website <http://andymatuschak.org/pages/sparkle>`__)
-| Used for the Mac OS X version
+| **Sparkle, Libreria per auto-aggiornamento** (`Website <http://andymatuschak.org/pages/sparkle>`__)
+| Utilizzato per la versione Mac OS X
 
-| **AMButtonBar, Filter bar component** (`Website <http://www.harmless.de>`__)
-| Used for the Mac OS X version
+| **AMButtonBar, Componente barra filtro** (`Website <http://www.harmless.de>`__)
+| Utilizzato per la versione Mac OS X
 
-| **PSMTabBarControl, Tab bar component** (`Website <http://www.positivespinmedia.com>`__)
-| Used for the Mac OS X version
+| **PSMTabBarControl, Componente schede** (`Website <http://www.positivespinmedia.com>`__)
+| Utilizzato per la versione Mac OS X
 
-| **You, moneyGuru user**
-| You rock.
+| **Tu, utente di moneyGuru**
+| Sei forte!

@@ -1,48 +1,48 @@
-Importing data into moneyGuru
+Importare i dati in moneyGuru
 =============================
 
-moneyGuru support QIF, OFX, QFX and CSV formats for import. To import a file, use the "Import..." item in the "File" menu, then select a file to import. When you do so, the import window will appear, which looks like this:
+moneyGuru supporta l'importazione dai formati QIF, OFX, QFX e CSV. Per importare un file, si utilizza la voce "Importa.." del menu "File" per poi selezionare un file. Facendolo, la finestra di importazione apparirà così:
 
 |import_window|
 
-For each account present in the import file a tab will be added in the import window. This dialog is rather straightforward to use. The leftmost column with a checkbox determines which transactions will be imported. Review the transaction to import, uncheck any transaction you don't want to import, click on import. Only one account (the selected one) is imported at once.
+Per ogni conto presente nel file da importare, verrà creata una scheda nella finestra di importazione. Questa finestra di dialogo è abbastanza intuitiva da usare. La colonna più a sinistra con una casella di selezione stabilisce quali transazioni importare. Basta esaminare le transazioni che si vogliono importare, deselezionare quelle che non si vuole e poi fare click per importale. Solo il conto selezionato viene importato.
 
-Fixing the dates
-----------------
+Correggere le date
+------------------
 
-moneyGuru automatically determines the date format of any file you import. It looks at all the dates and only chooses a date format that makes sense for all these dates. However, imported files sometimes only contain ambiguous dates (like "01/02/03"), so moneyGuru can't guess a date format with certainty. In these cases, moneyGuru will just pick the first fitting format. What happens when it picks the wrong one? Use the Swap button! For example, if moneyGuru chose dd/mm/yy but your file in fact contained mm/dd/yy, select "Day <--> Month" in the top right box and then click Swap. You can apply the swap to all accounts in the Import window by checking the "Apply to all accounts" box before you do the swap.
+moneyGuru determina automaticamente il formato delle date di un file importato, guardando tutte le date e scegliendo solo un formato che abbia senso per tutte quante. Comunque, a volte un file importato può avere delle date ambigue (come "01/02/03"), quindi moneyGuru non può esser sicuro della scelta. In questi casi, moneyGuru prenderà il primo formato adattabile, ma se non dovesse essere quello giusto, basta usare il pulsante Scambia. Per esempio, se moneyGuru avesse scelto dd/mm/yy ma il file contenesse in effetti mm/dd/yy, basta scegliere "Giorno <--> Mese" nella casella in alto a destra e premere Scambia. Si può applicare lo scambio a tutti i conti nella finestra di importazione, scegliendo "Applica a tutti i conti" prima dello scambio.
 
-Swapping description and payee
-------------------------------
+Scambiare descrizione e beneficiario
+------------------------------------
 
-In some cases, description and payee fields are swapped. It might be caused by a mistake from the application that created the file, or an ambiguity in the file format, or whatever. It doesn't matter, because you can fix it in the import window. Just select the "Description <--> Payee" in the swap selector, and click "Swap". Problem fixed.
+In alcuni casi, i campi descrizione e beneficiario sono scambiati. Potrebbe essere un errore dell'applicazione che ha creato il file, o un'ambiguità nel formato del file, o qualsiasi cosa. Non importa, perché lo si può correggere nella finestra di importazione selezionando "Descrizione <--> Beneficiario" nel selettore dello scambio, e poi premendo "Scambia". Problema risolto. 
 
-Importing into an existing account
-----------------------------------
+Importare in un conto esistente
+-------------------------------
 
-By default, transactions are imported in a new account. However, if you want, you can import transactions in an existing account by changing the target account. When importing OFX files, the target account is automatically selected if appropriate. If you select a target account, the matching table changes slightly and becomes something like this:
+Di norma le transazioni vengono importate in un conto nuovo. Tuttavia, è possibile importarle in un conto esistente cambiando il conto destinazione. Importando un file OFX, il conto destinazione è automaticamente selezionato, se ha senso. Se si seleziona un conto destinazione, la corrispondente tabella cambia leggermente diventando:
 
 |import_match_table|
 
-The reason why the table changes like this is because when you import in an existing account, it is possible that you import transactions that already exist in your account. You must tell moneyGuru which transactions go with which. If you import an OFX file, all of this is done automatically, but you still can change the matching manually if you want.
+La ragione per cui la tabella cambia a quel modo è perché se si importa in un conto esistente, è possibile trovarsi ad importare transazioni che esistono già nel conto. Bisogna dire a moneyGuru quale transazione va con quale. Se si importa un file OFX, tutto ciò viene fatto automaticamente, ma lo si può comunque modificare manualmente se si vuole.
 
-On the left side of the table (the 3 first columns) are the :doc:`unreconciled <reconciliation>` transactions from the target account. On the right side are the transactions to be imported. Unmatched transactions have one of their side empty. Matched transaction have both their side filled, and a lock icon in the middle. You can break up matched transactions by clicking on the lock. You can match transactions together by drag & dropping a transaction on another one.
+Sul lato sinistro della tabella (prime 3 colonne) ci sono le transazioni :doc:`Non Riconciliate <reconciliation>` del conto destinazione. Sulla destra ci sono le transazioni da importare. Le transazioni che non si sovrappongono hanno uno dei due lati liberi. Al contrario, le transazioni che si sovrappongono hanno entrambi i lati e l'icona di un lucchetto nel mezzo. Si possono separare le transazioni facendo click sul lucchetto e riunirle trascinandole una sull'altra.
 
-If you import a OFX file for an account that already received an OFX import before, all of this matching happen automatically. This bring up an exception to the rule that only unreconciled transactions are shown in the left side. If a transaction in the imported OFX file matches with a reconciled transaction from the target account, this transaction will be brought up. However, the "import" checkbox will be automatically unchecked (it's normally checked by default). The reason for this is that if it's reconciled, you probably don't want to change it.
+Se si importa un file OFX in un conto in cui era già stato importato un file OFX, tutto questo avviene automaticamente. Ciò porta ad un'eccezione alla regola che solo transazioni non riconciliate sono presenti sul lato di sinistra. Se una transazione nel file OFX importato combina con una transazione riconciliata dal conto destinazione, questa transazione si vedrà lì. Comunque, la casella "importa" sarà automaticamente deselezionata (di solito invece è selezionata). La ragione è che se è riconciliata, probabilmente non la si vuole cambiare.
 
-CSV Import
-----------
+Importazione da CSV
+-------------------
 
-Importing CSV files is the same thing as importing another type of file, but before you can get to the main Import window, you have to tell moneyGuru what each CSV column is about.
+Importare i file CSV è come importare un qualsiasi altro tipo di file, ma prima di arrivare alla finestra principale di importazione, si deve dire a moneyGuru quale colonna CSV è cosa.
 
 |import_csv_options|
 
-The problem with CSV is that there is absolutely no standard as to how the file is structured. This window lets you tell moneyGuru what column is what. To use it, look at the data displayed, and when you figured out what one column is about (for example, the date), click on that column's header and select the appropriate transaction field for it. The Date and Amount columns are mandatory.
+Il problema con i CSV è che non c'è assolutamente alcuno standard su come deve essere strutturato il file. Questa finestra permette di dirlo a moneyGuru. Per usarla basta guardare i dati mostrati e, una volta capito quale colonna contiene cosa (ad esempio la data), fare click sull'intestazione della colonna e selezionare l'opportuno campo della transazione. Le colonne Data e Ammontare sono obbligatorie. 
 
-CSV files also often have header (and even sometimes, footer!) lines. moneyGuru has no clue, beforehand, which lines are what. Therefore, it is you who must uncheck the Import column for each line that does not represent a transaction.
+I file CSV hanno spesso delle righe di intestazione (e a volte anche di chiusura in fondo). moneyGuru non ha idea inizialmente di che cosa rappresentino le righe, perciò a responsabilità dell'utente deselezionare ogni riga che non rappresenta una transazione.
 
-Sometimes, CSV files are so weird that moneyGuru won't be able to correctly detect the delimiter that separates fields in it. If that happens, you'll have all kinds of weird data in your column, with half a value in one column and the other half in another column. In those cases, you can use the **Delimiter** field to manually specify a field delimiter for a CSV file. After you do that, press Rescan to reload the columns using that delimiter.
+A volte i file CSV sono così strani che moneyGuru non riesce a capire correttamente quale sia il delimitatore che separa un campo dall'altro. Se accadesse, si avrebbero i dati più assurdi nelle varie colonne, con mezzo dato in una colonna e mezzo nell'altro. In quei casi, si può utilizzare il campo **Delimitatore** per specificare manualmente il carattere. Dopodiché è sufficiente premere Rianalizza per ricaricare le colonne tramite il nuovo separatore.
 
-moneyGuru remembers about columns and header lines between running sessions. If you have more than one type of CSV to regularly import, you can use the Layouts. Each layout store its own column/header configuration.
+moneyGuru si ricorda delle colonne e delle intestazioni da una sessione di esecuzione e l'altra, perciò se si hanno più tipi di file CSV da importare frequentemente, si possono utilizzare diverse Disposizioni, ognuna delle quali memorizza la propria configurazione di colonne e intestazioni.
 
-It's also possible to specify a target account directly in the CSV options window. This achieves the same thing as specifying the target account later, in the Import window, except that if you specify it in the CSV options window, it will be saved in the layout.
+Si può anche specificare un conto destinazione direttamente nella finestra delle opzioni CSV. Si ottiene lo stesso risultato specificandolo in seguito, nella finestra di importazione, eccetto per il fatto che se lo si specifica qui, verrà memorizzato nella Disposizione.

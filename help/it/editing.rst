@@ -1,89 +1,93 @@
-Editing a moneyGuru document
-============================
+Modificare un documento moneyGuru
+=================================
 
-The Basics
-----------
+I fondamenti
+------------
 
-There are a few keystrokes and clicks that work the same way for everything in moneyGuru. First, there is this set of 3 buttons at the bottom left corner:
+Ci sono alcuni tasti e alcuni click che funzionano allo stesso modo per ogni cosa in moneyGuru. Innanzitutto, c'è un insieme di 3 pulsanti nell'angolo in basso a sinistra:
 
 |edition_buttons|
 
-The + button creates a new thing, the - button removes the selected thing and the "i" button shows info about the selected thing. The "thing" depends on the current view. In the Balance Sheet and the Income Statement, it is an account. In the Transactions and Account views, it is a transaction. Also, if you select more than one transaction and click on the "i" button, the Mass Editing panel will show up rather than the transaction details panel.
+Il pulsante + crea un qualcosa di nuovo, il pulsante - rimuove un qualcosa di selezionato e il pulsante "i" mostra le informazioni, o proprietà aggiuntive, del qualcosa selezionato. Il "qualcosa" dipende dalla vista corrente. Nello Stato Patrimoniale e nel Conto Economico è un conto. Nelle viste Transazioni e Conto è una transazione. Inoltre se si seleziona più di una transazione e si fa click sul pulsante "i", il pannello di Modifica di Massa verrà mostrato al posto dei dettagli della singola transazione.
 
-Of course, it's also possible to do the same thing with the keyboard. |cmd|\ N creates a new thing, Delete or Backspace remove the selected thing and |cmd|\ I shows info about the selected thing.
+Ovviamente è anche possibile fare la stesse cose con la tastiera. |cmd|\ N crea una qualcosa di nuovo, Delete o Indietro rimuovono un qualcosa di selezionato e |cmd|\I mostra le informazioni relative al qualcosa selezionato.
 
-It's possible to edit things by double clicking on a cell that is editable (for example, the name cell of an account). It is also possible to start editing a thing by selecting it and pressing Return. The first editable cell will be in edit mode.
+Si può modificare un qualcosa anche facendo doppio click su una cella modificabile (per esempio, la cella nome di un conto). Si può inoltre iniziare a modificare qualcosa selezionandolo e premendo Invio. Si può annullare la modifica premendo Escape, ripristinando la riga al suo contenuto precedente.
 
-When in edit mode, Tab and Shift-Tab can be used to navigate editable cells. When there is no more editable cell in a row, editing ends. It's also possible to end editing by pressing Return again. You can cancel editing by pressing Escape. When doing so, everything you edited in the currently edited row will be reverted to its old value.
+Quando si è in modalità di modifica, Tab e Shift-Tab possono essere utilizzati per navigare tra le celle modificabili. Quando non ci sono più celle in una riga la modifica termina. Si può anche terminare la modifica premendo Invio.
 
-Accounts
---------
 
-Accounts are edited from the Balance Sheet and the Income Statement. When you create a new account, it will be created under the type of account that currently contains the selection. For example, if I have "Credit Card" selected and press |cmd|\ N, a new liability will be created. You can then type a new then press Return to end editing.
+I Conti
+-------
 
-You can also use drag & drop to change an account type or group (yeah, account group. use |cmd_shift|\ N to create one).
+I conti possono essere modificati dallo Stato Patrimoniale e dal Conto Economico. Quando si crea un nuovo conto, questo verrà creato nel tipo di conto che contiene la selezione attuale. Per esempio, se si ha un conto "Carta di Credito" selezionato e si preme |cmd|\ N, allora una nuova passività verrà creata. Si può quindi inserire un nome e premere Invio per terminare.
+
+Si può anche utilizzare il drag & drop (trascinamento con il mouse) per modificare il tipo o il gruppo di un conto (già, si possono creare dei gruppi di conto con |cmd_shift|\ N).
 
 |edition_account_panel|
 
-Using Show Info on an account will bring the account editing panel shown above. From there, you can edit an account name, but also change its type, its :doc:`currency <currencies>` and its account number. An account number is a numerical reference to an account. Use this if your accounting has account number (you know, 1000-1999 is for assets, 8000-8999 is for expenses, stuff like that). When an account has an account number, that number will be displayed along with the name in the Transaction and Account views. Moreover, you can type the number instead of the name to reference to that account (if you know the numbers by heart, it will make typing much faster).
+Utilizzando Mostra Info su di un conto, si visualizzerà il pannello di modifica nell'immagine precedente. Da qui si possono cambiare il nome del conto, il tipo, la sua :doc:`valuta <currencies>` e il numero di conto. Un numero di conto è solo un riferimento per quel conto, che si può utilizzare per riferirsi al proprio conto corrente o come meglio si crede (per dire, 1000-1999 per le Attività, 8000-8999 per le Uscite, e cose simili). Quando un conto possiede un numero, questo verrà mostrato nelle viste Transazioni e Conto. Per di più p possibile inserire il numero invece del nome per farvi riferimento (se ce lo si ricorda a mente, l'inserimento diventa molto più veloce).
 
-Note that changing an account's currency does **not** change the currency of the transactions it contains.
+Si noti che modificare la valuta di un conto **non** modifica la valuta delle transazioni che contiene.
 
-Transactions
-------------
 
-Transactions are edited from the Transactions and Account views. When creating a new transaction, the date of the previously selected transaction will be used as the new transaction's date (see "Date Editing" below). The Description, Payee and Account (From, To Transfer) columns are auto-completed (see "Auto-completion" below).
+Transazioni
+-----------
 
-It's possible to re-order a transaction within other transactions of the same date. To do so, you can use drag & drop, or you can use |cmd|\ + and |cmd|\ -.
+Le transazioni sono modificate dalle viste Transazioni e Cono. Quando si crea una nuova transazione, la data della transazione precedentemente selezionata viene inizialmente proposta (vedi "Modifica delle Date" più sotto). Le colonne Descrizione, Beneficiario e Conto (Da, A) sono auto-completate (vedi "Auto-completamento" più sotto). 
 
-If you type the name of an account that doesn't exist in an Account column, this account will automatically be created as an income or expense account (depending on the amount of the transaction). Don't worry about typos creating tons of accounts that you'll have to clean up. If you fix a typo in a transaction, the automatically created account will automatically be removed.
+Si può riordinare una transazione all'interno di altre transazioni con la stessa data tramite il drag & drop, oppure con |cmd|\ + e |cmd|\ -.
+
+Se si digita il nome di un conto che non esiste nella colonna Conto, questo verrà automaticamente creato come un'Entrata o un'Uscita a seconda dell'ammontare della transazione. Non preoccupativi di errori di battitura che potrebbero creare un sacco di conti che poi tocca andare a cancellare: se si corregge un nome di conto in una transazione che lo ha automaticamente creato, esso verrà altrettanto automaticamente rimosso.
 
 |edition_transaction_panel|
 
-Using Show Info on a single transaction brings the panel above up. With it, you can edit everything that you can edit from the Transactions and Account views, and additionally, you can create and edit transaction with more than 2 entries (commonly called a "Split Transaction") with the table at the bottom.
+Utilizzando il pannello Mostra Info su una singola transazione fa comparire il pannello qui sopra. In esso è possibile modificare tutto quello che si modifica dalle viste Transazione e Conto, ma in più è possibile creare una transazione con più di due elementi, comunemente chiamata "Transazione Multipla", tramite la tabella in fondo.
 
-One thing to remember about this entry editing table is that it's constantly auto-balancing. Therefore, if you take a transaction and simply delete one of its entries, it will not disappear. It will instantly re-add an unassigned entry with the same amount. Changing the amount of an entry will also automatically add an unassigned entry with the amount difference. Therefore, if you want to add a split transaction like, for example, a roommate shared bill where you pay a 40$ bill (let's say internet) using direct banking transfer and your roommate gives you 20$ in cash, you would do the following:
+Una cosa da ricordarsi a riguardo della modifica di questa tabella è che è costantemente auto-bilanciata. Perciò se si prende una transazione e si prova a cancellare una delle sue voci, questa non sparirà, in quanto verrà automaticamente riaggiunta con un conto non assegnato, di pari ammontare. Modificando l'ammontare di una riga creerà automaticamente una riga non assegnata con un ammontare pari alla differenza. Quindi se si vuole inserire una transazione multipla, come per esempio un compagno di stanza che a fronte di una bolletta di 40 Euro pagata da voi tramite addebito su conto corrente, vi dà 20 Euro in contanti, si deve:
 
-#. Add a normal 2 way Checking --> Utilities transaction.
-#. Show Info for the transaction.
-#. Change the Utilities debit to 20$. This will create a 3rd unassigned row with a 20$ debit.
-#. Change the 3rd row account to Cash.
+#. Aggiungere una normale transazione da Conto Corrente --> a Bollette.
+#. Fare click su Mostra Info per quella transazione.
+#. Modificare il debito del conto Bollette a 20 Euro, ottenendo così la creazione di una terza riga non assegnata con 20 Euro di debito.
+#. Modificare il conto della terza riga indicando Contanti.
 
 |edition_three_way_split|
 
-Congratulations, you just made a 3 ways split transaction. This transaction correctly reflect reality where 40$ are out of your checking account, internet had a net cost of 20$ for you and you end up with 20 more dollars in your pocket.
+Complimenti, avete creato la vostra prima transazione multipla! Questa riflette correttamente la realtà in cui 40 Euro sono usciti dal vostro conto corrente, l'utenza ha avuto un costo netto di 20 Euro e voi vi trovate 20 Euro in contanti in più nel portafoglio.
 
 |edition_mass_edition_panel|
 
-Using Show Info with more than one transaction selected bring up the panel above. It allows you to perform mass editing. When you press on Save, all selected transactions will have the attributes that have the checkboxes next to them checked changed to the value of the field next to it.
+Utilizzando Mostra Info su più di una transazione selezionata fa comparire il pannello qui sopra. Con questo è possibile fare modifiche di massa: quando si preme Salva, tutte le transazioni selezionate avranno i valori marcati dal segno di spunta modificati in base a quanto inserito nel campo accanto.
 
-Date Editing
-------------
 
-Whenever a date is edited, it is edited using a special widget. This widget has 3 fields: day, month and year. Whenever an editing operation is initiated, it is always the **day** fields that starts out selected, whatever your date format is. You can navigate the fields with the left and right arrows. You can increment and decrement the currently selected field with the up and down arrows. You can of course type the date out. The widget automatically changes the selection when a date separator is typed or the maximum length of a field is reached. Here is a list of the rules that this widget follows, just to make it clear:
+Modifica delle date
+-------------------
 
-* The display format is always your system's format.
-* The **input** format is always day --> month --> year.
-* Whatever your system date format is, you can type a date by padding your values with 0. For example, even if your date format is mm/dd/yy, you can enter the date "07/06/08" by typing "060708".
-* Whatever your system date format is, you can type a date by using separators. For example, even if your date format is yyyy-mm-dd, you can type "2008-07-06" by typing "6-7-08"
-* You can press the letter "T" to quickly set the date to today.
+Ogni volta che si modifica una data, lo si fa tramite uno speciale componente grafico dotato di tre campi: giorno, mese e anno. Quando si inizia un'operazione di modifica di una data, è sempre il **giorno** ad essere il primo campo selezionato, indipendentemente dal formato della data. Ci si può spostare all'interno dei campi con le frecce sinistra e destra, incrementando un campo con le frecce su e giù. Ovviamente si può anche inserire direttamente tutta la data e il componente cambierà automaticamente campo quando si inserisce il carattere separatore, oppure la lunghezza massima è stata raggiunta. Per chiarire, ecco le regole:
 
-While editing a transaction or entry, if you set the date to something outside the current date range, you will get a |backward_16| or a |forward_16| showing up. This means that if your date range is "navigable" (Month, Quarter, Year), that date range will be adjusted when editing ends to continue to show the edited transaction. If your current date range is not "navigable" (Year to date, Running year, Custom), the transaction will disappear from the current view when editing ends.
+* Il formato di visualizzazione è sempre quello di sistema.
+* Il formato di ingresso è sempre giorno --> mese --> anno.
+* Indipendentemente dal formato della data, se ne può inserire una senza separatori, a patto di inserire gli zeri dove servono per mantenere le doppie cifre. Per esempio, se il formato di data è mm/dd/yy, si può inserire "07/06/08" digitando "060708".
+* Indipendentemente dal formato della data, se ne può inserire una con i separatori. Per esempio, se il formato di data è yyyy-mm-dd, si può inserire "2008-07-06" digitando "6-7-08".
+* Si può premere la lettera "T" per inserire al volo la data di oggi.
 
-Amount Editing
---------------
+Mentre si modifica una voce, se si inserisce una data al di fuori dell'intervallo di date correnti, verrà visualizzato un |backward_16| o un |forward_16|. Ciò significa che se l'intervallo è di tipo "navigabile" (Mese, Quarto, Anno), l'intervallo verrà adeguato quando si termina l'inserimento in modo da mantenere visualizzata la transazione inserita. Se l'intervallo di date attuali non è "navigabile" (Anno ad Oggi, Anno Corrente, Personalizzato), la transazione sparirà dalla vista.
 
-Fields allowing you to enter amounts have a few hidden features. 
 
-* You can enter simple expressions like "2+4.35/2" and they will be automatically calculated.
-* If you enabled the "Automatically place decimals when typing" option, typing numbers without decimal point will result in it being automatically placed. For example, if your default currency is USD, typing "1234" will result in the amount "12.34".
-* You can always explicitly specify the currency of an amount by prepending or appending the 3-letters ISO code of that currency to that amount (see the :doc:`currencies help page <currencies>`).
+Modifica dell'Ammontare
+-----------------------
 
-Auto-completion, Autofill and Lookups
--------------------------------------
+I campi che permettono l'inserimento di una valuta hanno alcune caratteristiche nascoste.
+* Si possono inserire semplici espressioni tipo "2+4.35/2", che verranno automaticamente calcolate.
+* Se è stato attivata l'opzione "Imposta automaticamente i decimali mentre digito", si otterrà quando descritto. Per esempio, se la valuta attuale è USD, inserendo "1234" risulterà in "12.34".
+* Si può sempre specificare la valuta di un ammontare anteponendo o facendolo seguire la codice ISO a 3 cifre (vedi :doc:`valute <currencies>`).
 
-moneyGuru has advanced auto-completion and autofill capabilities. As soon as you type something in an auto-completable field (Description, Payee, Account), moneyGuru will look in other transactions you have and give you a completion proposition. You can cycle through the propositions with the up and down arrows. To accept a proposition, just tab out. You can also, of course, just continue to type.
 
-The autofill feature will automatically fill empty fields after you tab out of an auto-completable field. For example, if Payee is the first auto-completable column, typing an existing payee will make all subsequent fields automatically filled with values from the last transaction containing that payee.
+Auto-completamento, Auto-riempimento e Lista di Completamento
+-------------------------------------------------------------
 
-Under Mac OS X, it's possible to summon a lookup list for any auto-completable field. You need to type a payee that you **know** you have somewhere in your transaction, but don't remember what it starts with? Press |cmd|\ L and a lookup dialog will appear, listing all your payees. The search field allows you to run a fuzzy search (which means that you don't have to type the beginning of your payee, just a few letters that are in it) that will make most relevant payees come first in the list.
+moneyGuru ha un sistema di auto-completamento e auto-riempimento molto avanzato. Nonappena si digita qualcosa in un campo auto-completabile (Descrizione, Beneficiario, Conto), moneyGuru esaminerà le altre transazioni per proporre un completamento. Si può passare da un valore proposto all'altro tramite le frecce su e giù, ed accettarla uscendo dal campo con una Tabulazione. Ovviamente si può anche semplicemente proseguire a digitare.
+
+L'auto-riempimento consente di riempire i campi vuoti dopo che si esce con una Tabulazione da un campo auto-completabile. Per esempio, se il Beneficiario è la prima colonna auto-completabile, digitando un beneficiario già esistente farà sì che i campi successivi siano riempiti con i valori dell'ultima transazione relativa a quel beneficiario.
+
+In Mac OS X è possibile ottenere una lista di ricerca per qualsiasi campo auto-completabile. Se devi inserire un beneficiario che sai **di sicuro** di avere in una qualche transazione, ma di cui non ricordi come inizia, basta premere |cmd|\ L e una finestra di ricerca comparirà, elencando tutti i beneficiari. Il campo di ricerca permette di effettuare una ricerca fuzzy (ovvero non serve sapere le prime lettere, ma solo alcune lettere) che evidenzierà all'inizio della lista i beneficiari più rilevanti.
