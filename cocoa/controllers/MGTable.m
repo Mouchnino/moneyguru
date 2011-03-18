@@ -54,9 +54,4 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     return columns;
 }
-
-- (IBAction)copy:(id)sender;
-{
-    NSLog(@"foo");
-}
 @end
