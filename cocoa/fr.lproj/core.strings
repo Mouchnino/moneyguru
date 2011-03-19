@@ -110,7 +110,7 @@
 "Description" = "Description";
 
 /* core/gui/csv_options.py:22 */
-"Payee" = "Provenance";
+"Payee" = "Tiers";
 
 /* core/gui/csv_options.py:23 */
 "Check #" = "# Chèque";

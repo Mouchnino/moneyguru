@@ -1,9 +1,9 @@
 "Date" = "Date";
 "Check #" = "# Chèque";
 "Description" = "Description";
-"Payee" = "Provenance";
-"From" = "Comptes crédités";
-"To" = "Comptes débités";
+"Payee" = "Tiers";
+"From" = "De";
+"To" = "Vers";
 "Amount" = "Montant";
 "Transfer" = "Transfert";
 "Balance" = "Balance";

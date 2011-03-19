@@ -15,7 +15,7 @@ moneyGuru détermine le format de date des fichiers automatiquement. La plupart 
 Arranger les descriptions et provenances
 ----------------------------------------
 
-Il arrive qu'un fichier mal généré par une autre application se trompe de champ et que vous ayez ainsi les champs Description et Provenance interchangés. Vous n'avez qu'à utiliser la fonction "Description <--> Provenance" pour régler tout ça.
+Il arrive qu'un fichier mal généré par une autre application se trompe de champ et que vous ayez ainsi les champs Description et Tiers interchangés. Vous n'avez qu'à utiliser la fonction "Description <--> Tiers" pour régler tout ça.
 
 Importer dans un compte existant
 --------------------------------

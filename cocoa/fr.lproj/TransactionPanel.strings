@@ -17,7 +17,7 @@
 "337.title" = "# Chèque";
 
 /* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "339"; */
-"339.title" = "Provenance";
+"339.title" = "Tiers";
 
 /* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "342"; */
 "342.title" = "Description";

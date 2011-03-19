@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>Payee</source>
-        <translation>Provenance</translation>
+        <translation>Tiers</translation>
     </message>
     <message>
         <source>Check #</source>
@@ -644,11 +644,11 @@ Entrées de {start_date} à {end_date}</translation>
     </message>
     <message>
         <source>From</source>
-        <translation>Cp. crédités</translation>
+        <translation>De</translation>
     </message>
     <message>
         <source>To</source>
-        <translation>Cp. débités</translation>
+        <translation>Vers</translation>
     </message>
     <message>
         <source>Memo</source>
@@ -915,7 +915,7 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="import_window.ui" line="84"/>
         <source>Description &lt;--&gt; Payee</source>
-        <translation>Description &lt;--&gt; Provenance</translation>
+        <translation>Description &lt;--&gt; Tiers</translation>
     </message>
     <message>
         <source>Invert Amounts</source>
@@ -1182,7 +1182,7 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="mass_edition_panel.ui" line="76"/>
         <source>Payee:</source>
-        <translation>Provenance:</translation>
+        <translation>Tiers:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="100"/>
@@ -1192,12 +1192,12 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="mass_edition_panel.ui" line="124"/>
         <source>From:</source>
-        <translation>Comptes crédités:</translation>
+        <translation>De:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="148"/>
         <source>To:</source>
-        <translation>Comptes débités:</translation>
+        <translation>Vers:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="172"/>
@@ -1436,7 +1436,7 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="schedule_panel.ui" line="135"/>
         <source>Payee:</source>
-        <translation>Provenance:</translation>
+        <translation>Tiers:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="148"/>
@@ -1512,7 +1512,7 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="transaction_panel.ui" line="69"/>
         <source>Payee:</source>
-        <translation>Provenance:</translation>
+        <translation>Tiers:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="82"/>
@@ -1605,7 +1605,7 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="view_options_dialog.ui" line="236"/>
         <source>Payee</source>
-        <translation>Provenance</translation>
+        <translation>Tiers</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="243"/>

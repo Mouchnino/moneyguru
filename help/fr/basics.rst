@@ -75,7 +75,7 @@ Transactions
 
 |basics_transactions|
 
-La vue de Transactions contient toutes les transactions du document pour l'intervalle sélectionné. Depuis cette vue, vous pouvez :doc:`ajouter, modifier et supprimer <editing>` des transactions. Cette vue est la plus efficace si vous avez beaucoup de tranasctions à entrer (une pile de factures et reçus par exemple). La colonne **Montant** contient la valeur totale du mouvement d'argent. **Comptes crédités/débités** contient le ou les comptes crédités/débités dans la transaction. Par exemple, si vous payez votre épicerie avec votre carte de débit, "Comptes crédités" serait "Compte Courant" et "Comptes débités" serait "Nourriture".
+La vue de Transactions contient toutes les transactions du document pour l'intervalle sélectionné. Depuis cette vue, vous pouvez :doc:`ajouter, modifier et supprimer <editing>` des transactions. Cette vue est la plus efficace si vous avez beaucoup de tranasctions à entrer (une pile de factures et reçus par exemple). La colonne **Montant** contient la valeur totale du mouvement d'argent. **De/Vers** contient le ou les comptes desquels et vers lesquels l'argent est transféré. Par exemple, si vous payez votre épicerie avec votre carte de débit, "De" serait "Compte Courant" et "Vers" serait "Nourriture".
 
 Au dessus de la liste de transactions, il y a une barre de filtre permettant d'afficher seulement des transactions d'un certain type.
 

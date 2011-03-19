@@ -5,7 +5,7 @@
 "16.title" = "Description";
 
 /* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "18"; */
-"18.title" = "Provenance";
+"18.title" = "Tiers";
 
 /* Class = "NSTextFieldCell"; title = "Check #"; ObjectID = "20"; */
 "20.title" = "# Chèque";
@@ -17,10 +17,10 @@
 "59.title" = "Annuler";
 
 /* Class = "NSTextFieldCell"; title = "From"; ObjectID = "108"; */
-"108.title" = "Cp. crédités";
+"108.title" = "De";
 
 /* Class = "NSTextFieldCell"; title = "To"; ObjectID = "114"; */
-"114.title" = "Cp. débités";
+"114.title" = "Vers";
 
 /* Class = "NSTextFieldCell"; title = "Amount"; ObjectID = "120"; */
 "120.title" = "Montant";

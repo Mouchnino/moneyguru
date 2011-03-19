@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">788</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -122,7 +122,7 @@
 							<object class="NSButtonCell" key="NSCell" id="800904803">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Tiers</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="53691617"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -207,7 +207,7 @@
 							<object class="NSButtonCell" key="NSCell" id="411933171">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Tiers</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="386946478"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -292,7 +292,7 @@
 							<object class="NSButtonCell" key="NSCell" id="821271300">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Tiers</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="373205423"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -770,7 +770,7 @@
 							<object class="NSButtonCell" key="NSCell" id="108574141">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Tiers</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="846544596"/>
 								<int key="NSButtonFlags">1211912703</int>

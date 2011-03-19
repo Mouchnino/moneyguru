@@ -30,7 +30,7 @@
 "103.title" = "Appliquer à tous";
 
 /* Class = "NSMenuItem"; title = "Description <--> Payee"; ObjectID = "105"; */
-"105.title" = "Description <--> Provenance";
+"105.title" = "Description <--> Tiers";
 
 /* Class = "NSMenuItem"; title = "Invert Amounts"; ObjectID = "154"; */
 "154.title" = "Inverser les montants";

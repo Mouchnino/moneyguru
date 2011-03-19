@@ -28,7 +28,7 @@ Notez aussi que changer la devise d'un compte de change **pas** la devise des tr
 Transactions
 ------------
 
-Les transactions sont modifiées à partir des vues Transactions et Compte. Quand vous créez une nouvelle transaction, la date de la transaction sélectionnée est utilisée pour la nouvelle. Les colonnes de Description, Provenance et de comptes sont auto-complétés (voir ci-dessous).
+Les transactions sont modifiées à partir des vues Transactions et Compte. Quand vous créez une nouvelle transaction, la date de la transaction sélectionnée est utilisée pour la nouvelle. Les colonnes de Description, Tiers et de comptes sont auto-complétés (voir ci-dessous).
 
 Vous pouvez changer l'ordre de transaction ayant la même date en les glissant ou en utilisant |cmd|\ + et |cmd|\ -.
 

@@ -24,7 +24,7 @@
 "28.title" = "Description";
 
 /* Class = "NSMenuItem"; title = "Payee"; ObjectID = "30"; */
-"30.title" = "Provenance";
+"30.title" = "Tiers";
 
 /* Class = "NSMenuItem"; title = "Check #"; ObjectID = "31"; */
 "31.title" = "# Chèque";

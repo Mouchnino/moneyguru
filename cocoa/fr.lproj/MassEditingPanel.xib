@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1040</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">762</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -146,7 +146,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="764825935">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Provenance</string>
+								<string key="NSContents">Tiers</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="449851290"/>
@@ -415,7 +415,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="418074417">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Cp. crédités</string>
+								<string key="NSContents">De</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="408663519"/>
@@ -474,7 +474,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="177147695">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Cp. débités</string>
+								<string key="NSContents">Vers</string>
 								<reference key="NSSupport" ref="457994295"/>
 								<string key="NSPlaceholderString">No entry selected</string>
 								<reference key="NSControlView" ref="823863895"/>
@@ -1798,6 +1798,50 @@
 							<string>NSTextField</string>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>checknoField</string>
+							<string>currencySelector</string>
+							<string>dateField</string>
+							<string>descriptionField</string>
+							<string>fromField</string>
+							<string>payeeField</string>
+							<string>toField</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">checknoField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">currencySelector</string>
+								<string key="candidateClassName">NSComboBox</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">dateField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">descriptionField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">fromField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">payeeField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">toField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">controllers/MGMassEditionPanel.h</string>
@@ -1817,6 +1861,25 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>cancel:</string>
+							<string>save:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">cancel:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">save:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -2342,6 +2405,13 @@
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">showWindow:</string>
 						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">showWindow:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">showWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>

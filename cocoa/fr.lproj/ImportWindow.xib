@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">823</string>
+			<string key="NS.object.0">851</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -304,7 +304,7 @@
 													</object>
 													<object class="NSMenuItem" id="305537988">
 														<reference key="NSMenu" ref="976417440"/>
-														<string key="NSTitle">Description &lt;--&gt; Provenance</string>
+														<string key="NSTitle">Description &lt;--&gt; Tiers</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSMnemonicLoc">2147483647</int>
 														<reference key="NSOnImage" ref="668660200"/>

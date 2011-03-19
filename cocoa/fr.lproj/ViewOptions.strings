@@ -9,7 +9,7 @@
 "8.title" = "Description";
 
 /* Class = "NSButtonCell"; title = "Payee"; ObjectID = "10"; */
-"10.title" = "Provenance";
+"10.title" = "Tiers";
 
 /* Class = "NSButtonCell"; title = "Check #"; ObjectID = "12"; */
 "12.title" = "# Chèque";
@@ -57,7 +57,7 @@
 "58.title" = "Compte";
 
 /* Class = "NSButtonCell"; title = "Payee"; ObjectID = "59"; */
-"59.title" = "Provenance";
+"59.title" = "Tiers";
 
 /* Class = "NSButtonCell"; title = "Check #"; ObjectID = "60"; */
 "60.title" = "# Chèque";
@@ -75,7 +75,7 @@
 "81.title" = "# Chèque";
 
 /* Class = "NSButtonCell"; title = "Payee"; ObjectID = "82"; */
-"82.title" = "Provenance";
+"82.title" = "Tiers";
 
 /* Class = "NSButtonCell"; title = "Description"; ObjectID = "83"; */
 "83.title" = "Description";
@@ -99,7 +99,7 @@
 "156.title" = "# Chèque";
 
 /* Class = "NSButtonCell"; title = "Payee"; ObjectID = "157"; */
-"157.title" = "Provenance";
+"157.title" = "Tiers";
 
 /* Class = "NSButtonCell"; title = "Description"; ObjectID = "158"; */
 "158.title" = "Description";
