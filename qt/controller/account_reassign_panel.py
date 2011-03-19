@@ -13,6 +13,7 @@ from PyQt4.QtGui import (QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QSizePolic
 from hscommon.trans import tr as trbase
 from core.gui.account_reassign_panel import AccountReassignPanel as AccountReassignPanelModel
 
+from .. import plat
 from .panel import Panel
 
 tr = lambda s: trbase(s, "AccountReassignPanel")
@@ -31,7 +32,10 @@ class AccountReassignPanel(Panel):
         self.cancelButton.clicked.connect(self.accept)
     
     def _setupUi(self):
-        self.resize(340, 165)
+        if plat.isWindows():
+            self.resize(250, 140)
+        else:
+            self.resize(340, 165)
         self.setWindowTitle(tr("Re-assign Account"))
         self.verticalLayout = QVBoxLayout(self)
         self.label = QLabel(self)

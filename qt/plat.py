@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-04-02
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,11 +8,20 @@
 
 import sys
 
-if sys.platform == 'win32':
+def isWindows():
+    return sys.platform == 'win32'
+
+def isLinux():
+    return sys.platform == 'linux2'
+
+def isMac():
+    return sys.platform == 'darwin'
+
+if isWindows():
     from .plat_win import *
-elif sys.platform == 'linux2':
+elif isLinux():
     from .plat_lnx import *
-elif sys.platform == 'darwin':
+elif isMac():
     from .plat_osx import *
 else:
     print("Unsupported platform")
