@@ -29,7 +29,7 @@ class AccountReassignPanel(Panel):
         self.model = AccountReassignPanelModel(view=self, mainwindow=mainwindow.model)
         
         self.continueButton.clicked.connect(self.accept)
-        self.cancelButton.clicked.connect(self.accept)
+        self.cancelButton.clicked.connect(self.reject)
     
     def _setupUi(self):
         if plat.isWindows():
