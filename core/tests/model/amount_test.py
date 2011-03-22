@@ -272,6 +272,12 @@ def test_parse_auto_decimal_places_expression():
     # When there's an expression, the auto_decimal_place option is ignored
     eq_(parse_amount('2+3', default_currency=USD, auto_decimal_place=True), Amount(5, USD))
 
+def test_parse_zero_division():
+    # Instead of raising ZeroDivisionError, raise a ValueError when the expression to parse is a
+    # division by zero.
+    with raises(ValueError):
+        parse_amount('42/0')
+
 #--- Format amount
 def test_format_blank_zero():
     # When blank_zero is True, 0 is rendered as an empty string.
