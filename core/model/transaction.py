@@ -239,6 +239,8 @@ class Transaction:
     @amount.setter
     def amount(self, value):
         assert self.can_set_amount
+        if value == self.amount:
+            return
         debit = first(s for s in self.splits if s.debit)
         credit = first(s for s in self.splits if s.credit)
         debit_account = debit.account if debit is not None else None
@@ -269,7 +271,7 @@ class Transaction:
 class Split:
     def __init__(self, transaction, account, amount):
         self.transaction = transaction
-        self.account = account
+        self._account = account
         self.memo = ''
         self._amount = amount
         self.reconciliation_date = None
@@ -291,6 +293,17 @@ class Split:
         self.transaction.balance()
     
     #--- Properties
+    @property
+    def account(self):
+        return self._account
+    
+    @account.setter
+    def account(self, value):
+        if value is self._account:
+            return
+        self._account = value
+        self.reconciliation_date = None
+    
     @property
     def account_name(self):
         return self.account.name if self.account is not None else ''

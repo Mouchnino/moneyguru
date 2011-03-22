@@ -214,6 +214,23 @@ def test_change_date_makes_reconciliation_date_follow(app):
     app.etable.save_edits()
     eq_(app.etable[0].reconciliation_date, '10/07/2008')
 
+@with_app(app_reconciled_entry)
+def test_change_ttable_expense_account_doesnt_unreconcile_entry(app):
+    # Changing the expense account of a txn for which the asset side is reconciled doesn't
+    # unreconcile it.
+    app.show_tview()
+    app.ttable[0].to = 'other_expense'
+    app.ttable.save_edits()
+    assert app.ttable[0].reconciled
+
+@with_app(app_reconciled_entry)
+def test_change_ttable_asset_account_unreconciles_entry(app):
+    # Changing the account of a txn for which the entry is reconciled unreconciles it.
+    app.show_tview()
+    app.ttable[0].from_ = 'other_asset'
+    app.ttable.save_edits()
+    assert not app.ttable[0].reconciled
+
 #--- Entry different reconciliation date
 def app_entry_different_reconciliation_date(monkeypatch):
     app = TestApp()
