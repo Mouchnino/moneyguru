@@ -1,3 +1,13 @@
+=== 2.3.6 (2011-03-23)
+
+* Localized to italian (by Roberto Padovani).
+* Improved french localization.
+* Fixed bug where transaction editing was messed up after moving the Date column. [Mac OS X] (#235)
+* Fixed truncated text in account re-assign dialog. [Linux] (#234)
+* Fixed crash on entering a division by zero as an amount. (#229)
+* Fixed erroneous automatic de-reconciliation on transaction editing. (#237)
+* Fixed crash when launching moneyGuru from a very long folder name. [Mac OS X]
+
 === 2.3.5 (2011-02-07)
 
 * Fixed a few crashes here and there. (#228 #220 #216 #218 #217)
