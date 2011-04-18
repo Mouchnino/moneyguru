@@ -124,7 +124,7 @@ class MainWindow(Repeater):
         pane_data = []
         for data in stored_panes:
             pane_type = data['pane_type']
-            account_name = data.get('account_name', '')
+            account_name = str(data.get('account_name', '')) # str() because the value might be an int
             account = self.document.accounts.find(account_name)
             if pane_type == PaneType.Account and account is None:
                 continue

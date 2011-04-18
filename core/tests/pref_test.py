@@ -64,6 +64,22 @@ def test_gui_calls_after_pref_restore(app):
     app.check_gui_calls(app.ttablecol_gui, ['restore_columns'])
     app.check_gui_calls_partial(app.bsheet_gui, ['refresh_expanded_paths'])
 
+@with_app(TestApp)
+def test_numeric_account_name_pane_reopen(app):
+    # Under Qt, prefs are weird. If a pref is saved as a string, but has a numerical value in it,
+    # it will be read back as a int. This shouldn't cause a crash.
+    app.add_account('12345')
+    app.mw.show_account()
+    filename = app.save_file()
+    app.doc.close()
+    # now let's go change the 'account_name' attr of the pane in the prefs to emulate Qt's behavior
+    panes_pref = app.doc.get_default(OPENED_PANES_PREFERENCE)
+    account_pane_pref = panes_pref[-1]
+    account_pane_pref['account_name'] = int(account_pane_pref['account_name'])
+    newapp = TestApp(app=app.app)
+    newapp.doc.load_from_xml(filename) # no crash on restore
+    eq_(app.mw.pane_label(app.mw.pane_count-1), '12345')
+
 #--- Columns save/restore
 def assert_column_save_restore(app, tablename, colname):
     table = getattr(app, tablename)
