@@ -189,6 +189,8 @@ class MainWindow(Repeater):
     
     #--- Public
     def close_pane(self, index):
+        if self.pane_count == 1: # don't close the last pane
+            return
         if index == self.current_pane_index:
             # we must select another pane before we close it.
             if index == len(self.panes)-1:

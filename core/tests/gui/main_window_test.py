@@ -137,6 +137,14 @@ def test_select_ttable_on_sfield_query(app):
     app.sfield.query = 'foobar'
     eq_(app.mw.current_pane_index, 2)
 
+@with_app(TestApp)
+def test_dont_close_last_pane(app):
+    # if close_pane() is called with only one pane left, don't do anything.
+    while (app.mw.pane_count > 1):
+        app.mw.close_pane(0)
+    app.mw.close_pane(0) # no crash
+    eq_(app.mw.pane_count, 1)
+
 #--- Cleared GUI calls
 def app_cleared_gui_calls():
     app = TestApp()

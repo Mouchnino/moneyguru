@@ -414,6 +414,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             iconname = PANETYPE2ICON.get(pane_type)
             if iconname:
                 self.tabBar.setTabIcon(i, QIcon(QPixmap(':/{0}'.format(iconname))))
+        self.tabBar.setTabsClosable(self.model.pane_count > 1)
     
     def refresh_status_line(self):
         self.statusLabel.setText(self.model.status_line)
@@ -427,4 +428,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def view_closed(self, index):
         self.tabBar.removeTab(index)
+        self.tabBar.setTabsClosable(self.model.pane_count > 1)
     
