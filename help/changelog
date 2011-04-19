@@ -1,3 +1,13 @@
+=== 2.3.7 (2011-04-19)
+
+* Fixed a crash on closing tabs. [Windows, Linux] (#245)
+* Fixed a crash on restoring opened tabs on startup. [Windows, Linux] (#244)
+* Fixed a crash on moving columns in the split table. [Mac OS X] (#241)
+* Fixed a bug in the saving of a new document that could cause data loss. [Windows, Linux] (#247)
+* Fixed a bug where the filename of a saved document wouldn't have the correct extension. [Windows, Linux] (#248)
+* Fixed a selection glitch on creating a new transaction. [Windows, Linux] (#249)
+* Improved the french translation. (#243)
+
 === 2.3.6 (2011-03-23)
 
 * Localized to italian (by Roberto Padovani).
