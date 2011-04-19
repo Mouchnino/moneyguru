@@ -85,9 +85,6 @@
 /* core/gui/account_reassign_panel.py:19 */
 "No Account" = "Aucun compte";
 
-/* core/gui/account_view.py:77 */
-"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}";
-
 /* core/gui/balance_sheet.py:63 */
 "ASSETS" = "ACTIFS";
 
@@ -181,9 +178,6 @@
 /* core/gui/report.py:250 */
 "The account '{0}' already exists." = "Le compte '{0}' existe déjà.";
 
-/* core/gui/transaction_view.py:46 */
-"{0} out of {1} selected. Amount: {2}" = "{0} / {1} sélectionnés. Montant: {2}";
-
 /* core/loader/csv.py:85 */
 "The Date and Amount columns must be set." = "Les colonnes Date et Montant doivent être définis.";
 
@@ -191,14 +185,16 @@
 "The Date column has been set on a column that doesn't contain dates." = "La colonne Date ne contient pas de valeurs pouvant être des dates.";
 "The Amount column has been set on a column that doesn't contain amounts." = "La colonne Montant ne contient pas de valeurs pouvant être des montants.";
 
-/* core/model/date.py:186 */
+/* date range description formats */
 "{0} - Now" = "{0} - Aujourd'hui";
-
-/* core/model/date.py:210 */
+"Q{0} {1}" = "Trim. {0} {1}";
 "Running year ({0} - {1})" = "Année flottante ({0} - {1})";
-
-/* core/model/date.py:224 */
 "All Transactions" = "Toutes les transactions";
+
+/* status labels for views */
+"{0} out of {1} selected. Increase: {2} Decrease: {3}" = "{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}"; /* Account */
+"{0} out of {1} selected. Amount: {2}" = "{0} / {1} sélectionnés. Montant: {2}"; /* Transactions */
+"{0} out of {1} selected. Debit: {2} Credit: {3}" = "{0} / {1} sélectionnés. Débit: {2} Crédit: {3}"; /* General Ledger */
 
 /* core/model/recurrence.py:90 */
 "Daily" = "Quotidiennement";
@@ -242,6 +238,10 @@
 "months" = "mois";
 "year" = "année";
 "years" = "années";
+
+/* Cashculator messages */
+"Exported database not present. Click on Export Accounts first." = "Aucune présence d'un fichier d'exportation! Cliquez d'abord sur Exporter.";
+"Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base de données Cashculator inexistante! Vous devez exécuter et quitter Cashculator au moins une fois avant d'effectuer l'exportation.";
 
 /* Print titles */
 "Net Worth at {start_date}, starting from {end_date}" = "Valeur Nette à {start_date}, commençant à {end_date}";

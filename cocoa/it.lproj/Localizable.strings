@@ -24,6 +24,8 @@
 "Schedules" = "Pianificazioni";
 "Budgets" = "Previsioni";
 
+"%@ (Page %d of %d)" = "%@ (Page %d of %d)";
+
 /* Messages */
 "FirstRunMsg" = "Questa è la prima volta che eseguit moneyGuru. Vuoi aprire il file di esempio?";
 "AboutToRestartMsg" = "moneyGuru sta per riavviarsi";

@@ -140,7 +140,7 @@ class QuarterRange(NavigableDateRange):
     
     @property
     def display(self):
-        return 'Q%d %d' % (self.start.month // 3 + 1, self.start.year)
+        return tr('Q{0} {1}').format(self.start.month // 3 + 1, self.start.year)
     
 
 class YearRange(NavigableDateRange):

@@ -17,6 +17,7 @@ from hscommon import io
 from hscommon.path import Path
 from hscommon.cocoa.objcmin import (NSSearchPathForDirectoriesInDomains, NSApplicationSupportDirectory,
     NSUserDomainMask)
+from hscommon.trans import tr
 
 from ..const import PaneType
 from ..model.account import AccountType
@@ -25,9 +26,9 @@ from ..model.date import MonthRange, ONE_DAY
 from .base import BaseView
 
 MONTHS_TO_FILL = 4
-MSG_NO_DB = "Exported database not present. Click on Export Accounts first."
-MSG_NO_BASE_DB = "Base Cashculator database not present. You must run and quit Cashculator at least "\
-    "once before using the export feature."
+MSG_NO_DB = tr("Exported database not present. Click on Export Accounts first.")
+MSG_NO_BASE_DB = tr("Base Cashculator database not present. You must run and quit Cashculator at least "\
+    "once before using the export feature.")
 
 
 class CashculatorView(BaseView):

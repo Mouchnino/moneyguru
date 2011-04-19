@@ -24,6 +24,8 @@
 "Schedules" = "Récurrences";
 "Budgets" = "Budgets";
 
+"%@ (Page %d of %d)" = "%@ (Page %d sur %d)";
+
 /* Messages */
 "FirstRunMsg" = "Vous utilisez moneyGuru pour la première fois. Voulez-vous ouvrir le fichier d'exemple?";
 "AboutToRestartMsg" = "moneyGuru va fermer";
