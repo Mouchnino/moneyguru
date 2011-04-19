@@ -7,7 +7,8 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, pyqtSignal, QPoint, QRect
-from PyQt4.QtGui import QAbstractItemView, QTableView, QTreeView, QAbstractItemDelegate
+from PyQt4.QtGui import (QAbstractItemView, QTableView, QTreeView, QAbstractItemDelegate,
+    QItemSelectionModel)
 
 from hscommon.util import first
 
@@ -134,7 +135,10 @@ class ItemViewMixIn: # Must be mixed with a QAbstractItemView subclass
         selectedIndex = selectedRows[0]
         editableIndex = self._firstEditableIndex(selectedIndex)
         if editableIndex is not None:
-            self.setCurrentIndex(editableIndex)
+            # For a reason I can't explain, calling setCurrentIndex() without the NoUpdate flag
+            # sometimes messes up the selection and makes it empty (even though the editableIndex
+            # is inside the selection). That's why we have to make this call with the NoUpdate flag.
+            self.selectionModel().setCurrentIndex(editableIndex, QItemSelectionModel.NoUpdate)
             self.edit(editableIndex)
     
 
