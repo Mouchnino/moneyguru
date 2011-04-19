@@ -65,6 +65,7 @@ class Document(QObject):
         if not self.confirmDestructiveAction():
             return
         self.close()
+        self.documentPath = None
         self.model.clear()
     
     def open(self, docpath):
