@@ -116,10 +116,6 @@
         <translation>Aucun compte</translation>
     </message>
     <message>
-        <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
-        <translation>{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}</translation>
-    </message>
-    <message>
         <source>ASSETS</source>
         <translation>ACTIFS</translation>
     </message>
@@ -256,10 +252,6 @@
         <translation>Le compte '{0}' existe déjà.</translation>
     </message>
     <message>
-        <source>{0} out of {1} selected. Amount: {2}</source>
-        <translation>{0} / {1} sélectionnés. Montant: {2}</translation>
-    </message>
-    <message>
         <source>The Date and Amount columns must be set.</source>
         <translation>Les colonnes Date et Montant doivent être définis.</translation>
     </message>
@@ -271,9 +263,15 @@
         <source>The Amount column has been set on a column that doesn't contain amounts.</source>
         <translation>La colonne Montant ne contient pas de valeurs pouvant être des montants.</translation>
     </message>
+    
+    <!-- date range description formats -->
     <message>
         <source>{0} - Now</source>
         <translation>{0} - Aujourd'hui</translation>
+    </message>
+    <message>
+        <source>Q{0} {1}</source>
+        <translation>Trim. {0} {1}</translation>
     </message>
     <message>
         <source>Running year ({0} - {1})</source>
@@ -287,6 +285,22 @@
         <source>Daily</source>
         <translation>Quotidiennement</translation>
     </message>
+    
+    <!-- status labels for views -->
+    <message>
+        <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
+        <translation>{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}</translation>
+    </message>
+    <message>
+        <source>{0} out of {1} selected. Amount: {2}</source>
+        <translation>{0} / {1} sélectionnés. Montant: {2}</translation>
+    </message>
+    <message>
+        <source>{0} out of {1} selected. Debit: {2} Credit: {3}</source>
+        <translation>{0} / {1} sélectionnés. Débit: {2} Crédit: {3}</translation>
+    </message>
+    
+    
     <message>
         <source>Weekly</source>
         <translation>Hebdomadairement</translation>

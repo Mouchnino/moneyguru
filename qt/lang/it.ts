@@ -116,10 +116,6 @@
         <translation>Nessun Conto</translation>
     </message>
     <message>
-        <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
-        <translation>{0} di {1} selezionato. Incremento: {2} Decremento: {3}</translation>
-    </message>
-    <message>
         <source>ASSETS</source>
         <translation>Attivo</translation>
     </message>
@@ -256,10 +252,6 @@
         <translation>Il Conto '{0}' esiste già.</translation>
     </message>
     <message>
-        <source>{0} out of {1} selected. Amount: {2}</source>
-        <translation>{0} di {1} selezionato. Ammontare: {2}</translation>
-    </message>
-    <message>
         <source>The Date and Amount columns must be set.</source>
         <translation>Impostare le colonne Data e Ammontare.</translation>
     </message>
@@ -271,9 +263,15 @@
         <source>The Amount column has been set on a column that doesn't contain amounts.</source>
         <translation>La colonna Ammontare è stata impostata ad una colonna che non contiene un ammontare.</translation>
     </message>
+    
+    <!-- date range description formats -->
     <message>
         <source>{0} - Now</source>
         <translation>{0} - Ora</translation>
+    </message>
+    <message>
+        <source>Q{0} {1}</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Running year ({0} - {1})</source>
@@ -283,6 +281,21 @@
         <source>All Transactions</source>
         <translation>Tutte le Transazioni</translation>
     </message>
+    
+    <!-- status labels for views -->
+    <message>
+        <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
+        <translation>{0} di {1} selezionato. Incremento: {2} Decremento: {3}</translation>
+    </message>
+    <message>
+        <source>{0} out of {1} selected. Amount: {2}</source>
+        <translation>{0} di {1} selezionato. Ammontare: {2}</translation>
+    </message>
+    <message>
+        <source>{0} out of {1} selected. Debit: {2} Credit: {3}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    
     <message>
         <source>Daily</source>
         <translation>Giornaliero</translation>
