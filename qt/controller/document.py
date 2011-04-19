@@ -108,6 +108,8 @@ class Document(QObject):
         filters = tr("moneyGuru Documents (*.moneyguru)")
         docpath = str(QFileDialog.getSaveFileName(self.app.mainWindow, title, '', filters))
         if docpath:
+            if not docpath.endswith('.moneyguru'):
+                docpath += '.moneyguru'
             self.model.save_to_xml(docpath)
             self.documentPath = docpath
             self.documentSavedAs.emit(docpath)
