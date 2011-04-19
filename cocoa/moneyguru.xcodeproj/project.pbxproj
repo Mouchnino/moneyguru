@@ -79,6 +79,8 @@
 		CE720A5F0F84CB39005C4D5B /* MGTablePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */; };
 		CE74544612082C5B003A2794 /* cashculator_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE74544512082C5B003A2794 /* cashculator_16.png */; };
 		CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74808C11995EF400D59C50 /* MGEmptyView.m */; };
+		CE7869F0135D920500221226 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7869EC135D920500221226 /* about.xib */; };
+		CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7869EE135D920500221226 /* ErrorReportWindow.xib */; };
 		CE7990B212082D53000A4846 /* cashculator_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7990B112082D53000A4846 /* cashculator_48.png */; };
 		CE7DA76B11FF482E00E10DED /* MGViewOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7DA76A11FF482E00E10DED /* MGViewOptions.m */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
@@ -161,7 +163,6 @@
 		CEB93C420E5C622E006923EB /* balance_sheet_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3D0E5C622E006923EB /* balance_sheet_48.png */; };
 		CEB93C440E5C622E006923EB /* income_statement_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C3F0E5C622E006923EB /* income_statement_48.png */; };
 		CEB93C460E5C622E006923EB /* transaction_table_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB93C410E5C622E006923EB /* transaction_table_48.png */; };
-		CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */; };
 		CEBA331E11294DE5009C782F /* HSGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA331911294DE5009C782F /* HSGUIController.m */; };
 		CEBA332511294E55009C782F /* HSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBA332411294E55009C782F /* HSWindowController.m */; };
 		CEBB2FFD10F76BD100FC4C7A /* MGBudgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB2FFC10F76BD100FC4C7A /* MGBudgetView.m */; };
@@ -193,7 +194,6 @@
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
 		CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC941C912D32F7600816473 /* HSAboutBox.m */; };
-		CEC941CC12D32F8800816473 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC941CB12D32F8800816473 /* about.xib */; };
 		CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */; };
 		CED1FC6D10F7851600634D72 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6C10F7851600634D72 /* MGTransactionTable.m */; };
 		CED1FC7410F7852000634D72 /* MGBalanceGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6F10F7852000634D72 /* MGBalanceGraph.m */; };
@@ -400,6 +400,14 @@
 		CE74808A11995EDF00D59C50 /* PyEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEmptyView.h; sourceTree = "<group>"; };
 		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
 		CE74808C11995EF400D59C50 /* MGEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEmptyView.m; sourceTree = "<group>"; };
+		CE7869ED135D920500221226 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../cocoalib/en.lproj/about.xib; sourceTree = SOURCE_ROOT; };
+		CE7869EF135D920500221226 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../cocoalib/en.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
+		CE7869F2135D921600221226 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = ../cocoalib/fr.lproj/about.xib; sourceTree = SOURCE_ROOT; };
+		CE7869F3135D921600221226 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = ../cocoalib/fr.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
+		CE7869F4135D922000221226 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = ../cocoalib/de.lproj/about.xib; sourceTree = SOURCE_ROOT; };
+		CE7869F5135D922000221226 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = ../cocoalib/de.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
+		CE7869F6135D922D00221226 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = ../cocoalib/it.lproj/about.xib; sourceTree = SOURCE_ROOT; };
+		CE7869F7135D922D00221226 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = ../cocoalib/it.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
 		CE7990B112082D53000A4846 /* cashculator_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_48.png; sourceTree = "<group>"; };
 		CE7DA76911FF482E00E10DED /* MGViewOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewOptions.h; sourceTree = "<group>"; };
 		CE7DA76A11FF482E00E10DED /* MGViewOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewOptions.m; sourceTree = "<group>"; };
@@ -574,7 +582,6 @@
 		CEB93C410E5C622E006923EB /* transaction_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transaction_table_48.png; sourceTree = "<group>"; };
 		CEBA330811294D09009C782F /* PyGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGUI.h; sourceTree = "<group>"; };
 		CEBA330911294D09009C782F /* PyOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline.h; sourceTree = "<group>"; };
-		CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorReportWindow.xib; sourceTree = "<group>"; };
 		CEBA331811294DE5009C782F /* HSGUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSGUIController.h; sourceTree = "<group>"; };
 		CEBA331911294DE5009C782F /* HSGUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSGUIController.m; sourceTree = "<group>"; };
 		CEBA332311294E55009C782F /* HSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSWindowController.h; sourceTree = "<group>"; };
@@ -641,7 +648,6 @@
 		CEC5CE580F45F8670042E33F /* MGDoubleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDoubleView.m; sourceTree = "<group>"; };
 		CEC941C812D32F7600816473 /* HSAboutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSAboutBox.h; path = ../cocoalib/HSAboutBox.h; sourceTree = SOURCE_ROOT; };
 		CEC941C912D32F7600816473 /* HSAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSAboutBox.m; path = ../cocoalib/HSAboutBox.m; sourceTree = SOURCE_ROOT; };
-		CEC941CB12D32F8800816473 /* about.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = about.xib; path = ../cocoalib/xib/about.xib; sourceTree = SOURCE_ROOT; };
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
 		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
 		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
@@ -1229,9 +1235,9 @@
 		CEBA330A11294D2B009C782F /* xib */ = {
 			isa = PBXGroup;
 			children = (
-				CEC941CB12D32F8800816473 /* about.xib */,
+				CE7869EC135D920500221226 /* about.xib */,
+				CE7869EE135D920500221226 /* ErrorReportWindow.xib */,
 				CE6E77A912538B0F00A1754B /* FairwareReminder.xib */,
-				CEBA330B11294D2B009C782F /* ErrorReportWindow.xib */,
 			);
 			name = xib;
 			path = ../cocoalib/xib;
@@ -1489,7 +1495,6 @@
 				CEA6DE911101E6970028E125 /* TabNewMetalPressed.png in Resources */,
 				CEA6DE921101E6970028E125 /* TabNewMetalRollover.png in Resources */,
 				CEA6DE9D1101E6970028E125 /* ReadMe.rtfd in Resources */,
-				CEBA330E11294D2B009C782F /* ErrorReportWindow.xib in Resources */,
 				CEC367A911D10E1E00EB0222 /* AccountPanel.xib in Resources */,
 				CEC367AA11D10E1E00EB0222 /* AccountReassignPanel.xib in Resources */,
 				CEC367AB11D10E1E00EB0222 /* BalanceSheet.xib in Resources */,
@@ -1530,7 +1535,8 @@
 				CEB7CCED123B61270020DAF6 /* gledger_48.png in Resources */,
 				CE6E77AB12538B0F00A1754B /* FairwareReminder.xib in Resources */,
 				CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */,
-				CEC941CC12D32F8800816473 /* about.xib in Resources */,
+				CE7869F0135D920500221226 /* about.xib in Resources */,
+				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1707,6 +1713,30 @@
 				CEFF4ED01303FBBA009706BE /* it */,
 			);
 			name = FairwareReminder.xib;
+			path = ../cocoalib/xib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE7869EC135D920500221226 /* about.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE7869ED135D920500221226 /* en */,
+				CE7869F2135D921600221226 /* fr */,
+				CE7869F4135D922000221226 /* de */,
+				CE7869F6135D922D00221226 /* it */,
+			);
+			name = about.xib;
+			path = ../cocoalib/xib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE7869EE135D920500221226 /* ErrorReportWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE7869EF135D920500221226 /* en */,
+				CE7869F3135D921600221226 /* fr */,
+				CE7869F5135D922000221226 /* de */,
+				CE7869F7135D922D00221226 /* it */,
+			);
+			name = ErrorReportWindow.xib;
 			path = ../cocoalib/xib;
 			sourceTree = SOURCE_ROOT;
 		};
