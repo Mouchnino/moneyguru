@@ -23,45 +23,55 @@ def importall(app, filename):
     while app.iwin.panes:
         app.iwin.import_selected_pane()
 
-class TestPristine:
-    @with_app(TestApp)
-    def test_qif_export_import(self, app):
-        # Make sure nothing is wrong when the file is empty
-        app.do_test_qif_export_import()
-    
-    @with_app(TestApp)
-    def test_import_empty(self, app):
-        # Trying to import an empty file results in a FileFormatError
-        filename = testdata.filepath('zerofile')
-        with raises(FileFormatError):
-            app.doc.parse_file_for_import(filename)
-    
-    @with_app(TestApp)
-    def test_import_inexistant(self, app, tmpdir):
-        # Raises a FileFormatError when importing a file that doesn't exist.
-        filename = str(tmpdir.join('does_not_exist.qif'))
-        with raises(FileFormatError):
-            app.doc.parse_file_for_import(filename)
-    
-    @with_app(TestApp)
-    def test_import_invalid_qif(self, app):
-        # Raise a FileFormatError if the file does not have the right format (for now, a valid 
-        # file is a file that starts with a '!Account' line)
-        filename = testdata.filepath('qif', 'invalid.qif')
-        with raises(FileFormatError):
-            app.doc.parse_file_for_import(filename)
-    
-    @with_app(TestApp)
-    def test_import_moneyguru_file(self, app):
-        # Importing a moneyguru file works.
-        importall(app, testdata.filepath('moneyguru', 'simple.moneyguru'))
-        # 2 assets, 1 expense
-        eq_(app.bsheet.assets.children_count, 4)
-        app.mainwindow.select_income_statement()
-        eq_(app.istatement.expenses.children_count, 3)
-        # No need to test further, we already test moneyguru file loading, which is basically the 
-        # same thing.
-    
+#--- Pristine
+@with_app(TestApp)
+def test_qif_export_import(app):
+    # Make sure nothing is wrong when the file is empty
+    app.do_test_qif_export_import()
+
+@with_app(TestApp)
+def test_import_empty(app):
+    # Trying to import an empty file results in a FileFormatError
+    filename = testdata.filepath('zerofile')
+    with raises(FileFormatError):
+        app.doc.parse_file_for_import(filename)
+
+@with_app(TestApp)
+def test_import_inexistant(app, tmpdir):
+    # Raises a FileFormatError when importing a file that doesn't exist.
+    filename = str(tmpdir.join('does_not_exist.qif'))
+    with raises(FileFormatError):
+        app.doc.parse_file_for_import(filename)
+
+@with_app(TestApp)
+def test_import_invalid_qif(app):
+    # Raise a FileFormatError if the file does not have the right format (for now, a valid 
+    # file is a file that starts with a '!Account' line)
+    filename = testdata.filepath('qif', 'invalid.qif')
+    with raises(FileFormatError):
+        app.doc.parse_file_for_import(filename)
+
+@with_app(TestApp)
+def test_import_moneyguru_file(app):
+    # Importing a moneyguru file works.
+    importall(app, testdata.filepath('moneyguru', 'simple.moneyguru'))
+    # 2 assets, 1 expense
+    eq_(app.bsheet.assets.children_count, 4)
+    app.mainwindow.select_income_statement()
+    eq_(app.istatement.expenses.children_count, 3)
+    # No need to test further, we already test moneyguru file loading, which is basically the 
+    # same thing.
+
+@with_app(TestApp)
+def test_account_only_qif_is_invalid(app):
+    # A QIF file with only accounts is correctly seen as invalid. Previously, such a file, if an
+    # account had a valid "D" line, would go through the parsing/loading phase and pop up an empty
+    # import window, which would ultimately cause a crash.
+    with raises(FileFormatError):
+        # Whether the FileFormatError is raised during parsing or loading doesn't matter. Loading
+        # is a more appropriate error though because the file is a valid QIF, it just doesn't have
+        # any txns in it.
+        importall(app, testdata.filepath('qif', 'only_accounts.qif'))
 
 class TestQIFImport:
     # One account named 'Account 1' and then an parse_file_for_import() call for the 'checkbook.qif' test file.

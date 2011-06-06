@@ -740,7 +740,7 @@ class Document(Repeater):
     
     def load_parsed_file_for_import(self):
         self.loader.load()
-        if self.loader.accounts:
+        if self.loader.accounts and self.loader.transactions:
             self.notify('file_loaded_for_import')
         else:
             raise FileFormatError('This file does not contain any account to import.')
