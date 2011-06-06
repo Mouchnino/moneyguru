@@ -10,6 +10,17 @@ from hscommon.currency import CAD
 from ..base import TestApp, with_app
 from ...model.account import AccountType
 
+#--- Pristine
+@with_app(TestApp)
+def test_balgraph_yaxis_scaling_works_if_negative(app):
+    # The y axis scaling (ymin being "higher" than 0) works when the balance is negative.
+    app.add_account()
+    app.mw.show_account()
+    app.add_entry('01/01/2010', decrease='1000')
+    app.drsel.select_next_date_range()
+    eq_(app.balgraph.ymax, -900)
+    eq_(app.balgraph.ymin, -1100)
+
 class TestTwoLiabilityTransactions:
     def do_setup(self):
         app = TestApp()

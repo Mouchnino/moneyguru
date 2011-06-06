@@ -63,7 +63,7 @@ class BalanceGraph(Graph):
     def yrange(self):
         if self._data:
             ymin = min(point[1] for point in self._data)
-            ymax = max(0, max(point[1] for point in self._data))
+            ymax = max(point[1] for point in self._data)
             return (ymin, ymax)
         else:
             return (0, 1)
