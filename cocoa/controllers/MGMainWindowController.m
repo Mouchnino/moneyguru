@@ -565,18 +565,22 @@ http://www.hardcoded.net/licenses/bsd_license
             view = emptyView;
         }
         [subviews addObject:view];
+        NSTabViewItem *item;
         if (i < [tabView numberOfTabViewItems]) {
-            NSTabViewItem *item = [tabView tabViewItemAtIndex:i];
+            item = [tabView tabViewItemAtIndex:i];
             [item setLabel:label];
             [item setView:[view view]];
         }
         else {
-            NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+            item = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
             [item setLabel:label];
             [item setView:[view view]];
             [tabView addTabViewItem:item];
         }
-        PSMTabBarCell *tabCell = [tabBar cellAtIndex:i];
+        /* We use cellForTab instead of cellAtIndex because in some cases (just after a move, for
+           instance), the cells are not in sync with the tab items so the indexes might not match.
+        */
+        PSMTabBarCell *tabCell = [tabBar cellForTab:item];
         [tabCell setIcon:tabIcon];
     }
     [tabBar setDelegate:self];

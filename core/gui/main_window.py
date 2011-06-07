@@ -26,6 +26,9 @@ class ViewPane:
         self.label = label
         self.account = account
     
+    def __repr__(self):
+        return '<ViewPane {}>'.format(self.label)
+    
 
 class MainWindow(Repeater):
     def __init__(self, view, document):
@@ -267,6 +270,7 @@ class MainWindow(Repeater):
         del self.panes[pane_index]
         self.panes.insert(dest_index, pane)
         self.current_pane_index = self.panes.index(self._current_pane)
+        self.view.refresh_panes()
     
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report"""

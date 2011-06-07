@@ -79,6 +79,12 @@ def test_change_default_currency():
     app.app.default_currency = EUR
     app.check_gui_calls_partial(app.bsheet_gui, not_expected=['refresh'])
 
+@with_app(app_cleared_gui_calls)
+def test_mainwindow_move_pane(app):
+    # Moving a pane in the mainwindow calls refresh_panes on the view.
+    app.mw.move_pane(0, 1)
+    app.mainwindow_gui.check_gui_calls(['refresh_panes'])
+
 def test_new_budget():
     # Repeat options must be updated upon panel load
     app = app_cleared_gui_calls()
