@@ -31,6 +31,15 @@ Windows prerequisites
 - cx_Freeze, if you want to build a exe. You don't need it if you just want to run moneyGuru. (http://cx-freeze.sourceforge.net/)
 - Advanced Installer, if you want to build the installer file. (http://www.advancedinstaller.com/)
 
+The easy way!
+-------------
+
+There's an easy way to install the majority of the prerequisites above, and it's `pip <http://www.pip-installer.org/>`_ which has recently started to support Python 3. So install it and then run::
+
+    pip install -r requirements-[osx|win|lnx].txt
+
+([osx|win|lnx] depends, of course, on your platform). Because Sphinx doesn't support Python 3 yet, it's not in the requirements file and you'll have to install it manually. You might have to compile PyObjC manually too (see gotchas below). Sparkle and Advanced Installer, having nothing to do with Python, are also manual installs.
+
 Prerequisite gotchas
 --------------------
 
