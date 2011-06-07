@@ -151,17 +151,18 @@ def test_change_spawn_through_tpanel(app):
 @with_app(app_daily_schedule)
 def test_change_spawn_with_global_scope(app):
     # changing a spawn with a global scope makes every following spawn like it.
-    # The date progression, however, continues as it was
+    # The date progression follows depending on the difference between the "base date" and the
+    # changed date
     app.ttable.select([2])
-    app.ttable[2].date = '17/09/2008'
+    app.ttable[2].date = '17/09/2008' # 2 days before
     app.ttable[2].description = 'changed'
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.save_edits()
     # the explcitely changed one, however, keeps its date
-    eq_(app.ttable[2].date, '17/09/2008')
-    eq_(app.ttable[3].date, '22/09/2008')
+    eq_(app.ttable[2].date, '17/09/2008') # same as edited
+    eq_(app.ttable[3].date, '20/09/2008') # 2 days before
     eq_(app.ttable[3].description, 'changed')
-    eq_(app.ttable[4].date, '25/09/2008')
+    eq_(app.ttable[4].date, '23/09/2008') # 2 days before
     eq_(app.ttable[4].description, 'changed')
 
 @with_app(app_daily_schedule)
@@ -188,7 +189,7 @@ def test_change_spawn_with_global_scope_twice(app):
     app.ttable.save_edits()
     app.ttable[2].description = 'changed again'
     app.ttable.save_edits()
-    eq_(app.ttable[3].date, '22/09/2008')
+    eq_(app.ttable[3].date, '20/09/2008')
     eq_(app.ttable[3].description, 'changed again')
 
 @with_app(app_daily_schedule)
@@ -294,6 +295,46 @@ def test_ttable_attrs(app):
     eq_(app.ttable[5].date, '28/09/2008')
     # Also test amount. Previously, the spawns would have their amount attributes stuck at 0.
     eq_(app.ttable[0].amount, '1.00')
+
+@with_app(app_daily_schedule)
+def test_change_spawn_date_globally(app):
+    # When changing the date of a spawn globally, all future spawns' date are offseted by the same
+    # number of days.
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
+    app.ttable.select([1])
+    app.ttable[1].date = '15/09/2008'
+    app.ttable.save_edits()
+    eq_(app.ttable[1].date, '15/09/2008')
+    eq_(app.ttable[2].date, '18/09/2008') # one day early
+    eq_(app.ttable[3].date, '21/09/2008') # same here
+
+@with_app(app_daily_schedule)
+def test_new_global_change_after_previous_global_date_change(app):
+    # Performing a global change on a spawn that comes after a previous global change involving a
+    # date works. It previously wouldn't because the modified date was looked for in the global
+    # instances dict instead of the recurrence date.
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
+    app.ttable.select([1])
+    app.ttable[1].date = '15/09/2008'
+    app.ttable.save_edits()
+    app.ttable.select([2])
+    app.ttable[2].description = 'changed'
+    app.ttable.save_edits()
+    eq_(app.ttable[3].description, 'changed')
+
+@with_app(app_daily_schedule)
+def test_oven_limits_take_global_date_delta_into_account(app):
+    # However unlikely, it's possible to make a global date change go so far in the past that it
+    # confuses the oven and makes it not cook spawns that should be cooked for the current date
+    # range. This shouldn't happen.
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
+    app.ttable.select([1])
+    app.ttable[1].date = '15/08/2008' # one month earlier
+    app.ttable.save_edits()
+    # Now, the spawn instances for this date range have already been created previously, so we
+    # have to advance the date range to see whether the oven behaves or not.
+    app.drsel.select_next_date_range()
+    eq_(app.ttable.row_count, 11)
 
 #--- One Schedule and one normal txn
 def app_one_schedule_and_one_normal_txn():

@@ -144,26 +144,40 @@ class Recurrence:
         self.date2exception[date] = None
     
     def get_spawns(self, end):
+        # END DATE ADJUSTMENT
         # if a changed date end up being smaller than the "spawn date", it's possible that a spawn
         # that should have been spawned for the date range is not spawned. Therefore, we always
-        # spawn at least until the date of the last exception or global change.
-        changed_dates = list(self.date2exception.keys()) + list(self.date2globalchange.keys())
-        if changed_dates:
-            end = max(end, max(changed_dates))
+        # spawn at least until the date of the last exception. For global changes, it's even more
+        # complicated. If the global date delta is negative enough, we can end up with a spawn that
+        # doesn't go far enough, so we must adjust our max date by this delta.
+        if self.date2exception:
+            end = max(end, max(self.date2exception.keys()))
+        if self.date2globalchange:
+            min_date_delta = min(ref.date-date for date, ref in self.date2globalchange.items())
+            if min_date_delta < datetime.timedelta(days=0):
+                end += -min_date_delta
         end = min(end, nonone(self.stop_date, datetime.date.max))
+        
         date_counter = DateCounter(self.start_date, self.repeat_type, self.repeat_every, end)
         result = []
+        global_date_delta = datetime.timedelta(days=0)
         current_ref = self.ref
         for current_date in date_counter:
             if current_date in self.date2globalchange:
                 current_ref = self.date2globalchange[current_date]
+                global_date_delta = current_ref.date - current_date
             if current_date in self.date2exception:
                 exception = self.date2exception[current_date]
                 if exception is not None:
                     result.append(exception)
             else:
                 if current_date not in self.date2instances:
-                    self.date2instances[current_date] = self._create_spawn(current_ref, current_date)
+                    spawn = self._create_spawn(current_ref, current_date)
+                    if global_date_delta:
+                        # Only muck with spawn.date if we have a delta. otherwise we're breaking
+                        # budgets.
+                        spawn.date = current_date + global_date_delta
+                    self.date2instances[current_date] = spawn
                 result.append(self.date2instances[current_date])
         return result
     
