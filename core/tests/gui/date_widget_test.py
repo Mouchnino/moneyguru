@@ -12,6 +12,14 @@ from hscommon.testutil import eq_
 
 from ...gui.date_widget import DateWidget
 
+#--- No Setup
+def test_format_with_spaces():
+    # The date widget doesn't crash when a date format has spaces. It ignores them
+    w = DateWidget(' d. M. yyyy') # no crash
+    w.text = '1.1.2009'
+    eq_(w.date, date(2009, 1, 1)) # parsed the date correctly
+    eq_(w.text, '1.1.2009') # removed the spaces from the format
+
 class TestCasePristine:
     def setup_method(self, method):
         self.w = DateWidget('dd/MM/yyyy')
