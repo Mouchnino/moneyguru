@@ -19,6 +19,7 @@ from qtlib.app import Application as ApplicationBase
 from qtlib.reg import Registration
 
 from core.app import Application as MoneyGuruModel
+from core.model.date import clean_format
 
 from .controller.document import Document
 from .controller.main_window import MainWindow
@@ -39,6 +40,7 @@ class MoneyGuru(ApplicationBase):
         self.prefs.load()
         locale = QLocale.system()
         dateFormat = str(locale.dateFormat(QLocale.ShortFormat))
+        dateFormat = clean_format(dateFormat)
         decimalSep = str(locale.decimalPoint())
         groupingSep = str(locale.groupSeparator())
         try:

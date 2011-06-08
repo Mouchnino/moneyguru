@@ -30,9 +30,7 @@ FMT_ELEM = {
 class DateWidget:
     def __init__(self, format):
         # format is a Unicode format. The format has to be cleaned first. This class don't have 
-        # tolerance for garbage in the format. The format can have spaces in it, but they'll be
-        # removed in the widget (but they'll be present on non-editing display).
-        format = format.replace(' ', '')
+        # tolerance for garbage in the format.
         self._format = format
         self._sep = re_sep.search(format).groups()[0]
         fmt_elems = format.split(self._sep)
