@@ -6,12 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, QSize
 from PyQt4.QtGui import (QDialog, QMessageBox, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
-    QComboBox, QSpinBox, QCheckBox, QDialogButtonBox, QSizePolicy, QSpacerItem)
+    QComboBox, QSpinBox, QCheckBox, QLineEdit, QDialogButtonBox, QSizePolicy, QSpacerItem)
 
 from hscommon.currency import Currency
 from hscommon.trans import tr as trbase
+from core.model.date import clean_format
 
 tr = lambda s: trbase(s, "PreferencesPanel")
 
@@ -30,6 +31,7 @@ class PreferencesPanel(QDialog):
         self.app = app
         self._setupUi()
         
+        self.dateFormatEdit.editingFinished.connect(self.dateFormatEdited)
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
     
@@ -38,6 +40,7 @@ class PreferencesPanel(QDialog):
         self.resize(332, 253)
         self.verticalLayout = QVBoxLayout(self)
         self.formLayout = QFormLayout()
+        
         self.firstWeekdayComboBox = QComboBox(self)
         weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         self.firstWeekdayComboBox.addItems([tr(weekday) for weekday in weekdays])
@@ -47,6 +50,7 @@ class PreferencesPanel(QDialog):
         sizePolicy.setHeightForWidth(self.firstWeekdayComboBox.sizePolicy().hasHeightForWidth())
         self.firstWeekdayComboBox.setSizePolicy(sizePolicy)
         self.formLayout.addRow(tr("First day of the week:"), self.firstWeekdayComboBox)
+        
         self.aheadMonthsSpinBox = QSpinBox(self)
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -56,6 +60,7 @@ class PreferencesPanel(QDialog):
         self.aheadMonthsSpinBox.setMaximum(11)
         self.aheadMonthsSpinBox.setValue(2)
         self.formLayout.addRow(tr("Ahead months in Running Year:"), self.aheadMonthsSpinBox)
+        
         self.yearStartComboBox = QComboBox(self)
         months = ["January", "February", "March", "April", "May", "June", "July", "August",
             "September", "October", "November", "December"]
@@ -66,6 +71,7 @@ class PreferencesPanel(QDialog):
         sizePolicy.setHeightForWidth(self.yearStartComboBox.sizePolicy().hasHeightForWidth())
         self.yearStartComboBox.setSizePolicy(sizePolicy)
         self.formLayout.addRow(tr("Year starts in:"), self.yearStartComboBox)
+        
         self.horizontalLayout = QHBoxLayout()
         self.autoSaveIntervalSpinBox = QSpinBox(self)
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
@@ -77,6 +83,11 @@ class PreferencesPanel(QDialog):
         self.label_5 = QLabel(tr("minute(s) (0 for none)"), self)
         self.horizontalLayout.addWidget(self.label_5)
         self.formLayout.addRow(tr("Auto-save interval:"), self.horizontalLayout)
+        
+        self.dateFormatEdit = QLineEdit(self)
+        self.dateFormatEdit.setMaximumSize(QSize(140, 0xffffff))
+        self.formLayout.addRow(tr("Date Format:"), self.dateFormatEdit)
+        
         self.nativeCurrencyComboBox = QComboBox(self)
         availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
         self.nativeCurrencyComboBox.addItems(availableCurrencies)
@@ -87,6 +98,7 @@ class PreferencesPanel(QDialog):
         self.nativeCurrencyComboBox.setSizePolicy(sizePolicy)
         self.nativeCurrencyComboBox.setEditable(True)
         self.formLayout.addRow(tr("Native Currency:"), self.nativeCurrencyComboBox)
+        
         self.languageComboBox = QComboBox(self)
         for lang in SUPPORTED_LANGUAGES:
             self.languageComboBox.addItem(LANG2NAME[lang])
@@ -97,6 +109,7 @@ class PreferencesPanel(QDialog):
         self.languageComboBox.setSizePolicy(sizePolicy)
         self.formLayout.addRow(tr("Language:"), self.languageComboBox)
         self.verticalLayout.addLayout(self.formLayout)
+        
         self.scopeDialogCheckBox = QCheckBox(tr("Show scope dialog when modifying a scheduled transaction"), self)
         self.verticalLayout.addWidget(self.scopeDialogCheckBox)
         self.autoDecimalPlaceCheckBox = QCheckBox(tr("Automatically place decimals when typing"), self)
@@ -114,6 +127,7 @@ class PreferencesPanel(QDialog):
         self.aheadMonthsSpinBox.setValue(appm.ahead_months)
         self.yearStartComboBox.setCurrentIndex(appm.year_start_month - 1)
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
+        self.dateFormatEdit.setText(self.app.prefs.dateFormat)
         self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
@@ -124,11 +138,15 @@ class PreferencesPanel(QDialog):
         self.languageComboBox.setCurrentIndex(langindex)
     
     def save(self):
+        restartRequired = False
         appm = self.app.model
         appm.first_weekday = self.firstWeekdayComboBox.currentIndex()
         appm.ahead_months = self.aheadMonthsSpinBox.value()
         appm.year_start_month = self.yearStartComboBox.currentIndex() + 1
         appm.autosave_interval = self.autoSaveIntervalSpinBox.value()
+        if self.dateFormatEdit.text() != self.app.prefs.dateFormat:
+            restartRequired = True
+        self.app.prefs.dateFormat = self.dateFormatEdit.text()
         if self.nativeCurrencyComboBox.currentIndex() >= 0:
             appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
@@ -138,8 +156,14 @@ class PreferencesPanel(QDialog):
         if oldlang not in SUPPORTED_LANGUAGES:
             oldlang = 'en'
         if lang != oldlang:
-            QMessageBox.information(self, "", tr("moneyGuru has to restart for language changes to take effect"))
+            restartRequired = True
         self.app.prefs.language = lang
+        if restartRequired:
+            QMessageBox.information(self, "", tr("moneyGuru has to restart for these changes to take effect"))
+    
+    #--- Signals
+    def dateFormatEdited(self):
+        self.dateFormatEdit.setText(clean_format(self.dateFormatEdit.text()))
     
 
 if __name__ == '__main__':

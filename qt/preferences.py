@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-17
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -9,8 +8,9 @@
 
 import os.path as op
 
-from PyQt4.QtCore import QRect
+from PyQt4.QtCore import QRect, QLocale
 
+from core.model.date import clean_format
 from qtlib.preferences import Preferences as PreferencesBase
 
 # About the hidden columns preference:
@@ -31,6 +31,7 @@ class Preferences(PreferencesBase):
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
         self.recentDocuments = list(filter(op.exists, self.recentDocuments))
         self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
+        self.dateFormat = get('DateFormat', self.dateFormat)
         self.nativeCurrency = get('NativeCurrency', self.nativeCurrency)
         self.language = get('Language', self.language)
         
@@ -49,10 +50,14 @@ class Preferences(PreferencesBase):
             self.mainWindowRect = QRect(*self.mainWindowRect)
     
     def reset(self):
+        locale = QLocale.system()
         self.registration_code = ''
         self.registration_email = ''
         self.recentDocuments = []
         self.showScheduleScopeDialog = True # XXX Push down this pref at the model level
+        dateFormat = str(locale.dateFormat(QLocale.ShortFormat))
+        dateFormat = clean_format(dateFormat)
+        self.dateFormat = dateFormat
         self.nativeCurrency = 'USD'
         self.language = ''
         
@@ -74,6 +79,7 @@ class Preferences(PreferencesBase):
         set_('RegistrationEmail', self.registration_email)
         set_('RecentDocuments', self.recentDocuments)
         set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
+        set_('DateFormat', self.dateFormat)
         set_('NativeCurrency', self.nativeCurrency)
         set_('Language', self.language)
         

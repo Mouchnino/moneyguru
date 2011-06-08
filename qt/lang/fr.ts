@@ -1258,142 +1258,118 @@ Entrées de {start_date} à {end_date}</translation>
 <context>
     <name>PreferencesPanel</name>
     <message>
-        <location filename="preferences_panel.ui" line="14"/>
         <source>Preferences</source>
         <translation>Préférences</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="22"/>
         <source>First day of the week:</source>
         <translation>Premier jour de la semaine:</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="39"/>
         <source>Monday</source>
         <translation>Lundi</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="44"/>
         <source>Tuesday</source>
         <translation>Mardi</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="49"/>
         <source>Wednesday</source>
         <translation>Mercredi</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="54"/>
         <source>Thursday</source>
         <translation>Jeudi</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="59"/>
         <source>Friday</source>
         <translation>Vendredi</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="64"/>
         <source>Saturday</source>
         <translation>Samedi</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="69"/>
         <source>Sunday</source>
         <translation>Dimanche</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="77"/>
         <source>Ahead months in Running Year:</source>
         <translation>Nombre de mois flottants:</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="103"/>
         <source>Year starts in:</source>
         <translation>Début de l&apos;année:</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="120"/>
         <source>January</source>
         <translation>Janvier</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="125"/>
         <source>February</source>
         <translation>Février</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="130"/>
         <source>March</source>
         <translation>Mars</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="135"/>
         <source>April</source>
         <translation>Avril</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="140"/>
         <source>May</source>
         <translation>Mai</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="145"/>
         <source>June</source>
         <translation>Juin</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="150"/>
         <source>July</source>
         <translation>Juillet</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="155"/>
         <source>August</source>
         <translation>Août</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="160"/>
         <source>September</source>
         <translation>Septembre</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="165"/>
         <source>October</source>
         <translation>Octobre</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="170"/>
         <source>November</source>
         <translation>Novembre</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="175"/>
         <source>December</source>
         <translation>Décembre</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="183"/>
         <source>Auto-save interval:</source>
         <translation>Intervalle sauvegarde auto.:</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="205"/>
         <source>minute(s) (0 for none)</source>
         <translation>minute(s) (0 = inactif)</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="214"/>
         <source>Native Currency:</source>
         <translation>Devise principale:</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="239"/>
+        <source>Date Format:</source>
+        <translation>Format de date:</translation>
+    </message>
+    <message>
         <source>Show scope dialog when modifying a scheduled transaction</source>
         <translation>Confirmer la portée des changements aux récurrences</translation>
     </message>
     <message>
-        <location filename="preferences_panel.ui" line="246"/>
         <source>Automatically place decimals when typing</source>
         <translation>Placement automatique de décimale</translation>
     </message>
