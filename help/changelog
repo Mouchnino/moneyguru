@@ -1,3 +1,15 @@
+=== 2.3.8 (2011-06-09)
+
+* Fixed a crash on importing empty QIF files. (#263)
+* Fixed a layout glitch in the transaction panel. [Windows, Linux] (#255)
+* Correctly show the selected transaction when jumping to an account. [Windows, Linux] (#258)
+* Fixed Y-Axis scaling in graphs for negative values. (#257)
+* Fixed crashes after tab re-ordering. [Mac OS X] (#264)
+* Global date change on schedule spawns now work correctly. (#261)
+* Fixed crash on startup under certain regional settings. [Windows, Linux] (#250)
+* Added date format preference. [Windows, Linux] (#256)
+* Added the path of the current document in title bar. [Windows, Linux] (#259)
+
 === 2.3.7 (2011-04-19)
 
 * Fixed a crash on closing tabs. [Windows, Linux] (#245)
