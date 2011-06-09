@@ -130,6 +130,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.recentDocuments.mustOpenItem.connect(self.doc.open)
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
+        self.doc.documentPathChanged.connect(self.documentPathChanged)
         self.app.willSavePrefs.connect(self._savePrefs)
         self.tabBar.currentChanged.connect(self.currentTabChanged)
         self.tabBar.tabCloseRequested.connect(self.tabCloseRequested)
@@ -383,6 +384,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def currentTabChanged(self, index):
         self.model.current_pane_index = index
         self._setTabIndex(index)
+    
+    def documentPathChanged(self):
+        if self.doc.documentPath:
+            title = "moneyGuru ({})".format(self.doc.documentPath)
+        else:
+            title = "moneyGuru"
+        self.setWindowTitle(title)
     
     def tabCloseRequested(self, index):
         self.model.close_pane(index)

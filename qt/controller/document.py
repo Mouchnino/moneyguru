@@ -67,6 +67,7 @@ class Document(QObject):
         self.close()
         self.documentPath = None
         self.model.clear()
+        self.documentPathChanged.emit()
     
     def open(self, docpath):
         if not self.confirmDestructiveAction():
@@ -77,6 +78,7 @@ class Document(QObject):
             self.documentPath = docpath
         except FileFormatError as e:
             QMessageBox.warning(self.app.mainWindow, tr("Cannot load file"), str(e))
+        self.documentPathChanged.emit()
         self.documentOpened.emit(docpath)
     
     def openDocument(self):
@@ -96,6 +98,7 @@ class Document(QObject):
         self.model.load_from_xml(destpath)
         self.model.adjust_example_file()
         self.documentPath = None # As if it was a new doc. Save As is required.
+        self.documentPathChanged.emit()
     
     def save(self):
         if self.documentPath is not None:
@@ -112,6 +115,7 @@ class Document(QObject):
                 docpath += '.moneyguru'
             self.model.save_to_xml(docpath)
             self.documentPath = docpath
+            self.documentPathChanged.emit()
             self.documentSavedAs.emit(docpath)
     
     # model --> view
@@ -126,3 +130,4 @@ class Document(QObject):
     #--- Signals
     documentOpened = pyqtSignal(str)
     documentSavedAs = pyqtSignal(str)
+    documentPathChanged = pyqtSignal()
