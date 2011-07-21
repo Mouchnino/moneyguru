@@ -8,6 +8,8 @@ syntax: glob
 *.mode1v3
 *.tm_build_errors
 *.back.aip
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace/xcuserdata
 build
 _build
 conf.json

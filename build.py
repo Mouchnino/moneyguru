@@ -16,7 +16,7 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
-    build_all_qt_locs)
+    build_all_qt_locs, get_xcode_version)
 
 def move(src, dst):
     if not op.exists(src):
@@ -71,6 +71,10 @@ def build_cocoa(dev):
     open('Info.plist', 'w').write(contents)
     print("Building the XCode project")
     args = []
+    if get_xcode_version().startswith('4'):
+        args.append('-project moneyguru_xcode4.xcodeproj')
+    else:
+        args.append('-project moneyguru.xcodeproj')
     if dev:
         args.append('-configuration dev')
     else:
