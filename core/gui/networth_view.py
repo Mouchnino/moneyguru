@@ -12,7 +12,7 @@ from .account_sheet_view import AccountSheetView
 
 class NetWorthView(AccountSheetView):
     VIEW_TYPE = PaneType.NetWorth
-    PRINT_TITLE_FORMAT = tr('Net Worth at {start_date}, starting from {end_date}')
+    PRINT_TITLE_FORMAT = tr("Net Worth at {end_date}, starting from {start_date}")
     
     def set_children(self, children):
         AccountSheetView.set_children(self, children)

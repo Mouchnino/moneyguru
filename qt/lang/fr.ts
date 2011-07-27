@@ -418,8 +418,8 @@
     
     <!-- Print Titles -->
     <message>
-        <source>Net Worth at {start_date}, starting from {end_date}</source>
-        <translation>Valeur Nette à {start_date}, commençant à {end_date}</translation>
+        <source>Net Worth at {end_date}, starting from {start_date}</source>
+        <translation>Valeur Nette à {end_date}, commençant à {start_date}</translation>
     </message>
     <message>
         <source>Profit and Loss from {start_date} to {end_date}</source>

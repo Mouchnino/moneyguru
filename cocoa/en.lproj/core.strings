@@ -241,7 +241,7 @@
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature.";
 
 /* Print titles */
-"Net Worth at {start_date}, starting from {end_date}" = "Net Worth at {start_date}, starting from {end_date}";
+"Net Worth at {end_date}, starting from {start_date}" = "Net Worth at {end_date}, starting from {start_date}";
 "Profit and Loss from {start_date} to {end_date}" = "Profit and Loss from {start_date} to {end_date}";
 "Transactions from {start_date} to {end_date}" = "Transactions from {start_date} to {end_date}";
 "{account_name}\nEntries from {start_date} to {end_date}" = "{account_name}\nEntries from {start_date} to {end_date}";
