@@ -9,6 +9,7 @@
 import time
 from collections import defaultdict
 from copy import copy
+import datetime
 
 from hscommon.util import allsame, first, nonone, stripfalse
 
@@ -111,6 +112,10 @@ class Transaction:
             for split in self.splits:
                 if split.reconciliation_date == self.date:
                     split.reconciliation_date = date
+            # If the new date is in the future, we de-reconcile the splits
+            if date > datetime.date.today():
+                for split in self.splits:
+                    split.reconciliation_date = None
             self.date = date
         if description is not NOEDIT:
             self.description = description

@@ -321,6 +321,15 @@ def test_toggle_entries_reconciled_with_some_reconciled(app):
     assert app.etable[1].reconciled
     assert app.etable[2].reconciled
 
+@with_app(app_three_entries_one_reconciled)
+def test_set_txn_date_in_the_future(app, monkeypatch):
+    # Setting a reconciled txn's date in the future de-reconciles it.
+    monkeypatch.patch_today(2008, 2, 1)
+    app.etable[1].date = '02/02/2008'
+    app.etable.save_edits()
+    # Our txn is now the last one, so we test index 2
+    assert not app.etable[2].reconciled
+
 #--- Three entries all reconciled
 def app_three_entries_all_reconciled():
     app = TestApp()
