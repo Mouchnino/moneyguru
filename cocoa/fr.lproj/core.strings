@@ -1,6 +1,3 @@
-/* core/app.py:36 */
-"In the demo version, documents with more than 100 transactions cannot be saved." = "Dans cette version démo, les documents de plus de 100 transactions ne peuvent pas être enregistrés.";
-
 /* core/document.py:169 */
 "Add transaction" = "Ajouter transaction";
 

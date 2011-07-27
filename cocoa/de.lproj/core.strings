@@ -1,6 +1,3 @@
-/* core/app.py:36 */
-"In the demo version, documents with more than 100 transactions cannot be saved." = "Es ist nicht möglich mehr als 100 Transaktionen in der kostenlosen Testversion zu sichern";
-
 /* core/document.py:169 */
 "Add transaction" = "Transaktion hinzufügen";
 
