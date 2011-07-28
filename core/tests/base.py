@@ -532,6 +532,9 @@ class TestApp(TestAppBase):
         return [row.description for row in self.ttable.rows]
     
     #--- Shortcut for selecting a view type.
+    def show_nwview(self):
+        self.mw.select_pane_of_type(PaneType.NetWorth)
+    
     def show_tview(self):
         self.mw.select_pane_of_type(PaneType.Transaction)
     

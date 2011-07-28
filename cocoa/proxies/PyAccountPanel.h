@@ -21,6 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setAccountNumber:(NSString *)accountNumber;
 - (NSString *)notes;
 - (void)setNotes:(NSString *)notes;
+- (BOOL)canChangeCurrency;
 
 - (NSArray *)availableCurrencies;
 - (void)savePanel;

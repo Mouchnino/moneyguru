@@ -33,3 +33,7 @@ class AccountPanel(Panel, Ui_AccountPanel):
         availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
         self.currencyComboBox.addItems(availableCurrencies)
     
+    def _loadFields(self):
+        Panel._loadFields(self)
+        self.currencyComboBox.setEnabled(self.model.can_change_currency)
+    

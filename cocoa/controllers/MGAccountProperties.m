@@ -43,6 +43,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
     [accountNumberTextField setStringValue:[[self py] accountNumber]];
     [notesTextField setStringValue:[[self py] notes]];
+    [currencySelector setEnabled:[[self py] canChangeCurrency]];
 }
 
 - (void)saveFields

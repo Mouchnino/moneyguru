@@ -671,6 +671,10 @@ class PyAccountPanel(PyPanel):
     def setNotes_(self, notes):
         self.py.notes = notes
     
+    @signature('c@:')
+    def canChangeCurrency(self):
+        return self.py.can_change_currency
+    
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     

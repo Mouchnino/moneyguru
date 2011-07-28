@@ -28,7 +28,9 @@ Si può anche utilizzare il drag & drop (trascinamento con il mouse) per modific
 
 Utilizzando Mostra Info su di un conto, si visualizzerà il pannello di modifica nell'immagine precedente. Da qui si possono cambiare il nome del conto, il tipo, la sua :doc:`valuta <currencies>` e il numero di conto. Un numero di conto è solo un riferimento per quel conto, che si può utilizzare per riferirsi al proprio conto corrente o come meglio si crede (per dire, 1000-1999 per le Attività, 8000-8999 per le Uscite, e cose simili). Quando un conto possiede un numero, questo verrà mostrato nelle viste Transazioni e Conto. Per di più p possibile inserire il numero invece del nome per farvi riferimento (se ce lo si ricorda a mente, l'inserimento diventa molto più veloce).
 
-Si noti che modificare la valuta di un conto **non** modifica la valuta delle transazioni che contiene.
+About accounts and currencies: You can only change the currency of an account that has no
+:doc:`reconciled entry <reconciliation>`. If for some reason you want to change the currency of such
+an account, you'll have to de-reconcile its entries first. Si noti che modificare la valuta di un conto **non** modifica la valuta delle transazioni che contiene.
 
 
 Transazioni

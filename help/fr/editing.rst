@@ -23,7 +23,10 @@ Les comptes sont modifiés à partir des vues de Valeur nette et de Profits/Pert
 
 Le dialogue de détails de compte permet de changer la :doc:`devise <currencies>` du compte. Il permet aussi de lui assigner un numéro de compte. Ce numéro peut alors être utilisé comme référence partout dans l'application (vous pouvez donc taper ce numéro au lieu du nom de compte). Ce numéro sera aussi affiché à côté du compte.
 
-Notez aussi que changer la devise d'un compte de change **pas** la devise des transaction qu'il contient.
+Les comptes et les devises: Il n'est pas possible de changer la devise d'un compte ayant des
+:doc:`transactions réconciliées <reconciliation>`. Si pour une raison quelconque vous voulez changer
+la devise d'un pareil compte, vous devrez commencer par dé-réconcilier ses transactions. Notez aussi
+que changer la devise d'un compte ne change **pas** la devise des transaction qu'il contient.
 
 Transactions
 ------------

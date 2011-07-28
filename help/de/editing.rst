@@ -27,6 +27,10 @@ Sie können mit Drag & Drop unter der falschen Gruppe angelegte Konten verschieb
 
 Wenn Sie "Details anzeigen" wählen, so wird der oben angezeigte Dialog angezeigt. Sie können hier den Namen des Kontos, die Kontoart, die zugeordnete :doc:`Währung <currencies>` wie auch eine Kontonummer ändern. Die Kontonummer dient zur besseren Anzeige in den Transaktions- sowie Kontoansichten; Sie können auch beim Erfassen von Transaktionen die Nummer anstatt des Kontonamens eintippen. Dies dient einfach der Flexibilität und unterstützt Sie bei Ihrer Finanzverwaltung, falls Sie bisher das Arbeiten mit Kontonummern gewöhnt sind.
 
+About accounts and currencies: You can only change the currency of an account that has no
+:doc:`reconciled entry <reconciliation>`. If for some reason you want to change the currency of such
+an account, you'll have to de-reconcile its entries first.
+
 Achtung: Sollten Sie die Währung eines Kontos ändern, so werden dadurch nicht automatisch auch die Währung jeder Transaktion dieses Kontos geändert!
 
 Transaktionen

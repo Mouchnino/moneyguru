@@ -28,6 +28,7 @@ class AccountPanel(MainWindowPanel):
         self.notes = account.notes
         self.type_index = AccountType.InOrder.index(self.type)
         self.currency_index = Currency.all.index(self.currency)
+        self.can_change_currency = not any(e.reconciled for e in account.entries)
         self.account = account # for the save() assert
     
     def _save(self):

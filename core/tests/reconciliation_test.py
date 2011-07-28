@@ -330,6 +330,15 @@ def test_set_txn_date_in_the_future(app, monkeypatch):
     # Our txn is now the last one, so we test index 2
     assert not app.etable[2].reconciled
 
+@with_app(app_three_entries_one_reconciled)
+def test_cant_change_account_currency(app):
+    # We cannot change an account currency if this account has reconciled entries.
+    app.show_nwview()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.mainwindow_gui.clear_calls()
+    app.mw.edit_item()
+    assert not app.apanel.can_change_currency
+
 #--- Three entries all reconciled
 def app_three_entries_all_reconciled():
     app = TestApp()

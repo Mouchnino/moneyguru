@@ -31,6 +31,15 @@ class ViewPane:
     
 
 class MainWindow(Repeater):
+    #--- model -> view calls:
+    # change_current_pane()
+    # refresh_panes()
+    # refresh_undo_actions()
+    # show_custom_date_range_panel()
+    # refresh_status_line()
+    # show_message(message)
+    # view_closed(index)
+    
     def __init__(self, view, document):
         Repeater.__init__(self, document)
         self.view = view

@@ -274,6 +274,7 @@ class Document(Repeater):
             account.type = type
             account.group = None
         if currency is not NOEDIT:
+            assert not any(e.reconciled for e in account.entries)
             account.currency = currency
         if group is not NOEDIT:
             account.group = group
