@@ -1652,42 +1652,4 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <translation>Export format:</translation>
     </message>
 </context>
-<context>
-    <name>RegSubmitDialog</name>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="14"/>
-        <source>Enter your registration code</source>
-        <translation>Geben sie ihren Code ein</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="20"/>
-        <source>Please enter your $appname registration code and registered e-mail (the e-mail you used for the purchase), then press &quot;Submit&quot;.</source>
-        <translation>Geben sie hier sowohl ihren erworbenen $appname Code als auch ihre zum Kauf genutzte Emailadresse ein.</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="47"/>
-        <source>Registration code:</source>
-        <translation>Code:</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="54"/>
-        <source>Registered e-mail:</source>
-        <translation>Email:</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="71"/>
-        <source>Purchase</source>
-        <translation>Jetzt kaufen</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="100"/>
-        <source>Cancel</source>
-        <translation>Abbrechen</translation>
-    </message>
-    <message>
-        <location filename="reg_submit_dialog.ui" line="116"/>
-        <source>Submit</source>
-        <translation>beantragen</translation>
-    </message>
-</context>
 </TS>

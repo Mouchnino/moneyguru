@@ -11,12 +11,24 @@ import os
 import os.path as op
 import shutil
 import json
+from argparse import ArgumentParser
 
 from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
     build_all_qt_locs, get_xcode_version)
+
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument('--clean', action='store_true', dest='clean',
+        help="Clean build folder before building")
+    parser.add_argument('--doc', action='store_true', dest='doc',
+        help="Build only the help file")
+    parser.add_argument('--loc', action='store_true', dest='loc',
+        help="Build only localization")
+    args = parser.parse_args()
+    return args
 
 def move(src, dst):
     if not op.exists(src):
@@ -37,14 +49,6 @@ def build_all_cocoa_locs(basedir):
 
 def build_cocoa(dev):
     from pluginbuilder import build_plugin
-    if not dev:
-        print("Building help index")
-        help_path = op.abspath('help/moneyguru_help')
-        os.system('open -a /Developer/Applications/Utilities/Help\\ Indexer.app {0}'.format(help_path))
-    
-    build_all_cocoa_locs('cocoalib')
-    build_all_cocoa_locs('cocoa')
-        
     print("Building mg_cocoa.plugin")
     if not dev:
         copy_packages(['core', 'hscommon'], 'build')
@@ -90,8 +94,6 @@ def build_cocoa(dev):
     open('run.py', 'wt').write(run_contents)
 
 def build_qt(dev):
-    print("Converting .ts to .qm")
-    build_all_qt_locs(op.join('qt', 'lang'), extradirs=[op.join('qtlib', 'lang')])
     print("Building UI units")
     uipath = op.join('qt', 'ui')
     build_all_qt_ui(uipath)
@@ -110,7 +112,10 @@ def build_qt(dev):
     print("Creating the run.py file")
     shutil.copy('run_template_qt.py', 'run.py')
 
-def build_help():
+def build_help(dev):
+    if dev:
+        print("Generating devdocs")
+        print_and_do('sphinx-build devdoc devdoc_html')
     print("Generating Help")
     platform = 'osx' if sys.platform == 'darwin' else 'win'
     current_path = op.abspath('.')
@@ -122,20 +127,16 @@ def build_help():
     confrepl = {'platform': platform}
     sphinxgen.gen(help_basepath, help_destpath, changelog_path, tixurl, confrepl, confpath)
 
-def main():
-    conf = json.load(open('conf.json'))
-    ui = conf['ui']
-    dev = conf['dev']
-    print("Building moneyGuru with UI {0}".format(ui))
-    if dev:
-        print("Building in Dev mode")
-    if op.exists('build'):
-        shutil.rmtree('build')
-    os.mkdir('build')
-    build_help()
-    if dev:
-        print("Generating devdocs")
-        print_and_do('sphinx-build devdoc devdoc_html')
+def build_localizations(ui):
+    print("Building localizations")
+    if ui == 'cocoa':
+        build_all_cocoa_locs('cocoalib')
+        build_all_cocoa_locs('cocoa')
+    elif ui == 'qt':
+        print("Building .ts files")
+        build_all_qt_locs(op.join('qt', 'lang'), extradirs=[op.join('qtlib', 'lang')])
+
+def build_ext():
     print("Building C extensions")
     exts = []
     exts.append(Extension('_amount', [op.join('core', 'modules', 'amount.c')]))
@@ -145,10 +146,35 @@ def main():
     )
     move('_amount.so', op.join('core', 'model', '_amount.so'))
     move('_amount.pyd', op.join('core', 'model', '_amount.pyd'))
+
+def build_normal(ui, dev):
+    build_help(dev)
+    build_localizations(ui)
+    build_ext()
     if ui == 'cocoa':
         build_cocoa(dev)
     elif ui == 'qt':
         build_qt(dev)
+
+def main():
+    args = parse_args()
+    conf = json.load(open('conf.json'))
+    ui = conf['ui']
+    dev = conf['dev']
+    print("Building moneyGuru with UI {0}".format(ui))
+    if dev:
+        print("Building in Dev mode")
+    if args.clean:
+        if op.exists('build'):
+            shutil.rmtree('build')
+    if not op.exists('build'):
+        os.mkdir('build')
+    if args.doc:
+        build_help(dev)
+    elif args.loc:
+        build_localizations(ui)
+    else:
+        build_normal(ui, dev)
 
 if __name__ == '__main__':
     main()
