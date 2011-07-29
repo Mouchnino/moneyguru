@@ -1,3 +1,9 @@
+=== 2.3.9 (2011-07-29)
+
+* Fixed a bug where setting a transaction in the future wouldn't de-reconcile it. (#271)
+* Fixed a crash when changing the currency of an account with reconciled entries. (#273)
+* Fixed the title of the Net Worth print view. (#269)
+
 === 2.3.8 (2011-06-09)
 
 * Fixed a crash on importing empty QIF files. (#263)
