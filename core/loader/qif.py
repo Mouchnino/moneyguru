@@ -9,9 +9,8 @@
 import logging
 import re
 from collections import namedtuple
-from datetime import datetime
 
-from hscommon.util import flatten, first, stripfalse
+from hscommon.util import first, stripfalse
 
 from ..exception import FileFormatError
 from ..model.account import AccountType
@@ -138,7 +137,7 @@ class Loader(base.Loader):
         def parse_entry_line(header, data):
             if header == 'D':
                 try:
-                    self.transaction_info.date = datetime.strptime(data, self.date_format).date()
+                    self.transaction_info.date = self.parse_date_str(data, self.date_format)
                 except ValueError:
                     pass
             elif header == 'M':

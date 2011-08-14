@@ -117,6 +117,16 @@ class Loader:
                     return format
         return None    
     
+    def parse_date_str(self, date_str, date_format):
+        """Parses date_str using date_format and perform heuristic fixes if needed.
+        """
+        result = datetime.datetime.strptime(date_str, date_format).date()
+        if result.year < 1900:
+            # we have a typo in the house. Just use 2000 + last-two-digits
+            year = (result.year % 100) + 2000
+            result = result.replace(year=year)
+        return result
+    
     def start_group(self):
         pass
     

@@ -9,7 +9,6 @@
 #
 # Sections refer to the OFX 1.0.3 spec.
 
-from datetime import datetime
 from itertools import dropwhile
 from sgmllib import SGMLParser
 
@@ -134,7 +133,7 @@ class Loader(SGMLParser, base.Loader):
         self.data_handler = self.handle_dtposted
 
     def handle_dtposted(self, data):
-        self.transaction_info.date = datetime.strptime(data[:8], '%Y%m%d').date()
+        self.transaction_info.date = self.parse_date_str(data[:8], '%Y%m%d')
 
     def start_trnamt(self, attributes):
         self.data_handler = self.handle_trnamt

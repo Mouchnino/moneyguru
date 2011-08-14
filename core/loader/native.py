@@ -12,7 +12,6 @@ import xml.etree.cElementTree as ET
 from hscommon.util import tryint
 
 from ..exception import FileFormatError
-from ..model.amount import parse_amount
 from .base import SplitInfo, TransactionInfo
 from . import base
 
@@ -22,7 +21,7 @@ class Loader(base.Loader):
     def _parse(self, infile):
         try:
             root = ET.parse(infile).getroot()
-        except SyntaxError as e:
+        except SyntaxError:
             raise FileFormatError()
         if root.tag != 'moneyguru-file':
             raise FileFormatError()
@@ -32,7 +31,7 @@ class Loader(base.Loader):
         TODAY = datetime.now().date()
         def str2date(s, default=None):
             try:
-                return datetime.strptime(s, '%Y-%m-%d').date()
+                return self.parse_date_str(s, '%Y-%m-%d')
             except (ValueError, TypeError):
                 return default
         

@@ -395,3 +395,6 @@ def test_date_format_guessing(tmpdir):
     check('12/20/2010', '20/12/2010')
     check('28/Jun/2010', '28/06/2010')
     check('12/Jan/10', '12/01/2010')
+    # When we have really bogus years like this one below, we assume that this is some kind of typo
+    # and we go for the last resort: using the last two digits and adding 2000 to it.
+    check('01/01/0211', '01/01/2011')

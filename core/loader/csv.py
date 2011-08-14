@@ -8,7 +8,6 @@
 
 import csv
 import logging
-from datetime import datetime
 
 from hscommon.util import stripfalse
 from hscommon.trans import tr
@@ -149,7 +148,7 @@ class Loader(base.Loader):
             for attr, index in ci.items():
                 value = line[index]
                 if attr == CsvField.Date:
-                    value = datetime.strptime(value, date_format).date()
+                    value = self.parse_date_str(value, date_format)
                 elif attr == CsvField.Increase:
                     attr = CsvField.Amount
                 elif attr == CsvField.Decrease:
