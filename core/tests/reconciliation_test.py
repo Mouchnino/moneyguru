@@ -335,9 +335,17 @@ def test_cant_change_account_currency(app):
     # We cannot change an account currency if this account has reconciled entries.
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.mainwindow_gui.clear_calls()
     app.mw.edit_item()
     assert not app.apanel.can_change_currency
+
+@with_app(app_three_entries_one_reconciled)
+def test_can_change_other_account_attributes(app):
+    # There was a bug causing any attribute change through apanel to throw an assertion error.
+    app.show_nwview()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.mw.edit_item()
+    app.apanel.notes = 'foo'
+    app.apanel.save() # no crash
 
 #--- Three entries all reconciled
 def app_three_entries_all_reconciled():

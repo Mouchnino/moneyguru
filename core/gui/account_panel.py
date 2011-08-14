@@ -8,7 +8,7 @@
 
 from hscommon.currency import Currency
 
-from ..exception import DuplicateAccountNameError, OperationAborted
+from ..exception import DuplicateAccountNameError
 from ..model.account import AccountType
 from .base import MainWindowPanel
 
@@ -32,9 +32,12 @@ class AccountPanel(MainWindowPanel):
         self.account = account # for the save() assert
     
     def _save(self):
+        kwargs = dict(name=self.name, type=self.type, account_number=self.account_number,
+            notes=self.notes)
+        if self.can_change_currency:
+            kwargs['currency'] = self.currency
         try:
-            self.document.change_account(self.account, name=self.name, type=self.type, 
-                currency=self.currency, account_number=self.account_number, notes=self.notes)
+            self.document.change_account(self.account, **kwargs)
         except DuplicateAccountNameError:
             pass
     
