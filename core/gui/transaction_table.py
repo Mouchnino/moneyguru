@@ -256,3 +256,6 @@ class TotalRow(Row):
         self.is_budget = False
         self.is_bold = True
     
+    def can_edit(self):
+        return False
+    

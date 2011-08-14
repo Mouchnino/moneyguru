@@ -416,39 +416,42 @@ def test_selection_as_csv_different_column_order(app):
     expected = [['description', '11/07/2008', 'first', 'second', '42.00']]
     eq_(rows, expected)
 
-class TestTransactionLinkedToNumberedAccounts:
-    def do_setup(self):
-        app = TestApp()
-        app.add_account('account1', account_number='4242')
-        app.add_account('account2', account_number='4241')
-        # when entering the transactions, accounts are correctly found if their number is found
-        app.add_txn(from_='4242 - account1', to='4241', amount='42')
-        return app
-    
-    @with_app(do_setup)
-    def test_from_to_column(self, app):
-        # When an account is numbered, the from and to column display those numbers with the name.
-        eq_(app.ttable[0].from_, '4242 - account1')
-        eq_(app.ttable[0].to, '4241 - account2')
-    
+@with_app(app_one_transaction)
+def test_can_move_total_row(app):
+    # There was a crash when trying to move the total row (no 'transaction' attribute).
+    assert not app.ttable.can_move([1], 0) # no crash
 
-class TestOneTwoWayTransactionOtherWay:
-    def do_setup(self):
-        app = TestApp()
-        app.add_account('first')
-        app.mainwindow.show_account()
-        app.add_entry('11/07/2008', transfer='second', increase='42')
-        return app
-    
-    @with_app(do_setup)
-    def test_attributes(self, app):
-        # The from and to attributes depends on the money flow, not the order of the splits
-        app.mainwindow.select_transaction_table()
-        row = app.ttable[0]
-        eq_(row.from_, 'second')
-        eq_(row.to, 'first')
-        eq_(row.amount, '42.00')
-    
+#---
+def app_txn_linked_to_numbered_acct():
+    app = TestApp()
+    app.add_account('account1', account_number='4242')
+    app.add_account('account2', account_number='4241')
+    # when entering the transactions, accounts are correctly found if their number is found
+    app.add_txn(from_='4242 - account1', to='4241', amount='42')
+    return app
+
+@with_app(app_txn_linked_to_numbered_acct)
+def test_from_to_column_display_acct_number(app):
+    # When an account is numbered, the from and to column display those numbers with the name.
+    eq_(app.ttable[0].from_, '4242 - account1')
+    eq_(app.ttable[0].to, '4241 - account2')
+
+#---
+def app_two_way_txn_inverted_splits():
+    app = TestApp()
+    app.add_account('first')
+    app.mw.show_account()
+    app.add_entry('11/07/2008', transfer='second', increase='42')
+    return app
+
+@with_app(app_two_way_txn_inverted_splits)
+def test_from_two_cols_depend_on_split_type_not_order(app):
+    # The from and to attributes depends on the money flow, not the order of the splits
+    app.mw.select_transaction_table()
+    row = app.ttable[0]
+    eq_(row.from_, 'second')
+    eq_(row.to, 'first')
+    eq_(row.amount, '42.00')
 
 #--- Three-way transaction
 def app_three_way_transaction():
