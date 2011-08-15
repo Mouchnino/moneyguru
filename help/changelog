@@ -1,3 +1,9 @@
+=== 2.3.10 (2011-08-15)
+
+* Fixed crash on moving the Total row in the Transactions view. (#281)
+* Fixed bug causing bad dates to come through import checks. (#274)
+* Fixed a bug preventing some accounts' info to be edited. (#280)
+
 === 2.3.9 (2011-07-29)
 
 * Fixed a bug where setting a transaction in the future wouldn't de-reconcile it. (#271)
