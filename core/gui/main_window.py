@@ -399,6 +399,7 @@ class MainWindow(Repeater):
     def current_pane_index(self, value):
         if value == self._current_pane_index:
             return
+        self.document.stop_edition()
         value = minmax(value, 0, len(self.panes)-1)
         pane = self.panes[value]
         self._current_pane_index = value

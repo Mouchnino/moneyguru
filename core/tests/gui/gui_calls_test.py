@@ -165,6 +165,12 @@ def test_changing_date_range_refreshes_transaction_totals():
     app.drsel.select_quarter_range()
     app.check_gui_calls(app.mainwindow_gui, ['refresh_status_line'])
 
+@with_app(app_on_transaction_view)
+def test_stop_editing_on_pane_change(app):
+    # To avoid buggy editing (for example, #283), stop all editing before a pane switch occurs.
+    app.mw.select_next_view()
+    app.check_gui_calls_partial(app.ttable_gui, ['stop_editing'])
+
 #--- One account
 def app_one_account():
     app = TestApp()
@@ -267,7 +273,7 @@ def test_etable_show_income_account(app):
     app.show_account('income')
     app.clear_gui_calls()
     app.etable.show_transfer_account()
-    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh'])
+    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh', 'stop_editing'])
     app.check_gui_calls(app.bargraph_gui, ['refresh'])
 
 #--- Transaction between asset and liability
@@ -285,7 +291,7 @@ def test_etable_show_asset_account(app):
     app.show_account('asset')
     app.clear_gui_calls()
     app.etable.show_transfer_account()
-    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh'])
+    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh', 'stop_editing'])
     app.check_gui_calls(app.balgraph_gui, ['refresh'])
 
 #--- Transaction with panel loaded
