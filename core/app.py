@@ -33,7 +33,7 @@ SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
-    VERSION = '2.3.10'
+    VERSION = '2.3.11'
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
         default_currency=USD, cache_path=None):

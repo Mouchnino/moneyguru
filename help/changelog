@@ -1,3 +1,8 @@
+=== 2.3.11 (2011-08-29)
+
+* Improved OS X Lion compatibility. [Mac OS X] (#282)
+* Fixed a crash on tab switching. (#283)
+
 === 2.3.10 (2011-08-15)
 
 * Fixed crash on moving the Total row in the Transactions view. (#281)
