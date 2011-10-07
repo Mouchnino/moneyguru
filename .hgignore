@@ -4,8 +4,6 @@ syntax: glob
 *.pyc
 *.so
 *.pyd
-*.pbxuser
-*.mode1v3
 *.tm_build_errors
 *.back.aip
 *.xcodeproj/xcuserdata
@@ -17,6 +15,9 @@ conf.json
 cocoa/Info.plist
 cocoa/build
 cocoa/mg_cocoa.plugin
+cocoa/fr.lproj/*.xib
+cocoa/de.lproj/*.xib
+cocoa/it.lproj/*.xib
 qt/*_rc.py
 qt/ui/*_ui.py
 build

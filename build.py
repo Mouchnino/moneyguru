@@ -74,11 +74,7 @@ def build_cocoa(dev):
     contents = contents.replace('{version}', MoneyGuruApp.VERSION)
     open('Info.plist', 'w').write(contents)
     print("Building the XCode project")
-    args = []
-    if get_xcode_version().startswith('4'):
-        args.append('-project moneyguru_xcode4.xcodeproj')
-    else:
-        args.append('-project moneyguru.xcodeproj')
+    args = ['-project moneyguru.xcodeproj']
     if dev:
         args.append('-configuration dev')
     else:
