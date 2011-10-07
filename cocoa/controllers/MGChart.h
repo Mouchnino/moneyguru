@@ -11,9 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGChartView.h"
 #import "PyChart.h"
 
-@interface MGChart : HSGUIController {
-    MGChartView *view;
-}
+@interface MGChart : HSGUIController {}
 - (MGChartView *)view;
 - (PyChart *)py;
 

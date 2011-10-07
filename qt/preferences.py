@@ -26,8 +26,6 @@ from qtlib.preferences import Preferences as PreferencesBase
 class Preferences(PreferencesBase):
     def _load_values(self, settings):
         get = self.get_value
-        self.registration_code = get('RegistrationCode', self.registration_code)
-        self.registration_email = get('RegistrationEmail', self.registration_email)
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
         self.recentDocuments = list(filter(op.exists, self.recentDocuments))
         self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
@@ -51,8 +49,6 @@ class Preferences(PreferencesBase):
     
     def reset(self):
         locale = QLocale.system()
-        self.registration_code = ''
-        self.registration_email = ''
         self.recentDocuments = []
         self.showScheduleScopeDialog = True # XXX Push down this pref at the model level
         dateFormat = str(locale.dateFormat(QLocale.ShortFormat))
@@ -75,8 +71,6 @@ class Preferences(PreferencesBase):
     
     def _save_values(self, settings):
         set_ = self.set_value
-        set_('RegistrationCode', self.registration_code)
-        set_('RegistrationEmail', self.registration_email)
         set_('RecentDocuments', self.recentDocuments)
         set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         set_('DateFormat', self.dateFormat)

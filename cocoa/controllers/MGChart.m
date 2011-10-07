@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Override */
 - (MGChartView *)view
 {
-    return view;
+    return (MGChartView *)view;
 }
 
 - (PyChart *)py
@@ -23,10 +23,10 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Python callbacks */
 - (void)refresh
 {
-    [view setData:[[self py] data]];
-    [view setTitle:[[self py] title]];
-    [view setCurrency:[[self py] currency]];
-    [view setNeedsDisplay:YES];
+    [[self view] setData:[[self py] data]];
+    [[self view] setTitle:[[self py] title]];
+    [[self view] setCurrency:[[self py] currency]];
+    [[self view] setNeedsDisplay:YES];
 }
 
 @end

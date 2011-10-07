@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.01">
+<archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1040</int>
-		<string key="IBDocument.SystemVersion">9E17</string>
-		<string key="IBDocument.InterfaceBuilderVersion">629</string>
-		<string key="IBDocument.AppKitVersion">949.33</string>
-		<string key="IBDocument.HIToolboxVersion">352.00</string>
-		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+		<string key="IBDocument.SystemVersion">11B26</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
+		<string key="IBDocument.AppKitVersion">1138</string>
+		<string key="IBDocument.HIToolboxVersion">566.00</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string key="NS.object.0">1617</string>
+		</object>
+		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="3"/>
+			<string>NSSearchField</string>
+			<string>NSSearchFieldCell</string>
+			<string>NSCustomObject</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string id="587919955">com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys" id="0">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+			</object>
+			<reference key="dict.values" ref="0"/>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -31,14 +44,15 @@
 				<string key="NSFrameSize">{132, 24}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSSearchFieldCell" key="NSCell" id="95780218">
 					<int key="NSCellFlags">343014976</int>
 					<int key="NSCellFlags2">268436480</int>
-					<string key="NSContents" id="75493946"/>
+					<string key="NSContents"/>
 					<object class="NSFont" key="NSSupport">
 						<string key="NSName">LucidaGrande</string>
-						<double key="NSSize">1.300000e+01</double>
+						<double key="NSSize">13</double>
 						<int key="NSfFlags">1044</int>
 					</object>
 					<reference key="NSControlView" ref="803874427"/>
@@ -46,7 +60,7 @@
 					<int key="NSTextBezelStyle">1</int>
 					<object class="NSColor" key="NSBackgroundColor">
 						<int key="NSColorSpace">6</int>
-						<string key="NSCatalogName" id="320813563">System</string>
+						<string key="NSCatalogName">System</string>
 						<string key="NSColorName">textBackgroundColor</string>
 						<object class="NSColor" key="NSColor">
 							<int key="NSColorSpace">3</int>
@@ -55,7 +69,7 @@
 					</object>
 					<object class="NSColor" key="NSTextColor">
 						<int key="NSColorSpace">6</int>
-						<reference key="NSCatalogName" ref="320813563"/>
+						<string key="NSCatalogName">System</string>
 						<string key="NSColorName">controlTextColor</string>
 						<object class="NSColor" key="NSColor">
 							<int key="NSColorSpace">3</int>
@@ -66,12 +80,12 @@
 						<int key="NSCellFlags">130560</int>
 						<int key="NSCellFlags2">0</int>
 						<string key="NSContents">search</string>
+						<reference key="NSControlView" ref="803874427"/>
 						<string key="NSAction">_searchFieldSearch:</string>
 						<reference key="NSTarget" ref="95780218"/>
-						<reference key="NSControlView" ref="803874427"/>
 						<int key="NSButtonFlags">138690815</int>
 						<int key="NSButtonFlags2">0</int>
-						<reference key="NSKeyEquivalent" ref="75493946"/>
+						<string key="NSKeyEquivalent"/>
 						<int key="NSPeriodicDelay">400</int>
 						<int key="NSPeriodicInterval">75</int>
 					</object>
@@ -83,7 +97,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSMutableDictionary">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSMutableArray" key="dict.sortedKeys">
+								<object class="NSArray" key="dict.sortedKeys">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>AXDescription</string>
 									<string>NSAccessibilityEncodedAttributesValueType</string>
@@ -95,12 +109,12 @@
 								</object>
 							</object>
 						</object>
+						<reference key="NSControlView" ref="803874427"/>
 						<string key="NSAction">_searchFieldCancel:</string>
 						<reference key="NSTarget" ref="95780218"/>
-						<reference key="NSControlView" ref="803874427"/>
 						<int key="NSButtonFlags">138690815</int>
 						<int key="NSButtonFlags2">0</int>
-						<reference key="NSKeyEquivalent" ref="75493946"/>
+						<string key="NSKeyEquivalent"/>
 						<int key="NSPeriodicDelay">400</int>
 						<int key="NSPeriodicInterval">75</int>
 					</object>
@@ -113,14 +127,6 @@
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">view</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="803874427"/>
-					</object>
-					<int key="connectionID">4</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">changeQuery:</string>
 						<reference key="source" ref="1001"/>
@@ -128,34 +134,40 @@
 					</object>
 					<int key="connectionID">8</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">linkedView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="803874427"/>
+					</object>
+					<int key="connectionID">9</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<object class="NSArray" key="object" id="1002">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
+						<reference key="object" ref="0"/>
 						<reference key="children" ref="1000"/>
 						<nil key="parent"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-2</int>
 						<reference key="object" ref="1001"/>
-						<reference key="parent" ref="1002"/>
-						<string type="base64-UTF8" key="objectName">RmlsZSdzIE93bmVyA</string>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">File's Owner</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-1</int>
 						<reference key="object" ref="1003"/>
-						<reference key="parent" ref="1002"/>
+						<reference key="parent" ref="0"/>
 						<string key="objectName">First Responder</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-3</int>
 						<reference key="object" ref="1004"/>
-						<reference key="parent" ref="1002"/>
+						<reference key="parent" ref="0"/>
 						<string key="objectName">Application</string>
 					</object>
 					<object class="IBObjectRecord">
@@ -165,7 +177,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="95780218"/>
 						</object>
-						<reference key="parent" ref="1002"/>
+						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">3</int>
@@ -176,288 +188,91 @@
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="NSMutableArray" key="dict.sortedKeys">
+				<object class="NSArray" key="dict.sortedKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>-1.IBPluginDependency</string>
 					<string>-2.IBPluginDependency</string>
 					<string>-3.IBPluginDependency</string>
 					<string>2.IBPluginDependency</string>
-					<string>2.editorWindowContentRectSynchronizationRect</string>
 					<string>3.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<reference ref="587919955"/>
-					<reference ref="587919955"/>
-					<reference ref="587919955"/>
-					<reference ref="587919955"/>
-					<string>{{392, 734}, {132, 24}}</string>
-					<reference ref="587919955"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="NSArray" key="dict.sortedKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-				</object>
-				<object class="NSMutableArray" key="dict.values">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-				</object>
+				<reference key="dict.sortedKeys" ref="0"/>
+				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="activeLocalization"/>
 			<object class="NSMutableDictionary" key="localizations">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="NSArray" key="dict.sortedKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-				</object>
-				<object class="NSMutableArray" key="dict.values">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-				</object>
+				<reference key="dict.sortedKeys" ref="0"/>
+				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">8</int>
+			<int key="maxID">9</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
+					<string key="className">HSGUIController</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/HSGUIController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">MGSearchField</string>
-					<string key="superclassName">MGGUIController</string>
+					<string key="superclassName">HSGUIController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">changeQuery:</string>
 						<string key="NS.object.0">id</string>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">changeQuery:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">changeQuery:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">view</string>
+						<string key="NS.key.0">linkedView</string>
 						<string key="NS.object.0">NSSearchField</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey" id="720056235">IBProjectSource</string>
-						<string key="minorKey">controllers/MGSearchField.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGGUIController</string>
-					<string key="superclassName" id="481458294">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">linkedView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">linkedView</string>
+							<string key="candidateClassName">NSSearchField</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<reference key="majorKey" ref="720056235"/>
-						<string key="minorKey">controllers/MGGUIController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<reference key="className" ref="481458294"/>
-					<nil key="superclassName"/>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<reference key="majorKey" ref="720056235"/>
-						<string key="minorKey">support/NSTableViewAdditions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<reference key="className" ref="481458294"/>
-					<nil key="superclassName"/>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<reference key="majorKey" ref="720056235"/>
-						<string key="minorKey">support/MGTableView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<reference key="className" ref="481458294"/>
-					<nil key="superclassName"/>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<reference key="majorKey" ref="720056235"/>
-						<string key="minorKey">controllers/MGFieldEditor.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<reference key="className" ref="481458294"/>
-					<nil key="superclassName"/>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<reference key="majorKey" ref="720056235"/>
-						<string key="minorKey">support/MGTextField.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<reference key="className" ref="481458294"/>
-					<nil key="superclassName"/>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<reference key="majorKey" ref="720056235"/>
-						<string key="minorKey">support/MGOutlineView.h</string>
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MGSearchField.h</string>
 					</object>
 				</object>
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
-		<string key="IBDocument.LastKnownRelativeProjectPath">../../moneyguru.xcodeproj</string>
-		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableData" key="IBDocument.RunnableNib">
-			<bytes key="NS.bytes">YnBsaXN0MDDUAAEAAgADAAQABQAGAAkAClgkdmVyc2lvblQkdG9wWSRhcmNoaXZlclgkb2JqZWN0cxIA
-AYag0QAHAAhdSUIub2JqZWN0ZGF0YYABXxAPTlNLZXllZEFyY2hpdmVyrxBKAAsADAAxADUANgA8AD0A
-QQBFAEoAUgALAGIACwBjAH8AgACIAIkAjACWAJcAmACdAJ8ApAClAKgAuwC8AL0AwQDKAMsAzwDYANkA
-2gB6ANsA3wDjAOQA6ADvAPAA9AD5APoA/QEDAQYBBwEJAQ8BFgEdAR4BHwEgASEBJAEnATABOQE6ATsA
-mwE8AT0BPgFBAUQBR1UkbnVsbN8QEgANAA4ADwAQABEAEgATABQAFQAWABcAGAAZABoAGwAcAB0AHgAf
-ACAAIQAiACMAJAAlACYAJwAoACkAKgArACwALQAuAC8AMFZOU1Jvb3RWJGNsYXNzXU5TT2JqZWN0c0tl
-eXNfEA9OU0NsYXNzZXNWYWx1ZXNfEBlOU0FjY2Vzc2liaWxpdHlPaWRzVmFsdWVzXU5TQ29ubmVjdGlv
-bnNbTlNOYW1lc0tleXNbTlNGcmFtZXdvcmtdTlNDbGFzc2VzS2V5c1pOU09pZHNLZXlzXU5TTmFtZXNW
-YWx1ZXNfEBlOU0FjY2Vzc2liaWxpdHlDb25uZWN0b3JzXU5TRm9udE1hbmFnZXJfEBBOU1Zpc2libGVX
-aW5kb3dzXxAPTlNPYmplY3RzVmFsdWVzXxAXTlNBY2Nlc3NpYmlsaXR5T2lkc0tleXNZTlNOZXh0T2lk
-XE5TT2lkc1ZhbHVlc4ACgEmAMYA9gEiACIA2gAWAPIA+gDeARoAAgAaANYBHEAqAP9IADgAyADMANFtO
-U0NsYXNzTmFtZYAEgANdTUdTZWFyY2hGaWVsZNIANwA4ADkAOlgkY2xhc3Nlc1okY2xhc3NuYW1logA6
-ADteTlNDdXN0b21PYmplY3RYTlNPYmplY3RfEBBJQkNvY29hRnJhbWV3b3Jr0gAOAD4APwBAWk5TLm9i
-amVjdHOAB6DSADcAOABCAEOjAEMARAA7XE5TTXV0YWJsZVNldFVOU1NldNIADgA+AEYAR4AoogBIAEmA
-CYAu1AAOAEsATABNAE4ATwAfAFFdTlNEZXN0aW5hdGlvblhOU1NvdXJjZVdOU0xhYmVsgC2ACoACgCzY
-AFMADgBUAFUAVgBXAFgAWQBaAFsAXABdAF4AXwBaAGFfEA9OU05leHRSZXNwb25kZXJWTlNDZWxsWE5T
-dkZsYWdzW05TRnJhbWVTaXplWU5TRW5hYmxlZFhOU1dpbmRvd1tOU1N1cGVydmlld4ALgCuADhEBDIAM
-CYALgA1ZezEzMiwgMjR93gBkAA4AZQBmAGcAaABpAGoAawBsAG0AbgBvAHAAcQByAHMAdAB1AHYATwBf
-AHkAegBfAHwAfQB+W05TQ2VsbEZsYWdzXxASTlNDYW5jZWxCdXR0b25DZWxsXxARTlNCYWNrZ3JvdW5k
-Q29sb3JaTlNDb250ZW50c1lOU1N1cHBvcnRdTlNDb250cm9sVmlld18QGE5TU2VuZHNXaG9sZVNlYXJj
-aFN0cmluZ1xOU0NlbGxGbGFnczJfEBBOU1RleHRCZXplbFN0eWxlXxARTlNEcmF3c0JhY2tncm91bmRf
-EBJOU1NlYXJjaEJ1dHRvbkNlbGxfEBBOU01heGltdW1SZWNlbnRzW05TVGV4dENvbG9yEhRx/kCAKoAf
-gBOAD4AQgAoJEhAABAAQAQmAGxD/gBhQ1AAOAIEAggCDAIQAhQCGAIdWTlNTaXplVk5TTmFtZVhOU2ZG
-bGFnc4ASI0AqAAAAAAAAgBERBBRcTHVjaWRhR3JhbmRl0gA3ADgAigCLogCLADtWTlNGb2501QAOAI0A
-jgCPAJAAkQCSAJMAlACVV05TQ29sb3JcTlNDb2xvclNwYWNlW05TQ29sb3JOYW1lXU5TQ2F0YWxvZ05h
-bWWAF4AWEAaAFYAUVlN5c3RlbV8QE3RleHRCYWNrZ3JvdW5kQ29sb3LTAA4AjgCZAJEAmwCcV05TV2hp
-dGWAFxADQjEA0gA3ADgAngCNogCNADvVAA4AjQCOAI8AkACRAKEAkwCiAJWAF4AagBmAFF8QEGNvbnRy
-b2xUZXh0Q29sb3LTAA4AjgCZAJEAmwCngBdCMADcAKkAZAAOAKoAqwCsAGcAaQCtAGsArgCvAFwAsQCy
-ALMAtAB1ALYATwC4ALQAuQC6WE5TVGFyZ2V0XxASTlNQZXJpb2RpY0ludGVydmFsXk5TQnV0dG9uRmxh
-Z3MyXxAPTlNLZXlFcXVpdmFsZW50XxAPTlNQZXJpb2RpY0RlbGF5WE5TQWN0aW9uXU5TQnV0dG9uRmxh
-Z3OADhIAAf4AgB4QSxAAgA+AHIAKEQGQgB0SCERA/1ZzZWFyY2hfEBNfc2VhcmNoRmllbGRTZWFyY2g6
-0gA3ADgAvgC/pAC/AMAAVAA7XE5TQnV0dG9uQ2VsbFxOU0FjdGlvbkNlbGzdAKkAZAAOAKoAqwCsAMIA
-ZwBpAK0AawCuAK8AXACxALIAswC0AHUAxgDHAE8AuAC0AMkAul8QI05TQWNjZXNzaWJpbGl0eU92ZXJy
-aWRkZW5BdHRyaWJ1dGVzgA6AHoAPgCGAIIAKgClVY2xlYXLSAA4APgBGAM2AKKEAzoAi0wAOANAAPgDR
-ANIA1VdOUy5rZXlzgCeiANMA1IAjgCSiANYA14AlgCZdQVhEZXNjcmlwdGlvbl8QKU5TQWNjZXNzaWJp
-bGl0eUVuY29kZWRBdHRyaWJ1dGVzVmFsdWVUeXBlVmNhbmNlbNIANwA4ANwA3aMA3QDeADtfEBNOU011
-dGFibGVEaWN0aW9uYXJ5XE5TRGljdGlvbmFyedIANwA4AOAA4aMA4QDiADteTlNNdXRhYmxlQXJyYXlX
-TlNBcnJheV8QE19zZWFyY2hGaWVsZENhbmNlbDrSADcAOADlAOalAOYA5wDAAFQAO18QEU5TU2VhcmNo
-RmllbGRDZWxsXxAPTlNUZXh0RmllbGRDZWxs0gA3ADgA6QDqpgDqAOsA7ADtAO4AO11OU1NlYXJjaEZp
-ZWxkW05TVGV4dEZpZWxkWU5TQ29udHJvbFZOU1ZpZXdbTlNSZXNwb25kZXJUdmlld9IANwA4APEA8qMA
-8gDzADtfEBROU05pYk91dGxldENvbm5lY3Rvcl5OU05pYkNvbm5lY3RvctQADgBLAEwATQD1AB8ATwD4
-gDCAAoAKgC9cY2hhbmdlUXVlcnk60gA3ADgA+wD8owD8APMAO18QFU5TTmliQ29udHJvbENvbm5lY3Rv
-ctIADgA+AP4A/4A0owBPAFwBAoAKgA6AMtIADgAyADMBBYAEgDNdTlNBcHBsaWNhdGlvbtIANwA4AQgA
-4qIA4gA70gAOAD4A/gELgDSjAB8ATwAfgAKACoAC0gAOAD4A/gERgDSkAB8ATwBcAQKAAoAKgA6AMtIA
-DgA+AP4BGIA0pAEZARoBGwEcgDiAOYA6gDtcRmlsZSdzIE93bmVyXFNlYXJjaCBGaWVsZF8QEVNlYXJj
-aCBGaWVsZCBDZWxsW0FwcGxpY2F0aW9u0gAOAD4A/gEjgDSg0gAOAD4A/gEmgDSg0gAOAD4A/gEpgDSm
-AEkAHwBPAFwASAECgC6AAoAKgA6ACYAy0gAOAD4A/gEygDSmATMBNAE1ATYBNwE4gECAQYBCgEOARIBF
-EAgQCRACEAQT//////////3SAA4APgBGAUCAKKDSAA4APgD+AUOANKDSAA4APgD+AUaANKDSADcAOAFI
-AUmiAUkAO15OU0lCT2JqZWN0RGF0YQAIABkAIgAnADEAOgA/AEQAUgBUAGYA/QEDAU4BVQFcAWoBfAGY
-AaYBsgG+AcwB1wHlAgECDwIiAjQCTgJYAmUCZwJpAmsCbQJvAnECcwJ1AncCeQJ7An0CfwKBAoMChQKH
-AokCkgKeAqACogKwArkCwgLNAtIC4QLqAv0DBgMRAxMDFAMdAyQDMQM3A0ADQgNHA0kDSwNcA2oDcwN7
-A30DfwOBA4MDpAO2A70DxgPSA9wD5QPxA/MD9QP3A/oD/AP9A/8EAQQLBEQEUARlBHkEhASOBJwEtwTE
-BNcE6wUABRMFHwUkBSYFKAUqBSwFLgUwBTEFNgU4BTkFOwU9BT8FQAVRBVgFXwVoBWoFcwV1BXgFhQWO
-BZMFmgWvBbcFxAXQBd4F4AXiBeQF5gXoBe8GBQYSBhoGHAYeBiEGKgYvBkQGRgZIBkoGTAZfBmwGbgZx
-BqIGqwbABs8G4QbzBvwHCgcMBxEHEwcVBxcHGQcbBx0HIAciBycHLgdEB00HVgdjB3AHpQfLB80HzwfR
-B9MH1QfXB9kH3wfoB+oH7QfvB/wIBAgGCAsIDQgPCBQIFggYCCYIUghZCGIIaQh/CIwIlQicCKsIswjJ
-CNII3QjxCQMJDAkZCScJMwk9CUQJUAlVCV4JZQl8CYsJnAmeCaAJogmkCbEJugnBCdkJ4gnkCesJ7Qnv
-CfEJ+gn8Cf4KDAoVChoKIwolCiwKLgowCjIKOwo9CkYKSApKCkwKTgpXClkKYgpkCmYKaApqCncKhAqY
-CqQKrQqvCrAKuQq7CrwKxQrHCtQK1grYCtoK3AreCuAK6QrrCvgK+gr8Cv4LAAsCCwQLBgsICwoLDAsV
-Cx4LIAshCyoLLAstCzYLOAs5C0ILRwAAAAAAAAICAAAAAAAAAUoAAAAAAAAAAAAAAAAAAAtWA</bytes>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<integer value="1040" key="NS.object.0"/>
 		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
+			<integer value="3000" key="NS.object.0"/>
+		</object>
+		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
+		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 	</data>
 </archive>

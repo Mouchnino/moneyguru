@@ -22,38 +22,31 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
 {
     NSString *pyClassName = forEntryTable ? @"PyEntryFilterBar" : @"PyTransactionFilterBar";
-    self = [super initWithPyClassName:pyClassName pyParent:aPyParent];
-    view = [aView retain];
+    self = [super initWithPyClassName:pyClassName pyParent:aPyParent view:aView];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
 	[item setTitle:TR(@"All")];
-	[view insertItem:item atIndex:0];
+	[aView insertItem:item atIndex:0];
 	item = [[[AMButtonBarItem alloc] initWithIdentifier:MGINCOME] autorelease];
 	[item setTitle:forEntryTable ? TR(@"Increase") : TR(@"Income")];
-	[view insertItem:item atIndex:1];
+	[aView insertItem:item atIndex:1];
 	item = [[[AMButtonBarItem alloc] initWithIdentifier:MGEXPENSE] autorelease];
 	[item setTitle:forEntryTable ? TR(@"Decrease") : TR(@"Expenses")];
-	[view insertItem:item atIndex:2];
+	[aView insertItem:item atIndex:2];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGTRANSFER] autorelease];
     [item setTitle:TR(@"Transfers")];
-    [view insertItem:item atIndex:3];
+    [aView insertItem:item atIndex:3];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGUNASSIGNED] autorelease];
     [item setTitle:TR(@"Unassigned")];
-    [view insertItem:item atIndex:4];
+    [aView insertItem:item atIndex:4];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGRECONCILED] autorelease];
     [item setTitle:TR(@"Reconciled")];
-    [view insertItem:item atIndex:5];
+    [aView insertItem:item atIndex:5];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGNOTRECONCILED] autorelease];
     [item setTitle:TR(@"Not Reconciled")];
-    [view insertItem:item atIndex:6];
-    [view selectItemWithIdentifier:MGALL];
-	[view setDelegate:self];
+    [aView insertItem:item atIndex:6];
+    [aView selectItemWithIdentifier:MGALL];
+	[aView setDelegate:self];
     return self;
-}
-
-- (void)dealloc
-{
-    [view release];
-    [super dealloc];
 }
 
 /* HSGUIController */
@@ -63,9 +56,9 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyFilterBarBase *)py;
 }
 
-- (NSView *)view
+- (AMButtonBar *)view
 {
-    return view;
+    return (AMButtonBar *)view;
 }
 
 /* Delegate */
@@ -81,17 +74,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)disableTransfers
 {
-    [[[view items] objectAtIndex:3] setEnabled:NO];
+    [[[[self view] items] objectAtIndex:3] setEnabled:NO];
 }
 
 - (void)enableTransfers
 {
-    [[[view items] objectAtIndex:3] setEnabled:YES];
+    [[[[self view] items] objectAtIndex:3] setEnabled:YES];
 }
 
 - (void)refresh
 {
-    [view selectItemWithIdentifier:[[self py] filterType]];
+    [[self view] selectItemWithIdentifier:[[self py] filterType]];
 }
 
 @end

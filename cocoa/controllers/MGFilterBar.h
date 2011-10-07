@@ -14,8 +14,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGFilterBar : HSGUIController
 {   
-    AMButtonBar *view;
 }
 - (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
 - (PyFilterBarBase *)py;
+- (AMButtonBar *)view;
 @end

@@ -15,6 +15,7 @@ from hscommon.notify import Broadcaster
 from hscommon.reg import RegistrableApplication
 from hscommon import io
 from hscommon.util import nonone
+from hscommon.trans import tr
 
 from .const import DATE_FORMAT_FOR_PREFERENCES
 from .model import currency
@@ -33,13 +34,14 @@ SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
 class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
+    PROMPT_NAME = APP_NAME
     VERSION = '2.3.11'
+    DEMO_LIMITATION = tr("will show this dialog on startup")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
         default_currency=USD, cache_path=None):
         Broadcaster.__init__(self)
-        RegistrableApplication.__init__(self, appid=2)
-        self.view = view
+        RegistrableApplication.__init__(self, view=view, appid=2)
         self.cache_path = cache_path
         # cache_path is required, but for tests, we don't want to bother specifying it. When 
         # cache_path is kept as None, the path of the currency db will be ':memory:'
@@ -66,10 +68,6 @@ class Application(Broadcaster, RegistrableApplication):
         self.saved_custom_ranges = [None] * 3
         self._load_custom_ranges()
         self._update_autosave_timer()
-    
-    #--- Override
-    def _setup_as_registered(self):
-        self.view.setup_as_registered()
     
     #--- Private
     def _autosave_all_documents(self):

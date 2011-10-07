@@ -10,7 +10,7 @@ import sys
 import os.path as op
 
 from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QUrl
-from PyQt4.QtGui import QDialog, QDesktopServices
+from PyQt4.QtGui import QDialog, QDesktopServices, QApplication, QMessageBox
 
 from hscommon.currency import Currency
 
@@ -59,8 +59,6 @@ class MoneyGuru(ApplicationBase):
         self.csvOptionsWindow.model.connect()
         self.preferencesPanel = PreferencesPanel(self.mainWindow, app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)
-        self.reg = Registration(self.model)
-        self.model.set_registration(self.prefs.registration_code, self.prefs.registration_email)
         self.mainWindow.updateOptionalWidgetsVisibility()
         if sys.argv[1:] and op.exists(sys.argv[1]):
             self.doc.open(sys.argv[1])
@@ -72,7 +70,8 @@ class MoneyGuru(ApplicationBase):
     
     #--- Public
     def askForRegCode(self):
-        self.reg.ask_for_code()
+        reg = Registration(self.model)
+        reg.ask_for_code()
     
     def showAboutBox(self):
         self.aboutBox.show()
@@ -88,8 +87,7 @@ class MoneyGuru(ApplicationBase):
     
     #--- Event Handling
     def applicationFinishedLaunching(self):
-        if not self.model.registered and self.model.unpaid_hours >= 1:
-            self.reg.show_nag()
+        self.model.initial_registration_setup()
         if self.prefs.mainWindowIsMaximized:
             self.mainWindow.showMaximized()
         else:
@@ -113,9 +111,23 @@ class MoneyGuru(ApplicationBase):
     def set_default(self, key, value):
         self.prefs.set_value(key, value)
     
+    def show_fairware_nag(self, prompt):
+        reg = Registration(self.model)
+        reg.show_fairware_nag(prompt)
+    
+    def show_demo_nag(self, prompt):
+        reg = Registration(self.model)
+        reg.show_demo_nag(prompt)
+    
+    def show_message(self, msg):
+        window = QApplication.activeWindow()
+        QMessageBox.information(window, '', msg)
+    
+    def open_url(self, url):
+        url = QUrl(url)
+        QDesktopServices.openUrl(url)
+    
     def setup_as_registered(self):
-        self.prefs.registration_code = self.model.registration_code
-        self.prefs.registration_email = self.model.registration_email
         self.mainWindow.actionRegister.setVisible(False)
         self.aboutBox.registerButton.hide()
         self.aboutBox.registeredEmailLabel.setText(self.prefs.registration_email)

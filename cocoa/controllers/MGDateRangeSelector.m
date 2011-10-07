@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyDateRangeSelector" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"DateRangeSelector" owner:self];
+    [self setView:linkedView];
     /* In popups, there's the invisible first item, which is why we start our indexing at 8! */
     NSMenuItem *custom1 = [dateRangePopUp itemAtIndex:8];
     NSMenuItem *custom2 = [dateRangePopUp itemAtIndex:9];
@@ -36,16 +37,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyDateRangeSelector *)py;
 }
 
-- (NSView *)view
-{
-    return view;
-}
-
 /* Public */
 - (void)animate:(BOOL)forward
 {
     CGFloat PADDING = 3;
-    NSRect convertedFrame = [dateRangePopUp convertRect:[dateRangePopUp bounds] toView:[[view window] contentView]];
+    NSRect convertedFrame = [dateRangePopUp convertRect:[dateRangePopUp bounds] toView:[[[self view] window] contentView]];
     convertedFrame.size.width -= PADDING *2;
     convertedFrame.size.height -= PADDING *2;
     convertedFrame.origin.x += PADDING;

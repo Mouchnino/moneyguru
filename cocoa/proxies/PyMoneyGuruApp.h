@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithCocoa:(id)cocoa;
 - (void)free;
 
+- (BOOL)isFirstRun;
 /* Preferences */
 - (NSInteger)firstWeekday; // 0 = monday, 6 = sunday
 - (void)setFirstWeekday:(NSInteger)weekday;

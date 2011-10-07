@@ -7,7 +7,7 @@
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
 
-from hscommon.cocoa import install_exception_hook, pythonify
+from hscommon.cocoa import install_exception_hook
 from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyFairware
 from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
@@ -111,13 +111,10 @@ class PyMoneyGuruApp(PyFairware):
         if hasattr(self, 'cocoa'):
             del self.cocoa
     
-    def get_default(self, key_name):
-        raw = NSUserDefaults.standardUserDefaults().objectForKey_(key_name)
-        result = pythonify(raw)
-        return result
-    
-    def set_default(self, key_name, value):
-        NSUserDefaults.standardUserDefaults().setObject_forKey_(value, key_name)
+    #--- Public
+    @signature('c@:')
+    def isFirstRun(self):
+        return self.py.is_first_run
     
     #--- Preferences
     @signature('i@:')
@@ -160,14 +157,6 @@ class PyMoneyGuruApp(PyFairware):
     @signature('v@:c')
     def setAutoDecimalPlace_(self, value):
         self.py.auto_decimal_place = value
-    
-    #---Registration
-    def appName(self):
-        return self.py.APP_NAME
-    
-    #--- Python -> Cocoa
-    def setup_as_registered(self):
-        pass # does nothing on Cocoa
     
 
 class PyDocument(NSObject):

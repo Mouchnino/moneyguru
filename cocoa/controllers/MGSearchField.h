@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGSearchField : HSGUIController
 {   
-    IBOutlet NSSearchField *view;
+    IBOutlet NSSearchField *linkedView; // XXX Why not create the view programmatically?
 }
 - (id)initWithPyParent:(id)aPyParent;
 

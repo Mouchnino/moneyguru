@@ -11,15 +11,8 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGBarGraph
 - (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName
 {
-    self = [super initWithPyClassName:aClassName pyParent:aPyParent];
-    view = [[MGBarGraphView alloc] init];
+    MGBarGraphView *myview = [[MGBarGraphView alloc] init];
+    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:[myview autorelease]];
     return self;
 }
-
-- (void)dealloc
-{
-    [view release];
-    [super dealloc];
-}
-
 @end

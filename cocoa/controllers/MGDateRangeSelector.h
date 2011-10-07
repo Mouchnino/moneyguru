@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGDateRangeSelector : HSGUIController
 {
-    IBOutlet NSView *view;
+    IBOutlet NSView *linkedView;
     IBOutlet NSPopUpButton *dateRangePopUp;
     IBOutlet NSSegmentedControl *segmentedControl;
     

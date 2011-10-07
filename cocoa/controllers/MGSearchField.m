@@ -13,6 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PySearchField" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"SearchField" owner:self];
+    [self setView:linkedView];
     return self;
 }
 
@@ -23,16 +24,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PySearchField *)py;
 }
 
-- (NSView *)view
-{
-    return view;
-}
-
 /* Action */
 
 - (IBAction)changeQuery:(id)sender
 {
-    NSString *query = [view stringValue];
+    NSString *query = [linkedView stringValue];
     [[self py] setQuery:query];
 }
 
@@ -40,7 +36,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)refresh
 {
-    [view setStringValue:[[self py] query]];
+    [linkedView setStringValue:[[self py] query]];
 }
 
 @end

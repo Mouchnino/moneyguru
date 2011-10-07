@@ -151,7 +151,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [HSFairwareReminder showNagWithApp:[self py]];
+    [py initialRegistrationSetup];
     MGDocumentController *dc = [NSDocumentController sharedDocumentController];
     BOOL isFirstRun = [[self py] isFirstRun];
     if (isFirstRun) {
@@ -192,5 +192,26 @@ http://www.hardcoded.net/licenses/bsd_license
         [continueUpdate invoke];
         [continueUpdate release];
     }
+}
+
+/* model --> view */
+- (void)setupAsRegistered
+{
+    // Nothing to do.
+}
+
+- (void)showFairwareNagWithPrompt:(NSString *)prompt
+{
+    [HSFairwareReminder showFairwareNagWithApp:[self py] prompt:prompt];
+}
+
+- (void)showDemoNagWithPrompt:(NSString *)prompt
+{
+    [HSFairwareReminder showDemoNagWithApp:[self py] prompt:prompt];
+}
+
+- (void)showMessage:(NSString *)msg
+{
+    [Dialogs showMessage:msg];
 }
 @end
