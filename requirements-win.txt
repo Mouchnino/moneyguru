@@ -1,5 +1,4 @@
 sgmllib3k>=1.0.0
 pytest>=2.0.0
 pytest-monkeyplus>=1.0.0
-PyQt>=4.7.5
 cx_freeze>=4.2.3

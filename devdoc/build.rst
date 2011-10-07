@@ -10,21 +10,19 @@ Before being able to build moneyGuru, a few dependencies have to be installed:
 General dependencies
 --------------------
 
-- Python 3.1 (3.2 on Mac OS X) (http://www.python.org)
+- Python 3.2 (http://www.python.org)
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
-- Sphinx 1.0.6 (http://sphinx.pocoo.org/)
+- Sphinx 1.0.8 (http://sphinx.pocoo.org/)
 - pytest 2.0.0, to run unit tests. (http://pytest.org/)
 - pytest-monkeyplus, a pytest plugin. (http://bitbucket.org/hsoft/pytest-monkeyplus)
 
 OS X prerequisites
 ------------------
 
-- XCode 3.1 (http://developer.apple.com/TOOLS/xcode/)
+- XCode 4.1
 - Sparkle (http://sparkle.andymatuschak.org/)
-- PyObjC 2.3. (http://pyobjc.sourceforge.net/)
+- PyObjC 2.3 (http://pyobjc.sourceforge.net/)
 - pluginbuilder 1.0.0 (http://bitbucket.org/hsoft/pluginbuilder)
-
-moneyGuru can be built with XCode 4, but there's gotchas, see below.
   
 Windows prerequisites
 ---------------------
@@ -41,6 +39,9 @@ There's an easy way to install the majority of the prerequisites above, and it's
     pip install -r requirements-[osx|win|lnx].txt
 
 ([osx|win|lnx] depends, of course, on your platform). Because Sphinx doesn't support Python 3 yet, it's not in the requirements file and you'll have to install it manually. You might have to compile PyObjC manually too (see gotchas below). Sparkle and Advanced Installer, having nothing to do with Python, are also manual installs.
+
+PyQt isn't in the requirements file either (there's no package uploaded on PyPI) and you also have
+to install it manually.
 
 Prerequisite gotchas
 --------------------
@@ -70,12 +71,10 @@ same Python version you build moneyGuru with.
 Another one on OS X: I wouldn't use macports/fink/whatever. Whenever I tried using those, I always 
 ended up with problems.
 
-moneyGuru can be built with XCode 4 (until support for 10.5 is dropped, xcode 3 and xcode 4 projects
-have to be maintained in parallel though). You build it through `build.py`, like you'd normally do,
-but make sure that you installed the latest version of macholib because there was a
-10.7 related bug that was fixed recently. Right now, the fix hasn't even been released yet so you 
-have to install directly from the repo ( http://bitbucket.org/ronaldoussoren/macholib ). The fix
-in question is at http://bitbucket.org/ronaldoussoren/macholib/changeset/4ab0de0f5b60
+If compiling under under OS X Lion, make sure that you installed the latest version of macholib
+because there was a 10.7 related bug that was fixed recently. Right now, the fix hasn't even been
+released yet so you have to install directly from the repo ( http://bitbucket.org/ronaldoussoren/macholib ).
+The fix in question is at http://bitbucket.org/ronaldoussoren/macholib/changeset/4ab0de0f5b60
 
 Whenever you have a problem, always double-check that you're running the correct python version. 
 You'll probably have to tweak your $PATH.

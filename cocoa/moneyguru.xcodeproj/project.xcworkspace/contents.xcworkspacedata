@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:moneyguru_xcode4.xcodeproj">
+      location = "self:moneyguru.xcodeproj">
    </FileRef>
 </Workspace>
