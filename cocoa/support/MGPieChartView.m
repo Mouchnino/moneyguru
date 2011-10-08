@@ -9,43 +9,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPieChartView.h"
 #import "Utils.h"
 #import "MGConst.h"
+#import "HSGeometry.h"
 #import <math.h>
 
 #define LEGEND_PADDING 4.0
 #define TITLE_FONT_SIZE 15.0
 #define LINE_WIDTH 1.0
 #define CHART_PADDING 6.0
-
-#define RADIANS( degrees ) ( degrees * M_PI / 180 )
-
-CGFloat distance(NSPoint p1, NSPoint p2)
-{
-    CGFloat dX = p1.x - p2.x;
-    CGFloat dY = p1.y - p2.y;
-    return sqrt(dX * dX + dY * dY);
-}
-
-NSPoint pointInCircle(NSPoint center, CGFloat radius, CGFloat angle)
-{
-    // a/sin(A) = b/sin(B) = c/sin(C) = 2R
-    // the start point it (center.x + radius, center.y) and goes counterclockwise
-    angle = fmod(angle, 360);
-    CGFloat C = RADIANS(90);
-    CGFloat A = RADIANS(fmod(angle, 90));
-    CGFloat B = C - A;
-    CGFloat c = radius;
-    CGFloat ratio = c / sin(C);
-    CGFloat b = ratio * sin(B);
-    CGFloat a = ratio * sin(A);
-    if (angle > 270)
-        return NSMakePoint(center.x + a, center.y - b);
-    else if (angle > 180)
-        return NSMakePoint(center.x - b, center.y - a);
-    else if (angle > 90)
-        return NSMakePoint(center.x - a, center.y + b);
-    else
-        return NSMakePoint(center.x + b, center.y + a);
-}
 
 // Ensures that r1 is within r2. Returns a modified r1;
 NSRect ensureWithin(NSRect r1, NSRect r2)
@@ -177,7 +147,7 @@ NSPoint rectCenter(NSRect r)
         [slice stroke];
         
         NSString *legendText = [pair objectAtIndex:0];
-        NSPoint baseLegendPoint = pointInCircle(center, radius, startAngle + (angle / 2));
+        NSPoint baseLegendPoint = pointInCircle(center, radius, deg2rad(startAngle + (angle / 2)));
         NSSize legendSize = [legendText sizeWithAttributes:legendAttributes];
         NSPoint legendPoint = NSMakePoint(baseLegendPoint.x - (legendSize.width / 2), baseLegendPoint.y);
         NSRect legendRect = NSMakeRect(legendPoint.x, legendPoint.y, legendSize.width, legendSize.height);

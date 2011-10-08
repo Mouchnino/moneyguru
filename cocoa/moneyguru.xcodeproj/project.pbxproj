@@ -52,6 +52,7 @@
 		CE3BF14C1270845E000D141C /* MGDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF14B1270845E000D141C /* MGDocumentController.m */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
 		CE41C9900E2B52CD006D3BEA /* MGTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE41C98F0E2B52CD006D3BEA /* MGTable.m */; };
+		CE42F4061440916E00B3B9A9 /* HSGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = CE42F4051440916E00B3B9A9 /* HSGeometry.m */; };
 		CE44BA711207042E00F4BAE9 /* MGCashculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44BA701207042E00F4BAE9 /* MGCashculatorView.m */; };
 		CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE44BA721207045300F4BAE9 /* CashculatorView.xib */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
@@ -337,6 +338,8 @@
 		CE40239E0F4C737D0083BAD2 /* doc_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_icon.icns; sourceTree = "<group>"; };
 		CE41C98E0E2B52CD006D3BEA /* MGTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTable.h; sourceTree = "<group>"; };
 		CE41C98F0E2B52CD006D3BEA /* MGTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTable.m; sourceTree = "<group>"; };
+		CE42F4041440916E00B3B9A9 /* HSGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSGeometry.h; path = ../cocoalib/HSGeometry.h; sourceTree = "<group>"; };
+		CE42F4051440916E00B3B9A9 /* HSGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSGeometry.m; path = ../cocoalib/HSGeometry.m; sourceTree = "<group>"; };
 		CE44BA6B120703D900F4BAE9 /* PyCashculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCashculatorView.h; sourceTree = "<group>"; };
 		CE44BA6F1207042E00F4BAE9 /* MGCashculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCashculatorView.h; sourceTree = "<group>"; };
 		CE44BA701207042E00F4BAE9 /* MGCashculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCashculatorView.m; sourceTree = "<group>"; };
@@ -881,6 +884,8 @@
 				CE6D380F0F93648E00FA8460 /* Utils.m */,
 				CE6D38100F93648E00FA8460 /* ValueTransformers.h */,
 				CE6D38110F93648E00FA8460 /* ValueTransformers.m */,
+				CE42F4041440916E00B3B9A9 /* HSGeometry.h */,
+				CE42F4051440916E00B3B9A9 /* HSGeometry.m */,
 			);
 			name = cocoalib;
 			sourceTree = "<group>";
@@ -1666,6 +1671,7 @@
 				CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */,
 				CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */,
 				CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */,
+				CE42F4061440916E00B3B9A9 /* HSGeometry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
