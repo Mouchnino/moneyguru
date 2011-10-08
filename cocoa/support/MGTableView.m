@@ -10,21 +10,26 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "NSEventAdditions.h"
 
 @implementation MGTableView
-/* NSTableView */
-- (void)keyDown:(NSEvent *)event 
+- (id <MGTableViewDelegate>)delegate
 {
-    if (![self dispatchSpecialKeys:event]) {
-        [super keyDown:event];
-	}
+    return (id <MGTableViewDelegate>)[super delegate];
 }
 
-- (void)setDelegate:(id)aDelegate
+- (void)setDelegate:(id <MGTableViewDelegate>)aDelegate
 {
     [super setDelegate:aDelegate];
     id delegate = [self delegate];
     if ([delegate respondsToSelector:@selector(tableViewWasDoubleClicked:)]) {
         [self setTarget:[self delegate]];
         [self setDoubleAction:@selector(tableViewWasDoubleClicked:)];
+    }
+}
+
+/* NSTableView */
+- (void)keyDown:(NSEvent *)event 
+{
+    if (![self dispatchSpecialKeys:event]) {
+        [super keyDown:event];
     }
 }
 

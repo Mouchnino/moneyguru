@@ -159,7 +159,8 @@ http://www.hardcoded.net/licenses/bsd_license
             [self openExampleDocument:self];
         }
         else {
-            [dc openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
+            NSError *error;
+            [dc openUntitledDocumentAndDisplay:YES error:&error];
         }
     }
     else {

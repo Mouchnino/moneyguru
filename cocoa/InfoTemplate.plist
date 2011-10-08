@@ -98,7 +98,7 @@
 	<key>CFBundleIconFile</key>
 	<string>main_icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.hardcoded_software.moneyguru</string>
+	<string>com.hardcoded-software.moneyguru</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

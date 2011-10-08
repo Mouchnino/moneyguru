@@ -50,7 +50,8 @@ http://www.hardcoded.net/licenses/bsd_license
         return [self openDocumentWithContentsOfURL:url display:YES error:&error];
     }
     else {
-        return [self openUntitledDocumentOfType:@"moneyGuru Document" display:YES];
+        NSError *error;
+        return [self openUntitledDocumentAndDisplay:YES error:&error];
     }
 }
 @end

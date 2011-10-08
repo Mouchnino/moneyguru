@@ -37,7 +37,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
 
-@interface MGMainWindowController : HSWindowController
+@interface MGMainWindowController : HSWindowController <NSToolbarDelegate, NSWindowDelegate>
 {
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;

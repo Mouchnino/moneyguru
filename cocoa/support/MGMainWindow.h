@@ -7,6 +7,9 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "MGMainWindowController.h"
 
 @interface MGMainWindow : NSWindow {}
+- (MGMainWindowController *)delegate;
+- (void)setDelegate:(MGMainWindowController *)aDelegate;
 @end

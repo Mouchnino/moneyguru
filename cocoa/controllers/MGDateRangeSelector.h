@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSGUIController.h"
 #import "PyDateRangeSelector.h"
 
-@interface MGDateRangeSelector : HSGUIController
+@interface MGDateRangeSelector : HSGUIController <NSAnimationDelegate>
 {
     IBOutlet NSView *linkedView;
     IBOutlet NSPopUpButton *dateRangePopUp;

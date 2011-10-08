@@ -9,9 +9,18 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGMainWindow.h"
 #import "MGConst.h"
 #import "NSEventAdditions.h"
-#import "MGMainWindowController.h"
 
 @implementation MGMainWindow
+- (MGMainWindowController *)delegate
+{
+    return (MGMainWindowController *)[super delegate];
+}
+
+- (void)setDelegate:(MGMainWindowController *)aDelegate
+{
+    [super setDelegate:aDelegate];
+}
+
 - (void)performClose:(id)sender
 {
     if ([sender tag] == MGCloseWindowMenuItem) {
