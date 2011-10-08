@@ -128,25 +128,26 @@ class DictLoader(base.Loader):
 
 class TestApp(TestAppBase):
     def __init__(self, app=None, doc=None, tmppath=None):
+        TestAppBase.__init__(self)
         make_gui = self.make_gui
         def make_table_gui(name, class_, view=None, parent=None, holder=None):
             gui = make_gui(name, class_, view, parent, holder)
             if holder is None:
                 holder = self
-            colview = CallLogger()
+            colview = self.make_logger()
             setattr(holder, '{0}col_gui'.format(name), colview)
             gui.columns.view = colview
         
         self._tmppath = tmppath
         if app is None:
-            app = Application(ApplicationGUI())
+            app = Application(self.make_logger(ApplicationGUI))
         self.app = app
         self.app_gui = app.view
         if doc is None:
-            doc = Document(DocumentGUI(), self.app)
+            doc = Document(self.make_logger(DocumentGUI), self.app)
         self.doc = doc
         self.doc_gui = doc.view
-        make_gui('mainwindow', MainWindow, view=MainWindowGUI(), parent=self.doc)
+        make_gui('mainwindow', MainWindow, view=self.make_logger(MainWindowGUI), parent=self.doc)
         self.mw = self.mainwindow # shortcut. This one is often typed
         make_gui('nwview', NetWorthView)
         make_gui('pview', ProfitView)
@@ -162,6 +163,7 @@ class TestApp(TestAppBase):
         make_table_gui('btable', BudgetTable, parent=self.bview)
         make_table_gui('gltable', GeneralLedgerTable, parent=self.glview)
         make_gui('apanel', AccountPanel)
+        self.apanel.type_list.view = self.make_logger()
         make_gui('scpanel', SchedulePanel)
         make_gui('tpanel', TransactionPanel)
         make_gui('mepanel', MassEditionPanel)

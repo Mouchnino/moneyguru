@@ -206,6 +206,13 @@ def test_delete_entry():
     app.mainwindow.delete_item()
     app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
+@with_app(app_one_account)
+def test_edit_account(app):
+    app.show_nwview()
+    app.mw.edit_item() # apanel popping up
+    # Popping the panel refreshes the type list selection
+    app.apanel.type_list.view.check_gui_calls(['update_selection'])
+
 def test_jump_to_account():
     app = app_one_account()
     app.mainwindow.jump_to_account()

@@ -28,6 +28,7 @@ class AccountTypeList(GUISelectableList):
         GUISelectableList.__init__(self, account_types_desc)
     
     def _update_selection(self):
+        GUISelectableList._update_selection(self)
         selected_type = AccountType.InOrder[self.selected_index]
         self.panel.type = selected_type
 
@@ -46,10 +47,7 @@ class AccountPanel(MainWindowPanel):
         self.currency = account.currency
         self.account_number = account.account_number
         self.notes = account.notes
-        self.type_list.selected_index = AccountType.InOrder.index(self.type)
-        # XXX Normally, this should be done automatically in hscommon.gui.selectable_list
-        # XXX Also, add a test for this
-        self.type_list.view.refresh()
+        self.type_list.select(AccountType.InOrder.index(self.type))
         self.currency_index = Currency.all.index(self.currency)
         self.can_change_currency = not any(e.reconciled for e in account.entries)
         self.account = account # for the save() assert
