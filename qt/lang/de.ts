@@ -565,8 +565,8 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <translation>nicht wertgestellt</translation>
     </message>
 
-		<!-- CSV -->
-		<message>
+	<!-- CSV -->
+	<message>
         <source>New Layout</source>
         <translation>Neues Layout</translation>
     </message>
@@ -595,8 +595,26 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <translation>Ausgewähltes Layout löschen</translation>
     </message>
 
-		<!-- Columns -->
-		<message>
+    <!-- Dialogs -->
+    <message>
+        <source>Asset</source>
+        <translation>Aktiva</translation>
+    </message>
+    <message>
+        <source>Liability</source>
+        <translation>Passiva</translation>
+    </message>
+    <message>
+        <source>Income</source>
+        <translation>Einkommen</translation>
+    </message>
+    <message>
+        <source>Expense</source>
+        <translation>Ausgaben</translation>
+    </message>
+    
+	<!-- Columns -->
+	<message>
         <source>Change</source>
         <translation>Variation</translation>
     </message>
@@ -701,26 +719,6 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <location filename="account_panel.ui" line="41"/>
         <source>Type</source>
         <translation>Typ</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="52"/>
-        <source>Asset</source>
-        <translation>Aktiva</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="57"/>
-        <source>Liability</source>
-        <translation>Passiva</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="62"/>
-        <source>Income</source>
-        <translation>Einkommen</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="67"/>
-        <source>Expense</source>
-        <translation>Ausgaben</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="75"/>

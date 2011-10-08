@@ -2,23 +2,11 @@
 /* Class = "NSWindow"; title = "Account Properties"; ObjectID = "1"; */
 "1.title" = "Account Properties";
 
-/* Class = "NSMenuItem"; title = "Asset"; ObjectID = "12"; */
-"12.title" = "Asset";
-
-/* Class = "NSMenuItem"; title = "Liability"; ObjectID = "13"; */
-"13.title" = "Liability";
-
-/* Class = "NSMenuItem"; title = "Income"; ObjectID = "14"; */
-"14.title" = "Income";
-
 /* Class = "NSButtonCell"; title = "Save"; ObjectID = "16"; */
 "16.title" = "Save";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "18"; */
-"18.title" = "Cancel";
-
-/* Class = "NSMenuItem"; title = "Expense"; ObjectID = "21"; */
-"21.title" = "Expense";
+"18.title" = "Cancel"
 
 /* Class = "NSTextFieldCell"; title = "Account Info"; ObjectID = "36"; */
 "36.title" = "Account Info";

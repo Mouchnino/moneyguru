@@ -559,8 +559,8 @@ Entries from {start_date} to {end_date}</source>
         <translation>Non Riconciliato</translation>
     </message>
 
-		<!-- CSV -->
-		<message>
+	<!-- CSV -->
+	<message>
         <source>New Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -589,8 +589,26 @@ Entries from {start_date} to {end_date}</source>
         <translation>Elimina la Disposizione selezionata</translation>
     </message>
 
-		<!-- Columns -->
-		<message>
+    <!-- Dialogs -->
+    <message>
+        <source>Asset</source>
+        <translation>Attivo</translation>
+    </message>
+    <message>
+        <source>Liability</source>
+        <translation>Passivo</translation>
+    </message>
+    <message>
+        <source>Income</source>
+        <translation>Entrate</translation>
+    </message>
+    <message>
+        <source>Expense</source>
+        <translation>Uscite</translation>
+    </message>
+    
+	<!-- Columns -->
+	<message>
         <source>Change</source>
         <translation>Variazione</translation>
     </message>
@@ -695,26 +713,6 @@ Entries from {start_date} to {end_date}</source>
         <location filename="account_panel.ui" line="41"/>
         <source>Type</source>
         <translation>Tipo</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="52"/>
-        <source>Asset</source>
-        <translation>Attivo</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="57"/>
-        <source>Liability</source>
-        <translation>Passivo</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="62"/>
-        <source>Income</source>
-        <translation>Entrate</translation>
-    </message>
-    <message>
-        <location filename="account_panel.ui" line="67"/>
-        <source>Expense</source>
-        <translation>Uscite</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="75"/>

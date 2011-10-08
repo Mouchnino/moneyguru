@@ -34,15 +34,15 @@ def test_change_currency_index(app):
 @with_app(app_some_account)
 def test_change_type_index(app):
     # Changing type_index correctly updates the type.
-    app.apanel.type_index = 0
+    app.apanel.type_list.select(0)
     eq_(app.apanel.type, AccountType.Asset)
-    app.apanel.type_index = 1
+    app.apanel.type_list.select(1)
     eq_(app.apanel.type, AccountType.Liability)
-    app.apanel.type_index = 2
+    app.apanel.type_list.select(2)
     eq_(app.apanel.type, AccountType.Income)
-    app.apanel.type_index = 4 # doesn't do anything
-    eq_(app.apanel.type, AccountType.Income)
-    eq_(app.apanel.type_index, 2)
+    app.apanel.type_list.select(4) # Selects the highest index possible
+    eq_(app.apanel.type, AccountType.Expense)
+    eq_(app.apanel.type_list.selected_index, 3)
 
 @with_app(app_some_account)
 def test_fields(app):
@@ -51,7 +51,7 @@ def test_fields(app):
     eq_(app.apanel.name, 'foobar')
     eq_(app.apanel.type, AccountType.Expense)
     eq_(app.apanel.currency, CAD)
-    eq_(app.apanel.type_index, 3) # Expense type is last in the list
+    eq_(app.apanel.type_list.selected_index, 3) # Expense type is last in the list
     eq_(app.apanel.currency_index, Currency.all.index(CAD))
     eq_(app.apanel.account_number, '4242')
     eq_(app.apanel.notes, '')
@@ -59,7 +59,7 @@ def test_fields(app):
 @with_app(app_some_account)
 def test_fields_before_load(app):
     # ensure no crash occurs
-    app.apanel.type_index
+    app.apanel.type_list.selected_index
 
 @with_app(app_some_account)
 def test_load_stops_edition(app):
@@ -88,7 +88,7 @@ def test_save_then_load(app):
     # all GUI components. We have to test this on two accounts to make sure that the values we test
     # on load aren't just leftovers from past assignments
     app.mw.edit_item() # foobaz
-    app.apanel.type_index = 1
+    app.apanel.type_list.select(1)
     app.apanel.currency_index = 42
     app.apanel.name = 'changed name'
     app.apanel.account_number = '4241'
@@ -96,7 +96,7 @@ def test_save_then_load(app):
     app.apanel.save()
     app.bsheet.selected = app.bsheet.assets[0] # foobar
     app.mw.edit_item()
-    app.apanel.type_index = 0
+    app.apanel.type_list.select(0)
     app.apanel.currency_index = 0
     app.apanel.name = 'whatever'
     app.apanel.account_number = '1234'

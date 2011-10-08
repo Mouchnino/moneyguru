@@ -8,13 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGUI.h"
+#import "PySelectableList.h"
 
 @interface PyAccountPanel : PyGUI {}
 
 - (NSString *)name;
 - (void)setName:(NSString *)name;
-- (NSInteger)typeIndex;
-- (void)setTypeIndex:(NSInteger)index;
+- (PySelectableList *)typeList;
 - (NSInteger)currencyIndex;
 - (void)setCurrencyIndex:(NSInteger)index;
 - (NSString *)accountNumber;

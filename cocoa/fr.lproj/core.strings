@@ -236,6 +236,12 @@
 "year" = "année";
 "years" = "années";
 
+/* core/gui/account_panel */
+"Asset" = "Actif";
+"Liability" = "Passif";
+"Income" = "Revenu";
+"Expense" = "Dépense";
+
 /* Cashculator messages */
 "Exported database not present. Click on Export Accounts first." = "Aucune présence d'un fichier d'exportation! Cliquez d'abord sur Exporter.";
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base de données Cashculator inexistante! Vous devez exécuter et quitter Cashculator au moins une fois avant d'effectuer l'exportation.";

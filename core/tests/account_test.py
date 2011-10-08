@@ -265,7 +265,7 @@ def test_change_account_type(app):
     # leave its group, thus refusing to go to its real type's base node.
     app.bsheet.selected = app.bsheet.assets[0][0]
     app.mw.edit_item()
-    app.apanel.type_index = 1 # liability
+    app.apanel.type_list.select(1) # liability
     app.apanel.save()
     eq_(app.account_node_subaccount_count(app.bsheet.assets[0]), 0) # group is empty
     eq_(app.account_node_subaccount_count(app.bsheet.liabilities), 1) # the account is in liabilities

@@ -8,7 +8,7 @@
 import logging
 
 from hscommon.cocoa import install_exception_hook
-from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyFairware
+from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyFairware, PySelectableList
 from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
@@ -632,13 +632,10 @@ class PyAccountPanel(PyPanel):
     def setName_(self, name):
         self.py.name = name
     
-    @signature('i@:')
-    def typeIndex(self):
-        return self.py.type_index
-    
-    @signature('@@:i')
-    def setTypeIndex_(self, index):
-        self.py.type_index = index
+    def typeList(self):
+        if not hasattr(self, '_typeList'):
+            self._typeList = PySelectableList.alloc().initWithPy_(self.py.type_list)
+        return self._typeList
     
     @signature('i@:')
     def currencyIndex(self):

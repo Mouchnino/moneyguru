@@ -7,15 +7,35 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.currency import Currency
+from hscommon.gui.selectable_list import GUISelectableList
+from hscommon.trans import tr
 
 from ..exception import DuplicateAccountNameError
 from ..model.account import AccountType
 from .base import MainWindowPanel
 
+ACCOUNT_TYPE_DESC = {
+    AccountType.Asset: tr("Asset"),
+    AccountType.Liability: tr("Liability"),
+    AccountType.Income: tr("Income"),
+    AccountType.Expense: tr("Expense"),
+}
+
+class AccountTypeList(GUISelectableList):
+    def __init__(self, panel):
+        self.panel = panel
+        account_types_desc = [ACCOUNT_TYPE_DESC[at] for at in AccountType.InOrder]
+        GUISelectableList.__init__(self, account_types_desc)
+    
+    def _update_selection(self):
+        selected_type = AccountType.InOrder[self.selected_index]
+        self.panel.type = selected_type
+
 class AccountPanel(MainWindowPanel):
     def __init__(self, view, mainwindow):
         MainWindowPanel.__init__(self, view, mainwindow)
         self._init_fields()
+        self.type_list = AccountTypeList(self)
     
     #--- Override
     def _load(self, account):
@@ -26,7 +46,10 @@ class AccountPanel(MainWindowPanel):
         self.currency = account.currency
         self.account_number = account.account_number
         self.notes = account.notes
-        self.type_index = AccountType.InOrder.index(self.type)
+        self.type_list.selected_index = AccountType.InOrder.index(self.type)
+        # XXX Normally, this should be done automatically in hscommon.gui.selectable_list
+        # XXX Also, add a test for this
+        self.type_list.view.refresh()
         self.currency_index = Currency.all.index(self.currency)
         self.can_change_currency = not any(e.reconciled for e in account.entries)
         self.account = account # for the save() assert
@@ -44,7 +67,6 @@ class AccountPanel(MainWindowPanel):
     #--- Private
     def _init_fields(self):
         self.type = AccountType.Asset
-        self._type_index = 0
         self.currency = None
         self.account_number = ''
     
@@ -61,17 +83,4 @@ class AccountPanel(MainWindowPanel):
             pass
         else:
             self._currency_index = index
-    
-    @property
-    def type_index(self):
-        return self._type_index
-    
-    @type_index.setter
-    def type_index(self, index):
-        try:
-            self.type = AccountType.InOrder[index]
-        except IndexError:
-            pass
-        else:
-            self._type_index = index
-    
+       

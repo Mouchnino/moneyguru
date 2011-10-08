@@ -13,6 +13,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"AccountPanel" pyClassName:@"PyAccountPanel" parent:aParent];
+    [self window];
+    typePopUp = [[HSPopUpList alloc] initWithPy:[[self py] typeList] view:typeSelector];
     currencies = [[[self py] availableCurrencies] retain];
     /* If we don't reload data, we'll have a 0-length combobox at loadFields */
     [currencySelector reloadData];
@@ -21,6 +23,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)dealloc
 {
+    [typePopUp release];
     [currencies release];
     [super dealloc];
 }
@@ -39,7 +42,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)loadFields
 {
     [nameTextField setStringValue:[[self py] name]];
-    [typeSelector selectItemAtIndex:[[self py] typeIndex]];
     [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
     [accountNumberTextField setStringValue:[[self py] accountNumber]];
     [notesTextField setStringValue:[[self py] notes]];
@@ -52,7 +54,6 @@ http://www.hardcoded.net/licenses/bsd_license
     NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
     if (currencyIndex >= 0)
         [[self py] setCurrencyIndex:currencyIndex];
-    [[self py] setTypeIndex:[typeSelector indexOfSelectedItem]];
     [[self py] setAccountNumber:[accountNumberTextField stringValue]];
     [[self py] setNotes:[notesTextField stringValue]];
 }

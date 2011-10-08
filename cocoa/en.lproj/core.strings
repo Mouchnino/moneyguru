@@ -236,6 +236,12 @@
 "year" = "year";
 "years" = "years";
 
+/* core/gui/account_panel */
+"Asset" = "Asset";
+"Liability" = "Liability";
+"Income" = "Income";
+"Expense" = "Expense";
+
 /* Cashculator messages */
 "Exported database not present. Click on Export Accounts first." = "Exported database not present. Click on Export Accounts first.";
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature.";

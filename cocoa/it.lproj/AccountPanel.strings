@@ -2,23 +2,11 @@
 /* Class = "NSWindow"; title = "Account Properties"; ObjectID = "1"; */
 "1.title" = "Proprietà del Conto";
 
-/* Class = "NSMenuItem"; title = "Asset"; ObjectID = "12"; */
-"12.title" = "Attivo";
-
-/* Class = "NSMenuItem"; title = "Liability"; ObjectID = "13"; */
-"13.title" = "Passivo";
-
-/* Class = "NSMenuItem"; title = "Income"; ObjectID = "14"; */
-"14.title" = "Entrate";
-
 /* Class = "NSButtonCell"; title = "Save"; ObjectID = "16"; */
 "16.title" = "Salva";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "18"; */
 "18.title" = "Annulla";
-
-/* Class = "NSMenuItem"; title = "Expense"; ObjectID = "21"; */
-"21.title" = "Uscite";
 
 /* Class = "NSTextFieldCell"; title = "Account Info"; ObjectID = "36"; */
 "36.title" = "Informazioni Conto";

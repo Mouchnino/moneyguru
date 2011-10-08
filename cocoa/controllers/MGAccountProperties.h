@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
+#import "HSPopUpList.h"
 #import "PyAccountPanel.h"
 
 @interface MGAccountProperties : MGPanel {
@@ -17,6 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTextField *accountNumberTextField;
     IBOutlet NSTextField *notesTextField;
     
+    HSPopUpList *typePopUp;
     NSArray *currencies;
 }
 - (id)initWithParent:(HSWindowController *)aParent;

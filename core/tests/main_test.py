@@ -633,7 +633,7 @@ class TestOneEntryInPreviousRange:
         app.mainwindow.select_balance_sheet()
         app.bsheet.selected = app.bsheet.assets[0]
         app.mainwindow.edit_item()
-        app.apanel.type_index = 2 # income
+        app.apanel.type_list.select(2) # income
         app.apanel.save()
         app.mainwindow.select_income_statement()
         app.istatement.selected = app.istatement.income[0]
