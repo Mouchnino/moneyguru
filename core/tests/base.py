@@ -305,10 +305,10 @@ class TestApp(TestAppBase):
         self.bpanel.repeat_every = repeat_every
         if stop_date is not None:
             self.bpanel.stop_date = stop_date
-        account_index = self.bpanel.account_options.index(account_name)
-        self.bpanel.account_index = account_index
-        target_index = self.bpanel.target_options.index(target_name) if target_name else 0
-        self.bpanel.target_index = target_index
+        account_index = self.bpanel.account_list.index(account_name)
+        self.bpanel.account_list.select(account_index)
+        target_index = self.bpanel.target_list.index(target_name) if target_name else 0
+        self.bpanel.target_list.select(target_index)
         self.bpanel.amount = str_amount
         self.bpanel.save()
     

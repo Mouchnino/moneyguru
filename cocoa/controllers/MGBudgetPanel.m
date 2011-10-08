@@ -14,6 +14,8 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" parent:aParent];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
+    accountPopUp = [[HSPopUpList alloc] initWithPy:[[self py] accountList] view:accountSelector];
+    targetPopUp = [[HSPopUpList alloc] initWithPy:[[self py] targetList] view:targetSelector];
     return self;
 }
 
@@ -41,15 +43,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)loadFields
 {
-    [accountSelector removeAllItems];
-    [accountSelector addItemsWithTitles:[[self py] accountOptions]];
-    [targetSelector removeAllItems];
-    [targetSelector addItemsWithTitles:[[self py] targetOptions]];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
     [repeatEveryField setIntegerValue:[[self py] repeatEvery]];
-    [accountSelector selectItemAtIndex:[[self py] accountIndex]];
-    [targetSelector selectItemAtIndex:[[self py] targetIndex]];
     [amountField setStringValue:[[self py] amount]];
     [notesField setStringValue:[[self py] notes]];
 }
@@ -59,8 +55,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self py] setStartDate:[startDateField stringValue]];
     [[self py] setStopDate:[stopDateField stringValue]];
     [[self py] setRepeatEvery:[repeatEveryField intValue]];
-    [[self py] setAccountIndex:[accountSelector indexOfSelectedItem]];
-    [[self py] setTargetIndex:[targetSelector indexOfSelectedItem]];
     [[self py] setAmount:[amountField stringValue]];
     [[self py] setNotes:[notesField stringValue]];
 }

@@ -50,17 +50,17 @@ def test_attrs(app):
     eq_(app.bpanel.stop_date, '')
     eq_(app.bpanel.repeat_type_list.selected_index, 2) # monthly
     eq_(app.bpanel.repeat_every, 1)
-    eq_(app.bpanel.account_options, ['Some Income', 'Some Expense'])
-    eq_(app.bpanel.account_index, 1)
-    eq_(app.bpanel.target_options, ['None', 'asset', 'liability'])
-    eq_(app.bpanel.target_index, 0)
+    eq_(app.bpanel.account_list[:], ['Some Income', 'Some Expense'])
+    eq_(app.bpanel.account_list.selected_index, 1)
+    eq_(app.bpanel.target_list[:], ['None', 'asset', 'liability'])
+    eq_(app.bpanel.target_list.selected_index, 0)
     eq_(app.bpanel.amount, '100.00')
 
 @with_app(app_one_expense_with_budget)
 def test_edit_then_save(app):
     # Saving edits on the panel actually updates the budget
-    app.bpanel.account_index = 0 # Some Income
-    app.bpanel.target_index = 2 # liability
+    app.bpanel.account_list.select(0) # Some Income
+    app.bpanel.target_list.select(2) # liability
     app.bpanel.amount = '42'
     app.bpanel.notes = 'foobar'
     app.bpanel.save()
@@ -94,7 +94,7 @@ def test_new_budget(app):
     app.mainwindow.new_item()
     eq_(app.bpanel.start_date, '27/01/2008') # mocked date
     eq_(app.bpanel.repeat_type_list.selected_index, 2) # monthly
-    eq_(app.bpanel.account_index, 0)
-    eq_(app.bpanel.target_index, 0)
+    eq_(app.bpanel.account_list.selected_index, 0)
+    eq_(app.bpanel.target_list.selected_index, 0)
     app.bpanel.save()
     eq_(len(app.btable), 2) # has been added

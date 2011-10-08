@@ -26,14 +26,8 @@
 /* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
 "279.title" = "Stop Date";
 
-/* Class = "NSMenuItem"; title = "Account"; ObjectID = "297"; */
-"297.title" = "Account";
-
 /* Class = "NSTextFieldCell"; title = "Account"; ObjectID = "298"; */
 "298.title" = "Account";
-
-/* Class = "NSMenuItem"; title = "None"; ObjectID = "303"; */
-"303.title" = "None";
 
 /* Class = "NSTextFieldCell"; title = "Target"; ObjectID = "304"; */
 "304.title" = "Target";

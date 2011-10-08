@@ -12,6 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface PyBudgetPanel : PyPanel {}
 - (PySelectableList *)repeatTypeList;
+- (PySelectableList *)accountList;
+- (PySelectableList *)targetList;
+
 - (NSString *)startDate;
 - (void)setStartDate:(NSString *)startDate;
 - (NSString *)stopDate;
@@ -19,15 +22,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSInteger)repeatEvery;
 - (void)setRepeatEvery:(NSInteger)value;
 - (NSString *)repeatEveryDesc;
-- (NSInteger)accountIndex;
-- (void)setAccountIndex:(NSInteger)index;
-- (NSInteger)targetIndex;
-- (void)setTargetIndex:(NSInteger)index;
 - (NSString *)amount;
 - (void)setAmount:(NSString *)amount;
 - (NSString *)notes;
 - (void)setNotes:(NSString *)notes;
-
-- (NSArray *)accountOptions;
-- (NSArray *)targetOptions;
 @end

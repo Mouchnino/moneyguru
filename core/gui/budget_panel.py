@@ -9,18 +9,47 @@
 from datetime import date
 
 from hscommon.util import first
-
+from hscommon.gui.selectable_list import GUISelectableList
 from hscommon.trans import tr
+
 from ..exception import OperationAborted
 from ..model.account import sort_accounts
 from ..model.budget import Budget
 from .base import MainWindowPanel
 from .schedule_panel import PanelWithScheduleMixIn, REPEAT_OPTIONS_ORDER
 
+class AccountList(GUISelectableList):
+    def __init__(self, panel):
+        self.panel = panel
+        GUISelectableList.__init__(self)
+    
+    def _update_selection(self):
+        GUISelectableList._update_selection(self)
+        account = self.panel._accounts[self.selected_index]
+        self.panel.budget.account = account
+    
+    def refresh(self):
+        self[:] = [a.name for a in self.panel._accounts]
+
+class TargetList(GUISelectableList):
+    def __init__(self, panel):
+        self.panel = panel
+        GUISelectableList.__init__(self)
+    
+    def _update_selection(self):
+        GUISelectableList._update_selection(self)
+        target = self.panel._targets[self.selected_index]
+        self.panel.budget.target = target
+    
+    def refresh(self):
+        self[:] = [(a.name if a is not None else tr('None')) for a in self.panel._targets]
+
 class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
     def __init__(self, view, mainwindow):
         MainWindowPanel.__init__(self, view, mainwindow)
         self.create_repeat_type_list()
+        self.account_list = AccountList(self)
+        self.target_list = TargetList(self)
     
     #--- Override
     def _load(self):
@@ -31,8 +60,6 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
         self._load_budget(Budget(None, None, 0, date.today()))
     
     def _save(self):
-        self.budget.account = self._accounts[self.account_index]
-        self.budget.target = self._targets[self.target_index]
         self.document.change_budget(self.original, self.budget)
     
     #--- Private
@@ -52,10 +79,10 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
         self._targets = [a for a in self.document.accounts if a.is_balance_sheet_account()]
         sort_accounts(self._targets)
         self._targets.insert(0, None)
-        self.account_options = [a.name for a in self._accounts]
-        self.target_options = [(a.name if a is not None else tr('None')) for a in self._targets]
-        self.account_index = self._accounts.index(budget.account) if budget.account is not None else 0
-        self.target_index = self._targets.index(budget.target)
+        self.account_list.refresh()
+        self.account_list.select(self._accounts.index(budget.account) if budget.account is not None else 0)
+        self.target_list.refresh()
+        self.target_list.select(self._targets.index(budget.target))
         self.view.refresh_repeat_every()
     
     #--- Properties

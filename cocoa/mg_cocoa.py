@@ -891,6 +891,8 @@ class PyBudgetPanel(PyPanel):
     py_class = BudgetPanel
     
     repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
+    accountList = subproxy('accountList', 'account_list', PySelectableList)
+    targetList = subproxy('targetList', 'target_list', PySelectableList)
     
     def startDate(self):
         return self.py.start_date
@@ -915,22 +917,6 @@ class PyBudgetPanel(PyPanel):
     def repeatEveryDesc(self):
         return self.py.repeat_every_desc
     
-    @signature('i@:')
-    def accountIndex(self):
-        return self.py.account_index
-    
-    @signature('v@:i')
-    def setAccountIndex_(self, value):
-        self.py.account_index = value
-    
-    @signature('i@:')
-    def targetIndex(self):
-        return self.py.target_index
-    
-    @signature('v@:i')
-    def setTargetIndex_(self, value):
-        self.py.target_index = value
-    
     def amount(self):
         return self.py.amount
     
@@ -942,13 +928,6 @@ class PyBudgetPanel(PyPanel):
     
     def setNotes_(self, value):
         self.py.notes = value
-    
-    #--- Lists
-    def accountOptions(self):
-        return self.py.account_options
-    
-    def targetOptions(self):
-        return self.py.target_options
     
     #--- Python -> Cocoa
     def refresh_repeat_every(self):

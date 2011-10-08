@@ -23,6 +23,8 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTextField *notesField;
     
     HSPopUpList *repeatTypePopUp;
+    HSPopUpList *accountPopUp;
+    HSPopUpList *targetPopUp;
 }
 - (id)initWithParent:(HSWindowController *)aParent;
 - (PyBudgetPanel *)py;

@@ -25,8 +25,6 @@ class BudgetPanel(Panel):
         ('startDateEdit', 'start_date'),
         ('repeatEverySpinBox', 'repeat_every'),
         ('stopDateEdit', 'stop_date'),
-        ('accountComboBox', 'account_index'),
-        ('targetComboBox', 'target_index'),
         ('amountEdit', 'amount'),
         ('notesEdit', 'notes'),
     ]
@@ -36,6 +34,8 @@ class BudgetPanel(Panel):
         self._setupUi()
         self.model = BudgetPanelModel(view=self, mainwindow=mainwindow.model)
         self.repeatTypeComboBox = ComboboxModel(model=self.model.repeat_type_list, view=self.repeatTypeComboBoxView)
+        self.accountComboBox = ComboboxModel(model=self.model.account_list, view=self.accountComboBoxView)
+        self.targetComboBox = ComboboxModel(model=self.model.target_list, view=self.targetComboBoxView)
         
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
@@ -70,12 +70,12 @@ class BudgetPanel(Panel):
         self.stopDateEdit = DateEdit(self)
         self.stopDateEdit.setMaximumSize(QSize(120, 16777215))
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.stopDateEdit)
-        self.accountComboBox = QComboBox(self)
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.accountComboBox)
+        self.accountComboBoxView = QComboBox(self)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.accountComboBoxView)
         self.label_3 = QLabel(tr("Account:"))
         self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_3)
-        self.targetComboBox = QComboBox(self)
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.targetComboBox)
+        self.targetComboBoxView = QComboBox(self)
+        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.targetComboBoxView)
         self.label_4 = QLabel(tr("Target:"))
         self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_4)
         self.amountEdit = QLineEdit(self)
@@ -96,14 +96,9 @@ class BudgetPanel(Panel):
         self.label_7.setBuddy(self.repeatTypeComboBoxView)
         self.label_8.setBuddy(self.repeatEverySpinBox)
         self.label_9.setBuddy(self.stopDateEdit)
-        self.label_3.setBuddy(self.accountComboBox)
-        self.label_4.setBuddy(self.targetComboBox)
+        self.label_3.setBuddy(self.accountComboBoxView)
+        self.label_4.setBuddy(self.targetComboBoxView)
         self.label_5.setBuddy(self.amountEdit)
-    
-    def _loadFields(self):
-        self._changeComboBoxItems(self.accountComboBox, self.model.account_options)
-        self._changeComboBoxItems(self.targetComboBox, self.model.target_options)
-        Panel._loadFields(self)
     
     #--- model --> view
     def refresh_repeat_every(self):
