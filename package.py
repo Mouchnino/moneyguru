@@ -6,7 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import sys
 import os
 import os.path as op
 import compileall
@@ -14,14 +13,11 @@ import shutil
 import json
 
 from core.app import Application as MoneyGuru
+from hscommon.plat import ISWINDOWS, ISLINUX
 from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, copy_qt_plugins,
     print_and_do)
 
 def package_windows(dev):
-    if sys.platform != "win32":
-        print("Qt packaging only works under Windows.")
-        return
-    
     if op.exists('dist'):
         shutil.rmtree('dist')
     
@@ -87,9 +83,9 @@ def main():
     if ui == 'cocoa':
         build_dmg('cocoa/build/release/moneyGuru.app', '.')
     elif ui == 'qt':
-        if sys.platform == "win32":
+        if ISWINDOWS:
             package_windows(dev)
-        elif sys.platform == "linux2":
+        elif ISLINUX:
             package_debian()
         else:
             print("Qt packaging only works under Windows or Linux.")

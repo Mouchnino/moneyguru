@@ -6,7 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import sys
 import os.path as op
 
 from PyQt4.QtCore import QProcess, QUrl
@@ -15,6 +14,7 @@ from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
 
 from qtlib.recent import Recent
 from hscommon.trans import tr
+from hscommon.plat import ISLINUX
 from core.const import PaneType
 from core.gui.main_window import MainWindow as MainWindowModel
 
@@ -123,7 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.setGeometry(self.app.prefs.mainWindowRect)
 
         # Linux setup
-        if sys.platform == 'linux2':
+        if ISLINUX:
             self.actionCheckForUpdate.setVisible(False) # This only works on Windows
     
     def _bindSignals(self):

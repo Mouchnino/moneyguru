@@ -6,13 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import sys
 from optparse import OptionParser
 import json
 
+from hscommon.plat import ISOSX
+
 def main(ui, dev):
     if ui not in ('cocoa', 'qt'):
-        ui = 'cocoa' if sys.platform == 'darwin' else 'qt'
+        ui = 'cocoa' if ISOSX else 'qt'
     build_type = 'Dev' if dev else 'Release'
     print("Configuring moneyGuru for UI {0} ({1})".format(ui, build_type))
     conf = {

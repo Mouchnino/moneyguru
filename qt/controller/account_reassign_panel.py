@@ -11,9 +11,9 @@ from PyQt4.QtGui import (QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QSizePolic
     QPushButton)
 
 from hscommon.trans import tr as trbase
+from hscommon.plat import ISWINDOWS
 from core.gui.account_reassign_panel import AccountReassignPanel as AccountReassignPanelModel
 
-from .. import plat
 from .panel import Panel
 
 tr = lambda s: trbase(s, "AccountReassignPanel")
@@ -32,7 +32,7 @@ class AccountReassignPanel(Panel):
         self.cancelButton.clicked.connect(self.reject)
     
     def _setupUi(self):
-        if plat.isWindows():
+        if ISWINDOWS:
             self.resize(250, 140)
         else:
             self.resize(340, 165)

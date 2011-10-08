@@ -6,7 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import sys
 import os
 import os.path as op
 import shutil
@@ -16,6 +15,7 @@ from argparse import ArgumentParser
 from setuptools import setup, Extension
 
 from hscommon import sphinxgen
+from hscommon.plat import ISOSX
 from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
     build_all_qt_locs, move_all)
 
@@ -105,7 +105,7 @@ def build_help(dev):
         print("Generating devdocs")
         print_and_do('sphinx-build devdoc devdoc_html')
     print("Generating Help")
-    platform = 'osx' if sys.platform == 'darwin' else 'win'
+    platform = 'osx' if ISOSX else 'win'
     current_path = op.abspath('.')
     confpath = op.join(current_path, 'help', 'conf.tmpl')
     help_basepath = op.join(current_path, 'help', 'en')

@@ -19,6 +19,7 @@ from PyQt4.QtCore import QFile, QTextStream, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap, QDesktopServices
 
 import hscommon.trans
+from hscommon.plat import ISLINUX
 from qtlib.error_report_dialog import install_excepthook
 import qt.mg_rc
 
@@ -31,7 +32,7 @@ def main(argv):
     if not op.exists(appdata):
         os.makedirs(appdata)
     logging.basicConfig(filename=op.join(appdata, 'debug.log'), level=logging.WARNING)
-    if sys.platform == 'linux2':
+    if ISLINUX:
         stylesheetFile = QFile(':/stylesheet_lnx')
     else:
         stylesheetFile = QFile(':/stylesheet_win')

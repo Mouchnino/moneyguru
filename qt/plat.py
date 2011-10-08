@@ -6,22 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import sys
+from hscommon.plat import ISWINDOWS, ISLINUX, ISOSX
 
-def isWindows():
-    return sys.platform == 'win32'
-
-def isLinux():
-    return sys.platform == 'linux2'
-
-def isMac():
-    return sys.platform == 'darwin'
-
-if isWindows():
+if ISWINDOWS:
     from .plat_win import *
-elif isLinux():
+elif ISLINUX:
     from .plat_lnx import *
-elif isMac():
+elif ISOSX:
     from .plat_osx import *
 else:
     print("Unsupported platform")
