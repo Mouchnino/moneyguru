@@ -17,7 +17,7 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
-    build_all_qt_locs, get_xcode_version)
+    build_all_qt_locs, move_all)
 
 def parse_args():
     parser = ArgumentParser()
@@ -29,14 +29,6 @@ def parse_args():
         help="Build only localization")
     args = parser.parse_args()
     return args
-
-def move(src, dst):
-    if not op.exists(src):
-        return
-    if op.exists(dst):
-        os.remove(dst)
-    print('Moving %s --> %s' % (src, dst))
-    os.rename(src, dst)
 
 def build_all_cocoa_locs(basedir):
     locs = [name for name in os.listdir(basedir) if name.endswith('.lproj')]
@@ -140,8 +132,7 @@ def build_ext():
         script_args = ['build_ext', '--inplace'],
         ext_modules = exts,
     )
-    move('_amount.so', op.join('core', 'model', '_amount.so'))
-    move('_amount.pyd', op.join('core', 'model', '_amount.pyd'))
+    move_all('_amount*', op.join('core', 'model'))
 
 def build_normal(ui, dev):
     build_help(dev)
