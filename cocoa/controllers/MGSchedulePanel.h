@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 #import "MGTableView.h"
 #import "MGSplitTable.h"
+#import "HSPopUpList.h"
 #import "PySchedulePanel.h"
 
 @interface MGSchedulePanel : MGPanel {
@@ -17,7 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTextField *startDateField;
     IBOutlet NSTextField *repeatEveryField;
     IBOutlet NSTextField *repeatEveryDescLabel;
-    IBOutlet NSPopUpButton *repeatOptionsPopUp;
+    IBOutlet NSPopUpButton *repeatTypePopUpView;
     IBOutlet NSTextField *stopDateField;
     IBOutlet NSTextField *descriptionField;
     IBOutlet NSTextField *payeeField;
@@ -26,14 +27,13 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet MGTableView *splitTableView;
     
     MGSplitTable *splitTable;
+    HSPopUpList *repeatTypePopUp;
 }
 - (id)initWithParent:(HSWindowController *)aParent;
 - (PySchedulePanel *)py;
 /* Actions */
 - (IBAction)addSplit:(id)sender;
 - (IBAction)deleteSplit:(id)sender;
-- (IBAction)repeatTypeSelected:(id)sender;
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery;
-- (void)refreshRepeatOptions;
 @end

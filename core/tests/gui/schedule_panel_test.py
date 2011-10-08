@@ -54,22 +54,22 @@ def test_repeat_type_index(app):
     app.scpanel.repeat_every = 1
     eq_(app.scpanel.repeat_every_desc, 'day')
     app.check_gui_calls(app.scpanel_gui, ['refresh_repeat_every'])
-    app.scpanel.repeat_type_index = 1
+    app.scpanel.repeat_type_list.select(1)
     eq_(app.scpanel.repeat_every_desc, 'week')
-    app.scpanel.repeat_type_index = 2
+    app.scpanel.repeat_type_list.select(2)
     eq_(app.scpanel.repeat_every_desc, 'month')
-    app.scpanel.repeat_type_index = 3
+    app.scpanel.repeat_type_list.select(3)
     eq_(app.scpanel.repeat_every_desc, 'year')
-    app.scpanel.repeat_type_index = 4
+    app.scpanel.repeat_type_list.select(4)
     eq_(app.scpanel.repeat_every_desc, 'month')
-    app.scpanel.repeat_type_index = 5
+    app.scpanel.repeat_type_list.select(5)
     eq_(app.scpanel.repeat_every_desc, 'month')
 
 @with_app(app_daily_scheduled_txn)
 def test_repeat_options(app):
     # Repeat options depend on the txn's date. 13/09/2008 is the second saturday of July.
     expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every second Saturday of the month']
-    eq_(app.scpanel.repeat_options, expected)
+    eq_(app.scpanel.repeat_type_list[:], expected)
 
 @with_app(app_daily_scheduled_txn)
 def test_repeat_options_on_last_week(app):
@@ -77,9 +77,8 @@ def test_repeat_options_on_last_week(app):
     app.scpanel.start_date = '29/07/2008'
     expected = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'Every fifth Tuesday of the month',
                 'Every last Tuesday of the month']
-    eq_(app.scpanel.repeat_options, expected)
-    app.check_gui_calls(app.scpanel_gui, ['refresh_repeat_options'])
-
+    eq_(app.scpanel.repeat_type_list[:], expected)
+    app.scpanel.repeat_type_list.view.check_gui_calls(['refresh'])
 
 #--- Daily schedule loaded
 def app_daily_schedule_loaded():
@@ -89,7 +88,7 @@ def app_daily_schedule_loaded():
     app.scpanel.new()
     app.scpanel.start_date = '13/09/2008'
     app.scpanel.description = 'foobar'
-    app.scpanel.repeat_type_index = 0
+    app.scpanel.repeat_type_list.select(0)
     app.scpanel.repeat_every = 3
     app.scpanel.notes = 'some notes'
     app.scpanel.save()
@@ -103,7 +102,7 @@ def test_attrs():
     app = app_daily_schedule_loaded()
     eq_(app.scpanel.start_date, '13/09/2008')
     eq_(app.scpanel.stop_date, '')
-    eq_(app.scpanel.repeat_type_index, 0)
+    eq_(app.scpanel.repeat_type_list.selected_index, 0)
     eq_(app.scpanel.repeat_every, 3)
     eq_(app.scpanel.description, 'foobar')
     eq_(app.scpanel.notes, 'some notes')

@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyPanelWithTransaction.h"
+#import "PySelectableList.h"
 
 @interface PySchedulePanel : PyPanelWithTransaction {}
+- (PySelectableList *)repeatTypeList;
 - (NSString *)startDate;
 - (void)setStartDate:(NSString *)startDate;
 - (NSString *)stopDate;
@@ -18,7 +20,4 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSInteger)repeatEvery;
 - (void)setRepeatEvery:(NSInteger)value;
 - (NSString *)repeatEveryDesc;
-- (NSInteger)repeatTypeIndex;
-- (void)setRepeatTypeIndex:(NSInteger)value;
-- (NSArray *)repeatOptions;
 @end

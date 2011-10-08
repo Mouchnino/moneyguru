@@ -8,7 +8,8 @@
 import logging
 
 from hscommon.cocoa import install_exception_hook
-from hscommon.cocoa.inter import signature, PyGUIObject, PyTable, PyOutline, PyFairware, PySelectableList
+from hscommon.cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
+    PySelectableList)
 from hscommon.cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
     NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
@@ -626,16 +627,13 @@ class PyEntryFilterBar(PyFilterBarBase):
 class PyAccountPanel(PyPanel):
     py_class = AccountPanel
     
+    typeList = subproxy('typeList', 'type_list', PySelectableList)
+    
     def name(self):
         return self.py.name
     
     def setName_(self, name):
         self.py.name = name
-    
-    def typeList(self):
-        if not hasattr(self, '_typeList'):
-            self._typeList = PySelectableList.alloc().initWithPy_(self.py.type_list)
-        return self._typeList
     
     @signature('i@:')
     def currencyIndex(self):
@@ -860,6 +858,8 @@ class PyMassEditionPanel(PyPanel):
 class PySchedulePanel(PyPanelWithTransaction):
     py_class = SchedulePanel
     
+    repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
+    
     def startDate(self):
         return self.py.start_date
     
@@ -882,28 +882,15 @@ class PySchedulePanel(PyPanelWithTransaction):
     
     def repeatEveryDesc(self):
         return self.py.repeat_every_desc
-    
-    @signature('i@:')
-    def repeatTypeIndex(self):
-        return self.py.repeat_type_index
-    
-    @signature('v@:i')
-    def setRepeatTypeIndex_(self, value):
-        self.py.repeat_type_index = value
-    
-    def repeatOptions(self):
-        return self.py.repeat_options
     
     #--- Python -> Cocoa
     def refresh_repeat_every(self):
         self.cocoa.refreshRepeatEvery()
     
-    def refresh_repeat_options(self):
-        self.cocoa.refreshRepeatOptions()
-    
-
 class PyBudgetPanel(PyPanel):
     py_class = BudgetPanel
+    
+    repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
     
     def startDate(self):
         return self.py.start_date
@@ -927,14 +914,6 @@ class PyBudgetPanel(PyPanel):
     
     def repeatEveryDesc(self):
         return self.py.repeat_every_desc
-    
-    @signature('i@:')
-    def repeatTypeIndex(self):
-        return self.py.repeat_type_index
-    
-    @signature('v@:i')
-    def setRepeatTypeIndex_(self, value):
-        self.py.repeat_type_index = value
     
     @signature('i@:')
     def accountIndex(self):
@@ -965,9 +944,6 @@ class PyBudgetPanel(PyPanel):
         self.py.notes = value
     
     #--- Lists
-    def repeatOptions(self):
-        return self.py.repeat_options
-    
     def accountOptions(self):
         return self.py.account_options
     
@@ -977,9 +953,6 @@ class PyBudgetPanel(PyPanel):
     #--- Python -> Cocoa
     def refresh_repeat_every(self):
         self.cocoa.refreshRepeatEvery()
-    
-    def refresh_repeat_options(self):
-        self.cocoa.refreshRepeatOptions()
     
 
 class PyCustomDateRangePanel(PyPanel):

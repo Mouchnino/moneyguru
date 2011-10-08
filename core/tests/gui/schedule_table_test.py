@@ -19,7 +19,7 @@ def app_schedule():
     app.scpanel.new()
     app.scpanel.start_date = '13/09/2008'
     app.scpanel.description = 'foobar'
-    app.scpanel.repeat_type_index = 4
+    app.scpanel.repeat_type_list.select(4)
     app.scpanel.repeat_every = 3
     app.scpanel.stop_date = '13/12/2008'
     app.scpanel.save()

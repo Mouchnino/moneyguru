@@ -33,7 +33,7 @@ def test_make_schedule_from_selected(app):
     eq_(len(app.sctable), 0) # It's a *new* schedule, only added if we press save
     eq_(app.scpanel.start_date, '11/07/2008')
     eq_(app.scpanel.description, 'description')
-    eq_(app.scpanel.repeat_type_index, 2) # monthly
+    eq_(app.scpanel.repeat_type_list.selected_index, 2) # monthly
     eq_(app.scpanel.repeat_every, 1)
     app.scpanel.save()
     eq_(len(app.sctable), 1) # now we have it
@@ -47,7 +47,7 @@ def test_make_schedule_from_selected_weekly(app):
     # Previously, making a non-monthly schedule from a transaction would result in a duplicate
     # of the model txn.
     app.mw.make_schedule_from_selected()
-    app.scpanel.repeat_type_index = 1 # weekly
+    app.scpanel.repeat_type_list.select(1) # weekly
     app.scpanel.save()
     app.mw.select_transaction_table()
     eq_(app.ttable[1].date, '18/07/2008')

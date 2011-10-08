@@ -89,16 +89,16 @@ def test_new_budget():
     # Repeat options must be updated upon panel load
     app = app_cleared_gui_calls()
     app.add_account('income', account_type=AccountType.Income) # we need an account for the panel to load
-    app.mainwindow.select_budget_table()
-    app.mainwindow.new_item()
-    app.check_gui_calls_partial(app.bpanel_gui, ['refresh_repeat_options'])
+    app.mw.select_budget_table()
+    app.mw.new_item()
+    app.bpanel.repeat_type_list.view.check_gui_calls_partial(['refresh'])
 
 def test_new_schedule():
     # Repeat options and mct notices must be updated upon panel load
     app = app_cleared_gui_calls()
-    app.mainwindow.select_schedule_table()
-    app.mainwindow.new_item()
-    app.check_gui_calls_partial(app.scpanel_gui, ['refresh_repeat_options'])
+    app.mw.select_schedule_table()
+    app.mw.new_item()
+    app.scpanel.repeat_type_list.view.check_gui_calls_partial(['refresh'])
 
 @with_app(app_cleared_gui_calls)
 def test_select_mainwindow_next_previous_view(app):

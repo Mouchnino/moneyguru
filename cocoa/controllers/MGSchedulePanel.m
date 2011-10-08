@@ -14,12 +14,14 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
+    repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
     [splitTable connect];
     return self;
 }
 
 - (void)dealloc
 {
+    [repeatTypePopUp release];
     [splitTable release];
     [super dealloc];
 }
@@ -62,7 +64,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [tabView selectFirstTabViewItem:self];
     [startDateField setStringValue:[[self py] startDate]];
     [stopDateField setStringValue:[[self py] stopDate]];
-    [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
     [repeatEveryField setIntegerValue:[[self py] repeatEvery]];
     [descriptionField setStringValue:[[self py] description]];
     [payeeField setStringValue:[[self py] payee]];
@@ -75,7 +76,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [[self py] setStartDate:[startDateField stringValue]];
     [[self py] setStopDate:[stopDateField stringValue]];
-    [[self py] setRepeatTypeIndex:[repeatOptionsPopUp indexOfSelectedItem]];
     [[self py] setRepeatEvery:[repeatEveryField intValue]];
     [[self py] setDescription:[descriptionField stringValue]];
     [[self py] setPayee:[payeeField stringValue]];
@@ -100,12 +100,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [[splitTable py] deleteSelectedRows];
 }
 
-- (IBAction)repeatTypeSelected:(id)sender
-{
-    // The label next to the "every" field has to be updated as soon as the popup selection changes
-    [[self py] setRepeatTypeIndex:[repeatOptionsPopUp indexOfSelectedItem]];
-}
-
 /* Python --> Cocoa */
 - (void)refreshForMultiCurrency
 {
@@ -114,15 +108,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)refreshRepeatEvery
 {
     [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
-}
-
-- (void)refreshRepeatOptions
-{
-    NSInteger index = [repeatOptionsPopUp indexOfSelectedItem];
-    [repeatOptionsPopUp removeAllItems];
-    NSArray *options = [[self py] repeatOptions];
-    [repeatOptionsPopUp addItemsWithTitles:options];
-    [repeatOptionsPopUp selectItemAtIndex:index];
 }
 
 /* Delegate */

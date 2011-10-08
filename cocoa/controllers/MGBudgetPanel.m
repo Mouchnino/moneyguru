@@ -13,7 +13,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" parent:aParent];
+    repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
     return self;
+}
+
+- (void)dealloc
+{
+    [repeatTypePopUp release];
+    [super dealloc];
 }
 
 - (PyBudgetPanel *)py
@@ -51,7 +58,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [[self py] setStartDate:[startDateField stringValue]];
     [[self py] setStopDate:[stopDateField stringValue]];
-    [[self py] setRepeatTypeIndex:[repeatOptionsPopUp indexOfSelectedItem]];
     [[self py] setRepeatEvery:[repeatEveryField intValue]];
     [[self py] setAccountIndex:[accountSelector indexOfSelectedItem]];
     [[self py] setTargetIndex:[targetSelector indexOfSelectedItem]];
@@ -59,25 +65,10 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self py] setNotes:[notesField stringValue]];
 }
 
-/* Actions */
-- (IBAction)repeatTypeSelected:(id)sender
-{
-    // The label next to the "every" field has to be updated as soon as the popup selection changes
-    [[self py] setRepeatTypeIndex:[repeatOptionsPopUp indexOfSelectedItem]];
-}
-
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery
 {
     [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
-}
-
-- (void)refreshRepeatOptions
-{
-    [repeatOptionsPopUp removeAllItems];
-    NSArray *options = [[self py] repeatOptions];
-    [repeatOptionsPopUp addItemsWithTitles:options];
-    [repeatOptionsPopUp selectItemAtIndex:[[self py] repeatTypeIndex]];
 }
 
 /* Delegate */

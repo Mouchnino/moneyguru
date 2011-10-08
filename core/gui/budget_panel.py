@@ -18,6 +18,10 @@ from .base import MainWindowPanel
 from .schedule_panel import PanelWithScheduleMixIn, REPEAT_OPTIONS_ORDER
 
 class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
+    def __init__(self, view, mainwindow):
+        MainWindowPanel.__init__(self, view, mainwindow)
+        self.create_repeat_type_list()
+    
     #--- Override
     def _load(self):
         budget = first(self.mainwindow.selected_budgets)
@@ -27,7 +31,6 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
         self._load_budget(Budget(None, None, 0, date.today()))
     
     def _save(self):
-        self.budget.repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
         self.budget.account = self._accounts[self.account_index]
         self.budget.target = self._targets[self.target_index]
         self.document.change_budget(self.original, self.budget)
@@ -39,7 +42,8 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
         self.original = budget
         self.budget = budget.replicate()
         self.schedule = self.budget # for PanelWithScheduleMixIn
-        self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(budget.repeat_type)
+        self.repeat_type_list.refresh()
+        self.repeat_type_list.select(REPEAT_OPTIONS_ORDER.index(budget.repeat_type))
         self._accounts = [a for a in self.document.accounts if a.is_income_statement_account()]
         if not self._accounts:
             msg = tr("Income/Expense accounts must be created before budgets can be set.")
@@ -52,7 +56,6 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
         self.target_options = [(a.name if a is not None else tr('None')) for a in self._targets]
         self.account_index = self._accounts.index(budget.account) if budget.account is not None else 0
         self.target_index = self._targets.index(budget.target)
-        self.view.refresh_repeat_options()
         self.view.refresh_repeat_every()
     
     #--- Properties

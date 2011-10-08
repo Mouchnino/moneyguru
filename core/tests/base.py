@@ -165,9 +165,11 @@ class TestApp(TestAppBase):
         make_gui('apanel', AccountPanel)
         self.apanel.type_list.view = self.make_logger()
         make_gui('scpanel', SchedulePanel)
+        self.scpanel.repeat_type_list.view = self.make_logger()
         make_gui('tpanel', TransactionPanel)
         make_gui('mepanel', MassEditionPanel)
         make_gui('bpanel', BudgetPanel)
+        self.bpanel.repeat_type_list.view = self.make_logger()
         make_gui('cdrpanel', CustomDateRangePanel)
         make_gui('arpanel', AccountReassignPanel)
         make_gui('expanel', ExportPanel)
@@ -299,7 +301,7 @@ class TestApp(TestAppBase):
         if start_date is None:
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
         self.bpanel.start_date = start_date
-        self.bpanel.repeat_type_index = repeat_type_index
+        self.bpanel.repeat_type_list.select(repeat_type_index)
         self.bpanel.repeat_every = repeat_every
         if stop_date is not None:
             self.bpanel.stop_date = stop_date
@@ -347,7 +349,7 @@ class TestApp(TestAppBase):
         self.scpanel.new()
         self.scpanel.start_date = start_date
         self.scpanel.description = description
-        self.scpanel.repeat_type_index = repeat_type_index
+        self.scpanel.repeat_type_list.select(repeat_type_index)
         self.scpanel.repeat_every = repeat_every
         if stop_date is not None:
             self.scpanel.stop_date = stop_date

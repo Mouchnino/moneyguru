@@ -17,15 +17,6 @@
 /* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "226"; */
 "226.title" = "Repeat";
 
-/* Class = "NSMenuItem"; title = "Never"; ObjectID = "230"; */
-"230.title" = "Never";
-
-/* Class = "NSMenuItem"; title = "Daily"; ObjectID = "231"; */
-"231.title" = "Daily";
-
-/* Class = "NSMenuItem"; title = "Montly"; ObjectID = "232"; */
-"232.title" = "Montly";
-
 /* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
 "234.title" = "Every";
 

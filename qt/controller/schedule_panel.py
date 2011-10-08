@@ -11,6 +11,7 @@ from PyQt4.QtGui import (QWidget, QHBoxLayout, QVBoxLayout, QFormLayout, QLabel,
     QComboBox, QSizePolicy, QPlainTextEdit, QDialogButtonBox, QTabWidget, QSpinBox,
     QAbstractItemView, QSpacerItem, QPushButton, QIcon, QPixmap)
 
+from qtlib.selectable_list import ComboboxModel
 from hscommon.trans import tr as trbase
 
 from core.gui.schedule_panel import SchedulePanel as SchedulePanelModel
@@ -26,7 +27,6 @@ tr = lambda s: trbase(s, "SchedulePanel")
 class SchedulePanel(Panel):
     FIELDS = [
         ('startDateEdit', 'start_date'),
-        ('repeatTypeComboBox', 'repeat_type_index'),
         ('repeatEverySpinBox', 'repeat_every'),
         ('stopDateEdit', 'stop_date'),
         ('descriptionEdit', 'description'),
@@ -42,6 +42,7 @@ class SchedulePanel(Panel):
         self.model = SchedulePanelModel(view=self, mainwindow=mainwindow.model)
         self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
         self.splitTable.model.connect()
+        self.repeatTypeComboBox = ComboboxModel(model=self.model.repeat_type_list, view=self.repeatTypeComboBoxView)
         
         self.addSplitButton.clicked.connect(self.splitTable.model.add)
         self.removeSplitButton.clicked.connect(self.splitTable.model.delete)
@@ -64,8 +65,8 @@ class SchedulePanel(Panel):
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.startDateEdit)
         self.label_7 = QLabel(tr("Repeat Type:"))
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_7)
-        self.repeatTypeComboBox = QComboBox(self.tab)
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.repeatTypeComboBox)
+        self.repeatTypeComboBoxView = QComboBox(self.tab)
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.repeatTypeComboBoxView)
         self.label_8 = QLabel(tr("Every:"))
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_8)
         self.horizontalLayout_2 = QHBoxLayout()
@@ -139,7 +140,7 @@ class SchedulePanel(Panel):
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Save)
         self.verticalLayout_2.addWidget(self.buttonBox)
         self.label_2.setBuddy(self.startDateEdit)
-        self.label_7.setBuddy(self.repeatTypeComboBox)
+        self.label_7.setBuddy(self.repeatTypeComboBoxView)
         self.label_3.setBuddy(self.descriptionEdit)
         self.label_4.setBuddy(self.payeeEdit)
         self.label_5.setBuddy(self.checkNoEdit)
@@ -156,7 +157,4 @@ class SchedulePanel(Panel):
     
     def refresh_repeat_every(self):
         self.repeatEveryDescLabel.setText(self.model.repeat_every_desc)
-    
-    def refresh_repeat_options(self):
-        self._changeComboBoxItems(self.repeatTypeComboBox, self.model.repeat_options)
     

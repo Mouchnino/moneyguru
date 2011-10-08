@@ -9,6 +9,7 @@
 from datetime import date
 
 from hscommon.util import first
+from hscommon.gui.selectable_list import GUISelectableList
 from hscommon.trans import tr
 
 from ..exception import OperationAborted
@@ -30,6 +31,22 @@ REPEAT_EVERY_DESCS = {
     RepeatType.WeekdayLast: 'month',
 }
 
+class RepeatTypeList(GUISelectableList):
+    def __init__(self, panel):
+        self.panel = panel
+        GUISelectableList.__init__(self)
+    
+    def _update_selection(self):
+        GUISelectableList._update_selection(self)
+        repeat_type = REPEAT_OPTIONS_ORDER[self.selected_index]
+        self.panel.repeat_type = repeat_type
+    
+    def refresh(self):
+        descs = [self.panel.schedule.rtype2desc[rtype] for rtype in REPEAT_OPTIONS_ORDER]
+        # remove empty descs
+        descs = [desc for desc in descs if desc]
+        self[:] = descs
+
 class PanelWithScheduleMixIn:
     @property
     def start_date(self):
@@ -41,7 +58,7 @@ class PanelWithScheduleMixIn:
         if date == self.schedule.start_date:
             return
         self.schedule.start_date = date
-        self.view.refresh_repeat_options()
+        self.repeat_type_list.refresh()
     
     @property
     def stop_date(self):
@@ -68,32 +85,30 @@ class PanelWithScheduleMixIn:
     
     @property
     def repeat_every_desc(self):
-        repeat_option = REPEAT_OPTIONS_ORDER[self._repeat_type_index]
-        desc = REPEAT_EVERY_DESCS[repeat_option]
+        desc = REPEAT_EVERY_DESCS[self.schedule.repeat_type]
         if desc and self.schedule.repeat_every > 1:
             desc += 's'
         return tr(desc)
     
     @property
-    def repeat_options(self):
-        descs = [self.schedule.rtype2desc[rtype] for rtype in REPEAT_OPTIONS_ORDER]
-        # remove empty descs
-        descs = [desc for desc in descs if desc]
-        return descs
+    def repeat_type(self):
+        return self.schedule.repeat_type
     
-    @property
-    def repeat_type_index(self):
-        return self._repeat_type_index
-    
-    @repeat_type_index.setter
-    def repeat_type_index(self, value):
-        if value == self._repeat_type_index:
+    @repeat_type.setter
+    def repeat_type(self, value):
+        if value == self.schedule.repeat_type:
             return
-        self._repeat_type_index = value
+        self.schedule.repeat_type = value
         self.view.refresh_repeat_every()
     
+    def create_repeat_type_list(self):
+        self.repeat_type_list = RepeatTypeList(self)
 
 class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
+    def __init__(self, view, mainwindow):
+        PanelWithTransaction.__init__(self, view, mainwindow)
+        self.create_repeat_type_list()
+    
     #--- Override
     def _load(self):
         schedule = first(self.mainwindow.selected_schedules)
@@ -103,11 +118,11 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
         self._load_schedule(Recurrence(Transaction(date.today(), amount=0), RepeatType.Monthly, 1))
     
     def _save(self):
-        repeat_type = REPEAT_OPTIONS_ORDER[self.repeat_type_index]
+        repeat_type = self.schedule.repeat_type
         repeat_every = self.schedule.repeat_every
         stop_date = self.schedule.stop_date
         self.document.change_schedule(self.original, self.transaction, repeat_type=repeat_type,
-                                      repeat_every=repeat_every, stop_date=stop_date)
+            repeat_every=repeat_every, stop_date=stop_date)
     
     #--- Private
     def _load_schedule(self, schedule):
@@ -116,8 +131,8 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
         self.original = schedule
         self.schedule = schedule.replicate()
         self.transaction = self.schedule.ref
-        self._repeat_type_index = REPEAT_OPTIONS_ORDER.index(schedule.repeat_type)
-        self.view.refresh_repeat_options()
+        self.repeat_type_list.refresh()
+        self.repeat_type_list.select(REPEAT_OPTIONS_ORDER.index(schedule.repeat_type))
         self.view.refresh_repeat_every()
         self.notify('panel_loaded')
     

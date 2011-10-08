@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
+#import "PySelectableList.h"
 
 @interface PyBudgetPanel : PyPanel {}
+- (PySelectableList *)repeatTypeList;
 - (NSString *)startDate;
 - (void)setStartDate:(NSString *)startDate;
 - (NSString *)stopDate;
@@ -17,9 +19,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSInteger)repeatEvery;
 - (void)setRepeatEvery:(NSInteger)value;
 - (NSString *)repeatEveryDesc;
-- (NSInteger)repeatTypeIndex;
-- (void)setRepeatTypeIndex:(NSInteger)value;
-- (NSArray *)repeatOptions;
 - (NSInteger)accountIndex;
 - (void)setAccountIndex:(NSInteger)index;
 - (NSInteger)targetIndex;
