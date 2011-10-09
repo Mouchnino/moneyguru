@@ -15,8 +15,6 @@ Následuje seznam přímých i nepřímých spolupracovníků, kteří se podíl
 
 | **Roberto Padovani, Italská lokalizace**
 
-| **Eric Dee, Chinese localization**
-
 | **Aleš Nehyba, Czech localization**
 
 | **Programovací jazyk Python** (`Website <http://www.python.org>`__)

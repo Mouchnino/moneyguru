@@ -15,8 +15,6 @@ Voici la liste des contributeurs de moneyGuru. Merci!
 
 | **Roberto Padovani, localisation italienne**
 
-| **Eric Dee, localisation chinoise**
-
 | **Aleš Nehyba, localisation tchèque**
 
 | **Python, Langage de programmation** (`Site web <http://www.python.org>`__)

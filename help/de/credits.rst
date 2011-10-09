@@ -15,6 +15,8 @@ Liste aller direkten sowie indirekten Personen / Projekte, die einen Beitrag gel
 
 | **Roberto Padovani, Italian localization**
 
+| **Aleš Nehyba, Czech localization**
+
 | **Python, programming language** (`Website <http://www.python.org>`__)
 | Die beste der Besten
 
