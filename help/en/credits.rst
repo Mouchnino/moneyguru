@@ -15,6 +15,10 @@ Below is the list of direct or indirect contributors to moneyGuru. Thanks!
 
 | **Roberto Padovani, Italian localization**
 
+| **Eric Dee, Chinese localization**
+
+| **Aleš Nehyba, Czech localization**
+
 | **Python, Programming language** (`Website <http://www.python.org>`__)
 | The bestest of the bests
 

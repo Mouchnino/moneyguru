@@ -15,6 +15,10 @@ Di seguito la lista di chi ha contribuito direttamente o indirettamente a moneyG
 
 | **Roberto Padovani, Italian localization**
 
+| **Eric Dee, Chinese localization**
+
+| **Aleš Nehyba, Czech localization**
+
 | **Python, linguaggio di programmazione** (`Website <http://www.python.org>`__)
 | Il migliore tra i migliori
 
