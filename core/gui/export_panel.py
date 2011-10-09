@@ -6,20 +6,19 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.notify import Broadcaster
-
 from ..saver.csv import save as save_csv
 from ..saver.qif import save as save_qif
 from .base import MainWindowPanel
+from .export_account_table import ExportAccountTable
 
 class ExportFormat:
     QIF = 0
     CSV = 1
 
-class ExportPanel(MainWindowPanel, Broadcaster):
+class ExportPanel(MainWindowPanel):
     def __init__(self, view, mainwindow):
         MainWindowPanel.__init__(self, view, mainwindow)
-        Broadcaster.__init__(self)
+        self.account_table = ExportAccountTable(self)
     
     def _load(self):
         self.accounts = [a for a in self.document.accounts if a.is_balance_sheet_account()]
@@ -27,7 +26,7 @@ class ExportPanel(MainWindowPanel, Broadcaster):
         self.export_all = True
         self.export_format = ExportFormat.QIF
         self.export_path = None
-        self.notify('panel_loaded')
+        self.account_table.refresh()
     
     def _save(self):
         accounts = self.accounts

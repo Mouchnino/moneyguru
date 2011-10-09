@@ -229,7 +229,7 @@ def test_export_panel(app):
     app.expanel.export_all = False
     # We enable the table, and because there's no account selected, we disable the export button
     app.check_gui_calls(app.expanel_gui, ['set_table_enabled', 'set_export_button_enabled'])    
-    app.expanel.table[0].export = True
+    app.expanel.account_table[0].export = True
     app.check_gui_calls(app.expanel_gui, ['set_export_button_enabled'])    
 
 #--- One transaction

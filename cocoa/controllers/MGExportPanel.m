@@ -17,8 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"ExportPanel" pyClassName:@"PyExportPanel" parent:aParent];
-    accountTable = [[MGExportAccountTable alloc] initWithPyParent:[self py] view:accountTableView];
-    [accountTable connect];
+    accountTable = [[MGExportAccountTable alloc] initWithPy:[[self py] accountTable] view:accountTableView];
     return self;
 }
 

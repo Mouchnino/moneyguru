@@ -48,7 +48,6 @@ from core.gui.date_widget import DateWidget
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
 from core.gui.export_panel import ExportPanel
-from core.gui.export_account_table import ExportAccountTable
 from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
@@ -512,9 +511,6 @@ class PyBudgetTable(PyTable):
 class PyCashculatorAccountTable(PyTable):
     py_class = CashculatorAccountTable
 
-class PyExportAccountTable(PyTable):
-    py_class = ExportAccountTable
-
 class PyGeneralLedgerTable(PyTableWithDate):
     py_class = GeneralLedgerTable
 
@@ -931,6 +927,8 @@ class PyAccountReassignPanel(PyPanel):
 
 class PyExportPanel(PyPanel):
     py_class = ExportPanel
+    
+    accountTable = subproxy('accountTable', 'account_table', PyTable)
     
     @signature('c@:')
     def exportAll(self):

@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
+#import "PyTable.h"
 
 @interface PyExportPanel : PyPanel {}
+- (PyTable *)accountTable;
 - (BOOL)exportAll;
 - (void)setExportAll:(BOOL)value;
 - (NSString *)exportPath;

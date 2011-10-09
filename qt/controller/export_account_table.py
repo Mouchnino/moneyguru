@@ -11,7 +11,6 @@ from PyQt4.QtGui import QHeaderView
 
 from qtlib.column import Column
 from hscommon.trans import tr
-from core.gui.export_account_table import ExportAccountTable as ExportAccountTableModel
 from .table import Table
 
 class ExportAccountTable(Table):
@@ -20,8 +19,7 @@ class ExportAccountTable(Table):
         Column('export', tr('Export'), 60),
     ]
         
-    def __init__(self, exportPanel, view):
-        model = ExportAccountTableModel(view=self, export_panel=exportPanel.model)
+    def __init__(self, model, view):
         Table.__init__(self, model, view)
         view.horizontalHeader().setResizeMode(0, QHeaderView.Stretch)
         view.horizontalHeader().setResizeMode(1, QHeaderView.Fixed)

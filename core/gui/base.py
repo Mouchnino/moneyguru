@@ -158,23 +158,20 @@ class ViewChild(Listener, HideableObject, DocumentNotificationsMixin, MainWindow
             Listener.dispatch(self, msg)
     
 
-class PanelGUIObject(Listener):
+class TransactionPanelGUIObject(Listener):
     def __init__(self, view, panel):
         Listener.__init__(self, panel)
         self.view = view
         self.panel = panel
     
-    def panel_loaded(self):
-        pass
-    
-
-class TransactionPanelGUIObject(PanelGUIObject):
     def edition_must_stop(self):
         pass
     
     def split_changed(self):
         pass
     
+    def panel_loaded(self):
+        pass
 
 class ImportWindowGUIObject(Listener):
     def __init__(self, view, window):

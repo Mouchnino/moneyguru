@@ -22,7 +22,7 @@ def test_account_table_order(app):
     app.add_account('b', account_type=AccountType.Income) # not shown
     app.add_account('a', account_type=AccountType.Expense) # not shown
     app.mw.export()
-    t = app.expanel.table
+    t = app.expanel.account_table
     eq_(len(t), 2)
     eq_(t[0].name, 'd')
     eq_(t[1].name, 'c')
@@ -32,7 +32,7 @@ def test_default_values(app):
     app.add_account('foo')
     app.mw.export()
     assert app.expanel.export_all
-    assert not app.expanel.table[0].export
+    assert not app.expanel.account_table[0].export
     assert app.expanel.export_path is None
 
 @with_app(TestApp)
@@ -40,7 +40,7 @@ def test_export_only_one_account(app):
     app.add_accounts('foobar', 'foobaz')
     app.mw.export()
     app.expanel.export_all = False
-    app.expanel.table[0].export = True
+    app.expanel.account_table[0].export = True
     expath = str(app.tmppath() + 'foo.qif')
     app.expanel.export_path = expath
     app.expanel.save()

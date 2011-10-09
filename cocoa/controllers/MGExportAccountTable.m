@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 
 @implementation MGExportAccountTable
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyExportAccountTable" pyParent:aPyParent view:aTableView];
+    self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     return self;
 }

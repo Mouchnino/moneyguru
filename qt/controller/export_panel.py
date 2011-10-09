@@ -31,8 +31,7 @@ class ExportPanel(Panel):
         self.mainwindow = mainwindow
         self._setupUi()
         self.model = ExportPanelModel(view=self, mainwindow=mainwindow.model)
-        self.accountTable = ExportAccountTable(self, view=self.tableView)
-        self.accountTable.model.connect()
+        self.accountTable = ExportAccountTable(model=self.model.account_table, view=self.tableView)
         
         self.exportTypeButtons.buttonClicked[int].connect(self.exportTypeSelected)
         self.exportFormatButtons.buttonClicked[int].connect(self.exportFormatSelected)

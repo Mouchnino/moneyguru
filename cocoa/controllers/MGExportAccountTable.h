@@ -10,6 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGEditableTable.h"
 
 @interface MGExportAccountTable : MGEditableTable {}
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 @end

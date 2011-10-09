@@ -7,14 +7,13 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from ..model.account import ACCOUNT_SORT_KEY
-from .base import PanelGUIObject
 from .column import Column
 from .table import GUITable, Row
 
-class ExportAccountTable(GUITable, PanelGUIObject):
-    def __init__(self, view, export_panel):
-        PanelGUIObject.__init__(self, view, export_panel)
+class ExportAccountTable(GUITable):
+    def __init__(self, export_panel):
         self.document = export_panel.document
+        self.panel = export_panel
         GUITable.__init__(self)
     
     #--- Override
@@ -22,10 +21,6 @@ class ExportAccountTable(GUITable, PanelGUIObject):
         accounts = sorted(self.panel.accounts, key=ACCOUNT_SORT_KEY)
         for account in accounts:
             self.append(ExportAccountTableRow(self, account))
-    
-    #--- Event Handlers
-    def panel_loaded(self):
-        self.refresh()
     
 
 class ExportAccountTableRow(Row):

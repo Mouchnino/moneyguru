@@ -38,7 +38,6 @@ from ..gui.date_range_selector import DateRangeSelector
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
 from ..gui.export_panel import ExportPanel
-from ..gui.export_account_table import ExportAccountTable
 from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from ..gui.general_ledger_table import GeneralLedgerTable
 from ..gui.general_ledger_view import GeneralLedgerView
@@ -55,7 +54,6 @@ from ..gui.schedule_panel import SchedulePanel
 from ..gui.schedule_table import ScheduleTable
 from ..gui.schedule_view import ScheduleView
 from ..gui.search_field import SearchField
-from ..gui.split_table import SplitTable
 from ..gui.transaction_panel import TransactionPanel
 from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
@@ -178,7 +176,7 @@ class TestApp(TestAppBase):
         make_gui('cdrpanel', CustomDateRangePanel)
         make_gui('arpanel', AccountReassignPanel)
         make_gui('expanel', ExportPanel)
-        make_table_gui('table', ExportAccountTable, parent=self.expanel, holder=self.expanel)
+        self.expanel.account_table.view = self.make_logger()
         make_gui('balgraph', AccountBalanceGraph, parent=self.aview)
         make_gui('bargraph', AccountFlowGraph, parent=self.aview)
         make_gui('nwgraph', NetWorthGraph, parent=self.nwview)
@@ -228,7 +226,6 @@ class TestApp(TestAppBase):
         self.iwin.connect()
         self.itable.connect()
         self.csvopt.connect()
-        self.expanel.table.connect()
     
     def tmppath(self):
         if self._tmppath is None:
