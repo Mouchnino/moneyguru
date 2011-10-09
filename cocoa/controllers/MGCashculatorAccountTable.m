@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)initializeColumns
 {
-    MGColumnDef defs[] = {
+    HSColumnDef defs[] = {
         {@"name", @"Account", 100, 20, 0, NO, nil},
         {@"recurring", @"Recurring", 60, 60, 60, NO, [NSButtonCell class]},
         nil

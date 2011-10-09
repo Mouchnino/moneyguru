@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)initializeColumns
 {
-    MGColumnDef defs[] = {
+    HSColumnDef defs[] = {
         /* Account column is defined in XIB */
         {@"account_number", @"Account #", 64, 10, 0, NO, nil},
         {@"end", @"End", 100, 10, 0, NO, [MGAmountCell class]},

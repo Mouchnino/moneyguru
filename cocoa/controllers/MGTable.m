@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
-    columns = [[MGColumns alloc] initWithPyParent:[self py] tableView:aTableView];
+    columns = [[HSColumns alloc] initWithPyParent:[self py] tableView:aTableView];
     return self;
 }
 
@@ -50,7 +50,7 @@ http://www.hardcoded.net/licenses/bsd_license
     return (MGTableView *)tableView;
 }
 
-- (MGColumns *)columns
+- (HSColumns *)columns
 {
     return columns;
 }

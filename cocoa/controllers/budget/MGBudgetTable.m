@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)initializeColumns
 {
-    MGColumnDef defs[] = {
+    HSColumnDef defs[] = {
         {@"start_date", @"Start Date", 80, 60, 0, YES, nil},
         {@"stop_date", @"Stop Date", 80, 60, 0, YES, nil},
         {@"repeat_type", @"Repeat Type", 80, 60, 0, YES, nil},

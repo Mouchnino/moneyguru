@@ -23,7 +23,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)initializeColumns
 {
-    MGColumnDef defs[] = {
+    HSColumnDef defs[] = {
         {@"account", @"Account", 90, 40, 0, NO, nil},
         {@"memo", @"Memo #", 44, 10, 0, NO, nil},
         {@"debit", @"Debit", 90, 40, 0, NO, nil},

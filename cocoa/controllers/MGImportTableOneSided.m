@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)initializeColumns
 {
-    MGColumnDef defs[] = {
+    HSColumnDef defs[] = {
         {@"will_import", @"", 14, 14, 14, NO, [NSButtonCell class]},
         {@"date_import", @"Date", 80, 10, 0, NO, nil},
         {@"description_import", @"Description", 120, 10, 0, NO, nil},

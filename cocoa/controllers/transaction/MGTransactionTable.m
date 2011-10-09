@@ -27,7 +27,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)initializeColumns
 {
-    MGColumnDef defs[] = {
+    HSColumnDef defs[] = {
         {@"status", @"", 16, 16, 16, NO, [MGReconciliationCell class]},
         {@"date", @"Date", 80, 60, 0, YES, nil},
         {@"checkno", @"Check #", 72, 40, 0, YES, nil},
