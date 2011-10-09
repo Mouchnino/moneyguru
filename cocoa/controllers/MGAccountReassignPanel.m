@@ -13,7 +13,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"AccountReassignPanel" pyClassName:@"PyAccountReassignPanel" parent:aParent];
+    accountPopUp = [[HSPopUpList alloc] initWithPy:[[self py] accountList] view:accountSelector];
     return self;
+}
+
+- (void)dealloc
+{
+    [accountPopUp release];
+    [super dealloc];
 }
 
 - (PyAccountReassignPanel *)py
@@ -25,17 +32,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSResponder *)firstField
 {
     return accountSelector;
-}
-
-- (void)loadFields
-{
-    [accountSelector removeAllItems];
-    [accountSelector addItemsWithTitles:[[self py] availableAccounts]];
-    [accountSelector selectItemAtIndex:[[self py] accountIndex]];
-}
-
-- (void)saveFields
-{
-    [[self py] setAccountIndex:[accountSelector indexOfSelectedItem]];
 }
 @end

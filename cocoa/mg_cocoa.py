@@ -967,17 +967,7 @@ class PyCustomDateRangePanel(PyPanel):
 class PyAccountReassignPanel(PyPanel):
     py_class = AccountReassignPanel
     
-    def availableAccounts(self):
-        return self.py.available_accounts
-    
-    @signature('i@:')
-    def accountIndex(self):
-        return self.py.account_index
-    
-    @signature('v@:i')
-    def setAccountIndex_(self, value):
-        self.py.account_index = value
-    
+    accountList = subproxy('accountList', 'account_list', PySelectableList)
 
 class PyExportPanel(PyPanel):
     py_class = ExportPanel

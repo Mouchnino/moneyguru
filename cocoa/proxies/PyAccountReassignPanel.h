@@ -8,9 +8,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
+#import "PySelectableList.h"
 
 @interface PyAccountReassignPanel : PyPanel {}
-- (NSArray *)availableAccounts;
-- (NSInteger)accountIndex;
-- (void)setAccountIndex:(NSInteger)index;
+- (PySelectableList *)accountList;
 @end

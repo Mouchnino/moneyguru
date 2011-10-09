@@ -9,10 +9,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "MGDocument.h"
 #import "MGPanel.h"
+#import "HSPopUpList.h"
 #import "PyAccountReassignPanel.h"
 
 @interface MGAccountReassignPanel : MGPanel {
     IBOutlet NSPopUpButton *accountSelector;
+    
+    HSPopUpList *accountPopUp;
 }
 - (id)initWithParent:(HSWindowController *)aParent;
 - (PyAccountReassignPanel *)py;

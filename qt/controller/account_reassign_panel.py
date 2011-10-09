@@ -10,8 +10,10 @@ from PyQt4.QtCore import QSize
 from PyQt4.QtGui import (QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QSizePolicy, QSpacerItem,
     QPushButton)
 
+from qtlib.selectable_list import ComboboxModel
 from hscommon.trans import tr as trbase
 from hscommon.plat import ISWINDOWS
+
 from core.gui.account_reassign_panel import AccountReassignPanel as AccountReassignPanelModel
 
 from .panel import Panel
@@ -19,14 +21,11 @@ from .panel import Panel
 tr = lambda s: trbase(s, "AccountReassignPanel")
 
 class AccountReassignPanel(Panel):
-    FIELDS = [
-        ('accountComboBox', 'account_index'),
-    ]
-    
     def __init__(self, parent, mainwindow):
         Panel.__init__(self, parent)
         self._setupUi()
         self.model = AccountReassignPanelModel(view=self, mainwindow=mainwindow.model)
+        self.accountComboBox = ComboboxModel(model=self.model.account_list, view=self.accountComboBoxView)
         
         self.continueButton.clicked.connect(self.accept)
         self.cancelButton.clicked.connect(self.reject)
@@ -42,14 +41,14 @@ class AccountReassignPanel(Panel):
         self.label.setWordWrap(True)
         self.label.setText(tr("You\'re about to delete a non-empty account. Select an account to re-assign its transactions to."))
         self.verticalLayout.addWidget(self.label)
-        self.accountComboBox = QComboBox(self)
+        self.accountComboBoxView = QComboBox(self)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.accountComboBox.sizePolicy().hasHeightForWidth())
-        self.accountComboBox.setSizePolicy(sizePolicy)
-        self.accountComboBox.setMinimumSize(QSize(200, 0))
-        self.verticalLayout.addWidget(self.accountComboBox)
+        sizePolicy.setHeightForWidth(self.accountComboBoxView.sizePolicy().hasHeightForWidth())
+        self.accountComboBoxView.setSizePolicy(sizePolicy)
+        self.accountComboBoxView.setMinimumSize(QSize(200, 0))
+        self.verticalLayout.addWidget(self.accountComboBoxView)
         spacerItem = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout = QHBoxLayout()
@@ -64,10 +63,6 @@ class AccountReassignPanel(Panel):
         self.continueButton.setText(tr("Continue"))
         self.horizontalLayout.addWidget(self.continueButton)
         self.verticalLayout.addLayout(self.horizontalLayout)
-    
-    def _loadFields(self):
-        self._changeComboBoxItems(self.accountComboBox, self.model.available_accounts)
-        Panel._loadFields(self)
     
 
 if __name__ == '__main__':
