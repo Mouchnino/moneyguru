@@ -1,0 +1,75 @@
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "4"; */
+"4.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "4"; */
+"4.title" = "Popis";
+
+/* Class = "NSTextFieldCell"; title = "Start Date"; ObjectID = "8"; */
+"8.title" = "Odkdy";
+
+/* Class = "NSPanel"; title = "Schedule Info"; ObjectID = "166"; */
+"166.title" = "Info o plánu";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "196"; */
+"196.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "196"; */
+"196.title" = "Příjemce";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "200"; */
+"200.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Check #"; ObjectID = "200"; */
+"200.title" = "Šek č.";
+
+/* Class = "NSButtonCell"; title = "Save"; ObjectID = "215"; */
+"215.title" = "Uložit";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "216"; */
+"216.title" = "Zrušit";
+
+/* Class = "NSTextFieldCell"; title = "Schedule Info"; ObjectID = "224"; */
+"224.title" = "Info o plánu";
+
+/* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "226"; */
+"226.title" = "Opakovat";
+
+/* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
+"234.title" = "Každých";
+
+/* Class = "NSTextFieldCell"; title = "Days"; ObjectID = "239"; */
+"239.title" = "Dnů";
+
+/* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
+"279.title" = "Dokdy";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "293"; */
+"293.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Tranfers"; ObjectID = "293"; */
+"293.title" = "Přesuny";
+
+/* Class = "NSTabViewItem"; label = "Info"; ObjectID = "301"; */
+"301.label" = "Info";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "313"; */
+"313.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "You can navigate tabs with ⌘⌥→ and ⌘⌥←"; ObjectID = "313"; */
+"313.title" = "Mezi záložkami můžet přecházet pomocí ⌘⌥→ a ⌘⌥←";
+
+/* Class = "NSButtonCell"; title = "Next Tab"; ObjectID = "319"; */
+"319.title" = "Další záložka";
+
+/* Class = "NSButtonCell"; title = "Prev Tab"; ObjectID = "320"; */
+"320.title" = "Předchozí záložka";
+
+/* Class = "NSTabViewItem"; label = "Notes"; ObjectID = "323"; */
+"323.label" = "Poznámky";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "329"; */
+"329.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Use ⌥+Return to insert a new line."; ObjectID = "329"; */
+"329.title" = "Nový řádek vložíte stiskem ⌥+Return.";

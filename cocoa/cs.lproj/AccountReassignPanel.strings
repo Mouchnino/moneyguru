@@ -1,0 +1,15 @@
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"1.title" = "Okno";
+
+/* Class = "NSTextFieldCell"; title = "You're about to delete a non-empty account. Select an account to re-assign its transactions to."; ObjectID = "4"; */
+"4.title" = "Chystáte se smazat neprázdný účet. Vyberte účet, na který přesunete jeho transakce.";
+
+/* Class = "NSMenuItem"; title = "No Account"; ObjectID = "8"; */
+"8.title" = "Žádný účet";
+
+/* Class = "NSButtonCell"; title = "Continue"; ObjectID = "12"; */
+"12.title" = "Pokračovat";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "14"; */
+"14.title" = "Zrušit";

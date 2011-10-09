@@ -1,0 +1,21 @@
+
+/* Class = "NSWindow"; title = "Modification Scope"; ObjectID = "1"; */
+"1.title" = "Rozsah změn";
+
+/* Class = "NSTextFieldCell"; title = "Do you want this change to affect all future occurrences of this transaction?"; ObjectID = "5"; */
+"5.title" = "Přejete si, aby tato změna ovlivnila všechny budoucí výskyty této transakce?";
+
+/* Class = "NSTextFieldCell"; title = "You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change."; ObjectID = "7"; */
+"7.title" = "Podržením ⇧ při potvrzení změn můžete vynutit globální platnost (jinými slovy ovlivnit všechny budoucí výskyty).";
+
+/* Class = "NSButtonCell"; title = "Show this dialog next time"; ObjectID = "9"; */
+"9.title" = "Show this dialog next time";
+
+/* Class = "NSButtonCell"; title = "Just this one"; ObjectID = "11"; */
+"11.title" = "Pouze tento";
+
+/* Class = "NSButtonCell"; title = "All future occurences"; ObjectID = "13"; */
+"13.title" = "Všechny budoucí výskyty";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "19"; */
+"19.title" = "Zrušit";

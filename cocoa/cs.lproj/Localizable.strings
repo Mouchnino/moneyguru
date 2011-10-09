@@ -1,0 +1,35 @@
+"New Item" = "Nová položka";
+"New Account" = "Nový účet";
+"New Transaction" = "Nová transakce";
+"New Schedule" = "Nový plán";
+"New Budget" = "Nový rozpočet";
+
+"Account Lookup" = "Vyhledání účtu";
+"Completion Lookup" = "Vyhledání doplnění";
+
+"All" = "Vše";
+"Increase" = "Přírůstek";
+"Decrease" = "Úbytek";
+"Income" = "Příjem";
+"Expenses" = "Výdaje";
+"Transfers" = "Přesuny";
+"Unassigned" = "Nepřiřazeno";
+"Reconciled" = "Spárováno";
+"Not Reconciled" = "Nespárováno";
+
+"Filter" = "Filtr";
+"Date Range" = "Časové rozmezí";
+"Net Worth" = "Čisté jmění";
+"Profit/Loss" = "Zisk/Ztráta";
+"Schedules" = "Plány";
+"Budgets" = "Rozpočty";
+
+"%@ (Page %d of %d)" = "%@ (Strana %d ze %d)";
+
+/* Messages */
+"FirstRunMsg" = "Spustili jste moneyGuru poprvé. Přejete si otevřít vzorový soubor?";
+"AboutToRestartMsg" = "moneyGuru bude restartován";
+"ThanksForBuyingMsg" = "Děkuji vám za zakoupení moneyGuru!";
+"DemoLimitReachedMsg" = "Narazil jste na omezení demoverze. Aby bylo možné uložit tento dokument, musíte si zakoupit licenci moneyGuru.";
+"SelectFileToImportMsg" = "Vyberte soubor pro import";
+"ExportToFileMsg" = "Exportovat do souboru";

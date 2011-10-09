@@ -18,6 +18,7 @@ cocoa/mg_cocoa.plugin
 cocoa/fr.lproj/*.xib
 cocoa/de.lproj/*.xib
 cocoa/it.lproj/*.xib
+cocoa/cs.lproj/*.xib
 qt/*_rc.py
 qt/ui/*_ui.py
 build

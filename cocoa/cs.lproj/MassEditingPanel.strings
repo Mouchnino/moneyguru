@@ -1,0 +1,57 @@
+
+/* Class = "NSPanel"; title = "Window"; ObjectID = "3"; */
+"3.title" = "Okno";
+
+/* Class = "NSTextFieldCell"; title = "Date"; ObjectID = "14"; */
+"14.title" = "Datum";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "16"; */
+"16.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "16"; */
+"16.title" = "Popis";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "18"; */
+"18.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "18"; */
+"18.title" = "Příjemce";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "20"; */
+"20.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Check #"; ObjectID = "20"; */
+"20.title" = "Šek č.";
+
+/* Class = "NSButtonCell"; title = "Save"; ObjectID = "58"; */
+"58.title" = "Uložit";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "59"; */
+"59.title" = "Zrušit";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "108"; */
+"108.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "From"; ObjectID = "108"; */
+"108.title" = "Z";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "114"; */
+"114.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "To"; ObjectID = "114"; */
+"114.title" = "Na";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "120"; */
+"120.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Amount"; ObjectID = "120"; */
+"120.title" = "Částka";
+
+/* Class = "NSTextFieldCell"; title = "Mass Editing"; ObjectID = "160"; */
+"160.title" = "Hromadné úpravy";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "163"; */
+"163.placeholderString" = "Nic nevybráno";
+
+/* Class = "NSTextFieldCell"; title = "Currency"; ObjectID = "163"; */
+"163.title" = "Měna";

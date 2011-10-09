@@ -1,0 +1,81 @@
+
+/* Class = "NSWindow"; title = "CSV Import Options"; ObjectID = "1"; */
+"1.title" = "Možnosti importu CSV";
+
+/* Class = "NSTextFieldCell"; title = "Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transaction (header, footer, comments)."; ObjectID = "4"; */
+"4.title" = "Určete, které sloupce v CSV souboru odpovídají kterým transakčním polím. U řádků, které nepředstavují transakce (záhlaví, zápatí, komentáře) nezapomeňte zrušit zašktrnutí ve sloupci \"Import\".";
+
+/* Class = "NSTableColumn"; headerCell.title = "Import"; ObjectID = "10"; */
+"10.headerCell.title" = "Import";
+
+/* Class = "NSButtonCell"; title = "Continue Import"; ObjectID = "19"; */
+"19.title" = "Pokračovat v importu";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "21"; */
+"21.title" = "Zrušit";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "26"; */
+"26.title" = "Žádný";
+
+/* Class = "NSMenuItem"; title = "Date"; ObjectID = "27"; */
+"27.title" = "Datum";
+
+/* Class = "NSMenuItem"; title = "Description"; ObjectID = "28"; */
+"28.title" = "Popis";
+
+/* Class = "NSMenuItem"; title = "Payee"; ObjectID = "30"; */
+"30.title" = "Příjemce";
+
+/* Class = "NSMenuItem"; title = "Check #"; ObjectID = "31"; */
+"31.title" = "Šek č.";
+
+/* Class = "NSMenuItem"; title = "Transfer"; ObjectID = "32"; */
+"32.title" = "Přesun";
+
+/* Class = "NSMenuItem"; title = "Amount"; ObjectID = "33"; */
+"33.title" = "Částka";
+
+/* Class = "NSMenuItem"; title = "Currency"; ObjectID = "34"; */
+"34.title" = "Měna";
+
+/* Class = "NSMenuItem"; title = "Transaction ID"; ObjectID = "53"; */
+"53.title" = "ID transakce";
+
+/* Class = "NSTextFieldCell"; title = "Layout:"; ObjectID = "56"; */
+"56.title" = "Layout:";
+
+/* Class = "NSMenuItem"; title = "Default"; ObjectID = "60"; */
+"60.title" = "Výchozí";
+
+/* Class = "NSMenuItem"; title = "New Layout..."; ObjectID = "61"; */
+"61.title" = "Nové rozvržení...";
+
+/* Class = "NSMenuItem"; title = "Rename Selected Layout..."; ObjectID = "62"; */
+"62.title" = "Přejmenovat vybrané rozvržení...";
+
+/* Class = "NSMenuItem"; title = "Delete Selected Layout"; ObjectID = "64"; */
+"64.title" = "Smazat vybrané rozvržení";
+
+/* Class = "NSMenuItem"; title = "New Account"; ObjectID = "80"; */
+"80.title" = "Nový účet";
+
+/* Class = "NSTextFieldCell"; title = "Target:"; ObjectID = "81"; */
+"81.title" = "Cíl:";
+
+/* Class = "NSMenuItem"; title = "Increase"; ObjectID = "83"; */
+"83.title" = "Přírůstek";
+
+/* Class = "NSMenuItem"; title = "Decrease"; ObjectID = "85"; */
+"85.title" = "Úbytek";
+
+/* Class = "NSTextFieldCell"; title = "Delimiter:"; ObjectID = "90"; */
+"90.title" = "Oddělovač:";
+
+/* Class = "NSButtonCell"; title = "Rescan"; ObjectID = "94"; */
+"94.title" = "Přenačíst";
+
+/* Class = "NSBox"; title = "Rescan"; ObjectID = "97"; */
+"97.title" = "Přenačíst";
+
+/* Class = "NSTextFieldCell"; title = "Encoding:"; ObjectID = "99"; */
+"99.title" = "Kódování:";

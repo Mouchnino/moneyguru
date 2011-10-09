@@ -1,0 +1,21 @@
+
+/* Class = "NSWindow"; title = "Export Options"; ObjectID = "1"; */
+"1.title" = "Možnosti exportu";
+
+/* Class = "NSTextFieldCell"; title = "Which accounts do you want to export?"; ObjectID = "6"; */
+"6.title" = "Které účty si přejete exportovat?";
+
+/* Class = "NSButtonCell"; title = "All"; ObjectID = "8"; */
+"8.title" = "Vše";
+
+/* Class = "NSButtonCell"; title = "Selected"; ObjectID = "13"; */
+"13.title" = "Vybrané";
+
+/* Class = "NSButtonCell"; title = "Export"; ObjectID = "25"; */
+"25.title" = "Export";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "27"; */
+"27.title" = "Zrušit";
+
+/* Class = "NSTextFieldCell"; title = "Export Format:"; ObjectID = "47"; */
+"47.title" = "Formát pro export:";
