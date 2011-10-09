@@ -139,7 +139,7 @@ def test_delete_account_and_reassign(app):
     app.add_account('other expense', account_type=AccountType.Expense)
     app.istatement.selected = app.istatement.expenses[1] # Some Expense
     app.istatement.delete()
-    app.arpanel.account_index = 2 # other expense
+    app.arpanel.account_list.select(2) # other expense
     app.arpanel.save()
     app.mw.select_budget_table()
     eq_(app.btable[0].account, 'other expense')
@@ -161,7 +161,7 @@ def test_delete_target_and_reassign(app):
     app.add_account('other asset')
     app.bsheet.selected = app.bsheet.assets[1] # some asset
     app.bsheet.delete()
-    app.arpanel.account_index = 1 # other asset
+    app.arpanel.account_list.select(1) # other asset
     app.arpanel.save()
     app.mw.select_budget_table()
     eq_(app.btable[0].target, 'other asset')

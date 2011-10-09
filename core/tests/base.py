@@ -149,6 +149,7 @@ class TestApp(TestAppBase):
         self.doc_gui = doc.view
         make_gui('mainwindow', MainWindow, view=self.make_logger(MainWindowGUI), parent=self.doc)
         self.mw = self.mainwindow # shortcut. This one is often typed
+        self.default_parent = self.mw
         make_gui('nwview', NetWorthView)
         make_gui('pview', ProfitView)
         make_gui('tview', TransactionView)
