@@ -40,8 +40,7 @@ class SchedulePanel(Panel):
         self.mainwindow = mainwindow
         self._setupUi()
         self.model = SchedulePanelModel(view=self, mainwindow=mainwindow.model)
-        self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
-        self.splitTable.model.connect()
+        self.splitTable = SplitTable(model=self.model.split_table, view=self.splitTableView)
         self.repeatTypeComboBox = ComboboxModel(model=self.model.repeat_type_list, view=self.repeatTypeComboBoxView)
         
         self.addSplitButton.clicked.connect(self.splitTable.model.add)

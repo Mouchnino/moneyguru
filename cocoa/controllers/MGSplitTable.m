@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGSplitPasteboardType @"MGSplitPasteboardType"
 
 @implementation MGSplitTable
-- (id)initWithTransactionPanel:(PyPanel *)aPanel view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PySplitTable" pyParent:aPanel view:aTableView];
+    self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGSplitPasteboardType]];
     return self;

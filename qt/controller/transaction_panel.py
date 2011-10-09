@@ -36,8 +36,7 @@ class TransactionPanel(Panel):
         self.mainwindow = mainwindow
         self._setupUi()
         self.model = TransactionPanelModel(view=self, mainwindow=mainwindow.model)
-        self.splitTable = SplitTable(transactionPanel=self, view=self.splitTableView)
-        self.splitTable.model.connect()
+        self.splitTable = SplitTable(model=self.model.split_table, view=self.splitTableView)
         
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)

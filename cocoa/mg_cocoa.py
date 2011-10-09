@@ -66,7 +66,6 @@ from core.gui.schedule_panel import SchedulePanel
 from core.gui.schedule_table import ScheduleTable
 from core.gui.schedule_view import ScheduleView
 from core.gui.search_field import SearchField
-from core.gui.split_table import SplitTable
 from core.gui.transaction_panel import TransactionPanel
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.gui.transaction_table import TransactionTable
@@ -664,15 +663,14 @@ class PyAccountPanel(PyPanel):
     
 
 class PySplitTable(PyTable):
-    py_class = SplitTable
-    # pyparent is a PyTransactionPanel
-    
     @signature('v@:ii')
     def moveSplitFromRow_toRow_(self, from_row, to_row):
         self.py.move_split(from_row, to_row)
     
 
 class PyPanelWithTransaction(PyPanel):
+    splitTable = subproxy('splitTable', 'split_table', PySplitTable)
+    
     def description(self):
         return self.py.description
     

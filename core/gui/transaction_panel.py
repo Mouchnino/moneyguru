@@ -15,6 +15,7 @@ from ..exception import OperationAborted
 from ..model.account import Account, AccountType
 from ..model.transaction import Split, Transaction
 from .base import MainWindowPanel
+from .split_table import SplitTable
 
 class PanelWithTransaction(MainWindowPanel, Broadcaster):
     """Base class for panels working with a transaction"""
@@ -23,6 +24,8 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
         Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
         self._selected_splits = []
+        self.split_table = SplitTable(self)
+        self.split_table.connect()
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:

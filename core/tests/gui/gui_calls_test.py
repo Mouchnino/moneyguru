@@ -313,7 +313,7 @@ def test_move_split():
     # The split table is refreshed after a move
     app = app_transaction_with_panel_loaded()
     app.stable.move_split(0, 1)
-    app.check_gui_calls_partial(app.stable_gui, ['refresh'])
+    app.stable.view.check_gui_calls_partial(['refresh'])
 
 #--- Completable edit
 def app_completable_edit():

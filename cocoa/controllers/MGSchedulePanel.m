@@ -13,9 +13,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" parent:aParent];
-    splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
+    splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
-    [splitTable connect];
     return self;
 }
 

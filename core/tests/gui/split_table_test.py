@@ -25,7 +25,7 @@ def test_add_gui_calls():
     app.tpanel.load()
     app.clear_gui_calls()
     app.stable.add()
-    app.check_gui_calls(app.stable_gui, ['refresh', 'start_editing', 'stop_editing'])
+    app.stable.view.check_gui_calls(['refresh', 'start_editing', 'stop_editing'])
 
 def test_cancel_edits():
     # cancel_edits() sets edited to None and makes the right gui calls
@@ -35,7 +35,7 @@ def test_cancel_edits():
     app.clear_gui_calls()
     app.stable.cancel_edits()
     assert app.stable.edited is None
-    app.check_gui_calls(app.stable_gui, ['refresh', 'stop_editing'])
+    app.stable.view.check_gui_calls(['refresh', 'stop_editing'])
 
 @with_app(app_one_entry)
 def test_cancel_edits_while_adding(app):

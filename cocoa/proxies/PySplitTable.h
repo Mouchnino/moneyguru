@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTable.h"
-#import "PyTransactionPanel.h"
 
 @interface PySplitTable : PyTable {}
 - (void)moveSplitFromRow:(NSInteger)fromRow toRow:(NSInteger)toRow;

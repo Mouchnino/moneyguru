@@ -166,8 +166,12 @@ class TestApp(TestAppBase):
         make_gui('apanel', AccountPanel)
         self.apanel.type_list.view = self.make_logger()
         make_gui('scpanel', SchedulePanel)
+        self.scpanel.split_table.view = self.make_logger()
+        self.scsplittable = self.scpanel.split_table
         self.scpanel.repeat_type_list.view = self.make_logger()
         make_gui('tpanel', TransactionPanel)
+        self.tpanel.split_table.view = self.make_logger()
+        self.stable = self.tpanel.split_table
         make_gui('mepanel', MassEditionPanel)
         make_gui('bpanel', BudgetPanel)
         self.bpanel.repeat_type_list.view = self.make_logger()
@@ -175,8 +179,6 @@ class TestApp(TestAppBase):
         make_gui('arpanel', AccountReassignPanel)
         make_gui('expanel', ExportPanel)
         make_table_gui('table', ExportAccountTable, parent=self.expanel, holder=self.expanel)
-        make_table_gui('stable', SplitTable, parent=self.tpanel)
-        make_table_gui('scsplittable', SplitTable, parent=self.scpanel)
         make_gui('balgraph', AccountBalanceGraph, parent=self.aview)
         make_gui('bargraph', AccountFlowGraph, parent=self.aview)
         make_gui('nwgraph', NetWorthGraph, parent=self.nwview)

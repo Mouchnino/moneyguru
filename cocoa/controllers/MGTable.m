@@ -17,6 +17,13 @@ http://www.hardcoded.net/licenses/bsd_license
     return self;
 }
 
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+{
+    self = [super initWithPy:aPy view:aTableView];
+    columns = [[HSColumns alloc] initWithPyParent:[self py] tableView:aTableView];
+    return self;
+}
+
 - (void)dealloc
 {
     [columns release];

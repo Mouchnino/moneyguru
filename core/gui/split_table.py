@@ -11,11 +11,11 @@ from .base import TransactionPanelGUIObject
 from .table import GUITable, Row, RowWithDebitAndCreditMixIn
 
 class SplitTable(GUITable, TransactionPanelGUIObject):
-    def __init__(self, view, transaction_panel):
-        TransactionPanelGUIObject.__init__(self, view, transaction_panel)
+    def __init__(self, transaction_panel):
         self.mainwindow = transaction_panel.mainwindow # CompletableEdit on Qt requires a mainwindow member
         self.document = transaction_panel.document
         GUITable.__init__(self)
+        TransactionPanelGUIObject.__init__(self, self.view, transaction_panel)
     
     #--- Override
     def _do_add(self):

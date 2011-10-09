@@ -17,6 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
     HSColumns *columns;
 }
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
 
 /* Public */
 - (PyTable *)py;

@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
+#import "PySplitTable.h"
 
 @interface PyPanelWithTransaction : PyPanel {}
+- (PySplitTable *)splitTable;
 - (NSString *)description;
 - (void)setDescription:(NSString *)description;
 - (NSString *)payee;

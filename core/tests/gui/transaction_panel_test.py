@@ -206,7 +206,7 @@ def test_mct_balance():
     app.tpanel.mct_balance()
     eq_(len(app.stable), 3)
     eq_(app.stable[2].credit, 'CAD 6.80') # the selected split is the 2nd one
-    app.check_gui_calls_partial(app.stable_gui, ['refresh', 'stop_editing'])
+    app.stable.view.check_gui_calls_partial(['refresh', 'stop_editing'])
 
 @with_app(app_multi_currency_transaction)
 def test_mct_balance_reuses_unassigned_split(app):
@@ -244,7 +244,7 @@ def test_stop_edition_on_mct_balance():
     app = app_multi_currency_transaction()
     app.stable[1].account = 'foo'
     app.tpanel.mct_balance()
-    app.check_gui_calls_partial(app.stable_gui, ['stop_editing'])
+    app.stable.view.check_gui_calls_partial(['stop_editing'])
 
 #--- Generators (tests with more than one setup)
 def test_is_multi_currency():

@@ -16,8 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(HSWindowController *)aParent
 {
     self = [super initWithNibName:@"TransactionPanel" pyClassName:@"PyTransactionPanel" parent:aParent];
-    splitTable = [[MGSplitTable alloc] initWithTransactionPanel:[self py] view:splitTableView];
-    [splitTable connect];
+    splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
     return self;
 }
 

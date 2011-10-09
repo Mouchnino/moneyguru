@@ -11,7 +11,6 @@ from PyQt4.QtGui import QFont
 
 from qtlib.column import Column
 from hscommon.trans import tr
-from core.gui.split_table import SplitTable as SplitTableModel
 from .table import Table, ACCOUNT_EDIT
 
 MIME_INDEX = 'application/moneyguru.splitindex'
@@ -25,8 +24,7 @@ class SplitTable(Table):
     ]
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled | Qt.ItemIsDropEnabled
     
-    def __init__(self, transactionPanel, view):
-        model = SplitTableModel(view=self, transaction_panel=transactionPanel.model)
+    def __init__(self, model, view):
         Table.__init__(self, model, view)
         self.setColumnsWidth(None)
         view.keyPressed.connect(self.keyPressed)
