@@ -16,12 +16,13 @@ from core.model.date import clean_format
 
 tr = lambda s: trbase(s, "PreferencesPanel")
 
-SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it']
+SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it', 'cs']
 LANG2NAME = {
     'en': tr('English'),
     'fr': tr('French'),
     'de': tr('German'),
     'it': tr('Italian'),
+    'cs': tr('Czech'),
 }
 
 class PreferencesPanel(QDialog):

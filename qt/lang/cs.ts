@@ -1,433 +1,433 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.0" language="cs">
 <context>
     <name>core</name>
     <message>
         <source>Add transaction</source>
-        <translation>Ajouter transaction</translation>
+        <translation>Přidat transakci</translation>
     </message>
     <message>
         <source>Change transaction</source>
-        <translation>Modifier transaction</translation>
+        <translation>Změnit transakci</translation>
     </message>
     <message>
         <source>Change account</source>
-        <translation>Modifier compte</translation>
+        <translation>Změnit účet</translation>
     </message>
     <message>
         <source>Remove account</source>
-        <translation>Supprimer compte</translation>
+        <translation>Odstranit účet</translation>
     </message>
     <message>
         <source>New account</source>
-        <translation>Nouveau compte</translation>
+        <translation>Nový účet</translation>
     </message>
     <message>
         <source>Add account</source>
-        <translation>Ajouter compte</translation>
+        <translation>Přidat účet</translation>
     </message>
     <message>
         <source>Change group</source>
-        <translation>Modifier groupe</translation>
+        <translation>Změnit skupinu</translation>
     </message>
     <message>
         <source>Remove group</source>
-        <translation>Supprimer groupe</translation>
+        <translation>Odstranit skupinu</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation>Nouveau groupe</translation>
+        <translation>Nová skupina</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Ajouter groupe</translation>
+        <translation>Přidat skupinu</translation>
     </message>
     <message>
         <source>Remove transaction</source>
-        <translation>Supprimer transaction</translation>
+        <translation>Odstranit transakci</translation>
     </message>
     <message>
         <source>Duplicate transactions</source>
-        <translation>Dupliquer transactions</translation>
+        <translation>Kopírovat transakce</translation>
     </message>
     <message>
         <source>Move transaction</source>
-        <translation>Déplacer transactions</translation>
+        <translation>Přesunout transakci</translation>
     </message>
     <message>
         <source>Change reconciliation</source>
-        <translation>Modifier la réconciliation</translation>
+        <translation>Změnit párování</translation>
     </message>
     <message>
         <source>Change Budget</source>
-        <translation>Modifier budget</translation>
+        <translation>Změnit rozpočet</translation>
     </message>
     <message>
         <source>Add Budget</source>
-        <translation>Ajouter budget</translation>
+        <translation>Přidat rozpočet</translation>
     </message>
     <message>
         <source>Remove Budget</source>
-        <translation>Supprimer budget</translation>
+        <translation>Odstranit rozpočet</translation>
     </message>
     <message>
         <source>Change Schedule</source>
-        <translation>Modifier récurrence</translation>
+        <translation>Změnit plán</translation>
     </message>
     <message>
         <source>Add Schedule</source>
-        <translation>Ajouter récurrence</translation>
+        <translation>Přidat plán</translation>
     </message>
     <message>
         <source>Remove Schedule</source>
-        <translation>Supprimer récurrence</translation>
+        <translation>Odstranit plán</translation>
     </message>
     <message>
         <source>\"%s\" is not a moneyGuru file</source>
-        <translation>\"%s\" n'est pas un fichier moneyGuru</translation>
+        <translation>\"%s\" není souborem moneyGuru</translation>
     </message>
     <message>
         <source>%s is of an unknown format.</source>
-        <translation>%s est d'un format inconnu</translation>
+        <translation>%s nemá známý formát.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importer</translation>
+        <translation>Import</translation>
     </message>
     <message>
         <source>Assets</source>
-        <translation>Actifs</translation>
+        <translation>Aktiva</translation>
     </message>
     <message>
         <source>Liabilities</source>
-        <translation>Passifs</translation>
+        <translation>Závazky</translation>
     </message>
     <message>
         <source>Income</source>
-        <translation>Revenu</translation>
+        <translation>Příjem</translation>
     </message>
     <message>
         <source>Expenses</source>
-        <translation>Dépenses</translation>
+        <translation>Výdaje</translation>
     </message>
     <message>
         <source>No Account</source>
-        <translation>Aucun compte</translation>
+        <translation>Žádný účet</translation>
     </message>
     <message>
         <source>ASSETS</source>
-        <translation>ACTIFS</translation>
+        <translation>AKTIVA</translation>
     </message>
     <message>
         <source>LIABILITIES</source>
-        <translation>PASSIFS</translation>
+        <translation>ZÁVAZKY</translation>
     </message>
     <message>
         <source>NET WORTH</source>
-        <translation>VALEUR NETTE</translation>
+        <translation>ČISTÉ JMĚNÍ</translation>
     </message>
     <message>
         <source>Income/Expense accounts must be created before budgets can be set.</source>
-        <translation>Des comptes de revenu et dépenses doivent être créés avant de faire un budget.</translation>
+        <translation>Před návrhem rozpočtu musíte vytvořit příjmové/výdajové účty.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation>Žádná</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation>Date</translation>
+        <translation>Datum</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Description</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <source>Payee</source>
-        <translation>Tiers</translation>
+        <translation>Příjemce</translation>
     </message>
     <message>
         <source>Check #</source>
-        <translation># Chèque</translation>
+        <translation>Šek č.</translation>
     </message>
     <message>
         <source>Transfer</source>
-        <translation>Transfert</translation>
+        <translation>Přesun</translation>
     </message>
     <message>
         <source>Amount</source>
-        <translation>Montant</translation>
+        <translation>Částka</translation>
     </message>
     <message>
         <source>Increase</source>
-        <translation>Dépôt</translation>
+        <translation>Přírůstek</translation>
     </message>
     <message>
         <source>Decrease</source>
-        <translation>Retrait</translation>
+        <translation>Úbytek</translation>
     </message>
     <message>
         <source>Currency</source>
-        <translation>Devise</translation>
+        <translation>Měna</translation>
     </message>
     <message>
         <source>Transaction ID</source>
-        <translation>ID transaction</translation>
+        <translation>ID transakce</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Défaut</translation>
+        <translation>Výchozí</translation>
     </message>
     <message>
         <source>&lt; New Account &gt;</source>
-        <translation>&lt; Nouveau compte &gt;</translation>
+        <translation>&lt; Nový účet &gt;</translation>
     </message>
     <message>
         <source>Unassigned</source>
-        <translation>Non-assigné</translation>
+        <translation>Nepřiřazeno</translation>
     </message>
     <message>
         <source>Previous Balance</source>
-        <translation>Balance précédente</translation>
+        <translation>Předchozí zůstatek</translation>
     </message>
     <message>
         <source>TOTAL</source>
-        <translation>TOTAL</translation>
+        <translation>CELKEM</translation>
     </message>
     <message>
         <source>INCOME</source>
-        <translation>REVENU</translation>
+        <translation>PŘÍJEM</translation>
     </message>
     <message>
         <source>EXPENSES</source>
-        <translation>DÉPENSES</translation>
+        <translation>VÝDAJE</translation>
     </message>
     <message>
         <source>NET INCOME</source>
-        <translation>REVENU NET</translation>
+        <translation>ČISTÝ PŘÍJEM</translation>
     </message>
     <message>
         <source>Net Worth</source>
-        <translation>Valeur nette</translation>
+        <translation>Čisté jmění</translation>
     </message>
     <message>
         <source>Profit &amp; Loss</source>
-        <translation>Profits / pertes</translation>
+        <translation>Zisky &amp; ztráty</translation>
     </message>
     <message>
         <source>Transactions</source>
-        <translation>Transactions</translation>
+        <translation>Transakce</translation>
     </message>
     <message>
         <source>Schedules</source>
-        <translation>Récurrences</translation>
+        <translation>Plány</translation>
     </message>
     <message>
         <source>Budgets</source>
-        <translation>Budgets</translation>
+        <translation>Rozpočty</translation>
     </message>
     <message>
         <source>General Ledger</source>
-        <translation>Grand Livre</translation>
+        <translation>Účetní kniha</translation>
     </message>
     <message>
         <source>New Tab</source>
-        <translation>Nouvel onglet</translation>
+        <translation>Nová záložka</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation>Autres</translation>
+        <translation>Další</translation>
     </message>
     <message>
         <source>Total </source>
-        <translation>Total </translation>
+        <translation>Celkem </translation>
     </message>
     <message>
         <source>TOTAL </source>
-        <translation>TOTAL </translation>
+        <translation>CELKEM </translation>
     </message>
     <message>
         <source>The account '{0}' already exists.</source>
-        <translation>Le compte '{0}' existe déjà.</translation>
+        <translation>Účet '{0}' již existuje.</translation>
     </message>
     <message>
         <source>The Date and Amount columns must be set.</source>
-        <translation>Les colonnes Date et Montant doivent être définis.</translation>
+        <translation>Musíte určit sloupce Datum a Částka.</translation>
     </message>
     <message>
         <source>The Date column has been set on a column that doesn't contain dates.</source>
-        <translation>La colonne Date ne contient pas de valeurs pouvant être des dates.</translation>
+        <translation>Pro sloupec Datum jste vybrali sloupec bez dat.</translation>
     </message>
     <message>
         <source>The Amount column has been set on a column that doesn't contain amounts.</source>
-        <translation>La colonne Montant ne contient pas de valeurs pouvant être des montants.</translation>
+        <translation>Pro sloupec Částka jste vybrali sloupec bez částek.</translation>
     </message>
     
     <!-- date range description formats -->
     <message>
         <source>{0} - Now</source>
-        <translation>{0} - Aujourd'hui</translation>
+        <translation>{0} - Dosud</translation>
     </message>
     <message>
         <source>Q{0} {1}</source>
-        <translation>Trim. {0} {1}</translation>
+        <translation>Q{0} {1}</translation>
     </message>
     <message>
         <source>Running year ({0} - {1})</source>
-        <translation>Année flottante ({0} - {1})</translation>
+        <translation>Probíhající rok ({0} - {1})</translation>
     </message>
     <message>
         <source>All Transactions</source>
-        <translation>Toutes les transactions</translation>
+        <translation>Všechny transakce</translation>
     </message>
     <message>
         <source>Daily</source>
-        <translation>Quotidiennement</translation>
+        <translation>Denně</translation>
     </message>
     
     <!-- status labels for views -->
     <message>
         <source>{0} out of {1} selected. Increase: {2} Decrease: {3}</source>
-        <translation>{0} / {1} sélectionnés. Dépôt: {2} Retrait: {3}</translation>
+        <translation>Vybráno {0} z {1}. Přírůstek: {2} Úbytek: {3}</translation>
     </message>
     <message>
         <source>{0} out of {1} selected. Amount: {2}</source>
-        <translation>{0} / {1} sélectionnés. Montant: {2}</translation>
+        <translation>Vybráno {0} z {1}. Částka: {2}</translation>
     </message>
     <message>
         <source>{0} out of {1} selected. Debit: {2} Credit: {3}</source>
-        <translation>{0} / {1} sélectionnés. Débit: {2} Crédit: {3}</translation>
+        <translation>Vybráno {0} z {1}. Výběr: {2} Vklad: {3}</translation>
     </message>
     
     
     <message>
         <source>Weekly</source>
-        <translation>Hebdomadairement</translation>
+        <translation>Týdně</translation>
     </message>
     <message>
         <source>Monthly</source>
-        <translation>Mensuellement</translation>
+        <translation>Měsíčně</translation>
     </message>
     <message>
         <source>Yearly</source>
-        <translation>Annuellement</translation>
+        <translation>Ročně</translation>
     </message>
     <message>
         <source>fifth</source>
-        <translation>cinquième</translation>
+        <translation>pátý</translation>
     </message>
     <message>
         <source>first</source>
-        <translation>premier</translation>
+        <translation>první</translation>
     </message>
     <message>
         <source>fourth</source>
-        <translation>quatrième</translation>
+        <translation>čtvrtý</translation>
     </message>
     <message>
         <source>second</source>
-        <translation>deuxième</translation>
+        <translation>druhý</translation>
     </message>
     <message>
         <source>third</source>
-        <translation>troisième</translation>
+        <translation>třetí</translation>
     </message>
     <message>
         <source>Every %s %s of the month</source>
-        <translation>Chaque %s %s du mois</translation>
+        <translation>Každý %s %s v měsíci</translation>
     </message>
     <message>
         <source>Every last %s of the month</source>
-        <translation>Chaque dernier %s du mois</translation>
+        <translation>Poslední %s v měsíci</translation>
     </message>
     <message>
         <source>day</source>
-        <translation>jour</translation>
+        <translation>den</translation>
     </message>
     <message>
         <source>days</source>
-        <translation>jours</translation>
+        <translation>dnů</translation>
     </message>
     <message>
         <source>week</source>
-        <translation>semaine</translation>
+        <translation>týden</translation>
     </message>
     <message>
         <source>weeks</source>
-        <translation>semaines</translation>
+        <translation>týdnů</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>mois</translation>
+        <translation>měsíc</translation>
     </message>
     <message>
         <source>months</source>
-        <translation>mois</translation>
+        <translation>měsíců</translation>
     </message>
     <message>
         <source>year</source>
-        <translation>année</translation>
+        <translation>rok</translation>
     </message>
     <message>
         <source>years</source>
-        <translation>années</translation>
+        <translation>roků</translation>
     </message>
 
     <!-- Main Window -->
     <message>
         <source>New Account</source>
-        <translation>Nouveau compte</translation>
+        <translation>Nový účet</translation>
     </message>
     <message>
         <source>New Transaction</source>
-        <translation>Nouvelle transaction</translation>
+        <translation>Nová transakce</translation>
     </message>
     <message>
         <source>New Schedule</source>
-        <translation>Nouvelle récurrence</translation>
+        <translation>Nový plán</translation>
     </message>
     <message>
         <source>New Budget</source>
-        <translation>Nouveau budget</translation>
+        <translation>Nový rozpočet</translation>
     </message>
 		<message>
         <source>New Item</source>
-        <translation>Nouveau</translation>
+        <translation>Nová položka</translation>
     </message>
 		<message>
         <source>Undo {0}</source>
-        <translation>Défaire {0}</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Défaire</translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Redo {0}</source>
-        <translation>Refaire {0}</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refaire</translation>
+        <translation>Znovu</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Avertissement</translation>
+        <translation type="unfinished"></translation>
     </message>
     
     <!-- Print Titles -->
     <message>
         <source>Net Worth at {end_date}, starting from {start_date}</source>
-        <translation>Valeur Nette à {end_date}, commençant à {start_date}</translation>
+        <translation>Čisté jmění k {end_date}, počínaje {start_date}</translation>
     </message>
     <message>
         <source>Profit and Loss from {start_date} to {end_date}</source>
-        <translation>Profits et Pertes de {start_date} à {end_date}</translation>
+        <translation>Zisky a ztráty od {start_date} do {end_date}</translation>
     </message>
     <message>
         <source>Transactions from {start_date} to {end_date}</source>
-        <translation>Transactions de {start_date} à {end_date}</translation>
+        <translation>Transakce od {start_date} do {end_date}</translation>
     </message>
     <message>
         <source>{account_name}
@@ -437,263 +437,263 @@ Entrées de {start_date} à {end_date}</translation>
     </message>
     <message>
         <source>Schedules from {start_date} to {end_date}</source>
-        <translation>Récurrences de {start_date} à {end_date}</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Budgets from {start_date} to {end_date}</source>
-        <translation>Budgets de {start_date} à {end_date}</translation>
+        <translation>Rozpočty od {start_date} do {end_date}</translation>
     </message>
     <message>
         <source>General Ledger from {start_date} to {end_date}</source>
-        <translation>Grand Livre de {start_date} à {end_date}</translation>
+        <translation>Účetní kniha od {start_date} do {end_date}</translation>
     </message>
     
     <!-- Document -->
     <message>
         <source>FirstRunMsg</source>
-        <translation>Vous utilisez moneyGuru pour la première fois. Voulez-vous ouvrir le fichier d'exemple?</translation>
+        <translation>Spustili jste moneyGuru poprvé. Přejete si otevřít vzorový soubor?</translation>
     </message>
     <message>
         <source>AboutToRestartMsg</source>
-        <translation>moneyGuru va fermer</translation>
+        <translation>moneyGuru bude restartován</translation>
     </message>
     <message>
         <source>ThanksForBuyingMsg</source>
-        <translation>Merci d'avoir acheté moneyGuru!</translation>
+        <translation>Děkuji vám za zakoupení moneyGuru!</translation>
     </message>
     <message>
         <source>Export to QIF</source>
-        <translation>Exporter vers QIF</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>QIF Files (*.qif)</source>
-        <translation>Fichiers QIF (*.qif)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a document to import</source>
-        <translation>Selectionner un fichier à importer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)</source>
-        <translation>Fichiers supportés (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Cannot import file</source>
-        <translation>Impossible d'importer le fichier</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Select a document to load</source>
-        <translation>Sélectionnez un document à ouvrir</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>moneyGuru Documents (*.moneyguru)</source>
-        <translation>Documents moneyGuru (*.moneyguru)</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Cannot load file</source>
-        <translation>Impossible d'ouvrir le fichier</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Save As</source>
-        <translation>Sauvegarder sous</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Unsaved Document</source>
-        <translation>Document non-sauvegardé</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Do you want to save your changes before continuing?</source>
-        <translation>Voulez-vous sauvegarder vos changement avant de continuer?</translation>
+        <translation type="unfinished"></translation>
     </message>
 		
 		<!-- Date Range Selector -->
 		<message>
         <source>Next</source>
-        <translation>Suivant</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Previous</source>
-        <translation>Précédent</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Today</source>
-        <translation>Aujourd'hui</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Month</source>
-        <translation>Mois</translation>
+        <translation>Měsíc</translation>
     </message>
 		<message>
         <source>Quarter</source>
-        <translation>Trimestre</translation>
+        <translation>Čvrtletí</translation>
     </message>
 		<message>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Rok</translation>
     </message>
 		<message>
         <source>Year To Date</source>
-        <translation>Année en cours</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Running Year</source>
-        <translation>Année flottante</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<message>
         <source>Custom...</source>
-        <translation>Personnalisé...</translation>
+        <translation type="unfinished"></translation>
     </message>
 		<!-- Filters -->
 		<message>
         <source>All</source>
-        <translation>Tout</translation>
+        <translation>Vše</translation>
     </message>
     <message>
         <source>Transfers</source>
-        <translation>Transfert</translation>
+        <translation>Přesuny</translation>
     </message>
     <message>
         <source>Reconciled</source>
-        <translation>Reconcilié</translation>
+        <translation>Spárováno</translation>
     </message>
     <message>
         <source>Not Reconciled</source>
-        <translation>Non Reconcilié</translation>
+        <translation>Nespárováno</translation>
     </message>
 
 	<!-- CSV -->
 	<message>
         <source>New Layout</source>
-        <translation>Nouvelle configuration</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose a name for your new layout:</source>
-        <translation>Choisissez un nom pour la nouvelle configuration:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename Layout</source>
-        <translation>Renommer la configuration</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose a name for your layout:</source>
-        <translation>Choisissez un nom pour la configuration:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New Layout...</source>
-        <translation>Nouvelle configuration</translation>
+        <translation>Nové rozvržení...</translation>
     </message>
     <message>
         <source>Rename Selected Layout...</source>
-        <translation>Renommer la configuration sélectionnée...</translation>
+        <translation>Přejmenovat vybrané rozvržení...</translation>
     </message>
     <message>
         <source>Delete Selected Layout</source>
-        <translation>Supprimer la configuration sélectionnée</translation>
+        <translation>Smazat vybrané rozvržení</translation>
     </message>
     
     <!-- Dialogs -->
     <message>
         <source>Asset</source>
-        <translation>Actifs</translation>
+        <translation>Aktiva</translation>
     </message>
     <message>
         <source>Liability</source>
-        <translation>Passifs</translation>
+        <translation>Závazek</translation>
     </message>
     <!--- Income already defined above -->
     <message>
         <source>Expense</source>
-        <translation>Dépenses</translation>
+        <translation>Výdaj</translation>
     </message>
     
 	<!-- Columns -->
 	<message>
         <source>Change</source>
-        <translation>Variation</translation>
+        <translation>Změna</translation>
     </message>
     <message>
         <source>Change %</source>
-        <translation>Variation %</translation>
+        <translation>Změna %</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Début</translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>Budgeted</source>
-        <translation>Budgeté</translation>
+        <translation>V rozpočtu</translation>
     </message>
     <message>
         <source>Account #</source>
-        <translation># Compte</translation>
+        <translation>Účet č.</translation>
     </message>
     <message>
         <source>Current</source>
-        <translation>Courant</translation>
+        <translation>Aktuální</translation>
     </message>
     <message>
         <source>Last</source>
-        <translation>Précédent</translation>
+        <translation>Poslední</translation>
     </message>
     <message>
         <source>Account</source>
-        <translation>Compte</translation>
+        <translation>Účet</translation>
     </message>
     <message>
         <source>Reconciliation Date</source>
-        <translation>Date réconciliation</translation>
+        <translation>Datum párování</translation>
     </message>
     <message>
         <source>Balance</source>
-        <translation>Balance</translation>
+        <translation>Zůstatek</translation>
     </message>
     <message>
         <source>Start Date</source>
-        <translation>Date début</translation>
+        <translation>Odkdy</translation>
     </message>
     <message>
         <source>Stop Date</source>
-        <translation>Date fin</translation>
+        <translation>Dokdy</translation>
     </message>
     <message>
         <source>Repeat Type</source>
-        <translation>Type répétition</translation>
+        <translation>Typ opakování</translation>
     </message>
     <message>
         <source>Interval</source>
-        <translation>Intervalle</translation>
+        <translation>Interval</translation>
     </message>
     <message>
         <source>Target</source>
-        <translation>Cible</translation>
+        <translation>Cíl</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Fin</translation>
+        <translation>Konec</translation>
     </message>
     <message>
         <source>From</source>
-        <translation>De</translation>
+        <translation>Z</translation>
     </message>
     <message>
         <source>To</source>
-        <translation>Vers</translation>
+        <translation>Na</translation>
     </message>
     <message>
         <source>Memo</source>
-        <translation>Mémo</translation>
+        <translation>Poznámka</translation>
     </message>
     <message>
         <source>Debit</source>
-        <translation>Débit</translation>
+        <translation>Výběr</translation>
     </message>
     <message>
         <source>Credit</source>
-        <translation>Crédit</translation>
+        <translation>Vklad</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Exporter</translation>
+        <translation>Export</translation>
     </message>
 </context>
 <context>
@@ -701,31 +701,31 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="account_panel.ui" line="14"/>
         <source>Account Info</source>
-        <translation>Détails de compte</translation>
+        <translation>Informace o účtu</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="28"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="41"/>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="75"/>
         <source>Currency</source>
-        <translation>Devise</translation>
+        <translation>Měna</translation>
     </message>
     <message>
         <location filename="account_panel.ui" line="101"/>
         <source>Account #</source>
-        <translation># Compte</translation>
+        <translation>Účet č.</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Notes:</translation>
+        <translation>Poznámky:</translation>
     </message>
 </context>
 <context>
@@ -733,27 +733,27 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="account_reassign_panel.ui" line="14"/>
         <source>Re-assign Account</source>
-        <translation>Réassigner un compte</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="20"/>
         <source>You&apos;re about to delete a non-empty account. Select an account to re-assign its transactions to.</source>
-        <translation>Vous supprimez un compte qui n&apos;est pas vide. Sélectionnez un compte pour réassigner les transactions.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="74"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="77"/>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="account_reassign_panel.ui" line="84"/>
         <source>Continue</source>
-        <translation>Continuer</translation>
+        <translation>Pokračovat</translation>
     </message>
 </context>
 <context>
@@ -761,47 +761,47 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="budget_panel.ui" line="14"/>
         <source>Budget Info</source>
-        <translation>Détails de budget</translation>
+        <translation>Info o rozpočtu</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="28"/>
         <source>Start Date:</source>
-        <translation>Date début:</translation>
+        <translation>Odkdy:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="48"/>
         <source>Repeat Type:</source>
-        <translation>Répéter:</translation>
+        <translation>Typ opakování:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="82"/>
         <source>Every:</source>
-        <translation>Tout les:</translation>
+        <translation>Každých:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="110"/>
         <source>Stop Date:</source>
-        <translation>Date fin:</translation>
+        <translation>Dokdy:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="133"/>
         <source>Account:</source>
-        <translation>Compte:</translation>
+        <translation>Účet:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="146"/>
         <source>Target:</source>
-        <translation>Cible:</translation>
+        <translation>Cíl:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="166"/>
         <source>Amount:</source>
-        <translation>Montant:</translation>
+        <translation>Částka:</translation>
     </message>
     <message>
         <location filename="budget_panel.ui" line="179"/>
         <source>Notes:</source>
-        <translation>Notes:</translation>
+        <translation>Poznámky:</translation>
     </message>
 </context>
 <context>
@@ -809,46 +809,46 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="csv_options.ui" line="14"/>
         <source>CSV Options</source>
-        <translation>Options d&apos;importation CSV</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="20"/>
         <source>Specify which CSV columns correspond to which transaction fields. You must also uncheck the &quot;Import&quot; column for lines that don&apos;t represent a transaction (header, footer, comments).</source>
-        <translation>Spécifiez quelles colonnes CSV correspondent à quel champ. Vous devez aussi décocher les cases de la colonne \&quot;Imp.\&quot; pour chaque ligne n&apos;étant pas une transaction (entête, commentaire).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="32"/>
         <source>Layout:</source>
-        <translation>Config.:</translation>
+        <translation>Layout:</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="49"/>
         <source>Delimiter:</source>
-        <translation>Séparateur:</translation>
+        <translation>Oddělovač:</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="66"/>
         <source>Target:</source>
-        <translation>Cible:</translation>
+        <translation>Cíl:</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="82"/>
         <source>Rescan</source>
-        <translation>Rescanner</translation>
+        <translation>Přenačíst</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="141"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="csv_options.ui" line="151"/>
         <source>Continue Import</source>
-        <translation>Continuer l&apos;importation</translation>
+        <translation>Pokračovat v importu</translation>
     </message>
     <message>
         <source>Encoding:</source>
-        <translation>Encodage:</translation>
+        <translation>Kódování:</translation>
     </message>
 </context>
 <context>
@@ -856,37 +856,37 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="custom_date_range_panel.ui" line="14"/>
         <source>Custom Date Range</source>
-        <translation>Intervalle personnalisé</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="23"/>
         <source>Select start and end dates from your custom range:</source>
-        <translation>Selectionnez un intervalle de dates:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="32"/>
         <source>Start:</source>
-        <translation>Début:</translation>
+        <translation>Start:</translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="42"/>
         <source>End:</source>
-        <translation>Fin:</translation>
+        <translation>Konec:</translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="56"/>
         <source>Save this range under slot:</source>
-        <translation>Assigner l&apos;intervalle à la case:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="70"/>
         <source>None</source>
-        <translation>Aucune</translation>
+        <translation>Žádná</translation>
     </message>
     <message>
         <location filename="custom_date_range_panel.ui" line="110"/>
         <source>Under the name:</source>
-        <translation>Sous le nom:</translation>
+        <translation>Pod názvem:</translation>
     </message>
 </context>
 <context>
@@ -894,51 +894,51 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="import_window.ui" line="157"/>
         <source>Import</source>
-        <translation>Importer</translation>
+        <translation>Import</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="32"/>
         <source>Target Account:</source>
-        <translation>Compte cible:</translation>
+        <translation>Cílový účet:</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="62"/>
         <source>Some fields are wrong? Swap them!</source>
-        <translation>Champs incorrectes? Interchangez!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="import_window.ui" line="69"/>
         <source>Day &lt;--&gt; Month</source>
-        <translation>Jour &lt;--&gt; Mois</translation>
+        <translation>Den &lt;--&gt; Měsíc</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="74"/>
         <source>Month &lt;--&gt; Year</source>
-        <translation>Mois &lt;--&gt; Année</translation>
+        <translation>Měsíc &lt;--&gt; Rok</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="79"/>
         <source>Day &lt;--&gt; Year</source>
-        <translation>Jour &lt;--&gt; Année</translation>
+        <translation>Den &lt;--&gt; Rok</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="84"/>
         <source>Description &lt;--&gt; Payee</source>
-        <translation>Description &lt;--&gt; Tiers</translation>
+        <translation>Popis &lt;--&gt; Příjemce</translation>
     </message>
     <message>
         <source>Invert Amounts</source>
-        <translation>Inverser les montants</translation>
+        <translation>Převrátit částky</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="92"/>
         <source>Apply to all accounts</source>
-        <translation>Appliquer à tous</translation>
+        <translation>Použít pro všechny účty</translation>
     </message>
     <message>
         <location filename="import_window.ui" line="99"/>
         <source>Swap</source>
-        <translation>Zap!</translation>
+        <translation>Prohodit</translation>
     </message>
 </context>
 <context>
@@ -946,226 +946,226 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="main_window.ui" line="184"/>
         <source>File</source>
-        <translation>Fichier</translation>
+        <translation>Soubor</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="188"/>
         <source>Open Recent</source>
-        <translation>Ouvrir document récent</translation>
+        <translation>Otevřít nedávné</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="207"/>
         <source>View</source>
-        <translation>Vues</translation>
+        <translation>Pohled</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="211"/>
         <source>Date Range</source>
-        <translation>Intervalle</translation>
+        <translation>Časové rozmezí</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="227"/>
         <source>Edit</source>
-        <translation>Édition</translation>
+        <translation>Upravit</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="250"/>
         <source>Help</source>
-        <translation>Aide</translation>
+        <translation>Nápověda</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="264"/>
         <source>Open...</source>
-        <translation>Ouvrir...</translation>
+        <translation>Otevřít...</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="276"/>
         <source>Net Worth</source>
-        <translation>Valeur nette</translation>
+        <translation>Čisté jmění</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="288"/>
         <source>Profit &amp; Loss</source>
-        <translation>Profits / Pertes</translation>
+        <translation>Zisky &amp; ztráty</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="300"/>
         <source>Transactions</source>
-        <translation>Transactions</translation>
+        <translation>Transakce</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="308"/>
         <source>Show Account</source>
-        <translation>Ouvrir le compte</translation>
+        <translation>Zobrazit účet</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="324"/>
         <source>Remove Selected</source>
-        <translation>Supprimer la sélection</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="329"/>
         <source>Show Info</source>
-        <translation>Détails</translation>
+        <translation>Zobrazit info</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="337"/>
         <source>Move Up</source>
-        <translation>Monter</translation>
+        <translation>Posun nahoru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="345"/>
         <source>Move Down</source>
-        <translation>Descendre</translation>
+        <translation>Posun dolů</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="353"/>
         <source>Go Back</source>
-        <translation>Revenir</translation>
+        <translation>Vrátit se</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="361"/>
         <source>New Account Group</source>
-        <translation>Nouveau groupe de comptes</translation>
+        <translation>Nová skupina účtů</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="369"/>
         <source>Next View</source>
-        <translation>Onglet suivant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="377"/>
         <source>Previous View</source>
-        <translation>Onglet précédent</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="385"/>
         <source>New Document</source>
-        <translation>Nouveau document</translation>
+        <translation>Nový dokument</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="390"/>
         <source>Open Example Document</source>
-        <translation>Ouvrir le document d&apos;exemple</translation>
+        <translation>Otevřít vzorový dokument</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="395"/>
         <source>Import...</source>
-        <translation>Importer...</translation>
+        <translation>Import...</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="400"/>
         <source>Export to QIF...</source>
-        <translation>Exporter vers QIF...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="405"/>
         <source>Save</source>
-        <translation>Sauvegarder</translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="413"/>
         <source>Save As...</source>
-        <translation>Sauvegarder sous...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="421"/>
         <source>Register moneyGuru</source>
-        <translation>Enregistrer moneyGuru</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="426"/>
         <source>About moneyGuru</source>
-        <translation>À propos de moneyGuru</translation>
+        <translation>O aplikaci</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="431"/>
         <source>Toggle Reconciliation Mode</source>
-        <translation>Change le mode de réconciliation</translation>
+        <translation>Přepnout režim párování</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="443"/>
         <source>Schedules</source>
-        <translation>Récurrences</translation>
+        <translation>Plány</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="455"/>
         <source>Budgets</source>
-        <translation>Budgets</translation>
+        <translation>Rozpočty</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="463"/>
         <source>View Options...</source>
-        <translation>Options de visibilité...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="471"/>
         <source>Reconcile Selection</source>
-        <translation>Réconcilier la sélection</translation>
+        <translation>Spárovat výběr</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="479"/>
         <source>Make Schedule from Selected</source>
-        <translation>Créer une récurrence à partir de la sélection</translation>
+        <translation>Vytvořit plán z výběru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="487"/>
         <source>Preferences...</source>
-        <translation>Préférences...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="492"/>
         <source>Print...</source>
-        <translation>Imprimer...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="500"/>
         <source>Quit moneyGuru</source>
-        <translation>Quitter moneyGuru</translation>
+        <translation>Ukončit moneyGuru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="508"/>
         <source>Undo</source>
-        <translation>Défaire</translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="516"/>
         <source>Redo</source>
-        <translation>Refaire</translation>
+        <translation>Znovu</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="524"/>
         <source>moneyGuru Help</source>
-        <translation>Aide de moneyGuru</translation>
+        <translation>Nápověda moneyGuru</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="532"/>
         <source>Check for update</source>
-        <translation>Vérifier les mises-à-jour</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="537"/>
         <source>Duplicate Transaction</source>
-        <translation>Dupliquer la transaction</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main_window.ui" line="545"/>
         <source>Jump to Account...</source>
-        <translation>Ouvrir un compte...</translation>
+        <translation>Přejít na účet...</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="553"/>
         <source>New Tab</source>
-        <translation>Nouvel onglet</translation>
+        <translation>Nová záložka</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="561"/>
         <source>Close Tab</source>
-        <translation>Fermer l&apos;onglet</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Toggle Exclusion Status of Account</source>
-        <translation>Exclure/Inclure le compte</translation>
+        <translation>Přepnout stav vyloučení účtu</translation>
     </message>
 </context>
 
@@ -1176,219 +1176,219 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="mass_edition_panel.ui" line="14"/>
         <source>Mass Editing</source>
-        <translation>Édition multiple</translation>
+        <translation>Hromadné úpravy</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="28"/>
         <source>Date:</source>
-        <translation>Date:</translation>
+        <translation>Datum:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="52"/>
         <source>Description:</source>
-        <translation>Description:</translation>
+        <translation>Popis:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="76"/>
         <source>Payee:</source>
-        <translation>Tiers:</translation>
+        <translation>Příjemce:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="100"/>
         <source>Check #:</source>
-        <translation># Chèque:</translation>
+        <translation>Šek č.:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="124"/>
         <source>From:</source>
-        <translation>De:</translation>
+        <translation>Z:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="148"/>
         <source>To:</source>
-        <translation>Vers:</translation>
+        <translation>Na:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="172"/>
         <source>Amount:</source>
-        <translation>Montant:</translation>
+        <translation>Částka:</translation>
     </message>
     <message>
         <location filename="mass_edition_panel.ui" line="196"/>
         <source>Currency:</source>
-        <translation>Devise:</translation>
+        <translation>Měna:</translation>
     </message>
 </context>
 <context>
     <name>NewView</name>
     <message>
         <source>Choose a type for this tab:</source>
-        <translation>Choisissez un type d&apos;onglet:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>1. Net Worth</source>
-        <translation>1. Valeur nette</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>2. Profit &amp;&amp; Loss</source>
-        <translation>2. Profits / Pertes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>3. Transactions</source>
-        <translation>3. Transactions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>4. General Ledger</source>
-        <translation>4. Grand Livre</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>5. Schedules</source>
-        <translation>5. Récurrences</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>6. Budgets</source>
-        <translation>6. Budgets</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PreferencesPanel</name>
     <message>
         <source>Preferences</source>
-        <translation>Préférences</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First day of the week:</source>
-        <translation>Premier jour de la semaine:</translation>
+        <translation>První den v týdnu:</translation>
     </message>
     <message>
         <source>Monday</source>
-        <translation>Lundi</translation>
+        <translation>Pondělí</translation>
     </message>
     <message>
         <source>Tuesday</source>
-        <translation>Mardi</translation>
+        <translation>Úterý</translation>
     </message>
     <message>
         <source>Wednesday</source>
-        <translation>Mercredi</translation>
+        <translation>Středa</translation>
     </message>
     <message>
         <source>Thursday</source>
-        <translation>Jeudi</translation>
+        <translation>Čtvrtek</translation>
     </message>
     <message>
         <source>Friday</source>
-        <translation>Vendredi</translation>
+        <translation>Pátek</translation>
     </message>
     <message>
         <source>Saturday</source>
-        <translation>Samedi</translation>
+        <translation>Sobota</translation>
     </message>
     <message>
         <source>Sunday</source>
-        <translation>Dimanche</translation>
+        <translation>Neděle</translation>
     </message>
     <message>
         <source>Ahead months in Running Year:</source>
-        <translation>Nombre de mois flottants:</translation>
+        <translation>Měsíců napřed v probíhajícím roce:</translation>
     </message>
     <message>
         <source>Year starts in:</source>
-        <translation>Début de l&apos;année:</translation>
+        <translation>Rok začíná:</translation>
     </message>
     <message>
         <source>January</source>
-        <translation>Janvier</translation>
+        <translation>Leden</translation>
     </message>
     <message>
         <source>February</source>
-        <translation>Février</translation>
+        <translation>Únor</translation>
     </message>
     <message>
         <source>March</source>
-        <translation>Mars</translation>
+        <translation>Březen</translation>
     </message>
     <message>
         <source>April</source>
-        <translation>Avril</translation>
+        <translation>Duben</translation>
     </message>
     <message>
         <source>May</source>
-        <translation>Mai</translation>
+        <translation>Květen</translation>
     </message>
     <message>
         <source>June</source>
-        <translation>Juin</translation>
+        <translation>Červen</translation>
     </message>
     <message>
         <source>July</source>
-        <translation>Juillet</translation>
+        <translation>Červenec</translation>
     </message>
     <message>
         <source>August</source>
-        <translation>Août</translation>
+        <translation>Srpen</translation>
     </message>
     <message>
         <source>September</source>
-        <translation>Septembre</translation>
+        <translation>Září</translation>
     </message>
     <message>
         <source>October</source>
-        <translation>Octobre</translation>
+        <translation>Říjen</translation>
     </message>
     <message>
         <source>November</source>
-        <translation>Novembre</translation>
+        <translation>Listopad</translation>
     </message>
     <message>
         <source>December</source>
-        <translation>Décembre</translation>
+        <translation>Prosinec</translation>
     </message>
     <message>
         <source>Auto-save interval:</source>
-        <translation>Intervalle sauvegarde auto.:</translation>
+        <translation>Interval ukládání:</translation>
     </message>
     <message>
         <source>minute(s) (0 for none)</source>
-        <translation>minute(s) (0 = inactif)</translation>
+        <translation>minut(y) (0 vypíná)</translation>
     </message>
     <message>
         <source>Native Currency:</source>
-        <translation>Devise principale:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Date Format:</source>
-        <translation>Format de date:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show scope dialog when modifying a scheduled transaction</source>
-        <translation>Confirmer la portée des changements aux récurrences</translation>
+        <translation>Zobrazit dialog pro určení rozsahu při změně naplánované transakce</translation>
     </message>
     <message>
         <source>Automatically place decimals when typing</source>
-        <translation>Placement automatique de décimale</translation>
+        <translation>Automaticky vkládat desetinnou čárku při psaní</translation>
     </message>
     
     <!--- Languages -->
 	<message>
         <source>English</source>
-        <translation>Anglais</translation>
+        <translation type="unfinished"></translation>
     </message>
-	<message>
+		<message>
         <source>French</source>
-        <translation>Français</translation>
+        <translation type="unfinished"></translation>
     </message>
-	<message>
+		<message>
         <source>German</source>
-        <translation>Allemand</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation>Italien</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation>Tchèque</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1396,57 +1396,57 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="schedule_panel.ui" line="14"/>
         <source>Schedule Info</source>
-        <translation>Détails de récurrence</translation>
+        <translation>Info o plánu</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="27"/>
         <source>Info</source>
-        <translation>Détails</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="36"/>
         <source>Start Date:</source>
-        <translation>Date début:</translation>
+        <translation>Odkdy:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="56"/>
         <source>Repeat Type:</source>
-        <translation>Répéter:</translation>
+        <translation>Typ opakování:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="90"/>
         <source>Every:</source>
-        <translation>Tout les:</translation>
+        <translation>Každých:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="115"/>
         <source>Stop Date:</source>
-        <translation>Date fin:</translation>
+        <translation>Dokdy:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="122"/>
         <source>Description:</source>
-        <translation>Description:</translation>
+        <translation>Popis:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="135"/>
         <source>Payee:</source>
-        <translation>Tiers:</translation>
+        <translation>Příjemce:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="148"/>
         <source>Check #:</source>
-        <translation># Chèque:</translation>
+        <translation>Šek č.:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="168"/>
         <source>Transfers:</source>
-        <translation>Transferts:</translation>
+        <translation>Přesuny:</translation>
     </message>
     <message>
         <location filename="schedule_panel.ui" line="264"/>
         <source>Notes</source>
-        <translation>Notes</translation>
+        <translation>Poznámky</translation>
     </message>
 </context>
 <context>
@@ -1454,32 +1454,32 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="schedule_scope_dialog.ui" line="14"/>
         <source>Schedule Modification Scope</source>
-        <translation>Portée de la modification</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="26"/>
         <source>Do you want this change to affect all future occurrences of this schedule?</source>
-        <translation>Voulez-vous appliquer cette modification à toutes les occurrences futures?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="36"/>
         <source>You can force global scope (in other words, changing all future occurrences) by holding Shift when you perform the change.</source>
-        <translation>Vous pouvez forcer une portée globale (changer les occurrences futures) en appuyant sur ⇧ lors du changement.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="48"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="71"/>
         <source>All future occurrences</source>
-        <translation>Oui, toutes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="schedule_scope_dialog.ui" line="81"/>
         <source>Just this one</source>
-        <translation>Non</translation>
+        <translation>Pouze tento</translation>
     </message>
 </context>
 <context>
@@ -1487,47 +1487,47 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="transaction_panel.ui" line="14"/>
         <source>Transaction Info</source>
-        <translation>Détails de transaction</translation>
+        <translation>Info o transakci</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="27"/>
         <source>Info</source>
-        <translation>Détails</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="36"/>
         <source>Date:</source>
-        <translation>Date:</translation>
+        <translation>Datum:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="56"/>
         <source>Description:</source>
-        <translation>Description:</translation>
+        <translation>Popis:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="69"/>
         <source>Payee:</source>
-        <translation>Tiers:</translation>
+        <translation>Příjemce:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="82"/>
         <source>Check #:</source>
-        <translation># Chèque:</translation>
+        <translation>Šek č.:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="102"/>
         <source>Transfers:</source>
-        <translation>Transferts:</translation>
+        <translation>Přesuny:</translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="171"/>
         <source>Multi-currency balance</source>
-        <translation>Balancer les devises</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="transaction_panel.ui" line="204"/>
         <source>Notes</source>
-        <translation>Notes</translation>
+        <translation>Poznámky</translation>
     </message>
 </context>
 <context>
@@ -1535,127 +1535,127 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <location filename="view_options_dialog.ui" line="14"/>
         <source>View Options</source>
-        <translation>Options de visibilité</translation>
+        <translation>Předvolby pohledu</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="20"/>
         <source>Net Worth</source>
-        <translation>Valeur nette</translation>
+        <translation>Čisté jmění</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="84"/>
         <source>Change</source>
-        <translation>Variation</translation>
+        <translation>Změna</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="91"/>
         <source>Change %</source>
-        <translation>Variation %</translation>
+        <translation>Změna %</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="40"/>
         <source>Start</source>
-        <translation>Début</translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="105"/>
         <source>Budgeted</source>
-        <translation>Budgeté</translation>
+        <translation>V rozpočtu</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="206"/>
         <source>Graph</source>
-        <translation>Graphe</translation>
+        <translation>Graf</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="119"/>
         <source>Pie Charts</source>
-        <translation>Dia. Circ.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="126"/>
         <source>Account #</source>
-        <translation># Compte</translation>
+        <translation>Účet č.</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="78"/>
         <source>Profit &amp; Loss</source>
-        <translation>Profit &amp; Pertes</translation>
+        <translation>Zisky &amp; ztráty</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="98"/>
         <source>Last</source>
-        <translation>Précédent</translation>
+        <translation>Poslední</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="136"/>
         <source>Transactions</source>
-        <translation>Transactions</translation>
+        <translation>Transakce</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="229"/>
         <source>Description</source>
-        <translation>Description</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="236"/>
         <source>Payee</source>
-        <translation>Tiers</translation>
+        <translation>Příjemce</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="243"/>
         <source>Check #</source>
-        <translation># Chèque</translation>
+        <translation>Šek č.</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="179"/>
         <source>Account</source>
-        <translation>Compte</translation>
+        <translation>Účet</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="213"/>
         <source>Reconciliation Date</source>
-        <translation>Date réconciliation</translation>
+        <translation>Datum párování</translation>
     </message>
 		<message>
         <source>Debit/Credit</source>
-        <translation>Débit/Crédit</translation>
+        <translation>Výběr/Vklad</translation>
     </message>
     <message>
         <location filename="view_options_dialog.ui" line="223"/>
         <source>Schedules</source>
-        <translation>Récurrences</translation>
+        <translation>Plány</translation>
     </message>
     <message>
         <source>General Ledger</source>
-        <translation>Grand Livre</translation>
+        <translation>Účetní kniha</translation>
     </message>
 </context>
 <context>
     <name>ExportPanel</name>
     <message>
         <source>Export</source>
-        <translation>Exporter</translation>
+        <translation>Export</translation>
     </message>
     <message>
         <source>Export Options</source>
-        <translation>Options d'exportation</translation>
+        <translation>Možnosti exportu</translation>
     </message>
     <message>
         <source>Which accounts do you want to export?</source>
-        <translation>Quels comptes coulez-vous exporter?</translation>
+        <translation>Které účty si přejete exportovat?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Tous</translation>
+        <translation>Vše</translation>
     </message>
     <message>
         <source>Selected</source>
-        <translation>Sélection</translation>
+        <translation>Vybrané</translation>
     </message>
     <message>
         <source>Export format:</source>
-        <translation>Format d'exportation:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

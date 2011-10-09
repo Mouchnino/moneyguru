@@ -604,10 +604,7 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <source>Liability</source>
         <translation>Passiva</translation>
     </message>
-    <message>
-        <source>Income</source>
-        <translation>Einkommen</translation>
-    </message>
+    <!--- Income already defined above -->
     <message>
         <source>Expense</source>
         <translation>Ausgaben</translation>
@@ -1370,6 +1367,8 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <source>Automatically place decimals when typing</source>
         <translation>Dezimalstellen automatisch setzen</translation>
     </message>
+    
+    <!--- Languages -->
     <message>
         <source>English</source>
         <translation>Englisch</translation>
@@ -1381,6 +1380,14 @@ Eintrag vom {start_date} bis {end_date}</translation>
 		<message>
         <source>German</source>
         <translation>Deutsch</translation>
+    </message>
+    <message>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

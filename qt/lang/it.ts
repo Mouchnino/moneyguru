@@ -598,10 +598,7 @@ Entries from {start_date} to {end_date}</source>
         <source>Liability</source>
         <translation>Passivo</translation>
     </message>
-    <message>
-        <source>Income</source>
-        <translation>Entrate</translation>
-    </message>
+    <!--- Income already defined above -->
     <message>
         <source>Expense</source>
         <translation>Uscite</translation>
@@ -1369,7 +1366,9 @@ Entries from {start_date} to {end_date}</source>
         <source>Automatically place decimals when typing</source>
         <translation>Inserisci decimali automaticamente</translation>
     </message>
-		<message>
+    
+    <!--- Languages -->
+	<message>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1379,6 +1378,14 @@ Entries from {start_date} to {end_date}</source>
     </message>
 		<message>
         <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
