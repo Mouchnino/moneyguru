@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aOutlineView];
-    columns = [[HSColumns alloc] initWithPyParent:[self py] tableView:aOutlineView];
+    columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aOutlineView];
     [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
     return self;
 }

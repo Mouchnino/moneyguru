@@ -253,44 +253,6 @@ class PyGUIContainer(PyListener):
 class PyWindowController(PyListener):
     pass
 
-# PyColumns is special because when it is instantiated, the table it belongs to, as well as the
-# columns in it, is already instantiated. We thus use a trick with py_class to just fetch the
-# columns instead of creating a new instance like with all other Py-classes
-class PyColumns(PyGUIObject):
-    @staticmethod
-    def py_class(view, parent):
-        # view is self, and parent is the table instance.
-        result = parent.columns
-        result.view = view
-        return result
-    
-    def columnNamesInOrder(self):
-        return self.py.colnames
-    
-    @signature('i@:@')
-    def columnIsVisible_(self, colname):
-        return self.py.column_is_visible(colname)
-    
-    @signature('i@:@')
-    def columnWidth_(self, colname):
-        return self.py.column_width(colname)
-    
-    @signature('v@:@i')
-    def moveColumn_toIndex_(self, colname, index):
-        self.py.move_column(colname, index)
-    
-    @signature('v@:@i')
-    def resizeColumn_toWidth_(self, colname, newwidth):
-        self.py.resize_column(colname, newwidth)
-    
-    #--- Python --> Cocoa
-    def restore_columns(self):
-        self.cocoa.restoreColumns()
-    
-    def set_column_visible(self, colname, visible):
-        self.cocoa.setColumn_visible_(colname, visible)
-    
-
 class PyTableWithDate(PyTable):
     @signature('c@:')
     def isEditedRowInTheFuture(self):

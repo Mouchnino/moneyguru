@@ -291,9 +291,9 @@
 		CE107C740E619A8B0064AF17 /* nav_right_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_right_9.png; sourceTree = "<group>"; };
 		CE107C750E619A8B0064AF17 /* plus_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus_8.png; sourceTree = "<group>"; };
 		CE107C890E619F780064AF17 /* lock_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_12.png; sourceTree = "<group>"; };
-		CE113E9F120044F100402104 /* PyColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyColumns.h; sourceTree = "<group>"; };
 		CE1204331441DE3D00933858 /* HSColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSColumns.h; sourceTree = "<group>"; };
 		CE1204341441DE3D00933858 /* HSColumns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSColumns.m; sourceTree = "<group>"; };
+		CE1204361441F1DA00933858 /* PyColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyColumns.h; sourceTree = "<group>"; };
 		CE1453440E4AFE1D009517B6 /* MGImportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportWindow.h; sourceTree = "<group>"; };
 		CE1453450E4AFE1D009517B6 /* MGImportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportWindow.m; sourceTree = "<group>"; };
 		CE14535C0E4B0A99009517B6 /* PyImportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyImportWindow.h; path = proxies/PyImportWindow.h; sourceTree = SOURCE_ROOT; };
@@ -1035,7 +1035,6 @@
 				CE1031C71041337D007882D5 /* PyBudgetPanel.h */,
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
 				CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */,
-				CE113E9F120044F100402104 /* PyColumns.h */,
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
 				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
 				CE7311D41040361C00DB8B30 /* PyBudgetTable.h */,
@@ -1230,6 +1229,7 @@
 				CEBA330811294D09009C782F /* PyGUI.h */,
 				CEBA330911294D09009C782F /* PyOutline.h */,
 				CE647EA01173074C006D28BA /* PyTable.h */,
+				CE1204361441F1DA00933858 /* PyColumns.h */,
 			);
 			name = proxies;
 			path = ../cocoalib/proxies;

@@ -13,14 +13,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
-    columns = [[HSColumns alloc] initWithPyParent:[self py] tableView:aTableView];
+    columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aTableView];
     return self;
 }
 
 - (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
     self = [super initWithPy:aPy view:aTableView];
-    columns = [[HSColumns alloc] initWithPyParent:[self py] tableView:aTableView];
+    columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aTableView];
     return self;
 }
 
