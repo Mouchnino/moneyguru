@@ -61,9 +61,6 @@
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
 		CE57A7D6143FAB34001110B8 /* message.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE57A7D1143FAB33001110B8 /* message.strings */; };
-		CE57A7D7143FAB34001110B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
-		CE57A7D8143FAB34001110B8 /* core.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF93B1911D2142E00F49321 /* core.strings */; };
-		CE57A7D9143FAB34001110B8 /* columns.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE33E33C11FB58B800444435 /* columns.strings */; };
 		CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
 		CE647EA311730765006D28BA /* HSTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE647EA211730765006D28BA /* HSTable.m */; };
@@ -199,40 +196,6 @@
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
 		CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC941C912D32F7600816473 /* HSAboutBox.m */; };
 		CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */; };
-		CECEF79A144219E700EBF1C4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679511D10E1E00EB0222 /* MainMenu.xib */; };
-		CECEF79B144219E700EBF1C4 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679711D10E1E00EB0222 /* MainWindow.xib */; };
-		CECEF79C144219E700EBF1C4 /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */; };
-		CECEF79D144219E700EBF1C4 /* BalanceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3677F11D10E1E00EB0222 /* BalanceSheet.xib */; };
-		CECEF79E144219E700EBF1C4 /* IncomeStatement.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679111D10E1E00EB0222 /* IncomeStatement.xib */; };
-		CECEF79F144219E700EBF1C4 /* TransactionTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC367A511D10E1E00EB0222 /* TransactionTable.xib */; };
-		CECEF7A0144219E700EBF1C4 /* EntryTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678D11D10E1E00EB0222 /* EntryTable.xib */; };
-		CECEF7A1144219E700EBF1C4 /* ScheduleTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC367A111D10E1E00EB0222 /* ScheduleTable.xib */; };
-		CECEF7A2144219E700EBF1C4 /* BudgetTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678311D10E1E00EB0222 /* BudgetTable.xib */; };
-		CECEF7A3144219E700EBF1C4 /* GeneralLedger.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB601FF12393080002218CF /* GeneralLedger.xib */; };
-		CECEF7A4144219E700EBF1C4 /* CashculatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE44BA721207045300F4BAE9 /* CashculatorView.xib */; };
-		CECEF7A5144219E700EBF1C4 /* NewTabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679B11D10E1E00EB0222 /* NewTabView.xib */; };
-		CECEF7A6144219E700EBF1C4 /* AccountPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3677B11D10E1D00EB0222 /* AccountPanel.xib */; };
-		CECEF7A7144219E700EBF1C4 /* TransactionPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC367A311D10E1E00EB0222 /* TransactionPanel.xib */; };
-		CECEF7A8144219E700EBF1C4 /* MassEditingPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679911D10E1E00EB0222 /* MassEditingPanel.xib */; };
-		CECEF7A9144219E700EBF1C4 /* SchedulePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679F11D10E1E00EB0222 /* SchedulePanel.xib */; };
-		CECEF7AA144219E700EBF1C4 /* BudgetPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678111D10E1E00EB0222 /* BudgetPanel.xib */; };
-		CECEF7AB144219E700EBF1C4 /* ExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE66BD111275751B008EFA8A /* ExportPanel.xib */; };
-		CECEF7AC144219E700EBF1C4 /* ImportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678F11D10E1E00EB0222 /* ImportWindow.xib */; };
-		CECEF7AD144219E700EBF1C4 /* CSVImportOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678511D10E1E00EB0222 /* CSVImportOptions.xib */; };
-		CECEF7AE144219E700EBF1C4 /* CSVLayoutName.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678711D10E1E00EB0222 /* CSVLayoutName.xib */; };
-		CECEF7AF144219E700EBF1C4 /* ViewOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC367A711D10E1E00EB0222 /* ViewOptions.xib */; };
-		CECEF7B0144219E700EBF1C4 /* AccountReassignPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3677D11D10E1E00EB0222 /* AccountReassignPanel.xib */; };
-		CECEF7B1144219E700EBF1C4 /* CustomDateRangePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678911D10E1E00EB0222 /* CustomDateRangePanel.xib */; };
-		CECEF7B2144219E700EBF1C4 /* RecurrenceScopeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679D11D10E1E00EB0222 /* RecurrenceScopeDialog.xib */; };
-		CECEF7B3144219E700EBF1C4 /* Lookup.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679311D10E1E00EB0222 /* Lookup.xib */; };
-		CECEF7B4144219E700EBF1C4 /* SearchField.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC367D611D10EE500EB0222 /* SearchField.xib */; };
-		CECEF7B914421A0400EBF1C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
-		CECEF7BA14421A0400EBF1C4 /* core.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF93B1911D2142E00F49321 /* core.strings */; };
-		CECEF7BB14421A0400EBF1C4 /* message.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE57A7D1143FAB33001110B8 /* message.strings */; };
-		CECEF7BD14421A2500EBF1C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
-		CECEF7C114421A7A00EBF1C4 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7869EC135D920500221226 /* about.xib */; };
-		CECEF7C214421A7A00EBF1C4 /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7869EE135D920500221226 /* ErrorReportWindow.xib */; };
-		CECEF7C314421A7A00EBF1C4 /* FairwareReminder.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6E77A912538B0F00A1754B /* FairwareReminder.xib */; };
 		CED1DF611440B1C5005F82B5 /* HSPopUpList.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1DF601440B1C5005F82B5 /* HSPopUpList.m */; };
 		CED1FC6D10F7851600634D72 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6C10F7851600634D72 /* MGTransactionTable.m */; };
 		CED1FC7410F7852000634D72 /* MGBalanceGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6F10F7852000634D72 /* MGBalanceGraph.m */; };
@@ -1617,43 +1580,6 @@
 				CE7869F0135D920500221226 /* about.xib in Resources */,
 				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
 				CE57A7D6143FAB34001110B8 /* message.strings in Resources */,
-				CE57A7D7143FAB34001110B8 /* Localizable.strings in Resources */,
-				CE57A7D8143FAB34001110B8 /* core.strings in Resources */,
-				CE57A7D9143FAB34001110B8 /* columns.strings in Resources */,
-				CECEF79A144219E700EBF1C4 /* MainMenu.xib in Resources */,
-				CECEF79B144219E700EBF1C4 /* MainWindow.xib in Resources */,
-				CECEF79C144219E700EBF1C4 /* DateRangeSelector.xib in Resources */,
-				CECEF79D144219E700EBF1C4 /* BalanceSheet.xib in Resources */,
-				CECEF79E144219E700EBF1C4 /* IncomeStatement.xib in Resources */,
-				CECEF79F144219E700EBF1C4 /* TransactionTable.xib in Resources */,
-				CECEF7A0144219E700EBF1C4 /* EntryTable.xib in Resources */,
-				CECEF7A1144219E700EBF1C4 /* ScheduleTable.xib in Resources */,
-				CECEF7A2144219E700EBF1C4 /* BudgetTable.xib in Resources */,
-				CECEF7A3144219E700EBF1C4 /* GeneralLedger.xib in Resources */,
-				CECEF7A4144219E700EBF1C4 /* CashculatorView.xib in Resources */,
-				CECEF7A5144219E700EBF1C4 /* NewTabView.xib in Resources */,
-				CECEF7A6144219E700EBF1C4 /* AccountPanel.xib in Resources */,
-				CECEF7A7144219E700EBF1C4 /* TransactionPanel.xib in Resources */,
-				CECEF7A8144219E700EBF1C4 /* MassEditingPanel.xib in Resources */,
-				CECEF7A9144219E700EBF1C4 /* SchedulePanel.xib in Resources */,
-				CECEF7AA144219E700EBF1C4 /* BudgetPanel.xib in Resources */,
-				CECEF7AB144219E700EBF1C4 /* ExportPanel.xib in Resources */,
-				CECEF7AC144219E700EBF1C4 /* ImportWindow.xib in Resources */,
-				CECEF7AD144219E700EBF1C4 /* CSVImportOptions.xib in Resources */,
-				CECEF7AE144219E700EBF1C4 /* CSVLayoutName.xib in Resources */,
-				CECEF7AF144219E700EBF1C4 /* ViewOptions.xib in Resources */,
-				CECEF7B0144219E700EBF1C4 /* AccountReassignPanel.xib in Resources */,
-				CECEF7B1144219E700EBF1C4 /* CustomDateRangePanel.xib in Resources */,
-				CECEF7B2144219E700EBF1C4 /* RecurrenceScopeDialog.xib in Resources */,
-				CECEF7B3144219E700EBF1C4 /* Lookup.xib in Resources */,
-				CECEF7B4144219E700EBF1C4 /* SearchField.xib in Resources */,
-				CECEF7B914421A0400EBF1C4 /* Localizable.strings in Resources */,
-				CECEF7BA14421A0400EBF1C4 /* core.strings in Resources */,
-				CECEF7BB14421A0400EBF1C4 /* message.strings in Resources */,
-				CECEF7BD14421A2500EBF1C4 /* Localizable.strings in Resources */,
-				CECEF7C114421A7A00EBF1C4 /* about.xib in Resources */,
-				CECEF7C214421A7A00EBF1C4 /* ErrorReportWindow.xib in Resources */,
-				CECEF7C314421A7A00EBF1C4 /* FairwareReminder.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import Qt, QModelIndex, QMimeData, QByteArray
-from PyQt4.QtGui import QPixmap, QPalette, QFont, QMessageBox
+from PyQt4.QtCore import Qt, QMimeData, QByteArray
+from PyQt4.QtGui import QPixmap, QPalette, QFont, QItemSelection
 
 from hscommon.util import nonone
 from qtlib.column import ColumnBearer
@@ -101,7 +101,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)
         
-        self.view.selectionModel().currentRowChanged.connect(self.currentRowChanged)
+        self.view.selectionModel().selectionChanged[(QItemSelection, QItemSelection)].connect(self.selectionChanged)
         self.view.collapsed.connect(self.nodeCollapsed)
         self.view.expanded.connect(self.nodeExpanded)
         self.view.deletePressed.connect(self.model.delete)
@@ -233,11 +233,9 @@ class AccountSheet(TreeModel, ColumnBearer):
         return Qt.MoveAction
     
     #--- Events
-    def currentRowChanged(self, current, previous):
-        if not current.isValid():
-            return
-        node = current.internalPointer()
-        self.model.selected = node.ref
+    def selectionChanged(self, selected, deselected):
+        newNodes = [modelIndex.internalPointer().ref for modelIndex in self.view.selectionModel().selectedRows()]
+        self.model.selected_nodes = newNodes
     
     def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
         attrname = self.COLUMNS[logicalIndex].attrname
