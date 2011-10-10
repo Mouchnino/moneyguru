@@ -134,16 +134,18 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         if not self.can_delete():
             return
         self.view.stop_editing()
-        node = self.selected
-        if node.is_account:
-            account = node.account
-            if account.entries:
-                self.mainwindow.arpanel.load(account)
+        selected_nodes = self.selected_nodes
+        gnodes = [n for n in selected_nodes if n.is_group]
+        if gnodes:
+            groups = [n.group for n in gnodes]
+            self.document.delete_groups(groups)
+        anodes = [n for n in selected_nodes if n.is_account]
+        if anodes:
+            accounts = [n.account for n in anodes]
+            if any(a.entries for a in accounts):
+                self.mainwindow.arpanel.load(accounts)
             else:
-                self.document.delete_account(account)
-        else:
-            group = node.group
-            self.document.delete_group(group)
+                self.document.delete_accounts(accounts)
     
     def expand_node(self, node):
         self._expanded_paths.add(tuple(node.path))

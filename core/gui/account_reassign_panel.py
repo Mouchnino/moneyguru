@@ -17,19 +17,19 @@ class AccountReassignPanel(MainWindowPanel):
         MainWindowPanel.__init__(self, view, mainwindow)
         self.account_list = GUISelectableList()
     
-    def _load(self, account):
-        self.account = account
-        accounts = self.document.accounts[:]
-        accounts.remove(self.account)
-        sort_accounts(accounts)
-        available_accounts = [a.name for a in accounts]
-        available_accounts.insert(0, tr('No Account'))
-        self._accounts = accounts
-        self._accounts.insert(0, None)
-        self.account_list[:] = available_accounts
+    def _load(self, accounts):
+        self.deleted_accounts = set(accounts)
+        all_accounts = self.document.accounts[:]
+        target_accounts = [a for a in all_accounts if a not in self.deleted_accounts]
+        sort_accounts(target_accounts)
+        target_account_names = [a.name for a in target_accounts]
+        target_account_names.insert(0, tr('No Account'))
+        self._target_accounts = target_accounts
+        self._target_accounts.insert(0, None)
+        self.account_list[:] = target_account_names
         self.account_list.select(0)
     
     def _save(self):
-        reassign_to = self._accounts[self.account_list.selected_index]
-        self.document.delete_account(self.account, reassign_to=reassign_to)
+        reassign_to = self._target_accounts[self.account_list.selected_index]
+        self.document.delete_accounts(self.deleted_accounts, reassign_to=reassign_to)
     

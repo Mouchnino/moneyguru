@@ -73,3 +73,20 @@ def test_reassign_to_account_with_different_currency(app):
     app.arpanel.save() # no crash
     app.show_account('one')
     eq_(app.etable_count(), 2)
+
+#---
+def app_three_accounts_two_entries():
+    app = TestApp()
+    app.add_accounts('acc1', 'acc2', 'acc3')
+    app.add_txn(from_='acc1')
+    app.add_txn(from_='acc2')
+    app.show_nwview()
+    return app
+
+@with_app(app_three_accounts_two_entries)
+def test_delete_two_accounts_at_once_and_reassign(app):
+    # When deleting two accounts at once, reassigning affect all deleted accounts.
+    app.bsheet.selected_nodes = app.bsheet.assets[:2]
+    app.bsheet.delete() # arpanel popping up.
+    expected = ['No Account', 'acc3']
+    eq_(app.arpanel.account_list[:], expected)

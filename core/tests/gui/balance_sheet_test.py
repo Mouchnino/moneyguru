@@ -290,6 +290,22 @@ def test_add_group_while_editing(app):
     app.bsheet.add_account_group()
     eq_(app.bsheet.assets[1].name, 'foo')
 
+#---
+def app_two_accounts_selected():
+    # Two accounts being selected
+    app = TestApp()
+    app.add_account('foo')
+    app.add_account('bar')
+    app.bsheet.selected_nodes = app.bsheet.assets[:]
+    return app
+
+@with_app(app_two_accounts_selected)
+def test_delete_accounts_with_multiple_selection(app):
+    # When more than one account is selected, performing the delete action delete all selected
+    # accounts
+    app.mw.delete_item()
+    eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
+
 #--- With group
 def app_with_group():
     app = TestApp()
@@ -330,6 +346,20 @@ def test_add_account_while_editing_group(app):
     # What is in the edition buffer is saved before a new account is created
     app.bsheet.add_account()
     eq_(app.bsheet.assets[0].name, 'foo')
+
+#---
+def app_with_two_groups_selected():
+    app = TestApp()
+    app.add_group('group1')
+    app.add_group('group2')
+    app.bsheet.selected_nodes = app.bsheet.assets[:]
+    return app
+
+@with_app(app_with_two_groups_selected)
+def test_delete_two_groups_at_once(app):
+    # Selecting two groups and then deleting them works as expected.
+    app.mw.delete_item()
+    eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
 
 #--- Account beside group
 def app_account_beside_group():
@@ -377,6 +407,14 @@ def test_is_subtotal(app):
     assert not app.bsheet.assets[0].is_subtotal
     app.bsheet.collapse_node(app.bsheet.assets[0])
     assert app.bsheet.assets[0].is_subtotal
+
+@with_app(app_account_in_group)
+def test_delete_both_account_and_group_at_once(app):
+    # When a group and an account are selected and delete_item() is called, deleting both at once
+    # works
+    app.bsheet.selected_nodes = [app.bsheet.assets[0], app.bsheet.assets[0][0]]
+    app.mw.delete_item()
+    eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
 
 #--- Accounts and entries (Re-used in sub-app funcs below)
 def app_accounts_and_entries():

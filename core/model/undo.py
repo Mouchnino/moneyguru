@@ -8,7 +8,7 @@
 
 import copy
 
-from hscommon.util import extract
+from hscommon.util import extract, flatten
 
 from ..model.recurrence import Spawn
 
@@ -68,12 +68,14 @@ class Action:
     def change_splits(self, splits):
         self.changed_splits |= set((s, copy.copy(s)) for s in splits)
     
-    def delete_account(self, account):
-        self.deleted_accounts.add(account)
-        transactions = set(e.transaction for e in account.entries if not isinstance(e.transaction, Spawn))
-        transactions = set(t for t in transactions if not t.affected_accounts() - set([account]))
+    def delete_accounts(self, accounts):
+        accounts = set(accounts)
+        self.deleted_accounts |= accounts
+        all_entries = flatten(a.entries for a in accounts)
+        transactions = set(e.transaction for e in all_entries if not isinstance(e.transaction, Spawn))
+        transactions = set(t for t in transactions if not t.affected_accounts() - accounts)
         self.deleted_transactions |= transactions
-        self.change_splits(e.split for e in account.entries)
+        self.change_splits(e.split for e in all_entries)
     
 
 class Undoer:

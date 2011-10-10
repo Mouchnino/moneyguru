@@ -286,32 +286,35 @@ class Document(Repeater):
         self._cook()
         self.notify('account_changed')
     
-    def delete_account(self, account, reassign_to=None):
+    def delete_accounts(self, accounts, reassign_to=None):
         action = Action(tr('Remove account'))
-        action.delete_account(account)
-        affected_schedules = [s for s in self.schedules if account in s.ref.affected_accounts()]
+        accounts = set(accounts)
+        action.delete_accounts(accounts)
+        affected_schedules = [s for s in self.schedules if accounts & s.ref.affected_accounts()]
         for schedule in affected_schedules:
             action.change_schedule(schedule)
-        affected_budgets = [b for b in self.budgets if b.account is account or b.target is account]
-        if account.is_income_statement_account() and reassign_to is None:
-            action.deleted_budgets |= set(affected_budgets)
-        else:
-            for budget in affected_budgets:
-                action.change_budget(budget)
+        for account in accounts:
+            affected_budgets = [b for b in self.budgets if b.account is account or b.target is account]
+            if account.is_income_statement_account() and reassign_to is None:
+                action.deleted_budgets |= set(affected_budgets)
+            else:
+                for budget in affected_budgets:
+                    action.change_budget(budget)
         self._undoer.record(action)
-        self.transactions.reassign_account(account, reassign_to)
-        for schedule in affected_schedules:
-            schedule.ref.reassign_account(account, reassign_to)
-            schedule.reset_spawn_cache()
-        for budget in affected_budgets:
-            if budget.account is account:
-                if reassign_to is None:
-                    self.budgets.remove(budget)
-                else:
-                    budget.account = reassign_to
-            elif budget.target is account:
-                budget.target = reassign_to
-        self.accounts.remove(account)
+        for account in accounts:
+            self.transactions.reassign_account(account, reassign_to)
+            for schedule in affected_schedules:
+                schedule.ref.reassign_account(account, reassign_to)
+                schedule.reset_spawn_cache()
+            for budget in affected_budgets:
+                if budget.account is account:
+                    if reassign_to is None:
+                        self.budgets.remove(budget)
+                    else:
+                        budget.account = reassign_to
+                elif budget.target is account:
+                    budget.target = reassign_to
+            self.accounts.remove(account)
         self._cook()
         self.notify('account_deleted')
     
@@ -343,13 +346,15 @@ class Document(Repeater):
         self._undoer.record(action)
         self.notify('account_changed')
     
-    def delete_group(self, group):
-        accounts = [a for a in self.accounts if a.group is group]
+    def delete_groups(self, groups):
+        groups = set(groups)
+        accounts = [a for a in self.accounts if a.group in groups]
         action = Action(tr('Remove group'))
-        action.deleted_groups.add(group)
+        action.deleted_groups |= groups
         action.change_accounts(accounts)
         self._undoer.record(action)
-        self.groups.remove(group)
+        for group in groups:
+            self.groups.remove(group)
         for account in accounts:
             account.group = None
         self.notify('account_deleted')
