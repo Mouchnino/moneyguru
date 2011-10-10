@@ -154,18 +154,22 @@ class Transaction:
         """Return whether 'self' is matching query, which is a dict containing various arguments,
         such as 'all', 'amount', 'account'...
         """
-        query_all = query.get('all')
-        if query_all is not None:
-            if query_all in self.description.lower():
+        query_description = query.get('description')
+        if query_description is not None:
+            if query_description in self.description.lower():
                 return True
-            if query_all in self.payee.lower():
+        query_payee = query.get('payee')
+        if query_payee is not None:
+            if query_payee in self.payee.lower():
                 return True
-            if query_all == self.checkno.lower():
+        query_checkno = query.get('checkno')
+        if query_checkno is not None:
+            if query_checkno == self.checkno.lower():
                 return True
+        query_memo = query.get('memo')
+        if query_memo is not None:
             for split in self.splits:
-                if split.account and query_all in split.account.name.lower():
-                    return True
-                elif query_all in split.memo.lower():
+                if query_memo in split.memo.lower():
                     return True
         query_amount = query.get('amount')
         if query_amount is not None:

@@ -118,6 +118,8 @@ Cette vue met tout les comptes ensemble en montre leurs entrées respectives. La
 Filtre
 ------
 
+.. todo:: Update from english version
+
 Le champ "Filtre" dans la barre d'outils sert a chercher vos transactions avec des requêtes textuelles. Lorsque vous entrez du texte dans ce champ, seulement les transaction contenant ce texte dans un de leurs champs (description, provenance, etc.) seront visibles. Vous pouvez chercher pour des comptes ou des groupes spécifique avec "account: compte1,compte2" ou "group: groupe1,groupe2". Très utile pour les :doc:`modifications multiples <editing>`.
 
 Options de visibilité

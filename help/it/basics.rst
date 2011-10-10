@@ -123,6 +123,8 @@ Questa vista mette tutti i conti insieme e ne mostra le voci per l'intervallo di
 Filtraggio
 ----------
 
+.. todo:: Update from english version
+
 Il campo Filtro nella barra dei pulsanti permette di vedere tutte le transazioni che corrispondono al testo inserito. Per usarlo, è sufficiente digitare qualcosa e premere invio. Solo le transazioni che hanno una corrispondenza nei campi Descrizione, Beneficiario, Conto #, Conto o Ammontare verranno visualizzate. Se si vogliono vedere le transazioni per alcuni conti o gruppi specifici, digitare "account: conto1,conto2" oppure "group: gruppo1,gruppo2". Questo è molto utile per la :doc:`modifica di massa <editing>`.
 
 Opzioni Vista

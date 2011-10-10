@@ -122,7 +122,23 @@ This view puts all accounts together and displays their entries for the current 
 Filtering
 ---------
 
-The filter field in the toolbar allows you to see all transactions that match the stuff you type in it. To use it, type something and press return. Only transactions that have a description, payee, check #, account or amount matching with what you typed will be shown. If you want to see transactions from specific accounts or groups, type "account: account1,account2" or "group: group1,group2" in the filter box. This is very handy for :doc:`mass editing <editing>`.
+The filter field in the toolbar allows you to see all transactions that match the stuff you type in
+it. To use it, type something and press return. Only transactions that have one of its fields
+(description, payee, account, etc.) matching with what you typed will be shown. If you want to
+search specific fields, you can do so by prefixing your query with the name of the field, for
+example "payee: Apple". The possible prefix values are:
+
+* description
+* payee
+* checkno
+* memo
+* account
+* group
+* amount
+
+Account and group prefixes are special because you can search for multiple values by separating
+account/group names with a comma. For example, "account: Visa, Mastercard" will look for all
+transactions affecting the Visa or Mastercard accounts.
 
 View Options
 ------------

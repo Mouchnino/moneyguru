@@ -118,6 +118,8 @@ V tomto pohledu jsou sloučeny všechny účty a zobrazeny všechny záznamy za 
 Filtrování
 ----------
 
+.. todo:: Update from english version
+
 Pole pro zadání filtru v nástrojové liště vám umožňuje zobrazit ty transakce, které odpovídají zadanému výrazu. Chcete-li filtrovat transakce, napište něco do pole potvrďte stiskem klávesy Enter. V seznamu transakcí se zobrazí pouze ty, jejichž popis, příjemce, číslo šeku, název účtu nebo částka odpovídá napsanému výrazu. Pokud chcete vidět pouze transakce z určitých účtů nebo skupin účtů napište do pole pro zadání filtru "účet: účet1,účet2" nebo "skupina: skupina1,skupina2". To je velmi užitečné pro :doc:`hromadné úpravy <editing>`.
 
 Možnosti zobrazení

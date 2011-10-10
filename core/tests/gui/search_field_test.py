@@ -91,7 +91,7 @@ def test_query_checkno_partial(app):
 @with_app(app_two_transactions)
 def test_query_from(app):
     # The 'from' account can be queried.
-    app.sfield.query = 'desJ'
+    app.sfield.query = 'desJardins'
     eq_(app.ttable.row_count, 2)
 
 @with_app(app_two_transactions)
@@ -112,7 +112,7 @@ def test_query_space(app):
 @with_app(app_two_transactions)
 def test_query_to(app):
     # The 'to' account can be queried.
-    app.sfield.query = 'Come'
+    app.sfield.query = 'inCome'
     eq_(app.ttable.row_count, 1)
     eq_(app.ttable[0].description, 'a Deposit')
 
@@ -121,6 +121,32 @@ def test_dont_parse_amount_with_expression(app):
     # Don't parse the amount with the 'with_expression' option. It doesn't make sense.
     app.sfield.query = '100+40' # The txn with the '140' amount shouldn't show up.
     eq_(app.ttable.row_count, 0)
+
+#---
+def app_ambiguity_in_txn_values():
+    # Transactions have similar values in different fields
+    app = TestApp()
+    app.add_txn(description='foo1', payee='foo2', checkno='foo3', from_='foo4', to='foo5', amount='42')
+    app.add_txn(description='foo2', payee='foo3', checkno='foo4', from_='foo5', to='foo1', amount='43')
+    return app
+
+@with_app(app_ambiguity_in_txn_values)
+def test_targeted_description_search(app):
+    app.sfield.query = 'description:foo1'
+    eq_(app.ttable.row_count, 1)
+    eq_(app.ttable[0].description, 'foo1')
+
+@with_app(app_ambiguity_in_txn_values)
+def test_targeted_payee_search(app):
+    app.sfield.query = 'payee:foo2'
+    eq_(app.ttable.row_count, 1)
+    eq_(app.ttable[0].description, 'foo1')
+
+@with_app(app_ambiguity_in_txn_values)
+def test_targeted_checkno_search(app):
+    app.sfield.query = 'checkno:foo3'
+    eq_(app.ttable.row_count, 1)
+    eq_(app.ttable[0].description, 'foo1')
 
 #--- Three txns with zero amount
 def app_three_txns_with_zero_amount():

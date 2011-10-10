@@ -9,6 +9,7 @@
 import datetime
 import threading
 from collections import namedtuple
+import re
 
 from hscommon.currency import USD
 from hscommon.notify import Broadcaster
@@ -128,20 +129,28 @@ class Application(Broadcaster, RegistrableApplication):
     
     def parse_search_query(self, query_string):
         # Returns a dict of query arguments
-        query_string = query_string.lower()
-        if query_string.startswith('account:'):
-            accounts = query_string[len('account:'):].split(',')
-            accounts = set([s.strip().lower() for s in accounts])
-            return {'account': accounts}
-        if query_string.startswith('group:'):
-            groups = query_string[len('group:'):].split(',')
-            groups = set([s.strip().lower() for s in groups])
-            return {'group': groups}
-        query = {'all': query_string}
-        try:
-            query['amount'] = abs(parse_amount(query_string, self._default_currency, with_expression=False))
-        except ValueError:
-            pass
+        query_string = query_string.strip().lower()
+        ALL_QUERY_TYPES = ['account', 'group', 'amount', 'description', 'checkno', 'payee', 'memo']
+        RE_TARGETED_SEARCH = re.compile(r'({}):(.*)'.format('|'.join(ALL_QUERY_TYPES)))
+        m = RE_TARGETED_SEARCH.match(query_string)
+        if m is not None:
+            qtype, qargs = m.groups()
+            qtypes = [qtype]
+        else:
+            qtypes = ALL_QUERY_TYPES
+            qargs = query_string
+        query = {}
+        for qtype in qtypes:
+            if qtype in {'account', 'group'}:
+                # account and group args are comma-splitted
+                query[qtype] = {s.strip() for s in qargs.split(',')}
+            elif qtype == 'amount':
+                try:
+                    query['amount'] = abs(parse_amount(qargs, self._default_currency, with_expression=False))
+                except ValueError:
+                    pass
+            else:
+                query[qtype] = qargs
         return query
     
     def save_custom_range(self, slot, name, start, end):
