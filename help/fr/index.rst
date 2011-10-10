@@ -1,7 +1,12 @@
 Aide moneyGuru
 ==============
 
-Ce document est aussi disponible en `anglais <http://www.hardcoded.net/moneyguru/help/en>`__, en `allemand <http://www.hardcoded.net/moneyguru/help/de>`__ et en `italien <http://www.hardcoded.net/moneyguru/help/it>`__.
+Ce document est aussi disponible dans ces langues:
+
+* `Anglais <http://www.hardcoded.net/moneyguru/help/en>`__
+* `Allemand <http://www.hardcoded.net/moneyguru/help/de>`__
+* `Italien <http://www.hardcoded.net/moneyguru/help/it>`__
+* `Tchèque <http://www.hardcoded.net/moneyguru/help/cs>`__
 
 moneyGuru est une application de gestion de finances personnelles. Vous pouvez y évaluer votre situations financière afin de prendre de meilleures décisions.
 

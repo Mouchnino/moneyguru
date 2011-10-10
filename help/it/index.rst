@@ -1,7 +1,12 @@
 Aiuto di moneyGuru
 ==================
 
-Questo documento è disponibile anche in `inglese <http://www.hardcoded.net/moneyGuru/help/en/index.html>`__ , `francese <http://www.hardcoded.net/moneyGuru/help/fr/index.html>`__ e `tedesco <http://www.hardcoded.net/moneyGuru/help/de/index.html>`__.
+Questo documento è disponibile anche in:
+
+* `Inglese <http://www.hardcoded.net/moneyGuru/help/en>`__
+* `Francese <http://www.hardcoded.net/moneyGuru/help/fr>`__
+* `Tedesco <http://www.hardcoded.net/moneyGuru/help/de>`__
+* `Czech <http://www.hardcoded.net/moneyGuru/help/cs>`__
 
 moneyGuru è un programma di gestione delle finanze personali, con il quale valutare la propria situazione finanziaria e prendere decisioni consapevoli (e quindi migliori). La maggior parte delle applicazioni finanziarie hanno lo stesso obiettivo, ma moneyGuru si distingue nel modo in cui lo raggiunge. Invece che avere dei rapporti difficili da configurare (o da capire quale è quello preconfigurato che serve), i dati finanziari importanti (patrimonio netto e guadagno) sono costantemente aggiornati e "in primo piano". Ciò permette di fare le valutazioni in qualsiasi momento e non solo periodicamente.
 
