@@ -320,11 +320,11 @@ class PyReport(PyOutline):
         self.py.delete()
     
     @signature('c@:@@')
-    def canMovePath_toPath_(self, source_path, dest_path):
-        return self.py.can_move(source_path, dest_path)
+    def canMovePaths_toPath_(self, source_paths, dest_path):
+        return self.py.can_move(source_paths, dest_path)
     
-    def movePath_toPath_(self, source_path, dest_path):
-        self.py.move(source_path, dest_path)
+    def movePaths_toPath_(self, source_paths, dest_path):
+        self.py.move(source_paths, dest_path)
     
     def showSelectedAccount(self):
         self.py.show_selected_account()

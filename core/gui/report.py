@@ -108,14 +108,23 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         node = self.selected
         return isinstance(node, Node) and (node.is_account or node.is_group)
     
-    def can_move(self, source_path, dest_path):
-        """Returns whether it's possible to move the node at 'source_path' under the node at 'dest_path'."""
+    def can_move(self, source_paths, dest_path):
+        """Returns whether it's possible to move the nodes at 'source_paths' under the node at
+        'dest_path'.
+        """
         if not dest_path:  # Don't move under the root
             return False
-        if source_path[:-1] == dest_path:  # Don't move under the same node
+        dest_node = self.get_node(dest_path)
+        if not (dest_node.is_group or dest_node.is_type):
+            # Move only under a group node or a type node
             return False
-        node = self.get_node(dest_path)
-        return node.is_group or node.is_type  # Move only under a group node or a type node
+        for source_path in source_paths:
+            source_node = self.get_node(source_path)
+            if not source_node.is_account:
+                return False
+            if source_node.parent is dest_node:  # Don't move under the same node
+                return False
+        return True
     
     def cancel_edits(self):
         node = self.edited
@@ -200,15 +209,15 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         node.append(self.make_blank_node())
         return node
 
-    def move(self, source_path, dest_path):
-        """Moves the node at 'source_path' under the node at 'dest_path'."""
-        assert self.can_move(source_path, dest_path)
-        account = self.get_node(source_path).account
+    def move(self, source_paths, dest_path):
+        """Moves the nodes at 'source_paths' under the node at 'dest_path'."""
+        assert self.can_move(source_paths, dest_path)
+        accounts = [self.get_node(p).account for p in source_paths]
         dest_node = self.get_node(dest_path)
         if dest_node.is_type:
-            self.document.change_account(account, group=None, type=dest_node.type)
+            self.document.change_accounts(accounts, group=None, type=dest_node.type)
         elif dest_node.is_group:
-            self.document.change_account(account, group=dest_node.group, type=dest_node.group.type)
+            self.document.change_accounts(accounts, group=dest_node.group, type=dest_node.group.type)
     
     def refresh(self, refresh_view=True):
         selected_account = self.selected_account
@@ -233,7 +242,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         assert node.is_account or node.is_group
         try:
             if node.is_account:
-                self.document.change_account(node.account, name=node.name)
+                self.document.change_accounts([node.account], name=node.name)
             else:
                 self.document.change_group(node.group, name=node.name)
         except DuplicateAccountNameError:

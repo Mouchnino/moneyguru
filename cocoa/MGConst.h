@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGEntryPasteboardType @"MGEntryPasteboardType"
 #define MGImportEntryPasteboardType @"MGImportEntryPasteboardType"
 #define MGTransactionPasteboardType @"MGTransactionPasteboardType"
-#define MGPathPasteboardType @"MGPathPasteboardType"
+#define MGPathsPasteboardType @"MGPathsPasteboardType"
 
 /* Toolbar identifiers */
 

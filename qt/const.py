@@ -9,7 +9,7 @@
 
 from PyQt4.QtCore import Qt
 
-MIME_NODEPATH = 'application/moneyguru.nodepath'
+MIME_NODEPATHS = 'application/moneyguru.nodepaths'
 
 INDENTATION_OFFSET_ROLE = Qt.UserRole # Returns an offset for the item's indentation
 

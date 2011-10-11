@@ -263,25 +263,26 @@ class Document(Repeater):
             listener.dispatch('document_restoring_preferences')
     
     #--- Account
-    def change_account(self, account, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
+    def change_accounts(self, accounts, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
             account_number=NOEDIT, notes=NOEDIT):
-        assert account is not None
+        assert all (a is not None for a in accounts)
         action = Action(tr('Change account'))
-        action.change_accounts([account])
-        if name is not NOEDIT:
-            self.accounts.set_account_name(account, name)
-        if (type is not NOEDIT) and (type != account.type):
-            account.type = type
-            account.group = None
-        if currency is not NOEDIT:
-            assert not any(e.reconciled for e in account.entries)
-            account.currency = currency
-        if group is not NOEDIT:
-            account.group = group
-        if account_number is not NOEDIT:
-            account.account_number = account_number
-        if notes is not NOEDIT:
-            account.notes = notes
+        action.change_accounts(accounts)
+        for account in accounts:
+            if name is not NOEDIT:
+                self.accounts.set_account_name(account, name)
+            if (type is not NOEDIT) and (type != account.type):
+                account.type = type
+                account.group = None
+            if currency is not NOEDIT:
+                assert not any(e.reconciled for e in account.entries)
+                account.currency = currency
+            if group is not NOEDIT:
+                account.group = group
+            if account_number is not NOEDIT:
+                account.account_number = account_number
+            if notes is not NOEDIT:
+                account.notes = notes
         self._undoer.record(action)
         self._cook()
         self.notify('account_changed')

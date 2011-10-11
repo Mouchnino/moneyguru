@@ -58,7 +58,7 @@ class AccountPanel(MainWindowPanel):
         if self.can_change_currency:
             kwargs['currency'] = self.currency
         try:
-            self.document.change_account(self.account, **kwargs)
+            self.document.change_accounts([self.account], **kwargs)
         except DuplicateAccountNameError:
             pass
     

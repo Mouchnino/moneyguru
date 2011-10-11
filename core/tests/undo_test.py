@@ -262,7 +262,7 @@ def test_undo_delete_account(app, checkstate):
 def test_undo_move_account(app, checkstate):
     # Moving an account from one section to another can be undone
     app.mainwindow.select_balance_sheet()
-    app.bsheet.move([0, 0], [1])
+    app.bsheet.move([[0, 0]], [1])
     checkstate()
 
 @with_app(app_one_named_account)
@@ -359,7 +359,7 @@ def test_undo_delete_group_with_account(app, checkstate):
 def test_undo_move_account_out_of_group(app, checkstate):
     # Undoing a move_account for an account that was in a group puts it back in that group.
     app.mainwindow.select_balance_sheet()
-    app.bsheet.move([0, 0, 0], [1])
+    app.bsheet.move([[0, 0, 0]], [1])
     checkstate()
 
 #---

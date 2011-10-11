@@ -12,12 +12,21 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "Utils.h"
 
+NSArray* convertPaths(NSArray *paths)
+{
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSIndexPath *p in paths) {
+        [result addObject:p2a(p)];
+    }
+    return result;
+}
+
 @implementation MGReport
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aOutlineView];
     columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aOutlineView];
-    [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathPasteboardType]];
+    [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathsPasteboardType]];
     return self;
 }
 
@@ -77,15 +86,15 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)outlineView:(NSOutlineView *)aOutlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
-    NSIndexPath *path = [items objectAtIndex:0];
-    if ([self boolProperty:@"is_account" valueAtPath:path])
-    {
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:path];
-        [pboard declareTypes:[NSArray arrayWithObject:MGPathPasteboardType] owner:self];
-        [pboard setData:data forType:MGPathPasteboardType];
-        return YES;
+    for (NSIndexPath *path in items) {
+        if (![self boolProperty:@"is_account" valueAtPath:path]) {
+            return NO;
+        }
     }
-    return NO;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:items];
+    [pboard declareTypes:[NSArray arrayWithObject:MGPathsPasteboardType] owner:self];
+    [pboard setData:data forType:MGPathsPasteboardType];
+    return YES;
 }
 
 - (NSDragOperation)outlineView:(NSOutlineView *)aOutlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item 
@@ -93,14 +102,11 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSIndexPath *destPath = item;
     NSPasteboard *pboard = [info draggingPasteboard];
-    if ([[pboard types] containsObject:MGPathPasteboardType])
-    {
-        NSData *data = [pboard dataForType:MGPathPasteboardType];
-        NSIndexPath *sourcePath = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        if ([[self py] canMovePath:p2a(sourcePath) toPath:p2a(destPath)])
-        {
-            if (index != -1)
-            {
+    if ([[pboard types] containsObject:MGPathsPasteboardType]) {
+        NSData *data = [pboard dataForType:MGPathsPasteboardType];
+        NSArray *paths = convertPaths([NSKeyedUnarchiver unarchiveObjectWithData:data]);
+        if ([[self py] canMovePaths:paths toPath:p2a(destPath)]) {
+            if (index != -1) {
                 [outlineView setDropItem:item dropChildIndex:-1];
             }
             return NSDragOperationMove;
@@ -113,11 +119,10 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSPasteboard *pboard = [info draggingPasteboard];
     NSIndexPath *destPath = item;
-    if ([[pboard types] containsObject:MGPathPasteboardType])
-    {
-        NSData *data = [pboard dataForType:MGPathPasteboardType];
-        NSIndexPath *sourcePath = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        [[self py] movePath:p2a(sourcePath) toPath:p2a(destPath)];
+    if ([[pboard types] containsObject:MGPathsPasteboardType]) {
+        NSData *data = [pboard dataForType:MGPathsPasteboardType];
+        NSArray *paths = convertPaths([NSKeyedUnarchiver unarchiveObjectWithData:data]);
+        [[self py] movePaths:paths toPath:p2a(destPath)];
     }
     return YES;
 }

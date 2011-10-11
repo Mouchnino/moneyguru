@@ -13,7 +13,7 @@ from hscommon.util import nonone
 from qtlib.column import ColumnBearer
 from qtlib.tree_model import TreeNode, TreeModel
 
-from ..const import (MIME_NODEPATH, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
+from ..const import (MIME_NODEPATHS, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
     EXTRA_UNDERLINED_DOUBLE)
 from ..support.item_delegate import ItemDelegate, ItemDecoration
 
@@ -206,28 +206,33 @@ class AccountSheet(TreeModel, ColumnBearer):
     
     #--- Drag & Drop
     def dropMimeData(self, mimeData, action, row, column, parentIndex):
-        if not mimeData.hasFormat(MIME_NODEPATH):
+        if not mimeData.hasFormat(MIME_NODEPATHS):
             return False
         if not parentIndex.isValid():
             return False
-        strMimeData = bytes(mimeData.data(MIME_NODEPATH)).decode()
-        path = list(map(int, strMimeData.split(',')))
+        strMimeData = bytes(mimeData.data(MIME_NODEPATHS)).decode()
+        strPaths = strMimeData.split('|')
+        paths = [list(map(int, strPath.split(','))) for strPath in strPaths]
         destPath = self.pathForIndex(parentIndex)
-        if not self.model.can_move(path, destPath):
+        if not self.model.can_move(paths, destPath):
             return False
-        self.model.move(path, destPath)
+        self.model.move(paths, destPath)
         return True
     
     def mimeData(self, indexes):
+        dataList = []
         index = indexes[0]
-        path = self.pathForIndex(index)
-        data = ','.join(map(str, path))
+        for index in indexes:
+            path = self.pathForIndex(index)
+            data = ','.join(map(str, path))
+            dataList.append(data)
+        data = '|'.join(dataList)
         mimeData = QMimeData()
-        mimeData.setData(MIME_NODEPATH, QByteArray(data.encode()))
+        mimeData.setData(MIME_NODEPATHS, QByteArray(data.encode()))
         return mimeData
     
     def mimeTypes(self):
-        return [MIME_NODEPATH]
+        return [MIME_NODEPATHS]
     
     def supportedDropActions(self):
         return Qt.MoveAction

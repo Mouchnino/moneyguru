@@ -257,7 +257,7 @@ def test_duplicate_account_name(app):
 @with_app(app_one_account)
 def test_make_account_liability(app):
     # Making the account a liability account refreshes all views.
-    app.bsheet.move(app.bsheet.get_path(app.bsheet.assets[0]), app.bsheet.get_path(app.bsheet.liabilities))
+    app.bsheet.move([app.bsheet.get_path(app.bsheet.assets[0])], app.bsheet.get_path(app.bsheet.liabilities))
     app.check_gui_calls(app.nwgraph_gui, ['refresh'])
 
 @with_app(app_one_account)

@@ -101,11 +101,11 @@ def test_keep_old_accounts_on_load_failure(app):
 @with_app(app_one_empty_account)
 def test_move_account(app):
     # move_account() methods to change the account type and move it to the correct section.
-    app.mainwindow.select_balance_sheet()
-    app.bsheet.move([0, 0], [1])
+    app.show_nwview()
+    app.bsheet.move([[0, 0]], [1])
     eq_(app.account_node_subaccount_count(app.bsheet.get_node([0])), 0)
     eq_(app.account_node_subaccount_count(app.bsheet.get_node([1])), 1)
-    app.bsheet.move([1, 0], [0])                                
+    app.bsheet.move([[1, 0]], [0])                                
     eq_(app.account_node_subaccount_count(app.bsheet.get_node([0])), 1)
     eq_(app.account_node_subaccount_count(app.bsheet.get_node([1])), 0)
 
@@ -113,7 +113,7 @@ def test_move_account(app):
 def test_move_account_makes_the_app_dirty(app):
     # calling make_account_asset() makes the app dirty.
     app.mainwindow.select_balance_sheet()
-    app.bsheet.move([0, 0], [1])
+    app.bsheet.move([[0, 0]], [1])
     assert app.doc.is_dirty()
 
 @with_app(app_one_empty_account)
@@ -127,6 +127,7 @@ def test_save_and_load(app):
 def app_three_empty_accounts():
     app = TestApp()
     app.add_accounts('one', 'two', 'three')
+    app.show_nwview()
     return app
 
 @with_app(app_three_empty_accounts)
@@ -143,7 +144,6 @@ def test_account_sort(app):
 @with_app(app_three_empty_accounts)
 def test_account_sort_is_case_insensitive(app):
     # The account sort is case insensitive.
-    app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[1] # three
     app.bsheet.selected.name = 'THREE'
     app.bsheet.save_edits()
@@ -152,16 +152,20 @@ def test_account_sort_is_case_insensitive(app):
 @with_app(app_three_empty_accounts)
 def test_can_move_account(app):
     # An account can only be moved in an account group that is on the 2nd or 3rd level.
-    app.mainwindow.select_balance_sheet()
-    assert app.bsheet.can_move([0, 0], [1]) # Can move into Liabilities
-    assert not app.bsheet.can_move([0, 0], []) # Cannot move in Root
-    assert not app.bsheet.can_move([0, 0], [0]) # Cannot move in Assets
-    assert not app.bsheet.can_move([0, 0], [0, 1]) # Cannot move in another account
+    assert app.bsheet.can_move([[0, 0]], [1]) # Can move into Liabilities
+    assert not app.bsheet.can_move([[0, 0]], []) # Cannot move in Root
+    assert not app.bsheet.can_move([[0, 0]], [0]) # Cannot move in Assets
+    assert not app.bsheet.can_move([[0, 0]], [0, 1]) # Cannot move in another account
+
+@with_app(app_three_empty_accounts)
+def test_can_move_multiple_accounts(app):
+    # When multiple accounts are selected, it's possible to move them too.
+    assert app.bsheet.can_move([[0, 0], [0, 1]], [1]) # can move one and three
+    assert not app.bsheet.can_move([[0], [0, 0]], [1]) # can't move when one node in the selection can't be moved
 
 @with_app(app_three_empty_accounts)
 def test_delete_first_account(app):
     # Keep the selection there.
-    app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     eq_(app.account_names(), ['three', 'two'])
@@ -171,16 +175,21 @@ def test_delete_first_account(app):
 def test_delete_last_account(app):
     # When a deletion causes the account selection to go in the next section, stay in the
     # current section.
-    app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[1]
     app.bsheet.delete()
     eq_(app.account_names(), ['one', 'two']) 
     eq_(app.bsheet.selected_path, [0, 1])
 
 @with_app(app_three_empty_accounts)
+def test_move_multiple_accounts(app):
+    # move_account() methods to change the account type and move it to the correct section.
+    app.bsheet.move([[0, 0], [0, 1]], [1])
+    eq_(app.account_node_subaccount_count(app.bsheet.assets), 1)
+    eq_(app.account_node_subaccount_count(app.bsheet.liabilities), 2)
+
+@with_app(app_three_empty_accounts)
 def test_set_account_name_duplicate(app):
     # save_edits() reverts to the old name when the name already exists (case insensitive).
-    app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[1] # three
     app.bsheet.selected.name = 'ONE'
     app.bsheet.save_edits()
@@ -189,7 +198,6 @@ def test_set_account_name_duplicate(app):
 @with_app(app_three_empty_accounts)
 def test_set_account_name_same_name(app):
     # Don't raise DuplicateAccountNameError when the duplicate name is the account being edited.
-    app.mainwindow.select_balance_sheet()
     app.bsheet.selected = app.bsheet.assets[1] # three
     app.bsheet.selected.name = 'Three'
     app.bsheet.save_edits()
@@ -222,8 +230,8 @@ def test_move_account_to_group(app):
     # Accounts can be moved into user created groups.
     app.mainwindow.select_balance_sheet()
     app.bsheet.selected_path = [0, 0] # select the group
-    assert app.bsheet.can_move([0, 1], [0, 0])
-    app.bsheet.move([0, 1], [0, 0])
+    assert app.bsheet.can_move([[0, 1]], [0, 0])
+    app.bsheet.move([[0, 1]], [0, 0])
     eq_(app.bsheet.get_node([0]).children_count, 3) # 1 total node, 1 blank node
     eq_(app.bsheet.get_node([0, 0]).children_count, 3) # 1 total node, 1 blank node
 
@@ -232,8 +240,8 @@ def test_move_two_accounts(app):
     # Account groups can contain more than one account.
     # Refresh was previously bugged when more than one account were in the same group
     app.add_account()
-    app.bsheet.move([0, 1], [0, 0])
-    app.bsheet.move([0, 1], [0, 0])
+    app.bsheet.move([[0, 1]], [0, 0])
+    app.bsheet.move([[0, 1]], [0, 0])
     eq_(app.bsheet.get_node([0, 0]).children_count, 4) # 1 total node, 1 blank node
 
 @with_app(app_one_account_and_one_group)
@@ -290,7 +298,7 @@ def test_move_account_in_another_base_group(app):
     # Moving the account in another account base group does not result in a crash.
     # Previously, the edit system was working with None values to indicate "no edition", which
     # made it impossible to set the group to None.
-    app.bsheet.move([0, 0, 0], [1])
+    app.bsheet.move([[0, 0, 0]], [1])
     eq_(app.account_node_subaccount_count(app.bsheet.get_node([0, 0])), 0)
     eq_(app.account_node_subaccount_count(app.bsheet.get_node([1])), 1)
 
@@ -344,7 +352,7 @@ def app_account_and_group_with_same_name():
 @with_app(app_account_and_group_with_same_name)
 def test_move_account_in_group(app):
     # Moving an account in a group of the same name doesn't cause any problem.
-    app.bsheet.move([0, 1], [0, 0])
+    app.bsheet.move([[0, 1]], [0, 0])
     eq_(app.bsheet.get_node([0, 0]).children_count, 3) # 1 total node, 1 blank node
 
 #--- Different account types

@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface PyReport : PyOutline {}
 - (BOOL)canDeleteSelected;
-- (BOOL)canMovePath:(NSArray *)sourcePath toPath:(NSArray *)destPath;
+- (BOOL)canMovePaths:(NSArray *)sourcePaths toPath:(NSArray *)destPath;
 - (void)deleteSelected;
-- (void)movePath:(NSArray *)sourcePath toPath:(NSArray *)destPath;
+- (void)movePaths:(NSArray *)sourcePaths toPath:(NSArray *)destPath;
 - (void)showSelectedAccount;
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;
