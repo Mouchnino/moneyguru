@@ -19,4 +19,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSArray *)expandedPaths;
 - (void)expandPath:(NSArray *)path;
 - (void)collapsePath:(NSArray *)path;
+- (NSString *)selectionAsCSV;
 @end

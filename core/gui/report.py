@@ -4,6 +4,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import csv
+from io import StringIO
+
 from hscommon.gui import tree
 from hscommon.trans import tr
 
@@ -250,6 +253,23 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             # we use _name because we don't want to change self.edited
             node._name = node.account.name if node.is_account else node.group.name
             self.mainwindow.show_message(msg)
+    
+    def selection_as_csv(self):
+        csvrows = []
+        columns = (self.columns.coldata[colname] for colname in self.columns.colnames)
+        columns = [col for col in columns if col.visible]
+        for node in self.selected_nodes:
+            csvrow = []
+            for col in columns:
+                try:
+                    csvrow.append(getattr(node, col.name))
+                except AttributeError:
+                    pass
+            csvrows.append(csvrow)
+        fp = StringIO()
+        csv.writer(fp, delimiter='\t', quotechar='"').writerows(csvrows)
+        fp.seek(0)
+        return fp.read()
     
     def show_selected_account(self):
         self.mainwindow.shown_account = self.selected_account

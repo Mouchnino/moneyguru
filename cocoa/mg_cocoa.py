@@ -345,6 +345,9 @@ class PyReport(PyOutline):
     def expandedPaths(self):
         return self.py.expanded_paths
     
+    def selectionAsCSV(self):
+        return self.py.selection_as_csv()
+    
     # Python --> Cocoa
     def refresh_expanded_paths(self):
         self.cocoa.refreshExpandedPaths()

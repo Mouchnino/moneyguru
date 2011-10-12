@@ -226,6 +226,11 @@ NSArray* convertPaths(NSArray *paths)
 }
 
 /* delegate */
+- (NSString *)dataForCopyToPasteboard
+{
+    return [[self py] selectionAsCSV];
+}
+
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
     if ([[self py] canDeleteSelected])

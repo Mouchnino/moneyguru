@@ -5,6 +5,8 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from datetime import date
+import csv
+from io import StringIO
 
 from hscommon.testutil import eq_
 from hscommon.currency import Currency, USD, CAD
@@ -563,6 +565,16 @@ def test_shown_account_is_sticky(app):
     app.mw.select_entry_table()
     eq_(app.balgraph.title, 'Account 1')
     eq_(app.etable[0].description, 'Entry 1')
+
+@with_app(app_accounts_and_entries)
+def test_selection_as_csv(app):
+    # selection_as_csv() return a CSV string representing the selection.
+    app.bsheet.selected = app.bsheet.assets[0] # Account 1
+    csvdata = app.bsheet.selection_as_csv()
+    rows = list(csv.reader(StringIO(csvdata), delimiter='\t'))
+    # The contents of the columns, in order [name, end, start, budgeted]
+    expected = [['Account 1', '250.00', '0.00', '0.00']]
+    eq_(rows, expected)
 
 #--- Multiple currencies
 def app_multiple_currencies():
