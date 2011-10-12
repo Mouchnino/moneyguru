@@ -223,17 +223,18 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             self.document.change_accounts(accounts, group=dest_node.group, type=dest_node.group.type)
     
     def refresh(self, refresh_view=True):
-        selected_account = self.selected_account
-        selected_path = self.selected_path
+        selected_accounts = self.selected_accounts
+        selected_paths = self.selected_paths
         self._refresh()
-        if selected_account is not None:
-            node_of_account = self._node_of_account(selected_account)
+        selected_nodes = []
+        for account in selected_accounts:
+            node_of_account = self._node_of_account(account)
             if node_of_account is not None:
-                self.selected = node_of_account
-            else:
-                self.selected_path = selected_path
+                selected_nodes.append(node_of_account)
+        if selected_nodes:
+            self.selected_nodes = selected_nodes
         else:
-            self.selected_path = selected_path
+            self.selected_paths = selected_paths
         if refresh_view:
             self.view.refresh()
     
@@ -275,16 +276,17 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         self.mainwindow.shown_account = self.selected_account
     
     def toggle_excluded(self):
-        node = self.selected
-        if node.is_type:
-            affected_accounts = set(self.document.accounts.filter(type=node.type))
-        elif node.is_group:
-            affected_accounts = set(self.document.accounts.filter(group=node.group))
-        elif node.is_account:
-            affected_accounts = set([node.account])
-        else:
-            return
-        self.document.toggle_accounts_exclusion(affected_accounts)
+        nodes = self.selected_nodes
+        affected_accounts = set()
+        for node in nodes:
+            if node.is_type:
+                affected_accounts |= set(self.document.accounts.filter(type=node.type))
+            elif node.is_group:
+                affected_accounts |= set(self.document.accounts.filter(group=node.group))
+            elif node.is_account:
+                affected_accounts.add(node.account)
+        if affected_accounts:
+            self.document.toggle_accounts_exclusion(affected_accounts)
     
     #--- Event handlers
     def account_added(self):
@@ -362,11 +364,16 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     @property
     def selected_account(self):
-        node = self.selected_node
-        if (node is not None) and node.is_account:
-            return node.account
+        accounts = self.selected_accounts
+        if accounts:
+            return accounts[0]
         else:
             return None
+    
+    @property
+    def selected_accounts(self):
+        nodes = self.selected_nodes
+        return [node.account for node in nodes if node.is_account]
     
 
 class Node(tree.Node):

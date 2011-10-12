@@ -308,6 +308,20 @@ def test_delete_accounts_with_multiple_selection(app):
     app.mw.delete_item()
     eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
 
+@with_app(app_two_accounts_selected)
+def test_toggle_exclusion_with_multiple_selection(app):
+    # toggle_exclusion also works with multiple selection
+    app.bsheet.toggle_excluded()
+    assert app.bsheet.assets[0].is_excluded
+    assert app.bsheet.assets[1].is_excluded
+
+@with_app(app_two_accounts_selected)
+def test_toggle_exclusion_with_multiple_selection_doesnt_change_selection(app):
+    # there was a bug where toggling exclusion with multiple selection would change the selection to
+    # a single node.
+    app.bsheet.toggle_excluded()
+    eq_(len(app.bsheet.selected_nodes), 2)
+
 #--- With group
 def app_with_group():
     app = TestApp()
