@@ -96,6 +96,7 @@ Valute supportate
 * [MXN] Peso Messicano
 * [MYR] Ringgit Malese
 * [MZN] Metical Mozambicano
+* [NIO] Nicaraguan córdoba
 * [NLG] Fiorino dei Paesi Bassi
 * [NOK] Corone Norvegesi
 * [PAB] Balboa Panamense

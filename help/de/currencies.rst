@@ -95,6 +95,7 @@ Unterstützte Währungen
 * [MXN] Peso (Mexiko)
 * [MYR] Ringgit (Malaysia)
 * [MZN] Mozambican metical
+* [NIO] Nicaraguan córdoba
 * [NLG] Gulden (Niederlande)
 * [NOK] Krone (Norwegen)
 * [PAB] Balboa (Panama)

@@ -95,6 +95,7 @@ Podporované měny
 * [MXN] Mexican peso
 * [MYR] Malaysian ringgit
 * [MZN] Mozambican metical
+* [NIO] Nicaraguan córdoba
 * [NLG] Netherlands guild
 * [NOK] Norwegian krone
 * [PAB] Panamanian balboa
