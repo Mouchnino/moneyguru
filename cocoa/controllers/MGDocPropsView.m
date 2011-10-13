@@ -1,0 +1,35 @@
+/* 
+Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
+
+This software is licensed under the "BSD" License as described in the "LICENSE" file, 
+which should be included with this package. The terms are also available at 
+http://www.hardcoded.net/licenses/bsd_license
+*/
+
+#import "MGDocPropsView.h"
+#import "Utils.h"
+
+@implementation MGDocPropsView
+- (id)initWithPyParent:(id)aPyParent
+{
+    self = [super initWithPyClassName:@"PyDocPropsView" pyParent:aPyParent];
+    [NSBundle loadNibNamed:@"DocProps" owner:self];
+    firstWeekdayPopUp = [[HSPopUpList alloc] initWithPy:[[self py] firstWeekdayList] view:firstWeekdayPopUpView];
+    aheadMonthsPopUp = [[HSPopUpList alloc] initWithPy:[[self py] aheadMonthsList] view:aheadMonthsPopUpView];
+    yearStartMonthPopUp = [[HSPopUpList alloc] initWithPy:[[self py] yearStartMonthList] view:yearStartMonthPopUpView];
+    return self;
+}
+        
+- (void)dealloc
+{
+    [firstWeekdayPopUp release];
+    [aheadMonthsPopUp release];
+    [yearStartMonthPopUp release];
+    [super dealloc];
+}
+
+- (PyDocPropsView *)py
+{
+    return (PyDocPropsView *)py;
+}
+@end

@@ -1,0 +1,11 @@
+﻿/* Class = "NSTextFieldCell"; title = "Year starts in:"; ObjectID = "22"; */
+"22.title" = "Year starts in:";
+
+/* Class = "NSTextFieldCell"; title = "Ahead months in Running Year:"; ObjectID = "46"; */
+"46.title" = "Ahead months in Running Year:";
+
+/* Class = "NSTextFieldCell"; title = "First day of the week:"; ObjectID = "47"; */
+"47.title" = "First day of the week:";
+
+/* Class = "NSTextFieldCell"; title = "Document Properties"; ObjectID = "55"; */
+"55.title" = "Document Properties";

@@ -242,6 +242,28 @@
 "Income" = "Entrate";
 "Expense" = "Uscite";
 
+/* Months and weekday names */
+"Monday" = "Lunedì";
+"Tuesday" = "Martedì";
+"Wednesday" = "Mercoledì";
+"Thursday" = "Giovedì";
+"Friday" = "Venerdì";
+"Saturday" = "Sabato";
+"Sunday" = "Domenica";
+
+"December" = "Dicembre";
+"November" = "Novembre";
+"October" = "Ottobre";
+"September" = "Settembre";
+"August" = "Agosto";
+"July" = "Luglio";
+"June" = "Giugno";
+"May" = "Maggio";
+"April" = "Aprile";
+"March" = "Marzo";
+"February" = "Febbraio";
+"January" = "Gennaio";
+
 /* Cashculator messages */
 "Exported database not present. Click on Export Accounts first." = "Exported database not present. Click on Export Accounts first.";
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature.";

@@ -37,15 +37,18 @@ def test_all_transactions_range(app):
 @with_app(TestApp)
 def test_set_ahead_months(app):
     # setting the ahead_months preference doesn't change the current date range type
-    app.app.ahead_months = 5
+    app.show_dpview()
+    app.dpview.ahead_months_list.select(5)
     assert isinstance(app.doc.date_range, YearRange)
 
 @with_app(TestApp)
 def test_year_start_month_same_as_ahead_month(app):
     # There was a stupid bug where setting year_start_month to the same value as ahead_months
     # wouldn't work.
-    app.app.year_start_month = 11 # I don't thin ahead_month's default is every gonna be 11.
-    app.app.year_start_month = app.app.ahead_months
+    app.show_dpview()
+    app.dpview.year_start_month_list.select(11) # I don't think ahead_month's default is every gonna be 11.
+    # +1 is because our actual year_start_month is always list-index + 1
+    app.dpview.year_start_month_list.select(app.dpview.ahead_months_list.selected_index-1)
     eq_(app.app.year_start_month, app.app.ahead_months)
 
 #---
@@ -144,7 +147,8 @@ class TestRangeOnYearStartsOnApril:
         monkeypatch.patch_today(2007, 4, 1)
         app = TestApp()
         app.drsel.select_year_range()
-        app.app.year_start_month = 4
+        app.show_dpview()
+        app.dpview.year_start_month_list.select(3)
         return app
     
     @with_app(do_setup)
@@ -198,7 +202,7 @@ def test_select_next_prev_today_range(app):
 @with_app(app_range_on_year_to_date)
 def test_year_start_month_at_4(app):
     # when setting year_start_month at 4, the year-to-date range will start on april 1st
-    app.app.year_start_month = 4
+    app.dpview.year_start_month_list.select(3)
     eq_(app.doc.date_range.start, date(2008, 4, 1))
     eq_(app.doc.date_range.end, date(2008, 11, 12))
 
@@ -206,7 +210,7 @@ def test_year_start_month_at_4(app):
 def test_year_start_month_at_12(app):
     # when the year_start_month is higher than the current month in YTD, the date range will
     # start in the previous year
-    app.app.year_start_month = 12
+    app.dpview.year_start_month_list.select(11)
     eq_(app.doc.date_range.start, date(2007, 12, 1))
     eq_(app.doc.date_range.end, date(2008, 11, 12))
 
@@ -230,7 +234,7 @@ class TestRangeOnRunningYear:
     
     @with_app(do_setup)
     def test_11_ahead_months(self, app):
-        app.app.ahead_months = 11
+        app.dpview.ahead_months_list.select(11)
         eq_(app.doc.date_range.start, date(2009, 1, 1))
         eq_(app.doc.date_range.end, date(2009, 12, 31))
     
@@ -261,7 +265,7 @@ class TestRangeOnRunningYearWithAheadMonths:
     def do_setup(self, monkeypatch):
         app = TestApp()
         monkeypatch.patch_today(2009, 1, 25)
-        app.app.ahead_months = 5
+        app.dpview.ahead_months_list.select(5)
         app.drsel.select_running_year_range()
         app.clear_gui_calls()
         return app
@@ -410,7 +414,7 @@ class TestAllTransactionsRangeWithOneTransactionFarInThePast:
     @with_app(do_setup)
     def test_includes_ahead_months(self, app):
         # All Transactions range end_date is computed using the ahead_months pref
-        app.app.ahead_months = 3 # triggers a date range update
+        app.dpview.ahead_months_list.select(3) # triggers a date range update
         app.add_txn('30/04/2010')
         eq_(app.ttable.row_count, 3)
         # but not further...

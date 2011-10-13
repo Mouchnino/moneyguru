@@ -26,6 +26,7 @@ from .profit.view import ProfitView
 from .transaction.view import TransactionView
 from .schedule.view import ScheduleView
 from .general_ledger.view import GeneralLedgerView
+from .docprops_view import DocPropsView
 from .new_view import NewView
 from .lookup import AccountLookup, CompletionLookup
 from .account_panel import AccountPanel
@@ -71,6 +72,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.scview = ScheduleView(mainwindow=self)
         self.bview = BudgetView(mainwindow=self)
         self.glview = GeneralLedgerView(mainwindow=self)
+        self.dpview = DocPropsView(mainwindow=self)
         self.newview = NewView(mainwindow=self)
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
@@ -96,12 +98,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mainView.addWidget(self.scview)
         self.mainView.addWidget(self.bview)
         self.mainView.addWidget(self.glview)
+        self.mainView.addWidget(self.dpview)
         self.mainView.addWidget(self.newview)
         
         # set_children() and connect() calls have to happen after _setupUiPost()
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
-            self.glview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
+            self.glview, self.dpview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
             self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup,
             self.drsel, self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
@@ -228,6 +231,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             view = self.bview
         elif pane_type == PaneType.GeneralLedger:
             view = self.glview
+        elif pane_type == PaneType.DocProps:
+            view = self.dpview
         elif pane_type == PaneType.Empty:
             view = self.newview
         self.mainView.setCurrentWidget(view)
@@ -253,6 +258,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             PaneType.Schedule: tr("New Schedule"),
             PaneType.Budget: tr("New Budget"),
             PaneType.GeneralLedger: tr("New Transaction"),
+            PaneType.DocProps: tr("New Item"), #XXX make disabled
             PaneType.Empty: tr("New Item"), #XXX make disabled
         }[viewType]
         self.actionNewItem.setText(newItemLabel)

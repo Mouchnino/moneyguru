@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-06-09
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -8,15 +7,18 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QShortcut, QKeySequence
+from PyQt4.QtGui import (QShortcut, QKeySequence, QGridLayout, QIcon, QPixmap, QPushButton, QLabel,
+    QSpacerItem, QSizePolicy, QVBoxLayout)
 
+from hscommon.trans import tr as trbase
 from core.const import PaneType
 from core.gui.empty_view import EmptyView as EmptyViewModel
 
 from .base_view import BaseView
-from ..ui.new_view_ui import Ui_NewView
 
-class NewView(BaseView, Ui_NewView):
+tr = lambda s: trbase(s, "NewView")
+
+class NewView(BaseView):
     def __init__(self, mainwindow):
         BaseView.__init__(self)
         self._setupUi()
@@ -35,10 +37,54 @@ class NewView(BaseView, Ui_NewView):
         self.shortcut4.activated.connect(self.gledgerButtonClicked)
         self.shortcut5.activated.connect(self.scheduleButtonClicked)
         self.shortcut6.activated.connect(self.budgetButtonClicked)
+        self.shortcut7.activated.connect(self.docpropsButtonClicked)
     
     def _setupUi(self):
-        self.setupUi(self)
-        for i in range(1, 7):
+        self.resize(400, 300)
+        self.gridLayout = QGridLayout(self)
+        self.label = QLabel(tr("Choose a type for this tab:"))
+        self.label.setAlignment(Qt.AlignCenter)
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 3)
+        spacerItem = QSpacerItem(95, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
+        self.verticalLayout = QVBoxLayout()
+        self.networthButton = QPushButton(tr("1. Net Worth"))
+        icon = QIcon()
+        icon.addPixmap(QPixmap(':/balance_sheet_16'), QIcon.Normal, QIcon.Off)
+        self.networthButton.setIcon(icon)
+        self.verticalLayout.addWidget(self.networthButton)
+        self.profitButton = QPushButton(tr("2. Profit && Loss"))
+        icon1 = QIcon()
+        icon1.addPixmap(QPixmap(':/income_statement_16'), QIcon.Normal, QIcon.Off)
+        self.profitButton.setIcon(icon1)
+        self.verticalLayout.addWidget(self.profitButton)
+        self.transactionButton = QPushButton(tr("3. Transactions"))
+        icon2 = QIcon()
+        icon2.addPixmap(QPixmap(':/transaction_table_16'), QIcon.Normal, QIcon.Off)
+        self.transactionButton.setIcon(icon2)
+        self.verticalLayout.addWidget(self.transactionButton)
+        self.gledgerButton = QPushButton(tr("4. General Ledger"))
+        icon3 = QIcon()
+        icon3.addPixmap(QPixmap(':/gledger_16'), QIcon.Normal, QIcon.Off)
+        self.gledgerButton.setIcon(icon3)
+        self.verticalLayout.addWidget(self.gledgerButton)
+        self.scheduleButton = QPushButton(tr("5. Schedules"))
+        icon4 = QIcon()
+        icon4.addPixmap(QPixmap(':/schedules_16'), QIcon.Normal, QIcon.Off)
+        self.scheduleButton.setIcon(icon4)
+        self.verticalLayout.addWidget(self.scheduleButton)
+        self.budgetButton = QPushButton(tr("6. Budgets"))
+        icon5 = QIcon()
+        icon5.addPixmap(QPixmap(':/budget_16'), QIcon.Normal, QIcon.Off)
+        self.budgetButton.setIcon(icon5)
+        self.verticalLayout.addWidget(self.budgetButton)
+        self.gridLayout.addLayout(self.verticalLayout, 1, 1, 1, 1)
+        spacerItem1 = QSpacerItem(95, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 1, 2, 1, 1)
+        spacerItem2 = QSpacerItem(20, 71, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem2, 2, 1, 1, 1)
+        
+        for i in range(1, 8):
             shortcut = QShortcut(QKeySequence(str(i)), self, None, None, Qt.WidgetShortcut)
             setattr(self, 'shortcut{0}'.format(i), shortcut)
     
@@ -60,4 +106,7 @@ class NewView(BaseView, Ui_NewView):
     
     def budgetButtonClicked(self):
         self.model.select_pane_type(PaneType.Budget)
+        
+    def docpropsButtonClicked(self):
+        self.model.select_pane_type(PaneType.DocProps)
     

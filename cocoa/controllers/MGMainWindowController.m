@@ -32,6 +32,7 @@ http://www.hardcoded.net/licenses/bsd_license
     budgetView = [[MGBudgetView alloc] initWithPyParent:py];
     cashculatorView = [[MGCashculatorView alloc] initWithPyParent:py];
     ledgerView = [[MGGeneralLedgerView alloc] initWithPyParent:py];
+    docpropsView = [[MGDocPropsView alloc] initWithPyParent:py];
     emptyView = [[MGEmptyView alloc] initWithPyParent:py];
     searchField = [[MGSearchField alloc] initWithPyParent:py];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
@@ -56,7 +57,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
-        [ledgerView py], [emptyView py], [accountProperties py], [transactionPanel py],
+        [ledgerView py], [docpropsView py], [emptyView py], [accountProperties py], [transactionPanel py],
         [massEditionPanel py], [schedulePanel py], [budgetPanel py], [customDateRangePanel py],
         [accountReassignPanel py], [exportPanel py], [accountLookup py], [completionLookup py],
         [dateRangeSelector py], [viewOptions py], nil];
@@ -91,6 +92,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [budgetView release];
     [cashculatorView release];
     [ledgerView release];
+    [docpropsView release];
     [emptyView release];
     [searchField release];
     [importWindow release];
@@ -559,6 +561,10 @@ http://www.hardcoded.net/licenses/bsd_license
         }
         else if (paneType == MGPaneTypeGeneralLedger) {
             view = ledgerView;
+            tabIcon = [NSImage imageNamed:@"gledger_16"];
+        }
+        else if (paneType == MGPaneTypeDocProps) {
+            view = docpropsView;
             tabIcon = [NSImage imageNamed:@"gledger_16"];
         }
         else if (paneType == MGPaneTypeEmpty) {

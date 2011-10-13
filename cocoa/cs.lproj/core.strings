@@ -242,6 +242,28 @@
 "Income" = "Příjem";
 "Expense" = "Výdaj";
 
+/* Months and weekday names */
+"Monday" = "Pondělí";
+"Tuesday" = "Úterý";
+"Wednesday" = "Středa";
+"Thursday" = "Čtvrtek";
+"Friday" = "Pátek";
+"Saturday" = "Sobota";
+"Sunday" = "Neděle";
+
+"December" = "Prosinec";
+"November" = "Listopad";
+"October" = "Říjen";
+"September" = "Září";
+"August" = "Srpen";
+"July" = "Červenec";
+"June" = "Červen";
+"May" = "Květen";
+"April" = "Duben";
+"March" = "Březen";
+"February" = "Únor";
+"January" = "Leden";
+
 /* Cashculator messages */
 "Exported database not present. Click on Export Accounts first." = "Nebyla nalezena exportní databáze. Klepněte nejprve na Exportovat účty.";
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Nebyla nalezena výchozí databáze Cashculatoru. Před použitím exportu musíte Cashculator alespoň jednou spustit a ukončit.";

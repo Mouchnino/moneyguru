@@ -35,9 +35,10 @@ def test_app_loads_correct_pref_types():
         AHEAD_MONTHS_PREFERENCE: 'not an int',
     }
     app = TestApp(app=Application(gui))
+    app.show_dpview()
     # because none of the prefs are of the correct type, use default values
-    eq_(app.app.first_weekday, 0)
-    eq_(app.app.ahead_months, 2)
+    eq_(app.dpview.first_weekday_list.selected_index, 0)
+    eq_(app.dpview.ahead_months_list.selected_index, 2)
 
 def test_app_tries_to_convert_different_types():
     # The prefs might be stored as a different, but compatible type (for example, an int instead
@@ -47,7 +48,7 @@ def test_app_tries_to_convert_different_types():
         AHEAD_MONTHS_PREFERENCE: '6',
     }
     app = TestApp(app=Application(gui))
-    eq_(app.app.ahead_months, 6)
+    eq_(app.dpview.ahead_months_list.selected_index, 6)
 
 def test_can_use_another_amount_format():
     app = TestApp(app=Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' '))
@@ -77,20 +78,22 @@ def test_close_document():
     # preferences.
     app = TestApp()
     app.drsel.select_year_range()
-    app.app.first_weekday = 1
-    app.app.ahead_months = 5
-    app.app.year_start_month = 4
+    app.show_dpview()
+    app.dpview.first_weekday_list.select(1)
+    app.dpview.ahead_months_list.select(5)
+    app.dpview.year_start_month_list.select(4)
     app.app.autosave_interval = 8
     app.app.auto_decimal_place = True
     app.doc.close()
     newapp = Application(app.app_gui)
     newdoc = Document(app.doc_gui, newapp)
+    newapp = TestApp(app=newapp, doc=newdoc)
     assert isinstance(newdoc.date_range, YearRange)
-    eq_(newapp.first_weekday, 1)
-    eq_(newapp.ahead_months, 5)
-    eq_(newapp.year_start_month, 4)
-    eq_(newapp.autosave_interval, 8)
-    eq_(newapp.auto_decimal_place, True)
+    eq_(newapp.dpview.first_weekday_list.selected_index, 1)
+    eq_(newapp.dpview.ahead_months_list.selected_index, 5)
+    eq_(newapp.dpview.year_start_month_list.selected_index, 4)
+    eq_(newapp.app.autosave_interval, 8)
+    eq_(newapp.app.auto_decimal_place, True)
 
 def test_graph_yaxis():
     app = TestApp()
@@ -1065,22 +1068,6 @@ class TestThreeEntriesInTheSameExpenseAccount:
         app.istatement.selected = app.istatement.expenses[0]
         app.istatement.show_selected_account()
         return app
-    
-    @with_app(do_setup)
-    def test_change_first_weekday(self, app):
-        # changing the first weekday affects the bar graphs as expected
-        app.doc.date_range = MonthRange(date(2008, 1, 1))
-        app.clear_gui_calls()
-        app.app.first_weekday = 1 # tuesday
-        # The month conveniently starts on a tuesday, so the data now starts from the 1st of the month
-        expected = [('01/01/2008', '08/01/2008', '100.00', '0.00'), 
-                    ('15/01/2008', '22/01/2008', '200.00', '0.00')]
-        eq_(app.bar_graph_data(), expected)
-        app.check_gui_calls(app.bargraph_gui, ['refresh'])
-        app.app.first_weekday = 6 # sunday
-        expected = [('30/12/2007', '06/01/2008', '142.00', '0.00'), 
-                    ('20/01/2008', '27/01/2008', '200.00', '0.00')]
-        eq_(app.bar_graph_data(), expected)
     
     @with_app(do_setup)
     def test_delete_multiple_selection(self, app):

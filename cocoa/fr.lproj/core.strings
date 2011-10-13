@@ -242,6 +242,28 @@
 "Income" = "Revenu";
 "Expense" = "Dépense";
 
+/* Months and weekday names */
+"Monday" = "Lundi";
+"Tuesday" = "Mardi";
+"Wednesday" = "Mercredi";
+"Thursday" = "Jeudi";
+"Friday" = "Vendredi";
+"Saturday" = "Samedi";
+"Sunday" = "Dimanche";
+
+"December" = "Décembre";
+"November" = "Novembre";
+"October" = "Octobre";
+"September" = "Septembre";
+"August" = "Août";
+"July" = "Juillet";
+"June" = "Juin";
+"May" = "Mai";
+"April" = "Avril";
+"March" = "Mars";
+"February" = "Février";
+"January" = "Janvier";
+
 /* Cashculator messages */
 "Exported database not present. Click on Export Accounts first." = "Aucune présence d'un fichier d'exportation! Cliquez d'abord sur Exporter.";
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base de données Cashculator inexistante! Vous devez exécuter et quitter Cashculator au moins une fois avant d'effectuer l'exportation.";

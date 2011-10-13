@@ -218,30 +218,6 @@
 /* Class = "NSButtonCell"; title = "Automatically check for updates"; ObjectID = "1308"; */
 "1308.title" = "Vérifier les mises-à-jour automatiquement";
 
-/* Class = "NSTextFieldCell"; title = "First day of the week:"; ObjectID = "1313"; */
-"1313.title" = "Premier jour de la semaine:";
-
-/* Class = "NSMenuItem"; title = "Monday"; ObjectID = "1317"; */
-"1317.title" = "Lundi";
-
-/* Class = "NSMenuItem"; title = "Tuesday"; ObjectID = "1318"; */
-"1318.title" = "Mardi";
-
-/* Class = "NSMenuItem"; title = "Wednesday"; ObjectID = "1319"; */
-"1319.title" = "Mercredi";
-
-/* Class = "NSMenuItem"; title = "Thursday"; ObjectID = "1320"; */
-"1320.title" = "Jeudi";
-
-/* Class = "NSMenuItem"; title = "Friday"; ObjectID = "1321"; */
-"1321.title" = "Vendredi";
-
-/* Class = "NSMenuItem"; title = "Saturday"; ObjectID = "1322"; */
-"1322.title" = "Samedi";
-
-/* Class = "NSMenuItem"; title = "Sunday"; ObjectID = "1323"; */
-"1323.title" = "Dimanche";
-
 /* Class = "NSButtonCell"; title = "Show scope dialog when modifying a scheduled transaction"; ObjectID = "1327"; */
 "1327.title" = "Confirmer la portée des changements aux récurrences";
 
@@ -260,9 +236,6 @@
 /* Class = "NSMenuItem"; title = "Running year"; ObjectID = "1342"; */
 "1342.title" = "Année flottante";
 
-/* Class = "NSTextFieldCell"; title = "Ahead months in Running Year:"; ObjectID = "1353"; */
-"1353.title" = "Nombre de mois flottants:";
-
 /* Class = "NSMenuItem"; title = "Custom Date Range..."; ObjectID = "1373"; */
 "1373.title" = "Intervalle personnalisée...";
 
@@ -274,45 +247,6 @@
 
 /* Class = "NSMenuItem"; title = "Make Schedule from Selected"; ObjectID = "1382"; */
 "1382.title" = "Créer une récurrence à partir de la sélection";
-
-/* Class = "NSMenuItem"; title = "December"; ObjectID = "1391"; */
-"1391.title" = "Décembre";
-
-/* Class = "NSMenuItem"; title = "November"; ObjectID = "1392"; */
-"1392.title" = "Novembre";
-
-/* Class = "NSMenuItem"; title = "October"; ObjectID = "1393"; */
-"1393.title" = "Octobre";
-
-/* Class = "NSMenuItem"; title = "September"; ObjectID = "1394"; */
-"1394.title" = "Septembre";
-
-/* Class = "NSMenuItem"; title = "August"; ObjectID = "1395"; */
-"1395.title" = "Août";
-
-/* Class = "NSMenuItem"; title = "July"; ObjectID = "1396"; */
-"1396.title" = "Juillet";
-
-/* Class = "NSMenuItem"; title = "June"; ObjectID = "1397"; */
-"1397.title" = "Juin";
-
-/* Class = "NSMenuItem"; title = "May"; ObjectID = "1398"; */
-"1398.title" = "Mai";
-
-/* Class = "NSMenuItem"; title = "April"; ObjectID = "1399"; */
-"1399.title" = "Avril";
-
-/* Class = "NSMenuItem"; title = "March"; ObjectID = "1400"; */
-"1400.title" = "Mars";
-
-/* Class = "NSMenuItem"; title = "February"; ObjectID = "1401"; */
-"1401.title" = "Février";
-
-/* Class = "NSMenuItem"; title = "January"; ObjectID = "1402"; */
-"1402.title" = "Janvier";
-
-/* Class = "NSTextFieldCell"; title = "Year starts in:"; ObjectID = "1403"; */
-"1403.title" = "Début de l'année:";
 
 /* Class = "NSTextFieldCell"; title = "Auto-save interval:"; ObjectID = "1406"; */
 "1406.title" = "Intervalle sauvegarde auto.:";

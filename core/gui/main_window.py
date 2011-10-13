@@ -59,8 +59,8 @@ class MainWindow(Repeater):
     # children to have reference to the main window.
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
-            self.glview, self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
+            self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
+            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
             self.completion_lookup, self.daterange_selector, self.view_options) = children
         self._restore_default_panes()
         for child in children:
@@ -115,6 +115,8 @@ class MainWindow(Repeater):
             return ViewPane(self.ccview, tr("Cashculator"))
         elif pane_type == PaneType.GeneralLedger:
             return ViewPane(self.glview, tr("General Ledger"))
+        elif pane_type == PaneType.DocProps:
+            return ViewPane(self.dpview, tr("Document Properties"))
         elif pane_type == PaneType.Empty:
             return ViewPane(self.emptyview, tr("New Tab"))
         else:

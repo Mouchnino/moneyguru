@@ -57,6 +57,10 @@
 		CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE44BA721207045300F4BAE9 /* CashculatorView.xib */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
 		CE4B8C120E656DB70017432D /* help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* help */; };
+		CE4C7EC614477DC500B749E8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679511D10E1E00EB0222 /* MainMenu.xib */; };
+		CE4C7EC714477DC500B749E8 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679711D10E1E00EB0222 /* MainWindow.xib */; };
+		CE4C7EC814477DC500B749E8 /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */; };
+		CE4C7EC914477DC500B749E8 /* BalanceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3677F11D10E1E00EB0222 /* BalanceSheet.xib */; };
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
@@ -207,6 +211,8 @@
 		CED1FC8B10F7903800634D72 /* MGProfitView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC8910F7903800634D72 /* MGProfitView.m */; };
 		CED1FC9510F7958A00634D72 /* MGBalanceSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC9410F7958A00634D72 /* MGBalanceSheet.m */; };
 		CED1FC9810F7959200634D72 /* MGIncomeStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC9710F7959200634D72 /* MGIncomeStatement.m */; };
+		CED4DB05144767C20041601F /* DocProps.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED4DB03144767C20041601F /* DocProps.xib */; };
+		CED4DB0914476BEF0041601F /* MGDocPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED4DB0814476BEF0041601F /* MGDocPropsView.m */; };
 		CEDD55A80F87B9F500474A9C /* MGPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD55A70F87B9F500474A9C /* MGPrintView.m */; };
 		CEE223410F893D1C00E7FE12 /* MGTableWithSplitsPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE223400F893D1C00E7FE12 /* MGTableWithSplitsPrint.m */; };
 		CEE46FC40F91E58500D08E40 /* MGAccountReassignPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */; };
@@ -347,6 +353,10 @@
 		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = ../data/example.moneyguru; sourceTree = "<group>"; };
 		CE4B8C000E656DB70017432D /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../build/help; sourceTree = "<group>"; };
 		CE4C22940F7FB37D00845640 /* MGGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraphic.h; sourceTree = "<group>"; };
+		CE4C7EC214477DC500B749E8 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/DocProps.xib; sourceTree = "<group>"; };
+		CE4C7EC314477DC500B749E8 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/DocProps.xib; sourceTree = "<group>"; };
+		CE4C7EC414477DC500B749E8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/DocProps.xib; sourceTree = "<group>"; };
+		CE4C7EC514477DC500B749E8 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/DocProps.xib; sourceTree = "<group>"; };
 		CE4CD3870F2B7B0D003F1738 /* MGCSVLayoutNameDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVLayoutNameDialog.h; sourceTree = "<group>"; };
 		CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVLayoutNameDialog.m; sourceTree = "<group>"; };
 		CE4DCE4910F8E1C00062DA0B /* PyScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyScheduleView.h; sourceTree = "<group>"; };
@@ -717,6 +727,10 @@
 		CED1FC9710F7959200634D72 /* MGIncomeStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGIncomeStatement.m; sourceTree = "<group>"; };
 		CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMoneyGuruApp.h; sourceTree = "<group>"; };
 		CED43ECB0D3F679A004B73AA /* MGConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGConst.h; sourceTree = "<group>"; };
+		CED4DB04144767C20041601F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocProps.xib; sourceTree = "<group>"; };
+		CED4DB0714476BEF0041601F /* MGDocPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDocPropsView.h; sourceTree = "<group>"; };
+		CED4DB0814476BEF0041601F /* MGDocPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDocPropsView.m; sourceTree = "<group>"; };
+		CED4DB0A14476C0D0041601F /* PyDocPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDocPropsView.h; sourceTree = "<group>"; };
 		CED54817130C1E99008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CED54818130C1EA6008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/core.strings; sourceTree = "<group>"; };
 		CED54819130C1EB8008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/columns.strings; sourceTree = "<group>"; };
@@ -955,6 +969,8 @@
 				CEB60205123930AA002218CF /* general_ledger */,
 				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
 				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
+				CED4DB0714476BEF0041601F /* MGDocPropsView.h */,
+				CED4DB0814476BEF0041601F /* MGDocPropsView.m */,
 				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
 				CE74808C11995EF400D59C50 /* MGEmptyView.m */,
 				CE44BA6F1207042E00F4BAE9 /* MGCashculatorView.h */,
@@ -1053,6 +1069,7 @@
 				CE4DCE4910F8E1C00062DA0B /* PyScheduleView.h */,
 				CEBD4E2D10F8DE2300B00BBF /* PyBudgetView.h */,
 				CE44BA6B120703D900F4BAE9 /* PyCashculatorView.h */,
+				CED4DB0A14476C0D0041601F /* PyDocPropsView.h */,
 				CE74808A11995EDF00D59C50 /* PyEmptyView.h */,
 				CEBD4E2C10F8CD6600B00BBF /* PyAccountView.h */,
 				CE1E88D910F8A295003BB329 /* PyGUIContainer.h */,
@@ -1333,6 +1350,7 @@
 				CEC3678311D10E1E00EB0222 /* BudgetTable.xib */,
 				CEB601FF12393080002218CF /* GeneralLedger.xib */,
 				CE44BA721207045300F4BAE9 /* CashculatorView.xib */,
+				CED4DB03144767C20041601F /* DocProps.xib */,
 				CEC3679B11D10E1E00EB0222 /* NewTabView.xib */,
 				CEC3677B11D10E1D00EB0222 /* AccountPanel.xib */,
 				CEC367A311D10E1E00EB0222 /* TransactionPanel.xib */,
@@ -1454,7 +1472,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moneyguru" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1580,6 +1598,11 @@
 				CE7869F0135D920500221226 /* about.xib in Resources */,
 				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
 				CE57A7D6143FAB34001110B8 /* message.strings in Resources */,
+				CED4DB05144767C20041601F /* DocProps.xib in Resources */,
+				CE4C7EC614477DC500B749E8 /* MainMenu.xib in Resources */,
+				CE4C7EC714477DC500B749E8 /* MainWindow.xib in Resources */,
+				CE4C7EC814477DC500B749E8 /* DateRangeSelector.xib in Resources */,
+				CE4C7EC914477DC500B749E8 /* BalanceSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1709,6 +1732,7 @@
 				CE42F4061440916E00B3B9A9 /* HSGeometry.m in Sources */,
 				CED1DF611440B1C5005F82B5 /* HSPopUpList.m in Sources */,
 				CE1204351441DE3D00933858 /* HSColumns.m in Sources */,
+				CED4DB0914476BEF0041601F /* MGDocPropsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2100,6 +2124,18 @@
 				CECEF794144219E700EBF1C4 /* cs */,
 			);
 			name = SearchField.xib;
+			sourceTree = "<group>";
+		};
+		CED4DB03144767C20041601F /* DocProps.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CED4DB04144767C20041601F /* en */,
+				CE4C7EC214477DC500B749E8 /* cs */,
+				CE4C7EC314477DC500B749E8 /* de */,
+				CE4C7EC414477DC500B749E8 /* fr */,
+				CE4C7EC514477DC500B749E8 /* it */,
+			);
+			name = DocProps.xib;
 			sourceTree = "<group>";
 		};
 		CEF93B1911D2142E00F49321 /* core.strings */ = {

@@ -242,6 +242,28 @@
 "Income" = "Income";
 "Expense" = "Expense";
 
+/* Months and weekday names */
+"Monday" = "Monday";
+"Tuesday" = "Tuesday";
+"Wednesday" = "Wednesday";
+"Thursday" = "Thursday";
+"Friday" = "Friday";
+"Saturday" = "Saturday";
+"Sunday" = "Sunday";
+
+"December" = "December";
+"November" = "November";
+"October" = "October";
+"September" = "September";
+"August" = "August";
+"July" = "July";
+"June" = "June";
+"May" = "May";
+"April" = "April";
+"March" = "March";
+"February" = "February";
+"January" = "January";
+
 /* Cashculator messages */
 "Exported database not present. Click on Export Accounts first." = "Exported database not present. Click on Export Accounts first.";
 "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature." = "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature.";

@@ -67,4 +67,5 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGPaneTypeBudget 5
 #define MGPaneTypeCashculator 6
 #define MGPaneTypeGeneralLedger 7
+#define MGPaneTypeDocProps 8
 #define MGPaneTypeEmpty 100

@@ -35,6 +35,7 @@ from ..gui.completion_lookup import CompletionLookup
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.date_range_selector import DateRangeSelector
+from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
 from ..gui.export_panel import ExportPanel
@@ -155,6 +156,7 @@ class TestApp(TestAppBase):
         make_gui('scview', ScheduleView)
         make_gui('bview', BudgetView)
         make_gui('glview', GeneralLedgerView)
+        make_gui('dpview', DocPropsView)
         make_gui('emptyview', EmptyView)
         make_table_gui('etable', EntryTable, parent=self.aview)
         make_table_gui('ttable', TransactionTable, parent=self.tview)
@@ -215,9 +217,9 @@ class TestApp(TestAppBase):
         self.glview.set_children(children)
         # None between bview and empty view is the Cashculator view, which isn't tested
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
-            self.glview, self.emptyview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup,
-            self.drsel, self.vopts]
+            self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
+            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
+            self.clookup, self.drsel, self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
@@ -544,6 +546,9 @@ class TestApp(TestAppBase):
     
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
+    
+    def show_dpview(self):
+        self.mw.select_pane_of_type(PaneType.DocProps)
     
 
 def compare_apps(first, second, qif_mode=False):

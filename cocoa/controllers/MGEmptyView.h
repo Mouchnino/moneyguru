@@ -24,4 +24,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)selectBudgetView:(id)sender;
 - (IBAction)selectCashculatorView:(id)sender;
 - (IBAction)selectGeneralLedgerView:(id)sender;
+- (IBAction)selectDocPropsView:(id)sender;
 @end

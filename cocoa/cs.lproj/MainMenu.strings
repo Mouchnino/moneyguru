@@ -230,30 +230,6 @@
 /* Class = "NSButtonCell"; title = "Automatically check for updates"; ObjectID = "1308"; */
 "1308.title" = "Automaticky kontrolovat aktualizace";
 
-/* Class = "NSTextFieldCell"; title = "First day of the week:"; ObjectID = "1313"; */
-"1313.title" = "První den v týdnu:";
-
-/* Class = "NSMenuItem"; title = "Monday"; ObjectID = "1317"; */
-"1317.title" = "Pondělí";
-
-/* Class = "NSMenuItem"; title = "Tuesday"; ObjectID = "1318"; */
-"1318.title" = "Úterý";
-
-/* Class = "NSMenuItem"; title = "Wednesday"; ObjectID = "1319"; */
-"1319.title" = "Středa";
-
-/* Class = "NSMenuItem"; title = "Thursday"; ObjectID = "1320"; */
-"1320.title" = "Čtvrtek";
-
-/* Class = "NSMenuItem"; title = "Friday"; ObjectID = "1321"; */
-"1321.title" = "Pátek";
-
-/* Class = "NSMenuItem"; title = "Saturday"; ObjectID = "1322"; */
-"1322.title" = "Sobota";
-
-/* Class = "NSMenuItem"; title = "Sunday"; ObjectID = "1323"; */
-"1323.title" = "Neděle";
-
 /* Class = "NSButtonCell"; title = "Show scope dialog when modifying a scheduled transaction"; ObjectID = "1327"; */
 "1327.title" = "Zobrazit dialog pro určení rozsahu při změně naplánované transakce";
 
@@ -269,9 +245,6 @@
 /* Class = "NSMenuItem"; title = "Running year"; ObjectID = "1342"; */
 "1342.title" = "Probíhající rok";
 
-/* Class = "NSTextFieldCell"; title = "Ahead months in Running Year:"; ObjectID = "1353"; */
-"1353.title" = "Měsíců napřed v probíhajícím roce:";
-
 /* Class = "NSMenuItem"; title = "Custom Date Range..."; ObjectID = "1373"; */
 "1373.title" = "Custom Date Range...";
 
@@ -283,45 +256,6 @@
 
 /* Class = "NSMenuItem"; title = "Make Schedule from Selected"; ObjectID = "1382"; */
 "1382.title" = "Vytvořit plán z výběru";
-
-/* Class = "NSMenuItem"; title = "December"; ObjectID = "1391"; */
-"1391.title" = "Prosinec";
-
-/* Class = "NSMenuItem"; title = "November"; ObjectID = "1392"; */
-"1392.title" = "Listopad";
-
-/* Class = "NSMenuItem"; title = "October"; ObjectID = "1393"; */
-"1393.title" = "Říjen";
-
-/* Class = "NSMenuItem"; title = "September"; ObjectID = "1394"; */
-"1394.title" = "Září";
-
-/* Class = "NSMenuItem"; title = "August"; ObjectID = "1395"; */
-"1395.title" = "Srpen";
-
-/* Class = "NSMenuItem"; title = "July"; ObjectID = "1396"; */
-"1396.title" = "Červenec";
-
-/* Class = "NSMenuItem"; title = "June"; ObjectID = "1397"; */
-"1397.title" = "Červen";
-
-/* Class = "NSMenuItem"; title = "May"; ObjectID = "1398"; */
-"1398.title" = "Květen";
-
-/* Class = "NSMenuItem"; title = "April"; ObjectID = "1399"; */
-"1399.title" = "Duben";
-
-/* Class = "NSMenuItem"; title = "March"; ObjectID = "1400"; */
-"1400.title" = "Březen";
-
-/* Class = "NSMenuItem"; title = "February"; ObjectID = "1401"; */
-"1401.title" = "Únor";
-
-/* Class = "NSMenuItem"; title = "January"; ObjectID = "1402"; */
-"1402.title" = "Leden";
-
-/* Class = "NSTextFieldCell"; title = "Year starts in:"; ObjectID = "1403"; */
-"1403.title" = "Rok začíná:";
 
 /* Class = "NSTextFieldCell"; title = "Auto-save interval:"; ObjectID = "1406"; */
 "1406.title" = "Interval ukládání:";

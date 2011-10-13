@@ -5,6 +5,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.notify import Listener, Repeater
+from hscommon.gui.selectable_list import GUISelectableList
 
 class DocumentNotificationsMixin:
     def account_added(self):
@@ -280,3 +281,14 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         if not self._hidden:
             self.mainwindow.update_status_line()
     
+
+class LinkedSelectableList(GUISelectableList):
+    def __init__(self,  items=None, view=None, setfunc=None):
+        # setfunc(newindex)
+        GUISelectableList.__init__(self, items=items, view=view)
+        self.setfunc = setfunc
+    
+    def _update_selection(self):
+        GUISelectableList._update_selection(self)
+        if self.setfunc is not None:
+            self.setfunc(self.selected_index)

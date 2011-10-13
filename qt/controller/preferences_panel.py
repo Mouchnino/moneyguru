@@ -42,37 +42,6 @@ class PreferencesPanel(QDialog):
         self.verticalLayout = QVBoxLayout(self)
         self.formLayout = QFormLayout()
         
-        self.firstWeekdayComboBox = QComboBox(self)
-        weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        self.firstWeekdayComboBox.addItems([tr(weekday) for weekday in weekdays])
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.firstWeekdayComboBox.sizePolicy().hasHeightForWidth())
-        self.firstWeekdayComboBox.setSizePolicy(sizePolicy)
-        self.formLayout.addRow(tr("First day of the week:"), self.firstWeekdayComboBox)
-        
-        self.aheadMonthsSpinBox = QSpinBox(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aheadMonthsSpinBox.sizePolicy().hasHeightForWidth())
-        self.aheadMonthsSpinBox.setSizePolicy(sizePolicy)
-        self.aheadMonthsSpinBox.setMaximum(11)
-        self.aheadMonthsSpinBox.setValue(2)
-        self.formLayout.addRow(tr("Ahead months in Running Year:"), self.aheadMonthsSpinBox)
-        
-        self.yearStartComboBox = QComboBox(self)
-        months = ["January", "February", "March", "April", "May", "June", "July", "August",
-            "September", "October", "November", "December"]
-        self.yearStartComboBox.addItems([tr(month) for month in months])
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.yearStartComboBox.sizePolicy().hasHeightForWidth())
-        self.yearStartComboBox.setSizePolicy(sizePolicy)
-        self.formLayout.addRow(tr("Year starts in:"), self.yearStartComboBox)
-        
         self.horizontalLayout = QHBoxLayout()
         self.autoSaveIntervalSpinBox = QSpinBox(self)
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
@@ -124,9 +93,6 @@ class PreferencesPanel(QDialog):
     
     def load(self):
         appm = self.app.model
-        self.firstWeekdayComboBox.setCurrentIndex(appm.first_weekday)
-        self.aheadMonthsSpinBox.setValue(appm.ahead_months)
-        self.yearStartComboBox.setCurrentIndex(appm.year_start_month - 1)
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
         self.dateFormatEdit.setText(self.app.prefs.dateFormat)
         self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
@@ -141,9 +107,6 @@ class PreferencesPanel(QDialog):
     def save(self):
         restartRequired = False
         appm = self.app.model
-        appm.first_weekday = self.firstWeekdayComboBox.currentIndex()
-        appm.ahead_months = self.aheadMonthsSpinBox.value()
-        appm.year_start_month = self.yearStartComboBox.currentIndex() + 1
         appm.autosave_interval = self.autoSaveIntervalSpinBox.value()
         if self.dateFormatEdit.text() != self.app.prefs.dateFormat:
             restartRequired = True

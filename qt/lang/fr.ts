@@ -416,6 +416,84 @@
         <translation>Avertissement</translation>
     </message>
     
+    <!-- Day + Month names -->
+    <message>
+        <source>Monday</source>
+        <translation>Lundi</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Mardi</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Mercredi</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Jeudi</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Vendredi</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Samedi</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Dimanche</translation>
+    </message>
+    <message>
+        <source>January</source>
+        <translation>Janvier</translation>
+    </message>
+    <message>
+        <source>February</source>
+        <translation>Février</translation>
+    </message>
+    <message>
+        <source>March</source>
+        <translation>Mars</translation>
+    </message>
+    <message>
+        <source>April</source>
+        <translation>Avril</translation>
+    </message>
+    <message>
+        <source>May</source>
+        <translation>Mai</translation>
+    </message>
+    <message>
+        <source>June</source>
+        <translation>Juin</translation>
+    </message>
+    <message>
+        <source>July</source>
+        <translation>Juillet</translation>
+    </message>
+    <message>
+        <source>August</source>
+        <translation>Août</translation>
+    </message>
+    <message>
+        <source>September</source>
+        <translation>Septembre</translation>
+    </message>
+    <message>
+        <source>October</source>
+        <translation>Octobre</translation>
+    </message>
+    <message>
+        <source>November</source>
+        <translation>Novembre</translation>
+    </message>
+    <message>
+        <source>December</source>
+        <translation>Décembre</translation>
+    </message>
+    
     <!-- Print Titles -->
     <message>
         <source>Net Worth at {end_date}, starting from {start_date}</source>
@@ -1251,42 +1329,10 @@ Entrées de {start_date} à {end_date}</translation>
     </message>
 </context>
 <context>
-    <name>PreferencesPanel</name>
-    <message>
-        <source>Preferences</source>
-        <translation>Préférences</translation>
-    </message>
+    <name>DocPropsView</name>
     <message>
         <source>First day of the week:</source>
         <translation>Premier jour de la semaine:</translation>
-    </message>
-    <message>
-        <source>Monday</source>
-        <translation>Lundi</translation>
-    </message>
-    <message>
-        <source>Tuesday</source>
-        <translation>Mardi</translation>
-    </message>
-    <message>
-        <source>Wednesday</source>
-        <translation>Mercredi</translation>
-    </message>
-    <message>
-        <source>Thursday</source>
-        <translation>Jeudi</translation>
-    </message>
-    <message>
-        <source>Friday</source>
-        <translation>Vendredi</translation>
-    </message>
-    <message>
-        <source>Saturday</source>
-        <translation>Samedi</translation>
-    </message>
-    <message>
-        <source>Sunday</source>
-        <translation>Dimanche</translation>
     </message>
     <message>
         <source>Ahead months in Running Year:</source>
@@ -1296,53 +1342,12 @@ Entrées de {start_date} à {end_date}</translation>
         <source>Year starts in:</source>
         <translation>Début de l&apos;année:</translation>
     </message>
+</context>
+<context>
+    <name>PreferencesPanel</name>
     <message>
-        <source>January</source>
-        <translation>Janvier</translation>
-    </message>
-    <message>
-        <source>February</source>
-        <translation>Février</translation>
-    </message>
-    <message>
-        <source>March</source>
-        <translation>Mars</translation>
-    </message>
-    <message>
-        <source>April</source>
-        <translation>Avril</translation>
-    </message>
-    <message>
-        <source>May</source>
-        <translation>Mai</translation>
-    </message>
-    <message>
-        <source>June</source>
-        <translation>Juin</translation>
-    </message>
-    <message>
-        <source>July</source>
-        <translation>Juillet</translation>
-    </message>
-    <message>
-        <source>August</source>
-        <translation>Août</translation>
-    </message>
-    <message>
-        <source>September</source>
-        <translation>Septembre</translation>
-    </message>
-    <message>
-        <source>October</source>
-        <translation>Octobre</translation>
-    </message>
-    <message>
-        <source>November</source>
-        <translation>Novembre</translation>
-    </message>
-    <message>
-        <source>December</source>
-        <translation>Décembre</translation>
+        <source>Preferences</source>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>Auto-save interval:</source>

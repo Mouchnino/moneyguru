@@ -416,6 +416,84 @@
         <translation type="unfinished"></translation>
     </message>
     
+    <!-- Day + Month names -->
+    <message>
+        <source>Monday</source>
+        <translation>Pondělí</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Úterý</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Středa</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Čtvrtek</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Pátek</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Sobota</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Neděle</translation>
+    </message>
+    <message>
+        <source>January</source>
+        <translation>Leden</translation>
+    </message>
+    <message>
+        <source>February</source>
+        <translation>Únor</translation>
+    </message>
+    <message>
+        <source>March</source>
+        <translation>Březen</translation>
+    </message>
+    <message>
+        <source>April</source>
+        <translation>Duben</translation>
+    </message>
+    <message>
+        <source>May</source>
+        <translation>Květen</translation>
+    </message>
+    <message>
+        <source>June</source>
+        <translation>Červen</translation>
+    </message>
+    <message>
+        <source>July</source>
+        <translation>Červenec</translation>
+    </message>
+    <message>
+        <source>August</source>
+        <translation>Srpen</translation>
+    </message>
+    <message>
+        <source>September</source>
+        <translation>Září</translation>
+    </message>
+    <message>
+        <source>October</source>
+        <translation>Říjen</translation>
+    </message>
+    <message>
+        <source>November</source>
+        <translation>Listopad</translation>
+    </message>
+    <message>
+        <source>December</source>
+        <translation>Prosinec</translation>
+    </message>
+    
     <!-- Print Titles -->
     <message>
         <source>Net Worth at {end_date}, starting from {start_date}</source>
@@ -1251,42 +1329,10 @@ Entrées de {start_date} à {end_date}</translation>
     </message>
 </context>
 <context>
-    <name>PreferencesPanel</name>
-    <message>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>DocPropsView</name>
     <message>
         <source>First day of the week:</source>
         <translation>První den v týdnu:</translation>
-    </message>
-    <message>
-        <source>Monday</source>
-        <translation>Pondělí</translation>
-    </message>
-    <message>
-        <source>Tuesday</source>
-        <translation>Úterý</translation>
-    </message>
-    <message>
-        <source>Wednesday</source>
-        <translation>Středa</translation>
-    </message>
-    <message>
-        <source>Thursday</source>
-        <translation>Čtvrtek</translation>
-    </message>
-    <message>
-        <source>Friday</source>
-        <translation>Pátek</translation>
-    </message>
-    <message>
-        <source>Saturday</source>
-        <translation>Sobota</translation>
-    </message>
-    <message>
-        <source>Sunday</source>
-        <translation>Neděle</translation>
     </message>
     <message>
         <source>Ahead months in Running Year:</source>
@@ -1296,53 +1342,12 @@ Entrées de {start_date} à {end_date}</translation>
         <source>Year starts in:</source>
         <translation>Rok začíná:</translation>
     </message>
+</context>
+<context>
+    <name>PreferencesPanel</name>
     <message>
-        <source>January</source>
-        <translation>Leden</translation>
-    </message>
-    <message>
-        <source>February</source>
-        <translation>Únor</translation>
-    </message>
-    <message>
-        <source>March</source>
-        <translation>Březen</translation>
-    </message>
-    <message>
-        <source>April</source>
-        <translation>Duben</translation>
-    </message>
-    <message>
-        <source>May</source>
-        <translation>Květen</translation>
-    </message>
-    <message>
-        <source>June</source>
-        <translation>Červen</translation>
-    </message>
-    <message>
-        <source>July</source>
-        <translation>Červenec</translation>
-    </message>
-    <message>
-        <source>August</source>
-        <translation>Srpen</translation>
-    </message>
-    <message>
-        <source>September</source>
-        <translation>Září</translation>
-    </message>
-    <message>
-        <source>October</source>
-        <translation>Říjen</translation>
-    </message>
-    <message>
-        <source>November</source>
-        <translation>Listopad</translation>
-    </message>
-    <message>
-        <source>December</source>
-        <translation>Prosinec</translation>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Auto-save interval:</source>

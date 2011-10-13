@@ -45,6 +45,7 @@ from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
+from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
 from core.gui.export_panel import ExportPanel
@@ -424,6 +425,13 @@ class PyCashculatorView(PyGUIContainer):
 
 class PyGeneralLedgerView(PyGUIContainer):
     py_class = GeneralLedgerView
+
+class PyDocPropsView(PyGUIContainer):
+    py_class = DocPropsView
+    
+    firstWeekdayList = subproxy('firstWeekdayList', 'first_weekday_list', PySelectableList)
+    aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
+    yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
 
 class PyEmptyView(PyGUIContainer):
     py_class = EmptyView
