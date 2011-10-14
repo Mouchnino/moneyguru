@@ -49,7 +49,7 @@ def test_year_start_month_same_as_ahead_month(app):
     app.dpview.year_start_month_list.select(11) # I don't think ahead_month's default is every gonna be 11.
     # +1 is because our actual year_start_month is always list-index + 1
     app.dpview.year_start_month_list.select(app.dpview.ahead_months_list.selected_index-1)
-    eq_(app.app.year_start_month, app.app.ahead_months)
+    eq_(app.doc.year_start_month, app.doc.ahead_months)
 
 #---
 class TestRangeOnOctober2007:

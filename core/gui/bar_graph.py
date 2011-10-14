@@ -30,7 +30,7 @@ class BarGraph(Graph):
             return MonthRange(start_date)
         
         def weekly_period(start_date):
-            first_weekday = self.app.first_weekday
+            first_weekday = self.document.first_weekday
             weekday = start_date.weekday()
             if weekday < first_weekday:
                 weekday += 7

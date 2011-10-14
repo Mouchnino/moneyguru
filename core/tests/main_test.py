@@ -16,7 +16,7 @@ from hscommon.path import Path
 from hscommon.testutil import eq_
 
 from .base import ApplicationGUI, TestApp, with_app, testdata
-from ..app import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
+from ..document import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError

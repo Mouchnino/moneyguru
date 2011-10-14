@@ -33,6 +33,9 @@ SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
 SELECTED_DATE_RANGE_START_PREFERENCE = 'SelectedDateRangeStart'
 SELECTED_DATE_RANGE_END_PREFERENCE = 'SelectedDateRangeEnd'
 EXCLUDED_ACCOUNTS_PREFERENCE = 'ExcludedAccounts'
+FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
+AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
+YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 
 DATE_RANGE_MONTH = 'month'
 DATE_RANGE_QUARTER = 'quarter'
@@ -67,7 +70,7 @@ def handle_abort(method):
     return wrapper
 
 class Document(Repeater):
-    REPEATED_NOTIFICATIONS = {'first_weekday_changed', 'saved_custom_ranges_changed'}
+    REPEATED_NOTIFICATIONS = {'saved_custom_ranges_changed'}
     
     def __init__(self, view, app):
         Repeater.__init__(self, app)
@@ -87,6 +90,9 @@ class Document(Repeater):
         self._filter_string = ''
         self._filter_type = None
         self._document_id = None
+        self._first_weekday = self.app.get_default(FIRST_WEEKDAY_PREFERENCE, 0)
+        self._ahead_months = self.app.get_default(AHEAD_MONTHS_PREFERENCE, 2)
+        self._year_start_month = self.app.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._restore_preferences()
     
     #--- Private
@@ -98,7 +104,7 @@ class Document(Repeater):
         elif isinstance(self.date_range, AllTransactionsRange):
             if new_date >= self.date_range.start:
                 return False
-            new_date_range = AllTransactionsRange(start=new_date, ahead_months=self.app.ahead_months)
+            new_date_range = AllTransactionsRange(start=new_date, ahead_months=self.ahead_months)
         else:
             return False
         # We have to manually set the date range and send notifications because ENTRY_CHANGED
@@ -817,19 +823,19 @@ class Document(Repeater):
         self.date_range = QuarterRange(starting_point)
     
     def select_year_range(self, starting_point):
-        self.date_range = YearRange(starting_point, year_start_month=self.app.year_start_month)
+        self.date_range = YearRange(starting_point, year_start_month=self.year_start_month)
     
     def select_year_to_date_range(self):
-        self.date_range = YearToDateRange(year_start_month=self.app.year_start_month)
+        self.date_range = YearToDateRange(year_start_month=self.year_start_month)
     
     def select_running_year_range(self):
-        self.date_range = RunningYearRange(ahead_months=self.app.ahead_months)
+        self.date_range = RunningYearRange(ahead_months=self.ahead_months)
     
     def select_all_transactions_range(self):
         if not self.transactions:
             return
         start_date = self.transactions[0].date
-        self.date_range = AllTransactionsRange(start=start_date, ahead_months=self.app.ahead_months)
+        self.date_range = AllTransactionsRange(start=start_date, ahead_months=self.ahead_months)
     
     def select_custom_date_range(self, start_date=None, end_date=None):
         if start_date is not None and end_date is not None:
@@ -936,21 +942,46 @@ class Document(Repeater):
         self._filter_type = value
         self.notify('filter_applied')
     
-    #--- Events
-    def ahead_months_changed(self):
+    # 0=monday 6=sunday
+    @property
+    def first_weekday(self):
+        return self._first_weekday
+        
+    @first_weekday.setter
+    def first_weekday(self, value):
+        if value == self._first_weekday:
+            return
+        self._first_weekday = value
+        self.app.set_default(FIRST_WEEKDAY_PREFERENCE, value)
+        self.notify('first_weekday_changed')
+    
+    @property
+    def ahead_months(self):
+        return self._ahead_months
+        
+    @ahead_months.setter
+    def ahead_months(self, value):
+        assert 0 <= value <= 11
+        if value == self._ahead_months:
+            return
+        self._ahead_months = value
+        self.app.set_default(AHEAD_MONTHS_PREFERENCE, value)
         if isinstance(self.date_range, RunningYearRange):
             self.select_running_year_range()
         elif isinstance(self.date_range, AllTransactionsRange):
             self.select_all_transactions_range()
     
-    def default_currency_changed(self):
-        self.notify('document_changed')
-    
-    def must_autosave(self):
-        # this is called async
-        self._async_autosave()
-    
-    def year_start_month_changed(self):
+    @property
+    def year_start_month(self):
+        return self._year_start_month
+        
+    @year_start_month.setter
+    def year_start_month(self, value):
+        assert 1 <= value <= 12
+        if value == self._year_start_month:
+            return
+        self._year_start_month = value
+        self.app.set_default(YEAR_START_MONTH_PREFERENCE, value)
         if isinstance(self.date_range, YearRange):
             if datetime.date.today() in self.date_range:
                 starting_point = datetime.date.today()
@@ -959,4 +990,13 @@ class Document(Repeater):
             self.select_year_range(starting_point=starting_point)
         elif isinstance(self.date_range, YearToDateRange):
             self.select_year_to_date_range()
+    
+    #--- Events
+    def default_currency_changed(self):
+        self.notify('document_changed')
+    
+    def must_autosave(self):
+        # this is called async
+        self._async_autosave()
+    
     

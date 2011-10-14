@@ -24,9 +24,6 @@ from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
 
 HAD_FIRST_LAUNCH_PREFERENCE = 'HadFirstLaunch'
-FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
-AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
-YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
 AUTO_DECIMAL_PLACE_PREFERENCE = 'AutoDecimalPlace'
 CUSTOM_RANGES_PREFERENCE = 'CustomRanges'
@@ -61,9 +58,6 @@ class Application(Broadcaster, RegistrableApplication):
         self._decimal_sep = decimal_sep
         self._grouping_sep = grouping_sep
         self._autosave_timer = None
-        self._first_weekday = self.get_default(FIRST_WEEKDAY_PREFERENCE, 0)
-        self._ahead_months = self.get_default(AHEAD_MONTHS_PREFERENCE, 2)
-        self._year_start_month = self.get_default(YEAR_START_MONTH_PREFERENCE, 1)
         self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
         self._auto_decimal_place = self.get_default(AUTO_DECIMAL_PLACE_PREFERENCE, False)
         self.saved_custom_ranges = [None] * 3
@@ -172,45 +166,6 @@ class Application(Broadcaster, RegistrableApplication):
         self.view.set_default(key, value)
     
     #--- Preferences
-    # 0=monday 6=sunday
-    @property
-    def first_weekday(self):
-        return self._first_weekday
-        
-    @first_weekday.setter
-    def first_weekday(self, value):
-        if value == self._first_weekday:
-            return
-        self._first_weekday = value
-        self.set_default(FIRST_WEEKDAY_PREFERENCE, value)
-        self.notify('first_weekday_changed')
-    
-    @property
-    def ahead_months(self):
-        return self._ahead_months
-        
-    @ahead_months.setter
-    def ahead_months(self, value):
-        assert 0 <= value <= 11
-        if value == self._ahead_months:
-            return
-        self._ahead_months = value
-        self.set_default(AHEAD_MONTHS_PREFERENCE, value)
-        self.notify('ahead_months_changed')
-    
-    @property
-    def year_start_month(self):
-        return self._year_start_month
-        
-    @year_start_month.setter
-    def year_start_month(self, value):
-        assert 1 <= value <= 12
-        if value == self._year_start_month:
-            return
-        self._year_start_month = value
-        self.set_default(YEAR_START_MONTH_PREFERENCE, value)
-        self.notify('year_start_month_changed')
-    
     @property
     def autosave_interval(self):
         return self._autosave_interval
