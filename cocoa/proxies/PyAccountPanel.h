@@ -15,14 +15,12 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSString *)name;
 - (void)setName:(NSString *)name;
 - (PySelectableList *)typeList;
-- (NSInteger)currencyIndex;
-- (void)setCurrencyIndex:(NSInteger)index;
+- (PySelectableList *)currencyList;
 - (NSString *)accountNumber;
 - (void)setAccountNumber:(NSString *)accountNumber;
 - (NSString *)notes;
 - (void)setNotes:(NSString *)notes;
 - (BOOL)canChangeCurrency;
 
-- (NSArray *)availableCurrencies;
 - (void)savePanel;
 @end

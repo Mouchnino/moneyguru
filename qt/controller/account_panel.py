@@ -23,7 +23,6 @@ tr = lambda s: trbase(s, "AccountPanel")
 class AccountPanel(Panel):
     FIELDS = [
         ('nameEdit', 'name'),
-        ('currencyComboBox', 'currency_index'),
         ('accountNumberEdit', 'account_number'),
         ('notesEdit', 'notes'),
     ]
@@ -33,6 +32,7 @@ class AccountPanel(Panel):
         self._setupUi()
         self.model = AccountPanelModel(view=self, mainwindow=mainwindow.model)
         self.typeComboBox = ComboboxModel(model=self.model.type_list, view=self.typeComboBoxView)
+        self.currencyComboBox = ComboboxModel(model=self.model.currency_list, view=self.currencyComboBoxView)
         
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
@@ -54,15 +54,15 @@ class AccountPanel(Panel):
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.typeComboBoxView)
         self.label_3 = QLabel(tr("Currency"))
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
-        self.currencyComboBox = QComboBox()
+        self.currencyComboBoxView = QComboBox()
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.currencyComboBox.sizePolicy().hasHeightForWidth())
-        self.currencyComboBox.setSizePolicy(sizePolicy)
-        self.currencyComboBox.setEditable(True)
-        self.currencyComboBox.setInsertPolicy(QComboBox.NoInsert)
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.currencyComboBox)
+        sizePolicy.setHeightForWidth(self.currencyComboBoxView.sizePolicy().hasHeightForWidth())
+        self.currencyComboBoxView.setSizePolicy(sizePolicy)
+        self.currencyComboBoxView.setEditable(True)
+        self.currencyComboBoxView.setInsertPolicy(QComboBox.NoInsert)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.currencyComboBoxView)
         self.accountNumberLabel = QLabel(tr("Account #"))
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.accountNumberLabel)
         self.accountNumberEdit = QLineEdit()
@@ -79,12 +79,9 @@ class AccountPanel(Panel):
         self.verticalLayout.addWidget(self.buttonBox)
         self.label.setBuddy(self.nameEdit)
         self.label_2.setBuddy(self.typeComboBoxView)
-        self.label_3.setBuddy(self.currencyComboBox)
-        
-        availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
-        self.currencyComboBox.addItems(availableCurrencies)
+        self.label_3.setBuddy(self.currencyComboBoxView)
     
     def _loadFields(self):
         Panel._loadFields(self)
-        self.currencyComboBox.setEnabled(self.model.can_change_currency)
+        self.currencyComboBoxView.setEnabled(self.model.can_change_currency)
     

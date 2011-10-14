@@ -213,6 +213,7 @@
 		CED1FC9810F7959200634D72 /* MGIncomeStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC9710F7959200634D72 /* MGIncomeStatement.m */; };
 		CED4DB05144767C20041601F /* DocProps.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED4DB03144767C20041601F /* DocProps.xib */; };
 		CED4DB0914476BEF0041601F /* MGDocPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED4DB0814476BEF0041601F /* MGDocPropsView.m */; };
+		CED5E6F31448B36700C4B843 /* HSComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CED5E6F21448B36700C4B843 /* HSComboBox.m */; };
 		CEDD55A80F87B9F500474A9C /* MGPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD55A70F87B9F500474A9C /* MGPrintView.m */; };
 		CEE223410F893D1C00E7FE12 /* MGTableWithSplitsPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE223400F893D1C00E7FE12 /* MGTableWithSplitsPrint.m */; };
 		CEE46FC40F91E58500D08E40 /* MGAccountReassignPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */; };
@@ -734,6 +735,8 @@
 		CED54817130C1E99008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CED54818130C1EA6008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/core.strings; sourceTree = "<group>"; };
 		CED54819130C1EB8008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/columns.strings; sourceTree = "<group>"; };
+		CED5E6F11448B36700C4B843 /* HSComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSComboBox.h; sourceTree = "<group>"; };
+		CED5E6F21448B36700C4B843 /* HSComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSComboBox.m; sourceTree = "<group>"; };
 		CEDD55A60F87B9F500474A9C /* MGPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGPrintView.h; path = print/MGPrintView.h; sourceTree = "<group>"; };
 		CEDD55A70F87B9F500474A9C /* MGPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGPrintView.m; path = print/MGPrintView.m; sourceTree = "<group>"; };
 		CEE2233D0F893B1600E7FE12 /* PyEntryPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryPrint.h; sourceTree = "<group>"; };
@@ -1307,6 +1310,8 @@
 				CEBA331911294DE5009C782F /* HSGUIController.m */,
 				CED1DF5F1440B1C5005F82B5 /* HSPopUpList.h */,
 				CED1DF601440B1C5005F82B5 /* HSPopUpList.m */,
+				CED5E6F11448B36700C4B843 /* HSComboBox.h */,
+				CED5E6F21448B36700C4B843 /* HSComboBox.m */,
 				CE1204331441DE3D00933858 /* HSColumns.h */,
 				CE1204341441DE3D00933858 /* HSColumns.m */,
 			);
@@ -1733,6 +1738,7 @@
 				CED1DF611440B1C5005F82B5 /* HSPopUpList.m in Sources */,
 				CE1204351441DE3D00933858 /* HSColumns.m in Sources */,
 				CED4DB0914476BEF0041601F /* MGDocPropsView.m in Sources */,
+				CED5E6F31448B36700C4B843 /* HSComboBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

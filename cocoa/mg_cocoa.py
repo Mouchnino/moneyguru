@@ -571,20 +571,13 @@ class PyAccountPanel(PyPanel):
     py_class = AccountPanel
     
     typeList = subproxy('typeList', 'type_list', PySelectableList)
+    currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
     
     def name(self):
         return self.py.name
     
     def setName_(self, name):
         self.py.name = name
-    
-    @signature('i@:')
-    def currencyIndex(self):
-        return self.py.currency_index
-    
-    @signature('@@:i')
-    def setCurrencyIndex_(self, index):
-        self.py.currency_index = index
     
     def accountNumber(self):
         return self.py.account_number
@@ -601,9 +594,6 @@ class PyAccountPanel(PyPanel):
     @signature('c@:')
     def canChangeCurrency(self):
         return self.py.can_change_currency
-    
-    def availableCurrencies(self):
-        return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
 
 class PySplitTable(PyTable):

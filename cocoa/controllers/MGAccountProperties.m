@@ -15,16 +15,14 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithNibName:@"AccountPanel" pyClassName:@"PyAccountPanel" parent:aParent];
     [self window];
     typePopUp = [[HSPopUpList alloc] initWithPy:[[self py] typeList] view:typeSelector];
-    currencies = [[[self py] availableCurrencies] retain];
-    /* If we don't reload data, we'll have a 0-length combobox at loadFields */
-    [currencySelector reloadData];
+    currencyComboBox = [[HSComboBox alloc] initWithPy:[[self py] currencyList] view:currencySelector];
     return self;
 }
 
 - (void)dealloc
 {
     [typePopUp release];
-    [currencies release];
+    [currencyComboBox release];
     [super dealloc];
 }
 
@@ -42,7 +40,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)loadFields
 {
     [nameTextField setStringValue:[[self py] name]];
-    [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
     [accountNumberTextField setStringValue:[[self py] accountNumber]];
     [notesTextField setStringValue:[[self py] notes]];
     [currencySelector setEnabled:[[self py] canChangeCurrency]];
@@ -51,9 +48,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)saveFields
 {
     [[self py] setName:[nameTextField stringValue]];
-    NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
-    if (currencyIndex >= 0)
-        [[self py] setCurrencyIndex:currencyIndex];
     [[self py] setAccountNumber:[accountNumberTextField stringValue]];
     [[self py] setNotes:[notesTextField stringValue]];
 }
@@ -62,49 +56,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSString *)windowFrameAutosaveName
 {
     return @"AccountPanel";
-}
-
-/* Delegate */
-
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
-{
-    if (index < 0)
-    {
-        return nil;
-    }
-    return [currencies objectAtIndex:index];
-}
-
-- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
-{
-    return [currencies count];
-}
-
-- (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
-{
-    aString = [aString lowercaseString];
-    for (int i=0; i<[currencies count]; i++)
-    {
-        NSString *s = [currencies objectAtIndex:i];
-        if ([[s lowercaseString] isEqualTo:aString])
-        {
-            return i;
-        }
-    }
-    return NSNotFound;
-}
-
-- (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString
-{
-    uncompletedString = [uncompletedString lowercaseString];
-    for (int i=0; i<[currencies count]; i++)
-    {
-        NSString *s = [currencies objectAtIndex:i];
-        if ([[s lowercaseString] hasPrefix:uncompletedString])
-        {
-            return s;
-        }
-    }
-    return nil;
 }
 @end

@@ -23,13 +23,10 @@ def app_some_account():
 @with_app(app_some_account)
 def test_change_currency_index(app):
     # Changing currency_index correctly updates the currency.
-    app.apanel.currency_index = 0
+    app.apanel.currency_list.select(0)
     eq_(app.apanel.currency, Currency.all[0])
-    app.apanel.currency_index = 42
+    app.apanel.currency_list.select(42)
     eq_(app.apanel.currency, Currency.all[42])
-    app.apanel.currency_index = 9999 # doesn't do anything
-    eq_(app.apanel.currency, Currency.all[42])
-    eq_(app.apanel.currency_index, 42)
 
 @with_app(app_some_account)
 def test_change_type_index(app):
@@ -52,7 +49,7 @@ def test_fields(app):
     eq_(app.apanel.type, AccountType.Expense)
     eq_(app.apanel.currency, CAD)
     eq_(app.apanel.type_list.selected_index, 3) # Expense type is last in the list
-    eq_(app.apanel.currency_index, Currency.all.index(CAD))
+    eq_(app.apanel.currency_list.selected_index, Currency.all.index(CAD))
     eq_(app.apanel.account_number, '4242')
     eq_(app.apanel.notes, '')
 
@@ -89,7 +86,7 @@ def test_save_then_load(app):
     # on load aren't just leftovers from past assignments
     app.mw.edit_item() # foobaz
     app.apanel.type_list.select(1)
-    app.apanel.currency_index = 42
+    app.apanel.currency_list.select(42)
     app.apanel.name = 'changed name'
     app.apanel.account_number = '4241'
     app.apanel.notes = 'some notes'
@@ -97,7 +94,7 @@ def test_save_then_load(app):
     app.bsheet.selected = app.bsheet.assets[0] # foobar
     app.mw.edit_item()
     app.apanel.type_list.select(0)
-    app.apanel.currency_index = 0
+    app.apanel.currency_list.select(0)
     app.apanel.name = 'whatever'
     app.apanel.account_number = '1234'
     app.apanel.notes = 'other notes'

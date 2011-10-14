@@ -12,7 +12,7 @@ from hscommon.trans import tr
 
 from ..exception import DuplicateAccountNameError
 from ..model.account import AccountType
-from .base import MainWindowPanel
+from .base import MainWindowPanel, LinkedSelectableList
 
 ACCOUNT_TYPE_DESC = {
     AccountType.Asset: tr("Asset"),
@@ -37,6 +37,13 @@ class AccountPanel(MainWindowPanel):
         MainWindowPanel.__init__(self, view, mainwindow)
         self._init_fields()
         self.type_list = AccountTypeList(self)
+        currencies_display = ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
+        def setfunc(index):
+            try:
+                self.currency = Currency.all[index]
+            except IndexError:
+                pass
+        self.currency_list = LinkedSelectableList(items=currencies_display, setfunc=setfunc)
     
     #--- Override
     def _load(self, account):
@@ -48,7 +55,7 @@ class AccountPanel(MainWindowPanel):
         self.account_number = account.account_number
         self.notes = account.notes
         self.type_list.select(AccountType.InOrder.index(self.type))
-        self.currency_index = Currency.all.index(self.currency)
+        self.currency_list.select(Currency.all.index(self.currency))
         self.can_change_currency = not any(e.reconciled for e in account.entries)
         self.account = account # for the save() assert
     
@@ -68,17 +75,3 @@ class AccountPanel(MainWindowPanel):
         self.currency = None
         self.account_number = ''
     
-    #--- Properties
-    @property
-    def currency_index(self):
-        return self._currency_index
-    
-    @currency_index.setter
-    def currency_index(self, index):
-        try:
-            self.currency = Currency.all[index]
-        except IndexError:
-            pass
-        else:
-            self._currency_index = index
-       
