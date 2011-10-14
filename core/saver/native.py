@@ -50,11 +50,9 @@ def save(filename, document_id, properties, accounts, groups, transactions, sche
     
     root = ET.Element('moneyguru-file')
     root.attrib['document_id'] = document_id
+    props_element = ET.SubElement(root, 'properties')
     for name, value in properties.items():
-        pref_element = ET.SubElement(root, 'property')
-        attrib = pref_element.attrib
-        attrib['name'] = name
-        attrib['value'] = str(value)
+        props_element.attrib[name] = str(value)
     for group in groups:
         group_element = ET.SubElement(root, 'group')
         attrib = group_element.attrib

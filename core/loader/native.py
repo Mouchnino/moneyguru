@@ -74,13 +74,14 @@ class Loader(base.Loader):
         
         root = self.root
         self.document_id = root.attrib.get('document_id')
-        for pref_element in root.iter('property'):
-            name = pref_element.get('name')
-            # For now, all our prefs are ints, so we can simply assume tryint, but's we'll
-            # eventually need something more sophisticated.
-            value = tryint(pref_element.get('value'), default=None)
-            if name and value is not None:
-                self.properties[name] = value
+        props_element = root.find('properties')
+        if props_element is not None:
+            for name, value in props_element.attrib.items():
+                # For now, all our prefs are ints, so we can simply assume tryint, but we'll
+                # eventually need something more sophisticated.
+                value = tryint(value, default=None)
+                if name and value is not None:
+                    self.properties[name] = value
         for group_element in root.iter('group'):
             self.start_group()
             attrib = group_element.attrib
