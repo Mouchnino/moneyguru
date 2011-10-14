@@ -10,13 +10,16 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyDocPropsView.h"
 #import "MGBaseView.h"
 #import "HSPopUpList.h"
+#import "HSComboBox.h"
 
 @interface MGDocPropsView : MGBaseView
 {
+    IBOutlet NSComboBox *currencyComboBoxView;
     IBOutlet NSPopUpButton *firstWeekdayPopUpView;
     IBOutlet NSPopUpButton *aheadMonthsPopUpView;
     IBOutlet NSPopUpButton *yearStartMonthPopUpView;
     
+    HSComboBox *currencyComboBox;
     HSPopUpList *firstWeekdayPopUp;
     HSPopUpList *aheadMonthsPopUp;
     HSPopUpList *yearStartMonthPopUp;

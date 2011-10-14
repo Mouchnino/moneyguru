@@ -28,7 +28,7 @@ class IncomeStatement(Report):
     def _compute_account_node(self, node):
         account = node.account
         date_range = self.document.date_range
-        currency = self.app.default_currency
+        currency = self.document.default_currency
         cash_flow = account.entries.normal_cash_flow(date_range)
         cash_flow_native = account.entries.normal_cash_flow(date_range, currency)
         last_cash_flow = account.entries.normal_cash_flow(date_range.prev())
@@ -43,10 +43,10 @@ class IncomeStatement(Report):
         node.budgeted_amount = remaining_native
 
         # Amounts for display are kept in the account's currency
-        node.cash_flow = self.app.format_amount(cash_flow)
-        node.last_cash_flow = self.app.format_amount(last_cash_flow)
-        node.budgeted = self.app.format_amount(remaining)
-        node.delta = self.app.format_amount(delta)
+        node.cash_flow = self.document.format_amount(cash_flow)
+        node.last_cash_flow = self.document.format_amount(last_cash_flow)
+        node.budgeted = self.document.format_amount(remaining)
+        node.delta = self.document.format_amount(delta)
         node.delta_perc = get_delta_perc(delta, last_cash_flow)
     
     def _make_node(self, name):
@@ -71,10 +71,10 @@ class IncomeStatement(Report):
         last_net_income = self.income.last_cash_flow_amount - self.expenses.last_cash_flow_amount
         net_budgeted = self.income.budgeted_amount - self.expenses.budgeted_amount
         delta = net_income - last_net_income
-        self.net_income.cash_flow = self.app.format_amount(net_income)
-        self.net_income.last_cash_flow = self.app.format_amount(last_net_income)
-        self.net_income.budgeted = self.app.format_amount(net_budgeted)
-        self.net_income.delta = self.app.format_amount(delta)
+        self.net_income.cash_flow = self.document.format_amount(net_income)
+        self.net_income.last_cash_flow = self.document.format_amount(last_net_income)
+        self.net_income.budgeted = self.document.format_amount(net_budgeted)
+        self.net_income.delta = self.document.format_amount(delta)
         self.net_income.delta_perc = get_delta_perc(delta, last_net_income)
         self.net_income.is_total = True
         self.append(self.income)
@@ -88,10 +88,10 @@ class IncomeStatement(Report):
         parent.last_cash_flow_amount = sum(child.last_cash_flow_amount for child in parent)
         parent.budgeted_amount = sum(child.budgeted_amount for child in parent)
         delta = parent.cash_flow_amount - parent.last_cash_flow_amount
-        node.cash_flow = parent.cash_flow = self.app.format_amount(parent.cash_flow_amount)
-        node.last_cash_flow = parent.last_cash_flow = self.app.format_amount(parent.last_cash_flow_amount)
-        node.budgeted = parent.budgeted = self.app.format_amount(parent.budgeted_amount)
-        node.delta = parent.delta = self.app.format_amount(delta)
+        node.cash_flow = parent.cash_flow = self.document.format_amount(parent.cash_flow_amount)
+        node.last_cash_flow = parent.last_cash_flow = self.document.format_amount(parent.last_cash_flow_amount)
+        node.budgeted = parent.budgeted = self.document.format_amount(parent.budgeted_amount)
+        node.delta = parent.delta = self.document.format_amount(delta)
         node.delta_perc = parent.delta_perc = get_delta_perc(delta, parent.last_cash_flow_amount)
         return node
     

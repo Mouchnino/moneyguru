@@ -79,7 +79,7 @@ class BudgetTableRow(Row):
         self._account = budget.account.name
         self._target = budget.target.name if budget.target else ''
         self._amount = budget.amount
-        self._amount_fmt = self.document.app.format_amount(self._amount)
+        self._amount_fmt = self.document.format_amount(self._amount)
     
     def save(self):
         pass # read-only

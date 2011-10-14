@@ -66,8 +66,8 @@ class SplitTableRow(Row, RowWithDebitAndCreditMixIn):
         if self.split.transaction.amount:
             currency = self.split.transaction.amount.currency
         else:
-            currency = self.table.document.app.default_currency
-        return self.table.document.app.parse_amount(value, default_currency=currency)
+            currency = self.table.document.default_currency
+        return self.table.document.parse_amount(value, default_currency=currency)
     
     def load(self):
         self._account = self.split.account.name if self.split.account else ''
@@ -97,7 +97,7 @@ class SplitTableRow(Row, RowWithDebitAndCreditMixIn):
     
     @property
     def credit(self):
-        return self.table.document.app.format_amount(self._credit, blank_zero=True)
+        return self.table.document.format_amount(self._credit, blank_zero=True)
     
     @credit.setter
     def credit(self, value):
@@ -108,7 +108,7 @@ class SplitTableRow(Row, RowWithDebitAndCreditMixIn):
     
     @property
     def debit(self):
-        return self.table.document.app.format_amount(self._debit, blank_zero=True)
+        return self.table.document.format_amount(self._debit, blank_zero=True)
     
     @debit.setter
     def debit(self, value):

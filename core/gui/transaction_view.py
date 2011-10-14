@@ -39,9 +39,9 @@ class TransactionView(BaseView):
     def _refresh_totals(self):
         selected = len(self.mainwindow.selected_transactions)
         total = len(self.visible_transactions)
-        currency = self.app.default_currency
+        currency = self.document.default_currency
         total_amount = sum(convert_amount(t.amount, currency, t.date) for t in self.mainwindow.selected_transactions)
-        total_amount_fmt = self.app.format_amount(total_amount)
+        total_amount_fmt = self.document.format_amount(total_amount)
         msg = tr("{0} out of {1} selected. Amount: {2}")
         self.status_line = msg.format(selected, total, total_amount_fmt)
     

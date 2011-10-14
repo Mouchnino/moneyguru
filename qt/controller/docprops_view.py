@@ -20,6 +20,7 @@ class DocPropsView(BaseView):
         BaseView.__init__(self)
         self._setupUi()
         self.model = DocPropsViewModel(view=self, mainwindow=mainwindow.model)
+        self.currencyComboBox = ComboboxModel(model=self.model.currency_list, view=self.currencyComboBoxView)
         self.firstWeekdayComboBox = ComboboxModel(model=self.model.first_weekday_list,
             view=self.firstWeekdayComboBoxView)
         self.aheadMonthsComboBox = ComboboxModel(model=self.model.ahead_months_list,
@@ -29,6 +30,12 @@ class DocPropsView(BaseView):
     
     def _setupUi(self):
         self.mainLayout = QFormLayout(self)
+        
+        self.currencyComboBoxView = QComboBox()
+        self.currencyComboBoxView.setEditable(True)
+        self.currencyComboBoxView.setInsertPolicy(QComboBox.NoInsert)
+        self.mainLayout.addRow(tr("Native Currency:"), self.currencyComboBoxView)
+        
         self.firstWeekdayComboBoxView = QComboBox(self)
         self.mainLayout.addRow(tr("First day of the week:"), self.firstWeekdayComboBoxView)
         

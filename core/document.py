@@ -20,6 +20,7 @@ from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES
 from .exception import FileFormatError, OperationAborted
 from .loader import csv, qif, ofx, native
 from .model.account import Account, Group, AccountList, GroupList, AccountType
+from .model.amount import parse_amount, format_amount
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
     AllTransactionsRange, CustomDateRange, inc_month)
@@ -73,7 +74,13 @@ class Document(Repeater):
         Repeater.__init__(self, app)
         self.app = app
         self.view = view
-        self.accounts = AccountList(self.app.default_currency)
+        self._properties = {
+            'first_weekday': 0,
+            'ahead_months': 2,
+            'year_start_month': 1,
+            'default_currency': self.app._default_currency,
+        }
+        self.accounts = AccountList(self.default_currency)
         self.excluded_accounts = set()
         self.groups = GroupList()
         self.transactions = TransactionList()
@@ -88,11 +95,6 @@ class Document(Repeater):
         self._filter_type = None
         self._document_id = None
         self._dirty_flag = False
-        self._properties = {
-            'first_weekday': 0,
-            'ahead_months': 2,
-            'year_start_month': 1,
-        }
         self._restore_preferences()
     
     #--- Private
@@ -345,7 +347,7 @@ class Document(Repeater):
     
     def new_account(self, type, group):
         name = self.accounts.new_name(tr('New account'))
-        account = Account(name, self.app.default_currency, type)
+        account = Account(name, self.default_currency, type)
         account.group = group
         action = Action(tr('Add account'))
         action.added_accounts.add(account)
@@ -435,7 +437,7 @@ class Document(Repeater):
         if to is not NOEDIT:
             to = self.accounts.find(to, AccountType.Expense) if to else None
         if date is not NOEDIT and amount is not NOEDIT and amount != 0:
-            currencies_to_ensure = [amount.currency.code, self.app.default_currency.code]
+            currencies_to_ensure = [amount.currency.code, self.default_currency.code]
             Currency.get_rates_db().ensure_rates(date, currencies_to_ensure)
         if len(transactions) == 1:
             global_scope = self._query_for_scope_if_needed(transactions)
@@ -583,7 +585,7 @@ class Document(Repeater):
         """
         if target is None:
             budgets = self.budgets[:]
-            currency = self.app.default_currency
+            currency = self.default_currency
         else:
             budgets = self.budgets.budgets_for_target(target)
             currency = target.currency
@@ -716,7 +718,7 @@ class Document(Repeater):
         self.notify('document_changed')
     
     def load_from_xml(self, filename):
-        loader = native.Loader(self.app.default_currency)
+        loader = native.Loader(self.default_currency)
         try:
             loader.parse(filename)
         except FileFormatError:
@@ -759,7 +761,7 @@ class Document(Repeater):
     def parse_file_for_import(self, filename):
         for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv.Loader):
             try:
-                loader = loaderclass(self.app.default_currency)
+                loader = loaderclass(self.default_currency)
                 loader.parse(filename)
                 break
             except FileFormatError:
@@ -946,6 +948,16 @@ class Document(Repeater):
         key = 'Doc{0}.{1}'.format(self._document_id, key)
         self.app.set_default(key, value)
     
+    def format_amount(self, amount, **kw):
+        default_currency = self.default_currency
+        return format_amount(amount, default_currency, decimal_sep=self.app._decimal_sep,
+            grouping_sep=self.app._grouping_sep, **kw)
+    
+    def parse_amount(self, amount, default_currency=None):
+        if default_currency is None:
+            default_currency = self.default_currency
+        return parse_amount(amount, default_currency, auto_decimal_place=self.app._auto_decimal_place)
+    
     #--- Properties
     @property
     def filter_string(self):
@@ -1010,10 +1022,20 @@ class Document(Repeater):
         self.set_dirty()
         self._refresh_date_range()
     
-    #--- Events
-    def default_currency_changed(self):
+    @property
+    def default_currency(self):
+        return self._properties['default_currency']
+    
+    @default_currency.setter
+    def default_currency(self, value):
+        if value == self._properties['default_currency']:
+            return
+        self._properties['default_currency'] = value
+        self.set_dirty()
+        self.accounts.default_currency = value
         self.notify('document_changed')
     
+    #--- Events
     def must_autosave(self):
         # this is called async
         self._async_autosave()

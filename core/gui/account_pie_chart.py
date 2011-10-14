@@ -20,8 +20,8 @@ from .base import SheetViewNotificationsMixin
 from .pie_chart import PieChart
 
 class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
-    INVALIDATING_MESSAGES = PieChart.INVALIDATING_MESSAGES | set(['accounts_excluded',
-        'group_expanded_state_changed'])
+    INVALIDATING_MESSAGES = PieChart.INVALIDATING_MESSAGES | {'accounts_excluded',
+        'group_expanded_state_changed'}
     
     def __init__(self, view, parent_view, account_type, title):
         PieChart.__init__(self, view, parent_view)
@@ -43,7 +43,7 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
         return data
     
     def _accounts(self):
-        accounts = set(a for a in self.document.accounts if a.type == self._account_type)
+        accounts = {a for a in self.document.accounts if a.type == self._account_type}
         return accounts - self.document.excluded_accounts
     
     #--- Properties
@@ -63,7 +63,7 @@ class _BalancePieChart(_AccountPieChart):
     #--- Override
     def _get_account_data(self):
         date = self.document.date_range.end
-        currency = self.app.default_currency
+        currency = self.document.default_currency
         def get_value(account):
             balance = account.entries.normal_balance(date=date, currency=currency)
             budget_date_range = DateRange(date.min, self.document.date_range.end)
@@ -88,7 +88,7 @@ class _CashFlowPieChart(_AccountPieChart):
     #--- Override
     def _get_account_data(self):
         date_range = self.document.date_range
-        currency = self.app.default_currency
+        currency = self.document.default_currency
         def get_value(account):
             cash_flow = account.entries.normal_cash_flow(date_range, currency=currency)
             budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)

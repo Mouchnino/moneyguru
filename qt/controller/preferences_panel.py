@@ -58,17 +58,6 @@ class PreferencesPanel(QDialog):
         self.dateFormatEdit.setMaximumSize(QSize(140, 0xffffff))
         self.formLayout.addRow(tr("Date Format:"), self.dateFormatEdit)
         
-        self.nativeCurrencyComboBox = QComboBox(self)
-        availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
-        self.nativeCurrencyComboBox.addItems(availableCurrencies)
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.nativeCurrencyComboBox.sizePolicy().hasHeightForWidth())
-        self.nativeCurrencyComboBox.setSizePolicy(sizePolicy)
-        self.nativeCurrencyComboBox.setEditable(True)
-        self.formLayout.addRow(tr("Native Currency:"), self.nativeCurrencyComboBox)
-        
         self.languageComboBox = QComboBox(self)
         for lang in SUPPORTED_LANGUAGES:
             self.languageComboBox.addItem(LANG2NAME[lang])
@@ -95,7 +84,6 @@ class PreferencesPanel(QDialog):
         appm = self.app.model
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
         self.dateFormatEdit.setText(self.app.prefs.dateFormat)
-        self.nativeCurrencyComboBox.setCurrentIndex(Currency.all.index(appm.default_currency))
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
         try:
@@ -111,8 +99,6 @@ class PreferencesPanel(QDialog):
         if self.dateFormatEdit.text() != self.app.prefs.dateFormat:
             restartRequired = True
         self.app.prefs.dateFormat = self.dateFormatEdit.text()
-        if self.nativeCurrencyComboBox.currentIndex() >= 0:
-            appm.default_currency = Currency.all[self.nativeCurrencyComboBox.currentIndex()]
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
         lang = SUPPORTED_LANGUAGES[self.languageComboBox.currentIndex()]

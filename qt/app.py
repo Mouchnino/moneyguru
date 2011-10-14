@@ -12,8 +12,6 @@ import os.path as op
 from PyQt4.QtCore import pyqtSignal, SIGNAL, QCoreApplication, QLocale, QUrl
 from PyQt4.QtGui import QDialog, QDesktopServices, QApplication, QMessageBox
 
-from hscommon.currency import Currency
-
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
 from qtlib.reg import Registration
@@ -41,14 +39,10 @@ class MoneyGuru(ApplicationBase):
         dateFormat = self.prefs.dateFormat
         decimalSep = str(locale.decimalPoint())
         groupingSep = str(locale.groupSeparator())
-        try:
-            defaultCurrency = Currency(self.prefs.nativeCurrency)
-        except ValueError:
-            defaultCurrency = Currency('USD')
         cachePath = str(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
         DateEdit.DATE_FORMAT = dateFormat
         self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,
-            grouping_sep=groupingSep, default_currency=defaultCurrency, cache_path=cachePath)
+            grouping_sep=groupingSep, cache_path=cachePath)
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
         self.doc.model.connect()
@@ -98,7 +92,6 @@ class MoneyGuru(ApplicationBase):
         self.model.autosave_interval = 0
         self.doc.close()
         self.willSavePrefs.emit()
-        self.prefs.nativeCurrency = self.model.default_currency.code
         self.prefs.save()
     
     #--- Signals

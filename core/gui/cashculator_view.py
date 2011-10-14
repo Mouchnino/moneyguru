@@ -81,7 +81,7 @@ class CashculatorView(BaseView):
             dateranges.append(dr)
         # Update CC db with actual data from moneyGuru.
         self.document.oven.continue_cooking(until_date=date.today())
-        currency = self.document.app.default_currency
+        currency = self.document.default_currency
         db = self.get_db()
         accounts = [row.account for row in self.atable]
         categories = self.get_categories()

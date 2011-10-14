@@ -50,6 +50,7 @@ PANETYPE2ICON = {
     PaneType.Schedule: 'schedules_16',
     PaneType.Budget: 'budget_16',
     PaneType.GeneralLedger: 'gledger_16',
+    PaneType.DocProps: 'gledger_16',
 }
 
 # IMPORTANT NOTE ABOUT TABS
@@ -426,8 +427,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tabBar.setTabText(i, pane_label)
             pane_type = self.model.pane_type(i)
             iconname = PANETYPE2ICON.get(pane_type)
-            if iconname:
-                self.tabBar.setTabIcon(i, QIcon(QPixmap(':/{0}'.format(iconname))))
+            icon = QIcon(QPixmap(':/{0}'.format(iconname))) if iconname else QIcon()
+            self.tabBar.setTabIcon(i, icon)
         self.tabBar.setTabsClosable(self.model.pane_count > 1)
     
     def refresh_status_line(self):

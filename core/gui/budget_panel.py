@@ -88,12 +88,12 @@ class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
     #--- Properties
     @property
     def amount(self):
-        return self.app.format_amount(self.budget.amount)
+        return self.document.format_amount(self.budget.amount)
     
     @amount.setter
     def amount(self, value):
         try:
-            self.budget.amount = self.app.parse_amount(value)
+            self.budget.amount = self.document.parse_amount(value)
         except ValueError:
             pass
     

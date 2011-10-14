@@ -34,7 +34,7 @@ class BalanceSheet(Report):
         date_range = self.document.date_range
         start_date = date_range.start
         end_date = date_range.end
-        currency = self.app.default_currency
+        currency = self.document.default_currency
         start_amount = account.entries.normal_balance(start_date - timedelta(1))
         start_amount_native = account.entries.normal_balance(start_date - timedelta(1), currency=currency)
         end_amount = account.entries.normal_balance(end_date)
@@ -50,10 +50,10 @@ class BalanceSheet(Report):
         node.budgeted_amount = budgeted_amount_native
 
         # Amounts for display are kept in the account's currency
-        node.start = self.app.format_amount(start_amount)
-        node.end = self.app.format_amount(end_amount)
-        node.budgeted = self.app.format_amount(budgeted_amount)
-        node.delta = self.app.format_amount(delta)
+        node.start = self.document.format_amount(start_amount)
+        node.end = self.document.format_amount(end_amount)
+        node.budgeted = self.document.format_amount(budgeted_amount)
+        node.delta = self.document.format_amount(delta)
         node.delta_perc = get_delta_perc(delta, start_amount)
     
     def _make_node(self, name):
@@ -79,10 +79,10 @@ class BalanceSheet(Report):
         # The net worth's budget is not a simple subtraction, it must count the target-less budgets
         net_worth_budgeted = self.document.budgeted_amount_for_target(None, budget_date_range)
         net_worth_delta = net_worth_end - net_worth_start
-        self.net_worth.start = self.app.format_amount(net_worth_start)
-        self.net_worth.end = self.app.format_amount(net_worth_end)
-        self.net_worth.budgeted = self.app.format_amount(net_worth_budgeted)
-        self.net_worth.delta = self.app.format_amount(net_worth_delta)
+        self.net_worth.start = self.document.format_amount(net_worth_start)
+        self.net_worth.end = self.document.format_amount(net_worth_end)
+        self.net_worth.budgeted = self.document.format_amount(net_worth_budgeted)
+        self.net_worth.delta = self.document.format_amount(net_worth_delta)
         self.net_worth.delta_perc = get_delta_perc(net_worth_delta, net_worth_start)
         self.net_worth.is_total = True
         self.append(self.assets)
@@ -92,15 +92,15 @@ class BalanceSheet(Report):
     #--- Public
     def make_total_node(self, parent, name):
         node = Report.make_total_node(self, name)
-        currency = self.app.default_currency
+        currency = self.document.default_currency
         parent.start_amount = sum(child.start_amount for child in parent)
         parent.end_amount = sum(child.end_amount for child in parent)
         parent.budgeted_amount = sum(child.budgeted_amount for child in parent)
         delta_amount = parent.end_amount - parent.start_amount
-        node.start = parent.start = self.app.format_amount(parent.start_amount)
-        node.end = parent.end = self.app.format_amount(parent.end_amount)
-        node.budgeted = parent.budgeted = self.app.format_amount(parent.budgeted_amount)
-        node.delta = parent.delta = self.app.format_amount(delta_amount)
+        node.start = parent.start = self.document.format_amount(parent.start_amount)
+        node.end = parent.end = self.document.format_amount(parent.end_amount)
+        node.budgeted = parent.budgeted = self.document.format_amount(parent.budgeted_amount)
+        node.delta = parent.delta = self.document.format_amount(delta_amount)
         node.delta_perc = parent.delta_perc = get_delta_perc(delta_amount, parent.start_amount)
         return node
     

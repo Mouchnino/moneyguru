@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PySelectableList.h"
 
 @interface PyDocPropsView : PyGUIContainer {}
+- (PySelectableList *)currencyList;
 - (PySelectableList *)firstWeekdayList;
 - (PySelectableList *)aheadMonthsList;
 - (PySelectableList *)yearStartMonthList;

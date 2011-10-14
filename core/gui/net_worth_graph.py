@@ -26,7 +26,7 @@ class NetWorthGraph(BalanceGraph, SheetViewNotificationsMixin):
     def compute_data(self):
         accounts = set(a for a in self.document.accounts if a.is_balance_sheet_account())
         self._accounts = accounts - self.document.excluded_accounts
-        self._currency = self.app.default_currency
+        self._currency = self.document.default_currency
         BalanceGraph.compute_data(self)
     
     #--- Event Handlers
@@ -41,5 +41,5 @@ class NetWorthGraph(BalanceGraph, SheetViewNotificationsMixin):
     
     @property
     def currency(self):
-        return self.app.default_currency
+        return self.document.default_currency
     

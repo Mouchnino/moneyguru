@@ -57,7 +57,7 @@ class TransactionTable(TransactionTableBase):
         total_amount = 0
         for transaction in self.parent_view.visible_transactions:
             self.append(TransactionTableRow(self, transaction))
-            convert = lambda a: convert_amount(a, self.document.app.default_currency, transaction.date)
+            convert = lambda a: convert_amount(a, self.document.default_currency, transaction.date)
             total_amount += convert(transaction.amount)
         self.footer = TotalRow(self, self.document.date_range.end, total_amount)
         self._restore_from_explicit_selection()
@@ -215,14 +215,14 @@ class TransactionTableRow(Row, RowWithDateMixIn):
     @property
     def amount(self):
         if self._amount_fmt is None:
-            self._amount_fmt = self.document.app.format_amount(self._amount)
+            self._amount_fmt = self.document.format_amount(self._amount)
         return self._amount_fmt
     
     @amount.setter
     def amount(self, value):
         self._edit()
         try:
-            self._amount = self.document.app.parse_amount(value)
+            self._amount = self.document.parse_amount(value)
         except ValueError:
             return
         self._amount_fmt = None
@@ -246,7 +246,7 @@ class TotalRow(Row):
         self._date = date
         self.date = self.table.document.app.format_date(date)
         self.description = tr('TOTAL')
-        self.amount = self.table.document.app.format_amount(total_amount)
+        self.amount = self.table.document.format_amount(total_amount)
         self.payee = ''
         self.checkno = ''
         self.from_ = ''

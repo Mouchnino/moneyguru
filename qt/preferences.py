@@ -30,7 +30,6 @@ class Preferences(PreferencesBase):
         self.recentDocuments = list(filter(op.exists, self.recentDocuments))
         self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         self.dateFormat = get('DateFormat', self.dateFormat)
-        self.nativeCurrency = get('NativeCurrency', self.nativeCurrency)
         self.language = get('Language', self.language)
         
         self.networthGraphVisible = get('NetworthGraphVisible', self.networthGraphVisible)
@@ -54,7 +53,6 @@ class Preferences(PreferencesBase):
         dateFormat = str(locale.dateFormat(QLocale.ShortFormat))
         dateFormat = clean_format(dateFormat)
         self.dateFormat = dateFormat
-        self.nativeCurrency = 'USD'
         self.language = ''
         
         self.networthGraphVisible = True
@@ -74,7 +72,6 @@ class Preferences(PreferencesBase):
         set_('RecentDocuments', self.recentDocuments)
         set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         set_('DateFormat', self.dateFormat)
-        set_('NativeCurrency', self.nativeCurrency)
         set_('Language', self.language)
         
         set_('NetworthGraphVisible', self.networthGraphVisible)

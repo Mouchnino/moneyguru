@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-09-09
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -61,7 +60,7 @@ class GeneralLedgerTable(EntryTableBase):
         return row.account if row is not None else None
     
     def _get_totals_currency(self):
-        return self.app.default_currency
+        return self.document.default_currency
     
     #--- Public
     def is_account_row(self, row):

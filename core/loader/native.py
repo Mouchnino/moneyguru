@@ -9,6 +9,7 @@
 from datetime import datetime
 import xml.etree.cElementTree as ET
 
+from hscommon.currency import Currency
 from hscommon.util import tryint
 
 from ..exception import FileFormatError
@@ -79,7 +80,10 @@ class Loader(base.Loader):
             for name, value in props_element.attrib.items():
                 # For now, all our prefs are ints, so we can simply assume tryint, but we'll
                 # eventually need something more sophisticated.
-                value = tryint(value, default=None)
+                if name == 'default_currency':
+                    value = Currency.by_code.get(value)
+                else:
+                    value = tryint(value, default=None)
                 if name and value is not None:
                     self.properties[name] = value
         for group_element in root.iter('group'):

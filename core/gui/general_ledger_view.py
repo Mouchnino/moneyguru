@@ -38,8 +38,8 @@ class GeneralLedgerView(BaseView):
     #--- Private
     def _refresh_totals(self):
         selected, total, total_debit, total_credit = self.gltable.get_totals()
-        total_debit_fmt = self.app.format_amount(total_debit)
-        total_credit_fmt = self.app.format_amount(total_credit)
+        total_debit_fmt = self.document.format_amount(total_debit)
+        total_credit_fmt = self.document.format_amount(total_credit)
         msg = tr("{0} out of {1} selected. Debit: {2} Credit: {3}")
         self.status_line = msg.format(selected, total, total_debit_fmt, total_credit_fmt)
     

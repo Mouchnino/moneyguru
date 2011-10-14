@@ -124,7 +124,7 @@ class ImportTableRow(Row):
     
     @property
     def amount(self):
-        return self.table.document.app.format_amount(self._amount)
+        return self.table.document.format_amount(self._amount)
     
     @property
     def bound(self):
@@ -152,7 +152,7 @@ class ImportTableRow(Row):
     
     @property
     def amount_import(self):
-        return self.table.document.app.format_amount(self._amount_import)
+        return self.table.document.format_amount(self._amount_import)
     
     @property
     def can_edit_will_import(self):

@@ -22,7 +22,7 @@ class TransactionPrintBase(PrintView):
         splits = self._get_splits_at_row(row_index)
         split = splits[split_row_index]
         account_name = split.account.name if split.account is not None else tr('Unassigned')
-        return [account_name, split.memo, self.app.format_amount(split.amount)]
+        return [account_name, split.memo, self.document.format_amount(split.amount)]
     
 
 class TransactionPrint(TransactionPrintBase):

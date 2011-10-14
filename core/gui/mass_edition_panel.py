@@ -41,7 +41,7 @@ class MassEditionPanel(MainWindowPanel):
         if splits and allsame(s.amount.currency for s in splits):
             currency = splits[0].amount.currency
         else:
-            currency = self.app.default_currency
+            currency = self.document.default_currency
         self._currency_index = Currency.all.index(currency)
         if self.can_change_accounts:
             def get_from(t):
@@ -190,11 +190,11 @@ class MassEditionPanel(MainWindowPanel):
     
     @property
     def amount(self):
-        return self.app.format_amount(self._amount)
+        return self.document.format_amount(self._amount)
     
     @amount.setter
     def amount(self, value):
-        amount = self.app.parse_amount(value)
+        amount = self.document.parse_amount(value)
         if amount == self._amount:
             return
         self._amount = amount

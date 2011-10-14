@@ -64,8 +64,8 @@ class AccountView(BaseView):
         else:
             increase = total_credit
             decrease = total_debit
-        total_increase_fmt = self.app.format_amount(increase)
-        total_decrease_fmt = self.app.format_amount(decrease)
+        total_increase_fmt = self.document.format_amount(increase)
+        total_decrease_fmt = self.document.format_amount(decrease)
         msg = tr("{0} out of {1} selected. Increase: {2} Decrease: {3}")
         self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     

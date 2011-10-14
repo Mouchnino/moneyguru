@@ -449,7 +449,7 @@ class TestTwoAccountsWithCommonTransaction:
                 'amount': '1',
             },
         ]
-        loader = DictLoader(app.app.default_currency, 'first', txns)
+        loader = DictLoader(app.doc.default_currency, 'first', txns)
         loader.start_account()
         loader.account_info.name = 'second'
         loader.flush_account()

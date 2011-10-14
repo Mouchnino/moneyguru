@@ -44,6 +44,7 @@ def test_first_weekday_pref(app):
 def test_props_are_doc_based(app, tmpdir):
     # properties on dpview are document based, which means that they're saved in the document itself,
     # not in the preferences
+    app.dpview.currency_list.select(42)
     app.dpview.first_weekday_list.select(4)
     app.dpview.ahead_months_list.select(5)
     app.dpview.year_start_month_list.select(6)
@@ -54,6 +55,7 @@ def test_props_are_doc_based(app, tmpdir):
     app = TestApp()
     app.doc.load_from_xml(fn)
     app.show_dpview()
+    eq_(app.dpview.currency_list.selected_index, 42)
     eq_(app.dpview.first_weekday_list.selected_index, 4)
     eq_(app.dpview.ahead_months_list.selected_index, 5)
     eq_(app.dpview.year_start_month_list.selected_index, 6)
@@ -64,3 +66,11 @@ def test_setting_prop_makes_doc_dirty(app):
     app.dpview.first_weekday_list.select(4)
     assert app.doc.is_dirty()
     
+@with_app(app_props_shown)
+def test_set_default_currency(app):
+    app.dpview.currency_list.select(1) # EUR
+    app.add_txn(amount='1')
+    app.show_dpview()
+    app.dpview.currency_list.select(0) # back to USD
+    app.show_tview()
+    eq_(app.ttable[0].amount, 'EUR 1.00')

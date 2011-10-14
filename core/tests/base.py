@@ -358,7 +358,7 @@ class TestApp(TestAppBase):
         if account:
             self.scsplittable.add()
             self.scsplittable.edited.account = account
-            if self.app.parse_amount(amount) >= 0:
+            if self.doc.parse_amount(amount) >= 0:
                 self.scsplittable.edited.debit = amount
             else:
                 self.scsplittable.edited.credit = amount
@@ -456,7 +456,7 @@ class TestApp(TestAppBase):
         self.mainwindow.export()
         self.expanel.export_path = filepath
         self.expanel.save()
-        newapp = Application(ApplicationGUI(), default_currency=self.app.default_currency)
+        newapp = Application(ApplicationGUI(), default_currency=self.doc.default_currency)
         newdoc = Document(DocumentGUI(), newapp)
         iwin = ImportWindow(self.iwin_gui, newdoc)
         iwin.connect()
@@ -481,7 +481,7 @@ class TestApp(TestAppBase):
         # When you want to test the post-parsing import process, rather than going through the hoops,
         # use this methods. 'transactions' is a list of dicts, the dicts being attribute values.
         # dates are strings in '%d/%m/%Y'.
-        self.doc.loader = DictLoader(self.app.default_currency, account_name, transactions)
+        self.doc.loader = DictLoader(self.doc.default_currency, account_name, transactions)
         self.doc.loader.load()
         self.doc.notify('file_loaded_for_import')
     

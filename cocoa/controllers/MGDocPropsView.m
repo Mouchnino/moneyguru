@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyDocPropsView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"DocProps" owner:self];
+    currencyComboBox = [[HSComboBox alloc] initWithPy:[[self py] currencyList] view:currencyComboBoxView];
     firstWeekdayPopUp = [[HSPopUpList alloc] initWithPy:[[self py] firstWeekdayList] view:firstWeekdayPopUpView];
     aheadMonthsPopUp = [[HSPopUpList alloc] initWithPy:[[self py] aheadMonthsList] view:aheadMonthsPopUpView];
     yearStartMonthPopUp = [[HSPopUpList alloc] initWithPy:[[self py] yearStartMonthList] view:yearStartMonthPopUpView];
@@ -22,6 +23,7 @@ http://www.hardcoded.net/licenses/bsd_license
         
 - (void)dealloc
 {
+    [currencyComboBox release];
     [firstWeekdayPopUp release];
     [aheadMonthsPopUp release];
     [yearStartMonthPopUp release];

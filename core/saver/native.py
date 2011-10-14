@@ -52,7 +52,11 @@ def save(filename, document_id, properties, accounts, groups, transactions, sche
     root.attrib['document_id'] = document_id
     props_element = ET.SubElement(root, 'properties')
     for name, value in properties.items():
-        props_element.attrib[name] = str(value)
+        if name == 'default_currency':
+            value = value.code
+        else:
+            value = str(value)
+        props_element.attrib[name] = value
     for group in groups:
         group_element = ET.SubElement(root, 'group')
         attrib = group_element.attrib

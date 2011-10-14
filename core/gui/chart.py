@@ -45,5 +45,5 @@ class Chart(ViewChild):
     
     @property
     def currency(self):
-        return self.app.default_currency
+        return self.document.default_currency
     

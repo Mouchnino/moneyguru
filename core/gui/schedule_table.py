@@ -96,9 +96,9 @@ class ScheduleTableRow(Row):
         try:
             self._amount = sum(s.amount for s in tos)
         except ValueError: # currency coercing problem
-            currency = self.document.app.default_currency
+            currency = self.document.default_currency
             self._amount = sum(convert_amount(s.amount, currency, s.transaction.date) for s in tos)
-        self._amount_fmt = self.document.app.format_amount(self._amount)
+        self._amount_fmt = self.document.format_amount(self._amount)
     
     def save(self):
         pass # read-only

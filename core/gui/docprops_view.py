@@ -5,6 +5,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.currency import Currency
 from hscommon.trans import tr
 
 from ..const import PaneType
@@ -30,10 +31,16 @@ class DocPropsView(BaseView):
         def setfunc(index):
             self.document.year_start_month = index + 1
         self.year_start_month_list = LinkedSelectableList(items=MONTHS, setfunc=setfunc)
-        # temporary, once these are correctly set as document properties, we can normally remove this line below
-        self._revalidate()
+        currencies_display = ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
+        def setfunc(index):
+            self.document.default_currency = Currency.all[index]
+        self.currency_list = LinkedSelectableList(items=currencies_display, setfunc=setfunc)
     
     def _revalidate(self):
-        self.first_weekday_list.selected_index = self.document.first_weekday
-        self.ahead_months_list.selected_index = self.document.ahead_months
-        self.year_start_month_list.selected_index = self.document.year_start_month - 1
+        self.currency_list.select(Currency.all.index(self.document.default_currency))
+        self.first_weekday_list.select(self.document.first_weekday)
+        self.ahead_months_list.select(self.document.ahead_months)
+        self.year_start_month_list.select(self.document.year_start_month - 1)
+    
+    #--- Events
+    document_changed = _revalidate

@@ -61,9 +61,9 @@ class TestCaseNoSetup:
         # It's possible to specify a default currency at startup.
         app = TestApp(app=Application(ApplicationGUI(), default_currency=PLN))
         app.mainwindow.select_transaction_table()
-        eq_(app.app.default_currency, PLN)
+        eq_(app.doc.default_currency, PLN)
         app.add_account()
-        eq_(app.app.default_currency, PLN)
+        eq_(app.doc.default_currency, PLN)
     
 
 #--- One empty account EUR

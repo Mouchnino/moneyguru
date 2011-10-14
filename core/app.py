@@ -179,17 +179,6 @@ class Application(Broadcaster, RegistrableApplication):
         self._update_autosave_timer()
     
     @property
-    def default_currency(self):
-        return self._default_currency
-    
-    @default_currency.setter
-    def default_currency(self, value):
-        if value == self._default_currency:
-            return
-        self._default_currency = value
-        self.notify('default_currency_changed')
-    
-    @property
     def auto_decimal_place(self):
         return self._auto_decimal_place
     

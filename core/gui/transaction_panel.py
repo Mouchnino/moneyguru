@@ -33,7 +33,7 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
                 account_type = split.account.type
             else:
                 account_type = AccountType.Expense if split.amount < 0 else AccountType.Income
-            split.account = Account(account_name, self.app.default_currency, account_type)
+            split.account = Account(account_name, self.document.default_currency, account_type)
         else:
             split.account = None
         split.amount = amount
@@ -114,7 +114,7 @@ class TransactionPanel(PanelWithTransaction):
         """
         self.notify('edition_must_stop')
         split = first(self._selected_splits)
-        new_split_currency = self.app.default_currency
+        new_split_currency = self.document.default_currency
         if split is not None and split.amount != 0:
             new_split_currency = split.amount.currency
         self.transaction.mct_balance(new_split_currency)

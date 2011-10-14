@@ -100,24 +100,24 @@ class BaseEntryTableRow(Row, RowWithDateMixIn, RowWithDebitAndCreditMixIn):
     
     @property
     def increase(self):
-        return self.table.document.app.format_amount(self._increase, blank_zero=True)
+        return self.table.document.format_amount(self._increase, blank_zero=True)
     
     @property
     def decrease(self):
-        return self.table.document.app.format_amount(self._decrease, blank_zero=True)
+        return self.table.document.format_amount(self._decrease, blank_zero=True)
     
     @property
     def debit(self):
-        return self.table.document.app.format_amount(self._debit, blank_zero=True)
+        return self.table.document.format_amount(self._debit, blank_zero=True)
     
     @property
     def credit(self):
-        return self.table.document.app.format_amount(self._credit, blank_zero=True)
+        return self.table.document.format_amount(self._credit, blank_zero=True)
     
     @property
     def balance(self):
         account_currency = self.account.currency
-        return self.table.document.app.format_amount(self._the_balance(), zero_currency=account_currency)
+        return self.table.document.format_amount(self._the_balance(), zero_currency=account_currency)
     can_edit_balance = False
     
     @property
@@ -185,7 +185,7 @@ class EntryTableRow(BaseEntryTableRow):
     def _set_amount_property(self, propname, stramount):
         try:
             currency = self.entry.account.currency
-            parsed = self.table.document.app.parse_amount(stramount, default_currency=currency)
+            parsed = self.table.document.parse_amount(stramount, default_currency=currency)
         except ValueError:
             return
         if parsed != getattr(self, propname):
@@ -299,8 +299,8 @@ class TotalRow(BaseEntryTableRow):
         self._date = date
         self._description = tr('TOTAL')
         # don't touch _increase and _decrease, they trigger editing.
-        self._debit_fmt = table.document.app.format_amount(total_debit, blank_zero=True)
-        self._credit_fmt = table.document.app.format_amount(total_credit, blank_zero=True)
+        self._debit_fmt = table.document.format_amount(total_debit, blank_zero=True)
+        self._credit_fmt = table.document.format_amount(total_credit, blank_zero=True)
         delta = total_debit - total_credit
         if delta:
             if account.is_credit_account():
@@ -309,7 +309,7 @@ class TotalRow(BaseEntryTableRow):
             # format_amount doesn't explicitly put positive signs, so we have to put it ourselves.
             # However, if the delta is of foreign currency, we want the sign to be in front of the
             # amount, not in front of the currency code.
-            delta_fmt = table.document.app.format_amount(abs(delta))
+            delta_fmt = table.document.format_amount(abs(delta))
             sign = '+' if positive else '-'
             if delta_fmt[0].isdigit():
                 delta_fmt = sign + delta_fmt

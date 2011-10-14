@@ -70,13 +70,13 @@ def test_change_column_visibility(app):
 def test_change_default_currency():
     # When the default currency is changed, all gui refresh themselves
     app = app_cleared_gui_calls()
-    app.app.default_currency = EUR
+    app.doc.default_currency = EUR
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
     app.check_gui_calls(app.nwgraph_gui, ['refresh'])
     app.check_gui_calls(app.apie_gui, ['refresh'])
     app.check_gui_calls(app.lpie_gui, ['refresh'])
     # but not if it stays the same
-    app.app.default_currency = EUR
+    app.doc.default_currency = EUR
     app.check_gui_calls_partial(app.bsheet_gui, not_expected=['refresh'])
 
 @with_app(app_cleared_gui_calls)

@@ -404,6 +404,7 @@ class PyGeneralLedgerView(PyGUIContainer):
 class PyDocPropsView(PyGUIContainer):
     py_class = DocPropsView
     
+    currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
     firstWeekdayList = subproxy('firstWeekdayList', 'first_weekday_list', PySelectableList)
     aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
     yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
