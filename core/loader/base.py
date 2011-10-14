@@ -66,6 +66,7 @@ class Loader:
         # because the order in which the spawns are created must stay the same
         self.schedules = []
         self.budgets = []
+        self.properties = {}
         self.oven = Oven(self.accounts, self.transactions, self.schedules, self.budgets)
         self.target_account = None # when set, overrides the reference matching system
         self.group_infos = []

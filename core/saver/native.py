@@ -12,7 +12,7 @@ import xml.etree.cElementTree as ET
 from ..model.amount import format_amount
 from hscommon.util import remove_invalid_xml
 
-def save(filename, document_id, accounts, groups, transactions, schedules, budgets):
+def save(filename, document_id, properties, accounts, groups, transactions, schedules, budgets):
     def date2str(date):
         return date.strftime('%Y-%m-%d')
     
@@ -50,6 +50,11 @@ def save(filename, document_id, accounts, groups, transactions, schedules, budge
     
     root = ET.Element('moneyguru-file')
     root.attrib['document_id'] = document_id
+    for name, value in properties.items():
+        pref_element = ET.SubElement(root, 'property')
+        attrib = pref_element.attrib
+        attrib['name'] = name
+        attrib['value'] = str(value)
     for group in groups:
         group_element = ET.SubElement(root, 'group')
         attrib = group_element.attrib

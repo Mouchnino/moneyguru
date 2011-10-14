@@ -16,7 +16,6 @@ from hscommon.path import Path
 from hscommon.testutil import eq_
 
 from .base import ApplicationGUI, TestApp, with_app, testdata
-from ..document import FIRST_WEEKDAY_PREFERENCE, AHEAD_MONTHS_PREFERENCE
 from ..app import Application
 from ..document import Document, AUTOSAVE_BUFFER_COUNT
 from ..exception import FileFormatError
@@ -26,30 +25,6 @@ from ..model.account import AccountType
 from ..model.date import MonthRange, QuarterRange, YearRange
 
 #--- No Setup
-def test_app_loads_correct_pref_types():
-    # If the type loaded by Application from the prefs is not the correct one, we get a crash
-    # when the value goes back to the GUI, when it's depythonified.
-    gui = ApplicationGUI()
-    gui.defaults = {
-        FIRST_WEEKDAY_PREFERENCE: 'not an int',
-        AHEAD_MONTHS_PREFERENCE: 'not an int',
-    }
-    app = TestApp(app=Application(gui))
-    app.show_dpview()
-    # because none of the prefs are of the correct type, use default values
-    eq_(app.dpview.first_weekday_list.selected_index, 0)
-    eq_(app.dpview.ahead_months_list.selected_index, 2)
-
-def test_app_tries_to_convert_different_types():
-    # The prefs might be stored as a different, but compatible type (for example, an int instead
-    # of a bool. Try to convert the value before falling back to the default value.
-    gui = ApplicationGUI()
-    gui.defaults = {
-        AHEAD_MONTHS_PREFERENCE: '6',
-    }
-    app = TestApp(app=Application(gui))
-    eq_(app.dpview.ahead_months_list.selected_index, 6)
-
 def test_can_use_another_amount_format():
     app = TestApp(app=Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' '))
     app.add_account()
@@ -78,10 +53,6 @@ def test_close_document():
     # preferences.
     app = TestApp()
     app.drsel.select_year_range()
-    app.show_dpview()
-    app.dpview.first_weekday_list.select(1)
-    app.dpview.ahead_months_list.select(5)
-    app.dpview.year_start_month_list.select(4)
     app.app.autosave_interval = 8
     app.app.auto_decimal_place = True
     app.doc.close()
@@ -89,9 +60,6 @@ def test_close_document():
     newdoc = Document(app.doc_gui, newapp)
     newapp = TestApp(app=newapp, doc=newdoc)
     assert isinstance(newdoc.date_range, YearRange)
-    eq_(newapp.dpview.first_weekday_list.selected_index, 1)
-    eq_(newapp.dpview.ahead_months_list.selected_index, 5)
-    eq_(newapp.dpview.year_start_month_list.selected_index, 4)
     eq_(newapp.app.autosave_interval, 8)
     eq_(newapp.app.auto_decimal_place, True)
 

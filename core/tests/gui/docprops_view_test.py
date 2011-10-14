@@ -39,3 +39,28 @@ def test_first_weekday_pref(app):
     expected = [('30/12/2007', '06/01/2008', '142.00', '0.00'), 
                 ('20/01/2008', '27/01/2008', '200.00', '0.00')]
     eq_(app.bar_graph_data(), expected)
+
+@with_app(app_props_shown)
+def test_props_are_doc_based(app, tmpdir):
+    # properties on dpview are document based, which means that they're saved in the document itself,
+    # not in the preferences
+    app.dpview.first_weekday_list.select(4)
+    app.dpview.ahead_months_list.select(5)
+    app.dpview.year_start_month_list.select(6)
+    fn = str(tmpdir.join('foo.moneyguru'))
+    # We don't use TestApp.save_and_load() because we don't want to keep the app_gui instance,
+    # which contains preference, to be sure that the data is actually doc-based
+    app.doc.save_to_xml(fn)
+    app = TestApp()
+    app.doc.load_from_xml(fn)
+    app.show_dpview()
+    eq_(app.dpview.first_weekday_list.selected_index, 4)
+    eq_(app.dpview.ahead_months_list.selected_index, 5)
+    eq_(app.dpview.year_start_month_list.selected_index, 6)
+
+@with_app(app_props_shown)
+def test_setting_prop_makes_doc_dirty(app):
+    assert not app.doc.is_dirty()
+    app.dpview.first_weekday_list.select(4)
+    assert app.doc.is_dirty()
+    

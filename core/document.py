@@ -33,9 +33,6 @@ SELECTED_DATE_RANGE_PREFERENCE = 'SelectedDateRange'
 SELECTED_DATE_RANGE_START_PREFERENCE = 'SelectedDateRangeStart'
 SELECTED_DATE_RANGE_END_PREFERENCE = 'SelectedDateRangeEnd'
 EXCLUDED_ACCOUNTS_PREFERENCE = 'ExcludedAccounts'
-FIRST_WEEKDAY_PREFERENCE = 'FirstWeekday'
-AHEAD_MONTHS_PREFERENCE = 'AheadMonths'
-YEAR_START_MONTH_PREFERENCE = 'YearStartMonth'
 
 DATE_RANGE_MONTH = 'month'
 DATE_RANGE_QUARTER = 'quarter'
@@ -90,9 +87,12 @@ class Document(Repeater):
         self._filter_string = ''
         self._filter_type = None
         self._document_id = None
-        self._first_weekday = self.app.get_default(FIRST_WEEKDAY_PREFERENCE, 0)
-        self._ahead_months = self.app.get_default(AHEAD_MONTHS_PREFERENCE, 2)
-        self._year_start_month = self.app.get_default(YEAR_START_MONTH_PREFERENCE, 1)
+        self._dirty_flag = False
+        self._properties = {
+            'first_weekday': 0,
+            'ahead_months': 2,
+            'year_start_month': 1,
+        }
         self._restore_preferences()
     
     #--- Private
@@ -167,6 +167,7 @@ class Document(Repeater):
         del self.schedules[:]
         del self.budgets[:]
         self._undoer.clear()
+        self._dirty_flag = False
         self._cook()
     
     def _cook(self, from_date=None):
@@ -205,6 +206,23 @@ class Document(Repeater):
         materialized_split = materialized.splits[split_index]
         materialized_split.reconciliation_date = reconciliation_date
         return materialized_split
+    
+    def _refresh_date_range(self):
+        """Refreshes the date range to make sure that it's in accordance with the current date
+        range related preference (year start and ahead months). Call this when these prefs changed.
+        """
+        if isinstance(self.date_range, RunningYearRange):
+            self.select_running_year_range()
+        elif isinstance(self.date_range, AllTransactionsRange):
+            self.select_all_transactions_range()    
+        elif isinstance(self.date_range, YearRange):
+            if datetime.date.today() in self.date_range:
+                starting_point = datetime.date.today()
+            else:
+                starting_point = self.date_range
+            self.select_year_range(starting_point=starting_point)
+        elif isinstance(self.date_range, YearToDateRange):
+            self.select_year_to_date_range()
     
     def _restore_preferences(self):
         start_date = self.app.get_default(SELECTED_DATE_RANGE_START_PREFERENCE)
@@ -706,6 +724,9 @@ class Document(Repeater):
         loader.load()
         self._clear()
         self._document_id = loader.document_id
+        for propname in self._properties:
+            if propname in loader.properties:
+                self._properties[propname] = loader.properties[propname]
         for group in loader.groups:
             self.groups.append(group)
         for account in loader.accounts:
@@ -720,6 +741,7 @@ class Document(Repeater):
         self._restore_preferences_after_load()
         self.notify('document_changed')
         self._undoer.set_save_point()
+        self._refresh_date_range()
     
     def save_to_xml(self, filename, autosave=False):
         # When called from _async_autosave, it should not disrupt the user: no stop edition, no
@@ -728,10 +750,11 @@ class Document(Repeater):
             self.stop_edition()
         if self._document_id is None:
             self._document_id = uuid.uuid4().hex
-        save_native(filename, self._document_id, self.accounts, self.groups, self.transactions,
-            self.schedules, self.budgets)
+        save_native(filename, self._document_id, self._properties, self.accounts, self.groups,
+            self.transactions, self.schedules, self.budgets)
         if not autosave:
             self._undoer.set_save_point()
+            self._dirty_flag = False
     
     def parse_file_for_import(self, filename):
         for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv.Loader):
@@ -813,7 +836,13 @@ class Document(Repeater):
         self.notify('transactions_imported')
     
     def is_dirty(self):
-        return self._undoer.modified
+        return self._dirty_flag or self._undoer.modified
+    
+    def set_dirty(self):
+        # is_dirty() is determined by the undoer's save point, but some actions are not undoable but
+        # make the document dirty (ok, it's just one action: setting doc props). That's what this
+        # flag is for.
+        self._dirty_flag = True
     
     #--- Date Range
     def select_month_range(self, starting_point):
@@ -945,51 +974,41 @@ class Document(Repeater):
     # 0=monday 6=sunday
     @property
     def first_weekday(self):
-        return self._first_weekday
+        return self._properties['first_weekday']
         
     @first_weekday.setter
     def first_weekday(self, value):
-        if value == self._first_weekday:
+        if value == self._properties['first_weekday']:
             return
-        self._first_weekday = value
-        self.app.set_default(FIRST_WEEKDAY_PREFERENCE, value)
+        self._properties['first_weekday'] = value
+        self.set_dirty()
         self.notify('first_weekday_changed')
     
     @property
     def ahead_months(self):
-        return self._ahead_months
+        return self._properties['ahead_months']
         
     @ahead_months.setter
     def ahead_months(self, value):
         assert 0 <= value <= 11
-        if value == self._ahead_months:
+        if value == self._properties['ahead_months']:
             return
-        self._ahead_months = value
-        self.app.set_default(AHEAD_MONTHS_PREFERENCE, value)
-        if isinstance(self.date_range, RunningYearRange):
-            self.select_running_year_range()
-        elif isinstance(self.date_range, AllTransactionsRange):
-            self.select_all_transactions_range()
+        self._properties['ahead_months'] = value
+        self.set_dirty()
+        self._refresh_date_range()
     
     @property
     def year_start_month(self):
-        return self._year_start_month
+        return self._properties['year_start_month']
         
     @year_start_month.setter
     def year_start_month(self, value):
         assert 1 <= value <= 12
-        if value == self._year_start_month:
+        if value == self._properties['year_start_month']:
             return
-        self._year_start_month = value
-        self.app.set_default(YEAR_START_MONTH_PREFERENCE, value)
-        if isinstance(self.date_range, YearRange):
-            if datetime.date.today() in self.date_range:
-                starting_point = datetime.date.today()
-            else:
-                starting_point = self.date_range
-            self.select_year_range(starting_point=starting_point)
-        elif isinstance(self.date_range, YearToDateRange):
-            self.select_year_to_date_range()
+        self._properties['year_start_month'] = value
+        self.set_dirty()
+        self._refresh_date_range()
     
     #--- Events
     def default_currency_changed(self):

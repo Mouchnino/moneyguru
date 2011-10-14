@@ -58,7 +58,7 @@ class Loader(base.Loader):
             except ValueError:
                 info.mtime = 0
             info.reference = attrib.get('reference')
-            for split_element in element.getiterator('split'):
+            for split_element in element.iter('split'):
                 attrib = split_element.attrib
                 split_info = SplitInfo()
                 split_info.account = split_element.attrib.get('account')
@@ -74,13 +74,20 @@ class Loader(base.Loader):
         
         root = self.root
         self.document_id = root.attrib.get('document_id')
-        for group_element in root.getiterator('group'):
+        for pref_element in root.iter('property'):
+            name = pref_element.get('name')
+            # For now, all our prefs are ints, so we can simply assume tryint, but's we'll
+            # eventually need something more sophisticated.
+            value = tryint(pref_element.get('value'), default=None)
+            if name and value is not None:
+                self.properties[name] = value
+        for group_element in root.iter('group'):
             self.start_group()
             attrib = group_element.attrib
             self.group_info.name = attrib.get('name')
             self.group_info.type = attrib.get('type')
             self.flush_group()
-        for account_element in root.getiterator('account'):
+        for account_element in root.iter('account'):
             self.start_account()
             attrib = account_element.attrib
             self.account_info.name = attrib.get('name')
@@ -98,13 +105,13 @@ class Loader(base.Loader):
             self.start_transaction()
             read_transaction_element(transaction_element, self.transaction_info)
             self.flush_transaction()
-        for recurrence_element in root.getiterator('recurrence'):
+        for recurrence_element in root.iter('recurrence'):
             attrib = recurrence_element.attrib
             self.recurrence_info.repeat_type = attrib.get('type')
             self.recurrence_info.repeat_every = int(attrib.get('every', '1'))
             self.recurrence_info.stop_date = str2date(attrib.get('stop_date'))
             read_transaction_element(recurrence_element.find('transaction'), self.recurrence_info.transaction_info)
-            for exception_element in recurrence_element.getiterator('exception'):
+            for exception_element in recurrence_element.iter('exception'):
                 try:
                     date = str2date(exception_element.attrib['date'])
                     txn_element = exception_element.find('transaction')
@@ -112,7 +119,7 @@ class Loader(base.Loader):
                     self.recurrence_info.date2exception[date] = txn
                 except KeyError:
                     continue
-            for change_element in recurrence_element.getiterator('change'):
+            for change_element in recurrence_element.iter('change'):
                 try:
                     date = str2date(change_element.attrib['date'])
                     txn_element = change_element.find('transaction')
@@ -121,7 +128,7 @@ class Loader(base.Loader):
                 except KeyError:
                     continue
             self.flush_recurrence()
-        for budget_element in root.getiterator('budget'):
+        for budget_element in root.iter('budget'):
             attrib = budget_element.attrib
             self.budget_info.account = attrib.get('account')
             self.budget_info.repeat_type = attrib.get('type')
