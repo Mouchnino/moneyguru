@@ -16,12 +16,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)isFirstRun;
 /* Preferences */
-- (NSInteger)firstWeekday; // 0 = monday, 6 = sunday
-- (void)setFirstWeekday:(NSInteger)weekday;
-- (NSInteger)aheadMonths;
-- (void)setAheadMonths:(NSInteger)months;
-- (NSInteger)yearStartMonth; // 0 = Jan 11 = Dec
-- (void)setYearStartMonth:(NSInteger)month;
 - (NSInteger)autoSaveInterval;
 - (void)setAutoSaveInterval:(NSInteger)minutes;
 - (BOOL)autoDecimalPlace;

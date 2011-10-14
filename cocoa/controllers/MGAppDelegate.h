@@ -12,9 +12,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGAppDelegate : NSObject
 {
-    IBOutlet NSPopUpButton *firstWeekdayPopup;
-    IBOutlet NSPopUpButton *aheadMonthsPopup;
-    IBOutlet NSPopUpButton *yearStartMonthPopup;
     IBOutlet NSTextField *autoSaveIntervalField;
     IBOutlet NSButton *autoDecimalPlaceButton;
     IBOutlet NSMenuItem *customDateRangeItem1;

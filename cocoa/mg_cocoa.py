@@ -118,31 +118,6 @@ class PyMoneyGuruApp(PyFairware):
     
     #--- Preferences
     @signature('i@:')
-    def firstWeekday(self):
-        return self.py.first_weekday
-    
-    @signature('v@:i')
-    def setFirstWeekday_(self, weekday):
-        self.py.first_weekday = weekday
-    
-    @signature('i@:')
-    def aheadMonths(self):
-        return self.py.ahead_months
-    
-    @signature('v@:i')
-    def setAheadMonths_(self, months):
-        self.py.ahead_months = months
-    
-    # The selector in the pref pane is 0-based, the py side's pref is 1-based
-    @signature('i@:')
-    def yearStartMonth(self):
-        return self.py.year_start_month - 1
-    
-    @signature('v@:i')
-    def setYearStartMonth_(self, month):
-        self.py.year_start_month = month + 1
-    
-    @signature('i@:')
     def autoSaveInterval(self):
         return self.py.autosave_interval
     

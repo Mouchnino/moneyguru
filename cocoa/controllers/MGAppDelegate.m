@@ -168,9 +168,6 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     // For some messed up reason, simply notifying of a 'py' change here crashes the app, so the 
     // binding cannot be done in the NIB, it has to be done manually here.
-    [firstWeekdayPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.firstWeekday" options:nil];
-    [aheadMonthsPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.aheadMonths" options:nil];
-    [yearStartMonthPopup bind:@"selectedIndex" toObject:self withKeyPath:@"py.yearStartMonth" options:nil];
     [autoSaveIntervalField bind:@"value" toObject:self withKeyPath:@"py.autoSaveInterval" options:nil];
     [autoDecimalPlaceButton bind:@"value" toObject:self withKeyPath:@"py.autoDecimalPlace" options:nil];
 }
