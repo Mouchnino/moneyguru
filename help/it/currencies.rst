@@ -3,6 +3,8 @@ Valute
 
 moneyGuru ha un solido supporto per le valute multiple: ogni ammontare contiene la propria informazione di valuta, quindi qualsiasi somma può essere in una qualsiasi valuta. Sono stati fatti molti sforzi per garantire che si capisca sempre in quale valuta è espressa una somma, senza affaticare la vista con un codice di valuta per ogni cifra.
 
+.. todo:: Update from english version
+
 Un elemento centrale in moneyGuru è che ci sono 2 tipi di valuta. La valuta **nativa** e le valute **straniere**. La valuta nativa è quella del sistema operativa. Le valute straniere sono tutte le altre.
 
 Le valute vengono mostrate con una regola molto semplice: se l'ammontare è nella valuta nativa, è mostra senza codice, altrimenti è mostrato con il codice ISO a tre lettere della valuta (USD, CAD, EUR, GBP, etc..).

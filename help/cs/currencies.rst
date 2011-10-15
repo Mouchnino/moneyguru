@@ -3,6 +3,8 @@ Měny
 
 moneyGuru má výbornou podporu pro používání různých měn. Každá částka nese informaci o měně. Můžete zapsat libovolnou částku v libovolné měně. Tvůrci vynaložili mnoho úsilí, abyste vždy přesně věděli jaká částka je v jaké měně, aniž byste si museli namáhat zrak nebo všude cpát zkratky měny.
 
+.. todo:: Update from english version
+
 Hlavní myšlenkou moneyGuru je existence 2 druhů měny. **Vlastní** měna a **cizí** měna. Vlastní měna je ta, kterou používá váš operační systém (definuje se v System Preferences --> International). Vše ostatní jsou cizí měny.
 
 Zobrazení měn se řídí prostým pravidlem: Je-li částka ve vlastní měně, zobrazí se bez dalšího popisu. Pokud je suma v cizí měně, zobrazí se třípísmenným kódem ISO (USD, CAD, EUR, GBP atd.).

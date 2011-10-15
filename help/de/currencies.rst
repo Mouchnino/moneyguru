@@ -3,6 +3,8 @@ Währungen
 
 In moneyGuru können Sie mit verschiedenen Währungen arbeiten, sogar mit unterschiedlichen Währungen pro Transaktion. Jedem Geldbetrag ist eine Währungsinformation zugeordnet, somit können Sie jeden Geldbetrag in jeder beliebigen Währung eingeben. Diese Währungsinformation wird auch immer angezeigt, damit Sie überall wissen, welcher Betrag in welcher Währung eingegeben worden ist.
 
+.. todo:: Update from english version
+
 Zentrales Konzept in moneyGuru ist, dass es zwei unterschiedliche Arten von Währungen gibt. Die **Hauptwährung** wird aus den Systemeinstellungen des Betriebssystems übernommen (Systemeinstellungen --> Sprache & Text --> Formate). Alle anderen vorhandenen Währungen sind **Fremdwährungen**.
 
 Jeder Geldbetrag der Hauptwährung wird ohne Währungsinformation angezeigt, alle anderen Beträge enthalten den dreibuchstabigen ISO Code (USD, GBP, EUR, ...).

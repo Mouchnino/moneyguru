@@ -3,7 +3,10 @@ Le concept de devises
 
 moneyGuru a support solide pour la gestion des devises multiples. Chaque montant, quel qu'il soit, est d'une devise particulière. Tout montant que vous tapez peut être de n'importe laquelle devise. Beaucoup d'effort ont été déployés dans moneyGuru pour être sûr que l'information de devise soit claire sans être envahissante. Il suffit de connaître les règles de base.
 
-Il y a deux types de devises dans moneyGuru. La devise **native** et les devises **étrangères**. La devise native est déterminée par vos préférences système (dans "International"). Les devises étrangères sont toutes les autres.
+Il y a deux types de devises dans moneyGuru. La devise **native** et les devises **étrangères**.
+La devise native est une préférence au niveau du document et est la devises la plus utilisée dans
+votre document. Elle peut être changé dans l'onglet Propriétés du Document. Les devises étrangères
+sont toutes les autres.
 
 L'affichage de ces devises suit une règle très simple: Si un montant est de votre devise native, ce montant est laissé tel quel. Si il est d'une devise étrangère, le code ISO (USD, CAD, EUR, GBP, etc..) correspondant à cette devise est ajouté au montant.
 

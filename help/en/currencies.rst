@@ -3,7 +3,10 @@ Currencies
 
 moneyGuru has strong support for multiple currencies. Every amount has a currency information. Any amount you type can be in any currency. A lot of efforts have been made to make sure that you always know what currency any amount is without hurting your eyes and putting explicit currency codes everywhere.
 
-One central concept in moneyGuru is that there are 2 types of currencies. The **native** currency and the **foreign** currencies. The native currency is your system's currency (defined in System Preferences --> International). The foreign currencies are all the others.
+One central concept in moneyGuru is that there are 2 types of currencies. The **native** currency
+and the **foreign** currencies. The native currency is a per-document setting which can be changed
+in the Document Properties view. It's the currency that is the most used in your document. The
+foreign currencies are all other currencies.
 
 The display of these currencies works with a very simple rule: If the amount is in your native currency, it is shown plainly. If it's not, it is shown with the currency's 3 letter ISO code (USD, CAD, EUR, GBP, etc..).
 

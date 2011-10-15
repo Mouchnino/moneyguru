@@ -59,7 +59,7 @@ The Net Worth and Profit & Loss views are where you do account management and ge
 
 * **Balance Sheet:**
 
-    * **Account #:** An optional account number reference tied to the account. See the :doc:`edition page <editing>` for more info.
+    * **Account #:** An optional account number reference tied to the account. See the :doc:`editing page <editing>` for more info.
     * **Start:** The balance of the account at the beginning of the date range. It includes scheduled transactions, but not budgets.
     * **End:** The balance of the account at the end of the date range.
     * **Change:** The difference between Start and End.
