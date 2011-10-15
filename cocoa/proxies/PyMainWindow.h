@@ -9,8 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyGUIContainer.h"
 #import "MGConst.h"
+#import "PySearchField.h"
 
 @interface PyMainWindow : PyGUIContainer {}
+- (PySearchField *)searchField;
 // Navigation
 - (void)selectNextView;
 - (void)selectPreviousView;

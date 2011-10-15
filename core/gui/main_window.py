@@ -16,6 +16,7 @@ from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
 from .base import MESSAGES_DOCUMENT_CHANGED
+from .search_field import SearchField
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
@@ -51,6 +52,8 @@ class MainWindow(Repeater):
         self._selected_schedules = []
         self._selected_budgets = []
         self._account2visibleentries = {}
+        
+        self.search_field = SearchField(self)
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
@@ -502,6 +505,7 @@ class MainWindow(Repeater):
     def filter_applied(self):
         if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):
             self.select_pane_of_type(PaneType.Transaction, clear_filter=False)
+        self.search_field.refresh()
     
     def performed_undo_or_redo(self):
         self._close_irrelevant_account_panes()

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-20
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -9,13 +8,11 @@
 
 from PyQt4.QtCore import QObject
 
-from core.gui.search_field import SearchField as SearchFieldModel
-
 class SearchField(QObject):
-    def __init__(self, mainwindow, view):
+    def __init__(self, model, view):
         QObject.__init__(self)
         self.view = view
-        self.model = SearchFieldModel(mainwindow=mainwindow.model, view=self)
+        self.model = model
         
         self.view.searchChanged.connect(self.searchChanged)
     

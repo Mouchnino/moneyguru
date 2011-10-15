@@ -6,11 +6,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from .base import DocumentGUIObject
+from hscommon.gui.base import NoopGUI
 
-class SearchField(DocumentGUIObject):
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+class SearchField:
+    def __init__(self, mainwindow, view=None):
+        self.mainwindow = mainwindow
+        self.document = mainwindow.document
+        if view is None:
+            view = NoopGUI()
+        self.view = view
     
     @property
     def query(self):
@@ -20,9 +24,6 @@ class SearchField(DocumentGUIObject):
     def query(self, value):
         self.document.filter_string = value
     
-    #--- Events
-    def filter_applied(self):
+    def refresh(self):
         self.view.refresh()
-    
-
-    
+  

@@ -14,8 +14,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {   
     IBOutlet NSSearchField *linkedView; // XXX Why not create the view programmatically?
 }
-- (id)initWithPyParent:(id)aPyParent;
-
 - (PySearchField *)py;
 - (IBAction)changeQuery:(id)sender;
 @end

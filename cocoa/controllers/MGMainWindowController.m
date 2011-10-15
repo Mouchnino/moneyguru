@@ -34,7 +34,7 @@ http://www.hardcoded.net/licenses/bsd_license
     ledgerView = [[MGGeneralLedgerView alloc] initWithPyParent:py];
     docpropsView = [[MGDocPropsView alloc] initWithPyParent:py];
     emptyView = [[MGEmptyView alloc] initWithPyParent:py];
-    searchField = [[MGSearchField alloc] initWithPyParent:py];
+    searchField = [[MGSearchField alloc] initWithPy:[[self py] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
@@ -63,7 +63,6 @@ http://www.hardcoded.net/licenses/bsd_license
         [dateRangeSelector py], [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
-    [searchField connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause
        crashes.
     */

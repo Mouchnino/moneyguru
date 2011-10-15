@@ -9,9 +9,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGSearchField.h"
 
 @implementation MGSearchField
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PySearchField" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"SearchField" owner:self];
     [self setView:linkedView];
     return self;

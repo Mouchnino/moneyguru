@@ -43,7 +43,6 @@ from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from ..gui.general_ledger_table import GeneralLedgerTable
 from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.income_statement import IncomeStatement
-from ..gui.import_table import ImportTable
 from ..gui.import_window import ImportWindow
 from ..gui.main_window import MainWindow
 from ..gui.mass_edition_panel import MassEditionPanel
@@ -54,7 +53,6 @@ from ..gui.profit_view import ProfitView
 from ..gui.schedule_panel import SchedulePanel
 from ..gui.schedule_table import ScheduleTable
 from ..gui.schedule_view import ScheduleView
-from ..gui.search_field import SearchField
 from ..gui.transaction_panel import TransactionPanel
 from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
@@ -189,7 +187,8 @@ class TestApp(TestAppBase):
         make_gui('ipie', IncomePieChart, parent=self.pview)
         make_gui('epie', ExpensesPieChart, parent=self.pview)
         make_table_gui('istatement', IncomeStatement, parent=self.pview)
-        make_gui('sfield', SearchField)
+        self.sfield = self.mw.search_field
+        self.sfield.view = self.make_logger()
         # There are 2 filter bars: one for etable, one for ttable
         make_gui('efbar', EntryFilterBar, parent=self.aview)
         make_gui('tfbar', TransactionFilterBar, parent=self.tview)
@@ -224,7 +223,6 @@ class TestApp(TestAppBase):
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
-        self.sfield.connect()
         self.iwin.connect()
         self.csvopt.connect()
     

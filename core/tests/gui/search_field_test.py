@@ -202,7 +202,7 @@ def test_change_account(app):
     eq_(app.sfield.query, '')
     # setting the sfield query didn't make document go to all_transactions again
     eq_(app.mainwindow.current_pane_index, 0)
-    app.check_gui_calls(app.sfield_gui, ['refresh'])
+    app.sfield.view.check_gui_calls(['refresh'])
     app.mainwindow.select_transaction_table()
     eq_(app.ttable.row_count, 3)
 
@@ -211,7 +211,7 @@ def test_change_account_to_bsheet(app):
     # Balance sheet is another notification, so we must also test it in addition to test_change_account.
     app.mainwindow.select_balance_sheet()
     eq_(app.sfield.query, '')
-    app.check_gui_calls(app.sfield_gui, ['refresh'])
+    app.sfield.view.check_gui_calls(['refresh'])
     app.mainwindow.select_transaction_table()
     eq_(app.ttable.row_count, 3)
 

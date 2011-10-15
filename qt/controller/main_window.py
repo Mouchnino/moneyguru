@@ -87,7 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.clookup = CompletionLookup(self, mainwindow=self)
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
         self.vopts = ViewOptionsDialog(self)
-        self.sfield = SearchField(mainwindow=self, view=self.searchLineEdit)
+        self.sfield = SearchField(model=self.model.search_field, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, 'recentDocuments')
         self.recentDocuments.addMenu(self.menuOpenRecent)
         
@@ -110,7 +110,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.drsel, self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
-        self.sfield.model.connect()
         
         self._updateUndoActions()
         self._bindSignals()

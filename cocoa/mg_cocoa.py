@@ -53,7 +53,6 @@ from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
-from core.gui.import_table import ImportTable
 from core.gui.import_window import ImportWindow
 from core.gui.main_window import MainWindow
 from core.gui.mass_edition_panel import MassEditionPanel
@@ -65,7 +64,6 @@ from core.gui.profit_view import ProfitView
 from core.gui.schedule_panel import SchedulePanel
 from core.gui.schedule_table import ScheduleTable
 from core.gui.schedule_view import ScheduleView
-from core.gui.search_field import SearchField
 from core.gui.transaction_panel import TransactionPanel
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.gui.transaction_table import TransactionTable
@@ -508,17 +506,6 @@ class PyGeneralLedgerTable(PyTableWithDate):
     @signature('c@:i')
     def isBoldRow_(self, row_index):
         return self.py.is_bold_row(self._getrow(row_index))
-    
-
-class PySearchField(PyListener):
-    py_class = SearchField
-    
-    def query(self):
-        return self.py.query
-    
-    def setQuery_(self, query):
-        self.py.query = query
-    
 
 class PyFilterBarBase(PyListener):
     def filterType(self):
@@ -961,8 +948,18 @@ class PyIncomePieChart(PyChart):
 class PyExpensesPieChart(PyChart):
     py_class = ExpensesPieChart
 
+class PySearchField(PyGUIObject):
+    def query(self):
+        return self.py.query
+    
+    def setQuery_(self, query):
+        self.py.query = query
+    
+
 class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
+    
+    searchField = subproxy('searchField', 'search_field', PySearchField)
     
     def selectNextView(self):
         self.py.select_next_view()
@@ -1070,8 +1067,6 @@ class PyMainWindow(PyGUIContainer):
     
 
 class PyImportTable(PyTable):
-    py_class = ImportTable
-    
     # pyparent is a PyImportWindow
     @signature('v@:ii')
     def bindRow_to_(self, source_index, dest_index):
