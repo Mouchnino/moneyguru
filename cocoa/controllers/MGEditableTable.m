@@ -18,6 +18,17 @@ http://www.hardcoded.net/licenses/bsd_license
     return self;
 }
 
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+{
+    self = [super initWithPy:aPy view:aTableView];
+    /* XXX This is going to be a problem later, but for now there's only the import table that use
+       this initializer and it's not a problem there because the field editors aren't used.
+    */
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPy];
+    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
+    return self;
+}
+
 - (void)dealloc
 {
     [customFieldEditor release];

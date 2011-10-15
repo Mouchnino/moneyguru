@@ -174,19 +174,6 @@ class TransactionPanelGUIObject(Listener):
     def panel_loaded(self):
         pass
 
-class ImportWindowGUIObject(Listener):
-    def __init__(self, view, window):
-        Listener.__init__(self, window)
-        self.view = view
-        self.window = window
-    
-    def fields_switched(self):
-        pass
-    
-    def pane_selected(self):
-        pass
-    
-
 class GUIPanel:
     def __init__(self, view, document):
         self.view = view

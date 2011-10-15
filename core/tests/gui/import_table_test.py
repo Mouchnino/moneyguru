@@ -17,10 +17,7 @@ from ...model.date import YearRange
 def app_import_checkbook_qif():
     app = TestApp()
     app.doc.date_range = YearRange(date(2007, 1, 1))
-    # The cocoa side does some disconnect/connect stuff. We have to refreshthe table on connect()
-    app.itable.disconnect()
     app.doc.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
-    app.itable.connect()
     app.clear_gui_calls()
     return app
 
@@ -74,7 +71,7 @@ def test_rows_after_checkbook_import(app):
 def test_select_account_pane_refreshes_table(app):
     # Selecting another accounts updates the table.
     app.iwin.selected_pane_index = 1
-    app.check_gui_calls(app.itable_gui, ['refresh'])
+    app.itable.view.check_gui_calls(['refresh'])
     eq_(len(app.itable), 3)
     eq_(app.itable[1].date, '')
     eq_(app.itable[1].description, '')
@@ -92,7 +89,7 @@ def test_toggle_import_status(app):
     assert not app.itable[1].will_import
     assert not app.itable[2].will_import
     assert not app.itable[3].will_import
-    app.check_gui_calls(app.itable_gui, ['refresh'])
+    app.itable.view.check_gui_calls(['refresh'])
 
 @with_app(app_import_checkbook_qif)
 def test_will_import_value_is_kept(app):
@@ -118,7 +115,7 @@ def app_import_checkbook_qif_with_existing_txns():
     app.doc.parse_file_for_import(testdata.filepath('qif', 'checkbook.qif'))
     app.clear_gui_calls()
     app.iwin.selected_target_account_index = 1 # foo
-    app.check_gui_calls(app.itable_gui, ['refresh'])
+    app.itable.view.check_gui_calls(['refresh'])
     return app
 
 @with_app(app_import_checkbook_qif_with_existing_txns)
@@ -132,7 +129,7 @@ def test_bind(app):
     eq_(app.itable[2].date_import, '02/01/2007')
     eq_(app.itable[2].description_import, 'Power Bill')
     eq_(app.itable[2].amount_import, '-57.12')
-    app.check_gui_calls(app.itable_gui, ['refresh'])
+    app.itable.view.check_gui_calls(['refresh'])
 
 @with_app(app_import_checkbook_qif_with_existing_txns)
 def test_can_bind(app):
@@ -247,7 +244,7 @@ def test_unbind(app):
     eq_(app.itable[2].date_import, '16/02/2008')
     eq_(app.itable[2].description_import, 'txn2')
     eq_(app.itable[2].amount_import, 'CAD -14.00')
-    app.check_gui_calls(app.itable_gui, ['refresh'])
+    app.itable.view.check_gui_calls(['refresh'])
 
 @with_app(app_load_then_import_with_references)
 def test_unbind_unbound(app):

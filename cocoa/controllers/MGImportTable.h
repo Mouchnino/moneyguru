@@ -13,8 +13,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 
 @interface MGImportTable : MGEditableTable {}
-- (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 - (PyImportTable *)py;
+
+- (void)updateOneOrTwoSided;
 - (void)bindLockClick:(id)sender;
 @end

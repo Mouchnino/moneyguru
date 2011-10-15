@@ -1069,8 +1069,35 @@ class PyMainWindow(PyGUIContainer):
         self.cocoa.viewClosedAtIndex_(index)
     
 
+class PyImportTable(PyTable):
+    py_class = ImportTable
+    
+    # pyparent is a PyImportWindow
+    @signature('v@:ii')
+    def bindRow_to_(self, source_index, dest_index):
+        self.py.bind(source_index, dest_index)
+    
+    @signature('c@:ii')
+    def canBindRow_to_(self, source_index, dest_index):
+        return self.py.can_bind(source_index, dest_index)
+    
+    @signature('c@:')
+    def isTwoSided(self):
+        return self.py.is_two_sided
+    
+    @signature('v@:')
+    def toggleImportStatus(self):
+        self.py.toggle_import_status()
+    
+    @signature('v@:i')
+    def unbindRow_(self, index):
+        self.py.unbind(index)
+    
+
 class PyImportWindow(PyListener):
     py_class = ImportWindow
+    
+    importTable = subproxy('importTable', 'import_table', PyImportTable)
     
     @signature('i@:i')
     def accountCountAtIndex_(self, index):
@@ -1242,31 +1269,6 @@ class PyCSVImportOptions(PyWindowController):
     
     def show_message(self, msg):
         self.cocoa.showMessage_(msg)
-    
-
-class PyImportTable(PyTable):
-    py_class = ImportTable
-    
-    # pyparent is a PyImportWindow
-    @signature('v@:ii')
-    def bindRow_to_(self, source_index, dest_index):
-        self.py.bind(source_index, dest_index)
-    
-    @signature('c@:ii')
-    def canBindRow_to_(self, source_index, dest_index):
-        return self.py.can_bind(source_index, dest_index)
-    
-    @signature('c@:')
-    def isTwoSided(self):
-        return self.py.is_two_sided
-    
-    @signature('v@:')
-    def toggleImportStatus(self):
-        self.py.toggle_import_status()
-    
-    @signature('v@:i')
-    def unbindRow_(self, index):
-        self.py.unbind(index)
     
 
 class PyLookup(PyGUIObject):

@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGUI.h"
+#import "PyImportTable.h"
 
 @interface PyImportWindow : PyGUI {}
+- (PyImportTable *)importTable;
 - (NSInteger)accountCountAtIndex:(NSInteger)index;
 - (NSString *)accountNameAtIndex:(NSInteger)index;
 - (BOOL)canPerformSwap;

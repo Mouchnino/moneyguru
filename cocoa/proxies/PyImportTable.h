@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTable.h"
-#import "PyImportWindow.h"
 
 @interface PyImportTable : PyTable {}
 - (BOOL)canBindRow:(NSInteger)source to:(NSInteger)dest;

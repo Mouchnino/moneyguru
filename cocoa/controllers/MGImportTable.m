@@ -12,9 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGImportBindingCell.h"
 
 @implementation MGImportTable
-- (id)initWithImportWindow:(PyImportWindow *)aWindow view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyImportTable" pyParent:aWindow view:aTableView];
+    self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGImportEntryPasteboardType]];
     NSTableColumn *boundColumn = [[aTableView tableColumns] objectAtIndex:4];
@@ -35,6 +35,8 @@ http://www.hardcoded.net/licenses/bsd_license
         {@"date_import", @"Date", 80, 10, 0, NO, nil},
         {@"description_import", @"Description", 100, 10, 0, NO, nil},
         {@"payee_import", @"Payee", 80, 10, 0, NO, nil},
+        {@"checkno_import", @"Check #", 60, 10, 0, NO, nil},
+        {@"transfer_import", @"Transfer", 110, 10, 0, NO, nil},
         {@"amount_import", @"Amount", 80, 10, 0, NO, nil},
         nil
     };
@@ -62,6 +64,17 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyImportTable *)py;
 }
 
+
+- (void)updateOneOrTwoSided
+{
+    BOOL shouldShow = [[self py] isTwoSided];
+    NSArray *colnames = [NSArray arrayWithObjects:@"date", @"description", @"amount", @"bound", nil];
+    for (NSString *colname in colnames) {
+        NSTableColumn *col = [[self tableView] tableColumnWithIdentifier:colname];
+        [col setHidden:!shouldShow];
+    }
+}
+
 /* About NSTableView and NSActionCell
 
 From what I can understand, actions from an action cell is a tableview happen *after* the selectedRow
@@ -73,6 +86,7 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
     [[self py] unbindRow:[[self tableView] selectedRow]];
 }
 
+/* Delegate */
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     NSString *colname = [column identifier];

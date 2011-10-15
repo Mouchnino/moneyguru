@@ -12,7 +12,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDocument.h"
 #import "MGTableView.h"
 #import "MGImportTable.h"
-#import "MGImportTableOneSided.h"
 #import "PyImportWindow.h"
 
 @interface MGImportWindow : HSGUIController
@@ -22,24 +21,17 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTabView *tabView;
     IBOutlet NSView *mainView;
     IBOutlet NSPopUpButton *targetAccountsPopup;
-    IBOutlet NSView *importTablePlaceholder;
     IBOutlet NSPopUpButton *switchDateFieldsPopup;
     IBOutlet NSButton *applySwapToAllCheckbox;
     IBOutlet NSButton *swapButton;
     IBOutlet MGTableView *importTableView;
-    IBOutlet MGTableView *importTableOneSidedView;
-    IBOutlet NSScrollView *importTableScrollView;
-    IBOutlet NSScrollView *importTableOneSidedScrollView;
     
     MGImportTable *importTable;
-    MGImportTableOneSided *importTableOneSided;
-    id visibleTable;
     NSInteger tabToRemoveIndex;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
 - (PyImportWindow *)py;
-- (void)updateVisibleTable;
 /* Actions */
 - (IBAction)changeTargetAccount:(id)sender;
 - (IBAction)importSelectedPane:(id)sender;

@@ -21,8 +21,12 @@ class GUITable(GUITableBase):
     SAVENAME = ''
     COLUMNS = []
     
-    def __init__(self):
+    # XXX document is normally supposed to be a mandatory argument, but because of legacy code, it's
+    # optional. When all subclasses are changed to pass it on init, we can remove the =None part.
+    def __init__(self, document=None):
         GUITableBase.__init__(self)
+        if document is not None:
+            self.document = document
         self.columns = Columns(self)
     
     def can_move(self, row_indexes, position):

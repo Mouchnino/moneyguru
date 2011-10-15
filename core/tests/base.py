@@ -196,7 +196,8 @@ class TestApp(TestAppBase):
         make_gui('drsel', DateRangeSelector)
         make_gui('csvopt', CSVOptions, parent=self.doc)
         make_gui('iwin', ImportWindow, parent=self.doc)
-        make_table_gui('itable', ImportTable, parent=self.iwin)
+        self.itable = self.iwin.import_table
+        self.itable.view = self.make_logger()
         make_gui('alookup', AccountLookup)
         make_gui('clookup', CompletionLookup)
         make_gui('vopts', ViewOptions)
@@ -226,7 +227,6 @@ class TestApp(TestAppBase):
         self.stable.connect()
         self.sfield.connect()
         self.iwin.connect()
-        self.itable.connect()
         self.csvopt.connect()
     
     def tmppath(self):

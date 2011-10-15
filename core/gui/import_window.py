@@ -6,12 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.notify import Broadcaster
 from hscommon.util import flatten, dedupe, first
 from hscommon.trans import tr
 
 from ..exception import OperationAborted
 from .base import DocumentGUIObject
+from .import_table import ImportTable
 
 DAY = 'day'
 MONTH = 'month'
@@ -112,14 +112,14 @@ class AccountPane:
         self._match_entries()
     
 
-class ImportWindow(DocumentGUIObject, Broadcaster):
+class ImportWindow(DocumentGUIObject):
     def __init__(self, view, document):
         DocumentGUIObject.__init__(self, view, document)
-        Broadcaster.__init__(self)
         self._selected_pane_index = 0
         self._selected_target_index = 0
         self.swap_type_index = SwapType.DayMonth
         self.panes = []
+        self.import_table = ImportTable(self)
     
     def _can_swap_date_fields(self, first, second): # 'day', 'month', 'year'
         pane = self.selected_pane
@@ -140,7 +140,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
         # Entries, I don't remember why, hold a copy of their split's amount. It has to be updated.
         for entry in entries:
             entry.amount = entry.split.amount
-        self.notify('fields_switched')
+        self.import_table.refresh()
     
     def _refresh_target_selection(self):
         if not self.panes:
@@ -181,7 +181,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
         txns = dedupe(e.transaction for e in entries)
         for txn in txns:
             switch_func(txn)
-        self.notify('fields_switched')
+        self.import_table.refresh()
     
     def can_perform_swap(self):
         index = self.swap_type_index
@@ -202,8 +202,8 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             return
         self._selected_pane_index = min(self._selected_pane_index, len(self.panes) - 1)
         if was_selected:
+            self.import_table.refresh()
             self.view.update_selected_pane()
-            self.notify('pane_selected')
     
     def import_selected_pane(self):
         pane = self.selected_pane
@@ -252,7 +252,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
                 target_account = first(t for t in self.target_accounts if t.reference == account.reference)
             self.panes.append(AccountPane(account, target_account))
         self._refresh_target_selection()
-        self.notify('pane_selected')
+        self.import_table.refresh()
     
     #--- Properties
     @property
@@ -269,8 +269,8 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
             return
         self._selected_pane_index = value
         self._refresh_target_selection()
+        self.import_table.refresh()
         self.view.update_selected_pane()
-        self.notify('pane_selected')
     
     @property
     def selected_target_account(self):
@@ -285,7 +285,7 @@ class ImportWindow(DocumentGUIObject, Broadcaster):
         target = self.target_accounts[value - 1] if value > 0 else None
         self.selected_pane.selected_target = target
         self._selected_target_index = value
-        self.notify('pane_selected')
+        self.import_table.refresh()
     
     @property
     def target_account_names(self):

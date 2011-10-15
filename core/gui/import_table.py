@@ -6,21 +6,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from .base import ImportWindowGUIObject
 from .table import GUITable, Row
 
-class ImportTable(ImportWindowGUIObject, GUITable):
-    def __init__(self, view, import_window):
-        ImportWindowGUIObject.__init__(self, view, import_window)
-        self.document = self.window.document
-        GUITable.__init__(self)
+class ImportTable(GUITable):
+    def __init__(self, import_window):
+        GUITable.__init__(self, document=import_window.document)
+        self.window = import_window
         self._is_two_sided = False
     
     #--- Override
-    def connect(self):
-        ImportWindowGUIObject.connect(self)
-        self.refresh()
-    
     def _fill(self):
         self._is_two_sided = False
         self.pane = self.window.selected_pane
@@ -67,13 +61,6 @@ class ImportTable(ImportWindowGUIObject, GUITable):
         """Returns whether the table should show columns to display matches from the target account.
         """
         return self._is_two_sided
-    
-    #--- Events
-    def fields_switched(self):
-        self.refresh()
-        
-    def pane_selected(self):
-        self.refresh()
     
 
 class ImportTableRow(Row):

@@ -199,7 +199,6 @@
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
 		CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC941C912D32F7600816473 /* HSAboutBox.m */; };
-		CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */; };
 		CED1DF611440B1C5005F82B5 /* HSPopUpList.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1DF601440B1C5005F82B5 /* HSPopUpList.m */; };
 		CED1FC6D10F7851600634D72 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6C10F7851600634D72 /* MGTransactionTable.m */; };
 		CED1FC7410F7852000634D72 /* MGBalanceGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6F10F7852000634D72 /* MGBalanceGraph.m */; };
@@ -666,8 +665,6 @@
 		CEC941C812D32F7600816473 /* HSAboutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSAboutBox.h; path = ../cocoalib/HSAboutBox.h; sourceTree = SOURCE_ROOT; };
 		CEC941C912D32F7600816473 /* HSAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSAboutBox.m; path = ../cocoalib/HSAboutBox.m; sourceTree = SOURCE_ROOT; };
 		CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTableWithDate.h; sourceTree = "<group>"; };
-		CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTableOneSided.h; sourceTree = "<group>"; };
-		CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTableOneSided.m; sourceTree = "<group>"; };
 		CECEF77F144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/AccountPanel.xib; sourceTree = "<group>"; };
 		CECEF780144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/AccountReassignPanel.xib; sourceTree = "<group>"; };
 		CECEF781144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
@@ -986,8 +983,6 @@
 				CE41C98F0E2B52CD006D3BEA /* MGTable.m */,
 				CE873A8A0E21622F004F63E9 /* MGSplitTable.h */,
 				CE873A8B0E21622F004F63E9 /* MGSplitTable.m */,
-				CECE10E60E5EA8A60080E298 /* MGImportTableOneSided.h */,
-				CECE10E70E5EA8A60080E298 /* MGImportTableOneSided.m */,
 				CE2DD62E0E4C684000AB107B /* MGImportTable.h */,
 				CE2BFF361207F02B0098A2EC /* MGCashculatorAccountTable.h */,
 				CE2BFF371207F02B0098A2EC /* MGCashculatorAccountTable.m */,
@@ -1644,7 +1639,6 @@
 				CE2DD6300E4C684000AB107B /* MGImportTable.m in Sources */,
 				CEAFD2590E518B9B00A1E707 /* MGImportBindingCell.m in Sources */,
 				0761B95D0E547CE800E99B31 /* MGAmountCell.m in Sources */,
-				CECE10E80E5EA8A60080E298 /* MGImportTableOneSided.m in Sources */,
 				CE14AF790E6FB3B500E75B76 /* MGPieChartView.m in Sources */,
 				CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */,
 				CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */,

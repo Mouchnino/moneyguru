@@ -16,19 +16,13 @@ http://www.hardcoded.net/licenses/bsd_license
     [NSBundle loadNibNamed:@"ImportWindow" owner:self];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
-    importTable = [[MGImportTable alloc] initWithImportWindow:[self py] view:importTableView];
-    importTableOneSided = [[MGImportTableOneSided alloc] initWithImportWindow:[self py] view:importTableOneSidedView];
-    [importTableOneSided connect];
-    visibleTable = importTableOneSided;
-    [importTableOneSidedScrollView setFrame:[importTablePlaceholder frame]]; 
-    [mainView replaceSubview:importTablePlaceholder with:importTableOneSidedScrollView];
+    importTable = [[MGImportTable alloc] initWithPy:[[self py] importTable] view:importTableView];
     return self;
 }
 
 - (void)dealloc
 {
     [importTable release];
-    [importTableOneSided release];
     [super dealloc];
 }
 
@@ -37,37 +31,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyImportWindow *)py;
 }
 
-- (void)updateVisibleTable
-{
-    // Ok, this code below is a quite hackish. I guess that importTable and importTableOneSided
-    // should be a single class that hides columns (like in the PyQt side) rather than doing this
-    // kind of fuss around
-    if ([(PyImportTable *)[visibleTable py] isTwoSided]) {
-        // Show the two sided table
-        if (visibleTable == importTable)
-            return;
-        [importTableOneSided disconnect];
-        [importTable connect];
-        [importTableScrollView setFrame:[importTableOneSidedScrollView frame]]; 
-        [mainView replaceSubview:importTableOneSidedScrollView with:importTableScrollView];
-        visibleTable = importTable;
-    } else {
-        // Show the one sided table
-        if (visibleTable == importTableOneSided)
-            return;
-        [importTable disconnect];
-        [importTableOneSided connect];
-        [importTableOneSidedScrollView setFrame:[importTableScrollView frame]]; 
-        [mainView replaceSubview:importTableScrollView with:importTableOneSidedScrollView];
-        visibleTable = importTableOneSided;
-    }
-}
-
 /* Actions */
 - (IBAction)changeTargetAccount:(id)sender
 {
     [[self py] setSelectedTargetAccountIndex:[targetAccountsPopup indexOfSelectedItem]];
-    [self updateVisibleTable];
+    [importTable updateOneOrTwoSided];
 }
 
 - (IBAction)importSelectedPane:(id)sender
@@ -105,8 +73,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
-    if (index >= 0)
-    {
+    if (index >= 0) {
         [[self py] setSelectedAccountIndex:index];
     }
 }
@@ -126,20 +93,17 @@ http://www.hardcoded.net/licenses/bsd_license
     [tabBar setDelegate:nil];
     [tabView removeTabViewItem:[tabView selectedTabViewItem]];
     [tabBar setDelegate:self];
-    if ([tabView selectedTabViewItem] != nil)
-    {
+    if ([tabView selectedTabViewItem] != nil) {
         [self tabView:tabView didSelectTabViewItem:[tabView selectedTabViewItem]];
     }
 }
 
 - (void)refreshTabs
 {
-    while ([tabView numberOfTabViewItems])
-    {
+    while ([tabView numberOfTabViewItems]) {
         [tabView removeTabViewItem:[tabView tabViewItemAtIndex:0]];
     }
-    for (NSInteger i=0; i<[[self py] numberOfAccounts]; i++)
-    {
+    for (NSInteger i=0; i<[[self py] numberOfAccounts]; i++) {
         NSString *name = [[self py] accountNameAtIndex:i];
         NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:name] autorelease];
         [item setLabel:name];
@@ -164,7 +128,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)updateSelectedPane
 {
     [targetAccountsPopup selectItemAtIndex:[[self py] selectedTargetAccountIndex]];
-    [self updateVisibleTable];
+    [importTable updateOneOrTwoSided];
     [swapButton setEnabled:[[self py] canPerformSwap]];
 }
 

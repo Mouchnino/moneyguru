@@ -194,7 +194,7 @@ class TestImportCheckbookQIFWithSomeExistingTransactions:
         app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
         app.clear_gui_calls()
         app.iwin.selected_target_account_index = 1 # foo
-        app.check_gui_calls(app.itable_gui, ['refresh'])
+        app.itable.view.check_gui_calls(['refresh'])
         return app
     
     @with_app(do_setup)

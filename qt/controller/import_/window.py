@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-13
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -10,7 +9,7 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget
 
-from core.gui.import_window import ImportWindow as ImportWindowModel, DAY, MONTH, YEAR
+from core.gui.import_window import ImportWindow as ImportWindowModel
 from .table import ImportTable
 from ...ui.import_window_ui import Ui_ImportWindow
 
@@ -20,8 +19,7 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self._setupUi()
         self.doc = doc
         self.model = ImportWindowModel(view=self, document=doc.model)
-        self.table = ImportTable(importWindow=self, view=self.tableView)
-        self.table.model.connect()
+        self.table = ImportTable(model=self.model.import_table, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.tabView.tabCloseRequested.connect(self.tabCloseRequested)

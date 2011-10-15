@@ -11,7 +11,6 @@ from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
 from hscommon.trans import tr
-from core.gui.import_table import ImportTable as ImportTableModel
 from ..table import Table
 
 MIME_INDEXES = 'application/moneyguru.rowindexes'
@@ -31,8 +30,7 @@ class ImportTable(Table):
         Column('amount_import', tr('Amount'), 90, alignment=Qt.AlignRight),
     ]
         
-    def __init__(self, importWindow, view):
-        model = ImportTableModel(view=self, import_window=importWindow.model)
+    def __init__(self, model, view):
         Table.__init__(self, model, view)
         self.view.clicked.connect(self.cellClicked)
         self.view.spacePressed.connect(self.spacePressed)
