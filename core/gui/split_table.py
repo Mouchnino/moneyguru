@@ -6,16 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from ..model.amount import parse_amount
-from .base import TransactionPanelGUIObject
 from .table import GUITable, Row, RowWithDebitAndCreditMixIn
 
-class SplitTable(GUITable, TransactionPanelGUIObject):
+class SplitTable(GUITable):
     def __init__(self, transaction_panel):
+        GUITable.__init__(self, document=transaction_panel.document)
+        self.panel = transaction_panel
         self.mainwindow = transaction_panel.mainwindow # CompletableEdit on Qt requires a mainwindow member
-        self.document = transaction_panel.document
-        GUITable.__init__(self)
-        TransactionPanelGUIObject.__init__(self, self.view, transaction_panel)
     
     #--- Override
     def _do_add(self):
@@ -48,13 +45,15 @@ class SplitTable(GUITable, TransactionPanelGUIObject):
         self.select([to_index])
         self.view.refresh()
     
-    #--- Event Handlers
-    def panel_loaded(self):
+    def refresh_splits(self):
+        self._item_changed()
+    
+    def refresh_initial(self):
+        # the refresh just after a panel loading is a bit different
         self.refresh(refresh_view=False)
         self.select([0])
         self.view.refresh()
     
-    split_changed = GUITable._item_changed
 
 class SplitTableRow(Row, RowWithDebitAndCreditMixIn):
     def __init__(self, table, split):

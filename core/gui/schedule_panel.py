@@ -134,5 +134,5 @@ class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
         self.repeat_type_list.refresh()
         self.repeat_type_list.select(REPEAT_OPTIONS_ORDER.index(schedule.repeat_type))
         self.view.refresh_repeat_every()
-        self.notify('panel_loaded')
+        self.split_table.refresh_initial()
     

@@ -17,15 +17,13 @@ from ..model.transaction import Split, Transaction
 from .base import MainWindowPanel
 from .split_table import SplitTable
 
-class PanelWithTransaction(MainWindowPanel, Broadcaster):
+class PanelWithTransaction(MainWindowPanel):
     """Base class for panels working with a transaction"""
     def __init__(self, view, mainwindow):
         MainWindowPanel.__init__(self, view, mainwindow)
-        Broadcaster.__init__(self)
         self.transaction = Transaction(date.today())
         self._selected_splits = []
         self.split_table = SplitTable(self)
-        self.split_table.connect()
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:
@@ -41,7 +39,7 @@ class PanelWithTransaction(MainWindowPanel, Broadcaster):
         if split not in self.transaction.splits:
             self.transaction.splits.append(split)
         self.transaction.balance(split)
-        self.notify('split_changed')
+        self.split_table.refresh_splits()
         self.view.refresh_for_multi_currency()
     
     def delete_split(self, split):
@@ -102,7 +100,7 @@ class TransactionPanel(PanelWithTransaction):
         self.transaction = original.replicate()
         self.original = original
         self.view.refresh_for_multi_currency()
-        self.notify('panel_loaded')
+        self.split_table.refresh_initial()
     
     def _save(self):
         self.document.change_transaction(self.original, self.transaction)
@@ -112,13 +110,13 @@ class TransactionPanel(PanelWithTransaction):
         """Balances the mct by using xchange rates. The currency of the new split is the currency of
         the currently selected split.
         """
-        self.notify('edition_must_stop')
+        self.split_table.edition_must_stop()
         split = first(self._selected_splits)
         new_split_currency = self.document.default_currency
         if split is not None and split.amount != 0:
             new_split_currency = split.amount.currency
         self.transaction.mct_balance(new_split_currency)
-        self.notify('split_changed')
+        self.split_table.refresh_splits()
     
     @property
     def date(self):

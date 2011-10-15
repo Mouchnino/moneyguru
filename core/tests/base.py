@@ -224,7 +224,6 @@ class TestApp(TestAppBase):
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
-        self.stable.connect()
         self.sfield.connect()
         self.iwin.connect()
         self.csvopt.connect()
