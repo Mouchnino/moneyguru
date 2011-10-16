@@ -197,8 +197,10 @@ class TestApp(TestAppBase):
         make_gui('iwin', ImportWindow, parent=self.doc)
         self.itable = self.iwin.import_table
         self.itable.view = self.make_logger()
-        make_gui('alookup', AccountLookup)
-        make_gui('clookup', CompletionLookup)
+        self.alookup = self.mw.account_lookup
+        self.alookup.view = self.make_logger()
+        self.clookup = self.mw.completion_lookup
+        self.clookup.view = self.make_logger()
         make_gui('vopts', ViewOptions)
         # set children
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
@@ -218,8 +220,7 @@ class TestApp(TestAppBase):
         # None between bview and empty view is the Cashculator view, which isn't tested
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
             self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
-            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
-            self.clookup, self.vopts]
+            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()

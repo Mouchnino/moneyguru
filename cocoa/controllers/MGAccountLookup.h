@@ -8,9 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGLookup.h"
-#import "PyAccountLookup.h"
 
 @interface MGAccountLookup : MGLookup {}
-- (id)initWithPyParent:(id)aPyParent;
-- (PyAccountLookup *)py;
+- (id)initWithPy:(id)aPy;
 @end

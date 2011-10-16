@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "NSEventAdditions.h"
 
 @implementation MGLookup
-- (id)initWithClassName:(NSString *)aClassName pyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithNibName:@"Lookup" pyClassName:aClassName pyParent:aPyParent];
+    self = [super initWithNibName:@"Lookup" py:aPy];
     currentNames = [[NSArray array] retain];
     [self window]; // Initialize the window
     [namesTable setTarget:self];

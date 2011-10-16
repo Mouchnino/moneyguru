@@ -8,9 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGLookup.h"
-#import "PyCompletionLookup.h"
 
 @interface MGCompletionLookup : MGLookup {}
-- (id)initWithPyParent:(id)aPyParent;
-- (PyCompletionLookup *)py;
+- (id)initWithPy:(id)aPy;
 @end

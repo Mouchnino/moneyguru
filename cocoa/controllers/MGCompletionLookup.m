@@ -10,15 +10,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 
 @implementation MGCompletionLookup
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithClassName:@"PyCompletionLookup" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [[self window] setTitle:TR(@"Completion Lookup")];
     return self;
-}
-
-- (PyCompletionLookup *)py
-{
-    return (PyCompletionLookup *)py;
 }
 @end

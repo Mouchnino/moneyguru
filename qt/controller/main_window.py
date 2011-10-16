@@ -28,7 +28,7 @@ from .schedule.view import ScheduleView
 from .general_ledger.view import GeneralLedgerView
 from .docprops_view import DocPropsView
 from .new_view import NewView
-from .lookup import AccountLookup, CompletionLookup
+from .lookup import Lookup
 from .account_panel import AccountPanel
 from .account_reassign_panel import AccountReassignPanel
 from .transaction_panel import TransactionPanel
@@ -83,8 +83,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cdrpanel = CustomDateRangePanel(self, mainwindow=self)
         self.arpanel = AccountReassignPanel(self, mainwindow=self)
         self.expanel = ExportPanel(mainwindow=self)
-        self.alookup = AccountLookup(self, mainwindow=self)
-        self.clookup = CompletionLookup(self, mainwindow=self)
+        self.alookup = Lookup(self, model=self.model.account_lookup)
+        self.clookup = Lookup(self, model=self.model.completion_lookup)
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
         self.vopts = ViewOptionsDialog(self)
         self.sfield = SearchField(model=self.model.search_field, view=self.searchLineEdit)
@@ -106,7 +106,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
             self.glview, self.dpview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup, self.vopts]
+            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         

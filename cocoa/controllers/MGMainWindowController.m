@@ -41,8 +41,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [csvOptionsWindow connect];
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithParent:self];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithParent:self];
-    accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
-    completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
+    accountLookup = [[MGAccountLookup alloc] initWithPy:[[self py] accountLookup]];
+    completionLookup = [[MGCompletionLookup alloc] initWithPy:[[self py] completionLookup]];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPy:[[self py] daterangeSelector]];
     viewOptions = [[MGViewOptions alloc] initWithPyParent:py];
     subviews = [[NSMutableArray alloc] init];
@@ -59,8 +59,7 @@ http://www.hardcoded.net/licenses/bsd_license
         [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
         [ledgerView py], [docpropsView py], [emptyView py], [accountProperties py], [transactionPanel py],
         [massEditionPanel py], [schedulePanel py], [budgetPanel py], [customDateRangePanel py],
-        [accountReassignPanel py], [exportPanel py], [accountLookup py], [completionLookup py],
-        [viewOptions py], nil];
+        [accountReassignPanel py], [exportPanel py], [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause

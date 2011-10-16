@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSArray *currentNames;
 }
-- (id)initWithClassName:(NSString *)aClassName pyParent:(id)aPyParent;
+- (id)initWithPy:(id)aPy;
 - (PyLookup *)py;
 
 - (IBAction)go:(id)sender;

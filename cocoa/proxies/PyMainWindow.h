@@ -11,10 +11,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "PySearchField.h"
 #import "PyDateRangeSelector.h"
+#import "PyLookup.h"
 
 @interface PyMainWindow : PyGUIContainer {}
 - (PySearchField *)searchField;
 - (PyDateRangeSelector *)daterangeSelector;
+- (PyLookup *)accountLookup;
+- (PyLookup *)completionLookup;
 // Navigation
 - (void)selectNextView;
 - (void)selectPreviousView;

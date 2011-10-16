@@ -18,6 +18,8 @@ from ..model.recurrence import Recurrence, RepeatType
 from .base import MESSAGES_DOCUMENT_CHANGED
 from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
+from .account_lookup import AccountLookup
+from .completion_lookup import CompletionLookup
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
@@ -56,6 +58,8 @@ class MainWindow(Repeater):
         
         self.search_field = SearchField(self)
         self.daterange_selector = DateRangeSelector(self)
+        self.account_lookup = AccountLookup(self)
+        self.completion_lookup = CompletionLookup(self)
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
@@ -65,8 +69,7 @@ class MainWindow(Repeater):
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
             self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
-            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
-            self.completion_lookup, self.view_options) = children
+            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.view_options) = children
         # XXX For now, this is the only place where we know we've linked our GUI views, so we can
         # call our view refreshes. However, a more correct way to do it is to have an
         # app_finished_init signal.
@@ -259,7 +262,7 @@ class MainWindow(Repeater):
         self.expanel.load()
     
     def jump_to_account(self):
-        self.alookup.show()
+        self.account_lookup.show()
     
     def make_schedule_from_selected(self):
         current_view = self._current_pane.view

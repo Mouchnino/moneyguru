@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-02-26
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -10,17 +9,15 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QShortcut, QKeySequence
 
-from core.gui.account_lookup import AccountLookup as AccountLookupModel
-from core.gui.completion_lookup import CompletionLookup as CompletionLookupModel
-
 from ..ui.lookup_ui import Ui_Lookup
 
 class Lookup(QWidget, Ui_Lookup):
     MODEL_CLASS = None
     
-    def __init__(self, parent, mainwindow):
+    def __init__(self, parent, model):
         QWidget.__init__(self, parent, Qt.Window)
-        self.model = self.MODEL_CLASS(view=self, mainwindow=mainwindow.model)
+        self.model = model
+        self.model.view = self
         self._setupUi()
         
         self.searchEdit.searchChanged.connect(self.searchChanged)
@@ -79,9 +76,3 @@ class Lookup(QWidget, Ui_Lookup):
     def hide(self):
         QWidget.hide(self)
     
-
-class AccountLookup(Lookup):
-    MODEL_CLASS = AccountLookupModel
-
-class CompletionLookup(Lookup):
-    MODEL_CLASS = CompletionLookupModel

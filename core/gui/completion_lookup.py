@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-03-04
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -11,8 +10,8 @@ from ..model.sort import sort_string
 from .lookup import Lookup
 
 class CompletionLookup(Lookup):
-    def __init__(self, view, mainwindow):
-        Lookup.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        Lookup.__init__(self, mainwindow)
         self._completable_edit = None
     
     def _generate_lookup_names(self):

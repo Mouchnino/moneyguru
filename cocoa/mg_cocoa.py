@@ -27,7 +27,6 @@ from core.document import Document, FilterType
 from core.exception import FileFormatError
 from core.gui.account_balance_graph import AccountBalanceGraph
 from core.gui.account_flow_graph import AccountFlowGraph
-from core.gui.account_lookup import AccountLookup
 from core.gui.account_panel import AccountPanel
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from core.gui.account_reassign_panel import AccountReassignPanel
@@ -41,7 +40,6 @@ from core.gui.cashculator_account_table import CashculatorAccountTable
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
     SUPPORTED_ENCODINGS as CSV_SUPPORTED_ENCODINGS
 from core.gui.completable_edit import CompletableEdit
-from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_widget import DateWidget
 from core.gui.docprops_view import DocPropsView
@@ -934,6 +932,35 @@ class PyDateRangeSelector(PyGUIObject):
         self.cocoa.refreshCustomRanges()
     
 
+class PyLookup(PyGUIObject):
+    def go(self):
+        self.py.go()
+    
+    def names(self):
+        return self.py.names
+    
+    def searchQuery(self):
+        return self.py.search_query
+    
+    def setSearchQuery_(self, query):
+        self.py.search_query = query
+    
+    @signature('i@:')
+    def selectedIndex(self):
+        return self.py.selected_index
+    
+    @signature('v@:i')
+    def setSelectedIndex_(self, index):
+        self.py.selected_index = index
+    
+    #--- Python --> Cocoa
+    def show(self):
+        self.cocoa.show()
+    
+    def hide(self):
+        self.cocoa.hide()
+    
+
 #--- Views
 class PyNetWorthView(PyGUIContainer):
     py_class = NetWorthView
@@ -1015,6 +1042,8 @@ class PyMainWindow(PyGUIContainer):
     
     searchField = subproxy('searchField', 'search_field', PySearchField)
     daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyDateRangeSelector)
+    accountLookup = subproxy('accountLookup', 'account_lookup', PyLookup)
+    completionLookup = subproxy('completionLookup', 'completion_lookup', PyLookup)
     
     def selectNextView(self):
         self.py.select_next_view()
@@ -1320,41 +1349,6 @@ class PyCSVImportOptions(PyWindowController):
     def show_message(self, msg):
         self.cocoa.showMessage_(msg)
     
-
-class PyLookup(PyGUIObject):
-    def go(self):
-        self.py.go()
-    
-    def names(self):
-        return self.py.names
-    
-    def searchQuery(self):
-        return self.py.search_query
-    
-    def setSearchQuery_(self, query):
-        self.py.search_query = query
-    
-    @signature('i@:')
-    def selectedIndex(self):
-        return self.py.selected_index
-    
-    @signature('v@:i')
-    def setSelectedIndex_(self, index):
-        self.py.selected_index = index
-    
-    #--- Python --> Cocoa
-    def show(self):
-        self.cocoa.show()
-    
-    def hide(self):
-        self.cocoa.hide()
-    
-
-class PyAccountLookup(PyLookup):
-    py_class = AccountLookup
-
-class PyCompletionLookup(PyLookup):
-    py_class = CompletionLookup
 
 class PyDateWidget(NSObject):
     def init(self):

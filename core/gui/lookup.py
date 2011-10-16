@@ -9,10 +9,10 @@
 from collections import defaultdict
 from itertools import combinations
 
+from hscommon.gui.base import NoopGUI
 from hscommon.util import extract
 
 from ..model.sort import sort_string
-from .base import DocumentGUIObject
 
 def has_letters(s, query):
     s_letters = defaultdict(int)
@@ -34,14 +34,15 @@ def letter_distance(s, letter1, letter2):
 def letters_distance(s, query):
     return sum(letter_distance(s, l1, l2) for l1, l2 in combinations(query, 2))
 
-class Lookup(DocumentGUIObject):
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+class Lookup:
+    def __init__(self, mainwindow):
         self.mainwindow = mainwindow
+        self.document = mainwindow.document
         self._original_names = []
         self._filtered_names = []
         self._search_query = ''
         self.selected_index = 0
+        self.view = NoopGUI()
     
     def _apply_query(self):
         # On top, we want exact matches (the name starts with the query). Then, we want matches

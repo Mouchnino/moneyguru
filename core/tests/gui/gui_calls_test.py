@@ -216,11 +216,11 @@ def test_edit_account(app):
 def test_jump_to_account():
     app = app_one_account()
     app.mainwindow.jump_to_account()
-    app.check_gui_calls(app.alookup_gui, ['refresh', 'show'])
+    app.alookup.view.check_gui_calls(['refresh', 'show'])
     app.alookup.search_query = 'foo'
-    app.check_gui_calls(app.alookup_gui, ['refresh'])
+    app.alookup.view.check_gui_calls(['refresh'])
     app.alookup.go()
-    app.check_gui_calls(app.alookup_gui, ['hide'])
+    app.alookup.view.check_gui_calls(['hide'])
 
 @with_app(app_one_account)
 def test_export_panel(app):
