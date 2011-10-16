@@ -9,13 +9,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "HSGUIController.h"
 #import "AMButtonBar.h"
-#import "PyFilterBarBase.h"
-#import "PyEntryFilterBar.h"
+#import "PyFilterBar.h"
 
 @interface MGFilterBar : HSGUIController
 {   
 }
-- (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
-- (PyFilterBarBase *)py;
+- (id)initWithPy:(id)aPyParent view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
+- (PyFilterBar *)py;
 - (AMButtonBar *)view;
 @end

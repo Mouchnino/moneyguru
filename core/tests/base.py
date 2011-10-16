@@ -39,7 +39,6 @@ from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
 from ..gui.export_panel import ExportPanel
-from ..gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from ..gui.general_ledger_table import GeneralLedgerTable
 from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.income_statement import IncomeStatement
@@ -189,9 +188,10 @@ class TestApp(TestAppBase):
         make_table_gui('istatement', IncomeStatement, parent=self.pview)
         self.sfield = self.mw.search_field
         self.sfield.view = self.make_logger()
-        # There are 2 filter bars: one for etable, one for ttable
-        make_gui('efbar', EntryFilterBar, parent=self.aview)
-        make_gui('tfbar', TransactionFilterBar, parent=self.tview)
+        self.efbar = self.aview.filter_bar
+        self.efbar.view = self.make_logger()
+        self.tfbar = self.tview.filter_bar
+        self.tfbar.view = self.make_logger()
         make_gui('drsel', DateRangeSelector)
         make_gui('csvopt', CSVOptions, parent=self.doc)
         make_gui('iwin', ImportWindow, parent=self.doc)
@@ -205,9 +205,9 @@ class TestApp(TestAppBase):
         self.nwview.set_children(children)
         children = [self.istatement, self.pgraph, self.ipie, self.epie]
         self.pview.set_children(children)
-        children = [self.ttable, self.tfbar]
+        children = [self.ttable]
         self.tview.set_children(children)
-        children = [self.etable, self.balgraph, self.bargraph, self.efbar]
+        children = [self.etable, self.balgraph, self.bargraph]
         self.aview.set_children(children)
         children = [self.sctable]
         self.scview.set_children(children)

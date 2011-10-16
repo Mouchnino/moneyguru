@@ -6,18 +6,16 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from .base import ViewChild
+from hscommon.gui.base import NoopGUI
 
-class FilterBar(ViewChild):
-    INVALIDATING_MESSAGES = set(['filter_applied'])
+class FilterBar:
+    def __init__(self, parent_view):
+        self.mainwindow = parent_view.mainwindow
+        self.document = parent_view.document
+        self.view = NoopGUI()
     
-    def __init__(self, view, parent_view):
-        ViewChild.__init__(self, view, parent_view)
-    
-    #--- Override
-    # XXX should be done on _revalidate. is view.refresh really always needed?
-    def show(self):
-        ViewChild.show(self)
+    #--- Public
+    def refresh(self):
         self.view.refresh()
     
     #--- Properties
@@ -30,19 +28,14 @@ class FilterBar(ViewChild):
         self.document.filter_type = value
     
 
-class TransactionFilterBar(FilterBar):
-    def __init__(self, view, transaction_view):
-        FilterBar.__init__(self, view, transaction_view)
-    
-
 class EntryFilterBar(FilterBar): # disables buttons
-    def __init__(self, view, account_view):
-        FilterBar.__init__(self, view, account_view)
+    def __init__(self, account_view):
+        FilterBar.__init__(self, account_view)
         self._disabled_buttons = False
     
     #--- Override
-    def show(self):
-        FilterBar.show(self)
+    def refresh(self):
+        FilterBar.refresh(self)
         account = self.mainwindow.shown_account
         if account is not None and account.is_income_statement_account():
             self.document.filter_type = None

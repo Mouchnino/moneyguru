@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-01
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -24,10 +23,10 @@ class EntryView(BaseView, Ui_EntryView):
         self._setupUi()
         self.model = AccountViewModel(view=self, mainwindow=mainwindow.model)
         self.etable = EntryTable(self, view=self.tableView)
-        self.efbar = EntryFilterBar(self, view=self.filterBar)
+        self.efbar = EntryFilterBar(model=self.model.filter_bar, view=self.filterBar)
         self.bgraph = AccountBarGraph(self, view=self.barGraphView)
         self.lgraph = AccountLineGraph(self, view=self.lineGraphView)
-        children = [self.etable.model, self.lgraph.model, self.bgraph.model, self.efbar.model]
+        children = [self.etable.model, self.lgraph.model, self.bgraph.model]
         self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
         

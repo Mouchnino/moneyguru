@@ -49,7 +49,6 @@ from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
 from core.gui.export_panel import ExportPanel
-from core.gui.filter_bar import TransactionFilterBar, EntryFilterBar
 from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
@@ -341,80 +340,6 @@ class PyPanel(PyGUIObject):
     def pre_save(self):
         self.cocoa.preSave()
     
-
-#--- Views
-class PyNetWorthView(PyGUIContainer):
-    py_class = NetWorthView
-
-class PyProfitView(PyGUIContainer):
-    py_class = ProfitView
-
-class PyTransactionView(PyGUIContainer):
-    py_class = TransactionView
-
-class PyAccountView(PyGUIContainer):
-    py_class = AccountView
-
-    @signature('c@:')
-    def canToggleReconciliationMode(self):
-        return self.py.can_toggle_reconciliation_mode
-    
-    @signature('c@:')
-    def inReconciliationMode(self):
-        return self.py.reconciliation_mode
-    
-    def toggleReconciliationMode(self):
-        self.py.toggle_reconciliation_mode()
-    
-    #Python --> Cocoa
-    def refresh_reconciliation_button(self):
-        self.cocoa.refreshReconciliationButton()
-    
-    def show_bar_graph(self):
-        self.cocoa.showBarGraph()
-    
-    def show_line_graph(self):
-        self.cocoa.showLineGraph()
-    
-
-class PyBudgetView(PyGUIContainer):
-    py_class = BudgetView
-
-class PyScheduleView(PyGUIContainer):
-    py_class = ScheduleView
-
-class PyCashculatorView(PyGUIContainer):
-    py_class = CashculatorView
-    
-    def exportDB(self):
-        self.py.export_db()
-    
-    def launchCC(self):
-        self.py.launch_cc()
-    
-    def resetCCDB(self):
-        self.py.reset_ccdb()
-    
-
-class PyGeneralLedgerView(PyGUIContainer):
-    py_class = GeneralLedgerView
-
-class PyDocPropsView(PyGUIContainer):
-    py_class = DocPropsView
-    
-    currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
-    firstWeekdayList = subproxy('firstWeekdayList', 'first_weekday_list', PySelectableList)
-    aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
-    yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
-
-class PyEmptyView(PyGUIContainer):
-    py_class = EmptyView
-    
-    @signature('v@:i')
-    def selectPaneType_(self, paneType):
-        self.py.select_pane_type(paneType)
-    
-
 #--- GUI layer classes
 
 class PyBalanceSheet(PyReport):
@@ -507,7 +432,7 @@ class PyGeneralLedgerTable(PyTableWithDate):
     def isBoldRow_(self, row_index):
         return self.py.is_bold_row(self._getrow(row_index))
 
-class PyFilterBarBase(PyListener):
+class PyFilterBar(PyGUIObject):
     def filterType(self):
         result = 'all'
         if self.py.filter_type is FilterType.Unassigned:
@@ -541,12 +466,7 @@ class PyFilterBarBase(PyListener):
         self.py.filter_type = value
     
 
-class PyTransactionFilterBar(PyFilterBarBase):
-    py_class = TransactionFilterBar
-
-class PyEntryFilterBar(PyFilterBarBase):
-    py_class = EntryFilterBar
-    
+class PyEntryFilterBar(PyFilterBar):
     #--- Python --> Cocoa    
     def disable_transfers(self):
         self.cocoa.disableTransfers()
@@ -955,6 +875,82 @@ class PySearchField(PyGUIObject):
     def setQuery_(self, query):
         self.py.query = query
     
+
+#--- Views
+class PyNetWorthView(PyGUIContainer):
+    py_class = NetWorthView
+
+class PyProfitView(PyGUIContainer):
+    py_class = ProfitView
+
+class PyTransactionView(PyGUIContainer):
+    py_class = TransactionView
+    
+    filterBar = subproxy('filterBar', 'filter_bar', PyFilterBar)
+
+class PyAccountView(PyGUIContainer):
+    py_class = AccountView
+    
+    filterBar = subproxy('filterBar', 'filter_bar', PyEntryFilterBar)
+    
+    @signature('c@:')
+    def canToggleReconciliationMode(self):
+        return self.py.can_toggle_reconciliation_mode
+    
+    @signature('c@:')
+    def inReconciliationMode(self):
+        return self.py.reconciliation_mode
+    
+    def toggleReconciliationMode(self):
+        self.py.toggle_reconciliation_mode()
+    
+    #Python --> Cocoa
+    def refresh_reconciliation_button(self):
+        self.cocoa.refreshReconciliationButton()
+    
+    def show_bar_graph(self):
+        self.cocoa.showBarGraph()
+    
+    def show_line_graph(self):
+        self.cocoa.showLineGraph()
+    
+
+class PyBudgetView(PyGUIContainer):
+    py_class = BudgetView
+
+class PyScheduleView(PyGUIContainer):
+    py_class = ScheduleView
+
+class PyCashculatorView(PyGUIContainer):
+    py_class = CashculatorView
+    
+    def exportDB(self):
+        self.py.export_db()
+    
+    def launchCC(self):
+        self.py.launch_cc()
+    
+    def resetCCDB(self):
+        self.py.reset_ccdb()
+    
+
+class PyGeneralLedgerView(PyGUIContainer):
+    py_class = GeneralLedgerView
+
+class PyDocPropsView(PyGUIContainer):
+    py_class = DocPropsView
+    
+    currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
+    firstWeekdayList = subproxy('firstWeekdayList', 'first_weekday_list', PySelectableList)
+    aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
+    yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
+
+class PyEmptyView(PyGUIContainer):
+    py_class = EmptyView
+    
+    @signature('v@:i')
+    def selectPaneType_(self, paneType):
+        self.py.select_pane_type(paneType)
 
 class PyMainWindow(PyGUIContainer):
     py_class = MainWindow

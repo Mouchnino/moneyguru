@@ -8,7 +8,6 @@
 
 from hscommon.trans import tr
 from core.document import FilterType
-from core.gui.filter_bar import TransactionFilterBar as TransactionFilterBarModel
 
 from ..filter_bar import FilterBar
 
@@ -22,8 +21,3 @@ class TransactionFilterBar(FilterBar):
         (tr("Reconciled"), FilterType.Reconciled),
         (tr("Not Reconciled"), FilterType.NotReconciled),
     ]
-    
-    def __init__(self, transaction_view, view):
-        model = TransactionFilterBarModel(transaction_view=transaction_view.model, view=self)
-        FilterBar.__init__(self, model, view)
-    

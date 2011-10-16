@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -21,8 +20,8 @@ class TransactionView(BaseView, Ui_TransactionView):
         self._setupUi()
         self.model = TransactionViewModel(view=self, mainwindow=mainwindow.model)
         self.ttable = TransactionTable(self, view=self.tableView)
-        self.tfbar = TransactionFilterBar(self, view=self.filterBar)
-        children = [self.ttable.model, self.tfbar.model]
+        self.tfbar = TransactionFilterBar(model=self.model.filter_bar, view=self.filterBar)
+        children = [self.ttable.model]
         self.model.set_children(children)
         self._setupColumns() # Can only be done after the model has been connected
     

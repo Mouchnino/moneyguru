@@ -19,10 +19,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGNOTRECONCILED @"not_reconciled"
 
 @implementation MGFilterBar
-- (id)initWithPyParent:(id)aPyParent view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
+- (id)initWithPy:(id)aPy view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
 {
-    NSString *pyClassName = forEntryTable ? @"PyEntryFilterBar" : @"PyTransactionFilterBar";
-    self = [super initWithPyClassName:pyClassName pyParent:aPyParent view:aView];
+    self = [super initWithPy:aPy view:aView];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
 	[item setTitle:TR(@"All")];
 	[aView insertItem:item atIndex:0];
@@ -51,9 +50,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* HSGUIController */
 
-- (PyFilterBarBase *)py
+- (PyFilterBar *)py
 {
-    return (PyFilterBarBase *)py;
+    return (PyFilterBar *)py;
 }
 
 - (AMButtonBar *)view

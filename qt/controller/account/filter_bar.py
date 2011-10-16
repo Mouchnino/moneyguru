@@ -7,7 +7,6 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from core.document import FilterType
-from core.gui.filter_bar import EntryFilterBar as EntryFilterBarModel
 from hscommon.trans import tr
 
 from ..filter_bar import FilterBar
@@ -22,10 +21,6 @@ class EntryFilterBar(FilterBar):
         (tr("Reconciled"), FilterType.Reconciled),
         (tr("Not Reconciled"), FilterType.NotReconciled),
     ]
-    
-    def __init__(self, account_view, view):
-        model = EntryFilterBarModel(account_view=account_view.model, view=self)
-        FilterBar.__init__(self, model, view)
     
     #--- model --> view
     def disable_transfers(self):

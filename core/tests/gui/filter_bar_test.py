@@ -43,7 +43,7 @@ class TestTransactionsOfEachType:
         eq_(app.etable[1].description, 'fourth')
         #The ttable's expense filter makes it only show entries with a transfer to an expense.
         app.mainwindow.select_transaction_table()
-        app.check_gui_calls(app.tfbar_gui, ['refresh']) # refreshes on connect()
+        app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Expense
         eq_(app.ttable.row_count, 1)
         eq_(app.ttable[0].description, 'third')
@@ -58,7 +58,7 @@ class TestTransactionsOfEachType:
         eq_(app.etable[1].description, 'second')
         #The etable's income filter makes it only show entries with a transfer to an income.
         app.mainwindow.select_transaction_table()
-        app.check_gui_calls(app.tfbar_gui, ['refresh']) # refreshes on connect()
+        app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Income
         eq_(app.ttable.row_count, 1)
         eq_(app.ttable[0].description, 'first')
@@ -71,7 +71,7 @@ class TestTransactionsOfEachType:
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'fourth')
         app.mainwindow.select_transaction_table()
-        app.check_gui_calls(app.tfbar_gui, ['refresh']) # refreshes on connect()
+        app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Transfer
         eq_(app.ttable.row_count, 1)
         eq_(app.ttable[0].description, 'fourth')
@@ -85,7 +85,7 @@ class TestTransactionsOfEachType:
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'second')
         app.mainwindow.select_transaction_table()
-        app.check_gui_calls(app.tfbar_gui, ['refresh']) # refreshes on connect()
+        app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Unassigned
         eq_(app.ttable.row_count, 1)
     
@@ -98,13 +98,13 @@ class TestTransactionsOfEachType:
         app.clear_gui_calls()
         app.istatement.show_selected_account()
         assert app.efbar.filter_type is None
-        app.check_gui_calls(app.efbar_gui, ['refresh', 'disable_transfers'])
+        app.efbar.view.check_gui_calls(['refresh', 'disable_transfers'])
         app.mainwindow.select_transaction_table()
-        app.check_gui_calls(app.tfbar_gui, ['refresh']) # no disable
+        app.tfbar.view.check_gui_calls(['refresh']) # no disable
         app.mainwindow.select_balance_sheet()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
-        app.check_gui_calls(app.efbar_gui, ['refresh', 'enable_transfers'])
+        app.efbar.view.check_gui_calls(['refresh', 'enable_transfers'])
     
     @with_app(do_setup)
     def test_enable_disable_buttons_through_etable_cycling(self, app):
@@ -112,9 +112,9 @@ class TestTransactionsOfEachType:
         # accounts in etable. Previously, selected_account would be used instead of shown_account.
         app.etable.select([0]) # entry with transfer to income
         app.etable.show_transfer_account() # showing Income
-        app.check_gui_calls(app.efbar_gui, ['refresh', 'disable_transfers'])
+        app.efbar.view.check_gui_calls(['refresh', 'disable_transfers'])
         app.etable.show_transfer_account() # showing asset 2
-        app.check_gui_calls(app.efbar_gui, ['refresh', 'enable_transfers'])
+        app.efbar.view.check_gui_calls(['refresh', 'enable_transfers'])
     
     @with_app(do_setup)
     def test_multiple_filters_at_the_same_time(self, app):

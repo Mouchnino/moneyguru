@@ -9,30 +9,33 @@
 from hscommon.trans import tr
 from ..const import PaneType
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
+from .filter_bar import EntryFilterBar
 
 class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
     PRINT_TITLE_FORMAT = tr('{account_name}\nEntries from {start_date} to {end_date}')
-    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['filter_applied',
-        'date_range_changed', 'transactions_selected', 'shown_account_changed'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied',
+        'date_range_changed', 'transactions_selected', 'shown_account_changed'}
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
         self._shown_graph = None
         self._reconciliation_mode = False
+        self.filter_bar = EntryFilterBar(self)
     
     def set_children(self, children):
-        self.etable, self.balgraph, self.bargraph, self.efbar = children
+        self.etable, self.balgraph, self.bargraph = children
         self.maintable = self.etable
         self._shown_graph = self.balgraph
         # we count the graphs separately because the show/hide rules for them are special
-        BaseView.set_children(self, [self.etable, self.efbar])
+        BaseView.set_children(self, [self.etable])
         self.balgraph.connect()
         self.bargraph.connect()
     
     def _revalidate(self):
         self._refresh_totals()
         self.view.refresh_reconciliation_button()
+        self.filter_bar.refresh()
     
     def show(self):
         BaseView.show(self)
@@ -112,6 +115,7 @@ class AccountView(BaseView):
     
     def filter_applied(self):
         self._refresh_totals()
+        self.filter_bar.refresh()
     
     def performed_undo_or_redo(self):
         self._refresh_totals()
