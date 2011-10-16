@@ -34,7 +34,6 @@ from ..gui.completable_edit import CompletableEdit
 from ..gui.completion_lookup import CompletionLookup
 from ..gui.csv_options import CSVOptions
 from ..gui.custom_date_range_panel import CustomDateRangePanel
-from ..gui.date_range_selector import DateRangeSelector
 from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
@@ -192,7 +191,8 @@ class TestApp(TestAppBase):
         self.efbar.view = self.make_logger()
         self.tfbar = self.tview.filter_bar
         self.tfbar.view = self.make_logger()
-        make_gui('drsel', DateRangeSelector)
+        self.drsel = self.mw.daterange_selector
+        self.drsel.view = self.make_logger()
         make_gui('csvopt', CSVOptions, parent=self.doc)
         make_gui('iwin', ImportWindow, parent=self.doc)
         self.itable = self.iwin.import_table
@@ -219,7 +219,7 @@ class TestApp(TestAppBase):
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
             self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
             self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
-            self.clookup, self.drsel, self.vopts]
+            self.clookup, self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()

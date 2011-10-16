@@ -155,7 +155,7 @@ def app_cleared_gui_calls():
 def test_change_date_range(app):
     app.doc.date_range = app.doc.date_range.prev()
     expected_calls = ['refresh', 'animate_backward']
-    app.check_gui_calls(app.drsel_gui, expected_calls)
+    app.drsel.view.check_gui_calls(expected_calls)
     app.check_gui_calls_partial(app.bsheet_gui, ['refresh'])
     app.check_gui_calls(app.nwgraph_gui, ['refresh'])
     app.check_gui_calls_partial(app.balgraph_gui, not_expected=['refresh'])

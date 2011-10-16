@@ -43,7 +43,6 @@ from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
 from core.gui.completable_edit import CompletableEdit
 from core.gui.completion_lookup import CompletionLookup
 from core.gui.custom_date_range_panel import CustomDateRangePanel
-from core.gui.date_range_selector import DateRangeSelector
 from core.gui.date_widget import DateWidget
 from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
@@ -876,6 +875,65 @@ class PySearchField(PyGUIObject):
         self.py.query = query
     
 
+class PyDateRangeSelector(PyGUIObject):
+    def selectPrevDateRange(self):
+        self.py.select_prev_date_range()
+
+    def selectMonthRange(self):
+        self.py.select_month_range()
+
+    def selectQuarterRange(self):
+        self.py.select_quarter_range()
+
+    def selectYearRange(self):
+        self.py.select_year_range()
+    
+    def selectYearToDateRange(self):
+        self.py.select_year_to_date_range()
+    
+    def selectNextDateRange(self):
+        self.py.select_next_date_range()
+    
+    def selectTodayDateRange(self):
+        self.py.select_today_date_range()
+    
+    def selectRunningYearRange(self):
+        self.py.select_running_year_range()
+    
+    def selectAllTransactionsRange(self):
+        self.py.select_all_transactions_range()
+    
+    def selectCustomDateRange(self):
+        self.py.select_custom_date_range()
+    
+    @signature('v@:i')
+    def selectSavedRange_(self, slot):
+        self.py.select_saved_range(slot)
+    
+    def display(self):
+        return self.py.display
+    
+    @signature('c@:')
+    def canNavigate(self):
+        return self.py.can_navigate
+    
+    def customRangeNames(self):
+        return self.py.custom_range_names
+    
+    #--- Python -> Cocoa
+    def animate_backward(self):
+        self.cocoa.animateBackward()
+    
+    def animate_forward(self):
+        self.cocoa.animateForward()
+    
+    def refresh(self):
+        self.cocoa.refresh()
+    
+    def refresh_custom_ranges(self):
+        self.cocoa.refreshCustomRanges()
+    
+
 #--- Views
 class PyNetWorthView(PyGUIContainer):
     py_class = NetWorthView
@@ -956,6 +1014,7 @@ class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
     
     searchField = subproxy('searchField', 'search_field', PySearchField)
+    daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyDateRangeSelector)
     
     def selectNextView(self):
         self.py.select_next_view()
@@ -1377,67 +1436,6 @@ class PyCompletableEdit(NSObject):
     # Python --> Cocoa
     def refresh(self):
         self.cocoa.refresh()
-    
-
-class PyDateRangeSelector(PyGUIObject):
-    py_class = DateRangeSelector
-    
-    def selectPrevDateRange(self):
-        self.py.select_prev_date_range()
-
-    def selectMonthRange(self):
-        self.py.select_month_range()
-
-    def selectQuarterRange(self):
-        self.py.select_quarter_range()
-
-    def selectYearRange(self):
-        self.py.select_year_range()
-    
-    def selectYearToDateRange(self):
-        self.py.select_year_to_date_range()
-    
-    def selectNextDateRange(self):
-        self.py.select_next_date_range()
-    
-    def selectTodayDateRange(self):
-        self.py.select_today_date_range()
-    
-    def selectRunningYearRange(self):
-        self.py.select_running_year_range()
-    
-    def selectAllTransactionsRange(self):
-        self.py.select_all_transactions_range()
-    
-    def selectCustomDateRange(self):
-        self.py.select_custom_date_range()
-    
-    @signature('v@:i')
-    def selectSavedRange_(self, slot):
-        self.py.select_saved_range(slot)
-    
-    def display(self):
-        return self.py.display
-    
-    @signature('c@:')
-    def canNavigate(self):
-        return self.py.can_navigate
-    
-    def customRangeNames(self):
-        return self.py.custom_range_names
-    
-    #--- Python -> Cocoa
-    def animate_backward(self):
-        self.cocoa.animateBackward()
-    
-    def animate_forward(self):
-        self.cocoa.animateForward()
-    
-    def refresh(self):
-        self.cocoa.refresh()
-    
-    def refresh_custom_ranges(self):
-        self.cocoa.refreshCustomRanges()
     
 
 class PyViewOptions(PyGUIObject):

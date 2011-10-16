@@ -12,9 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyDateRangeSelector" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"DateRangeSelector" owner:self];
     [self setView:linkedView];
     /* In popups, there's the invisible first item, which is why we start our indexing at 8! */

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-03-15
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -9,17 +8,15 @@
 
 import datetime
 
-from .base import DocumentGUIObject
+from hscommon.gui.base import NoopGUI
 
-class DateRangeSelector(DocumentGUIObject):
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+class DateRangeSelector:
+    def __init__(self, mainwindow):
         self.mainwindow = mainwindow
-    
-    def connect(self):
-        DocumentGUIObject.connect(self)
-        self.view.refresh_custom_ranges()
-        self.view.refresh()
+        self.document = mainwindow.document
+        self.app = mainwindow.document.app
+        self.view = NoopGUI()
+        self._old_date_range = None
     
     #--- Private
     def _date_range_starting_point(self):
@@ -66,6 +63,23 @@ class DateRangeSelector(DocumentGUIObject):
         if saved_range:
             self.document.select_custom_date_range(saved_range.start, saved_range.end)
     
+    def remember_current_range(self):
+        self._old_date_range = self.document.date_range
+    
+    def refresh(self):
+        self.view.refresh()
+        old = self._old_date_range
+        if old is not None:
+            new = self.document.date_range
+            if type(new) == type(old):
+                if new.start > old.start:
+                    self.view.animate_forward()
+                else:
+                    self.view.animate_backward()
+    
+    def refresh_custom_ranges(self):
+        self.view.refresh_custom_ranges()
+    
     #--- Properties
     @property
     def can_navigate(self):
@@ -78,21 +92,4 @@ class DateRangeSelector(DocumentGUIObject):
     @property
     def display(self):
         return self.document.date_range.display
-    
-    #--- Event Handlers
-    def date_range_will_change(self):
-        self._old_date_range = self.document.date_range
-    
-    def date_range_changed(self):
-        self.view.refresh()
-        old = self._old_date_range
-        new = self.document.date_range
-        if type(new) == type(old):
-            if new.start > old.start:
-                self.view.animate_forward()
-            else:
-                self.view.animate_backward()
-    
-    def saved_custom_ranges_changed(self):
-        self.view.refresh_custom_ranges()
     

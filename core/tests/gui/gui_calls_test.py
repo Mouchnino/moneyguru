@@ -21,7 +21,7 @@ def test_initial_gui_calls():
     app = TestApp()
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
     app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane', 'refresh_status_line'])
-    app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
+    app.drsel.view.check_gui_calls(['refresh_custom_ranges', 'refresh'])
 
 #--- Cleared GUI calls
 def app_cleared_gui_calls():
@@ -142,7 +142,7 @@ def test_save_custom_range(app):
     app.cdrpanel.slot_index = 1
     app.cdrpanel.slot_name = 'foo'
     app.cdrpanel.save()
-    app.check_gui_calls(app.drsel_gui, ['refresh_custom_ranges', 'refresh'])
+    app.drsel.view.check_gui_calls(['refresh_custom_ranges', 'refresh'])
 
 def test_show_account():
     # on show_account() status line is refreshed

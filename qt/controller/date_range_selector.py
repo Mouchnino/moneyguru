@@ -10,14 +10,14 @@ from PyQt4.QtCore import QObject
 from PyQt4.QtGui import QMenu, QAction
 
 from hscommon.trans import tr
-from core.gui.date_range_selector import DateRangeSelector as DateRangeSelectorModel
 
 class DateRangeSelector(QObject):
     def __init__(self, mainwindow, view):
         QObject.__init__(self)
         self.mainwindow = mainwindow
         self.view = view
-        self.model = DateRangeSelectorModel(self, mainwindow.model)
+        self.model = mainwindow.model.daterange_selector
+        self.model.view = self
         self._setupUi()
     
     def _setupUi(self):

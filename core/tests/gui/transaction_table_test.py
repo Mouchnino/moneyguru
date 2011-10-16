@@ -333,7 +333,7 @@ def test_set_date_in_range(app):
     app.ttable[0].date = '12/07/2008'
     app.clear_gui_calls()
     app.ttable.save_edits()
-    app.check_gui_calls(app.drsel_gui, [])
+    app.drsel.view.check_gui_calls([])
 
 @with_app(app_one_transaction)
 def test_set_date_out_of_range(app):
@@ -343,7 +343,7 @@ def test_set_date_out_of_range(app):
     app.ttable.save_edits()
     eq_(app.doc.date_range, MonthRange(date(2008, 8, 1)))
     expected = ['animate_forward', 'refresh']
-    app.check_gui_calls(app.drsel_gui, expected)
+    app.drsel.view.check_gui_calls(expected)
 
 @with_app(app_one_transaction)
 def test_set_invalid_amount(app):

@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSArray *customRangeItems;
 }
-- (id)initWithPyParent:(id)aPyParent;
+- (id)initWithPy:(id)aPyParent;
 
 /* Virtual */
 - (PyDateRangeSelector *)py;

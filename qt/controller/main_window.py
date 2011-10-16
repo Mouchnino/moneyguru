@@ -106,8 +106,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
             self.glview, self.dpview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup,
-            self.drsel, self.vopts]
+            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup, self.clookup, self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         

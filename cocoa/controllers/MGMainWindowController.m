@@ -43,7 +43,7 @@ http://www.hardcoded.net/licenses/bsd_license
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithParent:self];
     accountLookup = [[MGAccountLookup alloc] initWithPyParent:py];
     completionLookup = [[MGCompletionLookup alloc] initWithPyParent:py];
-    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyParent:py];
+    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPy:[[self py] daterangeSelector]];
     viewOptions = [[MGViewOptions alloc] initWithPyParent:py];
     subviews = [[NSMutableArray alloc] init];
     
@@ -60,7 +60,7 @@ http://www.hardcoded.net/licenses/bsd_license
         [ledgerView py], [docpropsView py], [emptyView py], [accountProperties py], [transactionPanel py],
         [massEditionPanel py], [schedulePanel py], [budgetPanel py], [customDateRangePanel py],
         [accountReassignPanel py], [exportPanel py], [accountLookup py], [completionLookup py],
-        [dateRangeSelector py], [viewOptions py], nil];
+        [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause

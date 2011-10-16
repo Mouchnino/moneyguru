@@ -118,7 +118,7 @@ class TestRangeOnOctober2007:
         app.drsel.select_year_range()
         eq_(app.doc.date_range, YearRange(date(2007, 1, 1)))
         # We don't ask the GUI to perform any animation
-        app.check_gui_calls(app.drsel_gui, ['refresh'])
+        app.drsel.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_select_year_to_date_range(self, app):
@@ -324,7 +324,7 @@ class TestOneEntryYearRange2007:
         row.dat = '11/10/2007'
         app.clear_gui_calls()
         app.etable.save_edits()
-        app.check_gui_calls(app.drsel_gui, [])
+        app.drsel.view.check_gui_calls([])
     
     @with_app(do_setup)
     def test_set_date_out_of_range(self, app):
@@ -335,7 +335,7 @@ class TestOneEntryYearRange2007:
         app.etable.save_edits()
         eq_(app.doc.date_range, YearRange(date(2008, 1, 1)))
         expected = ['animate_forward', 'refresh']
-        app.check_gui_calls(app.drsel_gui, expected)
+        app.drsel.view.check_gui_calls(expected)
     
 
 #---

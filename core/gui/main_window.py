@@ -17,6 +17,7 @@ from ..model.budget import BudgetSpawn
 from ..model.recurrence import Recurrence, RepeatType
 from .base import MESSAGES_DOCUMENT_CHANGED
 from .search_field import SearchField
+from .date_range_selector import DateRangeSelector
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
@@ -54,6 +55,7 @@ class MainWindow(Repeater):
         self._account2visibleentries = {}
         
         self.search_field = SearchField(self)
+        self.daterange_selector = DateRangeSelector(self)
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
@@ -64,7 +66,12 @@ class MainWindow(Repeater):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
             self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
             self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.alookup,
-            self.completion_lookup, self.daterange_selector, self.view_options) = children
+            self.completion_lookup, self.view_options) = children
+        # XXX For now, this is the only place where we know we've linked our GUI views, so we can
+        # call our view refreshes. However, a more correct way to do it is to have an
+        # app_finished_init signal.
+        self.daterange_selector.refresh()
+        self.daterange_selector.refresh_custom_ranges()
         self._restore_default_panes()
         for child in children:
             # Panels are not listeners
@@ -492,6 +499,13 @@ class MainWindow(Repeater):
     def custom_date_range_selected(self):
         self.cdrpanel.load()
     
+    def date_range_will_change(self):
+        self.daterange_selector.remember_current_range()
+    
+    def date_range_changed(self):
+        self.daterange_selector.refresh()
+    
+    
     def document_changed(self):
         self._close_irrelevant_account_panes()
         self._undo_stack_changed()
@@ -510,6 +524,9 @@ class MainWindow(Repeater):
     def performed_undo_or_redo(self):
         self._close_irrelevant_account_panes()
         self.view.refresh_undo_actions()
+    
+    def saved_custom_ranges_changed(self):
+        self.daterange_selector.refresh_custom_ranges()
     
     schedule_changed = _undo_stack_changed
     schedule_deleted = _undo_stack_changed
