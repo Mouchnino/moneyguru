@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-11
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -8,8 +7,6 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtGui import QDialog
-
-from core.gui.custom_date_range_panel import CustomDateRangePanel as CustomDateRangePanelModel
 
 from .panel import Panel
 from ..ui.custom_date_range_panel_ui import Ui_CustomDateRangePanel
@@ -22,8 +19,9 @@ class CustomDateRangePanel(Panel, Ui_CustomDateRangePanel):
         ('slotNameEdit', 'slot_name'),
     ]
     
-    def __init__(self, parent, mainwindow):
-        Panel.__init__(self, parent)
+    def __init__(self, mainwindow):
+        Panel.__init__(self, mainwindow)
         self.setupUi(self)
-        self.model = CustomDateRangePanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.custom_daterange_panel
+        self.model.view = self
     

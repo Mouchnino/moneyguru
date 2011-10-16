@@ -1190,7 +1190,7 @@ class TestWithBudget:
         # Budget spawns can't be edited
         assert not app.ttable.can_edit_cell('date', 0)
         app.mw.edit_item() # budget spawns can't be edited
-        app.tpanel_gui.check_gui_calls_partial(not_expected=['post_load'])
+        app.tpanel.view.check_gui_calls_partial(not_expected=['post_load'])
     
 
 #--- Generators

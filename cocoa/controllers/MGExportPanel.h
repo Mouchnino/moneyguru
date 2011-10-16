@@ -12,6 +12,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyExportPanel.h"
 #import "MGExportAccountTable.h"
 
+@class MGMainWindowController;
+
 @interface MGExportPanel : MGPanel {
     IBOutlet NSMatrix *exportAllButtons;
     IBOutlet NSButton *exportButton;
@@ -20,7 +22,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     MGExportAccountTable *accountTable;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyExportPanel *)py;
 /* Actions */
 - (IBAction)exportAllToggled:(id)sender;

@@ -8,11 +8,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGSchedulePanel.h"
 #import "Utils.h"
+#import "MGMainWindowController.h"
 
 @implementation MGSchedulePanel
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"SchedulePanel" pyClassName:@"PySchedulePanel" parent:aParent];
+    self = [super initWithNibName:@"SchedulePanel" py:[[aParent py] schedulePanel] parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
     return self;

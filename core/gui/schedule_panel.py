@@ -105,8 +105,8 @@ class PanelWithScheduleMixIn:
         self.repeat_type_list = RepeatTypeList(self)
 
 class SchedulePanel(PanelWithTransaction, PanelWithScheduleMixIn):
-    def __init__(self, view, mainwindow):
-        PanelWithTransaction.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        PanelWithTransaction.__init__(self, mainwindow)
         self.create_repeat_type_list()
     
     #--- Override

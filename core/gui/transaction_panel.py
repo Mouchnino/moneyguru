@@ -19,8 +19,8 @@ from .split_table import SplitTable
 
 class PanelWithTransaction(MainWindowPanel):
     """Base class for panels working with a transaction"""
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self.transaction = Transaction(date.today())
         self._selected_splits = []
         self.split_table = SplitTable(self)

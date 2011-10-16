@@ -13,8 +13,8 @@ from ..model.account import sort_accounts
 from .base import MainWindowPanel
 
 class AccountReassignPanel(MainWindowPanel):
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self.account_list = GUISelectableList()
     
     def _load(self, accounts):

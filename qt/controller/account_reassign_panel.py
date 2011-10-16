@@ -14,17 +14,16 @@ from qtlib.selectable_list import ComboboxModel
 from hscommon.trans import tr as trbase
 from hscommon.plat import ISWINDOWS
 
-from core.gui.account_reassign_panel import AccountReassignPanel as AccountReassignPanelModel
-
 from .panel import Panel
 
 tr = lambda s: trbase(s, "AccountReassignPanel")
 
 class AccountReassignPanel(Panel):
-    def __init__(self, parent, mainwindow):
-        Panel.__init__(self, parent)
+    def __init__(self, mainwindow):
+        Panel.__init__(self, mainwindow)
         self._setupUi()
-        self.model = AccountReassignPanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.account_reassign_panel
+        self.model.view = self
         self.accountComboBox = ComboboxModel(model=self.model.account_list, view=self.accountComboBoxView)
         
         self.continueButton.clicked.connect(self.accept)

@@ -11,11 +11,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
 #import "NSEventAdditions.h"
+#import "MGMainWindowController.h"
 
 @implementation MGTransactionInspector
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"TransactionPanel" pyClassName:@"PyTransactionPanel" parent:aParent];
+    self = [super initWithNibName:@"TransactionPanel" py:[[aParent py] transactionPanel] parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
     return self;
 }

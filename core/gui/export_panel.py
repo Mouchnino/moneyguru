@@ -16,8 +16,8 @@ class ExportFormat:
     CSV = 1
 
 class ExportPanel(MainWindowPanel):
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self.account_table = ExportAccountTable(self)
     
     def _load(self):

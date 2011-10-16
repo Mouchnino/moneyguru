@@ -57,9 +57,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
-        [ledgerView py], [docpropsView py], [emptyView py], [accountProperties py], [transactionPanel py],
-        [massEditionPanel py], [schedulePanel py], [budgetPanel py], [customDateRangePanel py],
-        [accountReassignPanel py], [exportPanel py], [viewOptions py], nil];
+        [ledgerView py], [docpropsView py], [emptyView py], [viewOptions py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause

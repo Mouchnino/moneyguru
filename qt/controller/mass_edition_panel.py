@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-21
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -8,8 +7,6 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.currency import Currency
-
-from core.gui.mass_edition_panel import MassEditionPanel as MassEditionPanelModel
 
 from .panel import Panel
 from ..ui.mass_edition_panel_ui import Ui_MassEditionPanel
@@ -38,7 +35,8 @@ class MassEditionPanel(Panel, Ui_MassEditionPanel):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
         self._setupUi()
-        self.model = MassEditionPanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.mass_edit_panel
+        self.model.view = self
     
     def _setupUi(self):
         self.setupUi(self)

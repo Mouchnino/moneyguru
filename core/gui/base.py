@@ -5,6 +5,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.notify import Listener, Repeater
+from hscommon.gui.base import NoopGUI
 from hscommon.gui.selectable_list import GUISelectableList
 
 class DocumentNotificationsMixin:
@@ -193,8 +194,8 @@ class GUIPanel:
     
 
 class MainWindowPanel(GUIPanel):
-    def __init__(self, view, mainwindow):
-        GUIPanel.__init__(self, view, mainwindow.document)
+    def __init__(self, mainwindow):
+        GUIPanel.__init__(self, NoopGUI(), mainwindow.document)
         self.mainwindow = mainwindow
     
 

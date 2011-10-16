@@ -33,8 +33,8 @@ class AccountTypeList(GUISelectableList):
         self.panel.type = selected_type
 
 class AccountPanel(MainWindowPanel):
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self._init_fields()
         self.type_list = AccountTypeList(self)
         currencies_display = ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]

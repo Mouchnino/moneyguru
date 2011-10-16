@@ -8,15 +8,16 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGExportPanel.h"
 #import "MGConst.h"
+#import "MGMainWindowController.h"
 
 // Synced with the core
 #define MGExportFormatQIF 0
 #define MGExportFormatCSV 1
 
 @implementation MGExportPanel
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"ExportPanel" pyClassName:@"PyExportPanel" parent:aParent];
+    self = [super initWithNibName:@"ExportPanel" py:[[aParent py] exportPanel] parent:aParent];
     accountTable = [[MGExportAccountTable alloc] initWithPy:[[self py] accountTable] view:accountTableView];
     return self;
 }

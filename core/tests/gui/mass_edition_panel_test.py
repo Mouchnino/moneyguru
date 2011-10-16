@@ -103,25 +103,25 @@ def test_change_field():
     assert app.mepanel.date_enabled
     # just make sure they are not changed all at once
     assert not app.mepanel.description_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
     app.mepanel.description = 'foobar'
     assert app.mepanel.description_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
     app.mepanel.payee = 'foobar'
     assert app.mepanel.payee_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
     app.mepanel.checkno = '44'
     assert app.mepanel.checkno_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
     app.mepanel.from_ = 'foobar'
     assert app.mepanel.from_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
     app.mepanel.to = 'foobar'
     assert app.mepanel.to_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
     app.mepanel.amount = '44'
     assert app.mepanel.amount_enabled
-    app.check_gui_calls(app.mepanel_gui, ['refresh'])
+    app.mepanel.view.check_gui_calls(['refresh'])
 
 def test_change_field_to_none():
     # the mass panel considers replaces None values with ''.

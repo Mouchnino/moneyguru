@@ -80,8 +80,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.mepanel = MassEditionPanel(mainwindow=self)
         self.scpanel = SchedulePanel(mainwindow=self)
         self.bpanel = BudgetPanel(mainwindow=self)
-        self.cdrpanel = CustomDateRangePanel(self, mainwindow=self)
-        self.arpanel = AccountReassignPanel(self, mainwindow=self)
+        self.cdrpanel = CustomDateRangePanel(mainwindow=self)
+        self.arpanel = AccountReassignPanel(mainwindow=self)
         self.expanel = ExportPanel(mainwindow=self)
         self.alookup = Lookup(self, model=self.model.account_lookup)
         self.clookup = Lookup(self, model=self.model.completion_lookup)
@@ -105,8 +105,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # set_children() and connect() calls have to happen after _setupUiPost()
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
-            self.glview, self.dpview, self.newview, self.apanel, self.tpanel, self.mepanel, self.scpanel,
-            self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.vopts]
+            self.glview, self.dpview, self.newview, self.vopts]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         

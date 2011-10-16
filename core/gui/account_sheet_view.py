@@ -26,7 +26,7 @@ class AccountSheetView(BaseView):
     def edit_item(self):
         selected_account = self.sheet.selected_account
         if selected_account is not None:
-            self.mainwindow.apanel.load(selected_account)
+            self.mainwindow.account_panel.load(selected_account)
     
     def expand_group(self, group):
         group.expanded = True

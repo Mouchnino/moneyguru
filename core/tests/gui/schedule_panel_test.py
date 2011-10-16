@@ -39,7 +39,7 @@ def test_calls_refresh_repeat_every_on_load(app):
     # When the panel loads, make the panel call its refresh_repeat_every() view method so that
     # the correct time unit escription shows up
     app.scpanel.load()
-    app.check_gui_calls_partial(app.scpanel_gui, ['refresh_repeat_every'])
+    app.scpanel.view.check_gui_calls_partial(['refresh_repeat_every'])
 
 @with_app(app_daily_scheduled_txn)
 def test_repeat_every(app):
@@ -53,7 +53,7 @@ def test_repeat_type_index(app):
     eq_(app.scpanel.repeat_every_desc, 'days')
     app.scpanel.repeat_every = 1
     eq_(app.scpanel.repeat_every_desc, 'day')
-    app.check_gui_calls(app.scpanel_gui, ['refresh_repeat_every'])
+    app.scpanel.view.check_gui_calls(['refresh_repeat_every'])
     app.scpanel.repeat_type_list.select(1)
     eq_(app.scpanel.repeat_every_desc, 'week')
     app.scpanel.repeat_type_list.select(2)

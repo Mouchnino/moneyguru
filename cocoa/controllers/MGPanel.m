@@ -9,9 +9,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 
 @implementation MGPanel
-- (id)initWithNibName:(NSString *)aNibName pyClassName:(NSString *)aClassName parent:(HSWindowController *)aParent
+- (id)initWithNibName:(NSString *)aNibName py:(id)aPy parent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:aNibName pyClassName:aClassName pyParent:[aParent py]];
+    self = [super initWithNibName:aNibName py:aPy];
     [self window]; // Initialize elements from the NIB.
     parentWindow = [aParent window];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:[aParent py]];

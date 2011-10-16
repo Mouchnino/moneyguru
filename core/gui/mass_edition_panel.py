@@ -15,8 +15,8 @@ from ..exception import OperationAborted
 from .base import MainWindowPanel
 
 class MassEditionPanel(MainWindowPanel):
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self._init_fields()
     
     #--- Override

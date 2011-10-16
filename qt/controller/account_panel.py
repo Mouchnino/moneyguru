@@ -10,11 +10,8 @@ from PyQt4.QtCore import Qt, QSize
 from PyQt4.QtGui import (QVBoxLayout, QFormLayout, QLabel, QLineEdit, QComboBox, QSizePolicy,
     QPlainTextEdit, QDialogButtonBox)
 
-from hscommon.currency import Currency
 from hscommon.trans import tr as trbase
 from qtlib.selectable_list import ComboboxModel
-
-from core.gui.account_panel import AccountPanel as AccountPanelModel
 
 from .panel import Panel
 
@@ -30,7 +27,8 @@ class AccountPanel(Panel):
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
         self._setupUi()
-        self.model = AccountPanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.account_panel
+        self.model.view = self
         self.typeComboBox = ComboboxModel(model=self.model.type_list, view=self.typeComboBoxView)
         self.currencyComboBox = ComboboxModel(model=self.model.currency_list, view=self.currencyComboBoxView)
         

@@ -9,11 +9,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGCustomDateRangePanel.h"
 #import "Utils.h"
 #import "MGDateFieldEditor.h"
+#import "MGMainWindowController.h"
 
 @implementation MGCustomDateRangePanel
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"CustomDateRangePanel" pyClassName:@"PyCustomDateRangePanel" parent:aParent];
+    self = [super initWithNibName:@"CustomDateRangePanel" py:[[aParent py] customDateRangePanel] parent:aParent];
     return self;
 }
 

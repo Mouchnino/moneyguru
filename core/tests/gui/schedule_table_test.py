@@ -53,7 +53,7 @@ def test_edit_selected():
     app = app_schedule()
     app.clear_gui_calls()
     app.mainwindow.edit_item()
-    app.check_gui_calls_partial(app.scpanel_gui, ['post_load'])
+    app.scpanel.view.check_gui_calls_partial(['post_load'])
 
 def test_edition_must_stop():
     # When the edition_must_stop event is broadcasted, btable must ignore it because the objc

@@ -27,38 +27,30 @@ from core.document import Document, FilterType
 from core.exception import FileFormatError
 from core.gui.account_balance_graph import AccountBalanceGraph
 from core.gui.account_flow_graph import AccountFlowGraph
-from core.gui.account_panel import AccountPanel
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
-from core.gui.account_reassign_panel import AccountReassignPanel
 from core.gui.account_view import AccountView
 from core.gui.balance_sheet import BalanceSheet
-from core.gui.budget_panel import BudgetPanel
 from core.gui.budget_view import BudgetView
 from core.gui.cashculator_view import CashculatorView
 from core.gui.cashculator_account_table import CashculatorAccountTable
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
     SUPPORTED_ENCODINGS as CSV_SUPPORTED_ENCODINGS
 from core.gui.completable_edit import CompletableEdit
-from core.gui.custom_date_range_panel import CustomDateRangePanel
 from core.gui.date_widget import DateWidget
 from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
-from core.gui.export_panel import ExportPanel
 from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
 from core.gui.import_window import ImportWindow
 from core.gui.main_window import MainWindow
-from core.gui.mass_edition_panel import MassEditionPanel
 from core.gui.net_worth_graph import NetWorthGraph
 from core.gui.networth_view import NetWorthView
 from core.gui.print_view import PrintView
 from core.gui.profit_graph import ProfitGraph
 from core.gui.profit_view import ProfitView
-from core.gui.schedule_panel import SchedulePanel
 from core.gui.schedule_view import ScheduleView
-from core.gui.transaction_panel import TransactionPanel
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.gui.transaction_table import TransactionTable
 from core.gui.transaction_view import TransactionView
@@ -467,7 +459,6 @@ class PyEntryFilterBar(PyFilterBar):
     
 
 class PyAccountPanel(PyPanel):
-    py_class = AccountPanel
     
     typeList = subproxy('typeList', 'type_list', PySelectableList)
     currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
@@ -538,7 +529,6 @@ class PyPanelWithTransaction(PyPanel):
     
 
 class PyTransactionPanel(PyPanelWithTransaction):
-    py_class = TransactionPanel
 
     def mctBalance(self):
         self.py.mct_balance()
@@ -551,7 +541,6 @@ class PyTransactionPanel(PyPanelWithTransaction):
     
 
 class PyMassEditionPanel(PyPanel):
-    py_class = MassEditionPanel
 
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
@@ -687,7 +676,6 @@ class PyMassEditionPanel(PyPanel):
     
 
 class PySchedulePanel(PyPanelWithTransaction):
-    py_class = SchedulePanel
     
     repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
     
@@ -719,7 +707,6 @@ class PySchedulePanel(PyPanelWithTransaction):
         self.cocoa.refreshRepeatEvery()
     
 class PyBudgetPanel(PyPanel):
-    py_class = BudgetPanel
     
     repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
     accountList = subproxy('accountList', 'account_list', PySelectableList)
@@ -766,8 +753,6 @@ class PyBudgetPanel(PyPanel):
     
 
 class PyCustomDateRangePanel(PyPanel):
-    py_class = CustomDateRangePanel
-    
     def startDate(self):
         return self.py.start_date
     
@@ -796,13 +781,9 @@ class PyCustomDateRangePanel(PyPanel):
     
 
 class PyAccountReassignPanel(PyPanel):
-    py_class = AccountReassignPanel
-    
     accountList = subproxy('accountList', 'account_list', PySelectableList)
 
 class PyExportPanel(PyPanel):
-    py_class = ExportPanel
-    
     accountTable = subproxy('accountTable', 'account_table', PyTable)
     
     @signature('c@:')
@@ -1042,6 +1023,15 @@ class PyMainWindow(PyGUIContainer):
     daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyDateRangeSelector)
     accountLookup = subproxy('accountLookup', 'account_lookup', PyLookup)
     completionLookup = subproxy('completionLookup', 'completion_lookup', PyLookup)
+    
+    accountPanel = subproxy('accountPanel', 'account_panel', PyAccountPanel)
+    transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyTransactionPanel)
+    massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyMassEditionPanel)
+    budgetPanel = subproxy('budgetPanel', 'budget_panel', PyBudgetPanel)
+    schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
+    customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyCustomDateRangePanel)
+    accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyAccountReassignPanel)
+    exportPanel = subproxy('exportPanel', 'export_panel', PyExportPanel)
     
     def selectNextView(self):
         self.py.select_next_view()

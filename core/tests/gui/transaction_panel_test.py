@@ -69,7 +69,7 @@ def test_load_refreshes_mct_button():
     # loading the panel refreshes the mct button
     app = app_one_entry()
     app.tpanel.load()
-    app.check_gui_calls_partial(app.tpanel_gui, ['refresh_for_multi_currency'])
+    app.tpanel.view.check_gui_calls_partial(['refresh_for_multi_currency'])
 
 def test_load_while_etable_is_editing():
     # loading the tpanel while etable is editing saves the edits and stops editing mode.
@@ -141,7 +141,7 @@ def test_change_date():
     # in schedules)
     app = app_entry_with_amount_panel_loaded()
     app.tpanel.date = '17/07/2008'
-    app.check_gui_calls_partial(app.tpanel_gui, not_expected=['refresh_repeat_options'])
+    app.tpanel.view.check_gui_calls_partial(not_expected=['refresh_repeat_options'])
 
 #--- Two Amountless Entries
 def app_two_amountless_entries():

@@ -13,8 +13,6 @@ from PyQt4.QtGui import (QHBoxLayout, QVBoxLayout, QFormLayout, QLabel, QLineEdi
 from qtlib.selectable_list import ComboboxModel
 from hscommon.trans import tr as trbase
 
-from core.gui.budget_panel import BudgetPanel as BudgetPanelModel
-
 from ..support.date_edit import DateEdit
 from .panel import Panel
 
@@ -32,7 +30,8 @@ class BudgetPanel(Panel):
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
         self._setupUi()
-        self.model = BudgetPanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.budget_panel
+        self.model.view = self
         self.repeatTypeComboBox = ComboboxModel(model=self.model.repeat_type_list, view=self.repeatTypeComboBoxView)
         self.accountComboBox = ComboboxModel(model=self.model.account_list, view=self.accountComboBoxView)
         self.targetComboBox = ComboboxModel(model=self.model.target_list, view=self.targetComboBoxView)

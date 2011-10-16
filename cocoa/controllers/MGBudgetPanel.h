@@ -11,6 +11,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSPopUpList.h"
 #import "PyBudgetPanel.h"
 
+@class MGMainWindowController;
+
 @interface MGBudgetPanel : MGPanel {
     IBOutlet NSTextField *startDateField;
     IBOutlet NSTextField *repeatEveryField;
@@ -26,7 +28,7 @@ http://www.hardcoded.net/licenses/bsd_license
     HSPopUpList *accountPopUp;
     HSPopUpList *targetPopUp;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyBudgetPanel *)py;
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery;

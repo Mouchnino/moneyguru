@@ -155,7 +155,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         if anodes:
             accounts = [n.account for n in anodes]
             if any(a.entries for a in accounts):
-                self.mainwindow.arpanel.load(accounts)
+                self.mainwindow.account_reassign_panel.load(accounts)
             else:
                 self.document.delete_accounts(accounts)
     

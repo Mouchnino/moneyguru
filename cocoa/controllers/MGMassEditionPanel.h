@@ -10,6 +10,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 #import "PyMassEditionPanel.h"
 
+@class MGMainWindowController;
+
 @interface MGMassEditionPanel : MGPanel {
     IBOutlet NSTextField *dateField;
     IBOutlet NSTextField *descriptionField;
@@ -21,7 +23,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSArray *currencies;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyMassEditionPanel *)py;
 /* Python --> Cocoa */
 - (void)refresh;

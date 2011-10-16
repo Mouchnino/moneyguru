@@ -20,6 +20,14 @@ from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
 from .account_lookup import AccountLookup
 from .completion_lookup import CompletionLookup
+from .account_panel import AccountPanel
+from .transaction_panel import TransactionPanel
+from .mass_edition_panel import MassEditionPanel
+from .budget_panel import BudgetPanel
+from .schedule_panel import SchedulePanel
+from .custom_date_range_panel import CustomDateRangePanel
+from .account_reassign_panel import AccountReassignPanel
+from .export_panel import ExportPanel
 
 OPENED_PANES_PREFERENCE = 'OpenedPanes'
 SELECTED_PANE_PREFERENCE = 'SelectedPane'
@@ -61,6 +69,15 @@ class MainWindow(Repeater):
         self.account_lookup = AccountLookup(self)
         self.completion_lookup = CompletionLookup(self)
         
+        self.account_panel = AccountPanel(self)
+        self.transaction_panel = TransactionPanel(self)
+        self.mass_edit_panel = MassEditionPanel(self)
+        self.budget_panel = BudgetPanel(self)
+        self.schedule_panel = SchedulePanel(self)
+        self.custom_daterange_panel = CustomDateRangePanel(self)
+        self.account_reassign_panel = AccountReassignPanel(self)
+        self.export_panel = ExportPanel(self)
+        
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
     
@@ -68,8 +85,7 @@ class MainWindow(Repeater):
     # children to have reference to the main window.
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
-            self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
-            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.view_options) = children
+            self.glview, self.dpview, self.emptyview, self.view_options) = children
         # XXX For now, this is the only place where we know we've linked our GUI views, so we can
         # call our view refreshes. However, a more correct way to do it is to have an
         # app_finished_init signal.
@@ -248,18 +264,18 @@ class MainWindow(Repeater):
             elif current_view in (self.aview, self.tview, self.glview):
                 editable_txns = [txn for txn in self.selected_transactions if not isinstance(txn, BudgetSpawn)]
                 if len(editable_txns) > 1:
-                    self.mepanel.load()
+                    self.mass_edit_panel.load()
                 elif len(editable_txns) == 1:
-                    self.tpanel.load()
+                    self.transaction_panel.load()
             elif current_view is self.scview:
-                self.scpanel.load()
+                self.schedule_panel.load()
             elif current_view is self.bview:
-                self.bpanel.load()
+                self.budget_panel.load()
         except OperationAborted:
             pass
     
     def export(self):
-        self.expanel.load()
+        self.export_panel.load()
     
     def jump_to_account(self):
         self.account_lookup.show()
@@ -310,9 +326,9 @@ class MainWindow(Repeater):
             if current_view in (self.nwview, self.pview, self.tview, self.aview, self.glview):
                 current_view.new_item()
             elif current_view is self.scview:
-                self.scpanel.new()
+                self.schedule_panel.new()
             elif current_view is self.bview:
-                self.bpanel.new()
+                self.budget_panel.new()
         except OperationAborted as e:
             if e.message:
                 self.view.show_message(e.message)
@@ -500,14 +516,13 @@ class MainWindow(Repeater):
     budget_deleted = _undo_stack_changed
     
     def custom_date_range_selected(self):
-        self.cdrpanel.load()
+        self.custom_daterange_panel.load()
     
     def date_range_will_change(self):
         self.daterange_selector.remember_current_range()
     
     def date_range_changed(self):
         self.daterange_selector.refresh()
-    
     
     def document_changed(self):
         self._close_irrelevant_account_panes()

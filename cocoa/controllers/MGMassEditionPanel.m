@@ -7,11 +7,12 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGMassEditionPanel.h"
+#import "MGMainWindowController.h"
 
 @implementation MGMassEditionPanel
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"MassEditingPanel" pyClassName:@"PyMassEditionPanel" parent:aParent];
+    self = [super initWithNibName:@"MassEditingPanel" py:[[aParent py] massEditPanel] parent:aParent];
     currencies = [[[self py] availableCurrencies] retain];
     return self;
 }

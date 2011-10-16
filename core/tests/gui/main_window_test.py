@@ -227,7 +227,7 @@ def test_delete_account(app):
     app.bsheet.selected = app.bsheet.assets[0]
     app.clear_gui_calls()
     app.bsheet.delete()
-    app.check_gui_calls(app.arpanel_gui, ['pre_load', 'post_load'])
+    app.arpanel.view.check_gui_calls(['pre_load', 'post_load'])
 
 @with_app(app_asset_and_income_accounts_with_txn)
 def test_navigate_back(app):

@@ -8,11 +8,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGBudgetPanel.h"
 #import "MGDateFieldEditor.h"
+#import "MGMainWindowController.h"
 
 @implementation MGBudgetPanel
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"BudgetPanel" pyClassName:@"PyBudgetPanel" parent:aParent];
+    self = [super initWithNibName:@"BudgetPanel" py:[[aParent py] budgetPanel] parent:aParent];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
     accountPopUp = [[HSPopUpList alloc] initWithPy:[[self py] accountList] view:accountSelector];
     targetPopUp = [[HSPopUpList alloc] initWithPy:[[self py] targetList] view:targetSelector];

@@ -21,36 +21,25 @@ from ..exception import FileFormatError
 from ..const import PaneType
 from ..gui.account_balance_graph import AccountBalanceGraph
 from ..gui.account_flow_graph import AccountFlowGraph
-from ..gui.account_lookup import AccountLookup
-from ..gui.account_panel import AccountPanel
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
-from ..gui.account_reassign_panel import AccountReassignPanel
 from ..gui.account_view import AccountView
 from ..gui.balance_sheet import BalanceSheet
-from ..gui.budget_panel import BudgetPanel
 from ..gui.budget_view import BudgetView
 from ..gui.completable_edit import CompletableEdit
-from ..gui.completion_lookup import CompletionLookup
 from ..gui.csv_options import CSVOptions
-from ..gui.custom_date_range_panel import CustomDateRangePanel
 from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
-from ..gui.export_panel import ExportPanel
 from ..gui.general_ledger_table import GeneralLedgerTable
 from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.income_statement import IncomeStatement
 from ..gui.import_window import ImportWindow
 from ..gui.main_window import MainWindow
-from ..gui.mass_edition_panel import MassEditionPanel
 from ..gui.net_worth_graph import NetWorthGraph
 from ..gui.networth_view import NetWorthView
 from ..gui.profit_graph import ProfitGraph
 from ..gui.profit_view import ProfitView
-from ..gui.schedule_panel import SchedulePanel
-from ..gui.schedule_table import ScheduleTable
 from ..gui.schedule_view import ScheduleView
-from ..gui.transaction_panel import TransactionPanel
 from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
 from ..gui.view_options import ViewOptions
@@ -162,21 +151,29 @@ class TestApp(TestAppBase):
         self.btable.view = self.make_logger()
         self.btable.columns.view = self.make_logger()
         make_table_gui('gltable', GeneralLedgerTable, parent=self.glview)
-        make_gui('apanel', AccountPanel)
+        self.apanel = self.mw.account_panel
+        self.apanel.view = self.make_logger()
         self.apanel.type_list.view = self.make_logger()
-        make_gui('scpanel', SchedulePanel)
+        self.scpanel = self.mw.schedule_panel
+        self.scpanel.view = self.make_logger()
         self.scpanel.split_table.view = self.make_logger()
         self.scsplittable = self.scpanel.split_table
         self.scpanel.repeat_type_list.view = self.make_logger()
-        make_gui('tpanel', TransactionPanel)
+        self.tpanel = self.mw.transaction_panel
+        self.tpanel.view = self.make_logger()
         self.tpanel.split_table.view = self.make_logger()
         self.stable = self.tpanel.split_table
-        make_gui('mepanel', MassEditionPanel)
-        make_gui('bpanel', BudgetPanel)
+        self.mepanel = self.mw.mass_edit_panel
+        self.mepanel.view = self.make_logger()
+        self.bpanel = self.mw.budget_panel
+        self.bpanel.view = self.make_logger()
         self.bpanel.repeat_type_list.view = self.make_logger()
-        make_gui('cdrpanel', CustomDateRangePanel)
-        make_gui('arpanel', AccountReassignPanel)
-        make_gui('expanel', ExportPanel)
+        self.cdrpanel = self.mw.custom_daterange_panel
+        self.cdrpanel.view = self.make_logger()
+        self.arpanel = self.mw.account_reassign_panel
+        self.arpanel.view = self.make_logger()
+        self.expanel = self.mw.export_panel
+        self.expanel.view = self.make_logger()
         self.expanel.account_table.view = self.make_logger()
         make_gui('balgraph', AccountBalanceGraph, parent=self.aview)
         make_gui('bargraph', AccountFlowGraph, parent=self.aview)
@@ -218,8 +215,7 @@ class TestApp(TestAppBase):
         self.glview.set_children(children)
         # None between bview and empty view is the Cashculator view, which isn't tested
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
-            self.glview, self.dpview, self.emptyview, self.apanel, self.tpanel, self.mepanel,
-            self.scpanel, self.bpanel, self.cdrpanel, self.arpanel, self.expanel, self.vopts]
+            self.glview, self.dpview, self.emptyview, self.vopts]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()

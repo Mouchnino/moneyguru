@@ -12,6 +12,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSComboBox.h"
 #import "PyAccountPanel.h"
 
+@class MGMainWindowController;
+
 @interface MGAccountProperties : MGPanel {
     IBOutlet NSTextField *nameTextField;
     IBOutlet NSPopUpButton *typeSelector;
@@ -22,6 +24,6 @@ http://www.hardcoded.net/licenses/bsd_license
     HSPopUpList *typePopUp;
     HSComboBox *currencyComboBox;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyAccountPanel *)py;
 @end

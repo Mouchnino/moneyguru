@@ -12,6 +12,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGSplitTable.h"
 #import "PyTransactionPanel.h"
 
+@class MGMainWindowController;
+
 @interface MGTransactionInspector : MGPanel {
     IBOutlet NSTabView *tabView;
     IBOutlet NSTextField *dateField;
@@ -24,7 +26,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     MGSplitTable *splitTable;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyTransactionPanel *)py;
 /* Actions */
 - (IBAction)addSplit:(id)sender;

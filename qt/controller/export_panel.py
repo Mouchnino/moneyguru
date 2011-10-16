@@ -11,7 +11,7 @@ from PyQt4.QtGui import (QVBoxLayout, QLabel, QButtonGroup, QRadioButton, QTable
     QAbstractItemView, QDialogButtonBox, QApplication, QDialog, QFileDialog)
 
 from hscommon.trans import tr as trplain
-from core.gui.export_panel import ExportPanel as ExportPanelModel, ExportFormat
+from core.gui.export_panel import ExportFormat
 
 from .panel import Panel
 from .export_account_table import ExportAccountTable
@@ -30,7 +30,8 @@ class ExportPanel(Panel):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
         self._setupUi()
-        self.model = ExportPanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.export_panel
+        self.model.view = self
         self.accountTable = ExportAccountTable(model=self.model.account_table, view=self.tableView)
         
         self.exportTypeButtons.buttonClicked[int].connect(self.exportTypeSelected)

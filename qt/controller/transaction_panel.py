@@ -12,7 +12,6 @@ from PyQt4.QtGui import (QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QTabWid
     QDialogButtonBox, QIcon, QPixmap)
 
 from hscommon.trans import tr as trbase
-from core.gui.transaction_panel import TransactionPanel as TransactionPanelModel
 from ..support.item_view import TableView
 from ..support.date_edit import DateEdit
 from ..support.completable_edit import PayeeEdit, DescriptionEdit
@@ -35,7 +34,8 @@ class TransactionPanel(Panel):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
         self._setupUi()
-        self.model = TransactionPanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.transaction_panel
+        self.model.view = self
         self.splitTable = SplitTable(model=self.model.split_table, view=self.splitTableView)
         
         self.buttonBox.accepted.connect(self.accept)

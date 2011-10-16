@@ -8,11 +8,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGAccountProperties.h"
 #import "MGConst.h"
+#import "MGMainWindowController.h"
 
 @implementation MGAccountProperties
-- (id)initWithParent:(HSWindowController *)aParent
+- (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"AccountPanel" pyClassName:@"PyAccountPanel" parent:aParent];
+    self = [super initWithNibName:@"AccountPanel" py:[[aParent py] accountPanel] parent:aParent];
     [self window];
     typePopUp = [[HSPopUpList alloc] initWithPy:[[self py] typeList] view:typeSelector];
     currencyComboBox = [[HSComboBox alloc] initWithPy:[[self py] currencyList] view:currencySelector];

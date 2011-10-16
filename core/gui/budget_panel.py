@@ -45,8 +45,8 @@ class TargetList(GUISelectableList):
         self[:] = [(a.name if a is not None else tr('None')) for a in self.panel._targets]
 
 class BudgetPanel(MainWindowPanel, PanelWithScheduleMixIn):
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self.create_repeat_type_list()
         self.account_list = AccountList(self)
         self.target_list = TargetList(self)

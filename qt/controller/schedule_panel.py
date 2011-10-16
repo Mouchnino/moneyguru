@@ -14,8 +14,6 @@ from PyQt4.QtGui import (QWidget, QHBoxLayout, QVBoxLayout, QFormLayout, QLabel,
 from qtlib.selectable_list import ComboboxModel
 from hscommon.trans import tr as trbase
 
-from core.gui.schedule_panel import SchedulePanel as SchedulePanelModel
-
 from ..support.item_view import TableView
 from ..support.date_edit import DateEdit
 from ..support.completable_edit import PayeeEdit, DescriptionEdit
@@ -39,7 +37,8 @@ class SchedulePanel(Panel):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
         self._setupUi()
-        self.model = SchedulePanelModel(view=self, mainwindow=mainwindow.model)
+        self.model = mainwindow.model.schedule_panel
+        self.model.view = self
         self.splitTable = SplitTable(model=self.model.split_table, view=self.splitTableView)
         self.repeatTypeComboBox = ComboboxModel(model=self.model.repeat_type_list, view=self.repeatTypeComboBoxView)
         

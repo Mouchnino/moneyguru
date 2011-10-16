@@ -11,12 +11,14 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 #import "PyCustomDateRangePanel.h"
 
+@class MGMainWindowController;
+
 @interface MGCustomDateRangePanel : MGPanel {
     IBOutlet NSTextField *startDateField;
     IBOutlet NSTextField *endDateField;
     IBOutlet NSPopUpButton *slotIndexSelector;
     IBOutlet NSTextField *slotNameField;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyCustomDateRangePanel *)py;
 @end

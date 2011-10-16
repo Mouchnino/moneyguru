@@ -12,8 +12,8 @@ from ..model.date import CustomDateRange
 from .base import MainWindowPanel
 
 class CustomDateRangePanel(MainWindowPanel):
-    def __init__(self, view, mainwindow):
-        MainWindowPanel.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        MainWindowPanel.__init__(self, mainwindow)
         self._start_date = date.today()
         self._end_date = date.today()
     

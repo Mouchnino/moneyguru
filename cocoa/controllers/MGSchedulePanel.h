@@ -13,6 +13,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSPopUpList.h"
 #import "PySchedulePanel.h"
 
+@class MGMainWindowController;
+
 @interface MGSchedulePanel : MGPanel {
     IBOutlet NSTabView *tabView;
     IBOutlet NSTextField *startDateField;
@@ -29,7 +31,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGSplitTable *splitTable;
     HSPopUpList *repeatTypePopUp;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PySchedulePanel *)py;
 /* Actions */
 - (IBAction)addSplit:(id)sender;

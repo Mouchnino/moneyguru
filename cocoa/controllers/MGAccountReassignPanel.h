@@ -12,11 +12,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSPopUpList.h"
 #import "PyAccountReassignPanel.h"
 
+@class MGMainWindowController;
+
 @interface MGAccountReassignPanel : MGPanel {
     IBOutlet NSPopUpButton *accountSelector;
     
     HSPopUpList *accountPopUp;
 }
-- (id)initWithParent:(HSWindowController *)aParent;
+- (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyAccountReassignPanel *)py;
 @end
