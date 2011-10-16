@@ -10,7 +10,6 @@ from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
 from hscommon.trans import tr
-from core.gui.schedule_table import ScheduleTable as ScheduleTableModel
 from ..table import Table
 
 class ScheduleTable(Table):
@@ -27,8 +26,7 @@ class ScheduleTable(Table):
         Column('amount', tr('Amount'), 97, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, schedule_view, view):
-        model = ScheduleTableModel(view=self, schedule_view=schedule_view.model)
+    def __init__(self, model, view):
         Table.__init__(self, model, view)
         self.view.sortByColumn(0, Qt.AscendingOrder) # sorted by start_date by default
         self.view.deletePressed.connect(self.model.delete)

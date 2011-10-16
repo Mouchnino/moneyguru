@@ -41,6 +41,10 @@ class GUITable(GUITableBase):
             return False
         return True
     
+    def refresh_and_show_selection(self):
+        self.refresh()
+        self.view.show_selected_row()
+    
     def selection_as_csv(self):
         csvrows = []
         columns = (self.columns.coldata[colname] for colname in self.columns.colnames)
@@ -82,8 +86,7 @@ class GUITable(GUITableBase):
         self.view.refresh()
     
     def _item_changed(self):
-        self.refresh()
-        self.view.show_selected_row()
+        self.refresh_and_show_selection()
     
     def _item_deleted(self):
         self.refresh(refresh_view=False)

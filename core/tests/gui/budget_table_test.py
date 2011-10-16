@@ -48,5 +48,5 @@ def test_edition_must_stop(app):
     # side doesn't have a stop_editing method.
     app.clear_gui_calls()
     app.doc.stop_edition()
-    app.btable_gui.check_gui_calls_partial(not_expected=['stop_editing'])
+    app.btable.view.check_gui_calls_partial(not_expected=['stop_editing'])
 

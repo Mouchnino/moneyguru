@@ -32,7 +32,6 @@ from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, Inco
 from core.gui.account_reassign_panel import AccountReassignPanel
 from core.gui.account_view import AccountView
 from core.gui.balance_sheet import BalanceSheet
-from core.gui.budget_table import BudgetTable
 from core.gui.budget_panel import BudgetPanel
 from core.gui.budget_view import BudgetView
 from core.gui.cashculator_view import CashculatorView
@@ -58,7 +57,6 @@ from core.gui.print_view import PrintView
 from core.gui.profit_graph import ProfitGraph
 from core.gui.profit_view import ProfitView
 from core.gui.schedule_panel import SchedulePanel
-from core.gui.schedule_table import ScheduleTable
 from core.gui.schedule_view import ScheduleView
 from core.gui.transaction_panel import TransactionPanel
 from core.gui.transaction_print import TransactionPrint, EntryPrint
@@ -402,15 +400,11 @@ class PyTransactionTable(PyTableWithDate):
     
 
 class PyScheduleTable(PyTable):
-    py_class = ScheduleTable
-    
     def editItem(self):
         self.py.edit()
     
 
 class PyBudgetTable(PyTable):
-    py_class = BudgetTable
-    
     def editItem(self):
         self.py.edit()
     
@@ -1002,9 +996,13 @@ class PyAccountView(PyGUIContainer):
 
 class PyBudgetView(PyGUIContainer):
     py_class = BudgetView
+    
+    table = subproxy('table', 'table', PyBudgetTable)
 
 class PyScheduleView(PyGUIContainer):
     py_class = ScheduleView
+    
+    table = subproxy('table', 'table', PyScheduleTable)
 
 class PyCashculatorView(PyGUIContainer):
     py_class = CashculatorView

@@ -10,7 +10,6 @@ from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
 from hscommon.trans import tr
-from core.gui.budget_table import BudgetTable as BudgetTableModel
 from ..table import Table
 
 class BudgetTable(Table):
@@ -24,8 +23,7 @@ class BudgetTable(Table):
         Column('amount', tr('Amount'), 100, alignment=Qt.AlignRight),
     ]
     
-    def __init__(self, budget_view, view):
-        model = BudgetTableModel(view=self, budget_view=budget_view.model)
+    def __init__(self, model, view):
         Table.__init__(self, model, view)
         self.view.sortByColumn(0, Qt.AscendingOrder) # sorted by start_date by default
         self.view.deletePressed.connect(self.model.delete)

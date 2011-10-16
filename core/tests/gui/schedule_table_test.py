@@ -61,4 +61,4 @@ def test_edition_must_stop():
     app = app_schedule()
     app.clear_gui_calls()
     app.doc.stop_edition()
-    app.check_gui_calls_partial(app.sctable_gui, not_expected=['stop_editing'])
+    app.sctable.view.check_gui_calls_partial(not_expected=['stop_editing'])

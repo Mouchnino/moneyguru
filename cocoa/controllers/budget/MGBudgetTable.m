@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 
 @implementation MGBudgetTable
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyBudgetTable" pyParent:aPyParent view:aTableView];
+    self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
     return self;

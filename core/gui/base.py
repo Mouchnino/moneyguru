@@ -97,10 +97,10 @@ class SheetViewNotificationsMixin:
         pass
     
 
-MESSAGES_DOCUMENT_CHANGED = {'account_added', 'account_changed', 'account_deleted',
-    'transaction_changed', 'transaction_deleted', 'transactions_imported', 'budget_changed',
-    'budget_deleted', 'schedule_changed', 'schedule_deleted', 'document_changed',
-    'performed_undo_or_redo'}
+MESSAGES_EVERYTHING_CHANGED = {'document_changed', 'performed_undo_or_redo'}
+MESSAGES_DOCUMENT_CHANGED = MESSAGES_EVERYTHING_CHANGED | {'account_added', 'account_changed',
+    'account_deleted', 'transaction_changed', 'transaction_deleted', 'transactions_imported',
+    'budget_changed', 'budget_deleted', 'schedule_changed', 'schedule_deleted'}
 
 class HideableObject:
     # Messages that invalidates the view if received while it's hidden (its cache will be

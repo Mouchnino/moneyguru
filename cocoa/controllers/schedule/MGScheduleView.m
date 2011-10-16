@@ -15,9 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyScheduleView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    scheduleTable = [[MGScheduleTable alloc] initWithPyParent:[self py] view:tableView];
-    NSArray *children = [NSArray arrayWithObjects:[scheduleTable py], nil];
-    [[self py] setChildren:children];
+    scheduleTable = [[MGScheduleTable alloc] initWithPy:[[self py] table] view:tableView];
     return self;
 }
         

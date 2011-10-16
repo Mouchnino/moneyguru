@@ -10,11 +10,10 @@ import datetime
 
 from hscommon.trans import tr
 from ..model.amount import convert_amount
-from .base import ViewChild
 from .column import Column
 from .table import GUITable, Row, rowattr
 
-class ScheduleTable(GUITable, ViewChild):
+class ScheduleTable(GUITable):
     SAVENAME = 'ScheduleTable'
     COLUMNS = [
         Column('start_date'),
@@ -28,11 +27,10 @@ class ScheduleTable(GUITable, ViewChild):
         Column('to'),
         Column('amount'),
     ]
-    INVALIDATING_MESSAGES = {'schedule_changed', 'schedule_deleted', 'account_deleted'}
     
-    def __init__(self, view, schedule_view):
-        ViewChild.__init__(self, view, schedule_view)
-        GUITable.__init__(self)
+    def __init__(self, schedule_view):
+        GUITable.__init__(self, document=schedule_view.document)
+        self.mainwindow = schedule_view.mainwindow
     
     #--- Override
     def _update_selection(self):
@@ -41,9 +39,6 @@ class ScheduleTable(GUITable, ViewChild):
     def _fill(self):
         for schedule in self.document.schedules:
             self.append(ScheduleTableRow(self, schedule))
-    
-    def _revalidate(self):
-        self.refresh()
     
     #--- Public
     def delete(self):
@@ -57,13 +52,6 @@ class ScheduleTable(GUITable, ViewChild):
     def selected_schedules(self):
         return [row.schedule for row in self.selected_rows]
     
-    #--- Event handlers
-    def edition_must_stop(self):
-        pass # the view doesn't have a stop_editing method
-    
-    schedule_changed = GUITable._item_changed
-    schedule_deleted = GUITable._item_deleted
-
 class ScheduleTableRow(Row):
     def __init__(self, table, schedule):
         Row.__init__(self, table)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-21
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -19,9 +18,7 @@ class BudgetView(BaseView, Ui_BudgetView):
         self.doc = mainwindow.doc
         self._setupUi()
         self.model = BudgetViewModel(view=self, mainwindow=mainwindow.model)
-        self.btable = BudgetTable(self, view=self.tableView)
-        children = [self.btable.model]
-        self.model.set_children(children)
+        self.btable = BudgetTable(model=self.model.table, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):

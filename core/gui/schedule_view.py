@@ -8,16 +8,30 @@
 
 from hscommon.trans import tr
 from ..const import PaneType
-from .base import BaseView
+from .base import BaseView, MESSAGES_EVERYTHING_CHANGED
+from .schedule_table import ScheduleTable
 
 class ScheduleView(BaseView):
     VIEW_TYPE = PaneType.Schedule
     PRINT_TITLE_FORMAT = tr('Schedules from {start_date} to {end_date}')
+    INVALIDATING_MESSAGES = MESSAGES_EVERYTHING_CHANGED | {'schedule_changed', 'schedule_deleted',
+        'account_deleted'}
     
-    def set_children(self, children):
-        BaseView.set_children(self, children)
-        [self.sctable] = children
+    def __init__(self, view, mainwindow):
+        BaseView.__init__(self, view, mainwindow)
+        self.table = ScheduleTable(self)
+        self.bind_messages(self.INVALIDATING_MESSAGES, self._revalidate)
+    
+    def _revalidate(self):
+        self.table.refresh_and_show_selection()
     
     def delete_item(self):
-        self.sctable.delete()
+        self.table.delete()
+    
+    #--- Events
+    def document_will_close(self):
+        self.table.columns.save_columns()
+    
+    def document_restoring_preferences(self):
+        self.table.columns.restore_columns()
     

@@ -13,7 +13,6 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface MGScheduleTable : MGTable
 {
 }
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 
 /* Public */

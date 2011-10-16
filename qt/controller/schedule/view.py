@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-21
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -19,9 +18,7 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         self.doc = mainwindow.doc
         self._setupUi()
         self.model = ScheduleViewModel(view=self, mainwindow=mainwindow.model)
-        self.sctable = ScheduleTable(self, view=self.tableView)
-        children = [self.sctable.model]
-        self.model.set_children(children)
+        self.sctable = ScheduleTable(model=self.model.table, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):

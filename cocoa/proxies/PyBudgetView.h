@@ -8,6 +8,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGUIContainer.h"
+#import "PyBudgetTable.h"
 
 @interface PyBudgetView : PyGUIContainer {}
+- (PyBudgetTable *)table;
 @end

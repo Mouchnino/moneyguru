@@ -15,9 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyBudgetView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    budgetTable = [[MGBudgetTable alloc] initWithPyParent:[self py] view:tableView];
-    NSArray *children = [NSArray arrayWithObjects:[budgetTable py], nil];
-    [[self py] setChildren:children];
+    budgetTable = [[MGBudgetTable alloc] initWithPy:[[self py] table] view:tableView];
     return self;
 }
         

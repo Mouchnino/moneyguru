@@ -8,11 +8,10 @@
 
 import datetime
 
-from .base import ViewChild
 from .column import Column
 from .table import GUITable, Row, rowattr
 
-class BudgetTable(GUITable, ViewChild):
+class BudgetTable(GUITable):
     SAVENAME = 'BudgetTable'
     COLUMNS = [
         Column('start_date'),
@@ -23,11 +22,10 @@ class BudgetTable(GUITable, ViewChild):
         Column('target'),
         Column('amount'),
     ]
-    INVALIDATING_MESSAGES = set(['budget_changed', 'budget_deleted', 'account_deleted'])
     
-    def __init__(self, view, budget_view):
-        ViewChild.__init__(self, view, budget_view)
-        GUITable.__init__(self)
+    def __init__(self, budget_view):
+        GUITable.__init__(self, document=budget_view.document)
+        self.mainwindow = budget_view.mainwindow
     
     #--- Override
     def _update_selection(self):
@@ -36,9 +34,6 @@ class BudgetTable(GUITable, ViewChild):
     def _fill(self):
         for budget in self.document.budgets:
             self.append(BudgetTableRow(self, budget))
-    
-    def _revalidate(self):
-        self.refresh()
     
     #--- Public
     def delete(self):
@@ -51,13 +46,6 @@ class BudgetTable(GUITable, ViewChild):
     @property
     def selected_budgets(self):
         return [row.budget for row in self.selected_rows]
-    
-    #--- Event handlers
-    budget_changed = GUITable._item_changed
-    budget_deleted = GUITable._item_deleted
-    
-    def edition_must_stop(self):
-        pass # the view doesn't have a stop_editing method
     
 
 class BudgetTableRow(Row):

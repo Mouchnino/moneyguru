@@ -28,7 +28,6 @@ from ..gui.account_reassign_panel import AccountReassignPanel
 from ..gui.account_view import AccountView
 from ..gui.balance_sheet import BalanceSheet
 from ..gui.budget_panel import BudgetPanel
-from ..gui.budget_table import BudgetTable
 from ..gui.budget_view import BudgetView
 from ..gui.completable_edit import CompletableEdit
 from ..gui.completion_lookup import CompletionLookup
@@ -156,8 +155,12 @@ class TestApp(TestAppBase):
         make_gui('emptyview', EmptyView)
         make_table_gui('etable', EntryTable, parent=self.aview)
         make_table_gui('ttable', TransactionTable, parent=self.tview)
-        make_table_gui('sctable', ScheduleTable, parent=self.scview)
-        make_table_gui('btable', BudgetTable, parent=self.bview)
+        self.sctable = self.scview.table
+        self.sctable.view = self.make_logger()
+        self.sctable.columns.view = self.make_logger()
+        self.btable = self.bview.table
+        self.btable.view = self.make_logger()
+        self.btable.columns.view = self.make_logger()
         make_table_gui('gltable', GeneralLedgerTable, parent=self.glview)
         make_gui('apanel', AccountPanel)
         self.apanel.type_list.view = self.make_logger()
@@ -211,10 +214,6 @@ class TestApp(TestAppBase):
         self.tview.set_children(children)
         children = [self.etable, self.balgraph, self.bargraph]
         self.aview.set_children(children)
-        children = [self.sctable]
-        self.scview.set_children(children)
-        children = [self.btable]
-        self.bview.set_children(children)
         children = [self.gltable]
         self.glview.set_children(children)
         # None between bview and empty view is the Cashculator view, which isn't tested
