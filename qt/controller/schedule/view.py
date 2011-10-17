@@ -6,13 +6,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4 import QtGui
+
 from core.gui.schedule_view import ScheduleView as ScheduleViewModel
 
+from ...support.item_view import TableView
 from ..base_view import BaseView
 from .table import ScheduleTable
-from ...ui.schedule_view_ui import Ui_ScheduleView
 
-class ScheduleView(BaseView, Ui_ScheduleView):
+class ScheduleView(BaseView):
     def __init__(self, mainwindow):
         BaseView.__init__(self)
         self.doc = mainwindow.doc
@@ -22,7 +24,18 @@ class ScheduleView(BaseView, Ui_ScheduleView):
         self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
-        self.setupUi(self)
+        self.resize(400, 300)
+        self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.verticalLayout.setMargin(0)
+        self.tableView = TableView(self)
+        self.tableView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tableView.setSortingEnabled(True)
+        self.tableView.horizontalHeader().setHighlightSections(False)
+        self.tableView.horizontalHeader().setMinimumSectionSize(18)
+        self.tableView.verticalHeader().setVisible(False)
+        self.tableView.verticalHeader().setDefaultSectionSize(18)
+        self.verticalLayout.addWidget(self.tableView)
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()

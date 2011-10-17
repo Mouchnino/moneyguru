@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-09-12
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -7,13 +6,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4 import QtGui
+
 from core.gui.general_ledger_view import GeneralLedgerView as GeneralLedgerViewModel
 
+from ...support.item_view import TableView
 from ..base_view import BaseView
 from .table import GeneralLedgerTable
-from ...ui.general_ledger_view_ui import Ui_GeneralLedgerView
 
-class GeneralLedgerView(BaseView, Ui_GeneralLedgerView):
+class GeneralLedgerView(BaseView):
     def __init__(self, mainwindow):
         BaseView.__init__(self)
         self.doc = mainwindow.doc
@@ -25,7 +26,18 @@ class GeneralLedgerView(BaseView, Ui_GeneralLedgerView):
         self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
-        self.setupUi(self)
+        self.resize(400, 300)
+        self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.verticalLayout.setMargin(0)
+        self.tableView = TableView(self)
+        self.tableView.setEditTriggers(QtGui.QAbstractItemView.DoubleClicked|QtGui.QAbstractItemView.EditKeyPressed)
+        self.tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tableView.setSortingEnabled(False)
+        self.tableView.horizontalHeader().setHighlightSections(False)
+        self.tableView.horizontalHeader().setMinimumSectionSize(18)
+        self.tableView.verticalHeader().setVisible(False)
+        self.tableView.verticalHeader().setDefaultSectionSize(18)
+        self.verticalLayout.addWidget(self.tableView)
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()

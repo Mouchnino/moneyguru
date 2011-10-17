@@ -6,12 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QShortcut, QKeySequence
 
-from ..ui.lookup_ui import Ui_Lookup
+from hscommon.trans import tr
+from ..support.search_edit import SearchEdit
 
-class Lookup(QWidget, Ui_Lookup):
+class Lookup(QWidget):
     MODEL_CLASS = None
     
     def __init__(self, parent, model):
@@ -28,7 +30,18 @@ class Lookup(QWidget, Ui_Lookup):
         self._shortcutDown.activated.connect(self.downPressed)
     
     def _setupUi(self):
-        self.setupUi(self)
+        self.setWindowTitle(tr("Lookup", 'Lookup'))
+        self.resize(314, 331)
+        self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.searchEdit = SearchEdit(self)
+        self.verticalLayout.addWidget(self.searchEdit)
+        self.namesList = QtGui.QListWidget(self)
+        self.namesList.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.namesList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.namesList.setUniformItemSizes(True)
+        self.namesList.setSelectionRectVisible(True)
+        self.verticalLayout.addWidget(self.namesList)
+
         self.searchEdit.immediate = True
         seq = QKeySequence(Qt.Key_Up)
         self._shortcutUp = QShortcut(seq, self, None, None, Qt.WidgetShortcut)

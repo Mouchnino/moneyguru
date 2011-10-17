@@ -6,14 +6,17 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QWidget
+from PyQt4.QtGui import QWidget, QTabBar
+
+from hscommon.trans import tr as trbase
 
 from core.gui.import_window import ImportWindow as ImportWindowModel
+from ...support.item_view import TableView
 from .table import ImportTable
-from ...ui.import_window_ui import Ui_ImportWindow
 
-class ImportWindow(QWidget, Ui_ImportWindow):
+class ImportWindow(QWidget):
     def __init__(self, parent, doc):
         QWidget.__init__(self, parent, Qt.Window)
         self._setupUi()
@@ -30,7 +33,53 @@ class ImportWindow(QWidget, Ui_ImportWindow):
         self.swapButton.clicked.connect(self.swapClicked)
     
     def _setupUi(self):
-        self.setupUi(self)
+        tr = lambda s: trbase(s, 'ImportWindow')
+        self.setWindowTitle(tr("Import"))
+        self.resize(557, 407)
+        self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.tabView = QTabBar(self)
+        self.tabView.setMinimumSize(QtCore.QSize(0, 20))
+        self.verticalLayout.addWidget(self.tabView)
+        self.targetAccountLayout = QtGui.QHBoxLayout()
+        self.targetAccountLabel = QtGui.QLabel(tr("Target Account:"))
+        self.targetAccountLayout.addWidget(self.targetAccountLabel)
+        self.targetAccountComboBox = QtGui.QComboBox(self)
+        self.targetAccountComboBox.setMinimumSize(QtCore.QSize(150, 0))
+        self.targetAccountLayout.addWidget(self.targetAccountComboBox)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.targetAccountLayout.addItem(spacerItem)
+        self.groupBox = QtGui.QGroupBox(tr("Some fields are wrong? Swap them!"))
+        self.gridLayout = QtGui.QGridLayout(self.groupBox)
+        self.swapOptionsComboBox = QtGui.QComboBox(self.groupBox)
+        self.swapOptionsComboBox.addItem(tr("Day <--> Month"))
+        self.swapOptionsComboBox.addItem(tr("Month <--> Year"))
+        self.swapOptionsComboBox.addItem(tr("Day <--> Year"))
+        self.swapOptionsComboBox.addItem(tr("Description <--> Payee"))
+        self.swapOptionsComboBox.addItem(tr("Invert Amounts"))
+        self.gridLayout.addWidget(self.swapOptionsComboBox, 0, 0, 1, 2)
+        self.applyToAllCheckBox = QtGui.QCheckBox(tr("Apply to all accounts"))
+        self.gridLayout.addWidget(self.applyToAllCheckBox, 1, 0, 1, 1)
+        self.swapButton = QtGui.QPushButton(tr("Swap"))
+        self.gridLayout.addWidget(self.swapButton, 1, 1, 1, 1)
+        self.targetAccountLayout.addWidget(self.groupBox)
+        self.verticalLayout.addLayout(self.targetAccountLayout)
+        self.tableView = TableView(self)
+        self.tableView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.tableView.setDragEnabled(True)
+        self.tableView.setDragDropMode(QtGui.QAbstractItemView.InternalMove)
+        self.tableView.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tableView.horizontalHeader().setHighlightSections(False)
+        self.tableView.horizontalHeader().setMinimumSectionSize(18)
+        self.tableView.verticalHeader().setVisible(False)
+        self.tableView.verticalHeader().setDefaultSectionSize(18)
+        self.verticalLayout.addWidget(self.tableView)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
+        self.importButton = QtGui.QPushButton(tr("Import"))
+        self.horizontalLayout.addWidget(self.importButton)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         self.tabView.setTabsClosable(True)
         self.tabView.setDrawBase(False)
         self.tabView.setDocumentMode(True)

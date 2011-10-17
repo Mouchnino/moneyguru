@@ -16,7 +16,7 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
-from hscommon.build import (print_and_do, build_all_qt_ui, copy_packages, build_cocoa_localization,
+from hscommon.build import (print_and_do, copy_packages, build_cocoa_localization,
     build_all_qt_locs, move_all)
 
 def parse_args():
@@ -82,18 +82,6 @@ def build_cocoa(dev):
     open('run.py', 'wt').write(run_contents)
 
 def build_qt(dev):
-    print("Building UI units")
-    uipath = op.join('qt', 'ui')
-    build_all_qt_ui(uipath)
-    # This below is a ugly hack to work around the broken resource import system in pyuic
-    for filename in os.listdir(uipath):
-        if not filename.endswith('.py'):
-            continue
-        contents = open(op.join(uipath, filename), 'rt', encoding='utf-8').read()
-        if 'import mg_rc' not in contents:
-            continue
-        contents = contents.replace('import mg_rc', 'from .. import mg_rc')
-        open(op.join(uipath, filename), 'wt', encoding='utf-8').write(contents)
     qrc_path = op.join('qt', 'mg.qrc')
     pyrc_path = op.join('qt', 'mg_rc.py')
     print_and_do("pyrcc4 -py3 {0} > {1}".format(qrc_path, pyrc_path))

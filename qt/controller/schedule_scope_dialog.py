@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-10
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -7,23 +6,54 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog
 
+from hscommon.trans import tr
+
 from core.document import ScheduleScope
 
-from ..ui.schedule_scope_dialog_ui import Ui_ScheduleScopeDialog
-
-class ScheduleScopeDialog(QDialog, Ui_ScheduleScopeDialog):
+class ScheduleScopeDialog(QDialog):
     def __init__(self, parent=None):
         # The flags we pass are that so we don't get the "What's this" button in the title bar
         QDialog.__init__(self, None, Qt.WindowTitleHint | Qt.WindowSystemMenuHint)
-        self.setupUi(self)
+        self._setupUi()
         self._result = ScheduleScope.Local
         
         self.cancelButton.clicked.connect(self.cancelClicked)
         self.globalScopeButton.clicked.connect(self.globalScopeClicked)
         self.localScopeButton.clicked.connect(self.localScopeClicked)
+    
+    def _setupUi(self):
+        trui = lambda s: tr(s, 'ScheduleScopeDialog')
+        self.setWindowTitle(trui("Schedule Modification Scope"))
+        self.resize(333, 133)
+        self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.label = QtGui.QLabel(trui("Do you want this change to affect all future occurrences of this schedule?"))
+        font = QtGui.QFont()
+        font.setWeight(75)
+        font.setBold(True)
+        self.label.setFont(font)
+        self.label.setWordWrap(True)
+        self.verticalLayout.addWidget(self.label)
+        self.label_2 = QtGui.QLabel(trui("You can force global scope (in other words, changing all future occurrences) by holding Shift when you perform the change."))
+        self.label_2.setWordWrap(True)
+        self.verticalLayout.addWidget(self.label_2)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.cancelButton = QtGui.QPushButton(trui("Cancel"))
+        self.cancelButton.setShortcut("Esc")
+        self.horizontalLayout.addWidget(self.cancelButton)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.globalScopeButton = QtGui.QPushButton(trui("All future occurrences"))
+        self.globalScopeButton.setAutoDefault(False)
+        self.horizontalLayout.addWidget(self.globalScopeButton)
+        self.localScopeButton = QtGui.QPushButton(trui("Just this one"))
+        self.localScopeButton.setAutoDefault(False)
+        self.localScopeButton.setDefault(True)
+        self.horizontalLayout.addWidget(self.localScopeButton)
+        self.verticalLayout.addLayout(self.horizontalLayout)
     
     def cancelClicked(self):
         self._result = ScheduleScope.Cancel
