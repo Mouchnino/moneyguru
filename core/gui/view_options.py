@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-07-27
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -48,9 +47,9 @@ class ViewOptions(DocumentGUIObject):
     entry_table_checkno = column_prop('aview', 'etable', 'checkno')
     entry_table_reconciliation_date = column_prop('aview', 'etable', 'reconciliation_date')
     
-    schedule_table_description = column_prop('scview', 'sctable', 'description')
-    schedule_table_payee = column_prop('scview', 'sctable', 'payee')
-    schedule_table_checkno = column_prop('scview', 'sctable', 'checkno')
+    schedule_table_description = column_prop('scview', 'table', 'description')
+    schedule_table_payee = column_prop('scview', 'table', 'payee')
+    schedule_table_checkno = column_prop('scview', 'table', 'checkno')
     
     gledger_table_description = column_prop('glview', 'gltable', 'description')
     gledger_table_payee = column_prop('glview', 'gltable', 'payee')
