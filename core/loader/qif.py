@@ -116,7 +116,7 @@ class Loader(base.Loader):
     def _load(self):
         seen_account_names = set()
         
-        def remove_brakets(name):
+        def remove_brackets(name):
             if name.startswith('[') and name.endswith(']'):
                 return name[1:-1].strip()
             else:
@@ -130,7 +130,7 @@ class Loader(base.Loader):
         
         def parse_split_line(header, data):
             if header == 'S':
-                data = remove_brakets(data)
+                data = remove_brackets(data)
                 if data != self.account_info.name and data in seen_account_names:
                     # This transaction has already been added from the other account(s)
                     self.cancel_transaction()
@@ -154,7 +154,7 @@ class Loader(base.Loader):
             elif header == 'N':
                 self.transaction_info.checkno = data
             elif header == 'L':
-                data = remove_brakets(data)
+                data = remove_brackets(data)
                 if data in seen_account_names:
                     # This transaction has already been added from the other account(s)
                     self.cancel_transaction()
