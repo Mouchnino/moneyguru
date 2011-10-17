@@ -8,7 +8,7 @@
 
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QVBoxLayout, QLabel, QButtonGroup, QRadioButton, QTableView,
-    QAbstractItemView, QDialogButtonBox, QApplication, QDialog, QFileDialog)
+    QAbstractItemView, QDialogButtonBox, QApplication, QDialog, QFileDialog, QCheckBox)
 
 from hscommon.trans import tr as trplain
 from core.gui.export_panel import ExportFormat
@@ -72,11 +72,25 @@ class ExportPanel(Panel):
         self.mainLayout.addWidget(self.exportAsCSVButton)
         self.exportFormatButtons.addButton(self.exportAsCSVButton, ExportFormat.CSV)
         
+        self.label3 = QLabel(tr("Export scope:"))
+        self.mainLayout.addWidget(self.label3)
+        self.dateRangeOnlyCheckbox = QCheckBox(tr("Current date range only"))
+        self.mainLayout.addWidget(self.dateRangeOnlyCheckbox)
+        
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel)
         self.exportButton = self.buttonBox.addButton(tr("Export"), QDialogButtonBox.ActionRole)
         self.mainLayout.addWidget(self.buttonBox)
+    
+    #--- Overrides
+    def _loadFields(self):
+        self.exportAllButton.setChecked(self.model.export_all)
+        self.exportAsQIFButton.setChecked(self.model.export_format == ExportFormat.QIF)
+        self.dateRangeOnlyCheckbox.setChecked(self.model.current_daterange_only)
+    
+    def _saveFields(self):
+        self.model.current_daterange_only = self.dateRangeOnlyCheckbox.isChecked()
     
     #--- Event Handlers
     def exportButtonClicked(self):

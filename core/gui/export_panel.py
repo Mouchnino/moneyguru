@@ -26,6 +26,7 @@ class ExportPanel(MainWindowPanel):
         self.export_all = True
         self.export_format = ExportFormat.QIF
         self.export_path = None
+        self.current_daterange_only = False
         self.account_table.refresh()
     
     def _save(self):
@@ -36,7 +37,11 @@ class ExportPanel(MainWindowPanel):
             ExportFormat.QIF: save_qif,
             ExportFormat.CSV: save_csv,
         }[self.export_format]
-        save_func(self.export_path, accounts)
+        if self.current_daterange_only:
+            daterange = self.document.date_range
+        else:
+            daterange = None
+        save_func(self.export_path, accounts, daterange=daterange)
     
     #--- Public
     def is_exported(self, name):

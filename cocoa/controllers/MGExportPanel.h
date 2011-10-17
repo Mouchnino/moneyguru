@@ -19,6 +19,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSButton *exportButton;
     IBOutlet MGTableView *accountTableView;
     IBOutlet NSMatrix *exportFormatButtons;
+    IBOutlet NSButton *currentDateRangeOnlyButton;
     
     MGExportAccountTable *accountTable;
 }

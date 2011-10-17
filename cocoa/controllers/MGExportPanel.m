@@ -45,12 +45,15 @@ http://www.hardcoded.net/licenses/bsd_license
     [exportAllButtons selectCellAtRow:exportAllRow column:0];
     NSInteger exportFormat = [[self py] exportFormat];
     [exportFormatButtons selectCellAtRow:exportFormat column:0];
+    NSInteger state = [[self py] currentDateRangeOnly] ? NSOnState : NSOffState;
+    [currentDateRangeOnlyButton setState:state];
 }
 
 - (void)saveFields
 {
     NSInteger exportFormat = [exportFormatButtons selectedRow] == 0 ? MGExportFormatQIF : MGExportFormatCSV;
     [[self py] setExportFormat:exportFormat];
+    [[self py] setCurrentDateRangeOnly:[currentDateRangeOnlyButton state] == NSOnState];
 }
 
 /* Actions */

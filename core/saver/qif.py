@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-01-11
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -10,7 +9,7 @@
 from ..model.account import AccountType
 from ..model.date import format_date
 
-def save(filename, accounts):
+def save(filename, accounts, daterange=None):
     def format_amount_for_qif(amount):
         return '%1.2f' % amount.value if amount else '0.00'
     
@@ -25,7 +24,10 @@ def save(filename, accounts):
         lines.append('T%s' % qif_account_type)
         lines.append('^')
         lines.append('!Type:%s' % qif_account_type)
-        for entry in account.entries:
+        entries = account.entries
+        if daterange is not None:
+            entries = [e for e in entries if e.date in daterange]
+        for entry in entries:
             if entry.transaction in txns_seen:
                 continue
             txns_seen.add(entry.transaction)

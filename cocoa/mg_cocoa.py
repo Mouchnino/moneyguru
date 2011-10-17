@@ -808,6 +808,14 @@ class PyExportPanel(PyPanel):
     def setExportFormat_(self, value):
         self.py.export_format = value
     
+    @signature('c@:')
+    def currentDateRangeOnly(self):
+        return self.py.current_daterange_only
+    
+    @signature('v@:c')
+    def setCurrentDateRangeOnly_(self, value):
+        self.py.current_daterange_only = value
+    
     #--- Python --> Cocoa
     def set_table_enabled(self, enabled):
         self.cocoa.setTableEnabled_(enabled)

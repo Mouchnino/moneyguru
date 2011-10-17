@@ -11,13 +11,16 @@ import csv
 from ..model.amount import format_amount
 from ..model.date import format_date
 
-def save(filename, accounts):
+def save(filename, accounts, daterange=None):
     fp = open(filename, 'wt', encoding='utf-8')
     writer = csv.writer(fp, delimiter=';', quotechar='"')
     HEADER = ['Account', 'Date', 'Description', 'Payee', 'Check #', 'Transfer', 'Amount', 'Currency']
     writer.writerow(HEADER)
     for account in accounts:
-        for entry in account.entries:
+        entries = account.entries
+        if daterange is not None:
+            entries = [e for e in entries if e.date in daterange]
+        for entry in entries:
             date_str = format_date(entry.date, 'dd/MM/yyyy')
             transfer = ', '.join(a.name for a in entry.transfer)
             amount = entry.amount

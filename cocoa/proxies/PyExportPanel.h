@@ -18,4 +18,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setExportPath:(NSString *)value;
 - (NSInteger)exportFormat;
 - (void)setExportFormat:(NSInteger)value;
+- (BOOL)currentDateRangeOnly;
+- (void)setCurrentDateRangeOnly:(BOOL)value;
 @end
