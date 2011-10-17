@@ -341,3 +341,13 @@ def test_export_to_qif(tmpdir):
     exported = open(export_filename).read()
     reference = open(testdata.filepath('qif', 'export_ref_transfer.qif')).read()
     eq_(exported, reference)
+
+def test_transfer_splits():
+    # The transfer_splits file has a split between 3 accounts. The particularity in this is that
+    # the account references are placed in [] brackets. There was a bug where bracketed links were
+    # correctly handled in "L" lines, but not in split lines.
+    loader = Loader(USD)
+    loader.parse(testdata.filepath('qif', 'transfer_splits.qif'))
+    loader.load()
+    eq_(len(loader.accounts), 3)
+    eq_(len(loader.transactions), 1)
