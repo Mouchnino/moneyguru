@@ -121,6 +121,12 @@ class TestApp(TestAppBase):
             setattr(holder, '{0}col_gui'.format(name), colview)
             gui.columns.view = colview
         
+        def link_gui(gui):
+            gui.view = self.make_logger()
+            if hasattr(gui, 'columns'): # tables
+                gui.columns.view = self.make_logger()
+            return gui
+        
         self._tmppath = tmppath
         if app is None:
             app = Application(self.make_logger(ApplicationGUI))
@@ -144,36 +150,24 @@ class TestApp(TestAppBase):
         make_gui('emptyview', EmptyView)
         make_table_gui('etable', EntryTable, parent=self.aview)
         make_table_gui('ttable', TransactionTable, parent=self.tview)
-        self.sctable = self.scview.table
-        self.sctable.view = self.make_logger()
-        self.sctable.columns.view = self.make_logger()
-        self.btable = self.bview.table
-        self.btable.view = self.make_logger()
-        self.btable.columns.view = self.make_logger()
+        self.sctable = link_gui(self.scview.table)
+        self.btable = link_gui(self.bview.table)
         make_table_gui('gltable', GeneralLedgerTable, parent=self.glview)
-        self.apanel = self.mw.account_panel
-        self.apanel.view = self.make_logger()
+        self.apanel = link_gui(self.mw.account_panel)
         self.apanel.type_list.view = self.make_logger()
-        self.scpanel = self.mw.schedule_panel
-        self.scpanel.view = self.make_logger()
+        self.scpanel = link_gui(self.mw.schedule_panel)
         self.scpanel.split_table.view = self.make_logger()
-        self.scsplittable = self.scpanel.split_table
+        self.scsplittable = link_gui(self.scpanel.split_table)
         self.scpanel.repeat_type_list.view = self.make_logger()
-        self.tpanel = self.mw.transaction_panel
-        self.tpanel.view = self.make_logger()
+        self.tpanel = link_gui(self.mw.transaction_panel)
         self.tpanel.split_table.view = self.make_logger()
-        self.stable = self.tpanel.split_table
-        self.mepanel = self.mw.mass_edit_panel
-        self.mepanel.view = self.make_logger()
-        self.bpanel = self.mw.budget_panel
-        self.bpanel.view = self.make_logger()
+        self.stable = link_gui(self.tpanel.split_table)
+        self.mepanel = link_gui(self.mw.mass_edit_panel)
+        self.bpanel = link_gui(self.mw.budget_panel)
         self.bpanel.repeat_type_list.view = self.make_logger()
-        self.cdrpanel = self.mw.custom_daterange_panel
-        self.cdrpanel.view = self.make_logger()
-        self.arpanel = self.mw.account_reassign_panel
-        self.arpanel.view = self.make_logger()
-        self.expanel = self.mw.export_panel
-        self.expanel.view = self.make_logger()
+        self.cdrpanel = link_gui(self.mw.custom_daterange_panel)
+        self.arpanel = link_gui(self.mw.account_reassign_panel)
+        self.expanel = link_gui(self.mw.export_panel)
         self.expanel.account_table.view = self.make_logger()
         make_gui('balgraph', AccountBalanceGraph, parent=self.aview)
         make_gui('bargraph', AccountFlowGraph, parent=self.aview)
@@ -185,22 +179,15 @@ class TestApp(TestAppBase):
         make_gui('ipie', IncomePieChart, parent=self.pview)
         make_gui('epie', ExpensesPieChart, parent=self.pview)
         make_table_gui('istatement', IncomeStatement, parent=self.pview)
-        self.sfield = self.mw.search_field
-        self.sfield.view = self.make_logger()
-        self.efbar = self.aview.filter_bar
-        self.efbar.view = self.make_logger()
-        self.tfbar = self.tview.filter_bar
-        self.tfbar.view = self.make_logger()
-        self.drsel = self.mw.daterange_selector
-        self.drsel.view = self.make_logger()
+        self.sfield = link_gui(self.mw.search_field)
+        self.efbar = link_gui(self.aview.filter_bar)
+        self.tfbar = link_gui(self.tview.filter_bar)
+        self.drsel = link_gui(self.mw.daterange_selector)
         make_gui('csvopt', CSVOptions, parent=self.doc)
         make_gui('iwin', ImportWindow, parent=self.doc)
-        self.itable = self.iwin.import_table
-        self.itable.view = self.make_logger()
-        self.alookup = self.mw.account_lookup
-        self.alookup.view = self.make_logger()
-        self.clookup = self.mw.completion_lookup
-        self.clookup.view = self.make_logger()
+        self.itable = link_gui(self.iwin.import_table)
+        self.alookup = link_gui(self.mw.account_lookup)
+        self.clookup = link_gui(self.mw.completion_lookup)
         make_gui('vopts', ViewOptions)
         # set children
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
