@@ -333,12 +333,6 @@ class MainWindow(QMainWindow):
         self.tabBar.setMovable(True)
         self.tabBar.setTabsClosable(True)
         
-        # Restore window size
-        # We don't set geometry if the window was maximized so that if the user de-maximize the
-        # window, it actually shrinks.
-        if self.app.prefs.mainWindowRect is not None and not self.app.prefs.mainWindowIsMaximized:
-            self.setGeometry(self.app.prefs.mainWindowRect)
-
         # Linux setup
         if ISLINUX:
             self.actionCheckForUpdate.setVisible(False) # This only works on Windows
@@ -351,7 +345,6 @@ class MainWindow(QMainWindow):
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
         self.doc.documentPathChanged.connect(self.documentPathChanged)
-        self.app.willSavePrefs.connect(self._savePrefs)
         self.tabBar.currentChanged.connect(self.currentTabChanged)
         self.tabBar.tabCloseRequested.connect(self.tabCloseRequested)
         self.tabBar.tabMoved.connect(self.tabMoved)
@@ -422,10 +415,6 @@ class MainWindow(QMainWindow):
         viewPrinter = ViewPrinter(printer, currentView)
         currentView.fitViewsForPrint(viewPrinter)
         viewPrinter.render()
-    
-    def _savePrefs(self):
-        self.app.prefs.mainWindowIsMaximized = self.isMaximized()
-        self.app.prefs.mainWindowRect = self.geometry()
     
     def _setTabIndex(self, index):
         if not self.tabBar.count():

@@ -12,8 +12,8 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGImportWindow
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithPyClassName:@"PyImportWindow" pyParent:[aDocument py]];
-    [NSBundle loadNibNamed:@"ImportWindow" owner:self];
+    self = [super initWithNibName:@"ImportWindow" pyClassName:@"PyImportWindow" pyParent:[aDocument py]];
+    [self window];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
     importTable = [[MGImportTable alloc] initWithPy:[[self py] importTable] view:importTableView];
@@ -29,6 +29,12 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyImportWindow *)py
 {
     return (PyImportWindow *)py;
+}
+
+/* NSWindowController Overrides */
+- (NSString *)windowFrameAutosaveName
+{
+    return @"ImportWindow";
 }
 
 /* Actions */
@@ -82,7 +88,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)close
 {
-    [window orderOut:self];
+    [[self window] orderOut:self];
 }
 
 - (void)closeSelectedTab
@@ -122,7 +128,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)show
 {
-    [window makeKeyAndOrderFront:self];
+    [[self window] makeKeyAndOrderFront:self];
 }
 
 - (void)updateSelectedPane

@@ -305,3 +305,10 @@ class ImportWindow(DocumentGUIObject):
     
     account_changed = account_added
     account_deleted = account_added
+    
+    def document_will_close(self):
+        self.import_table.columns.save_columns()
+    
+    def document_restoring_preferences(self):
+        self.import_table.columns.restore_columns()
+    

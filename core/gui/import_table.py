@@ -6,9 +6,25 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from .column import Column
 from .table import GUITable, Row
 
 class ImportTable(GUITable):
+    SAVENAME = 'ImportTable'
+    COLUMNS = [
+        Column('will_import'),
+        Column('date'),
+        Column('description'),
+        Column('amount'),
+        Column('bound'),
+        Column('date_import'),
+        Column('description_import'),
+        Column('payee_import'),
+        Column('checkno_import'),
+        Column('transfer_import'),
+        Column('amount_import'),
+    ]
+    
     def __init__(self, import_window):
         GUITable.__init__(self, document=import_window.document)
         self.window = import_window

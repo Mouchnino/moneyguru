@@ -82,16 +82,17 @@ class MoneyGuru(ApplicationBase):
     #--- Event Handling
     def applicationFinishedLaunching(self):
         self.model.initial_registration_setup()
-        if self.prefs.mainWindowIsMaximized:
-            self.mainWindow.showMaximized()
-        else:
-            self.mainWindow.show()
+        self.prefs.restoreGeometry('mainWindowGeometry', self.mainWindow)
+        self.prefs.restoreGeometry('importWindowGeometry', self.importWindow)
+        self.mainWindow.show()
     
     def applicationWillTerminate(self):
         # This line stops the autosave timer which sometimes prevent the app from quitting.
         self.model.autosave_interval = 0
         self.doc.close()
         self.willSavePrefs.emit()
+        self.prefs.saveGeometry('mainWindowGeometry', self.mainWindow)
+        self.prefs.saveGeometry('importWindowGeometry', self.importWindow)
         self.prefs.save()
     
     #--- Signals
