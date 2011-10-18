@@ -687,8 +687,10 @@ Eintrag vom {start_date} bis {end_date}</translation>
         <source>Expense</source>
         <translation>Ausgaben</translation>
     </message>
-    
-	<!-- Columns -->
+</context>
+
+<context>
+    <name>columns</name>
 	<message>
         <source>Change</source>
         <translation>Variation</translation>
@@ -776,6 +778,38 @@ Eintrag vom {start_date} bis {end_date}</translation>
     <message>
         <source>Export</source>
         <translation>Export</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+    <message>
+        <source>Payee</source>
+        <translation>Empfänger</translation>
+    </message>
+    <message>
+        <source>Check #</source>
+        <translation>Scheck #</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translation>Transfer</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Betrag</translation>
+    </message>
+    <message>
+        <source>Increase</source>
+        <translation>Haben</translation>
+    </message>
+    <message>
+        <source>Decrease</source>
+        <translation>Soll</translation>
     </message>
 </context>
 <context>

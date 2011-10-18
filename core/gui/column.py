@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-07-25
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -9,11 +8,14 @@
 
 import copy
 
+from hscommon.trans import tr
+
 class Column:
-    def __init__(self, name, visible=True):
+    def __init__(self, name, display='', visible=True):
         self.name = name
         self.index = 0
         self.width = 0
+        self.display = display
         self.visible = visible
     
 
@@ -42,6 +44,9 @@ class Columns:
             setattr(col, attrname, value)
         except KeyError:
             pass
+    
+    def column_display(self, colname):
+        return self._get_colname_attr(colname, 'display', '')
     
     def column_is_visible(self, colname):
         return self._get_colname_attr(colname, 'visible', True)

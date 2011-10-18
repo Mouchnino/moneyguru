@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-09-12
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -11,7 +10,6 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QFont, QBrush, QColor
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from core.gui.general_ledger_table import GeneralLedgerTable as GeneralLedgerTableModel
 from ...const import EXTRA_ROLE, EXTRA_SPAN_ALL_COLUMNS
 from ..table import DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
@@ -19,16 +17,16 @@ from ..table_with_transactions import TableWithTransactions
 
 class GeneralLedgerTable(TableWithTransactions):
     COLUMNS = [
-        Column('status', '', 25, cantTruncate=True),
-        Column('date', tr('Date'), 86, editor=DATE_EDIT, cantTruncate=True),
-        Column('reconciliation_date', tr('Reconciliation Date'), 110, editor=DATE_EDIT, cantTruncate=True),
-        Column('description', tr('Description'), 150, editor=DESCRIPTION_EDIT),
-        Column('payee', tr('Payee'), 150, editor=PAYEE_EDIT),
-        Column('checkno', tr('Check #'), 100),
-        Column('transfer', tr('Transfer'), 120, editor=ACCOUNT_EDIT),
-        Column('debit', tr('Debit'), 95, alignment=Qt.AlignRight, cantTruncate=True),
-        Column('credit', tr('Credit'), 95, alignment=Qt.AlignRight, cantTruncate=True),
-        Column('balance', tr('Balance'), 110, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('status', 25, cantTruncate=True),
+        Column('date', 86, editor=DATE_EDIT, cantTruncate=True),
+        Column('reconciliation_date', 110, editor=DATE_EDIT, cantTruncate=True),
+        Column('description', 150, editor=DESCRIPTION_EDIT),
+        Column('payee', 150, editor=PAYEE_EDIT),
+        Column('checkno', 100),
+        Column('transfer', 120, editor=ACCOUNT_EDIT),
+        Column('debit', 95, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('credit', 95, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('balance', 110, alignment=Qt.AlignRight, cantTruncate=True),
     ]
     
     def __init__(self, general_ledger_view, view):

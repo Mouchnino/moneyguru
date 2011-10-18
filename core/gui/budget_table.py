@@ -8,19 +8,23 @@
 
 import datetime
 
+from hscommon.trans import tr
+
 from .column import Column
 from .table import GUITable, Row, rowattr
+
+trcol = lambda s: tr(s, 'columns')
 
 class BudgetTable(GUITable):
     SAVENAME = 'BudgetTable'
     COLUMNS = [
-        Column('start_date'),
-        Column('stop_date'),
-        Column('repeat_type'),
-        Column('interval'),
-        Column('account'),
-        Column('target'),
-        Column('amount'),
+        Column('start_date', display=trcol("Start Date")),
+        Column('stop_date', display=trcol("Stop Date")),
+        Column('repeat_type', display=trcol("Repeat Type")),
+        Column('interval', display=trcol("Interval")),
+        Column('account', display=trcol("Account")),
+        Column('target', display=trcol("Target")),
+        Column('amount', display=trcol("Amount")),
     ]
     
     def __init__(self, budget_view):

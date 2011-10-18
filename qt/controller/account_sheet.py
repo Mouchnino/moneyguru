@@ -91,13 +91,13 @@ class AccountSheet(TreeModel, ColumnBearer):
     
     def __init__(self, doc, model, view):
         TreeModel.__init__(self)
-        ColumnBearer.__init__(self, view.header())
         self.doc = doc
         self.app = doc.app
         self.view = view
         self.model = model
         self.model.columns.view = self
         self.view.setModel(self)
+        ColumnBearer.__init__(self, view.header())
         self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)
         

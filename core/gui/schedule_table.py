@@ -13,19 +13,21 @@ from ..model.amount import convert_amount
 from .column import Column
 from .table import GUITable, Row, rowattr
 
+trcol = lambda s: tr(s, 'columns')
+
 class ScheduleTable(GUITable):
     SAVENAME = 'ScheduleTable'
     COLUMNS = [
-        Column('start_date'),
-        Column('stop_date'),
-        Column('repeat_type'),
-        Column('interval'),
-        Column('checkno', visible=False),
-        Column('description'),
-        Column('payee', visible=False),
-        Column('from'),
-        Column('to'),
-        Column('amount'),
+        Column('start_date', display=trcol('Start Date')),
+        Column('stop_date', display=trcol('Stop Date')),
+        Column('repeat_type', display=trcol('Repeat Type')),
+        Column('interval', display=trcol('Interval')),
+        Column('checkno', display=trcol('Description'), visible=False),
+        Column('description', display=trcol('Payee')),
+        Column('payee', display=trcol('Check #'), visible=False),
+        Column('from', display=trcol('From')),
+        Column('to', display=trcol('To')),
+        Column('amount', display=trcol('Amount')),
     ]
     
     def __init__(self, schedule_view):

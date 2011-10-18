@@ -27,17 +27,17 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        {@"will_import", @"", 14, 14, 14, NO, [NSButtonCell class]},
-        {@"date", @"Date", 80, 40, 0, NO, nil},
-        {@"description", @"Description", 100, 40, 0, NO, nil},
-        {@"amount", @"Amount", 80, 10, 0, NO, nil},
-        {@"bound", @"", 14, 14, 14, NO, [MGImportBindingCell class]},
-        {@"date_import", @"Date", 80, 10, 0, NO, nil},
-        {@"description_import", @"Description", 100, 10, 0, NO, nil},
-        {@"payee_import", @"Payee", 80, 10, 0, NO, nil},
-        {@"checkno_import", @"Check #", 60, 10, 0, NO, nil},
-        {@"transfer_import", @"Transfer", 110, 10, 0, NO, nil},
-        {@"amount_import", @"Amount", 80, 10, 0, NO, nil},
+        {@"will_import", 14, 14, 14, NO, [NSButtonCell class]},
+        {@"date", 80, 40, 0, NO, nil},
+        {@"description", 100, 40, 0, NO, nil},
+        {@"amount", 80, 10, 0, NO, nil},
+        {@"bound", 14, 14, 14, NO, [MGImportBindingCell class]},
+        {@"date_import", 80, 10, 0, NO, nil},
+        {@"description_import", 100, 10, 0, NO, nil},
+        {@"payee_import", 80, 10, 0, NO, nil},
+        {@"checkno_import", 60, 10, 0, NO, nil},
+        {@"transfer_import", 110, 10, 0, NO, nil},
+        {@"amount_import", 80, 10, 0, NO, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

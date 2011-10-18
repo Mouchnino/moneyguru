@@ -29,18 +29,18 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        {@"status", @"", 16, 16, 16, NO, [MGReconciliationCell class]},
-        {@"date", @"Date", 80, 60, 0, YES, nil},
-        {@"reconciliation_date", @"Reconciliation Date", 110, 60, 0, YES, nil},
-        {@"checkno", @"Check #", 72, 40, 0, YES, nil},
-        {@"description", @"Description", 278, 80, 0, YES, nil},
-        {@"payee", @"Payee", 80, 80, 0, YES, nil},
-        {@"transfer", @"Transfer", 140, 80, 0, YES, [MGTextFieldCell class]},
-        {@"increase", @"Increase", 80, 80, 0, YES, nil},
-        {@"decrease", @"Decrease", 80, 80, 0, YES, nil},
-        {@"debit", @"Debit", 80, 80, 0, YES, nil},
-        {@"credit", @"Credit", 80, 80, 0, YES, nil},
-        {@"balance", @"Balance", 90, 90, 0, YES, nil},
+        {@"status", 16, 16, 16, NO, [MGReconciliationCell class]},
+        {@"date", 80, 60, 0, YES, nil},
+        {@"reconciliation_date", 110, 60, 0, YES, nil},
+        {@"checkno", 72, 40, 0, YES, nil},
+        {@"description", 278, 80, 0, YES, nil},
+        {@"payee", 80, 80, 0, YES, nil},
+        {@"transfer", 140, 80, 0, YES, [MGTextFieldCell class]},
+        {@"increase", 80, 80, 0, YES, nil},
+        {@"decrease", 80, 80, 0, YES, nil},
+        {@"debit", 80, 80, 0, YES, nil},
+        {@"credit", 80, 80, 0, YES, nil},
+        {@"balance", 90, 90, 0, YES, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

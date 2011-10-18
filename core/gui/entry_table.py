@@ -8,24 +8,27 @@
 
 import datetime
 
+from hscommon.trans import tr
 from .column import Column
-from .entry_table_base import EntryTableBase, EntryTableRow, PreviousBalanceRow, TotalRow
+from .entry_table_base import EntryTableBase, PreviousBalanceRow, TotalRow
+
+trcol = lambda s: tr(s, 'columns')
 
 class EntryTable(EntryTableBase):
     SAVENAME = 'EntryTable'
     COLUMNS = [
-        Column('status'),
-        Column('date'),
-        Column('reconciliation_date', visible=False),
-        Column('checkno', visible=False),
-        Column('description'),
-        Column('payee', visible=False),
-        Column('transfer'),
-        Column('increase'),
-        Column('decrease'),
-        Column('debit', visible=False),
-        Column('credit', visible=False),
-        Column('balance'),
+        Column('status', display=''),
+        Column('date', display=trcol("Date")),
+        Column('reconciliation_date', display=trcol("Reconciliation Date"), visible=False),
+        Column('checkno', display=trcol("Check #"), visible=False),
+        Column('description', display=trcol("Description")),
+        Column('payee', display=trcol("Payee"), visible=False),
+        Column('transfer', display=trcol("Transfer")),
+        Column('increase', display=trcol("Increase")),
+        Column('decrease', display=trcol("Decrease")),
+        Column('debit', display=trcol("Debit"), visible=False),
+        Column('credit', display=trcol("Credit"), visible=False),
+        Column('balance', display=trcol("Balance")),
     ]
     INVALIDATING_MESSAGES = EntryTableBase.INVALIDATING_MESSAGES | {'shown_account_changed'}
     

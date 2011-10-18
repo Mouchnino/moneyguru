@@ -6,9 +6,20 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import tr
 from .table import GUITable, Row, RowWithDebitAndCreditMixIn
+from .column import Column
+
+trcol = lambda s: tr(s, 'columns')
 
 class SplitTable(GUITable):
+    COLUMNS = [
+        Column('account', display=trcol("Account")),
+        Column('memo', display=trcol("Memo")),
+        Column('debit', display=trcol("Debit")),
+        Column('credit', display=trcol("Credit")),
+    ]
+    
     def __init__(self, transaction_panel):
         GUITable.__init__(self, document=transaction_panel.document)
         self.panel = transaction_panel

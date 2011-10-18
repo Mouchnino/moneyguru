@@ -28,14 +28,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        {@"status", @"", 16, 16, 16, NO, [MGReconciliationCell class]},
-        {@"date", @"Date", 80, 60, 0, YES, nil},
-        {@"checkno", @"Check #", 72, 40, 0, YES, nil},
-        {@"description", @"Description", 310, 80, 0, YES, nil},
-        {@"payee", @"Payee", 85, 80, 0, YES, nil},
-        {@"from", @"From", 136, 70, 0, YES, [MGTextFieldCell class]},
-        {@"to", @"To", 135, 70, 0, YES, [MGTextFieldCell class]},
-        {@"amount", @"Amount", 90, 70, 0, YES, nil},
+        {@"status", 16, 16, 16, NO, [MGReconciliationCell class]},
+        {@"date", 80, 60, 0, YES, nil},
+        {@"checkno", 72, 40, 0, YES, nil},
+        {@"description", 310, 80, 0, YES, nil},
+        {@"payee", 85, 80, 0, YES, nil},
+        {@"from", 136, 70, 0, YES, [MGTextFieldCell class]},
+        {@"to", 135, 70, 0, YES, [MGTextFieldCell class]},
+        {@"amount", 90, 70, 0, YES, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

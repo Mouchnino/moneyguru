@@ -6,23 +6,26 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import tr
 from .column import Column
 from .table import GUITable, Row
+
+trcol = lambda s: tr(s, 'columns')
 
 class ImportTable(GUITable):
     SAVENAME = 'ImportTable'
     COLUMNS = [
-        Column('will_import'),
-        Column('date'),
-        Column('description'),
-        Column('amount'),
-        Column('bound'),
-        Column('date_import'),
-        Column('description_import'),
-        Column('payee_import'),
-        Column('checkno_import'),
-        Column('transfer_import'),
-        Column('amount_import'),
+        Column('will_import', display=''),
+        Column('date', display=trcol("Date")),
+        Column('description', display=trcol("Description")),
+        Column('amount', display=trcol("Amount")),
+        Column('bound', display=''),
+        Column('date_import', display=trcol("Date")),
+        Column('description_import', display=trcol("Description")),
+        Column('payee_import', display=trcol("Payee")),
+        Column('checkno_import', display=trcol("Check #")),
+        Column('transfer_import', display=trcol("Transfer")),
+        Column('amount_import', display=trcol("Amount")),
     ]
     
     def __init__(self, import_window):

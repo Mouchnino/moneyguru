@@ -22,12 +22,12 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     HSColumnDef defs[] = {
         /* Account column is defined in XIB */
-        {@"account_number", @"Account #", 64, 10, 0, NO, nil},
-        {@"end", @"End", 100, 10, 0, NO, [MGAmountCell class]},
-        {@"delta", @"Change", 100, 10, 0, NO, [MGAmountCell class]},
-        {@"delta_perc", @"Change %", 60, 10, 0, NO, [MGAmountCell class]},
-        {@"start", @"Start", 100, 10, 0, NO, [MGAmountCell class]},
-        {@"budgeted", @"Budgeted", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"account_number", 64, 10, 0, NO, nil},
+        {@"end", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"delta", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"delta_perc", 60, 10, 0, NO, [MGAmountCell class]},
+        {@"start", 100, 10, 0, NO, [MGAmountCell class]},
+        {@"budgeted", 100, 10, 0, NO, [MGAmountCell class]},
         nil
     };
     [[self columns] initializeColumns:defs];

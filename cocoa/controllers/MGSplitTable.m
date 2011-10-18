@@ -24,10 +24,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        {@"account", @"Account", 90, 40, 0, NO, nil},
-        {@"memo", @"Memo #", 44, 10, 0, NO, nil},
-        {@"debit", @"Debit", 90, 40, 0, NO, nil},
-        {@"credit", @"Credit", 90, 40, 0, NO, nil},
+        {@"account", 90, 40, 0, NO, nil},
+        {@"memo", 44, 10, 0, NO, nil},
+        {@"debit", 90, 40, 0, NO, nil},
+        {@"credit", 90, 40, 0, NO, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

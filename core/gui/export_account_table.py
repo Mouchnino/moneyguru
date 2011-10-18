@@ -6,11 +6,19 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import tr
 from ..model.account import ACCOUNT_SORT_KEY
 from .column import Column
 from .table import GUITable, Row
 
+trcol = lambda s: tr(s, 'columns')
+
 class ExportAccountTable(GUITable):
+    COLUMNS = [
+        Column('name', display=trcol("Account")),
+        Column('export', display=trcol("Export")),
+    ]
+    
     def __init__(self, export_panel):
         self.document = export_panel.document
         self.panel = export_panel

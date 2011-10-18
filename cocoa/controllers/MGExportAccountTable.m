@@ -20,8 +20,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        {@"name", @"Account", 100, 20, 0, NO, nil},
-        {@"export", @"Export", 60, 60, 60, NO, [NSButtonCell class]},
+        {@"name", 100, 20, 0, NO, nil},
+        {@"export", 60, 60, 60, NO, [NSButtonCell class]},
         nil
     };
     [[self columns] initializeColumns:defs];

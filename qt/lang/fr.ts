@@ -682,9 +682,11 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <source>Expense</source>
         <translation>Dépenses</translation>
-    </message>
-    
-	<!-- Columns -->
+    </message>    
+</context>
+
+<context>
+    <name>columns</name>
 	<message>
         <source>Change</source>
         <translation>Variation</translation>
@@ -773,6 +775,38 @@ Entrées de {start_date} à {end_date}</translation>
         <source>Export</source>
         <translation>Exporter</translation>
     </message>
+    <message>
+        <source>Date</source>
+        <translation>Date</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Payee</source>
+        <translation>Tiers</translation>
+    </message>
+    <message>
+        <source>Check #</source>
+        <translation># Chèque</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translation>Transfert</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Montant</translation>
+    </message>
+    <message>
+        <source>Increase</source>
+        <translation>Dépôt</translation>
+    </message>
+    <message>
+        <source>Decrease</source>
+        <translation>Retrait</translation>
+    </message>    
 </context>
 <context>
     <name>AccountPanel</name>

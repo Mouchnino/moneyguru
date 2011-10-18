@@ -9,16 +9,18 @@ from ..model.account import AccountType
 from .column import Column
 from .report import Report, get_delta_perc
 
+trcol = lambda s: tr(s, 'columns')
+
 class IncomeStatement(Report):
     SAVENAME = 'IncomeStatement'
     COLUMNS = [
-        Column('name'),
-        Column('account_number', visible=False),
-        Column('cash_flow'),
-        Column('delta', visible=False),
-        Column('delta_perc', visible=False),
-        Column('last_cash_flow'),
-        Column('budgeted'),
+        Column('name', display=trcol("Account")),
+        Column('account_number', display=trcol("Account #"), visible=False),
+        Column('cash_flow', display=trcol("Current")),
+        Column('delta', display=trcol("Last"), visible=False),
+        Column('delta_perc', display=trcol("Change"), visible=False),
+        Column('last_cash_flow', display=trcol("Change %")),
+        Column('budgeted', display=trcol("Budgeted")),
     ]
     
     def __init__(self, view, profit_view):

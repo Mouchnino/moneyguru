@@ -9,19 +9,18 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from core.gui.income_statement import IncomeStatement as IncomeStatementModel
-from ..account_sheet import AccountSheet, AccountSheetDelegate
+from ..account_sheet import AccountSheet
 
 class ProfitSheet(AccountSheet):
     COLUMNS = [
-        Column('name', tr('Account'), 133),
-        Column('account_number', tr('Account #'), 80),
-        Column('cash_flow', tr('Current'), 100, alignment=Qt.AlignRight),
-        Column('last_cash_flow', tr('Last'), 100, alignment=Qt.AlignRight),
-        Column('delta', tr('Change'), 100, alignment=Qt.AlignRight),
-        Column('delta_perc', tr('Change %'), 100),
-        Column('budgeted', tr('Budgeted'), 100, alignment=Qt.AlignRight),
+        Column('name', 133),
+        Column('account_number', 80),
+        Column('cash_flow', 100, alignment=Qt.AlignRight),
+        Column('last_cash_flow', 100, alignment=Qt.AlignRight),
+        Column('delta', 100, alignment=Qt.AlignRight),
+        Column('delta_perc', 100),
+        Column('budgeted', 100, alignment=Qt.AlignRight),
     ]
     AMOUNT_ATTRS = {'cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'}
     BOLD_ATTRS = {'cash_flow', }

@@ -38,14 +38,14 @@ class TransactionTableDelegate(TableDelegate):
 
 class TransactionTable(TableWithTransactions):
     COLUMNS = [
-        Column('status', '', 25, cantTruncate=True),
-        Column('date', tr('Date'), 86, editor=DATE_EDIT, cantTruncate=True),
-        Column('description', tr('Description'), 230, editor=DESCRIPTION_EDIT),
-        Column('payee', tr('Payee'), 150, editor=PAYEE_EDIT),
-        Column('checkno', tr('Check #'), 80),
-        Column('from', tr('From'), 120, editor=ACCOUNT_EDIT),
-        Column('to', tr('To'), 120, editor=ACCOUNT_EDIT),
-        Column('amount', tr('Amount'), 100, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('status', 25, cantTruncate=True),
+        Column('date', 86, editor=DATE_EDIT, cantTruncate=True),
+        Column('description', 230, editor=DESCRIPTION_EDIT),
+        Column('payee', 150, editor=PAYEE_EDIT),
+        Column('checkno', 80),
+        Column('from', 120, editor=ACCOUNT_EDIT),
+        Column('to', 120, editor=ACCOUNT_EDIT),
+        Column('amount', 100, alignment=Qt.AlignRight, cantTruncate=True),
     ]
     
     def __init__(self, transaction_view, view):

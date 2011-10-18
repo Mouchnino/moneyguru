@@ -17,17 +17,19 @@ from .column import Column
 from .table import Row, RowWithDateMixIn, rowattr
 from .transaction_table_base import TransactionTableBase
 
+trcol = lambda s: tr(s, 'columns')
+
 class TransactionTable(TransactionTableBase):
     SAVENAME = 'TransactionTable'
     COLUMNS = [
-        Column('status'),
-        Column('date'),
-        Column('checkno', visible=False),
-        Column('description'),
-        Column('payee', visible=False),
-        Column('from'),
-        Column('to'),
-        Column('amount'),
+        Column('status', display=''),
+        Column('date', display=trcol('Date')),
+        Column('checkno', display=trcol('Description'), visible=False),
+        Column('description', display=trcol('Payee')),
+        Column('payee', display=trcol('Check #'), visible=False),
+        Column('from', display=trcol('From')),
+        Column('to', display=trcol('To')),
+        Column('amount', display=trcol('Amount')),
     ]
     
     def __init__(self, view, transaction_view):

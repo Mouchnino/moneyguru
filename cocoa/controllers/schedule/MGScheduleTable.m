@@ -22,16 +22,16 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        {@"start_date", @"Start Date", 80, 60, 0, YES, nil},
-        {@"stop_date", @"Stop Date", 80, 60, 0, YES, nil},
-        {@"repeat_type", @"Repeat Type", 80, 60, 0, YES, nil},
-        {@"interval", @"Interval", 60, 60, 0, YES, nil},
-        {@"checkno", @"Check #", 72, 40, 0, YES, nil},
-        {@"description", @"Description", 150, 80, 0, YES, nil},
-        {@"payee", @"Payee", 85, 80, 0, YES, nil},
-        {@"from", @"From", 118, 70, 0, YES, nil},
-        {@"to", @"To", 118, 70, 0, YES, nil},
-        {@"amount", @"Amount", 90, 80, 0, YES, nil},
+        {@"start_date", 80, 60, 0, YES, nil},
+        {@"stop_date", 80, 60, 0, YES, nil},
+        {@"repeat_type", 80, 60, 0, YES, nil},
+        {@"interval", 60, 60, 0, YES, nil},
+        {@"checkno", 72, 40, 0, YES, nil},
+        {@"description", 150, 80, 0, YES, nil},
+        {@"payee", 85, 80, 0, YES, nil},
+        {@"from", 118, 70, 0, YES, nil},
+        {@"to", 118, 70, 0, YES, nil},
+        {@"amount", 90, 80, 0, YES, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

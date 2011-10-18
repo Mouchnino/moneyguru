@@ -13,16 +13,18 @@ from ..model.date import DateRange, ONE_DAY
 from .column import Column
 from .report import Report, get_delta_perc
 
+trcol = lambda s: tr(s, 'columns')
+
 class BalanceSheet(Report):
     SAVENAME = 'BalanceSheet'
     COLUMNS = [
-        Column('name'),
-        Column('account_number', visible=False),
-        Column('end'),
-        Column('delta', visible=False),
-        Column('delta_perc', visible=False),
-        Column('start'),
-        Column('budgeted'),
+        Column('name', display=trcol("Account")),
+        Column('account_number', display=trcol("Account #"), visible=False),
+        Column('end', display=trcol("End")),
+        Column('delta', display=trcol("Start"), visible=False),
+        Column('delta_perc', display=trcol("Change"), visible=False),
+        Column('start', display=trcol("Change %")),
+        Column('budgeted', display=trcol("Budgeted")),
     ]
     
     def __init__(self, view, networth_view):

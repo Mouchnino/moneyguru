@@ -7,20 +7,18 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
-from PyQt4.QtGui import QFont
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from .table import Table, ACCOUNT_EDIT
 
 MIME_INDEX = 'application/moneyguru.splitindex'
 
 class SplitTable(Table):
     COLUMNS = [
-        Column('account', tr('Account'), 100, editor=ACCOUNT_EDIT),
-        Column('memo', tr('Memo'), 70),
-        Column('debit', tr('Debit'), 90, alignment=Qt.AlignRight),
-        Column('credit', tr('Credit'), 90, alignment=Qt.AlignRight),
+        Column('account', 100, editor=ACCOUNT_EDIT),
+        Column('memo', 70),
+        Column('debit', 90, alignment=Qt.AlignRight),
+        Column('credit', 90, alignment=Qt.AlignRight),
     ]
     INVALID_INDEX_FLAGS = Qt.ItemIsEnabled | Qt.ItemIsDropEnabled
     

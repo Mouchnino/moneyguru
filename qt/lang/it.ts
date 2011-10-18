@@ -681,8 +681,10 @@ Entries from {start_date} to {end_date}</source>
         <source>Expense</source>
         <translation>Uscite</translation>
     </message>
-    
-	<!-- Columns -->
+</context>
+
+<context>
+    <name>columns</name>
 	<message>
         <source>Change</source>
         <translation>Variazione</translation>
@@ -770,6 +772,38 @@ Entries from {start_date} to {end_date}</source>
     <message>
         <source>Export</source>
         <translation>Esporta</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descrizione</translation>
+    </message>
+    <message>
+        <source>Payee</source>
+        <translation>Beneficiario</translation>
+    </message>
+    <message>
+        <source>Check #</source>
+        <translation>Conto #</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translation>Trasferimento</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Ammontare</translation>
+    </message>
+    <message>
+        <source>Increase</source>
+        <translation>Incremento</translation>
+    </message>
+    <message>
+        <source>Decrease</source>
+        <translation>Decremento</translation>
     </message>
 </context>
 <context>

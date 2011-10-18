@@ -10,13 +10,12 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QHeaderView
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from .table import Table
 
 class ExportAccountTable(Table):
     COLUMNS = [
-        Column('name', tr('Account'), 80),
-        Column('export', tr('Export'), 60),
+        Column('name', 80),
+        Column('export', 60),
     ]
         
     def __init__(self, model, view):

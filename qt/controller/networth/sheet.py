@@ -9,22 +9,21 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from core.gui.balance_sheet import BalanceSheet as BalanceSheetModel
-from ..account_sheet import AccountSheet, AccountSheetDelegate
+from ..account_sheet import AccountSheet
 
 class NetWorthSheet(AccountSheet):
     COLUMNS = [
-        Column('name', tr('Account'), 133),
-        Column('account_number', tr('Account #'), 80),
-        Column('end', tr('End'), 100, alignment=Qt.AlignRight),
-        Column('start', tr('Start'), 100, alignment=Qt.AlignRight),
-        Column('delta', tr('Change'), 100, alignment=Qt.AlignRight),
-        Column('delta_perc', tr('Change %'), 100),
-        Column('budgeted', tr('Budgeted'), 100, alignment=Qt.AlignRight),
+        Column('name', 133),
+        Column('account_number', 80),
+        Column('end', 100, alignment=Qt.AlignRight),
+        Column('start', 100, alignment=Qt.AlignRight),
+        Column('delta', 100, alignment=Qt.AlignRight),
+        Column('delta_perc', 100),
+        Column('budgeted', 100, alignment=Qt.AlignRight),
     ]
-    AMOUNT_ATTRS = set(['end', 'start', 'delta', 'delta_perc', 'budgeted'])
-    BOLD_ATTRS = set(['end'])
+    AMOUNT_ATTRS = {'end', 'start', 'delta', 'delta_perc', 'budgeted'}
+    BOLD_ATTRS = {'end'}
     
     def __init__(self, networth_view, view):
         model = BalanceSheetModel(view=self, networth_view=networth_view.model)

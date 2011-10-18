@@ -6,10 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import tr
 from ..model.account import sort_accounts
 from .table import Row
 from .column import Column
 from .entry_table_base import EntryTableBase, EntryTableRow, TotalRow, PreviousBalanceRow
+
+trcol = lambda s: tr(s, 'columns')
 
 class AccountRow(Row):
     def __init__(self, table, account):
@@ -30,16 +33,16 @@ class GeneralLedgerRow(EntryTableRow):
 class GeneralLedgerTable(EntryTableBase):
     SAVENAME = 'GeneralLedgerTable'
     COLUMNS = [
-        Column('status'),
-        Column('date'),
-        Column('reconciliation_date', visible=False),
-        Column('checkno', visible=False),
-        Column('description'),
-        Column('payee', visible=False),
-        Column('transfer'),
-        Column('debit'),
-        Column('credit'),
-        Column('balance'),
+        Column('status', display=''),
+        Column('date', display=trcol("Date")),
+        Column('reconciliation_date', display=trcol("Reconciliation Date"), visible=False),
+        Column('checkno', display=trcol("Description"), visible=False),
+        Column('description', display=trcol("Payee")),
+        Column('payee', display=trcol("Check #"), visible=False),
+        Column('transfer', display=trcol("Transfer")),
+        Column('debit', display=trcol("Debit")),
+        Column('credit', display=trcol("Credit")),
+        Column('balance', display=trcol("Balance")),
     ]
     ENTRY_ROWCLASS = GeneralLedgerRow
     

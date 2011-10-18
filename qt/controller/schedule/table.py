@@ -9,21 +9,20 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from ..table import Table
 
 class ScheduleTable(Table):
     COLUMNS = [
-        Column('start_date', tr('Start Date'), 80),
-        Column('stop_date', tr('Stop Date'), 80),
-        Column('repeat_type', tr('Repeat Type'), 80),
-        Column('interval', tr('Interval'), 50),
-        Column('description', tr('Description'), 110),
-        Column('payee', tr('Payee'), 110),
-        Column('checkno', tr('Check #'), 70),
-        Column('from', tr('From'), 100),
-        Column('to', tr('To'), 100),
-        Column('amount', tr('Amount'), 97, alignment=Qt.AlignRight),
+        Column('start_date', 80),
+        Column('stop_date', 80),
+        Column('repeat_type', 80),
+        Column('interval', 50),
+        Column('description', 110),
+        Column('payee', 110),
+        Column('checkno', 70),
+        Column('from', 100),
+        Column('to', 100),
+        Column('amount', 97, alignment=Qt.AlignRight),
     ]
     
     def __init__(self, model, view):

@@ -683,8 +683,10 @@ Entrées de {start_date} à {end_date}</translation>
         <source>Expense</source>
         <translation>Výdaj</translation>
     </message>
-    
-	<!-- Columns -->
+</context>
+
+<context>
+    <name>columns</name>
 	<message>
         <source>Change</source>
         <translation>Změna</translation>
@@ -772,6 +774,38 @@ Entrées de {start_date} à {end_date}</translation>
     <message>
         <source>Export</source>
         <translation>Export</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Popis</translation>
+    </message>
+    <message>
+        <source>Payee</source>
+        <translation>Příjemce</translation>
+    </message>
+    <message>
+        <source>Check #</source>
+        <translation>Šek č.</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translation>Přesun</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Částka</translation>
+    </message>
+    <message>
+        <source>Increase</source>
+        <translation>Přírůstek</translation>
+    </message>
+    <message>
+        <source>Decrease</source>
+        <translation>Úbytek</translation>
     </message>
 </context>
 <context>
