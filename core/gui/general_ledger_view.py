@@ -29,8 +29,12 @@ class GeneralLedgerView(BaseView):
     def _revalidate(self):
         self._refresh_totals()
     
+    #--- Public
     def delete_item(self):
         self.gltable.delete()
+    
+    def edit_item(self):
+        self.mainwindow.edit_selected_transactions()
     
     def new_item(self):
         self.gltable.add()

@@ -25,6 +25,13 @@ class ScheduleView(BaseView):
     def _revalidate(self):
         self.table.refresh_and_show_selection()
     
+    #--- Public
+    def new_item(self):
+        self.mainwindow.schedule_panel.new()
+    
+    def edit_item(self):
+        self.mainwindow.schedule_panel.load()
+    
     def delete_item(self):
         self.table.delete()
     

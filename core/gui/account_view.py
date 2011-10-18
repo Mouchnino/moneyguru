@@ -79,6 +79,16 @@ class AccountView(BaseView):
     def duplicate_item(self):
         self.etable.duplicate_selected()
     
+    def edit_item(self):
+        self.mainwindow.edit_selected_transactions()
+    
+    def navigate_back(self):
+        """When the entry table is shown, go back to the appropriate report."""
+        if self.mainwindow.shown_account.is_balance_sheet_account():
+            self.mainwindow.select_balance_sheet()
+        else:
+            self.mainwindow.select_income_statement()
+    
     def move_down(self):
         self.etable.move_down()
     

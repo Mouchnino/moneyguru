@@ -25,6 +25,13 @@ class BudgetView(BaseView):
     def _revalidate(self):
         self.table.refresh_and_show_selection()
     
+    #--- Public
+    def new_item(self):
+        self.mainwindow.budget_panel.new()
+    
+    def edit_item(self):
+        self.mainwindow.budget_panel.load()
+    
     def delete_item(self):
         self.table.delete()
     

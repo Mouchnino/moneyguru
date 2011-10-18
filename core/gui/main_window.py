@@ -97,7 +97,6 @@ class MainWindow(Repeater):
             if isinstance(child, Listener):
                 child.connect()
     
-    # We don't override disconnect because we never disconnect the main window anyway...
     #--- Private
     def _add_pane(self, pane):
         self.panes.append(pane)
@@ -153,6 +152,11 @@ class MainWindow(Repeater):
     
     def _invalidate_visible_entries(self):
         self._account2visibleentries = {}
+    
+    def _perform_if_possible(self, action_name):
+        current_view = self._current_pane.view
+        if current_view.can_perform(action_name):
+            getattr(current_view, action_name)()
     
     def _restore_default_panes(self):
         pane_types = [PaneType.NetWorth, PaneType.Profit, PaneType.Transaction,
@@ -249,30 +253,23 @@ class MainWindow(Repeater):
             self.view.change_current_pane()
     
     def delete_item(self):
-        self._current_pane.view.delete_item()
+        self._perform_if_possible('delete_item')
     
     def duplicate_item(self):
-        current_view = self._current_pane.view
-        if current_view in (self.tview, self.aview):
-            current_view.duplicate_item()
+        self._perform_if_possible('duplicate_item')
     
     def edit_item(self):
         try:
-            current_view = self._current_pane.view
-            if current_view in (self.nwview, self.pview):
-                current_view.edit_item()
-            elif current_view in (self.aview, self.tview, self.glview):
-                editable_txns = [txn for txn in self.selected_transactions if not isinstance(txn, BudgetSpawn)]
-                if len(editable_txns) > 1:
-                    self.mass_edit_panel.load()
-                elif len(editable_txns) == 1:
-                    self.transaction_panel.load()
-            elif current_view is self.scview:
-                self.schedule_panel.load()
-            elif current_view is self.bview:
-                self.budget_panel.load()
+            self._perform_if_possible('edit_item')
         except OperationAborted:
             pass
+    
+    def edit_selected_transactions(self):
+        editable_txns = [txn for txn in self.selected_transactions if not isinstance(txn, BudgetSpawn)]
+        if len(editable_txns) > 1:
+            self.mass_edit_panel.load()
+        elif len(editable_txns) == 1:
+            self.transaction_panel.load()
     
     def export(self):
         self.export_panel.load()
@@ -296,14 +293,10 @@ class MainWindow(Repeater):
             self.edit_item()
     
     def move_down(self):
-        current_view = self._current_pane.view
-        if current_view in (self.tview, self.aview):
-            current_view.move_down()
+        self._perform_if_possible('move_down')
     
     def move_up(self):
-        current_view = self._current_pane.view
-        if current_view in (self.tview, self.aview):
-            current_view.move_up()
+        self._perform_if_possible('move_up')
     
     def move_pane(self, pane_index, dest_index):
         pane = self.panes[pane_index]
@@ -313,30 +306,17 @@ class MainWindow(Repeater):
         self.view.refresh_panes()
     
     def navigate_back(self):
-        """When the entry table is shown, go back to the appropriate report"""
-        assert self._current_pane.view is self.aview # not supposed to be called outside the entry_table context
-        if self.shown_account.is_balance_sheet_account():
-            self.select_balance_sheet()
-        else:
-            self.select_income_statement()
+        self._perform_if_possible('navigate_back')
     
     def new_item(self):
         try:
-            current_view = self._current_pane.view
-            if current_view in (self.nwview, self.pview, self.tview, self.aview, self.glview):
-                current_view.new_item()
-            elif current_view is self.scview:
-                self.schedule_panel.new()
-            elif current_view is self.bview:
-                self.budget_panel.new()
+            self._perform_if_possible('new_item')
         except OperationAborted as e:
             if e.message:
                 self.view.show_message(e.message)
     
     def new_group(self):
-        current_view = self._current_pane.view
-        if current_view in (self.nwview, self.pview):
-            current_view.new_group()
+        self._perform_if_possible('new_group')
     
     def new_tab(self):
         self.panes.append(self._create_pane(PaneType.Empty))

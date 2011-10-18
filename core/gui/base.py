@@ -199,6 +199,9 @@ class MainWindowPanel(GUIPanel):
         self.mainwindow = mainwindow
     
 
+def _raise_notimplemented(self):
+    raise NotImplementedError()
+    
 class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     VIEW_TYPE = -1
     
@@ -212,14 +215,17 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         self.app = mainwindow.document.app
         self._status_line = ""
     
-    #--- Virtual
-    def delete_item(self):
-        pass
+    #--- Actions (Virtual)
+    new_item = _raise_notimplemented
+    edit_item = _raise_notimplemented
+    delete_item = _raise_notimplemented
+    duplicate_item = _raise_notimplemented
+    new_group = _raise_notimplemented
+    navigate_back = _raise_notimplemented
+    move_up = _raise_notimplemented
+    move_down = _raise_notimplemented
     
-    def new_item(self):
-        pass
-    
-    #--- Public
+    #--- Overrides
     def dispatch(self, msg):
         if self._process_message(msg):
             Repeater.dispatch(self, msg)
@@ -242,6 +248,19 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         HideableObject.hide(self)
         for child in self._children:
             child.hide()
+    
+    #--- Public
+    @classmethod
+    def can_perform(cls, action_name):
+        # Base views have a specific set of actions they can perform, and the way they perform these
+        # actions is defined by the subclasses. However, not all views can perform all actions.
+        # You can use this method to determine whether a view can perform an action. It does so by
+        # comparing the method of the view with our base method which we know is abstract and if
+        # it's not the same, we know that the method was overridden and that we can perform the
+        # action.
+        mymethod = getattr(cls, action_name, None)
+        assert mymethod is not None
+        return mymethod is not getattr(BaseView, action_name, None)
     
     #--- Properties
     @property

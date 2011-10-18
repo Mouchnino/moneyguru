@@ -82,6 +82,9 @@ class TransactionView(BaseView):
     def duplicate_item(self):
         self.ttable.duplicate_selected()
     
+    def edit_item(self):
+        self.mainwindow.edit_selected_transactions()
+    
     def move_down(self):
         self.ttable.move_down()
     
