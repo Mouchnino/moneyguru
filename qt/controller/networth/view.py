@@ -76,10 +76,13 @@ class NetWorthView(BaseView):
     
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
+        hidden = self.model.mainwindow.hidden_areas
         viewPrinter.fitTree(self.nwsheet)
-        viewPrinter.fit(self.apiechart.view, 150, 150, expandH=True)
-        viewPrinter.fit(self.lpiechart.view, 150, 150, expandH=True)
-        viewPrinter.fit(self.nwgraph.view, 300, 150, expandH=True, expandV=True)
+        if PaneArea.RightChart not in hidden:
+            viewPrinter.fit(self.apiechart.view, 150, 150, expandH=True)
+            viewPrinter.fit(self.lpiechart.view, 150, 150, expandH=True)
+        if PaneArea.BottomGraph not in hidden:
+            viewPrinter.fit(self.nwgraph.view, 300, 150, expandH=True, expandV=True)
     
     #--- model --> view
     def update_visibility(self):

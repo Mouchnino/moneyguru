@@ -14,7 +14,6 @@ http://www.hardcoded.net/licenses/bsd_license
     NSView *graphView;
     CGFloat graphY;
     CGFloat graphHeight;
-    BOOL graphVisible;
 }
 - (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView;
 @end

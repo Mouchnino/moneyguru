@@ -8,7 +8,7 @@
 
 import os.path as op
 
-from PyQt4.QtCore import QRect, QLocale
+from PyQt4.QtCore import QLocale
 
 from core.model.date import clean_format
 from qtlib.preferences import Preferences as PreferencesBase
@@ -41,11 +41,6 @@ class Preferences(PreferencesBase):
         self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
         
-        self.mainWindowIsMaximized = get('MainWindowIsMaximized', self.mainWindowIsMaximized)
-        self.mainWindowRect = get('MainWindowRect', self.mainWindowRect)
-        if self.mainWindowRect is not None: # a list of 4 values
-            self.mainWindowRect = QRect(*self.mainWindowRect)
-    
     def reset(self):
         locale = QLocale.system()
         self.recentDocuments = []
@@ -82,9 +77,4 @@ class Preferences(PreferencesBase):
         
         set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
         set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
-        
-        set_('MainWindowIsMaximized', self.mainWindowIsMaximized)
-        r = self.mainWindowRect
-        rectAsList = [r.x(), r.y(), r.width(), r.height()]
-        set_('MainWindowRect', rectAsList)
     

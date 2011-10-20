@@ -97,8 +97,10 @@ class EntryView(BaseView):
     
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
+        hidden = self.model.mainwindow.hidden_areas
         viewPrinter.fitTable(self.etable)
-        viewPrinter.fit(self.graphView.currentWidget(), 300, 150, expandH=True, expandV=True)
+        if PaneArea.BottomGraph not in hidden:
+            viewPrinter.fit(self.graphView.currentWidget(), 300, 150, expandH=True, expandV=True)
     
     #--- model --> view
     def refresh_reconciliation_button(self):

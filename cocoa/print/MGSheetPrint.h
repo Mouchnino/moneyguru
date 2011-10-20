@@ -16,8 +16,6 @@ http://www.hardcoded.net/licenses/bsd_license
     MGDoubleView *pieViews;
     NSInteger piePage;
     NSInteger graphPage;
-    BOOL graphVisible;
-    BOOL pieVisible;
 }
 - (id)initWithPyParent:(id)pyParent outlineView:(NSOutlineView *)aOutlineView 
     graphView:(NSView *)aGraphView pieViews:(MGDoubleView *)aPieViews;

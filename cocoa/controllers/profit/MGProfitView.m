@@ -50,8 +50,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (MGPrintView *)viewToPrint
 {
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : [profitGraph view];
+    MGDoubleView *printPieChartView = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? nil : pieChartsView;
     MGProfitPrint *p = [[MGProfitPrint alloc] initWithPyParent:[self py] outlineView:outlineView
-        graphView:[profitGraph view] pieViews:pieChartsView];
+        graphView:printGraphView pieViews:printPieChartView];
     return [p autorelease];
 }
 

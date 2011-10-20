@@ -15,16 +15,19 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView
 {
     self = [super initWithPyParent:pyParent tableView:aTableView];
-    graphView = [aGraphView copy];
+    if (aGraphView != nil) {
+        graphView = [aGraphView copy];
+    }
+    else {
+        graphView = nil;
+    }
     return self;
 }
 
 - (void)setUpWithPrintInfo:(NSPrintInfo *)pi
 {
     [super setUpWithPrintInfo:pi];
-    // XXX Fix this
-    graphVisible = YES;
-    if (graphVisible)
+    if (graphView != nil)
     {
         graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;
         [graphView setHidden:YES];
@@ -69,8 +72,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)drawRect:(NSRect)rect
 {
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    BOOL shouldShowGraph = graphVisible && pageNumber == pageCount;
-    [graphView setHidden:!shouldShowGraph];
+    if (graphView != nil) {
+        BOOL shouldShowGraph = pageNumber == pageCount;
+        [graphView setHidden:!shouldShowGraph];
+    }
     [super drawRect:rect];
 }
 

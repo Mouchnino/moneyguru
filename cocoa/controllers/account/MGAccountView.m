@@ -50,8 +50,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (MGPrintView *)viewToPrint
 {
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : currentGraphView;
     return [[[MGEntryPrint alloc] initWithPyParent:[self py] tableView:tableView
-        graphView:currentGraphView] autorelease];
+        graphView:printGraphView] autorelease];
 }
 
 - (void)showGraph:(HSGUIController *)graph

@@ -16,21 +16,30 @@ http://www.hardcoded.net/licenses/bsd_license
     graphView:(NSView *)aGraphView pieViews:(MGDoubleView *)aPieViews
 {
     self = [super initWithPyParent:pyParent tableView:aOutlineView];
-    graphView = [aGraphView copy];
-    [graphView setHidden:YES];
-    [self addSubview:graphView];
-    pieViews = [[MGDoubleView alloc] init];
-    [pieViews setHidden:YES];
-    [self addSubview:pieViews];
-    [pieViews setFirstView:[[[aPieViews firstView] copy] autorelease]];
-    [pieViews setSecondView:[[[aPieViews secondView] copy] autorelease]];
+    if (aGraphView != nil) {
+        graphView = [aGraphView copy];
+        [graphView setHidden:YES];
+        [self addSubview:graphView];
+    }
+    else {
+        graphView = nil;
+    }
+    if (aPieViews != nil) {
+        pieViews = [[MGDoubleView alloc] init];
+        [pieViews setHidden:YES];
+        [self addSubview:pieViews];
+        [pieViews setFirstView:[[[aPieViews firstView] copy] autorelease]];
+        [pieViews setSecondView:[[[aPieViews secondView] copy] autorelease]];
+    }
+    else {
+        pieViews = nil;
+    }
     
     return self;
 }
 
 -(void)setUpWithPrintInfo:(NSPrintInfo *)pi
 {
-    // subclasses must set graphVisible and pieVisible before calling [super setUpWithPrintInfo:pi]
     [super setUpWithPrintInfo:pi];
     CGFloat columnsTotalWidth = [self columnsTotalWidth];
     CGFloat bottomY = lastRowYOnLastPage;
@@ -40,15 +49,13 @@ http://www.hardcoded.net/licenses/bsd_license
     CGFloat pieHeight = pageHeight - pieY;
     piePage = 1;
     BOOL isPieOnSide = pieWidth >= PIE_GRAPH_MIN_WIDTH;
-    if (pieVisible && !isPieOnSide)
-    {
+    if ((pieViews != nil) && !isPieOnSide) {
         pieX = 0;
         pieY = bottomY;
         pieWidth = pageWidth;
         pieHeight = pieWidth * GRAPH_HEIGHT_PROPORTION;
         bottomY = pieY + pieHeight;
-        if (bottomY > pageHeight)
-        {
+        if (bottomY > pageHeight) {
             pageCount++;
             pieY = headerHeight;
             bottomY = pieY + pieHeight;
@@ -57,8 +64,7 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     CGFloat graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;
     CGFloat graphY = pageHeight - graphHeight;
-    if (graphVisible && (bottomY > graphY))
-    {
+    if ((graphView != nil) && (bottomY > graphY)) {
         pageCount++;
         graphY = headerHeight;
     }
@@ -66,10 +72,14 @@ http://www.hardcoded.net/licenses/bsd_license
 
     
     // if there's only one page, the pies must stop when the graph starts
-    if (isPieOnSide && graphVisible && (pageCount == 1))
+    if (isPieOnSide && (graphView != nil) && (pageCount == 1))
         pieHeight = graphY - pieY;
-    [pieViews setFrame:NSMakeRect(pieX, pieY, pieWidth, pieHeight)];
-    [graphView setFrame:NSMakeRect(0, graphY, pageWidth, graphHeight)];
+    if (pieViews != nil) {
+        [pieViews setFrame:NSMakeRect(pieX, pieY, pieWidth, pieHeight)];
+    }
+    if (graphView != nil) {
+        [graphView setFrame:NSMakeRect(0, graphY, pageWidth, graphHeight)];
+    }
 }
 
 - (void)dealloc
@@ -82,10 +92,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)drawRect:(NSRect)rect
 {
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    BOOL showGraph = graphVisible && pageNumber == graphPage;
-    [graphView setHidden:!showGraph];
-    BOOL showPie = pieVisible && pageNumber == piePage;
-    [pieViews setHidden:!showPie];
+    if (graphView != nil) {
+        BOOL showGraph = pageNumber == graphPage;
+        [graphView setHidden:!showGraph];
+    }
+    if (pieViews != nil) {
+        BOOL showPie = pageNumber == piePage;
+        [pieViews setHidden:!showPie];
+    }
     [super drawRect:rect];
 }
 

@@ -14,12 +14,4 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     return [NSArray arrayWithObjects:@"start",@"end",nil];
 }
-
--(void)setUpWithPrintInfo:(NSPrintInfo *)pi
-{
-    // XXX Not supposed to be constant, fix this
-    graphVisible = YES;
-    pieVisible = YES;
-    [super setUpWithPrintInfo:pi];
-}
 @end

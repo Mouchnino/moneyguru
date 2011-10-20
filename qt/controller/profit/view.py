@@ -76,10 +76,13 @@ class ProfitView(BaseView):
     
     #--- Public
     def fitViewsForPrint(self, viewPrinter):
+        hidden = self.model.mainwindow.hidden_areas
         viewPrinter.fitTree(self.psheet)
-        viewPrinter.fit(self.ipiechart.view, 150, 150, expandH=True)
-        viewPrinter.fit(self.epiechart.view, 150, 150, expandH=True)
-        viewPrinter.fit(self.pgraph.view, 300, 150, expandH=True, expandV=True)
+        if PaneArea.RightChart not in hidden:
+            viewPrinter.fit(self.ipiechart.view, 150, 150, expandH=True)
+            viewPrinter.fit(self.epiechart.view, 150, 150, expandH=True)
+        if PaneArea.BottomGraph not in hidden:
+            viewPrinter.fit(self.pgraph.view, 300, 150, expandH=True, expandV=True)
     
     #--- model --> view
     def update_visibility(self):
