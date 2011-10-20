@@ -9,6 +9,7 @@
 from PyQt4.QtCore import QSize
 from PyQt4.QtGui import QVBoxLayout, QHBoxLayout, QFrame, QAbstractItemView
 
+from core.const import PaneArea
 from core.gui.profit_view import ProfitView as ProfitViewModel
 
 from ...support.item_view import TreeView
@@ -80,9 +81,11 @@ class ProfitView(BaseView):
         viewPrinter.fit(self.epiechart.view, 150, 150, expandH=True)
         viewPrinter.fit(self.pgraph.view, 300, 150, expandH=True, expandV=True)
     
-    def updateOptionalWidgetsVisibility(self):
-        prefs = self.doc.app.prefs
-        self.graphView.setHidden(not prefs.profitGraphVisible)
-        self.incomePieChart.setHidden(not prefs.profitPieChartsVisible)
-        self.expensePieChart.setHidden(not prefs.profitPieChartsVisible)
+    #--- model --> view
+    def update_visibility(self):
+        hidden = self.model.mainwindow.hidden_areas
+        self.graphView.setHidden(PaneArea.BottomGraph in hidden)
+        self.incomePieChart.setHidden(PaneArea.RightChart in hidden)
+        self.expensePieChart.setHidden(PaneArea.RightChart in hidden)
+    
     

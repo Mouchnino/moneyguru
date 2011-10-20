@@ -905,6 +905,24 @@
 									<reference key="NSOnImage" ref="640623815"/>
 									<reference key="NSMixedImage" ref="176664579"/>
 								</object>
+								<object class="NSMenuItem" id="514483715">
+									<reference key="NSMenu" ref="644935139"/>
+									<string key="NSTitle">Toggle Graph</string>
+									<string key="NSKeyEquiv">g</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+								</object>
+								<object class="NSMenuItem" id="363665734">
+									<reference key="NSMenu" ref="644935139"/>
+									<string key="NSTitle">Toggle Pie Charts</string>
+									<string key="NSKeyEquiv">p</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+								</object>
 							</array>
 						</object>
 					</object>
@@ -1025,6 +1043,7 @@
 							<string key="NSFrame">{{18, 18}, {420, 18}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="89179289">
 								<int key="NSCellFlags">67239424</int>
@@ -1053,6 +1072,7 @@
 							<string key="NSFrame">{{18, 58}, {420, 18}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="125175313"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="306815864">
 								<int key="NSCellFlags">-2080244224</int>
@@ -1075,6 +1095,7 @@
 							<string key="NSFrame">{{18, 38}, {420, 18}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="569786493"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="395511222">
 								<int key="NSCellFlags">67239424</int>
@@ -1097,6 +1118,7 @@
 							<string key="NSFrame">{{17, 110}, {181, 16}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="1036937176"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="910239933">
 								<int key="NSCellFlags">67239488</int>
@@ -1130,6 +1152,7 @@
 							<string key="NSFrame">{{203, 102}, {69, 26}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="267714280"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSComboBoxCell" key="NSCell" id="845604269">
 								<int key="NSCellFlags">343014976</int>
@@ -1239,6 +1262,7 @@
 							<string key="NSFrame">{{17, 84}, {181, 16}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="231610627"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="147744912">
 								<int key="NSCellFlags">67239488</int>
@@ -1256,6 +1280,7 @@
 							<string key="NSFrame">{{203, 78}, {69, 26}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="37537141"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSComboBoxCell" key="NSCell" id="167189485">
 								<int key="NSCellFlags">343014976</int>
@@ -1341,6 +1366,7 @@
 							<string key="NSFrame">{{17, 133}, {181, 16}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="390406213"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="245307582">
 								<int key="NSCellFlags">67239488</int>
@@ -1358,6 +1384,7 @@
 							<string key="NSFrame">{{251, 134}, {174, 16}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="159175614"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="337427705">
 								<int key="NSCellFlags">67239488</int>
@@ -1375,6 +1402,7 @@
 							<string key="NSFrame">{{203, 131}, {43, 22}}</string>
 							<reference key="NSSuperview" ref="127818566"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="685349008"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="747959225">
 								<int key="NSCellFlags">-1804468671</int>
@@ -1439,6 +1467,7 @@
 					<string key="NSFrameSize">{442, 173}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView" ref="975499186"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -1977,6 +2006,22 @@
 						<reference key="destination" ref="697507701"/>
 					</object>
 					<int key="connectionID">1457</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleGraph:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="514483715"/>
+					</object>
+					<int key="connectionID">1464</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">togglePieChart:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="363665734"/>
+					</object>
+					<int key="connectionID">1465</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2597,6 +2642,8 @@
 							<reference ref="749246150"/>
 							<reference ref="467142981"/>
 							<reference ref="834946961"/>
+							<reference ref="514483715"/>
+							<reference ref="363665734"/>
 						</array>
 						<reference key="parent" ref="875242672"/>
 					</object>
@@ -3005,6 +3052,16 @@
 						<reference key="object" ref="147744912"/>
 						<reference key="parent" ref="267714280"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1460</int>
+						<reference key="object" ref="514483715"/>
+						<reference key="parent" ref="644935139"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1462</int>
+						<reference key="object" ref="363665734"/>
+						<reference key="parent" ref="644935139"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3106,6 +3163,8 @@
 				<string key="1452.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1453.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1454.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1460.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1462.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3149,7 +3208,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1459</int>
+			<int key="maxID">1465</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3461,20 +3520,13 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="aheadMonthsPopup">NSPopUpButton</string>
 						<string key="autoDecimalPlaceButton">NSButton</string>
 						<string key="autoSaveIntervalField">NSTextField</string>
 						<string key="customDateRangeItem1">NSMenuItem</string>
 						<string key="customDateRangeItem2">NSMenuItem</string>
 						<string key="customDateRangeItem3">NSMenuItem</string>
-						<string key="firstWeekdayPopup">NSPopUpButton</string>
-						<string key="yearStartMonthPopup">NSPopUpButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="aheadMonthsPopup">
-							<string key="name">aheadMonthsPopup</string>
-							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="autoDecimalPlaceButton">
 							<string key="name">autoDecimalPlaceButton</string>
 							<string key="candidateClassName">NSButton</string>
@@ -3494,14 +3546,6 @@
 						<object class="IBToOneOutletInfo" key="customDateRangeItem3">
 							<string key="name">customDateRangeItem3</string>
 							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="firstWeekdayPopup">
-							<string key="name">firstWeekdayPopup</string>
-							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="yearStartMonthPopup">
-							<string key="name">yearStartMonthPopup</string>
-							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3660,6 +3704,7 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="accountTableView">MGTableView</string>
+						<string key="currentDateRangeOnlyButton">NSButton</string>
 						<string key="exportAllButtons">NSMatrix</string>
 						<string key="exportButton">NSButton</string>
 						<string key="exportFormatButtons">NSMatrix</string>
@@ -3668,6 +3713,10 @@
 						<object class="IBToOneOutletInfo" key="accountTableView">
 							<string key="name">accountTableView</string>
 							<string key="candidateClassName">MGTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="currentDateRangeOnlyButton">
+							<string key="name">currentDateRangeOnlyButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="exportAllButtons">
 							<string key="name">exportAllButtons</string>
@@ -3741,8 +3790,11 @@
 						<string key="showPreviousView:">id</string>
 						<string key="showSelectedAccount:">id</string>
 						<string key="showTransactionTable:">id</string>
+						<string key="toggleAreaVisibility:">id</string>
 						<string key="toggleEntriesReconciled:">id</string>
 						<string key="toggleExcluded:">id</string>
+						<string key="toggleGraph:">id</string>
+						<string key="togglePieChart:">id</string>
 						<string key="toggleReconciliationMode:">id</string>
 						<string key="toggleViewOptionsVisible:">id</string>
 					</dictionary>
@@ -3871,12 +3923,24 @@
 							<string key="name">showTransactionTable:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="toggleAreaVisibility:">
+							<string key="name">toggleAreaVisibility:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="toggleEntriesReconciled:">
 							<string key="name">toggleEntriesReconciled:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleExcluded:">
 							<string key="name">toggleExcluded:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleGraph:">
+							<string key="name">toggleGraph:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="togglePieChart:">
+							<string key="name">togglePieChart:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleReconciliationMode:">
@@ -3892,6 +3956,7 @@
 						<string key="statusLabel">NSTextField</string>
 						<string key="tabBar">PSMTabBarControl</string>
 						<string key="tabView">NSTabView</string>
+						<string key="visibilitySegments">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="statusLabel">
@@ -3905,6 +3970,10 @@
 						<object class="IBToOneOutletInfo" key="tabView">
 							<string key="name">tabView</string>
 							<string key="candidateClassName">NSTabView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="visibilitySegments">
+							<string key="name">visibilitySegments</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

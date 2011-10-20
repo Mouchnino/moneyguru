@@ -41,13 +41,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Preferences */
 
-// Visibility
-#define NetWorthGraphVisible @"NetWorthGraphVisible"
-#define AssetLiabilityPieChartVisible @"AssetLiabilityPieChartVisible"
-#define ProfitGraphVisible @"ProfitGraphVisible"
-#define IncomeExpensePieChartVisible @"IncomeExpensePieChartVisible"
-#define AccountGraphVisible @"AccountGraphVisible"
-
 // Others
 #define ShowRecurrenceScopeDialog @"ShowRecurrenceScopeDialog"
 #define TableFontSize @"TableFontSize"
@@ -69,3 +62,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGPaneTypeGeneralLedger 7
 #define MGPaneTypeDocProps 8
 #define MGPaneTypeEmpty 100
+
+// Synced with the core
+#define MGPaneAreaMain 1
+#define MGPaneAreaBottomGraph 2
+#define MGPaneAreaRightChart 3

@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "MGEntryPrint.h"
 #import "Utils.h"
+#import "PyMainWindow.h"
 
 @implementation MGAccountView
 - (id)initWithPyParent:(id)aPyParent
@@ -30,16 +31,11 @@ http://www.hardcoded.net/licenses/bsd_license
     NSArray *children = [NSArray arrayWithObjects:[entryTable py], [balanceGraph py], [barGraph py], nil];
     [[self py] setChildren:children];
     
-    [self updateVisibility];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud addObserver:self forKeyPath:AccountGraphVisible options:NSKeyValueObservingOptionNew context:NULL];
     return self;
 }
         
 - (void)dealloc
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud removeObserver:self forKeyPath:AccountGraphVisible];
     [entryTable release];
     [barGraph release];
     [balanceGraph release];
@@ -56,29 +52,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     return [[[MGEntryPrint alloc] initWithPyParent:[self py] tableView:tableView
         graphView:currentGraphView] autorelease];
-}
-
-/* Private */
-- (void)updateVisibility
-{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    BOOL graphVisible = [ud boolForKey:AccountGraphVisible];
-    // Let's set initial rects
-    NSRect mainRect = [tableScrollView frame];
-    NSRect graphRect = [[balanceGraph view] frame];
-    if (graphVisible)
-    {
-        mainRect.size.height = NSMaxY(mainRect) - NSMaxY(graphRect);
-        mainRect.origin.y = NSMaxY(graphRect);
-    }
-    else
-    {
-        mainRect.size.height = NSMaxY(mainRect) - NSMinY(graphRect);
-        mainRect.origin.y = NSMinY(graphRect);
-    }
-    [[balanceGraph view] setHidden:!graphVisible];
-    [[barGraph view] setHidden:!graphVisible];
-    [tableScrollView setFrame:mainRect];
 }
 
 - (void)showGraph:(HSGUIController *)graph
@@ -123,13 +96,27 @@ http://www.hardcoded.net/licenses/bsd_license
     [self toggleReconciliationMode];
 }
 
-/* Delegate */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+/* Core --> Cocoa */
+- (void)updateVisibility
 {
-    [self updateVisibility];
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    BOOL graphVisible = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
+    // Let's set initial rects
+    NSRect mainRect = [tableScrollView frame];
+    NSRect graphRect = [[balanceGraph view] frame];
+    if (graphVisible) {
+        mainRect.size.height = NSMaxY(mainRect) - NSMaxY(graphRect);
+        mainRect.origin.y = NSMaxY(graphRect);
+    }
+    else {
+        mainRect.size.height = NSMaxY(mainRect) - NSMinY(graphRect);
+        mainRect.origin.y = NSMinY(graphRect);
+    }
+    [[balanceGraph view] setHidden:!graphVisible];
+    [[barGraph view] setHidden:!graphVisible];
+    [tableScrollView setFrame:mainRect];
 }
 
-/* Core --> Cocoa */
 - (void)refreshReconciliationButton
 {
     if ([self canToggleReconciliationMode]) {

@@ -521,6 +521,9 @@ class TestApp(TestAppBase):
     def show_nwview(self):
         self.mw.select_pane_of_type(PaneType.NetWorth)
     
+    def show_pview(self):
+        self.mw.select_pane_of_type(PaneType.Profit)
+    
     def show_tview(self):
         self.mw.select_pane_of_type(PaneType.Transaction)
     

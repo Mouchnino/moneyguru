@@ -33,9 +33,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyParent:(id)aPyParent;
 - (PyAccountView *)py;
 
-/* Private */
-- (void)updateVisibility;
-
 /* Public */
 - (id)fieldEditorForObject:(id)asker;
 - (BOOL)canToggleReconciliationMode;
@@ -45,4 +42,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Actions */
 - (IBAction)toggleReconciliationMode:(id)sender;
+
+/* model --> view */
+- (void)updateVisibility;
+- (void)refreshReconciliationButton;
+- (void)showLineGraph;
+- (void)showBarGraph;
 @end

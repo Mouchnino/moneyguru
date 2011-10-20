@@ -92,6 +92,9 @@ class MainWindowNotificationsMixin:
     def transactions_selected(self):
         pass
     
+    def area_visibility_changed(self):
+        pass
+    
 
 class SheetViewNotificationsMixin:
     def group_expanded_state_changed(self):

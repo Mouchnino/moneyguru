@@ -30,10 +30,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyParent:(id)aPyParent;
 - (PyProfitView *)py;
 
-/* Private */
-- (void)updateVisibility;
-
 /* Public */
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;
+
+/* model --> view */
+- (void)updateVisibility;
 @end

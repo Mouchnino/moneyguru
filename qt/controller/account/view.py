@@ -8,6 +8,7 @@
 
 from PyQt4 import QtCore, QtGui
 
+from core.const import PaneArea
 from core.gui.account_view import AccountView as AccountViewModel
 
 from hscommon.trans import tr
@@ -99,10 +100,6 @@ class EntryView(BaseView):
         viewPrinter.fitTable(self.etable)
         viewPrinter.fit(self.graphView.currentWidget(), 300, 150, expandH=True, expandV=True)
     
-    def updateOptionalWidgetsVisibility(self):
-        prefs = self.doc.app.prefs
-        self.graphView.setHidden(not prefs.entryGraphVisible)
-    
     #--- model --> view
     def refresh_reconciliation_button(self):
         if self.model.can_toggle_reconciliation_mode:
@@ -117,4 +114,8 @@ class EntryView(BaseView):
     
     def show_line_graph(self):
         self.graphView.setCurrentIndex(0)
+    
+    def update_visibility(self):
+        hidden = self.model.mainwindow.hidden_areas
+        self.graphView.setHidden(PaneArea.BottomGraph in hidden)
     

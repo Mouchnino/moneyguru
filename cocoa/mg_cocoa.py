@@ -945,18 +945,38 @@ class PyLookup(PyGUIObject):
     
 
 #--- Views
-class PyNetWorthView(PyGUIContainer):
+class PyBaseView(PyGUIContainer):
+    # We can't use 'subproxy' here because it's too soon to have a reference to PyMainWindow. The
+    # only PyMainWindow reference we can have is inside the method's code. copy/paste
+    def mainwindow(self):
+        if not hasattr(self, '_mainwindow'):
+            self._mainwindow = PyMainWindow.alloc().initWithPy_(self.py.mainwindow)
+            # Our proxy's 'cocoa' attr will always stay None because this proxy is not the main
+            # proxy. We never bind the cocoa part.
+        return self._mainwindow
+
+class PyNetWorthView(PyBaseView):
     py_class = NetWorthView
+    
+    #Python --> Cocoa
+    def update_visibility(self):
+        self.cocoa.updateVisibility()
+    
 
-class PyProfitView(PyGUIContainer):
+class PyProfitView(PyBaseView):
     py_class = ProfitView
+    
+    #Python --> Cocoa
+    def update_visibility(self):
+        self.cocoa.updateVisibility()
+    
 
-class PyTransactionView(PyGUIContainer):
+class PyTransactionView(PyBaseView):
     py_class = TransactionView
     
     filterBar = subproxy('filterBar', 'filter_bar', PyFilterBar)
 
-class PyAccountView(PyGUIContainer):
+class PyAccountView(PyBaseView):
     py_class = AccountView
     
     filterBar = subproxy('filterBar', 'filter_bar', PyEntryFilterBar)
@@ -973,6 +993,9 @@ class PyAccountView(PyGUIContainer):
         self.py.toggle_reconciliation_mode()
     
     #Python --> Cocoa
+    def update_visibility(self):
+        self.cocoa.updateVisibility()
+    
     def refresh_reconciliation_button(self):
         self.cocoa.refreshReconciliationButton()
     
@@ -983,17 +1006,17 @@ class PyAccountView(PyGUIContainer):
         self.cocoa.showLineGraph()
     
 
-class PyBudgetView(PyGUIContainer):
+class PyBudgetView(PyBaseView):
     py_class = BudgetView
     
     table = subproxy('table', 'table', PyBudgetTable)
 
-class PyScheduleView(PyGUIContainer):
+class PyScheduleView(PyBaseView):
     py_class = ScheduleView
     
     table = subproxy('table', 'table', PyScheduleTable)
 
-class PyCashculatorView(PyGUIContainer):
+class PyCashculatorView(PyBaseView):
     py_class = CashculatorView
     
     def exportDB(self):
@@ -1006,10 +1029,10 @@ class PyCashculatorView(PyGUIContainer):
         self.py.reset_ccdb()
     
 
-class PyGeneralLedgerView(PyGUIContainer):
+class PyGeneralLedgerView(PyBaseView):
     py_class = GeneralLedgerView
 
-class PyDocPropsView(PyGUIContainer):
+class PyDocPropsView(PyBaseView):
     py_class = DocPropsView
     
     currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
@@ -1017,7 +1040,7 @@ class PyDocPropsView(PyGUIContainer):
     aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
     yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
 
-class PyEmptyView(PyGUIContainer):
+class PyEmptyView(PyBaseView):
     py_class = EmptyView
     
     @signature('v@:i')
@@ -1091,6 +1114,10 @@ class PyMainWindow(PyGUIContainer):
     def jumpToAccount(self):
         self.py.jump_to_account()
     
+    @signature('v@:i')
+    def toggleAreaVisibility_(self, area):
+        self.py.toggle_area_visibility(area)
+    
     #--- Item Management
     def deleteItem(self):
         self.py.delete_item()
@@ -1123,6 +1150,9 @@ class PyMainWindow(PyGUIContainer):
     def statusLine(self):
         return self.py.status_line
     
+    def hiddenAreas(self):
+        return list(self.py.hidden_areas)
+    
     #--- Python -> Cocoa
     def change_current_pane(self):
         self.cocoa.changeSelectedPane()
@@ -1141,6 +1171,9 @@ class PyMainWindow(PyGUIContainer):
     
     def show_message(self, message):
         self.cocoa.showMessage_(message)
+    
+    def update_area_visibility(self):
+        self.cocoa.updateAreaVisibility()
     
     def view_closed(self, index):
         self.cocoa.viewClosedAtIndex_(index)

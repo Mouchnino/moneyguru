@@ -9,6 +9,7 @@
 from PyQt4.QtCore import QSize
 from PyQt4.QtGui import QVBoxLayout, QHBoxLayout, QFrame, QAbstractItemView
 
+from core.const import PaneArea
 from core.gui.networth_view import NetWorthView as NetWorthViewModel
 
 from ...support.item_view import TreeView
@@ -80,9 +81,10 @@ class NetWorthView(BaseView):
         viewPrinter.fit(self.lpiechart.view, 150, 150, expandH=True)
         viewPrinter.fit(self.nwgraph.view, 300, 150, expandH=True, expandV=True)
     
-    def updateOptionalWidgetsVisibility(self):
-        prefs = self.doc.app.prefs
-        self.graphView.setHidden(not prefs.networthGraphVisible)
-        self.assetPieChart.setHidden(not prefs.networthPieChartsVisible)
-        self.liabilityPieChart.setHidden(not prefs.networthPieChartsVisible)
+    #--- model --> view
+    def update_visibility(self):
+        hidden = self.model.mainwindow.hidden_areas
+        self.graphView.setHidden(PaneArea.BottomGraph in hidden)
+        self.assetPieChart.setHidden(PaneArea.RightChart in hidden)
+        self.liabilityPieChart.setHidden(PaneArea.RightChart in hidden)
     

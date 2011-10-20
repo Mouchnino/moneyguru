@@ -21,3 +21,9 @@ class PaneType:
     GeneralLedger = 7
     DocProps = 8
     Empty = 100
+
+# These constants are in sync with the GUI
+class PaneArea:
+    Main = 1
+    BottomGraph = 2
+    RightChart = 3

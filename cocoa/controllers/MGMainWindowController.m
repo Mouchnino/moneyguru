@@ -331,6 +331,29 @@ http://www.hardcoded.net/licenses/bsd_license
     }
 }
 
+- (IBAction)toggleAreaVisibility:(id)sender
+{
+    NSInteger index = [(NSSegmentedControl *)sender selectedSegment];
+    NSInteger paneArea;
+    if (index == 0) {
+        paneArea = MGPaneAreaBottomGraph;
+    }
+    else {
+        paneArea = MGPaneAreaRightChart;
+    }
+    [[self py] toggleAreaVisibility:paneArea];
+}
+
+- (IBAction)toggleGraph:(id)sender
+{
+    [[self py] toggleAreaVisibility:MGPaneAreaBottomGraph];
+}
+
+- (IBAction)togglePieChart:(id)sender
+{
+    [[self py] toggleAreaVisibility:MGPaneAreaRightChart];
+}
+
 - (IBAction)export:(id)sender
 {
     [[self py] export];
@@ -603,6 +626,15 @@ http://www.hardcoded.net/licenses/bsd_license
     NSAlert *a = [NSAlert alertWithMessageText:aMessage defaultButton:nil alternateButton:nil
         otherButton:nil informativeTextWithFormat:@""];
     [a beginSheetModalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+}
+
+- (void)updateAreaVisibility
+{
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self py] hiddenAreas]];
+    NSString *imgname = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? @"graph_visibility_off_16" : @"graph_visibility_on_16";
+    [visibilitySegments setImage:[NSImage imageNamed:imgname] forSegment:0];
+    imgname = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? @"piechart_visibility_off_16" : @"piechart_visibility_on_16";
+    [visibilitySegments setImage:[NSImage imageNamed:imgname] forSegment:1];
 }
 
 - (void)viewClosedAtIndex:(NSInteger)index

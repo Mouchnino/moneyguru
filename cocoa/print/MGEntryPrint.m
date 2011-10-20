@@ -22,8 +22,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setUpWithPrintInfo:(NSPrintInfo *)pi
 {
     [super setUpWithPrintInfo:pi];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    graphVisible = [ud boolForKey:AccountGraphVisible];
+    // XXX Fix this
+    graphVisible = YES;
     if (graphVisible)
     {
         graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;

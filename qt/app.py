@@ -53,7 +53,6 @@ class MoneyGuru(ApplicationBase):
         self.csvOptionsWindow.model.connect()
         self.preferencesPanel = PreferencesPanel(self.mainWindow, app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)
-        self.mainWindow.updateOptionalWidgetsVisibility()
         if sys.argv[1:] and op.exists(sys.argv[1]):
             self.doc.open(sys.argv[1])
         elif self.prefs.recentDocuments:

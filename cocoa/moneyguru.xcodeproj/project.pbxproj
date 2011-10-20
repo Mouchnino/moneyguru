@@ -20,6 +20,10 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		CE036D64103AE51100E172F8 /* MGPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE036D63103AE51100E172F8 /* MGPanel.m */; };
 		CE051CF2123A904F00D31D18 /* MGGeneralLedgerPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */; };
+		CE092729145061F3004BD916 /* graph_visibility_off_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092725145061F3004BD916 /* graph_visibility_off_16.png */; };
+		CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092726145061F3004BD916 /* graph_visibility_on_16.png */; };
+		CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092727145061F3004BD916 /* piechart_visibility_off_16.png */; };
+		CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092728145061F3004BD916 /* piechart_visibility_on_16.png */; };
 		CE0E85C60F875C1800549758 /* MGBalancePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C10F875C1800549758 /* MGBalancePrint.m */; };
 		CE0E85C70F875C1800549758 /* MGProfitPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C30F875C1800549758 /* MGProfitPrint.m */; };
 		CE0E85C80F875C1800549758 /* MGSheetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C50F875C1800549758 /* MGSheetPrint.m */; };
@@ -276,6 +280,11 @@
 		CE036D63103AE51100E172F8 /* MGPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPanel.m; sourceTree = "<group>"; };
 		CE051CF0123A904F00D31D18 /* MGGeneralLedgerPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerPrint.h; path = print/MGGeneralLedgerPrint.h; sourceTree = SOURCE_ROOT; };
 		CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerPrint.m; path = print/MGGeneralLedgerPrint.m; sourceTree = SOURCE_ROOT; };
+		CE092725145061F3004BD916 /* graph_visibility_off_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph_visibility_off_16.png; sourceTree = "<group>"; };
+		CE092726145061F3004BD916 /* graph_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph_visibility_on_16.png; sourceTree = "<group>"; };
+		CE092727145061F3004BD916 /* piechart_visibility_off_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_off_16.png; sourceTree = "<group>"; };
+		CE092728145061F3004BD916 /* piechart_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_on_16.png; sourceTree = "<group>"; };
+		CE09272E14506C54004BD916 /* PyBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBaseView.h; sourceTree = "<group>"; };
 		CE0E85C00F875C1800549758 /* MGBalancePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBalancePrint.h; path = print/MGBalancePrint.h; sourceTree = "<group>"; };
 		CE0E85C10F875C1800549758 /* MGBalancePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBalancePrint.m; path = print/MGBalancePrint.m; sourceTree = "<group>"; };
 		CE0E85C20F875C1800549758 /* MGProfitPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGProfitPrint.h; path = print/MGProfitPrint.h; sourceTree = "<group>"; };
@@ -1057,6 +1066,7 @@
 				CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */,
 				CE9805DE11403F4400CB3693 /* PyLookup.h */,
 				CE9805DF11403F4400CB3693 /* PyPanelWithTransaction.h */,
+				CE09272E14506C54004BD916 /* PyBaseView.h */,
 				CE3F6A7610F903640046B2D2 /* PyProfitView.h */,
 				CE98C2B110F8F77200EB1D21 /* PyNetWorthView.h */,
 				CE4DCE4910F8E1C00062DA0B /* PyScheduleView.h */,
@@ -1401,6 +1411,10 @@
 		CEEED1D30E3F763100BBA154 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CE092725145061F3004BD916 /* graph_visibility_off_16.png */,
+				CE092726145061F3004BD916 /* graph_visibility_on_16.png */,
+				CE092727145061F3004BD916 /* piechart_visibility_off_16.png */,
+				CE092728145061F3004BD916 /* piechart_visibility_on_16.png */,
 				CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */,
 				CEF5E63511DCCEE80048C9DF /* entry_table_16.png */,
 				CEF5E63611DCCEE80048C9DF /* income_statement_16.png */,
@@ -1597,6 +1611,10 @@
 				CE4C7EC714477DC500B749E8 /* MainWindow.xib in Resources */,
 				CE4C7EC814477DC500B749E8 /* DateRangeSelector.xib in Resources */,
 				CE4C7EC914477DC500B749E8 /* BalanceSheet.xib in Resources */,
+				CE092729145061F3004BD916 /* graph_visibility_off_16.png in Resources */,
+				CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */,
+				CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */,
+				CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

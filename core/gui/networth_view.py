@@ -18,3 +18,4 @@ class NetWorthView(AccountSheetView):
         AccountSheetView.set_children(self, children)
         [self.bsheet, self.nwgraph, self.apie, self.lpie] = children
     
+

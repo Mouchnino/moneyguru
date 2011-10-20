@@ -26,12 +26,6 @@ http://www.hardcoded.net/licenses/bsd_license
     // Register app-wide defaults
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *d = [NSMutableDictionary dictionary];
-    // Visibility
-    [d setObject:b2n(YES) forKey:NetWorthGraphVisible];
-    [d setObject:b2n(YES) forKey:AssetLiabilityPieChartVisible];
-    [d setObject:b2n(YES) forKey:ProfitGraphVisible];
-    [d setObject:b2n(YES) forKey:IncomeExpensePieChartVisible];
-    [d setObject:b2n(YES) forKey:AccountGraphVisible];
     // Others
     [d setObject:b2n(YES) forKey:ShowRecurrenceScopeDialog];
     [d setObject:i2n(11) forKey:TableFontSize];

@@ -15,7 +15,8 @@ class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
     PRINT_TITLE_FORMAT = tr('{account_name}\nEntries from {start_date} to {end_date}')
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied',
-        'date_range_changed', 'transactions_selected', 'shown_account_changed'}
+        'date_range_changed', 'transactions_selected', 'shown_account_changed',
+        'area_visibility_changed'}
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
@@ -36,6 +37,7 @@ class AccountView(BaseView):
         self._refresh_totals()
         self.view.refresh_reconciliation_button()
         self.filter_bar.refresh()
+        self.view.update_visibility()
     
     def show(self):
         BaseView.show(self)
@@ -117,6 +119,9 @@ class AccountView(BaseView):
         return self._reconciliation_mode
     
     #--- Event Handlers
+    def area_visibility_changed(self):
+        self.view.update_visibility()
+    
     def date_range_changed(self):
         self._refresh_totals()
     

@@ -43,6 +43,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;
     IBOutlet NSTextField *statusLabel;
+    IBOutlet NSSegmentedControl *visibilitySegments;
     
     MGNetWorthView *netWorthView;
     MGProfitView *profitView;
@@ -113,6 +114,9 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)toggleEntriesReconciled:(id)sender;
 - (IBAction)toggleExcluded:(id)sender;
 - (IBAction)toggleViewOptionsVisible:(id)sender;
+- (IBAction)toggleAreaVisibility:(id)sender;
+- (IBAction)toggleGraph:(id)sender;
+- (IBAction)togglePieChart:(id)sender;
 - (IBAction)export:(id)sender;
 
 /* Public */

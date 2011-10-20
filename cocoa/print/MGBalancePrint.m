@@ -17,9 +17,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 -(void)setUpWithPrintInfo:(NSPrintInfo *)pi
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    graphVisible = [ud boolForKey:NetWorthGraphVisible];
-    pieVisible = [ud boolForKey:AssetLiabilityPieChartVisible];
+    // XXX Not supposed to be constant, fix this
+    graphVisible = YES;
+    pieVisible = YES;
     [super setUpWithPrintInfo:pi];
 }
 @end

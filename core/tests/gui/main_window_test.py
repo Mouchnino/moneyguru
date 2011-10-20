@@ -11,7 +11,7 @@ from datetime import date
 from hscommon.testutil import eq_
 
 from ..base import TestApp, with_app
-from ...const import PaneType
+from ...const import PaneType, PaneArea
 from ...model.account import AccountType
 from ...model.date import YearRange
 
@@ -171,6 +171,16 @@ def test_new_tab(app):
     app.check_current_pane(PaneType.Profit)
     app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes', 'refresh_status_line'])
 
+@with_app(app_cleared_gui_calls)
+def test_toggle_area_visibility(app):
+    app.mw.toggle_area_visibility(PaneArea.BottomGraph)
+    app.nwview.view.check_gui_calls(['update_visibility'])
+    # It sends the message to the main window as well (so it can update its buttons)
+    app.mw.view.check_gui_calls(['update_area_visibility'])
+    # Also update the visibility of other views when we select them
+    app.show_pview()
+    app.pview.view.check_gui_calls(['update_visibility'])
+
 #--- One account
 def app_one_account():
     app = TestApp()
@@ -267,14 +277,14 @@ def test_switch_panes_through_show_account(app):
     app.istatement.show_selected_account()
     eq_(app.mw.current_pane_index, 6)
     expected = ['show_bar_graph', 'refresh_reconciliation_button']
-    app.check_gui_calls(app.aview_gui, expected)
+    app.check_gui_calls_partial(app.aview_gui, expected)
     app.mainwindow.select_balance_sheet()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.mw.current_pane_index, 5)
     expected = ['show_line_graph', 'refresh_reconciliation_button']
-    app.check_gui_calls(app.aview_gui, expected)
+    app.check_gui_calls_partial(app.aview_gui, expected)
     app.mainwindow.select_transaction_table()
     eq_(app.mw.current_pane_index, 2)
 

@@ -7,7 +7,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyBaseView.h"
+#import "PyGUIContainer.h"
 
-@interface PyNetWorthView : PyBaseView {}
+@class PyMainWindow;
+
+@interface PyBaseView : PyGUIContainer {}
+- (PyMainWindow *)mainwindow;
 @end

@@ -10,7 +10,7 @@ from hscommon.notify import Repeater, Listener
 from hscommon.util import first, minmax
 from hscommon.trans import tr
 
-from ..const import PaneType
+from ..const import PaneType, PaneArea
 from ..document import FilterType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
@@ -51,6 +51,7 @@ class MainWindow(Repeater):
     # refresh_status_line()
     # show_message(message)
     # view_closed(index)
+    # update_area_visibility()
     
     def __init__(self, view, document):
         Repeater.__init__(self, document)
@@ -63,6 +64,7 @@ class MainWindow(Repeater):
         self._selected_schedules = []
         self._selected_budgets = []
         self._account2visibleentries = {}
+        self.hidden_areas = set()
         
         self.search_field = SearchField(self)
         self.daterange_selector = DateRangeSelector(self)
@@ -390,6 +392,14 @@ class MainWindow(Repeater):
     
     def show_message(self, message):
         self.view.show_message(message)
+    
+    def toggle_area_visibility(self, area):
+        if area in self.hidden_areas:
+            self.hidden_areas.remove(area)
+        else:
+            self.hidden_areas.add(area)
+        self.notify('area_visibility_changed')
+        self.view.update_area_visibility()
     
     def update_status_line(self):
         self.view.refresh_status_line()

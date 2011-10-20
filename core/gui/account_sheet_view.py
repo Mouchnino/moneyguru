@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-05-10
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -10,10 +9,21 @@
 from .base import BaseView
 
 class AccountSheetView(BaseView):
+    INVALIDATING_MESSAGES = BaseView.INVALIDATING_MESSAGES | {'area_visibility_changed'}
+    
+    def __init__(self, view, mainwindow):
+        BaseView.__init__(self, view, mainwindow)
+        self.bind_messages(self.INVALIDATING_MESSAGES, self._revalidate)
+    
     # subclasses of this class must put their sheet gui element first in the children list
     def set_children(self, children):
         BaseView.set_children(self, children)
         self.sheet = children[0]
+    
+    #--- Overrides
+    def _revalidate(self):
+        BaseView._revalidate(self)
+        self.view.update_visibility()
     
     #--- Public
     def collapse_group(self, group):

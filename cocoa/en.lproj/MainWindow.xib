@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">11B26</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
-		<string key="IBDocument.AppKitVersion">1138</string>
-		<string key="IBDocument.HIToolboxVersion">566.00</string>
+		<string key="IBDocument.SystemVersion">11C74</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
+		<string key="IBDocument.AppKitVersion">1138.23</string>
+		<string key="IBDocument.HIToolboxVersion">567.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1617</string>
+			<string key="NS.object.0">1938</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSView</string>
@@ -24,7 +24,10 @@
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
-		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="119759130">
 			<object class="NSCustomObject" id="1063475451">
 				<string key="NSClassName">MGMainWindowController</string>
@@ -71,6 +74,7 @@
 							<string key="NSFrame">{{0, 578}, {800, 22}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="963846985"/>
 							<string key="NSClassName">PSMTabBarControl</string>
 						</object>
 						<object class="NSSegmentedControl" id="734865357">
@@ -79,11 +83,12 @@
 							<string key="NSFrame">{{7, 1}, {89, 25}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="1012562456"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSSegmentedCell" key="NSCell" id="5157376">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<object class="NSFont" key="NSSupport">
+								<object class="NSFont" key="NSSupport" id="1002475987">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
@@ -123,12 +128,52 @@
 								<int key="NSSegmentStyle">2</int>
 							</object>
 						</object>
+						<object class="NSSegmentedControl" id="1012562456">
+							<reference key="NSNextResponder" ref="1024620742"/>
+							<int key="NSvFlags">292</int>
+							<string key="NSFrame">{{104, 1}, {61, 25}}</string>
+							<reference key="NSSuperview" ref="1024620742"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="318475319"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSSegmentedCell" key="NSCell" id="461028361">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">0</int>
+								<reference key="NSSupport" ref="1002475987"/>
+								<reference key="NSControlView" ref="1012562456"/>
+								<array class="NSMutableArray" key="NSSegmentImages">
+									<object class="NSSegmentItem">
+										<double key="NSSegmentItemWidth">27</double>
+										<object class="NSCustomResource" key="NSSegmentItemImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">graph_visibility_on_16</string>
+										</object>
+										<string key="NSSegmentItemLabel"/>
+										<int key="NSSegmentItemImageScaling">0</int>
+									</object>
+									<object class="NSSegmentItem">
+										<double key="NSSegmentItemWidth">27</double>
+										<object class="NSCustomResource" key="NSSegmentItemImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">piechart_visibility_on_16</string>
+										</object>
+										<string key="NSSegmentItemLabel"/>
+										<int key="NSSegmentItemTag">1</int>
+										<int key="NSSegmentItemImageScaling">0</int>
+									</object>
+								</array>
+								<int key="NSSelectedSegment">1</int>
+								<int key="NSTrackingMode">2</int>
+								<int key="NSSegmentStyle">2</int>
+							</object>
+						</object>
 						<object class="NSTextField" id="318475319">
 							<reference key="NSNextResponder" ref="1024620742"/>
 							<int key="NSvFlags">290</int>
-							<string key="NSFrame">{{101, 6}, {682, 17}}</string>
+							<string key="NSFrame">{{170, 6}, {623, 17}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="530152735">
 								<int key="NSCellFlags">68288064</int>
@@ -160,8 +205,9 @@
 					<string key="NSFrameSize">{800, 600}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView" ref="619150477"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{600, 322}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -179,35 +225,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="211527197"/>
-						<reference key="destination" ref="1063475451"/>
-					</object>
-					<int key="connectionID">1284</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">tabView</string>
 						<reference key="source" ref="1063475451"/>
 						<reference key="destination" ref="963846985"/>
 					</object>
 					<int key="connectionID">1406</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tabView</string>
-						<reference key="source" ref="619150477"/>
-						<reference key="destination" ref="963846985"/>
-					</object>
-					<int key="connectionID">1408</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="963846985"/>
-						<reference key="destination" ref="619150477"/>
-					</object>
-					<int key="connectionID">1409</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -232,6 +254,46 @@
 						<reference key="destination" ref="318475319"/>
 					</object>
 					<int key="connectionID">1421</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleAreaVisibility:</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="1012562456"/>
+					</object>
+					<int key="connectionID">1433</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">visibilitySegments</string>
+						<reference key="source" ref="1063475451"/>
+						<reference key="destination" ref="1012562456"/>
+					</object>
+					<int key="connectionID">1434</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="211527197"/>
+						<reference key="destination" ref="1063475451"/>
+					</object>
+					<int key="connectionID">1284</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="963846985"/>
+						<reference key="destination" ref="619150477"/>
+					</object>
+					<int key="connectionID">1409</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabView</string>
+						<reference key="source" ref="619150477"/>
+						<reference key="destination" ref="963846985"/>
+					</object>
+					<int key="connectionID">1408</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -277,6 +339,7 @@
 							<reference ref="619150477"/>
 							<reference ref="734865357"/>
 							<reference ref="318475319"/>
+							<reference ref="1012562456"/>
 						</array>
 						<reference key="parent" ref="211527197"/>
 					</object>
@@ -317,6 +380,19 @@
 						<reference key="object" ref="530152735"/>
 						<reference key="parent" ref="318475319"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1430</int>
+						<reference key="object" ref="1012562456"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="461028361"/>
+						</array>
+						<reference key="parent" ref="1024620742"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1431</int>
+						<reference key="object" ref="461028361"/>
+						<reference key="parent" ref="1012562456"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -330,6 +406,10 @@
 				<integer value="2" key="1417.IBSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="1419.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1420.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1430.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<integer value="0" key="1431.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<string key="1431.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<integer value="2" key="1431.IBSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="21.IBWindowTemplateEditedContentRect">{{80, 244}, {800, 600}}</string>
@@ -339,7 +419,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1421</int>
+			<int key="maxID">1434</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -425,6 +505,7 @@
 						<string key="showPreviousView:">id</string>
 						<string key="showSelectedAccount:">id</string>
 						<string key="showTransactionTable:">id</string>
+						<string key="toggleAreaVisibility:">id</string>
 						<string key="toggleEntriesReconciled:">id</string>
 						<string key="toggleExcluded:">id</string>
 						<string key="toggleReconciliationMode:">id</string>
@@ -555,6 +636,10 @@
 							<string key="name">showTransactionTable:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="toggleAreaVisibility:">
+							<string key="name">toggleAreaVisibility:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="toggleEntriesReconciled:">
 							<string key="name">toggleEntriesReconciled:</string>
 							<string key="candidateClassName">id</string>
@@ -576,6 +661,7 @@
 						<string key="statusLabel">NSTextField</string>
 						<string key="tabBar">PSMTabBarControl</string>
 						<string key="tabView">NSTabView</string>
+						<string key="visibilitySegments">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="statusLabel">
@@ -589,6 +675,10 @@
 						<object class="IBToOneOutletInfo" key="tabView">
 							<string key="name">tabView</string>
 							<string key="candidateClassName">NSTabView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="visibilitySegments">
+							<string key="name">visibilitySegments</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -633,7 +723,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<real value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
@@ -642,8 +732,10 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="graph_visibility_on_16">{16, 16}</string>
 			<string key="info_gray_12">{12, 12}</string>
 			<string key="minus_8">{8, 8}</string>
+			<string key="piechart_visibility_on_16">{16, 16}</string>
 			<string key="plus_8">{8, 8}</string>
 		</dictionary>
 	</data>

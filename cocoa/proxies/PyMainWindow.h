@@ -51,6 +51,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)showAccount;
 - (void)navigateBack;
 - (void)jumpToAccount;
+- (void)toggleAreaVisibility:(NSInteger)area; // MGPaneArea*
 
 // Item Management
 - (void)deleteItem;
@@ -65,4 +66,5 @@ http://www.hardcoded.net/licenses/bsd_license
 // Other
 - (void)export;
 - (NSString *)statusLine;
+- (NSArray *)hiddenAreas;
 @end
