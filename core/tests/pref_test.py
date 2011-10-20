@@ -10,8 +10,8 @@
 
 from hscommon.testutil import eq_
 
-from ..const import PaneType
-from ..gui.main_window import OPENED_PANES_PREFERENCE
+from ..const import PaneType, PaneArea
+from ..gui.main_window import Preference
 from .base import TestApp, with_app, testdata
 
 #--- Pristine
@@ -51,7 +51,7 @@ def test_mainwindow_panes_reopen_except_nonexistant_accounts(app):
 
 @with_app(TestApp)
 def test_main_window_doent_choke_on_unexisting_pane_pref(app):
-    app.app.set_default(OPENED_PANES_PREFERENCE, [{'pane_type': '99999'}])
+    app.app.set_default(Preference.OpenedPanes, [{'pane_type': '99999'}])
     newapp = TestApp(app=app.app)
     newapp.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru')) # no crash on restore
     newapp.check_current_pane(PaneType.NetWorth) # been replaced with a Net Worth pane.
@@ -73,12 +73,19 @@ def test_numeric_account_name_pane_reopen(app):
     filename = app.save_file()
     app.doc.close()
     # now let's go change the 'account_name' attr of the pane in the prefs to emulate Qt's behavior
-    panes_pref = app.doc.get_default(OPENED_PANES_PREFERENCE)
+    panes_pref = app.doc.get_default(Preference.OpenedPanes)
     account_pane_pref = panes_pref[-1]
     account_pane_pref['account_name'] = int(account_pane_pref['account_name'])
     newapp = TestApp(app=app.app)
     newapp.doc.load_from_xml(filename) # no crash on restore
     eq_(app.mw.pane_label(app.mw.pane_count-1), '12345')
+
+@with_app(TestApp)
+def test_graph_visibility_is_restored(app):
+    app.mw.toggle_area_visibility(PaneArea.BottomGraph)
+    newapp = app.save_and_load()
+    assert PaneArea.BottomGraph in newapp.mw.hidden_areas
+    newapp.mw.view.check_gui_calls_partial(['update_area_visibility'])
 
 #--- Columns save/restore
 def assert_column_save_restore(app, tablename, colname):

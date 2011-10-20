@@ -10,7 +10,7 @@ from hscommon.notify import Repeater, Listener
 from hscommon.util import first, minmax
 from hscommon.trans import tr
 
-from ..const import PaneType, PaneArea
+from ..const import PaneType
 from ..document import FilterType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
@@ -29,8 +29,10 @@ from .custom_date_range_panel import CustomDateRangePanel
 from .account_reassign_panel import AccountReassignPanel
 from .export_panel import ExportPanel
 
-OPENED_PANES_PREFERENCE = 'OpenedPanes'
-SELECTED_PANE_PREFERENCE = 'SelectedPane'
+class Preference:
+    OpenedPanes = 'OpenedPanes'
+    SelectedPane = 'SelectedPane'
+    HiddenAreas = 'HiddenAreas'
 
 class ViewPane:
     def __init__(self, view, label, account=None):
@@ -167,7 +169,7 @@ class MainWindow(Repeater):
         self._set_panes(pane_data)
     
     def _restore_opened_panes(self):
-        stored_panes = self.document.get_default(OPENED_PANES_PREFERENCE)
+        stored_panes = self.document.get_default(Preference.OpenedPanes)
         if not stored_panes:
             return
         pane_data = []
@@ -180,7 +182,7 @@ class MainWindow(Repeater):
             pane_data.append((pane_type, account))
         if pane_data:
             self._set_panes(pane_data)
-            selected_pane_index = self.document.get_default(SELECTED_PANE_PREFERENCE)
+            selected_pane_index = self.document.get_default(Preference.SelectedPane)
             if selected_pane_index is not None:
                 self.current_pane_index = selected_pane_index
     
@@ -192,8 +194,9 @@ class MainWindow(Repeater):
             if pane.account is not None:
                 data['account_name'] = pane.account.name
             opened_panes.append(data)
-        self.document.set_default(OPENED_PANES_PREFERENCE, opened_panes)
-        self.document.set_default(SELECTED_PANE_PREFERENCE, self._current_pane_index)
+        self.document.set_default(Preference.OpenedPanes, opened_panes)
+        self.document.set_default(Preference.SelectedPane, self._current_pane_index)
+        self.document.set_default(Preference.HiddenAreas, list(self.hidden_areas))
     
     def _set_panes(self, pane_data):
         # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, account)]
@@ -207,6 +210,10 @@ class MainWindow(Repeater):
                 self.panes.append(self._create_pane(PaneType.NetWorth))
         self.view.refresh_panes()
         self.current_pane_index = 0
+    
+    def _update_area_visibility(self):
+        self.notify('area_visibility_changed')
+        self.view.update_area_visibility()
     
     def _visible_entries_for_account(self, account):
         date_range = self.document.date_range
@@ -398,8 +405,7 @@ class MainWindow(Repeater):
             self.hidden_areas.remove(area)
         else:
             self.hidden_areas.add(area)
-        self.notify('area_visibility_changed')
-        self.view.update_area_visibility()
+        self._update_area_visibility()
     
     def update_status_line(self):
         self.view.refresh_status_line()
@@ -523,6 +529,8 @@ class MainWindow(Repeater):
     
     def document_restoring_preferences(self):
         self._restore_opened_panes()
+        self.hidden_areas = set(self.document.get_default(Preference.HiddenAreas, fallback_value=[]))
+        self._update_area_visibility()
     
     def filter_applied(self):
         if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):
