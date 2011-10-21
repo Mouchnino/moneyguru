@@ -154,6 +154,8 @@
 /* core/gui/income_statement.py:58 */
 "NET INCOME" = "NETTOEINKOMMEN";
 
+"Debit/Credit" = "Debit/kredit";
+
 /* Tab Names */
 "Net Worth" = "Eigenkapital";
 "Profit & Loss" = "Profit & Verlust";

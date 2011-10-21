@@ -154,6 +154,8 @@
 /* core/gui/income_statement.py:58 */
 "NET INCOME" = "REVENU NET";
 
+"Debit/Credit" = "Débit/Crédit";
+
 /* Tab Names */
 "Net Worth" = "Valeur nette";
 "Profit & Loss" = "Profits & pertes";

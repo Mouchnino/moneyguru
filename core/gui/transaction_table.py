@@ -24,9 +24,9 @@ class TransactionTable(TransactionTableBase):
     COLUMNS = [
         Column('status', display=''),
         Column('date', display=trcol('Date')),
-        Column('checkno', display=trcol('Description'), visible=False),
-        Column('description', display=trcol('Payee')),
-        Column('payee', display=trcol('Check #'), visible=False),
+        Column('checkno', display=trcol('Check #'), visible=False, optional=True),
+        Column('description', display=trcol('Description'), optional=True),
+        Column('payee', display=trcol('Payee'), visible=False, optional=True),
         Column('from', display=trcol('From')),
         Column('to', display=trcol('To')),
         Column('amount', display=trcol('Amount')),

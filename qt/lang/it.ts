@@ -128,6 +128,10 @@
         <translation>Patrimonio Netto</translation>
     </message>
     <message>
+        <source>Debit/Credit</source>
+        <translation>Debito/Credito</translation>
+    </message>
+    <message>
         <source>Income/Expense accounts must be created before budgets can be set.</source>
         <translation>Creare un Conto Entrate/Uscite prima di poter impostare una Previsione.</translation>
     </message>
@@ -1565,107 +1569,6 @@ Entries from {start_date} to {end_date}</source>
         <location filename="transaction_panel.ui" line="204"/>
         <source>Notes</source>
         <translation>Note</translation>
-    </message>
-</context>
-<context>
-    <name>ViewOptionsDialog</name>
-    <message>
-        <location filename="view_options_dialog.ui" line="14"/>
-        <source>View Options</source>
-        <translation>Opzioni Vista</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="20"/>
-        <source>Net Worth</source>
-        <translation>Patrimonio Netto</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="84"/>
-        <source>Change</source>
-        <translation>Variazione</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="91"/>
-        <source>Change %</source>
-        <translation>Variazione %</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="40"/>
-        <source>Start</source>
-        <translation>Inizio</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="105"/>
-        <source>Budgeted</source>
-        <translation>Previsto</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="206"/>
-        <source>Graph</source>
-        <translation>Grafico</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="119"/>
-        <source>Pie Charts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="126"/>
-        <source>Account #</source>
-        <translation>Conto #</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="78"/>
-        <source>Profit &amp; Loss</source>
-        <translation>Guadagno &amp; Perdita</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="98"/>
-        <source>Last</source>
-        <translation>Ultimo</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="136"/>
-        <source>Transactions</source>
-        <translation>Transazioni</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="229"/>
-        <source>Description</source>
-        <translation>Descrizione</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="236"/>
-        <source>Payee</source>
-        <translation>Beneficiario</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="243"/>
-        <source>Check #</source>
-        <translation>Conto #</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="179"/>
-        <source>Account</source>
-        <translation>Conto</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="213"/>
-        <source>Reconciliation Date</source>
-        <translation>Data di Riconciliazione</translation>
-    </message>
-		<message>
-        <source>Debit/Credit</source>
-        <translation>Debito/Credito</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="223"/>
-        <source>Schedules</source>
-        <translation>Pianificazione</translation>
-    </message>
-    <message>
-        <source>General Ledger</source>
-        <translation>Libro Mastro</translation>
     </message>
 </context>
 <context>

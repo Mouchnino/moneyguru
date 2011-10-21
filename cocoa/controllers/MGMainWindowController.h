@@ -33,7 +33,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountLookup.h"
 #import "MGCompletionLookup.h"
 #import "MGDateRangeSelector.h"
-#import "MGViewOptions.h"
 #import "MGBaseView.h"
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
@@ -69,7 +68,6 @@ http://www.hardcoded.net/licenses/bsd_license
     MGAccountLookup *accountLookup;
     MGCompletionLookup *completionLookup;
     MGDateRangeSelector *dateRangeSelector;
-    MGViewOptions *viewOptions;
     MGBaseView *top;
     NSMutableArray *subviews;
 }
@@ -80,6 +78,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)validateAction:(SEL)action;
 
 /* Actions */
+- (IBAction)columnMenuClick:(id)sender;
 - (IBAction)delete:(id)sender;
 - (IBAction)duplicateItem:(id)sender;
 - (IBAction)editItemInfo:(id)sender;
@@ -113,7 +112,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)toggleReconciliationMode:(id)sender;
 - (IBAction)toggleEntriesReconciled:(id)sender;
 - (IBAction)toggleExcluded:(id)sender;
-- (IBAction)toggleViewOptionsVisible:(id)sender;
 - (IBAction)toggleAreaVisibility:(id)sender;
 - (IBAction)toggleGraph:(id)sender;
 - (IBAction)togglePieChart:(id)sender;

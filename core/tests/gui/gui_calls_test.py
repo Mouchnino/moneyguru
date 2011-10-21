@@ -61,10 +61,12 @@ def test_add_transaction():
 @with_app(app_cleared_gui_calls)
 def test_change_column_visibility(app):
     # Changing the visibility option of a column calls the table's gui to actually hide the thing.
-    app.vopts.transaction_table_description = False
+    app.show_tview()
+    app.set_column_visible('description', False)
     app.check_gui_calls(app.ttablecol_gui, ['set_column_visible'])
     # Also works for sheets
-    app.vopts.networth_sheet_delta = True
+    app.show_nwview()
+    app.set_column_visible('delta', True)
     app.check_gui_calls(app.bsheetcol_gui, ['set_column_visible'])
 
 def test_change_default_currency():

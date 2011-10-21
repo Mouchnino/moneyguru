@@ -128,6 +128,10 @@
         <translation>VALEUR NETTE</translation>
     </message>
     <message>
+        <source>Debit/Credit</source>
+        <translation>Débit/Crédit</translation>
+    </message>
+    <message>
         <source>Income/Expense accounts must be created before budgets can be set.</source>
         <translation>Des comptes de revenu et dépenses doivent être créés avant de faire un budget.</translation>
     </message>
@@ -1567,107 +1571,6 @@ Entrées de {start_date} à {end_date}</translation>
         <location filename="transaction_panel.ui" line="204"/>
         <source>Notes</source>
         <translation>Notes</translation>
-    </message>
-</context>
-<context>
-    <name>ViewOptionsDialog</name>
-    <message>
-        <location filename="view_options_dialog.ui" line="14"/>
-        <source>View Options</source>
-        <translation>Options de visibilité</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="20"/>
-        <source>Net Worth</source>
-        <translation>Valeur nette</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="84"/>
-        <source>Change</source>
-        <translation>Variation</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="91"/>
-        <source>Change %</source>
-        <translation>Variation %</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="40"/>
-        <source>Start</source>
-        <translation>Début</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="105"/>
-        <source>Budgeted</source>
-        <translation>Budgeté</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="206"/>
-        <source>Graph</source>
-        <translation>Graphe</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="119"/>
-        <source>Pie Charts</source>
-        <translation>Dia. Circ.</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="126"/>
-        <source>Account #</source>
-        <translation># Compte</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="78"/>
-        <source>Profit &amp; Loss</source>
-        <translation>Profit &amp; Pertes</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="98"/>
-        <source>Last</source>
-        <translation>Précédent</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="136"/>
-        <source>Transactions</source>
-        <translation>Transactions</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="229"/>
-        <source>Description</source>
-        <translation>Description</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="236"/>
-        <source>Payee</source>
-        <translation>Tiers</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="243"/>
-        <source>Check #</source>
-        <translation># Chèque</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="179"/>
-        <source>Account</source>
-        <translation>Compte</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="213"/>
-        <source>Reconciliation Date</source>
-        <translation>Date réconciliation</translation>
-    </message>
-		<message>
-        <source>Debit/Credit</source>
-        <translation>Débit/Crédit</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="223"/>
-        <source>Schedules</source>
-        <translation>Récurrences</translation>
-    </message>
-    <message>
-        <source>General Ledger</source>
-        <translation>Grand Livre</translation>
     </message>
 </context>
 <context>

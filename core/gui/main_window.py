@@ -89,7 +89,7 @@ class MainWindow(Repeater):
     # children to have reference to the main window.
     def set_children(self, children):
         (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
-            self.glview, self.dpview, self.emptyview, self.view_options) = children
+            self.glview, self.dpview, self.emptyview) = children
         # XXX For now, this is the only place where we know we've linked our GUI views, so we can
         # call our view refreshes. However, a more correct way to do it is to have an
         # app_finished_init signal.
@@ -416,6 +416,19 @@ class MainWindow(Repeater):
         if account not in self._account2visibleentries:
             self._account2visibleentries[account] = self._visible_entries_for_account(account)
         return self._account2visibleentries[account]
+    
+    #Column menu
+    def column_menu_items(self):
+        # Returns a list of (display_name, marked) items for each optional column in the current
+        # view (marked means that it's visible).
+        if not hasattr(self._current_pane.view, 'columns'):
+            return None
+        return self._current_pane.view.columns.menu_items()
+    
+    def toggle_column_menu_item(self, index):
+        if not hasattr(self._current_pane.view, 'columns'):
+            return None
+        self._current_pane.view.columns.toggle_menu_item(index)
     
     #--- Properties
     @property

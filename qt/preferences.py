@@ -13,16 +13,6 @@ from PyQt4.QtCore import QLocale
 from core.model.date import clean_format
 from qtlib.preferences import Preferences as PreferencesBase
 
-# About the hidden columns preference:
-# Rather than keeping a list of visible columns, we keep a list of hidden column. This is because
-# not all columns are optionally visible, so we either need to know which columns are optionally
-# visible, or only store information about hidden columns. The second way is simpler, so that's
-# what we do.
-
-# About QRect conversion:
-# I think Qt supports putting basic structures like QRect directly in QSettings, but I prefer not
-# to rely on it and stay with generic structures.
-
 class Preferences(PreferencesBase):
     def _load_values(self, settings):
         get = self.get_value
@@ -31,15 +21,6 @@ class Preferences(PreferencesBase):
         self.showScheduleScopeDialog = get('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         self.dateFormat = get('DateFormat', self.dateFormat)
         self.language = get('Language', self.language)
-        
-        self.networthGraphVisible = get('NetworthGraphVisible', self.networthGraphVisible)
-        self.networthPieChartsVisible = get('NetworthPieChartsVisible', self.networthPieChartsVisible)
-        self.profitGraphVisible = get('ProfitGraphVisible', self.profitGraphVisible)
-        self.profitPieChartsVisible = get('ProfitPieChartsVisible', self.profitPieChartsVisible)
-        self.entryGraphVisible = get('EntryGraphVisible', self.entryGraphVisible)
-        
-        self.netWorthExpandedPaths = get('NetWorthExpandedPaths', self.netWorthExpandedPaths)
-        self.profitLossExpandedPaths = get('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
         
     def reset(self):
         locale = QLocale.system()
@@ -50,31 +31,10 @@ class Preferences(PreferencesBase):
         self.dateFormat = dateFormat
         self.language = ''
         
-        self.networthGraphVisible = True
-        self.networthPieChartsVisible = True
-        self.profitGraphVisible = True
-        self.profitPieChartsVisible = True
-        self.entryGraphVisible = True
-        
-        self.netWorthExpandedPaths = [[0], [1]] # Asset and Liability nodes
-        self.profitLossExpandedPaths = [[0], [1]] # Income and Expense nodes
-        
-        self.mainWindowIsMaximized = False
-        self.mainWindowRect = None
-    
     def _save_values(self, settings):
         set_ = self.set_value
         set_('RecentDocuments', self.recentDocuments)
         set_('ShowScheduleScopeDialog', self.showScheduleScopeDialog)
         set_('DateFormat', self.dateFormat)
         set_('Language', self.language)
-        
-        set_('NetworthGraphVisible', self.networthGraphVisible)
-        set_('NetworthPieChartsVisible', self.networthPieChartsVisible)
-        set_('ProfitGraphVisible', self.profitGraphVisible)
-        set_('ProfitPieChartsVisible', self.profitPieChartsVisible)
-        set_('EntryGraphVisible', self.entryGraphVisible)
-        
-        set_('NetWorthExpandedPaths', self.netWorthExpandedPaths)
-        set_('ProfitLossExpandedPaths', self.profitLossExpandedPaths)
     

@@ -42,7 +42,6 @@ from ..gui.profit_view import ProfitView
 from ..gui.schedule_view import ScheduleView
 from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
-from ..gui.view_options import ViewOptions
 from ..loader import base
 from ..model.account import AccountType
 
@@ -188,7 +187,6 @@ class TestApp(TestAppBase):
         self.itable = link_gui(self.iwin.import_table)
         self.alookup = link_gui(self.mw.account_lookup)
         self.clookup = link_gui(self.mw.completion_lookup)
-        make_gui('vopts', ViewOptions)
         # set children
         children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
         self.nwview.set_children(children)
@@ -202,7 +200,7 @@ class TestApp(TestAppBase):
         self.glview.set_children(children)
         # None between bview and empty view is the Cashculator view, which isn't tested
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
-            self.glview, self.dpview, self.emptyview, self.vopts]
+            self.glview, self.dpview, self.emptyview]
         self.mainwindow.set_children(children)
         self.doc.connect()
         self.mainwindow.connect()
@@ -513,6 +511,25 @@ class TestApp(TestAppBase):
             return
         else:
             raise LookupError("Trying to show an account that doesn't exist")
+    
+    def set_column_visible(self, colname, visible):
+        # Toggling column from the UI is rather simple for a human, but not for a program. The
+        # column menu is filled with display names and colname is an identifier.
+        assert self.mw._current_pane.view.columns is not None
+        items = self.mw.column_menu_items()
+        if colname == 'debit_credit':
+            # This is a special one
+            display = "Debit/Credit"
+        else:
+            display = self.mw._current_pane.view.columns.column_display(colname)
+        itemdisplays = [item[0] for item in items]
+        assert display in itemdisplays
+        index = itemdisplays.index(display)
+        # Now that we have our index, just toggle the menu item if the marked flag isn't what our
+        # visible flag is.
+        marked = items[index][1]
+        if marked != visible:
+            self.mw.toggle_column_menu_item(index)
     
     def transaction_descriptions(self):
         return [row.description for row in self.ttable.rows]

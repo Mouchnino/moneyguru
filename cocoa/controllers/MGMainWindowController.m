@@ -44,7 +44,6 @@ http://www.hardcoded.net/licenses/bsd_license
     accountLookup = [[MGAccountLookup alloc] initWithPy:[[self py] accountLookup]];
     completionLookup = [[MGCompletionLookup alloc] initWithPy:[[self py] completionLookup]];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPy:[[self py] daterangeSelector]];
-    viewOptions = [[MGViewOptions alloc] initWithPyParent:py];
     subviews = [[NSMutableArray alloc] init];
     
     // Setup the toolbar
@@ -57,7 +56,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
         [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
-        [ledgerView py], [docpropsView py], [emptyView py], [viewOptions py], nil];
+        [ledgerView py], [docpropsView py], [emptyView py], nil];
     [[self py] setChildren:children];
     [[self py] connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause
@@ -98,7 +97,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [accountLookup release];
     [completionLookup release];
     [dateRangeSelector release];
-    [viewOptions release];
     [subviews release];
     [super dealloc];
 }
@@ -145,8 +143,33 @@ http://www.hardcoded.net/licenses/bsd_license
     return YES;
 }
 
+- (NSMenu *)buildColumnsMenu
+{
+    NSArray *menuItems = [[self py] columnMenuItems];
+    if (menuItems == nil) {
+        return nil;
+    }
+    NSMenu *m = [[NSMenu alloc] initWithTitle:@""];
+    for (NSInteger i=0; i < [menuItems count]; i++) {
+        NSArray *pair = [menuItems objectAtIndex:i];
+        NSString *display = [pair objectAtIndex:0];
+        BOOL marked = n2b([pair objectAtIndex:1]);
+        NSMenuItem *mi = [m addItemWithTitle:display action:@selector(columnMenuClick:) keyEquivalent:@""];
+        [mi setTarget:self];
+        [mi setState:marked ? NSOnState : NSOffState];
+        [mi setTag:i];
+    }
+    return [m autorelease];
+}
 
 /* Actions */
+- (IBAction)columnMenuClick:(id)sender
+{
+    NSMenuItem *mi = (NSMenuItem *)sender;
+    NSInteger index = [mi tag];
+    [[self py] toggleColumnMenuItemAtIndex:index];
+}
+
 - (IBAction)delete:(id)sender
 {
     [[self py] deleteItem];
@@ -321,27 +344,25 @@ http://www.hardcoded.net/licenses/bsd_license
     [(MGAccountView *)top toggleReconciliationMode];
 }
 
-- (IBAction)toggleViewOptionsVisible:(id)sender
-{
-    if ([[viewOptions window] isVisible]) {
-        [[viewOptions window] orderOut:sender];
-    }
-    else {
-        [[viewOptions window] makeKeyAndOrderFront:sender];
-    }
-}
-
 - (IBAction)toggleAreaVisibility:(id)sender
 {
-    NSInteger index = [(NSSegmentedControl *)sender selectedSegment];
-    NSInteger paneArea;
+    NSSegmentedControl *sc = (NSSegmentedControl *)sender;
+    NSInteger index = [sc selectedSegment];
     if (index == 0) {
-        paneArea = MGPaneAreaBottomGraph;
+        [[self py] toggleAreaVisibility:MGPaneAreaBottomGraph];
+    }
+    else if (index == 1) {
+        [[self py] toggleAreaVisibility:MGPaneAreaRightChart];
     }
     else {
-        paneArea = MGPaneAreaRightChart;
+        NSMenu *m = [self buildColumnsMenu];
+        if (m != nil) {
+            NSRect buttonRect = [sc frame];
+            CGFloat lastSegmentWidth = [sc widthForSegment:2];
+            NSPoint popupPoint = NSMakePoint(NSMaxX(buttonRect)-lastSegmentWidth, NSMaxY(buttonRect));
+            [m popUpMenuPositioningItem:nil atLocation:popupPoint inView:[[self window] contentView]];
+        }
     }
-    [[self py] toggleAreaVisibility:paneArea];
 }
 
 - (IBAction)toggleGraph:(id)sender

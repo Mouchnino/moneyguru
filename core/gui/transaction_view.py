@@ -28,6 +28,7 @@ class TransactionView(BaseView):
         BaseView.set_children(self, children)
         [self.ttable] = children
         self.maintable = self.ttable
+        self.columns = self.maintable.columns
     
     def _revalidate(self):
         self._visible_transactions = None

@@ -128,6 +128,10 @@
         <translation>ČISTÉ JMĚNÍ</translation>
     </message>
     <message>
+        <source>Debit/Credit</source>
+        <translation>Výběr/Vklad</translation>
+    </message>
+    <message>
         <source>Income/Expense accounts must be created before budgets can be set.</source>
         <translation>Před návrhem rozpočtu musíte vytvořit příjmové/výdajové účty.</translation>
     </message>
@@ -1567,107 +1571,6 @@ Entrées de {start_date} à {end_date}</translation>
         <location filename="transaction_panel.ui" line="204"/>
         <source>Notes</source>
         <translation>Poznámky</translation>
-    </message>
-</context>
-<context>
-    <name>ViewOptionsDialog</name>
-    <message>
-        <location filename="view_options_dialog.ui" line="14"/>
-        <source>View Options</source>
-        <translation>Předvolby pohledu</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="20"/>
-        <source>Net Worth</source>
-        <translation>Čisté jmění</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="84"/>
-        <source>Change</source>
-        <translation>Změna</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="91"/>
-        <source>Change %</source>
-        <translation>Změna %</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="40"/>
-        <source>Start</source>
-        <translation>Start</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="105"/>
-        <source>Budgeted</source>
-        <translation>V rozpočtu</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="206"/>
-        <source>Graph</source>
-        <translation>Graf</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="119"/>
-        <source>Pie Charts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="126"/>
-        <source>Account #</source>
-        <translation>Účet č.</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="78"/>
-        <source>Profit &amp; Loss</source>
-        <translation>Zisky &amp; ztráty</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="98"/>
-        <source>Last</source>
-        <translation>Poslední</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="136"/>
-        <source>Transactions</source>
-        <translation>Transakce</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="229"/>
-        <source>Description</source>
-        <translation>Popis</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="236"/>
-        <source>Payee</source>
-        <translation>Příjemce</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="243"/>
-        <source>Check #</source>
-        <translation>Šek č.</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="179"/>
-        <source>Account</source>
-        <translation>Účet</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="213"/>
-        <source>Reconciliation Date</source>
-        <translation>Datum párování</translation>
-    </message>
-		<message>
-        <source>Debit/Credit</source>
-        <translation>Výběr/Vklad</translation>
-    </message>
-    <message>
-        <location filename="view_options_dialog.ui" line="223"/>
-        <source>Schedules</source>
-        <translation>Plány</translation>
-    </message>
-    <message>
-        <source>General Ledger</source>
-        <translation>Účetní kniha</translation>
     </message>
 </context>
 <context>

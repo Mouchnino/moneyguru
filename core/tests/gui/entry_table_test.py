@@ -90,6 +90,19 @@ def test_total_line_balance_is_empty(app):
     # When there's no change in the balance, the balance cell of the total row shows nothing
     eq_(app.etable[0].balance, '')
 
+@with_app(app_one_account)
+def test_toggle_debit_credit(app):
+    # The entry table is a bit special compared to other table because one of its column visibility
+    # menu item toggles 4 items at once, the Increase/Decrease and Credit/Debit pair. We just want
+    # to test that behavior.
+    menu_item_count = len(app.mw.column_menu_items())
+    eq_(app.mw.column_menu_items()[menu_item_count-1], ("Debit/Credit", False))
+    app.mw.toggle_column_menu_item(menu_item_count-1)
+    assert app.etable.columns.column_is_visible('debit')
+    assert app.etable.columns.column_is_visible('credit')
+    assert not app.etable.columns.column_is_visible('increase')
+    assert not app.etable.columns.column_is_visible('decrease')
+
 #---
 def app_eur_account():
     app = TestApp()
@@ -204,7 +217,7 @@ def test_change_transfer(app):
 def test_debit_credit_columns(app):
     # when enabling the credit/debit columns option, increase/decrease columns are replaced with
     # credit/debit columns
-    app.vopts.entry_table_debit_credit = True
+    app.set_column_visible('debit_credit', True)
     assert app.etable.columns.column_is_visible('debit')
     assert app.etable.columns.column_is_visible('credit')
     assert not app.etable.columns.column_is_visible('increase')
@@ -217,10 +230,10 @@ def test_debit_credit_columns(app):
 @with_app(app_one_entry)
 def test_debit_credit_columns_edit(app):
     # editing a debit/credit columns work
-    app.vopts.entry_table_debit_credit = True
+    app.set_column_visible('debit_credit', True)
     app.etable[0].debit = '43'
     app.etable.save_edits()
-    app.vopts.entry_table_debit_credit = False
+    app.set_column_visible('debit_credit', False)
     eq_(app.etable[0].increase, '43.00')
 
 @with_app(app_one_entry)

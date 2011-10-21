@@ -9,20 +9,37 @@
 import datetime
 
 from hscommon.trans import tr
-from .column import Column
+from .column import Column, Columns
 from .entry_table_base import EntryTableBase, PreviousBalanceRow, TotalRow
 
 trcol = lambda s: tr(s, 'columns')
+
+class EntryTableColumns(Columns):
+    def menu_items(self):
+        items = Columns.menu_items(self)
+        marked = self.column_is_visible('debit')
+        items.append((tr("Debit/Credit"), marked))
+        return items
+    
+    def toggle_menu_item(self, index):
+        if index == len(self._optional_columns()):
+            debit_visible = self.column_is_visible('debit')
+            self.set_column_visible('debit', not debit_visible)
+            self.set_column_visible('credit', not debit_visible)
+            self.set_column_visible('increase', debit_visible)
+            self.set_column_visible('decrease', debit_visible)
+        else:
+            Columns.toggle_menu_item(self, index)
 
 class EntryTable(EntryTableBase):
     SAVENAME = 'EntryTable'
     COLUMNS = [
         Column('status', display=''),
         Column('date', display=trcol("Date")),
-        Column('reconciliation_date', display=trcol("Reconciliation Date"), visible=False),
-        Column('checkno', display=trcol("Check #"), visible=False),
-        Column('description', display=trcol("Description")),
-        Column('payee', display=trcol("Payee"), visible=False),
+        Column('reconciliation_date', display=trcol("Reconciliation Date"), visible=False, optional=True),
+        Column('checkno', display=trcol("Check #"), visible=False, optional=True),
+        Column('description', display=trcol("Description"), optional=True),
+        Column('payee', display=trcol("Payee"), visible=False, optional=True),
         Column('transfer', display=trcol("Transfer")),
         Column('increase', display=trcol("Increase")),
         Column('decrease', display=trcol("Decrease")),
@@ -34,6 +51,7 @@ class EntryTable(EntryTableBase):
     
     def __init__(self, view, account_view):
         EntryTableBase.__init__(self, view, account_view)
+        self.columns = EntryTableColumns(self)
         self.account = None
         self._reconciliation_mode = False
     

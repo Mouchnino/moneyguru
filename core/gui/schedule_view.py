@@ -20,6 +20,7 @@ class ScheduleView(BaseView):
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
         self.table = ScheduleTable(self)
+        self.columns = self.table.columns
         self.bind_messages(self.INVALIDATING_MESSAGES, self._revalidate)
     
     def _revalidate(self):

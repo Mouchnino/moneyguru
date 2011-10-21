@@ -10,8 +10,8 @@ import os.path as op
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QProcess, QUrl
-from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap, QDialog,
-    QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QAction)
+from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
+    QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction)
 
 from qtlib.recent import Recent
 from qtlib.util import horizontalSpacer
@@ -43,7 +43,6 @@ from .export_panel import ExportPanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .search_field import SearchField
 from .date_range_selector import DateRangeSelector
-from .view_options import ViewOptionsDialog
 
 PANETYPE2ICON = {
     PaneType.NetWorth: 'balance_sheet_16',
@@ -89,7 +88,6 @@ class MainWindow(QMainWindow):
         self.alookup = Lookup(self, model=self.model.account_lookup)
         self.clookup = Lookup(self, model=self.model.completion_lookup)
         self.drsel = DateRangeSelector(mainwindow=self, view=self.dateRangeSelectorView)
-        self.vopts = ViewOptionsDialog(self)
         self.sfield = SearchField(model=self.model.search_field, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, 'recentDocuments')
         self.recentDocuments.addMenu(self.menuOpenRecent)
@@ -108,7 +106,7 @@ class MainWindow(QMainWindow):
         # set_children() and connect() calls have to happen after _setupUiPost()
         # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
         children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
-            self.glview, self.dpview, self.newview, self.vopts]
+            self.glview, self.dpview, self.newview]
         self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         
@@ -173,6 +171,10 @@ class MainWindow(QMainWindow):
         self.piechartVisibilityButton.setSizePolicy(buttonSizePolicy)
         self.piechartVisibilityButton.setIcon(QIcon(QPixmap(':/piechart_visibility_on_16')))
         self.horizontalLayout.addWidget(self.piechartVisibilityButton)
+        self.columnsVisibilityButton = QPushButton()
+        self.columnsVisibilityButton.setSizePolicy(buttonSizePolicy)
+        self.columnsVisibilityButton.setIcon(QIcon(QPixmap(':/columns_16')))
+        self.horizontalLayout.addWidget(self.columnsVisibilityButton)
         
         self.statusLabel = QtGui.QLabel(trui("Status"))
         self.statusLabel.setAlignment(QtCore.Qt.AlignCenter)
@@ -246,8 +248,6 @@ class MainWindow(QMainWindow):
         self.actionShowBudgets = QAction(trui("Budgets"), self)
         self.actionShowBudgets.setShortcut("Ctrl+5")
         self.actionShowBudgets.setIcon(QIcon(QPixmap(':/budget_48')))
-        self.actionShowViewOptions = QAction(trui("View Options..."), self)
-        self.actionShowViewOptions.setShortcut("Ctrl+J")
         self.actionReconcileSelected = QAction(trui("Reconcile Selection"), self)
         self.actionReconcileSelected.setShortcut("Ctrl+R")
         self.actionMakeScheduleFromSelected = QAction(trui("Make Schedule from Selected"), self)
@@ -296,7 +296,6 @@ class MainWindow(QMainWindow):
         self.menuView.addAction(self.actionShowNextView)
         self.menuView.addAction(self.menuDateRange.menuAction())
         self.menuView.addAction(self.actionShowPreferences)
-        self.menuView.addAction(self.actionShowViewOptions)
         self.menuView.addAction(self.actionToggleGraph)
         self.menuView.addAction(self.actionTogglePieChart)
         self.menuEdit.addAction(self.actionNewItem)
@@ -340,6 +339,7 @@ class MainWindow(QMainWindow):
         self.editItemButton.clicked.connect(self.actionEditItem.trigger)
         self.graphVisibilityButton.clicked.connect(self.actionToggleGraph.trigger)
         self.piechartVisibilityButton.clicked.connect(self.actionTogglePieChart.trigger)
+        self.columnsVisibilityButton.clicked.connect(self.columnsVisibilityButtonClicked)
         self.recentDocuments.mustOpenItem.connect(self.doc.open)
         self.doc.documentOpened.connect(self.recentDocuments.insertItem)
         self.doc.documentSavedAs.connect(self.recentDocuments.insertItem)
@@ -357,7 +357,6 @@ class MainWindow(QMainWindow):
         self.actionShowPreviousView.triggered.connect(self.showPreviousViewTriggered)        
         self.actionShowNextView.triggered.connect(self.showNextViewTriggered)        
         self.actionShowPreferences.triggered.connect(self.app.showPreferences)
-        self.actionShowViewOptions.triggered.connect(self.showViewOptions)
         self.actionToggleGraph.triggered.connect(self.toggleGraphTriggered)
         self.actionTogglePieChart.triggered.connect(self.togglePieChartTriggered)
         
@@ -571,10 +570,26 @@ class MainWindow(QMainWindow):
     def togglePieChartTriggered(self):
         self.model.toggle_area_visibility(PaneArea.RightChart)
     
-    def showViewOptions(self):
-        self.vopts.loadFromPrefs()
-        if self.vopts.exec_() == QDialog.Accepted:
-            self.vopts.saveToPrefs()
+    def columnsVisibilityButtonClicked(self):
+        items = self.model.column_menu_items()
+        if not items:
+            return
+        menu = QMenu()
+        for i, (display, marked) in enumerate(items):
+            action = menu.addAction(display)
+            action.setCheckable(True)
+            action.setChecked(marked)
+            action.setData(i)
+            action.triggered.connect(self.columnsMenuItemWasClicked)
+        self._columnMenuHolder = menu # we need to hold a reference to it while it popups
+        button = self.columnsVisibilityButton
+        menu.popup(button.parentWidget().mapToGlobal(button.geometry().topLeft()))
+    
+    def columnsMenuItemWasClicked(self):
+        action = self.sender()
+        if action is not None:
+            index, ok = action.data().toInt()
+            self.model.toggle_column_menu_item(index)
     
     def registerTriggered(self):
         self.app.askForRegCode()

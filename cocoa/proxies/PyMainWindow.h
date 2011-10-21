@@ -67,4 +67,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)export;
 - (NSString *)statusLine;
 - (NSArray *)hiddenAreas;
+
+// Column menu
+- (NSArray *)columnMenuItems;
+- (void)toggleColumnMenuItemAtIndex:(NSInteger)index;
 @end

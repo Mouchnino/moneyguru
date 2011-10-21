@@ -145,6 +145,36 @@ def test_dont_close_last_pane(app):
     app.mw.close_pane(0) # no crash
     eq_(app.mw.pane_count, 1)
 
+@with_app(TestApp)
+def test_column_menu_attributes(app):
+    # The column menu depends on the selected pane and shows the display attribute of optional
+    # columns.
+    app.show_nwview()
+    expected = [("Account #", False), ("Start", True), ("Change", False), ("Change %", False),
+        ("Budgeted", True)]
+    eq_(app.mw.column_menu_items(), expected)
+    app.mw.toggle_column_menu_item(0)
+    expected[0] = ("Account #", True)
+    eq_(app.mw.column_menu_items(), expected)
+
+@with_app(TestApp)
+def test_column_visibility_change_actually_changes_visibility(app):
+    # Changing the value of a column visibility in view options actually changes visibility
+    app.show_tview()
+    app.set_column_visible('description', False)
+    assert not app.ttable.columns.column_is_visible('description')
+
+@with_app(TestApp)
+def test_change_view_options_while_editing(app):
+    # When a table is in editing mode and that a column visibility is changed, we have to tell the
+    # gui to stop editing, or else we end up in a state where the core thinks it's editing when the
+    # GUI isn't.
+    app.show_tview()
+    app.mw.new_item()
+    app.ttable.payee = 'something' # in editing mode
+    app.set_column_visible('description', False)
+    assert app.ttable.edited is None
+
 #--- Cleared GUI calls
 def app_cleared_gui_calls():
     app = TestApp()

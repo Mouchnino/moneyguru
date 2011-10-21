@@ -24,6 +24,7 @@ class GeneralLedgerView(BaseView):
     def set_children(self, children):
         [self.gltable] = children
         self.maintable = self.gltable
+        self.columns = self.maintable.columns
         BaseView.set_children(self, children)
     
     def _revalidate(self):

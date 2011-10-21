@@ -17,4 +17,5 @@ class ProfitView(AccountSheetView):
     def set_children(self, children):
         AccountSheetView.set_children(self, children)
         [self.istatement, self.pgraph, self.ipie, self.epie] = children
+        self.columns = self.istatement.columns
     

@@ -8,15 +8,14 @@
 
 import copy
 
-from hscommon.trans import tr
-
 class Column:
-    def __init__(self, name, display='', visible=True):
+    def __init__(self, name, display='', visible=True, optional=False):
         self.name = name
         self.index = 0
         self.width = 0
         self.display = display
         self.visible = visible
+        self.optional = optional
     
 
 class Columns:
@@ -32,6 +31,7 @@ class Columns:
             column.index = i
         self.coldata = {col.name: col for col in columns}
     
+    #--- Private
     def _get_colname_attr(self, colname, attrname, default):
         try:
             return getattr(self.coldata[colname], attrname)
@@ -45,6 +45,10 @@ class Columns:
         except KeyError:
             pass
     
+    def _optional_columns(self):
+        return [c for c in self.ordered_columns if c.optional]
+    
+    #--- Public
     def column_display(self, colname):
         return self._get_colname_attr(colname, 'display', '')
     
@@ -58,6 +62,15 @@ class Columns:
         column = self.coldata[colname]
         index = column.index
         return [col.name for col in self.coldata.values() if (col.visible and col.index > index)]
+    
+    def menu_items(self):
+        # Returns a list of (display_name, marked) items for each optional column in the current
+        # view (marked means that it's visible).
+        return [(c.display, c.visible) for c in self._optional_columns()]
+    
+    def toggle_menu_item(self, index):
+        col = self._optional_columns()[index]
+        self.set_column_visible(col.name, not col.visible)
     
     def move_column(self, colname, index):
         colnames = self.colnames
@@ -103,6 +116,10 @@ class Columns:
     
     #--- Properties
     @property
+    def ordered_columns(self):
+        return [col for col in sorted(iter(self.coldata.values()), key=lambda col: col.index)]
+    
+    @property
     def colnames(self):
-        return [col.name for col in sorted(iter(self.coldata.values()), key=lambda col: col.index)]
+        return [col.name for col in self.ordered_columns]
     

@@ -106,7 +106,7 @@ def test_amount_completion_uses_the_latest_entered(app):
 @with_app(app_one_entry)
 def test_autofill_column_selection_for_description(app):
     # Hidden columns are not autofilled
-    app.vopts.entry_table_payee = False
+    app.set_column_visible('payee', False)
     app.etable.add()
     row = app.etable.selected_row
     row.description = 'Deposit'
@@ -170,7 +170,7 @@ def test_field_completion_is_case_sensitive(app):
 @with_app(app_one_entry)
 def test_field_completion_on_set_entry_transfer(app):
     # Setting a transfer autocompletes the amount and the description.
-    app.vopts.entry_table_payee = True
+    app.set_column_visible('payee', True)
     app.etable.columns.move_column('transfer', 0)
     app.etable.add()
     row = app.etable.selected_row
@@ -183,7 +183,7 @@ def test_field_completion_on_set_entry_transfer(app):
 @with_app(app_one_entry)
 def test_field_completion_on_set_entry_description(app):
     # Setting a description autocompletes the amount and the transfer.
-    app.vopts.entry_table_payee = True
+    app.set_column_visible('payee', True)
     app.etable.add()
     row = app.etable.selected_row
     row.description = 'Deposit'
@@ -315,7 +315,7 @@ def app_four_entries_with_description_and_category_collision(monkeypatch):
 def assert_completion_order_changed(app):
     # complete() returns descriptions for the second entry, and field completion also is based
     # on the second entry.
-    app.vopts.entry_table_payee = True
+    app.set_column_visible('payee', True)
     eq_(complete_etable(app, 'd', 'description'), 'esc1')
     eq_(complete_etable(app, 'c', 'transfer'), 'at1')
     eq_(complete_etable(app, 'p', 'payee'), 'ay1')

@@ -43,5 +43,6 @@
     <file alias="graph_visibility_off_16">../images/graph_visibility_off_16.png</file>
     <file alias="piechart_visibility_on_16">../images/piechart_visibility_on_16.png</file>
     <file alias="piechart_visibility_off_16">../images/piechart_visibility_off_16.png</file>
+    <file alias="columns_16">../images/columns_16.png</file>
 </qresource>
 </RCC>

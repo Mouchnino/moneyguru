@@ -17,5 +17,6 @@ class NetWorthView(AccountSheetView):
     def set_children(self, children):
         AccountSheetView.set_children(self, children)
         [self.bsheet, self.nwgraph, self.apie, self.lpie] = children
+        self.columns = self.bsheet.columns
     
 

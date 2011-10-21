@@ -9,7 +9,7 @@ from datetime import timedelta, date
 from hscommon.trans import tr
 from ..model.account import AccountType
 from ..model.amount import convert_amount
-from ..model.date import DateRange, ONE_DAY
+from ..model.date import DateRange
 from .column import Column
 from .report import Report, get_delta_perc
 
@@ -19,12 +19,12 @@ class BalanceSheet(Report):
     SAVENAME = 'BalanceSheet'
     COLUMNS = [
         Column('name', display=trcol("Account")),
-        Column('account_number', display=trcol("Account #"), visible=False),
+        Column('account_number', display=trcol("Account #"), visible=False, optional=True),
         Column('end', display=trcol("End")),
-        Column('delta', display=trcol("Start"), visible=False),
-        Column('delta_perc', display=trcol("Change"), visible=False),
-        Column('start', display=trcol("Change %")),
-        Column('budgeted', display=trcol("Budgeted")),
+        Column('start', display=trcol("Start"), optional=True),
+        Column('delta', display=trcol("Change"), visible=False, optional=True),
+        Column('delta_perc', display=trcol("Change %"), visible=False, optional=True),
+        Column('budgeted', display=trcol("Budgeted"), optional=True),
     ]
     
     def __init__(self, view, networth_view):

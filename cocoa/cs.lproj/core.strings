@@ -154,6 +154,8 @@
 /* core/gui/income_statement.py:58 */
 "NET INCOME" = "ČISTÝ PŘÍJEM";
 
+"Debit/Credit" = "Výběr/Vklad";
+
 /* Tab names */
 "Net Worth" = "Čisté jmění";
 "Profit & Loss" = "Zisky & ztráty";

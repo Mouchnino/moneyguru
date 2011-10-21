@@ -869,13 +869,14 @@ def app_autofill():
     app.add_account('Checking')
     app.mw.show_account()
     app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
+    app.show_tview()
     return app
 
 @with_app(app_autofill)
 def test_autofill_after_column_change(app):
     # When setting the Table's columns, only the visible columns to the right of the edited one are
     # auto-filled.
-    app.vopts.transaction_table_payee = False
+    app.set_column_visible('payee', False)
     app.ttable.columns.move_column('from', 0)
     app.ttable.add()
     row = app.ttable.edited
@@ -932,7 +933,7 @@ def test_autofill_ignores_blank(app):
 @with_app(app_autofill)
 def test_autofill_on_set_from(app):
     # Setting 'from' autocompletes the rest.
-    app.vopts.transaction_table_payee = True
+    app.set_column_visible('payee', True)
     app.ttable.columns.move_column('from', 0)
     app.ttable.add()
     row = app.ttable.edited
@@ -945,7 +946,7 @@ def test_autofill_on_set_from(app):
 @with_app(app_autofill)
 def test_autofill_on_set_to(app):
     # Setting 'to' autocompletes the rest.
-    app.vopts.transaction_table_payee = True
+    app.set_column_visible('payee', True)
     app.ttable.columns.move_column('to', 0)
     app.ttable.add()
     row = app.ttable.edited
@@ -958,7 +959,7 @@ def test_autofill_on_set_to(app):
 @with_app(app_autofill)
 def test_autofill_on_set_description(app):
     # Setting a description autocompletes the amount and the transfer.
-    app.vopts.transaction_table_payee = True
+    app.set_column_visible('payee', True)
     app.ttable.add()
     row = app.ttable.edited
     row.description = 'Deposit'
@@ -970,7 +971,7 @@ def test_autofill_on_set_description(app):
 @with_app(app_autofill)
 def test_autofill_on_set_payee(app):
     # Setting a transfer autocompletes the amount and the description.
-    app.vopts.transaction_table_payee = True
+    app.set_column_visible('payee', True)
     app.ttable.columns.move_column('payee', 0)
     app.ttable.add()
     row = app.ttable.edited
