@@ -209,9 +209,6 @@
 /* Class = "NSMenuItem"; title = "Hardcoded Software Website"; ObjectID = "1301"; */
 "1301.title" = "Site web de Hardcoded Software";
 
-/* Class = "NSMenuItem"; title = "Show View Options"; ObjectID = "1303"; */
-"1303.title" = "Ouvrir les options de visibilité";
-
 /* Class = "NSWindow"; title = "moneyGuru Preferences"; ObjectID = "1305"; */
 "1305.title" = "Préférences de moneyGuru";
 
