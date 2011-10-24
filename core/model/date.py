@@ -190,8 +190,10 @@ class YearToDateRange(DateRange):
 
 def compute_ahead_months(ahead_months):
     assert ahead_months < 12
+    if ahead_months == 0:
+        return date.today()
     month_range = MonthRange(date.today())
-    for _ in range(ahead_months):
+    for _ in range(ahead_months-1):
         month_range = month_range.next()
     return month_range.end
 
@@ -200,6 +202,8 @@ class RunningYearRange(DateRange):
         end = compute_ahead_months(ahead_months)
         end_plus_one = end + ONE_DAY
         start = end_plus_one.replace(year=end_plus_one.year-1)
+        if start.day != 1:
+            start = inc_month(start, 1).replace(day=1)
         DateRange.__init__(self, start, end)
     
     def prev(self): # for income statement's Last column

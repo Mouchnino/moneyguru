@@ -235,8 +235,16 @@ class TestRangeOnRunningYear:
     @with_app(do_setup)
     def test_11_ahead_months(self, app):
         app.dpview.ahead_months_list.select(11)
-        eq_(app.doc.date_range.start, date(2009, 1, 1))
-        eq_(app.doc.date_range.end, date(2009, 12, 31))
+        eq_(app.doc.date_range.start, date(2008, 12, 1))
+        eq_(app.doc.date_range.end, date(2009, 11, 30))
+    
+    @with_app(do_setup)
+    def test_0_ahead_months(self, app):
+        # When ahead month is 0, we end our range today. The start date is the first day of our
+        # current month.
+        app.dpview.ahead_months_list.select(0)
+        eq_(app.doc.date_range.start, date(2008, 2, 1))
+        eq_(app.doc.date_range.end, date(2009, 1, 25))
     
     @with_app(do_setup)
     def test_add_entry(self, app):
@@ -248,7 +256,7 @@ class TestRangeOnRunningYear:
     
     @with_app(do_setup)
     def test_date_range(self, app):
-        # Running year (with the default 2 ahead months) starts 10 months in the past and ends 2 
+        # Running year (with the default 3 ahead months) starts 10 months in the past and ends 2 
         # months in the future, rounding the months. (default ahead_months is 2)
         eq_(app.doc.date_range.start, date(2008, 4, 1))
         eq_(app.doc.date_range.end, date(2009, 3, 31))
@@ -273,7 +281,7 @@ class TestRangeOnRunningYearWithAheadMonths:
     @with_app(do_setup)
     def test_date_range(self, app):
         # select_running_year_range() uses the ahead_months preference
-        eq_(app.doc.date_range.start, date(2008, 7, 1))
+        eq_(app.doc.date_range.start, date(2008, 6, 1))
     
 
 #---
@@ -414,7 +422,7 @@ class TestAllTransactionsRangeWithOneTransactionFarInThePast:
     @with_app(do_setup)
     def test_includes_ahead_months(self, app):
         # All Transactions range end_date is computed using the ahead_months pref
-        app.dpview.ahead_months_list.select(3) # triggers a date range update
+        app.dpview.ahead_months_list.select(4) # triggers a date range update
         app.add_txn('30/04/2010')
         eq_(app.ttable.row_count, 3)
         # but not further...

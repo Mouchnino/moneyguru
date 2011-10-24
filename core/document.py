@@ -76,7 +76,7 @@ class Document(Repeater):
         self.view = view
         self._properties = {
             'first_weekday': 0,
-            'ahead_months': 2,
+            'ahead_months': 3,
             'year_start_month': 1,
             'default_currency': self.app._default_currency,
         }

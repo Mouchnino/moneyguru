@@ -152,7 +152,7 @@ class TestRangesNoSetup:
         # The running year ends at the end of the current month and adds 'ahead_months' to it. the
         # start date is then one year earlier.
         monkeypatch.patch_today(2009, 1, 25)
-        dr = RunningYearRange(ahead_months=2)
+        dr = RunningYearRange(ahead_months=3)
         eq_(dr.end, date(2009, 3, 31))
         eq_(dr.start, date(2008, 4, 1))
         eq_(dr.display, 'Running year (Apr - Mar)')
