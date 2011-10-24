@@ -2,4 +2,4 @@
         title="moneyGuru"                                        \
         longtitle="moneyGuru"                                    \
         command="moneyguru"                                      \
-        icon="/usr/local/share/moneyguru/logo_small.png"
+        icon="/usr/share/moneyguru/logo_small.png"

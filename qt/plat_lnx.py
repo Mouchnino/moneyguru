@@ -6,4 +6,4 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-HELP_PATH = '/usr/local/share/moneyguru/help'
+HELP_PATH = '/usr/share/moneyguru/help'
