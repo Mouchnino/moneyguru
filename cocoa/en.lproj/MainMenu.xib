@@ -1739,22 +1739,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">moveUp:</string>
-						<reference key="source" ref="954832501"/>
-						<reference key="destination" ref="816446771"/>
-					</object>
-					<int key="connectionID">1268</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">moveDown:</string>
-						<reference key="source" ref="954832501"/>
-						<reference key="destination" ref="905145106"/>
-					</object>
-					<int key="connectionID">1269</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">showTransactionTable:</string>
 						<reference key="source" ref="954832501"/>
 						<reference key="destination" ref="309490052"/>
@@ -1992,6 +1976,22 @@
 						<reference key="destination" ref="363665734"/>
 					</object>
 					<int key="connectionID">1465</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveSelectionUp:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="816446771"/>
+					</object>
+					<int key="connectionID">1466</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveSelectionDown:</string>
+						<reference key="source" ref="954832501"/>
+						<reference key="destination" ref="905145106"/>
+					</object>
+					<int key="connectionID">1467</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -3171,7 +3171,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1465</int>
+			<int key="maxID">1467</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3730,8 +3730,8 @@
 						<string key="itemSegmentClicked:">id</string>
 						<string key="jumpToAccount:">id</string>
 						<string key="makeScheduleFromSelected:">id</string>
-						<string key="moveDown:">id</string>
-						<string key="moveUp:">id</string>
+						<string key="moveSelectionDown:">id</string>
+						<string key="moveSelectionUp:">id</string>
 						<string key="navigateBack:">id</string>
 						<string key="newGroup:">id</string>
 						<string key="newItem:">id</string>
@@ -3760,7 +3760,6 @@
 						<string key="toggleGraph:">id</string>
 						<string key="togglePieChart:">id</string>
 						<string key="toggleReconciliationMode:">id</string>
-						<string key="toggleViewOptionsVisible:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="columnMenuClick:">
@@ -3795,12 +3794,12 @@
 							<string key="name">makeScheduleFromSelected:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="moveDown:">
-							<string key="name">moveDown:</string>
+						<object class="IBActionInfo" key="moveSelectionDown:">
+							<string key="name">moveSelectionDown:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="moveUp:">
-							<string key="name">moveUp:</string>
+						<object class="IBActionInfo" key="moveSelectionUp:">
+							<string key="name">moveSelectionUp:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="navigateBack:">
@@ -3913,10 +3912,6 @@
 						</object>
 						<object class="IBActionInfo" key="toggleReconciliationMode:">
 							<string key="name">toggleReconciliationMode:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleViewOptionsVisible:">
-							<string key="name">toggleViewOptionsVisible:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

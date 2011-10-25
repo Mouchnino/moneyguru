@@ -209,12 +209,12 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self py] makeScheduleFromSelected];
 }
 
-- (IBAction)moveDown:(id)sender
+- (IBAction)moveSelectionDown:(id)sender
 {
     [[self py] moveDown];
 }
 
-- (IBAction)moveUp:(id)sender
+- (IBAction)moveSelectionUp:(id)sender
 {
     [[self py] moveUp];
 }

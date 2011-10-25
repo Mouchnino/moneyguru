@@ -85,8 +85,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)itemSegmentClicked:(id)sender;
 - (IBAction)jumpToAccount:(id)sender;
 - (IBAction)makeScheduleFromSelected:(id)sender;
-- (IBAction)moveDown:(id)sender;
-- (IBAction)moveUp:(id)sender;
+- (IBAction)moveSelectionDown:(id)sender;
+- (IBAction)moveSelectionUp:(id)sender;
 - (IBAction)navigateBack:(id)sender;
 - (IBAction)newGroup:(id)sender;
 - (IBAction)newItem:(id)sender;
