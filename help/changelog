@@ -1,3 +1,15 @@
+=== 2.4.0 (2011-10-26)
+
+* Added a document properties tab. (#240)
+* Redesigned visibility options. (#182)
+* Allow targeted transaction searches. (#276)
+* Added the ability to select multiple accounts. (#55)
+* Added the ability to export a specific date range. (#201)
+* Remember size and position of the import window. (#238)
+* Improved the Ahead Months option. (#272)
+* Added support for Nicaraguan Cordobas. (#268)
+* Improved OS X Lion compatibility. [Mac OS X] (#286)
+
 === 2.3.11 (2011-08-29)
 
 * Improved OS X Lion compatibility. [Mac OS X] (#282)
