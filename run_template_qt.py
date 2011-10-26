@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.1
+#!/usr/bin/env python3
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)

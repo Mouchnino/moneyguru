@@ -41,6 +41,7 @@ install: build
 	dh_prep  
 	dh_installdirs
 
+	mkdir $(CURDIR)/debian/moneyguru/usr/bin
 	chmod +x src/run.py
 	cp -R src/ $(CURDIR)/debian/moneyguru/usr/share/moneyguru
 	cp $(CURDIR)/debian/moneyguru.desktop $(CURDIR)/debian/moneyguru/usr/share/applications
