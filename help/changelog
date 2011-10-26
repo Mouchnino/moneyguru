@@ -9,6 +9,7 @@
 * Improved the Ahead Months option. (#272)
 * Added support for Nicaraguan Cordobas. (#268)
 * Improved OS X Lion compatibility. [Mac OS X] (#286)
+* Added Czech localization by Aleš Nehyba.
 
 === 2.3.11 (2011-08-29)
 
