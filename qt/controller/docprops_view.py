@@ -5,7 +5,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtGui import QFormLayout, QComboBox
+from PyQt4.QtGui import QFormLayout, QComboBox, QSizePolicy
 
 from hscommon.trans import tr as trbase
 from qtlib.selectable_list import ComboboxModel
@@ -31,17 +31,22 @@ class DocPropsView(BaseView):
     def _setupUi(self):
         self.mainLayout = QFormLayout(self)
         
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         self.currencyComboBoxView = QComboBox()
         self.currencyComboBoxView.setEditable(True)
         self.currencyComboBoxView.setInsertPolicy(QComboBox.NoInsert)
+        self.currencyComboBoxView.setSizePolicy(sizePolicy)
         self.mainLayout.addRow(tr("Native Currency:"), self.currencyComboBoxView)
         
         self.firstWeekdayComboBoxView = QComboBox(self)
+        self.firstWeekdayComboBoxView.setSizePolicy(sizePolicy)
         self.mainLayout.addRow(tr("First day of the week:"), self.firstWeekdayComboBoxView)
         
         self.aheadMonthsComboBoxView = QComboBox(self)
+        self.aheadMonthsComboBoxView.setSizePolicy(sizePolicy)
         self.mainLayout.addRow(tr("Ahead months in Running Year:"), self.aheadMonthsComboBoxView)
         
         self.yearStartComboBoxView = QComboBox(self)
+        self.yearStartComboBoxView.setSizePolicy(sizePolicy)
         self.mainLayout.addRow(tr("Year starts in:"), self.yearStartComboBoxView)
         
