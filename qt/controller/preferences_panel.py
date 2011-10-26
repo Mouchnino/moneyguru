@@ -38,7 +38,7 @@ class PreferencesPanel(QDialog):
     
     def _setupUi(self):
         self.setWindowTitle(tr("Preferences"))
-        self.resize(332, 253)
+        self.resize(332, 170)
         self.verticalLayout = QVBoxLayout(self)
         self.formLayout = QFormLayout()
         
