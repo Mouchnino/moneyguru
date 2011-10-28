@@ -123,5 +123,5 @@ class MoneyGuru(ApplicationBase):
     def setup_as_registered(self):
         self.mainWindow.actionRegister.setVisible(False)
         self.aboutBox.registerButton.hide()
-        self.aboutBox.registeredEmailLabel.setText(self.prefs.registration_email)
+        self.aboutBox.registeredEmailLabel.setText(self.model.registration_email)
     
