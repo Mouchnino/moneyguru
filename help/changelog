@@ -1,3 +1,7 @@
+=== 2.4.1 (2011-10-28)
+
+* Fixed nasty crashes introduced in 2.4.0.
+
 === 2.4.0 (2011-10-26)
 
 * Added a document properties tab. (#240)
