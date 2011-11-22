@@ -1,0 +1,522 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+#: core/app.py:37
+msgid "will show this dialog on startup"
+msgstr ""
+
+#: core/document.py:181
+msgid "Add transaction"
+msgstr "Přidat transakci"
+
+#: core/document.py:184 core/document.py:414
+msgid "Change transaction"
+msgstr "Změnit transakci"
+
+#: core/document.py:295
+msgid "Change account"
+msgstr "Změnit účet"
+
+#: core/document.py:317
+msgid "Remove account"
+msgstr "Odstranit účet"
+
+#: core/document.py:349
+msgid "New account"
+msgstr "Nový účet"
+
+#: core/document.py:352
+msgid "Add account"
+msgstr "Přidat účet"
+
+#: core/document.py:369
+msgid "Change group"
+msgstr "Změnit skupinu"
+
+#: core/document.py:379
+msgid "Remove group"
+msgstr "Odstranit skupinu"
+
+#: core/document.py:390
+msgid "New group"
+msgstr "Nová skupina"
+
+#: core/document.py:392
+msgid "Add group"
+msgstr "Přidat skupinu"
+
+#: core/document.py:462
+msgid "Remove transaction"
+msgstr "Odstranit transakci"
+
+#: core/document.py:487
+msgid "Duplicate transactions"
+msgstr "Kopírovat transakce"
+
+#: core/document.py:502
+msgid "Move transaction"
+msgstr "Přesunout transakci"
+
+#: core/document.py:560
+msgid "Change reconciliation"
+msgstr "Změnit párování"
+
+#: core/document.py:604
+msgid "Change Budget"
+msgstr "Změnit rozpočet"
+
+#: core/document.py:607
+msgid "Add Budget"
+msgstr "Přidat rozpočet"
+
+#: core/document.py:628
+msgid "Remove Budget"
+msgstr "Odstranit rozpočet"
+
+#: core/document.py:644
+msgid "Change Schedule"
+msgstr "Změnit plán"
+
+#: core/document.py:647
+msgid "Add Schedule"
+msgstr "Přidat plán"
+
+#: core/document.py:668
+msgid "Remove Schedule"
+msgstr "Odstranit plán"
+
+#: core/document.py:725
+msgid "\"%s\" is not a moneyGuru file"
+msgstr "\"%s\" není souborem moneyGuru"
+
+#: core/document.py:771
+msgid "%s is of an unknown format."
+msgstr "%s nemá známý formát."
+
+#: core/document.py:814
+msgid "Import"
+msgstr "Import"
+
+#: core/gui/account_panel.py:18
+msgid "Asset"
+msgstr "Aktiva"
+
+#: core/gui/account_panel.py:19
+msgid "Liability"
+msgstr "Závazek"
+
+#: core/gui/account_panel.py:20 core/gui/account_pie_chart.py:102
+msgid "Income"
+msgstr "Příjem"
+
+#: core/gui/account_panel.py:21
+msgid "Expense"
+msgstr "Výdaj"
+
+#: core/gui/account_pie_chart.py:79
+msgid "Assets"
+msgstr "Aktiva"
+
+#: core/gui/account_pie_chart.py:84
+msgid "Liabilities"
+msgstr "Závazky"
+
+#: core/gui/account_pie_chart.py:107
+msgid "Expenses"
+msgstr "Výdaje"
+
+#: core/gui/account_reassign_panel.py:26
+msgid "No Account"
+msgstr "Žádný účet"
+
+#: core/gui/account_view.py:16
+msgid ""
+"{account_name}\n"
+"Entries from {start_date} to {end_date}"
+msgstr ""
+"{account_name}\n"
+"Záznamy od {start_date} do {end_date}"
+
+#: core/gui/account_view.py:75
+msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
+msgstr "Vybráno {0} z {1}. Přírůstek: {2} Úbytek: {3}"
+
+#: core/gui/balance_sheet.py:75
+msgid "ASSETS"
+msgstr "AKTIVA"
+
+#: core/gui/balance_sheet.py:76
+msgid "LIABILITIES"
+msgstr "ZÁVAZKY"
+
+#: core/gui/balance_sheet.py:77
+msgid "NET WORTH"
+msgstr "ČISTÉ JMĚNÍ"
+
+#: core/gui/budget_panel.py:45 core/gui/csv_options.py:20
+msgid "None"
+msgstr "Žádný"
+
+#: core/gui/budget_panel.py:76
+msgid "Income/Expense accounts must be created before budgets can be set."
+msgstr "Před návrhem rozpočtu musíte vytvořit příjmové/výdajové účty."
+
+#: core/gui/budget_view.py:16
+msgid "Budgets from {start_date} to {end_date}"
+msgstr "Rozpočty od {start_date} do {end_date}"
+
+#: core/gui/cashculator_view.py:29
+msgid "Exported database not present. Click on Export Accounts first."
+msgstr ""
+"Nebyla nalezena exportní databáze. Klepněte nejprve na Exportovat účty."
+
+#: core/gui/cashculator_view.py:30
+msgid ""
+"Base Cashculator database not present. You must run and quit Cashculator at "
+"least once before using the export feature."
+msgstr ""
+"Nebyla nalezena výchozí databáze Cashculatoru. Před použitím exportu musíte "
+"Cashculator alespoň jednou spustit a ukončit."
+
+#: core/gui/csv_options.py:21
+msgid "Date"
+msgstr "Datum"
+
+#: core/gui/csv_options.py:22
+msgid "Description"
+msgstr "Popis"
+
+#: core/gui/csv_options.py:23
+msgid "Payee"
+msgstr "Příjemce"
+
+#: core/gui/csv_options.py:24
+msgid "Check #"
+msgstr "Šek č."
+
+#: core/gui/csv_options.py:25
+msgid "Transfer"
+msgstr "Přesun"
+
+#: core/gui/csv_options.py:26
+msgid "Amount"
+msgstr "Částka"
+
+#: core/gui/csv_options.py:27
+msgid "Increase"
+msgstr "Přírůstek"
+
+#: core/gui/csv_options.py:28
+msgid "Decrease"
+msgstr "Úbytek"
+
+#: core/gui/csv_options.py:29
+msgid "Currency"
+msgstr "Měna"
+
+#: core/gui/csv_options.py:30
+msgid "Transaction ID"
+msgstr "ID transakce"
+
+#: core/gui/csv_options.py:102 core/gui/csv_options.py:231
+#: core/gui/csv_options.py:251
+msgid "Default"
+msgstr "Standardní"
+
+#: core/gui/csv_options.py:247 core/gui/import_window.py:292
+msgid "< New Account >"
+msgstr "< Nový účet >"
+
+#: core/gui/docprops_view.py:21
+msgid "Monday"
+msgstr "Pondělí"
+
+#: core/gui/docprops_view.py:22
+msgid "Tuesday"
+msgstr "Úterý"
+
+#: core/gui/docprops_view.py:23
+msgid "Wednesday"
+msgstr "Středa"
+
+#: core/gui/docprops_view.py:24
+msgid "Thursday"
+msgstr "Čtvrtek"
+
+#: core/gui/docprops_view.py:25
+msgid "Friday"
+msgstr "Pátek"
+
+#: core/gui/docprops_view.py:26
+msgid "Saturday"
+msgstr "Sobota"
+
+#: core/gui/docprops_view.py:27
+msgid "Sunday"
+msgstr "Neděle"
+
+#: core/gui/docprops_view.py:36
+msgid "January"
+msgstr "Leden"
+
+#: core/gui/docprops_view.py:37
+msgid "February"
+msgstr "Únor"
+
+#: core/gui/docprops_view.py:38
+msgid "March"
+msgstr "Březen"
+
+#: core/gui/docprops_view.py:39
+msgid "April"
+msgstr "Duben"
+
+#: core/gui/docprops_view.py:40
+msgid "May"
+msgstr "Květen"
+
+#: core/gui/docprops_view.py:41
+msgid "June"
+msgstr "Červen"
+
+#: core/gui/docprops_view.py:42
+msgid "July"
+msgstr "Červenec"
+
+#: core/gui/docprops_view.py:43
+msgid "August"
+msgstr "Srpen"
+
+#: core/gui/docprops_view.py:44
+msgid "September"
+msgstr "Září"
+
+#: core/gui/docprops_view.py:45
+msgid "October"
+msgstr "Říjen"
+
+#: core/gui/docprops_view.py:46
+msgid "November"
+msgstr "Listopad"
+
+#: core/gui/docprops_view.py:47
+msgid "December"
+msgstr "Prosinec"
+
+#: core/gui/entry_table.py:21
+msgid "Debit/Credit"
+msgstr "Výběr/Vklad"
+
+#: core/gui/entry_table_base.py:285
+msgid "Previous Balance"
+msgstr "Předchozí zůstatek"
+
+#: core/gui/entry_table_base.py:300 core/gui/transaction_table.py:250
+msgid "TOTAL"
+msgstr "CELKEM"
+
+#: core/gui/general_ledger_view.py:15
+msgid "General Ledger from {start_date} to {end_date}"
+msgstr "Účetní kniha od {start_date} do {end_date}"
+
+#: core/gui/general_ledger_view.py:48
+msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
+msgstr "Vybráno {0} z {1}. Výběr: {2} Vklad: {3}"
+
+#: core/gui/income_statement.py:69
+msgid "INCOME"
+msgstr "PŘÍJEM"
+
+#: core/gui/income_statement.py:70
+msgid "EXPENSES"
+msgstr "VÝDAJE"
+
+#: core/gui/income_statement.py:71
+msgid "NET INCOME"
+msgstr "ČISTÝ PŘÍJEM"
+
+#: core/gui/main_window.py:135 core/gui/net_worth_graph.py:40
+msgid "Net Worth"
+msgstr "Čisté jmění"
+
+#: core/gui/main_window.py:137 core/gui/profit_graph.py:42
+msgid "Profit & Loss"
+msgstr "Zisky & ztráty"
+
+#: core/gui/main_window.py:139
+msgid "Transactions"
+msgstr "Transakce"
+
+#: core/gui/main_window.py:143
+msgid "Schedules"
+msgstr "Plány"
+
+#: core/gui/main_window.py:145
+msgid "Budgets"
+msgstr "Rozpočty"
+
+#: core/gui/main_window.py:147
+msgid "Cashculator"
+msgstr ""
+
+#: core/gui/main_window.py:149
+msgid "General Ledger"
+msgstr "Účetní kniha"
+
+#: core/gui/main_window.py:151
+msgid "Document Properties"
+msgstr ""
+
+#: core/gui/main_window.py:153
+msgid "New Tab"
+msgstr "Nová záložka"
+
+#: core/gui/networth_view.py:15
+msgid "Net Worth at {end_date}, starting from {start_date}"
+msgstr "Čisté jmění k {end_date}, počínaje {start_date}"
+
+#: core/gui/pie_chart.py:33
+msgid "Others"
+msgstr "Další"
+
+#: core/gui/profit_view.py:15
+msgid "Profit and Loss from {start_date} to {end_date}"
+msgstr "Zisky a ztráty od {start_date} do {end_date}"
+
+#: core/gui/report.py:191
+msgid "Total "
+msgstr "Celkem "
+
+#: core/gui/report.py:211
+msgid "TOTAL "
+msgstr "CELKEM "
+
+#: core/gui/report.py:253
+msgid "The account '{0}' already exists."
+msgstr "Účet '{0}' již existuje."
+
+#: core/gui/schedule_panel.py:24
+msgid "day"
+msgstr "den"
+
+#: core/gui/schedule_panel.py:25
+msgid "week"
+msgstr "týden"
+
+#: core/gui/schedule_panel.py:26 core/gui/schedule_panel.py:28
+#: core/gui/schedule_panel.py:29
+msgid "month"
+msgstr "měsíc"
+
+#: core/gui/schedule_panel.py:27
+msgid "year"
+msgstr "rok"
+
+#: core/gui/schedule_panel.py:33
+msgid "days"
+msgstr "dnů"
+
+#: core/gui/schedule_panel.py:34
+msgid "weeks"
+msgstr "týdnů"
+
+#: core/gui/schedule_panel.py:35 core/gui/schedule_panel.py:37
+#: core/gui/schedule_panel.py:38
+msgid "months"
+msgstr "měsíců"
+
+#: core/gui/schedule_panel.py:36
+msgid "years"
+msgstr "roků"
+
+#: core/gui/schedule_table.py:82 core/gui/schedule_table.py:84
+#: core/gui/transaction_print.py:24 core/gui/transaction_table.py:156
+#: core/gui/transaction_table.py:159
+msgid "Unassigned"
+msgstr "Nepřiřazeno"
+
+#: core/gui/schedule_view.py:16
+msgid "Schedules from {start_date} to {end_date}"
+msgstr "Plány od {start_date} do {end_date}"
+
+#: core/gui/transaction_view.py:19
+msgid "Transactions from {start_date} to {end_date}"
+msgstr "Transakce od {start_date} do {end_date}"
+
+#: core/gui/transaction_view.py:49
+msgid "{0} out of {1} selected. Amount: {2}"
+msgstr "Vybráno {0} z {1}. Částka: {2}"
+
+#: core/loader/csv.py:110
+msgid "The Date column has been set on a column that doesn't contain dates."
+msgstr "Pro sloupec Datum jste vybrali sloupec bez dat."
+
+#: core/loader/csv.py:123
+msgid ""
+"The Amount column has been set on a column that doesn't contain amounts."
+msgstr "Pro sloupec Částka jste vybrali sloupec bez částek."
+
+#: core/loader/csv.py:142
+msgid "The Date and Amount columns must be set."
+msgstr "Musíte určit sloupce Datum a Částka."
+
+#: core/model/date.py:143
+msgid "Q{0} {1}"
+msgstr "Q{0} {1}"
+
+#: core/model/date.py:188
+msgid "{0} - Now"
+msgstr "{0} - Dosud"
+
+#: core/model/date.py:216
+msgid "Running year ({0} - {1})"
+msgstr "Probíhající rok ({0} - {1})"
+
+#: core/model/date.py:230
+msgid "All Transactions"
+msgstr "Všechny transakce"
+
+#: core/model/recurrence.py:94
+msgid "Daily"
+msgstr "Denně"
+
+#: core/model/recurrence.py:95
+msgid "Weekly"
+msgstr "Týdně"
+
+#: core/model/recurrence.py:96
+msgid "Monthly"
+msgstr "Měsíčně"
+
+#: core/model/recurrence.py:97
+msgid "Yearly"
+msgstr "Ročně"
+
+#: core/model/recurrence.py:114
+msgid "fifth"
+msgstr "pátý"
+
+#: core/model/recurrence.py:114
+msgid "first"
+msgstr "první"
+
+#: core/model/recurrence.py:114
+msgid "fourth"
+msgstr "čtvrtý"
+
+#: core/model/recurrence.py:114
+msgid "second"
+msgstr "druhý"
+
+#: core/model/recurrence.py:114
+msgid "third"
+msgstr "třetí"
+
+#: core/model/recurrence.py:115
+msgid "Every %s %s of the month"
+msgstr "Každý %s %s v měsíci"
+
+#: core/model/recurrence.py:118
+msgid "Every last %s of the month"
+msgstr "Poslední %s v měsíci"

@@ -1,0 +1,1402 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+#: qt/controller/account/filter_bar.py:18 qt/controller/export_panel.py:48
+#: qt/controller/transaction/filter_bar.py:18
+#: cocoa/en.lproj/ExportPanel.strings:0 cocoa/en.lproj/Localizable.strings:0
+msgid "All"
+msgstr "Alles"
+
+#: qt/controller/account/filter_bar.py:19 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Increase"
+msgstr "Haben"
+
+#: qt/controller/account/filter_bar.py:20 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Decrease"
+msgstr "Soll"
+
+#: qt/controller/account/filter_bar.py:21
+#: qt/controller/transaction/filter_bar.py:21
+#: cocoa/en.lproj/Localizable.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Transfers"
+msgstr "Transfers"
+
+#: qt/controller/account/filter_bar.py:22
+#: qt/controller/transaction/filter_bar.py:22
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Unassigned"
+msgstr "nicht zugeordnet"
+
+#: qt/controller/account/filter_bar.py:23
+#: qt/controller/transaction/filter_bar.py:23
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Reconciled"
+msgstr "wertgestellt"
+
+#: qt/controller/account/filter_bar.py:24
+#: qt/controller/transaction/filter_bar.py:24
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Not Reconciled"
+msgstr "nicht wertgestellt"
+
+#: qt/controller/account/view.py:61 cocoa/en.lproj/EntryTable.strings:0
+msgid "Reconciliation"
+msgstr "Wertstellung"
+
+#: qt/controller/account_panel.py:39 cocoa/en.lproj/AccountPanel.strings:0
+msgid "Account Info"
+msgstr "Kontodetails"
+
+#: qt/controller/account_panel.py:45 cocoa/en.lproj/AccountPanel.strings:0
+msgid "Name"
+msgstr "Name"
+
+#: qt/controller/account_panel.py:49 cocoa/en.lproj/AccountPanel.strings:0
+msgid "Type"
+msgstr "Typ"
+
+#: qt/controller/account_panel.py:53 cocoa/en.lproj/AccountPanel.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+msgid "Currency"
+msgstr "Währung"
+
+#: qt/controller/account_panel.py:64 cocoa/en.lproj/AccountPanel.strings:0
+#: cocoa/en.lproj/columns.strings:0
+msgid "Account #"
+msgstr "Konto #"
+
+#: qt/controller/account_panel.py:71 qt/controller/budget_panel.py:85
+msgid "Notes:"
+msgstr ""
+
+#: qt/controller/account_reassign_panel.py:37
+msgid "Re-assign Account"
+msgstr ""
+
+#: qt/controller/account_reassign_panel.py:41
+#: cocoa/en.lproj/AccountReassignPanel.strings:0
+msgid ""
+"You're about to delete a non-empty account. Select an account to re-assign "
+"its transactions to."
+msgstr ""
+"Sie sind dabei ein nicht leeres Konto zu löschen. Wählen sie ein anderes "
+"Konto aus, um ihre Transaktionen dorthin zu übertragen."
+
+#: qt/controller/account_reassign_panel.py:57
+#: qt/controller/import_/csv_options.py:93
+#: qt/controller/schedule_scope_dialog.py:45
+#: cocoa/en.lproj/AccountReassignPanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVLayoutName.strings:0
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+#: cocoa/en.lproj/ExportPanel.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: qt/controller/account_reassign_panel.py:62
+#: cocoa/en.lproj/AccountReassignPanel.strings:0
+msgid "Continue"
+msgstr "Weiter"
+
+#: qt/controller/budget_panel.py:43 cocoa/en.lproj/BudgetPanel.strings:0
+msgid "Budget Info"
+msgstr "Budgetdetails"
+
+#: qt/controller/budget_panel.py:49 qt/controller/schedule_panel.py:59
+msgid "Start Date:"
+msgstr ""
+
+#: qt/controller/budget_panel.py:54 qt/controller/schedule_panel.py:64
+msgid "Repeat Type:"
+msgstr ""
+
+#: qt/controller/budget_panel.py:58 qt/controller/schedule_panel.py:68
+msgid "Every:"
+msgstr ""
+
+#: qt/controller/budget_panel.py:67 qt/controller/schedule_panel.py:77
+msgid "Stop Date:"
+msgstr ""
+
+#: qt/controller/budget_panel.py:74
+msgid "Account:"
+msgstr ""
+
+#: qt/controller/budget_panel.py:78 qt/controller/import_/csv_options.py:61
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Target:"
+msgstr "Ziel:"
+
+#: qt/controller/budget_panel.py:83
+msgid "Amount:"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:36
+msgid "Custom Date Range"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:40
+msgid "Select start and end dates from your custom range:"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:43
+msgid "Start:"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:47
+msgid "End:"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:53
+msgid "Save this range under slot:"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:61
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "#1"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:61
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "#2"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:61
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "#3"
+msgstr ""
+
+#: qt/controller/custom_date_range_panel.py:61
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "None"
+msgstr "Keine"
+
+#: qt/controller/custom_date_range_panel.py:68
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "Under the name:"
+msgstr "unter:"
+
+#: qt/controller/date_range_selector.py:27
+msgid "Next"
+msgstr ""
+
+#: qt/controller/date_range_selector.py:30
+msgid "Previous"
+msgstr ""
+
+#: qt/controller/date_range_selector.py:33
+msgid "Today"
+msgstr ""
+
+#: qt/controller/date_range_selector.py:36
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Month"
+msgstr "Monat"
+
+#: qt/controller/date_range_selector.py:39
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Quarter"
+msgstr "Quartal"
+
+#: qt/controller/date_range_selector.py:42
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Year"
+msgstr "Jahr"
+
+#: qt/controller/date_range_selector.py:45
+msgid "Year To Date"
+msgstr ""
+
+#: qt/controller/date_range_selector.py:48
+msgid "Running Year"
+msgstr ""
+
+#: qt/controller/date_range_selector.py:51
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "All Transactions"
+msgstr "Alle Transaktionen"
+
+#: qt/controller/date_range_selector.py:54
+msgid "Custom..."
+msgstr ""
+
+#: qt/controller/docprops_view.py:39
+msgid "Native Currency:"
+msgstr ""
+
+#: qt/controller/docprops_view.py:43 cocoa/en.lproj/DocProps.strings:0
+msgid "First day of the week:"
+msgstr "Ersten Tag der Woche festlegen:"
+
+#: qt/controller/docprops_view.py:47 cocoa/en.lproj/DocProps.strings:0
+msgid "Ahead months in Running Year:"
+msgstr "kommende Monate im laufenden Jahr:"
+
+#: qt/controller/docprops_view.py:51 cocoa/en.lproj/DocProps.strings:0
+msgid "Year starts in:"
+msgstr "Jahresbeginn:"
+
+#: qt/controller/document.py:41
+msgid "Unsaved Document"
+msgstr ""
+
+#: qt/controller/document.py:42
+msgid "Do you want to save your changes before continuing?"
+msgstr ""
+
+#: qt/controller/document.py:57
+msgid "Select a document to import"
+msgstr ""
+
+#: qt/controller/document.py:58
+msgid "Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
+msgstr ""
+
+#: qt/controller/document.py:64
+msgid "Cannot import file"
+msgstr ""
+
+#: qt/controller/document.py:82
+msgid "Cannot load file"
+msgstr ""
+
+#: qt/controller/document.py:87
+msgid "Select a document to load"
+msgstr ""
+
+#: qt/controller/document.py:88 qt/controller/document.py:113
+msgid "moneyGuru Documents (*.moneyguru)"
+msgstr ""
+
+#: qt/controller/document.py:112
+msgid "Save As"
+msgstr ""
+
+#: qt/controller/export_panel.py:42 cocoa/en.lproj/ExportPanel.strings:0
+msgid "Export Options"
+msgstr "Export Options"
+
+#: qt/controller/export_panel.py:45 cocoa/en.lproj/ExportPanel.strings:0
+msgid "Which accounts do you want to export?"
+msgstr "Which accounts do you want to export?"
+
+#: qt/controller/export_panel.py:52 cocoa/en.lproj/ExportPanel.strings:0
+msgid "Selected"
+msgstr "Selected"
+
+#: qt/controller/export_panel.py:63 cocoa/en.lproj/ExportPanel.strings:0
+msgid "Export format:"
+msgstr "Export Format:"
+
+#: qt/controller/export_panel.py:74 cocoa/en.lproj/ExportPanel.strings:0
+msgid "Export scope:"
+msgstr "Export scope:"
+
+#: qt/controller/export_panel.py:76 cocoa/en.lproj/ExportPanel.strings:0
+msgid "Current date range only"
+msgstr "Current date range only"
+
+#: qt/controller/export_panel.py:82 qt/controller/export_panel.py:96
+#: cocoa/en.lproj/ExportPanel.strings:0
+msgid "Export"
+msgstr "Export"
+
+#: qt/controller/export_panel.py:98
+msgid "{0} Files (*.{1})"
+msgstr ""
+
+#: qt/controller/import_/csv_options.py:39
+msgid "CSV Options"
+msgstr ""
+
+#: qt/controller/import_/csv_options.py:42
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid ""
+"Specify which CSV columns correspond to which transaction fields. You must "
+"also uncheck the \"Import\" column for lines that don't represent a "
+"transaction (header, footer, comments)."
+msgstr ""
+"Bestimmen Sie, welches Feld der CSV Datei zu welchem Transaktionsfeld "
+"gehört. Sie müssen ebenfalls sämtliche Zeilen abwählen, die keine "
+"Transaktionen repräsentieren (z.B.: Titel, Fußzeile, Kommentare)."
+
+#: qt/controller/import_/csv_options.py:49
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Layout:"
+msgstr "Layout:"
+
+#: qt/controller/import_/csv_options.py:54
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Delimiter:"
+msgstr "Feldtrenner:"
+
+#: qt/controller/import_/csv_options.py:71
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Rescan"
+msgstr "Neu einlesen"
+
+#: qt/controller/import_/csv_options.py:79
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Encoding:"
+msgstr "Encoding:"
+
+#: qt/controller/import_/csv_options.py:96
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Continue Import"
+msgstr "Importieren fortsetzen"
+
+#: qt/controller/import_/csv_options.py:103
+msgid "New Layout"
+msgstr ""
+
+#: qt/controller/import_/csv_options.py:104
+msgid "Choose a name for your new layout:"
+msgstr ""
+
+#: qt/controller/import_/csv_options.py:110
+msgid "Rename Layout"
+msgstr ""
+
+#: qt/controller/import_/csv_options.py:111
+msgid "Choose a name for your layout:"
+msgstr ""
+
+#: qt/controller/import_/csv_options.py:157
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "New Layout..."
+msgstr "Neues Layout..."
+
+#: qt/controller/import_/csv_options.py:158
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Rename Selected Layout..."
+msgstr "Ausgewähltes Layout umbennen..."
+
+#: qt/controller/import_/csv_options.py:159
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Delete Selected Layout"
+msgstr "Ausgewähltes Layout löschen"
+
+#: qt/controller/import_/csv_options.py:232 qt/controller/import_/window.py:38
+#: qt/controller/import_/window.py:81
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/ImportWindow.strings:0
+msgid "Import"
+msgstr "Importieren"
+
+#: qt/controller/import_/window.py:45 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Target Account:"
+msgstr "Zielkonto:"
+
+#: qt/controller/import_/window.py:52
+msgid "Some fields are wrong? Swap them!"
+msgstr ""
+
+#: qt/controller/import_/window.py:55 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Day <--> Month"
+msgstr "Tag <--> Monat"
+
+#: qt/controller/import_/window.py:56 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Month <--> Year"
+msgstr "Monat <--> Jahr"
+
+#: qt/controller/import_/window.py:57 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Day <--> Year"
+msgstr "Tag <--> Jahr"
+
+#: qt/controller/import_/window.py:58 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Description <--> Payee"
+msgstr "Beschreibung <--> Wechselnehmer"
+
+#: qt/controller/import_/window.py:59 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Invert Amounts"
+msgstr "Invert Amounts"
+
+#: qt/controller/import_/window.py:61 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Apply to all accounts"
+msgstr "Auf alle Konten anwenden"
+
+#: qt/controller/import_/window.py:63 cocoa/en.lproj/ImportWindow.strings:0
+msgid "Swap"
+msgstr "Tauschen"
+
+#: qt/controller/lookup.py:35
+msgid "Lookup"
+msgstr ""
+
+#: qt/controller/main_window.py:180 cocoa/en.lproj/MainWindow.strings:0
+msgid "Status"
+msgstr ""
+
+#: qt/controller/main_window.py:189 cocoa/en.lproj/MainMenu.strings:0
+msgid "File"
+msgstr "Ablage"
+
+#: qt/controller/main_window.py:190 cocoa/en.lproj/MainMenu.strings:0
+msgid "Open Recent"
+msgstr "Benutzte Dokumente"
+
+#: qt/controller/main_window.py:191 cocoa/en.lproj/MainMenu.strings:0
+msgid "View"
+msgstr "Ansicht"
+
+#: qt/controller/main_window.py:192 cocoa/en.lproj/Localizable.strings:0
+msgid "Date Range"
+msgstr "Zeitraum"
+
+#: qt/controller/main_window.py:193 cocoa/en.lproj/MainMenu.strings:0
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: qt/controller/main_window.py:194 cocoa/en.lproj/MainMenu.strings:0
+msgid "Help"
+msgstr "Hilfe"
+
+#: qt/controller/main_window.py:196 cocoa/en.lproj/MainMenu.strings:0
+msgid "Open..."
+msgstr "Öffnen..."
+
+#: qt/controller/main_window.py:198 cocoa/en.lproj/Localizable.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/NewTabView.strings:0
+msgid "Net Worth"
+msgstr "Eigenkapital"
+
+#: qt/controller/main_window.py:201 cocoa/en.lproj/MainMenu.strings:0
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "Profit & Loss"
+msgstr "Profit & Verlust"
+
+#: qt/controller/main_window.py:204 cocoa/en.lproj/MainMenu.strings:0
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "Transactions"
+msgstr "Transaktionen"
+
+#: qt/controller/main_window.py:207 cocoa/en.lproj/MainMenu.strings:0
+msgid "Show Account"
+msgstr "Konto öffnen"
+
+#: qt/controller/main_window.py:209 qt/controller/main_window.py:468
+#: qt/controller/main_window.py:469 cocoa/en.lproj/Localizable.strings:0
+msgid "New Item"
+msgstr "Neuer Posten"
+
+#: qt/controller/main_window.py:211
+msgid "Remove Selected"
+msgstr ""
+
+#: qt/controller/main_window.py:212 cocoa/en.lproj/MainMenu.strings:0
+msgid "Show Info"
+msgstr "Details anzeigen"
+
+#: qt/controller/main_window.py:214
+msgid "Toggle Graph"
+msgstr ""
+
+#: qt/controller/main_window.py:216
+msgid "Toggle Pie Chart"
+msgstr ""
+
+#: qt/controller/main_window.py:218 cocoa/en.lproj/MainMenu.strings:0
+msgid "Move Up"
+msgstr "nach oben veschieben"
+
+#: qt/controller/main_window.py:220 cocoa/en.lproj/MainMenu.strings:0
+msgid "Move Down"
+msgstr "nach unten verschieben"
+
+#: qt/controller/main_window.py:222 cocoa/en.lproj/MainMenu.strings:0
+msgid "Go Back"
+msgstr "zurück"
+
+#: qt/controller/main_window.py:224 cocoa/en.lproj/MainMenu.strings:0
+msgid "New Account Group"
+msgstr "Neue Kontogruppe"
+
+#: qt/controller/main_window.py:226
+msgid "Next View"
+msgstr ""
+
+#: qt/controller/main_window.py:228
+msgid "Previous View"
+msgstr ""
+
+#: qt/controller/main_window.py:230 cocoa/en.lproj/MainMenu.strings:0
+msgid "New Document"
+msgstr "Neues Dokument"
+
+#: qt/controller/main_window.py:231 cocoa/en.lproj/MainMenu.strings:0
+msgid "Open Example Document"
+msgstr "Beispielsdatei öffnen"
+
+#: qt/controller/main_window.py:232 cocoa/en.lproj/MainMenu.strings:0
+msgid "Import..."
+msgstr "Importieren..."
+
+#: qt/controller/main_window.py:234 cocoa/en.lproj/MainMenu.strings:0
+msgid "Export..."
+msgstr "Export..."
+
+#: qt/controller/main_window.py:236 cocoa/en.lproj/AccountPanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/MainMenu.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Save"
+msgstr "Speichern"
+
+#: qt/controller/main_window.py:238
+msgid "Save As..."
+msgstr ""
+
+#: qt/controller/main_window.py:240
+msgid "Register moneyGuru"
+msgstr ""
+
+#: qt/controller/main_window.py:241 cocoa/en.lproj/MainMenu.strings:0
+msgid "About moneyGuru"
+msgstr "Über moneyGuru"
+
+#: qt/controller/main_window.py:242 cocoa/en.lproj/MainMenu.strings:0
+msgid "Toggle Reconciliation Mode"
+msgstr "Wertstellungsmodus ändern"
+
+#: qt/controller/main_window.py:244 cocoa/en.lproj/MainMenu.strings:0
+msgid "Toggle Exclusion Status of Account"
+msgstr "Toggle Exclusion Status of Account"
+
+#: qt/controller/main_window.py:246 cocoa/en.lproj/Localizable.strings:0
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "Schedules"
+msgstr "Wiederholung"
+
+#: qt/controller/main_window.py:249 cocoa/en.lproj/Localizable.strings:0
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "Budgets"
+msgstr "Budgets"
+
+#: qt/controller/main_window.py:252 cocoa/en.lproj/MainMenu.strings:0
+msgid "Reconcile Selection"
+msgstr "Auswahl wertstellen"
+
+#: qt/controller/main_window.py:254 cocoa/en.lproj/MainMenu.strings:0
+msgid "Make Schedule from Selected"
+msgstr "ausgewählte Transaktion wiederholen"
+
+#: qt/controller/main_window.py:256
+msgid "Preferences..."
+msgstr ""
+
+#: qt/controller/main_window.py:257
+msgid "Print..."
+msgstr ""
+
+#: qt/controller/main_window.py:259 cocoa/en.lproj/MainMenu.strings:0
+msgid "Quit moneyGuru"
+msgstr "moneyGuru beenden"
+
+#: qt/controller/main_window.py:261 qt/controller/main_window.py:492
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Undo"
+msgstr "Widerrufen"
+
+#: qt/controller/main_window.py:263 qt/controller/main_window.py:498
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Redo"
+msgstr "Wiederholen"
+
+#: qt/controller/main_window.py:265 cocoa/en.lproj/MainMenu.strings:0
+msgid "moneyGuru Help"
+msgstr "moneyGuru-Hilfe"
+
+#: qt/controller/main_window.py:267
+msgid "Check for update"
+msgstr ""
+
+#: qt/controller/main_window.py:268
+msgid "Open Debug Log"
+msgstr ""
+
+#: qt/controller/main_window.py:269
+msgid "Duplicate Transaction"
+msgstr ""
+
+#: qt/controller/main_window.py:271 cocoa/en.lproj/MainMenu.strings:0
+msgid "Jump to Account..."
+msgstr "Gehe zu Konto..."
+
+#: qt/controller/main_window.py:273 cocoa/en.lproj/MainMenu.strings:0
+msgid "New Tab"
+msgstr "Neuer Tab"
+
+#: qt/controller/main_window.py:275
+msgid "Close Tab"
+msgstr ""
+
+#: qt/controller/main_window.py:461 qt/controller/main_window.py:462
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "New Account"
+msgstr "Neues Konto"
+
+#: qt/controller/main_window.py:463 qt/controller/main_window.py:464
+#: qt/controller/main_window.py:467 cocoa/en.lproj/Localizable.strings:0
+msgid "New Transaction"
+msgstr "Neue Transaktion"
+
+#: qt/controller/main_window.py:465 cocoa/en.lproj/Localizable.strings:0
+msgid "New Schedule"
+msgstr "Neue Wiederholung"
+
+#: qt/controller/main_window.py:466 cocoa/en.lproj/Localizable.strings:0
+msgid "New Budget"
+msgstr "Neues Budget"
+
+#: qt/controller/main_window.py:489
+msgid "Undo {0}"
+msgstr ""
+
+#: qt/controller/main_window.py:495
+msgid "Redo {0}"
+msgstr ""
+
+#: qt/controller/main_window.py:661
+msgid "Warning"
+msgstr ""
+
+#: qt/controller/new_view.py:46
+msgid "Choose a type for this tab:"
+msgstr ""
+
+#: qt/controller/new_view.py:52
+msgid "1. Net Worth"
+msgstr ""
+
+#: qt/controller/new_view.py:55
+msgid "2. Profit && Loss"
+msgstr ""
+
+#: qt/controller/new_view.py:58
+msgid "3. Transactions"
+msgstr ""
+
+#: qt/controller/new_view.py:61
+msgid "4. General Ledger"
+msgstr ""
+
+#: qt/controller/new_view.py:64
+msgid "5. Schedules"
+msgstr ""
+
+#: qt/controller/new_view.py:67
+msgid "6. Budgets"
+msgstr ""
+
+#: qt/controller/new_view.py:70
+msgid "7. Document Properties"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:21
+msgid "English"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:22
+msgid "French"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:23
+msgid "German"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:24
+msgid "Italian"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:25
+msgid "Czech"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:40
+msgid "Preferences"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:53 cocoa/en.lproj/MainMenu.strings:0
+msgid "minute(s) (0 for none)"
+msgstr "Minute(n) (0 = inaktiv)"
+
+#: qt/controller/preferences_panel.py:55 cocoa/en.lproj/MainMenu.strings:0
+msgid "Auto-save interval:"
+msgstr "Zeitintervall der autom. Sicherung:"
+
+#: qt/controller/preferences_panel.py:59
+msgid "Date Format:"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:69
+msgid "Language:"
+msgstr ""
+
+#: qt/controller/preferences_panel.py:72 cocoa/en.lproj/MainMenu.strings:0
+msgid "Show scope dialog when modifying a scheduled transaction"
+msgstr "Bei Veränderung einer Wiederholung Dialogfenster anzeigen"
+
+#: qt/controller/preferences_panel.py:74 cocoa/en.lproj/MainMenu.strings:0
+msgid "Automatically place decimals when typing"
+msgstr "Dezimalstellen automatisch setzen"
+
+#: qt/controller/preferences_panel.py:112
+msgid "moneyGuru has to restart for these changes to take effect"
+msgstr ""
+
+#: qt/controller/schedule_panel.py:51 cocoa/en.lproj/SchedulePanel.strings:0
+msgid "Schedule Info"
+msgstr "Wiederholungsdetail"
+
+#: qt/controller/schedule_panel.py:82 qt/controller/transaction_panel.py:61
+msgid "Description:"
+msgstr ""
+
+#: qt/controller/schedule_panel.py:86 qt/controller/transaction_panel.py:63
+msgid "Payee:"
+msgstr ""
+
+#: qt/controller/schedule_panel.py:90 qt/controller/transaction_panel.py:66
+msgid "Check #:"
+msgstr ""
+
+#: qt/controller/schedule_panel.py:95 qt/controller/transaction_panel.py:68
+msgid "Transfers:"
+msgstr ""
+
+#: qt/controller/schedule_panel.py:129 qt/controller/transaction_panel.py:98
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Info"
+msgstr "Details"
+
+#: qt/controller/schedule_panel.py:134 qt/controller/transaction_panel.py:103
+#: cocoa/en.lproj/AccountPanel.strings:0 cocoa/en.lproj/BudgetPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Notes"
+msgstr "Bemerkungen"
+
+#: qt/controller/schedule_scope_dialog.py:31
+msgid "Schedule Modification Scope"
+msgstr ""
+
+#: qt/controller/schedule_scope_dialog.py:34
+msgid ""
+"Do you want this change to affect all future occurrences of this schedule?"
+msgstr ""
+
+#: qt/controller/schedule_scope_dialog.py:41
+msgid ""
+"You can force global scope (in other words, changing all future occurrences)"
+" by holding Shift when you perform the change."
+msgstr ""
+
+#: qt/controller/schedule_scope_dialog.py:50
+msgid "All future occurrences"
+msgstr ""
+
+#: qt/controller/schedule_scope_dialog.py:53
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+msgid "Just this one"
+msgstr "Nur diesen"
+
+#: qt/controller/transaction/filter_bar.py:19
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Income"
+msgstr "Einkommen"
+
+#: qt/controller/transaction/filter_bar.py:20
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Expenses"
+msgstr "Ausgaben"
+
+#: qt/controller/transaction_panel.py:48
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Transaction Info"
+msgstr "Transaktiondetails"
+
+#: qt/controller/transaction_panel.py:59
+msgid "Date:"
+msgstr ""
+
+#: qt/controller/transaction_panel.py:85
+msgid "Multi-currency balance"
+msgstr ""
+
+#: cocoa/en.lproj/AccountPanel.strings:0
+msgid "Account Properties"
+msgstr "Kontodetails"
+
+#: cocoa/en.lproj/AccountReassignPanel.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+msgid "Window"
+msgstr "Fenster"
+
+#: cocoa/en.lproj/AccountReassignPanel.strings:0
+msgid "No Account"
+msgstr "Kein Konto"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+msgid "Start Date"
+msgstr "Anfangsdatum"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0
+msgid "Every"
+msgstr "alle"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
+msgid "Days"
+msgstr ""
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+msgid "Stop Date"
+msgstr "Enddatum"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+msgid "Account"
+msgstr "Konto"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+msgid "Target"
+msgstr "Zielkonto"
+
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+msgid "Amount"
+msgstr "Betrag"
+
+#: cocoa/en.lproj/CashculatorView.strings:0
+msgid "Export Accounts"
+msgstr "Export Accounts"
+
+#: cocoa/en.lproj/CashculatorView.strings:0
+msgid "Export accounts to Cashculator"
+msgstr "Export accounts to Cashculator"
+
+#: cocoa/en.lproj/CashculatorView.strings:0
+msgid "Launch Cashculator"
+msgstr "Launch Cashculator"
+
+#: cocoa/en.lproj/CashculatorView.strings:0
+msgid "Please read instructions in the Forecast section of the help file."
+msgstr "Please read instructions in the Forecast section of the help file."
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Date"
+msgstr "Datum"
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Check #"
+msgstr "Scheck #"
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Description"
+msgstr "Beschreibung"
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Payee"
+msgstr "Empfänger"
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+msgid "From"
+msgstr "von"
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+msgid "To"
+msgstr "nach"
+
+#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Transfer"
+msgstr "Transfer"
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Balance"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Reconciliation Date"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "Start"
+msgstr "Beginn"
+
+#: cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "End"
+msgstr "Ende"
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Change"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Change %"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Budgeted"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Current"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Last"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Repeat Type"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Interval"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Debit"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Credit"
+msgstr ""
+
+#: cocoa/en.lproj/columns.strings:0
+msgid "Memo"
+msgstr ""
+
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "CSV Import Options"
+msgstr "CSV Import Optionen"
+
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Transaction ID"
+msgstr "Transaktionsnummer"
+
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+msgid "Default"
+msgstr "Verzug"
+
+#: cocoa/en.lproj/CSVLayoutName.strings:0
+msgid "Layout Name"
+msgstr "Layoutname"
+
+#: cocoa/en.lproj/CSVLayoutName.strings:0
+msgid "Layout Name:"
+msgstr "Layoutname:"
+
+#: cocoa/en.lproj/CSVLayoutName.strings:0
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "OK"
+msgstr "Ok"
+
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "Custom date range"
+msgstr "Benutzerdefinierter Zeitraum"
+
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "Select start and end dates for your custom range:"
+msgstr "Zeitraum bestimmen:"
+
+#: cocoa/en.lproj/CustomDateRangePanel.strings:0
+msgid "Save this custom range in slot:"
+msgstr "Zeitraum an dieser Stelle sichern:"
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Custom3"
+msgstr ""
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Custom2"
+msgstr ""
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Custom1"
+msgstr ""
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+msgid "Custom date range..."
+msgstr "Benutzerdefinierter Zeitraum..."
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Running year"
+msgstr "laufendes Jahr"
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Year to date"
+msgstr "Ab Jahresbeginn bis heute"
+
+#: cocoa/en.lproj/DateRangeSelector.strings:0
+msgid "<title>"
+msgstr ""
+
+#: cocoa/en.lproj/DocProps.strings:0
+msgid "Document Properties"
+msgstr "Document Properties"
+
+#: cocoa/en.lproj/ImportWindow.strings:0
+msgid "Tab"
+msgstr ""
+
+#: cocoa/en.lproj/ImportWindow.strings:0
+msgid "< New Account >"
+msgstr "< Neues Konto >"
+
+#: cocoa/en.lproj/ImportWindow.strings:0
+msgid "Foo"
+msgstr ""
+
+#: cocoa/en.lproj/ImportWindow.strings:0
+msgid "Bar"
+msgstr ""
+
+#: cocoa/en.lproj/ImportWindow.strings:0
+msgid "Are some fields wrong? Swap them!"
+msgstr "Inkorrekte Felder? Tauschen Sie sie aus!"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Account Lookup"
+msgstr "Kontoauswahl"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Completion Lookup"
+msgstr "Eingabehilfen anzeigen"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Filter"
+msgstr "Filter"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Profit/Loss"
+msgstr "Profit/Verlust"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "%@ (Page %d of %d)"
+msgstr "%@ (Page %d of %d)"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid ""
+"This is your first time running moneyGuru. Do you want to open the example "
+"file?"
+msgstr ""
+"Sie benutzen moneyGuru zum ersten Mal. Möchten sie die Beispielsdatei "
+"verwenden?"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "moneyGuru is about to restart"
+msgstr "moneyGuru schließt"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Thanks for buying moneyGuru!"
+msgstr "Wir danken Ihnen, dass Sie sich für moneyGuru entschieden haben!"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid ""
+"You have reached the limits of this demo version. You must buy moneyGuru to "
+"save the document."
+msgstr ""
+"Ihre kostenlose Testversion ist abgelaufen. Sie müssen moneyGuru erwerben, "
+"um ihre Daten weiterhin sichern zu können."
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Select a file to import"
+msgstr "Wählen sie eine Datei zum Importieren aus"
+
+#: cocoa/en.lproj/Localizable.strings:0
+msgid "Export to file"
+msgstr "Export to file"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Bring All to Front"
+msgstr "Alle nach vorne bringen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Minimize"
+msgstr "Im Dock ablegen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "MainMenu"
+msgstr ""
+
+#: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/MainWindow.strings:0
+msgid "moneyGuru"
+msgstr ""
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Close"
+msgstr "Schließen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Save As…"
+msgstr "Sichern unter…"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "New <item>"
+msgstr ""
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Clear Menu"
+msgstr "Einträge löschen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Preferences…"
+msgstr "Einstellungen…"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Services"
+msgstr "Dienste"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Hide moneyGuru"
+msgstr "moneyGuru ausblenden"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Hide Others"
+msgstr "Andere ausblenden"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Show All"
+msgstr "Alle einblenden"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Copy"
+msgstr "Kopieren"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Find"
+msgstr "Suchen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Cut"
+msgstr "Ausschneiden"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Delete"
+msgstr "Löschen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Paste"
+msgstr "Einsetzen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Select All"
+msgstr "Alles auswählen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Spelling"
+msgstr "Rechtschreibung und Grammatik"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Spelling…"
+msgstr "Rechtschreibung und Grammatik…"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Check Spelling"
+msgstr "Rechtschreibung und Grammatik einblenden"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Check Spelling as You Type"
+msgstr "Wärhend der Texteingabe prüfen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Zoom"
+msgstr "Zoomen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Document"
+msgstr "Dokument"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Previous Date Range"
+msgstr "vorheriger Zeitraum"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Next Date Range"
+msgstr "nächster Zeitraum"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Search..."
+msgstr "Suchen..."
+
+#: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Next Tab"
+msgstr "Nächster Tab"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Previous Tab"
+msgstr "Vorheriger Tab"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Check For Update..."
+msgstr "Nach Updates suchen..."
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Hardcoded Software Website"
+msgstr "Hardcoded Software Website"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "moneyGuru Preferences"
+msgstr "moneyGuru Einstellungen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Automatically check for updates"
+msgstr "Automatisch nach Updates suchen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Font size:"
+msgstr "Schriftgrad:"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Today's Date Range"
+msgstr "heutiger Zeitraum"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Custom Date Range..."
+msgstr "Benutzerdefinierter Zeitraum"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Print"
+msgstr "Drucken"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Page Setup..."
+msgstr "Seiteneinstellungen..."
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Lookup Completion..."
+msgstr "Eingabehilfen anzeigen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Close Window"
+msgstr "Fenster Schließen"
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Printing Font size:"
+msgstr "Printing Font size:"
+
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "No entry selected"
+msgstr ""
+
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+msgid "Mass Editing"
+msgstr "Mehrfachbearbeitung"
+
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "Choose a view for this tab:"
+msgstr "Wählen sie eine Ansicht für den Tab:"
+
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "Cashculator"
+msgstr "Cashculator"
+
+#: cocoa/en.lproj/NewTabView.strings:0
+msgid "General Ledger"
+msgstr "General Ledger"
+
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+msgid "Modification Scope"
+msgstr "Änderungsbereich"
+
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+msgid ""
+"Do you want this change to affect all future occurrences of this "
+"transaction?"
+msgstr ""
+"Wollen sie diese Änderung auf alle zukünftigen Vorgänge dieser Transaktion "
+"anwenden?"
+
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+msgid ""
+"You can force global scope (in other words, changing all future occurences) "
+"by holding ⇧ when you perform the change."
+msgstr ""
+"Sie können den Änderungsbereich auf alle zukünftigen Vorgänge erweitern, "
+"indem sie während der Änderung ⇧ gedrückt halten."
+
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+msgid "Show this dialog next time"
+msgstr "Dialogfenster beim nächsten Mal anzeigen"
+
+#: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
+msgid "All future occurences"
+msgstr "Ja, alle"
+
+#: cocoa/en.lproj/SchedulePanel.strings:0
+msgid "Tranfers"
+msgstr "Transfers"
+
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "You can navigate tabs with ⌘⌥→ and ⌘⌥←"
+msgstr "Sie können zwischen den Tabs mit ⌘⌥→ und ⌘⌥← navigieren"
+
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Prev Tab"
+msgstr ""
+
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Use ⌥+Return to insert a new line."
+msgstr "Zum Beginnen einer neuen Zeile drücken sie ⌥+Eingabetaste."
+
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Transaction Inspector"
+msgstr ""
+
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Multi-Currency Balance"
+msgstr "Währungssaldo"
