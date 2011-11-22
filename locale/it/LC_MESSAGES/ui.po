@@ -74,7 +74,7 @@ msgstr "Conto #"
 
 #: qt/controller/account_panel.py:71 qt/controller/budget_panel.py:85
 msgid "Notes:"
-msgstr ""
+msgstr "Note:"
 
 #: qt/controller/account_reassign_panel.py:37
 msgid "Re-assign Account"
@@ -116,23 +116,23 @@ msgstr "Info Previsione"
 
 #: qt/controller/budget_panel.py:49 qt/controller/schedule_panel.py:59
 msgid "Start Date:"
-msgstr ""
+msgstr "Data Inizio:"
 
 #: qt/controller/budget_panel.py:54 qt/controller/schedule_panel.py:64
 msgid "Repeat Type:"
-msgstr ""
+msgstr "Tipo di Ripetizione:"
 
 #: qt/controller/budget_panel.py:58 qt/controller/schedule_panel.py:68
 msgid "Every:"
-msgstr ""
+msgstr "Ogni:"
 
 #: qt/controller/budget_panel.py:67 qt/controller/schedule_panel.py:77
 msgid "Stop Date:"
-msgstr ""
+msgstr "Data Fine:"
 
 #: qt/controller/budget_panel.py:74
 msgid "Account:"
-msgstr ""
+msgstr "Conto:"
 
 #: qt/controller/budget_panel.py:78 qt/controller/import_/csv_options.py:61
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -141,7 +141,7 @@ msgstr "Target:"
 
 #: qt/controller/budget_panel.py:83
 msgid "Amount:"
-msgstr ""
+msgstr "Ammontare:"
 
 #: qt/controller/custom_date_range_panel.py:36
 msgid "Custom Date Range"
@@ -153,11 +153,11 @@ msgstr ""
 
 #: qt/controller/custom_date_range_panel.py:43
 msgid "Start:"
-msgstr ""
+msgstr "Inizio:"
 
 #: qt/controller/custom_date_range_panel.py:47
 msgid "End:"
-msgstr ""
+msgstr "Fine:"
 
 #: qt/controller/custom_date_range_panel.py:53
 msgid "Save this range under slot:"
@@ -669,11 +669,11 @@ msgstr "Nuova Previsione"
 
 #: qt/controller/main_window.py:489
 msgid "Undo {0}"
-msgstr ""
+msgstr "Annulla {0}"
 
 #: qt/controller/main_window.py:495
 msgid "Redo {0}"
-msgstr ""
+msgstr "Ripristina {0}"
 
 #: qt/controller/main_window.py:661
 msgid "Warning"
@@ -769,19 +769,19 @@ msgstr "Info Pianificazione"
 
 #: qt/controller/schedule_panel.py:82 qt/controller/transaction_panel.py:61
 msgid "Description:"
-msgstr ""
+msgstr "Descrizione:"
 
 #: qt/controller/schedule_panel.py:86 qt/controller/transaction_panel.py:63
 msgid "Payee:"
-msgstr ""
+msgstr "Beneficiario:"
 
 #: qt/controller/schedule_panel.py:90 qt/controller/transaction_panel.py:66
 msgid "Check #:"
-msgstr ""
+msgstr "Conto #:"
 
 #: qt/controller/schedule_panel.py:95 qt/controller/transaction_panel.py:68
 msgid "Transfers:"
-msgstr ""
+msgstr "Trasferimenti:"
 
 #: qt/controller/schedule_panel.py:129 qt/controller/transaction_panel.py:98
 #: cocoa/en.lproj/SchedulePanel.strings:0
@@ -837,7 +837,7 @@ msgstr "Info Transazione"
 
 #: qt/controller/transaction_panel.py:59
 msgid "Date:"
-msgstr ""
+msgstr "Data:"
 
 #: qt/controller/transaction_panel.py:85
 msgid "Multi-currency balance"
@@ -950,11 +950,11 @@ msgstr "Trasferimento"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Balance"
-msgstr ""
+msgstr "Saldo"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Reconciliation Date"
-msgstr ""
+msgstr "Data di Riconciliazione"
 
 #: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
@@ -968,43 +968,43 @@ msgstr "Fine"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Change"
-msgstr ""
+msgstr "Variazione"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Change %"
-msgstr ""
+msgstr "Variazione %"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Budgeted"
-msgstr ""
+msgstr "Previsto"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Current"
-msgstr ""
+msgstr "Attuale"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Last"
-msgstr ""
+msgstr "Ultimo"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Repeat Type"
-msgstr ""
+msgstr "Tipo di Ripetizione"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Interval"
-msgstr ""
+msgstr "Intervallo"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Debit"
-msgstr ""
+msgstr "Debito"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Credit"
-msgstr ""
+msgstr "Credito"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Memo"
-msgstr ""
+msgstr "Memo"
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "CSV Import Options"

@@ -74,7 +74,7 @@ msgstr "Účet č."
 
 #: qt/controller/account_panel.py:71 qt/controller/budget_panel.py:85
 msgid "Notes:"
-msgstr ""
+msgstr "Poznámky:"
 
 #: qt/controller/account_reassign_panel.py:37
 msgid "Re-assign Account"
@@ -116,23 +116,23 @@ msgstr "Info o rozpočtu"
 
 #: qt/controller/budget_panel.py:49 qt/controller/schedule_panel.py:59
 msgid "Start Date:"
-msgstr ""
+msgstr "Odkdy:"
 
 #: qt/controller/budget_panel.py:54 qt/controller/schedule_panel.py:64
 msgid "Repeat Type:"
-msgstr ""
+msgstr "Typ opakování:"
 
 #: qt/controller/budget_panel.py:58 qt/controller/schedule_panel.py:68
 msgid "Every:"
-msgstr ""
+msgstr "Každých:"
 
 #: qt/controller/budget_panel.py:67 qt/controller/schedule_panel.py:77
 msgid "Stop Date:"
-msgstr ""
+msgstr "Dokdy:"
 
 #: qt/controller/budget_panel.py:74
 msgid "Account:"
-msgstr ""
+msgstr "Účet:"
 
 #: qt/controller/budget_panel.py:78 qt/controller/import_/csv_options.py:61
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -141,7 +141,7 @@ msgstr "Cíl:"
 
 #: qt/controller/budget_panel.py:83
 msgid "Amount:"
-msgstr ""
+msgstr "Částka:"
 
 #: qt/controller/custom_date_range_panel.py:36
 msgid "Custom Date Range"
@@ -153,11 +153,11 @@ msgstr ""
 
 #: qt/controller/custom_date_range_panel.py:43
 msgid "Start:"
-msgstr ""
+msgstr "Start:"
 
 #: qt/controller/custom_date_range_panel.py:47
 msgid "End:"
-msgstr ""
+msgstr "Konec:"
 
 #: qt/controller/custom_date_range_panel.py:53
 msgid "Save this range under slot:"
@@ -769,19 +769,19 @@ msgstr "Info o plánu"
 
 #: qt/controller/schedule_panel.py:82 qt/controller/transaction_panel.py:61
 msgid "Description:"
-msgstr ""
+msgstr "Popis:"
 
 #: qt/controller/schedule_panel.py:86 qt/controller/transaction_panel.py:63
 msgid "Payee:"
-msgstr ""
+msgstr "Příjemce:"
 
 #: qt/controller/schedule_panel.py:90 qt/controller/transaction_panel.py:66
 msgid "Check #:"
-msgstr ""
+msgstr "Šek č.:"
 
 #: qt/controller/schedule_panel.py:95 qt/controller/transaction_panel.py:68
 msgid "Transfers:"
-msgstr ""
+msgstr "Přesuny:"
 
 #: qt/controller/schedule_panel.py:129 qt/controller/transaction_panel.py:98
 #: cocoa/en.lproj/SchedulePanel.strings:0
@@ -837,7 +837,7 @@ msgstr "Info o transakci"
 
 #: qt/controller/transaction_panel.py:59
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
 #: qt/controller/transaction_panel.py:85
 msgid "Multi-currency balance"
@@ -949,11 +949,11 @@ msgstr "Přesun"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Balance"
-msgstr ""
+msgstr "Zůstatek"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Reconciliation Date"
-msgstr ""
+msgstr "Datum párování"
 
 #: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
@@ -967,43 +967,43 @@ msgstr "Konec"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Change"
-msgstr ""
+msgstr "Změna"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Change %"
-msgstr ""
+msgstr "Změna %"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Budgeted"
-msgstr ""
+msgstr "V rozpočtu"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Current"
-msgstr ""
+msgstr "Aktuální"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Last"
-msgstr ""
+msgstr "Poslední"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Repeat Type"
-msgstr ""
+msgstr "Typ opakování"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Interval"
-msgstr ""
+msgstr "Interval"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Debit"
-msgstr ""
+msgstr "Výběr"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Credit"
-msgstr ""
+msgstr "Vklad"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Memo"
-msgstr ""
+msgstr "Poznámka"
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "CSV Import Options"

@@ -74,11 +74,11 @@ msgstr "# Compte"
 
 #: qt/controller/account_panel.py:71 qt/controller/budget_panel.py:85
 msgid "Notes:"
-msgstr ""
+msgstr "Notes:"
 
 #: qt/controller/account_reassign_panel.py:37
 msgid "Re-assign Account"
-msgstr ""
+msgstr "Réassigner un compte"
 
 #: qt/controller/account_reassign_panel.py:41
 #: cocoa/en.lproj/AccountReassignPanel.strings:0
@@ -116,23 +116,23 @@ msgstr "Détails de budget"
 
 #: qt/controller/budget_panel.py:49 qt/controller/schedule_panel.py:59
 msgid "Start Date:"
-msgstr ""
+msgstr "Date début:"
 
 #: qt/controller/budget_panel.py:54 qt/controller/schedule_panel.py:64
 msgid "Repeat Type:"
-msgstr ""
+msgstr "Répéter:"
 
 #: qt/controller/budget_panel.py:58 qt/controller/schedule_panel.py:68
 msgid "Every:"
-msgstr ""
+msgstr "Tout les:"
 
 #: qt/controller/budget_panel.py:67 qt/controller/schedule_panel.py:77
 msgid "Stop Date:"
-msgstr ""
+msgstr "Date fin:"
 
 #: qt/controller/budget_panel.py:74
 msgid "Account:"
-msgstr ""
+msgstr "Compte:"
 
 #: qt/controller/budget_panel.py:78 qt/controller/import_/csv_options.py:61
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -141,27 +141,27 @@ msgstr "Cible:"
 
 #: qt/controller/budget_panel.py:83
 msgid "Amount:"
-msgstr ""
+msgstr "Montant:"
 
 #: qt/controller/custom_date_range_panel.py:36
 msgid "Custom Date Range"
-msgstr ""
+msgstr "Intervalle personnalisé"
 
 #: qt/controller/custom_date_range_panel.py:40
 msgid "Select start and end dates from your custom range:"
-msgstr ""
+msgstr "Selectionnez un intervalle de dates:"
 
 #: qt/controller/custom_date_range_panel.py:43
 msgid "Start:"
-msgstr ""
+msgstr "Début:"
 
 #: qt/controller/custom_date_range_panel.py:47
 msgid "End:"
-msgstr ""
+msgstr "Fin:"
 
 #: qt/controller/custom_date_range_panel.py:53
 msgid "Save this range under slot:"
-msgstr ""
+msgstr "Assigner l'intervalle à la case:"
 
 #: qt/controller/custom_date_range_panel.py:61
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
@@ -191,15 +191,15 @@ msgstr "Sous le nom:"
 
 #: qt/controller/date_range_selector.py:27
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: qt/controller/date_range_selector.py:30
 msgid "Previous"
-msgstr ""
+msgstr "Précédent"
 
 #: qt/controller/date_range_selector.py:33
 msgid "Today"
-msgstr ""
+msgstr "Aujourd'hui"
 
 #: qt/controller/date_range_selector.py:36
 #: cocoa/en.lproj/DateRangeSelector.strings:0
@@ -221,11 +221,11 @@ msgstr "Année"
 
 #: qt/controller/date_range_selector.py:45
 msgid "Year To Date"
-msgstr ""
+msgstr "Année en cours"
 
 #: qt/controller/date_range_selector.py:48
 msgid "Running Year"
-msgstr ""
+msgstr "Année flottante"
 
 #: qt/controller/date_range_selector.py:51
 #: cocoa/en.lproj/DateRangeSelector.strings:0
@@ -235,11 +235,11 @@ msgstr "Toutes les transactions"
 
 #: qt/controller/date_range_selector.py:54
 msgid "Custom..."
-msgstr ""
+msgstr "Personnalisé..."
 
 #: qt/controller/docprops_view.py:39
 msgid "Native Currency:"
-msgstr ""
+msgstr "Devise principale:"
 
 #: qt/controller/docprops_view.py:43 cocoa/en.lproj/DocProps.strings:0
 msgid "First day of the week:"
@@ -255,39 +255,39 @@ msgstr "Début de l'année:"
 
 #: qt/controller/document.py:41
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Document non-sauvegardé"
 
 #: qt/controller/document.py:42
 msgid "Do you want to save your changes before continuing?"
-msgstr ""
+msgstr "Voulez-vous sauvegarder vos changement avant de continuer?"
 
 #: qt/controller/document.py:57
 msgid "Select a document to import"
-msgstr ""
+msgstr "Selectionner un fichier à importer"
 
 #: qt/controller/document.py:58
 msgid "Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
-msgstr ""
+msgstr "Fichiers supportés (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
 
 #: qt/controller/document.py:64
 msgid "Cannot import file"
-msgstr ""
+msgstr "Impossible d'importer le fichier"
 
 #: qt/controller/document.py:82
 msgid "Cannot load file"
-msgstr ""
+msgstr "Impossible d'ouvrir le fichier"
 
 #: qt/controller/document.py:87
 msgid "Select a document to load"
-msgstr ""
+msgstr "Sélectionnez un document à ouvrir"
 
 #: qt/controller/document.py:88 qt/controller/document.py:113
 msgid "moneyGuru Documents (*.moneyguru)"
-msgstr ""
+msgstr "Documents moneyGuru (*.moneyguru)"
 
 #: qt/controller/document.py:112
 msgid "Save As"
-msgstr ""
+msgstr "Sauvegarder sous"
 
 #: qt/controller/export_panel.py:42 cocoa/en.lproj/ExportPanel.strings:0
 msgid "Export Options"
@@ -324,7 +324,7 @@ msgstr ""
 
 #: qt/controller/import_/csv_options.py:39
 msgid "CSV Options"
-msgstr ""
+msgstr "Options d'importation CSV"
 
 #: qt/controller/import_/csv_options.py:42
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -364,19 +364,19 @@ msgstr "Continuer d'importer"
 
 #: qt/controller/import_/csv_options.py:103
 msgid "New Layout"
-msgstr ""
+msgstr "Nouvelle configuration"
 
 #: qt/controller/import_/csv_options.py:104
 msgid "Choose a name for your new layout:"
-msgstr ""
+msgstr "Choisissez un nom pour la nouvelle configuration:"
 
 #: qt/controller/import_/csv_options.py:110
 msgid "Rename Layout"
-msgstr ""
+msgstr "Renommer la configuration"
 
 #: qt/controller/import_/csv_options.py:111
 msgid "Choose a name for your layout:"
-msgstr ""
+msgstr "Choisissez un nom pour la configuration:"
 
 #: qt/controller/import_/csv_options.py:157
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -406,7 +406,7 @@ msgstr "Compte cible:"
 
 #: qt/controller/import_/window.py:52
 msgid "Some fields are wrong? Swap them!"
-msgstr ""
+msgstr "Champs incorrectes? Interchangez!"
 
 #: qt/controller/import_/window.py:55 cocoa/en.lproj/ImportWindow.strings:0
 msgid "Day <--> Month"
@@ -498,7 +498,7 @@ msgstr "Nouvel Item"
 
 #: qt/controller/main_window.py:211
 msgid "Remove Selected"
-msgstr ""
+msgstr "Supprimer la sélection"
 
 #: qt/controller/main_window.py:212 cocoa/en.lproj/MainMenu.strings:0
 msgid "Show Info"
@@ -530,11 +530,11 @@ msgstr "Nouveau groupe de comptes"
 
 #: qt/controller/main_window.py:226
 msgid "Next View"
-msgstr ""
+msgstr "Onglet suivant"
 
 #: qt/controller/main_window.py:228
 msgid "Previous View"
-msgstr ""
+msgstr "Onglet précédent"
 
 #: qt/controller/main_window.py:230 cocoa/en.lproj/MainMenu.strings:0
 msgid "New Document"
@@ -562,11 +562,11 @@ msgstr "Enregistrer"
 
 #: qt/controller/main_window.py:238
 msgid "Save As..."
-msgstr ""
+msgstr "Sauvegarder sous..."
 
 #: qt/controller/main_window.py:240
 msgid "Register moneyGuru"
-msgstr ""
+msgstr "Enregistrer moneyGuru"
 
 #: qt/controller/main_window.py:241 cocoa/en.lproj/MainMenu.strings:0
 msgid "About moneyGuru"
@@ -600,11 +600,11 @@ msgstr "Créer une récurrence à partir de la sélection"
 
 #: qt/controller/main_window.py:256
 msgid "Preferences..."
-msgstr ""
+msgstr "Préférences..."
 
 #: qt/controller/main_window.py:257
 msgid "Print..."
-msgstr ""
+msgstr "Imprimer..."
 
 #: qt/controller/main_window.py:259 cocoa/en.lproj/MainMenu.strings:0
 msgid "Quit moneyGuru"
@@ -626,7 +626,7 @@ msgstr "Aide de moneyGuru"
 
 #: qt/controller/main_window.py:267
 msgid "Check for update"
-msgstr ""
+msgstr "Vérifier les mises-à-jour"
 
 #: qt/controller/main_window.py:268
 msgid "Open Debug Log"
@@ -634,7 +634,7 @@ msgstr ""
 
 #: qt/controller/main_window.py:269
 msgid "Duplicate Transaction"
-msgstr ""
+msgstr "Dupliquer la transaction"
 
 #: qt/controller/main_window.py:271 cocoa/en.lproj/MainMenu.strings:0
 msgid "Jump to Account..."
@@ -646,7 +646,7 @@ msgstr "Nouvel onglet"
 
 #: qt/controller/main_window.py:275
 msgid "Close Tab"
-msgstr ""
+msgstr "Fermer l'onglet"
 
 #: qt/controller/main_window.py:461 qt/controller/main_window.py:462
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -669,23 +669,23 @@ msgstr "Nouveau Budget"
 
 #: qt/controller/main_window.py:489
 msgid "Undo {0}"
-msgstr ""
+msgstr "Défaire {0}"
 
 #: qt/controller/main_window.py:495
 msgid "Redo {0}"
-msgstr ""
+msgstr "Refaire {0}"
 
 #: qt/controller/main_window.py:661
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 #: qt/controller/new_view.py:46
 msgid "Choose a type for this tab:"
-msgstr ""
+msgstr "Choisissez un type d'onglet:"
 
 #: qt/controller/new_view.py:52
 msgid "1. Net Worth"
-msgstr ""
+msgstr "1. Valeur nette"
 
 #: qt/controller/new_view.py:55
 msgid "2. Profit && Loss"
@@ -693,19 +693,19 @@ msgstr ""
 
 #: qt/controller/new_view.py:58
 msgid "3. Transactions"
-msgstr ""
+msgstr "3. Transactions"
 
 #: qt/controller/new_view.py:61
 msgid "4. General Ledger"
-msgstr ""
+msgstr "4. Grand Livre"
 
 #: qt/controller/new_view.py:64
 msgid "5. Schedules"
-msgstr ""
+msgstr "5. Récurrences"
 
 #: qt/controller/new_view.py:67
 msgid "6. Budgets"
-msgstr ""
+msgstr "6. Budgets"
 
 #: qt/controller/new_view.py:70
 msgid "7. Document Properties"
@@ -713,27 +713,27 @@ msgstr ""
 
 #: qt/controller/preferences_panel.py:21
 msgid "English"
-msgstr ""
+msgstr "Anglais"
 
 #: qt/controller/preferences_panel.py:22
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #: qt/controller/preferences_panel.py:23
 msgid "German"
-msgstr ""
+msgstr "Allemand"
 
 #: qt/controller/preferences_panel.py:24
 msgid "Italian"
-msgstr ""
+msgstr "Italien"
 
 #: qt/controller/preferences_panel.py:25
 msgid "Czech"
-msgstr ""
+msgstr "Tchèque"
 
 #: qt/controller/preferences_panel.py:40
 msgid "Preferences"
-msgstr ""
+msgstr "Préférences"
 
 #: qt/controller/preferences_panel.py:53 cocoa/en.lproj/MainMenu.strings:0
 msgid "minute(s) (0 for none)"
@@ -745,7 +745,7 @@ msgstr "Intervalle sauvegarde auto.:"
 
 #: qt/controller/preferences_panel.py:59
 msgid "Date Format:"
-msgstr ""
+msgstr "Format de date:"
 
 #: qt/controller/preferences_panel.py:69
 msgid "Language:"
@@ -769,19 +769,19 @@ msgstr "Détails de récurrence"
 
 #: qt/controller/schedule_panel.py:82 qt/controller/transaction_panel.py:61
 msgid "Description:"
-msgstr ""
+msgstr "Description:"
 
 #: qt/controller/schedule_panel.py:86 qt/controller/transaction_panel.py:63
 msgid "Payee:"
-msgstr ""
+msgstr "Tiers:"
 
 #: qt/controller/schedule_panel.py:90 qt/controller/transaction_panel.py:66
 msgid "Check #:"
-msgstr ""
+msgstr "# Chèque:"
 
 #: qt/controller/schedule_panel.py:95 qt/controller/transaction_panel.py:68
 msgid "Transfers:"
-msgstr ""
+msgstr "Transferts:"
 
 #: qt/controller/schedule_panel.py:129 qt/controller/transaction_panel.py:98
 #: cocoa/en.lproj/SchedulePanel.strings:0
@@ -798,22 +798,25 @@ msgstr "Notes"
 
 #: qt/controller/schedule_scope_dialog.py:31
 msgid "Schedule Modification Scope"
-msgstr ""
+msgstr "Portée de la modification"
 
 #: qt/controller/schedule_scope_dialog.py:34
 msgid ""
 "Do you want this change to affect all future occurrences of this schedule?"
 msgstr ""
+"Voulez-vous appliquer cette modification à toutes les occurrences futures?"
 
 #: qt/controller/schedule_scope_dialog.py:41
 msgid ""
 "You can force global scope (in other words, changing all future occurrences)"
 " by holding Shift when you perform the change."
 msgstr ""
+"Vous pouvez forcer une portée globale (changer les occurrences futures) en "
+"appuyant sur ⇧ lors du changement."
 
 #: qt/controller/schedule_scope_dialog.py:50
 msgid "All future occurrences"
-msgstr ""
+msgstr "Oui, toutes"
 
 #: qt/controller/schedule_scope_dialog.py:53
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
@@ -828,7 +831,7 @@ msgstr "Revenu"
 #: qt/controller/transaction/filter_bar.py:20
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Expenses"
-msgstr "Dépense"
+msgstr "Dépenses"
 
 #: qt/controller/transaction_panel.py:48
 #: cocoa/en.lproj/TransactionPanel.strings:0
@@ -837,11 +840,11 @@ msgstr "Détails de transaction"
 
 #: qt/controller/transaction_panel.py:59
 msgid "Date:"
-msgstr ""
+msgstr "Date:"
 
 #: qt/controller/transaction_panel.py:85
 msgid "Multi-currency balance"
-msgstr ""
+msgstr "Balancer les devises"
 
 #: cocoa/en.lproj/AccountPanel.strings:0
 msgid "Account Properties"
@@ -950,11 +953,11 @@ msgstr "Transfert"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Balance"
-msgstr ""
+msgstr "Balance"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Reconciliation Date"
-msgstr ""
+msgstr "Date réconciliation"
 
 #: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
@@ -968,43 +971,43 @@ msgstr "Fin"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Change"
-msgstr ""
+msgstr "Variation"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Change %"
-msgstr ""
+msgstr "Variation %"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Budgeted"
-msgstr ""
+msgstr "Budgeté"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Current"
-msgstr ""
+msgstr "Courant"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Last"
-msgstr ""
+msgstr "Précédent"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Repeat Type"
-msgstr ""
+msgstr "Type répétition"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Interval"
-msgstr ""
+msgstr "Intervalle"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Debit"
-msgstr ""
+msgstr "Débit"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Credit"
-msgstr ""
+msgstr "Crédit"
 
 #: cocoa/en.lproj/columns.strings:0
 msgid "Memo"
-msgstr ""
+msgstr "Mémo"
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "CSV Import Options"
