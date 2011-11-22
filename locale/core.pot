@@ -1,0 +1,516 @@
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+
+#: core/app.py:37
+msgid "will show this dialog on startup"
+msgstr ""
+
+#: core/document.py:181
+msgid "Add transaction"
+msgstr ""
+
+#: core/document.py:184 core/document.py:414
+msgid "Change transaction"
+msgstr ""
+
+#: core/document.py:295
+msgid "Change account"
+msgstr ""
+
+#: core/document.py:317
+msgid "Remove account"
+msgstr ""
+
+#: core/document.py:349
+msgid "New account"
+msgstr ""
+
+#: core/document.py:352
+msgid "Add account"
+msgstr ""
+
+#: core/document.py:369
+msgid "Change group"
+msgstr ""
+
+#: core/document.py:379
+msgid "Remove group"
+msgstr ""
+
+#: core/document.py:390
+msgid "New group"
+msgstr ""
+
+#: core/document.py:392
+msgid "Add group"
+msgstr ""
+
+#: core/document.py:462
+msgid "Remove transaction"
+msgstr ""
+
+#: core/document.py:487
+msgid "Duplicate transactions"
+msgstr ""
+
+#: core/document.py:502
+msgid "Move transaction"
+msgstr ""
+
+#: core/document.py:560
+msgid "Change reconciliation"
+msgstr ""
+
+#: core/document.py:604
+msgid "Change Budget"
+msgstr ""
+
+#: core/document.py:607
+msgid "Add Budget"
+msgstr ""
+
+#: core/document.py:628
+msgid "Remove Budget"
+msgstr ""
+
+#: core/document.py:644
+msgid "Change Schedule"
+msgstr ""
+
+#: core/document.py:647
+msgid "Add Schedule"
+msgstr ""
+
+#: core/document.py:668
+msgid "Remove Schedule"
+msgstr ""
+
+#: core/document.py:725
+msgid "\"%s\" is not a moneyGuru file"
+msgstr ""
+
+#: core/document.py:771
+msgid "%s is of an unknown format."
+msgstr ""
+
+#: core/document.py:814
+msgid "Import"
+msgstr ""
+
+#: core/gui/account_panel.py:18
+msgid "Asset"
+msgstr ""
+
+#: core/gui/account_panel.py:19
+msgid "Liability"
+msgstr ""
+
+#: core/gui/account_panel.py:20 core/gui/account_pie_chart.py:102
+msgid "Income"
+msgstr ""
+
+#: core/gui/account_panel.py:21
+msgid "Expense"
+msgstr ""
+
+#: core/gui/account_pie_chart.py:79
+msgid "Assets"
+msgstr ""
+
+#: core/gui/account_pie_chart.py:84
+msgid "Liabilities"
+msgstr ""
+
+#: core/gui/account_pie_chart.py:107
+msgid "Expenses"
+msgstr ""
+
+#: core/gui/account_reassign_panel.py:26
+msgid "No Account"
+msgstr ""
+
+#: core/gui/account_view.py:16
+msgid ""
+"{account_name}\n"
+"Entries from {start_date} to {end_date}"
+msgstr ""
+
+#: core/gui/account_view.py:75
+msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
+msgstr ""
+
+#: core/gui/balance_sheet.py:75
+msgid "ASSETS"
+msgstr ""
+
+#: core/gui/balance_sheet.py:76
+msgid "LIABILITIES"
+msgstr ""
+
+#: core/gui/balance_sheet.py:77
+msgid "NET WORTH"
+msgstr ""
+
+#: core/gui/budget_panel.py:45 core/gui/csv_options.py:20
+msgid "None"
+msgstr ""
+
+#: core/gui/budget_panel.py:76
+msgid "Income/Expense accounts must be created before budgets can be set."
+msgstr ""
+
+#: core/gui/budget_view.py:16
+msgid "Budgets from {start_date} to {end_date}"
+msgstr ""
+
+#: core/gui/cashculator_view.py:29
+msgid "Exported database not present. Click on Export Accounts first."
+msgstr ""
+
+#: core/gui/cashculator_view.py:30
+msgid "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature."
+msgstr ""
+
+#: core/gui/csv_options.py:21
+msgid "Date"
+msgstr ""
+
+#: core/gui/csv_options.py:22
+msgid "Description"
+msgstr ""
+
+#: core/gui/csv_options.py:23
+msgid "Payee"
+msgstr ""
+
+#: core/gui/csv_options.py:24
+msgid "Check #"
+msgstr ""
+
+#: core/gui/csv_options.py:25
+msgid "Transfer"
+msgstr ""
+
+#: core/gui/csv_options.py:26
+msgid "Amount"
+msgstr ""
+
+#: core/gui/csv_options.py:27
+msgid "Increase"
+msgstr ""
+
+#: core/gui/csv_options.py:28
+msgid "Decrease"
+msgstr ""
+
+#: core/gui/csv_options.py:29
+msgid "Currency"
+msgstr ""
+
+#: core/gui/csv_options.py:30
+msgid "Transaction ID"
+msgstr ""
+
+#: core/gui/csv_options.py:102 core/gui/csv_options.py:231
+#: core/gui/csv_options.py:251
+msgid "Default"
+msgstr ""
+
+#: core/gui/csv_options.py:247 core/gui/import_window.py:292
+msgid "< New Account >"
+msgstr ""
+
+#: core/gui/docprops_view.py:21
+msgid "Monday"
+msgstr ""
+
+#: core/gui/docprops_view.py:22
+msgid "Tuesday"
+msgstr ""
+
+#: core/gui/docprops_view.py:23
+msgid "Wednesday"
+msgstr ""
+
+#: core/gui/docprops_view.py:24
+msgid "Thursday"
+msgstr ""
+
+#: core/gui/docprops_view.py:25
+msgid "Friday"
+msgstr ""
+
+#: core/gui/docprops_view.py:26
+msgid "Saturday"
+msgstr ""
+
+#: core/gui/docprops_view.py:27
+msgid "Sunday"
+msgstr ""
+
+#: core/gui/docprops_view.py:36
+msgid "January"
+msgstr ""
+
+#: core/gui/docprops_view.py:37
+msgid "February"
+msgstr ""
+
+#: core/gui/docprops_view.py:38
+msgid "March"
+msgstr ""
+
+#: core/gui/docprops_view.py:39
+msgid "April"
+msgstr ""
+
+#: core/gui/docprops_view.py:40
+msgid "May"
+msgstr ""
+
+#: core/gui/docprops_view.py:41
+msgid "June"
+msgstr ""
+
+#: core/gui/docprops_view.py:42
+msgid "July"
+msgstr ""
+
+#: core/gui/docprops_view.py:43
+msgid "August"
+msgstr ""
+
+#: core/gui/docprops_view.py:44
+msgid "September"
+msgstr ""
+
+#: core/gui/docprops_view.py:45
+msgid "October"
+msgstr ""
+
+#: core/gui/docprops_view.py:46
+msgid "November"
+msgstr ""
+
+#: core/gui/docprops_view.py:47
+msgid "December"
+msgstr ""
+
+#: core/gui/entry_table.py:21
+msgid "Debit/Credit"
+msgstr ""
+
+#: core/gui/entry_table_base.py:285
+msgid "Previous Balance"
+msgstr ""
+
+#: core/gui/entry_table_base.py:300 core/gui/transaction_table.py:250
+msgid "TOTAL"
+msgstr ""
+
+#: core/gui/general_ledger_view.py:15
+msgid "General Ledger from {start_date} to {end_date}"
+msgstr ""
+
+#: core/gui/general_ledger_view.py:48
+msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
+msgstr ""
+
+#: core/gui/income_statement.py:69
+msgid "INCOME"
+msgstr ""
+
+#: core/gui/income_statement.py:70
+msgid "EXPENSES"
+msgstr ""
+
+#: core/gui/income_statement.py:71
+msgid "NET INCOME"
+msgstr ""
+
+#: core/gui/main_window.py:135 core/gui/net_worth_graph.py:40
+msgid "Net Worth"
+msgstr ""
+
+#: core/gui/main_window.py:137 core/gui/profit_graph.py:42
+msgid "Profit & Loss"
+msgstr ""
+
+#: core/gui/main_window.py:139
+msgid "Transactions"
+msgstr ""
+
+#: core/gui/main_window.py:143
+msgid "Schedules"
+msgstr ""
+
+#: core/gui/main_window.py:145
+msgid "Budgets"
+msgstr ""
+
+#: core/gui/main_window.py:147
+msgid "Cashculator"
+msgstr ""
+
+#: core/gui/main_window.py:149
+msgid "General Ledger"
+msgstr ""
+
+#: core/gui/main_window.py:151
+msgid "Document Properties"
+msgstr ""
+
+#: core/gui/main_window.py:153
+msgid "New Tab"
+msgstr ""
+
+#: core/gui/networth_view.py:15
+msgid "Net Worth at {end_date}, starting from {start_date}"
+msgstr ""
+
+#: core/gui/pie_chart.py:33
+msgid "Others"
+msgstr ""
+
+#: core/gui/profit_view.py:15
+msgid "Profit and Loss from {start_date} to {end_date}"
+msgstr ""
+
+#: core/gui/report.py:191
+msgid "Total "
+msgstr ""
+
+#: core/gui/report.py:211
+msgid "TOTAL "
+msgstr ""
+
+#: core/gui/report.py:253
+msgid "The account '{0}' already exists."
+msgstr ""
+
+#: core/gui/schedule_panel.py:24
+msgid "day"
+msgstr ""
+
+#: core/gui/schedule_panel.py:25
+msgid "week"
+msgstr ""
+
+#: core/gui/schedule_panel.py:26 core/gui/schedule_panel.py:28
+#: core/gui/schedule_panel.py:29
+msgid "month"
+msgstr ""
+
+#: core/gui/schedule_panel.py:27
+msgid "year"
+msgstr ""
+
+#: core/gui/schedule_panel.py:33
+msgid "days"
+msgstr ""
+
+#: core/gui/schedule_panel.py:34
+msgid "weeks"
+msgstr ""
+
+#: core/gui/schedule_panel.py:35 core/gui/schedule_panel.py:37
+#: core/gui/schedule_panel.py:38
+msgid "months"
+msgstr ""
+
+#: core/gui/schedule_panel.py:36
+msgid "years"
+msgstr ""
+
+#: core/gui/schedule_table.py:82 core/gui/schedule_table.py:84
+#: core/gui/transaction_print.py:24 core/gui/transaction_table.py:156
+#: core/gui/transaction_table.py:159
+msgid "Unassigned"
+msgstr ""
+
+#: core/gui/schedule_view.py:16
+msgid "Schedules from {start_date} to {end_date}"
+msgstr ""
+
+#: core/gui/transaction_view.py:19
+msgid "Transactions from {start_date} to {end_date}"
+msgstr ""
+
+#: core/gui/transaction_view.py:49
+msgid "{0} out of {1} selected. Amount: {2}"
+msgstr ""
+
+#: core/loader/csv.py:110
+msgid "The Date column has been set on a column that doesn't contain dates."
+msgstr ""
+
+#: core/loader/csv.py:123
+msgid "The Amount column has been set on a column that doesn't contain amounts."
+msgstr ""
+
+#: core/loader/csv.py:142
+msgid "The Date and Amount columns must be set."
+msgstr ""
+
+#: core/model/date.py:143
+msgid "Q{0} {1}"
+msgstr ""
+
+#: core/model/date.py:188
+msgid "{0} - Now"
+msgstr ""
+
+#: core/model/date.py:216
+msgid "Running year ({0} - {1})"
+msgstr ""
+
+#: core/model/date.py:230
+msgid "All Transactions"
+msgstr ""
+
+#: core/model/recurrence.py:94
+msgid "Daily"
+msgstr ""
+
+#: core/model/recurrence.py:95
+msgid "Weekly"
+msgstr ""
+
+#: core/model/recurrence.py:96
+msgid "Monthly"
+msgstr ""
+
+#: core/model/recurrence.py:97
+msgid "Yearly"
+msgstr ""
+
+#: core/model/recurrence.py:114
+msgid "fifth"
+msgstr ""
+
+#: core/model/recurrence.py:114
+msgid "first"
+msgstr ""
+
+#: core/model/recurrence.py:114
+msgid "fourth"
+msgstr ""
+
+#: core/model/recurrence.py:114
+msgid "second"
+msgstr ""
+
+#: core/model/recurrence.py:114
+msgid "third"
+msgstr ""
+
+#: core/model/recurrence.py:115
+msgid "Every %s %s of the month"
+msgstr ""
+
+#: core/model/recurrence.py:118
+msgid "Every last %s of the month"
+msgstr ""
+

@@ -16,8 +16,9 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
-from hscommon.build import (print_and_do, copy_packages, build_cocoa_localization,
-    build_all_qt_locs, move_all)
+from hscommon.build import (print_and_do, copy_packages, build_all_qt_locs, build_all_cocoa_locs,
+    move_all)
+from hscommon import loc
 
 def parse_args():
     parser = ArgumentParser()
@@ -27,17 +28,10 @@ def parse_args():
         help="Build only the help file")
     parser.add_argument('--loc', action='store_true', dest='loc',
         help="Build only localization")
+    parser.add_argument('--updatepot', action='store_true', dest='updatepot',
+        help="Generate .pot files from source code.")
     args = parser.parse_args()
     return args
-
-def build_all_cocoa_locs(basedir):
-    locs = [name for name in os.listdir(basedir) if name.endswith('.lproj')]
-    locs.remove('en.lproj')
-    model_path = op.join(basedir, 'en.lproj')
-    for loc in locs:
-        loc_path = op.join(basedir, loc)
-        print("Building {0} localizations".format(loc_path))
-        build_cocoa_localization(model_path, loc_path)
 
 def build_cocoa(dev):
     from pluginbuilder import build_plugin
@@ -112,6 +106,22 @@ def build_localizations(ui):
         print("Building .ts files")
         build_all_qt_locs(op.join('qt', 'lang'), extradirs=[op.join('qtlib', 'lang')])
 
+def build_updatepot():
+    print("Building .pot files from source files")
+    print("Building core.pot")
+    loc.generate_pot(['core'], op.join('locale', 'core.pot'), ['tr'])
+    print("Building columns.pot")
+    loc.generate_pot(['core'], op.join('locale', 'columns.pot'), ['trcol'])
+    print("Building ui.pot")
+    loc.generate_pot(['qt'], op.join('locale', 'ui.pot'), ['tr'])
+    print("Building hscommon.pot")
+    loc.generate_pot(['hscommon'], op.join('hscommon', 'locale', 'hscommon.pot'), ['tr'])
+    print("Building qtlib.pot")
+    loc.generate_pot(['qtlib'], op.join('qtlib', 'locale', 'qtlib.pot'), ['tr'])
+    print("Enhancing ui.pot with Cocoa's strings files")
+    loc.allstrings2pot(op.join('cocoa', 'en.lproj'), op.join('locale', 'ui.pot'),
+        excludes={'core', 'message'})
+
 def build_ext():
     print("Building C extensions")
     exts = []
@@ -148,6 +158,8 @@ def main():
         build_help(dev)
     elif args.loc:
         build_localizations(ui)
+    elif args.updatepot:
+        build_updatepot()
     else:
         build_normal(ui, dev)
 
