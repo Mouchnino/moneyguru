@@ -17,6 +17,8 @@ Liste aller direkten sowie indirekten Personen / Projekte, die einen Beitrag gel
 
 | **Aleš Nehyba, Czech localization**
 
+| **Arnold Huzen, Dutch localization**
+
 | **Python, programming language** (`Website <http://www.python.org>`__)
 | Die beste der Besten
 

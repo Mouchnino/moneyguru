@@ -60,10 +60,6 @@
 		CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE44BA721207045300F4BAE9 /* CashculatorView.xib */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
 		CE4B8C120E656DB70017432D /* help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* help */; };
-		CE4C7EC614477DC500B749E8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679511D10E1E00EB0222 /* MainMenu.xib */; };
-		CE4C7EC714477DC500B749E8 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679711D10E1E00EB0222 /* MainWindow.xib */; };
-		CE4C7EC814477DC500B749E8 /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */; };
-		CE4C7EC914477DC500B749E8 /* BalanceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3677F11D10E1E00EB0222 /* BalanceSheet.xib */; };
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
 		CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4FAC9C1451B34D00114555 /* columns_16.png */; };
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
@@ -396,6 +392,37 @@
 		CE6D380F0F93648E00FA8460 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
 		CE6D38100F93648E00FA8460 /* ValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValueTransformers.h; path = ../cocoalib/ValueTransformers.h; sourceTree = SOURCE_ROOT; };
 		CE6D38110F93648E00FA8460 /* ValueTransformers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValueTransformers.m; path = ../cocoalib/ValueTransformers.m; sourceTree = SOURCE_ROOT; };
+		CE6D509C147EC66E00FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE6D509F147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/AccountPanel.xib; sourceTree = "<group>"; };
+		CE6D50A0147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/AccountReassignPanel.xib; sourceTree = "<group>"; };
+		CE6D50A1147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
+		CE6D50A2147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
+		CE6D50A3147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/BudgetTable.xib; sourceTree = "<group>"; };
+		CE6D50A4147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CashculatorView.xib; sourceTree = "<group>"; };
+		CE6D50A5147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
+		CE6D50A6147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
+		CE6D50A7147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CustomDateRangePanel.xib; sourceTree = "<group>"; };
+		CE6D50A8147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
+		CE6D50A9147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/DocProps.xib; sourceTree = "<group>"; };
+		CE6D50AA147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/EntryTable.xib; sourceTree = "<group>"; };
+		CE6D50AB147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/ExportPanel.xib; sourceTree = "<group>"; };
+		CE6D50AC147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
+		CE6D50AD147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/ImportWindow.xib; sourceTree = "<group>"; };
+		CE6D50AE147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/IncomeStatement.xib; sourceTree = "<group>"; };
+		CE6D50AF147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/Lookup.xib; sourceTree = "<group>"; };
+		CE6D50B0147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		CE6D50B1147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		CE6D50B2147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/MassEditingPanel.xib; sourceTree = "<group>"; };
+		CE6D50B3147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/NewTabView.xib; sourceTree = "<group>"; };
+		CE6D50B4147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/RecurrenceScopeDialog.xib; sourceTree = "<group>"; };
+		CE6D50B5147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/SchedulePanel.xib; sourceTree = "<group>"; };
+		CE6D50B6147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/ScheduleTable.xib; sourceTree = "<group>"; };
+		CE6D50B7147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/SearchField.xib; sourceTree = "<group>"; };
+		CE6D50B8147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/TransactionPanel.xib; sourceTree = "<group>"; };
+		CE6D50B9147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/TransactionTable.xib; sourceTree = "<group>"; };
+		CE6D50D5147EC6D900FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = ../nl.lproj/about.xib; sourceTree = "<group>"; };
+		CE6D50D6147EC6D900FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = ../nl.lproj/ErrorReportWindow.xib; sourceTree = "<group>"; };
+		CE6D50D7147EC6D900FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = ../nl.lproj/FairwareReminder.xib; sourceTree = "<group>"; };
 		CE6E000D0F4ECD0B00FE7628 /* MGChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChartView.h; sourceTree = "<group>"; };
 		CE6E000E0F4ECD0B00FE7628 /* MGChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChartView.m; sourceTree = "<group>"; };
 		CE6E00140F4ED61800FE7628 /* MGGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraph.h; sourceTree = "<group>"; };
@@ -1469,6 +1496,7 @@
 				de,
 				it,
 				cs,
+				nl,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* moneyguru */;
 			projectDirPath = "";
@@ -1576,10 +1604,6 @@
 				CE7869F0135D920500221226 /* about.xib in Resources */,
 				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
 				CED4DB05144767C20041601F /* DocProps.xib in Resources */,
-				CE4C7EC614477DC500B749E8 /* MainMenu.xib in Resources */,
-				CE4C7EC714477DC500B749E8 /* MainWindow.xib in Resources */,
-				CE4C7EC814477DC500B749E8 /* DateRangeSelector.xib in Resources */,
-				CE4C7EC914477DC500B749E8 /* BalanceSheet.xib in Resources */,
 				CE092729145061F3004BD916 /* graph_visibility_off_16.png in Resources */,
 				CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */,
 				CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */,
@@ -1729,6 +1753,7 @@
 				CE44BAB912070BB200F4BAE9 /* fr */,
 				CEFF4EB71303FAFB009706BE /* it */,
 				CECEF784144219E700EBF1C4 /* cs */,
+				CE6D50A4147EC6B500FCF8CD /* nl */,
 			);
 			name = CashculatorView.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1741,6 +1766,7 @@
 				CEFFC6AA12B0E9FB003739F6 /* de */,
 				CEFF4EBD1303FAFB009706BE /* it */,
 				CECEF78A144219E700EBF1C4 /* cs */,
+				CE6D50AB147EC6B500FCF8CD /* nl */,
 			);
 			name = ExportPanel.xib;
 			sourceTree = "<group>";
@@ -1753,6 +1779,7 @@
 				CE6E77AD12538B2E00A1754B /* de */,
 				CEFF4ED01303FBBA009706BE /* it */,
 				CECEF7C014421A7A00EBF1C4 /* cs */,
+				CE6D50D7147EC6D900FCF8CD /* nl */,
 			);
 			name = FairwareReminder.xib;
 			path = ../cocoalib/xib;
@@ -1766,6 +1793,7 @@
 				CE7869F4135D922000221226 /* de */,
 				CE7869F6135D922D00221226 /* it */,
 				CECEF7BE14421A7A00EBF1C4 /* cs */,
+				CE6D50D5147EC6D900FCF8CD /* nl */,
 			);
 			name = about.xib;
 			path = ../cocoalib/xib;
@@ -1779,6 +1807,7 @@
 				CE7869F5135D922000221226 /* de */,
 				CE7869F7135D922D00221226 /* it */,
 				CECEF7BF14421A7A00EBF1C4 /* cs */,
+				CE6D50D6147EC6D900FCF8CD /* nl */,
 			);
 			name = ErrorReportWindow.xib;
 			path = ../cocoalib/xib;
@@ -1792,6 +1821,7 @@
 				CEB6020E123931F9002218CF /* fr */,
 				CEFF4EBE1303FAFB009706BE /* it */,
 				CECEF78B144219E700EBF1C4 /* cs */,
+				CE6D50AC147EC6B500FCF8CD /* nl */,
 			);
 			name = GeneralLedger.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1804,6 +1834,7 @@
 				CE80D95211DA3A0C007B8E05 /* de */,
 				CEFF4EB21303FAFB009706BE /* it */,
 				CECEF77F144219E700EBF1C4 /* cs */,
+				CE6D509F147EC6B500FCF8CD /* nl */,
 			);
 			name = AccountPanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1816,6 +1847,7 @@
 				CE80D95711DA3A52007B8E05 /* de */,
 				CEFF4EB31303FAFB009706BE /* it */,
 				CECEF780144219E700EBF1C4 /* cs */,
+				CE6D50A0147EC6B500FCF8CD /* nl */,
 			);
 			name = AccountReassignPanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1828,6 +1860,7 @@
 				CE80D94B11DA39BB007B8E05 /* de */,
 				CEFF4EB41303FAFB009706BE /* it */,
 				CECEF781144219E700EBF1C4 /* cs */,
+				CE6D50A1147EC6B500FCF8CD /* nl */,
 			);
 			name = BalanceSheet.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1840,6 +1873,7 @@
 				CE80D95611DA3A36007B8E05 /* de */,
 				CEFF4EB51303FAFB009706BE /* it */,
 				CECEF782144219E700EBF1C4 /* cs */,
+				CE6D50A2147EC6B500FCF8CD /* nl */,
 			);
 			name = BudgetPanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1852,6 +1886,7 @@
 				CE80D95011DA39F6007B8E05 /* de */,
 				CEFF4EB61303FAFB009706BE /* it */,
 				CECEF783144219E700EBF1C4 /* cs */,
+				CE6D50A3147EC6B500FCF8CD /* nl */,
 			);
 			name = BudgetTable.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1864,6 +1899,7 @@
 				CE80D95811DA3A52007B8E05 /* de */,
 				CEFF4EB81303FAFB009706BE /* it */,
 				CECEF785144219E700EBF1C4 /* cs */,
+				CE6D50A5147EC6B500FCF8CD /* nl */,
 			);
 			name = CSVImportOptions.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1876,6 +1912,7 @@
 				CE80D95911DA3A52007B8E05 /* de */,
 				CEFF4EB91303FAFB009706BE /* it */,
 				CECEF786144219E700EBF1C4 /* cs */,
+				CE6D50A6147EC6B500FCF8CD /* nl */,
 			);
 			name = CSVLayoutName.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1888,6 +1925,7 @@
 				CE80D95A11DA3A52007B8E05 /* de */,
 				CEFF4EBA1303FAFB009706BE /* it */,
 				CECEF787144219E700EBF1C4 /* cs */,
+				CE6D50A7147EC6B500FCF8CD /* nl */,
 			);
 			name = CustomDateRangePanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1900,6 +1938,7 @@
 				CE80D94A11DA39AA007B8E05 /* de */,
 				CEFF4EBB1303FAFB009706BE /* it */,
 				CECEF788144219E700EBF1C4 /* cs */,
+				CE6D50A8147EC6B500FCF8CD /* nl */,
 			);
 			name = DateRangeSelector.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1912,6 +1951,7 @@
 				CE80D94E11DA39DD007B8E05 /* de */,
 				CEFF4EBC1303FAFB009706BE /* it */,
 				CECEF789144219E700EBF1C4 /* cs */,
+				CE6D50AA147EC6B500FCF8CD /* nl */,
 			);
 			name = EntryTable.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1924,6 +1964,7 @@
 				CE80D95B11DA3A52007B8E05 /* de */,
 				CEFF4EBF1303FAFB009706BE /* it */,
 				CECEF78C144219E700EBF1C4 /* cs */,
+				CE6D50AD147EC6B500FCF8CD /* nl */,
 			);
 			name = ImportWindow.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1936,6 +1977,7 @@
 				CE80D94C11DA39C5007B8E05 /* de */,
 				CEFF4EC01303FAFB009706BE /* it */,
 				CECEF78D144219E700EBF1C4 /* cs */,
+				CE6D50AE147EC6B500FCF8CD /* nl */,
 			);
 			name = IncomeStatement.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1948,6 +1990,7 @@
 				CE80D95C11DA3A52007B8E05 /* de */,
 				CEFF4EC11303FAFB009706BE /* it */,
 				CECEF78E144219E700EBF1C4 /* cs */,
+				CE6D50AF147EC6B500FCF8CD /* nl */,
 			);
 			name = Lookup.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1960,6 +2003,7 @@
 				CE80D93C11DA3964007B8E05 /* de */,
 				CEFF4EC21303FAFB009706BE /* it */,
 				CECEF78F144219E700EBF1C4 /* cs */,
+				CE6D50B0147EC6B500FCF8CD /* nl */,
 			);
 			name = MainMenu.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1972,6 +2016,7 @@
 				CE80D94911DA399E007B8E05 /* de */,
 				CEFF4EC31303FAFB009706BE /* it */,
 				CECEF790144219E700EBF1C4 /* cs */,
+				CE6D50B1147EC6B500FCF8CD /* nl */,
 			);
 			name = MainWindow.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1984,6 +2029,7 @@
 				CE80D95411DA3A1E007B8E05 /* de */,
 				CEFF4EC41303FAFB009706BE /* it */,
 				CECEF791144219E700EBF1C4 /* cs */,
+				CE6D50B2147EC6B500FCF8CD /* nl */,
 			);
 			name = MassEditingPanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -1996,6 +2042,7 @@
 				CE80D95111DA3A00007B8E05 /* de */,
 				CEFF4EC51303FAFB009706BE /* it */,
 				CECEF792144219E700EBF1C4 /* cs */,
+				CE6D50B3147EC6B500FCF8CD /* nl */,
 			);
 			name = NewTabView.xib;
 			sourceTree = SOURCE_ROOT;
@@ -2008,6 +2055,7 @@
 				CE80D95D11DA3A52007B8E05 /* de */,
 				CEFF4EC61303FAFB009706BE /* it */,
 				CECEF793144219E700EBF1C4 /* cs */,
+				CE6D50B4147EC6B500FCF8CD /* nl */,
 			);
 			name = RecurrenceScopeDialog.xib;
 			sourceTree = SOURCE_ROOT;
@@ -2020,6 +2068,7 @@
 				CE80D95511DA3A28007B8E05 /* de */,
 				CEFF4EC71303FAFB009706BE /* it */,
 				CECEF795144219E700EBF1C4 /* cs */,
+				CE6D50B5147EC6B500FCF8CD /* nl */,
 			);
 			name = SchedulePanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -2032,6 +2081,7 @@
 				CE80D94F11DA39ED007B8E05 /* de */,
 				CEFF4EC81303FAFB009706BE /* it */,
 				CECEF796144219E700EBF1C4 /* cs */,
+				CE6D50B6147EC6B500FCF8CD /* nl */,
 			);
 			name = ScheduleTable.xib;
 			sourceTree = SOURCE_ROOT;
@@ -2044,6 +2094,7 @@
 				CE80D95311DA3A15007B8E05 /* de */,
 				CEFF4ECA1303FAFB009706BE /* it */,
 				CECEF797144219E700EBF1C4 /* cs */,
+				CE6D50B8147EC6B500FCF8CD /* nl */,
 			);
 			name = TransactionPanel.xib;
 			sourceTree = SOURCE_ROOT;
@@ -2056,6 +2107,7 @@
 				CE80D94D11DA39D2007B8E05 /* de */,
 				CEFF4ECB1303FAFB009706BE /* it */,
 				CECEF798144219E700EBF1C4 /* cs */,
+				CE6D50B9147EC6B500FCF8CD /* nl */,
 			);
 			name = TransactionTable.xib;
 			sourceTree = SOURCE_ROOT;
@@ -2068,6 +2120,7 @@
 				CE80D95E11DA3A52007B8E05 /* de */,
 				CEFF4EC91303FAFB009706BE /* it */,
 				CECEF794144219E700EBF1C4 /* cs */,
+				CE6D50B7147EC6B500FCF8CD /* nl */,
 			);
 			name = SearchField.xib;
 			sourceTree = "<group>";
@@ -2080,6 +2133,7 @@
 				CE4C7EC314477DC500B749E8 /* de */,
 				CE4C7EC414477DC500B749E8 /* fr */,
 				CE4C7EC514477DC500B749E8 /* it */,
+				CE6D50A9147EC6B500FCF8CD /* nl */,
 			);
 			name = DocProps.xib;
 			sourceTree = "<group>";
@@ -2092,6 +2146,7 @@
 				CEFEA33511E1DEC30034AB46 /* de */,
 				CED54817130C1E99008387F1 /* it */,
 				CECEF7B814421A0400EBF1C4 /* cs */,
+				CE6D509C147EC66E00FCF8CD /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = SOURCE_ROOT;

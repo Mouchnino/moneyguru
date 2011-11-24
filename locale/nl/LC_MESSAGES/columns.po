@@ -1,0 +1,138 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+#: core/gui/balance_sheet.py:21 core/gui/budget_table.py:25
+#: core/gui/export_account_table.py:18 core/gui/income_statement.py:17
+#: core/gui/split_table.py:17
+msgid "Account"
+msgstr "Rekening"
+
+#: core/gui/balance_sheet.py:22 core/gui/income_statement.py:18
+msgid "Account #"
+msgstr "Rekening #"
+
+#: core/gui/balance_sheet.py:23
+msgid "End"
+msgstr "Einde"
+
+#: core/gui/balance_sheet.py:24
+msgid "Start"
+msgstr "Begin"
+
+#: core/gui/balance_sheet.py:25 core/gui/income_statement.py:21
+msgid "Change"
+msgstr "Wijziging"
+
+#: core/gui/balance_sheet.py:26 core/gui/income_statement.py:22
+msgid "Change %"
+msgstr "Wijziging %"
+
+#: core/gui/balance_sheet.py:27 core/gui/income_statement.py:23
+msgid "Budgeted"
+msgstr "Gebudgetteerd"
+
+#: core/gui/budget_table.py:21 core/gui/schedule_table.py:21
+msgid "Start Date"
+msgstr "Begindatum"
+
+#: core/gui/budget_table.py:22 core/gui/schedule_table.py:22
+msgid "Stop Date"
+msgstr "Einddatum"
+
+#: core/gui/budget_table.py:23 core/gui/schedule_table.py:23
+msgid "Repeat Type"
+msgstr "Type periode"
+
+#: core/gui/budget_table.py:24 core/gui/schedule_table.py:24
+msgid "Interval"
+msgstr "Interval"
+
+#: core/gui/budget_table.py:26
+msgid "Target"
+msgstr "Doel"
+
+#: core/gui/budget_table.py:27 core/gui/import_table.py:21
+#: core/gui/import_table.py:28 core/gui/schedule_table.py:30
+#: core/gui/transaction_table.py:32
+msgid "Amount"
+msgstr "Bedrag"
+
+#: core/gui/entry_table.py:38 core/gui/general_ledger_table.py:37
+#: core/gui/import_table.py:19 core/gui/import_table.py:23
+#: core/gui/transaction_table.py:26
+msgid "Date"
+msgstr "Datum"
+
+#: core/gui/entry_table.py:39 core/gui/general_ledger_table.py:38
+msgid "Reconciliation Date"
+msgstr "Vereffeningsdatum"
+
+#: core/gui/entry_table.py:40 core/gui/general_ledger_table.py:39
+#: core/gui/import_table.py:26 core/gui/schedule_table.py:27
+#: core/gui/transaction_table.py:27
+msgid "Check #"
+msgstr "Cheque #"
+
+#: core/gui/entry_table.py:41 core/gui/general_ledger_table.py:40
+#: core/gui/import_table.py:20 core/gui/import_table.py:24
+#: core/gui/schedule_table.py:25 core/gui/transaction_table.py:28
+msgid "Description"
+msgstr "Omschrijving"
+
+#: core/gui/entry_table.py:42 core/gui/general_ledger_table.py:41
+#: core/gui/import_table.py:25 core/gui/schedule_table.py:26
+#: core/gui/transaction_table.py:29
+msgid "Payee"
+msgstr "Ontvanger"
+
+#: core/gui/entry_table.py:43 core/gui/general_ledger_table.py:42
+#: core/gui/import_table.py:27
+msgid "Transfer"
+msgstr "Tegenrekening"
+
+#: core/gui/entry_table.py:44
+msgid "Increase"
+msgstr "Bij"
+
+#: core/gui/entry_table.py:45
+msgid "Decrease"
+msgstr "Af"
+
+#: core/gui/entry_table.py:46 core/gui/general_ledger_table.py:43
+#: core/gui/split_table.py:19
+msgid "Debit"
+msgstr "Debet"
+
+#: core/gui/entry_table.py:47 core/gui/general_ledger_table.py:44
+#: core/gui/split_table.py:20
+msgid "Credit"
+msgstr "Credit"
+
+#: core/gui/entry_table.py:48 core/gui/general_ledger_table.py:45
+msgid "Balance"
+msgstr "Saldo"
+
+#: core/gui/export_account_table.py:19
+msgid "Export"
+msgstr "Export"
+
+#: core/gui/income_statement.py:19
+msgid "Current"
+msgstr "Huidig"
+
+#: core/gui/income_statement.py:20
+msgid "Last"
+msgstr "Vorig"
+
+#: core/gui/schedule_table.py:28 core/gui/transaction_table.py:30
+msgid "From"
+msgstr "Van"
+
+#: core/gui/schedule_table.py:29 core/gui/transaction_table.py:31
+msgid "To"
+msgstr "Tot"
+
+#: core/gui/split_table.py:18
+msgid "Memo"
+msgstr "Memo"

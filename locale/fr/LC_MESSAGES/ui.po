@@ -728,35 +728,35 @@ msgstr "Italien"
 msgid "Czech"
 msgstr "Tchèque"
 
-#: qt/controller/preferences_panel.py:40
+#: qt/controller/preferences_panel.py:41
 msgid "Preferences"
 msgstr "Préférences"
 
-#: qt/controller/preferences_panel.py:53 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:54 cocoa/en.lproj/MainMenu.strings:0
 msgid "minute(s) (0 for none)"
 msgstr "minute(s) (0 = inactif)"
 
-#: qt/controller/preferences_panel.py:55 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:56 cocoa/en.lproj/MainMenu.strings:0
 msgid "Auto-save interval:"
 msgstr "Intervalle sauvegarde auto.:"
 
-#: qt/controller/preferences_panel.py:59
+#: qt/controller/preferences_panel.py:60
 msgid "Date Format:"
 msgstr "Format de date:"
 
-#: qt/controller/preferences_panel.py:69
+#: qt/controller/preferences_panel.py:70
 msgid "Language:"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:72 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:73 cocoa/en.lproj/MainMenu.strings:0
 msgid "Show scope dialog when modifying a scheduled transaction"
 msgstr "Confirmer la portée des changements aux récurrences"
 
-#: qt/controller/preferences_panel.py:74 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:75 cocoa/en.lproj/MainMenu.strings:0
 msgid "Automatically place decimals when typing"
 msgstr "Placement automatique de décimale"
 
-#: qt/controller/preferences_panel.py:112
+#: qt/controller/preferences_panel.py:113
 msgid "moneyGuru has to restart for these changes to take effect"
 msgstr ""
 
@@ -1279,3 +1279,7 @@ msgstr ""
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Multi-Currency Balance"
 msgstr "Balancer les devises"
+
+#: qt/controller/preferences_panel.py:26
+msgid "Dutch"
+msgstr ""

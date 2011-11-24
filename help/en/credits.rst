@@ -17,6 +17,8 @@ Below is the list of direct or indirect contributors to moneyGuru. Thanks!
 
 | **Aleš Nehyba, Czech localization**
 
+| **Arnold Huzen, Dutch localization**
+
 | **Python, Programming language** (`Website <http://www.python.org>`__)
 | The bestest of the bests
 

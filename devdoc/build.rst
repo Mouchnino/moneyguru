@@ -13,6 +13,7 @@ General dependencies
 - Python 3.2 (http://www.python.org)
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
 - Sphinx 1.0.8 (http://sphinx.pocoo.org/)
+- polib 0.7.0 (http://bitbucket.org/izi/polib)
 - pytest 2.0.0, to run unit tests. (http://pytest.org/)
 - pytest-monkeyplus, a pytest plugin. (http://bitbucket.org/hsoft/pytest-monkeyplus)
 

@@ -16,13 +16,14 @@ from core.model.date import clean_format
 
 tr = trget('ui')
 
-SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it', 'cs']
+SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it', 'cs', 'nl']
 LANG2NAME = {
     'en': tr('English'),
     'fr': tr('French'),
     'de': tr('German'),
     'it': tr('Italian'),
     'cs': tr('Czech'),
+    'nl': tr('Dutch'),
 }
 
 class PreferencesPanel(QDialog):

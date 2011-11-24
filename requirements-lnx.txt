@@ -1,3 +1,4 @@
 sgmllib3k>=1.0.0
+polib>=0.7.0
 pytest>=2.0.0
 pytest-monkeyplus>=1.0.0

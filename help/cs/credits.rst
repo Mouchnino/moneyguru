@@ -17,6 +17,8 @@ Následuje seznam přímých i nepřímých spolupracovníků, kteří se podíl
 
 | **Aleš Nehyba, Czech localization**
 
+| **Arnold Huzen, Dutch localization**
+
 | **Programovací jazyk Python** (`Website <http://www.python.org>`__)
 | Úplně ze všech nejlepčejší
 
