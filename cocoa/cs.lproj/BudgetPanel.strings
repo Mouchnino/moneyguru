@@ -20,9 +20,6 @@
 /* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
 "234.title" = "Každých";
 
-/* Class = "NSTextFieldCell"; title = "Days"; ObjectID = "239"; */
-"239.title" = "Dnů";
-
 /* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
 "279.title" = "Dokdy";
 
@@ -33,7 +30,7 @@
 "304.title" = "Cíl";
 
 /* Class = "NSTextFieldCell"; title = "Amount"; ObjectID = "308"; */
-"308.title" = "Suma";
+"308.title" = "Částka";
 
 /* Class = "NSTextFieldCell"; title = "Notes"; ObjectID = "314"; */
 "314.title" = "Poznámky";

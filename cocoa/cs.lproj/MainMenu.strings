@@ -11,15 +11,6 @@
 /* Class = "NSMenu"; title = "Window"; ObjectID = "24"; */
 "24.title" = "Okno";
 
-/* Class = "NSMenu"; title = "MainMenu"; ObjectID = "29"; */
-"29.title" = "MainMenu";
-
-/* Class = "NSMenuItem"; title = "moneyGuru"; ObjectID = "56"; */
-"56.title" = "moneyGuru";
-
-/* Class = "NSMenu"; title = "moneyGuru"; ObjectID = "57"; */
-"57.title" = "moneyGuru";
-
 /* Class = "NSMenuItem"; title = "About moneyGuru"; ObjectID = "58"; */
 "58.title" = "O aplikaci";
 
@@ -37,9 +28,6 @@
 
 /* Class = "NSMenu"; title = "File"; ObjectID = "81"; */
 "81.title" = "Soubor";
-
-/* Class = "NSMenuItem"; title = "New <item>"; ObjectID = "82"; */
-"82.title" = "Nový <item>";
 
 /* Class = "NSMenuItem"; title = "File"; ObjectID = "83"; */
 "83.title" = "Soubor";
@@ -165,7 +153,7 @@
 "1148.title" = "Další časové rozmezí";
 
 /* Class = "NSMenuItem"; title = "Quarter"; ObjectID = "1149"; */
-"1149.title" = "Čvrtletí";
+"1149.title" = "Čtvrtletí";
 
 /* Class = "NSMenuItem"; title = "Year"; ObjectID = "1150"; */
 "1150.title" = "Rok";
@@ -274,15 +262,6 @@
 
 /* Class = "NSMenuItem"; title = "Lookup Completion..."; ObjectID = "1429"; */
 "1429.title" = "Vyhledání doplnění...";
-
-/* Class = "NSMenuItem"; title = "Custom1"; ObjectID = "1431"; */
-"1431.title" = "Vlastní1";
-
-/* Class = "NSMenuItem"; title = "Custom2"; ObjectID = "1433"; */
-"1433.title" = "Vlastní2";
-
-/* Class = "NSMenuItem"; title = "Custom3"; ObjectID = "1435"; */
-"1435.title" = "Vlastní3";
 
 /* Class = "NSMenuItem"; title = "Close Window"; ObjectID = "1443"; */
 "1443.title" = "Zavřít okno";

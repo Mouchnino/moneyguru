@@ -17,7 +17,7 @@
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "27"; */
 "27.title" = "Annulla";
 
-/* Class = "NSTextFieldCell"; title = "Export Format:"; ObjectID = "47"; */
+/* Class = "NSTextFieldCell"; title = "Export format:"; ObjectID = "47"; */
 "47.title" = "Formato di Esportazione:";
 
 /* Class = "NSTextFieldCell"; title = "Export scope:"; ObjectID = "52"; */

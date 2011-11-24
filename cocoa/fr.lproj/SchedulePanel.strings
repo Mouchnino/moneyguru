@@ -1,8 +1,12 @@
+﻿
 /* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "4"; */
 "4.title" = "Description";
 
 /* Class = "NSTextFieldCell"; title = "Start Date"; ObjectID = "8"; */
 "8.title" = "Date début";
+
+/* Class = "NSPanel"; title = "Schedule Info"; ObjectID = "166"; */
+"166.title" = "Détails de récurrence";
 
 /* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "196"; */
 "196.title" = "Tiers";
@@ -23,19 +27,25 @@
 "226.title" = "Répéter";
 
 /* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
-"234.title" = "Tous les";
+"234.title" = "Tout les";
 
 /* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
 "279.title" = "Date fin";
 
-/* Class = "NSTextFieldCell"; title = "Tranfers"; ObjectID = "293"; */
-"293.title" = "Tranferts";
+/* Class = "NSTextFieldCell"; title = "Transfers"; ObjectID = "293"; */
+"293.title" = "Transferts";
 
 /* Class = "NSTabViewItem"; label = "Info"; ObjectID = "301"; */
 "301.label" = "Détails";
 
 /* Class = "NSTextFieldCell"; title = "You can navigate tabs with ⌘⌥→ and ⌘⌥←"; ObjectID = "313"; */
 "313.title" = "L'onglet actif se change avec ⌘⌥→ et ⌘⌥←";
+
+/* Class = "NSButtonCell"; title = "Next Tab"; ObjectID = "319"; */
+"319.title" = "Onglet suivant";
+
+/* Class = "NSButtonCell"; title = "Prev Tab"; ObjectID = "320"; */
+"320.title" = "Prev Tab";
 
 /* Class = "NSTabViewItem"; label = "Notes"; ObjectID = "323"; */
 "323.label" = "Notes";

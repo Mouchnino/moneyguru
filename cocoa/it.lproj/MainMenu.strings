@@ -11,15 +11,6 @@
 /* Class = "NSMenu"; title = "Window"; ObjectID = "24"; */
 "24.title" = "Finestra";
 
-/* Class = "NSMenu"; title = "MainMenu"; ObjectID = "29"; */
-"29.title" = "Menu Principale";
-
-/* Class = "NSMenuItem"; title = "moneyGuru"; ObjectID = "56"; */
-"56.title" = "moneyGuru";
-
-/* Class = "NSMenu"; title = "moneyGuru"; ObjectID = "57"; */
-"57.title" = "moneyGuru";
-
 /* Class = "NSMenuItem"; title = "About moneyGuru"; ObjectID = "58"; */
 "58.title" = "Informazioni su moneyGuru";
 
@@ -37,9 +28,6 @@
 
 /* Class = "NSMenu"; title = "File"; ObjectID = "81"; */
 "81.title" = "File";
-
-/* Class = "NSMenuItem"; title = "New <item>"; ObjectID = "82"; */
-"82.title" = "Nuovo <item>";
 
 /* Class = "NSMenuItem"; title = "File"; ObjectID = "83"; */
 "83.title" = "File";
@@ -274,15 +262,6 @@
 
 /* Class = "NSMenuItem"; title = "Lookup Completion..."; ObjectID = "1429"; */
 "1429.title" = "Cerca completamento…";
-
-/* Class = "NSMenuItem"; title = "Custom1"; ObjectID = "1431"; */
-"1431.title" = "Personalizzato1";
-
-/* Class = "NSMenuItem"; title = "Custom2"; ObjectID = "1433"; */
-"1433.title" = "Personalizzato2";
-
-/* Class = "NSMenuItem"; title = "Custom3"; ObjectID = "1435"; */
-"1435.title" = "Personalizzato3";
 
 /* Class = "NSMenuItem"; title = "Close Window"; ObjectID = "1443"; */
 "1443.title" = "Chiudi Finestra";

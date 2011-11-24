@@ -6,7 +6,7 @@
 "6.title" = "Which accounts do you want to export?";
 
 /* Class = "NSButtonCell"; title = "All"; ObjectID = "8"; */
-"8.title" = "All";
+"8.title" = "Alles";
 
 /* Class = "NSButtonCell"; title = "Selected"; ObjectID = "13"; */
 "13.title" = "Selected";
@@ -15,9 +15,9 @@
 "25.title" = "Export";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "27"; */
-"27.title" = "Cancel";
+"27.title" = "Abbrechen";
 
-/* Class = "NSTextFieldCell"; title = "Export Format:"; ObjectID = "47"; */
+/* Class = "NSTextFieldCell"; title = "Export format:"; ObjectID = "47"; */
 "47.title" = "Export Format:";
 
 /* Class = "NSTextFieldCell"; title = "Export scope:"; ObjectID = "52"; */

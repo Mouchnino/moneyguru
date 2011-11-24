@@ -2,20 +2,11 @@
 /* Class = "NSWindow"; title = "Import"; ObjectID = "1"; */
 "1.title" = "Import";
 
-/* Class = "NSTabViewItem"; label = "Tab"; ObjectID = "5"; */
-"5.label" = "Záložka";
-
 /* Class = "NSTextFieldCell"; title = "Target Account:"; ObjectID = "25"; */
 "25.title" = "Cílový účet:";
 
 /* Class = "NSMenuItem"; title = "< New Account >"; ObjectID = "29"; */
 "29.title" = "< Nový účet >";
-
-/* Class = "NSMenuItem"; title = "Foo"; ObjectID = "30"; */
-"30.title" = "Foo";
-
-/* Class = "NSMenuItem"; title = "Bar"; ObjectID = "31"; */
-"31.title" = "Bar";
 
 /* Class = "NSButtonCell"; title = "Import"; ObjectID = "42"; */
 "42.title" = "Import";

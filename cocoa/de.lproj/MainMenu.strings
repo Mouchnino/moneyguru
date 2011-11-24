@@ -21,7 +21,7 @@
 "73.title" = "Schließen";
 
 /* Class = "NSMenuItem"; title = "Save"; ObjectID = "75"; */
-"75.title" = "Sichern";
+"75.title" = "Speichern";
 
 /* Class = "NSMenuItem"; title = "Save As…"; ObjectID = "80"; */
 "80.title" = "Sichern unter…";
@@ -221,14 +221,11 @@
 /* Class = "NSTextFieldCell"; title = "Font size:"; ObjectID = "1330"; */
 "1330.title" = "Schriftgrad:";
 
-/* Class = "NSTextFieldCell"; title = "Printing Font size:"; ObjectID = "1454"; */
-"1454.title" = "Printing Font size:";
-
 /* Class = "NSMenuItem"; title = "Today's Date Range"; ObjectID = "1338"; */
 "1338.title" = "heutiger Zeitraum";
 
 /* Class = "NSMenuItem"; title = "Year to date"; ObjectID = "1340"; */
-"1340.title" = "Seit Jahresbeginn bis heute";
+"1340.title" = "Ab Jahresbeginn bis heute";
 
 /* Class = "NSMenuItem"; title = "Running year"; ObjectID = "1342"; */
 "1342.title" = "laufendes Jahr";
@@ -274,3 +271,6 @@
 
 /* Class = "NSMenuItem"; title = "Toggle Exclusion Status of Account"; ObjectID = "1449"; */
 "1449.title" = "Toggle Exclusion Status of Account";
+
+/* Class = "NSTextFieldCell"; title = "Printing Font size:"; ObjectID = "1454"; */
+"1454.title" = "Printing Font size:";

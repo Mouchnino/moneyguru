@@ -1,6 +1,6 @@
 
 /* Class = "NSButtonCell"; title = "Net Worth"; ObjectID = "5"; */
-"5.title" = "Patrimonio";
+"5.title" = "Patrimonio Netto";
 
 /* Class = "NSButtonCell"; title = "Profit & Loss"; ObjectID = "11"; */
 "11.title" = "Guadagno & Perdita";
@@ -9,10 +9,10 @@
 "15.title" = "Transazioni";
 
 /* Class = "NSButtonCell"; title = "Schedules"; ObjectID = "19"; */
-"19.title" = "Pianificazione";
+"19.title" = "Pianificazioni";
 
 /* Class = "NSButtonCell"; title = "Budgets"; ObjectID = "23"; */
-"23.title" = "Previsione";
+"23.title" = "Previsioni";
 
 /* Class = "NSTextFieldCell"; title = "Choose a view for this tab:"; ObjectID = "25"; */
 "25.title" = "Scegli una vista per questa scheda:";

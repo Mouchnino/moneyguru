@@ -3,7 +3,7 @@
 "5.title" = "Čisté jmění";
 
 /* Class = "NSButtonCell"; title = "Profit & Loss"; ObjectID = "11"; */
-"11.title" = "Zisky a ztráty";
+"11.title" = "Zisky & Ztráty";
 
 /* Class = "NSButtonCell"; title = "Transactions"; ObjectID = "15"; */
 "15.title" = "Transakce";

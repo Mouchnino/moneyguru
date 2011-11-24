@@ -63,10 +63,10 @@
 "81.title" = "Target:";
 
 /* Class = "NSMenuItem"; title = "Increase"; ObjectID = "83"; */
-"83.title" = "Aumento";
+"83.title" = "Incremento";
 
 /* Class = "NSMenuItem"; title = "Decrease"; ObjectID = "85"; */
-"85.title" = "Diminuzione";
+"85.title" = "Decremento";
 
 /* Class = "NSTextFieldCell"; title = "Delimiter:"; ObjectID = "90"; */
 "90.title" = "Delimitatore:";

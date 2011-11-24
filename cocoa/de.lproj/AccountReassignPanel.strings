@@ -1,3 +1,7 @@
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"1.title" = "Fenster";
+
 /* Class = "NSTextFieldCell"; title = "You're about to delete a non-empty account. Select an account to re-assign its transactions to."; ObjectID = "4"; */
 "4.title" = "Sie sind dabei ein nicht leeres Konto zu löschen. Wählen sie ein anderes Konto aus, um ihre Transaktionen dorthin zu übertragen.";
 

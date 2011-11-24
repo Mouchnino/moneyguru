@@ -23,7 +23,7 @@ Foire aux questions
 
 .. topic:: Comment déterminer la balance de départ d'un compte?
 
-    Créez une transaction "Balance de départ" avec une date précédent votre première entrée et laissez le Tranfert non-assigné.
+    Créez une transaction "Balance de départ" avec une date précédent votre première entrée et laissez le Transfert non-assigné.
 
 .. topic:: J'ai importé des transactions dans un compte mais la devise de ces transactions est erronée. Que faire?
 

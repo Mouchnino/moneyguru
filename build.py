@@ -16,8 +16,7 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
-from hscommon.build import (print_and_do, copy_packages, build_all_qt_locs, build_all_cocoa_locs,
-    move_all)
+from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, move_all)
 from hscommon import loc
 
 def parse_args():
@@ -30,6 +29,8 @@ def parse_args():
         help="Build only localization")
     parser.add_argument('--updatepot', action='store_true', dest='updatepot',
         help="Generate .pot files from source code.")
+    parser.add_argument('--mergepot', action='store_true', dest='mergepot',
+        help="Update all .po files based on .pot files.")
     args = parser.parse_args()
     return args
 
@@ -106,6 +107,17 @@ def build_localizations(ui):
         shutil.rmtree(op.join('build', 'locale'))
     shutil.copytree('locale', op.join('build', 'locale'), ignore=shutil.ignore_patterns('*.po', '*.pot'))
     if ui == 'cocoa':
+        print("Creating lproj folders based on .po files")
+        enlproj = op.join('cocoa', 'en.lproj')
+        for lang in loc.get_langs('locale'):
+            if lang == 'en':
+                continue
+            pofile = op.join('locale', lang, 'LC_MESSAGES', 'ui.po')
+            dest_lproj = op.join('cocoa', lang + '.lproj')
+            loc.po2allxibstrings(pofile, enlproj, dest_lproj)
+            loc.po2strings(pofile, op.join(enlproj, 'Localizable.strings'), op.join(dest_lproj, 'Localizable.strings'))
+            pofile = op.join('cocoalib', 'locale', lang, 'LC_MESSAGES', 'cocoalib.po')
+            loc.po2allxibstrings(pofile, op.join('cocoalib', 'en.lproj'), op.join('cocoalib', lang + '.lproj'))
         build_all_cocoa_locs('cocoalib')
         build_all_cocoa_locs('cocoa')
     elif ui == 'qt':
@@ -126,7 +138,12 @@ def build_updatepot():
     loc.generate_pot(['qtlib'], op.join('qtlib', 'locale', 'qtlib.pot'), ['tr'])
     print("Enhancing ui.pot with Cocoa's strings files")
     loc.allstrings2pot(op.join('cocoa', 'en.lproj'), op.join('locale', 'ui.pot'),
-        excludes={'core', 'message'})
+        excludes={'core', 'message', 'columns'})
+
+def build_mergepot():
+    print("Updating .po files using .pot files")
+    loc.merge_pots_into_pos('locale')
+    loc.merge_pots_into_pos(op.join('hscommon', 'locale'))
 
 def build_ext():
     print("Building C extensions")
@@ -166,6 +183,8 @@ def main():
         build_localizations(ui)
     elif args.updatepot:
         build_updatepot()
+    elif args.mergepot:
+        build_mergepot()
     else:
         build_normal(ui, dev)
 

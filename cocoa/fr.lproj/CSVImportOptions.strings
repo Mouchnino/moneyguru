@@ -6,7 +6,7 @@
 "4.title" = "Spécifiez quelles colonnes CSV correspondent à quel champ. Vous devez aussi décocher les cases de la colonne \"Imp.\" pour chaque ligne n'étant pas une transaction (entête, commentaire).";
 
 /* Class = "NSTableColumn"; headerCell.title = "Import"; ObjectID = "10"; */
-"10.headerCell.title" = "Imp.";
+"10.headerCell.title" = "Importer";
 
 /* Class = "NSButtonCell"; title = "Continue Import"; ObjectID = "19"; */
 "19.title" = "Continuer d'importer";
@@ -75,7 +75,7 @@
 "94.title" = "Rescanner";
 
 /* Class = "NSBox"; title = "Rescan"; ObjectID = "97"; */
-"97.title" = "Rescaner";
+"97.title" = "Rescanner";
 
 /* Class = "NSTextFieldCell"; title = "Encoding:"; ObjectID = "99"; */
 "99.title" = "Encodage:";

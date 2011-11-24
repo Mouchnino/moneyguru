@@ -1,3 +1,7 @@
+
+/* Class = "NSPanel"; title = "Window"; ObjectID = "3"; */
+"3.title" = "Fenster";
+
 /* Class = "NSTextFieldCell"; title = "Date"; ObjectID = "14"; */
 "14.title" = "Datum";
 

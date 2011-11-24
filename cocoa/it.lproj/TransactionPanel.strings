@@ -14,26 +14,14 @@
 /* Class = "NSTabViewItem"; label = "Info"; ObjectID = "291"; */
 "291.label" = "Info";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "335"; */
-"335.placeholderString" = "Nessuna voce selezionata";
-
 /* Class = "NSTextFieldCell"; title = "Transfers"; ObjectID = "335"; */
-"335.title" = "Trasferimenti";
-
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "337"; */
-"337.placeholderString" = "Nessuna voce selezionata";
+"335.title" = "Trasferimento";
 
 /* Class = "NSTextFieldCell"; title = "Check #"; ObjectID = "337"; */
 "337.title" = "Conto #";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "339"; */
-"339.placeholderString" = "Nessuna voce selezionata";
-
 /* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "339"; */
 "339.title" = "Beneficiario";
-
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "342"; */
-"342.placeholderString" = "Nessuna voce selezionata";
 
 /* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "342"; */
 "342.title" = "Descrizione";
@@ -47,17 +35,11 @@
 /* Class = "NSButtonCell"; title = "Next Tab"; ObjectID = "370"; */
 "370.title" = "Scheda successiva";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "374"; */
-"374.placeholderString" = "Nessuna voce selezionata";
-
 /* Class = "NSTextFieldCell"; title = "You can navigate tabs with ⌘⌥→ and ⌘⌥←"; ObjectID = "374"; */
-"374.title" = "Puoi cambiare Scheda con ⌘⌥→ e ⌘⌥←";
+"374.title" = "Puoi cambiare scheda con ⌘⌥→ e ⌘⌥←";
 
 /* Class = "NSTabViewItem"; label = "Notes"; ObjectID = "375"; */
 "375.label" = "Note";
-
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "381"; */
-"381.placeholderString" = "Nessuna voce selezionata";
 
 /* Class = "NSTextFieldCell"; title = "Use ⌥+Return to insert a new line."; ObjectID = "381"; */
 "381.title" = "Premere ⌥+A Capo per inserire una nuova linea.";

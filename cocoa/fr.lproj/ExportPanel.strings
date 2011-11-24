@@ -1,4 +1,4 @@
-﻿
+
 /* Class = "NSWindow"; title = "Export Options"; ObjectID = "1"; */
 "1.title" = "Options d'exportation";
 
@@ -17,7 +17,7 @@
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "27"; */
 "27.title" = "Annuler";
 
-/* Class = "NSTextFieldCell"; title = "Export Format:"; ObjectID = "47"; */
+/* Class = "NSTextFieldCell"; title = "Export format:"; ObjectID = "47"; */
 "47.title" = "Format d'exportation:";
 
 /* Class = "NSTextFieldCell"; title = "Export scope:"; ObjectID = "52"; */

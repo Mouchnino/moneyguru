@@ -51,7 +51,6 @@
 		CE3040DA0F86094400884424 /* MGEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D70F86094400884424 /* MGEntryPrint.m */; };
 		CE3040DB0F86094400884424 /* MGTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3040D90F86094400884424 /* MGTransactionPrint.m */; };
 		CE31C65D0E851CF400BBA82E /* MGRecurrenceScopeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */; };
-		CE33E33E11FB58B800444435 /* columns.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE33E33C11FB58B800444435 /* columns.strings */; };
 		CE3B617C1037FCBB00BC5B4A /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */; };
 		CE3BF14C1270845E000D141C /* MGDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3BF14B1270845E000D141C /* MGDocumentController.m */; };
 		CE40239F0F4C737D0083BAD2 /* doc_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE40239E0F4C737D0083BAD2 /* doc_icon.icns */; };
@@ -69,7 +68,6 @@
 		CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4FAC9C1451B34D00114555 /* columns_16.png */; };
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
-		CE57A7D6143FAB34001110B8 /* message.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE57A7D1143FAB33001110B8 /* message.strings */; };
 		CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
 		CE647EA311730765006D28BA /* HSTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE647EA211730765006D28BA /* HSTable.m */; };
@@ -231,7 +229,6 @@
 		CEF5E63C11DCCEE80048C9DF /* schedules_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63711DCCEE80048C9DF /* schedules_16.png */; };
 		CEF5E63D11DCCEE80048C9DF /* transaction_table_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */; };
 		CEF674AF0F4C76F7003E5283 /* MGCustomDateRangePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */; };
-		CEF93B1B11D2142E00F49321 /* core.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF93B1911D2142E00F49321 /* core.strings */; };
 		CEFCB6EA0E44899B00F5D379 /* MGFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */; };
 		CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -341,9 +338,6 @@
 		CE3040D90F86094400884424 /* MGTransactionPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTransactionPrint.m; path = print/MGTransactionPrint.m; sourceTree = "<group>"; };
 		CE31C65B0E851CF400BBA82E /* MGRecurrenceScopeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGRecurrenceScopeDialog.h; sourceTree = "<group>"; };
 		CE31C65C0E851CF400BBA82E /* MGRecurrenceScopeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog.m; sourceTree = "<group>"; };
-		CE33E33D11FB58B800444435 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/columns.strings; sourceTree = "<group>"; };
-		CE33E33F11FB58C900444435 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/columns.strings; sourceTree = "<group>"; };
-		CE33E34011FB58D500444435 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/columns.strings; sourceTree = "<group>"; };
 		CE348BBF0E5C232400D01E8F /* PyProfitGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitGraph.h; sourceTree = "<group>"; };
 		CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		CE3BF14A1270845E000D141C /* MGDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGDocumentController.h; path = controllers/MGDocumentController.h; sourceTree = SOURCE_ROOT; };
@@ -376,10 +370,6 @@
 		CE55EB881047DC8500F3390F /* MGSchedulePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSchedulePrint.m; path = print/MGSchedulePrint.m; sourceTree = "<group>"; };
 		CE55EB8A1047DE0C00F3390F /* MGBudgetPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBudgetPrint.h; path = print/MGBudgetPrint.h; sourceTree = "<group>"; };
 		CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBudgetPrint.m; path = print/MGBudgetPrint.m; sourceTree = "<group>"; };
-		CE57A7D2143FAB33001110B8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/message.strings; sourceTree = "<group>"; };
-		CE57A7D3143FAB33001110B8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/message.strings; sourceTree = "<group>"; };
-		CE57A7D4143FAB33001110B8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/message.strings; sourceTree = "<group>"; };
-		CE57A7D5143FAB33001110B8 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/message.strings; sourceTree = "<group>"; };
 		CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2707114E35B0008F43F8 /* MGDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateRangeSelector.m; sourceTree = "<group>"; };
@@ -488,7 +478,6 @@
 		CE873AA00E21622F004F63E9 /* MGGradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGradientBar.m; sourceTree = "<group>"; };
 		CE873AA70E21622F004F63E9 /* MGTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableView.h; sourceTree = "<group>"; };
 		CE873AA80E21622F004F63E9 /* MGTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableView.m; sourceTree = "<group>"; };
-		CE88336F11DC8BD700AA6F51 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/core.strings; sourceTree = "<group>"; };
 		CE88544711A1819C00268FBD /* MGMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindowController.h; sourceTree = "<group>"; };
 		CE88544811A1819C00268FBD /* MGMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMainWindowController.m; sourceTree = "<group>"; };
 		CE88544F11A1837B00268FBD /* MGMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMainWindow.h; sourceTree = "<group>"; };
@@ -693,10 +682,7 @@
 		CECEF796144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/ScheduleTable.xib; sourceTree = "<group>"; };
 		CECEF797144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/TransactionPanel.xib; sourceTree = "<group>"; };
 		CECEF798144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/TransactionTable.xib; sourceTree = "<group>"; };
-		CECEF7B614421A0400EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/columns.strings; sourceTree = "<group>"; };
-		CECEF7B714421A0400EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/core.strings; sourceTree = "<group>"; };
 		CECEF7B814421A0400EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CECEF7BC14421A2500EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/message.strings; sourceTree = "<group>"; };
 		CECEF7BE14421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/about.xib; sourceTree = "<group>"; };
 		CECEF7BF14421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/ErrorReportWindow.xib; sourceTree = "<group>"; };
 		CECEF7C014421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/FairwareReminder.xib; sourceTree = "<group>"; };
@@ -731,8 +717,6 @@
 		CED4DB0814476BEF0041601F /* MGDocPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDocPropsView.m; sourceTree = "<group>"; };
 		CED4DB0A14476C0D0041601F /* PyDocPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDocPropsView.h; sourceTree = "<group>"; };
 		CED54817130C1E99008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CED54818130C1EA6008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/core.strings; sourceTree = "<group>"; };
-		CED54819130C1EB8008387F1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/columns.strings; sourceTree = "<group>"; };
 		CED5E6F11448B36700C4B843 /* HSComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSComboBox.h; sourceTree = "<group>"; };
 		CED5E6F21448B36700C4B843 /* HSComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSComboBox.m; sourceTree = "<group>"; };
 		CEDD55A60F87B9F500474A9C /* MGPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGPrintView.h; path = print/MGPrintView.h; sourceTree = "<group>"; };
@@ -760,8 +744,6 @@
 		CEF674AD0F4C76F7003E5283 /* MGCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCustomDateRangePanel.h; sourceTree = "<group>"; };
 		CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCustomDateRangePanel.m; sourceTree = "<group>"; };
 		CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCustomDateRangePanel.h; sourceTree = "<group>"; };
-		CEF93B1A11D2142E00F49321 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/core.strings; sourceTree = "<group>"; };
-		CEF93B2011D2144A00F49321 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/core.strings; sourceTree = "<group>"; };
 		CEFBAB0C0E45B510004C0AB0 /* PyNetWorthGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyNetWorthGraph.h; sourceTree = "<group>"; };
 		CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGFilterBar.h; sourceTree = "<group>"; };
 		CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGFilterBar.m; sourceTree = "<group>"; };
@@ -944,9 +926,6 @@
 			isa = PBXGroup;
 			children = (
 				CEFEA33111E1DEA70034AB46 /* Localizable.strings */,
-				CEF93B1911D2142E00F49321 /* core.strings */,
-				CE57A7D1143FAB33001110B8 /* message.strings */,
-				CE33E33C11FB58B800444435 /* columns.strings */,
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
 				CEEED1D30E3F763100BBA154 /* images */,
@@ -1580,14 +1559,12 @@
 				CEC367BD11D10E1E00EB0222 /* TransactionPanel.xib in Resources */,
 				CEC367BE11D10E1E00EB0222 /* TransactionTable.xib in Resources */,
 				CEC367D811D10EE500EB0222 /* SearchField.xib in Resources */,
-				CEF93B1B11D2142E00F49321 /* core.strings in Resources */,
 				CEF5E63911DCCEE80048C9DF /* balance_sheet_16.png in Resources */,
 				CEF5E63A11DCCEE80048C9DF /* entry_table_16.png in Resources */,
 				CEF5E63B11DCCEE80048C9DF /* income_statement_16.png in Resources */,
 				CEF5E63C11DCCEE80048C9DF /* schedules_16.png in Resources */,
 				CEF5E63D11DCCEE80048C9DF /* transaction_table_16.png in Resources */,
 				CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */,
-				CE33E33E11FB58B800444435 /* columns.strings in Resources */,
 				CE44BA741207045300F4BAE9 /* CashculatorView.xib in Resources */,
 				CE74544612082C5B003A2794 /* cashculator_16.png in Resources */,
 				CE7990B212082D53000A4846 /* cashculator_48.png in Resources */,
@@ -1598,7 +1575,6 @@
 				CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */,
 				CE7869F0135D920500221226 /* about.xib in Resources */,
 				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
-				CE57A7D6143FAB34001110B8 /* message.strings in Resources */,
 				CED4DB05144767C20041601F /* DocProps.xib in Resources */,
 				CE4C7EC614477DC500B749E8 /* MainMenu.xib in Resources */,
 				CE4C7EC714477DC500B749E8 /* MainWindow.xib in Resources */,
@@ -1745,18 +1721,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CE33E33C11FB58B800444435 /* columns.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE33E33D11FB58B800444435 /* en */,
-				CE33E33F11FB58C900444435 /* fr */,
-				CE33E34011FB58D500444435 /* de */,
-				CED54819130C1EB8008387F1 /* it */,
-				CECEF7B614421A0400EBF1C4 /* cs */,
-			);
-			name = columns.strings;
-			sourceTree = SOURCE_ROOT;
-		};
 		CE44BA721207045300F4BAE9 /* CashculatorView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1768,18 +1732,6 @@
 			);
 			name = CashculatorView.xib;
 			sourceTree = SOURCE_ROOT;
-		};
-		CE57A7D1143FAB33001110B8 /* message.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE57A7D2143FAB33001110B8 /* de */,
-				CE57A7D3143FAB33001110B8 /* en */,
-				CE57A7D4143FAB33001110B8 /* fr */,
-				CE57A7D5143FAB33001110B8 /* it */,
-				CECEF7BC14421A2500EBF1C4 /* cs */,
-			);
-			name = message.strings;
-			sourceTree = "<group>";
 		};
 		CE66BD111275751B008EFA8A /* ExportPanel.xib */ = {
 			isa = PBXVariantGroup;
@@ -2130,18 +2082,6 @@
 				CE4C7EC514477DC500B749E8 /* it */,
 			);
 			name = DocProps.xib;
-			sourceTree = "<group>";
-		};
-		CEF93B1911D2142E00F49321 /* core.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEF93B1A11D2142E00F49321 /* en */,
-				CEF93B2011D2144A00F49321 /* fr */,
-				CE88336F11DC8BD700AA6F51 /* de */,
-				CED54818130C1EA6008387F1 /* it */,
-				CECEF7B714421A0400EBF1C4 /* cs */,
-			);
-			name = core.strings;
 			sourceTree = "<group>";
 		};
 		CEFEA33111E1DEA70034AB46 /* Localizable.strings */ = {

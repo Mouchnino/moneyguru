@@ -1,3 +1,7 @@
+
+/* Class = "NSPanel"; title = "Transaction Inspector"; ObjectID = "166"; */
+"166.title" = "Transaction Inspector";
+
 /* Class = "NSButtonCell"; title = "Save"; ObjectID = "215"; */
 "215.title" = "Speichern";
 
@@ -24,6 +28,12 @@
 
 /* Class = "NSTextFieldCell"; title = "Date"; ObjectID = "344"; */
 "344.title" = "Datum";
+
+/* Class = "NSButtonCell"; title = "Prev Tab"; ObjectID = "368"; */
+"368.title" = "Prev Tab";
+
+/* Class = "NSButtonCell"; title = "Next Tab"; ObjectID = "370"; */
+"370.title" = "Nächster Tab";
 
 /* Class = "NSTextFieldCell"; title = "You can navigate tabs with ⌘⌥→ and ⌘⌥←"; ObjectID = "374"; */
 "374.title" = "Sie können zwischen den Tabs mit ⌘⌥→ und ⌘⌥← navigieren";

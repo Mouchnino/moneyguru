@@ -1,8 +1,12 @@
+﻿
 /* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "4"; */
 "4.title" = "Beschreibung";
 
 /* Class = "NSTextFieldCell"; title = "Start Date"; ObjectID = "8"; */
 "8.title" = "Anfangsdatum";
+
+/* Class = "NSPanel"; title = "Schedule Info"; ObjectID = "166"; */
+"166.title" = "Wiederholungsdetail";
 
 /* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "196"; */
 "196.title" = "Empfänger";
@@ -20,7 +24,7 @@
 "224.title" = "Wiederholungsdetail";
 
 /* Class = "NSTextFieldCell"; title = "Repeat"; ObjectID = "226"; */
-"226.title" = "wiederholen";
+"226.title" = "Wiederholung";
 
 /* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
 "234.title" = "alle";
@@ -36,6 +40,12 @@
 
 /* Class = "NSTextFieldCell"; title = "You can navigate tabs with ⌘⌥→ and ⌘⌥←"; ObjectID = "313"; */
 "313.title" = "Sie können zwischen den Tabs mit ⌘⌥→ und ⌘⌥← navigieren";
+
+/* Class = "NSButtonCell"; title = "Next Tab"; ObjectID = "319"; */
+"319.title" = "Nächster Tab";
+
+/* Class = "NSButtonCell"; title = "Prev Tab"; ObjectID = "320"; */
+"320.title" = "Prev Tab";
 
 /* Class = "NSTabViewItem"; label = "Notes"; ObjectID = "323"; */
 "323.label" = "Bemerkungen";

@@ -6,7 +6,7 @@
 "4.title" = "Bestimmen Sie, welches Feld der CSV Datei zu welchem Transaktionsfeld gehört. Sie müssen ebenfalls sämtliche Zeilen abwählen, die keine Transaktionen repräsentieren (z.B.: Titel, Fußzeile, Kommentare).";
 
 /* Class = "NSTableColumn"; headerCell.title = "Import"; ObjectID = "10"; */
-"10.headerCell.title" = "Import";
+"10.headerCell.title" = "Importieren";
 
 /* Class = "NSButtonCell"; title = "Continue Import"; ObjectID = "19"; */
 "19.title" = "Importieren fortsetzen";

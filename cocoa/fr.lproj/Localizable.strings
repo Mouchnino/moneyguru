@@ -1,5 +1,5 @@
 "New Item" = "Nouvel Item";
-"New Account" = "Nouveau Compte";
+"New Account" = "Nouveau compte";
 "New Transaction" = "Nouvelle Transaction";
 "New Schedule" = "Nouvelle Récurrence";
 "New Budget" = "Nouveau Budget";
@@ -7,12 +7,12 @@
 "Account Lookup" = "Recherche de Compte";
 "Completion Lookup" = "Recherche de Complétion";
 
-"All" = "Tout";
+"All" = "Tous";
 "Increase" = "Dépôt";
 "Decrease" = "Retrait";
 "Income" = "Revenu";
-"Expenses" = "Dépense";
-"Transfers" = "Transfert";
+"Expenses" = "Dépenses";
+"Transfers" = "Transferts";
 "Unassigned" = "Non Assigné";
 "Reconciled" = "Reconcilié";
 "Not Reconciled" = "Non Reconcilié";

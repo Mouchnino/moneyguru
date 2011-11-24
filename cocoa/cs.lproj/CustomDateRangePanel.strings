@@ -21,16 +21,7 @@
 "28.title" = "Uložit toto časové rozmezí jako předvolbu:";
 
 /* Class = "NSMenuItem"; title = "None"; ObjectID = "32"; */
-"32.title" = "Žádná";
-
-/* Class = "NSMenuItem"; title = "#1"; ObjectID = "33"; */
-"33.title" = "#1";
-
-/* Class = "NSMenuItem"; title = "#2"; ObjectID = "34"; */
-"34.title" = "#2";
-
-/* Class = "NSMenuItem"; title = "#3"; ObjectID = "35"; */
-"35.title" = "#3";
+"32.title" = "Žádný";
 
 /* Class = "NSTextFieldCell"; title = "Under the name:"; ObjectID = "37"; */
 "37.title" = "Pod názvem:";

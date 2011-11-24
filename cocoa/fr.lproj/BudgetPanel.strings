@@ -1,5 +1,9 @@
+
 /* Class = "NSTextFieldCell"; title = "Start Date"; ObjectID = "8"; */
 "8.title" = "Date début";
+
+/* Class = "NSPanel"; title = "Budget Info"; ObjectID = "166"; */
+"166.title" = "Détails de budget";
 
 /* Class = "NSButtonCell"; title = "Save"; ObjectID = "215"; */
 "215.title" = "Enregistrer";
