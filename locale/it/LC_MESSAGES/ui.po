@@ -8,13 +8,13 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 msgid "All"
 msgstr "Tutti"
 
-#: qt/controller/account/filter_bar.py:19 cocoa/en.lproj/columns.strings:0
+#: qt/controller/account/filter_bar.py:19
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Increase"
 msgstr "Incremento"
 
-#: qt/controller/account/filter_bar.py:20 cocoa/en.lproj/columns.strings:0
+#: qt/controller/account/filter_bar.py:20
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Decrease"
@@ -68,7 +68,6 @@ msgid "Currency"
 msgstr "Valuta"
 
 #: qt/controller/account_panel.py:64 cocoa/en.lproj/AccountPanel.strings:0
-#: cocoa/en.lproj/columns.strings:0
 msgid "Account #"
 msgstr "Conto #"
 
@@ -856,8 +855,7 @@ msgstr "Finestra"
 msgid "No Account"
 msgstr "Nessun Conto"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
-#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Start Date"
 msgstr "Data Inizio"
 
@@ -873,20 +871,19 @@ msgstr "Ogni"
 msgid "Days"
 msgstr "Giorni"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
-#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Stop Date"
 msgstr "Data Fine"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
 msgid "Account"
 msgstr "Conto"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
 msgid "Target"
 msgstr "Verso"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "Amount"
@@ -909,102 +906,52 @@ msgid "Please read instructions in the Forecast section of the help file."
 msgstr ""
 "Per favore, leggere le istruzione alla sezione Previsioni del file di Aiuto."
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Date"
 msgstr "Data"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Check #"
 msgstr "Conto #"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Description"
 msgstr "Descrizione"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Payee"
 msgstr "Beneficiario"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "From"
 msgstr "Da"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "To"
 msgstr "A"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "Transfer"
 msgstr "Trasferimento"
 
-#: cocoa/en.lproj/columns.strings:0
-msgid "Balance"
-msgstr "Saldo"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Reconciliation Date"
-msgstr "Data di Riconciliazione"
-
-#: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "Start"
 msgstr "Inizio"
 
-#: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "End"
 msgstr "Fine"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Change"
-msgstr "Variazione"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Change %"
-msgstr "Variazione %"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Budgeted"
-msgstr "Previsto"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Current"
-msgstr "Attuale"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Last"
-msgstr "Ultimo"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Repeat Type"
-msgstr "Tipo di Ripetizione"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Interval"
-msgstr "Intervallo"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Debit"
-msgstr "Debito"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Credit"
-msgstr "Credito"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Memo"
-msgstr "Memo"
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "CSV Import Options"
@@ -1360,10 +1307,6 @@ msgstr "Mostra questa finestra la prossima volta"
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid "All future occurences"
 msgstr "Tutte quelle future"
-
-#: cocoa/en.lproj/SchedulePanel.strings:0
-msgid "Tranfers"
-msgstr "Trasferimetni"
 
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0

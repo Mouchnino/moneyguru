@@ -8,13 +8,13 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 msgid "All"
 msgstr "Vše"
 
-#: qt/controller/account/filter_bar.py:19 cocoa/en.lproj/columns.strings:0
+#: qt/controller/account/filter_bar.py:19
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Increase"
 msgstr "Přírůstek"
 
-#: qt/controller/account/filter_bar.py:20 cocoa/en.lproj/columns.strings:0
+#: qt/controller/account/filter_bar.py:20
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Decrease"
@@ -68,7 +68,6 @@ msgid "Currency"
 msgstr "Měna"
 
 #: qt/controller/account_panel.py:64 cocoa/en.lproj/AccountPanel.strings:0
-#: cocoa/en.lproj/columns.strings:0
 msgid "Account #"
 msgstr "Účet č."
 
@@ -856,8 +855,7 @@ msgstr "Okno"
 msgid "No Account"
 msgstr "Žádný účet"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
-#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Start Date"
 msgstr "Odkdy"
 
@@ -873,20 +871,19 @@ msgstr "Každých"
 msgid "Days"
 msgstr "Dnů"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
-#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Stop Date"
 msgstr "Dokdy"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
 msgid "Account"
 msgstr "Účet"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
 msgid "Target"
 msgstr "Cíl"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/columns.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "Amount"
@@ -908,102 +905,52 @@ msgstr "Spustit Cashculator"
 msgid "Please read instructions in the Forecast section of the help file."
 msgstr "Přečtěte si prosím instrukce v části nápovědy Předpovědi."
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Date"
 msgstr "Datum"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Check #"
 msgstr "Šek č."
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Description"
 msgstr "Popis"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Payee"
 msgstr "Příjemce"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "From"
 msgstr "Z"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "To"
 msgstr "Na"
 
-#: cocoa/en.lproj/columns.strings:0 cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "Transfer"
 msgstr "Přesun"
 
-#: cocoa/en.lproj/columns.strings:0
-msgid "Balance"
-msgstr "Zůstatek"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Reconciliation Date"
-msgstr "Datum párování"
-
-#: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "Start"
 msgstr "Start"
 
-#: cocoa/en.lproj/columns.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "End"
 msgstr "Konec"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Change"
-msgstr "Změna"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Change %"
-msgstr "Změna %"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Budgeted"
-msgstr "V rozpočtu"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Current"
-msgstr "Aktuální"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Last"
-msgstr "Poslední"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Repeat Type"
-msgstr "Typ opakování"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Interval"
-msgstr "Interval"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Debit"
-msgstr "Výběr"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Credit"
-msgstr "Vklad"
-
-#: cocoa/en.lproj/columns.strings:0
-msgid "Memo"
-msgstr "Poznámka"
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "CSV Import Options"
@@ -1358,10 +1305,6 @@ msgstr "Show this dialog next time"
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid "All future occurences"
 msgstr "Všechny budoucí výskyty"
-
-#: cocoa/en.lproj/SchedulePanel.strings:0
-msgid "Tranfers"
-msgstr "Přesuny"
 
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
