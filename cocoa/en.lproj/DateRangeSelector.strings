@@ -1,13 +1,4 @@
 
-/* Class = "NSMenuItem"; title = "Custom3"; ObjectID = "7"; */
-"7.title" = "Custom3";
-
-/* Class = "NSMenuItem"; title = "Custom2"; ObjectID = "8"; */
-"8.title" = "Custom2";
-
-/* Class = "NSMenuItem"; title = "Custom1"; ObjectID = "9"; */
-"9.title" = "Custom1";
-
 /* Class = "NSMenuItem"; title = "All Transactions"; ObjectID = "10"; */
 "10.title" = "All Transactions";
 
@@ -19,9 +10,6 @@
 
 /* Class = "NSMenuItem"; title = "Year to date"; ObjectID = "13"; */
 "13.title" = "Year to date";
-
-/* Class = "NSMenuItem"; title = "<title>"; ObjectID = "14"; */
-"14.title" = "<title>";
 
 /* Class = "NSMenuItem"; title = "Year"; ObjectID = "15"; */
 "15.title" = "Year";

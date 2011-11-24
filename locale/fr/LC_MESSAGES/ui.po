@@ -22,7 +22,7 @@ msgstr "Retrait"
 
 #: qt/controller/account/filter_bar.py:21
 #: qt/controller/transaction/filter_bar.py:21
-#: cocoa/en.lproj/Localizable.strings:0
+#: cocoa/en.lproj/Localizable.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Transfers"
 msgstr "Transferts"
@@ -91,6 +91,7 @@ msgstr ""
 #: qt/controller/account_reassign_panel.py:57
 #: qt/controller/import_/csv_options.py:93
 #: qt/controller/schedule_scope_dialog.py:45
+#: cocoa/en.lproj/AccountPanel.strings:0
 #: cocoa/en.lproj/AccountReassignPanel.strings:0
 #: cocoa/en.lproj/BudgetPanel.strings:0
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -163,17 +164,14 @@ msgid "Save this range under slot:"
 msgstr "Assigner l'intervalle à la case:"
 
 #: qt/controller/custom_date_range_panel.py:61
-#: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "#1"
 msgstr ""
 
 #: qt/controller/custom_date_range_panel.py:61
-#: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "#2"
 msgstr ""
 
 #: qt/controller/custom_date_range_panel.py:61
-#: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "#3"
 msgstr ""
 
@@ -439,7 +437,7 @@ msgstr "Zap!"
 msgid "Lookup"
 msgstr ""
 
-#: qt/controller/main_window.py:180 cocoa/en.lproj/MainWindow.strings:0
+#: qt/controller/main_window.py:180
 msgid "Status"
 msgstr ""
 
@@ -866,13 +864,9 @@ msgstr "Date début"
 msgid "Repeat"
 msgstr "Répéter"
 
-#: cocoa/en.lproj/BudgetPanel.strings:0
+#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Every"
 msgstr "Tout les"
-
-#: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
-msgid "Days"
-msgstr ""
 
 #: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Stop Date"
@@ -994,21 +988,6 @@ msgid "Save this custom range in slot:"
 msgstr "Assigner l'intervalle à la case:"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
-#: cocoa/en.lproj/MainMenu.strings:0
-msgid "Custom3"
-msgstr ""
-
-#: cocoa/en.lproj/DateRangeSelector.strings:0
-#: cocoa/en.lproj/MainMenu.strings:0
-msgid "Custom2"
-msgstr ""
-
-#: cocoa/en.lproj/DateRangeSelector.strings:0
-#: cocoa/en.lproj/MainMenu.strings:0
-msgid "Custom1"
-msgstr ""
-
-#: cocoa/en.lproj/DateRangeSelector.strings:0
 msgid "Custom date range..."
 msgstr "Intervalle personnalisé..."
 
@@ -1022,29 +1001,13 @@ msgstr "Année flottante"
 msgid "Year to date"
 msgstr "Année en cours"
 
-#: cocoa/en.lproj/DateRangeSelector.strings:0
-msgid "<title>"
-msgstr ""
-
 #: cocoa/en.lproj/DocProps.strings:0
 msgid "Document Properties"
 msgstr "Document Properties"
 
 #: cocoa/en.lproj/ImportWindow.strings:0
-msgid "Tab"
-msgstr ""
-
-#: cocoa/en.lproj/ImportWindow.strings:0
 msgid "< New Account >"
 msgstr "< Nouveau compte >"
-
-#: cocoa/en.lproj/ImportWindow.strings:0
-msgid "Foo"
-msgstr ""
-
-#: cocoa/en.lproj/ImportWindow.strings:0
-msgid "Bar"
-msgstr ""
 
 #: cocoa/en.lproj/ImportWindow.strings:0
 msgid "Are some fields wrong? Swap them!"
@@ -1099,24 +1062,12 @@ msgid "Minimize"
 msgstr "Placer dans le Dock"
 
 #: cocoa/en.lproj/MainMenu.strings:0
-msgid "MainMenu"
-msgstr ""
-
-#: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/MainWindow.strings:0
-msgid "moneyGuru"
-msgstr ""
-
-#: cocoa/en.lproj/MainMenu.strings:0
 msgid "Close"
 msgstr "Fermer"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Save As…"
 msgstr "Sauvegarder sous…"
-
-#: cocoa/en.lproj/MainMenu.strings:0
-msgid "New <item>"
-msgstr ""
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Clear Menu"
@@ -1262,12 +1213,6 @@ msgstr "Fermer la fenêtre"
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Printing Font size:"
 msgstr "Taille police (impression):"
-
-#: cocoa/en.lproj/MassEditingPanel.strings:0
-#: cocoa/en.lproj/SchedulePanel.strings:0
-#: cocoa/en.lproj/TransactionPanel.strings:0
-msgid "No entry selected"
-msgstr ""
 
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "Mass Editing"

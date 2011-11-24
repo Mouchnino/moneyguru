@@ -20,9 +20,6 @@
 /* Class = "NSTextFieldCell"; title = "Every"; ObjectID = "234"; */
 "234.title" = "Every";
 
-/* Class = "NSTextFieldCell"; title = "Days"; ObjectID = "239"; */
-"239.title" = "Days";
-
 /* Class = "NSTextFieldCell"; title = "Stop Date"; ObjectID = "279"; */
 "279.title" = "Stop Date";
 

@@ -5,20 +5,11 @@
 /* Class = "NSTextFieldCell"; title = "Date"; ObjectID = "14"; */
 "14.title" = "Date";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "16"; */
-"16.placeholderString" = "No entry selected";
-
 /* Class = "NSTextFieldCell"; title = "Description"; ObjectID = "16"; */
 "16.title" = "Description";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "18"; */
-"18.placeholderString" = "No entry selected";
-
 /* Class = "NSTextFieldCell"; title = "Payee"; ObjectID = "18"; */
 "18.title" = "Payee";
-
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "20"; */
-"20.placeholderString" = "No entry selected";
 
 /* Class = "NSTextFieldCell"; title = "Check #"; ObjectID = "20"; */
 "20.title" = "Check #";
@@ -29,29 +20,17 @@
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "59"; */
 "59.title" = "Cancel";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "108"; */
-"108.placeholderString" = "No entry selected";
-
 /* Class = "NSTextFieldCell"; title = "From"; ObjectID = "108"; */
 "108.title" = "From";
 
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "114"; */
-"114.placeholderString" = "No entry selected";
-
 /* Class = "NSTextFieldCell"; title = "To"; ObjectID = "114"; */
 "114.title" = "To";
-
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "120"; */
-"120.placeholderString" = "No entry selected";
 
 /* Class = "NSTextFieldCell"; title = "Amount"; ObjectID = "120"; */
 "120.title" = "Amount";
 
 /* Class = "NSTextFieldCell"; title = "Mass Editing"; ObjectID = "160"; */
 "160.title" = "Mass Editing";
-
-/* Class = "NSTextFieldCell"; placeholderString = "No entry selected"; ObjectID = "163"; */
-"163.placeholderString" = "No entry selected";
 
 /* Class = "NSTextFieldCell"; title = "Currency"; ObjectID = "163"; */
 "163.title" = "Currency";
