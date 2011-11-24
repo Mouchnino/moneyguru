@@ -10,14 +10,13 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QVBoxLayout, QLabel, QButtonGroup, QRadioButton, QTableView,
     QAbstractItemView, QDialogButtonBox, QApplication, QDialog, QFileDialog, QCheckBox)
 
-from hscommon.trans import tr as trplain
+from hscommon.trans import trget
 from core.gui.export_panel import ExportFormat
 
 from .panel import Panel
 from .export_account_table import ExportAccountTable
 
-def tr(s):
-    return trplain(s, 'ExportPanel')
+tr = trget('ui')
 
 class ExportType:
     All = 0

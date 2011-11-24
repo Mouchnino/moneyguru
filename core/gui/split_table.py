@@ -6,11 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 from .table import GUITable, Row, RowWithDebitAndCreditMixIn
 from .column import Column
 
-trcol = lambda s: tr(s, 'columns')
+trcol = trget('columns')
 
 class SplitTable(GUITable):
     COLUMNS = [

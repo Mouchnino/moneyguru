@@ -6,13 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 from ..model.account import sort_accounts
 from .table import Row
 from .column import Column
 from .entry_table_base import EntryTableBase, EntryTableRow, TotalRow, PreviousBalanceRow
 
-trcol = lambda s: tr(s, 'columns')
+trcol = trget('columns')
 
 class AccountRow(Row):
     def __init__(self, table, account):

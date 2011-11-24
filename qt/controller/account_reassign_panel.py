@@ -11,12 +11,12 @@ from PyQt4.QtGui import (QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QSizePolic
     QPushButton)
 
 from qtlib.selectable_list import ComboboxModel
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 from hscommon.plat import ISWINDOWS
 
 from .panel import Panel
 
-tr = lambda s: trbase(s, "AccountReassignPanel")
+tr = trget('ui')
 
 class AccountReassignPanel(Panel):
     def __init__(self, mainwindow):

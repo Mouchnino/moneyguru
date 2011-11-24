@@ -217,6 +217,7 @@
 		CED4DB0914476BEF0041601F /* MGDocPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED4DB0814476BEF0041601F /* MGDocPropsView.m */; };
 		CED5E6F31448B36700C4B843 /* HSComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CED5E6F21448B36700C4B843 /* HSComboBox.m */; };
 		CEDD55A80F87B9F500474A9C /* MGPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD55A70F87B9F500474A9C /* MGPrintView.m */; };
+		CEE0FE74147EA6C600713C87 /* locale in Resources */ = {isa = PBXBuildFile; fileRef = CEE0FE73147EA6C600713C87 /* locale */; };
 		CEE223410F893D1C00E7FE12 /* MGTableWithSplitsPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE223400F893D1C00E7FE12 /* MGTableWithSplitsPrint.m */; };
 		CEE46FC40F91E58500D08E40 /* MGAccountReassignPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */; };
 		CEE674D20E7A7C0300941332 /* recurrent_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE674D10E7A7C0300941332 /* recurrent_16.png */; };
@@ -736,6 +737,7 @@
 		CED5E6F21448B36700C4B843 /* HSComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSComboBox.m; sourceTree = "<group>"; };
 		CEDD55A60F87B9F500474A9C /* MGPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGPrintView.h; path = print/MGPrintView.h; sourceTree = "<group>"; };
 		CEDD55A70F87B9F500474A9C /* MGPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGPrintView.m; path = print/MGPrintView.m; sourceTree = "<group>"; };
+		CEE0FE73147EA6C600713C87 /* locale */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locale; path = ../build/locale; sourceTree = "<group>"; };
 		CEE2233D0F893B1600E7FE12 /* PyEntryPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryPrint.h; sourceTree = "<group>"; };
 		CEE2233E0F893D0A00E7FE12 /* PySplitPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySplitPrint.h; sourceTree = "<group>"; };
 		CEE2233F0F893D1C00E7FE12 /* MGTableWithSplitsPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTableWithSplitsPrint.h; path = print/MGTableWithSplitsPrint.h; sourceTree = "<group>"; };
@@ -952,6 +954,7 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */,
 				CE4B8C000E656DB70017432D /* help */,
+				CEE0FE73147EA6C600713C87 /* locale */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -1606,6 +1609,7 @@
 				CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */,
 				CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */,
 				CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */,
+				CEE0FE74147EA6C600713C87 /* locale in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

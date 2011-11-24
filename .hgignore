@@ -4,6 +4,7 @@ syntax: glob
 *.pyc
 *.so
 *.pyd
+*.mo
 *.tm_build_errors
 *.back.aip
 *.xcodeproj/xcuserdata
@@ -25,7 +26,6 @@ build
 dist
 install
 installer_tmp-cache
-qt/lang/??.qm
 devdoc_html
 run.py
 tmtags

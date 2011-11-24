@@ -10,12 +10,12 @@ from PyQt4.QtCore import Qt, QSize
 from PyQt4.QtGui import (QVBoxLayout, QFormLayout, QLabel, QLineEdit, QComboBox, QSizePolicy,
     QPlainTextEdit, QDialogButtonBox)
 
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 from qtlib.selectable_list import ComboboxModel
 
 from .panel import Panel
 
-tr = lambda s: trbase(s, "AccountPanel")
+tr = trget('ui')
 
 class AccountPanel(Panel):
     FIELDS = [

@@ -10,13 +10,13 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QShortcut, QKeySequence, QGridLayout, QIcon, QPixmap, QPushButton, QLabel,
     QSpacerItem, QSizePolicy, QVBoxLayout)
 
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 from core.const import PaneType
 from core.gui.empty_view import EmptyView as EmptyViewModel
 
 from .base_view import BaseView
 
-tr = lambda s: trbase(s, "NewView")
+tr = trget('ui')
 
 class NewView(BaseView):
     def __init__(self, mainwindow):

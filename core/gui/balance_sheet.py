@@ -6,14 +6,14 @@
 
 from datetime import timedelta, date
 
-from hscommon.trans import tr
+from hscommon.trans import trget, tr
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange
 from .column import Column
 from .report import Report, get_delta_perc
 
-trcol = lambda s: tr(s, 'columns')
+trcol = trget('columns')
 
 class BalanceSheet(Report):
     SAVENAME = 'BalanceSheet'

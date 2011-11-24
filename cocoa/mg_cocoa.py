@@ -20,7 +20,7 @@ from hscommon.util import nonone
 
 # Set translation func. This has to be set before core modules are initialized
 import hscommon.trans
-hscommon.trans.install_cocoa_trans()
+hscommon.trans.install_gettext_trans_under_cocoa()
 
 from core.app import Application
 from core.document import Document, FilterType

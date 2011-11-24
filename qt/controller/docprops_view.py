@@ -7,13 +7,13 @@
 
 from PyQt4.QtGui import QFormLayout, QComboBox, QSizePolicy
 
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 from qtlib.selectable_list import ComboboxModel
 from core.gui.docprops_view import DocPropsView as DocPropsViewModel
 
 from .base_view import BaseView
 
-tr = lambda s: trbase(s, "DocPropsView")
+tr = trget('ui')
 
 class DocPropsView(BaseView):
     def __init__(self, mainwindow):

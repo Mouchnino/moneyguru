@@ -11,10 +11,10 @@ from PyQt4.QtGui import (QDialog, QMessageBox, QVBoxLayout, QHBoxLayout, QFormLa
     QComboBox, QSpinBox, QCheckBox, QLineEdit, QDialogButtonBox, QSizePolicy, QSpacerItem)
 
 from hscommon.currency import Currency
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 from core.model.date import clean_format
 
-tr = lambda s: trbase(s, "PreferencesPanel")
+tr = trget('ui')
 
 SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it', 'cs']
 LANG2NAME = {

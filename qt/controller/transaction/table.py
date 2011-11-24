@@ -10,7 +10,6 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
-from hscommon.trans import tr
 from core.gui.transaction_table import TransactionTable as TransactionTableModel
 from ...support.item_delegate import ItemDecoration
 from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT

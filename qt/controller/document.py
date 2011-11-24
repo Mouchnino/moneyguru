@@ -12,11 +12,13 @@ import tempfile
 from PyQt4.QtCore import pyqtSignal, Qt, QObject, QFile
 from PyQt4.QtGui import QFileDialog, QMessageBox, QApplication
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 from core.exception import FileFormatError
 from core.document import Document as DocumentModel, ScheduleScope
 
 from ..controller.schedule_scope_dialog import ScheduleScopeDialog
+
+tr = trget('ui')
 
 class Document(QObject):
     def __init__(self, app):

@@ -8,11 +8,11 @@
 
 import datetime
 
-from hscommon.trans import tr
+from hscommon.trans import tr, trget
 from .column import Column, Columns
 from .entry_table_base import EntryTableBase, PreviousBalanceRow, TotalRow
 
-trcol = lambda s: tr(s, 'columns')
+trcol = trget('columns')
 
 class EntryTableColumns(Columns):
     def menu_items(self):

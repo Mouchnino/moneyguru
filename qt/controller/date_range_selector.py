@@ -9,7 +9,9 @@
 from PyQt4.QtCore import QObject
 from PyQt4.QtGui import QMenu, QAction
 
-from hscommon.trans import tr
+from hscommon.trans import trget
+
+tr = trget('ui')
 
 class DateRangeSelector(QObject):
     def __init__(self, mainwindow, view):

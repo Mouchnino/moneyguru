@@ -7,9 +7,11 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from core.document import FilterType
-from hscommon.trans import tr
+from hscommon.trans import trget
 
 from ..filter_bar import FilterBar
+
+tr = trget('ui')
 
 class EntryFilterBar(FilterBar):
     BUTTONS = [

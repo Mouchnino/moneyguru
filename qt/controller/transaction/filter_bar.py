@@ -6,10 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 from core.document import FilterType
 
 from ..filter_bar import FilterBar
+
+tr = trget('ui')
 
 class TransactionFilterBar(FilterBar):
     BUTTONS = [

@@ -10,9 +10,11 @@ from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QDialog
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 
 from core.document import ScheduleScope
+
+tr = trget('ui')
 
 class ScheduleScopeDialog(QDialog):
     def __init__(self, parent=None):
@@ -26,30 +28,29 @@ class ScheduleScopeDialog(QDialog):
         self.localScopeButton.clicked.connect(self.localScopeClicked)
     
     def _setupUi(self):
-        trui = lambda s: tr(s, 'ScheduleScopeDialog')
-        self.setWindowTitle(trui("Schedule Modification Scope"))
+        self.setWindowTitle(tr("Schedule Modification Scope"))
         self.resize(333, 133)
         self.verticalLayout = QtGui.QVBoxLayout(self)
-        self.label = QtGui.QLabel(trui("Do you want this change to affect all future occurrences of this schedule?"))
+        self.label = QtGui.QLabel(tr("Do you want this change to affect all future occurrences of this schedule?"))
         font = QtGui.QFont()
         font.setWeight(75)
         font.setBold(True)
         self.label.setFont(font)
         self.label.setWordWrap(True)
         self.verticalLayout.addWidget(self.label)
-        self.label_2 = QtGui.QLabel(trui("You can force global scope (in other words, changing all future occurrences) by holding Shift when you perform the change."))
+        self.label_2 = QtGui.QLabel(tr("You can force global scope (in other words, changing all future occurrences) by holding Shift when you perform the change."))
         self.label_2.setWordWrap(True)
         self.verticalLayout.addWidget(self.label_2)
         self.horizontalLayout = QtGui.QHBoxLayout()
-        self.cancelButton = QtGui.QPushButton(trui("Cancel"))
+        self.cancelButton = QtGui.QPushButton(tr("Cancel"))
         self.cancelButton.setShortcut("Esc")
         self.horizontalLayout.addWidget(self.cancelButton)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.globalScopeButton = QtGui.QPushButton(trui("All future occurrences"))
+        self.globalScopeButton = QtGui.QPushButton(tr("All future occurrences"))
         self.globalScopeButton.setAutoDefault(False)
         self.horizontalLayout.addWidget(self.globalScopeButton)
-        self.localScopeButton = QtGui.QPushButton(trui("Just this one"))
+        self.localScopeButton = QtGui.QPushButton(tr("Just this one"))
         self.localScopeButton.setAutoDefault(False)
         self.localScopeButton.setDefault(True)
         self.horizontalLayout.addWidget(self.localScopeButton)

@@ -20,15 +20,22 @@ from .transaction_panel import PanelWithTransaction
 REPEAT_OPTIONS_ORDER = [RepeatType.Daily, RepeatType.Weekly, RepeatType.Monthly, RepeatType.Yearly,
     RepeatType.Weekday, RepeatType.WeekdayLast]
 
-# i18n note: We don't call tr() here because these descriptions are pluralized. We call tr() on the
-# final desc
 REPEAT_EVERY_DESCS = {
-    RepeatType.Daily: 'day',
-    RepeatType.Weekly: 'week',
-    RepeatType.Monthly: 'month',
-    RepeatType.Yearly: 'year',
-    RepeatType.Weekday: 'month',
-    RepeatType.WeekdayLast: 'month',
+    RepeatType.Daily: tr('day'),
+    RepeatType.Weekly: tr('week'),
+    RepeatType.Monthly: tr('month'),
+    RepeatType.Yearly: tr('year'),
+    RepeatType.Weekday: tr('month'),
+    RepeatType.WeekdayLast: tr('month'),
+}
+
+REPEAT_EVERY_DESCS_PLURAL = {
+    RepeatType.Daily: tr('days'),
+    RepeatType.Weekly: tr('weeks'),
+    RepeatType.Monthly: tr('months'),
+    RepeatType.Yearly: tr('years'),
+    RepeatType.Weekday: tr('months'),
+    RepeatType.WeekdayLast: tr('months'),
 }
 
 class RepeatTypeList(GUISelectableList):
@@ -85,10 +92,10 @@ class PanelWithScheduleMixIn:
     
     @property
     def repeat_every_desc(self):
-        desc = REPEAT_EVERY_DESCS[self.schedule.repeat_type]
-        if desc and self.schedule.repeat_every > 1:
-            desc += 's'
-        return tr(desc)
+        if self.schedule.repeat_every > 1:
+            return REPEAT_EVERY_DESCS_PLURAL[self.schedule.repeat_type]
+        else:
+            return REPEAT_EVERY_DESCS[self.schedule.repeat_type]
     
     @property
     def repeat_type(self):

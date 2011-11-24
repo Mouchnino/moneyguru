@@ -8,12 +8,12 @@
 
 import datetime
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 
 from .column import Column
 from .table import GUITable, Row, rowattr
 
-trcol = lambda s: tr(s, 'columns')
+trcol = trget('columns')
 
 class BudgetTable(GUITable):
     SAVENAME = 'BudgetTable'

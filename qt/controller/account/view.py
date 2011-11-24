@@ -11,7 +11,7 @@ from PyQt4 import QtCore, QtGui
 from core.const import PaneArea
 from core.gui.account_view import AccountView as AccountViewModel
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 
 from qtlib.radio_box import RadioBox
 from ...support.item_view import TableView
@@ -22,6 +22,8 @@ from .filter_bar import EntryFilterBar
 from .table import EntryTable
 from .bar_graph import AccountBarGraph
 from .line_graph import AccountLineGraph
+
+tr = trget('ui')
 
 class EntryView(BaseView):
     def __init__(self, mainwindow):
@@ -56,7 +58,7 @@ class EntryView(BaseView):
         self.horizontalLayout.addWidget(self.filterBar)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.reconciliationButton = QtGui.QPushButton(tr("Reconciliation", 'EntryView'))
+        self.reconciliationButton = QtGui.QPushButton(tr("Reconciliation"))
         self.reconciliationButton.setCheckable(True)
         self.horizontalLayout.addWidget(self.reconciliationButton)
         self.verticalLayout.addLayout(self.horizontalLayout)

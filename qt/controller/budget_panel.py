@@ -11,12 +11,12 @@ from PyQt4.QtGui import (QHBoxLayout, QVBoxLayout, QFormLayout, QLabel, QLineEdi
     QPlainTextEdit, QDialogButtonBox, QSpinBox)
 
 from qtlib.selectable_list import ComboboxModel
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 
 from ..support.date_edit import DateEdit
 from .panel import Panel
 
-tr = lambda s: trbase(s, "BudgetPanel")
+tr = trget('ui')
 
 class BudgetPanel(Panel):
     FIELDS = [

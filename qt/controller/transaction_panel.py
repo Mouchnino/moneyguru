@@ -11,7 +11,7 @@ from PyQt4.QtGui import (QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QTabWid
     QLineEdit, QPlainTextEdit, QAbstractItemView, QSizePolicy, QSpacerItem, QPushButton,
     QDialogButtonBox, QIcon, QPixmap)
 
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 from ..support.item_view import TableView
 from ..support.date_edit import DateEdit
 from ..support.completable_edit import PayeeEdit, DescriptionEdit
@@ -19,7 +19,7 @@ from ..support.completable_edit import PayeeEdit, DescriptionEdit
 from .panel import Panel
 from .split_table import SplitTable
 
-tr = lambda s: trbase(s, "TransactionPanel")
+tr = trget('ui')
 
 class TransactionPanel(Panel):
     FIELDS = [

@@ -10,11 +10,13 @@ from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QTabBar
 
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 
 from core.gui.import_window import ImportWindow as ImportWindowModel
 from ...support.item_view import TableView
 from .table import ImportTable
+
+tr = trget('ui')
 
 class ImportWindow(QWidget):
     def __init__(self, parent, doc):
@@ -33,7 +35,6 @@ class ImportWindow(QWidget):
         self.swapButton.clicked.connect(self.swapClicked)
     
     def _setupUi(self):
-        tr = lambda s: trbase(s, 'ImportWindow')
         self.setWindowTitle(tr("Import"))
         self.resize(557, 407)
         self.verticalLayout = QtGui.QVBoxLayout(self)

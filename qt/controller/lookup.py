@@ -10,8 +10,10 @@ from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QShortcut, QKeySequence
 
-from hscommon.trans import tr
+from hscommon.trans import trget
 from ..support.search_edit import SearchEdit
+
+tr = trget('ui')
 
 class Lookup(QWidget):
     MODEL_CLASS = None
@@ -30,7 +32,7 @@ class Lookup(QWidget):
         self._shortcutDown.activated.connect(self.downPressed)
     
     def _setupUi(self):
-        self.setWindowTitle(tr("Lookup", 'Lookup'))
+        self.setWindowTitle(tr("Lookup"))
         self.resize(314, 331)
         self.verticalLayout = QtGui.QVBoxLayout(self)
         self.searchEdit = SearchEdit(self)

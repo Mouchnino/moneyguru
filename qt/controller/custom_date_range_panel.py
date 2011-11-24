@@ -8,12 +8,12 @@
 
 from PyQt4 import QtGui, QtCore
 
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 
 from ..support.date_edit import DateEdit
 from .panel import Panel
 
-tr = lambda s: trbase(s, "CustomDateRangePanel")
+tr = trget('ui')
 
 class CustomDateRangePanel(Panel):
     FIELDS = [
@@ -58,8 +58,8 @@ class CustomDateRangePanel(Panel):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.slotIndexComboBox.sizePolicy().hasHeightForWidth())
         self.slotIndexComboBox.setSizePolicy(sizePolicy)
-        for s in ["None", "#1", "#2", "#3"]:
-            self.slotIndexComboBox.addItem(tr(s))
+        for s in [tr("None"), tr("#1"), tr("#2"), tr("#3")]:
+            self.slotIndexComboBox.addItem(s)
         self.horizontalLayout_2.addWidget(self.slotIndexComboBox)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)

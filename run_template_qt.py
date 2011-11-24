@@ -43,7 +43,7 @@ def main(argv):
     app.setStyleSheet(style)
     settings = QSettings()
     lang = settings.value('Language').toString()
-    hscommon.trans.install_qt_trans(lang)
+    hscommon.trans.install_gettext_trans_under_qt(lang)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed
     from qt.app import MoneyGuru

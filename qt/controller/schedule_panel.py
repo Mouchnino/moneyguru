@@ -12,7 +12,7 @@ from PyQt4.QtGui import (QWidget, QHBoxLayout, QVBoxLayout, QFormLayout, QLabel,
     QAbstractItemView, QSpacerItem, QPushButton, QIcon, QPixmap)
 
 from qtlib.selectable_list import ComboboxModel
-from hscommon.trans import tr as trbase
+from hscommon.trans import trget
 
 from ..support.item_view import TableView
 from ..support.date_edit import DateEdit
@@ -20,7 +20,7 @@ from ..support.completable_edit import PayeeEdit, DescriptionEdit
 from .panel import Panel
 from .split_table import SplitTable
 
-tr = lambda s: trbase(s, "SchedulePanel")
+tr = trget('ui')
 
 class SchedulePanel(Panel):
     FIELDS = [
