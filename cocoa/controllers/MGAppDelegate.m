@@ -149,7 +149,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGDocumentController *dc = [NSDocumentController sharedDocumentController];
     BOOL isFirstRun = [[self py] isFirstRun];
     if (isFirstRun) {
-        if ([Dialogs askYesNo:TR(@"FirstRunMsg")] == NSAlertFirstButtonReturn) {
+        if ([Dialogs askYesNo:TR(@"This is your first time running moneyGuru. Do you want to open the example file?")] == NSAlertFirstButtonReturn) {
             [self openExampleDocument:self];
         }
         else {
@@ -172,7 +172,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     continueUpdate = [invocation retain];
     [[NSDocumentController sharedDocumentController] 
-        reviewUnsavedDocumentsWithAlertTitle:TR(@"AboutToRestartMsg")
+        reviewUnsavedDocumentsWithAlertTitle:TR(@"moneyGuru is about to restart")
         cancellable:NO delegate:self didReviewAllSelector:@selector(documentController:didReviewAll:contextInfo:)
         contextInfo:nil];
     return YES;

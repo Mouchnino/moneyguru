@@ -27,9 +27,7 @@
 "%@ (Page %d of %d)" = "%@ (Strana %d ze %d)";
 
 /* Messages */
-"FirstRunMsg" = "Spustili jste moneyGuru poprvé. Přejete si otevřít vzorový soubor?";
-"AboutToRestartMsg" = "moneyGuru bude restartován";
-"ThanksForBuyingMsg" = "Děkuji vám za zakoupení moneyGuru!";
-"DemoLimitReachedMsg" = "Narazil jste na omezení demoverze. Aby bylo možné uložit tento dokument, musíte si zakoupit licenci moneyGuru.";
-"SelectFileToImportMsg" = "Vyberte soubor pro import";
-"ExportToFileMsg" = "Exportovat do souboru";
+"This is your first time running moneyGuru. Do you want to open the example file?" = "Spustili jste moneyGuru poprvé. Přejete si otevřít vzorový soubor?";
+"moneyGuru is about to restart" = "moneyGuru bude restartován";
+"Select a file to import" = "Vyberte soubor pro import";
+"Export to file" = "Exportovat do souboru";

@@ -127,7 +127,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [op setCanChooseFiles:YES];
     [op setCanChooseDirectories:NO];
     [op setAllowsMultipleSelection:NO];
-    [op setTitle:TR(@"SelectFileToImportMsg")];
+    [op setTitle:TR(@"Select a file to import")];
     if ([op runModalForTypes:nil] == NSOKButton)
     {
         NSString *filename = [[op filenames] objectAtIndex:0];

@@ -27,9 +27,7 @@
 "%@ (Page %d of %d)" = "%@ (Page %d of %d)";
 
 /* Messages */
-"FirstRunMsg" = "Questa è la prima volta che eseguit moneyGuru. Vuoi aprire il file di esempio?";
-"AboutToRestartMsg" = "moneyGuru sta per riavviarsi";
-"ThanksForBuyingMsg" = "Grazie per aver acquistato moneyGuru!";
-"DemoLimitReachedMsg" = "Hai raggiunto i limiti di questa versione demo. Devi acquistare moneyGuru per salvare il documento.";
-"SelectFileToImportMsg" = "Scegli il file da importare";
-"ExportToFileMsg" = "Esporta al file";
+"This is your first time running moneyGuru. Do you want to open the example file?" = "Questa è la prima volta che eseguit moneyGuru. Vuoi aprire il file di esempio?";
+"moneyGuru is about to restart" = "moneyGuru sta per riavviarsi";
+"Select a file to import" = "Scegli il file da importare";
+"Export to file" = "Esporta al file";

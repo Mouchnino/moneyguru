@@ -67,7 +67,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSSavePanel *sp = [NSSavePanel savePanel];
     [sp setCanCreateDirectories:YES];
-    [sp setTitle:TR(@"ExportToFileMsg")];
+    [sp setTitle:TR(@"Export to file")];
     NSString *filename = [exportFormatButtons selectedRow] == 0 ? @"export.qif" : @"export.csv";
     if ([sp runModalForDirectory:nil file:filename] == NSOKButton) {
         NSString *filepath = [[sp URL] path];

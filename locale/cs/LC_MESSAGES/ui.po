@@ -1130,18 +1130,6 @@ msgid "moneyGuru is about to restart"
 msgstr "moneyGuru bude restartován"
 
 #: cocoa/en.lproj/Localizable.strings:0
-msgid "Thanks for buying moneyGuru!"
-msgstr "Děkuji vám za zakoupení moneyGuru!"
-
-#: cocoa/en.lproj/Localizable.strings:0
-msgid ""
-"You have reached the limits of this demo version. You must buy moneyGuru to "
-"save the document."
-msgstr ""
-"Narazil jste na omezení demoverze. Aby bylo možné uložit tento dokument, "
-"musíte si zakoupit licenci moneyGuru."
-
-#: cocoa/en.lproj/Localizable.strings:0
 msgid "Select a file to import"
 msgstr "Vyberte soubor pro import"
 

@@ -1136,18 +1136,6 @@ msgid "moneyGuru is about to restart"
 msgstr "moneyGuru va fermer"
 
 #: cocoa/en.lproj/Localizable.strings:0
-msgid "Thanks for buying moneyGuru!"
-msgstr "Merci d'avoir acheté moneyGuru!"
-
-#: cocoa/en.lproj/Localizable.strings:0
-msgid ""
-"You have reached the limits of this demo version. You must buy moneyGuru to "
-"save the document."
-msgstr ""
-"Vous avez atteint les limites de la démo. Vous devez acheter moneyGuru pour "
-"sauvegarder votre document."
-
-#: cocoa/en.lproj/Localizable.strings:0
 msgid "Select a file to import"
 msgstr "Selectionner un fichier à importer"
 
