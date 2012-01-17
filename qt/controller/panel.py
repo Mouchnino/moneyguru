@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-10
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -7,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox, QPlainTextEdit
+from PyQt4.QtCore import Qt, QSignalMapper
+from PyQt4.QtGui import QWidget, QDialog, QLineEdit, QSpinBox, QComboBox, QCheckBox, QPlainTextEdit
 
 from ..support.completable_edit import CompletableEdit
 
@@ -34,21 +33,24 @@ class Panel(QDialog):
             comboBox.currentIndexChanged.connect(self.comboBoxCurrentIndexChanged)
     
     def _connectSignals(self):
+        self._signalMapper = QSignalMapper()
         for widgetName, modelAttr in self.FIELDS:
             widget = getattr(self, widgetName)
             self._widget2ModelAttr[widget] = modelAttr
+            self._signalMapper.setMapping(widget, widget)
             if isinstance(widget, QComboBox):
-                widget.currentIndexChanged.connect(self.comboBoxCurrentIndexChanged)
+                widget.currentIndexChanged.connect(self._signalMapper.map)
             elif isinstance(widget, QSpinBox):
-                widget.valueChanged.connect(self.spinBoxValueChanged)
+                widget.valueChanged.connect(self._signalMapper.map)
             elif isinstance(widget, QLineEdit):
-                widget.editingFinished.connect(self.lineEditEditingFinished)
+                widget.editingFinished.connect(self._signalMapper.map)
                 if isinstance(widget, CompletableEdit):
                     widget.setMainwindow(self.mainwindow.model)
             elif isinstance(widget, QPlainTextEdit):
-                widget.textChanged.connect(self.plainEditTextChanged)
+                widget.textChanged.connect(self._signalMapper.map)
             elif isinstance(widget, QCheckBox):
-                widget.stateChanged.connect(self.checkBoxStateChanged)
+                widget.stateChanged.connect(self._signalMapper.map)
+        self._signalMapper.mapped[QWidget].connect(self.widgetChanged)
     
     def _loadFields(self):
         for widgetName, modelAttr in self.FIELDS:
@@ -77,31 +79,20 @@ class Panel(QDialog):
         QDialog.accept(self)
     
     #--- Event Handlers
-    def checkBoxStateChanged(self):
-        sender = self.sender()
+    def widgetChanged(self, sender):
         modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, sender.isChecked())
-    
-    def comboBoxCurrentIndexChanged(self):
-        sender = self.sender()
-        modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, sender.currentIndex())
-    
-    def lineEditEditingFinished(self):
-        sender = self.sender()
-        modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, str(sender.text()))
-    
-    def plainEditTextChanged(self):
-        sender = self.sender()
-        modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, str(sender.toPlainText()))
-    
-    def spinBoxValueChanged(self):
-        sender = self.sender()
-        modelAttr = self._widget2ModelAttr[sender]
-        setattr(self.model, modelAttr, sender.value())
-    
+        if isinstance(sender, QComboBox):
+            newvalue = sender.currentIndex()
+        elif isinstance(sender, QSpinBox):
+            newvalue = sender.value()
+        elif isinstance(sender, QLineEdit):
+            newvalue = sender.text()
+        elif isinstance(sender, QPlainTextEdit):
+            newvalue = sender.toPlainText()
+        elif isinstance(sender, QCheckBox):
+            newvalue = sender.isChecked()
+        setattr(self.model, modelAttr, newvalue)
+        
     #--- model --> view
     def pre_load(self):
         pass
