@@ -107,6 +107,8 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>hsft</string>
+    <key>CFBundleShortVersionString</key>
+    <string>{version}</string>
 	<key>CFBundleVersion</key>
 	<string>{version}</string>
 	<key>NSHumanReadableCopyright</key>
