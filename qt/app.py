@@ -86,13 +86,12 @@ class MoneyGuru(ApplicationBase):
         self.mainWindow.show()
     
     def applicationWillTerminate(self):
-        # This line stops the autosave timer which sometimes prevent the app from quitting.
-        self.model.autosave_interval = 0
         self.doc.close()
         self.willSavePrefs.emit()
         self.prefs.saveGeometry('mainWindowGeometry', self.mainWindow)
         self.prefs.saveGeometry('importWindowGeometry', self.importWindow)
         self.prefs.save()
+        self.model.shutdown()
     
     #--- Signals
     willSavePrefs = pyqtSignal()

@@ -152,6 +152,12 @@ class Application(Broadcaster, RegistrableApplication):
         self._save_custom_ranges()
         self.notify('saved_custom_ranges_changed')
     
+    def shutdown(self):
+        # XXX call this in Cocoa too (for now only called in Qt)
+        # This stops the autosave timer which sometimes prevent the app from quitting.
+        self._autosave_interval = 0
+        self._update_autosave_timer()
+        
     def get_default(self, key, fallback_value=None):
         result = nonone(self.view.get_default(key), fallback_value)
         if fallback_value is not None and not isinstance(result, type(fallback_value)):
