@@ -366,6 +366,23 @@ def test_etable_attrs_with_one_spawn_and_one_regular(app):
     eq_(app.etable[3].date, '19/09/2008')
     eq_(app.etable[3].description, 'foo')
 
+@with_app(app_one_schedule_and_one_normal_txn)
+def test_schedule_exceptions_are_correctly_reassigned(app):
+    # When deleting an account to which schedule exceptions are assigned, correctly reassign these
+    # exceptions.
+    app.add_account('account2')
+    app.show_tview()
+    app.ttable.select([3])
+    app.ttable[3].to = 'account2'
+    app.ttable.save_edits()
+    eq_(app.ttable[3].to, 'account2')
+    app.show_nwview()
+    app.bsheet.selected = app.bsheet.assets[1]
+    app.bsheet.delete()
+    app.arpanel.save() # reassign to None
+    app.show_tview()
+    eq_(app.ttable[3].to, '')
+
 #--- Schedule with local change
 def app_schedule_with_local_change(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)

@@ -9,6 +9,7 @@
 import copy
 import datetime
 from calendar import monthrange
+from itertools import chain
 
 from hscommon.util import nonone
 from hscommon.trans import tr
@@ -123,6 +124,12 @@ class Recurrence:
     def add_exception(self, spawn):
         self.date2exception[spawn.recurrence_date] = spawn
     
+    def affected_accounts(self):
+        result = self.ref.affected_accounts()
+        for txn in chain(self.date2exception.values(), self.date2globalchange.values()):
+            result |= txn.affected_accounts()
+        return result
+    
     def change_globally(self, spawn):
         for date in list(self.date2globalchange.keys()):
             if date >= spawn.recurrence_date:
@@ -180,6 +187,12 @@ class Recurrence:
                     self.date2instances[current_date] = spawn
                 result.append(self.date2instances[current_date])
         return result
+    
+    def reassign_account(self, account, reassign_to=None):
+        self.ref.reassign_account(account, reassign_to)
+        for txn in chain(self.date2exception.values(), self.date2globalchange.values()):
+            txn.reassign_account(account, reassign_to)
+        self.reset_spawn_cache()
     
     def replicate(self):
         result = copy.copy(self)

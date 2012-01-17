@@ -317,7 +317,7 @@ class Document(Repeater):
         action = Action(tr('Remove account'))
         accounts = set(accounts)
         action.delete_accounts(accounts)
-        affected_schedules = [s for s in self.schedules if accounts & s.ref.affected_accounts()]
+        affected_schedules = [s for s in self.schedules if accounts & s.affected_accounts()]
         for schedule in affected_schedules:
             action.change_schedule(schedule)
         for account in accounts:
@@ -331,8 +331,7 @@ class Document(Repeater):
         for account in accounts:
             self.transactions.reassign_account(account, reassign_to)
             for schedule in affected_schedules:
-                schedule.ref.reassign_account(account, reassign_to)
-                schedule.reset_spawn_cache()
+                schedule.reassign_account(account, reassign_to)
             for budget in affected_budgets:
                 if budget.account is account:
                     if reassign_to is None:
