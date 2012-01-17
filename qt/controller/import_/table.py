@@ -82,7 +82,11 @@ class ImportTable(Table):
         index = indexes[0]
         if not self.model.can_bind(index, parentIndex.row()):
             return False
+        # If we dont do the layoutChanged thing, we get a weird situation where the row below the
+        # the dragged row has its will_import unchecked.
+        self.layoutAboutToBeChanged.emit()
         self.model.bind(index, parentIndex.row())
+        self.layoutChanged.emit()
         return True
     
     def mimeData(self, indexes):
