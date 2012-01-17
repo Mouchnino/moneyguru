@@ -1,3 +1,13 @@
+=== 2.4.2 (2012-01-17)
+
+* Fixed a checkbox-unchecking glitch in the import window. [Windows, Linux] (#289)
+* Re-added mass editing dialog labels which went missing in v.2.4.0. [Windows, Linux] (#292)
+* Fixed a bug where the autosave interval preference wouldn't be kept in between sessions. [Windows, Linux] (#291)
+* Fixed mixup in schedule table column titles. (#294)
+* Fixed a crash on clicking the cancel button in dialogs. [Windows, Linux] (#296)
+* Fixed a "ghost account" issue. (#295)
+* Added Dutch localization by Arnold Huzen.
+
 === 2.4.1 (2011-10-28)
 
 * Fixed nasty crashes introduced in 2.4.0.
