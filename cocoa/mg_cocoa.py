@@ -32,7 +32,6 @@ from core.gui.account_view import AccountView
 from core.gui.balance_sheet import BalanceSheet
 from core.gui.budget_view import BudgetView
 from core.gui.cashculator_view import CashculatorView
-from core.gui.cashculator_account_table import CashculatorAccountTable
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
     SUPPORTED_ENCODINGS as CSV_SUPPORTED_ENCODINGS
 from core.gui.completable_edit import CompletableEdit
@@ -40,7 +39,6 @@ from core.gui.date_widget import DateWidget
 from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
 from core.gui.entry_table import EntryTable
-from core.gui.general_ledger_table import GeneralLedgerTable
 from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
 from core.gui.import_window import ImportWindow
@@ -401,8 +399,6 @@ class PyBudgetTable(PyTable):
     
 
 class PyGeneralLedgerTable(PyTableWithDate):
-    py_class = GeneralLedgerTable
-
     @signature('c@:i')
     def isAccountRow_(self, row_index):
         return self.py.is_account_row(self._getrow(row_index))
@@ -1029,6 +1025,7 @@ class PyCashculatorView(PyBaseView):
 
 class PyGeneralLedgerView(PyBaseView):
     py_class = GeneralLedgerView
+    table = subproxy('table', 'gltable', PyGeneralLedgerTable)
 
 class PyDocPropsView(PyBaseView):
     py_class = DocPropsView

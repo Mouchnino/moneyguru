@@ -15,9 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyGeneralLedgerView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"GeneralLedger" owner:self];
-    ledgerTable = [[MGGeneralLedgerTable alloc] initWithPyParent:[self py] view:tableView];
-    NSArray *children = [NSArray arrayWithObjects:[ledgerTable py], nil];
-    [[self py] setChildren:children];
+    ledgerTable = [[MGGeneralLedgerTable alloc] initWithPy:[[self py] table] view:tableView];
     return self;
 }
         

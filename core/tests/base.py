@@ -30,7 +30,6 @@ from ..gui.csv_options import CSVOptions
 from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
 from ..gui.entry_table import EntryTable
-from ..gui.general_ledger_table import GeneralLedgerTable
 from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.income_statement import IncomeStatement
 from ..gui.import_window import ImportWindow
@@ -151,7 +150,7 @@ class TestApp(TestAppBase):
         make_table_gui('ttable', TransactionTable, parent=self.tview)
         self.sctable = link_gui(self.scview.table)
         self.btable = link_gui(self.bview.table)
-        make_table_gui('gltable', GeneralLedgerTable, parent=self.glview)
+        self.gltable = link_gui(self.glview.gltable)
         self.apanel = link_gui(self.mw.account_panel)
         self.apanel.type_list.view = self.make_logger()
         self.scpanel = link_gui(self.mw.schedule_panel)

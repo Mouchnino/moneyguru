@@ -20,9 +20,7 @@ class GeneralLedgerView(BaseView):
         self.doc = mainwindow.doc
         self._setupUi()
         self.model = GeneralLedgerViewModel(view=self, mainwindow=mainwindow.model)
-        self.gltable = GeneralLedgerTable(self, view=self.tableView)
-        children = [self.gltable.model]
-        self.model.set_children(children)
+        self.gltable = GeneralLedgerTable(model=self.model.gltable, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):

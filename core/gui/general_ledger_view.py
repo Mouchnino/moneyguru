@@ -9,6 +9,7 @@
 from hscommon.trans import tr
 from ..const import PaneType
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
+from .general_ledger_table import GeneralLedgerTable
 
 class GeneralLedgerView(BaseView):
     VIEW_TYPE = PaneType.GeneralLedger
@@ -18,15 +19,13 @@ class GeneralLedgerView(BaseView):
     
     def __init__(self, view, mainwindow):
         BaseView.__init__(self, view, mainwindow)
+        self.gltable = GeneralLedgerTable(view=None, parent_view=self)
+        self.maintable = self.gltable
+        self.columns = self.maintable.columns
+        self.set_children([self.gltable])
         self.bind_messages(self.INVALIDATING_MESSAGES, self._refresh_totals)
     
     #--- Overrides
-    def set_children(self, children):
-        [self.gltable] = children
-        self.maintable = self.gltable
-        self.columns = self.maintable.columns
-        BaseView.set_children(self, children)
-    
     def _revalidate(self):
         self._refresh_totals()
     

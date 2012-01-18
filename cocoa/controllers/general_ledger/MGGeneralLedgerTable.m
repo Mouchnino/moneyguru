@@ -12,9 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGGeneralLedgerTable
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyGeneralLedgerTable" pyParent:aPyParent view:aTableView];
+    self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
     return self;
