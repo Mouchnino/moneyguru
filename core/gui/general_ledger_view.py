@@ -17,8 +17,8 @@ class GeneralLedgerView(BaseView):
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed',
         'transactions_selected'}
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         self.gltable = GeneralLedgerTable(view=None, parent_view=self)
         self.maintable = self.gltable
         self.columns = self.maintable.columns

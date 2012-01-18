@@ -17,6 +17,6 @@ http://www.hardcoded.net/licenses/bsd_license
     
     MGGeneralLedgerTable *ledgerTable;
 }
-- (id)initWithPyParent:(id)aPyParent;
+- (id)initWithPy:(id)aPy;
 - (PyGeneralLedgerView *)py;
 @end

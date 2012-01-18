@@ -89,10 +89,8 @@ class AccountSheet(TreeModel):
     AMOUNT_ATTRS = set()
     BOLD_ATTRS = set()
     
-    def __init__(self, doc, model, view):
+    def __init__(self, model, view):
         TreeModel.__init__(self)
-        self.doc = doc
-        self.app = doc.app
         self.view = view
         self.model = model
         self.model.view = self

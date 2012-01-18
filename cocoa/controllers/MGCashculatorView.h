@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     MGCashculatorAccountTable *accountTable;
 }
-- (id)initWithPyParent:(id)aPyParent;
+- (id)initWithPy:(id)aPy;
 - (PyCashculatorView *)py;
 
 - (IBAction)exportDB:(id)sender;

@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGGeneralLedgerView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyGeneralLedgerView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"GeneralLedger" owner:self];
     ledgerTable = [[MGGeneralLedgerTable alloc] initWithPy:[[self py] table] view:tableView];
     return self;

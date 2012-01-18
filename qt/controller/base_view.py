@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-10-31
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -10,6 +9,11 @@
 from PyQt4.QtGui import QWidget
 
 class BaseView(QWidget):
+    def __init__(self, model):
+        QWidget.__init__(self)
+        self.model = model
+        self.model.view = self
+    
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fit(self, 42, 42, expandH=True, expandV=True)
     

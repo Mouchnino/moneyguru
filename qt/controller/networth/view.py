@@ -10,7 +10,6 @@ from PyQt4.QtCore import QSize
 from PyQt4.QtGui import QVBoxLayout, QHBoxLayout, QFrame, QAbstractItemView
 
 from core.const import PaneArea
-from core.gui.networth_view import NetWorthView as NetWorthViewModel
 
 from ...support.item_view import TreeView
 from ...support.pie_chart_view import PieChartView
@@ -20,12 +19,10 @@ from ..chart import Chart
 from .sheet import NetWorthSheet
 
 class NetWorthView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
-        self.doc = mainwindow.doc
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = NetWorthViewModel(view=self, mainwindow=mainwindow.model)
-        self.nwsheet = NetWorthSheet(self.doc, self.model.bsheet, view=self.treeView)
+        self.nwsheet = NetWorthSheet(self.model.bsheet, view=self.treeView)
         self.nwgraph = Chart(self.model.nwgraph, view=self.graphView)
         self.apiechart = Chart(self.model.apie, view=self.assetPieChart)
         self.lpiechart = Chart(self.model.lpie, view=self.liabilityPieChart)

@@ -9,17 +9,15 @@ from PyQt4.QtGui import QFormLayout, QComboBox, QSizePolicy
 
 from hscommon.trans import trget
 from qtlib.selectable_list import ComboboxModel
-from core.gui.docprops_view import DocPropsView as DocPropsViewModel
 
 from .base_view import BaseView
 
 tr = trget('ui')
 
 class DocPropsView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = DocPropsViewModel(view=self, mainwindow=mainwindow.model)
         self.currencyComboBox = ComboboxModel(model=self.model.currency_list, view=self.currencyComboBoxView)
         self.firstWeekdayComboBox = ComboboxModel(model=self.model.first_weekday_list,
             view=self.firstWeekdayComboBoxView)

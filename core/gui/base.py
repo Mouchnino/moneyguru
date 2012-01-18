@@ -208,11 +208,10 @@ def _raise_notimplemented(self):
 class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     VIEW_TYPE = -1
     
-    def __init__(self, view, mainwindow):
+    def __init__(self, mainwindow):
         Repeater.__init__(self, mainwindow)
         HideableObject.__init__(self)
         self._children = []
-        self.view = view
         self.mainwindow = mainwindow
         self.document = mainwindow.document
         self.app = mainwindow.document.app

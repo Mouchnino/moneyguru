@@ -9,7 +9,6 @@
 from PyQt4 import QtCore, QtGui
 
 from qtlib.radio_box import RadioBox
-from core.gui.transaction_view import TransactionView as TransactionViewModel
 
 from ...support.item_view import TableView
 from ..base_view import BaseView
@@ -17,11 +16,9 @@ from .filter_bar import TransactionFilterBar
 from .table import TransactionTable
 
 class TransactionView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
-        self.doc = mainwindow.doc
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = TransactionViewModel(view=self, mainwindow=mainwindow.model)
         self.ttable = TransactionTable(self.model.ttable, view=self.tableView)
         self.tfbar = TransactionFilterBar(model=self.model.filter_bar, view=self.filterBar)
         self._setupColumns() # Can only be done after the model has been connected

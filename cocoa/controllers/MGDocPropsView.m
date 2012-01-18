@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGDocPropsView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyDocPropsView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"DocProps" owner:self];
     currencyComboBox = [[HSComboBox alloc] initWithPy:[[self py] currencyList] view:currencyComboBoxView];
     firstWeekdayPopUp = [[HSPopUpList alloc] initWithPy:[[self py] firstWeekdayList] view:firstWeekdayPopUpView];

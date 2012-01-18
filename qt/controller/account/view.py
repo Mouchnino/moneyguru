@@ -9,7 +9,6 @@
 from PyQt4 import QtCore, QtGui
 
 from core.const import PaneArea
-from core.gui.account_view import AccountView as AccountViewModel
 
 from hscommon.trans import trget
 
@@ -25,12 +24,9 @@ from .table import EntryTable
 tr = trget('ui')
 
 class EntryView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
-        self.mainwindow = mainwindow
-        self.doc = mainwindow.doc
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = AccountViewModel(view=self, mainwindow=mainwindow.model)
         self.etable = EntryTable(self.model.etable, view=self.tableView)
         self.efbar = EntryFilterBar(model=self.model.filter_bar, view=self.filterBar)
         self.bgraph = Chart(self.model.bargraph, view=self.barGraphView)

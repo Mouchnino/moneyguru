@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyMainWindow.h"
 
 @implementation MGProfitView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyProfitView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"IncomeStatement" owner:self];
     incomeStatement = [[MGIncomeStatement alloc] initWithPy:[[self py] sheet] view:outlineView];
     incomePieChart = [[MGPieChart alloc] initWithPy:[[self py] ipie]];

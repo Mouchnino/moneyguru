@@ -11,8 +11,8 @@ from .base import BaseView
 class AccountSheetView(BaseView):
     INVALIDATING_MESSAGES = BaseView.INVALIDATING_MESSAGES | {'area_visibility_changed'}
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         self.bind_messages(self.INVALIDATING_MESSAGES, self._revalidate)
     
     # subclasses of this class must put their sheet gui element first in the children list

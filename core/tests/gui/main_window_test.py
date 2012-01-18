@@ -307,14 +307,14 @@ def test_switch_panes_through_show_account(app):
     app.istatement.show_selected_account()
     eq_(app.mw.current_pane_index, 6)
     expected = ['show_bar_graph', 'refresh_reconciliation_button']
-    app.check_gui_calls_partial(app.aview_gui, expected)
+    app.check_gui_calls_partial(app.aview.view, expected)
     app.mainwindow.select_balance_sheet()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.mw.current_pane_index, 5)
     expected = ['show_line_graph', 'refresh_reconciliation_button']
-    app.check_gui_calls_partial(app.aview_gui, expected)
+    app.check_gui_calls_partial(app.aview.view, expected)
     app.mainwindow.select_transaction_table()
     eq_(app.mw.current_pane_index, 2)
 

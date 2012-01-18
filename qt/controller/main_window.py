@@ -70,15 +70,15 @@ class MainWindow(QMainWindow):
         
         # Create base elements
         self.model = MainWindowModel(view=self, document=doc.model)
-        self.nwview = NetWorthView(mainwindow=self)
-        self.pview = ProfitView(mainwindow=self)
-        self.tview = TransactionView(mainwindow=self)
-        self.eview = EntryView(mainwindow=self)
-        self.scview = ScheduleView(mainwindow=self)
-        self.bview = BudgetView(mainwindow=self)
-        self.glview = GeneralLedgerView(mainwindow=self)
-        self.dpview = DocPropsView(mainwindow=self)
-        self.newview = NewView(mainwindow=self)
+        self.nwview = NetWorthView(model=self.model.nwview)
+        self.pview = ProfitView(model=self.model.pview)
+        self.tview = TransactionView(model=self.model.tview)
+        self.eview = EntryView(model=self.model.aview)
+        self.scview = ScheduleView(model=self.model.scview)
+        self.bview = BudgetView(model=self.model.bview)
+        self.glview = GeneralLedgerView(model=self.model.glview)
+        self.dpview = DocPropsView(model=self.model.dpview)
+        self.newview = NewView(model=self.model.emptyview)
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
         self.mepanel = MassEditionPanel(mainwindow=self)
@@ -105,11 +105,6 @@ class MainWindow(QMainWindow):
         self.mainView.addWidget(self.dpview)
         self.mainView.addWidget(self.newview)
         
-        # set_children() and connect() calls have to happen after _setupUiPost()
-        # The None value between the bview and emptyview is the cashculator view, which is OS X specific.
-        children = [self.nwview, self.pview, self.tview, self.eview, self.scview, self.bview, None,
-            self.glview, self.dpview, self.newview]
-        self.model.set_children([getattr(child, 'model', None) for child in children])
         self.model.connect()
         
         self._updateUndoActions()

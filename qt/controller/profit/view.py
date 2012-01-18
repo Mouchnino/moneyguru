@@ -10,7 +10,6 @@ from PyQt4.QtCore import QSize
 from PyQt4.QtGui import QVBoxLayout, QHBoxLayout, QFrame, QAbstractItemView
 
 from core.const import PaneArea
-from core.gui.profit_view import ProfitView as ProfitViewModel
 
 from ...support.item_view import TreeView
 from ...support.pie_chart_view import PieChartView
@@ -20,12 +19,10 @@ from ..chart import Chart
 from .sheet import ProfitSheet
 
 class ProfitView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
-        self.doc = mainwindow.doc
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = ProfitViewModel(view=self, mainwindow=mainwindow.model)
-        self.psheet = ProfitSheet(self.doc, self.model.istatement, view=self.treeView)
+        self.psheet = ProfitSheet(self.model.istatement, view=self.treeView)
         self.pgraph = Chart(self.model.pgraph, view=self.graphView)
         self.ipiechart = Chart(self.model.ipie, view=self.incomePieChart)
         self.epiechart = Chart(self.model.epie, view=self.expensePieChart)

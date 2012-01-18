@@ -35,8 +35,8 @@ MSG_NO_BASE_DB = tr("Base Cashculator database not present. You must run and qui
 class CashculatorView(BaseView):
     VIEW_TYPE = PaneType.Cashculator
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         self._mgccdbpath = None
         self._ccdbpath = None
         self._db = None

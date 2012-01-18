@@ -24,16 +24,16 @@ http://www.hardcoded.net/licenses/bsd_license
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
     exportPanel = [[MGExportPanel alloc] initWithParent:self];
-    netWorthView = [[MGNetWorthView alloc] initWithPyParent:py];
-    profitView = [[MGProfitView alloc] initWithPyParent:py];
-    transactionView = [[MGTransactionView alloc] initWithPyParent:py];
-    accountView = [[MGAccountView alloc] initWithPyParent:py];
-    scheduleView = [[MGScheduleView alloc] initWithPyParent:py];
-    budgetView = [[MGBudgetView alloc] initWithPyParent:py];
-    cashculatorView = [[MGCashculatorView alloc] initWithPyParent:py];
-    ledgerView = [[MGGeneralLedgerView alloc] initWithPyParent:py];
-    docpropsView = [[MGDocPropsView alloc] initWithPyParent:py];
-    emptyView = [[MGEmptyView alloc] initWithPyParent:py];
+    netWorthView = [[MGNetWorthView alloc] initWithPy:[[self py] nwview]];
+    profitView = [[MGProfitView alloc] initWithPy:[[self py] pview]];
+    transactionView = [[MGTransactionView alloc] initWithPy:[[self py] tview]];
+    accountView = [[MGAccountView alloc] initWithPy:[[self py] aview]];
+    scheduleView = [[MGScheduleView alloc] initWithPy:[[self py] scview]];
+    budgetView = [[MGBudgetView alloc] initWithPy:[[self py] bview]];
+    cashculatorView = [[MGCashculatorView alloc] initWithPy:[[self py] ccview]];
+    ledgerView = [[MGGeneralLedgerView alloc] initWithPy:[[self py] glview]];
+    docpropsView = [[MGDocPropsView alloc] initWithPy:[[self py] dpview]];
+    emptyView = [[MGEmptyView alloc] initWithPy:[[self py] emptyview]];
     searchField = [[MGSearchField alloc] initWithPy:[[self py] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     [importWindow connect];
@@ -54,10 +54,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
-    NSArray *children = [NSArray arrayWithObjects:[netWorthView py], [profitView py],
-        [transactionView py], [accountView py], [scheduleView py], [budgetView py], [cashculatorView py],
-        [ledgerView py], [docpropsView py], [emptyView py], nil];
-    [[self py] setChildren:children];
     [[self py] connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause
        crashes.

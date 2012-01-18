@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGBudgetView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyBudgetView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
     budgetTable = [[MGBudgetTable alloc] initWithPy:[[self py] table] view:tableView];
     return self;

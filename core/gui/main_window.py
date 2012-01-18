@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.notify import Repeater, Listener
+from hscommon.notify import Repeater
 from hscommon.util import first, minmax
 from hscommon.trans import tr
 
@@ -28,6 +28,19 @@ from .schedule_panel import SchedulePanel
 from .custom_date_range_panel import CustomDateRangePanel
 from .account_reassign_panel import AccountReassignPanel
 from .export_panel import ExportPanel
+from .networth_view import NetWorthView
+from .profit_view import ProfitView
+from .transaction_view import TransactionView
+from .account_view import AccountView
+from .schedule_view import ScheduleView
+from .budget_view import BudgetView
+from .general_ledger_view import GeneralLedgerView
+from .docprops_view import DocPropsView
+from .empty_view import EmptyView
+try:
+    from .cashculator_view import CashculatorView
+except ImportError:
+    CashculatorView = None
 
 class Preference:
     OpenedPanes = 'OpenedPanes'
@@ -82,24 +95,36 @@ class MainWindow(Repeater):
         self.account_reassign_panel = AccountReassignPanel(self)
         self.export_panel = ExportPanel(self)
         
+        self.nwview = NetWorthView(self)
+        self.pview = ProfitView(self)
+        self.tview = TransactionView(self)
+        self.aview = AccountView(self)
+        self.scview = ScheduleView(self)
+        self.bview = BudgetView(self)
+        if CashculatorView is not None:
+            self.ccview = CashculatorView(self)
+        else:
+            self.ccview = None
+        self.glview = GeneralLedgerView(self)
+        self.dpview = DocPropsView(self)
+        self.emptyview = EmptyView(self)
+        
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
     
-    # After having created the main window, you *have* to call this method. This scheme is to allow
-    # children to have reference to the main window.
-    def set_children(self, children):
-        (self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, self.ccview,
-            self.glview, self.dpview, self.emptyview) = children
+    def connect(self):
         # XXX For now, this is the only place where we know we've linked our GUI views, so we can
         # call our view refreshes. However, a more correct way to do it is to have an
         # app_finished_init signal.
         self.daterange_selector.refresh()
         self.daterange_selector.refresh_custom_ranges()
         self._restore_default_panes()
+        children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
+            self.bview, self.ccview, self.glview, self.dpview, self.emptyview]
         for child in children:
-            # Panels are not listeners
-            if isinstance(child, Listener):
+            if child is not None:
                 child.connect()
+        Repeater.connect(self)
     
     #--- Private
     def _add_pane(self, pane):

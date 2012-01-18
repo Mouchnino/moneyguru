@@ -12,18 +12,15 @@ from PyQt4.QtGui import (QShortcut, QKeySequence, QGridLayout, QIcon, QPixmap, Q
 
 from hscommon.trans import trget
 from core.const import PaneType
-from core.gui.empty_view import EmptyView as EmptyViewModel
 
 from .base_view import BaseView
 
 tr = trget('ui')
 
 class NewView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = EmptyViewModel(view=self, mainwindow=mainwindow.model)
-        self.model.set_children([])
         
         self.networthButton.clicked.connect(self.networthButtonClicked)
         self.profitButton.clicked.connect(self.profitButtonClicked)

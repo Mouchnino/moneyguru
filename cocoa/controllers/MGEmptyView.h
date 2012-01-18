@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface MGEmptyView : MGBaseView
 {
 }
-- (id)initWithPyParent:(id)aPyParent;
+- (id)initWithPy:(id)aPy;
 - (PyEmptyView *)py;
 
 /* Actions */

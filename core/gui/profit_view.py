@@ -17,8 +17,8 @@ class ProfitView(AccountSheetView):
     VIEW_TYPE = PaneType.Profit
     PRINT_TITLE_FORMAT = tr('Profit and Loss from {start_date} to {end_date}')
     
-    def __init__(self, view, mainwindow):
-        AccountSheetView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        AccountSheetView.__init__(self, mainwindow)
         self.istatement = IncomeStatement(self)
         self.columns = self.istatement.columns
         self.pgraph = ProfitGraph(self)

@@ -21,8 +21,8 @@ class AccountView(BaseView):
         'date_range_changed', 'transactions_selected', 'shown_account_changed',
         'area_visibility_changed'}
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         self._shown_graph = None
         self._reconciliation_mode = False
         self.etable = EntryTable(self)
@@ -32,8 +32,8 @@ class AccountView(BaseView):
         self.bargraph = AccountFlowGraph(self)
         self.filter_bar = EntryFilterBar(self)
         self._shown_graph = self.balgraph
-        # self.balgraph.connect()
-        # self.bargraph.connect()
+        self.balgraph.connect()
+        self.bargraph.connect()
         # we count the graphs separately because the show/hide rules for them are special
         self.set_children([self.etable])
     

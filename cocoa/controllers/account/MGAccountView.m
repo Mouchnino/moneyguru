@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyMainWindow.h"
 
 @implementation MGAccountView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyAccountView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
     entryTable = [[MGEntryTable alloc] initWithPy:[[self py] table] view:tableView];
     filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:YES];

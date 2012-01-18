@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGCashculatorView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyCashculatorView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"CashculatorView" owner:self];
     accountTable = [[MGCashculatorAccountTable alloc] initWithPy:[[self py] table] view:accountTableView];
     return self;

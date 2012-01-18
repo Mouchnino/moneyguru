@@ -17,8 +17,8 @@ class ScheduleView(BaseView):
     INVALIDATING_MESSAGES = MESSAGES_EVERYTHING_CHANGED | {'schedule_changed', 'schedule_deleted',
         'account_deleted'}
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         self.table = ScheduleTable(self)
         self.columns = self.table.columns
         self.bind_messages(self.INVALIDATING_MESSAGES, self._revalidate)

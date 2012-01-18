@@ -18,7 +18,7 @@ def test_reconciliation_mode(app):
     app.clear_gui_calls()
     assert not app.aview.reconciliation_mode
     app.aview.toggle_reconciliation_mode()
-    app.check_gui_calls(app.aview_gui, ['refresh_reconciliation_button'])
+    app.check_gui_calls(app.aview.view, ['refresh_reconciliation_button'])
     assert app.aview.reconciliation_mode
     app.aview.toggle_reconciliation_mode()
     assert not app.aview.reconciliation_mode

@@ -25,24 +25,14 @@ hscommon.trans.install_gettext_trans_under_cocoa()
 from core.app import Application
 from core.document import Document, FilterType
 from core.exception import FileFormatError
-from core.gui.account_view import AccountView
-from core.gui.budget_view import BudgetView
-from core.gui.cashculator_view import CashculatorView
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
     SUPPORTED_ENCODINGS as CSV_SUPPORTED_ENCODINGS
 from core.gui.completable_edit import CompletableEdit
 from core.gui.date_widget import DateWidget
-from core.gui.docprops_view import DocPropsView
-from core.gui.empty_view import EmptyView
-from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.import_window import ImportWindow
 from core.gui.main_window import MainWindow
-from core.gui.networth_view import NetWorthView
 from core.gui.print_view import PrintView
-from core.gui.profit_view import ProfitView
-from core.gui.schedule_view import ScheduleView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
-from core.gui.transaction_view import TransactionView
 from core.model.date import clean_format
 
 class PyMoneyGuruApp(PyFairware):
@@ -905,8 +895,6 @@ class PyBaseView(PyGUIContainer):
         return self._mainwindow
 
 class PyNetWorthView(PyBaseView):
-    py_class = NetWorthView
-    
     sheet = subproxy('sheet', 'bsheet', PyReport)
     nwgraph = subproxy('nwgraph', 'nwgraph', PyGraph)
     apie = subproxy('apie', 'apie', PyChart)
@@ -918,8 +906,6 @@ class PyNetWorthView(PyBaseView):
     
 
 class PyProfitView(PyBaseView):
-    py_class = ProfitView
-    
     sheet = subproxy('sheet', 'istatement', PyReport)
     pgraph = subproxy('pgraph', 'pgraph', PyGraph)
     ipie = subproxy('ipie', 'ipie', PyChart)
@@ -931,14 +917,10 @@ class PyProfitView(PyBaseView):
     
 
 class PyTransactionView(PyBaseView):
-    py_class = TransactionView
-    
     filterBar = subproxy('filterBar', 'filter_bar', PyFilterBar)
     table = subproxy('table', 'ttable', PyTransactionTable)
 
 class PyAccountView(PyBaseView):
-    py_class = AccountView
-    
     filterBar = subproxy('filterBar', 'filter_bar', PyEntryFilterBar)
     table = subproxy('table', 'etable', PyEntryTable)
     balGraph = subproxy('balGraph', 'balgraph', PyGraph)
@@ -970,18 +952,12 @@ class PyAccountView(PyBaseView):
     
 
 class PyBudgetView(PyBaseView):
-    py_class = BudgetView
-    
     table = subproxy('table', 'table', PyBudgetTable)
 
 class PyScheduleView(PyBaseView):
-    py_class = ScheduleView
-    
     table = subproxy('table', 'table', PyScheduleTable)
 
 class PyCashculatorView(PyBaseView):
-    py_class = CashculatorView
-    
     table = subproxy('table', 'atable', PyTable)
     
     def exportDB(self):
@@ -995,20 +971,15 @@ class PyCashculatorView(PyBaseView):
     
 
 class PyGeneralLedgerView(PyBaseView):
-    py_class = GeneralLedgerView
     table = subproxy('table', 'gltable', PyGeneralLedgerTable)
 
 class PyDocPropsView(PyBaseView):
-    py_class = DocPropsView
-    
     currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
     firstWeekdayList = subproxy('firstWeekdayList', 'first_weekday_list', PySelectableList)
     aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
     yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
 
 class PyEmptyView(PyBaseView):
-    py_class = EmptyView
-    
     @signature('v@:i')
     def selectPaneType_(self, paneType):
         self.py.select_pane_type(paneType)
@@ -1029,6 +1000,17 @@ class PyMainWindow(PyGUIContainer):
     customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyCustomDateRangePanel)
     accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyAccountReassignPanel)
     exportPanel = subproxy('exportPanel', 'export_panel', PyExportPanel)
+    
+    nwview = subproxy('nwview', 'nwview', PyNetWorthView)
+    pview = subproxy('pview', 'pview', PyProfitView)
+    tview = subproxy('tview', 'tview', PyTransactionView)
+    aview = subproxy('aview', 'aview', PyAccountView)
+    scview = subproxy('scview', 'scview', PyScheduleView)
+    bview = subproxy('bview', 'bview', PyBudgetView)
+    ccview = subproxy('ccview', 'ccview', PyCashculatorView)
+    glview = subproxy('glview', 'glview', PyGeneralLedgerView)
+    dpview = subproxy('dpview', 'dpview', PyDocPropsView)
+    emptyview = subproxy('emptyview', 'emptyview', PyEmptyView)
     
     def selectNextView(self):
         self.py.select_next_view()

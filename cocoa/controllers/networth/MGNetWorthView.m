@@ -13,9 +13,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyMainWindow.h"
 
 @implementation MGNetWorthView
-- (id)initWithPyParent:(id)aPyParent
+- (id)initWithPy:(id)aPy
 {
-    self = [super initWithPyClassName:@"PyNetWorthView" pyParent:aPyParent];
+    self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
     balanceSheet = [[MGBalanceSheet alloc] initWithPy:[[self py] sheet] view:outlineView];
     assetsPieChart = [[MGPieChart alloc] initWithPy:[[self py] apie]];

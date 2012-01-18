@@ -20,8 +20,8 @@ class TransactionView(BaseView):
     PRINT_TITLE_FORMAT = tr('Transactions from {start_date} to {end_date}')
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         self._visible_transactions = None
         self.filter_bar = FilterBar(self)
         self.ttable = TransactionTable(self)

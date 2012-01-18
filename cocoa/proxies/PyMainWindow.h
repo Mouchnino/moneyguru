@@ -20,6 +20,16 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyCustomDateRangePanel.h"
 #import "PyAccountReassignPanel.h"
 #import "PyExportPanel.h"
+#import "PyNetWorthView.h"
+#import "PyProfitView.h"
+#import "PyTransactionView.h"
+#import "PyAccountView.h"
+#import "PyScheduleView.h"
+#import "PyBudgetView.h"
+#import "PyCashculatorView.h"
+#import "PyGeneralLedgerView.h"
+#import "PyDocPropsView.h"
+#import "PyEmptyView.h"
 
 @interface PyMainWindow : PyGUIContainer {}
 - (PySearchField *)searchField;
@@ -35,6 +45,17 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyCustomDateRangePanel *)customDateRangePanel;
 - (PyAccountReassignPanel *)accountReassignPanel;
 - (PyExportPanel *)exportPanel;
+
+- (PyNetWorthView *)nwview;
+- (PyProfitView *)pview;
+- (PyTransactionView *)tview;
+- (PyAccountView *)aview;
+- (PyScheduleView *)scview;
+- (PyBudgetView *)bview;
+- (PyCashculatorView *)ccview;
+- (PyGeneralLedgerView *)glview;
+- (PyDocPropsView *)dpview;
+- (PyEmptyView *)emptyview;
 
 // Navigation
 - (void)selectNextView;

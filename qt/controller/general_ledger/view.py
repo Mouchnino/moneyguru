@@ -8,18 +8,14 @@
 
 from PyQt4 import QtGui
 
-from core.gui.general_ledger_view import GeneralLedgerView as GeneralLedgerViewModel
-
 from ...support.item_view import TableView
 from ..base_view import BaseView
 from .table import GeneralLedgerTable
 
 class GeneralLedgerView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
-        self.doc = mainwindow.doc
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = GeneralLedgerViewModel(view=self, mainwindow=mainwindow.model)
         self.gltable = GeneralLedgerTable(model=self.model.gltable, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected
     

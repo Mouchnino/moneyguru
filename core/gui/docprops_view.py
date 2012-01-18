@@ -15,8 +15,8 @@ class DocPropsView(BaseView):
     VIEW_TYPE = PaneType.DocProps
     INVALIDATING_MESSAGES = {'document_changed'}
     
-    def __init__(self, view, mainwindow):
-        BaseView.__init__(self, view, mainwindow)
+    def __init__(self, mainwindow):
+        BaseView.__init__(self, mainwindow)
         WEEKDAYS = [
             tr("Monday"),
             tr("Tuesday"),

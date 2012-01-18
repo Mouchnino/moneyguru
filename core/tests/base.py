@@ -19,19 +19,10 @@ from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
 from ..const import PaneType
-from ..gui.account_view import AccountView
-from ..gui.budget_view import BudgetView
 from ..gui.completable_edit import CompletableEdit
 from ..gui.csv_options import CSVOptions
-from ..gui.docprops_view import DocPropsView
-from ..gui.empty_view import EmptyView
-from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.import_window import ImportWindow
 from ..gui.main_window import MainWindow
-from ..gui.networth_view import NetWorthView
-from ..gui.profit_view import ProfitView
-from ..gui.schedule_view import ScheduleView
-from ..gui.transaction_view import TransactionView
 from ..loader import base
 from ..model.account import AccountType
 
@@ -128,15 +119,15 @@ class TestApp(TestAppBase):
         make_gui('mainwindow', MainWindow, view=self.make_logger(MainWindowGUI), parent=self.doc)
         self.mw = self.mainwindow # shortcut. This one is often typed
         self.default_parent = self.mw
-        make_gui('nwview', NetWorthView)
-        make_gui('pview', ProfitView)
-        make_gui('tview', TransactionView)
-        make_gui('aview', AccountView)
-        make_gui('scview', ScheduleView)
-        make_gui('bview', BudgetView)
-        make_gui('glview', GeneralLedgerView)
-        make_gui('dpview', DocPropsView)
-        make_gui('emptyview', EmptyView)
+        self.nwview = link_gui(self.mw.nwview)
+        self.pview = link_gui(self.mw.pview)
+        self.tview = link_gui(self.mw.tview)
+        self.aview = link_gui(self.mw.aview)
+        self.scview = link_gui(self.mw.scview)
+        self.bview = link_gui(self.mw.bview)
+        self.glview = link_gui(self.mw.glview)
+        self.dpview = link_gui(self.mw.dpview)
+        self.emptyview = link_gui(self.mw.emptyview)
         self.etable = link_gui(self.aview.etable)
         self.etable_gui = self.etable.view
         self.ttable = link_gui(self.tview.ttable)
@@ -184,23 +175,8 @@ class TestApp(TestAppBase):
         self.itable = link_gui(self.iwin.import_table)
         self.alookup = link_gui(self.mw.account_lookup)
         self.clookup = link_gui(self.mw.completion_lookup)
-        # set children
-        children = [self.bsheet, self.nwgraph, self.apie, self.lpie]
-        self.nwview.set_children(children)
-        children = [self.istatement, self.pgraph, self.ipie, self.epie]
-        self.pview.set_children(children)
-        children = [self.ttable]
-        self.tview.set_children(children)
-        children = [self.etable, self.balgraph, self.bargraph]
-        self.aview.set_children(children)
-        children = [self.gltable]
-        self.glview.set_children(children)
-        # None between bview and empty view is the Cashculator view, which isn't tested
-        children = [self.nwview, self.pview, self.tview, self.aview, self.scview, self.bview, None,
-            self.glview, self.dpview, self.emptyview]
-        self.mainwindow.set_children(children)
         self.doc.connect()
-        self.mainwindow.connect()
+        self.mw.connect()
         self.iwin.connect()
         self.csvopt.connect()
     

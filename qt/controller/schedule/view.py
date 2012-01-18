@@ -8,18 +8,14 @@
 
 from PyQt4 import QtGui
 
-from core.gui.schedule_view import ScheduleView as ScheduleViewModel
-
 from ...support.item_view import TableView
 from ..base_view import BaseView
 from .table import ScheduleTable
 
 class ScheduleView(BaseView):
-    def __init__(self, mainwindow):
-        BaseView.__init__(self)
-        self.doc = mainwindow.doc
+    def __init__(self, model):
+        BaseView.__init__(self, model)
         self._setupUi()
-        self.model = ScheduleViewModel(view=self, mainwindow=mainwindow.model)
         self.sctable = ScheduleTable(model=self.model.table, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected
     
