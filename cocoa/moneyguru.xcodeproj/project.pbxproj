@@ -12,7 +12,6 @@
 		071424100E2A797800AC27AC /* MGLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0714240D0E2A797800AC27AC /* MGLineGraphView.m */; };
 		0726B2B40E49E1260059E8A7 /* MGReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0726B2B30E49E1260059E8A7 /* MGReport.m */; };
 		0761B95D0E547CE800E99B31 /* MGAmountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0761B95C0E547CE800E99B31 /* MGAmountCell.m */; };
-		0775D6B10CE4F640007F0C8F /* mg_cocoa.plugin in Resources */ = {isa = PBXBuildFile; fileRef = 0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */; };
 		0795A42C0E4217970053F2FC /* right_arrow_gray_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795A42B0E4217970053F2FC /* right_arrow_gray_12.png */; };
 		07D99F260E37D5A70009142B /* MGTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D99F250E37D5A70009142B /* MGTextFieldCell.m */; };
 		07FDA2DA0E41231C006709EA /* right_arrow_white_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 07FDA2D90E41231C006709EA /* right_arrow_white_12.png */; };
@@ -41,6 +40,10 @@
 		CE14AF790E6FB3B500E75B76 /* MGPieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14AF780E6FB3B500E75B76 /* MGPieChartView.m */; };
 		CE16B0260E715B3F001290F7 /* backward_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16B0240E715B3F001290F7 /* backward_32.png */; };
 		CE16B0270E715B3F001290F7 /* forward_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16B0250E715B3F001290F7 /* forward_32.png */; };
+		CE19150F14C74FC6008B18EE /* py in Resources */ = {isa = PBXBuildFile; fileRef = CE19150E14C74FC6008B18EE /* py */; };
+		CE19151114C74FCC008B18EE /* mg_cocoa.py in Resources */ = {isa = PBXBuildFile; fileRef = CE19151014C74FCC008B18EE /* mg_cocoa.py */; };
+		CE19151314C74FDD008B18EE /* Python in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19151214C74FDD008B18EE /* Python */; };
+		CE19151414C74FF2008B18EE /* Python in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE19151214C74FDD008B18EE /* Python */; };
 		CE2BFF381207F02B0098A2EC /* MGCashculatorAccountTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2BFF371207F02B0098A2EC /* MGCashculatorAccountTable.m */; };
 		CE2DD6300E4C684000AB107B /* MGImportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DD62F0E4C684000AB107B /* MGImportTable.m */; };
 		CE2F0BF411295E1A00F6FB55 /* HSOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */; };
@@ -237,6 +240,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				CEAF7FD00E612C4400765ADD /* Sparkle.framework in CopyFiles */,
+				CE19151414C74FF2008B18EE /* Python in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,7 +259,6 @@
 		0726B32B0E49E83B0059E8A7 /* PyIncomeStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyIncomeStatement.h; sourceTree = "<group>"; };
 		0761B95B0E547CE800E99B31 /* MGAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAmountCell.h; sourceTree = "<group>"; };
 		0761B95C0E547CE800E99B31 /* MGAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAmountCell.m; sourceTree = "<group>"; };
-		0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mg_cocoa.plugin; sourceTree = "<group>"; };
 		0795A42B0E4217970053F2FC /* right_arrow_gray_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow_gray_12.png; sourceTree = "<group>"; };
 		07D99F240E37D5A70009142B /* MGTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTextFieldCell.h; sourceTree = "<group>"; };
 		07D99F250E37D5A70009142B /* MGTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTextFieldCell.m; sourceTree = "<group>"; };
@@ -311,6 +314,9 @@
 		CE150D89144B30AD00E82CF5 /* PyFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFilterBar.h; sourceTree = "<group>"; };
 		CE16B0240E715B3F001290F7 /* backward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward_32.png; sourceTree = "<group>"; };
 		CE16B0250E715B3F001290F7 /* forward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward_32.png; sourceTree = "<group>"; };
+		CE19150E14C74FC6008B18EE /* py */ = {isa = PBXFileReference; lastKnownFileType = folder; name = py; path = ../build/py; sourceTree = "<group>"; };
+		CE19151014C74FCC008B18EE /* mg_cocoa.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = mg_cocoa.py; path = ../build/mg_cocoa.py; sourceTree = "<group>"; };
+		CE19151214C74FDD008B18EE /* Python */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Python; path = ../build/Python; sourceTree = "<group>"; };
 		CE1E88D810F89FB1003BB329 /* PyTransactionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionView.h; sourceTree = "<group>"; };
 		CE1E88D910F8A295003BB329 /* PyGUIContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGUIContainer.h; sourceTree = "<group>"; };
 		CE2BFF361207F02B0098A2EC /* MGCashculatorAccountTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCashculatorAccountTable.h; sourceTree = "<group>"; };
@@ -713,7 +719,6 @@
 		CECEF7BE14421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/about.xib; sourceTree = "<group>"; };
 		CECEF7BF14421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/ErrorReportWindow.xib; sourceTree = "<group>"; };
 		CECEF7C014421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/FairwareReminder.xib; sourceTree = "<group>"; };
-		CECFE92C0E72C633001BAFCF /* PyEntryFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryFilterBar.h; sourceTree = "<group>"; };
 		CED1DF5D1440B1B6005F82B5 /* PySelectableList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySelectableList.h; sourceTree = "<group>"; };
 		CED1DF5F1440B1C5005F82B5 /* HSPopUpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSPopUpList.h; sourceTree = "<group>"; };
 		CED1DF601440B1C5005F82B5 /* HSPopUpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSPopUpList.m; sourceTree = "<group>"; };
@@ -815,6 +820,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				CEAF7FB20E612A2E00765ADD /* Sparkle.framework in Frameworks */,
+				CE19151314C74FDD008B18EE /* Python in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +830,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE19151214C74FDD008B18EE /* Python */,
 				CEAF7FB10E612A2E00765ADD /* Sparkle.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -952,15 +959,16 @@
 		CE8739FF0E21615F004F63E9 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE19151014C74FCC008B18EE /* mg_cocoa.py */,
+				CE19150E14C74FC6008B18EE /* py */,
+				CE4B8C000E656DB70017432D /* help */,
+				CEE0FE73147EA6C600713C87 /* locale */,
+				8D1107310486CEB800E47090 /* Info.plist */,
 				CEFEA33111E1DEA70034AB46 /* Localizable.strings */,
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
 				CE491DED0E617B8900FD46F5 /* example.moneyguru */,
 				CEEED1D30E3F763100BBA154 /* images */,
 				CEC3677011D10DC700EB0222 /* xib */,
-				8D1107310486CEB800E47090 /* Info.plist */,
-				0775D67B0CE4F640007F0C8F /* mg_cocoa.plugin */,
-				CE4B8C000E656DB70017432D /* help */,
-				CEE0FE73147EA6C600713C87 /* locale */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -1109,7 +1117,6 @@
 				CE873A950E21622F004F63E9 /* PyDateWidget.h */,
 				CEBAC1B0113A72CD000BBDB2 /* PyCompletableEdit.h */,
 				CE150D89144B30AD00E82CF5 /* PyFilterBar.h */,
-				CECFE92C0E72C633001BAFCF /* PyEntryFilterBar.h */,
 				CE873A970E21622F004F63E9 /* PyGraph.h */,
 				CE873A980E21622F004F63E9 /* PyMainWindow.h */,
 				CEFBAB0C0E45B510004C0AB0 /* PyNetWorthGraph.h */,
@@ -1512,7 +1519,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0775D6B10CE4F640007F0C8F /* mg_cocoa.plugin in Resources */,
 				CEEED1D50E3F763100BBA154 /* check_16.png in Resources */,
 				07FDA2DA0E41231C006709EA /* right_arrow_white_12.png in Resources */,
 				0795A42C0E4217970053F2FC /* right_arrow_gray_12.png in Resources */,
@@ -1610,6 +1616,8 @@
 				CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */,
 				CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */,
 				CEE0FE74147EA6C600713C87 /* locale in Resources */,
+				CE19150F14C74FC6008B18EE /* py in Resources */,
+				CE19151114C74FCC008B18EE /* mg_cocoa.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2158,6 +2166,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../build\"",
+				);
 				PRODUCT_NAME = moneyGuru;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2168,11 +2180,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = moneyGuru;
 				SDKROOT = macosx10.6;
 			};
 			name = release;
@@ -2181,10 +2191,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = moneyGuru;
 				SDKROOT = macosx10.6;
 			};
 			name = dev;
@@ -2193,6 +2202,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../build\"",
+				);
 				PRODUCT_NAME = moneyGuru;
 				WRAPPER_EXTENSION = app;
 			};

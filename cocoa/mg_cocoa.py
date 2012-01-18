@@ -6,6 +6,7 @@
 
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
+import objc # import needed for dependency collection to work well
 
 from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
