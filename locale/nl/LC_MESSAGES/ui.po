@@ -139,7 +139,7 @@ msgstr "Rekening:"
 msgid "Target:"
 msgstr "Rekening:"
 
-#: qt/controller/budget_panel.py:83
+#: qt/controller/budget_panel.py:83 qt/controller/mass_edition_panel.py:104
 msgid "Amount:"
 msgstr "Bedrag:"
 
@@ -709,55 +709,35 @@ msgstr "6. Budgetten"
 msgid "7. Document Properties"
 msgstr "7. Documenteigenschappen"
 
-#: qt/controller/preferences_panel.py:21
-msgid "English"
-msgstr "Engels"
-
-#: qt/controller/preferences_panel.py:22
-msgid "French"
-msgstr "Frans"
-
-#: qt/controller/preferences_panel.py:23
-msgid "German"
-msgstr "Duits"
-
-#: qt/controller/preferences_panel.py:24
-msgid "Italian"
-msgstr "Italiaans"
-
-#: qt/controller/preferences_panel.py:25
-msgid "Czech"
-msgstr "Tsjechisch"
-
-#: qt/controller/preferences_panel.py:41
+#: qt/controller/preferences_panel.py:34
 msgid "Preferences"
 msgstr "Instellingen"
 
-#: qt/controller/preferences_panel.py:54 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:47 cocoa/en.lproj/MainMenu.strings:0
 msgid "minute(s) (0 for none)"
 msgstr "Minute(n) (0 = niet actief)"
 
-#: qt/controller/preferences_panel.py:56 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:49 cocoa/en.lproj/MainMenu.strings:0
 msgid "Auto-save interval:"
 msgstr "Automatisch opslaan elke:"
 
-#: qt/controller/preferences_panel.py:60
+#: qt/controller/preferences_panel.py:53
 msgid "Date Format:"
 msgstr "Datumformaat"
 
-#: qt/controller/preferences_panel.py:70
+#: qt/controller/preferences_panel.py:63
 msgid "Language:"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:73 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:66 cocoa/en.lproj/MainMenu.strings:0
 msgid "Show scope dialog when modifying a scheduled transaction"
 msgstr "Dialoogvenster tonen bij het wijzigen van een periodieke boeking"
 
-#: qt/controller/preferences_panel.py:75 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:68 cocoa/en.lproj/MainMenu.strings:0
 msgid "Automatically place decimals when typing"
 msgstr "Automatisch decimalen plaatsen tijdens invoer"
 
-#: qt/controller/preferences_panel.py:113
+#: qt/controller/preferences_panel.py:106
 msgid "moneyGuru has to restart for these changes to take effect"
 msgstr ""
 
@@ -765,11 +745,13 @@ msgstr ""
 msgid "Schedule Info"
 msgstr "Details periodieke boeking"
 
-#: qt/controller/schedule_panel.py:82 qt/controller/transaction_panel.py:61
+#: qt/controller/mass_edition_panel.py:64 qt/controller/schedule_panel.py:82
+#: qt/controller/transaction_panel.py:61
 msgid "Description:"
 msgstr "Omschrijving:"
 
-#: qt/controller/schedule_panel.py:86 qt/controller/transaction_panel.py:63
+#: qt/controller/mass_edition_panel.py:72 qt/controller/schedule_panel.py:86
+#: qt/controller/transaction_panel.py:63
 msgid "Payee:"
 msgstr "Ontvanger:"
 
@@ -835,6 +817,7 @@ msgstr "Uitgaven"
 msgid "Transaction Info"
 msgstr "Transactiedetails"
 
+#: qt/controller/mass_edition_panel.py:56
 #: qt/controller/transaction_panel.py:59
 msgid "Date:"
 msgstr "Datum:"
@@ -926,6 +909,7 @@ msgstr "Omschrijving"
 msgid "Payee"
 msgstr "Ontvanger"
 
+#: qt/controller/mass_edition_panel.py:80
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 #: cocoa/en.lproj/SchedulePanel.strings:0
@@ -1274,6 +1258,14 @@ msgstr ""
 msgid "Multi-Currency Balance"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:26
-msgid "Dutch"
+#: qt/controller/mass_edition_panel.py:88
+msgid "From:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:96
+msgid "To:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:112
+msgid "Currency:"
 msgstr ""

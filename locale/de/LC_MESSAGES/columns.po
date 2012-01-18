@@ -69,19 +69,19 @@ msgid "Reconciliation Date"
 msgstr "Wertstellungsdatum"
 
 #: core/gui/entry_table.py:40 core/gui/general_ledger_table.py:39
-#: core/gui/import_table.py:26 core/gui/schedule_table.py:27
+#: core/gui/import_table.py:26 core/gui/schedule_table.py:25
 #: core/gui/transaction_table.py:27
 msgid "Check #"
 msgstr "Scheck #"
 
 #: core/gui/entry_table.py:41 core/gui/general_ledger_table.py:40
 #: core/gui/import_table.py:20 core/gui/import_table.py:24
-#: core/gui/schedule_table.py:25 core/gui/transaction_table.py:28
+#: core/gui/schedule_table.py:26 core/gui/transaction_table.py:28
 msgid "Description"
 msgstr "Beschreibung"
 
 #: core/gui/entry_table.py:42 core/gui/general_ledger_table.py:41
-#: core/gui/import_table.py:25 core/gui/schedule_table.py:26
+#: core/gui/import_table.py:25 core/gui/schedule_table.py:27
 #: core/gui/transaction_table.py:29
 msgid "Payee"
 msgstr "Wechselnehmer"

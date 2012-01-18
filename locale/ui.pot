@@ -137,7 +137,7 @@ msgstr ""
 msgid "Target:"
 msgstr ""
 
-#: qt/controller/budget_panel.py:83
+#: qt/controller/budget_panel.py:83 qt/controller/mass_edition_panel.py:104
 msgid "Amount:"
 msgstr ""
 
@@ -671,6 +671,41 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
+#: qt/controller/mass_edition_panel.py:56
+#: qt/controller/transaction_panel.py:59
+msgid "Date:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:64 qt/controller/schedule_panel.py:82
+#: qt/controller/transaction_panel.py:61
+msgid "Description:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:72 qt/controller/schedule_panel.py:86
+#: qt/controller/transaction_panel.py:63
+msgid "Payee:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:80
+#: cocoa/en.lproj/CSVImportOptions.strings:0
+#: cocoa/en.lproj/MassEditingPanel.strings:0
+#: cocoa/en.lproj/SchedulePanel.strings:0
+#: cocoa/en.lproj/TransactionPanel.strings:0
+msgid "Check #"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:88
+msgid "From:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:96
+msgid "To:"
+msgstr ""
+
+#: qt/controller/mass_edition_panel.py:112
+msgid "Currency:"
+msgstr ""
+
 #: qt/controller/new_view.py:46
 msgid "Choose a type for this tab:"
 msgstr ""
@@ -703,72 +738,40 @@ msgstr ""
 msgid "7. Document Properties"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:21
-msgid "English"
-msgstr ""
-
-#: qt/controller/preferences_panel.py:22
-msgid "French"
-msgstr ""
-
-#: qt/controller/preferences_panel.py:23
-msgid "German"
-msgstr ""
-
-#: qt/controller/preferences_panel.py:24
-msgid "Italian"
-msgstr ""
-
-#: qt/controller/preferences_panel.py:25
-msgid "Czech"
-msgstr ""
-
-#: qt/controller/preferences_panel.py:26
-msgid "Dutch"
-msgstr ""
-
-#: qt/controller/preferences_panel.py:41
+#: qt/controller/preferences_panel.py:34
 msgid "Preferences"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:54 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:47 cocoa/en.lproj/MainMenu.strings:0
 msgid "minute(s) (0 for none)"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:56 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:49 cocoa/en.lproj/MainMenu.strings:0
 msgid "Auto-save interval:"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:60
+#: qt/controller/preferences_panel.py:53
 msgid "Date Format:"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:70
+#: qt/controller/preferences_panel.py:63
 msgid "Language:"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:73 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:66 cocoa/en.lproj/MainMenu.strings:0
 msgid "Show scope dialog when modifying a scheduled transaction"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:75 cocoa/en.lproj/MainMenu.strings:0
+#: qt/controller/preferences_panel.py:68 cocoa/en.lproj/MainMenu.strings:0
 msgid "Automatically place decimals when typing"
 msgstr ""
 
-#: qt/controller/preferences_panel.py:113
+#: qt/controller/preferences_panel.py:106
 msgid "moneyGuru has to restart for these changes to take effect"
 msgstr ""
 
 #: qt/controller/schedule_panel.py:51 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Schedule Info"
-msgstr ""
-
-#: qt/controller/schedule_panel.py:82 qt/controller/transaction_panel.py:61
-msgid "Description:"
-msgstr ""
-
-#: qt/controller/schedule_panel.py:86 qt/controller/transaction_panel.py:63
-msgid "Payee:"
 msgstr ""
 
 #: qt/controller/schedule_panel.py:90 qt/controller/transaction_panel.py:66
@@ -829,10 +832,6 @@ msgstr ""
 #: qt/controller/transaction_panel.py:48
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Transaction Info"
-msgstr ""
-
-#: qt/controller/transaction_panel.py:59
-msgid "Date:"
 msgstr ""
 
 #: qt/controller/transaction_panel.py:85
@@ -920,13 +919,6 @@ msgstr ""
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Payee"
-msgstr ""
-
-#: cocoa/en.lproj/CSVImportOptions.strings:0
-#: cocoa/en.lproj/MassEditingPanel.strings:0
-#: cocoa/en.lproj/SchedulePanel.strings:0
-#: cocoa/en.lproj/TransactionPanel.strings:0
-msgid "Check #"
 msgstr ""
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0

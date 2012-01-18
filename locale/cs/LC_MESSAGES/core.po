@@ -10,7 +10,7 @@ msgstr ""
 msgid "Add transaction"
 msgstr "Přidat transakci"
 
-#: core/document.py:184 core/document.py:414
+#: core/document.py:184 core/document.py:413
 msgid "Change transaction"
 msgstr "Změnit transakci"
 
@@ -22,79 +22,79 @@ msgstr "Změnit účet"
 msgid "Remove account"
 msgstr "Odstranit účet"
 
-#: core/document.py:349
+#: core/document.py:348
 msgid "New account"
 msgstr "Nový účet"
 
-#: core/document.py:352
+#: core/document.py:351
 msgid "Add account"
 msgstr "Přidat účet"
 
-#: core/document.py:369
+#: core/document.py:368
 msgid "Change group"
 msgstr "Změnit skupinu"
 
-#: core/document.py:379
+#: core/document.py:378
 msgid "Remove group"
 msgstr "Odstranit skupinu"
 
-#: core/document.py:390
+#: core/document.py:389
 msgid "New group"
 msgstr "Nová skupina"
 
-#: core/document.py:392
+#: core/document.py:391
 msgid "Add group"
 msgstr "Přidat skupinu"
 
-#: core/document.py:462
+#: core/document.py:461
 msgid "Remove transaction"
 msgstr "Odstranit transakci"
 
-#: core/document.py:487
+#: core/document.py:486
 msgid "Duplicate transactions"
 msgstr "Kopírovat transakce"
 
-#: core/document.py:502
+#: core/document.py:501
 msgid "Move transaction"
 msgstr "Přesunout transakci"
 
-#: core/document.py:560
+#: core/document.py:559
 msgid "Change reconciliation"
 msgstr "Změnit párování"
 
-#: core/document.py:604
+#: core/document.py:603
 msgid "Change Budget"
 msgstr "Změnit rozpočet"
 
-#: core/document.py:607
+#: core/document.py:606
 msgid "Add Budget"
 msgstr "Přidat rozpočet"
 
-#: core/document.py:628
+#: core/document.py:627
 msgid "Remove Budget"
 msgstr "Odstranit rozpočet"
 
-#: core/document.py:644
+#: core/document.py:643
 msgid "Change Schedule"
 msgstr "Změnit plán"
 
-#: core/document.py:647
+#: core/document.py:646
 msgid "Add Schedule"
 msgstr "Přidat plán"
 
-#: core/document.py:668
+#: core/document.py:667
 msgid "Remove Schedule"
 msgstr "Odstranit plán"
 
-#: core/document.py:725
+#: core/document.py:724
 msgid "\"%s\" is not a moneyGuru file"
 msgstr "\"%s\" není souborem moneyGuru"
 
-#: core/document.py:771
+#: core/document.py:770
 msgid "%s is of an unknown format."
 msgstr "%s nemá známý formát."
 
-#: core/document.py:814
+#: core/document.py:813
 msgid "Import"
 msgstr "Import"
 
@@ -477,46 +477,46 @@ msgstr "Probíhající rok ({0} - {1})"
 msgid "All Transactions"
 msgstr "Všechny transakce"
 
-#: core/model/recurrence.py:94
+#: core/model/recurrence.py:95
 msgid "Daily"
 msgstr "Denně"
 
-#: core/model/recurrence.py:95
+#: core/model/recurrence.py:96
 msgid "Weekly"
 msgstr "Týdně"
 
-#: core/model/recurrence.py:96
+#: core/model/recurrence.py:97
 msgid "Monthly"
 msgstr "Měsíčně"
 
-#: core/model/recurrence.py:97
+#: core/model/recurrence.py:98
 msgid "Yearly"
 msgstr "Ročně"
 
-#: core/model/recurrence.py:114
+#: core/model/recurrence.py:115
 msgid "fifth"
 msgstr "pátý"
 
-#: core/model/recurrence.py:114
+#: core/model/recurrence.py:115
 msgid "first"
 msgstr "první"
 
-#: core/model/recurrence.py:114
+#: core/model/recurrence.py:115
 msgid "fourth"
 msgstr "čtvrtý"
 
-#: core/model/recurrence.py:114
+#: core/model/recurrence.py:115
 msgid "second"
 msgstr "druhý"
 
-#: core/model/recurrence.py:114
+#: core/model/recurrence.py:115
 msgid "third"
 msgstr "třetí"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:116
 msgid "Every %s %s of the month"
 msgstr "Každý %s %s v měsíci"
 
-#: core/model/recurrence.py:118
+#: core/model/recurrence.py:119
 msgid "Every last %s of the month"
 msgstr "Poslední %s v měsíci"

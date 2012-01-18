@@ -12,19 +12,12 @@ from PyQt4.QtGui import (QDialog, QMessageBox, QVBoxLayout, QHBoxLayout, QFormLa
 
 from hscommon.currency import Currency
 from hscommon.trans import trget
+from qtlib.preferences import LANGNAMES
 from core.model.date import clean_format
 
 tr = trget('ui')
 
 SUPPORTED_LANGUAGES = ['en', 'fr', 'de', 'it', 'cs', 'nl']
-LANG2NAME = {
-    'en': tr('English'),
-    'fr': tr('French'),
-    'de': tr('German'),
-    'it': tr('Italian'),
-    'cs': tr('Czech'),
-    'nl': tr('Dutch'),
-}
 
 class PreferencesPanel(QDialog):
     def __init__(self, parent, app):
@@ -61,7 +54,7 @@ class PreferencesPanel(QDialog):
         
         self.languageComboBox = QComboBox(self)
         for lang in SUPPORTED_LANGUAGES:
-            self.languageComboBox.addItem(LANG2NAME[lang])
+            self.languageComboBox.addItem(LANGNAMES[lang])
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
