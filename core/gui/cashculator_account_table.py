@@ -22,8 +22,8 @@ class CashculatorAccountTable(GUITable, ViewChild):
         Column('recurring', display=trcol("Recurring")),
     ]
     
-    def __init__(self, view, cc_view):
-        ViewChild.__init__(self, view, cc_view)
+    def __init__(self, cc_view):
+        ViewChild.__init__(self, None, cc_view)
         GUITable.__init__(self, document=cc_view.document)
         self.nonrecurring_names = set()
     

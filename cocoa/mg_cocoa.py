@@ -400,9 +400,6 @@ class PyBudgetTable(PyTable):
         self.py.edit()
     
 
-class PyCashculatorAccountTable(PyTable):
-    py_class = CashculatorAccountTable
-
 class PyGeneralLedgerTable(PyTableWithDate):
     py_class = GeneralLedgerTable
 
@@ -1017,6 +1014,8 @@ class PyScheduleView(PyBaseView):
 
 class PyCashculatorView(PyBaseView):
     py_class = CashculatorView
+    
+    table = subproxy('table', 'atable', PyTable)
     
     def exportDB(self):
         self.py.export_db()

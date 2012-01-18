@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGUIContainer.h"
+#import "PyTable.h"
 
 @interface PyCashculatorView : PyGUIContainer {}
+- (PyTable *)table;
 - (void)exportDB;
 - (void)launchCC;
 - (void)resetCCDB;

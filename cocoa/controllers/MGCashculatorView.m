@@ -14,9 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyCashculatorView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"CashculatorView" owner:self];
-    accountTable = [[MGCashculatorAccountTable alloc] initWithPyParent:[self py] view:accountTableView];
-    NSArray *children = [NSArray arrayWithObjects:[accountTable py], nil];
-    [[self py] setChildren:children];
+    accountTable = [[MGCashculatorAccountTable alloc] initWithPy:[[self py] table] view:accountTableView];
     return self;
 }
 

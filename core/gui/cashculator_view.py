@@ -24,6 +24,7 @@ from ..model.account import AccountType
 from ..model.cashculator import CashculatorDB
 from ..model.date import MonthRange, ONE_DAY
 from .base import BaseView
+from .cashculator_account_table import CashculatorAccountTable
 
 MONTHS_TO_FILL = 4
 MSG_NO_DB = tr("Exported database not present. Click on Export Accounts first.")
@@ -41,10 +42,8 @@ class CashculatorView(BaseView):
         self._db = None
         self._categories = None # name: cat
         self._needs_reset = False
-    
-    def set_children(self, children):
-        BaseView.set_children(self, children)
-        [self.atable] = children
+        self.atable = CashculatorAccountTable(self)
+        self.set_children([self.atable])
     
     #--- Private
     def _ensure_paths(self):
