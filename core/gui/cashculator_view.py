@@ -13,10 +13,10 @@
 import subprocess
 from datetime import date
 
+from cocoa.objcmin import (NSSearchPathForDirectoriesInDomains, NSApplicationSupportDirectory,
+    NSUserDomainMask)
 from hscommon import io
 from hscommon.path import Path
-from hscommon.cocoa.objcmin import (NSSearchPathForDirectoriesInDomains, NSApplicationSupportDirectory,
-    NSUserDomainMask)
 from hscommon.trans import tr
 
 from ..const import PaneType

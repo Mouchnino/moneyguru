@@ -16,7 +16,7 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
-from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, move_all)
+from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, move_all, move)
 from hscommon import loc
 
 def parse_args():
@@ -31,14 +31,16 @@ def parse_args():
         help="Generate .pot files from source code.")
     parser.add_argument('--mergepot', action='store_true', dest='mergepot',
         help="Update all .po files based on .pot files.")
+    parser.add_argument('--cocoamod', action='store_true', dest='cocoamod',
+        help="Build only Cocoa modules")
     args = parser.parse_args()
     return args
 
 def build_cocoa(dev):
+    build_cocoa_proxy_module()
     from pluginbuilder import build_plugin
     print("Building mg_cocoa.plugin")
-    if not dev:
-        copy_packages(['core', 'hscommon'], 'build')
+    copy_packages(['core', 'hscommon', 'cocoalib/cocoa'], 'build', create_links=dev)
     shutil.copy('cocoa/mg_cocoa.py', 'build')
     os.chdir('build')
     # We have to exclude PyQt4 specifically because it's conditionally imported in hscommon.trans
@@ -48,11 +50,6 @@ def build_cocoa(dev):
     if op.exists(pluginpath):
         shutil.rmtree(pluginpath)
     shutil.move('build/dist/mg_cocoa.plugin', pluginpath)
-    if dev:
-        # In alias mode, the tweakings we do to the pythonpath aren't counted in. We have to
-        # manually put a .pth in the plugin
-        pthpath = op.join(pluginpath, 'Contents/Resources/dev.pth')
-        open(pthpath, 'w').write(op.abspath('.'))
     os.chdir('cocoa')
     print('Generating Info.plist')
     # We import this here because we don't want opened module to prevent us replacing .pyd files.
@@ -156,6 +153,25 @@ def build_ext():
     )
     move_all('_amount*', op.join('core', 'model'))
 
+def build_cocoa_ext(extname, dest, source_files, extra_frameworks=(), extra_includes=()):
+    extra_link_args = ["-framework", "CoreFoundation", "-framework", "Foundation"]
+    for extra in extra_frameworks:
+        extra_link_args += ['-framework', extra]
+    ext = Extension(extname, source_files, extra_link_args=extra_link_args, include_dirs=extra_includes)
+    setup(script_args=['build_ext', '--inplace'], ext_modules=[ext])
+    fn = extname + '.so'
+    assert op.exists(fn)
+    move(fn, op.join(dest, fn))
+
+def build_cocoa_proxy_module():
+    print("Building Cocoa Proxy")
+    import objp.p2o
+    objp.p2o.generate_python_proxy_code('cocoalib/cocoa/CocoaProxy.h', 'build/CocoaProxy.m')
+    build_cocoa_ext("CocoaProxy", 'cocoalib/cocoa',
+        ['cocoalib/cocoa/CocoaProxy.m', 'build/CocoaProxy.m', 'build/ObjP.m'],
+        ['AppKit', 'CoreServices'],
+        ['cocoalib'])
+
 def build_normal(ui, dev):
     build_help(dev)
     build_localizations(ui)
@@ -186,6 +202,8 @@ def main():
         build_updatepot()
     elif args.mergepot:
         build_mergepot()
+    elif args.cocoamod:
+        build_cocoa_proxy_module()
     else:
         build_normal(ui, dev)
 
