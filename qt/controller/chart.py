@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-08
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -7,13 +6,16 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-class Chart(object):
+class Chart:
     CHART_MODEL_CLASS = None
     
-    def __init__(self, parent, view):
-        self.doc = parent.doc
+    def __init__(self, parent_or_model, view):
         self.view = view
-        self.model = self.CHART_MODEL_CLASS(self, parent.model)
+        if self.CHART_MODEL_CLASS is not None:
+            self.model = self.CHART_MODEL_CLASS(self, parent_or_model.model)
+        else:
+            self.model = parent_or_model
+            self.model.view = self
         self.view.dataSource = self.model
     
     #--- model --> view

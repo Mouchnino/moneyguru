@@ -9,9 +9,14 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyBaseView.h"
 #import "PyFilterBar.h"
+#import "PyEntryTable.h"
+#import "PyGraph.h"
 
 @interface PyAccountView : PyBaseView {}
 - (PyFilterBar *)filterBar;
+- (PyEntryTable *)table;
+- (PyGraph *)balGraph;
+- (PyGraph *)barGraph;
 - (BOOL)canToggleReconciliationMode;
 - (BOOL)inReconciliationMode;
 - (void)toggleReconciliationMode;

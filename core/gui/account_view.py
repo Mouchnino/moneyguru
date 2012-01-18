@@ -10,6 +10,9 @@ from hscommon.trans import tr
 from ..const import PaneType
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 from .filter_bar import EntryFilterBar
+from .entry_table import EntryTable
+from .account_balance_graph import AccountBalanceGraph
+from .account_flow_graph import AccountFlowGraph
 
 class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
@@ -22,17 +25,17 @@ class AccountView(BaseView):
         BaseView.__init__(self, view, mainwindow)
         self._shown_graph = None
         self._reconciliation_mode = False
-        self.filter_bar = EntryFilterBar(self)
-    
-    def set_children(self, children):
-        self.etable, self.balgraph, self.bargraph = children
+        self.etable = EntryTable(self)
         self.maintable = self.etable
         self.columns = self.maintable.columns
+        self.balgraph = AccountBalanceGraph(None, self)
+        self.bargraph = AccountFlowGraph(None, self)
+        self.filter_bar = EntryFilterBar(self)
         self._shown_graph = self.balgraph
+        # self.balgraph.connect()
+        # self.bargraph.connect()
         # we count the graphs separately because the show/hide rules for them are special
-        BaseView.set_children(self, [self.etable])
-        self.balgraph.connect()
-        self.bargraph.connect()
+        self.set_children([self.etable])
     
     def _revalidate(self):
         self._refresh_totals()

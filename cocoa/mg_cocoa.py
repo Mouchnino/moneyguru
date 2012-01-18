@@ -25,8 +25,6 @@ hscommon.trans.install_gettext_trans_under_cocoa()
 from core.app import Application
 from core.document import Document, FilterType
 from core.exception import FileFormatError
-from core.gui.account_balance_graph import AccountBalanceGraph
-from core.gui.account_flow_graph import AccountFlowGraph
 from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from core.gui.account_view import AccountView
 from core.gui.balance_sheet import BalanceSheet
@@ -38,7 +36,6 @@ from core.gui.completable_edit import CompletableEdit
 from core.gui.date_widget import DateWidget
 from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
-from core.gui.entry_table import EntryTable
 from core.gui.general_ledger_view import GeneralLedgerView
 from core.gui.income_statement import IncomeStatement
 from core.gui.import_window import ImportWindow
@@ -332,8 +329,6 @@ class PyIncomeStatement(PyReport):
     py_class = IncomeStatement
 
 class PyEntryTable(PyTableWithDate):
-    py_class = EntryTable
-
     @signature('c@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
@@ -813,14 +808,8 @@ class PyExportPanel(PyPanel):
         self.cocoa.setExportButtonEnabled_(enabled)
     
 
-class PyAccountBalanceGraph(PyGraph):
-    py_class = AccountBalanceGraph
-
 class PyNetWorthGraph(PyGraph):
     py_class = NetWorthGraph
-
-class PyAccountFlowGraph(PyGraph):
-    py_class = AccountFlowGraph
 
 class PyProfitGraph(PyGraph):
     py_class = ProfitGraph
@@ -970,6 +959,9 @@ class PyAccountView(PyBaseView):
     py_class = AccountView
     
     filterBar = subproxy('filterBar', 'filter_bar', PyEntryFilterBar)
+    table = subproxy('table', 'etable', PyEntryTable)
+    balGraph = subproxy('balGraph', 'balgraph', PyGraph)
+    barGraph = subproxy('barGraph', 'bargraph', PyGraph)
     
     @signature('c@:')
     def canToggleReconciliationMode(self):

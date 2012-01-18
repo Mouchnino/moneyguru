@@ -49,8 +49,8 @@ class EntryTable(EntryTableBase):
     ]
     INVALIDATING_MESSAGES = EntryTableBase.INVALIDATING_MESSAGES | {'shown_account_changed'}
     
-    def __init__(self, view, account_view):
-        EntryTableBase.__init__(self, view, account_view)
+    def __init__(self, account_view):
+        EntryTableBase.__init__(self, None, account_view)
         self.columns = EntryTableColumns(self, prefaccess=account_view.document, savename=self.SAVENAME)
         self.account = None
         self._reconciliation_mode = False

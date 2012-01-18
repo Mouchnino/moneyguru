@@ -19,8 +19,6 @@ from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
 from ..const import PaneType
-from ..gui.account_balance_graph import AccountBalanceGraph
-from ..gui.account_flow_graph import AccountFlowGraph
 from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from ..gui.account_view import AccountView
 from ..gui.balance_sheet import BalanceSheet
@@ -29,7 +27,6 @@ from ..gui.completable_edit import CompletableEdit
 from ..gui.csv_options import CSVOptions
 from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
-from ..gui.entry_table import EntryTable
 from ..gui.general_ledger_view import GeneralLedgerView
 from ..gui.income_statement import IncomeStatement
 from ..gui.import_window import ImportWindow
@@ -145,7 +142,8 @@ class TestApp(TestAppBase):
         make_gui('glview', GeneralLedgerView)
         make_gui('dpview', DocPropsView)
         make_gui('emptyview', EmptyView)
-        make_table_gui('etable', EntryTable, parent=self.aview)
+        self.etable = link_gui(self.aview.etable)
+        self.etable_gui = self.etable.view
         self.ttable = link_gui(self.tview.ttable)
         self.ttable_gui = self.ttable.view
         self.sctable = link_gui(self.scview.table)
@@ -167,8 +165,10 @@ class TestApp(TestAppBase):
         self.arpanel = link_gui(self.mw.account_reassign_panel)
         self.expanel = link_gui(self.mw.export_panel)
         self.expanel.account_table.view = self.make_logger()
-        make_gui('balgraph', AccountBalanceGraph, parent=self.aview)
-        make_gui('bargraph', AccountFlowGraph, parent=self.aview)
+        self.balgraph = link_gui(self.aview.balgraph)
+        self.balgraph_gui = self.balgraph.view
+        self.bargraph = link_gui(self.aview.bargraph)
+        self.bargraph_gui = self.bargraph.view
         make_gui('nwgraph', NetWorthGraph, parent=self.nwview)
         make_gui('pgraph', ProfitGraph, parent=self.pview)
         make_table_gui('bsheet', BalanceSheet, parent=self.nwview)

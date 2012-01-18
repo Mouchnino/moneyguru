@@ -17,20 +17,16 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyAccountView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    entryTable = [[MGEntryTable alloc] initWithPyParent:[self py] view:tableView];
+    entryTable = [[MGEntryTable alloc] initWithPy:[[self py] table] view:tableView];
     filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:YES];
-    balanceGraph = [[MGBalanceGraph alloc] initWithPyParent:[self py] pyClassName:@"PyAccountBalanceGraph"];
-    barGraph = [[MGBarGraph alloc] initWithPyParent:[self py] pyClassName:@"PyAccountFlowGraph"];
+    balanceGraph = [[MGBalanceGraph alloc] initWithPy:[[self py] balGraph]];
+    barGraph = [[MGBarGraph alloc] initWithPy:[[self py] barGraph]];
     // We have to put one of the graph in there before we link the prefs
     NSView *graphView = [balanceGraph view];
     [graphView setFrame:[graphPlaceholder frame]];
     [graphView setAutoresizingMask:[graphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:graphPlaceholder with:graphView];
     currentGraphView = [balanceGraph view];
-    
-    NSArray *children = [NSArray arrayWithObjects:[entryTable py], [balanceGraph py], [barGraph py], nil];
-    [[self py] setChildren:children];
-    
     return self;
 }
         

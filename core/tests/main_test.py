@@ -320,7 +320,8 @@ class TestOneEntryYearRange2007:
         setattr(row, column, value) # Sets the flag
         app.etable.save_edits()
         # Make sure that the values really made it down in the model by using a spanking new gui
-        etable = EntryTable(app.etable_gui, app.aview)
+        etable = EntryTable(app.aview)
+        etable.view = app.etable_gui
         etable.columns.view = app.etable_gui
         etable.connect()
         etable.show()

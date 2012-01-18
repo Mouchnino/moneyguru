@@ -11,7 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGEditableTable.h"
 
 @interface MGEntryTable : MGEditableTable {}
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView;
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 
 /* Public */

@@ -15,4 +15,12 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:[myview autorelease]];
     return self;
 }
+
+- (id)initWithPy:(id)aPy
+{
+    MGLineGraphView *myview = [[MGLineGraphView alloc] init];
+    self = [super initWithPy:aPy];
+    [self setView:[myview autorelease]];
+    return self;
+}
 @end

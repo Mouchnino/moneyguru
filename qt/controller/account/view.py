@@ -18,10 +18,9 @@ from ...support.item_view import TableView
 from ...support.line_graph_view import LineGraphView
 from ...support.bar_graph_view import BarGraphView
 from ..base_view import BaseView
+from ..chart import Chart
 from .filter_bar import EntryFilterBar
 from .table import EntryTable
-from .bar_graph import AccountBarGraph
-from .line_graph import AccountLineGraph
 
 tr = trget('ui')
 
@@ -32,12 +31,10 @@ class EntryView(BaseView):
         self.doc = mainwindow.doc
         self._setupUi()
         self.model = AccountViewModel(view=self, mainwindow=mainwindow.model)
-        self.etable = EntryTable(self, view=self.tableView)
+        self.etable = EntryTable(self.model.etable, view=self.tableView)
         self.efbar = EntryFilterBar(model=self.model.filter_bar, view=self.filterBar)
-        self.bgraph = AccountBarGraph(self, view=self.barGraphView)
-        self.lgraph = AccountLineGraph(self, view=self.lineGraphView)
-        children = [self.etable.model, self.lgraph.model, self.bgraph.model]
-        self.model.set_children(children)
+        self.bgraph = Chart(self.model.bargraph, view=self.barGraphView)
+        self.lgraph = Chart(self.model.balgraph, view=self.lineGraphView)
         self._setupColumns() # Can only be done after the model has been connected
         
         self.reconciliationButton.clicked.connect(self.model.toggle_reconciliation_mode)

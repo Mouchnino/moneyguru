@@ -9,9 +9,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "MGBarGraphView.h"
 #import "MGGraph.h"
-#import "PyAccountFlowGraph.h"
-
 
 @interface MGBarGraph : MGGraph {}
 - (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName;
+- (id)initWithPy:(id)aPy;
 @end
