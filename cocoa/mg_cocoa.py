@@ -7,11 +7,10 @@
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
 
-from cocoa import install_exception_hook
+from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
     PySelectableList)
-from cocoa.objcmin import (NSObject, NSUserDefaults, NSSearchPathForDirectoriesInDomains,
-    NSCachesDirectory, NSUserDomainMask, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
+from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
 from hscommon.currency import Currency, USD
@@ -54,18 +53,17 @@ from core.gui.schedule_view import ScheduleView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.gui.transaction_table import TransactionTable
 from core.gui.transaction_view import TransactionView
-from core.gui.view_options import ViewOptions
 from core.model.date import clean_format
 
 class PyMoneyGuruApp(PyFairware):
     def initWithCocoa_(self, cocoa):
         super(PyMoneyGuruApp, self).init()
         self.cocoa = cocoa
-        LOGGING_LEVEL = logging.DEBUG if NSUserDefaults.standardUserDefaults().boolForKey_('debug') else logging.WARNING
+        LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('debug') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
         logging.debug('started in debug mode')
         install_exception_hook()
-        std_caches_path = Path(NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, True)[0])
+        std_caches_path = Path(proxy.getCachePath())
         cache_path = std_caches_path + 'moneyGuru'
         currency_code = nonone(NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode), 'USD')
         logging.info('Currency code: {0}'.format(currency_code))

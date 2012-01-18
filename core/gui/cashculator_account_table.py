@@ -6,17 +6,20 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.trans import trget
 from hscommon.gui.column import Column
 from ..model.account import ACCOUNT_SORT_KEY
 from .base import ViewChild
 from .table import GUITable, Row
 
+trcol = trget('columns')
+
 class CashculatorAccountTable(GUITable, ViewChild):
     INVALIDATING_MESSAGES = {'account_added', 'account_changed', 'account_deleted',
         'accounts_excluded'}
     COLUMNS = [
-        Column('name'),
-        Column('recurring'),
+        Column('name', display=trcol("Account")),
+        Column('recurring', display=trcol("Recurring")),
     ]
     
     def __init__(self, view, cc_view):

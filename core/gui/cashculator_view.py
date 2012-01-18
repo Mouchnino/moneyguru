@@ -12,9 +12,9 @@
 
 import subprocess
 from datetime import date
+import os.path as op
 
-from cocoa.objcmin import (NSSearchPathForDirectoriesInDomains, NSApplicationSupportDirectory,
-    NSUserDomainMask)
+from cocoa import proxy
 from hscommon import io
 from hscommon.path import Path
 from hscommon.trans import tr
@@ -50,13 +50,9 @@ class CashculatorView(BaseView):
     def _ensure_paths(self):
         if self._ccdbpath is not None:
             return
-        cmd = "defaults read com.apparentsoft.cashculator CCDB_Folder"
-        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        if p.wait() != 0:
-            return
-        self._ccdbpath = Path(p.communicate()[0].strip()) + 'CCDB'
-        appsupport = Path(NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
-            NSUserDomainMask, True)[0])
+        ccdb_folder = op.expanduser(proxy.prefValue_inDomain_('CCDB_Folder', 'com.apparentsoft.cashculator'))
+        self._ccdbpath = Path(ccdb_folder) + 'CCDB'
+        appsupport = Path(proxy.getAppdataPath())
         self._mgccdbpath = appsupport + 'moneyGuru/cc/CCDB'
     
     def _open_db(self):
@@ -119,6 +115,7 @@ class CashculatorView(BaseView):
         if not self.has_db():
             self.mainwindow.show_message(MSG_NO_DB)
             return
+        # XXX Add CocoaProxy.setPrefValue_value_inDomain_
         cmd = "defaults write com.apparentsoft.cashculator CCDB_Folder \"{0}\""
         cmd = cmd.format(str(self._mgccdbpath[:-1]))
         p = subprocess.Popen(cmd, shell=True)
