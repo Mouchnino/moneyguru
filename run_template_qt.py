@@ -22,6 +22,7 @@ import hscommon.trans
 from hscommon.plat import ISLINUX
 from qtlib.error_report_dialog import install_excepthook
 import qt.mg_rc
+from qt.plat import BASE_PATH
 
 def main(argv):
     app = QApplication(sys.argv)
@@ -43,7 +44,8 @@ def main(argv):
     app.setStyleSheet(style)
     settings = QSettings()
     lang = settings.value('Language').toString()
-    hscommon.trans.install_gettext_trans_under_qt(lang)
+    locale_folder = op.join(BASE_PATH, 'locale')
+    hscommon.trans.install_gettext_trans_under_qt(locale_folder, lang)
     # Many strings are translated at import time, so this is why we only import after the translator
     # has been installed
     from qt.app import MoneyGuru
