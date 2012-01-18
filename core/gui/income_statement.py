@@ -5,8 +5,8 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.trans import trget, tr
+from hscommon.gui.column import Column
 from ..model.account import AccountType
-from .column import Column
 from .report import Report, get_delta_perc
 
 trcol = trget('columns')

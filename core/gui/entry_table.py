@@ -9,7 +9,7 @@
 import datetime
 
 from hscommon.trans import tr, trget
-from .column import Column, Columns
+from hscommon.gui.column import Column, Columns
 from .entry_table_base import EntryTableBase, PreviousBalanceRow, TotalRow
 
 trcol = trget('columns')
@@ -51,7 +51,7 @@ class EntryTable(EntryTableBase):
     
     def __init__(self, view, account_view):
         EntryTableBase.__init__(self, view, account_view)
-        self.columns = EntryTableColumns(self)
+        self.columns = EntryTableColumns(self, prefaccess=account_view.document, savename=self.SAVENAME)
         self.account = None
         self._reconciliation_mode = False
     

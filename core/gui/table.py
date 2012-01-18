@@ -11,23 +11,20 @@ import datetime
 from io import StringIO
 
 from hscommon.gui.table import GUITable as GUITableBase, Row as RowBase
+from hscommon.gui.column import Columns
 
 from ..model.amount import Amount
 from ..model.sort import sort_string
-from .column import Columns
 
 # Subclasses of this class must have a "view" and a "document" attribute
 class GUITable(GUITableBase):
     SAVENAME = ''
     COLUMNS = []
     
-    # XXX document is normally supposed to be a mandatory argument, but because of legacy code, it's
-    # optional. When all subclasses are changed to pass it on init, we can remove the =None part.
-    def __init__(self, document=None):
+    def __init__(self, document):
         GUITableBase.__init__(self)
-        if document is not None:
-            self.document = document
-        self.columns = Columns(self)
+        self.document = document
+        self.columns = Columns(self, prefaccess=document, savename=self.SAVENAME)
     
     def can_move(self, row_indexes, position):
         if not 0 <= position <= len(self):

@@ -7,8 +7,8 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.trans import trget
+from hscommon.gui.column import Column
 from .table import GUITable, Row, RowWithDebitAndCreditMixIn
-from .column import Column
 
 trcol = trget('columns')
 
@@ -21,7 +21,7 @@ class SplitTable(GUITable):
     ]
     
     def __init__(self, transaction_panel):
-        GUITable.__init__(self, document=transaction_panel.document)
+        GUITable.__init__(self, document=transaction_panel.mainwindow.document)
         self.panel = transaction_panel
         self.mainwindow = transaction_panel.mainwindow # CompletableEdit on Qt requires a mainwindow member
     

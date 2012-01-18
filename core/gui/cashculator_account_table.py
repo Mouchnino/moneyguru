@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-08-02
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -7,9 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from hscommon.gui.column import Column
 from ..model.account import ACCOUNT_SORT_KEY
 from .base import ViewChild
-from .column import Column
 from .table import GUITable, Row
 
 class CashculatorAccountTable(GUITable, ViewChild):
@@ -22,7 +21,7 @@ class CashculatorAccountTable(GUITable, ViewChild):
     
     def __init__(self, view, cc_view):
         ViewChild.__init__(self, view, cc_view)
-        GUITable.__init__(self)
+        GUITable.__init__(self, document=cc_view.document)
         self.nonrecurring_names = set()
     
     #--- Override

@@ -7,10 +7,10 @@
 from datetime import timedelta, date
 
 from hscommon.trans import trget, tr
+from hscommon.gui.column import Column
 from ..model.account import AccountType
 from ..model.amount import convert_amount
 from ..model.date import DateRange
-from .column import Column
 from .report import Report, get_delta_perc
 
 trcol = trget('columns')

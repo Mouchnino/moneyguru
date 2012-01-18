@@ -9,8 +9,8 @@
 import datetime
 
 from hscommon.trans import trget, tr
+from hscommon.gui.column import Column
 from ..model.amount import convert_amount
-from .column import Column
 from .table import GUITable, Row, rowattr
 
 trcol = trget('columns')

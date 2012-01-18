@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.trans import trget
-from .column import Column
+from hscommon.gui.column import Column
 from .table import GUITable, Row
 
 trcol = trget('columns')

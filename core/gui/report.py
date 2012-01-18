@@ -9,10 +9,10 @@ from io import StringIO
 
 from hscommon.gui import tree
 from hscommon.trans import tr
+from hscommon.gui.column import Columns
 
 from ..exception import DuplicateAccountNameError
 from .base import ViewChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
-from .column import Columns
 
 # used in both bsheet and istatement
 def get_delta_perc(delta_amount, start_amount):
@@ -29,7 +29,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         tree.Tree.__init__(self)
-        self.columns = Columns(self)
+        self.columns = Columns(self, prefaccess=parent_view.document, savename=self.SAVENAME)
         self.edited = None
         self._expanded_paths = {(0, ), (1, )}
     

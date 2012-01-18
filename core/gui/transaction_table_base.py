@@ -17,7 +17,7 @@ class TransactionTableBase(GUITable, ViewChild):
     
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
-        GUITable.__init__(self)
+        GUITable.__init__(self, document=parent_view.document)
     
     #--- Override
     def _is_edited_new(self):

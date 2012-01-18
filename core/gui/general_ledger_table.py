@@ -7,9 +7,9 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.trans import trget
+from hscommon.gui.column import Column
 from ..model.account import sort_accounts
 from .table import Row
-from .column import Column
 from .entry_table_base import EntryTableBase, EntryTableRow, TotalRow, PreviousBalanceRow
 
 trcol = trget('columns')
