@@ -9,18 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "HSTable.h"
 #import "MGTableView.h"
-#import "HSColumns.h"
 #import "PyTable.h"
 
-@interface MGTable : HSTable
-{
-    HSColumns *columns;
-}
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView;
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
-
+@interface MGTable : HSTable {}
 /* Public */
 - (PyTable *)py;
 - (MGTableView *)tableView;
-- (HSColumns *)columns;
 @end

@@ -10,26 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGTable
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
-{
-    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
-    columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aTableView];
-    return self;
-}
-
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
-{
-    self = [super initWithPy:aPy view:aTableView];
-    columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aTableView];
-    return self;
-}
-
-- (void)dealloc
-{
-    [columns release];
-    [super dealloc];
-}
-
 /* MGTableView delegate */
 - (NSIndexSet *)selectedIndexes
 {
@@ -55,10 +35,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGTableView *)tableView
 {
     return (MGTableView *)tableView;
-}
-
-- (HSColumns *)columns
-{
-    return columns;
 }
 @end
