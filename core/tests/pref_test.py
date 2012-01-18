@@ -61,8 +61,8 @@ def test_gui_calls_after_pref_restore(app):
     # appropriate gui calls are made after pref restore
     app.clear_gui_calls()
     app = app.save_and_load()
-    app.check_gui_calls(app.ttablecol_gui, ['restore_columns'])
-    app.check_gui_calls_partial(app.bsheet_gui, ['refresh_expanded_paths'])
+    app.ttable.columns.view.check_gui_calls(['restore_columns'])
+    app.bsheet.view.check_gui_calls_partial(['refresh_expanded_paths'])
 
 @with_app(TestApp)
 def test_numeric_account_name_pane_reopen(app):

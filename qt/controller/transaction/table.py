@@ -10,7 +10,6 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QPixmap
 
 from qtlib.column import Column
-from core.gui.transaction_table import TransactionTable as TransactionTableModel
 from ...support.item_delegate import ItemDecoration
 from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT
 from ..table_with_transactions import TableWithTransactions
@@ -47,8 +46,7 @@ class TransactionTable(TableWithTransactions):
         Column('amount', 100, alignment=Qt.AlignRight, cantTruncate=True),
     ]
     
-    def __init__(self, transaction_view, view):
-        model = TransactionTableModel(view=self, transaction_view=transaction_view.model)
+    def __init__(self, model, view):
         TableWithTransactions.__init__(self, model, view)
         self.tableDelegate = TransactionTableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)

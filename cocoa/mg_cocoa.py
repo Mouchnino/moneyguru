@@ -50,7 +50,6 @@ from core.gui.profit_graph import ProfitGraph
 from core.gui.profit_view import ProfitView
 from core.gui.schedule_view import ScheduleView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
-from core.gui.transaction_table import TransactionTable
 from core.gui.transaction_view import TransactionView
 from core.model.date import clean_format
 
@@ -367,8 +366,6 @@ class PyEntryTable(PyTableWithDate):
     
 
 class PyTransactionTable(PyTableWithDate):
-    py_class = TransactionTable
-    
     @signature('c@:i')
     def isBoldAtRow_(self, row):
         return self.py[row].is_bold
@@ -967,6 +964,7 @@ class PyTransactionView(PyBaseView):
     py_class = TransactionView
     
     filterBar = subproxy('filterBar', 'filter_bar', PyFilterBar)
+    table = subproxy('table', 'ttable', PyTransactionTable)
 
 class PyAccountView(PyBaseView):
     py_class = AccountView

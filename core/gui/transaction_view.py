@@ -13,6 +13,7 @@ from ..model.account import AccountType
 from ..model.amount import convert_amount
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 from .filter_bar import FilterBar
+from .transaction_table import TransactionTable
 
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
@@ -23,12 +24,10 @@ class TransactionView(BaseView):
         BaseView.__init__(self, view, mainwindow)
         self._visible_transactions = None
         self.filter_bar = FilterBar(self)
-    
-    def set_children(self, children):
-        BaseView.set_children(self, children)
-        [self.ttable] = children
+        self.ttable = TransactionTable(self)
         self.maintable = self.ttable
         self.columns = self.maintable.columns
+        self.set_children([self.ttable])
     
     def _revalidate(self):
         self._visible_transactions = None

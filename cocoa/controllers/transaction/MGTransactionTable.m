@@ -14,9 +14,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTextFieldCell.h"
 
 @implementation MGTransactionTable
-- (id)initWithPyParent:(id)aPyParent view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:@"PyTransactionTable" pyParent:aPyParent view:aTableView];
+    self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     [[self tableView] registerForDraggedTypes:[NSArray arrayWithObject:MGTransactionPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup

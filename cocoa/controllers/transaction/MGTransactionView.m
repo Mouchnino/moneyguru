@@ -15,10 +15,8 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyTransactionView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    transactionTable = [[MGTransactionTable alloc] initWithPyParent:[self py] view:tableView];
+    transactionTable = [[MGTransactionTable alloc] initWithPy:[[self py] table] view:tableView];
     filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:NO];
-    NSArray *children = [NSArray arrayWithObjects:[transactionTable py], nil];
-    [[self py] setChildren:children];
     return self;
 }
         

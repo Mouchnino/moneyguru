@@ -63,11 +63,11 @@ def test_change_column_visibility(app):
     # Changing the visibility option of a column calls the table's gui to actually hide the thing.
     app.show_tview()
     app.set_column_visible('description', False)
-    app.check_gui_calls(app.ttablecol_gui, ['set_column_visible'])
+    app.ttable.columns.view.check_gui_calls(['set_column_visible'])
     # Also works for sheets
     app.show_nwview()
     app.set_column_visible('delta', True)
-    app.check_gui_calls(app.bsheetcol_gui, ['set_column_visible'])
+    app.bsheet.columns.view.check_gui_calls(['set_column_visible'])
 
 def test_change_default_currency():
     # When the default currency is changed, all gui refresh themselves

@@ -371,7 +371,8 @@ def test_set_row_attr(app):
     eq_(row.to, 'newto')
     eq_(row.amount, '0.42')
     # the changes didn't go down to Transaction
-    table = TransactionTable(app.ttable_gui, app.tview)
+    table = TransactionTable(app.tview)
+    table.view = app.ttable_gui
     table.connect()
     table.show()
     assert_row_has_original_attrs(table[0])

@@ -39,7 +39,6 @@ from ..gui.networth_view import NetWorthView
 from ..gui.profit_graph import ProfitGraph
 from ..gui.profit_view import ProfitView
 from ..gui.schedule_view import ScheduleView
-from ..gui.transaction_table import TransactionTable
 from ..gui.transaction_view import TransactionView
 from ..loader import base
 from ..model.account import AccountType
@@ -147,7 +146,8 @@ class TestApp(TestAppBase):
         make_gui('dpview', DocPropsView)
         make_gui('emptyview', EmptyView)
         make_table_gui('etable', EntryTable, parent=self.aview)
-        make_table_gui('ttable', TransactionTable, parent=self.tview)
+        self.ttable = link_gui(self.tview.ttable)
+        self.ttable_gui = self.ttable.view
         self.sctable = link_gui(self.scview.table)
         self.btable = link_gui(self.bview.table)
         self.gltable = link_gui(self.glview.gltable)
