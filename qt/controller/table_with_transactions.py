@@ -45,7 +45,7 @@ class TableWithTransactions(Table):
             font = QFont(self.view.font())
             font.setBold(row.is_bold)
             return font
-        if column.attrname == 'status':
+        if column.name == 'status':
             return self._getStatusData(row, role)
         else:
             return Table._getData(self, row, column, role)

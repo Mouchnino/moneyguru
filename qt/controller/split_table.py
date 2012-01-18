@@ -24,7 +24,6 @@ class SplitTable(Table):
     
     def __init__(self, model, view):
         Table.__init__(self, model, view)
-        self.setColumnsWidth(None)
         view.keyPressed.connect(self.keyPressed)
     
     def _getFlags(self, row, column):

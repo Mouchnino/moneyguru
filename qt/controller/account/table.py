@@ -70,13 +70,13 @@ class EntryTable(TableWithTransactions):
     
     def _getFlags(self, row, column):
         flags = TableWithTransactions._getFlags(self, row, column)
-        if column.attrname == 'status':
+        if column.name == 'status':
             if row.can_reconcile() and not row.reconciled:
                 flags |= Qt.ItemIsUserCheckable
         return flags
     
     def _setData(self, row, column, value, role):
-        if column.attrname == 'status':
+        if column.name == 'status':
             if role == Qt.CheckStateRole:
                 row.toggle_reconciled()
                 return True
@@ -87,7 +87,8 @@ class EntryTable(TableWithTransactions):
     
     #--- Event Handling
     def cellClicked(self, index):
-        rowattr = self.COLUMNS[index.column()].attrname
+        column = self.model.columns.column_by_index(index.column())
+        rowattr = column.name
         if rowattr == 'status':
             row = self.model[index.row()]
             if row.can_reconcile() and row.reconciled:

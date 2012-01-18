@@ -33,7 +33,6 @@ class ProfitView(BaseView):
         self.epiechart = ExpensePieChart(self, view=self.expensePieChart)
         children = [self.psheet.model, self.pgraph.model, self.ipiechart.model, self.epiechart.model]
         self.model.set_children(children)
-        self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
         self.resize(558, 447)
@@ -66,9 +65,6 @@ class ProfitView(BaseView):
         self.graphView = BarGraphView(self)
         self.graphView.setMinimumSize(QSize(0, 200))
         self.verticalLayout_2.addWidget(self.graphView)
-    
-    def _setupColumns(self):
-        self.psheet.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

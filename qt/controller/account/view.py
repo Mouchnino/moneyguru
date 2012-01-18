@@ -91,7 +91,6 @@ class EntryView(BaseView):
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()
         h.setMovable(True) # column drag & drop reorder
-        self.etable.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

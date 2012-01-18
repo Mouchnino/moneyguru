@@ -22,11 +22,10 @@ class ExportAccountTable(Table):
         Table.__init__(self, model, view)
         view.horizontalHeader().setResizeMode(0, QHeaderView.Stretch)
         view.horizontalHeader().setResizeMode(1, QHeaderView.Fixed)
-        self.setColumnsWidth(None)
     
     #--- Data methods override
     def _getData(self, row, column, role):
-        if column.attrname == 'export':
+        if column.name == 'export':
             if role == Qt.CheckStateRole:
                 return Qt.Checked if row.export else Qt.Unchecked
             else:
@@ -36,12 +35,12 @@ class ExportAccountTable(Table):
     
     def _getFlags(self, row, column):
         flags = Table._getFlags(self, row, column)
-        if column.attrname == 'export':
+        if column.name == 'export':
             flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
         return flags
     
     def _setData(self, row, column, value, role):
-        if column.attrname == 'export':
+        if column.name == 'export':
             if role == Qt.CheckStateRole:
                 row.export = value.toBool()
                 return True

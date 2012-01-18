@@ -87,8 +87,6 @@ class ImportWindow(QWidget):
         self.tabView.setUsesScrollButtons(True)
     
     def _setupColumns(self):
-        self.table.setColumnsWidth(None)
-        
         # Can't set widget alignment in a layout in the Designer
         l = self.targetAccountLayout
         l.setAlignment(self.targetAccountLabel, Qt.AlignTop)

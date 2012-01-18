@@ -45,35 +45,5 @@ class TableDelegate(ItemDelegate):
 class Table(TableBase):
     def __init__(self, model, view):
         TableBase.__init__(self, model, view)
-        self.model.columns.view = self
         self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
         self.view.setItemDelegate(self.tableDelegate)
-        self.view.horizontalHeader().sectionMoved.connect(self.headerSectionMoved)
-        self.view.horizontalHeader().sectionResized.connect(self.headerSectionResized)
-    
-    #--- Event Handling
-    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
-        attrname = self.COLUMNS[logicalIndex].attrname
-        self.model.columns.move_column(attrname, newVisualIndex)
-    
-    def headerSectionResized(self, logicalIndex, oldSize, newSize):
-        attrname = self.COLUMNS[logicalIndex].attrname
-        self.model.columns.resize_column(attrname, newSize)
-    
-    #--- model --> view
-    def restore_columns(self):
-        colnames = self.model.columns.colnames
-        indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
-        self.setColumnsOrder(indexes)
-        widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
-        if not any(widths):
-            widths = None
-        self.setColumnsWidth(widths)
-        for column in self.COLUMNS:
-            visible = self.model.columns.column_is_visible(column.attrname)
-            self.view.horizontalHeader().setSectionHidden(column.index, not visible)
-    
-    def set_column_visible(self, colname, visible):
-        column = self.ATTR2COLUMN[colname]
-        self.view.horizontalHeader().setSectionHidden(column.index, not visible)
-    

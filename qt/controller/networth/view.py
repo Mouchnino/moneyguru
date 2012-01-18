@@ -33,7 +33,6 @@ class NetWorthView(BaseView):
         self.lpiechart = LiabilityPieChart(self, view=self.liabilityPieChart)
         children = [self.nwsheet.model, self.nwgraph.model, self.apiechart.model, self.lpiechart.model]
         self.model.set_children(children)
-        self._setupColumns() # Can only be done after the model has been connected
     
     def _setupUi(self):
         self.resize(558, 447)
@@ -66,9 +65,6 @@ class NetWorthView(BaseView):
         self.graphView = LineGraphView(self)
         self.graphView.setMinimumSize(QSize(0, 200))
         self.verticalLayout_2.addWidget(self.graphView)
-    
-    def _setupColumns(self):
-        self.nwsheet.restore_columns()
     
     #--- QWidget override
     def setFocus(self):

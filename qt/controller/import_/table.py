@@ -36,12 +36,12 @@ class ImportTable(Table):
     
     #--- Data methods override
     def _getData(self, row, column, role):
-        if column.attrname == 'will_import':
+        if column.name == 'will_import':
             if role == Qt.CheckStateRole:
                 return Qt.Checked if row.will_import else Qt.Unchecked
             else:
                 return None
-        elif column.attrname == 'bound':
+        elif column.name == 'bound':
             if role == Qt.DecorationRole:
                 return QPixmap(':/lock_12') if row.bound else None
             else:
@@ -51,7 +51,7 @@ class ImportTable(Table):
     
     def _getFlags(self, row, column):
         flags = Table._getFlags(self, row, column)
-        if column.attrname == 'will_import':
+        if column.name == 'will_import':
             flags |= Qt.ItemIsUserCheckable | Qt.ItemIsEditable
             if not row.can_edit_will_import:
                 flags &= ~Qt.ItemIsEnabled
@@ -60,7 +60,7 @@ class ImportTable(Table):
         return flags
     
     def _setData(self, row, column, value, role):
-        if column.attrname == 'will_import':
+        if column.name == 'will_import':
             if role == Qt.CheckStateRole:
                 row.will_import = value.toBool()
                 return True
@@ -104,14 +104,14 @@ class ImportTable(Table):
     
     #--- Private
     def _switchToOneSidedMode(self):
-        h = self._headerView
+        h = self.view.horizontalHeader()
         if h.isSectionHidden(1):
             return # already in one sided mode
         for i in [1, 2, 3, 4]:
             h.hideSection(i)
     
     def _switchToTwoSidedMode(self):
-        h = self._headerView
+        h = self.view.horizontalHeader()
         if not h.isSectionHidden(1):
             return # already in two sided mode
         for i in [1, 2, 3, 4]:
@@ -126,7 +126,8 @@ class ImportTable(Table):
     
     #--- Event Handling
     def cellClicked(self, index):
-        rowattr = self.COLUMNS[index.column()].attrname
+        column = self.model.columns.column_by_index(index.column())
+        rowattr = column.name
         if rowattr == 'bound':
             self.model.unbind(index.row())
     

@@ -10,7 +10,7 @@ from PyQt4.QtCore import Qt, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap, QPalette, QFont, QItemSelection
 
 from hscommon.util import nonone
-from qtlib.column import ColumnBearer
+from qtlib.column import Columns
 from qtlib.tree_model import TreeNode, TreeModel
 
 from ..const import (MIME_NODEPATHS, INDENTATION_OFFSET_ROLE, EXTRA_ROLE, EXTRA_UNDERLINED,
@@ -43,8 +43,8 @@ class AccountSheetDelegate(ItemDelegate):
         self._decoAccountIn = ItemDecoration(accountIn, self._model.model.toggle_excluded)
     
     def _get_decorations(self, index, isSelected):
-        column = self._model.COLUMNS[index.column()]
-        if column.attrname != 'name':
+        column = self._model.model.columns.column_by_index(index.column())
+        if column.name != 'name':
             return []
         result = []
         node = index.internalPointer()
@@ -58,7 +58,7 @@ class AccountSheetDelegate(ItemDelegate):
         return result
     
     def _prepare_paint_options(self, option, index):
-        column = self._model.COLUMNS[index.column()]
+        column = self._model.model.columns.column_by_index(index.column())
         node = index.internalPointer()
         ref = node.ref
         if ref.is_excluded:
@@ -85,7 +85,7 @@ class AccountSheetDelegate(ItemDelegate):
                 painter.drawLine(p1, p2)
     
 
-class AccountSheet(TreeModel, ColumnBearer):
+class AccountSheet(TreeModel):
     AMOUNT_ATTRS = set()
     BOLD_ATTRS = set()
     
@@ -97,7 +97,7 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.model = model
         self.model.columns.view = self
         self.view.setModel(self)
-        ColumnBearer.__init__(self, view.header())
+        self.columns = Columns(self.model.columns, self.COLUMNS, view.header())
         self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)
         
@@ -106,8 +106,6 @@ class AccountSheet(TreeModel, ColumnBearer):
         self.view.expanded.connect(self.nodeExpanded)
         self.view.deletePressed.connect(self.model.delete)
         self.view.doubleClicked.connect(self.model.show_selected_account)
-        self.view.header().sectionMoved.connect(self.headerSectionMoved)
-        self.view.header().sectionResized.connect(self.headerSectionResized)
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):
@@ -127,15 +125,15 @@ class AccountSheet(TreeModel, ColumnBearer):
     
     #--- Data Model methods
     def columnCount(self, parent):
-        return len(self.COLUMNS)
+        return self.model.columns.columns_count()
     
     def data(self, index, role):
         if not index.isValid():
             return None
         node = index.internalPointer()
         ref = node.ref
-        column = self.COLUMNS[index.column()]
-        rowattr = column.attrname
+        column = self.model.columns.column_by_index(index.column())
+        rowattr = column.name
         if role in (Qt.DisplayRole, Qt.EditRole):
             if (rowattr == 'name') or (not ref.is_expanded):
                 return getattr(node.ref, rowattr)
@@ -172,7 +170,8 @@ class AccountSheet(TreeModel, ColumnBearer):
             return Qt.ItemIsEnabled
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
         node = index.internalPointer()
-        rowattr = self.COLUMNS[index.column()].attrname
+        column = self.model.columns.column_by_index(index.column())
+        rowattr = column.name
         if getattr(node.ref, 'can_edit_' + rowattr, False):
             flags |= Qt.ItemIsEditable
         if node.ref.is_group or node.ref.is_type:
@@ -182,9 +181,17 @@ class AccountSheet(TreeModel, ColumnBearer):
         return flags
     
     def headerData(self, section, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.COLUMNS):
-            return self.COLUMNS[section].title
-        return None
+        if orientation != Qt.Horizontal:
+            return None
+        if section >= self.model.columns.columns_count():
+            return None
+        column = self.model.columns.column_by_index(section)
+        if role == Qt.DisplayRole:
+            return column.display
+        elif role == Qt.TextAlignmentRole:
+            return column.alignment
+        else:
+            return None
     
     def revert(self):
         self.model.cancel_edits()
@@ -194,8 +201,9 @@ class AccountSheet(TreeModel, ColumnBearer):
             return False
         if role == Qt.EditRole:
             node = index.internalPointer()
-            rowattr = self.COLUMNS[index.column()].attrname
-            value = str(value.toString())
+            column = self.model.columns.column_by_index(index.column())
+            rowattr = column.name
+            value = value.toString()
             setattr(node.ref, rowattr, value)
             return True
         return False
@@ -242,14 +250,6 @@ class AccountSheet(TreeModel, ColumnBearer):
         newNodes = [modelIndex.internalPointer().ref for modelIndex in self.view.selectionModel().selectedRows()]
         self.model.selected_nodes = newNodes
     
-    def headerSectionMoved(self, logicalIndex, oldVisualIndex, newVisualIndex):
-        attrname = self.COLUMNS[logicalIndex].attrname
-        self.model.columns.move_column(attrname, newVisualIndex)
-    
-    def headerSectionResized(self, logicalIndex, oldSize, newSize):
-        attrname = self.COLUMNS[logicalIndex].attrname
-        self.model.columns.resize_column(attrname, newSize)
-    
     def nodeCollapsed(self, index):
         node = index.internalPointer()
         self.model.collapse_node(node.ref)
@@ -269,22 +269,8 @@ class AccountSheet(TreeModel, ColumnBearer):
             index = self.findIndex(path)
             self.view.expand(index)
     
-    def restore_columns(self):
-        colnames = self.model.columns.colnames
-        indexes = [self.ATTR2COLUMN[name].index for name in colnames if name in self.ATTR2COLUMN]
-        self.setColumnsOrder(indexes)
-        widths = [self.model.columns.column_width(col.attrname) for col in self.COLUMNS]
-        self.setColumnsWidth(widths)
-        for column in self.COLUMNS:
-            visible = self.model.columns.column_is_visible(column.attrname)
-            self.view.header().setSectionHidden(column.index, not visible)
-    
     def start_editing(self):
         self.view.editSelected()
-    
-    def set_column_visible(self, colname, visible):
-        column = self.ATTR2COLUMN[colname]
-        self.view.header().setSectionHidden(column.index, not visible)
     
     def stop_editing(self):
         self.view.setFocus() # enough to stop editing
