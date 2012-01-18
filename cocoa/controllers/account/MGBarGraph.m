@@ -9,13 +9,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBarGraph.h"
 
 @implementation MGBarGraph
-- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName
-{
-    MGBarGraphView *myview = [[MGBarGraphView alloc] init];
-    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:[myview autorelease]];
-    return self;
-}
-
 - (id)initWithPy:(id)aPy
 {
     MGBarGraphView *myview = [[MGBarGraphView alloc] init];

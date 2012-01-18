@@ -11,12 +11,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPieChart.h"
 #import "MGBarGraph.h"
 #import "MGDoubleView.h"
-#import "PyIncomeStatement.h"
 
-@interface MGIncomeStatement : MGReport
-{
-}
-- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView;
+@interface MGIncomeStatement : MGReport {}
+- (id)initWithPy:(id)aPy view:(HSOutlineView *)aOutlineView;
 - (void)initializeColumns;
-- (PyIncomeStatement *)py;
 @end

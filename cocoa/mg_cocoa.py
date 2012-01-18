@@ -25,9 +25,7 @@ hscommon.trans.install_gettext_trans_under_cocoa()
 from core.app import Application
 from core.document import Document, FilterType
 from core.exception import FileFormatError
-from core.gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from core.gui.account_view import AccountView
-from core.gui.balance_sheet import BalanceSheet
 from core.gui.budget_view import BudgetView
 from core.gui.cashculator_view import CashculatorView
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
@@ -37,13 +35,10 @@ from core.gui.date_widget import DateWidget
 from core.gui.docprops_view import DocPropsView
 from core.gui.empty_view import EmptyView
 from core.gui.general_ledger_view import GeneralLedgerView
-from core.gui.income_statement import IncomeStatement
 from core.gui.import_window import ImportWindow
 from core.gui.main_window import MainWindow
-from core.gui.net_worth_graph import NetWorthGraph
 from core.gui.networth_view import NetWorthView
 from core.gui.print_view import PrintView
-from core.gui.profit_graph import ProfitGraph
 from core.gui.profit_view import ProfitView
 from core.gui.schedule_view import ScheduleView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
@@ -321,12 +316,6 @@ class PyPanel(PyGUIObject):
         self.cocoa.preSave()
     
 #--- GUI layer classes
-
-class PyBalanceSheet(PyReport):
-    py_class = BalanceSheet
-
-class PyIncomeStatement(PyReport):
-    py_class = IncomeStatement
 
 class PyEntryTable(PyTableWithDate):
     @signature('c@:@i')
@@ -808,24 +797,6 @@ class PyExportPanel(PyPanel):
         self.cocoa.setExportButtonEnabled_(enabled)
     
 
-class PyNetWorthGraph(PyGraph):
-    py_class = NetWorthGraph
-
-class PyProfitGraph(PyGraph):
-    py_class = ProfitGraph
-
-class PyAssetsPieChart(PyChart):
-    py_class = AssetsPieChart
-
-class PyLiabilitiesPieChart(PyChart):
-    py_class = LiabilitiesPieChart
-
-class PyIncomePieChart(PyChart):
-    py_class = IncomePieChart
-
-class PyExpensesPieChart(PyChart):
-    py_class = ExpensesPieChart
-
 class PySearchField(PyGUIObject):
     def query(self):
         return self.py.query
@@ -936,6 +907,11 @@ class PyBaseView(PyGUIContainer):
 class PyNetWorthView(PyBaseView):
     py_class = NetWorthView
     
+    sheet = subproxy('sheet', 'bsheet', PyReport)
+    nwgraph = subproxy('nwgraph', 'nwgraph', PyGraph)
+    apie = subproxy('apie', 'apie', PyChart)
+    lpie = subproxy('lpie', 'lpie', PyChart)
+    
     #Python --> Cocoa
     def update_visibility(self):
         self.cocoa.updateVisibility()
@@ -943,6 +919,11 @@ class PyNetWorthView(PyBaseView):
 
 class PyProfitView(PyBaseView):
     py_class = ProfitView
+    
+    sheet = subproxy('sheet', 'istatement', PyReport)
+    pgraph = subproxy('pgraph', 'pgraph', PyGraph)
+    ipie = subproxy('ipie', 'ipie', PyChart)
+    epie = subproxy('epie', 'epie', PyChart)
     
     #Python --> Cocoa
     def update_visibility(self):

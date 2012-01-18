@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyOutline.h"
 
 @interface PyReport : PyOutline {}
 - (BOOL)canDeleteSelected;

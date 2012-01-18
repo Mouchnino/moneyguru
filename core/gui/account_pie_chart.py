@@ -23,8 +23,8 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
     INVALIDATING_MESSAGES = PieChart.INVALIDATING_MESSAGES | {'accounts_excluded',
         'group_expanded_state_changed'}
     
-    def __init__(self, view, parent_view, account_type, title):
-        PieChart.__init__(self, view, parent_view)
+    def __init__(self, parent_view, account_type, title):
+        PieChart.__init__(self, None, parent_view)
         self._account_type = account_type
         self._title = title
     
@@ -75,13 +75,13 @@ class _BalancePieChart(_AccountPieChart):
     
 
 class AssetsPieChart(_BalancePieChart):
-    def __init__(self, view, networth_view):
-        _BalancePieChart.__init__(self, view, networth_view, AccountType.Asset, tr('Assets'))
+    def __init__(self, networth_view):
+        _BalancePieChart.__init__(self, networth_view, AccountType.Asset, tr('Assets'))
     
 
 class LiabilitiesPieChart(_BalancePieChart):
-    def __init__(self, view, networth_view):
-        _BalancePieChart.__init__(self, view, networth_view, AccountType.Liability, tr('Liabilities'))
+    def __init__(self, networth_view):
+        _BalancePieChart.__init__(self, networth_view, AccountType.Liability, tr('Liabilities'))
     
 
 class _CashFlowPieChart(_AccountPieChart):
@@ -98,11 +98,11 @@ class _CashFlowPieChart(_AccountPieChart):
     
 
 class IncomePieChart(_CashFlowPieChart):
-    def __init__(self, view, profit_view):
-        _CashFlowPieChart.__init__(self, view, profit_view, AccountType.Income, tr('Income'))
+    def __init__(self, profit_view):
+        _CashFlowPieChart.__init__(self, profit_view, AccountType.Income, tr('Income'))
     
 
 class ExpensesPieChart(_CashFlowPieChart):
-    def __init__(self, view, profit_view):
-        _CashFlowPieChart.__init__(self, view, profit_view, AccountType.Expense, tr('Expenses'))
+    def __init__(self, profit_view):
+        _CashFlowPieChart.__init__(self, profit_view, AccountType.Expense, tr('Expenses'))
     

@@ -17,20 +17,16 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyNetWorthView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
-    balanceSheet = [[MGBalanceSheet alloc] initWithPyParent:[self py] view:outlineView];
-    assetsPieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyAssetsPieChart"];
-    liabilitiesPieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyLiabilitiesPieChart"];
+    balanceSheet = [[MGBalanceSheet alloc] initWithPy:[[self py] sheet] view:outlineView];
+    assetsPieChart = [[MGPieChart alloc] initWithPy:[[self py] apie]];
+    liabilitiesPieChart = [[MGPieChart alloc] initWithPy:[[self py] lpie]];
     [pieChartsView setFirstView:[assetsPieChart view]];
     [pieChartsView setSecondView:[liabilitiesPieChart view]];
-    netWorthGraph = [[MGBalanceGraph alloc] initWithPyParent:[self py] pyClassName:@"PyNetWorthGraph"];
+    netWorthGraph = [[MGBalanceGraph alloc] initWithPy:[[self py] nwgraph]];
     NSView *graphView = [netWorthGraph view];
     [graphView setFrame:[netWorthGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[netWorthGraphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:netWorthGraphPlaceholder with:graphView];
-    
-    NSArray *children = [NSArray arrayWithObjects:[balanceSheet py], [netWorthGraph py],
-        [assetsPieChart py], [liabilitiesPieChart py], nil];
-    [[self py] setChildren:children];
     return self;
 }
         

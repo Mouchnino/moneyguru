@@ -8,6 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyBaseView.h"
+#import "PyReport.h"
+#import "PyChart.h"
+#import "PyGraph.h"
 
 @interface PyProfitView : PyBaseView {}
+- (PyReport *)sheet;
+- (PyGraph *)pgraph;
+- (PyChart *)ipie;
+- (PyChart *)epie;
 @end

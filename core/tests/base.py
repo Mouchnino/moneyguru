@@ -19,21 +19,16 @@ from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
 from ..const import PaneType
-from ..gui.account_pie_chart import AssetsPieChart, LiabilitiesPieChart, IncomePieChart, ExpensesPieChart
 from ..gui.account_view import AccountView
-from ..gui.balance_sheet import BalanceSheet
 from ..gui.budget_view import BudgetView
 from ..gui.completable_edit import CompletableEdit
 from ..gui.csv_options import CSVOptions
 from ..gui.docprops_view import DocPropsView
 from ..gui.empty_view import EmptyView
 from ..gui.general_ledger_view import GeneralLedgerView
-from ..gui.income_statement import IncomeStatement
 from ..gui.import_window import ImportWindow
 from ..gui.main_window import MainWindow
-from ..gui.net_worth_graph import NetWorthGraph
 from ..gui.networth_view import NetWorthView
-from ..gui.profit_graph import ProfitGraph
 from ..gui.profit_view import ProfitView
 from ..gui.schedule_view import ScheduleView
 from ..gui.transaction_view import TransactionView
@@ -169,14 +164,17 @@ class TestApp(TestAppBase):
         self.balgraph_gui = self.balgraph.view
         self.bargraph = link_gui(self.aview.bargraph)
         self.bargraph_gui = self.bargraph.view
-        make_gui('nwgraph', NetWorthGraph, parent=self.nwview)
-        make_gui('pgraph', ProfitGraph, parent=self.pview)
-        make_table_gui('bsheet', BalanceSheet, parent=self.nwview)
-        make_gui('apie', AssetsPieChart, parent=self.nwview)
-        make_gui('lpie', LiabilitiesPieChart, parent=self.nwview)
-        make_gui('ipie', IncomePieChart, parent=self.pview)
-        make_gui('epie', ExpensesPieChart, parent=self.pview)
-        make_table_gui('istatement', IncomeStatement, parent=self.pview)
+        self.nwgraph = link_gui(self.nwview.nwgraph)
+        self.nwgraph_gui = self.nwgraph.view
+        self.pgraph = link_gui(self.pview.pgraph)
+        self.bsheet = link_gui(self.nwview.bsheet)
+        self.bsheet_gui = self.bsheet.view
+        self.istatement = link_gui(self.pview.istatement)
+        self.istatement_gui = self.istatement.view
+        self.apie = link_gui(self.nwview.apie)
+        self.lpie = link_gui(self.nwview.lpie)
+        self.ipie = link_gui(self.pview.ipie)
+        self.epie = link_gui(self.pview.epie)
         self.sfield = link_gui(self.mw.search_field)
         self.efbar = link_gui(self.aview.filter_bar)
         self.tfbar = link_gui(self.tview.filter_bar)

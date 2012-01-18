@@ -96,7 +96,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
         # on 1/7/2008 is 7.04 USD
         expected = [32 + 22 - 7.04, -100, 54]
         eq_(amounts, expected)
-        app.check_gui_calls(app.pgraph_gui, ['refresh'])
+        app.check_gui_calls(app.pgraph.view, ['refresh'])
     
     @with_app(do_setup)
     def test_profit_graph(self, app):

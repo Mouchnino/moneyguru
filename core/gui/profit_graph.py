@@ -13,8 +13,8 @@ from .bar_graph import BarGraph
 from .base import SheetViewNotificationsMixin
 
 class ProfitGraph(BarGraph, SheetViewNotificationsMixin):
-    def __init__(self, view, profit_view):
-        BarGraph.__init__(self, view, profit_view)
+    def __init__(self, profit_view):
+        BarGraph.__init__(self, profit_view)
     
     #--- Override
     def _currency(self):

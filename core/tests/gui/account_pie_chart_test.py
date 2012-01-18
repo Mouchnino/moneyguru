@@ -82,7 +82,7 @@ class TestSomeAssetsAndLiabilities:
             ('a3 22.2%', 2),
         ]
         eq_(app.apie.data, expected)
-        app.apie_gui.check_gui_calls(['refresh'])
+        app.apie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_liabilities_pie(self, app):
@@ -203,7 +203,7 @@ class TestSomeIncomeAndExpenses:
             ('e2 14.3%', 1),
         ]
         eq_(app.epie.data, expected)
-        app.epie_gui.check_gui_calls(['refresh'])
+        app.epie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_income_pie(self, app):
@@ -238,7 +238,7 @@ class TestDifferentDateRanges:
         eq_(app.apie.data, [('foo 100.0%', 2)])
         app.drsel.select_prev_date_range()
         eq_(app.apie.data, [('foo 100.0%', 4)])
-        app.apie_gui.check_gui_calls(['refresh'])
+        app.apie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_cash_flow_pie_chart(self, app):
@@ -249,7 +249,7 @@ class TestDifferentDateRanges:
         eq_(app.epie.data, [('bar 100.0%', 2)])
         app.drsel.select_prev_date_range()
         eq_(app.epie.data, [('bar 100.0%', 1)])
-        app.epie_gui.check_gui_calls(['refresh'])
+        app.epie.view.check_gui_calls(['refresh'])
     
 
 class TestMultipleCurrencies:

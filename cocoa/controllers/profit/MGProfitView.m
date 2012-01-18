@@ -17,20 +17,16 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPyClassName:@"PyProfitView" pyParent:aPyParent];
     [NSBundle loadNibNamed:@"IncomeStatement" owner:self];
-    incomeStatement = [[MGIncomeStatement alloc] initWithPyParent:[self py] view:outlineView];
-    incomePieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyIncomePieChart"];
-    expensesPieChart = [[MGPieChart alloc] initWithPyParent:[self py] pieChartClassName:@"PyExpensesPieChart"];
+    incomeStatement = [[MGIncomeStatement alloc] initWithPy:[[self py] sheet] view:outlineView];
+    incomePieChart = [[MGPieChart alloc] initWithPy:[[self py] ipie]];
+    expensesPieChart = [[MGPieChart alloc] initWithPy:[[self py] epie]];
     [pieChartsView setFirstView:[incomePieChart view]];
     [pieChartsView setSecondView:[expensesPieChart view]];
-    profitGraph = [[MGBarGraph alloc] initWithPyParent:[self py] pyClassName:@"PyProfitGraph"];
+    profitGraph = [[MGBarGraph alloc] initWithPy:[[self py] pgraph]];
     NSView *graphView = [profitGraph view];
     [graphView setFrame:[profitGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[profitGraphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:profitGraphPlaceholder with:graphView];
-    
-    NSArray *children = [NSArray arrayWithObjects:[incomeStatement py], [profitGraph py],
-        [incomePieChart py], [expensesPieChart py], nil];
-    [[self py] setChildren:children];
     return self;
 }
         

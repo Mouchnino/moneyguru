@@ -9,7 +9,6 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
-from core.gui.income_statement import IncomeStatement as IncomeStatementModel
 from ..account_sheet import AccountSheet
 
 class ProfitSheet(AccountSheet):
@@ -24,8 +23,4 @@ class ProfitSheet(AccountSheet):
     ]
     AMOUNT_ATTRS = {'cash_flow', 'last_cash_flow', 'delta', 'delta_perc', 'budgeted'}
     BOLD_ATTRS = {'cash_flow', }
-    
-    def __init__(self, profit_view, view):
-        model = IncomeStatementModel(view=self, profit_view=profit_view.model)
-        AccountSheet.__init__(self, profit_view.doc, model, view)
     

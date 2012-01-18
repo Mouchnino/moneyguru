@@ -9,7 +9,6 @@
 from PyQt4.QtCore import Qt
 
 from qtlib.column import Column
-from core.gui.balance_sheet import BalanceSheet as BalanceSheetModel
 from ..account_sheet import AccountSheet
 
 class NetWorthSheet(AccountSheet):
@@ -24,8 +23,4 @@ class NetWorthSheet(AccountSheet):
     ]
     AMOUNT_ATTRS = {'end', 'start', 'delta', 'delta_perc', 'budgeted'}
     BOLD_ATTRS = {'end'}
-    
-    def __init__(self, networth_view, view):
-        model = BalanceSheetModel(view=self, networth_view=networth_view.model)
-        AccountSheet.__init__(self, networth_view.doc, model, view)
     

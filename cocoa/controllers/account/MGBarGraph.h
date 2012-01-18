@@ -11,6 +11,5 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGGraph.h"
 
 @interface MGBarGraph : MGGraph {}
-- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName;
 - (id)initWithPy:(id)aPy;
 @end

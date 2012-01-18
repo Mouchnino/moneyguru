@@ -26,8 +26,8 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     COLUMNS = []
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'accounts_excluded', 'date_range_changed'}
     
-    def __init__(self, view, parent_view):
-        ViewChild.__init__(self, view, parent_view)
+    def __init__(self, parent_view):
+        ViewChild.__init__(self, None, parent_view)
         tree.Tree.__init__(self)
         self.columns = Columns(self, prefaccess=parent_view.document, savename=self.SAVENAME)
         self.edited = None

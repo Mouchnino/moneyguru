@@ -9,14 +9,20 @@
 from hscommon.trans import tr
 from ..const import PaneType
 from .account_sheet_view import AccountSheetView
+from .balance_sheet import BalanceSheet
+from .net_worth_graph import NetWorthGraph
+from .account_pie_chart import AssetsPieChart, LiabilitiesPieChart
 
 class NetWorthView(AccountSheetView):
     VIEW_TYPE = PaneType.NetWorth
     PRINT_TITLE_FORMAT = tr("Net Worth at {end_date}, starting from {start_date}")
     
-    def set_children(self, children):
-        AccountSheetView.set_children(self, children)
-        [self.bsheet, self.nwgraph, self.apie, self.lpie] = children
+    def __init__(self, view, mainwindow):
+        AccountSheetView.__init__(self, view, mainwindow)
+        self.bsheet = BalanceSheet(self)
         self.columns = self.bsheet.columns
+        self.nwgraph = NetWorthGraph(self)
+        self.apie = AssetsPieChart(self)
+        self.lpie = LiabilitiesPieChart(self)
+        self.set_children([self.bsheet, self.nwgraph, self.apie, self.lpie])
     
-

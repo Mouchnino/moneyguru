@@ -12,8 +12,8 @@ from .balance_graph import BalanceGraph
 from .base import SheetViewNotificationsMixin
 
 class NetWorthGraph(BalanceGraph, SheetViewNotificationsMixin):
-    def __init__(self, view, networth_view):
-        BalanceGraph.__init__(self, view, networth_view)
+    def __init__(self, networth_view):
+        BalanceGraph.__init__(self, networth_view)
     
     def _balance_for_date(self, date):
         balances = (a.entries.balance(date=date, currency=self._currency) for a in self._accounts)

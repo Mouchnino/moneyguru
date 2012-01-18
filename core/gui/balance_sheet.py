@@ -27,9 +27,6 @@ class BalanceSheet(Report):
         Column('budgeted', display=trcol("Budgeted"), optional=True),
     ]
     
-    def __init__(self, view, networth_view):
-        Report.__init__(self, view, networth_view)
-    
     #--- Override
     def _compute_account_node(self, node):
         account = node.account

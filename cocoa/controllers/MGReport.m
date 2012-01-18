@@ -22,11 +22,11 @@ NSArray* convertPaths(NSArray *paths)
 }
 
 @implementation MGReport
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
+- (id)initWithPy:(id)aPy view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aOutlineView];
+    self = [super initWithPy:aPy view:aOutlineView];
     columns = [[HSColumns alloc] initWithPy:[[self py] columns] tableView:aOutlineView];
-    [outlineView registerForDraggedTypes:[NSArray arrayWithObject:MGPathsPasteboardType]];
+    [[self view] registerForDraggedTypes:[NSArray arrayWithObject:MGPathsPasteboardType]];
     return self;
 }
 
@@ -76,12 +76,12 @@ NSArray* convertPaths(NSArray *paths)
     }
     
     // Don't show values on expanded nodes.
-    if ([outlineView isItemExpanded:item] && ![[column identifier] isEqualToString:@"name"])
+    if ([[self view] isItemExpanded:item] && ![[column identifier] isEqualToString:@"name"])
     {
         return nil;
     }
     
-    return [super outlineView:outlineView objectValueForTableColumn:column byItem:item];
+    return [super outlineView:[self view] objectValueForTableColumn:column byItem:item];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)aOutlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
@@ -107,7 +107,7 @@ NSArray* convertPaths(NSArray *paths)
         NSArray *paths = convertPaths([NSKeyedUnarchiver unarchiveObjectWithData:data]);
         if ([[self py] canMovePaths:paths toPath:p2a(destPath)]) {
             if (index != -1) {
-                [outlineView setDropItem:item dropChildIndex:-1];
+                [[self view] setDropItem:item dropChildIndex:-1];
             }
             return NSDragOperationMove;
         }
@@ -134,8 +134,8 @@ NSArray* convertPaths(NSArray *paths)
     NSString *column = [tableColumn identifier];
     NSIndexPath *path = item;
     BOOL isTotal = [self boolProperty:@"is_total" valueAtPath:path];
-    NSInteger level = [outlineView levelForItem:item];
-    NSInteger row = [outlineView rowForItem:item];
+    NSInteger level = [[self view] levelForItem:item];
+    NSInteger row = [[self view] rowForItem:item];
     BOOL isPrinting = [NSPrintOperation currentOperation] != nil;
 
     if ([column isEqualToString:@"name"])
@@ -143,9 +143,9 @@ NSArray* convertPaths(NSArray *paths)
         MGTextFieldCell *cell = theCell;
         NSFont *font = [cell font];
         NSFontManager *fontManager = [NSFontManager sharedFontManager];
-        BOOL isExpandable = [self outlineView:outlineView isItemExpandable:item];
-        BOOL isFocused = outlineView == [[outlineView window] firstResponder] && [[outlineView window] isKeyWindow];
-        BOOL isSelected = row == [outlineView selectedRow];
+        BOOL isExpandable = [self outlineView:[self view] isItemExpandable:item];
+        BOOL isFocused = [self view] == [[[self view] window] firstResponder] && [[[self view] window] isKeyWindow];
+        BOOL isSelected = row == [[self view] selectedRow];
         
         // Bold or not bold?
         if (isExpandable || isTotal)
@@ -158,7 +158,7 @@ NSArray* convertPaths(NSArray *paths)
         {
             font = [fontManager convertFont:font toFamily:@"Helvetica"]; // Lucida doesn't have italics
             font = [fontManager convertFont:font toHaveTrait:NSFontItalicTrait];
-            [cell setIndent:-[outlineView indentationPerLevel]];
+            [cell setIndent:-[[self view] indentationPerLevel]];
         }
         else
         {
@@ -246,13 +246,13 @@ NSArray* convertPaths(NSArray *paths)
 
 - (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
 {
-    [outlineView startEditing];
+    [[self view] startEditing];
     return YES;
 }
 
 - (void)outlineViewWasDoubleClicked:(HSOutlineView *)sender
 {
-    if ([outlineView clickedRow] != -1)
+    if ([[self view] clickedRow] != -1)
     {
         [[self py] showSelectedAccount];
     }
@@ -298,7 +298,7 @@ NSArray* convertPaths(NSArray *paths)
     for (NSArray *arrayPath in expandedPaths) {
         NSIndexPath *path = a2p(arrayPath);
         if (path != nil) {
-            [outlineView expandItem:path];
+            [[self view] expandItem:path];
         }
     }
 }

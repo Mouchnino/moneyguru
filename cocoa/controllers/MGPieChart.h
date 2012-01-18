@@ -11,6 +11,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyChart.h"
 
 @interface MGPieChart : MGChart {}
-- (id)initWithPyParent:(id)aPyParent pieChartClassName:(NSString *)className;
+- (id)initWithPy:(id)aPy;
 - (PyChart *)py;
 @end

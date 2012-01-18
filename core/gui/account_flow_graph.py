@@ -12,8 +12,8 @@ from .bar_graph import BarGraph
 class AccountFlowGraph(BarGraph):
     INVALIDATING_MESSAGES = BarGraph.INVALIDATING_MESSAGES | set(['shown_account_changed'])
     
-    def __init__(self, view, account_view):
-        BarGraph.__init__(self, view, account_view)
+    def __init__(self, account_view):
+        BarGraph.__init__(self, account_view)
     
     #--- Override
     def _currency(self):

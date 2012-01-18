@@ -8,12 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGReport.h"
-#import "PyBalanceSheet.h"
 
 @interface MGBalanceSheet : MGReport
 {
 }
-- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView;
+- (id)initWithPy:(id)aPyParent view:(HSOutlineView *)aOutlineView;
 - (void)initializeColumns;
-- (PyBalanceSheet *)py;
 @end

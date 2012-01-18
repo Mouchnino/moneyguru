@@ -10,10 +10,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPieChartView.h"
 
 @implementation MGPieChart
-- (id)initWithPyParent:(id)aPyParent pieChartClassName:(NSString *)className
+- (id)initWithPy:(id)aPy
 {
     MGPieChartView *myview = [[MGPieChartView alloc] init];
-    self = [super initWithPyClassName:className pyParent:aPyParent view:[myview autorelease]];
+    self = [super initWithPy:aPy];
+    [self setView:[myview autorelease]];
     return self;
 }
 

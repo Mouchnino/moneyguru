@@ -13,8 +13,8 @@ from .balance_graph import BalanceGraph
 class AccountBalanceGraph(BalanceGraph):
     INVALIDATING_MESSAGES = BalanceGraph.INVALIDATING_MESSAGES | set(['shown_account_changed'])
     
-    def __init__(self, view, account_view):
-        BalanceGraph.__init__(self, view, account_view)
+    def __init__(self, account_view):
+        BalanceGraph.__init__(self, account_view)
         self._account = None
     
     def _balance_for_date(self, date):

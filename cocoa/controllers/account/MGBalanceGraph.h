@@ -12,6 +12,5 @@ http://www.hardcoded.net/licenses/bsd_license
 
 
 @interface MGBalanceGraph : MGGraph {}
-- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName;
 - (id)initWithPy:(id)aPy;
 @end

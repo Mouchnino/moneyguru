@@ -28,8 +28,8 @@ class AccountView(BaseView):
         self.etable = EntryTable(self)
         self.maintable = self.etable
         self.columns = self.maintable.columns
-        self.balgraph = AccountBalanceGraph(None, self)
-        self.bargraph = AccountFlowGraph(None, self)
+        self.balgraph = AccountBalanceGraph(self)
+        self.bargraph = AccountFlowGraph(self)
         self.filter_bar = EntryFilterBar(self)
         self._shown_graph = self.balgraph
         # self.balgraph.connect()

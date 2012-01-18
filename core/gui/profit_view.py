@@ -9,13 +9,20 @@
 from hscommon.trans import tr
 from ..const import PaneType
 from .account_sheet_view import AccountSheetView
+from .income_statement import IncomeStatement
+from .profit_graph import ProfitGraph
+from .account_pie_chart import IncomePieChart, ExpensesPieChart
 
 class ProfitView(AccountSheetView):
     VIEW_TYPE = PaneType.Profit
     PRINT_TITLE_FORMAT = tr('Profit and Loss from {start_date} to {end_date}')
     
-    def set_children(self, children):
-        AccountSheetView.set_children(self, children)
-        [self.istatement, self.pgraph, self.ipie, self.epie] = children
+    def __init__(self, view, mainwindow):
+        AccountSheetView.__init__(self, view, mainwindow)
+        self.istatement = IncomeStatement(self)
         self.columns = self.istatement.columns
+        self.pgraph = ProfitGraph(self)
+        self.ipie = IncomePieChart(self)
+        self.epie = ExpensesPieChart(self)
+        self.set_children([self.istatement, self.pgraph, self.ipie, self.epie])
     

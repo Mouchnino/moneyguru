@@ -12,9 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @implementation MGIncomeStatement
 
-- (id)initWithPyParent:(id)aPyParent view:(HSOutlineView *)aOutlineView
+- (id)initWithPy:(id)aPy view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithPyClassName:@"PyIncomeStatement" pyParent:aPyParent view:aOutlineView];
+    self = [super initWithPy:aPy view:aOutlineView];
     [self initializeColumns];
     return self;
 }
@@ -32,32 +32,26 @@ http://www.hardcoded.net/licenses/bsd_license
         nil
     };
     [[self columns] initializeColumns:defs];
-    for (NSTableColumn *c in [[self outlineView] tableColumns]) {
+    for (NSTableColumn *c in [[self view] tableColumns]) {
         [c setEditable:NO];
     }
-    NSTableColumn *c = [[self outlineView] tableColumnWithIdentifier:@"name"];
+    NSTableColumn *c = [[self view] tableColumnWithIdentifier:@"name"];
     [c setEditable:YES]; // Only account name is editable.
-    c = [[self outlineView] tableColumnWithIdentifier:@"cash_flow"];
+    c = [[self view] tableColumnWithIdentifier:@"cash_flow"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
     NSFont *font = [[c dataCell] font];
     font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
     [[c dataCell] setFont:font];
-    c = [[self outlineView] tableColumnWithIdentifier:@"delta"];
+    c = [[self view] tableColumnWithIdentifier:@"delta"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
-    c = [[self outlineView] tableColumnWithIdentifier:@"delta_perc"];
+    c = [[self view] tableColumnWithIdentifier:@"delta_perc"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
-    c = [[self outlineView] tableColumnWithIdentifier:@"last_cash_flow"];
+    c = [[self view] tableColumnWithIdentifier:@"last_cash_flow"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
-    c = [[self outlineView] tableColumnWithIdentifier:@"budgeted"];
+    c = [[self view] tableColumnWithIdentifier:@"budgeted"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     [[self columns] restoreColumns];
 }
 
-/* Overrides */
-
-- (PyIncomeStatement *)py
-{
-    return (PyIncomeStatement *)py;
-}
 @end 

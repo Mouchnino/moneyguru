@@ -9,13 +9,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBalanceGraph.h"
 
 @implementation MGBalanceGraph
-- (id)initWithPyParent:(id)aPyParent pyClassName:(NSString *)aClassName
-{
-    MGLineGraphView *myview = [[MGLineGraphView alloc] init];
-    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:[myview autorelease]];
-    return self;
-}
-
 - (id)initWithPy:(id)aPy
 {
     MGLineGraphView *myview = [[MGLineGraphView alloc] init];

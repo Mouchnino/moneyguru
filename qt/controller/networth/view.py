@@ -16,10 +16,8 @@ from ...support.item_view import TreeView
 from ...support.pie_chart_view import PieChartView
 from ...support.line_graph_view import LineGraphView
 from ..base_view import BaseView
+from ..chart import Chart
 from .sheet import NetWorthSheet
-from .graph import NetWorthGraph
-from .asset_pie_chart import AssetPieChart
-from .liability_pie_chart import LiabilityPieChart
 
 class NetWorthView(BaseView):
     def __init__(self, mainwindow):
@@ -27,12 +25,10 @@ class NetWorthView(BaseView):
         self.doc = mainwindow.doc
         self._setupUi()
         self.model = NetWorthViewModel(view=self, mainwindow=mainwindow.model)
-        self.nwsheet = NetWorthSheet(self, view=self.treeView)
-        self.nwgraph = NetWorthGraph(self, view=self.graphView)
-        self.apiechart = AssetPieChart(self, view=self.assetPieChart)
-        self.lpiechart = LiabilityPieChart(self, view=self.liabilityPieChart)
-        children = [self.nwsheet.model, self.nwgraph.model, self.apiechart.model, self.lpiechart.model]
-        self.model.set_children(children)
+        self.nwsheet = NetWorthSheet(self.doc, self.model.bsheet, view=self.treeView)
+        self.nwgraph = Chart(self.model.nwgraph, view=self.graphView)
+        self.apiechart = Chart(self.model.apie, view=self.assetPieChart)
+        self.lpiechart = Chart(self.model.lpie, view=self.liabilityPieChart)
     
     def _setupUi(self):
         self.resize(558, 447)
