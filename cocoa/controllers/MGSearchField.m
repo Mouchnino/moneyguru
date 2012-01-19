@@ -7,21 +7,27 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGSearchField.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGSearchField
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PySearchField *m = [[PySearchField alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"GUIObjectView", self)];
     [NSBundle loadNibNamed:@"SearchField" owner:self];
     [self setView:linkedView];
     return self;
 }
 
-/* HSGUIController */
-
-- (PySearchField *)py
+- (PySearchField *)model
 {
-    return (PySearchField *)py;
+    return (PySearchField *)model;
 }
 
 /* Action */
@@ -29,14 +35,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)changeQuery:(id)sender
 {
     NSString *query = [linkedView stringValue];
-    [[self py] setQuery:query];
+    [[self model] setQuery:query];
 }
 
 /* Python callbacks */
 
 - (void)refresh
 {
-    [linkedView setStringValue:[[self py] query]];
+    [linkedView setStringValue:[[self model] query]];
 }
 
 @end

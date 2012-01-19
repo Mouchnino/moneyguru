@@ -187,9 +187,9 @@ def build_cocoa_bridging_interfaces():
         ColumnsView)
     from mg_cocoa import (PyListener2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
         CSVImportOptionsView, PyImportTable, PyLookup, LookupView, PyDateRangeSelector,
-        DateRangeSelectorView)
+        DateRangeSelectorView, PySearchField)
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyCompletableEdit, PyDateWidget,
-        PyCSVImportOptions, PyImportTable, PyLookup, PyDateRangeSelector]
+        PyCSVImportOptions, PyImportTable, PyLookup, PyDateRangeSelector, PySearchField]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
     allclasses = [GUIObjectView, TableView, ColumnsView, CSVImportOptionsView, LookupView,

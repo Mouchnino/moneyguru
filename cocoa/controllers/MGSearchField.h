@@ -7,13 +7,14 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSGUIController.h"
+#import "HSGUIController2.h"
 #import "PySearchField.h"
 
-@interface MGSearchField : HSGUIController
+@interface MGSearchField : HSGUIController2
 {   
     IBOutlet NSSearchField *linkedView; // XXX Why not create the view programmatically?
 }
-- (PySearchField *)py;
+- (id)initWithPy:(id)aPy;
+- (PySearchField *)model;
 - (IBAction)changeQuery:(id)sender;
 @end

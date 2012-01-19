@@ -809,13 +809,14 @@ class PyExportPanel(PyPanel):
         self.cocoa.setExportButtonEnabled_(enabled)
     
 
-class PySearchField(PyGUIObject):
-    def query(self):
-        return self.py.query
+class PySearchField(PyGUIObject2):
+    def query(self) -> str:
+        return self.model.query
     
-    def setQuery_(self, query):
-        self.py.query = query
+    def setQuery_(self, query: str):
+        self.model.query = query
     
+
 class DateRangeSelectorView(GUIObjectView):
     def animateBackward(self): pass
     def animateForward(self): pass
@@ -1015,7 +1016,7 @@ class PyEmptyView(PyBaseView):
 class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
     
-    searchField = subproxy('searchField', 'search_field', PySearchField)
+    searchField = subproxy('searchField', 'search_field', PyGUIObject)
     daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyGUIObject)
     accountLookup = subproxy('accountLookup', 'account_lookup', PyGUIObject)
     completionLookup = subproxy('completionLookup', 'completion_lookup', PyGUIObject)
