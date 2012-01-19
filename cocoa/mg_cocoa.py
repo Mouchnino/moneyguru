@@ -816,65 +816,68 @@ class PySearchField(PyGUIObject):
     def setQuery_(self, query):
         self.py.query = query
     
+class DateRangeSelectorView(GUIObjectView):
+    def animateBackward(self): pass
+    def animateForward(self): pass
+    def refreshCustomRanges(self): pass
 
-class PyDateRangeSelector(PyGUIObject):
+class PyDateRangeSelector(PyGUIObject2):
     def selectPrevDateRange(self):
-        self.py.select_prev_date_range()
+        self.model.select_prev_date_range()
 
     def selectMonthRange(self):
-        self.py.select_month_range()
+        self.model.select_month_range()
 
     def selectQuarterRange(self):
-        self.py.select_quarter_range()
+        self.model.select_quarter_range()
 
     def selectYearRange(self):
-        self.py.select_year_range()
+        self.model.select_year_range()
     
     def selectYearToDateRange(self):
-        self.py.select_year_to_date_range()
+        self.model.select_year_to_date_range()
     
     def selectNextDateRange(self):
-        self.py.select_next_date_range()
+        self.model.select_next_date_range()
     
     def selectTodayDateRange(self):
-        self.py.select_today_date_range()
+        self.model.select_today_date_range()
     
     def selectRunningYearRange(self):
-        self.py.select_running_year_range()
+        self.model.select_running_year_range()
     
     def selectAllTransactionsRange(self):
-        self.py.select_all_transactions_range()
+        self.model.select_all_transactions_range()
     
     def selectCustomDateRange(self):
-        self.py.select_custom_date_range()
+        self.model.select_custom_date_range()
     
-    @signature('v@:i')
-    def selectSavedRange_(self, slot):
-        self.py.select_saved_range(slot)
+    def selectSavedRange_(self, slot: int):
+        self.model.select_saved_range(slot)
     
-    def display(self):
-        return self.py.display
+    def display(self) -> str:
+        return self.model.display
     
-    @signature('c@:')
-    def canNavigate(self):
-        return self.py.can_navigate
+    def canNavigate(self) -> bool:
+        return self.model.can_navigate
     
-    def customRangeNames(self):
-        return self.py.custom_range_names
+    def customRangeNames(self) -> list:
+        return self.model.custom_range_names
     
     #--- Python -> Cocoa
+    @dontwrap
     def animate_backward(self):
-        self.cocoa.animateBackward()
+        self.callback.animateBackward()
     
+    @dontwrap
     def animate_forward(self):
-        self.cocoa.animateForward()
+        self.callback.animateForward()
     
-    def refresh(self):
-        self.cocoa.refresh()
-    
+    @dontwrap
     def refresh_custom_ranges(self):
-        self.cocoa.refreshCustomRanges()
+        self.callback.refreshCustomRanges()
     
+
 class LookupView(GUIObjectView):
     def show(self): pass
     def hide(self): pass
@@ -1013,7 +1016,7 @@ class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
     
     searchField = subproxy('searchField', 'search_field', PySearchField)
-    daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyDateRangeSelector)
+    daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyGUIObject)
     accountLookup = subproxy('accountLookup', 'account_lookup', PyGUIObject)
     completionLookup = subproxy('completionLookup', 'completion_lookup', PyGUIObject)
     

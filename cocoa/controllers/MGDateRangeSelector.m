@@ -9,12 +9,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDateRangeSelector.h"
 #import "MGConst.h"
 #import "Utils.h"
+#import "ObjP.h"
 #import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyDateRangeSelector *m = [[PyDateRangeSelector alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"DateRangeSelectorView", self)];
+    [m release];
     [NSBundle loadNibNamed:@"DateRangeSelector" owner:self];
     [self setView:linkedView];
     /* In popups, there's the invisible first item, which is why we start our indexing at 8! */
@@ -31,10 +39,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-/* HSGUIController */
-- (PyDateRangeSelector *)py
+- (PyDateRangeSelector *)model
 {
-    return (PyDateRangeSelector *)py;
+    return (PyDateRangeSelector *)model;
 }
 
 /* Public */
@@ -67,67 +74,67 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSInteger index = [segmentedControl selectedSegment];
     if (index == 0) {
-        [[self py] selectPrevDateRange];
+        [[self model] selectPrevDateRange];
     }
     else if (index == 2) {
-        [[self py] selectNextDateRange];
+        [[self model] selectNextDateRange];
     }
 }
 
 - (IBAction)selectMonthRange:(id)sender
 {
-    [[self py] selectMonthRange];
+    [[self model] selectMonthRange];
 }
 
 - (IBAction)selectNextDateRange:(id)sender
 {
-    [[self py] selectNextDateRange];
+    [[self model] selectNextDateRange];
 }
 
 - (IBAction)selectPrevDateRange:(id)sender
 {
-    [[self py] selectPrevDateRange];
+    [[self model] selectPrevDateRange];
 }
 
 - (IBAction)selectTodayDateRange:(id)sender
 {
-    [[self py] selectTodayDateRange];
+    [[self model] selectTodayDateRange];
 }
 
 - (IBAction)selectQuarterRange:(id)sender
 {
-    [[self py] selectQuarterRange];
+    [[self model] selectQuarterRange];
 }
 
 - (IBAction)selectYearRange:(id)sender
 {
-    [[self py] selectYearRange];
+    [[self model] selectYearRange];
 }
 
 - (IBAction)selectYearToDateRange:(id)sender
 {
-    [[self py] selectYearToDateRange];
+    [[self model] selectYearToDateRange];
 }
 
 - (IBAction)selectRunningYearRange:(id)sender
 {
-    [[self py] selectRunningYearRange];
+    [[self model] selectRunningYearRange];
 }
 
 - (IBAction)selectAllTransactionsRange:(id)sender
 {
-    [[self py] selectAllTransactionsRange];
+    [[self model] selectAllTransactionsRange];
 }
 
 - (IBAction)selectCustomDateRange:(id)sender
 {
-    [[self py] selectCustomDateRange];
+    [[self model] selectCustomDateRange];
 }
 
 - (IBAction)selectSavedCustomRange:(id)sender
 {
     NSInteger slot = [(NSMenuItem *)sender tag] - MGCustomSavedRangeStart;
-    [[self py] selectSavedRange:slot];
+    [[self model] selectSavedRange:slot];
 }
 
 /* Delegate */
@@ -153,15 +160,15 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)refresh
 {
-    [dateRangePopUp setTitle:[[self py] display]];
-    BOOL canNavigate = [[self py] canNavigate];
+    [dateRangePopUp setTitle:[[self model] display]];
+    BOOL canNavigate = [[self model] canNavigate];
     [segmentedControl setEnabled:canNavigate forSegment:0];
     [segmentedControl setEnabled:canNavigate forSegment:2];
 }
 
 - (void)refreshCustomRanges
 {
-    NSArray *names = [[self py] customRangeNames];
+    NSArray *names = [[self model] customRangeNames];
     MGAppDelegate *app = [NSApp delegate];
     for (NSInteger i=0; i<[names count]; i++) {
         id item = [names objectAtIndex:i];

@@ -10,7 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyGUIContainer.h"
 #import "MGConst.h"
 #import "PySearchField.h"
-#import "PyDateRangeSelector.h"
 #import "PyAccountPanel.h"
 #import "PyTransactionPanel.h"
 #import "PyMassEditionPanel.h"
@@ -32,7 +31,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface PyMainWindow : PyGUIContainer {}
 - (PySearchField *)searchField;
-- (PyDateRangeSelector *)daterangeSelector;
+- (PyGUI *)daterangeSelector;
 - (PyGUI *)accountLookup;
 - (PyGUI *)completionLookup;
 

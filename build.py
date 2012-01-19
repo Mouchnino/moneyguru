@@ -186,12 +186,14 @@ def build_cocoa_bridging_interfaces():
     from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, TableView, PyColumns2,
         ColumnsView)
     from mg_cocoa import (PyListener2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
-        CSVImportOptionsView, PyImportTable, PyLookup, LookupView)
+        CSVImportOptionsView, PyImportTable, PyLookup, LookupView, PyDateRangeSelector,
+        DateRangeSelectorView)
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyCompletableEdit, PyDateWidget,
-        PyCSVImportOptions, PyImportTable, PyLookup]
+        PyCSVImportOptions, PyImportTable, PyLookup, PyDateRangeSelector]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
-    allclasses = [GUIObjectView, TableView, ColumnsView, CSVImportOptionsView, LookupView]
+    allclasses = [GUIObjectView, TableView, ColumnsView, CSVImportOptionsView, LookupView,
+        DateRangeSelectorView]
     clsspecs = [objp.o2p.spec_from_python_class(class_) for class_ in allclasses]
     objp.p2o.generate_python_proxy_code_from_clsspec(clsspecs, 'build/CocoaViews.m')
     build_cocoa_ext('CocoaViews', 'build/py', ['build/CocoaViews.m', 'build/ObjP.m'])

@@ -134,7 +134,7 @@ http://www.hardcoded.net/licenses/bsd_license
         return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top canToggleReconciliationMode];
     else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
         || (action == @selector(selectTodayDateRange:)))
-        return [[dateRangeSelector py] canNavigate];
+        return [[dateRangeSelector model] canNavigate];
     return YES;
 }
 

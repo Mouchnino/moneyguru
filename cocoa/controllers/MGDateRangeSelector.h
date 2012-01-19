@@ -7,10 +7,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSGUIController.h"
+#import "HSGUIController2.h"
 #import "PyDateRangeSelector.h"
 
-@interface MGDateRangeSelector : HSGUIController <NSAnimationDelegate>
+@interface MGDateRangeSelector : HSGUIController2 <NSAnimationDelegate>
 {
     IBOutlet NSView *linkedView;
     IBOutlet NSPopUpButton *dateRangePopUp;
@@ -21,7 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPy:(id)aPyParent;
 
 /* Virtual */
-- (PyDateRangeSelector *)py;
+- (PyDateRangeSelector *)model;
 
 /* Public */
 - (void)animate:(BOOL)forward;

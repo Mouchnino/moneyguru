@@ -243,6 +243,7 @@
 		CEF5E63D11DCCEE80048C9DF /* transaction_table_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63811DCCEE80048C9DF /* transaction_table_16.png */; };
 		CEF674AF0F4C76F7003E5283 /* MGCustomDateRangePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */; };
 		CEF9701814C8A5F000EDD9D7 /* PyLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701714C8A5F000EDD9D7 /* PyLookup.m */; };
+		CEF9701B14C8A7D100EDD9D7 /* PyDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */; };
 		CEFCB6EA0E44899B00F5D379 /* MGFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */; };
 		CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -381,7 +382,6 @@
 		CE55EB881047DC8500F3390F /* MGSchedulePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSchedulePrint.m; path = print/MGSchedulePrint.m; sourceTree = "<group>"; };
 		CE55EB8A1047DE0C00F3390F /* MGBudgetPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBudgetPrint.h; path = print/MGBudgetPrint.h; sourceTree = "<group>"; };
 		CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBudgetPrint.m; path = print/MGBudgetPrint.m; sourceTree = "<group>"; };
-		CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2707114E35B0008F43F8 /* MGDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateRangeSelector.m; sourceTree = "<group>"; };
 		CE5CBBDB1038361D008AC465 /* MGSchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSchedulePanel.h; sourceTree = "<group>"; };
@@ -809,6 +809,8 @@
 		CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCustomDateRangePanel.h; sourceTree = "<group>"; };
 		CEF9701614C8A5F000EDD9D7 /* PyLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyLookup.h; sourceTree = "<group>"; };
 		CEF9701714C8A5F000EDD9D7 /* PyLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyLookup.m; sourceTree = "<group>"; };
+		CEF9701914C8A7D100EDD9D7 /* PyDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateRangeSelector.h; sourceTree = "<group>"; };
+		CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDateRangeSelector.m; sourceTree = "<group>"; };
 		CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGFilterBar.h; sourceTree = "<group>"; };
 		CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGFilterBar.m; sourceTree = "<group>"; };
 		CEFEA33211E1DEA70034AB46 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1108,7 +1110,6 @@
 				CE66BD1612757567008EFA8A /* PyExportPanel.h */,
 				CEB60203123930A1002218CF /* PyGeneralLedgerTable.h */,
 				CEB60204123930A1002218CF /* PyGeneralLedgerView.h */,
-				CE5C2701114E3589008F43F8 /* PyDateRangeSelector.h */,
 				CE9805DF11403F4400CB3693 /* PyPanelWithTransaction.h */,
 				CE09272E14506C54004BD916 /* PyBaseView.h */,
 				CE3F6A7610F903640046B2D2 /* PyProfitView.h */,
@@ -1313,6 +1314,8 @@
 				CEB46FD514C878F100C56775 /* PyImportTable.m */,
 				CEF9701614C8A5F000EDD9D7 /* PyLookup.h */,
 				CEF9701714C8A5F000EDD9D7 /* PyLookup.m */,
+				CEF9701914C8A7D100EDD9D7 /* PyDateRangeSelector.h */,
+				CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */,
 			);
 			path = autogen;
 			sourceTree = "<group>";
@@ -1819,6 +1822,7 @@
 				CEB46FD914C878F100C56775 /* PyTable2.m in Sources */,
 				CEB46FDC14C8793400C56775 /* PyColumns2.m in Sources */,
 				CEF9701814C8A5F000EDD9D7 /* PyLookup.m in Sources */,
+				CEF9701B14C8A7D100EDD9D7 /* PyDateRangeSelector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
