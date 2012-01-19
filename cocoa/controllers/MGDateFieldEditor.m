@@ -13,8 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)init
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
-    Class pyClass = [Utils classNamed:@"PyDateWidget"];
-    py = [[pyClass alloc] init];
+    py = [[PyDateWidget alloc] init];
     [self setEditable:YES];
     [self setFieldEditor:YES];
     [self setSelectable:YES];

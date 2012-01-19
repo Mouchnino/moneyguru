@@ -185,8 +185,8 @@ def build_cocoa_bridging_interfaces():
     add_to_pythonpath('cocoa')
     add_to_pythonpath('cocoalib')
     from cocoa.inter2 import (PyGUIObject2, GUIObjectView)
-    from mg_cocoa import PyCompletableEdit
-    allclasses = [PyGUIObject2, PyCompletableEdit]
+    from mg_cocoa import PyCompletableEdit, PyDateWidget
+    allclasses = [PyGUIObject2, PyCompletableEdit, PyDateWidget]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
     allclasses = [GUIObjectView]

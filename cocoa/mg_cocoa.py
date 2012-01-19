@@ -1346,16 +1346,14 @@ class PyCSVImportOptions(PyWindowController):
         self.cocoa.showMessage_(msg)
     
 
-class PyDateWidget(NSObject):
-    def init(self):
-        super(PyDateWidget, self).init()
+class PyDateWidget:
+    def __init__(self):
         NSDateFormatter.setDefaultFormatterBehavior_(NSDateFormatterBehavior10_4)
         f = NSDateFormatter.alloc().init()
         f.setDateStyle_(NSDateFormatterShortStyle)
         f.setTimeStyle_(NSDateFormatterNoStyle)
         self.date_format = clean_format(f.dateFormat())
         self.w = DateWidget(self.date_format)
-        return self
     
     def increase(self):
         self.w.increase()
@@ -1375,18 +1373,16 @@ class PyDateWidget(NSObject):
     def exit(self):
         self.w.exit()
     
-    def type_(self, something):
+    def type_(self, something: str):
         self.w.type(something)
     
-    def setDate_(self, str_date):
-        # There's a strange bug in PyObjC that sometimes causes crashes with strptime, so we have to
-        # explicitly convert str_date.
-        self.w.text = str(str_date)
+    def setDate_(self, str_date: str):
+        self.w.text = str_date
     
-    def text(self):
+    def text(self) -> str:
         return self.w.text
     
-    def selection(self):
+    def selection(self) -> list: # list of numbers
         return self.w.selection
     
 
