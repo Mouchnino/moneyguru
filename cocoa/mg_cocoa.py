@@ -398,24 +398,28 @@ class PyGeneralLedgerTable(PyTableWithDate):
     def isBoldRow_(self, row_index):
         return self.py.is_bold_row(self._getrow(row_index))
 
-class PyFilterBar(PyGUIObject):
-    def filterType(self):
+class FilterBarView(GUIObjectView):
+    def disableTransfers(self): pass
+    def enableTransfers(self): pass
+
+class PyFilterBar(PyGUIObject2):
+    def filterType(self) -> str:
         result = 'all'
-        if self.py.filter_type is FilterType.Unassigned:
+        if self.model.filter_type is FilterType.Unassigned:
             result = 'unassigned'
-        elif self.py.filter_type is FilterType.Income:
+        elif self.model.filter_type is FilterType.Income:
             result = 'income'
-        elif self.py.filter_type is FilterType.Expense:
+        elif self.model.filter_type is FilterType.Expense:
             result = 'expense'
-        elif self.py.filter_type is FilterType.Transfer:
+        elif self.model.filter_type is FilterType.Transfer:
             result = 'transfer'
-        elif self.py.filter_type is FilterType.Reconciled:
+        elif self.model.filter_type is FilterType.Reconciled:
             result = 'reconciled'
-        elif self.py.filter_type is FilterType.NotReconciled:
+        elif self.model.filter_type is FilterType.NotReconciled:
             result = 'not_reconciled'
         return result
     
-    def setFilterType_(self, filter_type):
+    def setFilterType_(self, filter_type: str):
         value = None
         if filter_type == 'unassigned':
             value = FilterType.Unassigned
@@ -429,16 +433,16 @@ class PyFilterBar(PyGUIObject):
             value = FilterType.Reconciled
         elif filter_type == 'not_reconciled':
             value = FilterType.NotReconciled
-        self.py.filter_type = value
+        self.model.filter_type = value
     
-
-class PyEntryFilterBar(PyFilterBar):
     #--- Python --> Cocoa    
+    @dontwrap
     def disable_transfers(self):
-        self.cocoa.disableTransfers()
+        self.callback.disableTransfers()
     
+    @dontwrap
     def enable_transfers(self):
-        self.cocoa.enableTransfers()
+        self.callback.enableTransfers()
     
 
 class PyAccountPanel(PyPanel):
@@ -945,11 +949,11 @@ class PyProfitView(PyBaseView):
     
 
 class PyTransactionView(PyBaseView):
-    filterBar = subproxy('filterBar', 'filter_bar', PyFilterBar)
+    filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
     table = subproxy('table', 'ttable', PyTransactionTable)
 
 class PyAccountView(PyBaseView):
-    filterBar = subproxy('filterBar', 'filter_bar', PyEntryFilterBar)
+    filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
     table = subproxy('table', 'etable', PyEntryTable)
     balGraph = subproxy('balGraph', 'balgraph', PyGraph)
     barGraph = subproxy('barGraph', 'bargraph', PyGraph)

@@ -9,6 +9,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGFilterBar.h"
 #import "MGConst.h"
 #import "AMButtonBarItem.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 #define MGALL @"all"
 #define MGINCOME @"income"
@@ -21,7 +23,14 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGFilterBar
 - (id)initWithPy:(id)aPy view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
 {
-    self = [super initWithPy:aPy view:aView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyFilterBar *m = [[PyFilterBar alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m view:aView];
+    [m bindCallback:createCallback(@"FilterBarView", self)];
+    [m release];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
 	[item setTitle:TR(@"All")];
 	[aView insertItem:item atIndex:0];
@@ -50,9 +59,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* HSGUIController */
 
-- (PyFilterBar *)py
+- (PyFilterBar *)model
 {
-    return (PyFilterBar *)py;
+    return (PyFilterBar *)model;
 }
 
 - (AMButtonBar *)view
@@ -66,7 +75,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSArray *selectedItems = [[aNotification userInfo] objectForKey:@"selectedItems"];
         NSString *selected = [selectedItems objectAtIndex:0];
-        [[self py] setFilterType:selected];
+        [[self model] setFilterType:selected];
 }
 
 /* Python --> Cocoa */
@@ -83,7 +92,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)refresh
 {
-    [[self view] selectItemWithIdentifier:[[self py] filterType]];
+    [[self view] selectItemWithIdentifier:[[self model] filterType]];
 }
 
 @end
