@@ -8,13 +8,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PSMTabBarControl.h"
-#import "HSWindowController.h"
 #import "MGDocument.h"
 #import "MGTableView.h"
 #import "MGImportTable.h"
 #import "PyImportWindow.h"
 
-@interface MGImportWindow : HSWindowController
+@interface MGImportWindow : NSWindowController
 {
     IBOutlet PSMTabBarControl *tabBar;
     IBOutlet NSTabView *tabView;
@@ -25,12 +24,12 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSButton *swapButton;
     IBOutlet MGTableView *importTableView;
     
+    PyImportWindow *model;
     MGImportTable *importTable;
     NSInteger tabToRemoveIndex;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
 
-- (PyImportWindow *)py;
 /* Actions */
 - (IBAction)changeTargetAccount:(id)sender;
 - (IBAction)importSelectedPane:(id)sender;

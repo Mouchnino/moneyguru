@@ -8,27 +8,32 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGImportWindow.h"
 #import "PSMTabBarCell.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGImportWindow
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithNibName:@"ImportWindow" pyClassName:@"PyImportWindow" pyParent:[aDocument py]];
+    self = [super initWithWindowNibName:@"ImportWindow"];
     [self window];
+    PyObject *pDocument = getHackedPyRef([aDocument py]);
+    model = [[PyImportWindow alloc] initWithDocument:pDocument];
+    OBJP_LOCKGIL;
+    Py_DECREF(pDocument);
+    OBJP_UNLOCKGIL;
+    [model bindCallback:createCallback(@"ImportWindowView", self)];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
-    importTable = [[MGImportTable alloc] initWithPy:[[self py] importTable] view:importTableView];
+    importTable = [[MGImportTable alloc] initWithPyRef:[model importTable] view:importTableView];
+    [model connect];
     return self;
 }
 
 - (void)dealloc
 {
+    [model release];
     [importTable release];
     [super dealloc];
-}
-
-- (PyImportWindow *)py
-{
-    return (PyImportWindow *)py;
 }
 
 /* NSWindowController Overrides */
@@ -40,26 +45,26 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Actions */
 - (IBAction)changeTargetAccount:(id)sender
 {
-    [[self py] setSelectedTargetAccountIndex:[targetAccountsPopup indexOfSelectedItem]];
+    [model setSelectedTargetAccountIndex:[targetAccountsPopup indexOfSelectedItem]];
     [importTable updateOneOrTwoSided];
 }
 
 - (IBAction)importSelectedPane:(id)sender
 {
-    [[self py] importSelectedPane];
+    [model importSelectedPane];
 }
 
 - (IBAction)selectSwapType:(id)sender
 {
-    [[self py] setSwapTypeIndex:[switchDateFieldsPopup indexOfSelectedItem]];
-    [swapButton setEnabled:[[self py] canPerformSwap]];
+    [model setSwapTypeIndex:[switchDateFieldsPopup indexOfSelectedItem]];
+    [swapButton setEnabled:[model canPerformSwap]];
 }
 
 - (IBAction)switchDateFields:(id)sender
 {
     BOOL applyToAll = [applySwapToAllCheckbox state] == NSOnState;
-    if ([[self py] canPerformSwap]) {
-        [[self py] performSwap:applyToAll];
+    if ([model canPerformSwap]) {
+        [model performSwap:applyToAll];
     }
 }
 
@@ -73,14 +78,14 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)aTabViewItem
 {
-    [[self py] closePaneAtIndex:tabToRemoveIndex];
+    [model closePaneAtIndex:tabToRemoveIndex];
 }
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
     if (index >= 0) {
-        [[self py] setSelectedAccountIndex:index];
+        [model setSelectedAccountIndex:index];
     }
 }
 
@@ -109,21 +114,21 @@ http://www.hardcoded.net/licenses/bsd_license
     while ([tabView numberOfTabViewItems]) {
         [tabView removeTabViewItem:[tabView tabViewItemAtIndex:0]];
     }
-    for (NSInteger i=0; i<[[self py] numberOfAccounts]; i++) {
-        NSString *name = [[self py] accountNameAtIndex:i];
+    for (NSInteger i=0; i<[model numberOfAccounts]; i++) {
+        NSString *name = [model accountNameAtIndex:i];
         NSTabViewItem *item = [[[NSTabViewItem alloc] initWithIdentifier:name] autorelease];
         [item setLabel:name];
         [item setView:mainView];
         [tabView addTabViewItem:item];
         PSMTabBarCell *cell = [tabBar cellAtIndex:i];
-        [cell setCount:[[self py] accountCountAtIndex:i]];
+        [cell setCount:[model accountCountAtIndex:i]];
     }
 }
 
 - (void)refreshTargetAccounts
 {
     [targetAccountsPopup removeAllItems];
-    [targetAccountsPopup addItemsWithTitles:[[self py] targetAccountNames]];
+    [targetAccountsPopup addItemsWithTitles:[model targetAccountNames]];
 }
 
 - (void)show
@@ -133,9 +138,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)updateSelectedPane
 {
-    [targetAccountsPopup selectItemAtIndex:[[self py] selectedTargetAccountIndex]];
+    [targetAccountsPopup selectItemAtIndex:[model selectedTargetAccountIndex]];
     [importTable updateOneOrTwoSided];
-    [swapButton setEnabled:[[self py] canPerformSwap]];
+    [swapButton setEnabled:[model canPerformSwap]];
 }
 
 @end

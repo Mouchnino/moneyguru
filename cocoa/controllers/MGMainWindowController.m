@@ -36,7 +36,6 @@ http://www.hardcoded.net/licenses/bsd_license
     emptyView = [[MGEmptyView alloc] initWithPy:[[self py] emptyview]];
     searchField = [[MGSearchField alloc] initWithPy:[[self py] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
-    [importWindow connect];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithParent:self];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithParent:self];

@@ -7,19 +7,14 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGImportTable.h"
-#import "Utils.h"
-#import "ObjP.h"
 #import "MGConst.h"
 #import "MGImportBindingCell.h"
+#import "Utils.h"
 
 @implementation MGImportTable
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef view:(MGTableView *)aTableView
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyImportTable *m = [[PyImportTable alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyImportTable *m = [[PyImportTable alloc] initWithModel:aPyRef];
     self = [super initWithModel:m tableView:aTableView];
     [m bindCallback:createCallback(@"TableView", self)];
     [m release];

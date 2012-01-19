@@ -1180,76 +1180,82 @@ class PyImportTable(PyTable2):
     def unbindRow_(self, index: int):
         self.model.unbind(index)
     
+class ImportWindowView(GUIObjectView):
+    def close(self): pass
+    def closeSelectedTab(self): pass
+    def refreshTabs(self): pass
+    def refreshTargetAccounts(self): pass
+    def show(self): pass
+    def updateSelectedPane(self): pass
 
-class PyImportWindow(PyListener):
-    py_class = ImportWindow
+class PyImportWindow(PyListener2):
+    def __init__(self, document: pyref):
+        model = ImportWindow(None, document)
+        PyListener2.__init__(self, model)
     
-    importTable = subproxy('importTable', 'import_table', PyGUIObject)
+    def importTable(self) -> pyref:
+        return self.model.import_table
     
-    @signature('i@:i')
-    def accountCountAtIndex_(self, index):
-        return self.py.panes[index].count
+    def accountCountAtIndex_(self, index: int) -> int:
+        return self.model.panes[index].count
     
-    @signature('@@:i')
-    def accountNameAtIndex_(self, index):
-        return self.py.panes[index].name
+    def accountNameAtIndex_(self, index: int) -> str:
+        return self.model.panes[index].name
     
-    @signature('c@:')
-    def canPerformSwap(self):
-        return self.py.can_perform_swap()
+    def canPerformSwap(self) -> bool:
+        return self.model.can_perform_swap()
     
-    @signature('@@:i')
-    def closePaneAtIndex_(self, index):
-        self.py.close_pane(index)
+    def closePaneAtIndex_(self, index: int):
+        self.model.close_pane(index)
     
     def importSelectedPane(self):
-        self.py.import_selected_pane()
+        self.model.import_selected_pane()
     
-    @signature('i@:')
-    def numberOfAccounts(self):
-        return len(self.py.panes)
+    def numberOfAccounts(self) -> int:
+        return len(self.model.panes)
     
-    @signature('v@:c')
-    def performSwap_(self, applyToAll):
-        return self.py.perform_swap(apply_to_all=applyToAll)
+    def performSwap_(self, applyToAll: bool):
+        self.model.perform_swap(apply_to_all=applyToAll)
     
-    @signature('i@:')
-    def selectedTargetAccountIndex(self):
-        return self.py.selected_target_account_index
+    def selectedTargetAccountIndex(self) -> int:
+        return self.model.selected_target_account_index
     
-    @signature('v@:i')
-    def setSelectedTargetAccountIndex_(self, index):
-        self.py.selected_target_account_index = index
+    def setSelectedTargetAccountIndex_(self, index: int):
+        self.model.selected_target_account_index = index
     
-    @signature('v@:i')
-    def setSelectedAccountIndex_(self, index):
-        self.py.selected_pane_index = index
+    def setSelectedAccountIndex_(self, index: int):
+        self.model.selected_pane_index = index
     
-    @signature('v@:i')
-    def setSwapTypeIndex_(self, index):
-        self.py.swap_type_index = index
+    def setSwapTypeIndex_(self, index: int):
+        self.model.swap_type_index = index
     
-    def targetAccountNames(self):
-        return self.py.target_account_names
+    def targetAccountNames(self) -> list:
+        return self.model.target_account_names
     
     #--- Python -> Cocoa
+    @dontwrap
     def close(self):
-        self.cocoa.close()
+        self.callback.close()
     
+    @dontwrap
     def close_selected_tab(self):
-        self.cocoa.closeSelectedTab()
+        self.callback.closeSelectedTab()
     
+    @dontwrap
     def refresh_tabs(self):
-        self.cocoa.refreshTabs()
+        self.callback.refreshTabs()
     
+    @dontwrap
     def refresh_target_accounts(self):
-        self.cocoa.refreshTargetAccounts()
+        self.callback.refreshTargetAccounts()
     
+    @dontwrap
     def show(self):
-        self.cocoa.show()
+        self.callback.show()
     
+    @dontwrap
     def update_selected_pane(self):
-        self.cocoa.updateSelectedPane()
+        self.callback.updateSelectedPane()
     
 
 class CSVImportOptionsView(GUIObjectView):
