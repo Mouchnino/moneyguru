@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 
 @implementation MGTransactionPrint
-+ (NSString *)pyClassName
++ (Class)pyClass
 {
-    return @"PyTransactionPrint";
+    return [PyTransactionPrint class];
 }
 
 - (PyTransactionPrint *)py

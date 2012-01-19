@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGPrintView.h"
 #import "Utils.h"
+#import "ObjP.h"
 #import "MGConst.h"
 
 static NSParagraphStyle* changeParagraphAlignment(NSParagraphStyle *p, NSTextAlignment align)
@@ -32,8 +33,12 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
 - (id)initWithPyParent:(id)pyParent
 {
     self = [super initWithFrame:NSZeroRect];
-    Class pyClass = [Utils classNamed:[[self class] pyClassName]];
-    py = [[pyClass alloc] initWithPyParent:pyParent];
+    Class pyClass = [[self class] pyClass];
+    PyObject *pParentRef = getHackedPyRef(pyParent);
+    OBJP_LOCKGIL;
+    Py_DECREF(pParentRef);
+    OBJP_UNLOCKGIL;
+    py = [[pyClass alloc] initWithParent:pParentRef];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     fontSize = [ud integerForKey:PrintFontSize];
     headerFont = [[NSFont boldSystemFontOfSize:fontSize] retain];
@@ -54,9 +59,9 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
     [super dealloc];
 }
 
-+ (NSString *)pyClassName
++ (Class)pyClass
 {
-    return @"PyPrintView";
+    return [PyPrintView class];
 }
 
 - (PyPrintView *)py

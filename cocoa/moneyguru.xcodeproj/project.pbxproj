@@ -245,6 +245,10 @@
 		CEF9701814C8A5F000EDD9D7 /* PyLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701714C8A5F000EDD9D7 /* PyLookup.m */; };
 		CEF9701B14C8A7D100EDD9D7 /* PyDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */; };
 		CEF9701E14C8AE7B00EDD9D7 /* PySearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */; };
+		CEF9702714C8B22500EDD9D7 /* PyEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702014C8B22500EDD9D7 /* PyEntryPrint.m */; };
+		CEF9702814C8B22500EDD9D7 /* PyPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702214C8B22500EDD9D7 /* PyPrintView.m */; };
+		CEF9702914C8B22500EDD9D7 /* PySplitPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702414C8B22500EDD9D7 /* PySplitPrint.m */; };
+		CEF9702A14C8B22500EDD9D7 /* PyTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702614C8B22500EDD9D7 /* PyTransactionPrint.m */; };
 		CEFCB6EA0E44899B00F5D379 /* MGFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */; };
 		CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -813,6 +817,14 @@
 		CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDateRangeSelector.m; sourceTree = "<group>"; };
 		CEF9701C14C8AE7B00EDD9D7 /* PySearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySearchField.h; sourceTree = "<group>"; };
 		CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PySearchField.m; sourceTree = "<group>"; };
+		CEF9701F14C8B22500EDD9D7 /* PyEntryPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryPrint.h; sourceTree = "<group>"; };
+		CEF9702014C8B22500EDD9D7 /* PyEntryPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyEntryPrint.m; sourceTree = "<group>"; };
+		CEF9702114C8B22500EDD9D7 /* PyPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPrintView.h; sourceTree = "<group>"; };
+		CEF9702214C8B22500EDD9D7 /* PyPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyPrintView.m; sourceTree = "<group>"; };
+		CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySplitPrint.h; sourceTree = "<group>"; };
+		CEF9702414C8B22500EDD9D7 /* PySplitPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PySplitPrint.m; sourceTree = "<group>"; };
+		CEF9702514C8B22500EDD9D7 /* PyTransactionPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPrint.h; sourceTree = "<group>"; };
+		CEF9702614C8B22500EDD9D7 /* PyTransactionPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyTransactionPrint.m; sourceTree = "<group>"; };
 		CEFCB6E80E44899B00F5D379 /* MGFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGFilterBar.h; sourceTree = "<group>"; };
 		CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGFilterBar.m; sourceTree = "<group>"; };
 		CEFEA33211E1DEA70034AB46 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1319,6 +1331,14 @@
 				CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */,
 				CEF9701C14C8AE7B00EDD9D7 /* PySearchField.h */,
 				CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */,
+				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
+				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
+				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
+				CEF9702414C8B22500EDD9D7 /* PySplitPrint.m */,
+				CEF9701F14C8B22500EDD9D7 /* PyEntryPrint.h */,
+				CEF9702014C8B22500EDD9D7 /* PyEntryPrint.m */,
+				CEF9702514C8B22500EDD9D7 /* PyTransactionPrint.h */,
+				CEF9702614C8B22500EDD9D7 /* PyTransactionPrint.m */,
 			);
 			path = autogen;
 			sourceTree = "<group>";
@@ -1827,6 +1847,10 @@
 				CEF9701814C8A5F000EDD9D7 /* PyLookup.m in Sources */,
 				CEF9701B14C8A7D100EDD9D7 /* PyDateRangeSelector.m in Sources */,
 				CEF9701E14C8AE7B00EDD9D7 /* PySearchField.m in Sources */,
+				CEF9702714C8B22500EDD9D7 /* PyEntryPrint.m in Sources */,
+				CEF9702814C8B22500EDD9D7 /* PyPrintView.m in Sources */,
+				CEF9702914C8B22500EDD9D7 /* PySplitPrint.m in Sources */,
+				CEF9702A14C8B22500EDD9D7 /* PyTransactionPrint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

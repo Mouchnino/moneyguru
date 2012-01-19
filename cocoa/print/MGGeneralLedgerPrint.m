@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGGeneralLedgerPrint.h"
 #import "MGConst.h"
 #import "MGGraphic.h"
+#import "PyEntryPrint.h"
 
 #define ACCOUNTROW_XPADDING 8
 #define ACCOUNTROW_LINEWIDTH 2
@@ -27,9 +28,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-+ (NSString *)pyClassName
++ (Class)pyClass
 {
-    return @"PyEntryPrint";
+    return [PyEntryPrint class];
 }
 
 - (void)setUpWithPrintInfo:(NSPrintInfo *)pi

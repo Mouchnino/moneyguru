@@ -30,7 +30,7 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
 }
 - (id)initWithPyParent:(id)pyParent;
 
-+ (NSString *)pyClassName;
++ (Class)pyClass;
 - (PyPrintView *)py;
 
 - (void)setUpWithPrintInfo:(NSPrintInfo *)pi;

@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGEntryPrint.h"
 #import "MGConst.h"
+#import "PyEntryPrint.h"
 
 #define GRAPH_HEIGHT_PROPORTION 0.4
 
@@ -48,9 +49,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-+ (NSString *)pyClassName
++ (Class)pyClass
 {
-    return @"PyEntryPrint";
+    return [PyEntryPrint class];
 }
 
 - (NSArray *)unresizableColumns

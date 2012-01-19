@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 
 @implementation MGBudgetPrint
-+ (NSString *)pyClassName
++ (Class)pyClass
 {
-    return @"PyPrintView";
+    return [PyPrintView class];
 }
 
 - (PyPrintView *)py

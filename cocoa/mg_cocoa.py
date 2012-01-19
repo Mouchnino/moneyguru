@@ -1436,28 +1436,23 @@ class PyCompletableEdit(PyGUIObject2):
 
 #--- Printing
 
-class PyPrintView(NSObject):
+class PyPrintView:
     py_class = PrintView
     
     # The parent of the PyPrintView is a View object
-    def initWithPyParent_(self, pyparent):
-        super(PyPrintView, self).init()
-        self.py = self.py_class(pyparent.py)
-        return self
+    def __init__(self, parent: pyref):
+        self.model = self.py_class(parent)
     
-    def title(self):
-        return self.py.title
+    def title(self) -> str:
+        return self.model.title
     
 
 class PySplitPrint(PyPrintView):
-    @signature('i@:i')
-    def splitCountAtRow_(self, row):
-        return self.py.split_count_at_row(row)
+    def splitCountAtRow_(self, row: int) -> int:
+        return self.model.split_count_at_row(row)
     
-    @signature('@@:ii')
-    def splitValuesAtRow_splitRow_(self, row, split_row):
-        return self.py.split_values(row, split_row)
-    
+    def splitValuesAtRow_splitRow_(self, row: int, split_row: int) -> list:
+        return self.model.split_values(row, split_row)
 
 class PyTransactionPrint(PySplitPrint):
     py_class = TransactionPrint
