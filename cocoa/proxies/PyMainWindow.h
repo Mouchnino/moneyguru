@@ -11,7 +11,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "PySearchField.h"
 #import "PyDateRangeSelector.h"
-#import "PyLookup.h"
 #import "PyAccountPanel.h"
 #import "PyTransactionPanel.h"
 #import "PyMassEditionPanel.h"
@@ -34,8 +33,8 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface PyMainWindow : PyGUIContainer {}
 - (PySearchField *)searchField;
 - (PyDateRangeSelector *)daterangeSelector;
-- (PyLookup *)accountLookup;
-- (PyLookup *)completionLookup;
+- (PyGUI *)accountLookup;
+- (PyGUI *)completionLookup;
 
 - (PyAccountPanel *)accountPanel;
 - (PyTransactionPanel *)transactionPanel;

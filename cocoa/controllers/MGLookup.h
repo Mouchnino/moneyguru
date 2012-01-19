@@ -7,17 +7,16 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSWindowController.h"
 #import "PyLookup.h"
 
-@interface MGLookup : HSWindowController {
+@interface MGLookup : NSWindowController {
     IBOutlet NSSearchField *searchField;
     IBOutlet NSTableView *namesTable;
     
+    PyLookup *model;
     NSArray *currentNames;
 }
 - (id)initWithPy:(id)aPy;
-- (PyLookup *)py;
 
 - (IBAction)go:(id)sender;
 - (IBAction)updateQuery:(id)sender;

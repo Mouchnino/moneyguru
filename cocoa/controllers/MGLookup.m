@@ -8,12 +8,19 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGLookup.h"
 #import "Utils.h"
+#import "ObjP.h"
 #import "NSEventAdditions.h"
 
 @implementation MGLookup
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithNibName:@"Lookup" py:aPy];
+    self = [super initWithWindowNibName:@"Lookup"];
+    PyObject *pRef = getHackedPyRef(aPy);
+    model = [[PyLookup alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    [model bindCallback:createCallback(@"LookupView", self)];
     currentNames = [[NSArray array] retain];
     [self window]; // Initialize the window
     [namesTable setTarget:self];
@@ -24,29 +31,25 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)dealloc
 {
     [currentNames release];
+    [model release];
     [super dealloc];
-}
-
-- (PyLookup *)py
-{
-    return (PyLookup *)py;
 }
 
 /* Private */
 - (void)restoreSelection
 {
-    [namesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:[[self py] selectedIndex]] byExtendingSelection:NO];
+    [namesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:[model selectedIndex]] byExtendingSelection:NO];
 }
 
 /* Actions */
 - (IBAction)go:(id)sender
 {
-    [[self py] go];
+    [model go];
 }
 
 - (IBAction)updateQuery:(id)sender
 {
-    [[self py] setSearchQuery:[searchField stringValue]];
+    [model setSearchQuery:[searchField stringValue]];
 }
 
 /* Data source */
@@ -64,7 +67,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)control:(NSControl*)control textView:(NSTextView*)textView doCommandBySelector:(SEL)commandSelector
 {
     if (commandSelector == @selector(insertNewline:)) {
-        [[self py] go];
+        [model go];
         return YES;
     }
     else if(commandSelector == @selector(moveUp:)) {
@@ -87,17 +90,17 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
     NSInteger selected = [namesTable selectedRow];
-    [[self py] setSelectedIndex:selected];
+    [model setSelectedIndex:selected];
 }
 
 /* Python --> Cocoa */
 - (void)refresh
 {
     [currentNames release];
-    currentNames = [[[self py] names] retain];
+    currentNames = [[model names] retain];
     [namesTable reloadData];
     [self restoreSelection];
-    [searchField setStringValue:[[self py] searchQuery]];
+    [searchField setStringValue:[model searchQuery]];
 }
 
 - (void)show

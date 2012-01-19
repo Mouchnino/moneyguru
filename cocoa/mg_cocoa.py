@@ -875,34 +875,37 @@ class PyDateRangeSelector(PyGUIObject):
     def refresh_custom_ranges(self):
         self.cocoa.refreshCustomRanges()
     
+class LookupView(GUIObjectView):
+    def show(self): pass
+    def hide(self): pass
 
-class PyLookup(PyGUIObject):
+class PyLookup(PyGUIObject2):
     def go(self):
-        self.py.go()
+        self.model.go()
     
-    def names(self):
-        return self.py.names
+    def names(self) -> list:
+        return self.model.names
     
-    def searchQuery(self):
-        return self.py.search_query
+    def searchQuery(self) -> str:
+        return self.model.search_query
     
-    def setSearchQuery_(self, query):
-        self.py.search_query = query
+    def setSearchQuery_(self, query: str):
+        self.model.search_query = query
     
-    @signature('i@:')
-    def selectedIndex(self):
-        return self.py.selected_index
+    def selectedIndex(self) -> int:
+        return self.model.selected_index
     
-    @signature('v@:i')
-    def setSelectedIndex_(self, index):
-        self.py.selected_index = index
+    def setSelectedIndex_(self, index: int):
+        self.model.selected_index = index
     
     #--- Python --> Cocoa
+    @dontwrap
     def show(self):
-        self.cocoa.show()
+        self.callback.show()
     
+    @dontwrap
     def hide(self):
-        self.cocoa.hide()
+        self.callback.hide()
     
 
 #--- Views
@@ -1011,8 +1014,8 @@ class PyMainWindow(PyGUIContainer):
     
     searchField = subproxy('searchField', 'search_field', PySearchField)
     daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyDateRangeSelector)
-    accountLookup = subproxy('accountLookup', 'account_lookup', PyLookup)
-    completionLookup = subproxy('completionLookup', 'completion_lookup', PyLookup)
+    accountLookup = subproxy('accountLookup', 'account_lookup', PyGUIObject)
+    completionLookup = subproxy('completionLookup', 'completion_lookup', PyGUIObject)
     
     accountPanel = subproxy('accountPanel', 'account_panel', PyAccountPanel)
     transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyTransactionPanel)
