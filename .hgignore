@@ -15,7 +15,7 @@ _build
 conf.json
 cocoa/Info.plist
 cocoa/build
-cocoa/mg_cocoa.plugin
+cocoa/autogen
 cocoa/fr.lproj/*.xib
 cocoa/de.lproj/*.xib
 cocoa/it.lproj/*.xib

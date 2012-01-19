@@ -39,7 +39,7 @@ def parse_args():
 
 def build_cocoa(dev):
     build_cocoa_proxy_module()
-    # build_cocoa_bridging_interfaces()
+    build_cocoa_bridging_interfaces()
     print("Building the cocoa layer")
     from pluginbuilder import copy_embeddable_python_dylib, get_python_header_folder, collect_dependencies
     copy_embeddable_python_dylib('build')

@@ -7,10 +7,12 @@
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
 import objc # import needed for dependency collection to work well
+from objp.util import pyref
 
 from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
     PySelectableList)
+from cocoa.inter2 import PyGUIObject2
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -34,6 +36,15 @@ from core.gui.main_window import MainWindow
 from core.gui.print_view import PrintView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.model.date import clean_format
+
+# This is a temporary, very hackish way of getting a PyObject* reference out of a pyobjc-based
+# instance. I couldn't figure out how to directly get it. When objp conversion is complete, we
+# won't need this anymore.
+class PyHack(NSObject):
+    def setRef_(self, ref):
+        import __main__
+        __main__.HACK_INSTANCE = ref.py
+
 
 class PyMoneyGuruApp(PyFairware):
     def initWithCocoa_(self, cocoa):
@@ -1379,42 +1390,34 @@ class PyDateWidget(NSObject):
         return self.w.selection
     
 
-class PyCompletableEdit(NSObject):
-    def initWithCocoa_pyParent_(self, cocoa, pyparent):
-        super(PyCompletableEdit, self).init()
-        self.py = CompletableEdit(view=self, mainwindow=pyparent.py)
-        self.cocoa = cocoa
-        return self
+class PyCompletableEdit(PyGUIObject2):
+    def __init__(self, mainwindow: pyref):
+        model = CompletableEdit(view=None, mainwindow=mainwindow)
+        PyGUIObject2.__init__(self, model)
     
-    def setAttrname_(self, attrname):
-        self.py.attrname = attrname
+    def setAttrname_(self, attrname: str):
+        self.model.attrname = attrname
     
-    def text(self):
-        return self.py.text
+    def text(self) -> str:
+        return self.model.text
     
-    def setText_(self, value):
-        # Don't send value directly to the py side! NSString are mutable and weird stuff will
-        # happen if you do that!
-        self.py.text = str(value)
+    def setText_(self, value: str):
+        self.model.text = value
     
-    def completion(self):
-        return self.py.completion
+    def completion(self) -> str:
+        return self.model.completion
     
     def commit(self):
-        self.py.commit()
+        self.model.commit()
     
     def down(self):
-        self.py.down()
+        self.model.down()
     
     def up(self):
-        self.py.up()
+        self.model.up()
     
     def lookup(self):
-        self.py.lookup()
-    
-    # Python --> Cocoa
-    def refresh(self):
-        self.cocoa.refresh()
+        self.model.lookup()
     
 
 #--- Printing

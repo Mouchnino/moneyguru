@@ -8,13 +8,18 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGFieldEditor.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGFieldEditor
 - (id)initWithPyParent:(id)aParent
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
-    Class pyClass = [Utils classNamed:@"PyCompletableEdit"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:aParent];
+    PyObject *pParent = getHackedPyRef(aParent);
+    py = [[PyCompletableEdit alloc] initWithMainwindow:pParent];
+    OBJP_LOCKGIL;
+    Py_DECREF(pParent);
+    OBJP_UNLOCKGIL;
+    [py bindCallback:createCallback(@"GUIObjectView", self)];
     lastCompletion = nil;
     [self setEditable:YES];
     [self setFieldEditor:YES];
