@@ -10,14 +10,22 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 #import "MGReconciliationCell.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGGeneralLedgerTable
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyGeneralLedgerTable *m = [[PyGeneralLedgerTable alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m tableView:aTableView];
+    [m bindCallback:createCallback(@"TableView", self)];
+    [m release];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
@@ -56,9 +64,9 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Overrides */
-- (PyGeneralLedgerTable *)py
+- (PyGeneralLedgerTable *)model
 {
-    return (PyGeneralLedgerTable *)py;
+    return (PyGeneralLedgerTable *)model;
 }
 
 - (NSArray *)dateColumns
@@ -74,7 +82,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Delegate */
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
 {
-    return [[self py] isAccountRow:row];
+    return [[self model] isAccountRow:row];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
@@ -82,8 +90,8 @@ http://www.hardcoded.net/licenses/bsd_license
     if ([[column identifier] isEqualToString:@"status"]) {
         return nil; // special column
     }
-    if ([[self py] isAccountRow:row]) {
-        return [[self py] valueForColumn:@"account_name" row:row];;
+    if ([[self model] isAccountRow:row]) {
+        return [[self model] valueForColumn:@"account_name" row:row];;
     }
     return [super tableView:aTableView objectValueForTableColumn:column row:row];
 }
@@ -91,17 +99,17 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
-    if (row >= [[self py] numberOfRows]) {
+    if (row >= [[self model] numberOfRows]) {
         return;
     }
-    if ([[self py] isAccountRow:row]) {
+    if ([[self model] isAccountRow:row]) {
         return;
     }
     if ([aCell isKindOfClass:[NSTextFieldCell class]]) {
         NSTextFieldCell *cell = aCell;
         NSFont *font = [cell font];
         NSFontManager *fontManager = [NSFontManager sharedFontManager];
-        BOOL isBold = [[self py] isBoldRow:row];
+        BOOL isBold = [[self model] isBoldRow:row];
         if (isBold) {
             font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
         }
@@ -112,9 +120,9 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     else if ([[column identifier] isEqualToString:@"status"]) {
         MGReconciliationCell *cell = aCell;
-        [cell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
-        [cell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
-        [cell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
+        [cell setReconciled:n2b([[self model] valueForColumn:@"reconciled" row:row])];
+        [cell setRecurrent:n2b([[self model] valueForColumn:@"recurrent" row:row])];
+        [cell setIsBudget:n2b([[self model] valueForColumn:@"is_budget" row:row])];
     }
 }
 @end

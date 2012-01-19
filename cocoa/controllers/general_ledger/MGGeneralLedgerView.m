@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"GeneralLedger" owner:self];
-    ledgerTable = [[MGGeneralLedgerTable alloc] initWithPy:[[self py] table] view:tableView];
+    ledgerTable = [[MGGeneralLedgerTable alloc] initWithPy:[[self py] table] tableView:tableView];
     return self;
 }
         

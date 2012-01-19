@@ -185,16 +185,17 @@ def build_cocoa_bridging_interfaces():
     add_to_pythonpath('cocoalib')
     from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, TableView, PyColumns2,
         ColumnsView, PyOutline2)
-    from mg_cocoa import (PyListener2, PyTableWithDate2, PyCompletableEdit, PyDateWidget,
+    from mg_cocoa import (PyListener2, PyTableWithDate, PyCompletableEdit, PyDateWidget,
         PyCSVImportOptions, CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView,
         PyDateRangeSelector, DateRangeSelectorView, PySearchField, PyImportWindow, ImportWindowView,
         PyFilterBar, FilterBarView, PyReport, ReportView, PyScheduleTable, PyBudgetTable,
-        PyEntryTable, PyTransactionTable)
+        PyEntryTable, PyTransactionTable, PyGeneralLedgerTable)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyOutline2,
-        PyTableWithDate2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions, PyImportTable,
+        PyTableWithDate, PyCompletableEdit, PyDateWidget, PyCSVImportOptions, PyImportTable,
         PySplitTable, PyLookup, PyDateRangeSelector, PySearchField, PyImportWindow, PyFilterBar,
-        PyReport, PyScheduleTable, PyBudgetTable, PyEntryTable, PyTransactionTable]
+        PyReport, PyScheduleTable, PyBudgetTable, PyEntryTable, PyTransactionTable,
+        PyGeneralLedgerTable]
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)

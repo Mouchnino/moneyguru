@@ -204,21 +204,7 @@ class PyGUIContainer(PyListener):
         self.py.set_children([child.py for child in children])
     
 
-class PyTableWithDate(PyTable):
-    @signature('c@:')
-    def isEditedRowInTheFuture(self):
-        if self.py.edited is None:
-            return False
-        return self.py.edited.is_date_in_future()
-    
-    @signature('c@:')
-    def isEditedRowInThePast(self):
-        if self.py.edited is None:
-            return False
-        return self.py.edited.is_date_in_past()
-    
-
-class PyTableWithDate2(PyTable2):
+class PyTableWithDate(PyTable2):
     def isEditedRowInTheFuture(self) -> bool:
         if self.model.edited is None:
             return False
@@ -336,7 +322,7 @@ class PyPanel(PyGUIObject):
     
 #--- GUI layer classes
 
-class PyEntryTable(PyTableWithDate2):
+class PyEntryTable(PyTableWithDate):
     def completableEdit(self) -> pyref:
         return self.model.completable_edit
     
@@ -365,7 +351,7 @@ class PyEntryTable(PyTableWithDate2):
         self.model[row_index].toggle_reconciled()
     
 
-class PyTransactionTable(PyTableWithDate2):
+class PyTransactionTable(PyTableWithDate):
     def completableEdit(self) -> pyref:
         return self.model.completable_edit
     
@@ -396,15 +382,15 @@ class PyBudgetTable(PyTable2):
     
 
 class PyGeneralLedgerTable(PyTableWithDate):
-    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+    def completableEdit(self) -> pyref:
+        return self.model.completable_edit
     
-    @signature('c@:i')
-    def isAccountRow_(self, row_index):
-        return self.py.is_account_row(self._getrow(row_index))
+    def isAccountRow_(self, row_index: int) -> bool:
+        return self.model.is_account_row(self._getrow(row_index))
     
-    @signature('c@:i')
-    def isBoldRow_(self, row_index):
-        return self.py.is_bold_row(self._getrow(row_index))
+    def isBoldRow_(self, row_index: int) -> bool:
+        return self.model.is_bold_row(self._getrow(row_index))
+    
 
 class FilterBarView(GUIObjectView):
     def disableTransfers(self): pass
@@ -1011,7 +997,7 @@ class PyCashculatorView(PyBaseView):
     
 
 class PyGeneralLedgerView(PyBaseView):
-    table = subproxy('table', 'gltable', PyGeneralLedgerTable)
+    table = subproxy('table', 'gltable', PyTable)
 
 class PyDocPropsView(PyBaseView):
     currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
