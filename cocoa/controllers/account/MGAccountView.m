@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    entryTable = [[MGEntryTable alloc] initWithPy:[[self py] table] view:tableView];
+    entryTable = [[MGEntryTable alloc] initWithPy:[[self py] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithPy:[[self py] balGraph]];
     barGraph = [[MGBarGraph alloc] initWithPy:[[self py] barGraph]];
@@ -85,7 +85,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)toggleReconciled
 {
-    [[entryTable py] toggleReconciled];
+    [[entryTable model] toggleReconciled];
 }
 
 /* Actions */

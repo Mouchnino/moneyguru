@@ -8,13 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyEntryTable.h"
-#import "MGEditableTable.h"
+#import "MGEditableTable2.h"
 
-@interface MGEntryTable : MGEditableTable {}
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
+@interface MGEntryTable : MGEditableTable2 {}
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
 
 /* Public */
-- (PyEntryTable *)py;
+- (PyEntryTable *)model;
 - (void)showTransferAccount:(id)sender;
 @end

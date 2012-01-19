@@ -218,6 +218,18 @@ class PyTableWithDate(PyTable):
         return self.py.edited.is_date_in_past()
     
 
+class PyTableWithDate2(PyTable2):
+    def isEditedRowInTheFuture(self) -> bool:
+        if self.model.edited is None:
+            return False
+        return self.model.edited.is_date_in_future()
+    
+    def isEditedRowInThePast(self) -> bool:
+        if self.model.edited is None:
+            return False
+        return self.model.edited.is_date_in_past()
+    
+
 class PyChart(PyListener):
     def data(self):
         return self.py.data
@@ -324,38 +336,33 @@ class PyPanel(PyGUIObject):
     
 #--- GUI layer classes
 
-class PyEntryTable(PyTableWithDate):
-    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+class PyEntryTable(PyTableWithDate2):
+    def completableEdit(self) -> pyref:
+        return self.model.completable_edit
     
-    @signature('c@:@i')
-    def canMoveRows_to_(self, rows, position):
-        return self.py.can_move(list(rows), position)
+    def canMoveRows_to_(self, rows: list, position: int) -> bool:
+        return self.model.can_move(rows, position)
 
-    @signature('c@:i')
-    def canReconcileEntryAtRow_(self, row):
-        return self.py[row].can_reconcile()
+    def canReconcileEntryAtRow_(self, row: int) -> bool:
+        return self.model[row].can_reconcile()
     
-    @signature('c@:i')
-    def isBalanceNegativeAtRow_(self, row):
-        return self.py[row].is_balance_negative()
+    def isBalanceNegativeAtRow_(self, row: int) -> bool:
+        return self.model[row].is_balance_negative()
     
-    @signature('c@:i')
-    def isBoldAtRow_(self, row):
-        return self.py[row].is_bold
+    def isBoldAtRow_(self, row: int) -> bool:
+        return self.model[row].is_bold
     
-    @signature('v@:@i')
-    def moveRows_to_(self, rows, position):
-        self.py.move(list(rows), position)
+    def moveRows_to_(self, rows: list, position: int):
+        self.model.move(rows, position)
 
     def showTransferAccount(self):
-        self.py.show_transfer_account()
+        self.model.show_transfer_account()
     
     def toggleReconciled(self):
-        self.py.toggle_reconciled()
+        self.model.toggle_reconciled()
     
-    @signature('v@:i')
-    def toggleReconciledAtRow_(self, row_index):
-        self.py[row_index].toggle_reconciled()
+    def toggleReconciledAtRow_(self, row_index: int):
+        self.model[row_index].toggle_reconciled()
     
 
 class PyTransactionTable(PyTableWithDate):
@@ -957,7 +964,7 @@ class PyTransactionView(PyBaseView):
 
 class PyAccountView(PyBaseView):
     filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
-    table = subproxy('table', 'etable', PyEntryTable)
+    table = subproxy('table', 'etable', PyTable)
     balGraph = subproxy('balGraph', 'balgraph', PyGraph)
     barGraph = subproxy('barGraph', 'bargraph', PyGraph)
     

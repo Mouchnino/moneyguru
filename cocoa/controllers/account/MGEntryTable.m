@@ -7,23 +7,31 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGEntryTable.h"
-#import "Utils.h"
 #import "MGConst.h"
 #import "MGTableView.h"
 #import "MGReconciliationCell.h"
 #import "MGTextFieldCell.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGEntryTable
 
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyEntryTable *m = [[PyEntryTable alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m tableView:aTableView];
+    [m bindCallback:createCallback(@"TableView", self)];
+    [m release];
     [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGEntryPasteboardType]];
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
     [aTableView setSortDescriptors:[NSArray arrayWithObject:sd]];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
@@ -71,9 +79,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Override */
 
-- (PyEntryTable *)py
+- (PyEntryTable *)model
 {
-    return (PyEntryTable *)py;
+    return (PyEntryTable *)model;
 }
 
 - (NSArray *)dateColumns
@@ -104,7 +112,7 @@ http://www.hardcoded.net/licenses/bsd_license
         NSPasteboard* pboard = [info draggingPasteboard];
         NSData* rowData = [pboard dataForType:MGEntryPasteboardType];
         NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-        if ([[self py] canMoveRows:[Utils indexSet2Array:rowIndexes] to:row])
+        if ([[self model] canMoveRows:[Utils indexSet2Array:rowIndexes] to:row])
         {
             return NSDragOperationMove;
         }
@@ -118,7 +126,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSPasteboard* pboard = [info draggingPasteboard];
     NSData* rowData = [pboard dataForType:MGEntryPasteboardType];
     NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-    [[self py] moveRows:[Utils indexSet2Array:rowIndexes] to:row];
+    [[self model] moveRows:[Utils indexSet2Array:rowIndexes] to:row];
     return YES;
 }
 
@@ -135,9 +143,9 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     if ([[column identifier] isEqualToString:@"status"])
     {
-        if ([[self py] canReconcileEntryAtRow:row])
+        if ([[self model] canReconcileEntryAtRow:row])
         {
-            [[self py] toggleReconciledAtRow:row];
+            [[self model] toggleReconciledAtRow:row];
         }
         return;
     }
@@ -149,14 +157,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
-    if (row >= [[self py] numberOfRows]) {
+    if (row >= [[self model] numberOfRows]) {
         return;
     }
     if ([aCell isKindOfClass:[NSTextFieldCell class]]) {
         NSTextFieldCell *cell = aCell;
         NSFont *font = [cell font];
         NSFontManager *fontManager = [NSFontManager sharedFontManager];
-        BOOL isBold = [[self py] isBoldAtRow:row];
+        BOOL isBold = [[self model] isBoldAtRow:row];
         if (isBold) {
             font = [fontManager convertFont:font toHaveTrait:NSFontBoldTrait];
         }
@@ -166,23 +174,23 @@ http://www.hardcoded.net/licenses/bsd_license
         [cell setFont:font];
     }
     if ([[column identifier] isEqualToString:@"balance"]) {
-        NSColor *color = [[self py] isBalanceNegativeAtRow:row] ? [NSColor redColor] : [NSColor blackColor];
+        NSColor *color = [[self model] isBalanceNegativeAtRow:row] ? [NSColor redColor] : [NSColor blackColor];
         [aCell setTextColor:color];
     }
     else if ([[column identifier] isEqualToString:@"status"]) {
         MGReconciliationCell *cell = aCell;
         if (row == [[self tableView] editedRow]) {
-            [cell setIsInFuture:[[self py] isEditedRowInTheFuture]];
-            [cell setIsInPast:[[self py] isEditedRowInThePast]];
+            [cell setIsInFuture:[[self model] isEditedRowInTheFuture]];
+            [cell setIsInPast:[[self model] isEditedRowInThePast]];
         }
         else {
             [cell setIsInFuture:NO];
             [cell setIsInPast:NO];
         }
-        [cell setCanReconcile:[[self py] canReconcileEntryAtRow:row]];
-        [cell setReconciled:n2b([[self py] valueForColumn:@"reconciled" row:row])];
-        [cell setRecurrent:n2b([[self py] valueForColumn:@"recurrent" row:row])];
-        [cell setIsBudget:n2b([[self py] valueForColumn:@"is_budget" row:row])];
+        [cell setCanReconcile:[[self model] canReconcileEntryAtRow:row]];
+        [cell setReconciled:n2b([[self model] valueForColumn:@"reconciled" row:row])];
+        [cell setRecurrent:n2b([[self model] valueForColumn:@"recurrent" row:row])];
+        [cell setIsBudget:n2b([[self model] valueForColumn:@"is_budget" row:row])];
     }
     else if ([[column identifier] isEqualToString:@"transfer"]) {
         MGTextFieldCell *cell = aCell;
@@ -202,13 +210,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)tableViewHadSpacePressed:(NSTableView *)tableView
 {
-    [[self py] toggleReconciled];
+    [[self model] toggleReconciled];
     return YES;
 }
 
 /* Public */
 - (void)showTransferAccount:(id)sender
 {
-    [[self py] showTransferAccount];
+    [[self model] showTransferAccount];
 }
 @end
