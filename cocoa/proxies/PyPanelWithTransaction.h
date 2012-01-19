@@ -9,8 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
 #import "PySplitTable.h"
+#import "PyCompletableEdit.h"
 
 @interface PyPanelWithTransaction : PyPanel {}
+- (PyCompletableEdit *)completableEdit;
 - (PySplitTable *)splitTable;
 - (NSString *)description;
 - (void)setDescription:(NSString *)description;

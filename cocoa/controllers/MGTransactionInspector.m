@@ -18,6 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithNibName:@"TransactionPanel" py:[[aParent py] transactionPanel] parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
     return self;
 }
 

@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTableWithDate.h"
+#import "PyCompletableEdit.h"
 
 @interface PyGeneralLedgerTable : PyTableWithDate {}
+- (PyCompletableEdit *)completableEdit;
 - (BOOL)isAccountRow:(NSInteger)row;
 - (BOOL)isBoldRow:(NSInteger)row;
 @end

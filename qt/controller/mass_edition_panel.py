@@ -40,8 +40,8 @@ class MassEditionPanel(Panel):
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
-        self._setupUi()
         self.model = mainwindow.model.mass_edit_panel
+        self._setupUi()
         self.model.view = self
         
         self.buttonBox.accepted.connect(self.accept)
@@ -66,7 +66,7 @@ class MassEditionPanel(Panel):
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.descriptionCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_2.addWidget(self.descriptionCheckBox)
-        self.descriptionEdit = DescriptionEdit(self)
+        self.descriptionEdit = DescriptionEdit(self.model.completable_edit, self)
         self.horizontalLayout_2.addWidget(self.descriptionEdit)
         self.formLayout.setLayout(1, QtGui.QFormLayout.FieldRole, self.horizontalLayout_2)
         self.label_3 = QtGui.QLabel(tr("Payee:"), self)
@@ -74,7 +74,7 @@ class MassEditionPanel(Panel):
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.payeeCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_3.addWidget(self.payeeCheckBox)
-        self.payeeEdit = PayeeEdit(self)
+        self.payeeEdit = PayeeEdit(self.model.completable_edit, self)
         self.horizontalLayout_3.addWidget(self.payeeEdit)
         self.formLayout.setLayout(2, QtGui.QFormLayout.FieldRole, self.horizontalLayout_3)
         self.label_4 = QtGui.QLabel(tr("Check #"), self)
@@ -90,7 +90,7 @@ class MassEditionPanel(Panel):
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
         self.fromCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_5.addWidget(self.fromCheckBox)
-        self.fromEdit = AccountEdit(self)
+        self.fromEdit = AccountEdit(self.model.completable_edit, self)
         self.horizontalLayout_5.addWidget(self.fromEdit)
         self.formLayout.setLayout(4, QtGui.QFormLayout.FieldRole, self.horizontalLayout_5)
         self.label_6 = QtGui.QLabel(tr("To:"), self)
@@ -98,7 +98,7 @@ class MassEditionPanel(Panel):
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
         self.toCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_6.addWidget(self.toCheckBox)
-        self.toEdit = AccountEdit(self)
+        self.toEdit = AccountEdit(self.model.completable_edit, self)
         self.horizontalLayout_6.addWidget(self.toEdit)
         self.formLayout.setLayout(5, QtGui.QFormLayout.FieldRole, self.horizontalLayout_6)
         self.label_7 = QtGui.QLabel(tr("Amount:"), self)

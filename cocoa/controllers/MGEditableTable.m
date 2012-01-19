@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
 {
     self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPyParent];
+    customFieldEditor = nil; // created by subclasses;
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }
@@ -21,10 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
     self = [super initWithPy:aPy view:aTableView];
-    /* XXX This is going to be a problem later, but for now there's only the import table that use
-       this initializer and it's not a problem there because the field editors aren't used.
-    */
-    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:aPy];
+    customFieldEditor = nil; // created by subclasses;
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }

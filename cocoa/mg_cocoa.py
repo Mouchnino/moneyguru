@@ -29,7 +29,6 @@ from core.document import Document, FilterType
 from core.exception import FileFormatError
 from core.gui.csv_options import CSVOptions, FIELD_ORDER as CSV_FIELD_ORDER, \
     SUPPORTED_ENCODINGS as CSV_SUPPORTED_ENCODINGS
-from core.gui.completable_edit import CompletableEdit
 from core.gui.date_widget import DateWidget
 from core.gui.import_window import ImportWindow
 from core.gui.main_window import MainWindow
@@ -323,6 +322,8 @@ class PyPanel(PyGUIObject):
 #--- GUI layer classes
 
 class PyEntryTable(PyTableWithDate):
+    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+    
     @signature('c@:@i')
     def canMoveRows_to_(self, rows, position):
         return self.py.can_move(list(rows), position)
@@ -355,6 +356,8 @@ class PyEntryTable(PyTableWithDate):
     
 
 class PyTransactionTable(PyTableWithDate):
+    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+    
     @signature('c@:i')
     def isBoldAtRow_(self, row):
         return self.py[row].is_bold
@@ -385,6 +388,8 @@ class PyBudgetTable(PyTable):
     
 
 class PyGeneralLedgerTable(PyTableWithDate):
+    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+    
     @signature('c@:i')
     def isAccountRow_(self, row_index):
         return self.py.is_account_row(self._getrow(row_index))
@@ -471,6 +476,7 @@ class PySplitTable(PyTable):
     
 
 class PyPanelWithTransaction(PyPanel):
+    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
     splitTable = subproxy('splitTable', 'split_table', PySplitTable)
     
     def description(self):
@@ -519,7 +525,8 @@ class PyTransactionPanel(PyPanelWithTransaction):
     
 
 class PyMassEditionPanel(PyPanel):
-
+    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+    
     def availableCurrencies(self):
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
@@ -1395,12 +1402,6 @@ class PyDateWidget:
     
 
 class PyCompletableEdit(PyGUIObject2):
-    def __init__(self, mainwindow: pyref):
-        if isinstance(mainwindow, PyGUIObject2): # XXX very ugly, but temporary
-            mainwindow = mainwindow.model
-        model = CompletableEdit(view=None, mainwindow=mainwindow)
-        PyGUIObject2.__init__(self, model)
-    
     def setAttrname_(self, attrname: str):
         self.model.attrname = attrname
     

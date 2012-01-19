@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTableWithDate.h"
+#import "PyCompletableEdit.h"
 
 @interface PyEntryTable : PyTableWithDate {}
+- (PyCompletableEdit *)completableEdit;
 - (BOOL)canMoveRows:(NSArray *)rows to:(NSInteger)position;
 - (BOOL)canReconcileEntryAtRow:(NSInteger)row;
 - (BOOL)isBalanceNegativeAtRow:(NSInteger)row;

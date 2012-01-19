@@ -8,8 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyPanel.h"
+#import "PyCompletableEdit.h"
 
 @interface PyMassEditionPanel : PyPanel {}
+- (PyCompletableEdit *)completableEdit;
 - (NSArray *)availableCurrencies;
 - (BOOL)canChangeAccounts;
 - (BOOL)canChangeAmount;

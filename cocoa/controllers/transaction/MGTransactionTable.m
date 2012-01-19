@@ -22,6 +22,7 @@ http://www.hardcoded.net/licenses/bsd_license
     // Table auto-save also saves sort descriptors, but we want them to be reset to date on startup
     NSSortDescriptor *sd = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES] autorelease];
     [[self tableView] setSortDescriptors:[NSArray arrayWithObject:sd]];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
     return self;
 }
 

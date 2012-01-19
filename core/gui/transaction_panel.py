@@ -16,6 +16,7 @@ from ..model.account import Account, AccountType
 from ..model.transaction import Split, Transaction
 from .base import MainWindowPanel
 from .split_table import SplitTable
+from .completable_edit import CompletableEdit
 
 class PanelWithTransaction(MainWindowPanel):
     """Base class for panels working with a transaction"""
@@ -24,6 +25,7 @@ class PanelWithTransaction(MainWindowPanel):
         self.transaction = Transaction(date.today())
         self._selected_splits = []
         self.split_table = SplitTable(self)
+        self.completable_edit = CompletableEdit(None, mainwindow)
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:

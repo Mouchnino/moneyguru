@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithModel:(PyTable2 *)aModel tableView:(MGTableView *)aTableView
 {
     self = [super initWithModel:aModel tableView:aTableView];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPyParentRef:[[self model] pyRef]];
+    customFieldEditor = nil; // created by subclasses;
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }
@@ -21,8 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView
 {
     self = [super initWithPyRef:aPyRef tableView:aTableView];
-    /* XXX We have a problem because MGFieldEditor expects a mainwindow as a parent. */
-    customFieldEditor = [[MGFieldEditor alloc] initWithPyParentRef:[[self model] pyRef]];
+    customFieldEditor = nil; // created by subclasses;
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }

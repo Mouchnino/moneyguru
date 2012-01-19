@@ -15,16 +15,16 @@ from ..table import TableDelegate, DATE_EDIT, DESCRIPTION_EDIT, PAYEE_EDIT, ACCO
 from ..table_with_transactions import TableWithTransactions
 
 class EntryTableDelegate(TableDelegate):
-    def __init__(self, model, columns):
-        TableDelegate.__init__(self, model, columns)
+    def __init__(self, model):
+        TableDelegate.__init__(self, model)
         arrow = QPixmap(':/right_arrow_gray_12')
         arrowSelected = QPixmap(':/right_arrow_white_12')
         self._decoArrow = ItemDecoration(arrow, self._model.show_transfer_account)
         self._decoArrowSelected = ItemDecoration(arrowSelected, self._model.show_transfer_account)
     
     def _get_decorations(self, index, isSelected):
-        column = self._columns[index.column()]
-        if column.attrname == 'transfer':
+        column = self._model.columns.column_by_index(index.column())
+        if column.name == 'transfer':
             return [self._decoArrowSelected if isSelected else self._decoArrow]
         else:
             return []
@@ -48,7 +48,7 @@ class EntryTable(TableWithTransactions):
     
     def __init__(self, model, view):
         TableWithTransactions.__init__(self, model, view)
-        self.tableDelegate = EntryTableDelegate(self.model, self.COLUMNS)
+        self.tableDelegate = EntryTableDelegate(self.model)
         self.view.setItemDelegate(self.tableDelegate)
         self.view.sortByColumn(1, Qt.AscendingOrder) # sorted by date by default
         self.view.clicked.connect(self.cellClicked)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-22
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -9,8 +8,6 @@
 
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QLineEdit
-
-from core.gui.completable_edit import CompletableEdit as CompletableEditModel
 
 # The QCompleter works by having access to a list of possible matches, but we already have that
 # logic implemented on the model side. It turns out subclassing the QCompleter to adapt it to our
@@ -23,6 +20,11 @@ from core.gui.completable_edit import CompletableEdit as CompletableEditModel
 class CompletableEdit(QLineEdit):
     ATTRNAME = '' # must be set
     
+    def __init__(self, model, parent):
+        QLineEdit.__init__(self, parent)
+        self.model = model
+        self.model.view = self
+    
     def _prefix(self):
         # Returns the text before the selection
         if self.selectionStart() == -1:
@@ -33,6 +35,7 @@ class CompletableEdit(QLineEdit):
     #--- QLineEdit overrides
     def focusInEvent(self, event):
         QLineEdit.focusInEvent(self, event)
+        self.model.attrname = self.ATTRNAME
         self.model.text = ''
     
     def focusOutEvent(self, event):
@@ -58,10 +61,6 @@ class CompletableEdit(QLineEdit):
         # case-insensitive-wise. If yes, we use the case of the completion rather than our own.
         if self.selectedText() and self.selectedText() == self.model.completion:
             self.model.commit()
-    
-    def setMainwindow(self, mainwindow_model):
-        self.model = CompletableEditModel(view=self, mainwindow=mainwindow_model)
-        self.model.attrname = self.ATTRNAME
     
     #--- model --> view
     def refresh(self):

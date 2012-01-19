@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithNibName:aNibName py:aPy];
     [self window]; // Initialize elements from the NIB.
     parentWindow = [aParent window];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPyParent:[aParent py]];
+    customFieldEditor = nil; // instantiated by subclasses
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }

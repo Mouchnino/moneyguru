@@ -36,8 +36,8 @@ class SchedulePanel(Panel):
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
-        self._setupUi()
         self.model = mainwindow.model.schedule_panel
+        self._setupUi()
         self.model.view = self
         self.splitTable = SplitTable(model=self.model.split_table, view=self.splitTableView)
         self.repeatTypeComboBox = ComboboxModel(model=self.model.repeat_type_list, view=self.repeatTypeComboBoxView)
@@ -81,11 +81,11 @@ class SchedulePanel(Panel):
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.stopDateEdit)
         self.label_3 = QLabel(tr("Description:"))
         self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_3)
-        self.descriptionEdit = DescriptionEdit(self.tab)
+        self.descriptionEdit = DescriptionEdit(self.model.completable_edit, self.tab)
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.descriptionEdit)
         self.label_4 = QLabel(tr("Payee:"))
         self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_4)
-        self.payeeEdit = PayeeEdit(self.tab)
+        self.payeeEdit = PayeeEdit(self.model.completable_edit, self.tab)
         self.formLayout.setWidget(5, QFormLayout.FieldRole, self.payeeEdit)
         self.label_5 = QLabel(tr("Check #:"))
         self.formLayout.setWidget(6, QFormLayout.LabelRole, self.label_5)

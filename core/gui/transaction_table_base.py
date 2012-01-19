@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-01-06
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -9,6 +8,7 @@
 
 from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 from .table import GUITable
+from .completable_edit import CompletableEdit
 
 class TransactionTableBase(GUITable, ViewChild):
     """Common superclass for TransactionTable and EntryTable, which share a lot of logic.
@@ -18,6 +18,7 @@ class TransactionTableBase(GUITable, ViewChild):
     def __init__(self, view, parent_view):
         ViewChild.__init__(self, view, parent_view)
         GUITable.__init__(self, document=parent_view.document)
+        self.completable_edit = CompletableEdit(None, parent_view.mainwindow)
     
     #--- Override
     def _is_edited_new(self):

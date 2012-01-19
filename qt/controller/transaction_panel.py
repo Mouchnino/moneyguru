@@ -33,8 +33,8 @@ class TransactionPanel(Panel):
     def __init__(self, mainwindow):
         Panel.__init__(self, mainwindow)
         self.mainwindow = mainwindow
-        self._setupUi()
         self.model = mainwindow.model.transaction_panel
+        self._setupUi()
         self.model.view = self
         self.splitTable = SplitTable(model=self.model.split_table, view=self.splitTableView)
         
@@ -57,9 +57,9 @@ class TransactionPanel(Panel):
         self.dateEdit = DateEdit(self.infoTab)
         self.dateEdit.setMaximumSize(QSize(120, 16777215))
         self.formLayout.addRow(tr("Date:"), self.dateEdit)
-        self.descriptionEdit = DescriptionEdit(self.infoTab)
+        self.descriptionEdit = DescriptionEdit(self.model.completable_edit, self.infoTab)
         self.formLayout.addRow(tr("Description:"), self.descriptionEdit)
-        self.payeeEdit = PayeeEdit(self.infoTab)
+        self.payeeEdit = PayeeEdit(self.model.completable_edit, self.infoTab)
         self.formLayout.addRow(tr("Payee:"), self.payeeEdit)
         self.checkNoEdit = QLineEdit(self.infoTab)
         self.checkNoEdit.setMaximumSize(QSize(120, 16777215))

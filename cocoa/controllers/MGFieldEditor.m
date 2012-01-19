@@ -10,20 +10,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGFieldEditor
-- (id)initWithPyParent:(id)aParent
+- (id)initWithPy:(id)aPy
 {
-    PyObject *pParent = getHackedPyRef(aParent);
-    self = [self initWithPyParentRef:pParent];
+    PyObject *pRef = getHackedPyRef(aPy);
+    self = [self initWithPyRef:pRef];
     OBJP_LOCKGIL;
-    Py_DECREF(pParent);
+    Py_DECREF(pRef);
     OBJP_UNLOCKGIL;
     return self;
 }
 
-- (id)initWithPyParentRef:(PyObject *)aPyParentRef
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];
-    py = [[PyCompletableEdit alloc] initWithMainwindow:aPyParentRef];
+    py = [[PyCompletableEdit alloc] initWithModel:aPyRef];
     [py bindCallback:createCallback(@"GUIObjectView", self)];
     lastCompletion = nil;
     [self setEditable:YES];

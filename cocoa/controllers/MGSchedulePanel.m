@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithNibName:@"SchedulePanel" py:[[aParent py] schedulePanel] parent:aParent];
     splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
     return self;
 }
 

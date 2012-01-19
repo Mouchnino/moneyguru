@@ -13,10 +13,12 @@ from hscommon.util import allsame, nonone, flatten
 
 from ..exception import OperationAborted
 from .base import MainWindowPanel
+from .completable_edit import CompletableEdit
 
 class MassEditionPanel(MainWindowPanel):
     def __init__(self, mainwindow):
         MainWindowPanel.__init__(self, mainwindow)
+        self.completable_edit = CompletableEdit(None, mainwindow)
         self._init_fields()
     
     #--- Override

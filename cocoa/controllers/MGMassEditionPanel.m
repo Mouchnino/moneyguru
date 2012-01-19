@@ -14,6 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithNibName:@"MassEditingPanel" py:[[aParent py] massEditPanel] parent:aParent];
     currencies = [[[self py] availableCurrencies] retain];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
     return self;
 }
 

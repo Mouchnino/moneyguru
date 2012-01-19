@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-01
 # Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
@@ -18,32 +17,31 @@ DESCRIPTION_EDIT = 'description_edit'
 PAYEE_EDIT = 'payee_edit'
 ACCOUNT_EDIT = 'account_edit'
 
+EDIT_TYPE2COMPLETABLE_EDIT = {
+    DESCRIPTION_EDIT: DescriptionEdit,
+    PAYEE_EDIT: PayeeEdit,
+    ACCOUNT_EDIT: AccountEdit
+}
+
 class TableDelegate(ItemDelegate):
-    def __init__(self, model, columns):
+    def __init__(self, model):
         ItemDelegate.__init__(self)
         self._model = model
-        self._columns = columns
     
     def createEditor(self, parent, option, index):
-        column = self._columns[index.column()]
+        column = self._model.columns.column_by_index(index.column())
         editType = column.editor
         if editType is None:
             return ItemDelegate.createEditor(self, parent, option, index)
         elif editType == DATE_EDIT:
             return DateEdit(parent)
-        elif editType in (DESCRIPTION_EDIT, PAYEE_EDIT, ACCOUNT_EDIT):
-            editClass = {
-                DESCRIPTION_EDIT: DescriptionEdit,
-                PAYEE_EDIT: PayeeEdit,
-                ACCOUNT_EDIT: AccountEdit
-            }[editType]
-            result = editClass(parent)
-            result.setMainwindow(self._model.mainwindow)
-            return result
+        elif editType in EDIT_TYPE2COMPLETABLE_EDIT:
+            print(repr(column.name), repr(editType))
+            return EDIT_TYPE2COMPLETABLE_EDIT[editType](self._model.completable_edit, parent)
     
 
 class Table(TableBase):
     def __init__(self, model, view):
         TableBase.__init__(self, model, view)
-        self.tableDelegate = TableDelegate(self.model, self.COLUMNS)
+        self.tableDelegate = TableDelegate(self.model)
         self.view.setItemDelegate(self.tableDelegate)

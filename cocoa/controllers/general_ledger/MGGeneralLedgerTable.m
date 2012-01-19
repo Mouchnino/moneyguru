@@ -17,6 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithPy:aPy view:aTableView];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
     return self;
 }
 
