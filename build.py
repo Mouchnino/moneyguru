@@ -189,12 +189,12 @@ def build_cocoa_bridging_interfaces():
         PyCSVImportOptions, CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView,
         PyDateRangeSelector, DateRangeSelectorView, PySearchField, PyImportWindow, ImportWindowView,
         PyFilterBar, FilterBarView, PyReport, ReportView, PyScheduleTable, PyBudgetTable,
-        PyEntryTable)
+        PyEntryTable, PyTransactionTable)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyOutline2,
         PyTableWithDate2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions, PyImportTable,
         PySplitTable, PyLookup, PyDateRangeSelector, PySearchField, PyImportWindow, PyFilterBar,
-        PyReport, PyScheduleTable, PyBudgetTable, PyEntryTable]
+        PyReport, PyScheduleTable, PyBudgetTable, PyEntryTable, PyTransactionTable]
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)

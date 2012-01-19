@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    transactionTable = [[MGTransactionTable alloc] initWithPy:[[self py] table] view:tableView];
+    transactionTable = [[MGTransactionTable alloc] initWithPy:[[self py] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:NO];
     return self;
 }

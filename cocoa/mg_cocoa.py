@@ -365,26 +365,24 @@ class PyEntryTable(PyTableWithDate2):
         self.model[row_index].toggle_reconciled()
     
 
-class PyTransactionTable(PyTableWithDate):
-    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+class PyTransactionTable(PyTableWithDate2):
+    def completableEdit(self) -> pyref:
+        return self.model.completable_edit
     
-    @signature('c@:i')
-    def isBoldAtRow_(self, row):
-        return self.py[row].is_bold
+    def isBoldAtRow_(self, row: int) -> bool:
+        return self.model[row].is_bold
     
-    @signature('c@:@i')
-    def canMoveRows_to_(self, rows, position):
-        return self.py.can_move(list(rows), position)
+    def canMoveRows_to_(self, rows: list, position: int) -> bool:
+        return self.model.can_move(rows, position)
     
-    @signature('v@:@i')
-    def moveRows_to_(self, rows, position):
-        self.py.move(list(rows), position)
+    def moveRows_to_(self, rows: list, position: int):
+        self.model.move(rows, position)
     
     def showFromAccount(self):
-        self.py.show_from_account()
+        self.model.show_from_account()
     
     def showToAccount(self):
-        self.py.show_to_account()
+        self.model.show_to_account()
     
 
 class PyScheduleTable(PyTable2):
@@ -960,7 +958,7 @@ class PyProfitView(PyBaseView):
 
 class PyTransactionView(PyBaseView):
     filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
-    table = subproxy('table', 'ttable', PyTransactionTable)
+    table = subproxy('table', 'ttable', PyTable)
 
 class PyAccountView(PyBaseView):
     filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)

@@ -8,15 +8,15 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTransactionTable.h"
-#import "MGEditableTable.h"
+#import "MGEditableTable2.h"
 #import "MGTableView.h"
 
-@interface MGTransactionTable : MGEditableTable {}
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
+@interface MGTransactionTable : MGEditableTable2 {}
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
 
 /* Public */
-- (PyTransactionTable *)py;
+- (PyTransactionTable *)model;
 - (void)showFromAccount:(id)sender;
 - (void)showToAccount:(id)sender;
 @end
