@@ -165,6 +165,14 @@
 		CEB46FBE14C86C8D00C56775 /* PyDateWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FBD14C86C8D00C56775 /* PyDateWidget.m */; };
 		CEB46FC114C8712E00C56775 /* PyCSVImportOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FC014C8712E00C56775 /* PyCSVImportOptions.m */; };
 		CEB46FC414C8715D00C56775 /* PyListener2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FC314C8715D00C56775 /* PyListener2.m */; };
+		CEB46FCB14C8760A00C56775 /* HSColumns2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FC614C8760A00C56775 /* HSColumns2.m */; };
+		CEB46FCC14C8760A00C56775 /* HSGUIController2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FC814C8760A00C56775 /* HSGUIController2.m */; };
+		CEB46FCD14C8760A00C56775 /* HSTable2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FCA14C8760A00C56775 /* HSTable2.m */; };
+		CEB46FD214C878C100C56775 /* MGEditableTable2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FCF14C878C100C56775 /* MGEditableTable2.m */; };
+		CEB46FD314C878C100C56775 /* MGTable2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FD114C878C100C56775 /* MGTable2.m */; };
+		CEB46FD814C878F100C56775 /* PyImportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FD514C878F100C56775 /* PyImportTable.m */; };
+		CEB46FD914C878F100C56775 /* PyTable2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FD714C878F100C56775 /* PyTable2.m */; };
+		CEB46FDC14C8793400C56775 /* PyColumns2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FDB14C8793400C56775 /* PyColumns2.m */; };
 		CEB6020112393080002218CF /* GeneralLedger.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB601FF12393080002218CF /* GeneralLedger.xib */; };
 		CEB6020A123930BF002218CF /* MGGeneralLedgerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60207123930BF002218CF /* MGGeneralLedgerTable.m */; };
 		CEB6020B123930BF002218CF /* MGGeneralLedgerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60209123930BF002218CF /* MGGeneralLedgerView.m */; };
@@ -326,7 +334,6 @@
 		CE2BFF371207F02B0098A2EC /* MGCashculatorAccountTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCashculatorAccountTable.m; sourceTree = "<group>"; };
 		CE2DD62E0E4C684000AB107B /* MGImportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTable.h; sourceTree = "<group>"; };
 		CE2DD62F0E4C684000AB107B /* MGImportTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTable.m; sourceTree = "<group>"; };
-		CE2DD6310E4C684C00AB107B /* PyImportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyImportTable.h; sourceTree = "<group>"; };
 		CE2F0BEE11295E1A00F6FB55 /* HSOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSOutlineView.h; sourceTree = "<group>"; };
 		CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSOutlineView.m; sourceTree = "<group>"; };
 		CE2F0BF011295E1A00F6FB55 /* NSIndexPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSIndexPathAdditions.h; sourceTree = "<group>"; };
@@ -614,6 +621,22 @@
 		CEB46FC014C8712E00C56775 /* PyCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyCSVImportOptions.m; sourceTree = "<group>"; };
 		CEB46FC214C8715D00C56775 /* PyListener2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyListener2.h; sourceTree = "<group>"; };
 		CEB46FC314C8715D00C56775 /* PyListener2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyListener2.m; sourceTree = "<group>"; };
+		CEB46FC514C8760A00C56775 /* HSColumns2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSColumns2.h; sourceTree = "<group>"; };
+		CEB46FC614C8760A00C56775 /* HSColumns2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSColumns2.m; sourceTree = "<group>"; };
+		CEB46FC714C8760A00C56775 /* HSGUIController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSGUIController2.h; sourceTree = "<group>"; };
+		CEB46FC814C8760A00C56775 /* HSGUIController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSGUIController2.m; sourceTree = "<group>"; };
+		CEB46FC914C8760A00C56775 /* HSTable2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTable2.h; sourceTree = "<group>"; };
+		CEB46FCA14C8760A00C56775 /* HSTable2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTable2.m; sourceTree = "<group>"; };
+		CEB46FCE14C878C100C56775 /* MGEditableTable2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEditableTable2.h; sourceTree = "<group>"; };
+		CEB46FCF14C878C100C56775 /* MGEditableTable2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEditableTable2.m; sourceTree = "<group>"; };
+		CEB46FD014C878C100C56775 /* MGTable2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTable2.h; sourceTree = "<group>"; };
+		CEB46FD114C878C100C56775 /* MGTable2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTable2.m; sourceTree = "<group>"; };
+		CEB46FD414C878F100C56775 /* PyImportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyImportTable.h; sourceTree = "<group>"; };
+		CEB46FD514C878F100C56775 /* PyImportTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyImportTable.m; sourceTree = "<group>"; };
+		CEB46FD614C878F100C56775 /* PyTable2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTable2.h; sourceTree = "<group>"; };
+		CEB46FD714C878F100C56775 /* PyTable2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyTable2.m; sourceTree = "<group>"; };
+		CEB46FDA14C8793400C56775 /* PyColumns2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyColumns2.h; sourceTree = "<group>"; };
+		CEB46FDB14C8793400C56775 /* PyColumns2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyColumns2.m; sourceTree = "<group>"; };
 		CEB6020012393080002218CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
 		CEB60203123930A1002218CF /* PyGeneralLedgerTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyGeneralLedgerTable.h; path = proxies/PyGeneralLedgerTable.h; sourceTree = SOURCE_ROOT; };
 		CEB60204123930A1002218CF /* PyGeneralLedgerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyGeneralLedgerView.h; path = proxies/PyGeneralLedgerView.h; sourceTree = SOURCE_ROOT; };
@@ -991,6 +1014,10 @@
 				CEBB300210F76E3600FC4C7A /* schedule */,
 				CEBB2FFA10F76BD100FC4C7A /* budget */,
 				CEB60205123930AA002218CF /* general_ledger */,
+				CEB46FCE14C878C100C56775 /* MGEditableTable2.h */,
+				CEB46FCF14C878C100C56775 /* MGEditableTable2.m */,
+				CEB46FD014C878C100C56775 /* MGTable2.h */,
+				CEB46FD114C878C100C56775 /* MGTable2.m */,
 				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
 				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
 				CED4DB0714476BEF0041601F /* MGDocPropsView.h */,
@@ -1105,7 +1132,6 @@
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
 				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
 				CE7311D41040361C00DB8B30 /* PyBudgetTable.h */,
-				CE2DD6310E4C684C00AB107B /* PyImportTable.h */,
 				CE873A9A0E21622F004F63E9 /* PySplitTable.h */,
 				CEA25A6B0E2776BD0067AE58 /* PyTransactionTable.h */,
 				CE873A960E21622F004F63E9 /* PyEntryTable.h */,
@@ -1272,12 +1298,18 @@
 				CEB46FB814C86C3600C56775 /* PyGUIObject2.m */,
 				CEB46FC214C8715D00C56775 /* PyListener2.h */,
 				CEB46FC314C8715D00C56775 /* PyListener2.m */,
+				CEB46FD614C878F100C56775 /* PyTable2.h */,
+				CEB46FD714C878F100C56775 /* PyTable2.m */,
+				CEB46FDA14C8793400C56775 /* PyColumns2.h */,
+				CEB46FDB14C8793400C56775 /* PyColumns2.m */,
 				CEB46FB514C86C3600C56775 /* PyCompletableEdit.h */,
 				CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */,
 				CEB46FBC14C86C8D00C56775 /* PyDateWidget.h */,
 				CEB46FBD14C86C8D00C56775 /* PyDateWidget.m */,
 				CEB46FBF14C8712E00C56775 /* PyCSVImportOptions.h */,
 				CEB46FC014C8712E00C56775 /* PyCSVImportOptions.m */,
+				CEB46FD414C878F100C56775 /* PyImportTable.h */,
+				CEB46FD514C878F100C56775 /* PyImportTable.m */,
 			);
 			path = autogen;
 			sourceTree = "<group>";
@@ -1336,6 +1368,12 @@
 				CED5E6F21448B36700C4B843 /* HSComboBox.m */,
 				CE1204331441DE3D00933858 /* HSColumns.h */,
 				CE1204341441DE3D00933858 /* HSColumns.m */,
+				CEB46FC714C8760A00C56775 /* HSGUIController2.h */,
+				CEB46FC814C8760A00C56775 /* HSGUIController2.m */,
+				CEB46FC514C8760A00C56775 /* HSColumns2.h */,
+				CEB46FC614C8760A00C56775 /* HSColumns2.m */,
+				CEB46FC914C8760A00C56775 /* HSTable2.h */,
+				CEB46FCA14C8760A00C56775 /* HSTable2.m */,
 			);
 			name = controllers;
 			path = ../cocoalib/controllers;
@@ -1769,6 +1807,14 @@
 				CEB46FBE14C86C8D00C56775 /* PyDateWidget.m in Sources */,
 				CEB46FC114C8712E00C56775 /* PyCSVImportOptions.m in Sources */,
 				CEB46FC414C8715D00C56775 /* PyListener2.m in Sources */,
+				CEB46FCB14C8760A00C56775 /* HSColumns2.m in Sources */,
+				CEB46FCC14C8760A00C56775 /* HSGUIController2.m in Sources */,
+				CEB46FCD14C8760A00C56775 /* HSTable2.m in Sources */,
+				CEB46FD214C878C100C56775 /* MGEditableTable2.m in Sources */,
+				CEB46FD314C878C100C56775 /* MGTable2.m in Sources */,
+				CEB46FD814C878F100C56775 /* PyImportTable.m in Sources */,
+				CEB46FD914C878F100C56775 /* PyTable2.m in Sources */,
+				CEB46FDC14C8793400C56775 /* PyColumns2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

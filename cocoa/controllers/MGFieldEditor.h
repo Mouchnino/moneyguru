@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyGUI.h"
 #import "PyCompletableEdit.h"
+#import "ObjP.h"
 
 @interface MGFieldEditor : NSTextView
 {
@@ -16,6 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSString *lastCompletion;
 }
 - (id)initWithPyParent:(id)aParent;
+- (id)initWithPyParentRef:(PyObject *)aPyParentRef;
 - (void)setAttrname:(NSString *)attrname;
 /* Actions */
 - (IBAction)lookupCompletion:(id)sender;

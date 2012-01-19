@@ -12,7 +12,7 @@ from objp.util import pyref, dontwrap
 from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
     PySelectableList)
-from cocoa.inter2 import PyGUIObject2, GUIObjectView
+from cocoa.inter2 import PyGUIObject2, GUIObjectView, PyTable2, PyColumns2
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -1150,33 +1150,27 @@ class PyMainWindow(PyGUIContainer):
         self.cocoa.viewClosedAtIndex_(index)
     
 
-class PyImportTable(PyTable):
-    # pyparent is a PyImportWindow
-    @signature('v@:ii')
-    def bindRow_to_(self, source_index, dest_index):
-        self.py.bind(source_index, dest_index)
+class PyImportTable(PyTable2):
+    def bindRow_to_(self, source_index: int, dest_index: int):
+        self.model.bind(source_index, dest_index)
     
-    @signature('c@:ii')
-    def canBindRow_to_(self, source_index, dest_index):
-        return self.py.can_bind(source_index, dest_index)
+    def canBindRow_to_(self, source_index: int, dest_index: int) -> bool:
+        return self.model.can_bind(source_index, dest_index)
     
-    @signature('c@:')
-    def isTwoSided(self):
-        return self.py.is_two_sided
+    def isTwoSided(self) -> bool:
+        return self.model.is_two_sided
     
-    @signature('v@:')
     def toggleImportStatus(self):
-        self.py.toggle_import_status()
+        self.model.toggle_import_status()
     
-    @signature('v@:i')
-    def unbindRow_(self, index):
-        self.py.unbind(index)
+    def unbindRow_(self, index: int):
+        self.model.unbind(index)
     
 
 class PyImportWindow(PyListener):
     py_class = ImportWindow
     
-    importTable = subproxy('importTable', 'import_table', PyImportTable)
+    importTable = subproxy('importTable', 'import_table', PyGUIObject)
     
     @signature('i@:i')
     def accountCountAtIndex_(self, index):
@@ -1402,6 +1396,8 @@ class PyDateWidget:
 
 class PyCompletableEdit(PyGUIObject2):
     def __init__(self, mainwindow: pyref):
+        if isinstance(mainwindow, PyGUIObject2): # XXX very ugly, but temporary
+            mainwindow = mainwindow.model
         model = CompletableEdit(view=None, mainwindow=mainwindow)
         PyGUIObject2.__init__(self, model)
     

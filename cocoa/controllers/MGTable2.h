@@ -7,12 +7,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyTable.h"
+#import "HSTable2.h"
+#import "MGTableView.h"
 
-@interface PyImportTable : PyTable {}
-- (BOOL)canBindRow:(NSInteger)source to:(NSInteger)dest;
-- (void)bindRow:(NSInteger)source to:(NSInteger)dest;
-- (void)unbindRow:(NSInteger)row;
-- (BOOL)isTwoSided;
-- (void)toggleImportStatus;
+@interface MGTable2 : HSTable2 {}
+/* Public */
+- (MGTableView *)tableView;
 @end

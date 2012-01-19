@@ -9,12 +9,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyImportTable.h"
 #import "PyImportWindow.h"
-#import "MGEditableTable.h"
+#import "MGEditableTable2.h"
 #import "MGTableView.h"
 
-@interface MGImportTable : MGEditableTable {}
+@interface MGImportTable : MGEditableTable2 {}
+- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView;
 - (void)initializeColumns;
-- (PyImportTable *)py;
+- (PyImportTable *)model;
 
 - (void)updateOneOrTwoSided;
 - (void)bindLockClick:(id)sender;

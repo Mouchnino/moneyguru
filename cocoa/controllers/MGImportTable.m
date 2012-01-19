@@ -8,13 +8,21 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGImportTable.h"
 #import "Utils.h"
+#import "ObjP.h"
 #import "MGConst.h"
 #import "MGImportBindingCell.h"
 
 @implementation MGImportTable
 - (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyImportTable *m = [[PyImportTable alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m tableView:aTableView];
+    [m bindCallback:createCallback(@"TableView", self)];
+    [m release];
     [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGImportEntryPasteboardType]];
     NSTableColumn *boundColumn = [[aTableView tableColumns] objectAtIndex:4];
@@ -59,15 +67,15 @@ http://www.hardcoded.net/licenses/bsd_license
     [[c dataCell] setAlignment:NSRightTextAlignment];
 }
 
-- (PyImportTable *)py
+- (PyImportTable *)model
 {
-    return (PyImportTable *)py;
+    return (PyImportTable *)model;
 }
 
 
 - (void)updateOneOrTwoSided
 {
-    BOOL shouldShow = [[self py] isTwoSided];
+    BOOL shouldShow = [[self model] isTwoSided];
     NSArray *colnames = [NSArray arrayWithObjects:@"date", @"description", @"amount", @"bound", nil];
     for (NSString *colname in colnames) {
         NSTableColumn *col = [[self tableView] tableColumnWithIdentifier:colname];
@@ -83,7 +91,7 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
 */
 - (void)bindLockClick:(id)sender
 {
-    [[self py] unbindRow:[[self tableView] selectedRow]];
+    [[self model] unbindRow:[[self tableView] selectedRow]];
 }
 
 /* Delegate */
@@ -98,11 +106,11 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     // Cocoa's typeselect mechanism can call us with an out-of-range row
-    if (row >= [[self py] numberOfRows])
+    if (row >= [[self model] numberOfRows])
         return;
     NSString *colname = [column identifier];
     if ([colname isEqualToString:@"will_import"]) {
-        BOOL canEdit = [[self py] canEditColumn:@"will_import" atRow:row];
+        BOOL canEdit = n2b([[self model] canEditColumn:@"will_import" atRow:row]);
         [aCell setEnabled:canEdit];
         return;
     }
@@ -125,7 +133,7 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
         NSData* rowData = [pboard dataForType:MGImportEntryPasteboardType];
         NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
         NSInteger source = [rowIndexes firstIndex];
-        if ([[self py] canBindRow:source to:row])
+        if ([[self model] canBindRow:source to:row])
         {
             return NSDragOperationMove;
         }
@@ -140,13 +148,13 @@ didn't work. We have to use [tableView selectedRow] to know which row to unbind.
     NSData* rowData = [pboard dataForType:MGImportEntryPasteboardType];
     NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
     NSInteger source = [rowIndexes firstIndex];
-    [[self py] bindRow:source to:row];
+    [[self model] bindRow:source to:row];
     return YES;
 }
 
 - (BOOL)tableViewHadSpacePressed:(NSTableView *)tableView
 {
-    [[self py] toggleImportStatus];
+    [[self model] toggleImportStatus];
     return YES;
 }
 
