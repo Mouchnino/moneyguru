@@ -23,6 +23,9 @@
 		CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092726145061F3004BD916 /* graph_visibility_on_16.png */; };
 		CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092727145061F3004BD916 /* piechart_visibility_off_16.png */; };
 		CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092728145061F3004BD916 /* piechart_visibility_on_16.png */; };
+		CE0DB09414C8CF9E002F5727 /* PyReport.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB09314C8CF9E002F5727 /* PyReport.m */; };
+		CE0DB09714C8CFE0002F5727 /* PyOutline2.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB09614C8CFE0002F5727 /* PyOutline2.m */; };
+		CE0DB09A14C8D145002F5727 /* HSOutline2.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB09914C8D145002F5727 /* HSOutline2.m */; };
 		CE0E85C60F875C1800549758 /* MGBalancePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C10F875C1800549758 /* MGBalancePrint.m */; };
 		CE0E85C70F875C1800549758 /* MGProfitPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C30F875C1800549758 /* MGProfitPrint.m */; };
 		CE0E85C80F875C1800549758 /* MGSheetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C50F875C1800549758 /* MGSheetPrint.m */; };
@@ -279,7 +282,6 @@
 		0714240D0E2A797800AC27AC /* MGLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLineGraphView.m; sourceTree = "<group>"; };
 		0726B2B20E49E1260059E8A7 /* MGReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGReport.h; sourceTree = "<group>"; };
 		0726B2B30E49E1260059E8A7 /* MGReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGReport.m; sourceTree = "<group>"; };
-		0726B3260E49E7A50059E8A7 /* PyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReport.h; sourceTree = "<group>"; };
 		0761B95B0E547CE800E99B31 /* MGAmountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAmountCell.h; sourceTree = "<group>"; };
 		0761B95C0E547CE800E99B31 /* MGAmountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAmountCell.m; sourceTree = "<group>"; };
 		0795A42B0E4217970053F2FC /* right_arrow_gray_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow_gray_12.png; sourceTree = "<group>"; };
@@ -302,6 +304,12 @@
 		CE092727145061F3004BD916 /* piechart_visibility_off_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_off_16.png; sourceTree = "<group>"; };
 		CE092728145061F3004BD916 /* piechart_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_on_16.png; sourceTree = "<group>"; };
 		CE09272E14506C54004BD916 /* PyBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBaseView.h; sourceTree = "<group>"; };
+		CE0DB09214C8CF9E002F5727 /* PyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReport.h; sourceTree = "<group>"; };
+		CE0DB09314C8CF9E002F5727 /* PyReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyReport.m; sourceTree = "<group>"; };
+		CE0DB09514C8CFE0002F5727 /* PyOutline2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline2.h; sourceTree = "<group>"; };
+		CE0DB09614C8CFE0002F5727 /* PyOutline2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyOutline2.m; sourceTree = "<group>"; };
+		CE0DB09814C8D145002F5727 /* HSOutline2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSOutline2.h; sourceTree = "<group>"; };
+		CE0DB09914C8D145002F5727 /* HSOutline2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSOutline2.m; sourceTree = "<group>"; };
 		CE0E85C00F875C1800549758 /* MGBalancePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBalancePrint.h; path = print/MGBalancePrint.h; sourceTree = "<group>"; };
 		CE0E85C10F875C1800549758 /* MGBalancePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBalancePrint.m; path = print/MGBalancePrint.m; sourceTree = "<group>"; };
 		CE0E85C20F875C1800549758 /* MGProfitPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGProfitPrint.h; path = print/MGProfitPrint.h; sourceTree = "<group>"; };
@@ -663,7 +671,6 @@
 		CEB93C3F0E5C622E006923EB /* income_statement_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = income_statement_48.png; sourceTree = "<group>"; };
 		CEB93C410E5C622E006923EB /* transaction_table_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transaction_table_48.png; sourceTree = "<group>"; };
 		CEBA330811294D09009C782F /* PyGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGUI.h; sourceTree = "<group>"; };
-		CEBA330911294D09009C782F /* PyOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline.h; sourceTree = "<group>"; };
 		CEBA331811294DE5009C782F /* HSGUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSGUIController.h; sourceTree = "<group>"; };
 		CEBA331911294DE5009C782F /* HSGUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSGUIController.m; sourceTree = "<group>"; };
 		CEBA332311294E55009C782F /* HSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSWindowController.h; sourceTree = "<group>"; };
@@ -1157,7 +1164,6 @@
 				CE873A910E21622F004F63E9 /* PyAccountPanel.h */,
 				CE873A970E21622F004F63E9 /* PyGraph.h */,
 				CE873A980E21622F004F63E9 /* PyMainWindow.h */,
-				0726B3260E49E7A50059E8A7 /* PyReport.h */,
 			);
 			path = proxies;
 			sourceTree = "<group>";
@@ -1312,6 +1318,8 @@
 				CEB46FC314C8715D00C56775 /* PyListener2.m */,
 				CEB46FD614C878F100C56775 /* PyTable2.h */,
 				CEB46FD714C878F100C56775 /* PyTable2.m */,
+				CE0DB09514C8CFE0002F5727 /* PyOutline2.h */,
+				CE0DB09614C8CFE0002F5727 /* PyOutline2.m */,
 				CEB46FDA14C8793400C56775 /* PyColumns2.h */,
 				CEB46FDB14C8793400C56775 /* PyColumns2.m */,
 				CEB46FB514C86C3600C56775 /* PyCompletableEdit.h */,
@@ -1334,6 +1342,8 @@
 				CE9F8FA314C8B95300A2CB7B /* PySplitTable.m */,
 				CEE6E4FE14C8CB53002FF89F /* PyFilterBar.h */,
 				CEE6E4FF14C8CB53002FF89F /* PyFilterBar.m */,
+				CE0DB09214C8CF9E002F5727 /* PyReport.h */,
+				CE0DB09314C8CF9E002F5727 /* PyReport.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1364,7 +1374,6 @@
 			children = (
 				CED1DF5D1440B1B6005F82B5 /* PySelectableList.h */,
 				CEBA330811294D09009C782F /* PyGUI.h */,
-				CEBA330911294D09009C782F /* PyOutline.h */,
 				CE647EA01173074C006D28BA /* PyTable.h */,
 				CE1204361441F1DA00933858 /* PyColumns.h */,
 			);
@@ -1406,6 +1415,8 @@
 				CEB46FC614C8760A00C56775 /* HSColumns2.m */,
 				CEB46FC914C8760A00C56775 /* HSTable2.h */,
 				CEB46FCA14C8760A00C56775 /* HSTable2.m */,
+				CE0DB09814C8D145002F5727 /* HSOutline2.h */,
+				CE0DB09914C8D145002F5727 /* HSOutline2.m */,
 			);
 			name = controllers;
 			path = ../cocoalib/controllers;
@@ -1857,6 +1868,9 @@
 				CE9F8FA114C8B53200A2CB7B /* PyImportWindow.m in Sources */,
 				CE9F8FA414C8B95300A2CB7B /* PySplitTable.m in Sources */,
 				CEE6E50114C8CB53002FF89F /* PyFilterBar.m in Sources */,
+				CE0DB09414C8CF9E002F5727 /* PyReport.m in Sources */,
+				CE0DB09714C8CFE0002F5727 /* PyOutline2.m in Sources */,
+				CE0DB09A14C8D145002F5727 /* HSOutline2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

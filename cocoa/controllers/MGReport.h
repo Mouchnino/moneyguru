@@ -7,17 +7,18 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSOutline.h"
+#import "HSOutline2.h"
 #import "PyReport.h"
-#import "HSColumns.h"
+#import "HSColumns2.h"
 
-@interface MGReport : HSOutline {
-    HSColumns *columns;
+@interface MGReport : HSOutline2 {
+    HSColumns2 *columns;
     BOOL toggleExcludedIsEnabled;
 }
 - (PyReport *)py;
 
 - (IBAction)showSelectedAccount:(id)sender;
 - (BOOL)canShowSelectedAccount;
-- (HSColumns *)columns;
+- (HSColumns2 *)columns;
+- (HSOutlineView *)view;
 @end

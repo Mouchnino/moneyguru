@@ -12,7 +12,7 @@ from objp.util import pyref, dontwrap
 from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
     PySelectableList)
-from cocoa.inter2 import PyGUIObject2, GUIObjectView, PyTable2, PyColumns2
+from cocoa.inter2 import PyGUIObject2, GUIObjectView, PyTable2, PyColumns2, PyOutline2, OutlineView
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -262,47 +262,50 @@ class PyGraph(PyChart):
     def yTickMarks(self):
         return self.py.ytickmarks
     
+class ReportView(OutlineView):
+    def refreshExpandedPaths(self): pass
 
-class PyReport(PyOutline):
-    @signature('c@:')
-    def canDeleteSelected(self):
-        return self.py.can_delete()
+class PyReport(PyOutline2):
+    def columns(self) -> pyref:
+        return self.model.columns
+    
+    def canDeleteSelected(self) -> bool:
+        return self.model.can_delete()
     
     def deleteSelected(self):
-        self.py.delete()
+        self.model.delete()
     
-    @signature('c@:@@')
-    def canMovePaths_toPath_(self, source_paths, dest_path):
-        return self.py.can_move(source_paths, dest_path)
+    def canMovePaths_toPath_(self, source_paths: list, dest_path: list) -> bool:
+        return self.model.can_move(source_paths, dest_path)
     
-    def movePaths_toPath_(self, source_paths, dest_path):
-        self.py.move(source_paths, dest_path)
+    def movePaths_toPath_(self, source_paths: list, dest_path: list):
+        self.model.move(source_paths, dest_path)
     
     def showSelectedAccount(self):
-        self.py.show_selected_account()
+        self.model.show_selected_account()
     
-    @signature('c@:')
-    def canShowSelectedAccount(self):
-        return self.py.can_show_selected_account
+    def canShowSelectedAccount(self) -> bool:
+        return self.model.can_show_selected_account
     
     def toggleExcluded(self):
-        self.py.toggle_excluded()
+        self.model.toggle_excluded()
     
-    def expandPath_(self, path):
-        self.py.expand_node(self.py.get_node(path))
+    def expandPath_(self, path: list):
+        self.model.expand_node(self.model.get_node(path))
         
-    def collapsePath_(self, path):
-        self.py.collapse_node(self.py.get_node(path))
+    def collapsePath_(self, path: list):
+        self.model.collapse_node(self.model.get_node(path))
     
-    def expandedPaths(self):
-        return self.py.expanded_paths
+    def expandedPaths(self) -> list:
+        return self.model.expanded_paths
     
-    def selectionAsCSV(self):
-        return self.py.selection_as_csv()
+    def selectionAsCSV(self) -> str:
+        return self.model.selection_as_csv()
     
     # Python --> Cocoa
+    @dontwrap
     def refresh_expanded_paths(self):
-        self.cocoa.refreshExpandedPaths()
+        self.callback.refreshExpandedPaths()
     
 
 class PyPanel(PyGUIObject):
@@ -927,7 +930,7 @@ class PyBaseView(PyGUIContainer):
         return self._mainwindow
 
 class PyNetWorthView(PyBaseView):
-    sheet = subproxy('sheet', 'bsheet', PyReport)
+    sheet = subproxy('sheet', 'bsheet', PyGUIObject)
     nwgraph = subproxy('nwgraph', 'nwgraph', PyGraph)
     apie = subproxy('apie', 'apie', PyChart)
     lpie = subproxy('lpie', 'lpie', PyChart)
@@ -938,7 +941,7 @@ class PyNetWorthView(PyBaseView):
     
 
 class PyProfitView(PyBaseView):
-    sheet = subproxy('sheet', 'istatement', PyReport)
+    sheet = subproxy('sheet', 'istatement', PyGUIObject)
     pgraph = subproxy('pgraph', 'pgraph', PyGraph)
     ipie = subproxy('ipie', 'ipie', PyChart)
     epie = subproxy('epie', 'epie', PyChart)
