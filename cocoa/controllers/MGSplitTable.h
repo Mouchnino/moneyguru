@@ -10,9 +10,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 #import "PySplitTable.h"
 #import "PyPanel.h"
-#import "MGEditableTable.h"
+#import "MGEditableTable2.h"
 
-@interface MGSplitTable : MGEditableTable {}
+@interface MGSplitTable : MGEditableTable2 {}
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
-- (PySplitTable *)py;
+- (PySplitTable *)model;
 @end

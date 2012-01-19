@@ -9,13 +9,22 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGSplitTable.h"
 #import "MGConst.h"
 #import "NSEventAdditions.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 #define MGSplitPasteboardType @"MGSplitPasteboardType"
 
 @implementation MGSplitTable
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PySplitTable *m = [[PySplitTable alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m tableView:aTableView];
+    [m bindCallback:createCallback(@"TableView", self)];
+    [m release];
     [self initializeColumns];
     [aTableView registerForDraggedTypes:[NSArray arrayWithObject:MGSplitPasteboardType]];
     return self;
@@ -41,9 +50,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [[c dataCell] setAlignment:NSRightTextAlignment];
 }
 
-- (PySplitTable *)py
+- (PySplitTable *)model
 {
-    return (PySplitTable *)py;
+    return (PySplitTable *)model;
 }
 
 /* Datasource */
@@ -70,15 +79,15 @@ http://www.hardcoded.net/licenses/bsd_license
     NSPasteboard *pboard = [info draggingPasteboard];
     NSData *rowData = [pboard dataForType:MGSplitPasteboardType];
     NSIndexSet *rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-    [[self py] moveSplitFromRow:[rowIndexes firstIndex] toRow:row];
+    [[self model] moveSplitFromRow:[rowIndexes firstIndex] toRow:row];
     return YES;
 }
 
 /* Delegate */
 - (BOOL)tableView:(NSTableView *)tableView receivedKeyEvent:(NSEvent *)aEvent
 {
-    if ([aEvent isDown] && ([[self tableView] selectedRow] == [[self py] numberOfRows]-1)) {
-        [[self py] add];
+    if ([aEvent isDown] && ([[self tableView] selectedRow] == [[self model] numberOfRows]-1)) {
+        [[self model] add];
         return YES;
     }
     return NO;

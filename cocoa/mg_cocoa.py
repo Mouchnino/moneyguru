@@ -469,15 +469,14 @@ class PyAccountPanel(PyPanel):
         return self.py.can_change_currency
     
 
-class PySplitTable(PyTable):
-    @signature('v@:ii')
-    def moveSplitFromRow_toRow_(self, from_row, to_row):
-        self.py.move_split(from_row, to_row)
+class PySplitTable(PyTable2):
+    def moveSplitFromRow_toRow_(self, from_row: int, to_row: int):
+        self.model.move_split(from_row, to_row)
     
 
 class PyPanelWithTransaction(PyPanel):
     completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
-    splitTable = subproxy('splitTable', 'split_table', PySplitTable)
+    splitTable = subproxy('splitTable', 'split_table', PyGUIObject)
     
     def description(self):
         return self.py.description

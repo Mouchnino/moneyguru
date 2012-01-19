@@ -108,6 +108,7 @@
 		CE9805E511403F5A00CB3693 /* MGLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9805E311403F5A00CB3693 /* MGLookup.m */; };
 		CE9912221136CD1300E006A5 /* MGAccountLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9912211136CD1300E006A5 /* MGAccountLookup.m */; };
 		CE9F8FA114C8B53200A2CB7B /* PyImportWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9F8FA014C8B53200A2CB7B /* PyImportWindow.m */; };
+		CE9F8FA414C8B95300A2CB7B /* PySplitTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9F8FA314C8B95300A2CB7B /* PySplitTable.m */; };
 		CEA6DDCE1101E6830028E125 /* AMButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA11101E6830028E125 /* AMButtonBar.m */; };
 		CEA6DDCF1101E6830028E125 /* AMButtonBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA31101E6830028E125 /* AMButtonBarCell.m */; };
 		CEA6DDD01101E6830028E125 /* AMButtonBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DDA51101E6830028E125 /* AMButtonBarItem.m */; };
@@ -517,7 +518,6 @@
 		CE873A960E21622F004F63E9 /* PyEntryTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryTable.h; sourceTree = "<group>"; };
 		CE873A970E21622F004F63E9 /* PyGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGraph.h; sourceTree = "<group>"; };
 		CE873A980E21622F004F63E9 /* PyMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMainWindow.h; sourceTree = "<group>"; };
-		CE873A9A0E21622F004F63E9 /* PySplitTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySplitTable.h; sourceTree = "<group>"; };
 		CE873A9B0E21622F004F63E9 /* PyTransactionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPanel.h; sourceTree = "<group>"; };
 		CE873A9F0E21622F004F63E9 /* MGGradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGradientBar.h; sourceTree = "<group>"; };
 		CE873AA00E21622F004F63E9 /* MGGradientBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGradientBar.m; sourceTree = "<group>"; };
@@ -540,6 +540,8 @@
 		CE9912211136CD1300E006A5 /* MGAccountLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountLookup.m; sourceTree = "<group>"; };
 		CE9F8F9F14C8B53200A2CB7B /* PyImportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyImportWindow.h; sourceTree = "<group>"; };
 		CE9F8FA014C8B53200A2CB7B /* PyImportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyImportWindow.m; sourceTree = "<group>"; };
+		CE9F8FA214C8B95300A2CB7B /* PySplitTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySplitTable.h; sourceTree = "<group>"; };
+		CE9F8FA314C8B95300A2CB7B /* PySplitTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PySplitTable.m; sourceTree = "<group>"; };
 		CEA25A6B0E2776BD0067AE58 /* PyTransactionTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionTable.h; sourceTree = "<group>"; };
 		CEA6DDA01101E6830028E125 /* AMButtonBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMButtonBar.h; sourceTree = "<group>"; };
 		CEA6DDA11101E6830028E125 /* AMButtonBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMButtonBar.m; sourceTree = "<group>"; };
@@ -1147,7 +1149,6 @@
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
 				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
 				CE7311D41040361C00DB8B30 /* PyBudgetTable.h */,
-				CE873A9A0E21622F004F63E9 /* PySplitTable.h */,
 				CEA25A6B0E2776BD0067AE58 /* PyTransactionTable.h */,
 				CE873A960E21622F004F63E9 /* PyEntryTable.h */,
 				CE14AF7B0E6FCACA00E75B76 /* PyChart.h */,
@@ -1328,6 +1329,8 @@
 				CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */,
 				CE9F8F9F14C8B53200A2CB7B /* PyImportWindow.h */,
 				CE9F8FA014C8B53200A2CB7B /* PyImportWindow.m */,
+				CE9F8FA214C8B95300A2CB7B /* PySplitTable.h */,
+				CE9F8FA314C8B95300A2CB7B /* PySplitTable.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1849,6 +1852,7 @@
 				CEF9702914C8B22500EDD9D7 /* PySplitPrint.m in Sources */,
 				CEF9702A14C8B22500EDD9D7 /* PyTransactionPrint.m in Sources */,
 				CE9F8FA114C8B53200A2CB7B /* PyImportWindow.m in Sources */,
+				CE9F8FA414C8B95300A2CB7B /* PySplitTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

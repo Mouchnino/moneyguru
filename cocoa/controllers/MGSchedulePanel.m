@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     self = [super initWithNibName:@"SchedulePanel" py:[[aParent py] schedulePanel] parent:aParent];
-    splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] view:splitTableView];
+    splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] tableView:splitTableView];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
     customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
     return self;
@@ -93,12 +93,12 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Actions */
 - (IBAction)addSplit:(id)sender
 {
-    [[splitTable py] add];
+    [[splitTable model] add];
 }
 
 - (IBAction)deleteSplit:(id)sender
 {
-    [[splitTable py] deleteSelectedRows];
+    [[splitTable model] deleteSelectedRows];
 }
 
 /* Python --> Cocoa */

@@ -186,11 +186,11 @@ def build_cocoa_bridging_interfaces():
     from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, TableView, PyColumns2,
         ColumnsView)
     from mg_cocoa import (PyListener2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
-        CSVImportOptionsView, PyImportTable, PyLookup, LookupView, PyDateRangeSelector,
+        CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView, PyDateRangeSelector,
         DateRangeSelectorView, PySearchField, PyImportWindow, ImportWindowView)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyCompletableEdit, PyDateWidget,
-        PyCSVImportOptions, PyImportTable, PyLookup, PyDateRangeSelector, PySearchField,
+        PyCSVImportOptions, PyImportTable, PySplitTable, PyLookup, PyDateRangeSelector, PySearchField,
         PyImportWindow]
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
