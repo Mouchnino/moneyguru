@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    scheduleTable = [[MGScheduleTable alloc] initWithPy:[[self py] table] view:tableView];
+    scheduleTable = [[MGScheduleTable alloc] initWithPy:[[self py] table] tableView:tableView];
     return self;
 }
         

@@ -380,14 +380,14 @@ class PyTransactionTable(PyTableWithDate):
         self.py.show_to_account()
     
 
-class PyScheduleTable(PyTable):
+class PyScheduleTable(PyTable2):
     def editItem(self):
-        self.py.edit()
+        self.model.edit()
     
 
-class PyBudgetTable(PyTable):
+class PyBudgetTable(PyTable2):
     def editItem(self):
-        self.py.edit()
+        self.model.edit()
     
 
 class PyGeneralLedgerTable(PyTableWithDate):
@@ -987,10 +987,10 @@ class PyAccountView(PyBaseView):
     
 
 class PyBudgetView(PyBaseView):
-    table = subproxy('table', 'table', PyBudgetTable)
+    table = subproxy('table', 'table', PyTable)
 
 class PyScheduleView(PyBaseView):
-    table = subproxy('table', 'table', PyScheduleTable)
+    table = subproxy('table', 'table', PyTable)
 
 class PyCashculatorView(PyBaseView):
     table = subproxy('table', 'atable', PyTable)

@@ -241,6 +241,8 @@
 		CEEDCEE910F75FF9003BC1BA /* MGTransactionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEDCEE810F75FF9003BC1BA /* MGTransactionView.m */; };
 		CEEED1CF0E3F5FD100BBA154 /* MGReconciliationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */; };
 		CEEED1D50E3F763100BBA154 /* check_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEED1D40E3F763100BBA154 /* check_16.png */; };
+		CEF10B2F14C8D2B200D4CBD0 /* PyBudgetTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF10B2C14C8D2B200D4CBD0 /* PyBudgetTable.m */; };
+		CEF10B3014C8D2B200D4CBD0 /* PyScheduleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF10B2E14C8D2B200D4CBD0 /* PyScheduleTable.m */; };
 		CEF4C5060F22274B004FDC9D /* popup_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF4C5050F22274B004FDC9D /* popup_arrows.png */; };
 		CEF5E63911DCCEE80048C9DF /* balance_sheet_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */; };
 		CEF5E63A11DCCEE80048C9DF /* entry_table_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF5E63511DCCEE80048C9DF /* entry_table_16.png */; };
@@ -333,7 +335,6 @@
 		CE1204361441F1DA00933858 /* PyColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyColumns.h; sourceTree = "<group>"; };
 		CE1453440E4AFE1D009517B6 /* MGImportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportWindow.h; sourceTree = "<group>"; };
 		CE1453450E4AFE1D009517B6 /* MGImportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportWindow.m; sourceTree = "<group>"; };
-		CE14535C0E4B0A99009517B6 /* PyImportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyImportWindow.h; path = proxies/PyImportWindow.h; sourceTree = SOURCE_ROOT; };
 		CE14537E0E4B40B3009517B6 /* MGEditableTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEditableTable.h; sourceTree = "<group>"; };
 		CE14537F0E4B40B3009517B6 /* MGEditableTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEditableTable.m; sourceTree = "<group>"; };
 		CE14AF770E6FB3B500E75B76 /* MGPieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPieChartView.h; sourceTree = "<group>"; };
@@ -466,7 +467,6 @@
 		CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGOutlinePrint.m; path = print/MGOutlinePrint.m; sourceTree = "<group>"; };
 		CE720A5D0F84CB39005C4D5B /* MGTablePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTablePrint.h; path = print/MGTablePrint.h; sourceTree = "<group>"; };
 		CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTablePrint.m; path = print/MGTablePrint.m; sourceTree = "<group>"; };
-		CE7311D41040361C00DB8B30 /* PyBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetTable.h; sourceTree = "<group>"; };
 		CE74544512082C5B003A2794 /* cashculator_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_16.png; sourceTree = "<group>"; };
 		CE74808A11995EDF00D59C50 /* PyEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEmptyView.h; sourceTree = "<group>"; };
 		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
@@ -620,7 +620,6 @@
 		CEAFD2580E518B9B00A1E707 /* MGImportBindingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportBindingCell.m; sourceTree = "<group>"; };
 		CEB1E0B21031A386001FC4B4 /* budget_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_48.png; sourceTree = "<group>"; };
 		CEB1E0B31031A386001FC4B4 /* schedules_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedules_48.png; sourceTree = "<group>"; };
-		CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyScheduleTable.h; sourceTree = "<group>"; };
 		CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVImportOptions.m; sourceTree = "<group>"; };
 		CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBaseView.h; sourceTree = "<group>"; };
@@ -812,6 +811,10 @@
 		CEEED1CD0E3F5FD100BBA154 /* MGReconciliationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGReconciliationCell.h; sourceTree = "<group>"; };
 		CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGReconciliationCell.m; sourceTree = "<group>"; };
 		CEEED1D40E3F763100BBA154 /* check_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_16.png; sourceTree = "<group>"; };
+		CEF10B2B14C8D2B200D4CBD0 /* PyBudgetTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetTable.h; sourceTree = "<group>"; };
+		CEF10B2C14C8D2B200D4CBD0 /* PyBudgetTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyBudgetTable.m; sourceTree = "<group>"; };
+		CEF10B2D14C8D2B200D4CBD0 /* PyScheduleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyScheduleTable.h; sourceTree = "<group>"; };
+		CEF10B2E14C8D2B200D4CBD0 /* PyScheduleTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyScheduleTable.m; sourceTree = "<group>"; };
 		CEF4C5050F22274B004FDC9D /* popup_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popup_arrows.png; sourceTree = "<group>"; };
 		CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balance_sheet_16.png; sourceTree = "<group>"; };
 		CEF5E63511DCCEE80048C9DF /* entry_table_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = entry_table_16.png; sourceTree = "<group>"; };
@@ -1098,7 +1101,6 @@
 				CE6C6FF00E74324B003B5062 /* MGChart.m */,
 				CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */,
 				CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */,
-				CE14535C0E4B0A99009517B6 /* PyImportWindow.h */,
 				CE1453440E4AFE1D009517B6 /* MGImportWindow.h */,
 				CE1453450E4AFE1D009517B6 /* MGImportWindow.m */,
 				CE873A740E21622F004F63E9 /* MGAppDelegate.h */,
@@ -1156,8 +1158,6 @@
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
 				CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */,
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
-				CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */,
-				CE7311D41040361C00DB8B30 /* PyBudgetTable.h */,
 				CEA25A6B0E2776BD0067AE58 /* PyTransactionTable.h */,
 				CE873A960E21622F004F63E9 /* PyEntryTable.h */,
 				CE14AF7B0E6FCACA00E75B76 /* PyChart.h */,
@@ -1344,6 +1344,10 @@
 				CEE6E4FF14C8CB53002FF89F /* PyFilterBar.m */,
 				CE0DB09214C8CF9E002F5727 /* PyReport.h */,
 				CE0DB09314C8CF9E002F5727 /* PyReport.m */,
+				CEF10B2B14C8D2B200D4CBD0 /* PyBudgetTable.h */,
+				CEF10B2C14C8D2B200D4CBD0 /* PyBudgetTable.m */,
+				CEF10B2D14C8D2B200D4CBD0 /* PyScheduleTable.h */,
+				CEF10B2E14C8D2B200D4CBD0 /* PyScheduleTable.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1871,6 +1875,8 @@
 				CE0DB09414C8CF9E002F5727 /* PyReport.m in Sources */,
 				CE0DB09714C8CFE0002F5727 /* PyOutline2.m in Sources */,
 				CE0DB09A14C8D145002F5727 /* HSOutline2.m in Sources */,
+				CEF10B2F14C8D2B200D4CBD0 /* PyBudgetTable.m in Sources */,
+				CEF10B3014C8D2B200D4CBD0 /* PyScheduleTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

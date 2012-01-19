@@ -9,11 +9,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGScheduleTable.h"
 #import "MGConst.h"
 #import "MGTableView.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGScheduleTable
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyScheduleTable *m = [[PyScheduleTable alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m tableView:aTableView];
+    [m bindCallback:createCallback(@"TableView", self)];
+    [m release];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
     return self;
@@ -42,26 +51,26 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Overrides */
-- (PyScheduleTable *)py
+- (PyScheduleTable *)model
 {
-    return (PyScheduleTable *)py;
+    return (PyScheduleTable *)model;
 }
 
 /* Delegate */
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
-    [[self py] deleteSelectedRows];
+    [[self model] deleteSelectedRows];
     return YES;
 }
 
 - (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
 {
-    [[self py] editItem];
+    [[self model] editItem];
     return YES;
 }
 
 - (void)tableViewWasDoubleClicked:(MGTableView *)tableView
 {
-    [[self py] editItem];
+    [[self model] editItem];
 }
 @end

@@ -8,9 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyBudgetTable.h"
-#import "MGTable.h"
+#import "MGTable2.h"
 
-@interface MGBudgetTable : MGTable {}
+@interface MGBudgetTable : MGTable2 {}
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
-- (PyBudgetTable *)py;
+- (PyBudgetTable *)model;
 @end

@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithPy:aPy];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    budgetTable = [[MGBudgetTable alloc] initWithPy:[[self py] table] view:tableView];
+    budgetTable = [[MGBudgetTable alloc] initWithPy:[[self py] table] tableView:tableView];
     return self;
 }
         

@@ -8,13 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyScheduleTable.h"
-#import "MGTable.h"
+#import "MGTable2.h"
 
-@interface MGScheduleTable : MGTable
-{
-}
+@interface MGScheduleTable : MGTable2 {}
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
-
-/* Public */
-- (PyScheduleTable *)py;
+- (PyScheduleTable *)model;
 @end

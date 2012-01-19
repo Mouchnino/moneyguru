@@ -8,11 +8,20 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGBudgetTable.h"
 #import "MGTableView.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGBudgetTable
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyBudgetTable *m = [[PyBudgetTable alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m tableView:aTableView];
+    [m bindCallback:createCallback(@"TableView", self)];
+    [m release];
     [self initializeColumns];
     [aTableView setSortDescriptors:[NSArray array]];
     return self;
@@ -38,26 +47,26 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Overrides */
-- (PyBudgetTable *)py
+- (PyBudgetTable *)model
 {
-    return (PyBudgetTable *)py;
+    return (PyBudgetTable *)model;
 }
 
 /* Delegate */
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
-    [[self py] deleteSelectedRows];
+    [[self model] deleteSelectedRows];
     return YES;
 }
 
 - (BOOL)tableViewHadReturnPressed:(NSTableView *)tableView
 {
-    [[self py] editItem];
+    [[self model] editItem];
     return YES;
 }
 
 - (void)tableViewWasDoubleClicked:(MGTableView *)tableView
 {
-    [[self py] editItem];
+    [[self model] editItem];
 }
 @end
