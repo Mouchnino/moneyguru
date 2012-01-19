@@ -7,11 +7,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSWindowController.h"
 #import "MGDocument.h"
 #import "PyCSVImportOptions.h"
 
-@interface MGCSVImportOptions : HSWindowController
+@interface MGCSVImportOptions : NSWindowController
 {
     IBOutlet NSTableView *csvDataTable;
     IBOutlet NSMenu *columnMenu;
@@ -21,9 +20,9 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTextField *delimiterTextField;
     
     NSInteger lastClickedColumnIndex;
+    PyCSVImportOptions *model;
 }
 - (id)initWithDocument:(MGDocument *)aDocument;
-- (PyCSVImportOptions *)py;
 
 /* Actions */
 - (IBAction)cancel:(id)sender;

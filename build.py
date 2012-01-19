@@ -38,18 +38,17 @@ def parse_args():
     return args
 
 def build_cocoa(dev):
+    print("Building the cocoa layer")
+    if not op.exists('build/py'):
+        os.mkdir('build/py')
     build_cocoa_proxy_module()
     build_cocoa_bridging_interfaces()
-    print("Building the cocoa layer")
     from pluginbuilder import copy_embeddable_python_dylib, get_python_header_folder, collect_dependencies
     copy_embeddable_python_dylib('build')
     symlink(get_python_header_folder(), 'build/PythonHeaders')
-    if not op.exists('build/py'):
-        os.mkdir('build/py')
     tocopy = ['core', 'hscommon', 'cocoalib/cocoa']
     copy_packages(tocopy, 'build')
     copy('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
-    copy('cocoa/CocoaViews.so', 'build/CocoaViews.so')
     os.chdir('build')
     collect_dependencies('mg_cocoa.py', 'py', excludes=['PyQt4'])
     os.chdir('..')
@@ -185,14 +184,15 @@ def build_cocoa_bridging_interfaces():
     add_to_pythonpath('cocoa')
     add_to_pythonpath('cocoalib')
     from cocoa.inter2 import (PyGUIObject2, GUIObjectView)
-    from mg_cocoa import PyCompletableEdit, PyDateWidget
-    allclasses = [PyGUIObject2, PyCompletableEdit, PyDateWidget]
+    from mg_cocoa import (PyListener2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
+        CSVImportOptionsView)
+    allclasses = [PyGUIObject2, PyListener2, PyCompletableEdit, PyDateWidget, PyCSVImportOptions]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
-    allclasses = [GUIObjectView]
+    allclasses = [GUIObjectView, CSVImportOptionsView]
     clsspecs = [objp.o2p.spec_from_python_class(class_) for class_ in allclasses]
     objp.p2o.generate_python_proxy_code_from_clsspec(clsspecs, 'build/CocoaViews.m')
-    build_cocoa_ext('CocoaViews', 'cocoa', ['build/CocoaViews.m', 'build/ObjP.m'])
+    build_cocoa_ext('CocoaViews', 'build/py', ['build/CocoaViews.m', 'build/ObjP.m'])
 
 def build_normal(ui, dev):
     build_help(dev)

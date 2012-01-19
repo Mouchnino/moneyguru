@@ -9,19 +9,28 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGCSVImportOptions.h"
 #import "MGCSVLayoutNameDialog.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGCSVImportOptions
 - (id)initWithDocument:(MGDocument *)aDocument
 {
-    self = [super initWithNibName:@"CSVImportOptions" pyClassName:@"PyCSVImportOptions" pyParent:[aDocument py]];
+    self = [super initWithWindowNibName:@"CSVImportOptions"];
     [self window];
-    [encodingSelector addItemsWithTitles:[[self py] supportedEncodings]];
+    PyObject *pDocument = getHackedPyRef([aDocument py]);
+    model = [[PyCSVImportOptions alloc] initWithDocument:pDocument];
+    OBJP_LOCKGIL;
+    Py_DECREF(pDocument);
+    OBJP_UNLOCKGIL;
+    [model bindCallback:createCallback(@"CSVImportOptionsView", self)];
+    [encodingSelector addItemsWithTitles:[model supportedEncodings]];
+    [model connect];
     return self;
 }
 
-- (PyCSVImportOptions *)py
+- (void)dealloc
 {
-    return (PyCSVImportOptions *)py;
+    [model release];
+    [super dealloc];
 }
 
 /* Actions */
@@ -33,61 +42,61 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)continueImport:(id)sender
 {
-    [[self py] continueImport];
+    [model continueImport];
 }
 
 - (IBAction)deleteSelectedLayout:(id)sender
 {
-    [[self py] deleteSelectedLayout];
+    [model deleteSelectedLayout];
 }
 
 - (IBAction)newLayout:(id)sender
 {
     NSString *layoutName = [MGCSVLayoutNameDialog askForLayoutName];
     if (layoutName != nil)
-        [[self py] newLayout:layoutName];
+        [model newLayout:layoutName];
     else
-        [layoutSelector selectItemWithTitle:[[self py] selectedLayoutName]];
+        [layoutSelector selectItemWithTitle:[model selectedLayoutName]];
 }
 
 - (IBAction)renameSelectedLayout:(id)sender
 {
-    NSString *layoutName = [MGCSVLayoutNameDialog askForLayoutNameBasedOnOldName:[[self py] selectedLayoutName]];
+    NSString *layoutName = [MGCSVLayoutNameDialog askForLayoutNameBasedOnOldName:[model selectedLayoutName]];
     if (layoutName != nil)
-        [[self py] renameSelectedLayout:layoutName];
+        [model renameSelectedLayout:layoutName];
     else
-        [layoutSelector selectItemWithTitle:[[self py] selectedLayoutName]];
+        [layoutSelector selectItemWithTitle:[model selectedLayoutName]];
 }
 
 - (IBAction)rescan:(id)sender
 {
-    [[self py] setFieldSeparator:[delimiterTextField stringValue]];
-    [[self py] setEncodingIndex:[encodingSelector indexOfSelectedItem]];
-    [[self py] rescan];
+    [model setFieldSeparator:[delimiterTextField stringValue]];
+    [model setEncodingIndex:[encodingSelector indexOfSelectedItem]];
+    [model rescan];
 }
 
 - (IBAction)selectLayout:(id)sender
 {
     NSMenuItem *item = sender;
     if ([layoutSelector indexOfItem:item] == 0) // Default
-        [[self py] selectLayout:nil];
+        [model selectLayout:nil];
     else
-        [[self py] selectLayout:[item title]];
+        [model selectLayout:[item title]];
 }
 
 - (IBAction)selectTarget:(id)sender
 {
-    [[self py] setSelectedTargetIndex:[targetSelector indexOfSelectedItem]];
+    [model setSelectedTargetIndex:[targetSelector indexOfSelectedItem]];
 }
 
 - (IBAction)setColumnField:(id)sender
 {
-    [[self py] setColumn:lastClickedColumnIndex-1 fieldForTag:[sender tag]];
+    [model setColumn:lastClickedColumnIndex-1 fieldForTag:[sender tag]];
 }
 
 - (IBAction)toggleLineExclusion:(id)sender
 {
-    [[self py] toggleLineExclusion:[csvDataTable selectedRow]];
+    [model toggleLineExclusion:[csvDataTable selectedRow]];
 }
 
 /* Public */
@@ -101,16 +110,16 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [[self py] numberOfLines];
+    return [model numberOfLines];
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
     id identifier = [tableColumn identifier];
     if ([@"import" isEqualTo:identifier])
-        return i2n([[self py] lineIsImported:rowIndex]);
+        return i2n([model lineIsImported:rowIndex]);
     else
-        return [[self py] valueForRow:rowIndex column:n2i(identifier)];
+        return [model valueForRow:rowIndex column:n2i(identifier)];
 }
 
 /* Delegate */
@@ -128,7 +137,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     for (int i=1; i<[[csvDataTable tableColumns] count]; i++)
     {
-        NSString *columnName = [[self py] columnNameAtIndex:i-1];
+        NSString *columnName = [model columnNameAtIndex:i-1];
         NSTableColumn *column = [[csvDataTable tableColumns] objectAtIndex:i];
         [[column headerCell] setStringValue:columnName];
     }
@@ -138,7 +147,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)refreshColumns
 {
-    NSInteger columnCount = [[self py] numberOfColumns] + 1; // we have to count the "import" column
+    NSInteger columnCount = [model numberOfColumns] + 1; // we have to count the "import" column
     while ([[csvDataTable tableColumns] count] > columnCount)
         [csvDataTable removeTableColumn:[[csvDataTable tableColumns] objectAtIndex:columnCount]];
     while ([[csvDataTable tableColumns] count] < columnCount)
@@ -160,7 +169,7 @@ http://www.hardcoded.net/licenses/bsd_license
     // First, remove all menu items until the first separator item
     while (![[layoutSelector itemAtIndex:0] isSeparatorItem])
         [layoutSelector removeItemAtIndex:0];
-    NSArray *layoutNames = [[self py] layoutNames];
+    NSArray *layoutNames = [model layoutNames];
     for (int i=0; i<[layoutNames count]; i++)
     {
         NSString *title = [layoutNames objectAtIndex:i];
@@ -168,20 +177,20 @@ http://www.hardcoded.net/licenses/bsd_license
         [item setTarget:self];
         [[layoutSelector menu] insertItem:item atIndex:i];
     }   
-    [layoutSelector selectItemWithTitle:[[self py] selectedLayoutName]];
+    [layoutSelector selectItemWithTitle:[model selectedLayoutName]];
 }
 
 - (void)refreshLines
 {
     [csvDataTable reloadData];
-    [delimiterTextField setStringValue:[[self py] fieldSeparator]];
+    [delimiterTextField setStringValue:[model fieldSeparator]];
 }
 
 - (void)refreshTargets
 {
     [targetSelector removeAllItems];
-    [targetSelector addItemsWithTitles:[[self py] targetAccountNames]];
-    [targetSelector selectItemAtIndex:[[self py] selectedTargetIndex]];
+    [targetSelector addItemsWithTitles:[model targetAccountNames]];
+    [targetSelector selectItemAtIndex:[model selectedTargetIndex]];
 }
 
 - (void)show

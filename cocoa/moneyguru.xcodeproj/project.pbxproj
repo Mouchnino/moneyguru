@@ -163,6 +163,8 @@
 		CEB46FBA14C86C3700C56775 /* PyCompletableEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */; };
 		CEB46FBB14C86C3700C56775 /* PyGUIObject2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FB814C86C3600C56775 /* PyGUIObject2.m */; };
 		CEB46FBE14C86C8D00C56775 /* PyDateWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FBD14C86C8D00C56775 /* PyDateWidget.m */; };
+		CEB46FC114C8712E00C56775 /* PyCSVImportOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FC014C8712E00C56775 /* PyCSVImportOptions.m */; };
+		CEB46FC414C8715D00C56775 /* PyListener2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB46FC314C8715D00C56775 /* PyListener2.m */; };
 		CEB6020112393080002218CF /* GeneralLedger.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB601FF12393080002218CF /* GeneralLedger.xib */; };
 		CEB6020A123930BF002218CF /* MGGeneralLedgerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60207123930BF002218CF /* MGGeneralLedgerTable.m */; };
 		CEB6020B123930BF002218CF /* MGGeneralLedgerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB60209123930BF002218CF /* MGGeneralLedgerView.m */; };
@@ -596,7 +598,6 @@
 		CEB1E0B21031A386001FC4B4 /* budget_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_48.png; sourceTree = "<group>"; };
 		CEB1E0B31031A386001FC4B4 /* schedules_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedules_48.png; sourceTree = "<group>"; };
 		CEB1E0BB1031C396001FC4B4 /* PyScheduleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyScheduleTable.h; sourceTree = "<group>"; };
-		CEB2FA170F223C3400A09E4C /* PyCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA180F223C4100A09E4C /* MGCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVImportOptions.h; sourceTree = "<group>"; };
 		CEB2FA190F223C4100A09E4C /* MGCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVImportOptions.m; sourceTree = "<group>"; };
 		CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBaseView.h; sourceTree = "<group>"; };
@@ -609,6 +610,10 @@
 		CEB46FB814C86C3600C56775 /* PyGUIObject2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyGUIObject2.m; sourceTree = "<group>"; };
 		CEB46FBC14C86C8D00C56775 /* PyDateWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateWidget.h; sourceTree = "<group>"; };
 		CEB46FBD14C86C8D00C56775 /* PyDateWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDateWidget.m; sourceTree = "<group>"; };
+		CEB46FBF14C8712E00C56775 /* PyCSVImportOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCSVImportOptions.h; sourceTree = "<group>"; };
+		CEB46FC014C8712E00C56775 /* PyCSVImportOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyCSVImportOptions.m; sourceTree = "<group>"; };
+		CEB46FC214C8715D00C56775 /* PyListener2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyListener2.h; sourceTree = "<group>"; };
+		CEB46FC314C8715D00C56775 /* PyListener2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyListener2.m; sourceTree = "<group>"; };
 		CEB6020012393080002218CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralLedger.xib; sourceTree = "<group>"; };
 		CEB60203123930A1002218CF /* PyGeneralLedgerTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyGeneralLedgerTable.h; path = proxies/PyGeneralLedgerTable.h; sourceTree = SOURCE_ROOT; };
 		CEB60204123930A1002218CF /* PyGeneralLedgerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyGeneralLedgerView.h; path = proxies/PyGeneralLedgerView.h; sourceTree = SOURCE_ROOT; };
@@ -1108,7 +1113,6 @@
 				CEE2233D0F893B1600E7FE12 /* PyEntryPrint.h */,
 				CE00BDC20F890A9E00EB18BE /* PyTransactionPrint.h */,
 				CEC1C8D00F88AB5600953BDB /* PyPrintView.h */,
-				CEB2FA170F223C3400A09E4C /* PyCSVImportOptions.h */,
 				CE14AF7B0E6FCACA00E75B76 /* PyChart.h */,
 				CE873A910E21622F004F63E9 /* PyAccountPanel.h */,
 				CE150D89144B30AD00E82CF5 /* PyFilterBar.h */,
@@ -1264,12 +1268,16 @@
 			children = (
 				CEB46FB314C86C3600C56775 /* ObjP.h */,
 				CEB46FB414C86C3600C56775 /* ObjP.m */,
-				CEB46FB514C86C3600C56775 /* PyCompletableEdit.h */,
-				CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */,
 				CEB46FB714C86C3600C56775 /* PyGUIObject2.h */,
 				CEB46FB814C86C3600C56775 /* PyGUIObject2.m */,
+				CEB46FC214C8715D00C56775 /* PyListener2.h */,
+				CEB46FC314C8715D00C56775 /* PyListener2.m */,
+				CEB46FB514C86C3600C56775 /* PyCompletableEdit.h */,
+				CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */,
 				CEB46FBC14C86C8D00C56775 /* PyDateWidget.h */,
 				CEB46FBD14C86C8D00C56775 /* PyDateWidget.m */,
+				CEB46FBF14C8712E00C56775 /* PyCSVImportOptions.h */,
+				CEB46FC014C8712E00C56775 /* PyCSVImportOptions.m */,
 			);
 			path = autogen;
 			sourceTree = "<group>";
@@ -1759,6 +1767,8 @@
 				CEB46FBA14C86C3700C56775 /* PyCompletableEdit.m in Sources */,
 				CEB46FBB14C86C3700C56775 /* PyGUIObject2.m in Sources */,
 				CEB46FBE14C86C8D00C56775 /* PyDateWidget.m in Sources */,
+				CEB46FC114C8712E00C56775 /* PyCSVImportOptions.m in Sources */,
+				CEB46FC414C8715D00C56775 /* PyListener2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,12 +7,12 @@
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
 import objc # import needed for dependency collection to work well
-from objp.util import pyref
+from objp.util import pyref, dontwrap
 
 from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
     PySelectableList)
-from cocoa.inter2 import PyGUIObject2
+from cocoa.inter2 import PyGUIObject2, GUIObjectView
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -192,14 +192,18 @@ class PyListener(PyGUIObject):
         self.disconnect()
         PyGUIObject.free(self)
     
+class PyListener2(PyGUIObject2):
+    def connect(self):
+        self.model.connect()
+    
+    def disconnect(self):
+        self.model.disconnect()
+    
 
 class PyGUIContainer(PyListener):
     def setChildren_(self, children):
         self.py.set_children([child.py for child in children])
     
-
-class PyWindowController(PyListener):
-    pass
 
 class PyTableWithDate(PyTable):
     @signature('c@:')
@@ -1240,110 +1244,120 @@ class PyImportWindow(PyListener):
         self.cocoa.updateSelectedPane()
     
 
-class PyCSVImportOptions(PyWindowController):
-    py_class = CSVOptions
+class CSVImportOptionsView(GUIObjectView):
+    def refreshColumns(self): pass
+    def refreshColumnsName(self): pass
+    def refreshLayoutMenu(self): pass
+    def refreshLines(self): pass
+    def refreshTargets(self): pass
+    def show(self): pass
+    def hide(self): pass
+    def showMessage_(self, msg: str): pass
+
+class PyCSVImportOptions(PyListener2):
+    def __init__(self, document: pyref):
+        model = CSVOptions(None, document)
+        PyListener2.__init__(self, model)
     
-    @signature('@@:i')
-    def columnNameAtIndex_(self, index):
-        return self.py.get_column_name(index)
+    def columnNameAtIndex_(self, index: int) -> str:
+        return self.model.get_column_name(index)
     
     def continueImport(self):
-        self.py.continue_import()
+        self.model.continue_import()
     
     def deleteSelectedLayout(self):
-        self.py.delete_selected_layout()
+        self.model.delete_selected_layout()
     
-    def fieldSeparator(self):
-        return self.py.field_separator
+    def fieldSeparator(self) -> str:
+        return self.model.field_separator
     
-    def layoutNames(self):
-        return self.py.layout_names
+    def layoutNames(self) -> list:
+        return self.model.layout_names
     
-    @signature('c@:i')
-    def lineIsImported_(self, index):
-        return not self.py.line_is_excluded(index)
+    def lineIsImported_(self, index: int) -> bool:
+        return not self.model.line_is_excluded(index)
     
-    @signature('i@:')
-    def numberOfColumns(self):
-        return len(self.py.columns)
+    def numberOfColumns(self) -> int:
+        return len(self.model.columns)
     
-    @signature('i@:')
-    def numberOfLines(self):
-        return len(self.py.lines)
+    def numberOfLines(self) -> int:
+        return len(self.model.lines)
     
-    def newLayout_(self, name):
-        self.py.new_layout(name)
+    def newLayout_(self, name: str):
+        self.model.new_layout(name)
     
-    def renameSelectedLayout_(self, newname):
-        self.py.rename_selected_layout(newname)
+    def renameSelectedLayout_(self, newname: str):
+        self.model.rename_selected_layout(newname)
     
     def rescan(self):
-        self.py.rescan()
+        self.model.rescan()
     
-    def selectedLayoutName(self):
-        return self.py.layout.name
+    def selectedLayoutName(self) -> str:
+        return self.model.layout.name
     
-    @signature('i@:')
-    def selectedTargetIndex(self):
-        return self.py.selected_target_index
+    def selectedTargetIndex(self) -> int:
+        return self.model.selected_target_index
     
-    def selectLayout_(self, name):
-        self.py.select_layout(name)
+    def selectLayout_(self, name: str):
+        self.model.select_layout(name)
     
-    @signature('v@:ii')
-    def setColumn_fieldForTag_(self, index, tag):
+    def setColumn_fieldForTag_(self, index: int, tag: int):
         field = CSV_FIELD_ORDER[tag]
-        self.py.set_column_field(index, field)
+        self.model.set_column_field(index, field)
     
-    @signature('v@:i')
-    def setEncodingIndex_(self, index):
-        self.py.encoding_index = index
+    def setEncodingIndex_(self, index: int):
+        self.model.encoding_index = index
     
-    def setFieldSeparator_(self, fieldSep):
-        self.py.field_separator = fieldSep
+    def setFieldSeparator_(self, fieldSep: str):
+        self.model.field_separator = fieldSep
     
-    @signature('v@:i')
-    def setSelectedTargetIndex_(self, index):
-        self.py.selected_target_index = index
+    def setSelectedTargetIndex_(self, index: int):
+        self.model.selected_target_index = index
     
-    def supportedEncodings(self):
+    def supportedEncodings(self) -> list:
         return CSV_SUPPORTED_ENCODINGS
     
-    def targetAccountNames(self):
-        return self.py.target_account_names
+    def targetAccountNames(self) -> list:
+        return self.model.target_account_names
     
-    @signature('v@:i')
-    def toggleLineExclusion_(self, index):
-        self.py.set_line_excluded(index, not self.py.line_is_excluded(index))
+    def toggleLineExclusion_(self, index: int):
+        self.model.set_line_excluded(index, not self.model.line_is_excluded(index))
     
-    @signature('@@:ii')
-    def valueForRow_column_(self, row, column):
-        return self.py.lines[row][column]
+    def valueForRow_column_(self, row: int, column: int) -> str:
+        return self.model.lines[row][column]
     
     #--- Python -> Cocoa
+    @dontwrap
     def refresh_columns(self):
-        self.cocoa.refreshColumns()
+        self.callback.refreshColumns()
     
+    @dontwrap
     def refresh_columns_name(self):
-        self.cocoa.refreshColumnsName()
+        self.callback.refreshColumnsName()
     
+    @dontwrap
     def refresh_layout_menu(self):
-        self.cocoa.refreshLayoutMenu()
+        self.callback.refreshLayoutMenu()
     
+    @dontwrap
     def refresh_lines(self):
-        self.cocoa.refreshLines()
+        self.callback.refreshLines()
     
+    @dontwrap
     def refresh_targets(self):
-        self.cocoa.refreshTargets()
+        self.callback.refreshTargets()
     
+    @dontwrap
     def show(self):
-        self.cocoa.show()
+        self.callback.show()
     
+    @dontwrap
     def hide(self):
-        self.cocoa.hide()
+        self.callback.hide()
     
+    @dontwrap
     def show_message(self, msg):
-        self.cocoa.showMessage_(msg)
+        self.callback.showMessage_(msg)
     
 
 class PyDateWidget:
