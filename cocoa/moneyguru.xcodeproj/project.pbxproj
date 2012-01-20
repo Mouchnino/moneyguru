@@ -271,6 +271,7 @@
 		CEFEA42D14CA064B004BCD8D /* HSPopUpList2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA42914CA064B004BCD8D /* HSPopUpList2.m */; };
 		CEFEA43114CA0693004BCD8D /* PySelectableList2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA43014CA0693004BCD8D /* PySelectableList2.m */; };
 		CEFEA43414CA082C004BCD8D /* MGPanel2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA43314CA082C004BCD8D /* MGPanel2.m */; };
+		CEFEA43714CA0BFC004BCD8D /* PyMassEditionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA43614CA0BFC004BCD8D /* PyMassEditionPanel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -330,7 +331,6 @@
 		CE0E85C30F875C1800549758 /* MGProfitPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGProfitPrint.m; path = print/MGProfitPrint.m; sourceTree = "<group>"; };
 		CE0E85C40F875C1800549758 /* MGSheetPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSheetPrint.h; path = print/MGSheetPrint.h; sourceTree = "<group>"; };
 		CE0E85C50F875C1800549758 /* MGSheetPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSheetPrint.m; path = print/MGSheetPrint.m; sourceTree = "<group>"; };
-		CE0F13910E39BC3D006B6982 /* PyMassEditionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMassEditionPanel.h; sourceTree = "<group>"; };
 		CE0F13920E39BC4A006B6982 /* MGMassEditionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMassEditionPanel.h; sourceTree = "<group>"; };
 		CE0F13930E39BC4A006B6982 /* MGMassEditionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMassEditionPanel.m; sourceTree = "<group>"; };
 		CE1031C71041337D007882D5 /* PyBudgetPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetPanel.h; sourceTree = "<group>"; };
@@ -873,6 +873,8 @@
 		CEFEA43014CA0693004BCD8D /* PySelectableList2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PySelectableList2.m; sourceTree = "<group>"; };
 		CEFEA43214CA082C004BCD8D /* MGPanel2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPanel2.h; sourceTree = "<group>"; };
 		CEFEA43314CA082C004BCD8D /* MGPanel2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPanel2.m; sourceTree = "<group>"; };
+		CEFEA43514CA0BFC004BCD8D /* PyMassEditionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMassEditionPanel.h; sourceTree = "<group>"; };
+		CEFEA43614CA0BFC004BCD8D /* PyMassEditionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyMassEditionPanel.m; sourceTree = "<group>"; };
 		CEFF4EB21303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AccountPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB31303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AccountReassignPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB41303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
@@ -1183,7 +1185,6 @@
 				CE83CE1E0E220EA70095BA6A /* PyDocument.h */,
 				CE5CBBEC10383F51008AC465 /* PyPanel.h */,
 				CE873A9B0E21622F004F63E9 /* PyTransactionPanel.h */,
-				CE0F13910E39BC3D006B6982 /* PyMassEditionPanel.h */,
 				CE5CBBEB10383C47008AC465 /* PySchedulePanel.h */,
 				CE1031C71041337D007882D5 /* PyBudgetPanel.h */,
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
@@ -1392,6 +1393,8 @@
 				CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */,
 				CEFEA42014CA05E1004BCD8D /* PyAccountPanel.h */,
 				CEFEA42114CA05E1004BCD8D /* PyAccountPanel.m */,
+				CEFEA43514CA0BFC004BCD8D /* PyMassEditionPanel.h */,
+				CEFEA43614CA0BFC004BCD8D /* PyMassEditionPanel.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1937,6 +1940,7 @@
 				CEFEA42D14CA064B004BCD8D /* HSPopUpList2.m in Sources */,
 				CEFEA43114CA0693004BCD8D /* PySelectableList2.m in Sources */,
 				CEFEA43414CA082C004BCD8D /* MGPanel2.m in Sources */,
+				CEFEA43714CA0BFC004BCD8D /* PyMassEditionPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

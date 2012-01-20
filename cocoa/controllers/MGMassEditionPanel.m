@@ -8,13 +8,23 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGMassEditionPanel.h"
 #import "MGMainWindowController.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGMassEditionPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"MassEditingPanel" py:[[aParent py] massEditPanel] parent:aParent];
-    currencies = [[[self py] availableCurrencies] retain];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
+    PyObject *pRef = getHackedPyRef([[aParent py] massEditPanel]);
+    PyMassEditionPanel *m = [[PyMassEditionPanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"MassEditingPanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"PanelView", self)];
+    [m release];
+    [self window];
+    currencies = [[[self model] availableCurrencies] retain];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
@@ -24,9 +34,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyMassEditionPanel *)py
+- (PyMassEditionPanel *)model
 {
-    return (PyMassEditionPanel *)py;
+    return (PyMassEditionPanel *)model;
 }
 
 /* Override */
@@ -57,15 +67,47 @@ http://www.hardcoded.net/licenses/bsd_license
     return dateField;
 }
 
+- (void)loadCheckboxes
+{
+    [dateCheckBox setState:[[self model] dateEnabled] ? NSOnState : NSOffState];
+    [descriptionCheckBox setState:[[self model] descriptionEnabled] ? NSOnState : NSOffState];
+    [payeeCheckBox setState:[[self model] payeeEnabled] ? NSOnState : NSOffState];
+    [checknoCheckBox setState:[[self model] checknoEnabled] ? NSOnState : NSOffState];
+    [fromCheckBox setState:[[self model] fromEnabled] ? NSOnState : NSOffState];
+    [toCheckBox setState:[[self model] toEnabled] ? NSOnState : NSOffState];
+    [amountCheckBox setState:[[self model] amountEnabled] ? NSOnState : NSOffState];
+    [currencyCheckBox setState:[[self model] currencyEnabled] ? NSOnState : NSOffState];
+}
+
 - (void)loadFields
 {
-    [currencySelector selectItemAtIndex:[[self py] currencyIndex]];
-    // The rest all load through bindings
+    [self loadCheckboxes];
+    [dateField setStringValue:[[self model] date]];
+    [descriptionField setStringValue:[[self model] description]];
+    [payeeField setStringValue:[[self model] payee]];
+    [checknoField setStringValue:[[self model] checkno]];
+    [fromField setStringValue:[[self model] fromAccount]];
+    [toField setStringValue:[[self model] to]];
+    [amountField setStringValue:[[self model] amount]];
+    [currencySelector selectItemAtIndex:[[self model] currencyIndex]];
+    [fromCheckBox setEnabled:[[self model] canChangeAccounts]];
+    [toCheckBox setEnabled:[[self model] canChangeAccounts]];
+    [amountCheckBox setEnabled:[[self model] canChangeAmount]];
+    [fromField setEnabled:[[self model] canChangeAccounts]];
+    [toField setEnabled:[[self model] canChangeAccounts]];
+    [amountField setEnabled:[[self model] canChangeAmount]];
 }
 
 - (void)saveFields
 {
-    // all fields are saved through bindings.
+    [[self model] setDateEnabled:[dateCheckBox state] == NSOnState];
+    [[self model] setDescriptionEnabled:[descriptionCheckBox state] == NSOnState];
+    [[self model] setPayeeEnabled:[payeeCheckBox state] == NSOnState];
+    [[self model] setChecknoEnabled:[checknoCheckBox state] == NSOnState];
+    [[self model] setFromEnabled:[fromCheckBox state] == NSOnState];
+    [[self model] setToEnabled:[toCheckBox state] == NSOnState];
+    [[self model] setAmountEnabled:[amountCheckBox state] == NSOnState];
+    [[self model] setCurrencyEnabled:[currencyCheckBox state] == NSOnState];
 }
 
 /* Delegate */
@@ -115,25 +157,49 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification
 {
     NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
-    [[self py] setCurrencyIndex:currencyIndex];
+    [[self model] setCurrencyIndex:currencyIndex];
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
-    /* When the popup list is never popped (when only typing is used), this is what is called on
-       tabbing out. We can't rely on indexOfSelectedItem as it seems to be set *after*
-       controlTextDidEndEditing: is called.
+    id control = [aNotification object];
+    /* XXX This is all really ugly, but this panel used to use KVO bindings which don't work with
+       ObjP. I'm too busy to fix this cleanly now, but I'll get to it eventually.
     */
-    NSInteger currencyIndex = [self comboBox:currencySelector indexOfItemWithStringValue:[currencySelector stringValue]];
-    [[self py] setCurrencyIndex:currencyIndex];
+    if (control == dateField) {
+        [[self model] setDate:[dateField stringValue]];
+    }
+    else if (control == descriptionField) {
+        [[self model] setDescription:[descriptionField stringValue]];
+    }
+    else if (control == payeeField) {
+        [[self model] setPayee:[payeeField stringValue]];
+    }
+    else if (control == checknoField) {
+        [[self model] setCheckno:[checknoField stringValue]];
+    }
+    else if (control == fromField) {
+        [[self model] setFromAccount:[fromField stringValue]];
+    }
+    else if (control == toField) {
+        [[self model] setTo:[toField stringValue]];
+    }
+    else if (control == amountField) {
+        [[self model] setAmount:[amountField stringValue]];
+    }
+    else if (control == currencySelector) {
+        /* When the popup list is never popped (when only typing is used), this is what is called on
+           tabbing out. We can't rely on indexOfSelectedItem as it seems to be set *after*
+           controlTextDidEndEditing: is called.
+        */
+        NSInteger currencyIndex = [self comboBox:currencySelector indexOfItemWithStringValue:[currencySelector stringValue]];
+        [[self model] setCurrencyIndex:currencyIndex];
+    }
 }
 
-/* Python --> Cocoa */
+/* Model --> View */
 - (void)refresh
 {
-    // When we change the values in the py side, it doesn't work with KVO mechanism.
-    // Notifications of a "py" change is enough to refresh all bound controls.
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
+    [self loadCheckboxes];
 }
 @end

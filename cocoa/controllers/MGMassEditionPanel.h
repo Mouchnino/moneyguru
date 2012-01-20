@@ -7,24 +7,31 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGPanel.h"
+#import "MGPanel2.h"
 #import "PyMassEditionPanel.h"
 
 @class MGMainWindowController;
 
-@interface MGMassEditionPanel : MGPanel {
+@interface MGMassEditionPanel : MGPanel2 {
     IBOutlet NSTextField *dateField;
     IBOutlet NSTextField *descriptionField;
     IBOutlet NSTextField *payeeField;
     IBOutlet NSTextField *checknoField;
     IBOutlet NSTextField *fromField;
     IBOutlet NSTextField *toField;
+    IBOutlet NSTextField *amountField;
     IBOutlet NSComboBox *currencySelector;
+    IBOutlet NSButton *dateCheckBox;
+    IBOutlet NSButton *descriptionCheckBox;
+    IBOutlet NSButton *payeeCheckBox;
+    IBOutlet NSButton *checknoCheckBox;
+    IBOutlet NSButton *fromCheckBox;
+    IBOutlet NSButton *toCheckBox;
+    IBOutlet NSButton *amountCheckBox;
+    IBOutlet NSButton *currencyCheckBox;
     
     NSArray *currencies;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;
-- (PyMassEditionPanel *)py;
-/* Python --> Cocoa */
-- (void)refresh;
+- (PyMassEditionPanel *)model;
 @end

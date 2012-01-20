@@ -318,7 +318,7 @@ class PyPanel(PyGUIObject):
         self.cocoa.preSave()
     
 
-class PanelView:
+class PanelView(GUIObjectView):
     def preLoad(self): pass
     def postLoad(self): pass
     def preSave(self): pass
@@ -540,140 +540,114 @@ class PyTransactionPanel(PyPanelWithTransaction):
         self.py.date = value
     
 
-class PyMassEditionPanel(PyPanel):
-    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
+class PyMassEditionPanel(PyPanel2):
+    def completableEdit(self) -> pyref:
+        return self.model.completable_edit
     
-    def availableCurrencies(self):
+    def availableCurrencies(self) -> list:
         return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
     
-    @signature('c@:')
-    def canChangeAccounts(self):
-        return self.py.can_change_accounts
+    def canChangeAccounts(self) -> bool:
+        return self.model.can_change_accounts
     
-    @signature('c@:')
-    def canChangeAmount(self):
-        return self.py.can_change_amount
+    def canChangeAmount(self) -> bool:
+        return self.model.can_change_amount
     
-    @signature('c@:')
-    def dateEnabled(self):
-        return self.py.date_enabled
+    def dateEnabled(self) -> bool:
+        return self.model.date_enabled
     
-    @signature('v@:c')
-    def setDateEnabled_(self, value):
-        self.py.date_enabled = value
+    def setDateEnabled_(self, value: bool):
+        self.model.date_enabled = value
     
-    @signature('c@:')
-    def descriptionEnabled(self):
-        return self.py.description_enabled
+    def descriptionEnabled(self) -> bool:
+        return self.model.description_enabled
     
-    @signature('v@:c')
-    def setDescriptionEnabled_(self, value):
-        self.py.description_enabled = value
+    def setDescriptionEnabled_(self, value: bool):
+        self.model.description_enabled = value
     
-    @signature('c@:')
-    def payeeEnabled(self):
-        return self.py.payee_enabled
+    def payeeEnabled(self) -> bool:
+        return self.model.payee_enabled
     
-    @signature('v@:c')
-    def setPayeeEnabled_(self, value):
-        self.py.payee_enabled = value
+    def setPayeeEnabled_(self, value: bool):
+        self.model.payee_enabled = value
     
-    @signature('c@:')
-    def checknoEnabled(self):
-        return self.py.checkno_enabled
+    def checknoEnabled(self) -> bool:
+        return self.model.checkno_enabled
     
-    @signature('v@:c')
-    def setChecknoEnabled_(self, value):
-        self.py.checkno_enabled = value
+    def setChecknoEnabled_(self, value: bool):
+        self.model.checkno_enabled = value
     
-    @signature('c@:')
-    def fromEnabled(self):
-        return self.py.from_enabled
+    def fromEnabled(self) -> bool:
+        return self.model.from_enabled
     
-    @signature('v@:c')
-    def setFromEnabled_(self, value):
-        self.py.from_enabled = value
+    def setFromEnabled_(self, value: bool):
+        self.model.from_enabled = value
     
-    @signature('c@:')
-    def toEnabled(self):
-        return self.py.to_enabled
+    def toEnabled(self) -> bool:
+        return self.model.to_enabled
     
-    @signature('v@:c')
-    def setToEnabled_(self, value):
-        self.py.to_enabled = value
+    def setToEnabled_(self, value: bool):
+        self.model.to_enabled = value
     
-    @signature('c@:')
-    def amountEnabled(self):
-        return self.py.amount_enabled
+    def amountEnabled(self) -> bool:
+        return self.model.amount_enabled
     
-    @signature('v@:c')
-    def setAmountEnabled_(self, value):
-        self.py.amount_enabled = value
+    def setAmountEnabled_(self, value: bool):
+        self.model.amount_enabled = value
     
-    @signature('c@:')
-    def currencyEnabled(self):
-        return self.py.currency_enabled
+    def currencyEnabled(self) -> bool:
+        return self.model.currency_enabled
     
-    @signature('v@:c')
-    def setCurrencyEnabled_(self, value):
-        self.py.currency_enabled = value
+    def setCurrencyEnabled_(self, value: bool):
+        self.model.currency_enabled = value
     
-    def date(self):
-        return self.py.date
+    def date(self) -> str:
+        return self.model.date
     
-    @signature('v@:@')
-    def setDate_(self, value):
-        self.py.date = value
+    def setDate_(self, value: str):
+        self.model.date = value
     
-    def description(self):
-        return self.py.description
+    def description(self) -> str:
+        return self.model.description
     
-    @signature('v@:@')
-    def setDescription_(self, value):
-        self.py.description = value
+    def setDescription_(self, value: str):
+        self.model.description = value
     
-    def payee(self):
-        return self.py.payee
+    def payee(self) -> str:
+        return self.model.payee
     
-    @signature('v@:@')
-    def setPayee_(self, value):
-        self.py.payee = value
+    def setPayee_(self, value: str):
+        self.model.payee = value
     
-    def checkno(self):
-        return self.py.checkno
+    def checkno(self) -> str:
+        return self.model.checkno
     
-    @signature('v@:@')
-    def setCheckno_(self, value):
-        self.py.checkno = value
+    def setCheckno_(self, value: str):
+        self.model.checkno = value
     
-    def fromAccount(self): # We cannot use the underscore to escape the kw. It messes with pyobjc
-        return self.py.from_
+    def fromAccount(self) -> str: # We cannot use the underscore to escape the kw. It messes with pyobjc
+        return self.model.from_
     
-    @signature('v@:@')
-    def setFromAccount_(self, value):
-        self.py.from_ = value
+    def setFromAccount_(self, value: str):
+        self.model.from_ = value
     
-    def to(self):
-        return self.py.to
+    def to(self) -> str:
+        return self.model.to
     
-    @signature('v@:@')
-    def setTo_(self, value):
-        self.py.to = value
+    def setTo_(self, value: str):
+        self.model.to = value
     
-    def amount(self):
-        return self.py.amount
+    def amount(self) -> str:
+        return self.model.amount
     
-    @signature('v@:@')
-    def setAmount_(self, value):
-        self.py.amount = value
+    def setAmount_(self, value: str):
+        self.model.amount = value
     
-    @signature('i@:')
-    def currencyIndex(self):
-        return self.py.currency_index
+    def currencyIndex(self) -> int:
+        return self.model.currency_index
     
-    @signature('v@:i')
-    def setCurrencyIndex_(self, value):
-        self.py.currency_index = value
+    def setCurrencyIndex_(self, value: int):
+        self.model.currency_index = value
     
 
 class PySchedulePanel(PyPanelWithTransaction):
@@ -1039,7 +1013,7 @@ class PyMainWindow(PyGUIContainer):
     
     accountPanel = subproxy('accountPanel', 'account_panel', PyGUIObject)
     transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyTransactionPanel)
-    massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyMassEditionPanel)
+    massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyGUIObject)
     budgetPanel = subproxy('budgetPanel', 'budget_panel', PyBudgetPanel)
     schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
     customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyCustomDateRangePanel)
