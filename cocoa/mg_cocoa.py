@@ -681,50 +681,57 @@ class PySchedulePanel(PyPanelWithTransaction):
     def refresh_repeat_every(self):
         self.cocoa.refreshRepeatEvery()
     
-class PyBudgetPanel(PyPanel):
+class BudgetPanelView(PanelView):
+    def refreshRepeatEvery(self): pass
+
+class PyBudgetPanel(PyPanel2):
     
-    repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
-    accountList = subproxy('accountList', 'account_list', PySelectableList)
-    targetList = subproxy('targetList', 'target_list', PySelectableList)
+    def repeatTypeList(self) -> pyref:
+        return self.model.repeat_type_list
     
-    def startDate(self):
-        return self.py.start_date
+    def accountList(self) -> pyref:
+        return self.model.account_list
     
-    def setStartDate_(self, value):
-        self.py.start_date = value
+    def targetList(self) -> pyref:
+        return self.model.target_list
     
-    def stopDate(self):
-        return self.py.stop_date
+    def startDate(self) -> str:
+        return self.model.start_date
     
-    def setStopDate_(self, value):
-        self.py.stop_date = value
+    def setStartDate_(self, value: str):
+        self.model.start_date = value
     
-    @signature('i@:')
-    def repeatEvery(self):
-        return self.py.repeat_every
+    def stopDate(self) -> str:
+        return self.model.stop_date
     
-    @signature('v@:i')
-    def setRepeatEvery_(self, value):
-        self.py.repeat_every = value
+    def setStopDate_(self, value: str):
+        self.model.stop_date = value
     
-    def repeatEveryDesc(self):
-        return self.py.repeat_every_desc
+    def repeatEvery(self) -> int:
+        return self.model.repeat_every
     
-    def amount(self):
-        return self.py.amount
+    def setRepeatEvery_(self, value: int):
+        self.model.repeat_every = value
     
-    def setAmount_(self, value):
-        self.py.amount = value
+    def repeatEveryDesc(self) -> str:
+        return self.model.repeat_every_desc
     
-    def notes(self):
-        return self.py.notes
+    def amount(self) -> str:
+        return self.model.amount
     
-    def setNotes_(self, value):
-        self.py.notes = value
+    def setAmount_(self, value: str):
+        self.model.amount = value
+    
+    def notes(self) -> str:
+        return self.model.notes
+    
+    def setNotes_(self, value: str):
+        self.model.notes = value
     
     #--- Python -> Cocoa
+    @dontwrap
     def refresh_repeat_every(self):
-        self.cocoa.refreshRepeatEvery()
+        self.callback.refreshRepeatEvery()
     
 
 class PyCustomDateRangePanel(PyPanel):
@@ -1014,7 +1021,7 @@ class PyMainWindow(PyGUIContainer):
     accountPanel = subproxy('accountPanel', 'account_panel', PyGUIObject)
     transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyTransactionPanel)
     massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyGUIObject)
-    budgetPanel = subproxy('budgetPanel', 'budget_panel', PyBudgetPanel)
+    budgetPanel = subproxy('budgetPanel', 'budget_panel', PyGUIObject)
     schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
     customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyCustomDateRangePanel)
     accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyAccountReassignPanel)

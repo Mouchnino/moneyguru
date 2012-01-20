@@ -7,16 +7,24 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGBudgetPanel.h"
-#import "MGDateFieldEditor.h"
 #import "MGMainWindowController.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGBudgetPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"BudgetPanel" py:[[aParent py] budgetPanel] parent:aParent];
-    repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
-    accountPopUp = [[HSPopUpList alloc] initWithPy:[[self py] accountList] view:accountSelector];
-    targetPopUp = [[HSPopUpList alloc] initWithPy:[[self py] targetList] view:targetSelector];
+    PyObject *pRef = getHackedPyRef([[aParent py] budgetPanel]);
+    PyBudgetPanel *m = [[PyBudgetPanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"BudgetPanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"BudgetPanelView", self)];
+    [m release];
+    repeatTypePopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
+    accountPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] accountList] popupView:accountSelector];
+    targetPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] targetList] popupView:targetSelector];
     return self;
 }
 
@@ -26,9 +34,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyBudgetPanel *)py
+- (PyBudgetPanel *)model
 {
-    return (PyBudgetPanel *)py;
+    return (PyBudgetPanel *)model;
 }
 
 /* Override */
@@ -44,26 +52,26 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)loadFields
 {
-    [startDateField setStringValue:[[self py] startDate]];
-    [stopDateField setStringValue:[[self py] stopDate]];
-    [repeatEveryField setIntegerValue:[[self py] repeatEvery]];
-    [amountField setStringValue:[[self py] amount]];
-    [notesField setStringValue:[[self py] notes]];
+    [startDateField setStringValue:[[self model] startDate]];
+    [stopDateField setStringValue:[[self model] stopDate]];
+    [repeatEveryField setIntegerValue:[[self model] repeatEvery]];
+    [amountField setStringValue:[[self model] amount]];
+    [notesField setStringValue:[[self model] notes]];
 }
 
 - (void)saveFields
 {
-    [[self py] setStartDate:[startDateField stringValue]];
-    [[self py] setStopDate:[stopDateField stringValue]];
-    [[self py] setRepeatEvery:[repeatEveryField intValue]];
-    [[self py] setAmount:[amountField stringValue]];
-    [[self py] setNotes:[notesField stringValue]];
+    [[self model] setStartDate:[startDateField stringValue]];
+    [[self model] setStopDate:[stopDateField stringValue]];
+    [[self model] setRepeatEvery:[repeatEveryField intValue]];
+    [[self model] setAmount:[amountField stringValue]];
+    [[self model] setNotes:[notesField stringValue]];
 }
 
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery
 {
-    [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
+    [repeatEveryDescLabel setStringValue:[[self model] repeatEveryDesc]];
 }
 
 /* Delegate */
@@ -71,9 +79,9 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     id control = [aNotification object];
     if (control == repeatEveryField) // must be edited right away to update the desc label
-        [[self py] setRepeatEvery:[repeatEveryField intValue]];
+        [[self model] setRepeatEvery:[repeatEveryField intValue]];
     else if (control == startDateField) // must be edited right away to update the repeat options
-        [[self py] setStartDate:[startDateField stringValue]];
+        [[self model] setStartDate:[startDateField stringValue]];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)window toObject:(id)asker
