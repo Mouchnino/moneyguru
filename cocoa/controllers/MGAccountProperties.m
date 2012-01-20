@@ -9,14 +9,23 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountProperties.h"
 #import "MGConst.h"
 #import "MGMainWindowController.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGAccountProperties
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"AccountPanel" py:[[aParent py] accountPanel] parent:aParent];
+    PyObject *pRef = getHackedPyRef([[aParent py] accountPanel]);
+    PyAccountPanel *m = [[PyAccountPanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"AccountPanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"PanelView", self)];
+    [m release];
     [self window];
-    typePopUp = [[HSPopUpList alloc] initWithPy:[[self py] typeList] view:typeSelector];
-    currencyComboBox = [[HSComboBox alloc] initWithPy:[[self py] currencyList] view:currencySelector];
+    typePopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] typeList] popupView:typeSelector];
+    currencyComboBox = [[HSComboBox2 alloc] initWithPyRef:[[self model] currencyList] view:currencySelector];
     return self;
 }
 
@@ -27,9 +36,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyAccountPanel *)py
+- (PyAccountPanel *)model
 {
-    return (PyAccountPanel *)py;
+    return (PyAccountPanel *)model;
 }
 
 /* Override */
@@ -40,17 +49,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)loadFields
 {
-    [nameTextField setStringValue:[[self py] name]];
-    [accountNumberTextField setStringValue:[[self py] accountNumber]];
-    [notesTextField setStringValue:[[self py] notes]];
-    [currencySelector setEnabled:[[self py] canChangeCurrency]];
+    [nameTextField setStringValue:[[self model] name]];
+    [accountNumberTextField setStringValue:[[self model] accountNumber]];
+    [notesTextField setStringValue:[[self model] notes]];
+    [currencySelector setEnabled:[[self model] canChangeCurrency]];
 }
 
 - (void)saveFields
 {
-    [[self py] setName:[nameTextField stringValue]];
-    [[self py] setAccountNumber:[accountNumberTextField stringValue]];
-    [[self py] setNotes:[notesTextField stringValue]];
+    [[self model] setName:[nameTextField stringValue]];
+    [[self model] setAccountNumber:[accountNumberTextField stringValue]];
+    [[self model] setNotes:[notesTextField stringValue]];
 }
 
 /* NSWindowController Overrides */

@@ -265,6 +265,12 @@
 		CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
 		CEFEA41E14C9FFAF004BCD8D /* PyChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA41B14C9FFAF004BCD8D /* PyChart.m */; };
 		CEFEA41F14C9FFAF004BCD8D /* PyGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */; };
+		CEFEA42414CA05E1004BCD8D /* PyAccountPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA42114CA05E1004BCD8D /* PyAccountPanel.m */; };
+		CEFEA42514CA05E1004BCD8D /* PyPanel2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA42314CA05E1004BCD8D /* PyPanel2.m */; };
+		CEFEA42C14CA064B004BCD8D /* HSComboBox2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA42714CA064B004BCD8D /* HSComboBox2.m */; };
+		CEFEA42D14CA064B004BCD8D /* HSPopUpList2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA42914CA064B004BCD8D /* HSPopUpList2.m */; };
+		CEFEA43114CA0693004BCD8D /* PySelectableList2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA43014CA0693004BCD8D /* PySelectableList2.m */; };
+		CEFEA43414CA082C004BCD8D /* MGPanel2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA43314CA082C004BCD8D /* MGPanel2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -527,7 +533,6 @@
 		CE873A8D0E21622F004F63E9 /* MGTransactionInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransactionInspector.m; sourceTree = "<group>"; };
 		CE873A8E0E21622F004F63E9 /* MGUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGUndoManager.h; sourceTree = "<group>"; };
 		CE873A8F0E21622F004F63E9 /* MGUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGUndoManager.m; sourceTree = "<group>"; };
-		CE873A910E21622F004F63E9 /* PyAccountPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountPanel.h; sourceTree = "<group>"; };
 		CE873A980E21622F004F63E9 /* PyMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMainWindow.h; sourceTree = "<group>"; };
 		CE873A9B0E21622F004F63E9 /* PyTransactionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPanel.h; sourceTree = "<group>"; };
 		CE873A9F0E21622F004F63E9 /* MGGradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGradientBar.h; sourceTree = "<group>"; };
@@ -856,6 +861,18 @@
 		CEFEA41B14C9FFAF004BCD8D /* PyChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyChart.m; sourceTree = "<group>"; };
 		CEFEA41C14C9FFAF004BCD8D /* PyGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGraph.h; sourceTree = "<group>"; };
 		CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyGraph.m; sourceTree = "<group>"; };
+		CEFEA42014CA05E1004BCD8D /* PyAccountPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountPanel.h; sourceTree = "<group>"; };
+		CEFEA42114CA05E1004BCD8D /* PyAccountPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyAccountPanel.m; sourceTree = "<group>"; };
+		CEFEA42214CA05E1004BCD8D /* PyPanel2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanel2.h; sourceTree = "<group>"; };
+		CEFEA42314CA05E1004BCD8D /* PyPanel2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyPanel2.m; sourceTree = "<group>"; };
+		CEFEA42614CA064B004BCD8D /* HSComboBox2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSComboBox2.h; sourceTree = "<group>"; };
+		CEFEA42714CA064B004BCD8D /* HSComboBox2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSComboBox2.m; sourceTree = "<group>"; };
+		CEFEA42814CA064B004BCD8D /* HSPopUpList2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSPopUpList2.h; sourceTree = "<group>"; };
+		CEFEA42914CA064B004BCD8D /* HSPopUpList2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSPopUpList2.m; sourceTree = "<group>"; };
+		CEFEA42F14CA0693004BCD8D /* PySelectableList2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySelectableList2.h; sourceTree = "<group>"; };
+		CEFEA43014CA0693004BCD8D /* PySelectableList2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PySelectableList2.m; sourceTree = "<group>"; };
+		CEFEA43214CA082C004BCD8D /* MGPanel2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPanel2.h; sourceTree = "<group>"; };
+		CEFEA43314CA082C004BCD8D /* MGPanel2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPanel2.m; sourceTree = "<group>"; };
 		CEFF4EB21303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AccountPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB31303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AccountReassignPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB41303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
@@ -1074,6 +1091,8 @@
 				CE88544811A1819C00268FBD /* MGMainWindowController.m */,
 				CE036D62103AE51100E172F8 /* MGPanel.h */,
 				CE036D63103AE51100E172F8 /* MGPanel.m */,
+				CEFEA43214CA082C004BCD8D /* MGPanel2.h */,
+				CEFEA43314CA082C004BCD8D /* MGPanel2.m */,
 				CE41C98E0E2B52CD006D3BEA /* MGTable.h */,
 				CE41C98F0E2B52CD006D3BEA /* MGTable.m */,
 				CE873A8A0E21622F004F63E9 /* MGSplitTable.h */,
@@ -1170,7 +1189,6 @@
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
 				CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */,
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
-				CE873A910E21622F004F63E9 /* PyAccountPanel.h */,
 				CE873A980E21622F004F63E9 /* PyMainWindow.h */,
 			);
 			path = proxies;
@@ -1322,6 +1340,8 @@
 				CEB46FB414C86C3600C56775 /* ObjP.m */,
 				CEB46FB714C86C3600C56775 /* PyGUIObject2.h */,
 				CEB46FB814C86C3600C56775 /* PyGUIObject2.m */,
+				CEFEA42F14CA0693004BCD8D /* PySelectableList2.h */,
+				CEFEA43014CA0693004BCD8D /* PySelectableList2.m */,
 				CEB46FC214C8715D00C56775 /* PyListener2.h */,
 				CEB46FC314C8715D00C56775 /* PyListener2.m */,
 				CEB46FD614C878F100C56775 /* PyTable2.h */,
@@ -1332,6 +1352,8 @@
 				CEB46FDB14C8793400C56775 /* PyColumns2.m */,
 				CEF10B3D14C8D91300D4CBD0 /* PyTableWithDate.h */,
 				CEF10B3E14C8D91300D4CBD0 /* PyTableWithDate.m */,
+				CEFEA42214CA05E1004BCD8D /* PyPanel2.h */,
+				CEFEA42314CA05E1004BCD8D /* PyPanel2.m */,
 				CEB46FB514C86C3600C56775 /* PyCompletableEdit.h */,
 				CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */,
 				CEB46FBC14C86C8D00C56775 /* PyDateWidget.h */,
@@ -1368,6 +1390,8 @@
 				CEFEA41B14C9FFAF004BCD8D /* PyChart.m */,
 				CEFEA41C14C9FFAF004BCD8D /* PyGraph.h */,
 				CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */,
+				CEFEA42014CA05E1004BCD8D /* PyAccountPanel.h */,
+				CEFEA42114CA05E1004BCD8D /* PyAccountPanel.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1429,8 +1453,12 @@
 				CEBA331911294DE5009C782F /* HSGUIController.m */,
 				CED1DF5F1440B1C5005F82B5 /* HSPopUpList.h */,
 				CED1DF601440B1C5005F82B5 /* HSPopUpList.m */,
+				CEFEA42814CA064B004BCD8D /* HSPopUpList2.h */,
+				CEFEA42914CA064B004BCD8D /* HSPopUpList2.m */,
 				CED5E6F11448B36700C4B843 /* HSComboBox.h */,
 				CED5E6F21448B36700C4B843 /* HSComboBox.m */,
+				CEFEA42614CA064B004BCD8D /* HSComboBox2.h */,
+				CEFEA42714CA064B004BCD8D /* HSComboBox2.m */,
 				CE1204331441DE3D00933858 /* HSColumns.h */,
 				CE1204341441DE3D00933858 /* HSColumns.m */,
 				CEB46FC714C8760A00C56775 /* HSGUIController2.h */,
@@ -1903,6 +1931,12 @@
 				CEF10B3F14C8D91300D4CBD0 /* PyTableWithDate.m in Sources */,
 				CEFEA41E14C9FFAF004BCD8D /* PyChart.m in Sources */,
 				CEFEA41F14C9FFAF004BCD8D /* PyGraph.m in Sources */,
+				CEFEA42414CA05E1004BCD8D /* PyAccountPanel.m in Sources */,
+				CEFEA42514CA05E1004BCD8D /* PyPanel2.m in Sources */,
+				CEFEA42C14CA064B004BCD8D /* HSComboBox2.m in Sources */,
+				CEFEA42D14CA064B004BCD8D /* HSPopUpList2.m in Sources */,
+				CEFEA43114CA0693004BCD8D /* PySelectableList2.m in Sources */,
+				CEFEA43414CA082C004BCD8D /* MGPanel2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

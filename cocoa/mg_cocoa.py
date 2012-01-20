@@ -12,7 +12,8 @@ from objp.util import pyref, dontwrap
 from cocoa import install_exception_hook, proxy
 from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
     PySelectableList)
-from cocoa.inter2 import PyGUIObject2, GUIObjectView, PyTable2, PyColumns2, PyOutline2, OutlineView
+from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, PyColumns2, PyOutline2, OutlineView,
+    PySelectableList2)
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -316,6 +317,27 @@ class PyPanel(PyGUIObject):
     def pre_save(self):
         self.cocoa.preSave()
     
+
+class PanelView:
+    def preLoad(self): pass
+    def postLoad(self): pass
+    def preSave(self): pass
+
+class PyPanel2(PyGUIObject2):
+    def savePanel(self):
+        self.model.save()
+    
+    # Python --> Cocoa
+    def pre_load(self):
+        self.callback.preLoad()
+    
+    def post_load(self):
+        self.callback.postLoad()
+    
+    def pre_save(self):
+        self.callback.preSave()
+    
+
 #--- GUI layer classes
 
 class PyEntryTable(PyTableWithDate):
@@ -435,32 +457,33 @@ class PyFilterBar(PyGUIObject2):
         self.callback.enableTransfers()
     
 
-class PyAccountPanel(PyPanel):
+class PyAccountPanel(PyPanel2):
+    def typeList(self) -> pyref:
+        return self.model.type_list
     
-    typeList = subproxy('typeList', 'type_list', PySelectableList)
-    currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
+    def currencyList(self) -> pyref:
+        return self.model.currency_list
     
-    def name(self):
-        return self.py.name
+    def name(self) -> str:
+        return self.model.name
     
-    def setName_(self, name):
-        self.py.name = name
+    def setName_(self, name: str):
+        self.model.name = name
     
-    def accountNumber(self):
-        return self.py.account_number
+    def accountNumber(self) -> str:
+        return self.model.account_number
     
-    def setAccountNumber_(self, accountNumber):
-        self.py.account_number = accountNumber
+    def setAccountNumber_(self, accountNumber: str):
+        self.model.account_number = accountNumber
     
-    def notes(self):
-        return self.py.notes
+    def notes(self) -> str:
+        return self.model.notes
     
-    def setNotes_(self, notes):
-        self.py.notes = notes
+    def setNotes_(self, notes: str):
+        self.model.notes = notes
     
-    @signature('c@:')
-    def canChangeCurrency(self):
-        return self.py.can_change_currency
+    def canChangeCurrency(self) -> bool:
+        return self.model.can_change_currency
     
 
 class PySplitTable(PyTable2):
@@ -1014,7 +1037,7 @@ class PyMainWindow(PyGUIContainer):
     accountLookup = subproxy('accountLookup', 'account_lookup', PyGUIObject)
     completionLookup = subproxy('completionLookup', 'completion_lookup', PyGUIObject)
     
-    accountPanel = subproxy('accountPanel', 'account_panel', PyAccountPanel)
+    accountPanel = subproxy('accountPanel', 'account_panel', PyGUIObject)
     transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyTransactionPanel)
     massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyMassEditionPanel)
     budgetPanel = subproxy('budgetPanel', 'budget_panel', PyBudgetPanel)
