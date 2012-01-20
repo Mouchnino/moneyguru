@@ -240,6 +240,7 @@
 		CEE6850E14CA1E9D0082F618 /* PyBudgetPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6850D14CA1E9D0082F618 /* PyBudgetPanel.m */; };
 		CEE6851114CA20030082F618 /* PyCustomDateRangePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6851014CA20030082F618 /* PyCustomDateRangePanel.m */; };
 		CEE6851414CA21BC0082F618 /* PyAccountReassignPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6851314CA21BC0082F618 /* PyAccountReassignPanel.m */; };
+		CEE6851714CA24190082F618 /* PyExportPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6851614CA24190082F618 /* PyExportPanel.m */; };
 		CEE6E50114C8CB53002FF89F /* PyFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6E4FF14C8CB53002FF89F /* PyFilterBar.m */; };
 		CEEDCEE910F75FF9003BC1BA /* MGTransactionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEDCEE810F75FF9003BC1BA /* MGTransactionView.m */; };
 		CEEED1CF0E3F5FD100BBA154 /* MGReconciliationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */; };
@@ -420,7 +421,6 @@
 		CE647EA111730765006D28BA /* HSTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTable.h; sourceTree = "<group>"; };
 		CE647EA211730765006D28BA /* HSTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTable.m; sourceTree = "<group>"; };
 		CE66BD121275751B008EFA8A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ExportPanel.xib; sourceTree = "<group>"; };
-		CE66BD1612757567008EFA8A /* PyExportPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyExportPanel.h; path = proxies/PyExportPanel.h; sourceTree = SOURCE_ROOT; };
 		CE66BD1712757587008EFA8A /* MGExportAccountTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGExportAccountTable.h; path = controllers/MGExportAccountTable.h; sourceTree = SOURCE_ROOT; };
 		CE66BD1812757587008EFA8A /* MGExportAccountTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGExportAccountTable.m; path = controllers/MGExportAccountTable.m; sourceTree = SOURCE_ROOT; };
 		CE66BD1912757587008EFA8A /* MGExportPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGExportPanel.h; path = controllers/MGExportPanel.h; sourceTree = SOURCE_ROOT; };
@@ -817,6 +817,8 @@
 		CEE6851014CA20030082F618 /* PyCustomDateRangePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyCustomDateRangePanel.m; sourceTree = "<group>"; };
 		CEE6851214CA21BC0082F618 /* PyAccountReassignPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountReassignPanel.h; sourceTree = "<group>"; };
 		CEE6851314CA21BC0082F618 /* PyAccountReassignPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyAccountReassignPanel.m; sourceTree = "<group>"; };
+		CEE6851514CA24190082F618 /* PyExportPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyExportPanel.h; sourceTree = "<group>"; };
+		CEE6851614CA24190082F618 /* PyExportPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyExportPanel.m; sourceTree = "<group>"; };
 		CEE6E4FE14C8CB53002FF89F /* PyFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFilterBar.h; sourceTree = "<group>"; };
 		CEE6E4FF14C8CB53002FF89F /* PyFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyFilterBar.m; sourceTree = "<group>"; };
 		CEEDCEE710F75FF9003BC1BA /* MGTransactionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionView.h; sourceTree = "<group>"; };
@@ -1173,7 +1175,6 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
-				CE66BD1612757567008EFA8A /* PyExportPanel.h */,
 				CEB60204123930A1002218CF /* PyGeneralLedgerView.h */,
 				CE9805DF11403F4400CB3693 /* PyPanelWithTransaction.h */,
 				CE09272E14506C54004BD916 /* PyBaseView.h */,
@@ -1404,6 +1405,8 @@
 				CEE6851014CA20030082F618 /* PyCustomDateRangePanel.m */,
 				CEE6851214CA21BC0082F618 /* PyAccountReassignPanel.h */,
 				CEE6851314CA21BC0082F618 /* PyAccountReassignPanel.m */,
+				CEE6851514CA24190082F618 /* PyExportPanel.h */,
+				CEE6851614CA24190082F618 /* PyExportPanel.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1953,6 +1956,7 @@
 				CEE6850E14CA1E9D0082F618 /* PyBudgetPanel.m in Sources */,
 				CEE6851114CA20030082F618 /* PyCustomDateRangePanel.m in Sources */,
 				CEE6851414CA21BC0082F618 /* PyAccountReassignPanel.m in Sources */,
+				CEE6851714CA24190082F618 /* PyExportPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

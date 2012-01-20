@@ -764,46 +764,46 @@ class PyAccountReassignPanel(PyPanel2):
     def accountList(self) -> pyref:
         return self.model.account_list
     
+class ExportPanelView(PanelView):
+    def setTableEnabled_(self, enabled: bool): pass
+    def setExportButtonEnabled_(self, enabled: bool): pass
 
-class PyExportPanel(PyPanel):
-    accountTable = subproxy('accountTable', 'account_table', PyTable)
+class PyExportPanel(PyPanel2):
+    def accountTable(self) -> pyref:
+        return self.model.account_table
     
-    @signature('c@:')
-    def exportAll(self):
-        return self.py.export_all
+    def exportAll(self) -> bool:
+        return self.model.export_all
     
-    @signature('v@:c')
-    def setExportAll_(self, value):
-        self.py.export_all = value
+    def setExportAll_(self, value: bool):
+        self.model.export_all = value
     
-    def exportPath(self):
-        return self.py.export_path
+    def exportPath(self) -> str:
+        return self.model.export_path
     
-    def setExportPath_(self, value):
-        self.py.export_path = value
+    def setExportPath_(self, value: str):
+        self.model.export_path = value
     
-    @signature('i@:')
-    def exportFormat(self):
-        return self.py.export_format
+    def exportFormat(self) -> int:
+        return self.model.export_format
     
-    @signature('v@:i')
-    def setExportFormat_(self, value):
-        self.py.export_format = value
+    def setExportFormat_(self, value: int):
+        self.model.export_format = value
     
-    @signature('c@:')
-    def currentDateRangeOnly(self):
-        return self.py.current_daterange_only
+    def currentDateRangeOnly(self) -> bool:
+        return self.model.current_daterange_only
     
-    @signature('v@:c')
-    def setCurrentDateRangeOnly_(self, value):
-        self.py.current_daterange_only = value
+    def setCurrentDateRangeOnly_(self, value: bool):
+        self.model.current_daterange_only = value
     
     #--- Python --> Cocoa
+    @dontwrap
     def set_table_enabled(self, enabled):
-        self.cocoa.setTableEnabled_(enabled)
+        self.callback.setTableEnabled_(enabled)
     
+    @dontwrap
     def set_export_button_enabled(self, enabled):
-        self.cocoa.setExportButtonEnabled_(enabled)
+        self.callback.setExportButtonEnabled_(enabled)
     
 
 class PySearchField(PyGUIObject2):
@@ -1025,7 +1025,7 @@ class PyMainWindow(PyGUIContainer):
     schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
     customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyGUIObject)
     accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyGUIObject)
-    exportPanel = subproxy('exportPanel', 'export_panel', PyExportPanel)
+    exportPanel = subproxy('exportPanel', 'export_panel', PyGUIObject)
     
     nwview = subproxy('nwview', 'nwview', PyNetWorthView)
     pview = subproxy('pview', 'pview', PyProfitView)

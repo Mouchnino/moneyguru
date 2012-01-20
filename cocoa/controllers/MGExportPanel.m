@@ -9,6 +9,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGExportPanel.h"
 #import "MGConst.h"
 #import "MGMainWindowController.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 // Synced with the core
 #define MGExportFormatQIF 0
@@ -17,8 +19,15 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGExportPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"ExportPanel" py:[[aParent py] exportPanel] parent:aParent];
-    accountTable = [[MGExportAccountTable alloc] initWithPy:[[self py] accountTable] view:accountTableView];
+    PyObject *pRef = getHackedPyRef([[aParent py] exportPanel]);
+    PyExportPanel *m = [[PyExportPanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"ExportPanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"ExportPanelView", self)];
+    [m release];
+    accountTable = [[MGExportAccountTable alloc] initWithPyRef:[[self model] accountTable] tableView:accountTableView];
     return self;
 }
 
@@ -28,9 +37,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyExportPanel *)py
+- (PyExportPanel *)model
 {
-    return (PyExportPanel *)py;
+    return (PyExportPanel *)model;
 }
 
 /* Override */
@@ -41,26 +50,26 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)loadFields
 {
-    NSInteger exportAllRow = [[self py] exportAll] ? 0 : 1;
+    NSInteger exportAllRow = [[self model] exportAll] ? 0 : 1;
     [exportAllButtons selectCellAtRow:exportAllRow column:0];
-    NSInteger exportFormat = [[self py] exportFormat];
+    NSInteger exportFormat = [[self model] exportFormat];
     [exportFormatButtons selectCellAtRow:exportFormat column:0];
-    NSInteger state = [[self py] currentDateRangeOnly] ? NSOnState : NSOffState;
+    NSInteger state = [[self model] currentDateRangeOnly] ? NSOnState : NSOffState;
     [currentDateRangeOnlyButton setState:state];
 }
 
 - (void)saveFields
 {
     NSInteger exportFormat = [exportFormatButtons selectedRow] == 0 ? MGExportFormatQIF : MGExportFormatCSV;
-    [[self py] setExportFormat:exportFormat];
-    [[self py] setCurrentDateRangeOnly:[currentDateRangeOnlyButton state] == NSOnState];
+    [[self model] setExportFormat:exportFormat];
+    [[self model] setCurrentDateRangeOnly:[currentDateRangeOnlyButton state] == NSOnState];
 }
 
 /* Actions */
 - (IBAction)exportAllToggled:(id)sender
 {
     BOOL exportAll = [exportAllButtons selectedRow] == 0;
-    [[self py] setExportAll:exportAll];
+    [[self model] setExportAll:exportAll];
 }
 
 - (IBAction)export:(id)sender
@@ -71,7 +80,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSString *filename = [exportFormatButtons selectedRow] == 0 ? @"export.qif" : @"export.csv";
     if ([sp runModalForDirectory:nil file:filename] == NSOKButton) {
         NSString *filepath = [[sp URL] path];
-        [[self py] setExportPath:filepath];
+        [[self model] setExportPath:filepath];
         [self save:sender];
     }
 }
