@@ -8,9 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGChart.h"
-#import "PyChart.h"
 
 @interface MGPieChart : MGChart {}
 - (id)initWithPy:(id)aPy;
-- (PyChart *)py;
 @end

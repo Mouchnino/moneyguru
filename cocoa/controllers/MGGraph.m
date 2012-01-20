@@ -7,31 +7,46 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGGraph.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGGraph
+- (id)initWithPy:(id)aPy
+{
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyGraph *m = [[PyGraph alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"GUIObjectView", self)];
+    [m release];
+    return self;
+}
+
 /* Override */
 - (MGGraphView *)view
 {
     return (MGGraphView *)view;
 }
 
-- (PyGraph *)py
+- (PyGraph *)model
 {
-    return (PyGraph *)py;
+    return (PyGraph *)model;
 }
 
 /* Python callbacks */
 - (void)refresh
 {
     [super refresh];
-    [[self view] setMinX:[[self py] xMin]];
-    [[self view] setMaxX:[[self py] xMax]];
-    [[self view] setMinY:[[self py] yMin]];
-    [[self view] setMaxY:[[self py] yMax]];
-    [[self view] setXToday:[[self py] xToday]];
-    [[self view] setXLabels:[[self py] xLabels]];
-    [[self view] setYLabels:[[self py] yLabels]];
-    [[self view] setXTickMarks:[[self py] xTickMarks]];
-    [[self view] setYTickMarks:[[self py] yTickMarks]];
+    [[self view] setMinX:[[self model] xMin]];
+    [[self view] setMaxX:[[self model] xMax]];
+    [[self view] setMinY:[[self model] yMin]];
+    [[self view] setMaxY:[[self model] yMax]];
+    [[self view] setXToday:[[self model] xToday]];
+    [[self view] setXLabels:[[self model] xLabels]];
+    [[self view] setYLabels:[[self model] yLabels]];
+    [[self view] setXTickMarks:[[self model] xTickMarks]];
+    [[self view] setYTickMarks:[[self model] yTickMarks]];
 }
 @end

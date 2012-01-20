@@ -216,50 +216,46 @@ class PyTableWithDate(PyTable2):
         return self.model.edited.is_date_in_past()
     
 
-class PyChart(PyListener):
-    def data(self):
-        return self.py.data
+class PyChart(PyListener2):
+    def data(self) -> list:
+        return self.model.data
     
-    def title(self):
-        return self.py.title
+    def title(self) -> str:
+        return self.model.title
     
-    def currency(self):
-        return self.py.currency.code
+    def currency(self) -> str:
+        return self.model.currency.code
     
 
 class PyGraph(PyChart):
-    @signature('f@:')
-    def xMin(self):
-        return self.py.xmin
+    def xMin(self) -> float:
+        return self.model.xmin
 
-    @signature('f@:')
-    def xMax(self):
-        return self.py.xmax
+    def xMax(self) -> float:
+        return self.model.xmax
     
-    @signature('f@:')
-    def yMin(self):
-        return self.py.ymin
+    def yMin(self) -> float:
+        return self.model.ymin
     
-    @signature('f@:')
-    def yMax(self):
-        return self.py.ymax
+    def yMax(self) -> float:
+        return self.model.ymax
     
-    @signature('f@:')
-    def xToday(self):
-        return getattr(self.py, 'xtoday', 0) # bar charts don't have a xtoday attr
+    def xToday(self) -> float:
+        return getattr(self.model, 'xtoday', 0) # bar charts don't have a xtoday attr
     
-    def xLabels(self):
-        return self.py.xlabels
+    def xLabels(self) -> list:
+        return self.model.xlabels
     
-    def xTickMarks(self):
-        return self.py.xtickmarks
+    def xTickMarks(self) -> list:
+        return self.model.xtickmarks
     
-    def yLabels(self):
-        return self.py.ylabels
+    def yLabels(self) -> list:
+        return self.model.ylabels
     
-    def yTickMarks(self):
-        return self.py.ytickmarks
+    def yTickMarks(self) -> list:
+        return self.model.ytickmarks
     
+
 class ReportView(OutlineView):
     def refreshExpandedPaths(self): pass
 
@@ -922,9 +918,9 @@ class PyBaseView(PyGUIContainer):
 
 class PyNetWorthView(PyBaseView):
     sheet = subproxy('sheet', 'bsheet', PyGUIObject)
-    nwgraph = subproxy('nwgraph', 'nwgraph', PyGraph)
-    apie = subproxy('apie', 'apie', PyChart)
-    lpie = subproxy('lpie', 'lpie', PyChart)
+    nwgraph = subproxy('nwgraph', 'nwgraph', PyGUIObject)
+    apie = subproxy('apie', 'apie', PyGUIObject)
+    lpie = subproxy('lpie', 'lpie', PyGUIObject)
     
     #Python --> Cocoa
     def update_visibility(self):
@@ -933,9 +929,9 @@ class PyNetWorthView(PyBaseView):
 
 class PyProfitView(PyBaseView):
     sheet = subproxy('sheet', 'istatement', PyGUIObject)
-    pgraph = subproxy('pgraph', 'pgraph', PyGraph)
-    ipie = subproxy('ipie', 'ipie', PyChart)
-    epie = subproxy('epie', 'epie', PyChart)
+    pgraph = subproxy('pgraph', 'pgraph', PyGUIObject)
+    ipie = subproxy('ipie', 'ipie', PyGUIObject)
+    epie = subproxy('epie', 'epie', PyGUIObject)
     
     #Python --> Cocoa
     def update_visibility(self):
@@ -949,8 +945,8 @@ class PyTransactionView(PyBaseView):
 class PyAccountView(PyBaseView):
     filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
     table = subproxy('table', 'etable', PyTable)
-    balGraph = subproxy('balGraph', 'balgraph', PyGraph)
-    barGraph = subproxy('barGraph', 'bargraph', PyGraph)
+    balGraph = subproxy('balGraph', 'balgraph', PyGUIObject)
+    barGraph = subproxy('barGraph', 'bargraph', PyGUIObject)
     
     @signature('c@:')
     def canToggleReconciliationMode(self):

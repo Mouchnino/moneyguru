@@ -7,25 +7,40 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGChart.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGChart
+- (id)initWithPy:(id)aPy
+{
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyChart *m = [[PyChart alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"GUIObjectView", self)];
+    [m release];
+    return self;
+}
+
 /* Override */
 - (MGChartView *)view
 {
     return (MGChartView *)view;
 }
 
-- (PyChart *)py
+- (PyChart *)model
 {
-    return (PyChart *)py;
+    return (PyChart *)model;
 }
 
 /* Python callbacks */
 - (void)refresh
 {
-    [[self view] setData:[[self py] data]];
-    [[self view] setTitle:[[self py] title]];
-    [[self view] setCurrency:[[self py] currency]];
+    [[self view] setData:[[self model] data]];
+    [[self view] setTitle:[[self model] title]];
+    [[self view] setCurrency:[[self model] currency]];
     [[self view] setNeedsDisplay:YES];
 }
 

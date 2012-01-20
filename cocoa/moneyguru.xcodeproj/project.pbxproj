@@ -263,6 +263,8 @@
 		CEF9702A14C8B22500EDD9D7 /* PyTransactionPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702614C8B22500EDD9D7 /* PyTransactionPrint.m */; };
 		CEFCB6EA0E44899B00F5D379 /* MGFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFCB6E90E44899B00F5D379 /* MGFilterBar.m */; };
 		CEFEA33311E1DEA70034AB46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFEA33111E1DEA70034AB46 /* Localizable.strings */; };
+		CEFEA41E14C9FFAF004BCD8D /* PyChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA41B14C9FFAF004BCD8D /* PyChart.m */; };
+		CEFEA41F14C9FFAF004BCD8D /* PyGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -343,7 +345,6 @@
 		CE14537F0E4B40B3009517B6 /* MGEditableTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEditableTable.m; sourceTree = "<group>"; };
 		CE14AF770E6FB3B500E75B76 /* MGPieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPieChartView.h; sourceTree = "<group>"; };
 		CE14AF780E6FB3B500E75B76 /* MGPieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPieChartView.m; sourceTree = "<group>"; };
-		CE14AF7B0E6FCACA00E75B76 /* PyChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyChart.h; sourceTree = "<group>"; };
 		CE16B0240E715B3F001290F7 /* backward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward_32.png; sourceTree = "<group>"; };
 		CE16B0250E715B3F001290F7 /* forward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward_32.png; sourceTree = "<group>"; };
 		CE19150E14C74FC6008B18EE /* py */ = {isa = PBXFileReference; lastKnownFileType = folder; name = py; path = ../build/py; sourceTree = "<group>"; };
@@ -527,7 +528,6 @@
 		CE873A8E0E21622F004F63E9 /* MGUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGUndoManager.h; sourceTree = "<group>"; };
 		CE873A8F0E21622F004F63E9 /* MGUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGUndoManager.m; sourceTree = "<group>"; };
 		CE873A910E21622F004F63E9 /* PyAccountPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountPanel.h; sourceTree = "<group>"; };
-		CE873A970E21622F004F63E9 /* PyGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGraph.h; sourceTree = "<group>"; };
 		CE873A980E21622F004F63E9 /* PyMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMainWindow.h; sourceTree = "<group>"; };
 		CE873A9B0E21622F004F63E9 /* PyTransactionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionPanel.h; sourceTree = "<group>"; };
 		CE873A9F0E21622F004F63E9 /* MGGradientBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGradientBar.h; sourceTree = "<group>"; };
@@ -852,6 +852,10 @@
 		CEFEA33211E1DEA70034AB46 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEFEA33411E1DEB70034AB46 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEFEA33511E1DEC30034AB46 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEFEA41A14C9FFAF004BCD8D /* PyChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyChart.h; sourceTree = "<group>"; };
+		CEFEA41B14C9FFAF004BCD8D /* PyChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyChart.m; sourceTree = "<group>"; };
+		CEFEA41C14C9FFAF004BCD8D /* PyGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyGraph.h; sourceTree = "<group>"; };
+		CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyGraph.m; sourceTree = "<group>"; };
 		CEFF4EB21303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AccountPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB31303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AccountReassignPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB41303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
@@ -1166,9 +1170,7 @@
 				CEE46FC10F91E57800D08E40 /* PyAccountReassignPanel.h */,
 				CEF674B00F4C7791003E5283 /* PyCustomDateRangePanel.h */,
 				CECA7B820F8F89FE003EAF88 /* PyTableWithDate.h */,
-				CE14AF7B0E6FCACA00E75B76 /* PyChart.h */,
 				CE873A910E21622F004F63E9 /* PyAccountPanel.h */,
-				CE873A970E21622F004F63E9 /* PyGraph.h */,
 				CE873A980E21622F004F63E9 /* PyMainWindow.h */,
 			);
 			path = proxies;
@@ -1362,6 +1364,10 @@
 				CEF10B3814C8D77800D4CBD0 /* PyTransactionTable.m */,
 				CEF10B3A14C8D90000D4CBD0 /* PyGeneralLedgerTable.h */,
 				CEF10B3B14C8D90000D4CBD0 /* PyGeneralLedgerTable.m */,
+				CEFEA41A14C9FFAF004BCD8D /* PyChart.h */,
+				CEFEA41B14C9FFAF004BCD8D /* PyChart.m */,
+				CEFEA41C14C9FFAF004BCD8D /* PyGraph.h */,
+				CEFEA41D14C9FFAF004BCD8D /* PyGraph.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1895,6 +1901,8 @@
 				CEF10B3914C8D77800D4CBD0 /* PyTransactionTable.m in Sources */,
 				CEF10B3C14C8D90000D4CBD0 /* PyGeneralLedgerTable.m in Sources */,
 				CEF10B3F14C8D91300D4CBD0 /* PyTableWithDate.m in Sources */,
+				CEFEA41E14C9FFAF004BCD8D /* PyChart.m in Sources */,
+				CEFEA41F14C9FFAF004BCD8D /* PyGraph.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

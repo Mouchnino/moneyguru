@@ -7,13 +7,14 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSGUIController.h"
+#import "HSGUIController2.h"
 #import "MGChartView.h"
 #import "PyChart.h"
 
-@interface MGChart : HSGUIController {}
+@interface MGChart : HSGUIController2 {}
+- (id)initWithPy:(id)aPy;
 - (MGChartView *)view;
-- (PyChart *)py;
+- (PyChart *)model;
 
 /* Python callbacks */
 - (void)refresh;

@@ -17,9 +17,4 @@ http://www.hardcoded.net/licenses/bsd_license
     [self setView:[myview autorelease]];
     return self;
 }
-
-- (PyChart *)py
-{
-    return (PyChart *)py;
-}
 @end
