@@ -734,32 +734,30 @@ class PyBudgetPanel(PyPanel2):
         self.callback.refreshRepeatEvery()
     
 
-class PyCustomDateRangePanel(PyPanel):
-    def startDate(self):
-        return self.py.start_date
+class PyCustomDateRangePanel(PyPanel2):
+    def startDate(self) -> str:
+        return self.model.start_date
     
-    def setStartDate_(self, value):
-        self.py.start_date = value
+    def setStartDate_(self, value: str):
+        self.model.start_date = value
     
-    def endDate(self):
-        return self.py.end_date
+    def endDate(self) -> str:
+        return self.model.end_date
     
-    def setEndDate_(self, value):
-        self.py.end_date = value
+    def setEndDate_(self, value: str):
+        self.model.end_date = value
     
-    @signature('i@:')
-    def slotIndex(self):
-        return self.py.slot_index
+    def slotIndex(self) -> int:
+        return self.model.slot_index
     
-    @signature('v@:i')
-    def setSlotIndex_(self, index):
-        self.py.slot_index = index
+    def setSlotIndex_(self, index: int):
+        self.model.slot_index = index
     
-    def slotName(self):
-        return self.py.slot_name
+    def slotName(self) -> str:
+        return self.model.slot_name
     
-    def setSlotName_(self, name):
-        self.py.slot_name = name
+    def setSlotName_(self, name: str):
+        self.model.slot_name = name
     
 
 class PyAccountReassignPanel(PyPanel):
@@ -1023,7 +1021,7 @@ class PyMainWindow(PyGUIContainer):
     massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyGUIObject)
     budgetPanel = subproxy('budgetPanel', 'budget_panel', PyGUIObject)
     schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
-    customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyCustomDateRangePanel)
+    customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyGUIObject)
     accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyAccountReassignPanel)
     exportPanel = subproxy('exportPanel', 'export_panel', PyExportPanel)
     

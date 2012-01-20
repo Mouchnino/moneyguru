@@ -8,19 +8,27 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGCustomDateRangePanel.h"
 #import "Utils.h"
-#import "MGDateFieldEditor.h"
 #import "MGMainWindowController.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGCustomDateRangePanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"CustomDateRangePanel" py:[[aParent py] customDateRangePanel] parent:aParent];
+    PyObject *pRef = getHackedPyRef([[aParent py] customDateRangePanel]);
+    PyCustomDateRangePanel *m = [[PyCustomDateRangePanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"CustomDateRangePanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"PanelView", self)];
+    [m release];
     return self;
 }
 
-- (PyCustomDateRangePanel *)py
+- (PyCustomDateRangePanel *)model
 {
-    return (PyCustomDateRangePanel *)py;
+    return (PyCustomDateRangePanel *)model;
 }
 
 /* Override */
@@ -36,16 +44,16 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)loadFields
 {
-    [startDateField setStringValue:[[self py] startDate]];
-    [endDateField setStringValue:[[self py] endDate]];
-    [slotIndexSelector selectItemAtIndex:[[self py] slotIndex]];
-    [slotNameField setStringValue:[[self py] slotName]];
+    [startDateField setStringValue:[[self model] startDate]];
+    [endDateField setStringValue:[[self model] endDate]];
+    [slotIndexSelector selectItemAtIndex:[[self model] slotIndex]];
+    [slotNameField setStringValue:[[self model] slotName]];
 }
 
 - (void)saveFields
 {
-    [[self py] setSlotIndex:[slotIndexSelector indexOfSelectedItem]];
-    [[self py] setSlotName:[slotNameField stringValue]];
+    [[self model] setSlotIndex:[slotIndexSelector indexOfSelectedItem]];
+    [[self model] setSlotName:[slotNameField stringValue]];
 }
 
 /* Delegate */
@@ -54,10 +62,10 @@ http://www.hardcoded.net/licenses/bsd_license
     // We have to update start/end field in real time
     id control = [aNotification object];
     if (control == startDateField) {
-        [[self py] setStartDate:[startDateField stringValue]];
+        [[self model] setStartDate:[startDateField stringValue]];
     }
     else if (control == endDateField) {
-        [[self py] setEndDate:[endDateField stringValue]];
+        [[self model] setEndDate:[endDateField stringValue]];
     }
 }
 @end

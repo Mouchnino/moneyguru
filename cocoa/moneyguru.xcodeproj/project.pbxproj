@@ -238,6 +238,7 @@
 		CEE46FC40F91E58500D08E40 /* MGAccountReassignPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE46FC30F91E58500D08E40 /* MGAccountReassignPanel.m */; };
 		CEE674D20E7A7C0300941332 /* recurrent_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE674D10E7A7C0300941332 /* recurrent_16.png */; };
 		CEE6850E14CA1E9D0082F618 /* PyBudgetPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6850D14CA1E9D0082F618 /* PyBudgetPanel.m */; };
+		CEE6851114CA20030082F618 /* PyCustomDateRangePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6851014CA20030082F618 /* PyCustomDateRangePanel.m */; };
 		CEE6E50114C8CB53002FF89F /* PyFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE6E4FF14C8CB53002FF89F /* PyFilterBar.m */; };
 		CEEDCEE910F75FF9003BC1BA /* MGTransactionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEDCEE810F75FF9003BC1BA /* MGTransactionView.m */; };
 		CEEED1CF0E3F5FD100BBA154 /* MGReconciliationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEED1CE0E3F5FD100BBA154 /* MGReconciliationCell.m */; };
@@ -812,6 +813,8 @@
 		CEE674D10E7A7C0300941332 /* recurrent_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recurrent_16.png; sourceTree = "<group>"; };
 		CEE6850C14CA1E9D0082F618 /* PyBudgetPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBudgetPanel.h; sourceTree = "<group>"; };
 		CEE6850D14CA1E9D0082F618 /* PyBudgetPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyBudgetPanel.m; sourceTree = "<group>"; };
+		CEE6850F14CA20030082F618 /* PyCustomDateRangePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyCustomDateRangePanel.h; sourceTree = "<group>"; };
+		CEE6851014CA20030082F618 /* PyCustomDateRangePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyCustomDateRangePanel.m; sourceTree = "<group>"; };
 		CEE6E4FE14C8CB53002FF89F /* PyFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFilterBar.h; sourceTree = "<group>"; };
 		CEE6E4FF14C8CB53002FF89F /* PyFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyFilterBar.m; sourceTree = "<group>"; };
 		CEEDCEE710F75FF9003BC1BA /* MGTransactionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionView.h; sourceTree = "<group>"; };
@@ -1398,6 +1401,8 @@
 				CEFEA43614CA0BFC004BCD8D /* PyMassEditionPanel.m */,
 				CEE6850C14CA1E9D0082F618 /* PyBudgetPanel.h */,
 				CEE6850D14CA1E9D0082F618 /* PyBudgetPanel.m */,
+				CEE6850F14CA20030082F618 /* PyCustomDateRangePanel.h */,
+				CEE6851014CA20030082F618 /* PyCustomDateRangePanel.m */,
 				CEF9702114C8B22500EDD9D7 /* PyPrintView.h */,
 				CEF9702214C8B22500EDD9D7 /* PyPrintView.m */,
 				CEF9702314C8B22500EDD9D7 /* PySplitPrint.h */,
@@ -1945,6 +1950,7 @@
 				CEFEA43414CA082C004BCD8D /* MGPanel2.m in Sources */,
 				CEFEA43714CA0BFC004BCD8D /* PyMassEditionPanel.m in Sources */,
 				CEE6850E14CA1E9D0082F618 /* PyBudgetPanel.m in Sources */,
+				CEE6851114CA20030082F618 /* PyCustomDateRangePanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
