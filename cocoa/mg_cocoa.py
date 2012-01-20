@@ -760,8 +760,10 @@ class PyCustomDateRangePanel(PyPanel2):
         self.model.slot_name = name
     
 
-class PyAccountReassignPanel(PyPanel):
-    accountList = subproxy('accountList', 'account_list', PySelectableList)
+class PyAccountReassignPanel(PyPanel2):
+    def accountList(self) -> pyref:
+        return self.model.account_list
+    
 
 class PyExportPanel(PyPanel):
     accountTable = subproxy('accountTable', 'account_table', PyTable)
@@ -1022,7 +1024,7 @@ class PyMainWindow(PyGUIContainer):
     budgetPanel = subproxy('budgetPanel', 'budget_panel', PyGUIObject)
     schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
     customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyGUIObject)
-    accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyAccountReassignPanel)
+    accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyGUIObject)
     exportPanel = subproxy('exportPanel', 'export_panel', PyExportPanel)
     
     nwview = subproxy('nwview', 'nwview', PyNetWorthView)
