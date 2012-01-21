@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGEditableTable2.h"
 
 @interface MGSplitTable : MGEditableTable2 {}
-- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
 - (PySplitTable *)model;
 @end

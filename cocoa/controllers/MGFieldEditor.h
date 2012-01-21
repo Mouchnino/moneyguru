@@ -16,7 +16,6 @@ http://www.hardcoded.net/licenses/bsd_license
     PyCompletableEdit *py;
     NSString *lastCompletion;
 }
-- (id)initWithPy:(id)aPy;
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (void)setAttrname:(NSString *)attrname;
 /* Actions */

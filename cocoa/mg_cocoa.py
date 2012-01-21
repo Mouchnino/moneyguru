@@ -303,27 +303,12 @@ class PyReport(PyOutline2):
         self.callback.refreshExpandedPaths()
     
 
-class PyPanel(PyGUIObject):
-    def savePanel(self):
-        self.py.save()
-    
-    # Python --> Cocoa
-    def pre_load(self):
-        self.cocoa.preLoad()
-    
-    def post_load(self):
-        self.cocoa.postLoad()
-    
-    def pre_save(self):
-        self.cocoa.preSave()
-    
-
 class PanelView(GUIObjectView):
     def preLoad(self): pass
     def postLoad(self): pass
     def preSave(self): pass
 
-class PyPanel2(PyGUIObject2):
+class PyPanel(PyGUIObject2):
     def savePanel(self):
         self.model.save()
     
@@ -457,7 +442,7 @@ class PyFilterBar(PyGUIObject2):
         self.callback.enableTransfers()
     
 
-class PyAccountPanel(PyPanel2):
+class PyAccountPanel(PyPanel):
     def typeList(self) -> pyref:
         return self.model.type_list
     
@@ -491,56 +476,61 @@ class PySplitTable(PyTable2):
         self.model.move_split(from_row, to_row)
     
 
+class PanelWithTransactionView(PanelView):
+    def refreshForMultiCurrency(self): pass
+
 class PyPanelWithTransaction(PyPanel):
-    completableEdit = subproxy('completableEdit', 'completable_edit', PyGUIObject)
-    splitTable = subproxy('splitTable', 'split_table', PyGUIObject)
+    def completableEdit(self) -> pyref:
+        return self.model.completable_edit
     
-    def description(self):
-        return self.py.description
+    def splitTable(self) -> pyref:
+        return self.model.split_table
     
-    def setDescription_(self, value):
-        self.py.description = value
+    def description(self) -> str:
+        return self.model.description
     
-    def payee(self):
-        return self.py.payee
+    def setDescription_(self, value: str):
+        self.model.description = value
     
-    def setPayee_(self, value):
-        self.py.payee = value
+    def payee(self) -> str:
+        return self.model.payee
     
-    def checkno(self):
-        return self.py.checkno
+    def setPayee_(self, value: str):
+        self.model.payee = value
     
-    def setCheckno_(self, value):
-        self.py.checkno = value
+    def checkno(self) -> str:
+        return self.model.checkno
     
-    def notes(self):
-        return self.py.notes
+    def setCheckno_(self, value: str):
+        self.model.checkno = value
     
-    def setNotes_(self, value):
-        self.py.notes = value
+    def notes(self) -> str:
+        return self.model.notes
     
-    @signature('c@:')
-    def isMultiCurrency(self):
-        return self.py.is_multi_currency
+    def setNotes_(self, value: str):
+        self.model.notes = value
+    
+    def isMultiCurrency(self) -> bool:
+        return self.model.is_multi_currency
     
     #--- Python -> Cocoa
+    @dontwrap
     def refresh_for_multi_currency(self):
-        self.cocoa.refreshForMultiCurrency()
+        self.callback.refreshForMultiCurrency()
     
 
 class PyTransactionPanel(PyPanelWithTransaction):
-
     def mctBalance(self):
-        self.py.mct_balance()
+        self.model.mct_balance()
     
-    def date(self):
-        return self.py.date
+    def date(self) -> str:
+        return self.model.date
     
-    def setDate_(self, value):
-        self.py.date = value
+    def setDate_(self, value: str):
+        self.model.date = value
     
 
-class PyMassEditionPanel(PyPanel2):
+class PyMassEditionPanel(PyPanel):
     def completableEdit(self) -> pyref:
         return self.model.completable_edit
     
@@ -650,42 +640,43 @@ class PyMassEditionPanel(PyPanel2):
         self.model.currency_index = value
     
 
+class SchedulePanelView(PanelWithTransactionView):
+    def refreshRepeatEvery(self): pass
+
 class PySchedulePanel(PyPanelWithTransaction):
+    def repeatTypeList(self) -> pyref:
+        return self.model.repeat_type_list
     
-    repeatTypeList = subproxy('repeatTypeList', 'repeat_type_list', PySelectableList)
+    def startDate(self) -> str:
+        return self.model.start_date
     
-    def startDate(self):
-        return self.py.start_date
+    def setStartDate_(self, value: str):
+        self.model.start_date = value
     
-    def setStartDate_(self, value):
-        self.py.start_date = value
+    def stopDate(self) -> str:
+        return self.model.stop_date
     
-    def stopDate(self):
-        return self.py.stop_date
+    def setStopDate_(self, value: str):
+        self.model.stop_date = value
     
-    def setStopDate_(self, value):
-        self.py.stop_date = value
+    def repeatEvery(self) -> int:
+        return self.model.repeat_every
     
-    @signature('i@:')
-    def repeatEvery(self):
-        return self.py.repeat_every
+    def setRepeatEvery_(self, value: int):
+        self.model.repeat_every = value
     
-    @signature('v@:i')
-    def setRepeatEvery_(self, value):
-        self.py.repeat_every = value
-    
-    def repeatEveryDesc(self):
-        return self.py.repeat_every_desc
+    def repeatEveryDesc(self) -> str:
+        return self.model.repeat_every_desc
     
     #--- Python -> Cocoa
+    @dontwrap
     def refresh_repeat_every(self):
-        self.cocoa.refreshRepeatEvery()
+        self.callback.refreshRepeatEvery()
     
 class BudgetPanelView(PanelView):
     def refreshRepeatEvery(self): pass
 
-class PyBudgetPanel(PyPanel2):
-    
+class PyBudgetPanel(PyPanel):
     def repeatTypeList(self) -> pyref:
         return self.model.repeat_type_list
     
@@ -734,7 +725,7 @@ class PyBudgetPanel(PyPanel2):
         self.callback.refreshRepeatEvery()
     
 
-class PyCustomDateRangePanel(PyPanel2):
+class PyCustomDateRangePanel(PyPanel):
     def startDate(self) -> str:
         return self.model.start_date
     
@@ -760,7 +751,7 @@ class PyCustomDateRangePanel(PyPanel2):
         self.model.slot_name = name
     
 
-class PyAccountReassignPanel(PyPanel2):
+class PyAccountReassignPanel(PyPanel):
     def accountList(self) -> pyref:
         return self.model.account_list
     
@@ -768,7 +759,7 @@ class ExportPanelView(PanelView):
     def setTableEnabled_(self, enabled: bool): pass
     def setExportButtonEnabled_(self, enabled: bool): pass
 
-class PyExportPanel(PyPanel2):
+class PyExportPanel(PyPanel):
     def accountTable(self) -> pyref:
         return self.model.account_table
     
@@ -1019,10 +1010,10 @@ class PyMainWindow(PyGUIContainer):
     completionLookup = subproxy('completionLookup', 'completion_lookup', PyGUIObject)
     
     accountPanel = subproxy('accountPanel', 'account_panel', PyGUIObject)
-    transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyTransactionPanel)
+    transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyGUIObject)
     massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyGUIObject)
     budgetPanel = subproxy('budgetPanel', 'budget_panel', PyGUIObject)
-    schedulePanel = subproxy('schedulePanel', 'schedule_panel', PySchedulePanel)
+    schedulePanel = subproxy('schedulePanel', 'schedule_panel', PyGUIObject)
     customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyGUIObject)
     accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyGUIObject)
     exportPanel = subproxy('exportPanel', 'export_panel', PyGUIObject)

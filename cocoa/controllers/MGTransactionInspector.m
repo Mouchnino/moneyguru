@@ -16,9 +16,16 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGTransactionInspector
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"TransactionPanel" py:[[aParent py] transactionPanel] parent:aParent];
-    splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] tableView:splitTableView];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
+    PyObject *pRef = getHackedPyRef([[aParent py] transactionPanel]);
+    PyTransactionPanel *m = [[PyTransactionPanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"TransactionPanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"PanelWithTransactionView", self)];
+    [m release];
+    splitTable = [[MGSplitTable alloc] initWithPyRef:[[self model] splitTable] tableView:splitTableView];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
@@ -28,9 +35,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyTransactionPanel *)py
+- (PyTransactionPanel *)model
 {
-    return (PyTransactionPanel *)py;
+    return (PyTransactionPanel *)model;
 }
 
 /* MGPanel Overrides */
@@ -64,19 +71,21 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)loadFields
 {
     [tabView selectFirstTabViewItem:self];
-    [descriptionField setStringValue:[[self py] description]];
-    [payeeField setStringValue:[[self py] payee]];
-    [checknoField setStringValue:[[self py] checkno]];
-    [notesField setStringValue:[[self py] notes]];
+    [dateField setStringValue:[[self model] date]];
+    [descriptionField setStringValue:[[self model] description]];
+    [payeeField setStringValue:[[self model] payee]];
+    [checknoField setStringValue:[[self model] checkno]];
+    [notesField setStringValue:[[self model] notes]];
     [splitTable refresh];
 }
 
 - (void)saveFields
 {
-    [[self py] setDescription:[descriptionField stringValue]];
-    [[self py] setPayee:[payeeField stringValue]];
-    [[self py] setCheckno:[checknoField stringValue]];
-    [[self py] setNotes:[notesField stringValue]];
+    [[self model] setDate:[dateField stringValue]];
+    [[self model] setDescription:[descriptionField stringValue]];
+    [[self model] setPayee:[payeeField stringValue]];
+    [[self model] setCheckno:[checknoField stringValue]];
+    [[self model] setNotes:[notesField stringValue]];
 }
 
 /* NSWindowController Overrides */
@@ -88,7 +97,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Python --> Cocoa */
 - (void)refreshForMultiCurrency
 {
-    [mctBalanceButton setEnabled:[[self py] isMultiCurrency]];
+    [mctBalanceButton setEnabled:[[self model] isMultiCurrency]];
 }
 
 /* Actions */
@@ -104,6 +113,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)mctBalance:(id)sender
 {
-    [[self py] mctBalance];
+    [[self model] mctBalance];
 }
 @end

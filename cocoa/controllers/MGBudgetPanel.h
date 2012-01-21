@@ -7,13 +7,13 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGPanel2.h"
+#import "MGPanel.h"
 #import "HSPopUpList2.h"
 #import "PyBudgetPanel.h"
 
 @class MGMainWindowController;
 
-@interface MGBudgetPanel : MGPanel2 {
+@interface MGBudgetPanel : MGPanel {
     IBOutlet NSTextField *startDateField;
     IBOutlet NSTextField *repeatEveryField;
     IBOutlet NSTextField *repeatEveryDescLabel;

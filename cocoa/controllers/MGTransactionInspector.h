@@ -27,7 +27,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGSplitTable *splitTable;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;
-- (PyTransactionPanel *)py;
+- (PyTransactionPanel *)model;
 /* Actions */
 - (IBAction)addSplit:(id)sender;
 - (IBAction)deleteSplit:(id)sender;

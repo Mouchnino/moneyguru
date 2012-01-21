@@ -7,14 +7,14 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGPanel2.h"
+#import "MGPanel.h"
 #import "HSPopUpList2.h"
 #import "HSComboBox2.h"
 #import "PyAccountPanel.h"
 
 @class MGMainWindowController;
 
-@interface MGAccountProperties : MGPanel2 {
+@interface MGAccountProperties : MGPanel {
     IBOutlet NSTextField *nameTextField;
     IBOutlet NSPopUpButton *typeSelector;
     IBOutlet NSComboBox *currencySelector;

@@ -9,10 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 
 @implementation MGPanel
-- (id)initWithNibName:(NSString *)aNibName py:(id)aPy parent:(HSWindowController *)aParent
+- (id)initWithNibName:(NSString *)aNibName model:(PyPanel *)aModel parent:(HSWindowController *)aParent
 {
-    self = [super initWithNibName:aNibName py:aPy];
+    self = [super initWithWindowNibName:aNibName];
     [self window]; // Initialize elements from the NIB.
+    model = [aModel retain];
     parentWindow = [aParent window];
     customFieldEditor = nil; // instantiated by subclasses
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
@@ -21,14 +22,15 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)dealloc
 {
+    [model release];
     [customDateFieldEditor release];
     [customFieldEditor release];
     [super dealloc];
 }
 
-- (PyPanel *)py
+- (PyPanel *)model
 {
-    return (PyPanel *)py;
+    return (PyPanel *)model;
 }
 
 /* Virtual */
@@ -60,7 +62,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Public */
 - (void)save
 {
-    [[self py] savePanel];
+    [[self model] savePanel];
 }
 
 /* Actions */
@@ -106,10 +108,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)postLoad
 {
-    // When we change the values in the py side, it doesn't work with KVO mechanism.
-    // Notifications of a "py" change is enough to refresh all bound controls.
-    [self willChangeValueForKey:@"py"];
-    [self didChangeValueForKey:@"py"];
     [self loadFields];
     [[self window] makeFirstResponder:[self firstField]];
     [NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:self 

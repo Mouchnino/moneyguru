@@ -7,12 +7,12 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGPanel2.h"
+#import "MGPanel.h"
 #import "PyMassEditionPanel.h"
 
 @class MGMainWindowController;
 
-@interface MGMassEditionPanel : MGPanel2 {
+@interface MGMassEditionPanel : MGPanel {
     IBOutlet NSTextField *dateField;
     IBOutlet NSTextField *descriptionField;
     IBOutlet NSTextField *payeeField;

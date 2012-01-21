@@ -7,18 +7,19 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSWindowController.h"
 #import "MGDateFieldEditor.h"
 #import "MGFieldEditor.h"
 #import "PyPanel.h"
+#import "HSWindowController.h"
 
-@interface MGPanel : HSWindowController {
+@interface MGPanel : NSWindowController {
+    PyPanel *model;
     NSWindow *parentWindow;
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
 }
-- (id)initWithNibName:(NSString *)aNibName py:(id)aPy parent:(HSWindowController *)aParent;
-- (PyPanel *)py;
+- (id)initWithNibName:(NSString *)aNibName model:(PyPanel *)aModel parent:(HSWindowController *)aParent;
+- (PyPanel *)model;
 /* Virtual */
 - (NSString *)completionAttrForField:(id)aField;
 - (BOOL)isFieldDateField:(id)aField;

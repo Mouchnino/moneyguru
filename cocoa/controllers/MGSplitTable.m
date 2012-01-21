@@ -10,18 +10,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "NSEventAdditions.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 #define MGSplitPasteboardType @"MGSplitPasteboardType"
 
 @implementation MGSplitTable
-- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PySplitTable *m = [[PySplitTable alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PySplitTable *m = [[PySplitTable alloc] initWithModel:aPyRef];
     self = [super initWithModel:m tableView:aTableView];
     [m bindCallback:createCallback(@"TableView", self)];
     [m release];

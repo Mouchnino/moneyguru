@@ -10,16 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGFieldEditor
-- (id)initWithPy:(id)aPy
-{
-    PyObject *pRef = getHackedPyRef(aPy);
-    self = [self initWithPyRef:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
-    return self;
-}
-
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     self = [super initWithFrame:NSMakeRect(0, 0, 0, 0)];

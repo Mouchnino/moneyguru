@@ -7,16 +7,24 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGSchedulePanel.h"
-#import "Utils.h"
 #import "MGMainWindowController.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGSchedulePanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    self = [super initWithNibName:@"SchedulePanel" py:[[aParent py] schedulePanel] parent:aParent];
-    splitTable = [[MGSplitTable alloc] initWithPy:[[self py] splitTable] tableView:splitTableView];
-    repeatTypePopUp = [[HSPopUpList alloc] initWithPy:[[self py] repeatTypeList] view:repeatTypePopUpView];
-    customFieldEditor = [[MGFieldEditor alloc] initWithPy:[[self py] completableEdit]];
+    PyObject *pRef = getHackedPyRef([[aParent py] schedulePanel]);
+    PySchedulePanel *m = [[PySchedulePanel alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithNibName:@"SchedulePanel" model:m parent:aParent];
+    [m bindCallback:createCallback(@"SchedulePanelView", self)];
+    [m release];
+    splitTable = [[MGSplitTable alloc] initWithPyRef:[[self model] splitTable] tableView:splitTableView];
+    repeatTypePopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
+    customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
@@ -27,9 +35,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PySchedulePanel *)py
+- (PySchedulePanel *)model
 {
-    return (PySchedulePanel *)py;
+    return (PySchedulePanel *)model;
 }
 
 /* MGPanel Override */
@@ -63,25 +71,25 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)loadFields
 {
     [tabView selectFirstTabViewItem:self];
-    [startDateField setStringValue:[[self py] startDate]];
-    [stopDateField setStringValue:[[self py] stopDate]];
-    [repeatEveryField setIntegerValue:[[self py] repeatEvery]];
-    [descriptionField setStringValue:[[self py] description]];
-    [payeeField setStringValue:[[self py] payee]];
-    [checknoField setStringValue:[[self py] checkno]];
-    [notesField setStringValue:[[self py] notes]];
+    [startDateField setStringValue:[[self model] startDate]];
+    [stopDateField setStringValue:[[self model] stopDate]];
+    [repeatEveryField setIntegerValue:[[self model] repeatEvery]];
+    [descriptionField setStringValue:[[self model] description]];
+    [payeeField setStringValue:[[self model] payee]];
+    [checknoField setStringValue:[[self model] checkno]];
+    [notesField setStringValue:[[self model] notes]];
     [splitTable refresh];
 }
 
 - (void)saveFields
 {
-    [[self py] setStartDate:[startDateField stringValue]];
-    [[self py] setStopDate:[stopDateField stringValue]];
-    [[self py] setRepeatEvery:[repeatEveryField intValue]];
-    [[self py] setDescription:[descriptionField stringValue]];
-    [[self py] setPayee:[payeeField stringValue]];
-    [[self py] setCheckno:[checknoField stringValue]];
-    [[self py] setNotes:[notesField stringValue]];
+    [[self model] setStartDate:[startDateField stringValue]];
+    [[self model] setStopDate:[stopDateField stringValue]];
+    [[self model] setRepeatEvery:[repeatEveryField intValue]];
+    [[self model] setDescription:[descriptionField stringValue]];
+    [[self model] setPayee:[payeeField stringValue]];
+    [[self model] setCheckno:[checknoField stringValue]];
+    [[self model] setNotes:[notesField stringValue]];
 }
 
 /* NSWindowController Overrides */
@@ -108,7 +116,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)refreshRepeatEvery
 {
-    [repeatEveryDescLabel setStringValue:[[self py] repeatEveryDesc]];
+    [repeatEveryDescLabel setStringValue:[[self model] repeatEveryDesc]];
 }
 
 /* Delegate */
@@ -117,11 +125,11 @@ http://www.hardcoded.net/licenses/bsd_license
     id control = [aNotification object];
     if (control == repeatEveryField) {
         // must be edited right away to update the desc label
-        [[self py] setRepeatEvery:[repeatEveryField intValue]];
+        [[self model] setRepeatEvery:[repeatEveryField intValue]];
     }
     else if (control == startDateField) {
         // must be edited right away to update the repeat options
-        [[self py] setStartDate:[startDateField stringValue]];
+        [[self model] setStartDate:[startDateField stringValue]];
     }
     // for the repeatType field, it's handled in repeatTypeSelected:
 }
