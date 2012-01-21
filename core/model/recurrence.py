@@ -105,6 +105,10 @@ class Recurrence:
         return '<Recurrence %s %d>' % (self.repeat_type, self.repeat_every)
     
     #--- Private
+    def _all_exceptions(self):
+        exceptions = chain(self.date2exception.values(), self.date2globalchange.values())
+        return (e for e in exceptions if e is not None)
+    
     def _create_spawn(self, ref, date):
         return Spawn(self, ref, date)
     
@@ -126,8 +130,8 @@ class Recurrence:
     
     def affected_accounts(self):
         result = self.ref.affected_accounts()
-        for txn in chain(self.date2exception.values(), self.date2globalchange.values()):
-            result |= txn.affected_accounts()
+        for exception in self._all_exceptions():
+            result |= exception.affected_accounts()
         return result
     
     def change_globally(self, spawn):
@@ -190,8 +194,8 @@ class Recurrence:
     
     def reassign_account(self, account, reassign_to=None):
         self.ref.reassign_account(account, reassign_to)
-        for txn in chain(self.date2exception.values(), self.date2globalchange.values()):
-            txn.reassign_account(account, reassign_to)
+        for exception in self._all_exceptions():
+            exception.reassign_account(account, reassign_to)
         self.reset_spawn_cache()
     
     def replicate(self):

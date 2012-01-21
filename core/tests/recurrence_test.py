@@ -455,6 +455,14 @@ def test_perform_another_global_change_before_local_deletion(app):
     app.ttable.save_edits()
     eq_(app.ttable[2].date, '22/09/2008')
 
+@with_app(app_schedule_with_local_deletion)
+def test_delete_account_with_schedule_containing_deletions(app):
+    # There was a bug (#298) where a None value in schedule exceptions would make
+    # affected_accounts() crash.
+    app.select_account('account')
+    app.mw.delete_item()
+    app.arpanel.save() # no crash
+
 #--- Schedule with stop date
 def app_schedule_with_stop_date():
     app = TestApp()

@@ -32,18 +32,21 @@ class EntryFilterBar(FilterBar): # disables buttons
     def __init__(self, account_view):
         FilterBar.__init__(self, account_view)
         self._disabled_buttons = False
+        self._previous_account = None
     
     #--- Override
     def refresh(self):
         FilterBar.refresh(self)
         account = self.mainwindow.shown_account
-        if account is not None and account.is_income_statement_account():
-            self.document.filter_type = None
-            if not self._disabled_buttons:
-                self.view.disable_transfers()
-                self._disabled_buttons = True
-        else:
-            if self._disabled_buttons:
-                self.view.enable_transfers()
-                self._disabled_buttons = False
+        if account is not self._previous_account:
+            self._previous_account = account
+            if account is not None and account.is_income_statement_account():
+                self.document.filter_type = None
+                if not self._disabled_buttons:
+                    self.view.disable_transfers()
+                    self._disabled_buttons = True
+            else:
+                if self._disabled_buttons:
+                    self.view.enable_transfers()
+                    self._disabled_buttons = False
     
