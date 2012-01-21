@@ -12,17 +12,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGReconciliationCell.h"
 #import "MGTextFieldCell.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGEntryTable
 
-- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyEntryTable *m = [[PyEntryTable alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyEntryTable *m = [[PyEntryTable alloc] initWithModel:aPyRef];
     self = [super initWithModel:m tableView:aTableView];
     [m bindCallback:createCallback(@"TableView", self)];
     [m release];

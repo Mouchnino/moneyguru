@@ -11,10 +11,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "AMButtonBar.h"
 #import "PyFilterBar.h"
 
-@interface MGFilterBar : HSGUIController2
-{   
-}
-- (id)initWithPy:(id)aPyParent view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
+@interface MGFilterBar : HSGUIController2 {}
+- (id)initWithPyRef:(PyObject *)aPyRef view:(AMButtonBar *)view forEntryTable:(BOOL)forEntryTable;
 - (PyFilterBar *)model;
 - (AMButtonBar *)view;
 @end

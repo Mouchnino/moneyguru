@@ -10,7 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "AMButtonBarItem.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 #define MGALL @"all"
 #define MGINCOME @"income"
@@ -21,13 +20,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGNOTRECONCILED @"not_reconciled"
 
 @implementation MGFilterBar
-- (id)initWithPy:(id)aPy view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
+- (id)initWithPyRef:(PyObject *)aPyRef view:(AMButtonBar *)aView forEntryTable:(BOOL)forEntryTable
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyFilterBar *m = [[PyFilterBar alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyFilterBar *m = [[PyFilterBar alloc] initWithModel:aPyRef];
     self = [super initWithModel:m view:aView];
     [m bindCallback:createCallback(@"FilterBarView", self)];
     [m release];

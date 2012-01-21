@@ -10,17 +10,25 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "MGEntryPrint.h"
 #import "Utils.h"
+#import "ObjP.h"
 #import "PyMainWindow.h"
 
 @implementation MGAccountView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyAccountView *m = [[PyAccountView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"AccountViewView", self)];
+    [m release];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
-    entryTable = [[MGEntryTable alloc] initWithPy:[[self py] table] tableView:tableView];
-    filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:YES];
-    balanceGraph = [[MGBalanceGraph alloc] initWithPy:[[self py] balGraph]];
-    barGraph = [[MGBarGraph alloc] initWithPy:[[self py] barGraph]];
+    entryTable = [[MGEntryTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
+    filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:YES];
+    balanceGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] balGraph]];
+    barGraph = [[MGBarGraph alloc] initWithPyRef:[[self model] barGraph]];
     // We have to put one of the graph in there before we link the prefs
     NSView *graphView = [balanceGraph view];
     [graphView setFrame:[graphPlaceholder frame]];
@@ -39,16 +47,16 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyAccountView *)py
+- (PyAccountView *)model
 {
-    return (PyAccountView *)py;
+    return (PyAccountView *)model;
 }
 
 - (MGPrintView *)viewToPrint
 {
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : currentGraphView;
-    return [[[MGEntryPrint alloc] initWithPyParent:[self py] tableView:tableView
+    return [[[MGEntryPrint alloc] initWithPyParent:[self model] tableView:tableView
         graphView:printGraphView] autorelease];
 }
 
@@ -70,17 +78,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)canToggleReconciliationMode
 {
-    return [[self py] canToggleReconciliationMode];
+    return [[self model] canToggleReconciliationMode];
 }
 
 - (BOOL)inReconciliationMode
 {
-    return [[self py] inReconciliationMode];
+    return [[self model] inReconciliationMode];
 }
 
 - (void)toggleReconciliationMode
 {
-    [[self py] toggleReconciliationMode];
+    [[self model] toggleReconciliationMode];
 }
 
 - (void)toggleReconciled
@@ -97,7 +105,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Core --> Cocoa */
 - (void)updateVisibility
 {
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     BOOL graphVisible = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
     // Let's set initial rects
     NSRect mainRect = [tableScrollView frame];

@@ -9,14 +9,21 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTransactionView.h"
 #import "MGTransactionPrint.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGTransactionView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyTransactionView *m = [[PyTransactionView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m release];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];
-    transactionTable = [[MGTransactionTable alloc] initWithPy:[[self py] table] tableView:tableView];
-    filterBar = [[MGFilterBar alloc] initWithPy:[[self py] filterBar] view:filterBarView forEntryTable:NO];
+    transactionTable = [[MGTransactionTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
+    filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:NO];
     return self;
 }
         
@@ -27,14 +34,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyTransactionView *)py
+- (PyTransactionView *)model
 {
-    return (PyTransactionView *)py;
+    return (PyTransactionView *)model;
 }
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGTransactionPrint alloc] initWithPyParent:[self py] 
+    return [[[MGTransactionPrint alloc] initWithPyParent:[self model] 
         tableView:[transactionTable tableView]] autorelease];
 }
 

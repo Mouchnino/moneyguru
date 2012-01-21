@@ -313,12 +313,15 @@ class PyPanel(PyGUIObject2):
         self.model.save()
     
     # Python --> Cocoa
+    @dontwrap
     def pre_load(self):
         self.callback.preLoad()
     
+    @dontwrap
     def post_load(self):
         self.callback.postLoad()
     
+    @dontwrap
     def pre_save(self):
         self.callback.preSave()
     
@@ -960,39 +963,57 @@ class PyProfitView(PyBaseView2):
         self.callback.updateVisibility()
     
 
-class PyTransactionView(PyBaseView):
-    filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
-    table = subproxy('table', 'ttable', PyTable)
+class PyTransactionView(PyBaseView2):
+    def filterBar(self) -> pyref:
+        return self.model.filter_bar
+    
+    def table(self) -> pyref:
+        return self.model.ttable
+    
 
-class PyAccountView(PyBaseView):
-    filterBar = subproxy('filterBar', 'filter_bar', PyGUIObject)
-    table = subproxy('table', 'etable', PyTable)
-    balGraph = subproxy('balGraph', 'balgraph', PyGUIObject)
-    barGraph = subproxy('barGraph', 'bargraph', PyGUIObject)
+class AccountViewView(ViewWithGraphView):
+    def refreshReconciliationButton(self): pass
+    def showBarGraph(self): pass
+    def showLineGraph(self): pass
+
+class PyAccountView(PyBaseView2):
+    def filterBar(self) -> pyref:
+        return self.model.filter_bar
     
-    @signature('c@:')
-    def canToggleReconciliationMode(self):
-        return self.py.can_toggle_reconciliation_mode
+    def table(self) -> pyref:
+        return self.model.etable
     
-    @signature('c@:')
-    def inReconciliationMode(self):
-        return self.py.reconciliation_mode
+    def balGraph(self) -> pyref:
+        return self.model.balgraph
+    
+    def barGraph(self) -> pyref:
+        return self.model.bargraph
+    
+    def canToggleReconciliationMode(self) -> bool:
+        return self.model.can_toggle_reconciliation_mode
+    
+    def inReconciliationMode(self) -> bool:
+        return self.model.reconciliation_mode
     
     def toggleReconciliationMode(self):
-        self.py.toggle_reconciliation_mode()
+        self.model.toggle_reconciliation_mode()
     
     #Python --> Cocoa
+    @dontwrap
     def update_visibility(self):
-        self.cocoa.updateVisibility()
+        self.callback.updateVisibility()
     
+    @dontwrap
     def refresh_reconciliation_button(self):
-        self.cocoa.refreshReconciliationButton()
+        self.callback.refreshReconciliationButton()
     
+    @dontwrap
     def show_bar_graph(self):
-        self.cocoa.showBarGraph()
+        self.callback.showBarGraph()
     
+    @dontwrap
     def show_line_graph(self):
-        self.cocoa.showLineGraph()
+        self.callback.showLineGraph()
     
 
 class PyBudgetView(PyBaseView):
@@ -1047,8 +1068,8 @@ class PyMainWindow(PyGUIContainer):
     
     nwview = subproxy('nwview', 'nwview', PyGUIObject)
     pview = subproxy('pview', 'pview', PyGUIObject)
-    tview = subproxy('tview', 'tview', PyTransactionView)
-    aview = subproxy('aview', 'aview', PyAccountView)
+    tview = subproxy('tview', 'tview', PyGUIObject)
+    aview = subproxy('aview', 'aview', PyGUIObject)
     scview = subproxy('scview', 'scview', PyScheduleView)
     bview = subproxy('bview', 'bview', PyBudgetView)
     ccview = subproxy('ccview', 'ccview', PyCashculatorView)

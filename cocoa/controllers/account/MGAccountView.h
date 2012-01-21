@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyAccountView.h"
-#import "MGBaseView.h"
+#import "MGBaseView2.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
 #import "MGEntryTable.h"
@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBalanceGraph.h"
 #import "MGBarGraph.h"
 
-@interface MGAccountView : MGBaseView
+@interface MGAccountView : MGBaseView2
 {
     IBOutlet MGTableView *tableView;
     IBOutlet NSScrollView *tableScrollView;
@@ -31,7 +31,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSView *currentGraphView;
 }
 - (id)initWithPy:(id)aPy;
-- (PyAccountView *)py;
+- (PyAccountView *)model;
 
 /* Public */
 - (id)fieldEditorForObject:(id)asker;
