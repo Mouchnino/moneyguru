@@ -1,3 +1,8 @@
+=== 2.4.3 (2012-01-21)
+
+* Fixed a crash on account deletion. (#298)
+* Fixed the filter bar for income/expense. (#297)
+
 === 2.4.2 (2012-01-17)
 
 * Fixed a checkbox-unchecking glitch in the import window. [Windows, Linux] (#289)
