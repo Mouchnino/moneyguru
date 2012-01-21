@@ -494,23 +494,26 @@ class TestApp(TestAppBase):
         self.doc.save_to_xml(filename) # reset the dirty flag
         return filename
     
-    def show_account(self, account_name):
-        # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
+    def select_account(self, account_name):
+        # Selects the account with `account_name` in the appropriate sheet
         predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
         self.mw.select_balance_sheet()
         node = self.bsheet.find(predicate)
         if node is not None:
             self.bsheet.selected = node
-            self.mw.show_account()
             return
         self.mw.select_income_statement()
         node = self.istatement.find(predicate)
         if node is not None:
             self.istatement.selected = node
-            self.mw.show_account()
             return
         else:
             raise LookupError("Trying to show an account that doesn't exist")
+        
+    def show_account(self, account_name):
+        # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
+        self.select_account(account_name)
+        self.mw.show_account()
     
     def set_column_visible(self, colname, visible):
         # Toggling column from the UI is rather simple for a human, but not for a program. The
