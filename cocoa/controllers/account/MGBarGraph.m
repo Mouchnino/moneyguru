@@ -9,10 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBarGraph.h"
 
 @implementation MGBarGraph
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
     MGBarGraphView *myview = [[MGBarGraphView alloc] init];
-    self = [super initWithPy:aPy];
+    self = [super initWithPyRef:aPyRef];
     [self setView:[myview autorelease]];
     return self;
 }

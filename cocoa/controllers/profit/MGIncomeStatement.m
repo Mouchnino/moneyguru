@@ -12,9 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @implementation MGIncomeStatement
 
-- (id)initWithPy:(id)aPy view:(HSOutlineView *)aOutlineView
+- (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView
 {
-    self = [super initWithPy:aPy view:aOutlineView];
+    self = [super initWithPyRef:aPyRef view:aOutlineView];
     [self initializeColumns];
     return self;
 }

@@ -10,19 +10,27 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBalancePrint.h"
 #import "MGConst.h"
 #import "Utils.h"
+#import "ObjP.h"
 #import "PyMainWindow.h"
 
 @implementation MGNetWorthView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyNetWorthView *m = [[PyNetWorthView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"ViewWithGraphView", self)];
+    [m release];
     [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
-    balanceSheet = [[MGBalanceSheet alloc] initWithPy:[[self py] sheet] view:outlineView];
-    assetsPieChart = [[MGPieChart alloc] initWithPy:[[self py] apie]];
-    liabilitiesPieChart = [[MGPieChart alloc] initWithPy:[[self py] lpie]];
+    balanceSheet = [[MGBalanceSheet alloc] initWithPyRef:[[self model] sheet] view:outlineView];
+    assetsPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] apie]];
+    liabilitiesPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] lpie]];
     [pieChartsView setFirstView:[assetsPieChart view]];
     [pieChartsView setSecondView:[liabilitiesPieChart view]];
-    netWorthGraph = [[MGBalanceGraph alloc] initWithPy:[[self py] nwgraph]];
+    netWorthGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] nwgraph]];
     NSView *graphView = [netWorthGraph view];
     [graphView setFrame:[netWorthGraphPlaceholder frame]];
     [graphView setAutoresizingMask:[netWorthGraphPlaceholder autoresizingMask]];
@@ -39,17 +47,17 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyNetWorthView *)py
+- (PyNetWorthView *)model
 {
-    return (PyNetWorthView *)py;
+    return (PyNetWorthView *)model;
 }
 
 - (MGPrintView *)viewToPrint
 {
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : [netWorthGraph view];
     MGDoubleView *printPieChartView = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? nil : pieChartsView;
-    MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[self py] outlineView:outlineView
+    MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[self model] outlineView:outlineView
         graphView:printGraphView pieViews:printPieChartView];
     return [p autorelease];
 }
@@ -68,7 +76,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* model --> view */
 - (void)updateVisibility
 {
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[[self py] mainwindow] hiddenAreas]];
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     BOOL graphVisible = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
     BOOL pieVisible = ![hiddenAreas containsIndex:MGPaneAreaRightChart];
     // Let's set initial rects

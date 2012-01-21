@@ -12,6 +12,5 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface MGBalanceSheet : MGReport
 {
 }
-- (id)initWithPy:(id)aPyParent view:(HSOutlineView *)aOutlineView;
 - (void)initializeColumns;
 @end

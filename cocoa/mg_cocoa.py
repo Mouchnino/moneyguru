@@ -911,26 +911,53 @@ class PyBaseView(PyGUIContainer):
             # proxy. We never bind the cocoa part.
         return self._mainwindow
 
-class PyNetWorthView(PyBaseView):
-    sheet = subproxy('sheet', 'bsheet', PyGUIObject)
-    nwgraph = subproxy('nwgraph', 'nwgraph', PyGUIObject)
-    apie = subproxy('apie', 'apie', PyGUIObject)
-    lpie = subproxy('lpie', 'lpie', PyGUIObject)
+class PyBaseView2(PyListener2):
+    def mainwindow(self) -> pyref:
+        return self.model.mainwindow
     
-    #Python --> Cocoa
-    def update_visibility(self):
-        self.cocoa.updateVisibility()
+    def hiddenAreas(self) -> list:
+        return list(self.model.mainwindow.hidden_areas)
     
 
-class PyProfitView(PyBaseView):
-    sheet = subproxy('sheet', 'istatement', PyGUIObject)
-    pgraph = subproxy('pgraph', 'pgraph', PyGUIObject)
-    ipie = subproxy('ipie', 'ipie', PyGUIObject)
-    epie = subproxy('epie', 'epie', PyGUIObject)
+class ViewWithGraphView:
+    def updateVisibility(self): pass
+
+class PyNetWorthView(PyBaseView2):
+    def sheet(self) -> pyref:
+        return self.model.bsheet
+    
+    def nwgraph(self) -> pyref:
+        return self.model.nwgraph
+    
+    def apie(self) -> pyref:
+        return self.model.apie
+    
+    def lpie(self) -> pyref:
+        return self.model.lpie
     
     #Python --> Cocoa
+    @dontwrap
     def update_visibility(self):
-        self.cocoa.updateVisibility()
+        self.callback.updateVisibility()
+    
+
+class PyProfitView(PyBaseView2):
+    def sheet(self) -> pyref:
+        return self.model.istatement
+    
+    def pgraph(self) -> pyref:
+        return self.model.pgraph
+    
+    def ipie(self) -> pyref:
+        return self.model.ipie
+    
+    def epie(self) -> pyref:
+        return self.model.epie
+    
+    #Python --> Cocoa
+    @dontwrap
+    def update_visibility(self):
+        self.callback.updateVisibility()
     
 
 class PyTransactionView(PyBaseView):
@@ -1018,8 +1045,8 @@ class PyMainWindow(PyGUIContainer):
     accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyGUIObject)
     exportPanel = subproxy('exportPanel', 'export_panel', PyGUIObject)
     
-    nwview = subproxy('nwview', 'nwview', PyNetWorthView)
-    pview = subproxy('pview', 'pview', PyProfitView)
+    nwview = subproxy('nwview', 'nwview', PyGUIObject)
+    pview = subproxy('pview', 'pview', PyGUIObject)
     tview = subproxy('tview', 'tview', PyTransactionView)
     aview = subproxy('aview', 'aview', PyAccountView)
     scview = subproxy('scview', 'scview', PyScheduleView)

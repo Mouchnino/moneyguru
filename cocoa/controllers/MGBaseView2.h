@@ -7,14 +7,14 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyBaseView.h"
-#import "PyReport.h"
-#import "PyChart.h"
-#import "PyGraph.h"
+#import "HSGUIController2.h"
+#import "MGPrintView.h"
 
-@interface PyProfitView : PyBaseView {}
-- (PyReport *)sheet;
-- (PyGraph *)pgraph;
-- (PyChart *)ipie;
-- (PyChart *)epie;
+@interface MGBaseView2 : HSGUIController2
+{
+    IBOutlet NSView *wholeView;
+    IBOutlet NSResponder *mainResponder;
+}
+- (MGPrintView *)viewToPrint;
+- (NSResponder *)mainResponder;
 @end

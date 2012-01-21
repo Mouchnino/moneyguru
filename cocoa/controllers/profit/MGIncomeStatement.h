@@ -13,6 +13,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDoubleView.h"
 
 @interface MGIncomeStatement : MGReport {}
-- (id)initWithPy:(id)aPy view:(HSOutlineView *)aOutlineView;
+- (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView;
 - (void)initializeColumns;
 @end

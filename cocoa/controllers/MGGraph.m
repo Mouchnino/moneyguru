@@ -14,10 +14,16 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPy:(id)aPy
 {
     PyObject *pRef = getHackedPyRef(aPy);
-    PyGraph *m = [[PyGraph alloc] initWithModel:pRef];
+    self = [self initWithPyRef:pRef];
     OBJP_LOCKGIL;
     Py_DECREF(pRef);
     OBJP_UNLOCKGIL;
+    return self;
+}
+
+- (id)initWithPyRef:(PyObject *)aPyRef
+{
+    PyGraph *m = [[PyGraph alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
     [m release];

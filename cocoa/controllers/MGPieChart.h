@@ -10,5 +10,5 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGChart.h"
 
 @interface MGPieChart : MGChart {}
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 @end

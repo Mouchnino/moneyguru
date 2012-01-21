@@ -15,6 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
     HSColumns2 *columns;
     BOOL toggleExcludedIsEnabled;
 }
+- (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView;
 - (PyReport *)py;
 
 - (IBAction)showSelectedAccount:(id)sender;

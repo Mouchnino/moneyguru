@@ -11,7 +11,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTextFieldCell.h"
 #import "MGConst.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 NSArray* convertPaths(NSArray *paths)
 {
@@ -23,13 +22,9 @@ NSArray* convertPaths(NSArray *paths)
 }
 
 @implementation MGReport
-- (id)initWithPy:(id)aPy view:(HSOutlineView *)aOutlineView
+- (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyReport *m = [[PyReport alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyReport *m = [[PyReport alloc] initWithModel:aPyRef];
     self = [super initWithPy:m view:aOutlineView];
     [m bindCallback:createCallback(@"ReportView", self)];
     [m release];

@@ -6,15 +6,21 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/bsd_license
 */
 
-#import <Cocoa/Cocoa.h>
-#import "PyBaseView.h"
-#import "PyReport.h"
-#import "PyChart.h"
-#import "PyGraph.h"
+#import "MGBaseView2.h"
 
-@interface PyNetWorthView : PyBaseView {}
-- (PyReport *)sheet;
-- (PyGraph *)nwgraph;
-- (PyChart *)apie;
-- (PyChart *)lpie;
+@implementation MGBaseView2
+- (NSView *)view
+{
+    return wholeView;
+}
+
+- (MGPrintView *)viewToPrint
+{
+    return nil;
+}
+
+- (NSResponder *)mainResponder
+{
+    return mainResponder;
+}
 @end

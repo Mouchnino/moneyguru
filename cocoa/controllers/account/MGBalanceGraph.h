@@ -12,5 +12,5 @@ http://www.hardcoded.net/licenses/bsd_license
 
 
 @interface MGBalanceGraph : MGGraph {}
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 @end
