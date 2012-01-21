@@ -124,6 +124,14 @@ class TestTransactionsOfEachType:
         app.sfield.query = 'first'
         eq_(app.ttable.row_count, 0)
     
+    @with_app(do_setup)
+    def test_allow_change_in_fbar_when_in_income_account(self, app):
+        # There was a bug (#297) where the fbar, when in an income/expense account, would always
+        # reset the filter to None on refresh, making it impossible to apply any filter.
+        app.show_account('Income')
+        app.efbar.filter_type = FilterType.Income
+        eq_(app.efbar.filter_type, FilterType.Income)
+    
 
 class TestThreeEntriesOneReconciled:
     def do_setup(self):
