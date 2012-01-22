@@ -65,7 +65,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)toggleExcluded
 {
-    [[balanceSheet py] toggleExcluded];
+    [[balanceSheet model] toggleExcluded];
 }
 
 /* model --> view */

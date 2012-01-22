@@ -65,7 +65,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)toggleExcluded
 {
-    [[incomeStatement py] toggleExcluded];
+    [[incomeStatement model] toggleExcluded];
 }
 
 /* model --> view */

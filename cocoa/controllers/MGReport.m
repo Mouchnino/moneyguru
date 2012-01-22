@@ -24,11 +24,9 @@ NSArray* convertPaths(NSArray *paths)
 @implementation MGReport
 - (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView
 {
-    PyReport *m = [[PyReport alloc] initWithModel:aPyRef];
-    self = [super initWithPy:m view:aOutlineView];
-    [m bindCallback:createCallback(@"ReportView", self)];
-    [m release];
-    columns = [[HSColumns alloc] initWithPyRef:[[self py] columns] tableView:aOutlineView];
+    self = [super initWithPyRef:aPyRef wrapperClass:[PyReport class]
+        callbackClassName:@"ReportView" view:aOutlineView];
+    columns = [[HSColumns alloc] initWithPyRef:[[self model] columns] tableView:aOutlineView];
     [[self view] registerForDraggedTypes:[NSArray arrayWithObject:MGPathsPasteboardType]];
     return self;
 }
@@ -39,9 +37,9 @@ NSArray* convertPaths(NSArray *paths)
     [super dealloc];
 }
 
-- (PyReport *)py
+- (PyReport *)model
 {
-    return (PyReport *)py;
+    return (PyReport *)model;
 }
 
 - (HSColumns *)columns
@@ -49,27 +47,22 @@ NSArray* convertPaths(NSArray *paths)
     return columns;
 }
 
-- (HSOutlineView *)view
-{
-    return outlineView;
-}
-
 /* Actions */
 - (IBAction)showSelectedAccount:(id)sender
 {
-    [[self py] showSelectedAccount];
+    [[self model] showSelectedAccount];
 }
 
 - (IBAction)toggleExcluded:(id)sender
 {
     if (toggleExcludedIsEnabled) {
-        [[self py] toggleExcluded];
+        [[self model] toggleExcluded];
     }
 }
 
 - (BOOL)canShowSelectedAccount
 {
-    return [[self py] canShowSelectedAccount];
+    return [[self model] canShowSelectedAccount];
 }
 
 /* NSOutlineView data source */
@@ -113,7 +106,7 @@ NSArray* convertPaths(NSArray *paths)
     if ([[pboard types] containsObject:MGPathsPasteboardType]) {
         NSData *data = [pboard dataForType:MGPathsPasteboardType];
         NSArray *paths = convertPaths([NSKeyedUnarchiver unarchiveObjectWithData:data]);
-        if ([[self py] canMovePaths:paths toPath:p2a(destPath)]) {
+        if ([[self model] canMovePaths:paths toPath:p2a(destPath)]) {
             if (index != -1) {
                 [[self view] setDropItem:item dropChildIndex:-1];
             }
@@ -130,7 +123,7 @@ NSArray* convertPaths(NSArray *paths)
     if ([[pboard types] containsObject:MGPathsPasteboardType]) {
         NSData *data = [pboard dataForType:MGPathsPasteboardType];
         NSArray *paths = convertPaths([NSKeyedUnarchiver unarchiveObjectWithData:data]);
-        [[self py] movePaths:paths toPath:p2a(destPath)];
+        [[self model] movePaths:paths toPath:p2a(destPath)];
     }
     return YES;
 }
@@ -236,14 +229,14 @@ NSArray* convertPaths(NSArray *paths)
 /* delegate */
 - (NSString *)dataForCopyToPasteboard
 {
-    return [[self py] selectionAsCSV];
+    return [[self model] selectionAsCSV];
 }
 
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
-    if ([[self py] canDeleteSelected])
+    if ([[self model] canDeleteSelected])
     {
-        [[self py] deleteSelected];
+        [[self model] deleteSelected];
         return YES;
     }
     else
@@ -262,20 +255,20 @@ NSArray* convertPaths(NSArray *paths)
 {
     if ([[self view] clickedRow] != -1)
     {
-        [[self py] showSelectedAccount];
+        [[self model] showSelectedAccount];
     }
 }
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
     NSIndexPath *p = [[notification userInfo] objectForKey:@"NSObject"];
-    [[self py] expandPath:p2a(p)];
+    [[self model] expandPath:p2a(p)];
 }
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
 {
     NSIndexPath *p = [[notification userInfo] objectForKey:@"NSObject"];
-    [[self py] collapsePath:p2a(p)];
+    [[self model] collapsePath:p2a(p)];
 }
 
 /* HACK WARNING
@@ -302,7 +295,7 @@ NSArray* convertPaths(NSArray *paths)
 
 - (void)refreshExpandedPaths
 {
-    NSArray *expandedPaths = [[self py] expandedPaths];
+    NSArray *expandedPaths = [[self model] expandedPaths];
     for (NSArray *arrayPath in expandedPaths) {
         NSIndexPath *path = a2p(arrayPath);
         if (path != nil) {
