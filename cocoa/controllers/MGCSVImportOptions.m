@@ -9,18 +9,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGCSVImportOptions.h"
 #import "MGCSVLayoutNameDialog.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGCSVImportOptions
 - (id)initWithDocument:(MGDocument *)aDocument
 {
     self = [super initWithWindowNibName:@"CSVImportOptions"];
     [self window];
-    PyObject *pDocument = getHackedPyRef([aDocument py]);
-    model = [[PyCSVImportOptions alloc] initWithDocument:pDocument];
-    OBJP_LOCKGIL;
-    Py_DECREF(pDocument);
-    OBJP_UNLOCKGIL;
+    model = [[PyCSVImportOptions alloc] initWithDocument:[[aDocument model] pyRef]];
     [model bindCallback:createCallback(@"CSVImportOptionsView", self)];
     [encodingSelector addItemsWithTitles:[model supportedEncodings]];
     [model connect];

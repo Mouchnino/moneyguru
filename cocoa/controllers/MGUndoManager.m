@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGUndoManager.h"
 
 @implementation MGUndoManager
-- (id)initWithPy:(PyDocument *)aDocument
+- (id)initWithDocumentModel:(PyDocument *)aDocument
 {
     self = [super init];
     document = [aDocument retain];

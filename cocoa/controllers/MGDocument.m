@@ -9,22 +9,25 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDocument.h"
 #import "MGMainWindowController.h"
 #import "MGConst.h"
-#import "Utils.h"
 #import "Dialogs.h"
 #import "MGUndoManager.h"
 #import "MGRecurrenceScopeDialog.h"
 #import "MGAppDelegate.h"
 #import "MGPrintView.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGDocument
-
 - (id)init
 {
     self = [super init];
     MGAppDelegate *app = [NSApp delegate];
-    Class pyClass = [Utils classNamed:@"PyDocument"];
-    py = [[pyClass alloc] initWithCocoa:self pyParent:[app py]];
-    [self setUndoManager:[[[MGUndoManager alloc] initWithPy:[self py]] autorelease]];
+    PyObject *pApp = getHackedPyRef([app py]);
+    model = [[PyDocument alloc] initWithApp:pApp];
+    OBJP_LOCKGIL;
+    Py_DECREF(pApp);
+    OBJP_UNLOCKGIL;
+    [self setUndoManager:[[[MGUndoManager alloc] initWithDocumentModel:model] autorelease]];
     return self;
 }
 
@@ -33,31 +36,22 @@ http://www.hardcoded.net/licenses/bsd_license
     for (NSWindowController *wc in [self windowControllers]) {
         [wc release];
     }
-    [py release];
+    [model release];
     [super dealloc];
 }
 
-- (oneway void)release
-{
-    // See HSGUIController
-    if ([self retainCount] == 2)
-    {
-        [py free];
-    }
-    [super release];
-}
 /* For GUI Proxies */
 
-- (PyDocument *)py
+- (PyDocument *)model
 {
-    return py;
+    return model;
 }
 
 /* Override */
 
 - (void)close
 {
-    [[self py] close];
+    [[self model] close];
     // This must not happen in dealloc, because when quitting the app, the dealloc method might not be called
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
@@ -66,7 +60,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)isDocumentEdited
 {
-    return [py isDirty];
+    return [model isDirty];
 }
 
 - (void)makeWindowControllers 
@@ -93,15 +87,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)outError
 {
-    if ([url isFileURL])
-    {
-        NSString *error = [py loadFromFile:[url path]];
-        if (error == nil)
-        {
+    if ([url isFileURL]) {
+        NSString *error = [model loadFromFile:[url path]];
+        if (error == nil) {
             return YES;
         }
-        else
-        {
+        else {
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:error forKey:NSLocalizedFailureReasonErrorKey];
             *outError = [NSError errorWithDomain:MGErrorDomain code:MGFileFormatErrorCode userInfo:userInfo];
         }
@@ -112,7 +103,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)outError
 {
     if ([url isFileURL]) {
-        [py saveToFile:[url path]];
+        [model saveToFile:[url path]];
         [[self windowForSheet] setDocumentEdited:[self isDocumentEdited]];
         return YES;
     }
@@ -131,7 +122,7 @@ http://www.hardcoded.net/licenses/bsd_license
     if ([op runModalForTypes:nil] == NSOKButton)
     {
         NSString *filename = [[op filenames] objectAtIndex:0];
-        NSString *error = [py import:filename];
+        NSString *error = [model import:filename];
         if (error != nil)
         {
             [Dialogs showMessage:error];
@@ -142,12 +133,12 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Misc */
 - (BOOL)isDirty
 {
-    return [py isDirty];
+    return [model isDirty];
 }
 
 - (void)stopEdition
 {
-    [py stopEdition];
+    [model stopEdition];
 }
 
 /* Python -> Cocoa */

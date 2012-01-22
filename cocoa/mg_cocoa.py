@@ -107,75 +107,69 @@ class PyMoneyGuruApp(PyFairware):
         self.py.auto_decimal_place = value
     
 
-class PyDocument(NSObject):
-    def initWithCocoa_pyParent_(self, cocoa, pyparent):
-        super(PyDocument, self).init()
-        self.cocoa = cocoa
-        self.py = Document(self, pyparent.py)
-        self.py.connect()
-        return self
+class DocumentView(GUIObjectView):
+    def queryForScheduleScope(self) -> bool: pass
+
+class PyDocument(PyGUIObject2):
+    def __init__(self, app: pyref):
+        model = Document(None, app)
+        PyGUIObject2.__init__(self, model)
+        self.model.connect()
     
     #--- Undo
-    @signature('c@:')
-    def canUndo(self):
-        return self.py.can_undo()
+    def canUndo(self) -> bool:
+        return self.model.can_undo()
     
-    def undoDescription(self):
-        return self.py.undo_description()
+    def undoDescription(self) -> str:
+        return self.model.undo_description()
     
     def undo(self):
-        self.py.undo()
+        self.model.undo()
     
-    @signature('c@:')
-    def canRedo(self):
-        return self.py.can_redo()
+    def canRedo(self) -> bool:
+        return self.model.can_redo()
     
-    def redoDescription(self):
-        return self.py.redo_description()
+    def redoDescription(self) -> str:
+        return self.model.redo_description()
     
     def redo(self):
-        self.py.redo()
+        self.model.redo()
     
     #--- Misc
     def adjustExampleFile(self):
-        self.py.adjust_example_file()
+        self.model.adjust_example_file()
     
-    def loadFromFile_(self, filename):
+    def loadFromFile_(self, filename: str) -> str:
         try:
-            self.py.load_from_xml(filename)
+            self.model.load_from_xml(filename)
         except FileFormatError as e:
             return str(e)
     
-    def saveToFile_(self, filename):
-        self.py.save_to_xml(filename)
+    def saveToFile_(self, filename: str):
+        self.model.save_to_xml(filename)
     
-    def import_(self, filename):
+    def import_(self, filename: str) -> str:
         try:
-            self.py.parse_file_for_import(filename)
+            self.model.parse_file_for_import(filename)
         except FileFormatError as e:
             return str(e)
     
-    @signature('c@:')
-    def isDirty(self):
-        return self.py.is_dirty()
+    def isDirty(self) -> bool:
+        return self.model.is_dirty()
     
     def stopEdition(self):
-        self.py.stop_edition()
+        self.model.stop_edition()
     
     def close(self):
-        self.py.close()
-        self.py.disconnect()
+        self.model.close()
+        self.model.disconnect()
     
-    # temporary
-    @signature('i@:')
-    def isRegistered(self):
-        return self.py.app.registered
-    
-    def free(self): # see PyGUIObject
-        if hasattr(self, 'cocoa'):
-            del self.cocoa
+    # temporary. XXX still needed?
+    def isRegistered(self) -> bool:
+        return self.model.app.registered
     
     #--- Python -> Cocoa
+    @dontwrap
     def query_for_schedule_scope(self):
         return self.cocoa.queryForScheduleScope()
     
@@ -1066,7 +1060,7 @@ class MainWindowView(GUIObjectView):
 
 class PyMainWindow(PyListener2):
     def __init__(self, document: pyref):
-        model = MainWindow(None, document)
+        model = MainWindow(None, document.model)
         PyListener2.__init__(self, model)
     
     def searchField(self) -> pyref:
@@ -1282,7 +1276,7 @@ class ImportWindowView(GUIObjectView):
 
 class PyImportWindow(PyListener2):
     def __init__(self, document: pyref):
-        model = ImportWindow(None, document)
+        model = ImportWindow(None, document.model)
         PyListener2.__init__(self, model)
     
     def importTable(self) -> pyref:
@@ -1362,7 +1356,7 @@ class CSVImportOptionsView(GUIObjectView):
 
 class PyCSVImportOptions(PyListener2):
     def __init__(self, document: pyref):
-        model = CSVOptions(None, document)
+        model = CSVOptions(None, document.model)
         PyListener2.__init__(self, model)
     
     def columnNameAtIndex_(self, index: int) -> str:

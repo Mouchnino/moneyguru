@@ -13,5 +13,5 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     PyDocument *document;
 }
-- (id)initWithPy:(PyDocument *)aDocument;
+- (id)initWithDocumentModel:(PyDocument *)aDocument;
 @end

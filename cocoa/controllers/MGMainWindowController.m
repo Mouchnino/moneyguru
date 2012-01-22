@@ -9,17 +9,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGMainWindowController.h"
 #import "MGConst.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGMainWindowController
 - (id)initWithDocument:(MGDocument *)document
 {
     self = [super initWithWindowNibName:@"MainWindow"];
-    PyObject *pDocument = getHackedPyRef([document py]);
-    model = [[PyMainWindow alloc] initWithDocument:pDocument];
-    OBJP_LOCKGIL;
-    Py_DECREF(pDocument);
-    OBJP_UNLOCKGIL;
+    model = [[PyMainWindow alloc] initWithDocument:[[document model] pyRef]];
     [model bindCallback:createCallback(@"MainWindowView", self)];
     [self setDocument:document];
     /* Put a cute iTunes-like bottom bar */

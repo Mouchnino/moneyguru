@@ -11,10 +11,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGDocument : NSDocument
 {
-    PyDocument *py;
+    PyDocument *model;
 }
 
-- (PyDocument *)py;
+- (PyDocument *)model;
 
 /* Actions */
 - (IBAction)import:(id)sender;

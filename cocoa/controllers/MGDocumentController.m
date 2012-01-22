@@ -30,7 +30,7 @@ http://www.hardcoded.net/licenses/bsd_license
                 doc = [self openFirstDocument];
             }
         }
-        [[doc py] import:[absoluteURL path]];
+        [[doc model] import:[absoluteURL path]];
         return doc;
     }
     return [super openDocumentWithContentsOfURL:absoluteURL display:displayDocument error:outError];

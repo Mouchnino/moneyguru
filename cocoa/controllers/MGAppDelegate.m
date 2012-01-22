@@ -78,7 +78,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSError *error;
     MGDocument *doc = [dc makeUntitledDocumentOfType:@"moneyGuru Document" error:&error];
     [doc readFromURL:[NSURL fileURLWithPath:filePath] ofType:@"moneyGuru Document" error:&error];
-    [[doc py] adjustExampleFile];
+    [[doc model] adjustExampleFile];
     [dc addDocument:doc];
     [doc makeWindowControllers];
     [doc showWindows];

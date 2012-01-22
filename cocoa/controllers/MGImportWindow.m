@@ -9,18 +9,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGImportWindow.h"
 #import "PSMTabBarCell.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGImportWindow
 - (id)initWithDocument:(MGDocument *)aDocument
 {
     self = [super initWithWindowNibName:@"ImportWindow"];
     [self window];
-    PyObject *pDocument = getHackedPyRef([aDocument py]);
-    model = [[PyImportWindow alloc] initWithDocument:pDocument];
-    OBJP_LOCKGIL;
-    Py_DECREF(pDocument);
-    OBJP_UNLOCKGIL;
+    model = [[PyImportWindow alloc] initWithDocument:[[aDocument model] pyRef]];
     [model bindCallback:createCallback(@"ImportWindowView", self)];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
