@@ -13,11 +13,6 @@ from ..model.completion import CompletionList
 
 class CompletableEdit(DocumentGUIObject):
     def __init__(self, view, mainwindow):
-        # XXX This is an ugly hack, I'm not sure of what's the best way to habdle this now...
-        # This is a workaround for the problem where completable edits for ttable and etable under
-        # cocoa receive their view as a parent, not the main window.
-        if hasattr(mainwindow, 'mainwindow'):
-            mainwindow = mainwindow.mainwindow # *sigh*, sooo ugly
         DocumentGUIObject.__init__(self, view, mainwindow.document)
         self.mainwindow = mainwindow
         self._attrname = ''
