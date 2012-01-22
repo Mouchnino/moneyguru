@@ -55,7 +55,7 @@ http://www.hardcoded.net/licenses/bsd_license
         graphView:printGraphView] autorelease];
 }
 
-- (void)showGraph:(HSGUIController2 *)graph
+- (void)showGraph:(HSGUIController *)graph
 {
     NSView *oldView = currentGraphView;
     NSView *graphView = [graph view];

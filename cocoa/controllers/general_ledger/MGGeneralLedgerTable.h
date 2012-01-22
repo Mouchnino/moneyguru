@@ -8,9 +8,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGeneralLedgerTable.h"
-#import "MGEditableTable2.h"
+#import "MGEditableTable.h"
 
-@interface MGGeneralLedgerTable : MGEditableTable2 {}
+@interface MGGeneralLedgerTable : MGEditableTable {}
 - (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
 - (PyGeneralLedgerTable *)model;

@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
-#import "HSPopUpList2.h"
+#import "HSPopUpList.h"
 #import "PyBudgetPanel.h"
 
 @class MGMainWindowController;
@@ -24,9 +24,9 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTextField *amountField;
     IBOutlet NSTextField *notesField;
     
-    HSPopUpList2 *repeatTypePopUp;
-    HSPopUpList2 *accountPopUp;
-    HSPopUpList2 *targetPopUp;
+    HSPopUpList *repeatTypePopUp;
+    HSPopUpList *accountPopUp;
+    HSPopUpList *targetPopUp;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyBudgetPanel *)model;

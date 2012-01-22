@@ -29,7 +29,7 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
 }
 
 @implementation MGPrintView
-- (id)initWithPyParent:(PyGUIObject2 *)pyParent
+- (id)initWithPyParent:(PyGUIObject *)pyParent
 {
     self = [super initWithFrame:NSZeroRect];
     Class pyClass = [[self class] pyClass];

@@ -26,7 +26,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSMutableArray *visibleColumns;
 }
 
-- (id)initWithPyParent:(PyGUIObject2 *)pyParent tableView:(NSTableView *)aTableView;
+- (id)initWithPyParent:(PyGUIObject *)pyParent tableView:(NSTableView *)aTableView;
 
 - (id)objectValueForTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow;
 - (void)willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aColumn row:(NSInteger)aRow;

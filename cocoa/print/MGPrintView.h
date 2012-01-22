@@ -28,7 +28,7 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
     CGFloat headerHeight;
     NSString *baseTitle;
 }
-- (id)initWithPyParent:(PyGUIObject2 *)pyParent;
+- (id)initWithPyParent:(PyGUIObject *)pyParent;
 
 + (Class)pyClass;
 - (PyPrintView *)py;

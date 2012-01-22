@@ -28,7 +28,7 @@ NSArray* convertPaths(NSArray *paths)
     self = [super initWithPy:m view:aOutlineView];
     [m bindCallback:createCallback(@"ReportView", self)];
     [m release];
-    columns = [[HSColumns2 alloc] initWithPyRef:[[self py] columns] tableView:aOutlineView];
+    columns = [[HSColumns alloc] initWithPyRef:[[self py] columns] tableView:aOutlineView];
     [[self view] registerForDraggedTypes:[NSArray arrayWithObject:MGPathsPasteboardType]];
     return self;
 }
@@ -44,7 +44,7 @@ NSArray* convertPaths(NSArray *paths)
     return (PyReport *)py;
 }
 
-- (HSColumns2 *)columns
+- (HSColumns *)columns
 {
     return columns;
 }

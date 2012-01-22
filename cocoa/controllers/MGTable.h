@@ -9,10 +9,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "HSTable.h"
 #import "MGTableView.h"
-#import "PyTable.h"
 
 @interface MGTable : HSTable {}
 /* Public */
-- (PyTable *)py;
 - (MGTableView *)tableView;
 @end

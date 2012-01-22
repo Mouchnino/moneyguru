@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [m bindCallback:createCallback(@"SchedulePanelView", self)];
     [m release];
     splitTable = [[MGSplitTable alloc] initWithPyRef:[[self model] splitTable] tableView:splitTableView];
-    repeatTypePopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
+    repeatTypePopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }

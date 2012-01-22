@@ -19,8 +19,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
     [self window];
-    typePopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] typeList] popupView:typeSelector];
-    currencyComboBox = [[HSComboBox2 alloc] initWithPyRef:[[self model] currencyList] view:currencySelector];
+    typePopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] typeList] popupView:typeSelector];
+    currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencySelector];
     return self;
 }
 

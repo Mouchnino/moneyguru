@@ -10,10 +10,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Python.h>
 #import "PyImportTable.h"
 #import "PyImportWindow.h"
-#import "MGEditableTable2.h"
+#import "MGEditableTable.h"
 #import "MGTableView.h"
 
-@interface MGImportTable : MGEditableTable2 {}
+@interface MGImportTable : MGEditableTable {}
 - (id)initWithPyRef:(PyObject *)aPyRef view:(MGTableView *)aTableView;
 - (void)initializeColumns;
 - (PyImportTable *)model;

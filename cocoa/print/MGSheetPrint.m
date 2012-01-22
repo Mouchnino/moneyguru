@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #define PIE_GRAPH_MIN_WIDTH 170
 
 @implementation MGSheetPrint
-- (id)initWithPyParent:(PyGUIObject2 *)pyParent outlineView:(NSOutlineView *)aOutlineView 
+- (id)initWithPyParent:(PyGUIObject *)pyParent outlineView:(NSOutlineView *)aOutlineView 
     graphView:(NSView *)aGraphView pieViews:(MGDoubleView *)aPieViews
 {
     self = [super initWithPyParent:pyParent tableView:aOutlineView];

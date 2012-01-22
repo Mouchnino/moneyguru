@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #define GRAPH_HEIGHT_PROPORTION 0.4
 
 @implementation MGEntryPrint
-- (id)initWithPyParent:(PyGUIObject2 *)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView
+- (id)initWithPyParent:(PyGUIObject *)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView
 {
     self = [super initWithPyParent:pyParent tableView:aTableView];
     if (aGraphView != nil) {

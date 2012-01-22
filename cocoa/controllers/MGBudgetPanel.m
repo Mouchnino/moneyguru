@@ -17,9 +17,9 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithNibName:@"BudgetPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"BudgetPanelView", self)];
     [m release];
-    repeatTypePopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
-    accountPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] accountList] popupView:accountSelector];
-    targetPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] targetList] popupView:targetSelector];
+    repeatTypePopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
+    accountPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] accountList] popupView:accountSelector];
+    targetPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] targetList] popupView:targetSelector];
     return self;
 }
 

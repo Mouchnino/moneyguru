@@ -10,17 +10,17 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGEditableTable
-- (id)initWithPyClassName:(NSString *)aClassName pyParent:(id)aPyParent view:(MGTableView *)aTableView
+- (id)initWithModel:(PyTable *)aModel tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPyClassName:aClassName pyParent:aPyParent view:aTableView];
+    self = [super initWithModel:aModel tableView:aTableView];
     customFieldEditor = nil; // created by subclasses;
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
 }
 
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    self = [super initWithPyRef:aPyRef tableView:aTableView];
     customFieldEditor = nil; // created by subclasses;
     customDateFieldEditor = [[MGDateFieldEditor alloc] init];
     return self;
@@ -36,18 +36,18 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Data source */
 - (void)tableView:(NSTableView *)tableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    [[self py] setValue:value forColumn:[column identifier] row:row];
+    [[self model] setValue:value forColumn:[column identifier] row:row];
 }
 
 /* Delegate */
 - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    return [[self py] canEditColumn:[column identifier] atRow:row];
+    return n2b([[self model] canEditColumn:[column identifier] atRow:row]);
 }
 
 - (BOOL)tableViewHadDeletePressed:(NSTableView *)tableView
 {
-    [[self py] deleteSelectedRows];
+    [[self model] deleteSelectedRows];
     return YES;
 }
 
@@ -60,12 +60,12 @@ http://www.hardcoded.net/licenses/bsd_license
 // This is never called on edition cancel (pressing ESC) or stopEditing call
 - (void)tableViewDidEndEditing:(MGTableView *)tableView
 {
-    [[self py] saveEdits];
+    [[self model] saveEdits];
 }
 
 - (void)tableViewCancelsEdition:(MGTableView *)tableView
 {
-    [[self py] cancelEdits];
+    [[self model] cancelEdits];
 }
 
 - (id)fieldEditorForObject:(id)asker

@@ -7,9 +7,9 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGEditableTable2.h"
+#import "MGEditableTable.h"
 
-@interface MGExportAccountTable : MGEditableTable2 {}
+@interface MGExportAccountTable : MGEditableTable {}
 - (id)initWithPyRef:(PyObject *)aPyRef tableView:(NSTableView *)aTableView;
 - (void)initializeColumns;
 @end

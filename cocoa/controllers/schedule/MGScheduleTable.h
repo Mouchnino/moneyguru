@@ -8,9 +8,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyScheduleTable.h"
-#import "MGTable2.h"
+#import "MGTable.h"
 
-@interface MGScheduleTable : MGTable2 {}
+@interface MGScheduleTable : MGTable {}
 - (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
 - (PyScheduleTable *)model;

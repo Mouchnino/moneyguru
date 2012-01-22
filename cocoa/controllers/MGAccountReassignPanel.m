@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithNibName:@"AccountReassignPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
-    accountPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] accountList] popupView:accountSelector];
+    accountPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] accountList] popupView:accountSelector];
     return self;
 }
 

@@ -10,8 +10,8 @@ import objc # import needed for dependency collection to work well
 from objp.util import pyref, dontwrap
 
 from cocoa import install_exception_hook, proxy
-from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, PyColumns2, PyOutline2, OutlineView,
-    PySelectableList2, PyFairware2)
+from cocoa.inter2 import (PyGUIObject, GUIObjectView, PyTable, PyColumns, PyOutline, OutlineView,
+    PySelectableList, PyFairware)
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -35,7 +35,7 @@ from core.gui.print_view import PrintView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.model.date import clean_format
 
-class PyMoneyGuruApp(PyFairware2):
+class PyMoneyGuruApp(PyFairware):
     def __init__(self):
         LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('debug') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
@@ -65,7 +65,7 @@ class PyMoneyGuruApp(PyFairware2):
         logging.info('System numeric separators: %s and %s' % (grouping_sep, decimal_sep))
         model = Application(self, date_format=date_format, decimal_sep=decimal_sep, 
             grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path)
-        PyFairware2.__init__(self, model)
+        PyFairware.__init__(self, model)
     
     #--- Public
     def isFirstRun(self) -> bool:
@@ -88,10 +88,10 @@ class PyMoneyGuruApp(PyFairware2):
 class DocumentView(GUIObjectView):
     def queryForScheduleScope(self) -> bool: pass
 
-class PyDocument(PyGUIObject2):
+class PyDocument(PyGUIObject):
     def __init__(self, app: pyref):
         model = Document(None, app.model)
-        PyGUIObject2.__init__(self, model)
+        PyGUIObject.__init__(self, model)
         self.model.connect()
     
     #--- Undo
@@ -153,7 +153,7 @@ class PyDocument(PyGUIObject2):
     
 
 #--- Root classes
-class PyListener(PyGUIObject2):
+class PyListener(PyGUIObject):
     def connect(self):
         self.model.connect()
     
@@ -161,7 +161,7 @@ class PyListener(PyGUIObject2):
         self.model.disconnect()
     
 
-class PyTableWithDate(PyTable2):
+class PyTableWithDate(PyTable):
     def isEditedRowInTheFuture(self) -> bool:
         if self.model.edited is None:
             return False
@@ -216,7 +216,7 @@ class PyGraph(PyChart):
 class ReportView(OutlineView):
     def refreshExpandedPaths(self): pass
 
-class PyReport(PyOutline2):
+class PyReport(PyOutline):
     def columns(self) -> pyref:
         return self.model.columns
     
@@ -264,7 +264,7 @@ class PanelView(GUIObjectView):
     def postLoad(self): pass
     def preSave(self): pass
 
-class PyPanel(PyGUIObject2):
+class PyPanel(PyGUIObject):
     def savePanel(self):
         self.model.save()
     
@@ -333,12 +333,12 @@ class PyTransactionTable(PyTableWithDate):
         self.model.show_to_account()
     
 
-class PyScheduleTable(PyTable2):
+class PyScheduleTable(PyTable):
     def editItem(self):
         self.model.edit()
     
 
-class PyBudgetTable(PyTable2):
+class PyBudgetTable(PyTable):
     def editItem(self):
         self.model.edit()
     
@@ -358,7 +358,7 @@ class FilterBarView(GUIObjectView):
     def disableTransfers(self): pass
     def enableTransfers(self): pass
 
-class PyFilterBar(PyGUIObject2):
+class PyFilterBar(PyGUIObject):
     def filterType(self) -> str:
         result = 'all'
         if self.model.filter_type is FilterType.Unassigned:
@@ -430,7 +430,7 @@ class PyAccountPanel(PyPanel):
         return self.model.can_change_currency
     
 
-class PySplitTable(PyTable2):
+class PySplitTable(PyTable):
     def moveSplitFromRow_toRow_(self, from_row: int, to_row: int):
         self.model.move_split(from_row, to_row)
     
@@ -756,7 +756,7 @@ class PyExportPanel(PyPanel):
         self.callback.setExportButtonEnabled_(enabled)
     
 
-class PySearchField(PyGUIObject2):
+class PySearchField(PyGUIObject):
     def query(self) -> str:
         return self.model.query
     
@@ -769,7 +769,7 @@ class DateRangeSelectorView(GUIObjectView):
     def animateForward(self): pass
     def refreshCustomRanges(self): pass
 
-class PyDateRangeSelector(PyGUIObject2):
+class PyDateRangeSelector(PyGUIObject):
     def selectPrevDateRange(self):
         self.model.select_prev_date_range()
 
@@ -830,7 +830,7 @@ class LookupView(GUIObjectView):
     def show(self): pass
     def hide(self): pass
 
-class PyLookup(PyGUIObject2):
+class PyLookup(PyGUIObject):
     def go(self):
         self.model.go()
     
@@ -1212,7 +1212,7 @@ class PyMainWindow(PyListener):
         self.callback.viewClosedAtIndex_(index)
     
 
-class PyImportTable(PyTable2):
+class PyImportTable(PyTable):
     def bindRow_to_(self, source_index: int, dest_index: int):
         self.model.bind(source_index, dest_index)
     
@@ -1462,7 +1462,7 @@ class PyDateWidget:
         return self.w.selection
     
 
-class PyCompletableEdit(PyGUIObject2):
+class PyCompletableEdit(PyGUIObject):
     def setAttrname_(self, attrname: str):
         self.model.attrname = attrname
     

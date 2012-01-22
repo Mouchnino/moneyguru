@@ -17,6 +17,8 @@ http://www.hardcoded.net/licenses/bsd_license
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
 }
+- (id)initWithModel:(PyTable *)aPy tableView:(NSTableView *)aTableView;
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(NSTableView *)aTableView;
 /* Virtual */
 - (NSArray *)dateColumns;
 - (NSArray *)completableColumns;

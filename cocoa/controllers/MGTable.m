@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* MGTableView delegate */
 - (NSIndexSet *)selectedIndexes
 {
-    return [Utils array2IndexSet:[[self py] selectedRows]];
+    return [Utils array2IndexSet:[[self model] selectedRows]];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)column row:(NSInteger)row
@@ -23,17 +23,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (NSString *)dataForCopyToPasteboard
 {
-    return [[self py] selectionAsCSV];
+    return [[self model] selectionAsCSV];
 }
 
 /* Public */
-- (PyTable *)py
-{
-    return (PyTable *)py;
-}
-
 - (MGTableView *)tableView
 {
-    return (MGTableView *)tableView;
+    return (MGTableView *)view;
 }
 @end

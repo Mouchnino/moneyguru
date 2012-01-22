@@ -8,8 +8,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
-#import "HSPopUpList2.h"
-#import "HSComboBox2.h"
+#import "HSPopUpList.h"
+#import "HSComboBox.h"
 #import "PyAccountPanel.h"
 
 @class MGMainWindowController;
@@ -21,8 +21,8 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSTextField *accountNumberTextField;
     IBOutlet NSTextField *notesTextField;
     
-    HSPopUpList2 *typePopUp;
-    HSComboBox2 *currencyComboBox;
+    HSPopUpList *typePopUp;
+    HSComboBox *currencyComboBox;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyAccountPanel *)model;

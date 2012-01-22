@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 #import "MGTableView.h"
 #import "MGSplitTable.h"
-#import "HSPopUpList2.h"
+#import "HSPopUpList.h"
 #import "PySchedulePanel.h"
 
 @class MGMainWindowController;
@@ -29,7 +29,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet MGTableView *splitTableView;
     
     MGSplitTable *splitTable;
-    HSPopUpList2 *repeatTypePopUp;
+    HSPopUpList *repeatTypePopUp;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PySchedulePanel *)model;

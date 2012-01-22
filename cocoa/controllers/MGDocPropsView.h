@@ -9,8 +9,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyDocPropsView.h"
 #import "MGBaseView.h"
-#import "HSPopUpList2.h"
-#import "HSComboBox2.h"
+#import "HSPopUpList.h"
+#import "HSComboBox.h"
 
 @interface MGDocPropsView : MGBaseView
 {
@@ -19,10 +19,10 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSPopUpButton *aheadMonthsPopUpView;
     IBOutlet NSPopUpButton *yearStartMonthPopUpView;
     
-    HSComboBox2 *currencyComboBox;
-    HSPopUpList2 *firstWeekdayPopUp;
-    HSPopUpList2 *aheadMonthsPopUp;
-    HSPopUpList2 *yearStartMonthPopUp;
+    HSComboBox *currencyComboBox;
+    HSPopUpList *firstWeekdayPopUp;
+    HSPopUpList *aheadMonthsPopUp;
+    HSPopUpList *yearStartMonthPopUp;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyDocPropsView *)model;

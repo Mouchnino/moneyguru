@@ -16,10 +16,10 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"DocProps" owner:self];
-    currencyComboBox = [[HSComboBox2 alloc] initWithPyRef:[[self model] currencyList] view:currencyComboBoxView];
-    firstWeekdayPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] firstWeekdayList] popupView:firstWeekdayPopUpView];
-    aheadMonthsPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] aheadMonthsList] popupView:aheadMonthsPopUpView];
-    yearStartMonthPopUp = [[HSPopUpList2 alloc] initWithPyRef:[[self model] yearStartMonthList] popupView:yearStartMonthPopUpView];
+    currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencyComboBoxView];
+    firstWeekdayPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] firstWeekdayList] popupView:firstWeekdayPopUpView];
+    aheadMonthsPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] aheadMonthsList] popupView:aheadMonthsPopUpView];
+    yearStartMonthPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] yearStartMonthList] popupView:yearStartMonthPopUpView];
     return self;
 }
         

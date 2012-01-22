@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #define CELL_PADDING 12
 
 @implementation MGTablePrint
-- (id)initWithPyParent:(PyGUIObject2 *)pyParent tableView:(NSTableView *)aTableView
+- (id)initWithPyParent:(PyGUIObject *)pyParent tableView:(NSTableView *)aTableView
 {
     self = [super initWithPyParent:pyParent];
     tableView = [aTableView retain];
