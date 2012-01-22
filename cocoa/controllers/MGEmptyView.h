@@ -10,10 +10,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyEmptyView.h"
 #import "MGBaseView.h"
 
-@interface MGEmptyView : MGBaseView
-{
-}
-- (id)initWithPy:(id)aPy;
+@interface MGEmptyView : MGBaseView {}
+- (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyEmptyView *)model;
 
 /* Actions */

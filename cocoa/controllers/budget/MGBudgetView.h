@@ -18,6 +18,6 @@ http://www.hardcoded.net/licenses/bsd_license
     
     MGBudgetTable *budgetTable;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyBudgetView *)model;
 @end

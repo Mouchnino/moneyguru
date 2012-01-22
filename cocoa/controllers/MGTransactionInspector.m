@@ -16,11 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGTransactionInspector
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] transactionPanel]);
-    PyTransactionPanel *m = [[PyTransactionPanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyTransactionPanel *m = [[PyTransactionPanel alloc] initWithModel:[[aParent model] transactionPanel]];
     self = [super initWithNibName:@"TransactionPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"PanelWithTransactionView", self)];
     [m release];

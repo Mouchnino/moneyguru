@@ -10,17 +10,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "MGEntryPrint.h"
 #import "Utils.h"
-#import "ObjP.h"
 #import "PyMainWindow.h"
 
 @implementation MGAccountView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyAccountView *m = [[PyAccountView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyAccountView *m = [[PyAccountView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"AccountViewView", self)];
     [m release];

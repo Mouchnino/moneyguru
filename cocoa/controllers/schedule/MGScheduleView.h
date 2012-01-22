@@ -18,7 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     MGScheduleTable *scheduleTable;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 
 - (PyScheduleView *)model;
 @end

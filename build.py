@@ -196,7 +196,7 @@ def build_cocoa_bridging_interfaces():
         PanelWithTransactionView, PyTransactionPanel, PySchedulePanel, SchedulePanelView,
         ViewWithGraphView, PyNetWorthView, PyProfitView, PyTransactionView, PyAccountView,
         AccountViewView, PyScheduleView, PyBudgetView, PyCashculatorView, PyGeneralLedgerView,
-        PyDocPropsView, PyEmptyView)
+        PyDocPropsView, PyEmptyView, PyMainWindow, MainWindowView)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyOutline2, PySelectableList2,
         PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
@@ -206,14 +206,14 @@ def build_cocoa_bridging_interfaces():
         PyCustomDateRangePanel, PyAccountReassignPanel, PyExportPanel, PyPanelWithTransaction,
         PyTransactionPanel, PySchedulePanel, PyNetWorthView, PyProfitView, PyTransactionView,
         PyAccountView, PyScheduleView, PyBudgetView, PyCashculatorView, PyGeneralLedgerView,
-        PyDocPropsView, PyEmptyView]
+        PyDocPropsView, PyEmptyView, PyMainWindow]
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
     allclasses = [GUIObjectView, TableView, ColumnsView, SelectableListView, PanelView,
         CSVImportOptionsView, LookupView, DateRangeSelectorView, ImportWindowView, FilterBarView,
         ReportView, BudgetPanelView, ExportPanelView, PanelWithTransactionView, SchedulePanelView,
-        ViewWithGraphView, AccountViewView]
+        ViewWithGraphView, AccountViewView, MainWindowView]
     clsspecs = [objp.o2p.spec_from_python_class(class_) for class_ in allclasses]
     objp.p2o.generate_python_proxy_code_from_clsspec(clsspecs, 'build/CocoaViews.m')
     build_cocoa_ext('CocoaViews', 'build/py', ['build/CocoaViews.m', 'build/ObjP.m'])

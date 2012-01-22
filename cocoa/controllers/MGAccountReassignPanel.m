@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountReassignPanel.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGAccountReassignPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] accountReassignPanel]);
-    PyAccountReassignPanel *m = [[PyAccountReassignPanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyAccountReassignPanel *m = [[PyAccountReassignPanel alloc] initWithModel:[[aParent model] accountReassignPanel]];
     self = [super initWithNibName:@"AccountReassignPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];

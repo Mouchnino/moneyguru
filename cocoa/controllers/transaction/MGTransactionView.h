@@ -22,7 +22,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGTransactionTable *transactionTable;
     MGFilterBar *filterBar;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 
 - (PyTransactionView *)model;
 

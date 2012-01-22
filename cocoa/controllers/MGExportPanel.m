@@ -10,7 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 // Synced with the core
 #define MGExportFormatQIF 0
@@ -19,11 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGExportPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] exportPanel]);
-    PyExportPanel *m = [[PyExportPanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyExportPanel *m = [[PyExportPanel alloc] initWithModel:[[aParent model] exportPanel]];
     self = [super initWithNibName:@"ExportPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"ExportPanelView", self)];
     [m release];

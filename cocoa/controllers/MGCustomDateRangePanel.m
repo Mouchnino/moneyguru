@@ -10,16 +10,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGCustomDateRangePanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] customDateRangePanel]);
-    PyCustomDateRangePanel *m = [[PyCustomDateRangePanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyCustomDateRangePanel *m = [[PyCustomDateRangePanel alloc] initWithModel:[[aParent model] customDateRangePanel]];
     self = [super initWithNibName:@"CustomDateRangePanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];

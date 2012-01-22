@@ -1054,155 +1054,206 @@ class PyEmptyView(PyBaseView):
         self.model.select_pane_type(paneType)
     
 
-class PyMainWindow(PyGUIContainer):
-    py_class = MainWindow
+class MainWindowView(GUIObjectView):
+    def changeSelectedPane(self): pass
+    def refreshPanes(self): pass
+    def refreshUndoActions(self): pass
+    def showCustomDateRangePanel(self): pass
+    def refreshStatusLine(self): pass
+    def showMessage_(self, message: str): pass
+    def updateAreaVisibility(self): pass
+    def viewClosedAtIndex_(self, index: int): pass
+
+class PyMainWindow(PyListener2):
+    def __init__(self, document: pyref):
+        model = MainWindow(None, document)
+        PyListener2.__init__(self, model)
     
-    searchField = subproxy('searchField', 'search_field', PyGUIObject)
-    daterangeSelector = subproxy('daterangeSelector', 'daterange_selector', PyGUIObject)
-    accountLookup = subproxy('accountLookup', 'account_lookup', PyGUIObject)
-    completionLookup = subproxy('completionLookup', 'completion_lookup', PyGUIObject)
+    def searchField(self) -> pyref:
+        return self.model.search_field
     
-    accountPanel = subproxy('accountPanel', 'account_panel', PyGUIObject)
-    transactionPanel = subproxy('transactionPanel', 'transaction_panel', PyGUIObject)
-    massEditPanel = subproxy('massEditPanel', 'mass_edit_panel', PyGUIObject)
-    budgetPanel = subproxy('budgetPanel', 'budget_panel', PyGUIObject)
-    schedulePanel = subproxy('schedulePanel', 'schedule_panel', PyGUIObject)
-    customDateRangePanel = subproxy('customDateRangePanel', 'custom_daterange_panel', PyGUIObject)
-    accountReassignPanel = subproxy('accountReassignPanel', 'account_reassign_panel', PyGUIObject)
-    exportPanel = subproxy('exportPanel', 'export_panel', PyGUIObject)
+    def daterangeSelector(self) -> pyref:
+        return self.model.daterange_selector
     
-    nwview = subproxy('nwview', 'nwview', PyGUIObject)
-    pview = subproxy('pview', 'pview', PyGUIObject)
-    tview = subproxy('tview', 'tview', PyGUIObject)
-    aview = subproxy('aview', 'aview', PyGUIObject)
-    scview = subproxy('scview', 'scview', PyGUIObject)
-    bview = subproxy('bview', 'bview', PyGUIObject)
-    ccview = subproxy('ccview', 'ccview', PyGUIObject)
-    glview = subproxy('glview', 'glview', PyGUIObject)
-    dpview = subproxy('dpview', 'dpview', PyGUIObject)
-    emptyview = subproxy('emptyview', 'emptyview', PyGUIObject)
+    def accountLookup(self) -> pyref:
+        return self.model.account_lookup
+    
+    def completionLookup(self) -> pyref:
+        return self.model.completion_lookup
+    
+    def accountPanel(self) -> pyref:
+        return self.model.account_panel
+    
+    def transactionPanel(self) -> pyref:
+        return self.model.transaction_panel
+    
+    def massEditPanel(self) -> pyref:
+        return self.model.mass_edit_panel
+    
+    def budgetPanel(self) -> pyref:
+        return self.model.budget_panel
+    
+    def schedulePanel(self) -> pyref:
+        return self.model.schedule_panel
+    
+    def customDateRangePanel(self) -> pyref:
+        return self.model.custom_daterange_panel
+    
+    def accountReassignPanel(self) -> pyref:
+        return self.model.account_reassign_panel
+    
+    def exportPanel(self) -> pyref:
+        return self.model.export_panel
+    
+    def nwview(self) -> pyref:
+        return self.model.nwview
+    
+    def pview(self) -> pyref:
+        return self.model.pview
+    
+    def tview(self) -> pyref:
+        return self.model.tview
+    
+    def aview(self) -> pyref:
+        return self.model.aview
+    
+    def scview(self) -> pyref:
+        return self.model.scview
+    
+    def bview(self) -> pyref:
+        return self.model.bview
+    
+    def ccview(self) -> pyref:
+        return self.model.ccview
+    
+    def glview(self) -> pyref:
+        return self.model.glview
+    
+    def dpview(self) -> pyref:
+        return self.model.dpview
+    
+    def emptyview(self) -> pyref:
+        return self.model.emptyview
     
     def selectNextView(self):
-        self.py.select_next_view()
+        self.model.select_next_view()
     
     def selectPreviousView(self):
-        self.py.select_previous_view()
+        self.model.select_previous_view()
     
-    @signature('i@:')
-    def currentPaneIndex(self):
-        return self.py.current_pane_index
+    def currentPaneIndex(self) -> int:
+        return self.model.current_pane_index
     
-    @signature('v@:i')
-    def setCurrentPaneIndex_(self, index):
-        self.py.current_pane_index = index
+    def setCurrentPaneIndex_(self, index: int):
+        self.model.current_pane_index = index
     
-    @signature('i@:')
-    def paneCount(self):
-        return self.py.pane_count
+    def paneCount(self) -> int:
+        return self.model.pane_count
     
-    @signature('@@:i')
-    def paneLabelAtIndex_(self, index):
-        return self.py.pane_label(index)
+    def paneLabelAtIndex_(self, index: int) -> str:
+        return self.model.pane_label(index)
     
-    @signature('i@:i')
-    def paneTypeAtIndex_(self, index):
-        return self.py.pane_type(index)
+    def paneTypeAtIndex_(self, index: int) -> int:
+        return self.model.pane_type(index)
     
-    @signature('v@:i')
-    def showPaneOfType_(self, pane_type):
-        self.py.select_pane_of_type(pane_type)
+    def showPaneOfType_(self, pane_type: int):
+        self.model.select_pane_of_type(pane_type)
     
-    @signature('v@:i')
-    def closePaneAtIndex_(self, index):
-        self.py.close_pane(index)
+    def closePaneAtIndex_(self, index: int):
+        self.model.close_pane(index)
     
-    @signature('v@:ii')
-    def movePaneAtIndex_toIndex_(self, pane_index, dest_index):
-        self.py.move_pane(pane_index, dest_index)
+    def movePaneAtIndex_toIndex_(self, pane_index: int, dest_index: int):
+        self.model.move_pane(pane_index, dest_index)
     
     def newTab(self):
-        self.py.new_tab()
+        self.model.new_tab()
     
     def showAccount(self):
-        self.py.show_account()
+        self.model.show_account()
     
     def navigateBack(self):
-        self.py.navigate_back()
+        self.model.navigate_back()
     
     def jumpToAccount(self):
-        self.py.jump_to_account()
+        self.model.jump_to_account()
     
-    @signature('v@:i')
-    def toggleAreaVisibility_(self, area):
-        self.py.toggle_area_visibility(area)
+    def toggleAreaVisibility_(self, area: int):
+        self.model.toggle_area_visibility(area)
     
     #--- Item Management
     def deleteItem(self):
-        self.py.delete_item()
+        self.model.delete_item()
     
     def duplicateItem(self):
-        self.py.duplicate_item()
+        self.model.duplicate_item()
     
     def editItem(self):
-        self.py.edit_item()
+        self.model.edit_item()
     
     def makeScheduleFromSelected(self):
-        self.py.make_schedule_from_selected()
+        self.model.make_schedule_from_selected()
     
     def moveDown(self):
-        self.py.move_down()
+        self.model.move_down()
     
     def moveUp(self):
-        self.py.move_up()
+        self.model.move_up()
     
     def newItem(self):
-        self.py.new_item()
+        self.model.new_item()
     
     def newGroup(self):
-        self.py.new_group()
+        self.model.new_group()
     
     #--- Other
     def export(self):
-        self.py.export()
+        self.model.export()
     
-    def statusLine(self):
-        return self.py.status_line
+    def statusLine(self) -> str:
+        return self.model.status_line
     
-    def hiddenAreas(self):
-        return list(self.py.hidden_areas)
+    def hiddenAreas(self) -> list:
+        return list(self.model.hidden_areas)
     
     #--- Column menu
-    def columnMenuItems(self):
-        return self.py.column_menu_items()
+    def columnMenuItems(self) -> list:
+        return self.model.column_menu_items()
     
-    @signature('v@:i')
-    def toggleColumnMenuItemAtIndex_(self, index):
-        self.py.toggle_column_menu_item(index)
+    def toggleColumnMenuItemAtIndex_(self, index: int):
+        self.model.toggle_column_menu_item(index)
     
     #--- Python -> Cocoa
+    @dontwrap
     def change_current_pane(self):
-        self.cocoa.changeSelectedPane()
+        self.callback.changeSelectedPane()
     
+    @dontwrap
     def refresh_panes(self):
-        self.cocoa.refreshPanes()
+        self.callback.refreshPanes()
     
+    @dontwrap
     def refresh_undo_actions(self):
-        self.cocoa.refreshUndoActions()
+        self.callback.refreshUndoActions()
     
+    @dontwrap
     def show_custom_date_range_panel(self):
-        self.cocoa.showCustomDateRangePanel()
+        self.callback.showCustomDateRangePanel()
     
+    @dontwrap
     def refresh_status_line(self):
-        self.cocoa.refreshStatusLine()
+        self.callback.refreshStatusLine()
     
+    @dontwrap
     def show_message(self, message):
-        self.cocoa.showMessage_(message)
+        self.callback.showMessage_(message)
     
+    @dontwrap
     def update_area_visibility(self):
-        self.cocoa.updateAreaVisibility()
+        self.callback.updateAreaVisibility()
     
+    @dontwrap
     def view_closed(self, index):
-        self.cocoa.viewClosedAtIndex_(index)
+        self.callback.viewClosedAtIndex_(index)
     
 
 class PyImportTable(PyTable2):

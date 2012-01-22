@@ -27,7 +27,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGPieChart *liabilitiesPieChart;
     MGBalanceGraph *netWorthGraph;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyNetWorthView *)model;
 
 /* Public */

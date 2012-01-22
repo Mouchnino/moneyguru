@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPanel.h"
 
 @implementation MGPanel
-- (id)initWithNibName:(NSString *)aNibName model:(PyPanel *)aModel parent:(HSWindowController *)aParent
+- (id)initWithNibName:(NSString *)aNibName model:(PyPanel *)aModel parent:(NSWindowController *)aParent
 {
     self = [super initWithWindowNibName:aNibName];
     [self window]; // Initialize elements from the NIB.

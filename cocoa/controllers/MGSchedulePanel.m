@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGSchedulePanel.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGSchedulePanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] schedulePanel]);
-    PySchedulePanel *m = [[PySchedulePanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PySchedulePanel *m = [[PySchedulePanel alloc] initWithModel:[[aParent model] schedulePanel]];
     self = [super initWithNibName:@"SchedulePanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"SchedulePanelView", self)];
     [m release];

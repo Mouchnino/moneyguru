@@ -24,6 +24,6 @@ http://www.hardcoded.net/licenses/bsd_license
     HSPopUpList2 *aheadMonthsPopUp;
     HSPopUpList2 *yearStartMonthPopUp;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyDocPropsView *)model;
 @end

@@ -27,7 +27,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGPieChart *expensesPieChart;
     MGBarGraph *profitGraph;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyProfitView *)model;
 
 /* Public */

@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 
 @implementation MGAccountLookup
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    self = [super initWithPy:aPy];
+    self = [super initWithPyRef:aPyRef];
     [[self window] setTitle:TR(@"Account Lookup")];
     return self;
 }

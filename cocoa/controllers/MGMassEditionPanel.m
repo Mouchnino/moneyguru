@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGMassEditionPanel.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGMassEditionPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] massEditPanel]);
-    PyMassEditionPanel *m = [[PyMassEditionPanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyMassEditionPanel *m = [[PyMassEditionPanel alloc] initWithModel:[[aParent model] massEditPanel]];
     self = [super initWithNibName:@"MassEditingPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];

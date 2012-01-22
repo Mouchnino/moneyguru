@@ -10,16 +10,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGAccountProperties
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] accountPanel]);
-    PyAccountPanel *m = [[PyAccountPanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyAccountPanel *m = [[PyAccountPanel alloc] initWithModel:[[aParent model] accountPanel]];
     self = [super initWithNibName:@"AccountPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];

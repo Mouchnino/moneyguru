@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTransactionView.h"
 #import "MGTransactionPrint.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGTransactionView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyTransactionView *m = [[PyTransactionView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyTransactionView *m = [[PyTransactionView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"TransactionTable" owner:self];

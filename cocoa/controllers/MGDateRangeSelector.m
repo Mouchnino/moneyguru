@@ -9,17 +9,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDateRangeSelector.h"
 #import "MGConst.h"
 #import "Utils.h"
-#import "ObjP.h"
 #import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyDateRangeSelector *m = [[PyDateRangeSelector alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyDateRangeSelector *m = [[PyDateRangeSelector alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"DateRangeSelectorView", self)];
     [m release];

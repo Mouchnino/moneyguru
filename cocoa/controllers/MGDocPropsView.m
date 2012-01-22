@@ -8,16 +8,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGDocPropsView.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGDocPropsView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyDocPropsView *m = [[PyDocPropsView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyDocPropsView *m = [[PyDocPropsView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"DocProps" owner:self];

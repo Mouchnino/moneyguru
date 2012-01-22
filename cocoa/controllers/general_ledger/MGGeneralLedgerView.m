@@ -11,13 +11,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGGeneralLedgerView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyGeneralLedgerView *m = [[PyGeneralLedgerView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyGeneralLedgerView *m = [[PyGeneralLedgerView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"GeneralLedger" owner:self];

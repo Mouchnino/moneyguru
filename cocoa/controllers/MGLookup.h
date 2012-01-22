@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
     PyLookup *model;
     NSArray *currentNames;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 
 - (IBAction)go:(id)sender;
 - (IBAction)updateQuery:(id)sender;

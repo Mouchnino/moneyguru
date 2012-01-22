@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSWindowController.h"
 #import "PSMTabBarControl.h"
 #import "MGAccountProperties.h"
 #import "MGTransactionInspector.h"
@@ -37,13 +36,14 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGPrintView.h"
 #import "PyMainWindow.h"
 
-@interface MGMainWindowController : HSWindowController <NSToolbarDelegate, NSWindowDelegate>
+@interface MGMainWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate>
 {
     IBOutlet NSTabView *tabView;
     IBOutlet PSMTabBarControl *tabBar;
     IBOutlet NSTextField *statusLabel;
     IBOutlet NSSegmentedControl *visibilitySegments;
     
+    PyMainWindow *model;
     MGNetWorthView *netWorthView;
     MGProfitView *profitView;
     MGTransactionView *transactionView;
@@ -72,7 +72,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSMutableArray *subviews;
 }
 - (id)initWithDocument:(MGDocument *)document;
-- (PyMainWindow *)py;
+- (PyMainWindow *)model;
 - (MGDocument *)document;
 /* Private */
 - (BOOL)validateAction:(SEL)action;

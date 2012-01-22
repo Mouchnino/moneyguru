@@ -10,17 +10,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGProfitPrint.h"
 #import "MGConst.h"
 #import "Utils.h"
-#import "ObjP.h"
 #import "PyMainWindow.h"
 
 @implementation MGProfitView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyProfitView *m = [[PyProfitView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyProfitView *m = [[PyProfitView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"ViewWithGraphView", self)];
     [m release];

@@ -10,7 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDateFieldEditor.h"
 #import "MGFieldEditor.h"
 #import "PyPanel.h"
-#import "HSWindowController.h"
 
 @interface MGPanel : NSWindowController {
     PyPanel *model;
@@ -18,7 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGFieldEditor *customFieldEditor;
     MGDateFieldEditor *customDateFieldEditor;
 }
-- (id)initWithNibName:(NSString *)aNibName model:(PyPanel *)aModel parent:(HSWindowController *)aParent;
+- (id)initWithNibName:(NSString *)aNibName model:(PyPanel *)aModel parent:(NSWindowController *)aParent;
 - (PyPanel *)model;
 /* Virtual */
 - (NSString *)completionAttrForField:(id)aField;

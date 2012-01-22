@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBudgetPanel.h"
 #import "MGMainWindowController.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGBudgetPanel
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
-    PyObject *pRef = getHackedPyRef([[aParent py] budgetPanel]);
-    PyBudgetPanel *m = [[PyBudgetPanel alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyBudgetPanel *m = [[PyBudgetPanel alloc] initWithModel:[[aParent model] budgetPanel]];
     self = [super initWithNibName:@"BudgetPanel" model:m parent:aParent];
     [m bindCallback:createCallback(@"BudgetPanelView", self)];
     [m release];

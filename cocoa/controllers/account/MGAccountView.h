@@ -30,7 +30,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGBarGraph *barGraph;
     NSView *currentGraphView;
 }
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyAccountView *)model;
 
 /* Public */

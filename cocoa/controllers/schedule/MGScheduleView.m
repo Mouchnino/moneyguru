@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGScheduleView.h"
 #import "MGSchedulePrint.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGScheduleView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyScheduleView *m = [[PyScheduleView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyScheduleView *m = [[PyScheduleView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];

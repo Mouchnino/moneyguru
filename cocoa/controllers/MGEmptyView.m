@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGEmptyView.h"
 #import "MGConst.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGEmptyView
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyEmptyView *m = [[PyEmptyView alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyEmptyView *m = [[PyEmptyView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"NewTabView" owner:self];

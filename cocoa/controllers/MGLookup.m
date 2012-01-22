@@ -8,18 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGLookup.h"
 #import "Utils.h"
-#import "ObjP.h"
 #import "NSEventAdditions.h"
 
 @implementation MGLookup
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
     self = [super initWithWindowNibName:@"Lookup"];
-    PyObject *pRef = getHackedPyRef(aPy);
-    model = [[PyLookup alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    model = [[PyLookup alloc] initWithModel:aPyRef];
     [model bindCallback:createCallback(@"LookupView", self)];
     currentNames = [[NSArray array] retain];
     [self window]; // Initialize the window

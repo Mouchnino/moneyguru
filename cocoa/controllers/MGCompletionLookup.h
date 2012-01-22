@@ -10,5 +10,5 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGLookup.h"
 
 @interface MGCompletionLookup : MGLookup {}
-- (id)initWithPy:(id)aPy;
+- (id)initWithPyRef:(PyObject *)aPyRef;
 @end

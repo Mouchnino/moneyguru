@@ -7,13 +7,20 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGMainWindowController.h"
-#import "Utils.h"
 #import "MGConst.h"
+#import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGMainWindowController
 - (id)initWithDocument:(MGDocument *)document
 {
-    self = [super initWithNibName:@"MainWindow" pyClassName:@"PyMainWindow" pyParent:[document py]];
+    self = [super initWithWindowNibName:@"MainWindow"];
+    PyObject *pDocument = getHackedPyRef([document py]);
+    model = [[PyMainWindow alloc] initWithDocument:pDocument];
+    OBJP_LOCKGIL;
+    Py_DECREF(pDocument);
+    OBJP_UNLOCKGIL;
+    [model bindCallback:createCallback(@"MainWindowView", self)];
     [self setDocument:document];
     /* Put a cute iTunes-like bottom bar */
     [[self window] setContentBorderThickness:28 forEdge:NSMinYEdge];
@@ -24,24 +31,24 @@ http://www.hardcoded.net/licenses/bsd_license
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
     exportPanel = [[MGExportPanel alloc] initWithParent:self];
-    netWorthView = [[MGNetWorthView alloc] initWithPy:[[self py] nwview]];
-    profitView = [[MGProfitView alloc] initWithPy:[[self py] pview]];
-    transactionView = [[MGTransactionView alloc] initWithPy:[[self py] tview]];
-    accountView = [[MGAccountView alloc] initWithPy:[[self py] aview]];
-    scheduleView = [[MGScheduleView alloc] initWithPy:[[self py] scview]];
-    budgetView = [[MGBudgetView alloc] initWithPy:[[self py] bview]];
-    cashculatorView = [[MGCashculatorView alloc] initWithPy:[[self py] ccview]];
-    ledgerView = [[MGGeneralLedgerView alloc] initWithPy:[[self py] glview]];
-    docpropsView = [[MGDocPropsView alloc] initWithPy:[[self py] dpview]];
-    emptyView = [[MGEmptyView alloc] initWithPy:[[self py] emptyview]];
-    searchField = [[MGSearchField alloc] initWithPy:[[self py] searchField]];
+    netWorthView = [[MGNetWorthView alloc] initWithPyRef:[[self model] nwview]];
+    profitView = [[MGProfitView alloc] initWithPyRef:[[self model] pview]];
+    transactionView = [[MGTransactionView alloc] initWithPyRef:[[self model] tview]];
+    accountView = [[MGAccountView alloc] initWithPyRef:[[self model] aview]];
+    scheduleView = [[MGScheduleView alloc] initWithPyRef:[[self model] scview]];
+    budgetView = [[MGBudgetView alloc] initWithPyRef:[[self model] bview]];
+    cashculatorView = [[MGCashculatorView alloc] initWithPyRef:[[self model] ccview]];
+    ledgerView = [[MGGeneralLedgerView alloc] initWithPyRef:[[self model] glview]];
+    docpropsView = [[MGDocPropsView alloc] initWithPyRef:[[self model] dpview]];
+    emptyView = [[MGEmptyView alloc] initWithPyRef:[[self model] emptyview]];
+    searchField = [[MGSearchField alloc] initWithPyRef:[[self model] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
     customDateRangePanel = [[MGCustomDateRangePanel alloc] initWithParent:self];
     accountReassignPanel = [[MGAccountReassignPanel alloc] initWithParent:self];
-    accountLookup = [[MGAccountLookup alloc] initWithPy:[[self py] accountLookup]];
-    completionLookup = [[MGCompletionLookup alloc] initWithPy:[[self py] completionLookup]];
-    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPy:[[self py] daterangeSelector]];
+    accountLookup = [[MGAccountLookup alloc] initWithPyRef:[[self model] accountLookup]];
+    completionLookup = [[MGCompletionLookup alloc] initWithPyRef:[[self model] completionLookup]];
+    dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyRef:[[self model] daterangeSelector]];
     subviews = [[NSMutableArray alloc] init];
     
     // Setup the toolbar
@@ -52,7 +59,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
-    [[self py] connect];
+    [[self model] connect];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause
        crashes.
     */
@@ -92,12 +99,13 @@ http://www.hardcoded.net/licenses/bsd_license
     [completionLookup release];
     [dateRangeSelector release];
     [subviews release];
+    [model release];
     [super dealloc];
 }
 
-- (PyMainWindow *)py
+- (PyMainWindow *)model
 {
-    return (PyMainWindow *)py;
+    return (PyMainWindow *)model;
 }
 
 - (MGDocument *)document
@@ -118,9 +126,9 @@ http://www.hardcoded.net/licenses/bsd_license
     else if (action == @selector(toggleEntriesReconciled:))
         return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top inReconciliationMode];
     else if (action == @selector(showNextView:))
-        return [[self py] currentPaneIndex] < [[self py] paneCount]-1;
+        return [[self model] currentPaneIndex] < [[self model] paneCount]-1;
     else if (action == @selector(showPreviousView:))
-        return [[self py] currentPaneIndex] > 0;
+        return [[self model] currentPaneIndex] > 0;
     else if (action == @selector(showSelectedAccount:)) {
         if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
             return [(id)top canShowSelectedAccount];
@@ -139,7 +147,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (NSMenu *)buildColumnsMenu
 {
-    NSArray *menuItems = [[self py] columnMenuItems];
+    NSArray *menuItems = [[self model] columnMenuItems];
     if (menuItems == nil) {
         return nil;
     }
@@ -161,22 +169,22 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSMenuItem *mi = (NSMenuItem *)sender;
     NSInteger index = [mi tag];
-    [[self py] toggleColumnMenuItemAtIndex:index];
+    [[self model] toggleColumnMenuItemAtIndex:index];
 }
 
 - (IBAction)delete:(id)sender
 {
-    [[self py] deleteItem];
+    [[self model] deleteItem];
 }
 
 - (IBAction)duplicateItem:(id)sender
 {
-    [[self py] duplicateItem];
+    [[self model] duplicateItem];
 }
 
 - (IBAction)editItemInfo:(id)sender
 {
-    [[self py] editItem];
+    [[self model] editItem];
 }
 
 - (IBAction)itemSegmentClicked:(id)sender
@@ -195,42 +203,42 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)jumpToAccount:(id)sender
 {
-    [[self py] jumpToAccount];
+    [[self model] jumpToAccount];
 }
 
 - (IBAction)makeScheduleFromSelected:(id)sender
 {
-    [[self py] makeScheduleFromSelected];
+    [[self model] makeScheduleFromSelected];
 }
 
 - (IBAction)moveSelectionDown:(id)sender
 {
-    [[self py] moveDown];
+    [[self model] moveDown];
 }
 
 - (IBAction)moveSelectionUp:(id)sender
 {
-    [[self py] moveUp];
+    [[self model] moveUp];
 }
 
 - (IBAction)navigateBack:(id)sender
 {
-    [[self py] navigateBack];
+    [[self model] navigateBack];
 }
 
 - (IBAction)newGroup:(id)sender
 {
-    [[self py] newGroup];
+    [[self model] newGroup];
 }
 
 - (IBAction)newItem:(id)sender
 {
-    [[self py] newItem];
+    [[self model] newItem];
 }
 
 - (IBAction)newTab:(id)sender
 {
-    [[self py] newTab];
+    [[self model] newTab];
 }
 
 - (IBAction)search:(id)sender
@@ -295,32 +303,32 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)showBalanceSheet:(id)sender
 {
-    [[self py] showPaneOfType:MGPaneTypeNetWorth];
+    [[self model] showPaneOfType:MGPaneTypeNetWorth];
 }
 
 - (IBAction)showIncomeStatement:(id)sender
 {
-    [[self py] showPaneOfType:MGPaneTypeProfit];
+    [[self model] showPaneOfType:MGPaneTypeProfit];
 }
 
 - (IBAction)showTransactionTable:(id)sender
 {
-    [[self py] showPaneOfType:MGPaneTypeTransaction];
+    [[self model] showPaneOfType:MGPaneTypeTransaction];
 }
 
 - (IBAction)showNextView:(id)sender
 {
-    [[self py] selectNextView];
+    [[self model] selectNextView];
 }
 
 - (IBAction)showPreviousView:(id)sender
 {
-    [[self py] selectPreviousView];
+    [[self model] selectPreviousView];
 }
 
 - (IBAction)showSelectedAccount:(id)sender
 {
-    [[self py] showAccount];
+    [[self model] showAccount];
 }
 
 - (IBAction)toggleEntriesReconciled:(id)sender
@@ -343,10 +351,10 @@ http://www.hardcoded.net/licenses/bsd_license
     NSSegmentedControl *sc = (NSSegmentedControl *)sender;
     NSInteger index = [sc selectedSegment];
     if (index == 0) {
-        [[self py] toggleAreaVisibility:MGPaneAreaBottomGraph];
+        [[self model] toggleAreaVisibility:MGPaneAreaBottomGraph];
     }
     else if (index == 1) {
-        [[self py] toggleAreaVisibility:MGPaneAreaRightChart];
+        [[self model] toggleAreaVisibility:MGPaneAreaRightChart];
     }
     else {
         NSMenu *m = [self buildColumnsMenu];
@@ -361,17 +369,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)toggleGraph:(id)sender
 {
-    [[self py] toggleAreaVisibility:MGPaneAreaBottomGraph];
+    [[self model] toggleAreaVisibility:MGPaneAreaBottomGraph];
 }
 
 - (IBAction)togglePieChart:(id)sender
 {
-    [[self py] toggleAreaVisibility:MGPaneAreaRightChart];
+    [[self model] toggleAreaVisibility:MGPaneAreaRightChart];
 }
 
 - (IBAction)export:(id)sender
 {
-    [[self py] export];
+    [[self model] export];
 }
 
 /* Public */
@@ -402,12 +410,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (NSInteger)openedTabCount
 {
-    return [[self py] paneCount];
+    return [[self model] paneCount];
 }
 
 - (void)closeActiveTab
 {
-    [[self py] closePaneAtIndex:[[self py] currentPaneIndex]];
+    [[self model] closePaneAtIndex:[[self model] currentPaneIndex]];
 }
 
 /* Delegate */
@@ -419,7 +427,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
-    [[self py] closePaneAtIndex:index];
+    [[self model] closePaneAtIndex:index];
     /* We never let the tab bar remove the tab itself. It causes all kind of problems with tab
        syncing. A callback will take care of closing the tab manually.
      */
@@ -429,12 +437,12 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)aTabViewItem
 {
     NSInteger index = [tabView indexOfTabViewItem:aTabViewItem];
-    [[self py] setCurrentPaneIndex:index];
+    [[self model] setCurrentPaneIndex:index];
 }
 
 - (void)tabView:(NSTabView *)aTabView movedTab:(NSTabViewItem *)aTabViewItem fromIndex:(NSInteger)aFrom toIndex:(NSInteger)aTo
 {
-    [[self py] movePaneAtIndex:aFrom toIndex:aTo];
+    [[self model] movePaneAtIndex:aFrom toIndex:aTo];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
@@ -544,7 +552,7 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Callbacks for python */
 - (void)changeSelectedPane
 {
-    NSInteger index = [[self py] currentPaneIndex];
+    NSInteger index = [[self model] currentPaneIndex];
     [tabView selectTabViewItemAtIndex:index];
     top = [subviews objectAtIndex:index];
     [[self window] makeFirstResponder:[top mainResponder]];
@@ -554,15 +562,15 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [tabBar setDelegate:nil];
     [subviews removeAllObjects];
-    NSInteger paneCount = [[self py] paneCount];
+    NSInteger paneCount = [[self model] paneCount];
     while ([tabView numberOfTabViewItems] > paneCount) {
         NSTabViewItem *item = [tabView tabViewItemAtIndex:paneCount];
         [tabView removeTabViewItem:item];
     }
     
     for (NSInteger i=0; i<paneCount; i++) {
-        NSInteger paneType = [[self py] paneTypeAtIndex:i];
-        NSString *label = [[self py] paneLabelAtIndex:i];
+        NSInteger paneType = [[self model] paneTypeAtIndex:i];
+        NSString *label = [[self model] paneLabelAtIndex:i];
         MGBaseView *view = nil;
         NSImage *tabIcon = nil;
         if (paneType == MGPaneTypeNetWorth) {
@@ -628,7 +636,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)refreshStatusLine
 {
-    [statusLabel setStringValue:[[self py] statusLine]];
+    [statusLabel setStringValue:[[self model] statusLine]];
 }
 
 - (void)refreshUndoActions
@@ -645,7 +653,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)updateAreaVisibility
 {
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self py] hiddenAreas]];
+    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     NSString *imgname = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? @"graph_visibility_off_16" : @"graph_visibility_on_16";
     [visibilitySegments setImage:[NSImage imageNamed:imgname] forSegment:0];
     imgname = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? @"piechart_visibility_off_16" : @"piechart_visibility_on_16";

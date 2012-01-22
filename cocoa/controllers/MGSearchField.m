@@ -8,16 +8,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGSearchField.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGSearchField
-- (id)initWithPy:(id)aPy
+- (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PySearchField *m = [[PySearchField alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PySearchField *m = [[PySearchField alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
     [NSBundle loadNibNamed:@"SearchField" owner:self];
