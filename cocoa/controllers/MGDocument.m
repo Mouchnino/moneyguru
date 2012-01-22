@@ -15,18 +15,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAppDelegate.h"
 #import "MGPrintView.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGDocument
 - (id)init
 {
     self = [super init];
     MGAppDelegate *app = [NSApp delegate];
-    PyObject *pApp = getHackedPyRef([app py]);
-    model = [[PyDocument alloc] initWithApp:pApp];
-    OBJP_LOCKGIL;
-    Py_DECREF(pApp);
-    OBJP_UNLOCKGIL;
+    model = [[PyDocument alloc] initWithApp:[[app model] pyRef]];
     [self setUndoManager:[[[MGUndoManager alloc] initWithDocumentModel:model] autorelease]];
     return self;
 }

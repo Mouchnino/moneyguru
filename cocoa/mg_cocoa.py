@@ -10,10 +10,8 @@ import objc # import needed for dependency collection to work well
 from objp.util import pyref, dontwrap
 
 from cocoa import install_exception_hook, proxy
-from cocoa.inter import (signature, subproxy, PyGUIObject, PyTable, PyOutline, PyFairware,
-    PySelectableList)
 from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, PyColumns2, PyOutline2, OutlineView,
-    PySelectableList2)
+    PySelectableList2, PyFairware2)
 from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
     NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
     NSNumberFormatter, NSNumberFormatterBehavior10_4)
@@ -37,19 +35,8 @@ from core.gui.print_view import PrintView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.model.date import clean_format
 
-# This is a temporary, very hackish way of getting a PyObject* reference out of a pyobjc-based
-# instance. I couldn't figure out how to directly get it. When objp conversion is complete, we
-# won't need this anymore.
-class PyHack(NSObject):
-    def setRef_(self, ref):
-        import __main__
-        __main__.HACK_INSTANCE = ref.py
-
-
-class PyMoneyGuruApp(PyFairware):
-    def initWithCocoa_(self, cocoa):
-        super(PyMoneyGuruApp, self).init()
-        self.cocoa = cocoa
+class PyMoneyGuruApp(PyFairware2):
+    def __init__(self):
         LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('debug') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
         logging.debug('started in debug mode')
@@ -76,35 +63,26 @@ class PyMoneyGuruApp(PyFairware):
         decimal_sep = f.decimalSeparator()
         grouping_sep = f.groupingSeparator()
         logging.info('System numeric separators: %s and %s' % (grouping_sep, decimal_sep))
-        self.py = Application(self, date_format=date_format, decimal_sep=decimal_sep, 
+        model = Application(self, date_format=date_format, decimal_sep=decimal_sep, 
             grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path)
-        return self
-    
-    def free(self): # see PyGUIObject
-        if hasattr(self, 'cocoa'):
-            del self.cocoa
+        PyFairware2.__init__(self, model)
     
     #--- Public
-    @signature('c@:')
-    def isFirstRun(self):
-        return self.py.is_first_run
+    def isFirstRun(self) -> bool:
+        return self.model.is_first_run
     
     #--- Preferences
-    @signature('i@:')
-    def autoSaveInterval(self):
-        return self.py.autosave_interval
+    def autoSaveInterval(self) -> int:
+        return self.model.autosave_interval
     
-    @signature('v@:i')
-    def setAutoSaveInterval_(self, minutes):
-        self.py.autosave_interval = minutes
+    def setAutoSaveInterval_(self, minutes: int):
+        self.model.autosave_interval = minutes
     
-    @signature('c@:')
-    def autoDecimalPlace(self):
-        return self.py.auto_decimal_place
+    def autoDecimalPlace(self) -> bool:
+        return self.model.auto_decimal_place
     
-    @signature('v@:c')
-    def setAutoDecimalPlace_(self, value):
-        self.py.auto_decimal_place = value
+    def setAutoDecimalPlace_(self, value: bool):
+        self.model.auto_decimal_place = value
     
 
 class DocumentView(GUIObjectView):
@@ -112,7 +90,7 @@ class DocumentView(GUIObjectView):
 
 class PyDocument(PyGUIObject2):
     def __init__(self, app: pyref):
-        model = Document(None, app)
+        model = Document(None, app.model)
         PyGUIObject2.__init__(self, model)
         self.model.connect()
     

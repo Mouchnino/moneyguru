@@ -19,11 +19,11 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSMenuItem *customDateRangeItem3;
     
     NSInvocation *continueUpdate;
-    PyMoneyGuruApp *py;
+    PyMoneyGuruApp *model;
     HSAboutBox *_aboutBox;
 }
 
-- (PyMoneyGuruApp *)py;
+- (PyMoneyGuruApp *)model;
 
 - (IBAction)openExampleDocument:(id)sender;
 - (IBAction)openWebsite:(id)sender;

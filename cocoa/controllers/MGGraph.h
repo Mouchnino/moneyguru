@@ -13,7 +13,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 
 @interface MGGraph : MGChart {}
-- (id)initWithPy:(id)aPy;
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (MGGraphView *)view;
 - (PyGraph *)model;

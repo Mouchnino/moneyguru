@@ -37,8 +37,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)awakeFromNib
 {
-    Class pyClass = [Utils classNamed:@"PyMoneyGuruApp"];
-    py = [[pyClass alloc] initWithCocoa:self];
+    model = [[PyMoneyGuruApp alloc] init];
+    [model bindCallback:createCallback(@"FairwareView", self)];
     // Some weird bug showed up, and the first document instance (which get access to MGAppDelegate)
     // through [NSApp delegate] would be created before the NIB unarchiver would set the delegate
     // This is why we set it here.
@@ -48,24 +48,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)dealloc
 {
     // NSLog(@"AppDelegate dealloc");
-    [py release];
+    [model release];
     [_aboutBox release];
     [super dealloc];
 }
 
-- (oneway void)release
+- (PyMoneyGuruApp *)model
 {
-    // See HSGUIController
-    if ([self retainCount] == 2)
-    {
-        [py free];
-    }
-    [super release];
-}
-
-- (PyMoneyGuruApp *)py
-{
-    return py;
+    return model;
 }
 
 - (IBAction)openExampleDocument:(id)sender
@@ -100,7 +90,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)showAboutBox:(id)sender
 {
     if (_aboutBox == nil) {
-        _aboutBox = [[HSAboutBox alloc] initWithApp:py];
+        _aboutBox = [[HSAboutBox alloc] initWithApp:model];
     }
     [[_aboutBox window] makeKeyAndOrderFront:sender];
 }
@@ -145,9 +135,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [py initialRegistrationSetup];
+    [model initialRegistrationSetup];
     MGDocumentController *dc = [NSDocumentController sharedDocumentController];
-    BOOL isFirstRun = [[self py] isFirstRun];
+    BOOL isFirstRun = [[self model] isFirstRun];
     if (isFirstRun) {
         if ([Dialogs askYesNo:TR(@"This is your first time running moneyGuru. Do you want to open the example file?")] == NSAlertFirstButtonReturn) {
             [self openExampleDocument:self];
@@ -160,10 +150,10 @@ http://www.hardcoded.net/licenses/bsd_license
     else {
         [dc openFirstDocument];
     }
-    // For some messed up reason, simply notifying of a 'py' change here crashes the app, so the 
+    // For some messed up reason, simply notifying of a 'model' change here crashes the app, so the 
     // binding cannot be done in the NIB, it has to be done manually here.
-    [autoSaveIntervalField bind:@"value" toObject:self withKeyPath:@"py.autoSaveInterval" options:nil];
-    [autoDecimalPlaceButton bind:@"value" toObject:self withKeyPath:@"py.autoDecimalPlace" options:nil];
+    [autoSaveIntervalField bind:@"value" toObject:self withKeyPath:@"model.autoSaveInterval" options:nil];
+    [autoDecimalPlaceButton bind:@"value" toObject:self withKeyPath:@"model.autoDecimalPlace" options:nil];
 }
 
 /* SUUpdater delegate */
@@ -194,12 +184,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)showFairwareNagWithPrompt:(NSString *)prompt
 {
-    [HSFairwareReminder showFairwareNagWithApp:[self py] prompt:prompt];
+    [HSFairwareReminder showFairwareNagWithApp:[self model] prompt:prompt];
 }
 
 - (void)showDemoNagWithPrompt:(NSString *)prompt
 {
-    [HSFairwareReminder showDemoNagWithApp:[self py] prompt:prompt];
+    [HSFairwareReminder showDemoNagWithApp:[self model] prompt:prompt];
 }
 
 - (void)showMessage:(NSString *)msg

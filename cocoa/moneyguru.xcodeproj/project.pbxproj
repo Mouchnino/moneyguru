@@ -73,6 +73,8 @@
 		CE464BFF14CC4D7E0074A658 /* PyMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BFE14CC4D7E0074A658 /* PyMainWindow.m */; };
 		CE464C0214CC556F0074A658 /* PyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0114CC556F0074A658 /* PyDocument.m */; };
 		CE464C0514CC5B370074A658 /* PyListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0414CC5B370074A658 /* PyListener.m */; };
+		CE464C0A14CC5E0A0074A658 /* PyFairware2.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0714CC5E0A0074A658 /* PyFairware2.m */; };
+		CE464C0B14CC5E0A0074A658 /* PyMoneyGuruApp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0914CC5E0A0074A658 /* PyMoneyGuruApp.m */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
 		CE4B8C120E656DB70017432D /* help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* help */; };
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
@@ -423,6 +425,10 @@
 		CE464C0114CC556F0074A658 /* PyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDocument.m; sourceTree = "<group>"; };
 		CE464C0314CC5B370074A658 /* PyListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyListener.h; sourceTree = "<group>"; };
 		CE464C0414CC5B370074A658 /* PyListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyListener.m; sourceTree = "<group>"; };
+		CE464C0614CC5E0A0074A658 /* PyFairware2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFairware2.h; sourceTree = "<group>"; };
+		CE464C0714CC5E0A0074A658 /* PyFairware2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyFairware2.m; sourceTree = "<group>"; };
+		CE464C0814CC5E0A0074A658 /* PyMoneyGuruApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMoneyGuruApp.h; sourceTree = "<group>"; };
+		CE464C0914CC5E0A0074A658 /* PyMoneyGuruApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyMoneyGuruApp.m; sourceTree = "<group>"; };
 		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = ../data/example.moneyguru; sourceTree = "<group>"; };
 		CE4B8C000E656DB70017432D /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../build/help; sourceTree = "<group>"; };
 		CE4C22940F7FB37D00845640 /* MGGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraphic.h; sourceTree = "<group>"; };
@@ -806,7 +812,6 @@
 		CED1FC9410F7958A00634D72 /* MGBalanceSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBalanceSheet.m; sourceTree = "<group>"; };
 		CED1FC9610F7959200634D72 /* MGIncomeStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGIncomeStatement.h; sourceTree = "<group>"; };
 		CED1FC9710F7959200634D72 /* MGIncomeStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGIncomeStatement.m; sourceTree = "<group>"; };
-		CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMoneyGuruApp.h; sourceTree = "<group>"; };
 		CED43ECB0D3F679A004B73AA /* MGConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGConst.h; sourceTree = "<group>"; };
 		CED4DB04144767C20041601F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocProps.xib; sourceTree = "<group>"; };
 		CED4DB0714476BEF0041601F /* MGDocPropsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDocPropsView.h; sourceTree = "<group>"; };
@@ -987,7 +992,6 @@
 				CE873A6F0E21622F004F63E9 /* controllers */,
 				CE1016020F7F747F0099DA3C /* print */,
 				CEB46FB214C86C3600C56775 /* autogen */,
-				CE873A900E21622F004F63E9 /* proxies */,
 				CE873A9C0E21622F004F63E9 /* support */,
 				CE8739FF0E21615F004F63E9 /* resources */,
 				CE6D37C90F93633F00FA8460 /* cocoalib */,
@@ -1191,14 +1195,6 @@
 			);
 			includeInIndex = 1;
 			path = controllers;
-			sourceTree = "<group>";
-		};
-		CE873A900E21622F004F63E9 /* proxies */ = {
-			isa = PBXGroup;
-			children = (
-				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
-			);
-			path = proxies;
 			sourceTree = "<group>";
 		};
 		CE873A9C0E21622F004F63E9 /* support */ = {
@@ -1568,6 +1564,8 @@
 				CEFEA43014CA0693004BCD8D /* PySelectableList2.m */,
 				CE464C0314CC5B370074A658 /* PyListener.h */,
 				CE464C0414CC5B370074A658 /* PyListener.m */,
+				CE464C0614CC5E0A0074A658 /* PyFairware2.h */,
+				CE464C0714CC5E0A0074A658 /* PyFairware2.m */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -1701,6 +1699,8 @@
 		CEF44AF614CB78FF003FD363 /* misc */ = {
 			isa = PBXGroup;
 			children = (
+				CE464C0814CC5E0A0074A658 /* PyMoneyGuruApp.h */,
+				CE464C0914CC5E0A0074A658 /* PyMoneyGuruApp.m */,
 				CE464C0014CC556F0074A658 /* PyDocument.h */,
 				CE464C0114CC556F0074A658 /* PyDocument.m */,
 				CE464BFD14CC4D7E0074A658 /* PyMainWindow.h */,
@@ -2067,6 +2067,8 @@
 				CE464BFF14CC4D7E0074A658 /* PyMainWindow.m in Sources */,
 				CE464C0214CC556F0074A658 /* PyDocument.m in Sources */,
 				CE464C0514CC5B370074A658 /* PyListener.m in Sources */,
+				CE464C0A14CC5E0A0074A658 /* PyFairware2.m in Sources */,
+				CE464C0B14CC5E0A0074A658 /* PyMoneyGuruApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

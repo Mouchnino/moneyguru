@@ -8,19 +8,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGChart.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGChart
-- (id)initWithPy:(id)aPy
-{
-    PyObject *pRef = getHackedPyRef(aPy);
-    self = [self initWithPyRef:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
-    return self;
-}
-
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyChart *m = [[PyChart alloc] initWithModel:aPyRef];
