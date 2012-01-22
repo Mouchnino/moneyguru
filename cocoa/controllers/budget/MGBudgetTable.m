@@ -9,16 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBudgetTable.h"
 #import "MGTableView.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGBudgetTable
-- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyBudgetTable *m = [[PyBudgetTable alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyBudgetTable *m = [[PyBudgetTable alloc] initWithModel:aPyRef];
     self = [super initWithModel:m tableView:aTableView];
     [m bindCallback:createCallback(@"TableView", self)];
     [m release];

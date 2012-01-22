@@ -8,11 +8,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyScheduleView.h"
-#import "MGBaseView.h"
+#import "MGBaseView2.h"
 #import "MGTableView.h"
 #import "MGScheduleTable.h"
 
-@interface MGScheduleView : MGBaseView
+@interface MGScheduleView : MGBaseView2
 {
     IBOutlet MGTableView *tableView;
     
@@ -20,5 +20,5 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 - (id)initWithPy:(id)aPy;
 
-- (PyScheduleView *)py;
+- (PyScheduleView *)model;
 @end

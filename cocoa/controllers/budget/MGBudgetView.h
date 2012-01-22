@@ -8,16 +8,16 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyBudgetView.h"
-#import "MGBaseView.h"
+#import "MGBaseView2.h"
 #import "MGTableView.h"
 #import "MGBudgetTable.h"
 
-@interface MGBudgetView : MGBaseView
+@interface MGBudgetView : MGBaseView2
 {
     IBOutlet MGTableView *tableView;
     
     MGBudgetTable *budgetTable;
 }
 - (id)initWithPy:(id)aPy;
-- (PyBudgetView *)py;
+- (PyBudgetView *)model;
 @end

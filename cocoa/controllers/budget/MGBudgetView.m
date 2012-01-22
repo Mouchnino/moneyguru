@@ -9,13 +9,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBudgetView.h"
 #import "MGBudgetPrint.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGBudgetView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyBudgetView *m = [[PyBudgetView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m release];
     [NSBundle loadNibNamed:@"BudgetTable" owner:self];
-    budgetTable = [[MGBudgetTable alloc] initWithPy:[[self py] table] tableView:tableView];
+    budgetTable = [[MGBudgetTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     return self;
 }
         
@@ -25,13 +32,13 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyBudgetView *)py
+- (PyBudgetView *)model
 {
-    return (PyBudgetView *)py;
+    return (PyBudgetView *)model;
 }
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGBudgetPrint alloc] initWithPyParent:[self py] tableView:[budgetTable tableView]] autorelease];
+    return [[[MGBudgetPrint alloc] initWithPyParent:[self model] tableView:[budgetTable tableView]] autorelease];
 }
 @end

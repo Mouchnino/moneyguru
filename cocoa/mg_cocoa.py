@@ -1016,11 +1016,15 @@ class PyAccountView(PyBaseView2):
         self.callback.showLineGraph()
     
 
-class PyBudgetView(PyBaseView):
-    table = subproxy('table', 'table', PyTable)
+class PyBudgetView(PyBaseView2):
+    def table(self) -> pyref:
+        return self.model.table
+    
 
-class PyScheduleView(PyBaseView):
-    table = subproxy('table', 'table', PyTable)
+class PyScheduleView(PyBaseView2):
+    def table(self) -> pyref:
+        return self.model.table
+    
 
 class PyCashculatorView(PyBaseView):
     table = subproxy('table', 'atable', PyTable)
@@ -1070,8 +1074,8 @@ class PyMainWindow(PyGUIContainer):
     pview = subproxy('pview', 'pview', PyGUIObject)
     tview = subproxy('tview', 'tview', PyGUIObject)
     aview = subproxy('aview', 'aview', PyGUIObject)
-    scview = subproxy('scview', 'scview', PyScheduleView)
-    bview = subproxy('bview', 'bview', PyBudgetView)
+    scview = subproxy('scview', 'scview', PyGUIObject)
+    bview = subproxy('bview', 'bview', PyGUIObject)
     ccview = subproxy('ccview', 'ccview', PyCashculatorView)
     glview = subproxy('glview', 'glview', PyGeneralLedgerView)
     dpview = subproxy('dpview', 'dpview', PyDocPropsView)

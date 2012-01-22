@@ -9,13 +9,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGScheduleView.h"
 #import "MGSchedulePrint.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGScheduleView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyScheduleView *m = [[PyScheduleView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m release];
     [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
-    scheduleTable = [[MGScheduleTable alloc] initWithPy:[[self py] table] tableView:tableView];
+    scheduleTable = [[MGScheduleTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     return self;
 }
         
@@ -25,14 +32,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyScheduleView *)py
+- (PyScheduleView *)model
 {
-    return (PyScheduleView *)py;
+    return (PyScheduleView *)model;
 }
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGSchedulePrint alloc] initWithPyParent:[self py] 
+    return [[[MGSchedulePrint alloc] initWithPyParent:[self model] 
         tableView:[scheduleTable tableView]] autorelease];
 }
 @end
