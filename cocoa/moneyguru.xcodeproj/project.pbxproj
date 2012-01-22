@@ -93,7 +93,6 @@
 		CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1A12757587008EFA8A /* MGExportPanel.m */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38070F93648E00FA8460 /* Dialogs.m */; };
-		CE6D38130F93648E00FA8460 /* HSErrorReportWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */; };
 		CE6D38160F93648E00FA8460 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D380F0F93648E00FA8460 /* Utils.m */; };
 		CE6D38170F93648E00FA8460 /* ValueTransformers.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38110F93648E00FA8460 /* ValueTransformers.m */; };
 		CE6E000F0F4ECD0B00FE7628 /* MGChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E000E0F4ECD0B00FE7628 /* MGChartView.m */; };
@@ -457,8 +456,6 @@
 		CE6C6FF00E74324B003B5062 /* MGChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChart.m; sourceTree = "<group>"; };
 		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
 		CE6D38070F93648E00FA8460 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = ../cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
-		CE6D38080F93648E00FA8460 /* HSErrorReportWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSErrorReportWindow.h; path = ../cocoalib/HSErrorReportWindow.h; sourceTree = SOURCE_ROOT; };
-		CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSErrorReportWindow.m; path = ../cocoalib/HSErrorReportWindow.m; sourceTree = SOURCE_ROOT; };
 		CE6D380E0F93648E00FA8460 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
 		CE6D380F0F93648E00FA8460 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
 		CE6D38100F93648E00FA8460 /* ValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValueTransformers.h; path = ../cocoalib/ValueTransformers.h; sourceTree = SOURCE_ROOT; };
@@ -1036,8 +1033,6 @@
 				CEBA330A11294D2B009C782F /* xib */,
 				CE6D38060F93648E00FA8460 /* Dialogs.h */,
 				CE6D38070F93648E00FA8460 /* Dialogs.m */,
-				CE6D38080F93648E00FA8460 /* HSErrorReportWindow.h */,
-				CE6D38090F93648E00FA8460 /* HSErrorReportWindow.m */,
 				CE6E77A212538AF200A1754B /* HSFairwareReminder.h */,
 				CE6E77A312538AF200A1754B /* HSFairwareReminder.m */,
 				CEC941C812D32F7600816473 /* HSAboutBox.h */,
@@ -1876,7 +1871,6 @@
 				CEE223410F893D1C00E7FE12 /* MGTableWithSplitsPrint.m in Sources */,
 				CEE46FC40F91E58500D08E40 /* MGAccountReassignPanel.m in Sources */,
 				CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */,
-				CE6D38130F93648E00FA8460 /* HSErrorReportWindow.m in Sources */,
 				CE6D38160F93648E00FA8460 /* Utils.m in Sources */,
 				CE6D38170F93648E00FA8460 /* ValueTransformers.m in Sources */,
 				CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */,
