@@ -175,28 +175,12 @@ class PyDocument(PyGUIObject2):
     
 
 #--- Root classes
-class PyListener(PyGUIObject):
-    def connect(self):
-        self.py.connect()
-    
-    def disconnect(self):
-        self.py.disconnect()
-    
-    def free(self):
-        self.disconnect()
-        PyGUIObject.free(self)
-    
-class PyListener2(PyGUIObject2):
+class PyListener(PyGUIObject2):
     def connect(self):
         self.model.connect()
     
     def disconnect(self):
         self.model.disconnect()
-    
-
-class PyGUIContainer(PyListener):
-    def setChildren_(self, children):
-        self.py.set_children([child.py for child in children])
     
 
 class PyTableWithDate(PyTable2):
@@ -211,7 +195,7 @@ class PyTableWithDate(PyTable2):
         return self.model.edited.is_date_in_past()
     
 
-class PyChart(PyListener2):
+class PyChart(PyListener):
     def data(self) -> list:
         return self.model.data
     
@@ -898,7 +882,7 @@ class PyLookup(PyGUIObject2):
     
 
 #--- Views
-class PyBaseView(PyListener2):
+class PyBaseView(PyListener):
     def mainwindow(self) -> pyref:
         return self.model.mainwindow
     
@@ -1058,10 +1042,10 @@ class MainWindowView(GUIObjectView):
     def updateAreaVisibility(self): pass
     def viewClosedAtIndex_(self, index: int): pass
 
-class PyMainWindow(PyListener2):
+class PyMainWindow(PyListener):
     def __init__(self, document: pyref):
         model = MainWindow(None, document.model)
-        PyListener2.__init__(self, model)
+        PyListener.__init__(self, model)
     
     def searchField(self) -> pyref:
         return self.model.search_field
@@ -1274,10 +1258,10 @@ class ImportWindowView(GUIObjectView):
     def show(self): pass
     def updateSelectedPane(self): pass
 
-class PyImportWindow(PyListener2):
+class PyImportWindow(PyListener):
     def __init__(self, document: pyref):
         model = ImportWindow(None, document.model)
-        PyListener2.__init__(self, model)
+        PyListener.__init__(self, model)
     
     def importTable(self) -> pyref:
         return self.model.import_table
@@ -1354,10 +1338,10 @@ class CSVImportOptionsView(GUIObjectView):
     def hide(self): pass
     def showMessage_(self, msg: str): pass
 
-class PyCSVImportOptions(PyListener2):
+class PyCSVImportOptions(PyListener):
     def __init__(self, document: pyref):
         model = CSVOptions(None, document.model)
-        PyListener2.__init__(self, model)
+        PyListener.__init__(self, model)
     
     def columnNameAtIndex_(self, index: int) -> str:
         return self.model.get_column_name(index)
