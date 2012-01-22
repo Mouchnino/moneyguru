@@ -8,13 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyEmptyView.h"
-#import "MGBaseView.h"
+#import "MGBaseView2.h"
 
-@interface MGEmptyView : MGBaseView
+@interface MGEmptyView : MGBaseView2
 {
 }
 - (id)initWithPy:(id)aPy;
-- (PyEmptyView *)py;
+- (PyEmptyView *)model;
 
 /* Actions */
 - (IBAction)selectNetWorthView:(id)sender;

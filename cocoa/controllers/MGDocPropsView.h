@@ -8,22 +8,22 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyDocPropsView.h"
-#import "MGBaseView.h"
-#import "HSPopUpList.h"
-#import "HSComboBox.h"
+#import "MGBaseView2.h"
+#import "HSPopUpList2.h"
+#import "HSComboBox2.h"
 
-@interface MGDocPropsView : MGBaseView
+@interface MGDocPropsView : MGBaseView2
 {
     IBOutlet NSComboBox *currencyComboBoxView;
     IBOutlet NSPopUpButton *firstWeekdayPopUpView;
     IBOutlet NSPopUpButton *aheadMonthsPopUpView;
     IBOutlet NSPopUpButton *yearStartMonthPopUpView;
     
-    HSComboBox *currencyComboBox;
-    HSPopUpList *firstWeekdayPopUp;
-    HSPopUpList *aheadMonthsPopUp;
-    HSPopUpList *yearStartMonthPopUp;
+    HSComboBox2 *currencyComboBox;
+    HSPopUpList2 *firstWeekdayPopUp;
+    HSPopUpList2 *aheadMonthsPopUp;
+    HSPopUpList2 *yearStartMonthPopUp;
 }
 - (id)initWithPy:(id)aPy;
-- (PyDocPropsView *)py;
+- (PyDocPropsView *)model;
 @end

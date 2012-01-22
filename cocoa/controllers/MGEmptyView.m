@@ -9,59 +9,66 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGEmptyView.h"
 #import "MGConst.h"
 #import "Utils.h"
+#import "ObjP.h"
 
 @implementation MGEmptyView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyEmptyView *m = [[PyEmptyView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m release];
     [NSBundle loadNibNamed:@"NewTabView" owner:self];
     return self;
 }
         
-- (PyEmptyView *)py
+- (PyEmptyView *)model
 {
-    return (PyEmptyView *)py;
+    return (PyEmptyView *)model;
 }
 
 /* Actions */
 - (IBAction)selectNetWorthView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeNetWorth];
+    [[self model] selectPaneType:MGPaneTypeNetWorth];
 }
 
 - (IBAction)selectProfitView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeProfit];
+    [[self model] selectPaneType:MGPaneTypeProfit];
 }
 
 - (IBAction)selectTransactionView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeTransaction];
+    [[self model] selectPaneType:MGPaneTypeTransaction];
 }
 
 - (IBAction)selectScheduleView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeSchedule];
+    [[self model] selectPaneType:MGPaneTypeSchedule];
 }
 
 - (IBAction)selectBudgetView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeBudget];
+    [[self model] selectPaneType:MGPaneTypeBudget];
 }
 
 - (IBAction)selectCashculatorView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeCashculator];
+    [[self model] selectPaneType:MGPaneTypeCashculator];
 }
 
 - (IBAction)selectGeneralLedgerView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeGeneralLedger];
+    [[self model] selectPaneType:MGPaneTypeGeneralLedger];
 }
 
 - (IBAction)selectDocPropsView:(id)sender
 {
-    [[self py] selectPaneType:MGPaneTypeDocProps];
+    [[self model] selectPaneType:MGPaneTypeDocProps];
 }
 
 @end

@@ -1045,16 +1045,24 @@ class PyGeneralLedgerView(PyBaseView2):
         return self.model.gltable
     
 
-class PyDocPropsView(PyBaseView):
-    currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
-    firstWeekdayList = subproxy('firstWeekdayList', 'first_weekday_list', PySelectableList)
-    aheadMonthsList = subproxy('aheadMonthsList', 'ahead_months_list', PySelectableList)
-    yearStartMonthList = subproxy('yearStartMonthList', 'year_start_month_list', PySelectableList)
+class PyDocPropsView(PyBaseView2):
+    def currencyList(self) -> pyref:
+        return self.model.currency_list
+    
+    def firstWeekdayList(self) -> pyref:
+        return self.model.first_weekday_list
+    
+    def aheadMonthsList(self) -> pyref:
+        return self.model.ahead_months_list
+    
+    def yearStartMonthList(self) -> pyref:
+        return self.model.year_start_month_list
+    
 
-class PyEmptyView(PyBaseView):
-    @signature('v@:i')
-    def selectPaneType_(self, paneType):
-        self.py.select_pane_type(paneType)
+class PyEmptyView(PyBaseView2):
+    def selectPaneType_(self, paneType: int):
+        self.model.select_pane_type(paneType)
+    
 
 class PyMainWindow(PyGUIContainer):
     py_class = MainWindow
@@ -1081,8 +1089,8 @@ class PyMainWindow(PyGUIContainer):
     bview = subproxy('bview', 'bview', PyGUIObject)
     ccview = subproxy('ccview', 'ccview', PyGUIObject)
     glview = subproxy('glview', 'glview', PyGUIObject)
-    dpview = subproxy('dpview', 'dpview', PyDocPropsView)
-    emptyview = subproxy('emptyview', 'emptyview', PyEmptyView)
+    dpview = subproxy('dpview', 'dpview', PyGUIObject)
+    emptyview = subproxy('emptyview', 'emptyview', PyGUIObject)
     
     def selectNextView(self):
         self.py.select_next_view()
