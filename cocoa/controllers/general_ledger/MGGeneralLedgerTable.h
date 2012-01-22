@@ -11,7 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGEditableTable2.h"
 
 @interface MGGeneralLedgerTable : MGEditableTable2 {}
-- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView;
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView;
 - (void)initializeColumns;
 - (PyGeneralLedgerTable *)model;
 @end

@@ -1026,21 +1026,24 @@ class PyScheduleView(PyBaseView2):
         return self.model.table
     
 
-class PyCashculatorView(PyBaseView):
-    table = subproxy('table', 'atable', PyTable)
+class PyCashculatorView(PyBaseView2):
+    def table(self) -> pyref:
+        return self.model.atable
     
     def exportDB(self):
-        self.py.export_db()
+        self.model.export_db()
     
     def launchCC(self):
-        self.py.launch_cc()
+        self.model.launch_cc()
     
     def resetCCDB(self):
-        self.py.reset_ccdb()
+        self.model.reset_ccdb()
     
 
-class PyGeneralLedgerView(PyBaseView):
-    table = subproxy('table', 'gltable', PyTable)
+class PyGeneralLedgerView(PyBaseView2):
+    def table(self) -> pyref:
+        return self.model.gltable
+    
 
 class PyDocPropsView(PyBaseView):
     currencyList = subproxy('currencyList', 'currency_list', PySelectableList)
@@ -1076,8 +1079,8 @@ class PyMainWindow(PyGUIContainer):
     aview = subproxy('aview', 'aview', PyGUIObject)
     scview = subproxy('scview', 'scview', PyGUIObject)
     bview = subproxy('bview', 'bview', PyGUIObject)
-    ccview = subproxy('ccview', 'ccview', PyCashculatorView)
-    glview = subproxy('glview', 'glview', PyGeneralLedgerView)
+    ccview = subproxy('ccview', 'ccview', PyGUIObject)
+    glview = subproxy('glview', 'glview', PyGUIObject)
     dpview = subproxy('dpview', 'dpview', PyDocPropsView)
     emptyview = subproxy('emptyview', 'emptyview', PyEmptyView)
     

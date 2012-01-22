@@ -8,15 +8,15 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGeneralLedgerView.h"
-#import "MGBaseView.h"
+#import "MGBaseView2.h"
 #import "MGGeneralLedgerTable.h"
 
-@interface MGGeneralLedgerView : MGBaseView
+@interface MGGeneralLedgerView : MGBaseView2
 {
     IBOutlet MGTableView *tableView;
     
     MGGeneralLedgerTable *ledgerTable;
 }
 - (id)initWithPy:(id)aPy;
-- (PyGeneralLedgerView *)py;
+- (PyGeneralLedgerView *)model;
 @end

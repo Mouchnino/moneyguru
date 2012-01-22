@@ -10,16 +10,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 #import "MGReconciliationCell.h"
 #import "Utils.h"
-#import "ObjP.h"
 
 @implementation MGGeneralLedgerTable
-- (id)initWithPy:(id)aPy tableView:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView
 {
-    PyObject *pRef = getHackedPyRef(aPy);
-    PyGeneralLedgerTable *m = [[PyGeneralLedgerTable alloc] initWithModel:pRef];
-    OBJP_LOCKGIL;
-    Py_DECREF(pRef);
-    OBJP_UNLOCKGIL;
+    PyGeneralLedgerTable *m = [[PyGeneralLedgerTable alloc] initWithModel:aPyRef];
     self = [super initWithModel:m tableView:aTableView];
     [m bindCallback:createCallback(@"TableView", self)];
     [m release];

@@ -8,17 +8,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyCashculatorView.h"
-#import "MGBaseView.h"
+#import "MGBaseView2.h"
 #import "MGCashculatorAccountTable.h"
 
-@interface MGCashculatorView : MGBaseView
+@interface MGCashculatorView : MGBaseView2
 {
     IBOutlet MGTableView *accountTableView;
     
     MGCashculatorAccountTable *accountTable;
 }
 - (id)initWithPy:(id)aPy;
-- (PyCashculatorView *)py;
+- (PyCashculatorView *)model;
 
 - (IBAction)exportDB:(id)sender;
 - (IBAction)launchCC:(id)sender;

@@ -12,9 +12,15 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGCashculatorView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyCashculatorView *m = [[PyCashculatorView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m release];
     [NSBundle loadNibNamed:@"CashculatorView" owner:self];
-    accountTable = [[MGCashculatorAccountTable alloc] initWithPy:[[self py] table] view:accountTableView];
+    accountTable = [[MGCashculatorAccountTable alloc] initWithPyRef:[[self model] table] view:accountTableView];
     return self;
 }
 
@@ -24,18 +30,18 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyCashculatorView *)py
+- (PyCashculatorView *)model
 {
-    return (PyCashculatorView *)py;
+    return (PyCashculatorView *)model;
 }
 
 - (IBAction)exportDB:(id)sender
 {
-    [[self py] exportDB];
+    [[self model] exportDB];
 }
 
 - (IBAction)launchCC:(id)sender
 {
-    [[self py] launchCC];
+    [[self model] launchCC];
 }
 @end

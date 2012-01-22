@@ -10,9 +10,9 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTableView.h"
 
 @implementation MGCashculatorAccountTable
-- (id)initWithPy:(id)aPy view:(MGTableView *)aTableView
+- (id)initWithPyRef:(PyObject *)aPyRef view:(MGTableView *)aTableView
 {
-    self = [super initWithPy:aPy view:aTableView];
+    self = [super initWithPyRef:aPyRef tableView:aTableView];
     [self initializeColumns];
     return self;
 }

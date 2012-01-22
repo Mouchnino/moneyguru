@@ -13,9 +13,15 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGGeneralLedgerView
 - (id)initWithPy:(id)aPy
 {
-    self = [super initWithPy:aPy];
+    PyObject *pRef = getHackedPyRef(aPy);
+    PyGeneralLedgerView *m = [[PyGeneralLedgerView alloc] initWithModel:pRef];
+    OBJP_LOCKGIL;
+    Py_DECREF(pRef);
+    OBJP_UNLOCKGIL;
+    self = [super initWithModel:m];
+    [m release];
     [NSBundle loadNibNamed:@"GeneralLedger" owner:self];
-    ledgerTable = [[MGGeneralLedgerTable alloc] initWithPy:[[self py] table] tableView:tableView];
+    ledgerTable = [[MGGeneralLedgerTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     return self;
 }
         
@@ -25,14 +31,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
-- (PyGeneralLedgerView *)py
+- (PyGeneralLedgerView *)model
 {
-    return (PyGeneralLedgerView *)py;
+    return (PyGeneralLedgerView *)model;
 }
 
 - (MGPrintView *)viewToPrint
 {
-    return [[[MGGeneralLedgerPrint alloc] initWithPyParent:[self py] tableView:[ledgerTable tableView]] autorelease];
+    return [[[MGGeneralLedgerPrint alloc] initWithPyParent:[self model] tableView:[ledgerTable tableView]] autorelease];
 }
 
 - (id)fieldEditorForObject:(id)asker
