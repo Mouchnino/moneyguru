@@ -8,14 +8,14 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyNetWorthView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
 #import "MGPieChart.h"
 #import "MGBalanceGraph.h"
 #import "MGDoubleView.h"
 
-@interface MGNetWorthView : MGBaseView2
+@interface MGNetWorthView : MGBaseView
 {
     IBOutlet HSOutlineView *outlineView;
     IBOutlet NSScrollView *outlineScrollView;

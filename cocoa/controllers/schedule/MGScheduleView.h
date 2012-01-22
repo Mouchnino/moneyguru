@@ -8,11 +8,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyScheduleView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "MGTableView.h"
 #import "MGScheduleTable.h"
 
-@interface MGScheduleView : MGBaseView2
+@interface MGScheduleView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
     

@@ -8,11 +8,11 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyDocPropsView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "HSPopUpList2.h"
 #import "HSComboBox2.h"
 
-@interface MGDocPropsView : MGBaseView2
+@interface MGDocPropsView : MGBaseView
 {
     IBOutlet NSComboBox *currencyComboBoxView;
     IBOutlet NSPopUpButton *firstWeekdayPopUpView;

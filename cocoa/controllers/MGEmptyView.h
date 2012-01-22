@@ -8,9 +8,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyEmptyView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 
-@interface MGEmptyView : MGBaseView2
+@interface MGEmptyView : MGBaseView
 {
 }
 - (id)initWithPy:(id)aPy;

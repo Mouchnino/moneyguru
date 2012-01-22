@@ -7,10 +7,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "HSGUIController.h"
+#import "HSGUIController2.h"
 #import "MGPrintView.h"
 
-@interface MGBaseView : HSGUIController
+@interface MGBaseView : HSGUIController2
 {
     IBOutlet NSView *wholeView;
     IBOutlet NSResponder *mainResponder;

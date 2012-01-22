@@ -8,10 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyCashculatorView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "MGCashculatorAccountTable.h"
 
-@interface MGCashculatorView : MGBaseView2
+@interface MGCashculatorView : MGBaseView
 {
     IBOutlet MGTableView *accountTableView;
     

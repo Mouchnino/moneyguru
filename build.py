@@ -185,7 +185,7 @@ def build_cocoa_bridging_interfaces():
     add_to_pythonpath('cocoalib')
     from cocoa.inter2 import (PyGUIObject2, GUIObjectView, PyTable2, TableView, PyColumns2,
         ColumnsView, PyOutline2, PySelectableList2, SelectableListView)
-    from mg_cocoa import (PyListener2, PyPanel, PanelView, PyBaseView2,
+    from mg_cocoa import (PyListener2, PyPanel, PanelView, PyBaseView,
         PyTableWithDate, PyCompletableEdit, PyDateWidget,
         PyCSVImportOptions, CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView,
         PyDateRangeSelector, DateRangeSelectorView, PySearchField, PyImportWindow, ImportWindowView,
@@ -199,7 +199,7 @@ def build_cocoa_bridging_interfaces():
         PyDocPropsView, PyEmptyView)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject2, PyListener2, PyTable2, PyColumns2, PyOutline2, PySelectableList2,
-        PyPanel, PyBaseView2, PyTableWithDate, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
+        PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget, PyCSVImportOptions,
         PyImportTable, PySplitTable, PyLookup, PyDateRangeSelector, PySearchField, PyImportWindow,
         PyFilterBar, PyReport, PyScheduleTable, PyBudgetTable, PyEntryTable, PyTransactionTable,
         PyGeneralLedgerTable, PyChart, PyGraph, PyAccountPanel, PyMassEditionPanel, PyBudgetPanel,

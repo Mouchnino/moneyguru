@@ -8,13 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyTransactionView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
 #import "MGTransactionTable.h"
 #import "MGFilterBar.h"
 
-@interface MGTransactionView : MGBaseView2
+@interface MGTransactionView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
     IBOutlet AMButtonBar *filterBarView;

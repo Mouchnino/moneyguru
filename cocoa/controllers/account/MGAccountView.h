@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyAccountView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "MGTableView.h"
 #import "AMButtonBar.h"
 #import "MGEntryTable.h"
@@ -16,7 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBalanceGraph.h"
 #import "MGBarGraph.h"
 
-@interface MGAccountView : MGBaseView2
+@interface MGAccountView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
     IBOutlet NSScrollView *tableScrollView;

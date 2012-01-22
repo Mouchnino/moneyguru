@@ -8,10 +8,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyGeneralLedgerView.h"
-#import "MGBaseView2.h"
+#import "MGBaseView.h"
 #import "MGGeneralLedgerTable.h"
 
-@interface MGGeneralLedgerView : MGBaseView2
+@interface MGGeneralLedgerView : MGBaseView
 {
     IBOutlet MGTableView *tableView;
     

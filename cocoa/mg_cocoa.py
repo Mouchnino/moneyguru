@@ -904,17 +904,7 @@ class PyLookup(PyGUIObject2):
     
 
 #--- Views
-class PyBaseView(PyGUIContainer):
-    # We can't use 'subproxy' here because it's too soon to have a reference to PyMainWindow. The
-    # only PyMainWindow reference we can have is inside the method's code. copy/paste
-    def mainwindow(self):
-        if not hasattr(self, '_mainwindow'):
-            self._mainwindow = PyMainWindow.alloc().initWithPy_(self.py.mainwindow)
-            # Our proxy's 'cocoa' attr will always stay None because this proxy is not the main
-            # proxy. We never bind the cocoa part.
-        return self._mainwindow
-
-class PyBaseView2(PyListener2):
+class PyBaseView(PyListener2):
     def mainwindow(self) -> pyref:
         return self.model.mainwindow
     
@@ -925,7 +915,7 @@ class PyBaseView2(PyListener2):
 class ViewWithGraphView:
     def updateVisibility(self): pass
 
-class PyNetWorthView(PyBaseView2):
+class PyNetWorthView(PyBaseView):
     def sheet(self) -> pyref:
         return self.model.bsheet
     
@@ -944,7 +934,7 @@ class PyNetWorthView(PyBaseView2):
         self.callback.updateVisibility()
     
 
-class PyProfitView(PyBaseView2):
+class PyProfitView(PyBaseView):
     def sheet(self) -> pyref:
         return self.model.istatement
     
@@ -963,7 +953,7 @@ class PyProfitView(PyBaseView2):
         self.callback.updateVisibility()
     
 
-class PyTransactionView(PyBaseView2):
+class PyTransactionView(PyBaseView):
     def filterBar(self) -> pyref:
         return self.model.filter_bar
     
@@ -976,7 +966,7 @@ class AccountViewView(ViewWithGraphView):
     def showBarGraph(self): pass
     def showLineGraph(self): pass
 
-class PyAccountView(PyBaseView2):
+class PyAccountView(PyBaseView):
     def filterBar(self) -> pyref:
         return self.model.filter_bar
     
@@ -1016,17 +1006,17 @@ class PyAccountView(PyBaseView2):
         self.callback.showLineGraph()
     
 
-class PyBudgetView(PyBaseView2):
+class PyBudgetView(PyBaseView):
     def table(self) -> pyref:
         return self.model.table
     
 
-class PyScheduleView(PyBaseView2):
+class PyScheduleView(PyBaseView):
     def table(self) -> pyref:
         return self.model.table
     
 
-class PyCashculatorView(PyBaseView2):
+class PyCashculatorView(PyBaseView):
     def table(self) -> pyref:
         return self.model.atable
     
@@ -1040,12 +1030,12 @@ class PyCashculatorView(PyBaseView2):
         self.model.reset_ccdb()
     
 
-class PyGeneralLedgerView(PyBaseView2):
+class PyGeneralLedgerView(PyBaseView):
     def table(self) -> pyref:
         return self.model.gltable
     
 
-class PyDocPropsView(PyBaseView2):
+class PyDocPropsView(PyBaseView):
     def currencyList(self) -> pyref:
         return self.model.currency_list
     
@@ -1059,7 +1049,7 @@ class PyDocPropsView(PyBaseView2):
         return self.model.year_start_month_list
     
 
-class PyEmptyView(PyBaseView2):
+class PyEmptyView(PyBaseView):
     def selectPaneType_(self, paneType: int):
         self.model.select_pane_type(paneType)
     

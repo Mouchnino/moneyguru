@@ -69,6 +69,7 @@
 		CE464BF314CC46930074A658 /* PyGeneralLedgerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BF114CC46930074A658 /* PyGeneralLedgerView.m */; };
 		CE464BF814CC48CC0074A658 /* PyDocPropsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BF514CC48CC0074A658 /* PyDocPropsView.m */; };
 		CE464BF914CC48CC0074A658 /* PyEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BF714CC48CC0074A658 /* PyEmptyView.m */; };
+		CE464BFC14CC4A930074A658 /* PyBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BFB14CC4A930074A658 /* PyBaseView.m */; };
 		CE491DEE0E617B8900FD46F5 /* example.moneyguru in Resources */ = {isa = PBXBuildFile; fileRef = CE491DED0E617B8900FD46F5 /* example.moneyguru */; };
 		CE4B8C120E656DB70017432D /* help in Resources */ = {isa = PBXBuildFile; fileRef = CE4B8C000E656DB70017432D /* help */; };
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
@@ -260,10 +261,8 @@
 		CEF44AE414CB6D7C003FD363 /* PySchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AE014CB6D7C003FD363 /* PySchedulePanel.m */; };
 		CEF44AE514CB6D7C003FD363 /* PyTransactionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AE214CB6D7C003FD363 /* PyTransactionPanel.m */; };
 		CEF44AE814CB7304003FD363 /* PyPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AE714CB7304003FD363 /* PyPanel.m */; };
-		CEF44AED14CB777A003FD363 /* PyBaseView2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AEA14CB777A003FD363 /* PyBaseView2.m */; };
 		CEF44AEE14CB777A003FD363 /* PyNetWorthView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AEC14CB777A003FD363 /* PyNetWorthView.m */; };
 		CEF44AF914CB7DD5003FD363 /* PyProfitView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AF814CB7DD5003FD363 /* PyProfitView.m */; };
-		CEF44AFC14CB7E7C003FD363 /* MGBaseView2.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AFB14CB7E7C003FD363 /* MGBaseView2.m */; };
 		CEF44AFF14CB82C8003FD363 /* PyTransactionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44AFE14CB82C8003FD363 /* PyTransactionView.m */; };
 		CEF44B0214CB8485003FD363 /* PyAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF44B0114CB8485003FD363 /* PyAccountView.m */; };
 		CEF4C5060F22274B004FDC9D /* popup_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = CEF4C5050F22274B004FDC9D /* popup_arrows.png */; };
@@ -335,7 +334,6 @@
 		CE092726145061F3004BD916 /* graph_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph_visibility_on_16.png; sourceTree = "<group>"; };
 		CE092727145061F3004BD916 /* piechart_visibility_off_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_off_16.png; sourceTree = "<group>"; };
 		CE092728145061F3004BD916 /* piechart_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_on_16.png; sourceTree = "<group>"; };
-		CE09272E14506C54004BD916 /* PyBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBaseView.h; sourceTree = "<group>"; };
 		CE0DB09214C8CF9E002F5727 /* PyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReport.h; sourceTree = "<group>"; };
 		CE0DB09314C8CF9E002F5727 /* PyReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyReport.m; sourceTree = "<group>"; };
 		CE0DB09514C8CFE0002F5727 /* PyOutline2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyOutline2.h; sourceTree = "<group>"; };
@@ -416,6 +414,8 @@
 		CE464BF514CC48CC0074A658 /* PyDocPropsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDocPropsView.m; sourceTree = "<group>"; };
 		CE464BF614CC48CC0074A658 /* PyEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEmptyView.h; sourceTree = "<group>"; };
 		CE464BF714CC48CC0074A658 /* PyEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyEmptyView.m; sourceTree = "<group>"; };
+		CE464BFA14CC4A930074A658 /* PyBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBaseView.h; sourceTree = "<group>"; };
+		CE464BFB14CC4A930074A658 /* PyBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyBaseView.m; sourceTree = "<group>"; };
 		CE491DED0E617B8900FD46F5 /* example.moneyguru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.moneyguru; path = ../data/example.moneyguru; sourceTree = "<group>"; };
 		CE4B8C000E656DB70017432D /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = ../build/help; sourceTree = "<group>"; };
 		CE4C22940F7FB37D00845640 /* MGGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraphic.h; sourceTree = "<group>"; };
@@ -854,14 +854,10 @@
 		CEF44AE214CB6D7C003FD363 /* PyTransactionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyTransactionPanel.m; sourceTree = "<group>"; };
 		CEF44AE614CB7304003FD363 /* PyPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPanel.h; sourceTree = "<group>"; };
 		CEF44AE714CB7304003FD363 /* PyPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyPanel.m; sourceTree = "<group>"; };
-		CEF44AE914CB777A003FD363 /* PyBaseView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyBaseView2.h; sourceTree = "<group>"; };
-		CEF44AEA14CB777A003FD363 /* PyBaseView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyBaseView2.m; sourceTree = "<group>"; };
 		CEF44AEB14CB777A003FD363 /* PyNetWorthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyNetWorthView.h; sourceTree = "<group>"; };
 		CEF44AEC14CB777A003FD363 /* PyNetWorthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyNetWorthView.m; sourceTree = "<group>"; };
 		CEF44AF714CB7DD5003FD363 /* PyProfitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyProfitView.h; sourceTree = "<group>"; };
 		CEF44AF814CB7DD5003FD363 /* PyProfitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyProfitView.m; sourceTree = "<group>"; };
-		CEF44AFA14CB7E7C003FD363 /* MGBaseView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBaseView2.h; sourceTree = "<group>"; };
-		CEF44AFB14CB7E7C003FD363 /* MGBaseView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBaseView2.m; sourceTree = "<group>"; };
 		CEF44AFD14CB82C8003FD363 /* PyTransactionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTransactionView.h; sourceTree = "<group>"; };
 		CEF44AFE14CB82C8003FD363 /* PyTransactionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyTransactionView.m; sourceTree = "<group>"; };
 		CEF44B0014CB8485003FD363 /* PyAccountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyAccountView.h; sourceTree = "<group>"; };
@@ -1115,8 +1111,6 @@
 				CEB46FD114C878C100C56775 /* MGTable2.m */,
 				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
 				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
-				CEF44AFA14CB7E7C003FD363 /* MGBaseView2.h */,
-				CEF44AFB14CB7E7C003FD363 /* MGBaseView2.m */,
 				CED4DB0714476BEF0041601F /* MGDocPropsView.h */,
 				CED4DB0814476BEF0041601F /* MGDocPropsView.m */,
 				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
@@ -1199,7 +1193,6 @@
 		CE873A900E21622F004F63E9 /* proxies */ = {
 			isa = PBXGroup;
 			children = (
-				CE09272E14506C54004BD916 /* PyBaseView.h */,
 				CE1E88D910F8A295003BB329 /* PyGUIContainer.h */,
 				CED39F9E0F93892D00CE9DC6 /* PyMoneyGuruApp.h */,
 				CE83CE1E0E220EA70095BA6A /* PyDocument.h */,
@@ -1582,8 +1575,8 @@
 		CEF44AF014CB77B0003FD363 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				CEF44AE914CB777A003FD363 /* PyBaseView2.h */,
-				CEF44AEA14CB777A003FD363 /* PyBaseView2.m */,
+				CE464BFA14CC4A930074A658 /* PyBaseView.h */,
+				CE464BFB14CC4A930074A658 /* PyBaseView.m */,
 				CEF44AEB14CB777A003FD363 /* PyNetWorthView.h */,
 				CEF44AEC14CB777A003FD363 /* PyNetWorthView.m */,
 				CEF44AF714CB7DD5003FD363 /* PyProfitView.h */,
@@ -2057,10 +2050,8 @@
 				CEF44AE414CB6D7C003FD363 /* PySchedulePanel.m in Sources */,
 				CEF44AE514CB6D7C003FD363 /* PyTransactionPanel.m in Sources */,
 				CEF44AE814CB7304003FD363 /* PyPanel.m in Sources */,
-				CEF44AED14CB777A003FD363 /* PyBaseView2.m in Sources */,
 				CEF44AEE14CB777A003FD363 /* PyNetWorthView.m in Sources */,
 				CEF44AF914CB7DD5003FD363 /* PyProfitView.m in Sources */,
-				CEF44AFC14CB7E7C003FD363 /* MGBaseView2.m in Sources */,
 				CEF44AFF14CB82C8003FD363 /* PyTransactionView.m in Sources */,
 				CEF44B0214CB8485003FD363 /* PyAccountView.m in Sources */,
 				CE464BEC14CC43DF0074A658 /* PyBudgetView.m in Sources */,
@@ -2069,6 +2060,7 @@
 				CE464BF314CC46930074A658 /* PyGeneralLedgerView.m in Sources */,
 				CE464BF814CC48CC0074A658 /* PyDocPropsView.m in Sources */,
 				CE464BF914CC48CC0074A658 /* PyEmptyView.m in Sources */,
+				CE464BFC14CC4A930074A658 /* PyBaseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
