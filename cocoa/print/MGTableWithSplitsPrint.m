@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #define SPLIT_FIELD_COUNT 3
 
 @implementation MGTableWithSplitsPrint
-- (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView
+- (id)initWithPyParent:(PyGUIObject2 *)pyParent tableView:(NSTableView *)aTableView
 {
     self = [super initWithPyParent:pyParent tableView:aTableView];
     

@@ -15,5 +15,5 @@ http://www.hardcoded.net/licenses/bsd_license
     CGFloat graphY;
     CGFloat graphHeight;
 }
-- (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView;
+- (id)initWithPyParent:(PyGUIObject2 *)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView;
 @end

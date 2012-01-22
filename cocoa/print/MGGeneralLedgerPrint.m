@@ -15,7 +15,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #define ACCOUNTROW_LINEWIDTH 2
 
 @implementation MGGeneralLedgerPrint
-- (id)initWithPyParent:(id)pyParent tableView:(NSTableView *)aTableView
+- (id)initWithPyParent:(PyGUIObject2 *)pyParent tableView:(NSTableView *)aTableView
 {
     self = [super initWithPyParent:pyParent tableView:aTableView];
     accountRowIndexes = [[NSMutableIndexSet indexSet] retain];

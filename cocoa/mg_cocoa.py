@@ -1495,7 +1495,7 @@ class PyPrintView:
     
     # The parent of the PyPrintView is a View object
     def __init__(self, parent: pyref):
-        self.model = self.py_class(parent)
+        self.model = self.py_class(parent.model)
     
     def title(self) -> str:
         return self.model.title

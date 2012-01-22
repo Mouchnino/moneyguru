@@ -17,6 +17,6 @@ http://www.hardcoded.net/licenses/bsd_license
     NSInteger piePage;
     NSInteger graphPage;
 }
-- (id)initWithPyParent:(id)pyParent outlineView:(NSOutlineView *)aOutlineView 
+- (id)initWithPyParent:(PyGUIObject2 *)pyParent outlineView:(NSOutlineView *)aOutlineView 
     graphView:(NSView *)aGraphView pieViews:(MGDoubleView *)aPieViews;
 @end
