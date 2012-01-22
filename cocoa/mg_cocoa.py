@@ -12,9 +12,6 @@ from objp.util import pyref, dontwrap
 from cocoa import install_exception_hook, proxy
 from cocoa.inter2 import (PyGUIObject, GUIObjectView, PyTable, PyColumns, PyOutline, OutlineView,
     PySelectableList, PyFairware)
-from cocoa.objcmin import (NSObject, NSLocale, NSLocaleCurrencyCode, NSDateFormatter,
-    NSDateFormatterBehavior10_4, NSDateFormatterShortStyle, NSDateFormatterNoStyle,
-    NSNumberFormatter, NSNumberFormatterBehavior10_4)
 from hscommon.currency import Currency, USD
 from hscommon.path import Path
 from hscommon.util import nonone
@@ -43,25 +40,19 @@ class PyMoneyGuruApp(PyFairware):
         install_exception_hook()
         std_caches_path = Path(proxy.getCachePath())
         cache_path = std_caches_path + 'moneyGuru'
-        currency_code = nonone(NSLocale.currentLocale().objectForKey_(NSLocaleCurrencyCode), 'USD')
+        currency_code = nonone(proxy.systemCurrency(), 'USD')
         logging.info('Currency code: {0}'.format(currency_code))
         try:
             system_currency = Currency(currency_code)
         except ValueError: # currency does not exist
             logging.warning('System currency {0} is not supported. Falling back to USD.'.format(currency_code))
             system_currency = USD
-        NSDateFormatter.setDefaultFormatterBehavior_(NSDateFormatterBehavior10_4)
-        f = NSDateFormatter.alloc().init()
-        f.setDateStyle_(NSDateFormatterShortStyle)
-        f.setTimeStyle_(NSDateFormatterNoStyle)
-        date_format = f.dateFormat()
+        date_format = proxy.systemShortDateFormat()
         logging.info('System date format: %s' % date_format)
         date_format = clean_format(date_format)
         logging.info('Cleaned date format: %s' % date_format)
-        NSNumberFormatter.setDefaultFormatterBehavior_(NSNumberFormatterBehavior10_4)
-        f = NSNumberFormatter.alloc().init()
-        decimal_sep = f.decimalSeparator()
-        grouping_sep = f.groupingSeparator()
+        decimal_sep = proxy.systemNumberDecimalSeparator()
+        grouping_sep = proxy.systemNumberGroupingSeparator()
         logging.info('System numeric separators: %s and %s' % (grouping_sep, decimal_sep))
         model = Application(self, date_format=date_format, decimal_sep=decimal_sep, 
             grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path)
@@ -1424,11 +1415,7 @@ class PyCSVImportOptions(PyListener):
 
 class PyDateWidget:
     def __init__(self):
-        NSDateFormatter.setDefaultFormatterBehavior_(NSDateFormatterBehavior10_4)
-        f = NSDateFormatter.alloc().init()
-        f.setDateStyle_(NSDateFormatterShortStyle)
-        f.setTimeStyle_(NSDateFormatterNoStyle)
-        self.date_format = clean_format(f.dateFormat())
+        self.date_format = clean_format(proxy.systemShortDateFormat())
         self.w = DateWidget(self.date_format)
     
     def increase(self):
