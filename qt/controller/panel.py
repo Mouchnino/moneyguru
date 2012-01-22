@@ -44,8 +44,6 @@ class Panel(QDialog):
                 widget.valueChanged.connect(self._signalMapper.map)
             elif isinstance(widget, QLineEdit):
                 widget.editingFinished.connect(self._signalMapper.map)
-                if isinstance(widget, CompletableEdit):
-                    widget.setMainwindow(self.mainwindow.model)
             elif isinstance(widget, QPlainTextEdit):
                 widget.textChanged.connect(self._signalMapper.map)
             elif isinstance(widget, QCheckBox):

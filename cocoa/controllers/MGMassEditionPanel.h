@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
 #import "PyMassEditionPanel.h"
+#import "HSComboBox.h"
 
 @class MGMainWindowController;
 
@@ -30,7 +31,7 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSButton *amountCheckBox;
     IBOutlet NSButton *currencyCheckBox;
     
-    NSArray *currencies;
+    HSComboBox *currencyComboBox;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyMassEditionPanel *)model;

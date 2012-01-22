@@ -483,8 +483,8 @@ class PyMassEditionPanel(PyPanel):
     def completableEdit(self) -> pyref:
         return self.model.completable_edit
     
-    def availableCurrencies(self) -> list:
-        return ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
+    def currencyList(self) -> pyref:
+        return self.model.currency_list
     
     def canChangeAccounts(self) -> bool:
         return self.model.can_change_accounts
@@ -581,12 +581,6 @@ class PyMassEditionPanel(PyPanel):
     
     def setAmount_(self, value: str):
         self.model.amount = value
-    
-    def currencyIndex(self) -> int:
-        return self.model.currency_index
-    
-    def setCurrencyIndex_(self, value: int):
-        self.model.currency_index = value
     
 
 class SchedulePanelView(PanelWithTransactionView):

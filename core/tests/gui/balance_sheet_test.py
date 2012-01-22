@@ -501,7 +501,7 @@ def test_budget_multiple_currencies(app, monkeypatch):
     app.mw.select_income_statement()
     app.istatement.selected = app.istatement.income[0]
     app.mw.edit_item()
-    app.apanel.currency_index = Currency.all.index(CAD)
+    app.apanel.currency_list.select(Currency.all.index(CAD))
     app.apanel.save()
     app.add_budget('income', 'Account 1', '400 cad')
     app.mw.select_balance_sheet()

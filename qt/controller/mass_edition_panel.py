@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui
 
 from hscommon.currency import Currency
 from hscommon.trans import trget
+from qtlib.selectable_list import ComboboxModel
 
 from ..support.date_edit import DateEdit
 from ..support.completable_edit import PayeeEdit, AccountEdit, DescriptionEdit
@@ -34,7 +35,6 @@ class MassEditionPanel(Panel):
         ('fromEdit', 'from_'),
         ('toEdit', 'to'),
         ('amountEdit', 'amount'),
-        ('currencyComboBox', 'currency_index'),
     ]
     
     def __init__(self, mainwindow):
@@ -43,6 +43,7 @@ class MassEditionPanel(Panel):
         self.model = mainwindow.model.mass_edit_panel
         self._setupUi()
         self.model.view = self
+        self.currencyComboBox = ComboboxModel(model=self.model.currency_list, view=self.currencyComboBoxView)
         
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
@@ -114,9 +115,9 @@ class MassEditionPanel(Panel):
         self.horizontalLayout_8 = QtGui.QHBoxLayout()
         self.currencyCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_8.addWidget(self.currencyCheckBox)
-        self.currencyComboBox = QtGui.QComboBox(self)
-        self.currencyComboBox.setEditable(True)
-        self.horizontalLayout_8.addWidget(self.currencyComboBox)
+        self.currencyComboBoxView = QtGui.QComboBox(self)
+        self.currencyComboBoxView.setEditable(True)
+        self.horizontalLayout_8.addWidget(self.currencyComboBoxView)
         self.formLayout.setLayout(7, QtGui.QFormLayout.FieldRole, self.horizontalLayout_8)
         self.verticalLayout.addLayout(self.formLayout)
         self.buttonBox = QtGui.QDialogButtonBox(self)
@@ -130,10 +131,7 @@ class MassEditionPanel(Panel):
         self.label_5.setBuddy(self.fromEdit)
         self.label_6.setBuddy(self.toEdit)
         self.label_7.setBuddy(self.amountEdit)
-        self.label_8.setBuddy(self.currencyComboBox)
-        
-        availableCurrencies = ['{currency.code} - {currency.name}'.format(currency=currency) for currency in Currency.all]
-        self.currencyComboBox.addItems(availableCurrencies)
+        self.label_8.setBuddy(self.currencyComboBoxView)
     
     def _loadFields(self):
         Panel._loadFields(self)

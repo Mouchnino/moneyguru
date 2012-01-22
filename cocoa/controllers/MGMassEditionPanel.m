@@ -18,14 +18,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
     [self window];
-    currencies = [[[self model] availableCurrencies] retain];
+    currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencySelector];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
 - (void)dealloc
 {
-    [currencies release];
+    [currencyComboBox release];
     [super dealloc];
 }
 
@@ -84,7 +84,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [fromField setStringValue:[[self model] fromAccount]];
     [toField setStringValue:[[self model] to]];
     [amountField setStringValue:[[self model] amount]];
-    [currencySelector selectItemAtIndex:[[self model] currencyIndex]];
     [fromCheckBox setEnabled:[[self model] canChangeAccounts]];
     [toCheckBox setEnabled:[[self model] canChangeAccounts]];
     [amountCheckBox setEnabled:[[self model] canChangeAmount]];
@@ -106,55 +105,6 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Delegate */
-
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
-{
-    if (index < 0)
-    {
-        return nil;
-    }
-    return [currencies objectAtIndex:index];
-}
-
-- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
-{
-    return [currencies count];
-}
-
-- (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
-{
-    aString = [aString lowercaseString];
-    for (int i=0; i<[currencies count]; i++)
-    {
-        NSString *s = [currencies objectAtIndex:i];
-        if ([[s lowercaseString] isEqualTo:aString])
-        {
-            return i;
-        }
-    }
-    return NSNotFound;
-}
-
-- (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString
-{
-    uncompletedString = [uncompletedString lowercaseString];
-    for (int i=0; i<[currencies count]; i++)
-    {
-        NSString *s = [currencies objectAtIndex:i];
-        if ([[s lowercaseString] hasPrefix:uncompletedString])
-        {
-            return s;
-        }
-    }
-    return nil;
-}
-
-- (void)comboBoxSelectionDidChange:(NSNotification *)notification
-{
-    NSInteger currencyIndex = [currencySelector indexOfSelectedItem];
-    [[self model] setCurrencyIndex:currencyIndex];
-}
-
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
     id control = [aNotification object];
@@ -181,14 +131,6 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     else if (control == amountField) {
         [[self model] setAmount:[amountField stringValue]];
-    }
-    else if (control == currencySelector) {
-        /* When the popup list is never popped (when only typing is used), this is what is called on
-           tabbing out. We can't rely on indexOfSelectedItem as it seems to be set *after*
-           controlTextDidEndEditing: is called.
-        */
-        NSInteger currencyIndex = [self comboBox:currencySelector indexOfItemWithStringValue:[currencySelector stringValue]];
-        [[self model] setCurrencyIndex:currencyIndex];
     }
 }
 

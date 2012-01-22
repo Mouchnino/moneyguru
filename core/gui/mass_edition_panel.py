@@ -12,13 +12,24 @@ from hscommon.currency import Currency
 from hscommon.util import allsame, nonone, flatten
 
 from ..exception import OperationAborted
-from .base import MainWindowPanel
+from .base import MainWindowPanel, LinkedSelectableList
 from .completable_edit import CompletableEdit
 
 class MassEditionPanel(MainWindowPanel):
     def __init__(self, mainwindow):
         MainWindowPanel.__init__(self, mainwindow)
         self.completable_edit = CompletableEdit(None, mainwindow)
+        currencies_display = ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
+        def setfunc(index):
+            if 0 <= index < len(Currency.all):
+                currency = Currency.all[index]
+            else:
+                currency = None
+            if currency != self.currency:
+                self.currency = currency
+                self.currency_enabled = currency != None
+                self.view.refresh()
+        self.currency_list = LinkedSelectableList(items=currencies_display, setfunc=setfunc)
         self._init_fields()
     
     #--- Override
@@ -41,10 +52,10 @@ class MassEditionPanel(MainWindowPanel):
         splits = flatten(t.splits for t in transactions)
         splits = [s for s in splits if s.amount]
         if splits and allsame(s.amount.currency for s in splits):
-            currency = splits[0].amount.currency
+            self.currency = splits[0].amount.currency
         else:
-            currency = self.document.default_currency
-        self._currency_index = Currency.all.index(currency)
+            self.currency = self.document.default_currency
+        self.currency_list.select(Currency.all.index(self.currency))
         if self.can_change_accounts:
             def get_from(t):
                 s1, s2 = t.splits
@@ -83,10 +94,7 @@ class MassEditionPanel(MainWindowPanel):
         if self.amount_enabled:
             kw['amount'] = self._amount
         if self.currency_enabled:
-            try:
-                kw['currency'] = Currency.all[self._currency_index]
-            except IndexError:
-                pass # invalid currency, just do nothing
+            kw['currency'] = self.currency
         if kw:
             self.document.change_transactions(transactions, **kw)
     
@@ -109,7 +117,8 @@ class MassEditionPanel(MainWindowPanel):
         self._from = ''
         self._to = ''
         self._amount = 0
-        self._currency_index = -1
+        self.currency = None
+        self.currency_list.selected_index = -1
     
     #--- Properties
     @property
@@ -201,17 +210,5 @@ class MassEditionPanel(MainWindowPanel):
             return
         self._amount = amount
         self.amount_enabled = True
-        self.view.refresh()
-    
-    @property
-    def currency_index(self):
-        return self._currency_index
-    
-    @currency_index.setter
-    def currency_index(self, value):
-        if value == self._currency_index:
-            return
-        self._currency_index = value
-        self.currency_enabled = value >= 0
         self.view.refresh()
     

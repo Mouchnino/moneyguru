@@ -49,7 +49,7 @@ def test_save_out_of_range_currency_index(app):
     # (On OS X, when typing a currency that doesn't exist in the box, the index ends up being an
     # out of range one)
     app.mw.edit_item()
-    app.mepanel.currency_index = 999999
+    app.mepanel.currency_list.select(999999)
     app.mepanel.save() # no crash
 
 @with_app(app_two_transactions)
@@ -315,16 +315,16 @@ def test_amount_has_correct_currency():
     #The amount is shown with a currency code and the selected currency is the correct one
     app = app_two_foreign_transactions()
     eq_(app.mepanel.amount, 'EUR 42.00')
-    eq_(app.mepanel.currency_index, 1) # EUR
+    eq_(app.mepanel.currency_list.selected_index, 1) # EUR
 
 def test_change_currency():
     # It's possible to mass edit currency
     app = app_two_foreign_transactions()
-    app.mepanel.currency_index = 3 # CAD
+    app.mepanel.currency_list.select(3) # CAD
     assert app.mepanel.currency_enabled
-    app.mepanel.currency_index = -1
+    app.mepanel.currency_list.select(-1)
     assert not app.mepanel.currency_enabled
-    app.mepanel.currency_index = 3 # CAD
+    app.mepanel.currency_list.select(3) # CAD
     assert app.mepanel.currency_enabled
     app.mepanel.save()
     eq_(app.ttable[0].amount, 'CAD 42.00')
@@ -363,7 +363,7 @@ def app_transactions_with_splits():
 @with_app(app_transactions_with_splits)
 def test_currency_change_on_splits(app):
     # currency mass change also work on split transactions. There would previously be a crash.
-    app.mepanel.currency_index = 2 # GBP
+    app.mepanel.currency_list.select(2) # GBP
     app.mepanel.save() # no crash
     eq_(app.ttable[1].amount, 'GBP 20.00')
 
@@ -380,7 +380,7 @@ def test_set_currency_to_native_one_when_we_cant_choose_one_from_selection(app):
     # There was a bug previously where the panel's currency could stay at -1, causing the mass panel
     # to change all currencies to XPF (the last currency in the currency list).
     app.mepanel.load()
-    eq_(app.mepanel.currency_index, 0) # USD
+    eq_(app.mepanel.currency_list.selected_index, 0) # USD
 
 #--- Generators
 def test_can_change_amount():

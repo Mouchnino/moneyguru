@@ -65,7 +65,7 @@ class TestSomeAssetsAndLiabilities:
         # just make sure it doesn't crash
         app.bsheet.selected = app.bsheet.assets[0]
         app.mw.edit_item()
-        app.apanel.currency_index = Currency.all.index(CAD)
+        app.apanel.currency_list.select(Currency.all.index(CAD))
         app.apanel.save()
         app.add_account('income', account_type=AccountType.Income)
         app.add_budget('income', None, '5')

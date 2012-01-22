@@ -16,7 +16,6 @@ from PyQt4.QtGui import QLineEdit
 # Moreover, QCompleter's behavior on up/down arrow is inadequate in InlineCompletion mode (doesn't
 # cycle through possible completions)
 
-# For CompletableEdit to work correctly, you *have* to call setMainwindow() right after creation.
 class CompletableEdit(QLineEdit):
     ATTRNAME = '' # must be set
     
