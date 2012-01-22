@@ -173,7 +173,7 @@ def build_cocoa_proxy_module():
     import objp.p2o
     objp.p2o.generate_python_proxy_code('cocoalib/cocoa/CocoaProxy.h', 'build/CocoaProxy.m')
     build_cocoa_ext("CocoaProxy", 'cocoalib/cocoa',
-        ['cocoalib/cocoa/CocoaProxy.m', 'build/CocoaProxy.m', 'build/ObjP.m'],
+        ['cocoalib/cocoa/CocoaProxy.m', 'build/CocoaProxy.m', 'build/ObjP.m', 'cocoalib/HSErrorReportWindow.m'],
         ['AppKit', 'CoreServices'],
         ['cocoalib'])
 
@@ -183,7 +183,7 @@ def build_cocoa_bridging_interfaces():
     import objp.p2o
     add_to_pythonpath('cocoa')
     add_to_pythonpath('cocoalib')
-    from cocoa.inter2 import (PyGUIObject, GUIObjectView, PyTable, TableView, PyColumns,
+    from cocoa.inter import (PyGUIObject, GUIObjectView, PyTable, TableView, PyColumns,
         ColumnsView, PyOutline, PySelectableList, SelectableListView, PyFairware, FairwareView)
     from mg_cocoa import (PyListener, PyPanel, PanelView, PyBaseView,
         PyTableWithDate, PyCompletableEdit, PyDateWidget,

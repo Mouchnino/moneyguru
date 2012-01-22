@@ -6,11 +6,10 @@
 
 # index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
-import objc # import needed for dependency collection to work well
 from objp.util import pyref, dontwrap
 
 from cocoa import install_exception_hook, proxy
-from cocoa.inter2 import (PyGUIObject, GUIObjectView, PyTable, PyColumns, PyOutline, OutlineView,
+from cocoa.inter import (PyGUIObject, GUIObjectView, PyTable, PyColumns, PyOutline, OutlineView,
     PySelectableList, PyFairware)
 from hscommon.currency import Currency, USD
 from hscommon.path import Path
