@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
         PyThreadState_Swap(NULL);
         PyEval_ReleaseLock();
     }
+    [pool release];
     int result = NSApplicationMain(argc,  (const char **) argv);
     Py_Finalize();
-    [pool release];
     return result;
 }
