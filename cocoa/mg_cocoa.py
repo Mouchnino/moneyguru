@@ -132,10 +132,6 @@ class PyDocument(PyGUIObject):
         self.model.close()
         self.model.disconnect()
     
-    # temporary. XXX still needed?
-    def isRegistered(self) -> bool:
-        return self.model.app.registered
-    
     #--- Python -> Cocoa
     @dontwrap
     def query_for_schedule_scope(self):
