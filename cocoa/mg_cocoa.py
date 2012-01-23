@@ -61,6 +61,9 @@ class PyMoneyGuruApp(PyFairware):
     def isFirstRun(self) -> bool:
         return self.model.is_first_run
     
+    def shutdown(self):
+        self.model.shutdown()
+    
     #--- Preferences
     def autoSaveInterval(self) -> int:
         return self.model.autosave_interval

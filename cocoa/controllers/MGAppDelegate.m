@@ -156,6 +156,11 @@ http://www.hardcoded.net/licenses/bsd_license
     [autoDecimalPlaceButton bind:@"value" toObject:self withKeyPath:@"model.autoDecimalPlace" options:nil];
 }
 
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+    [[self model] shutdown];
+}
+
 /* SUUpdater delegate */
 
 - (BOOL)updater:(SUUpdater *)updater shouldPostponeRelaunchForUpdate:(SUAppcastItem *)update untilInvoking:(NSInvocation *)invocation;

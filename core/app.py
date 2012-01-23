@@ -153,8 +153,6 @@ class Application(Broadcaster, RegistrableApplication):
         self.notify('saved_custom_ranges_changed')
     
     def shutdown(self):
-        # XXX call this in Cocoa too (for now only called in Qt)
-        # This stops the autosave timer which sometimes prevent the app from quitting.
         self._autosave_interval = 0
         self._update_autosave_timer()
         
