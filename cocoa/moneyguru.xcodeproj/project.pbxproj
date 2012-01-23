@@ -274,7 +274,6 @@
 		CEF674AF0F4C76F7003E5283 /* MGCustomDateRangePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF674AE0F4C76F7003E5283 /* MGCustomDateRangePanel.m */; };
 		CEF9701814C8A5F000EDD9D7 /* PyLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701714C8A5F000EDD9D7 /* PyLookup.m */; };
 		CEF9701B14C8A7D100EDD9D7 /* PyDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */; };
-		CEF9701E14C8AE7B00EDD9D7 /* PySearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */; };
 		CEF9702714C8B22500EDD9D7 /* PyEntryPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702014C8B22500EDD9D7 /* PyEntryPrint.m */; };
 		CEF9702814C8B22500EDD9D7 /* PyPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702214C8B22500EDD9D7 /* PyPrintView.m */; };
 		CEF9702914C8B22500EDD9D7 /* PySplitPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9702414C8B22500EDD9D7 /* PySplitPrint.m */; };
@@ -862,8 +861,6 @@
 		CEF9701714C8A5F000EDD9D7 /* PyLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyLookup.m; sourceTree = "<group>"; };
 		CEF9701914C8A7D100EDD9D7 /* PyDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDateRangeSelector.h; sourceTree = "<group>"; };
 		CEF9701A14C8A7D100EDD9D7 /* PyDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDateRangeSelector.m; sourceTree = "<group>"; };
-		CEF9701C14C8AE7B00EDD9D7 /* PySearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PySearchField.h; sourceTree = "<group>"; };
-		CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PySearchField.m; sourceTree = "<group>"; };
 		CEF9701F14C8B22500EDD9D7 /* PyEntryPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyEntryPrint.h; sourceTree = "<group>"; };
 		CEF9702014C8B22500EDD9D7 /* PyEntryPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyEntryPrint.m; sourceTree = "<group>"; };
 		CEF9702114C8B22500EDD9D7 /* PyPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyPrintView.h; sourceTree = "<group>"; };
@@ -1552,8 +1549,6 @@
 				CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */,
 				CEB46FBC14C86C8D00C56775 /* PyDateWidget.h */,
 				CEB46FBD14C86C8D00C56775 /* PyDateWidget.m */,
-				CEF9701C14C8AE7B00EDD9D7 /* PySearchField.h */,
-				CEF9701D14C8AE7B00EDD9D7 /* PySearchField.m */,
 			);
 			name = edit;
 			sourceTree = "<group>";
@@ -1957,7 +1952,6 @@
 				CEB46FD814C878F100C56775 /* PyImportTable.m in Sources */,
 				CEF9701814C8A5F000EDD9D7 /* PyLookup.m in Sources */,
 				CEF9701B14C8A7D100EDD9D7 /* PyDateRangeSelector.m in Sources */,
-				CEF9701E14C8AE7B00EDD9D7 /* PySearchField.m in Sources */,
 				CEF9702714C8B22500EDD9D7 /* PyEntryPrint.m in Sources */,
 				CEF9702814C8B22500EDD9D7 /* PyPrintView.m in Sources */,
 				CEF9702914C8B22500EDD9D7 /* PySplitPrint.m in Sources */,

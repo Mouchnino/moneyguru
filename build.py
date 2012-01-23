@@ -17,7 +17,7 @@ from setuptools import setup, Extension
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
 from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, move_all, move,
-    copy, symlink, add_to_pythonpath, copy_sysconfig_files_for_embed)
+    copy, symlink, hardlink, add_to_pythonpath, copy_sysconfig_files_for_embed)
 from hscommon import loc
 
 def parse_args():
@@ -48,7 +48,10 @@ def build_cocoa(dev):
     symlink(get_python_header_folder(), 'build/PythonHeaders')
     tocopy = ['core', 'hscommon', 'cocoalib/cocoa']
     copy_packages(tocopy, 'build')
-    copy('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
+    if dev:
+        hardlink('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
+    else:
+        copy('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
     os.chdir('build')
     collect_dependencies('mg_cocoa.py', 'py', excludes=['PyQt4'])
     os.chdir('..')
@@ -188,7 +191,7 @@ def build_cocoa_bridging_interfaces():
     from mg_cocoa import (PyListener, PyPanel, PanelView, PyBaseView,
         PyTableWithDate, PyCompletableEdit, PyDateWidget,
         PyCSVImportOptions, CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView,
-        PyDateRangeSelector, DateRangeSelectorView, PySearchField, PyImportWindow, ImportWindowView,
+        PyDateRangeSelector, DateRangeSelectorView, PyImportWindow, ImportWindowView,
         PyFilterBar, FilterBarView, PyReport, ReportView, PyScheduleTable, PyBudgetTable,
         PyEntryTable, PyTransactionTable, PyGeneralLedgerTable, PyChart, PyGraph, PyAccountPanel,
         PyMassEditionPanel, PyBudgetPanel, BudgetPanelView, PyCustomDateRangePanel,
@@ -202,7 +205,7 @@ def build_cocoa_bridging_interfaces():
     allclasses = [PyGUIObject, PyListener, PyTextField, PyTable, PyColumns, PyOutline, PySelectableList,
         PyFairware, PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget,
         PyCSVImportOptions, PyImportTable, PySplitTable, PyLookup, PyDateRangeSelector,
-        PySearchField, PyImportWindow, PyFilterBar, PyReport, PyScheduleTable, PyBudgetTable,
+        PyImportWindow, PyFilterBar, PyReport, PyScheduleTable, PyBudgetTable,
         PyEntryTable, PyTransactionTable, PyGeneralLedgerTable, PyChart, PyGraph, PyAccountPanel,
         PyMassEditionPanel, PyBudgetPanel, PyCustomDateRangePanel, PyAccountReassignPanel,
         PyExportPanel, PyPanelWithTransaction, PyTransactionPanel, PySchedulePanel, PyNetWorthView,

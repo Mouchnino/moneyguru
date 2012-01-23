@@ -719,14 +719,6 @@ class PyExportPanel(PyPanel):
         self.callback.setExportButtonEnabled_(enabled)
     
 
-class PySearchField(PyGUIObject):
-    def query(self) -> str:
-        return self.model.query
-    
-    def setQuery_(self, query: str):
-        self.model.query = query
-    
-
 class DateRangeSelectorView(GUIObjectView):
     def animateBackward(self): pass
     def animateForward(self): pass

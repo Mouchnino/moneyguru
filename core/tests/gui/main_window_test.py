@@ -134,7 +134,7 @@ def test_select_pane_of_type_creates_new_pane_if_needed(app):
 @with_app(TestApp)
 def test_select_ttable_on_sfield_query(app):
     # Setting a value in the search field selects the ttable.
-    app.sfield.query = 'foobar'
+    app.sfield.text = 'foobar'
     eq_(app.mw.current_pane_index, 2)
 
 @with_app(TestApp)

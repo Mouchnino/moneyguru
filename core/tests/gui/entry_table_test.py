@@ -419,7 +419,7 @@ def test_remove_entry_through_tpanel(app):
 @with_app(app_two_entries)
 def test_search(app):
     # Searching when on etable doesn't switch to the ttable, and shows the results in etable
-    app.sfield.query = 'second'
+    app.sfield.text = 'second'
     app.check_gui_calls_partial(app.mainwindow_gui, not_expected=['show_transaction_table'])
     eq_(app.etable_count(), 1)
     eq_(app.etable[0].description, 'second')

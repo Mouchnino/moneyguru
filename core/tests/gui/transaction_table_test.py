@@ -70,7 +70,7 @@ def test_gui_call_on_filter_applied(app):
     # The ttable's view is refreshed on filter_applied.
     app.mw.select_transaction_table()
     app.clear_gui_calls()
-    app.sfield.query = 'foobar'
+    app.sfield.text = 'foobar'
     app.check_gui_calls(app.ttable_gui, ['refresh'])
 
 @with_app(app_tview_shown)
@@ -269,7 +269,7 @@ def test_delete(app):
 @with_app(app_one_transaction)
 def test_delete_while_filtered(app):
     # Deleting a txn while a filter is applied correctly refreshes the ttable
-    app.sfield.query = 'description'
+    app.sfield.text = 'description'
     app.ttable.delete()
     eq_(app.ttable.row_count, 0)
 
@@ -392,7 +392,7 @@ def test_show_to_account(app):
 @with_app(app_one_transaction)
 def test_undo_redo_while_filtered(app):
     # undo/redo while a filter is applied correctly refreshes the ttable
-    app.sfield.query = 'description'
+    app.sfield.text = 'description'
     app.ttable.delete()
     app.doc.undo()
     eq_(app.ttable.row_count, 1)
@@ -743,7 +743,7 @@ def test_selection_changed_when_filtering_out(app):
     # selected transactions becoming filtered out are not selected anymore. Also, the selection
     # is updated at the document level
     app.ttable.select([0]) # first
-    app.sfield.query = 'second'
+    app.sfield.text = 'second'
     eq_(app.ttable.selected_row.description, 'second')
     app.mw.edit_item()
     eq_(app.tpanel.description, 'second')
@@ -782,7 +782,7 @@ class TestThreeTransactionsEverythingReconciled:
     @with_app(do_setup)
     def test_move_while_filtered(self, app):
         # The ttable is correctly updated after a move with a filter applied
-        app.sfield.query = 'entry'
+        app.sfield.text = 'entry'
         app.ttable.move([1], 3)
         eq_(app.ttable[1].description, 'entry 3')
         eq_(app.ttable[2].description, 'entry 2')

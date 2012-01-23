@@ -12,7 +12,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGSearchField
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PySearchField *m = [[PySearchField alloc] initWithModel:aPyRef];
+    PyTextField *m = [[PyTextField alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
     [NSBundle loadNibNamed:@"SearchField" owner:self];
@@ -20,9 +20,9 @@ http://www.hardcoded.net/licenses/bsd_license
     return self;
 }
 
-- (PySearchField *)model
+- (PyTextField *)model
 {
-    return (PySearchField *)model;
+    return (PyTextField *)model;
 }
 
 /* Action */
@@ -30,14 +30,14 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)changeQuery:(id)sender
 {
     NSString *query = [linkedView stringValue];
-    [[self model] setQuery:query];
+    [[self model] setText:query];
 }
 
 /* Python callbacks */
 
 - (void)refresh
 {
-    [linkedView setStringValue:[[self model] query]];
+    [linkedView setStringValue:[[self model] text]];
 }
 
 @end

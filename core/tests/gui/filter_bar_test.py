@@ -121,7 +121,7 @@ class TestTransactionsOfEachType:
         # Having an unassigned filter at the same time as a search filter works as expected.
         app.mainwindow.select_transaction_table()
         app.tfbar.filter_type = FilterType.Unassigned
-        app.sfield.query = 'first'
+        app.sfield.text = 'first'
         eq_(app.ttable.row_count, 0)
     
     @with_app(do_setup)
