@@ -12,32 +12,31 @@ http://www.hardcoded.net/licenses/bsd_license
 @implementation MGSearchField
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
+    NSSearchField *searchView = [[NSSearchField alloc] init];
     PyTextField *m = [[PyTextField alloc] initWithModel:aPyRef];
-    self = [super initWithModel:m];
+    self = [super initWithModel:m view:[searchView autorelease]];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
-    [NSBundle loadNibNamed:@"SearchField" owner:self];
-    [self setView:linkedView];
     return self;
 }
 
-- (PyTextField *)model
+- (NSSearchField *)view
 {
-    return (PyTextField *)model;
+    return (NSSearchField *)view;
+}
+
+- (void)setView:(NSSearchField *)aView
+{
+    [super setView:aView];
+    /* The action on a NSSearchField happens when escape is pressed, something that isn't covered
+       by controlTextDidEndEditing: in HSTextField.
+    */
+    [aView setAction:@selector(changeQuery:)];
+    [aView setTarget:self];
 }
 
 /* Action */
-
 - (IBAction)changeQuery:(id)sender
 {
-    NSString *query = [linkedView stringValue];
-    [[self model] setText:query];
+    [[self model] setText:[[self view] stringValue]];
 }
-
-/* Python callbacks */
-
-- (void)refresh
-{
-    [linkedView setStringValue:[[self model] text]];
-}
-
 @end
