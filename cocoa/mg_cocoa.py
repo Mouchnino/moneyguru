@@ -9,8 +9,8 @@ import logging
 from objp.util import pyref, dontwrap
 
 from cocoa import install_exception_hook, proxy
-from cocoa.inter import (PyGUIObject, GUIObjectView, PyTable, PyColumns, PyOutline, OutlineView,
-    PySelectableList, PyFairware)
+from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, PyColumns, PyOutline,
+    OutlineView, PySelectableList, PyFairware)
 from hscommon.currency import Currency, USD
 from hscommon.path import Path
 from hscommon.util import nonone
@@ -480,6 +480,27 @@ class PyTransactionPanel(PyPanelWithTransaction):
     
 
 class PyMassEditionPanel(PyPanel):
+    def dateField(self) -> pyref:
+        return self.model.date_field
+    
+    def descriptionField(self) -> pyref:
+        return self.model.description_field
+    
+    def payeeField(self) -> pyref:
+        return self.model.payee_field
+    
+    def checknoField(self) -> pyref:
+        return self.model.checkno_field
+    
+    def fromField(self) -> pyref:
+        return self.model.from_field
+    
+    def toField(self) -> pyref:
+        return self.model.to_field
+    
+    def amountField(self) -> pyref:
+        return self.model.amount_field
+    
     def completableEdit(self) -> pyref:
         return self.model.completable_edit
     
@@ -539,48 +560,6 @@ class PyMassEditionPanel(PyPanel):
     
     def setCurrencyEnabled_(self, value: bool):
         self.model.currency_enabled = value
-    
-    def date(self) -> str:
-        return self.model.date
-    
-    def setDate_(self, value: str):
-        self.model.date = value
-    
-    def description(self) -> str:
-        return self.model.description
-    
-    def setDescription_(self, value: str):
-        self.model.description = value
-    
-    def payee(self) -> str:
-        return self.model.payee
-    
-    def setPayee_(self, value: str):
-        self.model.payee = value
-    
-    def checkno(self) -> str:
-        return self.model.checkno
-    
-    def setCheckno_(self, value: str):
-        self.model.checkno = value
-    
-    def fromAccount(self) -> str: # We cannot use the underscore to escape the kw. It messes with pyobjc
-        return self.model.from_
-    
-    def setFromAccount_(self, value: str):
-        self.model.from_ = value
-    
-    def to(self) -> str:
-        return self.model.to
-    
-    def setTo_(self, value: str):
-        self.model.to = value
-    
-    def amount(self) -> str:
-        return self.model.amount
-    
-    def setAmount_(self, value: str):
-        self.model.amount = value
     
 
 class SchedulePanelView(PanelWithTransactionView):

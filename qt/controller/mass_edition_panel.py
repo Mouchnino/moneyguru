@@ -11,6 +11,7 @@ from PyQt4 import QtCore, QtGui
 from hscommon.currency import Currency
 from hscommon.trans import trget
 from qtlib.selectable_list import ComboboxModel
+from qtlib.text_field import TextField
 
 from ..support.date_edit import DateEdit
 from ..support.completable_edit import PayeeEdit, AccountEdit, DescriptionEdit
@@ -28,13 +29,6 @@ class MassEditionPanel(Panel):
         ('toCheckBox', 'to_enabled'),
         ('amountCheckBox', 'amount_enabled'),
         ('currencyCheckBox', 'currency_enabled'),
-        ('dateEdit', 'date'),
-        ('descriptionEdit', 'description'),
-        ('payeeEdit', 'payee'),
-        ('checknoEdit', 'checkno'),
-        ('fromEdit', 'from_'),
-        ('toEdit', 'to'),
-        ('amountEdit', 'amount'),
     ]
     
     def __init__(self, mainwindow):
@@ -43,6 +37,13 @@ class MassEditionPanel(Panel):
         self.model = mainwindow.model.mass_edit_panel
         self._setupUi()
         self.model.view = self
+        self.dateEdit = TextField(model=self.model.date_field, view=self.dateEditView)
+        self.descriptionEdit = TextField(model=self.model.description_field, view=self.descriptionEditView)
+        self.payeeEdit = TextField(model=self.model.payee_field, view=self.payeeEditView)
+        self.checknoEdit = TextField(model=self.model.checkno_field, view=self.checknoEditView)
+        self.fromEdit = TextField(model=self.model.from_field, view=self.fromEditView)
+        self.toEdit = TextField(model=self.model.to_field, view=self.toEditView)
+        self.amountEdit = TextField(model=self.model.amount_field, view=self.amountEditView)
         self.currencyComboBox = ComboboxModel(model=self.model.currency_list, view=self.currencyComboBoxView)
         
         self.buttonBox.accepted.connect(self.accept)
@@ -59,56 +60,56 @@ class MassEditionPanel(Panel):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.dateCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout.addWidget(self.dateCheckBox)
-        self.dateEdit = DateEdit(self)
-        self.horizontalLayout.addWidget(self.dateEdit)
+        self.dateEditView = DateEdit(self)
+        self.horizontalLayout.addWidget(self.dateEditView)
         self.formLayout.setLayout(0, QtGui.QFormLayout.FieldRole, self.horizontalLayout)
         self.label_2 = QtGui.QLabel(tr("Description:"), self)
         self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.label_2)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.descriptionCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_2.addWidget(self.descriptionCheckBox)
-        self.descriptionEdit = DescriptionEdit(self.model.completable_edit, self)
-        self.horizontalLayout_2.addWidget(self.descriptionEdit)
+        self.descriptionEditView = DescriptionEdit(self.model.completable_edit, self)
+        self.horizontalLayout_2.addWidget(self.descriptionEditView)
         self.formLayout.setLayout(1, QtGui.QFormLayout.FieldRole, self.horizontalLayout_2)
         self.label_3 = QtGui.QLabel(tr("Payee:"), self)
         self.formLayout.setWidget(2, QtGui.QFormLayout.LabelRole, self.label_3)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.payeeCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_3.addWidget(self.payeeCheckBox)
-        self.payeeEdit = PayeeEdit(self.model.completable_edit, self)
-        self.horizontalLayout_3.addWidget(self.payeeEdit)
+        self.payeeEditView = PayeeEdit(self.model.completable_edit, self)
+        self.horizontalLayout_3.addWidget(self.payeeEditView)
         self.formLayout.setLayout(2, QtGui.QFormLayout.FieldRole, self.horizontalLayout_3)
         self.label_4 = QtGui.QLabel(tr("Check #"), self)
         self.formLayout.setWidget(3, QtGui.QFormLayout.LabelRole, self.label_4)
         self.horizontalLayout_4 = QtGui.QHBoxLayout()
         self.checknoCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_4.addWidget(self.checknoCheckBox)
-        self.checknoEdit = QtGui.QLineEdit(self)
-        self.horizontalLayout_4.addWidget(self.checknoEdit)
+        self.checknoEditView = QtGui.QLineEdit(self)
+        self.horizontalLayout_4.addWidget(self.checknoEditView)
         self.formLayout.setLayout(3, QtGui.QFormLayout.FieldRole, self.horizontalLayout_4)
         self.label_5 = QtGui.QLabel(tr("From:"), self)
         self.formLayout.setWidget(4, QtGui.QFormLayout.LabelRole, self.label_5)
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
         self.fromCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_5.addWidget(self.fromCheckBox)
-        self.fromEdit = AccountEdit(self.model.completable_edit, self)
-        self.horizontalLayout_5.addWidget(self.fromEdit)
+        self.fromEditView = AccountEdit(self.model.completable_edit, self)
+        self.horizontalLayout_5.addWidget(self.fromEditView)
         self.formLayout.setLayout(4, QtGui.QFormLayout.FieldRole, self.horizontalLayout_5)
         self.label_6 = QtGui.QLabel(tr("To:"), self)
         self.formLayout.setWidget(5, QtGui.QFormLayout.LabelRole, self.label_6)
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
         self.toCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_6.addWidget(self.toCheckBox)
-        self.toEdit = AccountEdit(self.model.completable_edit, self)
-        self.horizontalLayout_6.addWidget(self.toEdit)
+        self.toEditView = AccountEdit(self.model.completable_edit, self)
+        self.horizontalLayout_6.addWidget(self.toEditView)
         self.formLayout.setLayout(5, QtGui.QFormLayout.FieldRole, self.horizontalLayout_6)
         self.label_7 = QtGui.QLabel(tr("Amount:"), self)
         self.formLayout.setWidget(6, QtGui.QFormLayout.LabelRole, self.label_7)
         self.horizontalLayout_7 = QtGui.QHBoxLayout()
         self.amountCheckBox = QtGui.QCheckBox(self)
         self.horizontalLayout_7.addWidget(self.amountCheckBox)
-        self.amountEdit = QtGui.QLineEdit(self)
-        self.horizontalLayout_7.addWidget(self.amountEdit)
+        self.amountEditView = QtGui.QLineEdit(self)
+        self.horizontalLayout_7.addWidget(self.amountEditView)
         self.formLayout.setLayout(6, QtGui.QFormLayout.FieldRole, self.horizontalLayout_7)
         self.label_8 = QtGui.QLabel(tr("Currency:"), self)
         self.formLayout.setWidget(7, QtGui.QFormLayout.LabelRole, self.label_8)
@@ -124,13 +125,13 @@ class MassEditionPanel(Panel):
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Save)
         self.verticalLayout.addWidget(self.buttonBox)
-        self.label.setBuddy(self.dateEdit)
-        self.label_2.setBuddy(self.descriptionEdit)
-        self.label_3.setBuddy(self.payeeEdit)
-        self.label_4.setBuddy(self.checknoEdit)
-        self.label_5.setBuddy(self.fromEdit)
-        self.label_6.setBuddy(self.toEdit)
-        self.label_7.setBuddy(self.amountEdit)
+        self.label.setBuddy(self.dateEditView)
+        self.label_2.setBuddy(self.descriptionEditView)
+        self.label_3.setBuddy(self.payeeEditView)
+        self.label_4.setBuddy(self.checknoEditView)
+        self.label_5.setBuddy(self.fromEditView)
+        self.label_6.setBuddy(self.toEditView)
+        self.label_7.setBuddy(self.amountEditView)
         self.label_8.setBuddy(self.currencyComboBoxView)
     
     def _loadFields(self):

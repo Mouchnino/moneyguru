@@ -87,6 +87,8 @@
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
 		CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
+		CE5F433414CDB81B00F70DE1 /* PyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5F433314CDB81B00F70DE1 /* PyTextField.m */; };
+		CE5F433814CDB98E00F70DE1 /* HSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5F433714CDB98E00F70DE1 /* HSTextField.m */; };
 		CE647EA311730765006D28BA /* HSTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE647EA211730765006D28BA /* HSTable.m */; };
 		CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE66BD111275751B008EFA8A /* ExportPanel.xib */; };
 		CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1812757587008EFA8A /* MGExportAccountTable.m */; };
@@ -445,6 +447,10 @@
 		CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateRangeSelector.m; sourceTree = "<group>"; };
 		CE5CBBDB1038361D008AC465 /* MGSchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSchedulePanel.h; sourceTree = "<group>"; };
 		CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSchedulePanel.m; sourceTree = "<group>"; };
+		CE5F433214CDB81B00F70DE1 /* PyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyTextField.h; sourceTree = "<group>"; };
+		CE5F433314CDB81B00F70DE1 /* PyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyTextField.m; sourceTree = "<group>"; };
+		CE5F433614CDB98E00F70DE1 /* HSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTextField.h; sourceTree = "<group>"; };
+		CE5F433714CDB98E00F70DE1 /* HSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTextField.m; sourceTree = "<group>"; };
 		CE647EA111730765006D28BA /* HSTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTable.h; sourceTree = "<group>"; };
 		CE647EA211730765006D28BA /* HSTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTable.m; sourceTree = "<group>"; };
 		CE66BD121275751B008EFA8A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ExportPanel.xib; sourceTree = "<group>"; };
@@ -1338,6 +1344,8 @@
 		CEBA331711294DE5009C782F /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE5F433614CDB98E00F70DE1 /* HSTextField.h */,
+				CE5F433714CDB98E00F70DE1 /* HSTextField.m */,
 				CE647EA111730765006D28BA /* HSTable.h */,
 				CE647EA211730765006D28BA /* HSTable.m */,
 				CE464C1E14CC66D00074A658 /* HSOutline.h */,
@@ -1538,6 +1546,8 @@
 		CEF44AF114CB77F8003FD363 /* edit */ = {
 			isa = PBXGroup;
 			children = (
+				CE5F433214CDB81B00F70DE1 /* PyTextField.h */,
+				CE5F433314CDB81B00F70DE1 /* PyTextField.m */,
 				CEB46FB514C86C3600C56775 /* PyCompletableEdit.h */,
 				CEB46FB614C86C3600C56775 /* PyCompletableEdit.m */,
 				CEB46FBC14C86C8D00C56775 /* PyDateWidget.h */,
@@ -1996,6 +2006,8 @@
 				CE464C1C14CC655A0074A658 /* PyOutline.m in Sources */,
 				CE464C1D14CC655A0074A658 /* PyTable.m in Sources */,
 				CE464C2014CC66D00074A658 /* HSOutline.m in Sources */,
+				CE5F433414CDB81B00F70DE1 /* PyTextField.m in Sources */,
+				CE5F433814CDB98E00F70DE1 /* HSTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

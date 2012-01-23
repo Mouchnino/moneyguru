@@ -9,19 +9,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "MGPanel.h"
 #import "PyMassEditionPanel.h"
+#import "HSTextField.h"
 #import "HSComboBox.h"
 
 @class MGMainWindowController;
 
 @interface MGMassEditionPanel : MGPanel {
-    IBOutlet NSTextField *dateField;
-    IBOutlet NSTextField *descriptionField;
-    IBOutlet NSTextField *payeeField;
-    IBOutlet NSTextField *checknoField;
-    IBOutlet NSTextField *fromField;
-    IBOutlet NSTextField *toField;
-    IBOutlet NSTextField *amountField;
-    IBOutlet NSComboBox *currencySelector;
+    IBOutlet NSTextField *dateFieldView;
+    IBOutlet NSTextField *descriptionFieldView;
+    IBOutlet NSTextField *payeeFieldView;
+    IBOutlet NSTextField *checknoFieldView;
+    IBOutlet NSTextField *fromFieldView;
+    IBOutlet NSTextField *toFieldView;
+    IBOutlet NSTextField *amountFieldView;
+    IBOutlet NSComboBox *currencyComboBoxView;
     IBOutlet NSButton *dateCheckBox;
     IBOutlet NSButton *descriptionCheckBox;
     IBOutlet NSButton *payeeCheckBox;
@@ -31,6 +32,13 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSButton *amountCheckBox;
     IBOutlet NSButton *currencyCheckBox;
     
+    HSTextField *dateField;
+    HSTextField *descriptionField;
+    HSTextField *payeeField;
+    HSTextField *checknoField;
+    HSTextField *fromField;
+    HSTextField *toField;
+    HSTextField *amountField;
     HSComboBox *currencyComboBox;
 }
 - (id)initWithParent:(MGMainWindowController *)aParent;

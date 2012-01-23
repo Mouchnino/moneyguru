@@ -87,75 +87,75 @@ def test_attributes(monkeypatch):
     assert not app.mepanel.from_enabled
     assert not app.mepanel.to_enabled
     assert not app.mepanel.amount_enabled
-    eq_(app.mepanel.date, '20/02/2010')
-    eq_(app.mepanel.description, '')
-    eq_(app.mepanel.payee, '')
-    eq_(app.mepanel.checkno, '')
-    eq_(app.mepanel.from_, '')
-    eq_(app.mepanel.to, '')
-    eq_(app.mepanel.amount, '0.00')
+    eq_(app.mepanel.date_field.text, '20/02/2010')
+    eq_(app.mepanel.description_field.text, '')
+    eq_(app.mepanel.payee_field.text, '')
+    eq_(app.mepanel.checkno_field.text, '')
+    eq_(app.mepanel.from_field.text, '')
+    eq_(app.mepanel.to_field.text, '')
+    eq_(app.mepanel.amount_field.text, '0.00')
 
 def test_change_field():
     # Changing a field enables the associated checkbox
     app = app_two_transactions_different_value()
     app.clear_gui_calls()
-    app.mepanel.date = '08/07/2008'
+    app.mepanel.date_field.text = '08/07/2008'
     assert app.mepanel.date_enabled
     # just make sure they are not changed all at once
     assert not app.mepanel.description_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
-    app.mepanel.description = 'foobar'
+    app.mepanel.description_field.text = 'foobar'
     assert app.mepanel.description_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
-    app.mepanel.payee = 'foobar'
+    app.mepanel.payee_field.text = 'foobar'
     assert app.mepanel.payee_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
-    app.mepanel.checkno = '44'
+    app.mepanel.checkno_field.text = '44'
     assert app.mepanel.checkno_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
-    app.mepanel.from_ = 'foobar'
+    app.mepanel.from_field.text = 'foobar'
     assert app.mepanel.from_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
-    app.mepanel.to = 'foobar'
+    app.mepanel.to_field.text = 'foobar'
     assert app.mepanel.to_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
-    app.mepanel.amount = '44'
+    app.mepanel.amount_field.text = '44'
     assert app.mepanel.amount_enabled
     app.mepanel.view.check_gui_calls(['refresh'])
 
 def test_change_field_to_none():
     # the mass panel considers replaces None values with ''.
     app = app_two_transactions_different_value()
-    app.mepanel.description = None
-    app.mepanel.payee = None
-    app.mepanel.checkno = None
-    app.mepanel.from_ = None
-    app.mepanel.to = None
-    app.mepanel.amount = None
+    app.mepanel.description_field.text = None
+    app.mepanel.payee_field.text = None
+    app.mepanel.checkno_field.text = None
+    app.mepanel.from_field.text = None
+    app.mepanel.to_field.text = None
+    app.mepanel.amount_field.text = None
     assert not app.mepanel.description_enabled
     assert not app.mepanel.payee_enabled
     assert not app.mepanel.checkno_enabled
     assert not app.mepanel.from_enabled
     assert not app.mepanel.to_enabled
     assert not app.mepanel.amount_enabled
-    eq_(app.mepanel.description, '')
-    eq_(app.mepanel.payee, '')
-    eq_(app.mepanel.checkno, '')
-    eq_(app.mepanel.from_, '')
-    eq_(app.mepanel.to, '')
-    eq_(app.mepanel.amount, '0.00')
+    eq_(app.mepanel.description_field.text, '')
+    eq_(app.mepanel.payee_field.text, '')
+    eq_(app.mepanel.checkno_field.text, '')
+    eq_(app.mepanel.from_field.text, '')
+    eq_(app.mepanel.to_field.text, '')
+    eq_(app.mepanel.amount_field.text, '0.00')
 
 def test_change_and_save():
     # save() performs mass edits on selected transactions.
     app = app_two_transactions_different_value()
     app.save_file()
-    app.mepanel.date = '08/07/2008'
-    app.mepanel.description = 'description3'
-    app.mepanel.payee = 'payee3'
-    app.mepanel.checkno = '44'
-    app.mepanel.from_ = 'from3'
-    app.mepanel.to = 'to3'
-    app.mepanel.amount = '44'
+    app.mepanel.date_field.text = '08/07/2008'
+    app.mepanel.description_field.text = 'description3'
+    app.mepanel.payee_field.text = 'payee3'
+    app.mepanel.checkno_field.text = '44'
+    app.mepanel.from_field.text = 'from3'
+    app.mepanel.to_field.text = 'to3'
+    app.mepanel.amount_field.text = '44'
     app.mepanel.save()
     assert app.doc.is_dirty()
     for row in app.ttable.rows:
@@ -170,13 +170,13 @@ def test_change_and_save():
 def test_change_date_only():
     # Only change checked fields.
     app = app_two_transactions_different_value()
-    app.mepanel.date = '08/07/2008'
-    app.mepanel.description = 'description3'
-    app.mepanel.payee = 'payee3'
-    app.mepanel.checkno = '44'
-    app.mepanel.from_ = 'from3'
-    app.mepanel.to = 'to3'
-    app.mepanel.amount = '44'
+    app.mepanel.date_field.text = '08/07/2008'
+    app.mepanel.description_field.text = 'description3'
+    app.mepanel.payee_field.text = 'payee3'
+    app.mepanel.checkno_field.text = '44'
+    app.mepanel.from_field.text = 'from3'
+    app.mepanel.to_field.text = 'to3'
+    app.mepanel.amount_field.text = '44'
     app.mepanel.description_enabled = False
     app.mepanel.payee_enabled = False
     app.mepanel.checkno_enabled = False
@@ -196,8 +196,8 @@ def test_change_date_only():
 def test_change_description_only():
     # test_change_date_only is not enough for complete coverage.
     app = app_two_transactions_different_value()
-    app.mepanel.date = '08/07/2008'
-    app.mepanel.description = 'description3'
+    app.mepanel.date_field.text = '08/07/2008'
+    app.mepanel.description_field.text = 'description3'
     app.mepanel.date_enabled = False
     app.mepanel.save()
     row = app.ttable[0]
@@ -225,13 +225,13 @@ def test_attributes_when_same_values(app):
     assert not app.mepanel.from_enabled
     assert not app.mepanel.to_enabled
     assert not app.mepanel.amount_enabled
-    eq_(app.mepanel.date, '06/07/2008')
-    eq_(app.mepanel.description, 'description')
-    eq_(app.mepanel.payee, 'payee')
-    eq_(app.mepanel.checkno, '42')
-    eq_(app.mepanel.from_, 'account2')
-    eq_(app.mepanel.to, 'account1')
-    eq_(app.mepanel.amount, '42.00')
+    eq_(app.mepanel.date_field.text, '06/07/2008')
+    eq_(app.mepanel.description_field.text, 'description')
+    eq_(app.mepanel.payee_field.text, 'payee')
+    eq_(app.mepanel.checkno_field.text, '42')
+    eq_(app.mepanel.from_field.text, 'account2')
+    eq_(app.mepanel.to_field.text, 'account1')
+    eq_(app.mepanel.amount_field.text, '42.00')
 
 @with_app(app_two_transactions_same_values)
 def test_change_field_same(app):
@@ -271,10 +271,10 @@ def test_load_again(app, monkeypatch):
     assert not app.mepanel.from_enabled
     assert not app.mepanel.to_enabled
     assert not app.mepanel.amount_enabled
-    eq_(app.mepanel.date, '20/02/2010')
-    eq_(app.mepanel.description, '')
-    eq_(app.mepanel.payee, '')
-    eq_(app.mepanel.checkno, '')
+    eq_(app.mepanel.date_field.text, '20/02/2010')
+    eq_(app.mepanel.description_field.text, '')
+    eq_(app.mepanel.payee_field.text, '')
+    eq_(app.mepanel.checkno_field.text, '')
 
 #--- Two transactions one split
 def app_two_transactions_one_split():
@@ -314,7 +314,7 @@ def app_two_foreign_transactions():
 def test_amount_has_correct_currency():
     #The amount is shown with a currency code and the selected currency is the correct one
     app = app_two_foreign_transactions()
-    eq_(app.mepanel.amount, 'EUR 42.00')
+    eq_(app.mepanel.amount_field.text, 'EUR 42.00')
     eq_(app.mepanel.currency_list.selected_index, 1) # EUR
 
 def test_change_currency():

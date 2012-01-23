@@ -18,13 +18,27 @@ http://www.hardcoded.net/licenses/bsd_license
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
     [self window];
-    currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencySelector];
+    dateField = [[HSTextField alloc] initWithPyRef:[[self model] dateField] view:dateFieldView];
+    descriptionField = [[HSTextField alloc] initWithPyRef:[[self model] descriptionField] view:descriptionFieldView];
+    payeeField = [[HSTextField alloc] initWithPyRef:[[self model] payeeField] view:payeeFieldView];
+    checknoField = [[HSTextField alloc] initWithPyRef:[[self model] checknoField] view:checknoFieldView];
+    fromField = [[HSTextField alloc] initWithPyRef:[[self model] fromField] view:fromFieldView];
+    toField = [[HSTextField alloc] initWithPyRef:[[self model] toField] view:toFieldView];
+    amountField = [[HSTextField alloc] initWithPyRef:[[self model] amountField] view:amountFieldView];
+    currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencyComboBoxView];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
 }
 
 - (void)dealloc
 {
+    [dateField release];
+    [descriptionField release];
+    [payeeField release];
+    [checknoField release];
+    [fromField release];
+    [toField release];
+    [amountField release];
     [currencyComboBox release];
     [super dealloc];
 }
@@ -37,16 +51,16 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Override */
 - (NSString *)completionAttrForField:(id)aField
 {
-    if (aField == descriptionField) {
+    if (aField == descriptionFieldView) {
         return @"description";
     }
-    else if (aField == payeeField) {
+    else if (aField == payeeFieldView) {
         return @"payee";
     }
-    else if (aField == fromField) {
+    else if (aField == fromFieldView) {
         return @"from";
     }
-    else if (aField == toField) {
+    else if (aField == toFieldView) {
         return @"to";
     }
     return nil;
@@ -54,12 +68,12 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)isFieldDateField:(id)aField
 {
-    return aField == dateField;
+    return aField == dateFieldView;
 }
 
 - (NSResponder *)firstField
 {
-    return dateField;
+    return dateFieldView;
 }
 
 - (void)loadCheckboxes
@@ -77,19 +91,12 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)loadFields
 {
     [self loadCheckboxes];
-    [dateField setStringValue:[[self model] date]];
-    [descriptionField setStringValue:[[self model] description]];
-    [payeeField setStringValue:[[self model] payee]];
-    [checknoField setStringValue:[[self model] checkno]];
-    [fromField setStringValue:[[self model] fromAccount]];
-    [toField setStringValue:[[self model] to]];
-    [amountField setStringValue:[[self model] amount]];
     [fromCheckBox setEnabled:[[self model] canChangeAccounts]];
     [toCheckBox setEnabled:[[self model] canChangeAccounts]];
     [amountCheckBox setEnabled:[[self model] canChangeAmount]];
-    [fromField setEnabled:[[self model] canChangeAccounts]];
-    [toField setEnabled:[[self model] canChangeAccounts]];
-    [amountField setEnabled:[[self model] canChangeAmount]];
+    [fromFieldView setEnabled:[[self model] canChangeAccounts]];
+    [toFieldView setEnabled:[[self model] canChangeAccounts]];
+    [amountFieldView setEnabled:[[self model] canChangeAmount]];
 }
 
 - (void)saveFields
@@ -102,36 +109,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self model] setToEnabled:[toCheckBox state] == NSOnState];
     [[self model] setAmountEnabled:[amountCheckBox state] == NSOnState];
     [[self model] setCurrencyEnabled:[currencyCheckBox state] == NSOnState];
-}
-
-/* Delegate */
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
-{
-    id control = [aNotification object];
-    /* XXX This is all really ugly, but this panel used to use KVO bindings which don't work with
-       ObjP. I'm too busy to fix this cleanly now, but I'll get to it eventually.
-    */
-    if (control == dateField) {
-        [[self model] setDate:[dateField stringValue]];
-    }
-    else if (control == descriptionField) {
-        [[self model] setDescription:[descriptionField stringValue]];
-    }
-    else if (control == payeeField) {
-        [[self model] setPayee:[payeeField stringValue]];
-    }
-    else if (control == checknoField) {
-        [[self model] setCheckno:[checknoField stringValue]];
-    }
-    else if (control == fromField) {
-        [[self model] setFromAccount:[fromField stringValue]];
-    }
-    else if (control == toField) {
-        [[self model] setTo:[toField stringValue]];
-    }
-    else if (control == amountField) {
-        [[self model] setAmount:[amountField stringValue]];
-    }
 }
 
 /* Model --> View */
