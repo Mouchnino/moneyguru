@@ -365,6 +365,9 @@ class MainWindow(Repeater):
         pane = self.panes[index]
         return pane.view.VIEW_TYPE
     
+    def pane_view(self, index):
+        return self.panes[index].view
+    
     def select_pane_of_type(self, pane_type, clear_filter=True):
         if clear_filter:
             self.document.filter_string = ''

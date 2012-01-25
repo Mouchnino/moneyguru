@@ -76,6 +76,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGDocument *)document;
 /* Private */
 - (BOOL)validateAction:(SEL)action;
+- (MGBaseView *)viewFromPaneType:(NSInteger)paneType;
 
 /* Actions */
 - (IBAction)columnMenuClick:(id)sender;

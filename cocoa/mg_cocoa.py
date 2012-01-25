@@ -1062,6 +1062,9 @@ class PyMainWindow(PyGUIObject):
     def paneTypeAtIndex_(self, index: int) -> int:
         return self.model.pane_type(index)
     
+    def paneViewRefAtIndex_(self, index: int) -> pyref:
+        return self.model.pane_view(index)
+    
     def showPaneOfType_(self, pane_type: int):
         self.model.select_pane_of_type(pane_type)
     

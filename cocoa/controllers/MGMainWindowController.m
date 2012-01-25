@@ -158,6 +158,43 @@ http://www.hardcoded.net/licenses/bsd_license
     return [m autorelease];
 }
 
+- (MGBaseView *)viewFromPaneType:(NSInteger)paneType
+{
+    if (paneType == MGPaneTypeNetWorth) {
+        return netWorthView;
+    }
+    else if (paneType == MGPaneTypeProfit) {
+        return profitView;
+    }
+    else if (paneType == MGPaneTypeTransaction) {
+        return transactionView;
+    }
+    else if (paneType == MGPaneTypeAccount) {
+        return accountView;
+    }
+    else if (paneType == MGPaneTypeSchedule) {
+        return scheduleView;
+    }
+    else if (paneType == MGPaneTypeBudget) {
+        return budgetView;
+    }
+    else if (paneType == MGPaneTypeCashculator) {
+        return cashculatorView;
+    }
+    else if (paneType == MGPaneTypeGeneralLedger) {
+        return ledgerView;
+    }
+    else if (paneType == MGPaneTypeDocProps) {
+        return docpropsView;
+    }
+    else if (paneType == MGPaneTypeEmpty) {
+        return emptyView;
+    }
+    else {
+        return nil;
+    }
+}
+
 /* Actions */
 - (IBAction)columnMenuClick:(id)sender
 {
@@ -563,38 +600,18 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     
     for (NSInteger i=0; i<paneCount; i++) {
-        NSInteger paneType = [[self model] paneTypeAtIndex:i];
         NSString *label = [[self model] paneLabelAtIndex:i];
+        PyObject *viewRef = [[self model] paneViewRefAtIndex:i];
         MGBaseView *view = nil;
-        if (paneType == MGPaneTypeNetWorth) {
-            view = netWorthView;
+        for (MGBaseView *v in subviews) {
+            if ([[v model] modelRef] == viewRef) {
+                view = v;
+                break;
+            }
         }
-        else if (paneType == MGPaneTypeProfit) {
-            view = profitView;
-        }
-        else if (paneType == MGPaneTypeTransaction) {
-            view = transactionView;
-        }
-        else if (paneType == MGPaneTypeAccount) {
-            view = accountView;
-        }
-        else if (paneType == MGPaneTypeSchedule) {
-            view = scheduleView;
-        }
-        else if (paneType == MGPaneTypeBudget) {
-            view = budgetView;
-        }
-        else if (paneType == MGPaneTypeCashculator) {
-            view = cashculatorView;
-        }
-        else if (paneType == MGPaneTypeGeneralLedger) {
-            view = ledgerView;
-        }
-        else if (paneType == MGPaneTypeDocProps) {
-            view = docpropsView;
-        }
-        else if (paneType == MGPaneTypeEmpty) {
-            view = emptyView;
+        if (view == nil) {
+            NSInteger paneType = [[self model] paneTypeAtIndex:i];
+            view = [self viewFromPaneType:paneType];
         }
         NSImage *tabIcon = [NSImage imageNamed:[view tabIconName]];
         [subviews addObject:view];
