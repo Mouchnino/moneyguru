@@ -15,7 +15,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithWindowNibName:@"MainWindow"];
     model = [[PyMainWindow alloc] initWithDocument:[[document model] pyRef]];
-    [model bindCallback:createCallback(@"MainWindowView", self)];
     [self setDocument:document];
     /* Put a cute iTunes-like bottom bar */
     [[self window] setContentBorderThickness:28 forEdge:NSMinYEdge];
@@ -54,7 +53,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [toolbar setDelegate:self];
     [[self window] setToolbar:toolbar];
     
-    [[self model] connect];
+    [model bindCallback:createCallback(@"MainWindowView", self)];
     /* Don't set the delegate in the XIB or else delegates methods are called too soon and cause
        crashes.
     */

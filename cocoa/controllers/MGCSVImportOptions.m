@@ -18,7 +18,6 @@ http://www.hardcoded.net/licenses/bsd_license
     model = [[PyCSVImportOptions alloc] initWithDocument:[[aDocument model] pyRef]];
     [model bindCallback:createCallback(@"CSVImportOptionsView", self)];
     [encodingSelector addItemsWithTitles:[model supportedEncodings]];
-    [model connect];
     return self;
 }
 

@@ -70,7 +70,6 @@
 		CE464BFC14CC4A930074A658 /* PyBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BFB14CC4A930074A658 /* PyBaseView.m */; };
 		CE464BFF14CC4D7E0074A658 /* PyMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464BFE14CC4D7E0074A658 /* PyMainWindow.m */; };
 		CE464C0214CC556F0074A658 /* PyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0114CC556F0074A658 /* PyDocument.m */; };
-		CE464C0514CC5B370074A658 /* PyListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0414CC5B370074A658 /* PyListener.m */; };
 		CE464C0B14CC5E0A0074A658 /* PyMoneyGuruApp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0914CC5E0A0074A658 /* PyMoneyGuruApp.m */; };
 		CE464C1214CC65230074A658 /* PyFairware.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0D14CC65230074A658 /* PyFairware.m */; };
 		CE464C1314CC65230074A658 /* PyGUIObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE464C0F14CC65230074A658 /* PyGUIObject.m */; };
@@ -409,8 +408,6 @@
 		CE464BFE14CC4D7E0074A658 /* PyMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyMainWindow.m; sourceTree = "<group>"; };
 		CE464C0014CC556F0074A658 /* PyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyDocument.h; sourceTree = "<group>"; };
 		CE464C0114CC556F0074A658 /* PyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyDocument.m; sourceTree = "<group>"; };
-		CE464C0314CC5B370074A658 /* PyListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyListener.h; sourceTree = "<group>"; };
-		CE464C0414CC5B370074A658 /* PyListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyListener.m; sourceTree = "<group>"; };
 		CE464C0814CC5E0A0074A658 /* PyMoneyGuruApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMoneyGuruApp.h; sourceTree = "<group>"; };
 		CE464C0914CC5E0A0074A658 /* PyMoneyGuruApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyMoneyGuruApp.m; sourceTree = "<group>"; };
 		CE464C0C14CC65230074A658 /* PyFairware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyFairware.h; sourceTree = "<group>"; };
@@ -1493,8 +1490,6 @@
 				CEB46FB414C86C3600C56775 /* ObjP.m */,
 				CE464C0E14CC65230074A658 /* PyGUIObject.h */,
 				CE464C0F14CC65230074A658 /* PyGUIObject.m */,
-				CE464C0314CC5B370074A658 /* PyListener.h */,
-				CE464C0414CC5B370074A658 /* PyListener.m */,
 				CE464C1014CC65230074A658 /* PySelectableList.h */,
 				CE464C1114CC65230074A658 /* PySelectableList.m */,
 				CE464C0C14CC65230074A658 /* PyFairware.h */,
@@ -1982,7 +1977,6 @@
 				CE464BFC14CC4A930074A658 /* PyBaseView.m in Sources */,
 				CE464BFF14CC4D7E0074A658 /* PyMainWindow.m in Sources */,
 				CE464C0214CC556F0074A658 /* PyDocument.m in Sources */,
-				CE464C0514CC5B370074A658 /* PyListener.m in Sources */,
 				CE464C0B14CC5E0A0074A658 /* PyMoneyGuruApp.m in Sources */,
 				CE464C1214CC65230074A658 /* PyFairware.m in Sources */,
 				CE464C1314CC65230074A658 /* PyGUIObject.m in Sources */,

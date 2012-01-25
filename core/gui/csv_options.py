@@ -107,6 +107,7 @@ class CSVOptions(DocumentGUIObject):
         except Exception: # probably because of corrupted prefs
             self._layouts = []
         self.layout = self._default_layout
+        self.connect()
     
     #--- Private
     def _refresh_columns(self):

@@ -48,9 +48,7 @@ class MoneyGuru(ApplicationBase):
         self.doc.model.connect()
         self.mainWindow = MainWindow(doc=self.doc)
         self.importWindow = ImportWindow(self.mainWindow, doc=self.doc)
-        self.importWindow.model.connect()
         self.csvOptionsWindow = CSVOptionsWindow(self.mainWindow, doc=self.doc)
-        self.csvOptionsWindow.model.connect()
         self.preferencesPanel = PreferencesPanel(self.mainWindow, app=self)
         self.aboutBox = AboutBox(self.mainWindow, self)
         if sys.argv[1:] and op.exists(sys.argv[1]):

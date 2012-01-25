@@ -20,7 +20,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
     importTable = [[MGImportTable alloc] initWithPyRef:[model importTable] view:importTableView];
-    [model connect];
     return self;
 }
 

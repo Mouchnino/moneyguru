@@ -177,8 +177,6 @@ class TestApp(TestAppBase):
         self.clookup = link_gui(self.mw.completion_lookup)
         self.doc.connect()
         self.mw.connect()
-        self.iwin.connect()
-        self.csvopt.connect()
     
     def tmppath(self):
         if self._tmppath is None:

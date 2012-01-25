@@ -120,6 +120,7 @@ class ImportWindow(DocumentGUIObject):
         self.swap_type_index = SwapType.DayMonth
         self.panes = []
         self.import_table = ImportTable(self)
+        self.connect()
     
     def _can_swap_date_fields(self, first, second): # 'day', 'month', 'year'
         pane = self.selected_pane
