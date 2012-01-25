@@ -4,6 +4,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 
 #: core/gui/balance_sheet.py:21 core/gui/budget_table.py:25
+#: core/gui/cashculator_account_table.py:21
 #: core/gui/export_account_table.py:18 core/gui/income_statement.py:17
 #: core/gui/split_table.py:17
 msgid "Account"
@@ -57,6 +58,10 @@ msgstr ""
 #: core/gui/import_table.py:28 core/gui/schedule_table.py:30
 #: core/gui/transaction_table.py:32
 msgid "Amount"
+msgstr ""
+
+#: core/gui/cashculator_account_table.py:22
+msgid "Recurring"
 msgstr ""
 
 #: core/gui/entry_table.py:38 core/gui/general_ledger_table.py:37

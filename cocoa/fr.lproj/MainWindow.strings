@@ -1,0 +1,20 @@
+﻿/* Class = "NSSegmentedCell"; 1417.ibShadowedToolTips[0] = "New Item"; ObjectID = "1417"; */
+"1417.ibShadowedToolTips[0]" = "Nouvel Item";
+
+/* Class = "NSSegmentedCell"; 1417.ibShadowedToolTips[1] = "Delete Selected"; ObjectID = "1417"; */
+"1417.ibShadowedToolTips[1]" = "Delete Selected";
+
+/* Class = "NSSegmentedCell"; 1417.ibShadowedToolTips[2] = "Edit Selected"; ObjectID = "1417"; */
+"1417.ibShadowedToolTips[2]" = "Edit Selected";
+
+/* Class = "NSTextField"; ibExternalAccessibilityDescription = "Status label"; ObjectID = "1419"; */
+"1419.ibExternalAccessibilityDescription" = "Status label";
+
+/* Class = "NSSegmentedCell"; 1431.ibShadowedToolTips[0] = "Toggle Graph"; ObjectID = "1431"; */
+"1431.ibShadowedToolTips[0]" = "Toggle Graph";
+
+/* Class = "NSSegmentedCell"; 1431.ibShadowedToolTips[1] = "Toggle Pie Chart"; ObjectID = "1431"; */
+"1431.ibShadowedToolTips[1]" = "Toggle Pie Chart";
+
+/* Class = "NSSegmentedCell"; 1431.ibShadowedToolTips[2] = "Toggle Columns"; ObjectID = "1431"; */
+"1431.ibShadowedToolTips[2]" = "Toggle Columns";

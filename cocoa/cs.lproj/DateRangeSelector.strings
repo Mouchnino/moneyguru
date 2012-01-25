@@ -1,3 +1,15 @@
+﻿
+/* Class = "NSSegmentedControl"; ibExternalAccessibilityDescription = "Date range buttons"; ObjectID = "2"; */
+"2.ibExternalAccessibilityDescription" = "Date range buttons";
+
+/* Class = "NSSegmentedCell"; 3.ibShadowedToolTips[0] = "Previous Date Range"; ObjectID = "3"; */
+"3.ibShadowedToolTips[0]" = "Předchozí časové rozmezí";
+
+/* Class = "NSSegmentedCell"; 3.ibShadowedToolTips[1] = "Placeholder for the date range menu"; ObjectID = "3"; */
+"3.ibShadowedToolTips[1]" = "Placeholder for the date range menu";
+
+/* Class = "NSSegmentedCell"; 3.ibShadowedToolTips[2] = "Next Date Range"; ObjectID = "3"; */
+"3.ibShadowedToolTips[2]" = "Další časové rozmezí";
 
 /* Class = "NSMenuItem"; title = "All Transactions"; ObjectID = "10"; */
 "10.title" = "Všechny transakce";

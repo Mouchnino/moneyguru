@@ -131,25 +131,25 @@ msgstr ""
 msgid "No Account"
 msgstr ""
 
-#: core/gui/account_view.py:16
+#: core/gui/account_view.py:19
 msgid ""
 "{account_name}\n"
 "Entries from {start_date} to {end_date}"
 msgstr ""
 
-#: core/gui/account_view.py:75
+#: core/gui/account_view.py:78
 msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
 msgstr ""
 
-#: core/gui/balance_sheet.py:75
+#: core/gui/balance_sheet.py:72
 msgid "ASSETS"
 msgstr ""
 
-#: core/gui/balance_sheet.py:76
+#: core/gui/balance_sheet.py:73
 msgid "LIABILITIES"
 msgstr ""
 
-#: core/gui/balance_sheet.py:77
+#: core/gui/balance_sheet.py:74
 msgid "NET WORTH"
 msgstr ""
 
@@ -165,11 +165,11 @@ msgstr ""
 msgid "Budgets from {start_date} to {end_date}"
 msgstr ""
 
-#: core/gui/cashculator_view.py:29
+#: core/gui/cashculator_view.py:30
 msgid "Exported database not present. Click on Export Accounts first."
 msgstr ""
 
-#: core/gui/cashculator_view.py:30
+#: core/gui/cashculator_view.py:31
 msgid "Base Cashculator database not present. You must run and quit Cashculator at least once before using the export feature."
 msgstr ""
 
@@ -310,63 +310,63 @@ msgstr ""
 msgid "TOTAL"
 msgstr ""
 
-#: core/gui/general_ledger_view.py:15
+#: core/gui/general_ledger_view.py:16
 msgid "General Ledger from {start_date} to {end_date}"
 msgstr ""
 
-#: core/gui/general_ledger_view.py:48
+#: core/gui/general_ledger_view.py:47
 msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
 msgstr ""
 
-#: core/gui/income_statement.py:69
+#: core/gui/income_statement.py:66
 msgid "INCOME"
 msgstr ""
 
-#: core/gui/income_statement.py:70
+#: core/gui/income_statement.py:67
 msgid "EXPENSES"
 msgstr ""
 
-#: core/gui/income_statement.py:71
+#: core/gui/income_statement.py:68
 msgid "NET INCOME"
 msgstr ""
 
-#: core/gui/main_window.py:135 core/gui/net_worth_graph.py:40
+#: core/gui/main_window.py:160 core/gui/net_worth_graph.py:40
 msgid "Net Worth"
 msgstr ""
 
-#: core/gui/main_window.py:137 core/gui/profit_graph.py:42
+#: core/gui/main_window.py:162 core/gui/profit_graph.py:42
 msgid "Profit & Loss"
 msgstr ""
 
-#: core/gui/main_window.py:139
+#: core/gui/main_window.py:164
 msgid "Transactions"
 msgstr ""
 
-#: core/gui/main_window.py:143
+#: core/gui/main_window.py:168
 msgid "Schedules"
 msgstr ""
 
-#: core/gui/main_window.py:145
+#: core/gui/main_window.py:170
 msgid "Budgets"
 msgstr ""
 
-#: core/gui/main_window.py:147
+#: core/gui/main_window.py:172
 msgid "Cashculator"
 msgstr ""
 
-#: core/gui/main_window.py:149
+#: core/gui/main_window.py:174
 msgid "General Ledger"
 msgstr ""
 
-#: core/gui/main_window.py:151
+#: core/gui/main_window.py:176
 msgid "Document Properties"
 msgstr ""
 
-#: core/gui/main_window.py:153
+#: core/gui/main_window.py:178
 msgid "New Tab"
 msgstr ""
 
-#: core/gui/networth_view.py:15
+#: core/gui/networth_view.py:18
 msgid "Net Worth at {end_date}, starting from {start_date}"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-#: core/gui/profit_view.py:15
+#: core/gui/profit_view.py:18
 msgid "Profit and Loss from {start_date} to {end_date}"
 msgstr ""
 
@@ -434,11 +434,11 @@ msgstr ""
 msgid "Schedules from {start_date} to {end_date}"
 msgstr ""
 
-#: core/gui/transaction_view.py:19
+#: core/gui/transaction_view.py:20
 msgid "Transactions from {start_date} to {end_date}"
 msgstr ""
 
-#: core/gui/transaction_view.py:49
+#: core/gui/transaction_view.py:48
 msgid "{0} out of {1} selected. Amount: {2}"
 msgstr ""
 
@@ -486,31 +486,31 @@ msgstr ""
 msgid "Yearly"
 msgstr ""
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "fifth"
 msgstr ""
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "first"
 msgstr ""
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "fourth"
 msgstr ""
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "second"
 msgstr ""
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "third"
 msgstr ""
 
-#: core/model/recurrence.py:116
+#: core/model/recurrence.py:120
 msgid "Every %s %s of the month"
 msgstr ""
 
-#: core/model/recurrence.py:119
+#: core/model/recurrence.py:123
 msgid "Every last %s of the month"
 msgstr ""
 

@@ -130,7 +130,7 @@ msgstr "Ausgaben"
 msgid "No Account"
 msgstr "Kein Konto"
 
-#: core/gui/account_view.py:16
+#: core/gui/account_view.py:19
 msgid ""
 "{account_name}\n"
 "Entries from {start_date} to {end_date}"
@@ -138,19 +138,19 @@ msgstr ""
 "{account_name}\n"
 "Eintrag vom {start_date} bis {end_date}"
 
-#: core/gui/account_view.py:75
+#: core/gui/account_view.py:78
 msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
 msgstr "{0} von {1} ausgewählt. Haben: {2} Soll: {3}"
 
-#: core/gui/balance_sheet.py:75
+#: core/gui/balance_sheet.py:72
 msgid "ASSETS"
 msgstr "AKTIVA"
 
-#: core/gui/balance_sheet.py:76
+#: core/gui/balance_sheet.py:73
 msgid "LIABILITIES"
 msgstr "PASSIVA"
 
-#: core/gui/balance_sheet.py:77
+#: core/gui/balance_sheet.py:74
 msgid "NET WORTH"
 msgstr "EIGENKAPITAL"
 
@@ -168,11 +168,11 @@ msgstr ""
 msgid "Budgets from {start_date} to {end_date}"
 msgstr "Budgets vom {start_date} bis {end_date}"
 
-#: core/gui/cashculator_view.py:29
+#: core/gui/cashculator_view.py:30
 msgid "Exported database not present. Click on Export Accounts first."
 msgstr "Exported database not present. Click on Export Accounts first."
 
-#: core/gui/cashculator_view.py:30
+#: core/gui/cashculator_view.py:31
 msgid ""
 "Base Cashculator database not present. You must run and quit Cashculator at "
 "least once before using the export feature."
@@ -317,63 +317,63 @@ msgstr "vorheriger Saldo"
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: core/gui/general_ledger_view.py:15
+#: core/gui/general_ledger_view.py:16
 msgid "General Ledger from {start_date} to {end_date}"
 msgstr "General Ledger from {start_date} to {end_date}"
 
-#: core/gui/general_ledger_view.py:48
+#: core/gui/general_ledger_view.py:47
 msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
 msgstr "{0} out of {1} selected. Debit: {2} Credit: {3}"
 
-#: core/gui/income_statement.py:69
+#: core/gui/income_statement.py:66
 msgid "INCOME"
 msgstr "EINKOMMEN"
 
-#: core/gui/income_statement.py:70
+#: core/gui/income_statement.py:67
 msgid "EXPENSES"
 msgstr "AUSGABEN"
 
-#: core/gui/income_statement.py:71
+#: core/gui/income_statement.py:68
 msgid "NET INCOME"
 msgstr "NETTOEINKOMMEN"
 
-#: core/gui/main_window.py:135 core/gui/net_worth_graph.py:40
+#: core/gui/main_window.py:160 core/gui/net_worth_graph.py:40
 msgid "Net Worth"
 msgstr "Eigenkapital"
 
-#: core/gui/main_window.py:137 core/gui/profit_graph.py:42
+#: core/gui/main_window.py:162 core/gui/profit_graph.py:42
 msgid "Profit & Loss"
 msgstr "Profit & Verlust"
 
-#: core/gui/main_window.py:139
+#: core/gui/main_window.py:164
 msgid "Transactions"
 msgstr "Transaktionen"
 
-#: core/gui/main_window.py:143
+#: core/gui/main_window.py:168
 msgid "Schedules"
 msgstr "Wiederholungen"
 
-#: core/gui/main_window.py:145
+#: core/gui/main_window.py:170
 msgid "Budgets"
 msgstr "Budgets"
 
-#: core/gui/main_window.py:147
+#: core/gui/main_window.py:172
 msgid "Cashculator"
 msgstr ""
 
-#: core/gui/main_window.py:149
+#: core/gui/main_window.py:174
 msgid "General Ledger"
 msgstr "General Ledger"
 
-#: core/gui/main_window.py:151
+#: core/gui/main_window.py:176
 msgid "Document Properties"
 msgstr ""
 
-#: core/gui/main_window.py:153
+#: core/gui/main_window.py:178
 msgid "New Tab"
 msgstr "Neuer Tab"
 
-#: core/gui/networth_view.py:15
+#: core/gui/networth_view.py:18
 msgid "Net Worth at {end_date}, starting from {start_date}"
 msgstr "Eigenkapital vom {end_date}, beginnend am {start_date}"
 
@@ -381,7 +381,7 @@ msgstr "Eigenkapital vom {end_date}, beginnend am {start_date}"
 msgid "Others"
 msgstr "andere"
 
-#: core/gui/profit_view.py:15
+#: core/gui/profit_view.py:18
 msgid "Profit and Loss from {start_date} to {end_date}"
 msgstr "Profit und Verlust vom {start_date} bis {end_date}"
 
@@ -441,11 +441,11 @@ msgstr "nicht zugeordnet"
 msgid "Schedules from {start_date} to {end_date}"
 msgstr "Wiederholung vom {start_date} bis {end_date}"
 
-#: core/gui/transaction_view.py:19
+#: core/gui/transaction_view.py:20
 msgid "Transactions from {start_date} to {end_date}"
 msgstr "Transaktionen vom {start_date} bis {end_date}"
 
-#: core/gui/transaction_view.py:49
+#: core/gui/transaction_view.py:48
 msgid "{0} out of {1} selected. Amount: {2}"
 msgstr "{0} von {1} ausgewählt. Betrag: {2}"
 
@@ -496,30 +496,30 @@ msgstr "monatlich"
 msgid "Yearly"
 msgstr "jährlich"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "fifth"
 msgstr "fünften"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "first"
 msgstr "ersten"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "fourth"
 msgstr "vierten"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "second"
 msgstr "zweiten"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "third"
 msgstr "dritten"
 
-#: core/model/recurrence.py:116
+#: core/model/recurrence.py:120
 msgid "Every %s %s of the month"
 msgstr "Jeden %s %s im Monat"
 
-#: core/model/recurrence.py:119
+#: core/model/recurrence.py:123
 msgid "Every last %s of the month"
 msgstr "Jeden letzten %s im Monat"

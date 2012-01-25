@@ -130,25 +130,25 @@ msgstr "Uitgaven"
 msgid "No Account"
 msgstr "Geen rekening"
 
-#: core/gui/account_view.py:16
+#: core/gui/account_view.py:19
 msgid ""
 "{account_name}\n"
 "Entries from {start_date} to {end_date}"
 msgstr ""
 
-#: core/gui/account_view.py:75
+#: core/gui/account_view.py:78
 msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
 msgstr "{0} van {1} geselecteerd. Bij: {2} Af: {3}"
 
-#: core/gui/balance_sheet.py:75
+#: core/gui/balance_sheet.py:72
 msgid "ASSETS"
 msgstr "ACTIVA"
 
-#: core/gui/balance_sheet.py:76
+#: core/gui/balance_sheet.py:73
 msgid "LIABILITIES"
 msgstr "PASSIVA"
 
-#: core/gui/balance_sheet.py:77
+#: core/gui/balance_sheet.py:74
 msgid "NET WORTH"
 msgstr "VERMOGEN"
 
@@ -166,11 +166,11 @@ msgstr ""
 msgid "Budgets from {start_date} to {end_date}"
 msgstr "Budgetten vanaf {start_date}tot {end_date}"
 
-#: core/gui/cashculator_view.py:29
+#: core/gui/cashculator_view.py:30
 msgid "Exported database not present. Click on Export Accounts first."
 msgstr ""
 
-#: core/gui/cashculator_view.py:30
+#: core/gui/cashculator_view.py:31
 msgid ""
 "Base Cashculator database not present. You must run and quit Cashculator at "
 "least once before using the export feature."
@@ -313,63 +313,63 @@ msgstr "Vorig saldo"
 msgid "TOTAL"
 msgstr "TOTAAL"
 
-#: core/gui/general_ledger_view.py:15
+#: core/gui/general_ledger_view.py:16
 msgid "General Ledger from {start_date} to {end_date}"
 msgstr "Grootboek vanaf {start_date} tot {end_date}"
 
-#: core/gui/general_ledger_view.py:48
+#: core/gui/general_ledger_view.py:47
 msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
 msgstr "{0} van {1} geselecteerd. Bij: {2} Af: {3}"
 
-#: core/gui/income_statement.py:69
+#: core/gui/income_statement.py:66
 msgid "INCOME"
 msgstr "INKOMSTEN"
 
-#: core/gui/income_statement.py:70
+#: core/gui/income_statement.py:67
 msgid "EXPENSES"
 msgstr "UITGAVEN"
 
-#: core/gui/income_statement.py:71
+#: core/gui/income_statement.py:68
 msgid "NET INCOME"
 msgstr "NETTO INKOMSTEN"
 
-#: core/gui/main_window.py:135 core/gui/net_worth_graph.py:40
+#: core/gui/main_window.py:160 core/gui/net_worth_graph.py:40
 msgid "Net Worth"
 msgstr "Vermogen"
 
-#: core/gui/main_window.py:137 core/gui/profit_graph.py:42
+#: core/gui/main_window.py:162 core/gui/profit_graph.py:42
 msgid "Profit & Loss"
 msgstr "Winst / Verlies"
 
-#: core/gui/main_window.py:139
+#: core/gui/main_window.py:164
 msgid "Transactions"
 msgstr "Transacties"
 
-#: core/gui/main_window.py:143
+#: core/gui/main_window.py:168
 msgid "Schedules"
 msgstr "Periodieke boekingen"
 
-#: core/gui/main_window.py:145
+#: core/gui/main_window.py:170
 msgid "Budgets"
 msgstr "Budgetten"
 
-#: core/gui/main_window.py:147
+#: core/gui/main_window.py:172
 msgid "Cashculator"
 msgstr ""
 
-#: core/gui/main_window.py:149
+#: core/gui/main_window.py:174
 msgid "General Ledger"
 msgstr "Grootboek"
 
-#: core/gui/main_window.py:151
+#: core/gui/main_window.py:176
 msgid "Document Properties"
 msgstr ""
 
-#: core/gui/main_window.py:153
+#: core/gui/main_window.py:178
 msgid "New Tab"
 msgstr "Nieuw Tabblad"
 
-#: core/gui/networth_view.py:15
+#: core/gui/networth_view.py:18
 msgid "Net Worth at {end_date}, starting from {start_date}"
 msgstr "Eigenkapital vom {end_date}, beginnend am {start_date}"
 
@@ -377,7 +377,7 @@ msgstr "Eigenkapital vom {end_date}, beginnend am {start_date}"
 msgid "Others"
 msgstr "Andere"
 
-#: core/gui/profit_view.py:15
+#: core/gui/profit_view.py:18
 msgid "Profit and Loss from {start_date} to {end_date}"
 msgstr "Winst en verlies vanaf {start_date} tot {end_date}"
 
@@ -437,11 +437,11 @@ msgstr "Niet toegewezen"
 msgid "Schedules from {start_date} to {end_date}"
 msgstr "Periodieke boekingen vanaf {start_date} tot {end_date}"
 
-#: core/gui/transaction_view.py:19
+#: core/gui/transaction_view.py:20
 msgid "Transactions from {start_date} to {end_date}"
 msgstr "Transacties vanaf {start_date} tot {end_date}"
 
-#: core/gui/transaction_view.py:49
+#: core/gui/transaction_view.py:48
 msgid "{0} out of {1} selected. Amount: {2}"
 msgstr "{0} van {1} geselecteerd. Bedrag: {2}"
 
@@ -490,30 +490,30 @@ msgstr "Maandelijks"
 msgid "Yearly"
 msgstr "Jaarlijks"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "fifth"
 msgstr "vijfde"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "first"
 msgstr "eerste"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "fourth"
 msgstr "vierde"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "second"
 msgstr "tweede"
 
-#: core/model/recurrence.py:115
+#: core/model/recurrence.py:119
 msgid "third"
 msgstr "derde"
 
-#: core/model/recurrence.py:116
+#: core/model/recurrence.py:120
 msgid "Every %s %s of the month"
 msgstr "Elke %s %s van de maand"
 
-#: core/model/recurrence.py:119
+#: core/model/recurrence.py:123
 msgid "Every last %s of the month"
 msgstr "Elke laatste %s van de maand"

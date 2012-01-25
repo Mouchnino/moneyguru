@@ -3,6 +3,7 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 #: core/gui/balance_sheet.py:21 core/gui/budget_table.py:25
+#: core/gui/cashculator_account_table.py:21
 #: core/gui/export_account_table.py:18 core/gui/income_statement.py:17
 #: core/gui/split_table.py:17
 msgid "Account"
@@ -136,3 +137,7 @@ msgstr "Vers"
 #: core/gui/split_table.py:18
 msgid "Memo"
 msgstr "Mémo"
+
+#: core/gui/cashculator_account_table.py:22
+msgid "Recurring"
+msgstr ""
