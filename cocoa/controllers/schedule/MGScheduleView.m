@@ -37,4 +37,9 @@ http://www.hardcoded.net/licenses/bsd_license
     return [[[MGSchedulePrint alloc] initWithPyParent:[self model] 
         tableView:[scheduleTable tableView]] autorelease];
 }
+
+- (NSString *)tabIconName
+{
+    return @"schedules_16";
+}
 @end

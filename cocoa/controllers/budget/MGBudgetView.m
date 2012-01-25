@@ -36,4 +36,9 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     return [[[MGBudgetPrint alloc] initWithPyParent:[self model] tableView:[budgetTable tableView]] autorelease];
 }
+
+- (NSString *)tabIconName
+{
+    return @"budget_16";
+}
 @end

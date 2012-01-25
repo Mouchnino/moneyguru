@@ -17,4 +17,5 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 - (MGPrintView *)viewToPrint;
 - (NSResponder *)mainResponder;
+- (NSString *)tabIconName;
 @end

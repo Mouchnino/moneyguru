@@ -40,6 +40,11 @@ http://www.hardcoded.net/licenses/bsd_license
         tableView:[transactionTable tableView]] autorelease];
 }
 
+- (NSString *)tabIconName
+{
+    return @"transaction_table_16";
+}
+
 - (id)fieldEditorForObject:(id)asker
 {
     return [transactionTable fieldEditorForObject:asker];

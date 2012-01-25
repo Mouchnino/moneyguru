@@ -57,6 +57,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return [p autorelease];
 }
 
+- (NSString *)tabIconName
+{
+    return @"income_statement_16";
+}
+
 /* Public */
 - (BOOL)canShowSelectedAccount
 {

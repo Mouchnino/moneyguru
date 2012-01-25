@@ -36,4 +36,9 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     return (PyDocPropsView *)model;
 }
+
+- (NSString *)tabIconName
+{
+    return @"gledger_16";
+}
 @end

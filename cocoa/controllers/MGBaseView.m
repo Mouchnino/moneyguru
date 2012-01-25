@@ -23,4 +23,9 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     return mainResponder;
 }
+
+- (NSString *)tabIconName
+{
+    return nil;
+}
 @end

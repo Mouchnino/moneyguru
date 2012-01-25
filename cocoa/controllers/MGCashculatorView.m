@@ -31,6 +31,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyCashculatorView *)model;
 }
 
+- (NSString *)tabIconName
+{
+    return @"cashculator_16";
+}
+
 - (IBAction)exportDB:(id)sender
 {
     [[self model] exportDB];

@@ -55,6 +55,11 @@ http://www.hardcoded.net/licenses/bsd_license
         graphView:printGraphView] autorelease];
 }
 
+- (NSString *)tabIconName
+{
+    return @"entry_table_16";
+}
+
 - (void)showGraph:(HSGUIController *)graph
 {
     NSView *oldView = currentGraphView;

@@ -37,6 +37,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return [[[MGGeneralLedgerPrint alloc] initWithPyParent:[self model] tableView:[ledgerTable tableView]] autorelease];
 }
 
+- (NSString *)tabIconName
+{
+    return @"gledger_16";
+}
+
 - (id)fieldEditorForObject:(id)asker
 {
     return [ledgerTable fieldEditorForObject:asker];

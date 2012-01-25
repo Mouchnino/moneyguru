@@ -566,46 +566,37 @@ http://www.hardcoded.net/licenses/bsd_license
         NSInteger paneType = [[self model] paneTypeAtIndex:i];
         NSString *label = [[self model] paneLabelAtIndex:i];
         MGBaseView *view = nil;
-        NSImage *tabIcon = nil;
         if (paneType == MGPaneTypeNetWorth) {
             view = netWorthView;
-            tabIcon = [NSImage imageNamed:@"balance_sheet_16"];
         }
         else if (paneType == MGPaneTypeProfit) {
             view = profitView;
-            tabIcon = [NSImage imageNamed:@"income_statement_16"];
         }
         else if (paneType == MGPaneTypeTransaction) {
             view = transactionView;
-            tabIcon = [NSImage imageNamed:@"transaction_table_16"];
         }
         else if (paneType == MGPaneTypeAccount) {
             view = accountView;
-            tabIcon = [NSImage imageNamed:@"entry_table_16"];
         }
         else if (paneType == MGPaneTypeSchedule) {
             view = scheduleView;
-            tabIcon = [NSImage imageNamed:@"schedules_16"];
         }
         else if (paneType == MGPaneTypeBudget) {
             view = budgetView;
-            tabIcon = [NSImage imageNamed:@"budget_16"];
         }
         else if (paneType == MGPaneTypeCashculator) {
             view = cashculatorView;
-            tabIcon = [NSImage imageNamed:@"cashculator_16"];
         }
         else if (paneType == MGPaneTypeGeneralLedger) {
             view = ledgerView;
-            tabIcon = [NSImage imageNamed:@"gledger_16"];
         }
         else if (paneType == MGPaneTypeDocProps) {
             view = docpropsView;
-            tabIcon = [NSImage imageNamed:@"gledger_16"];
         }
         else if (paneType == MGPaneTypeEmpty) {
             view = emptyView;
         }
+        NSImage *tabIcon = [NSImage imageNamed:[view tabIconName]];
         [subviews addObject:view];
         NSTabViewItem *item;
         if (i < [tabView numberOfTabViewItems]) {
