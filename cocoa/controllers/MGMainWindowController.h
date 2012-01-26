@@ -14,13 +14,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGSchedulePanel.h"
 #import "MGBudgetPanel.h"
 #import "MGExportPanel.h"
-#import "MGAccountView.h"
-#import "MGNetWorthView.h"
-#import "MGProfitView.h"
-#import "MGTransactionView.h"
-#import "MGScheduleView.h"
-#import "MGBudgetView.h"
-#import "MGGeneralLedgerView.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
 #import "MGCSVImportOptions.h"
@@ -41,13 +34,6 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSSegmentedControl *visibilitySegments;
     
     PyMainWindow *model;
-    MGNetWorthView *netWorthView;
-    MGProfitView *profitView;
-    MGTransactionView *transactionView;
-    MGAccountView *accountView;
-    MGScheduleView *scheduleView;
-    MGBudgetView *budgetView;
-    MGGeneralLedgerView *ledgerView;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
     MGMassEditionPanel *massEditionPanel;

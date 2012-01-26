@@ -125,13 +125,13 @@ class TestApp(TestAppBase):
         # reference.
         self.mw = self.mainwindow # shortcut. This one is often typed
         self.default_parent = self.mw
-        self.nwview = link_gui(self.mw.nwview)
-        self.pview = link_gui(self.mw.pview)
-        self.tview = link_gui(self.mw.tview)
-        self.aview = link_gui(self.mw.aview)
-        self.scview = link_gui(self.mw.scview)
-        self.bview = link_gui(self.mw.bview)
-        self.glview = link_gui(self.mw.glview)
+        self.nwview = link_gui(self.mw._get_view_for_pane_type(PaneType.NetWorth))
+        self.pview = link_gui(self.mw._get_view_for_pane_type(PaneType.Profit))
+        self.tview = link_gui(self.mw._get_view_for_pane_type(PaneType.Transaction))
+        self.aview = link_gui(self.mw._get_view_for_pane_type(PaneType.Account))
+        self.scview = link_gui(self.mw._get_view_for_pane_type(PaneType.Schedule))
+        self.bview = link_gui(self.mw._get_view_for_pane_type(PaneType.Budget))
+        self.glview = link_gui(self.mw._get_view_for_pane_type(PaneType.GeneralLedger))
         self.etable = link_gui(self.aview.etable)
         self.etable_gui = self.etable.view
         self.ttable = link_gui(self.tview.ttable)

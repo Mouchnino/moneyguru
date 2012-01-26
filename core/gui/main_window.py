@@ -105,15 +105,7 @@ class MainWindow(Repeater, GUIObject):
         self.custom_daterange_panel = CustomDateRangePanel(self)
         self.account_reassign_panel = AccountReassignPanel(self)
         self.export_panel = ExportPanel(self)
-        
-        self.nwview = NetWorthView(self)
-        self.pview = ProfitView(self)
-        self.tview = TransactionView(self)
-        self.aview = AccountView(self)
-        self.scview = ScheduleView(self)
-        self.bview = BudgetView(self)
-        self.glview = GeneralLedgerView(self)
-        
+                
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
     
@@ -157,32 +149,30 @@ class MainWindow(Repeater, GUIObject):
         if pane_type in self._panetyp2view:
             return self._panetyp2view[pane_type]
         if pane_type == PaneType.NetWorth:
-            result = self.nwview
+            result = NetWorthView(self)
         elif pane_type == PaneType.Profit:
-            result = self.pview
+            result = ProfitView(self)
         elif pane_type == PaneType.Transaction:
-            result = self.tview
+            result = TransactionView(self)
         elif pane_type == PaneType.Account:
-            result = self.aview
+            result = AccountView(self)
         elif pane_type == PaneType.Schedule:
-            result = self.scview
+            result = ScheduleView(self)
         elif pane_type == PaneType.Budget:
-            result = self.bview
+            result = BudgetView(self)
         elif pane_type == PaneType.Cashculator:
             # OS X only, so we import he instead of at the top of the module
             from .cashculator_view import CashculatorView
             result = CashculatorView(self)
-            result.connect()
         elif pane_type == PaneType.GeneralLedger:
-            result = self.glview
+            result = GeneralLedgerView(self)
         elif pane_type == PaneType.DocProps:
             result = DocPropsView(self)
-            result.connect()
         elif pane_type == PaneType.Empty:
             result = EmptyView(self)
-            result.connect()
         else:
             raise ValueError("Cannot create view of type {}".format(pane_type))
+        result.connect()
         self._panetyp2view[pane_type] = result
         return result
     
@@ -283,13 +273,6 @@ class MainWindow(Repeater, GUIObject):
         if not self.panes:
             self._restore_default_panes()
     
-    def connect(self):
-        children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
-            self.bview, self.glview]
-        for child in children:
-            child.connect()
-        Repeater.connect(self)
-    
     #--- Public
     def close_pane(self, index):
         if self.pane_count == 1: # don't close the last pane
@@ -335,7 +318,7 @@ class MainWindow(Repeater, GUIObject):
     
     def make_schedule_from_selected(self):
         current_view = self._current_pane.view
-        if current_view in (self.tview, self.aview):
+        if current_view.VIEW_TYPE in {PaneType.Transaction, PaneType.Account}:
             if not self.selected_transactions:
                 return
             # There's no test case for this, but select_schedule_table() must happen before 
@@ -444,7 +427,7 @@ class MainWindow(Repeater, GUIObject):
         of the selected transaction will be shown.
         """
         current_view = self._current_pane.view
-        if current_view in (self.nwview, self.pview, self.tview, self.aview):
+        if hasattr(current_view, 'show_account'):
             current_view.show_account()
     
     def show_message(self, message):
@@ -550,7 +533,7 @@ class MainWindow(Repeater, GUIObject):
                 self._add_pane(self._create_pane(PaneType.Account, account))
             else:
                 self.current_pane_index = index
-        elif self._current_pane.view is self.aview:
+        elif self._current_pane.view.VIEW_TYPE == PaneType.Account:
             self.select_balance_sheet()
     
     @property
@@ -596,7 +579,7 @@ class MainWindow(Repeater, GUIObject):
         self._update_area_visibility()
     
     def filter_applied(self):
-        if self.document.filter_string and self._current_pane.view not in (self.tview, self.aview):
+        if self.document.filter_string and self._current_pane.view.VIEW_TYPE not in {PaneType.Transaction, PaneType.Account}:
             self.select_pane_of_type(PaneType.Transaction, clear_filter=False)
         self.search_field.refresh()
     

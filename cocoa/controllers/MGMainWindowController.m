@@ -8,6 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGMainWindowController.h"
 #import "MGConst.h"
+#import "MGAccountView.h"
+#import "MGNetWorthView.h"
+#import "MGProfitView.h"
+#import "MGTransactionView.h"
+#import "MGScheduleView.h"
+#import "MGBudgetView.h"
+#import "MGGeneralLedgerView.h"
 #import "MGCashculatorView.h"
 #import "MGDocPropsView.h"
 #import "MGEmptyView.h"
@@ -28,14 +35,6 @@ http://www.hardcoded.net/licenses/bsd_license
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
     exportPanel = [[MGExportPanel alloc] initWithParent:self];
-    // Lazily instantiated
-    netWorthView = nil;
-    profitView = nil;
-    transactionView = nil;
-    accountView = nil;
-    scheduleView = nil;
-    budgetView = nil;
-    ledgerView = nil;
     searchField = [[MGSearchField alloc] initWithPyRef:[[self model] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
@@ -76,13 +75,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [accountProperties release];
     [budgetPanel release];
     [exportPanel release];
-    [netWorthView release];
-    [profitView release];
-    [accountView release];
-    [transactionView release];
-    [scheduleView release];
-    [budgetView release];
-    [ledgerView release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -161,49 +153,28 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGBaseView *)viewFromPaneType:(NSInteger)paneType modelRef:(PyObject *)modelRef
 {
     if (paneType == MGPaneTypeNetWorth) {
-        if (netWorthView == nil) {
-            netWorthView = [[MGNetWorthView alloc] initWithPyRef:modelRef];
-        }
-        return netWorthView;
+        return [[[MGNetWorthView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeProfit) {
-        if (profitView == nil) {
-            profitView = [[MGProfitView alloc] initWithPyRef:modelRef];
-        }
-        return profitView;
+        return [[[MGProfitView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeTransaction) {
-        if (transactionView == nil) {
-            transactionView = [[MGTransactionView alloc] initWithPyRef:modelRef];
-        }
-        return transactionView;
+        return [[[MGTransactionView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeAccount) {
-        if (accountView == nil) {
-            accountView = [[MGAccountView alloc] initWithPyRef:modelRef];
-        }
-        return accountView;
+        return [[[MGAccountView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeSchedule) {
-        if (scheduleView == nil) {
-            scheduleView = [[MGScheduleView alloc] initWithPyRef:modelRef];
-        }
-        return scheduleView;
+        return [[[MGScheduleView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeBudget) {
-        if (budgetView == nil) {
-            budgetView = [[MGBudgetView alloc] initWithPyRef:modelRef];
-        }
-        return budgetView;
+        return [[[MGBudgetView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeCashculator) {
         return [[[MGCashculatorView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeGeneralLedger) {
-        if (ledgerView == nil) {
-            ledgerView = [[MGGeneralLedgerView alloc] initWithPyRef:modelRef];
-        }
-        return ledgerView;
+        return [[[MGGeneralLedgerView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeDocProps) {
         return [[[MGDocPropsView alloc] initWithPyRef:modelRef] autorelease];
