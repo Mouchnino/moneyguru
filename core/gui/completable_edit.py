@@ -49,6 +49,17 @@ class CompletableEdit(DocumentGUIObject):
         if self.completion:
             self.view.refresh()
     
+    #--- Override
+    # We override view to allow it to be set multiple times because CompletableEdit, as a special
+    # case, can have more than one view swapping each other out
+    @property
+    def view(self):
+        return self._view
+    
+    @view.setter
+    def view(self, value):
+        self._view = value
+    
     #--- Public
     def commit(self):
         """Accepts current completion and updates the text with it.

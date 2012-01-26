@@ -22,9 +22,7 @@ class CompletableEdit(QLineEdit):
     def __init__(self, model, parent):
         QLineEdit.__init__(self, parent)
         self.model = model
-        # XXX CompletableEdit for Qt is broken, fix this.
-        if self.model.view is None:
-            self.model.view = self
+        self.model.view = self
     
     def _prefix(self):
         # Returns the text before the selection
@@ -36,6 +34,7 @@ class CompletableEdit(QLineEdit):
     #--- QLineEdit overrides
     def focusInEvent(self, event):
         QLineEdit.focusInEvent(self, event)
+        self.model.view = self
         self.model.attrname = self.ATTRNAME
         self.model.text = ''
     

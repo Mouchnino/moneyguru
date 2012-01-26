@@ -69,6 +69,17 @@ def test_ignore_accents(app):
     app.ce.text = 'é'
     eq_(app.ce.completion, 'lectrique')
 
+@with_app(app_default)
+def test_can_swap_views(app):
+    # Normally, GUIObject can only have one view set in their lifetimes, but with
+    # CompletableEdit, it's special. Under Qt, in panels, we have multiple views talking to the
+    # same model instance. Not all at once, but one after the other.
+    app.clear_gui_calls()
+    oldview = app.ce.view
+    app.ce.view = app.make_logger()
+    app.ce.text = 'e'
+    app.ce.view.check_gui_calls(['refresh'])
+
 #--- Edit with match
 def app_with_match():
     # XXX This test is flaky on windows because time.time() is not guaranteed to always return a
