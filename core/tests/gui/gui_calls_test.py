@@ -52,7 +52,7 @@ def test_add_group():
 def test_add_transaction():
     # Adding a transaction causes a refresh_undo_actions() gui call and the main window status line.
     app = app_cleared_gui_calls()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     app.ttable.add()
     app.ttable[0].description = 'foobar'
@@ -92,14 +92,14 @@ def test_new_budget():
     # Repeat options must be updated upon panel load
     app = app_cleared_gui_calls()
     app.add_account('income', account_type=AccountType.Income) # we need an account for the panel to load
-    app.mw.select_budget_table()
+    app.show_bview()
     app.mw.new_item()
     app.bpanel.repeat_type_list.view.check_gui_calls_partial(['refresh'])
 
 def test_new_schedule():
     # Repeat options and mct notices must be updated upon panel load
     app = app_cleared_gui_calls()
-    app.mw.select_schedule_table()
+    app.show_scview()
     app.mw.new_item()
     app.scpanel.repeat_type_list.view.check_gui_calls_partial(['refresh'])
 
@@ -113,13 +113,13 @@ def test_select_mainwindow_next_previous_view(app):
 def test_show_transaction_table():
     # main window's status is refreshed upon showing.
     app = app_cleared_gui_calls()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 def test_sort_table():
     # sorting a table refreshes it.
     app = app_cleared_gui_calls()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     app.ttable.sort_by('description')
     app.check_gui_calls(app.ttable_gui, ['refresh'])
@@ -127,7 +127,7 @@ def test_sort_table():
 def test_ttable_add_and_cancel():
     # gui calls on the ttable are correctly made
     app = app_cleared_gui_calls()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     app.ttable.add()
     # stop_editing must happen first
@@ -158,7 +158,7 @@ def test_show_account():
 #--- On transaction view
 def app_on_transaction_view():
     app = TestApp()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     return app
 
@@ -257,7 +257,7 @@ def test_change_tview_filter(app):
 #--- Load file with balance sheet selected
 def app_load_file_with_bsheet_selected():
     app = TestApp()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.clear_gui_calls()
     app.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
     return app

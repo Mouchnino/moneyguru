@@ -60,7 +60,7 @@ class TestCaseNoSetup:
     def test_default_currency(self, fake_server):
         # It's possible to specify a default currency at startup.
         app = TestApp(app=Application(ApplicationGUI(), default_currency=PLN))
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         eq_(app.doc.default_currency, PLN)
         app.add_account()
         eq_(app.doc.default_currency, PLN)
@@ -92,7 +92,7 @@ def test_add_transaction_with_foreign_amount(app, fake_server):
     # Saving an entry triggers an ensure_rates
     log = []
     FakeServer.hooklog(log)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     app.ttable.edited.date = '20/5/2008'
     app.ttable.edited.amount = '12 eur'
@@ -118,14 +118,14 @@ class TestCaseCADAssetAndUSDAsset:
         app = self.app
         app.add_entry(transfer='CAD Account', increase='42 usd')
         # Then, make the other side 'native'
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         row = app.etable.selected_row
         row.decrease = '40 cad'
         app.etable.save_edits()
         # The other side should have *not* followed
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         eq_(app.etable[0].increase, '42.00')
@@ -145,14 +145,14 @@ class TestCaseCADLiabilityAndUSDLiability:
         app = self.app
         app.add_entry(transfer='CAD Account', increase='42 usd')
         # Then, make the other side 'native'
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.liabilities[0]
         app.bsheet.show_selected_account()
         row = app.etable.selected_row
         row.decrease = '40 cad'
         app.etable.save_edits()
         # The other side should have *not* followed
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.liabilities[1]
         app.bsheet.show_selected_account()
         eq_(app.etable[0].increase, '42.00')
@@ -167,7 +167,7 @@ def app_entry_with_foreign_currency():
     PLN.set_CAD_value(0.42, date(2007, 10, 1))
     app.add_account('first', CAD)
     app.add_account('second', PLN, account_type=AccountType.Income)
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     app.add_entry(date='1/10/2007', transfer='second', increase='42 eur')
@@ -177,7 +177,7 @@ def app_entry_with_foreign_currency():
 def test_bar_graph_data():
     # The amount shown in the bar graph is a converted amount.
     app = app_entry_with_foreign_currency()
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     eq_(app.bar_graph_data(), [('01/10/2007', '08/10/2007', '%2.2f' % ((42 * 1.42) / 0.42), '0.00')])
@@ -213,7 +213,7 @@ def test_entry_balance():
 def test_opposite_entry_balance():
     # The 'other side' of the entry also have its balance correctly computed.
     app = app_entry_with_foreign_currency()
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     eq_(app.etable[0].balance, 'PLN %2.2f' % ((42 * 1.42) / 0.42))
@@ -232,14 +232,14 @@ class TestCaseCADAssetAndUSDIncome:
         # First, let's add a 'native' transaction
         # Then, make the asset side 'native'
         app = self.app
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         row = app.etable.selected_row
         row.increase = '40 cad'
         app.etable.save_edits()
         # The other side should have followed
-        app.mw.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.etable[0].increase, 'CAD 40.00')
@@ -253,7 +253,7 @@ class TestCaseDifferentCurrencies:
         app = TestApp(app=Application(ApplicationGUI(), default_currency=CAD))
         app.add_account('first account')
         app.add_account('second account', USD)
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         app.add_entry(description='first entry', transfer='second account', increase='42 usd')
@@ -273,7 +273,7 @@ class TestCaseDifferentCurrencies:
         app = self.app
         eq_(app.etable[0].increase, 'USD 42.00')
         eq_(app.etable[1].increase, 'EUR 42.00')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         eq_(app.etable[0].decrease, 'USD 42.00')
@@ -343,7 +343,7 @@ def app_multi_currency_transaction():
     app.add_account('USD Account', USD)
     app.mw.show_account()
     app.add_entry(transfer='CAD Account', increase='42 usd')
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     row = app.etable.selected_row
@@ -370,7 +370,7 @@ def test_set_entry_increase():
     row = app.etable.selected_row
     row.increase = '12 cad'
     app.etable.save_edits()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1]
     app.bsheet.show_selected_account()
     eq_(app.etable[0].decrease, '42.00')

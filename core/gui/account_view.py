@@ -91,9 +91,9 @@ class AccountView(BaseView):
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report."""
         if self.mainwindow.shown_account.is_balance_sheet_account():
-            self.mainwindow.select_balance_sheet()
+            self.mainwindow.select_pane_of_type(PaneType.NetWorth)
         else:
-            self.mainwindow.select_income_statement()
+            self.mainwindow.select_pane_of_type(PaneType.Profit)
     
     def move_down(self):
         self.etable.move_down()

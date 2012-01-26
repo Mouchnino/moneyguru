@@ -218,14 +218,14 @@ class TestApp(TestAppBase):
         # This method simulates what a user would do to add an account with the specified attributes
         # Note that, undo-wise, this operation is not atomic.
         if account_type in (AccountType.Income, AccountType.Expense):
-            self.mw.select_income_statement()
+            self.mw.select_pane_of_type(PaneType.Profit)
             sheet = self.istatement
             if account_type == AccountType.Income:
                 sheet.selected = sheet.income
             else:
                 sheet.selected = sheet.expenses
         else:
-            self.mw.select_balance_sheet()
+            self.mw.select_pane_of_type(PaneType.NetWorth)
             sheet = self.bsheet
             if account_type == AccountType.Asset:
                 sheet.selected = sheet.assets
@@ -258,7 +258,7 @@ class TestApp(TestAppBase):
     def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
             repeat_every=1, stop_date=None):
         # if no target, set target_name to None
-        self.mainwindow.select_budget_table()
+        self.mainwindow.select_pane_of_type(PaneType.Budget)
         self.mainwindow.new_item()
         if start_date is None:
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
@@ -307,7 +307,7 @@ class TestApp(TestAppBase):
             repeat_type_index=0, repeat_every=1, stop_date=None):
         if start_date is None:
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
-        self.mainwindow.select_schedule_table()
+        self.mainwindow.select_pane_of_type(PaneType.Schedule)
         self.scpanel.new()
         self.scpanel.start_date = start_date
         self.scpanel.description = description
@@ -327,7 +327,7 @@ class TestApp(TestAppBase):
     
     def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
             checkno=None):
-        self.mw.select_transaction_table()
+        self.mw.select_pane_of_type(PaneType.Transaction)
         self.ttable.add()
         row = self.ttable.edited
         if date is not None:
@@ -483,12 +483,12 @@ class TestApp(TestAppBase):
     def select_account(self, account_name):
         # Selects the account with `account_name` in the appropriate sheet
         predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
-        self.mw.select_balance_sheet()
+        self.mw.select_pane_of_type(PaneType.NetWorth)
         node = self.bsheet.find(predicate)
         if node is not None:
             self.bsheet.selected = node
             return
-        self.mw.select_income_statement()
+        self.mw.select_pane_of_type(PaneType.Profit)
         node = self.istatement.find(predicate)
         if node is not None:
             self.istatement.selected = node
@@ -541,6 +541,19 @@ class TestApp(TestAppBase):
     
     def show_tview(self):
         self.mw.select_pane_of_type(PaneType.Transaction)
+        return self.current_view()
+    
+    def show_aview(self):
+        # This should only be used when a specific account has previously been shown before
+        assert self.mw.shown_account is not None
+        self.mw.select_pane_of_type(PaneType.Account)
+    
+    def show_bview(self):
+        self.mw.select_pane_of_type(PaneType.Budget)
+        return self.current_view()
+    
+    def show_scview(self):
+        self.mw.select_pane_of_type(PaneType.Schedule)
         return self.current_view()
     
     def show_glview(self):

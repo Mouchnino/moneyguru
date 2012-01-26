@@ -134,7 +134,7 @@ class MainWindow(Repeater, GUIObject):
             if pane.view.VIEW_TYPE == PaneType.Account and pane.account not in self.document.accounts:
                 indexes_to_close.append(index)
         if self.current_pane_index in indexes_to_close:
-            self.select_balance_sheet()
+            self.select_pane_of_type(PaneType.NetWorth)
         for index in reversed(indexes_to_close):
             self.close_pane(index)
     
@@ -321,10 +321,10 @@ class MainWindow(Repeater, GUIObject):
         if current_view.VIEW_TYPE in {PaneType.Transaction, PaneType.Account}:
             if not self.selected_transactions:
                 return
-            # There's no test case for this, but select_schedule_table() must happen before 
+            # There's no test case for this, but select_pane_of_type() must happen before 
             # new_schedule_from_transaction() or else the sctable's selection upon view switch will
             # overwrite our selection.
-            self.select_schedule_table()
+            self.select_pane_of_type(PaneType.Schedule)
             ref = self.selected_transactions[0]
             schedule = Recurrence(ref.replicate(), RepeatType.Monthly, 1)
             schedule.delete_at(ref.date)
@@ -381,26 +381,6 @@ class MainWindow(Repeater, GUIObject):
             self._add_pane(self._create_pane(pane_type))
         else:
             self.current_pane_index = index
-    
-    def select_balance_sheet(self):
-        self.select_pane_of_type(PaneType.NetWorth)
-    
-    def select_income_statement(self):
-        self.select_pane_of_type(PaneType.Profit)
-    
-    def select_transaction_table(self):
-        self.select_pane_of_type(PaneType.Transaction)
-    
-    def select_entry_table(self):
-        if self.shown_account is None:
-            return
-        self.select_pane_of_type(PaneType.Account)
-    
-    def select_schedule_table(self):
-        self.select_pane_of_type(PaneType.Schedule)
-    
-    def select_budget_table(self):
-        self.select_pane_of_type(PaneType.Budget)
     
     def select_next_view(self):
         if self.current_pane_index == len(self.panes) - 1:
@@ -534,7 +514,7 @@ class MainWindow(Repeater, GUIObject):
             else:
                 self.current_pane_index = index
         elif self._current_pane.view.VIEW_TYPE == PaneType.Account:
-            self.select_balance_sheet()
+            self.select_pane_of_type(PaneType.NetWorth)
     
     @property
     def status_line(self):

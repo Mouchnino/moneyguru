@@ -38,8 +38,8 @@ def test_totals_with_unicode_amount_format(app):
     # it seems that some people have some weird separator in their settings, and there was a
     # UnicodeEncodeError in the status line formatting.
     app.app._decimal_sep = '\xa0'
-    app.mw.select_transaction_table() # force a refresh
-    app.mw.select_entry_table()
+    app.show_tview() # force a refresh
+    app.show_aview()
     expected = "1 out of 2 selected. Increase: 0\xa000 Decrease: 12\xa000"
     eq_(app.mw.status_line, expected)
 

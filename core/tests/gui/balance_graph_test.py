@@ -37,7 +37,7 @@ class TestTwoLiabilityTransactions:
         monkeypatch.patch_today(2008, 1, 27)
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('expense', 'Visa', '100')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.liabilities[0]
         app.bsheet.show_selected_account()
         expected = [('04/01/2008', '120.00'), ('05/01/2008', '120.00'), ('06/01/2008', '80.00'), 
@@ -52,7 +52,7 @@ class TestTwoLiabilityTransactions:
         monkeypatch.patch_today(2008, 1, 31)
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('expense', 'Visa', '100')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.drsel.select_next_date_range()
     
     @with_app(do_setup)
@@ -62,7 +62,7 @@ class TestTwoLiabilityTransactions:
         app.add_entry('20/1/2008', decrease='10')
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('expense', 'Visa', '100')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.liabilities[0]
         app.bsheet.show_selected_account()
         # the amount at the 20th is supposed to include budgeting for the 20th, and the 21st data point
@@ -106,7 +106,7 @@ class TestBudgetAndNoTranaction:
         # There was a bug where when in a future date range, and also in a range with no transaction,
         # no budget data would be drawn.
         app.drsel.select_next_date_range()
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         # Now, we're supposed to see a graph starting at 100 and ending at 200
         expected = [('01/02/2008', '100.00'), ('01/03/2008', '200.00')]
         eq_(app.nw_graph_data(), expected)

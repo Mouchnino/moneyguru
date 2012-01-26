@@ -13,7 +13,7 @@ from ..base import TestApp, with_app
 
 @with_app(TestApp)
 def test_add_schedule(app):
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.scpanel.new()
     app.scpanel.description = 'foobar'
     app.scpanel.save()
@@ -23,7 +23,7 @@ def test_add_schedule(app):
 @with_app(TestApp)
 def test_edit_schedule(app):
     # Initiating a schedule edition while none is selected doesn't crash
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.mainwindow.edit_item() # no crash
 
 #---
@@ -84,7 +84,7 @@ def test_repeat_options_on_last_week(app):
 def app_daily_schedule_loaded():
     app = TestApp()
     app.doc.date_range = MonthRange(app.app.parse_date('13/09/2008'))
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.scpanel.new()
     app.scpanel.start_date = '13/09/2008'
     app.scpanel.description = 'foobar'
@@ -92,7 +92,7 @@ def app_daily_schedule_loaded():
     app.scpanel.repeat_every = 3
     app.scpanel.notes = 'some notes'
     app.scpanel.save()
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.sctable.select([0])
     app.scpanel.load()
     return app
@@ -122,5 +122,5 @@ def test_edit_then_save():
     app.scpanel.description = 'foobaz'
     app.scpanel.save()
     # To see if the save_edits() worked, we look if the spawns are correct in the ttable
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 3) #stops 2 days after it starts

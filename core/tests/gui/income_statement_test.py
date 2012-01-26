@@ -17,7 +17,7 @@ from ...model.date import MonthRange
 class TestPristine:
     def do_setup(self):
         app = TestApp()
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.check_gui_calls(app.istatement_gui, ['refresh'])
         return app
     
@@ -61,7 +61,7 @@ class TestAccountsAndEntries:
         app.mainwindow.show_account()
         app.add_entry('11/12/2007', 'Entry 3', increase='100.00')
         app.add_entry('12/01/2008', 'Entry 4', decrease='20.00')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         return app
     
     @with_app(do_setup)
@@ -70,7 +70,7 @@ class TestAccountsAndEntries:
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         app.add_entry('13/01/2008', 'Entry 3', increase='42.00')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income[0].cash_flow, '292.00')
     
     @with_app(do_setup)
@@ -78,7 +78,7 @@ class TestAccountsAndEntries:
         # Must include the budget. 250 of the 400 are spent, there's 150 left to add
         monkeypatch.patch_today(2008, 1, 17)
         app.add_budget('Account 1', None, '400')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income[0].cash_flow, '250.00')
         eq_(app.istatement.income[0].budgeted, '150.00')
         eq_(app.istatement.income.budgeted, '150.00')
@@ -99,7 +99,7 @@ class TestAccountsAndEntries:
     def test_cash_flow_with_underestimated_budget(self, app, monkeypatch):
         monkeypatch.patch_today(2008, 1, 17)
         app.add_budget('Account 1', None, '200')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income[0].cash_flow, '250.00')
     
     @with_app(do_setup)
@@ -158,7 +158,7 @@ class TestMultipleCurrencies:
         app.add_entry('1/1/2007', 'USD entry', increase='50.00')
         app.add_entry('1/1/2008', 'USD entry', increase='80.00')
         app.add_entry('31/1/2008', 'USD entry', increase='20.00')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         return app
     
     @with_app(do_setup)
@@ -167,7 +167,7 @@ class TestMultipleCurrencies:
         # the account itself
         monkeypatch.patch_today(2008, 1, 20)
         app.add_budget('USD account', None, '300usd')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income[0][1].cash_flow, 'USD 100.00')
         eq_(app.istatement.income[0][1].budgeted, 'USD 200.00')
     
@@ -198,7 +198,7 @@ class TestMultipleCurrenciesOverTwoMonths:
         app.add_entry('1/1/2008', 'USD entry', increase='80.00')
         app.add_entry('31/1/2008', 'USD entry', increase='20.00')
         app.add_entry('10/2/2008', 'USD entry', increase='100.00')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         return app
     
     @with_app(do_setup)
@@ -237,7 +237,7 @@ class TestEntriesSpreadOverAYear:
         app.add_entry('01/12/2008', 'Entry', increase='8')
         app.add_entry('01/03/2009', 'Entry', increase='9')
         app.add_entry('01/05/2009', 'Entry', increase='10')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         return app
     
     @with_app(do_setup)
@@ -261,7 +261,7 @@ class TestBustedBudget:
         app.mainwindow.show_account()
         app.add_entry('01/01/2010', increase='112')
         app.add_budget('account', None, '100')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         return app
     
     @with_app(do_setup)

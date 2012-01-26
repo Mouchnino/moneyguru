@@ -17,7 +17,7 @@ def app_with_budget(monkeypatch):
     app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')
-    app.mw.select_budget_table()
+    app.show_bview()
     return app
 
 @with_app(app_with_budget)
@@ -39,7 +39,7 @@ def test_delete(app):
     app.mw.delete_item()
     eq_(len(app.btable), 0)
     # And the spawns aren't there anymore in the ttable
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 0)
 
 @with_app(app_with_budget)

@@ -16,7 +16,7 @@ from ...model.account import AccountType
 def app_some_account():
     app = TestApp()
     app.add_account('foobar', CAD, account_type=AccountType.Expense, account_number='4242')
-    app.mw.select_income_statement()
+    app.show_pview()
     app.clear_gui_calls()
     return app
 

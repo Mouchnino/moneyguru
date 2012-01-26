@@ -133,7 +133,7 @@ def test_expanded_nodes_are_restored_on_load(app):
     # We can't use the normal compare_apps mechanism here because node expansion info doesn't go into
     # the document. This test also makes sure that the nodes expansion state are saved even if the
     # sheet is not connected at close (and thus doesn't receive the document_will_close msg).
-    app.mw.select_income_statement()
+    app.show_pview()
     newapp = app.save_and_load()
     assert (0, 0) in newapp.bsheet.expanded_paths
 

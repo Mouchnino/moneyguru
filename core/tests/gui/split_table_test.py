@@ -54,7 +54,7 @@ def test_changes_split_buffer_only():
     row.debit = '40'
     app.stable.save_edits()
     # Now, let's force a refresh of etable
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.etable[0].increase, 'CAD 42.00')
@@ -69,7 +69,7 @@ def test_completion():
 def test_completion_new_txn():
     # When completing an account from a new txn, the completion wouldn't work at all
     app = app_one_entry()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     app.tpanel.load()
     ce = app.completable_edit('account')
@@ -79,7 +79,7 @@ def test_completion_new_txn():
 def test_load_tpanel_from_ttable():
     # When the tpanel is loaded form the ttable, the system currency is used.
     app = app_one_entry()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.tpanel.load() # no crash
     eq_(app.stable[0].debit, 'CAD 42.00')
 
@@ -111,7 +111,7 @@ def test_set_wrong_values_for_attributes():
 #--- Transaction being added
 def app_transaction_being_added():
     app = TestApp()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     return app
 

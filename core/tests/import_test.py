@@ -57,7 +57,7 @@ def test_import_moneyguru_file(app):
     importall(app, testdata.filepath('moneyguru', 'simple.moneyguru'))
     # 2 assets, 1 expense
     eq_(app.bsheet.assets.children_count, 4)
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     eq_(app.istatement.expenses.children_count, 3)
     # No need to test further, we already test moneyguru file loading, which is basically the 
     # same thing.
@@ -81,7 +81,7 @@ class TestQIFImport:
         app.add_account('Account 1')
         app.add_account('Account 1 1')
         importall(app, testdata.filepath('qif', 'checkbook.qif'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         return app
@@ -98,7 +98,7 @@ class TestQIFImport:
     @with_app(do_setup)
     def test_default_account_currency(self, app):
         # This QIF has no currency. Therefore, the default currency should be used for accounts
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2]
         app.mainwindow.edit_item()
         eq_(app.apanel.currency, PLN)
@@ -107,7 +107,7 @@ class TestQIFImport:
     def test_default_entry_currency(self, app):
         # Entries default to their account's currency. Therefore, changing the account currency
         # after the import should cause the entries to be cooked as amount with currency
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2]
         app.mainwindow.edit_item()
         app.apanel.currency = CAD
@@ -121,7 +121,7 @@ class TestOFXImport:
     def do_setup(self):
         app = TestApp()
         importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         return app
@@ -156,7 +156,7 @@ class TestDoubleOFXImport:
         app = TestApp()
         app.doc.date_range = MonthRange(date(2008, 2, 1))
         importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         # The entry that is in both files in the "retrait" one, which we'll edit
@@ -193,7 +193,7 @@ class TestDoubleOFXImportAcrossSessions:
         app = TestApp()
         app.doc.date_range = MonthRange(date(2008, 2, 1))
         importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # 815-30219-11111-EOP
         app.bsheet.selected.name = 'Desjardins EOP'
         app.bsheet.save_edits()
@@ -226,11 +226,11 @@ class TestAnotherDoubleOFXImport:
     @with_app(do_setup)
     def test_entries_counts(self, app):
         # All accounts have the appropriate number of entries.
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 2)
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 1)
@@ -253,7 +253,7 @@ class TestTripleOFXImportAcrossSessions:
     def test_entry_count(self, app):
         # The number of entries is the same as if the import was made once
         # Previously, the transaction reference would be lost in a transaction conflict resolution
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 3)
@@ -265,7 +265,7 @@ def app_double_ofx_import_with_split_in_the_middle():
     app = TestApp()
     app.doc.date_range = MonthRange(date(2008, 2, 1))
     importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     app.etable.select([2]) #retrait
@@ -291,7 +291,7 @@ class TestImportAccountInGroup:
     def do_setup(self):
         app = TestApp()
         importall(app, testdata.filepath('moneyguru', 'account_in_group.moneyguru'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -333,7 +333,7 @@ class TestTransferBetweenTwoReferencedAccounts:
         app.doc.date_range = MonthRange(date(2008, 2, 1))
         importall(app, testdata.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
         app.add_account('Account 4') # Add it as an asset
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         app.etable.select([0])
@@ -376,7 +376,7 @@ class TestImportFileWithMultipleTransferReferences:
     def test_account_names_are_correct(self, app):
         # the account names for the transfers are correctly imported. Previously, new_name() was
         # recursively called on them for each occurence in the split.
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income[0].name, 'income')
         eq_(app.istatement.expenses[0].name, 'expense')
     

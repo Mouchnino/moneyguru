@@ -22,7 +22,7 @@ def test_can_create_new():
     # When trying to create a new budget in a document without income/expense accounts, an
     # error message is displayed explaining that it's not possible.
     app = app_one_asset_account()
-    app.mainwindow.select_budget_table()
+    app.show_bview()
     app.mainwindow.new_item()
     eq_(len(app.mainwindow_gui.messages), 1) # a message has been shown
 
@@ -33,13 +33,13 @@ def app_one_expense_with_budget(monkeypatch):
     app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     # The accounts' name and order in which they are created is important, as it tests that
     # the budget panel sorts them correctly.
     app.add_account('liability', account_type=AccountType.Liability)
     app.add_account('asset')
     app.add_account('Some Income', account_type=AccountType.Income)
-    app.mainwindow.select_budget_table()
+    app.show_bview()
     app.btable.select([0])
     app.mainwindow.edit_item()
     return app
@@ -77,7 +77,7 @@ def test_edit_then_save(app):
     eq_(row.target, 'liability')
     eq_(row.amount, '42.00')
     # To see if the save_edits() worked, we look if the spawns are correct in the ttable
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     row = app.ttable[0]
     eq_(row.to, 'liability')
     eq_(row.from_, 'Some Income')

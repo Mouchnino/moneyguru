@@ -127,7 +127,7 @@ def app_three_accounts():
 def test_add_transfer_entry(app):
     # Add a balancing entry to the account of the entry's transfer.
     app.add_entry(transfer='one', increase='42.00')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.etable_count(), 1)
@@ -192,7 +192,7 @@ def test_add_then_delete(app):
 @with_app(app_one_entry)
 def test_can_reconcile_expense(app):
     # income/expense entires can't be reconciled
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.expenses[0] # second
     app.istatement.show_selected_account()
     assert not app.etable[0].can_reconcile()
@@ -427,10 +427,10 @@ def test_search(app):
 @with_app(app_two_entries)
 def test_selection(app):
     # EntryTable stays in sync with TransactionTable.
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0])
     app.clear_gui_calls()
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.etable.selected_indexes, [0])
@@ -485,9 +485,9 @@ def app_two_entries_in_two_accounts():
 def test_selection_after_connect(app):
     # The selection in the document is correctly updated when the selected account changes.
     # The tpanel loads the document selection, so this is why we test through it.
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0]) # first
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1]
     app.bsheet.show_selected_account()
     app.tpanel.load()

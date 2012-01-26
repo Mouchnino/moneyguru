@@ -61,7 +61,7 @@ def test_can_load_selected_transaction():
     # Whether load() is possible is based on the last selection of either the etable or the ttable
     app = app_one_entry()
     app.etable.select([])
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0])
     app.tpanel.load() # no OperationAborted
 
@@ -86,7 +86,7 @@ def test_load_while_etable_is_editing():
 def test_load_while_ttable_is_editing():
     # loading the tpanel while ttable is editing saves the edits and stops editing mode.
     app = app_one_entry()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     row = app.ttable.edited
     row.date = '07/07/2008'
@@ -118,7 +118,7 @@ def app_amountless_entry_panel_loaded():
     app.add_account()
     app.mw.show_account()
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42')
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0])
     app.tpanel.load()
     app.clear_gui_calls()
@@ -130,7 +130,7 @@ def app_entry_with_amount_panel_loaded():
     app.add_account()
     app.mw.show_account()
     app.add_entry(date='06/07/2008', description='description', increase='42')
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0])
     app.tpanel.load()
     app.clear_gui_calls()
@@ -156,7 +156,7 @@ def test_loads_last_selected_transaction():
     # the tpanel also works with the ttable. If the ttable is the last to have had a selection,
     # tpanel loads this one.
     app = app_two_amountless_entries()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0]) # etable has index 1 selected
     app.tpanel.load()
     eq_(app.tpanel.description, 'desc1')

@@ -39,7 +39,7 @@ def app_some_assets_and_liabilities(monkeypatch):
     app.add_account('l2', account_type=AccountType.Liability)
     app.mw.show_account()
     app.add_entry(increase='5')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets
     app.clear_gui_calls()
     return app
@@ -69,7 +69,7 @@ class TestSomeAssetsAndLiabilities:
         app.apanel.save()
         app.add_account('income', account_type=AccountType.Income)
         app.add_budget('income', None, '5')
-        app.mw.select_balance_sheet() # don't crash
+        app.show_nwview() # don't crash
     
     @with_app(do_setup)
     def test_exclude_account(self, app):
@@ -101,7 +101,7 @@ class TestSomeAssetsAndLiabilitiesWithBudget:
         app.drsel.select_today_date_range()
         app.add_account('income', account_type=AccountType.Income)
         app.add_budget('income', 'a3', '5')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -135,7 +135,7 @@ class TestMoreThanSliceCountAssets:
             app.add_account('account %d' % i)
             app.mw.show_account()
             app.add_entry(increase='1')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -161,7 +161,7 @@ class TestSomeIncomeAndExpenses:
         app.add_entry(transfer='e2', decrease='1')
         app.add_entry(transfer='e3', decrease='4')
         app.add_entry(transfer='e4', decrease='2')
-        app.mw.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses
         app.clear_gui_calls()
         return app
@@ -171,7 +171,7 @@ class TestSomeIncomeAndExpenses:
         # budgeted amounts are also reflected in the pie chart
         monkeypatch.patch_today(2009, 1, 29) # On the last day of the month, this test fails
         app.add_budget('e1', None, '5')
-        app.mw.select_income_statement()
+        app.show_pview()
         expected = [
             ('e1 41.7%', 5),
             ('e3 33.3%', 4),
@@ -228,7 +228,7 @@ class TestDifferentDateRanges:
         app.add_entry(date='01/08/2008', transfer='baz', increase='5')
         app.add_entry(date='01/08/2008', transfer='bar', decrease='1')
         app.add_entry(date='01/09/2008', transfer='bar', decrease='2')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.clear_gui_calls()
         return app
     
@@ -243,7 +243,7 @@ class TestDifferentDateRanges:
     @with_app(do_setup)
     def test_cash_flow_pie_chart(self, app):
         # the data in the cash flow pie chart reflects the currencly selected date range
-        app.mw.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
         app.clear_gui_calls()
         eq_(app.epie.data, [('bar 100.0%', 2)])
@@ -264,7 +264,7 @@ class TestMultipleCurrencies:
         app.add_account('CAD asset', currency=CAD)
         app.mw.show_account()
         app.add_entry('1/1/2008', 'CAD entry', transfer='CAD income', increase='1')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -279,7 +279,7 @@ class TestMultipleCurrencies:
     @with_app(do_setup)
     def test_cash_flow_pie_chart(self, app):
         # the amounts are converted to the default currency before being weighted
-        app.mw.select_income_statement()
+        app.show_pview()
         expected = [
             ('CAD income 55.6%', 1),
             ('USD income 44.4%', 0.8),
@@ -294,7 +294,7 @@ class TestNegativeAssetValue:
         app.add_account('bar')
         app.mw.show_account()
         app.add_entry(date='01/08/2008', transfer='foo', increase='1')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -320,7 +320,7 @@ class TestAccountGroup:
         app.add_account('baz')
         app.mw.show_account()
         app.add_entry(increase='7')
-        app.mw.select_balance_sheet()
+        app.show_nwview()
         app.clear_gui_calls()
         return app
     

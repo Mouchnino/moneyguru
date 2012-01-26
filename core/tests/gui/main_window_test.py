@@ -118,8 +118,8 @@ def test_selected_account_is_updated_on_nonrevalidating_show(app):
     # is correctly updated
     app.add_account('Asset')
     app.add_account('Income', account_type=AccountType.Income)
-    app.mw.select_balance_sheet()
-    app.mw.select_income_statement() # no revalidation since nothing has changed
+    app.show_nwview()
+    app.show_pview() # no revalidation since nothing has changed
     app.mw.show_account()
     app.check_current_pane(PaneType.Account, account_name='Income')
 
@@ -223,7 +223,7 @@ def test_rename_opened_account_changes_tab_label(app):
     # Renaming the account with an opened tab renames that tab.
     app.mw.show_account()
     index = app.mw.current_pane_index
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.clear_gui_calls()
     app.bsheet.selected.name = 'renamed'
     app.bsheet.save_edits()
@@ -263,7 +263,7 @@ def test_close_pane_of_autocleaned_accounts(app):
 @with_app(app_asset_and_income_accounts_with_txn)
 def test_delete_account(app):
     # deleting a non-empty account shows the account reassign panel
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.clear_gui_calls()
     app.bsheet.delete()
@@ -272,13 +272,13 @@ def test_delete_account(app):
 @with_app(app_asset_and_income_accounts_with_txn)
 def test_navigate_back(app):
     # navigate_back() shows the appropriate sheet depending on which account entry table shows
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     app.clear_gui_calls()
     app.mw.navigate_back()
     eq_(app.mw.current_pane_index, 0)
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     app.clear_gui_calls()
@@ -289,11 +289,11 @@ def test_navigate_back(app):
 def test_show_account_when_in_sheet(app):
     # When a sheet is selected, show_account() shows the selected account. If the account already
     # has a tab opened, re-use that tab.
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.clear_gui_calls()
     app.mw.show_account()
     eq_(app.mw.current_pane_index, 5) # The tab opened in setup is re-used
-    app.mw.select_income_statement()
+    app.show_pview()
     app.clear_gui_calls()
     app.mw.show_account()
     eq_(app.mw.current_pane_index, 6) # a new tab is opened for this one
@@ -301,21 +301,21 @@ def test_show_account_when_in_sheet(app):
 @with_app(app_asset_and_income_accounts_with_txn)
 def test_switch_panes_through_show_account(app):
     # Views shown in the main window depend on what's selected in the account tree.
-    app.mw.select_income_statement()
+    app.show_pview()
     eq_(app.mw.current_pane_index, 1)
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     eq_(app.mw.current_pane_index, 6)
     expected = ['show_bar_graph', 'refresh_reconciliation_button']
     app.check_gui_calls_partial(app.aview.view, expected)
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.mw.current_pane_index, 5)
     expected = ['show_line_graph', 'refresh_reconciliation_button']
     app.check_gui_calls_partial(app.aview.view, expected)
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     eq_(app.mw.current_pane_index, 2)
 
 @with_app(app_asset_and_income_accounts_with_txn)

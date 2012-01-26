@@ -114,7 +114,7 @@ def test_set_split_account(app):
     row.account = 'foo'
     app.stable.save_edits()
     app.tpanel.save()
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.assets[1].name, 'foo') # The foo account was autocreated
     app.bsheet.selected = app.bsheet.assets[1]
     app.bsheet.show_selected_account()
@@ -126,7 +126,7 @@ def test_set_split_account(app):
     app.tpanel.save()
     eq_(app.stable[1].account, 'bar')
     eq_(app.etable[0].transfer, 'bar')
-    app.mw.select_income_statement()
+    app.show_pview()
     eq_(app.istatement.income[0].name, 'bar') # The bar account was autocreated
 
 #--- Entry without transfer

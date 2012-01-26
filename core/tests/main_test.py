@@ -221,11 +221,11 @@ class TestThreeAccountsAndOneEntry:
     def test_bind_entry_to_income_expense_accounts(self, app):
         # Adding an entry with a transfer named after an existing income creates a bound entry in
         # that account.
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         app.add_entry(transfer='three')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.etable_count(), 2)
@@ -348,7 +348,7 @@ class TestOneEntryYearRange2007:
         eq_(app.account_names(), ['Checking', 'Salary'])
         eq_(app.bsheet.assets.children_count, 3)
         eq_(app.bsheet.liabilities.children_count, 2)
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income.children_count, 3)
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
@@ -365,7 +365,7 @@ class TestOneEntryYearRange2007:
     @with_app(do_setup)
     def test_delete_entries_with_Salary_selected(self, app):
         # Deleting the last entry of an income account does not remove that account.
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         app.etable.delete()
@@ -414,7 +414,7 @@ class TestOneEntryYearRange2007:
     @with_app(do_setup)
     def test_entry_is_editable_of_opposite(self, app):
         # The other side of an Entry has the same edition rights as the Entry.
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         editable_columns = ['date', 'description', 'payee', 'transfer', 'increase', 'decrease', 'checkno']
@@ -434,12 +434,12 @@ class TestOneEntryYearRange2007:
     @with_app(do_setup)
     def test_graph(self, app):
         # The 'Checking' account has a line graph. The 'Salary' account has a bar graph.
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.bar_graph_data(), [('01/10/2007', '01/11/2007', '42.00', '0.00')])
         eq_(app.bargraph.title, 'Salary')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         eq_(app.graph_data(), [('11/10/2007', '42.00'), ('01/01/2008', '42.00')])
@@ -467,7 +467,7 @@ class TestTwoBoundEntries:
         app.mw.show_account()
         app.add_entry(description='transfer', transfer='first', increase='42')
         app.add_account('third')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         return app
@@ -476,13 +476,13 @@ class TestTwoBoundEntries:
     def test_change_amount(self, app):
         # The other side of the transaction follows
         # Because of MCT, a transfer between asset/liability accounts stopped balancing itself
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         row = app.etable.selected_row
         row.decrease = '40'
         app.etable.save_edits()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         eq_(app.etable[0].increase, '40.00')
@@ -493,11 +493,11 @@ class TestTwoBoundEntries:
         row = app.etable.selected_row
         row.transfer = 'third'
         app.etable.save_edits()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # first
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 0)
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2] # third
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 1)
@@ -505,17 +505,17 @@ class TestTwoBoundEntries:
     @with_app(do_setup)
     def test_change_transfer_backwards(self, app):
         # Entry binding works both ways
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         row = app.etable.selected_row
         row.transfer = 'third'
         app.etable.save_edits()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 0)
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2]
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 1)
@@ -527,16 +527,16 @@ class TestTwoBoundEntries:
         row = app.etable.selected_row
         row.transfer = 'other'
         app.etable.save_edits()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # first
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 0)
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2] # third
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 0)
         # Make sure the entry don't try to unbind from 'first' again
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1] # second
         app.bsheet.show_selected_account()
         row = app.etable.selected_row
@@ -552,14 +552,14 @@ class TestTwoBoundEntries:
         app.doc.clear()
         eq_(app.mainwindow.current_pane_index, 0)
         eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         eq_(app.ttable.row_count, 0)
     
     @with_app(do_setup)
     def test_delete_entries(self, app):
         # Deleting an entry also delets any bound entry
         app.etable.delete()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         eq_(app.etable_count(), 0)
@@ -580,7 +580,7 @@ class TestNegativeBoundEntryTest:
         row = app.etable.selected_row
         row.decrease = '42' # we're decreasing the liability here
         app.etable.save_edits()
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.expenses.children_count, 3)
     
 
@@ -603,12 +603,12 @@ class TestOneEntryInPreviousRange:
     @with_app(do_setup)
     def test_make_account_income(self, app):
         # If we make the account an income account, the previous balance entry disappears
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.mainwindow.edit_item()
         app.apanel.type_list.select(2) # income
         app.apanel.save()
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.etable_count(), 0)
@@ -816,7 +816,7 @@ class TestTwoAccountsTwoEntriesInTheFirst:
         app.add_entry('3/10/2007', 'first', increase='1')
         app.add_entry('4/10/2007', 'second', increase='1')
         app.add_account()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         return app
@@ -851,7 +851,7 @@ class TestAssetIncomeWithDecrease:
     @with_app(do_setup)
     def test_income_balance(self, app):
         # Salary's entries' balances are positive
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.etable[0].balance, '42.00')
@@ -859,7 +859,7 @@ class TestAssetIncomeWithDecrease:
     @with_app(do_setup)
     def test_income_decrease(self, app):
         # The Error Adjustment transaction is an decrease in Salary
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.etable[1].decrease, '2.00')
@@ -867,7 +867,7 @@ class TestAssetIncomeWithDecrease:
     @with_app(do_setup)
     def test_income_increase(self, app):
         # The MacroSoft transaction is an increase in Salary
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         eq_(app.etable[0].increase, '42.00')
@@ -875,7 +875,7 @@ class TestAssetIncomeWithDecrease:
     @with_app(do_setup)
     def test_set_income_decrease(self, app):
         # Setting an income entry's decrease actually sets the right side
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         row = app.etable.selected_row
@@ -885,7 +885,7 @@ class TestAssetIncomeWithDecrease:
     @with_app(do_setup)
     def test_set_income_increase(self, app):
         # Setting an income entry's increase actually sets the right side
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         row = app.etable.selected_row
@@ -909,7 +909,7 @@ class TestLiabilityExpenseWithDecrease:
     @with_app(do_setup)
     def test_expense_decrease(self, app):
         # The Rebate transaction is a decrease in Clothes
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
         app.istatement.show_selected_account()
         eq_(app.etable[1].decrease, '2.00')
@@ -917,7 +917,7 @@ class TestLiabilityExpenseWithDecrease:
     @with_app(do_setup)
     def test_expense_increase(self, app):
         # The Shoes transaction is an increase in Clothes
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
         app.istatement.show_selected_account()
         eq_(app.etable[0].increase, '42.00')
@@ -1034,7 +1034,7 @@ class TestThreeEntriesInTheSameExpenseAccount:
         app.add_entry('1/1/2008', 'entry1', transfer='Expense', decrease='100')
         app.add_entry('20/1/2008', 'entry2', transfer='Expense', decrease='200')
         app.add_entry('31/3/2008', 'entry3', transfer='Expense', decrease='150')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
         app.istatement.show_selected_account()
         return app
@@ -1276,7 +1276,7 @@ class TestFourEntriesOnTheSameDate:
         # positions would be set to 1 open loading).
         newapp = app.save_and_load() # no crash
         newapp.doc.date_range = MonthRange(date(2008, 1, 1))
-        newapp.mainwindow.select_transaction_table()
+        newapp.show_tview()
         newapp.ttable.select([3])
         newapp.ttable.move_up()
         eq_(newapp.transaction_descriptions(), ['entry 1', 'entry 2', 'entry 4', 'entry 3'])
@@ -1304,14 +1304,14 @@ class TestEntrySelectionOnAccountChange:
     def test_keep_date(self, app):
         # Explicitely selecting a transaction make it so the nearest date is found as a fallback
         app.etable.select([0]) # the transaction from asset2 to expense1
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses[1] # expense2
         app.istatement.show_selected_account()
         # The nearest date in expense2 is 2008/1/4
         eq_(app.etable.selected_indexes, [0])
         # Now select the 2008/1/12 date
         app.etable.select([1])
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.expenses[2] # expense3
         app.istatement.show_selected_account()
         # The 2008/1/11 date is nearer than the 2008/1/22 date, so it should be selected
@@ -1333,7 +1333,7 @@ class TestEntrySelectionOnAccountChange:
         row = app.etable.selected_row
         row.date = '5/1/2008'
         app.etable.save_edits()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         eq_(app.etable.selected_indexes, [1]) #2008/1/4
@@ -1388,7 +1388,7 @@ class TestExampleDocumentLoadTest:
         app.add_entry('01/03/2009')
         app.add_entry('15/04/2009')
         app.add_entry('28/04/2009') # will be deleted because in the future
-        app.mainwindow.select_schedule_table()
+        app.show_scview()
         app.mainwindow.new_item()
         app.scpanel.start_date = '03/03/2009'
         app.scpanel.stop_date = '04/05/2009'
@@ -1400,7 +1400,7 @@ class TestExampleDocumentLoadTest:
     def test_adjust_example_file(self, app):
         # When loading as an example file, an offset is correctly applied to transactions.
         app.doc.adjust_example_file()
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         # There are 3 normal txns (the last one is deleted because it's in the future)
         # and 1 schedule spawns (only future spawns are kept)
         eq_(app.ttable.row_count, 4)

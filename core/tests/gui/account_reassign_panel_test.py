@@ -17,7 +17,7 @@ def app_deleting_second_account():
     app.add_accounts('one', 'two')
     app.mw.show_account()
     app.add_entry(transfer='three', increase='42')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1] # account 'two', the one with the entry
     app.bsheet.delete() # the panel shows up
     return app
@@ -60,7 +60,7 @@ def app_different_currencies_reconciled_entries():
     app.aview.toggle_reconciliation_mode()
     app.etable[0].toggle_reconciled()
     app.aview.toggle_reconciliation_mode()
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1] # account 'two', the one with the entry
     app.bsheet.delete() # the panel shows up
     return app

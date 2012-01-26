@@ -24,7 +24,7 @@ def test_account_names_are_stripped(app):
 @with_app(TestApp)
 def test_delete_account(app):
     # No crash occurs when trying to delete a group that can't be deleted.
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets
     assert not app.bsheet.can_delete()
     app.bsheet.delete() # no crash
@@ -32,7 +32,7 @@ def test_delete_account(app):
 @with_app(TestApp)
 def test_delete_root_type_nodes(app):
     # root type nodes cannot be deleted.
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets
     assert not app.bsheet.can_delete()
     app.bsheet.selected = app.bsheet.assets[0] # total node
@@ -55,7 +55,7 @@ def test_accounts_count(app):
 @with_app(app_one_empty_account)
 def test_can_edit_account_name(app):
     # The name of base groups and the Imbalance account cannot be edited.
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     assert app.bsheet.selected.can_edit_name
     app.bsheet.selected = app.bsheet.assets
@@ -68,7 +68,7 @@ def test_can_edit_account_name(app):
 @with_app(app_one_empty_account)
 def test_empty_account_name(app):
     # An empty account name is not allowed.
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = ''
     eq_(app.bsheet.assets[0].name, 'Checking')
@@ -112,7 +112,7 @@ def test_move_account(app):
 @with_app(app_one_empty_account)
 def test_move_account_makes_the_app_dirty(app):
     # calling make_account_asset() makes the app dirty.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.move([[0, 0]], [1])
     assert app.doc.is_dirty()
 
@@ -120,7 +120,7 @@ def test_move_account_makes_the_app_dirty(app):
 def test_save_and_load(app):
     # account_number is kept when saving and reloading
     newapp = app.save_and_load()
-    newapp.mw.select_balance_sheet()
+    newapp.show_nwview()
     eq_(newapp.bsheet.assets[0].account_number, '4242')
 
 #--- Three empty accounts
@@ -213,14 +213,14 @@ def app_one_account_and_one_group():
 @with_app(app_one_account_and_one_group)
 def test_can_delete_group(app):
     # can_delete_account() returns True for user created groups.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     assert app.bsheet.can_delete()
 
 @with_app(app_one_account_and_one_group)
 def test_delete_group(app):
     # delete_account() on a user created group removes the group.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     eq_(app.bsheet.assets.children_count, 3) # total + blank
@@ -228,7 +228,7 @@ def test_delete_group(app):
 @with_app(app_one_account_and_one_group)
 def test_move_account_to_group(app):
     # Accounts can be moved into user created groups.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected_path = [0, 0] # select the group
     assert app.bsheet.can_move([[0, 1]], [0, 0])
     app.bsheet.move([[0, 1]], [0, 0])
@@ -247,14 +247,14 @@ def test_move_two_accounts(app):
 @with_app(app_one_account_and_one_group)
 def test_sort_order(app):
     # Groups are always first.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.assets[0].name, 'New group')
     eq_(app.bsheet.assets[1].name, 'New account')
 
 @with_app(app_one_account_and_one_group)
 def test_user_groups_are_editable(app):
     # User created groups can have their name edited.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     assert app.bsheet.selected.can_edit_name
     app.bsheet.selected.name = 'foobar'
@@ -307,7 +307,7 @@ def app_two_groups():
     app = TestApp()
     app.add_group()
     app.add_group()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     return app
 
 @with_app(app_two_groups)
@@ -328,7 +328,7 @@ def app_two_groups_in_two_base_types():
     app = TestApp()
     app.add_group()
     app.add_group(account_type=AccountType.Liability)
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     return app
 
 @with_app(app_two_groups_in_two_base_types)
@@ -341,7 +341,7 @@ def app_account_and_group_with_same_name():
     app = TestApp()
     app.add_account()
     app.add_group()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = 'some_name'
     app.bsheet.save_edits()
@@ -362,7 +362,7 @@ def app_different_account_types():
     app.add_account('two')
     app.mainwindow.show_account()
     app.add_entry(transfer='three')
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0] # 'three'
     app.istatement.show_selected_account()
     return app
@@ -370,17 +370,17 @@ def app_different_account_types():
 @with_app(app_different_account_types)
 def test_account_group_size(app):
     # The account group counts correct.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.account_node_subaccount_count(app.bsheet.assets), 2)
     eq_(app.account_node_subaccount_count(app.bsheet.liabilities), 0)
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     eq_(app.account_node_subaccount_count(app.istatement.income), 1)
     eq_(app.account_node_subaccount_count(app.istatement.expenses), 0)
 
 @with_app(app_different_account_types)
 def test_select_another_type_then_set_attribute_value(app):
     # select_account() works across accounts sections.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1]
     app.bsheet.selected.name = 'foo'
     app.bsheet.save_edits()
@@ -393,7 +393,7 @@ def app_one_transaction():
     app.add_account('second')
     app.add_account('third')
     app.add_txn(description='transfer', from_='first', to='second', amount='42')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     return app
 
 @with_app(app_one_transaction)
@@ -402,7 +402,7 @@ def test_delete_account_unbinds_transactions(app):
     app.bsheet.selected = app.bsheet.assets[1] # second
     app.bsheet.delete()
     app.arpanel.save()
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 1)
     eq_(app.ttable[0].from_, 'first')
     eq_(app.ttable[0].to, '')
@@ -421,7 +421,7 @@ def test_auto_clean_doesnt_clean_manually_created(app):
     app.show_account('asset')
     app.add_entry()
     app.etable.delete()
-    app.mw.select_income_statement()
+    app.show_pview()
     eq_(app.istatement.income[0].name, 'income')
 
 #--- Account with accents and number

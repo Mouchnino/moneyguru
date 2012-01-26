@@ -42,7 +42,7 @@ class TestTransactionsOfEachType:
         eq_(app.etable[0].description, 'third')
         eq_(app.etable[1].description, 'fourth')
         #The ttable's expense filter makes it only show entries with a transfer to an expense.
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Expense
         eq_(app.ttable.row_count, 1)
@@ -57,7 +57,7 @@ class TestTransactionsOfEachType:
         eq_(app.etable[0].description, 'first')
         eq_(app.etable[1].description, 'second')
         #The etable's income filter makes it only show entries with a transfer to an income.
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Income
         eq_(app.ttable.row_count, 1)
@@ -70,7 +70,7 @@ class TestTransactionsOfEachType:
         app.check_gui_calls(app.etable_gui, ['refresh'])
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'fourth')
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Transfer
         eq_(app.ttable.row_count, 1)
@@ -84,7 +84,7 @@ class TestTransactionsOfEachType:
         app.check_gui_calls(app.etable_gui, ['refresh'])
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'second')
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.tfbar.view.check_gui_calls(['refresh']) # refreshes on connect()
         assert app.tfbar.filter_type is FilterType.Unassigned
         eq_(app.ttable.row_count, 1)
@@ -93,15 +93,15 @@ class TestTransactionsOfEachType:
     def test_enable_disable_buttons(self, app):
         # The enable disable mechanism of the income, expense and transfer buttons work as expected
         app.efbar.filter_type = FilterType.Income
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.clear_gui_calls()
         app.istatement.show_selected_account()
         assert app.efbar.filter_type is None
         app.efbar.view.check_gui_calls(['refresh', 'disable_transfers'])
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.tfbar.view.check_gui_calls(['refresh']) # no disable
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         app.efbar.view.check_gui_calls(['refresh', 'enable_transfers'])
@@ -119,7 +119,7 @@ class TestTransactionsOfEachType:
     @with_app(do_setup)
     def test_multiple_filters_at_the_same_time(self, app):
         # Having an unassigned filter at the same time as a search filter works as expected.
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.tfbar.filter_type = FilterType.Unassigned
         app.sfield.text = 'first'
         eq_(app.ttable.row_count, 0)
@@ -153,7 +153,7 @@ class TestThreeEntriesOneReconciled:
         app.efbar.filter_type = FilterType.NotReconciled
         eq_(app.etable_count(), 2)
         eq_(app.etable[0].description, 'one')
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         eq_(app.ttable.row_count, 2)
         eq_(app.ttable[1].description, 'three')
     
@@ -162,7 +162,7 @@ class TestThreeEntriesOneReconciled:
         app.efbar.filter_type = FilterType.Reconciled
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'two')
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         eq_(app.ttable.row_count, 1)
         eq_(app.ttable[0].description, 'two')
     
@@ -193,7 +193,7 @@ def test_efbar_increase_decrease():
     app.efbar.filter_type = FilterType.Expense # decrease
     eq_(app.etable_count(), 1)
     # now, let's go to the liability side
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.liabilities[0]
     app.bsheet.show_selected_account()
     # we're still on FilterType.Expense (decrease)

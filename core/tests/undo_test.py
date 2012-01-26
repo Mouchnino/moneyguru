@@ -74,7 +74,7 @@ def test_undo_add_group(app, checkstate):
 @with_app(TestApp)
 def test_add_schedule(app, checkstate):
     # schedule addition are undoable
-    app.mw.select_schedule_table()
+    app.show_scview()
     app.scpanel.new()
     app.scpanel.save()    
     checkstate()
@@ -102,7 +102,7 @@ def test_import(app, checkstate):
 def test_undo_shown_account(app):
     # Undoing the creation of a new account when shown sets makes the main window go back to
     # the net worth sheet *before* triggering a refresh (otherwise, we crash).
-    app.mw.select_income_statement()
+    app.show_pview()
     app.mw.new_item()
     app.mw.show_account()
     app.doc.undo() # no crash
@@ -134,7 +134,7 @@ def app_one_named_account():
 def test_action_after_undo(app):
     # When doing an action after an undo, the whole undo chain is broken at the current index.
     app.doc.undo() # undo set name
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = 'foobaz'
     app.bsheet.save_edits()
@@ -165,7 +165,7 @@ def test_can_undo_after_action(app):
 def test_change_account_on_duplicate_account_name_doesnt_record_action(app):
     # Renaming an account and causing a duplicate account name error doesn't cause an action to
     # be recorded
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.add_account()
     app.bsheet.selected.name = 'foobar'
     app.bsheet.save_edits()
@@ -192,7 +192,7 @@ def test_descriptions_after_action(app):
 @with_app(app_one_named_account)
 def test_description_after_delete(app):
     # the undo description is 'Remove account' after deleting an account.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     eq_(app.doc.undo_description(), 'Remove account')
@@ -200,7 +200,7 @@ def test_description_after_delete(app):
 @with_app(app_one_named_account)
 def test_gui_calls(app):
     # the correct gui calls are made when undoing/redoing (in particular: stop_editing)
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.clear_gui_calls()
     app.doc.undo()
     app.check_gui_calls(app.bsheet_gui, ['refresh', 'stop_editing'])
@@ -231,7 +231,7 @@ def test_modified_status(app, tmpdir):
 @with_app(app_one_named_account)
 def test_redo_delete_while_in_etable(app):
     # If we're in etable and perform a redo that removes the account we're in, go back to the bsheet
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     app.doc.undo()
@@ -253,7 +253,7 @@ def test_undo_add_entry(app, checkstate):
 @with_app(app_one_named_account)
 def test_undo_delete_account(app, checkstate):
     # Undo after having removed an account puts it back in.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     checkstate()
@@ -261,14 +261,14 @@ def test_undo_delete_account(app, checkstate):
 @with_app(app_one_named_account)
 def test_undo_move_account(app, checkstate):
     # Moving an account from one section to another can be undone
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.move([[0, 0]], [1])
     checkstate()
 
 @with_app(app_one_named_account)
 def test_undo_set_account_name(app, checkstate):
     # Undo after a name change puts back the old name.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = 'foobaz'
     app.bsheet.save_edits()
@@ -277,7 +277,7 @@ def test_undo_set_account_name(app, checkstate):
 @with_app(app_one_named_account)
 def test_undo_add_while_in_etable(app):
     # If we're in etable and perform an undo that removes the account we're in, go back to the bsheet
-    app.mainwindow.select_entry_table()
+    app.show_aview()
     app.doc.undo()
     app.clear_gui_calls()
     app.doc.undo()
@@ -290,7 +290,7 @@ def test_undo_twice(app):
     # Undoing a new_account() just after having undone a change_account works.
     # Previously, a copy of the changed account would be inserted, making it impossible for
     # undo to find the account to be removed.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.doc.undo()
     app.doc.undo()
     eq_(app.bsheet.assets.children_count, 2)
@@ -315,7 +315,7 @@ def test_descriptions_after_group(app):
 @with_app(app_account_group)
 def test_undo_delete_group(app, checkstate):
     # It's possible to undo group deletion.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     checkstate()
@@ -323,7 +323,7 @@ def test_undo_delete_group(app, checkstate):
 @with_app(app_account_group)
 def test_undo_rename_group(app, checkstate):
     # It's possible to undo a group rename.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = 'foobar'
     app.bsheet.save_edits()
@@ -341,7 +341,7 @@ def app_account_in_group():
 def test_change_group_on_duplicate_account_name_doesnt_record_action(app):
     # Renaming a group and causing a duplicate account name error doesn't cause an action to
     # be recorded
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.add_account_group()
     app.bsheet.selected.name = 'group'
     app.bsheet.save_edits()
@@ -350,7 +350,7 @@ def test_change_group_on_duplicate_account_name_doesnt_record_action(app):
 @with_app(app_account_in_group)
 def test_undo_delete_group_with_account(app, checkstate):
     # When undoing a group deletion, the accounts that were in it are back in.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     checkstate()
@@ -358,7 +358,7 @@ def test_undo_delete_group_with_account(app, checkstate):
 @with_app(app_account_in_group)
 def test_undo_move_account_out_of_group(app, checkstate):
     # Undoing a move_account for an account that was in a group puts it back in that group.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.move([[0, 0, 0]], [1])
     checkstate()
 
@@ -376,7 +376,7 @@ def app_load_file():
     # and recook.
     time.sleep(0.05)
     app.doc._cook()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     return app
@@ -404,7 +404,7 @@ def test_undo_add_entry_in_grouped_account(app, checkstate):
 def test_undo_add_group_besides_account_in_group(app, checkstate):
     # The undoer keeps its group list up-to-date after a load.
     # Previously, the Undoer would hold an old instance of GroupList
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.add_account_group()
     checkstate()
 
@@ -440,7 +440,7 @@ def test_etable_refreshes(app):
 
 @with_app(app_two_txns_in_two_accounts)
 def test_ttable_refreshes(app):
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     app.doc.undo()
     eq_(app.ttable.row_count, 1)
@@ -462,7 +462,7 @@ def test_undo_change_transaction_from_etable(app, checkstate):
 @with_app(app_two_txns_in_two_accounts)
 def test_undo_change_transaction_from_ttable(app, checkstate):
     # It's possible to undo a transaction change.
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     row = app.ttable[1]
     row.date = '21/6/2008'
     row.description = 'foo'
@@ -484,7 +484,7 @@ def test_undo_delete_entry(app, checkstate):
 @with_app(app_two_txns_in_two_accounts)
 def test_undo_delete_transaction(app, checkstate):
     # It's possible to undo a transaction deletion.
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0, 1])
     app.ttable.delete()
     checkstate()
@@ -493,7 +493,7 @@ def test_undo_delete_transaction(app, checkstate):
 def test_undo_delete_account_with_txn(app, checkstate):
     # When 'first' is deleted, one transaction is simply unbound, and the other is deleted. we 
     # must undo all that
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     app.arpanel.save() # continue deletion
@@ -501,7 +501,7 @@ def test_undo_delete_account_with_txn(app, checkstate):
 
 @with_app(app_two_txns_in_two_accounts)
 def test_undo_duplicate_transaction(app, checkstate):
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0, 1])
     app.ttable.duplicate_selected()
     checkstate()
@@ -574,7 +574,7 @@ def app_three_txns_reconciled():
 def test_change_entry(app, checkstate):
     # Performing a txn change that results in unreconciliation can be completely undone
     # (including the unreconciliation).
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     app.etable[0].date = '18/6/2008'
@@ -585,7 +585,7 @@ def test_change_entry(app, checkstate):
 def test_change_transaction(app, checkstate):
     # Performing a txn change that results in unreconciliation can be completely undone
     # (including the unreconciliation).
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable[0].date = '18/6/2008'
     app.ttable.save_edits()
     checkstate()
@@ -594,7 +594,7 @@ def test_change_transaction(app, checkstate):
 def test_delete_transaction(app, checkstate):
     # Deleting txn change that results in unreconciliation can be completely undone
     # (including the unreconciliation).
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.delete()
     checkstate()
 
@@ -602,7 +602,7 @@ def test_delete_transaction(app, checkstate):
 def test_move_transaction(app, checkstate):
     # Moving txn change that results in unreconciliation can be completely undone
     # (including the unreconciliation).
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.move([0], 2)
     checkstate()
 
@@ -622,7 +622,7 @@ def app_import_ofx():
     # same cheat as in LoadFile
     time.sleep(0.05)
     app.doc._cook()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     return app
@@ -670,7 +670,7 @@ def app_scheduled_txn():
     app = TestApp()
     app.add_account('account')
     app.add_schedule(description='foobar', account='account')
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.sctable.select([0])
     return app
 
@@ -686,7 +686,7 @@ def test_change_schedule(app, checkstate):
 def test_change_spawn_globally(app):
     # Changing a spawn globally then undoing correcty updates the spawns. Old values would
     # previously linger around even though the schedule had been un-changed.
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.select([0])
     app.ttable[0].description = 'changed'
@@ -696,7 +696,7 @@ def test_change_spawn_globally(app):
 
 @with_app(app_scheduled_txn)
 def test_delete_account(app, checkstate):
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     app.arpanel.save()
@@ -711,7 +711,7 @@ def test_delete_schedule(app, checkstate):
 def test_delete_spawn_undo_then_delete_again(app):
     # There was a bug where a spawn deletion being undone would result in an undeletable spawn
     # being put back into the ttable.
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0])
     app.ttable.delete()
     app.doc.undo()
@@ -744,7 +744,7 @@ def app_with_budget(monkeypatch):
     app.drsel.select_today_date_range()
     app.add_account('Some Expense', account_type=AccountType.Expense)
     app.add_budget('Some Expense', None, '100')
-    app.mainwindow.select_budget_table()
+    app.show_bview()
     app.btable.select([0])
     return app
 
@@ -757,7 +757,7 @@ def test_change_budget(app, checkstate):
 
 @with_app(app_with_budget)
 def test_delete_account_with_budget(app, checkstate):
-    app.mainwindow.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.expenses[0]
     app.istatement.delete()
     app.arpanel.save()

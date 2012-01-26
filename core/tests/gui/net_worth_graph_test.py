@@ -37,7 +37,7 @@ class TestAssetsAndLiabilitiesInDifferentAccounts:
         app.add_account('liability2', account_type=AccountType.Liability)
         app.mainwindow.show_account()
         app.add_entry('8/7/2008', increase='100')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.clear_gui_calls()
         return app
     
@@ -57,9 +57,9 @@ class TestAssetsAndLiabilitiesInDifferentAccounts:
         app.add_account('expense', account_type=AccountType.Expense)
         app.add_budget('income', 'asset1', '300')
         app.add_budget('expense', 'asset1', '100')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         # this means 200$ profit in 4 days
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         expected = [
             ('01/07/2008', '10.00'),
             ('02/07/2008', '34.96'), # 32 - 10 * 1.42 (the mock xchange rate)
@@ -84,7 +84,7 @@ class TestAssetsAndLiabilitiesInDifferentAccounts:
         app.add_account('income', account_type=AccountType.Income)
         without_budget = app.nw_graph_data()
         app.add_budget('income', 'asset3', '300')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2] # asset3
         app.bsheet.toggle_excluded()
         eq_(app.nw_graph_data(), without_budget)

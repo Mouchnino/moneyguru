@@ -148,7 +148,7 @@ class TestImportCheckbookQIF:
         app.add_account('bar')
         app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
         eq_(app.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # bar
         app.bsheet.delete()
         app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])

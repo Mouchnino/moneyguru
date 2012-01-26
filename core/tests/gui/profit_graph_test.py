@@ -28,7 +28,7 @@ class TestPristine:
         app.add_entry('01/11/2008', transfer='Income', increase='42') #sunday
         app.drsel.select_prev_date_range() # oct 2008
         app.add_entry('31/10/2008', transfer='Income', increase='42')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         # now, the creation of the txn forced a recook. what we want to make sure is that both 
         # entries will be in the bar
         eq_(app.pgraph.data[0][2], 84)
@@ -51,7 +51,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
         app.add_entry('15/7/2008', transfer='income2', increase='54') # 3rd week
         app.add_entry('1/7/2008', transfer='expense1', decrease='10 cad')
         app.add_entry('8/7/2008', transfer='expense2', decrease='100') # 2nd week
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.clear_gui_calls()
         return app
     
@@ -60,7 +60,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
         # budgets are counted in the pgraph
         monkeypatch.patch_today(2008, 7, 18)
         app.add_budget('income1', 'asset', '400') # +180
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         amounts = [data[2:] for data in app.pgraph.data]
         first_week = 50 + 80 + 32 + 22 - 7.04
         second_week = 90 - 100
@@ -78,7 +78,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
         # when an account is excluded, it's budget is not counted
         monkeypatch.patch_today(2008, 7, 18)
         app.add_budget('income1', 'asset', '400') # +180
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.toggle_excluded()
         # same as test_exclude_account
         amounts = [data[2] for data in app.pgraph.data]

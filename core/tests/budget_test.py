@@ -23,7 +23,7 @@ def app_account_with_budget(monkeypatch):
 @with_app(app_account_with_budget)
 def test_budget_amount_flow_direction(app):
     # When the budgeted account is an income, the account gets in the *from* column
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable[0].from_, 'Some Income')
 
 @with_app(app_account_with_budget)
@@ -32,7 +32,7 @@ def test_dont_replace_split_instances_needlessly(app):
     # range, would have their split re-created with new amounts. Because of this, going back in
     # the date range would cause cached entries to be "bumped out" of the transaction. This
     # would result in the shown account to be displayed in the "Transfer" column.
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     eq_(app.etable[0].transfer, '')
@@ -44,19 +44,19 @@ def test_dont_replace_split_instances_needlessly(app):
 def test_save_and_load(app):
     # There was a crash when loading a targetless budget
     newapp = app.save_and_load() # no crash
-    newapp.mw.select_budget_table()
+    newapp.show_bview()
     eq_(len(newapp.btable), 1)
 
 @with_app(app_account_with_budget)
 def test_set_budget_again(app):
     # There was a bug where setting the amount on a budget again wouldn't invert that amount
     # in the case of an income-based budget.
-    app.mw.select_budget_table()
+    app.show_bview()
     app.btable.select([0])
     app.mw.edit_item()
     app.bpanel.amount = '200'
     app.bpanel.save()
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable[0].from_, 'Some Income')
 
 #--- Income with budget in past
@@ -71,7 +71,7 @@ def app_income_with_budget_in_past(monkeypatch):
 def test_spawns_dont_linger(app):
     # If the budget hasn't been spent in the past, we don't continue to spawn transactions for
     # it once we went past the spawn's end date.
-    app.mw.select_transaction_table()
+    app.show_tview()
      # Only the spawns for november and december, NOT, september and october.
     eq_(app.ttable.row_count, 2)
 
@@ -111,13 +111,13 @@ def app_expense_with_budget_and_target(monkeypatch):
 @with_app(app_expense_with_budget_and_target)
 def test_asset_is_in_the_from_column(app):
     # In the budget transaction, 'some asset' is in the 'from' column.
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable[0].from_, 'some asset')
 
 @with_app(app_expense_with_budget_and_target)
 def test_budget_is_counted_in_etable_balance(app):
     # When an asset is a budget target, its balance is correctly incremented in the etable.
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     # The balance of the budget entry has a correctly decremented balance (the budget is an expense).
@@ -126,11 +126,11 @@ def test_budget_is_counted_in_etable_balance(app):
 @with_app(app_expense_with_budget_and_target)
 def test_delete_account(app):
     # When deleting an income or expense account, delete all budgets associated with it as well.
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.expenses[0]
     app.istatement.delete()
     app.arpanel.save() # don't reassign
-    app.mw.select_budget_table()
+    app.show_bview()
     eq_(len(app.btable), 0) # the budget has been removed
 
 @with_app(app_expense_with_budget_and_target)
@@ -141,18 +141,18 @@ def test_delete_account_and_reassign(app):
     app.istatement.delete()
     app.arpanel.account_list.select(2) # other expense
     app.arpanel.save()
-    app.mw.select_budget_table()
+    app.show_bview()
     eq_(app.btable[0].account, 'other expense')
 
 @with_app(app_expense_with_budget_and_target)
 def test_delete_target(app):
     # When deleting the target account, budgets having this account as their target have it
     # changed to None
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     app.arpanel.save()
-    app.mw.select_budget_table()
+    app.show_bview()
     eq_(app.btable[0].target, '') # been changed to None
 
 @with_app(app_expense_with_budget_and_target)
@@ -163,7 +163,7 @@ def test_delete_target_and_reassign(app):
     app.bsheet.delete()
     app.arpanel.account_list.select(1) # other asset
     app.arpanel.save()
-    app.mw.select_budget_table()
+    app.show_bview()
     eq_(app.btable[0].target, 'other asset')
 
 #--- Two budgets from same account
@@ -182,7 +182,7 @@ def app_two_budgets_from_same_account(monkeypatch):
 @with_app(app_two_budgets_from_same_account)
 def test_both_budgets_are_counted(app):
     # The amount budgeted is the sum of all budgets, not just the first one.
-    app.mw.select_income_statement()
+    app.show_pview()
     eq_(app.istatement.income[0].budgeted, '175.00')
 
 #--- Yearly buget with txn before current month
@@ -198,13 +198,13 @@ def app_yearly_budget_with_txn_before_current_month(monkeypatch):
 @with_app(app_yearly_budget_with_txn_before_current_month)
 def test_entry_is_correctly_counted_in_budget(app):
     # The entry, although not in the current month, is counted in budget calculations
-    app.mw.select_income_statement()
+    app.show_pview()
     eq_(app.istatement.income[0].budgeted, '75.00')
 
 @with_app(app_yearly_budget_with_txn_before_current_month)
 def test_spawn_has_correct_date(app):
     # The spawn is created at the correct date, which is at the end of the year
-    app.mw.select_transaction_table()
+    app.show_tview()
     # first txn is the entry on 01/07
     eq_(app.ttable[1].date, '31/12/2009')
 
@@ -221,5 +221,5 @@ def app_scheduled_txn_and_budget(monkeypatch):
 @with_app(app_scheduled_txn_and_budget)
 def test_schedule_affects_budget(app):
     # schedule spawns affect the budget spawns
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable[1].amount, '9.00') # 1$ has been removed from the budgeted 10

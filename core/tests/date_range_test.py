@@ -438,7 +438,7 @@ class TestAllTransactionsRangeWithOneTransactionFarInThePast:
     @with_app(do_setup)
     def test_income_statement_last_column(self, app):
         # the Last column of the income statement must show 0 (there's nothing before).
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.expenses.last_cash_flow, '0.00')
     
     @with_app(do_setup)
@@ -446,7 +446,7 @@ class TestAllTransactionsRangeWithOneTransactionFarInThePast:
         # When reloading a document, if the all transactions range was selected, it must be brought
         # back *after* transactions have been loaded.
         newapp = app.save_and_load()
-        newapp.mainwindow.select_transaction_table()
+        newapp.show_tview()
         eq_(newapp.ttable.row_count, 2)
     
     @with_app(do_setup)

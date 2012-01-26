@@ -34,7 +34,7 @@ def app_two_transactions():
     app.add_entry(description='a Deposit', payee='Joe SixPack', checkno='42A', transfer='Income', increase='212.12')
     # it's important for the test that this txns has no space in its fields
     app.add_entry(description='Withdrawal', payee='Dunno-What-To-Write', checkno='24B', transfer='Cash', decrease='140')
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_two_transactions)
@@ -105,7 +105,7 @@ def test_query_payee(app):
 def test_query_space(app):
     # Querying for a space character doesn't cause a crash. Previously, it did because it was
     # parsed as an amount.
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.sfield.text = ' ' # no crash
     eq_(app.ttable.row_count, 2) # same as no filter
 
@@ -198,21 +198,21 @@ def app_three_txns_filtered():
 @with_app(app_three_txns_filtered)
 def test_change_account(app):
     # Changing selection to another account cancels the filter.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.sfield.text, '')
     # setting the sfield query didn't make document go to all_transactions again
     eq_(app.mainwindow.current_pane_index, 0)
     app.sfield.view.check_gui_calls(['refresh'])
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 3)
 
 @with_app(app_three_txns_filtered)
 def test_change_account_to_bsheet(app):
     # Balance sheet is another notification, so we must also test it in addition to test_change_account.
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.sfield.text, '')
     app.sfield.view.check_gui_calls(['refresh'])
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 3)
 
 @with_app(app_three_txns_filtered)

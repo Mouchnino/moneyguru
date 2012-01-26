@@ -15,7 +15,7 @@ from ..base import TestApp
 def app_schedule():
     app = TestApp()
     app.doc.date_range = MonthRange(app.app.parse_date('13/09/2008'))
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.scpanel.new()
     app.scpanel.start_date = '13/09/2008'
     app.scpanel.description = 'foobar'
@@ -23,7 +23,7 @@ def app_schedule():
     app.scpanel.repeat_every = 3
     app.scpanel.stop_date = '13/12/2008'
     app.scpanel.save()
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     return app
 
 def test_attrs():
@@ -43,7 +43,7 @@ def test_delete():
     app.sctable.delete()
     eq_(len(app.sctable), 0)
     # And the spawns aren't there anymore in the ttable
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 0)
 
 def test_edit_selected():

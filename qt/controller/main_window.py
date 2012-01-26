@@ -481,19 +481,19 @@ class MainWindow(QMainWindow):
     #--- Actions
     # Views
     def showNetWorthTriggered(self):
-        self.model.select_balance_sheet()
+        self.model.select_pane_of_type(PaneType.NetWorth)
     
     def showProfitLossTriggered(self):
-        self.model.select_income_statement()
+        self.model.select_pane_of_type(PaneType.Profit)
     
     def showTransactionsTriggered(self):
-        self.model.select_transaction_table()
+        self.model.select_pane_of_type(PaneType.Transaction)
     
     def showSchedulesTriggered(self):
-        self.model.select_schedule_table()
+        self.model.select_pane_of_type(PaneType.Schedule)
     
     def showBudgetsTriggered(self):
-        self.model.select_budget_table()
+        self.model.select_pane_of_type(PaneType.Budget)
     
     def showPreviousViewTriggered(self):
         self.model.select_previous_view()

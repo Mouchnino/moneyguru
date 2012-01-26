@@ -165,7 +165,7 @@ def app_mixed_up_schedule_and_budget(monkeypatch):
 @with_app(app_mixed_up_schedule_and_budget)
 def test_sort_etable_by_status(app):
     # Reconciled are first, then plain, then schedules, then budgets
-    app.mw.select_entry_table() # 'asset' is already selected from setup
+    app.show_aview() # 'asset' is already selected from setup
     app.etable.sort_by('status')
     eq_(app.etable[0].description, 'reconciled')
     eq_(app.etable[1].description, 'plain')
@@ -175,7 +175,7 @@ def test_sort_etable_by_status(app):
 @with_app(app_mixed_up_schedule_and_budget)
 def test_sort_ttable_by_status(app):
     # Reconciled are first, then plain, then schedules, then budgets
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.sort_by('status')
     eq_(app.ttable[0].description, 'reconciled')
     eq_(app.ttable[1].description, 'plain')
@@ -185,7 +185,7 @@ def test_sort_ttable_by_status(app):
 #--- Two transactions added when sorted by description
 def app_two_txns_added_when_sorted_by_description():
     app = TestApp()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.sort_by('description')
     app.add_txn(description='foo', from_='asset')
     app.add_txn(description='bar', from_='asset')

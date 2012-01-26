@@ -131,10 +131,10 @@ def test_show_account_then_select_other_report(app):
     # If the shown account is not in the shown report, select the first account
     app.add_account('asset')
     app.add_account('income', account_type=AccountType.Income)
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.selected, app.bsheet.assets[0])
 
 @with_app(TestApp)
@@ -147,7 +147,7 @@ def test_delta_perc_with_negative_start(app):
     app.add_account('Checking')
     app.mw.show_account()
     app.add_entry(date='1/1/2008', description='Salary', increase='1500.00')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.net_worth.delta_perc, '+150.0%')
 
 #--- Account hierarchy
@@ -159,7 +159,7 @@ def app_account_hierarchy():
     app.add_account('Liability 1', account_type=AccountType.Liability)
     app.add_group('Loans', account_type=AccountType.Liability)
     app.add_account('Loan 1', account_type=AccountType.Liability, group_name='Loans')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.clear_gui_calls()
     return app
 
@@ -383,7 +383,7 @@ def app_account_beside_group():
     app = TestApp()
     app.add_account()
     app.add_group()
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0] # the group
     return app
 
@@ -447,7 +447,7 @@ def app_accounts_and_entries():
     app.mw.show_account()
     app.add_entry('11/12/2007', 'Entry 3', transfer='income', increase='100.00')
     app.add_entry('12/01/2008', 'Entry 4', transfer='expense', decrease='20.00')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.clear_gui_calls()
     return app
 
@@ -480,7 +480,7 @@ def test_budget(app, monkeypatch):
     monkeypatch.patch_today(2008, 1, 15)
     app.add_budget('income', 'Account 2', '400') # + 150
     app.add_budget('expense', 'Account 1', '100') # + 80
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.assets[0].end, '250.00')
     eq_(app.bsheet.assets[0].budgeted, '-80.00')
     eq_(app.bsheet.assets[1].end, '80.00')
@@ -499,13 +499,13 @@ def test_budget_multiple_currencies(app, monkeypatch):
     # budgeted amounts must be correctly converted to the target's currency
     monkeypatch.patch_today(2008, 1, 15)
     USD.set_CAD_value(0.8, date(2008, 1, 1))
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.mw.edit_item()
     app.apanel.currency_list.select(Currency.all.index(CAD))
     app.apanel.save()
     app.add_budget('income', 'Account 1', '400 cad')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.assets[0].end, '250.00')
     eq_(app.bsheet.assets[0].budgeted, '250.00') # 400 / 2 / 0.8 = 250
 
@@ -515,7 +515,7 @@ def test_budget_target_liability(app, monkeypatch):
     monkeypatch.patch_today(2008, 1, 15)
     app.add_account('foo', account_type=AccountType.Liability)
     app.add_budget('income', 'foo', '400')
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.liabilities[0].end, '0.00')
     eq_(app.bsheet.liabilities[0].budgeted, '-150.00')
 
@@ -524,7 +524,7 @@ def test_budget_without_target(app, monkeypatch):
     # The Net Worth's "budgeted" column counts all budgets, including target-less ones
     monkeypatch.patch_today(2008, 1, 15)
     app.add_budget('income', None, '400')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.net_worth.budgeted, '150.00')
 
 @with_app(app_accounts_and_entries)
@@ -572,12 +572,12 @@ def test_show_account_and_come_back(app):
 @with_app(app_accounts_and_entries)
 def test_shown_account_is_sticky(app):
     # When calling show_selected_account, soming back in a report and selecting another account
-    # does not change the account that will be shown is select_entry_table is called.
+    # does not change the account that will be shown is show_aview() is called.
     app.bsheet.selected = app.bsheet.assets[0] # Account 1
     app.bsheet.show_selected_account()
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1] # Account 2
-    app.mw.select_entry_table()
+    app.show_aview()
     eq_(app.balgraph.title, 'Account 1')
     eq_(app.etable[0].description, 'Entry 1')
 
@@ -606,7 +606,7 @@ def app_multiple_currencies():
     app.add_account('CAD account', currency=CAD, group_name='Group')
     app.mw.show_account()
     app.add_entry('1/1/2008', 'USD entry', increase='100.00')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     return app
 
 @with_app(app_multiple_currencies)
@@ -626,10 +626,10 @@ def test_balance_sheet_with_multiple_currencies(app):
 def test_delete_transaction(app):
     # Deleting a transaction correctly updates the balance sheet balances. Previously, the
     # cache in Account would not correctly be cleared on cook()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([2]) # last entry, on the 31st
     app.ttable.delete()
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     eq_(app.bsheet.assets.end, '217.00')
 
 @with_app(app_multiple_currencies)
@@ -673,7 +673,7 @@ def app_with_liabilities():
     app.mw.show_account()
     app.add_entry(date='31/12/2007', description='Starting balance', decrease='100.00')
     app.add_entry(date='1/1/2008', description='Expensive jewel', increase='1200.00')
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     return app
 
 @with_app(app_with_liabilities)

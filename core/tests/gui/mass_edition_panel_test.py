@@ -22,7 +22,7 @@ def test_can_load_when_empty(app):
 #--- Two Transactions
 def app_two_transactions():
     app = TestApp()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     app.ttable.save_edits()
     app.ttable.add()
@@ -69,7 +69,7 @@ def app_two_transactions_different_value():
     app.add_account('from2')
     app.mainwindow.show_account()
     app.add_entry(date='07/07/2008', description='description2', payee='payee2', checkno='43', transfer='to2', decrease='43')
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0, 1])
     app.mepanel.load()
     return app
@@ -306,7 +306,7 @@ def app_two_foreign_transactions():
     app.mainwindow.show_account()
     app.add_entry(increase='42 eur')
     app.add_entry(increase='42 eur')
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.ttable.select([0, 1])
     app.mepanel.load()
     return app

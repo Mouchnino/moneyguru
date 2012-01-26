@@ -45,7 +45,7 @@ class TestLoadFile:
         app = TestApp()
         app.add_account() # This is to set the modified flag to true so we can make sure it has been put back to false
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         return app
@@ -59,7 +59,7 @@ class TestLoadFile:
     @with_app(do_setup)
     def test_change_account_currency(self, app):
         # Changing an account currency sets the modified flag.
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.mainwindow.edit_item()
         app.apanel.currency = PLN
         app.apanel.save()
@@ -68,7 +68,7 @@ class TestLoadFile:
     @with_app(do_setup)
     def test_delete_account(self, app):
         # Removing an account sets the modified flag.
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.delete()
         app.arpanel.save() # continue deletion
@@ -83,7 +83,7 @@ class TestLoadFile:
     @with_app(do_setup)
     def test_delete_transactions(self, app):
         # Deleting a transaction sets the modified flag.
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.select([0]) # will be automatic at some point
         app.ttable.delete()
         assert app.doc.is_dirty()
@@ -118,7 +118,7 @@ class TestLoadFile:
     @with_app(do_setup)
     def test_rename_account(self, app):
         # Renaming an account sets the modified flag.
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.selected.name = 'some other name'
         app.bsheet.save_edits()
@@ -153,7 +153,7 @@ class TestLoadMultiCurrency:
         app = TestApp()
         app.doc.date_range = MonthRange(date(2008, 2, 1))
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'multi_currency.moneyguru'))
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         app.etable.select([0])
@@ -177,7 +177,7 @@ class TestLoadPayeeDescription:
         app = TestApp()
         app.doc.date_range = MonthRange(date(2008, 3, 1))
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'payee_description.moneyguru'))
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         return app
     
     @with_app(do_setup)
@@ -300,7 +300,7 @@ def app_transaction_with_memos():
     app = TestApp()
     app.add_account('first')
     app.add_account('second')
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     app.tpanel.load()
     app.stable[0].account = 'first'
@@ -376,7 +376,7 @@ def app_schedule_with_global_change(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([2])
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
@@ -388,7 +388,7 @@ def app_schedule_with_local_deletion(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([2])
     app.ttable.delete()
     return app

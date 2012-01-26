@@ -58,7 +58,7 @@ class TestSomeIncomeInTheFutureWithRangeOnYearToDate:
     @with_app(do_setup)
     def test_bar_graphs_during_ytd_dont_show_future_data(self, app):
         # Unlike all other date ranges, bar charts during YTD don't overflow
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(len(app.pgraph.data), 0)
     
 
@@ -89,7 +89,7 @@ class TestAccountAndEntriesAndBudget:
         app.add_account('Account 1', account_type=AccountType.Income)
         monkeypatch.patch_today(2008, 1, 17)
         app.add_budget('Account 1', None, '400')
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.istatement.show_selected_account()
         app.add_entry('10/01/2008', 'Entry 1', increase='100.00')
@@ -120,7 +120,7 @@ class TestRunningYearWithSomeIncome:
     @with_app(do_setup)
     def test_data_is_taken_from_shown_account(self, app):
         # Ensure that bargraph's data is taken from shown_account, *not* selected_account
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.add_txn('23/09/2008', from_='something else', to='Checking', amount='1')
         app.ttable.select([0])
         app.ttable.show_from_account()
@@ -131,6 +131,6 @@ class TestRunningYearWithSomeIncome:
     @with_app(do_setup)
     def test_monthly_bars(self, app):
         # with the running year range, the bars are monthly
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(len(app.pgraph.data), 1) # there is only one bar
     

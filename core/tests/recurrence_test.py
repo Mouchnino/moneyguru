@@ -19,7 +19,7 @@ def app_one_transaction():
     app.add_account('first')
     app.mw.show_account()
     app.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42', checkno='24')
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     return app
 
@@ -39,7 +39,7 @@ def test_make_schedule_from_selected(app):
     eq_(len(app.sctable), 1) # now we have it
     # When creating the schedule, we must delete the first occurrence because it overlapse with
     # the base transaction
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 1)
 
 @with_app(app_one_transaction)
@@ -49,7 +49,7 @@ def test_make_schedule_from_selected_weekly(app):
     app.mw.make_schedule_from_selected()
     app.scpanel.repeat_type_list.select(1) # weekly
     app.scpanel.save()
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable[1].date, '18/07/2008')
 
 #--- Daily schedule
@@ -60,7 +60,7 @@ def app_daily_schedule(monkeypatch):
     app.add_account('account')
     app.add_schedule(start_date='13/09/2008', description='foobar', account='account',  amount='1',
         repeat_every=3)
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     return app
 
@@ -68,12 +68,12 @@ def app_daily_schedule(monkeypatch):
 def test_change_schedule_transaction(app):
     # when modifying a schedule's transaction through the scpanel, make sure that this change
     # is reflected among all spawns (in other words, reset spawn cache).
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     app.sctable.select([0])
     app.scpanel.load()
     app.scpanel.description = 'foobaz'
     app.scpanel.save()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable[1].description, 'foobaz')
 
 @with_app(app_daily_schedule)
@@ -195,11 +195,11 @@ def test_change_spawn_with_global_scope_twice(app):
 @with_app(app_daily_schedule)
 def test_delete_account(app):
     # Deleting an account affecting a schedule properly update that schedule
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.delete()
     app.arpanel.save()
-    app.mainwindow.select_schedule_table()
+    app.show_scview()
     eq_(app.sctable[0].to, '')
 
 @with_app(app_daily_schedule)
@@ -349,7 +349,7 @@ def app_one_schedule_and_one_normal_txn():
 
 @with_app(app_one_schedule_and_one_normal_txn)
 def test_ttable_attrs_with_one_spawn_and_one_regular(app):
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.row_count, 7)
     eq_(app.ttable[2].date, '19/09/2008')
     eq_(app.ttable[2].description, 'bar')
@@ -388,7 +388,7 @@ def app_schedule_with_local_change(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([2])
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
@@ -399,8 +399,8 @@ def app_schedule_with_local_change(monkeypatch):
 def test_exceptions_still_hold_the_correct_recurrent_date_after_load(app):
     # Previously, reloading an exception would result in recurrent_date being the same as date
     newapp = app.save_and_load()
-    newapp.mw.select_schedule_table()
-    newapp.mw.select_transaction_table()
+    newapp.show_scview()
+    newapp.show_tview()
     newapp.ttable.select([2])
     newapp.ttable.delete()
     eq_(newapp.ttable[2].date, '22/09/2008')
@@ -410,7 +410,7 @@ def test_save_load_schedule_with_local_changes(app):
     # Previously, exceptions would lose their recurrent status after a reload
     # Also, later, local changes would be lost at reload
     newapp = app.save_and_load()
-    newapp.mw.select_transaction_table()
+    newapp.show_tview()
     assert newapp.ttable[2].recurrent
     eq_(newapp.ttable[2].description, 'changed')
 
@@ -419,7 +419,7 @@ def app_schedule_with_global_change(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([2])
     app.ttable[2].date = '17/09/2008'
     app.ttable[2].description = 'changed'
@@ -441,7 +441,7 @@ def app_schedule_with_local_deletion(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', account='account', amount='1', repeat_every=3)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([2])
     app.ttable.delete()
     return app
@@ -467,7 +467,7 @@ def test_delete_account_with_schedule_containing_deletions(app):
 def app_schedule_with_stop_date():
     app = TestApp()
     app.add_schedule(start_date='13/09/2008', repeat_every=3)
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.select([3])
     app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
     app.ttable.delete()
@@ -487,7 +487,7 @@ def app_weekly_schedule():
     app.drsel.select_month_range()
     app.navigate_to_date(2008, 9, 13)
     app.add_schedule(start_date='13/09/2008', repeat_type_index=1, repeat_every=2) # weekly
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_weekly_schedule)
@@ -510,7 +510,7 @@ def app_monthly_schedule_on_thirty_first():
     app.drsel.select_month_range()
     app.navigate_to_date(2008, 8, 31)
     app.add_schedule(start_date='31/08/2008', repeat_type_index=2) # monthly
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_monthly_schedule_on_thirty_first)
@@ -529,7 +529,7 @@ def app_yearly_schedule_on_twenty_ninth():
     app.drsel.select_year_range()
     app.navigate_to_date(2008, 2, 29)
     app.add_schedule(start_date='29/02/2008', repeat_type_index=3) # yearly
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_yearly_schedule_on_twenty_ninth)
@@ -550,7 +550,7 @@ def app_schedule_on_third_monday_of_the_month():
     app.drsel.select_year_range()
     app.navigate_to_date(2008, 9, 15)
     app.add_schedule(start_date='15/09/2008', repeat_type_index=4) # week no in month
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_schedule_on_third_monday_of_the_month)
@@ -568,7 +568,7 @@ def app_schedule_on_fifth_tuesday_of_the_month():
     app.drsel.select_month_range()
     app.navigate_to_date(2008, 9, 30)
     app.add_schedule(start_date='30/09/2008', repeat_type_index=4) # week no in month
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_schedule_on_fifth_tuesday_of_the_month)
@@ -588,7 +588,7 @@ def app_schedule_on_last_tuesday_of_the_month():
     app.drsel.select_month_range()
     app.navigate_to_date(2008, 9, 30)
     app.add_schedule(start_date='30/09/2008', repeat_type_index=5) # last week in month
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_schedule_on_last_tuesday_of_the_month)
@@ -631,12 +631,12 @@ def test_dont_spawn_before_last_materialization_on_change(app):
     # exceptions start to be all out of sync with the recurrence, and trying to figure out which
     # ones should be kept is a nightmare. Thus, when a recurrence's start_date, repeat_type or
     # repeat_every is changed, its exceptions are simply reset.
-    app.mw.select_schedule_table()
+    app.show_scview()
     app.sctable.select([0])
     app.scpanel.load()
     app.scpanel.repeat_every = 1
     app.scpanel.save()
-    app.mw.select_transaction_table()
+    app.show_tview()
     # spawns start from the 13th, *not* the 13th, which means 18 spawn. If we add the reconciled
     # spawn which have been materialized, we have 19
     eq_(app.ttable.row_count, 19)

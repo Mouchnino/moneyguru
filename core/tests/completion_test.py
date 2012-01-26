@@ -385,10 +385,10 @@ def test_edit_description_changes_completion_list_order(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_edit_ttable_changes_completion_list_order(app):
     # Changing a txn in the ttable updates the mtime
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.selected_row.amount = '1'
     app.ttable.save_edits()
-    app.mw.select_entry_table()
+    app.show_aview()
     assert_completion_order_changed(app)
 
 @with_app(app_four_entries_with_description_and_category_collision)
@@ -505,7 +505,7 @@ def test_persistence_of_completion(app, tmpdir, monkeypatch):
     app = TestApp()
     app.add_txn(description='Duh, that shouldn\'t be here!')
     app.doc.load_from_xml(filepath)
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     assert_completion_order_changed(app)

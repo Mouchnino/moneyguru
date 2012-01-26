@@ -44,7 +44,7 @@ def test_add_change_and_save(app):
     row.amount = '42'
     app.clear_gui_calls()
     app.ttable.save_edits()
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[0]
     app.istatement.show_selected_account()
     eq_(app.etable_count(), 1)
@@ -68,7 +68,7 @@ def test_delete_up_to_empty_table_doesnt_cause_crash(app):
 @with_app(app_tview_shown)
 def test_gui_call_on_filter_applied(app):
     # The ttable's view is refreshed on filter_applied.
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.clear_gui_calls()
     app.sfield.text = 'foobar'
     app.check_gui_calls(app.ttable_gui, ['refresh'])
@@ -103,7 +103,7 @@ def test_strip_account_name_in_from_to_columns(app):
 class TestEditionMode:
     def do_setup(self):
         app = TestApp()
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.add()
         app.clear_gui_calls()
         return app
@@ -112,7 +112,7 @@ class TestEditionMode:
     def test_add_and_save(self, app):
         # Leaving the from/to columns empty don't auto-create an empty named account
         app.ttable.save_edits()
-        app.mainwindow.select_income_statement()
+        app.show_pview()
         eq_(app.istatement.income.children_count, 2)
     
     @with_app(do_setup)
@@ -140,7 +140,7 @@ class TestEditionMode:
 class TestUnassignedTransactionWithAmount:
     def do_setup(self):
         app = TestApp()
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.add()
         app.ttable[0].amount = '42'
         app.ttable.save_edits()
@@ -260,7 +260,7 @@ def test_delete(app):
     # Deleting a transaction updates the graph and makes the 'second' account go away.
     app.ttable.delete()
     eq_(app.ttable.row_count, 0)
-    app.mw.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(list(app.balgraph.data), [])
@@ -316,7 +316,7 @@ def test_save_edits(app):
     eq_(row.to, 'newto')
     eq_(row.amount, '0.42')
     # 'newfrom' has been created as an income, and 'newto' as an expense. 'second' has been cleaned
-    app.mw.select_income_statement()
+    app.show_pview()
     eq_(app.istatement.income.children_count, 3)
     eq_(app.istatement.expenses.children_count, 3)
     eq_(app.istatement.income[0].name, 'newfrom')
@@ -448,7 +448,7 @@ def app_two_way_txn_inverted_splits():
 @with_app(app_two_way_txn_inverted_splits)
 def test_from_two_cols_depend_on_split_type_not_order(app):
     # The from and to attributes depends on the money flow, not the order of the splits
-    app.mw.select_transaction_table()
+    app.show_tview()
     row = app.ttable[0]
     eq_(row.from_, 'second')
     eq_(row.to, 'first')
@@ -507,7 +507,7 @@ def app_three_way_multi_currency_transaction():
     row.debit = '22 usd'
     app.stable.save_edits()
     app.tpanel.save()
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     return app
 
 #--- Four way txn with unassigned
@@ -532,7 +532,7 @@ def test_from_and_to_column_show_unassigned_splits(app):
 class TestTwoWayUnassignedWithAmount:
     def do_setup(self):
         app = TestApp()
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.add()
         app.ttable.selected_row.amount = '42'
         app.ttable.save_edits()
@@ -550,7 +550,7 @@ class TestTwoWayUnassignedWithAmount:
 class TestEmptyTransaction:
     def do_setup(self):
         app = TestApp()
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.add()
         app.ttable.save_edits()
         return app
@@ -569,7 +569,7 @@ class TestTwoWayNullAmounts:
         app.add_account('first')
         app.mainwindow.show_account()
         app.add_entry('11/07/2008', transfer='second')
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         return app
     
     @with_app(do_setup)
@@ -625,7 +625,7 @@ class TestTwoTransactionsOneOutOfRange:
         app.mainwindow.show_account()
         app.add_entry('11/06/2008', description='first')
         app.add_entry('11/07/2008', description='second') # The month range has now changed to July 2008
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.clear_gui_calls()
         return app
     
@@ -659,7 +659,7 @@ def app_three_transactions():
     app.add_entry('11/07/2008', description='first', transfer='first', increase='1')
     app.add_entry('11/07/2008', description='second', transfer='second', increase='2')
     app.add_entry('12/07/2008', description='third', transfer='third', increase='3') 
-    app.mw.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_three_transactions)
@@ -712,17 +712,17 @@ def test_delete_second_then_add(app):
 def test_explicit_selection(app):
     # Only the explicit selection is sticky. If the non-explicit selection changes, this doesn't
     # affect the ttable selection.
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[1] # second
     app.istatement.show_selected_account()
-    app.mw.select_transaction_table()
+    app.show_tview()
     eq_(app.ttable.selected_indexes, [2]) # explicit selection
     # the other way around too
     app.ttable.select([1])
-    app.mw.select_income_statement()
+    app.show_pview()
     app.istatement.selected = app.istatement.income[2]
     app.istatement.show_selected_account()
-    app.mainwindow.select_balance_sheet()
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.show_selected_account()
     eq_(app.etable.selected_indexes, [1]) # explicit selection
@@ -761,7 +761,7 @@ class TestThreeTransactionsEverythingReconciled:
         app = TestApp()
         app.add_account('first')
         app.add_account('second')
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.show_selected_account()
         app.add_entry('19/07/2008', description='entry 1', increase='1')
@@ -771,12 +771,12 @@ class TestThreeTransactionsEverythingReconciled:
         app.etable[0].toggle_reconciled()
         app.etable[1].toggle_reconciled()
         app.etable[2].toggle_reconciled()
-        app.mainwindow.select_balance_sheet()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
         app.bsheet.show_selected_account()
         app.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
         app.aview.toggle_reconciliation_mode() # commit reconciliation
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         return app
     
     @with_app(do_setup)
@@ -795,7 +795,7 @@ class TestThreeTransactionsEverythingReconciled:
 #--- Transaction created through the ttable
 def app_transaction_created_through_ttable():
     app = TestApp()
-    app.mw.select_transaction_table()
+    app.show_tview()
     app.ttable.add()
     row = app.ttable.edited
     row.description = 'foo'
@@ -849,7 +849,7 @@ def app_load_file():
     app = TestApp()
     app.doc.date_range = MonthRange(date(2008, 2, 1))
     app.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
-    app.mainwindow.select_transaction_table()
+    app.show_tview()
     return app
 
 @with_app(app_load_file)
@@ -922,7 +922,7 @@ def test_autofill_is_case_sensitive(app):
 @with_app(app_autofill)
 def test_autofill_ignores_blank(app):
     # Blank values never result in autofill.
-    app.mw.select_transaction_table()
+    app.show_tview()
     row = app.ttable[0]
     row.description = ''
     app.ttable.save_edits()
@@ -1019,7 +1019,7 @@ class TestSevenEntries:
     @with_app(do_setup)
     def test_can_reorder_entry(self, app):
         # Move is allowed only when it makes sense
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         assert not app.ttable.can_move([0], 2) # Not the same date
         assert not app.ttable.can_move([2], 0) # Likewise
         assert not app.ttable.can_move([1], 1) # Moving to the same row doesn't change anything
@@ -1034,7 +1034,7 @@ class TestSevenEntries:
     @with_app(do_setup)
     def test_can_reorder_entry_multiple(self, app):
         # Move is allowed only when it makes sense
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         assert app.ttable.can_move([1, 2], 4) # This one is valid
         assert not app.ttable.can_move([1, 0], 4) # from_indexes are on different days
         assert not app.ttable.can_move([1, 2], 3) # Nothing moving (just next to the second index)
@@ -1048,7 +1048,7 @@ class TestSevenEntries:
     @with_app(do_setup)
     def test_change_date(self, app):
         # When chaing a txn date, the txn goes at the last position of its new date
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.select([2]) # txn 3
         row = app.ttable[2]
         row.date = '3/1/2008'
@@ -1059,28 +1059,28 @@ class TestSevenEntries:
     @with_app(do_setup)
     def test_move_entry_to_the_end_of_the_day(self, app):
         # Moving a txn to the end of the day works
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.move([1], 5)
         eq_(app.transaction_descriptions()[:5], ['txn 1', 'txn 3', 'txn 4', 'txn 5', 'txn 2'])
     
     @with_app(do_setup)
     def test_move_entry_to_the_end_of_the_list(self, app):
         # Moving a txn to the end of the list works
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.move([5], 7)
         eq_(app.transaction_descriptions()[5:], ['txn 7', 'txn 6'])
     
     @with_app(do_setup)
     def test_reorder_entry(self, app):
         # Moving a txn reorders the entries.
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.move([1], 3)
         eq_(app.transaction_descriptions()[:4], ['txn 1', 'txn 3', 'txn 2', 'txn 4'])
     
     @with_app(do_setup)
     def test_reorder_entry_multiple(self, app):
         # Multiple txns can be re-ordered at once
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.move([1, 2], 4)
         eq_(app.transaction_descriptions()[:4], ['txn 1', 'txn 4', 'txn 2', 'txn 3'])
     
@@ -1088,14 +1088,14 @@ class TestSevenEntries:
     def test_reorder_entry_makes_the_app_dirty(self, app):
         # reordering txns makes the app dirty
         app.save_file()
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.move([1], 3)
         assert app.doc.is_dirty()
     
     @with_app(do_setup)
     def test_selection_follows(self, app):
         # The selection follows when we move the selected txn.
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.select([1])
         app.ttable.move([1], 3)
         eq_(app.ttable.selected_indexes, [2])
@@ -1105,7 +1105,7 @@ class TestSevenEntries:
     @with_app(do_setup)
     def test_selection_follows_multiple(self, app):
         # The selection follows when we move the selected txns
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.select([1, 2])
         app.ttable.move([1, 2], 4)
         eq_(app.ttable.selected_indexes, [2, 3])
@@ -1113,7 +1113,7 @@ class TestSevenEntries:
     @with_app(do_setup)
     def test_selection_stays(self, app):
         # The selection stays on the same txn if we don't move the selected one
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         app.ttable.select([2])
         app.ttable.move([1], 3)
         eq_(app.ttable.selected_indexes, [1])
@@ -1135,7 +1135,7 @@ class TestFourEntriesOnTheSameDate:
         app.add_entry('1/1/2008', description='txn 2')
         app.add_entry('1/1/2008', description='txn 3')
         app.add_entry('1/1/2008', description='txn 4')
-        app.mainwindow.select_transaction_table()
+        app.show_tview()
         return app
     
     @with_app(do_setup)
@@ -1176,7 +1176,7 @@ class TestWithBudget:
         app.drsel.select_today_date_range()
         app.add_account('Some Expense', account_type=AccountType.Expense)
         app.add_budget('Some Expense', None, '100')
-        app.mw.select_transaction_table()
+        app.show_tview()
         app.clear_gui_calls()
         return app
     
