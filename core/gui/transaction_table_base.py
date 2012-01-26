@@ -15,10 +15,10 @@ class TransactionTableBase(GUITable, ViewChild):
     """
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
     
-    def __init__(self, view, parent_view):
-        ViewChild.__init__(self, view, parent_view)
+    def __init__(self, parent_view):
+        ViewChild.__init__(self, parent_view)
         GUITable.__init__(self, document=parent_view.document)
-        self.completable_edit = CompletableEdit(None, parent_view.mainwindow)
+        self.completable_edit = CompletableEdit(parent_view.mainwindow)
     
     #--- Override
     def _is_edited_new(self):

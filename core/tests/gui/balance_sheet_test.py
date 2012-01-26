@@ -117,7 +117,8 @@ def test_refresh_on_connect():
     # the account tree refreshes itself and selects the first asset. It is important in case the
     # document is already loaded when we connect.
     mgapp = Application(ApplicationGUI())
-    doc = Document(DocumentGUI(), mgapp)
+    doc = Document(mgapp)
+    doc.view = DocumentGUI()
     doc.date_range = MonthRange(date(2008, 2, 1))
     doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
     app = TestApp(app=mgapp, doc=doc)

@@ -86,7 +86,7 @@ class Layout:
     
 
 class CSVOptions(DocumentGUIObject):
-    def __init__(self, view, document):
+    def __init__(self, document):
         def preference2layout(pref):
             layout = Layout(pref['name'])
             columns = pref['columns']
@@ -95,7 +95,7 @@ class CSVOptions(DocumentGUIObject):
             layout.target_account_name = pref.get('target_account')
             return layout
         
-        DocumentGUIObject.__init__(self, view, document)
+        DocumentGUIObject.__init__(self, document)
         self.lines = []
         self._colcount = 0
         self._target_accounts = []

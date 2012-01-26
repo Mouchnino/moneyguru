@@ -9,6 +9,7 @@
 from hscommon.notify import Repeater
 from hscommon.util import first, minmax
 from hscommon.trans import tr
+from hscommon.gui.base import GUIObject
 
 from ..const import PaneType
 from ..document import FilterType
@@ -57,7 +58,7 @@ class ViewPane:
         return '<ViewPane {}>'.format(self.label)
     
 
-class MainWindow(Repeater):
+class MainWindow(Repeater, GUIObject):
     #--- model -> view calls:
     # change_current_pane()
     # refresh_panes()
@@ -68,9 +69,9 @@ class MainWindow(Repeater):
     # view_closed(index)
     # update_area_visibility()
     
-    def __init__(self, view, document):
+    def __init__(self, document):
         Repeater.__init__(self, document)
-        self.view = view
+        GUIObject.__init__(self)
         self.document = document
         self.app = document.app
         self._shown_account = None # the account that is shown when the entry table is selected
@@ -111,20 +112,6 @@ class MainWindow(Repeater):
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
-    
-    def connect(self):
-        # XXX For now, this is the only place where we know we've linked our GUI views, so we can
-        # call our view refreshes. However, a more correct way to do it is to have an
-        # app_finished_init signal.
-        self.daterange_selector.refresh()
-        self.daterange_selector.refresh_custom_ranges()
-        self._restore_default_panes()
-        children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
-            self.bview, self.ccview, self.glview, self.dpview, self.emptyview]
-        for child in children:
-            if child is not None:
-                child.connect()
-        Repeater.connect(self)
     
     #--- Private
     def _add_pane(self, pane):
@@ -267,6 +254,20 @@ class MainWindow(Repeater):
         elif filter_type is FilterType.NotReconciled:
             entries = [e for e in entries if not e.reconciled]
         return entries
+    
+    #--- Override
+    def _view_updated(self):
+        self.daterange_selector.refresh()
+        self.daterange_selector.refresh_custom_ranges()
+        self._restore_default_panes()
+    
+    def connect(self):
+        children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
+            self.bview, self.ccview, self.glview, self.dpview, self.emptyview]
+        for child in children:
+            if child is not None:
+                child.connect()
+        Repeater.connect(self)
     
     #--- Public
     def close_pane(self, index):

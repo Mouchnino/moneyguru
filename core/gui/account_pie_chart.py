@@ -24,7 +24,7 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
         'group_expanded_state_changed'}
     
     def __init__(self, parent_view, account_type, title):
-        PieChart.__init__(self, None, parent_view)
+        PieChart.__init__(self, parent_view)
         self._account_type = account_type
         self._title = title
     

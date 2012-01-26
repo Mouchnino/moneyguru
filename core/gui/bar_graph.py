@@ -13,9 +13,6 @@ from ..model.date import DateRange, MonthRange, YearToDateRange
 from .graph import Graph
 
 class BarGraph(Graph):
-    def __init__(self, parent_view):
-        Graph.__init__(self, None, parent_view)
-    
     # BarGraph's data point is (float x1, float x2, float past_value, float future_value).
     #--- Virtual
     def _currency(self):

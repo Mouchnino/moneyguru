@@ -113,15 +113,15 @@ class AccountPane:
     
 
 class ImportWindow(DocumentGUIObject):
-    def __init__(self, view, document):
-        DocumentGUIObject.__init__(self, view, document)
+    def __init__(self, document):
+        DocumentGUIObject.__init__(self, document)
         self._selected_pane_index = 0
         self._selected_target_index = 0
         self.swap_type_index = SwapType.DayMonth
         self.panes = []
         self.import_table = ImportTable(self)
-        self.connect()
     
+    #--- Private
     def _can_swap_date_fields(self, first, second): # 'day', 'month', 'year'
         pane = self.selected_pane
         if pane is None:
@@ -184,6 +184,11 @@ class ImportWindow(DocumentGUIObject):
             switch_func(txn)
         self.import_table.refresh()
     
+    #--- Override
+    def _view_updated(self):
+        self.connect()
+    
+    #--- Public
     def can_perform_swap(self):
         index = self.swap_type_index
         if index == SwapType.DayMonth:

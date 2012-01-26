@@ -14,6 +14,7 @@ import pytest
 
 from hscommon.path import Path
 from hscommon.testutil import eq_, CallLogger, TestApp as TestAppBase, with_app, TestData
+from hscommon.gui.base import GUIObject
 
 from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
 from ..document import Document, ScheduleScope
@@ -93,30 +94,20 @@ class TestApp(TestAppBase):
     def __init__(self, app=None, doc=None, tmppath=None):
         TestAppBase.__init__(self)
         make_gui = self.make_gui
-        def make_table_gui(name, class_, view=None, parent=None, holder=None):
-            gui = make_gui(name, class_, view, parent, holder)
-            if holder is None:
-                holder = self
-            colview = self.make_logger()
-            setattr(holder, '{0}col_gui'.format(name), colview)
-            gui.columns.view = colview
-        
-        def link_gui(gui):
-            gui.view = self.make_logger()
-            if hasattr(gui, 'columns'): # tables
-                gui.columns.view = self.make_logger()
-            return gui
-        
+        link_gui = self.link_gui
         self._tmppath = tmppath
         if app is None:
             app = Application(self.make_logger(ApplicationGUI))
         self.app = app
         self.app_gui = app.view
         if doc is None:
-            doc = Document(self.make_logger(DocumentGUI), self.app)
+            doc = Document(self.app)
+            doc.view = self.make_logger(DocumentGUI)
         self.doc = doc
         self.doc_gui = doc.view
-        make_gui('mainwindow', MainWindow, view=self.make_logger(MainWindowGUI), parent=self.doc)
+        self.mainwindow = MainWindow(self.doc)
+        # we set mainwindow's view at the end because it triggers daterangeselector refreshes
+        # which needs to have its own view set first.
         self.mw = self.mainwindow # shortcut. This one is often typed
         self.default_parent = self.mw
         self.nwview = link_gui(self.mw.nwview)
@@ -136,21 +127,15 @@ class TestApp(TestAppBase):
         self.btable = link_gui(self.bview.table)
         self.gltable = link_gui(self.glview.gltable)
         self.apanel = link_gui(self.mw.account_panel)
-        self.apanel.type_list.view = self.make_logger()
         self.scpanel = link_gui(self.mw.schedule_panel)
-        self.scpanel.split_table.view = self.make_logger()
         self.scsplittable = link_gui(self.scpanel.split_table)
-        self.scpanel.repeat_type_list.view = self.make_logger()
         self.tpanel = link_gui(self.mw.transaction_panel)
-        self.tpanel.split_table.view = self.make_logger()
         self.stable = link_gui(self.tpanel.split_table)
         self.mepanel = link_gui(self.mw.mass_edit_panel)
         self.bpanel = link_gui(self.mw.budget_panel)
-        self.bpanel.repeat_type_list.view = self.make_logger()
         self.cdrpanel = link_gui(self.mw.custom_daterange_panel)
         self.arpanel = link_gui(self.mw.account_reassign_panel)
         self.expanel = link_gui(self.mw.export_panel)
-        self.expanel.account_table.view = self.make_logger()
         self.balgraph = link_gui(self.aview.balgraph)
         self.balgraph_gui = self.balgraph.view
         self.bargraph = link_gui(self.aview.bargraph)
@@ -176,7 +161,20 @@ class TestApp(TestAppBase):
         self.alookup = link_gui(self.mw.account_lookup)
         self.clookup = link_gui(self.mw.completion_lookup)
         self.doc.connect()
+        self.mw.view = self.make_logger(MainWindowGUI)
+        self.mainwindow_gui = self.mw.view
         self.mw.connect()
+    
+    def link_gui(self, gui):
+        if gui.view is None:
+            gui.view = self.make_logger()
+        # link sub GUIs too
+        for elem in vars(gui).values():
+            if elem is gui or elem is self.mw:
+                continue
+            if isinstance(elem, GUIObject) and elem.view is None:
+                elem.view = self.make_logger()
+        return gui
     
     def tmppath(self):
         if self._tmppath is None:
@@ -386,11 +384,13 @@ class TestApp(TestAppBase):
     def close_and_load(self):
         self.doc.close()
         app = Application(self.app_gui)
-        doc = Document(self.doc_gui, self.app)
+        doc = Document(self.app)
+        doc.view = self.doc_gui
         return TestApp(app=app, doc=doc)
     
     def completable_edit(self, attrname):
-        ce = CompletableEdit(CallLogger(), self.mw)
+        ce = CompletableEdit(self.mw)
+        ce.view = self.make_logger()
         ce.attrname = attrname
         return ce
     
@@ -406,8 +406,10 @@ class TestApp(TestAppBase):
         self.expanel.export_path = filepath
         self.expanel.save()
         newapp = Application(ApplicationGUI(), default_currency=self.doc.default_currency)
-        newdoc = Document(DocumentGUI(), newapp)
-        iwin = ImportWindow(self.iwin_gui, newdoc)
+        newdoc = Document(newapp)
+        newdoc.view = self.make_logger(DocumentGUI)
+        iwin = ImportWindow(newdoc)
+        self.link_gui(iwin)
         iwin.connect()
         try:
             newdoc.parse_file_for_import(filepath)

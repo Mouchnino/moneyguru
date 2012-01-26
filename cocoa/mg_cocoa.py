@@ -83,7 +83,7 @@ class DocumentView(GUIObjectView):
 
 class PyDocument(PyGUIObject):
     def __init__(self, app: pyref):
-        model = Document(None, app.model)
+        model = Document(app.model)
         PyGUIObject.__init__(self, model)
         self.model.connect()
     
@@ -968,7 +968,7 @@ class MainWindowView(GUIObjectView):
 
 class PyMainWindow(PyGUIObject):
     def __init__(self, document: pyref):
-        model = MainWindow(None, document.model)
+        model = MainWindow(document.model)
         PyGUIObject.__init__(self, model)
     
     def bindCallback_(self, callback: pyref):
@@ -1191,7 +1191,7 @@ class ImportWindowView(GUIObjectView):
 
 class PyImportWindow(PyGUIObject):
     def __init__(self, document: pyref):
-        model = ImportWindow(None, document.model)
+        model = ImportWindow(document.model)
         PyGUIObject.__init__(self, model)
     
     def importTable(self) -> pyref:
@@ -1271,7 +1271,7 @@ class CSVImportOptionsView(GUIObjectView):
 
 class PyCSVImportOptions(PyGUIObject):
     def __init__(self, document: pyref):
-        model = CSVOptions(None, document.model)
+        model = CSVOptions(document.model)
         PyGUIObject.__init__(self, model)
     
     def columnNameAtIndex_(self, index: int) -> str:

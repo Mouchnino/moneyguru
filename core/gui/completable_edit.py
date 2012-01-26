@@ -12,8 +12,8 @@ from .base import DocumentGUIObject
 from ..model.completion import CompletionList
 
 class CompletableEdit(DocumentGUIObject):
-    def __init__(self, view, mainwindow):
-        DocumentGUIObject.__init__(self, view, mainwindow.document)
+    def __init__(self, mainwindow):
+        DocumentGUIObject.__init__(self, mainwindow.document)
         self.mainwindow = mainwindow
         self._attrname = ''
         self._candidates = None

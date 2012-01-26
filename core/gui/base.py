@@ -5,7 +5,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.notify import Listener, Repeater
-from hscommon.gui.base import NoopGUI
+from hscommon.gui.base import GUIObject
 from hscommon.gui.selectable_list import GUISelectableList
 
 class DocumentNotificationsMixin:
@@ -138,21 +138,19 @@ class HideableObject:
         self._hidden = True
     
 
-class DocumentGUIObject(Listener, DocumentNotificationsMixin):
-    def __init__(self, view, document):
+class DocumentGUIObject(Listener, GUIObject, DocumentNotificationsMixin):
+    def __init__(self, document):
         Listener.__init__(self, document)
-        self.view = view
+        GUIObject.__init__(self)
         self.document = document
         self.app = document.app
     
 
-class ViewChild(Listener, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
-    # yeah, there's a little ambiguity here... `view` is the GUI view, where GUI callbacks are made.
-    # `parent` is the parent view instance, which is a core instance.
-    def __init__(self, view, parent_view):
+class ViewChild(Listener, GUIObject, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+    def __init__(self, parent_view):
         Listener.__init__(self, parent_view)
+        GUIObject.__init__(self)
         HideableObject.__init__(self)
-        self.view = view
         self.parent_view = parent_view
         self.mainwindow = parent_view.mainwindow
         self.document = self.mainwindow.document
@@ -163,12 +161,13 @@ class ViewChild(Listener, HideableObject, DocumentNotificationsMixin, MainWindow
             Listener.dispatch(self, msg)
     
 
-class GUIPanel:
-    def __init__(self, view, document):
-        self.view = view
+class GUIPanel(GUIObject):
+    def __init__(self, document):
+        GUIObject.__init__(self)
         self.document = document
         self.app = document.app
     
+    #--- Virtual
     def _load(self):
         raise NotImplementedError()
     
@@ -178,6 +177,7 @@ class GUIPanel:
     def _save(self):
         raise NotImplementedError()
     
+    #--- Overrides
     def load(self, *args, **kwargs):
         # If the panel can't load, OperationAborted will be raised. If a message to the user is
         # required, the OperationAborted exception will have a non-empty message
@@ -198,18 +198,19 @@ class GUIPanel:
 
 class MainWindowPanel(GUIPanel):
     def __init__(self, mainwindow):
-        GUIPanel.__init__(self, NoopGUI(), mainwindow.document)
+        GUIPanel.__init__(self, mainwindow.document)
         self.mainwindow = mainwindow
     
 
 def _raise_notimplemented(self):
     raise NotImplementedError()
     
-class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
     VIEW_TYPE = -1
     
     def __init__(self, mainwindow):
         Repeater.__init__(self, mainwindow)
+        GUIObject.__init__(self)
         HideableObject.__init__(self)
         self._children = []
         self.mainwindow = mainwindow
@@ -217,7 +218,7 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
         self.app = mainwindow.document.app
         self._status_line = ""
     
-    #--- Actions (Virtual)
+    #--- Virtual
     new_item = _raise_notimplemented
     edit_item = _raise_notimplemented
     delete_item = _raise_notimplemented
@@ -277,9 +278,9 @@ class BaseView(Repeater, HideableObject, DocumentNotificationsMixin, MainWindowN
     
 
 class LinkedSelectableList(GUISelectableList):
-    def __init__(self,  items=None, view=None, setfunc=None):
+    def __init__(self,  items=None, setfunc=None):
         # setfunc(newindex)
-        GUISelectableList.__init__(self, items=items, view=view)
+        GUISelectableList.__init__(self, items=items)
         self.setfunc = setfunc
     
     def _update_selection(self):

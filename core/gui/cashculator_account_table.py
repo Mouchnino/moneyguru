@@ -23,7 +23,7 @@ class CashculatorAccountTable(GUITable, ViewChild):
     ]
     
     def __init__(self, cc_view):
-        ViewChild.__init__(self, None, cc_view)
+        ViewChild.__init__(self, cc_view)
         GUITable.__init__(self, document=cc_view.document)
         self.nonrecurring_names = set()
     

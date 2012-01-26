@@ -18,7 +18,7 @@ from .completable_edit import CompletableEdit
 
 class MassEditTextField(TextField):
     def __init__(self, panel, fieldname):
-        TextField.__init__(self, view=None)
+        TextField.__init__(self)
         self._panel = panel
         self._attrname = '_' + fieldname
         self._enabledname = fieldname + '_enabled'
@@ -55,7 +55,7 @@ class MassEditionPanel(MainWindowPanel):
         self.from_field = MassEditTextField(self, 'from')
         self.to_field = MassEditTextField(self, 'to')
         self.amount_field = MassEditAmountField(self, 'amount')
-        self.completable_edit = CompletableEdit(None, mainwindow)
+        self.completable_edit = CompletableEdit(mainwindow)
         currencies_display = ['%s - %s' % (currency.code, currency.name) for currency in Currency.all]
         def setfunc(index):
             if 0 <= index < len(Currency.all):

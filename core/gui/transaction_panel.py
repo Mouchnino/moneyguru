@@ -25,7 +25,7 @@ class PanelWithTransaction(MainWindowPanel):
         self.transaction = Transaction(date.today())
         self._selected_splits = []
         self.split_table = SplitTable(self)
-        self.completable_edit = CompletableEdit(None, mainwindow)
+        self.completable_edit = CompletableEdit(mainwindow)
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:

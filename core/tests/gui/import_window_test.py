@@ -17,6 +17,7 @@ from ...gui.import_window import SwapType
 class TestImportCheckbookQIF:
     def do_setup(self):
         app = TestApp()
+        app.clear_gui_calls()
         app.doc.date_range = YearRange(date(2007, 1, 1))
         app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
         app.check_gui_calls(app.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])

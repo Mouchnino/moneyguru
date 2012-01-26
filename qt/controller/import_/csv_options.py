@@ -25,8 +25,9 @@ class CSVOptionsWindow(QWidget):
         QWidget.__init__(self, parent, Qt.Window)
         self._setupUi()
         self.doc = doc
-        self.model = CSVOptionsModel(view=self, document=doc.model)
+        self.model = CSVOptionsModel(document=doc.model)
         self.tableModel = CSVOptionsTableModel(self.model, self.tableView)
+        self.model.view = self
         self.encodingComboBox.addItems(SUPPORTED_ENCODINGS)
         
         self.cancelButton.clicked.connect(self.hide)

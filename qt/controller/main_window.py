@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
         self._setupUi()
         
         # Create base elements
-        self.model = MainWindowModel(view=self, document=doc.model)
+        self.model = MainWindowModel(document=doc.model)
         self.nwview = NetWorthView(model=self.model.nwview)
         self.pview = ProfitView(model=self.model.pview)
         self.tview = TransactionView(model=self.model.tview)
@@ -105,6 +105,7 @@ class MainWindow(QMainWindow):
         self.mainView.addWidget(self.dpview)
         self.mainView.addWidget(self.newview)
         
+        self.model.view = self
         self.model.connect()
         
         self._updateUndoActions()

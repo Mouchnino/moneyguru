@@ -32,9 +32,6 @@ class TransactionTable(TransactionTableBase):
         Column('amount', display=trcol('Amount')),
     ]
     
-    def __init__(self, transaction_view):
-        TransactionTableBase.__init__(self, None, transaction_view)
-    
     #--- Override
     def _do_add(self):
         transactions = self.mainwindow.selected_transactions

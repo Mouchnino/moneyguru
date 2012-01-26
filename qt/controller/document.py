@@ -25,7 +25,8 @@ class Document(QObject):
         QObject.__init__(self)
         self.app = app
         self.documentPath = None
-        self.model = DocumentModel(view=self, app=app.model)
+        self.model = DocumentModel(app=app.model)
+        self.model.view = self
     
     #--- Public
     def close(self):

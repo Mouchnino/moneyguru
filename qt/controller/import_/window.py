@@ -23,8 +23,9 @@ class ImportWindow(QWidget):
         QWidget.__init__(self, parent, Qt.Window)
         self._setupUi()
         self.doc = doc
-        self.model = ImportWindowModel(view=self, document=doc.model)
+        self.model = ImportWindowModel(document=doc.model)
         self.table = ImportTable(model=self.model.import_table, view=self.tableView)
+        self.model.view = self
         self._setupColumns() # Can only be done after the model has been connected
         
         self.tabView.tabCloseRequested.connect(self.tabCloseRequested)

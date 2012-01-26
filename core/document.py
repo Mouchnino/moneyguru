@@ -15,6 +15,7 @@ from hscommon.notify import Repeater
 from hscommon import io
 from hscommon.util import nonone, allsame, dedupe, extract, first
 from hscommon.trans import tr
+from hscommon.gui.base import GUIObject
 
 from .const import NOEDIT, DATE_FORMAT_FOR_PREFERENCES
 from .exception import FileFormatError, OperationAborted
@@ -67,13 +68,13 @@ def handle_abort(method):
     
     return wrapper
 
-class Document(Repeater):
+class Document(Repeater, GUIObject):
     REPEATED_NOTIFICATIONS = {'saved_custom_ranges_changed'}
     
-    def __init__(self, view, app):
+    def __init__(self, app):
         Repeater.__init__(self, app)
+        GUIObject.__init__(self)
         self.app = app
-        self.view = view
         self._properties = {
             'first_weekday': 0,
             'ahead_months': 3,

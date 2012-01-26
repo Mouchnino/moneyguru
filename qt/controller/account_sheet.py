@@ -94,7 +94,6 @@ class AccountSheet(TreeModel):
         self.view = view
         self.model = model
         self.model.view = self
-        self.model.columns.view = self
         self.view.setModel(self)
         self.columns = Columns(self.model.columns, self.COLUMNS, view.header())
         self.accountSheetDelegate = AccountSheetDelegate(self)

@@ -57,7 +57,8 @@ def test_close_document():
     app.app.auto_decimal_place = True
     app.doc.close()
     newapp = Application(app.app_gui)
-    newdoc = Document(app.doc_gui, newapp)
+    newdoc = Document(newapp)
+    newdoc.view = app.doc_gui
     newapp = TestApp(app=newapp, doc=newdoc)
     assert isinstance(newdoc.date_range, YearRange)
     eq_(newapp.app.autosave_interval, 8)
