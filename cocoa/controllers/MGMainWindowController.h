@@ -20,7 +20,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGTransactionView.h"
 #import "MGScheduleView.h"
 #import "MGBudgetView.h"
-#import "MGCashculatorView.h"
 #import "MGGeneralLedgerView.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
@@ -48,7 +47,6 @@ http://www.hardcoded.net/licenses/bsd_license
     MGAccountView *accountView;
     MGScheduleView *scheduleView;
     MGBudgetView *budgetView;
-    MGCashculatorView *cashculatorView;
     MGGeneralLedgerView *ledgerView;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
@@ -65,6 +63,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGCompletionLookup *completionLookup;
     MGDateRangeSelector *dateRangeSelector;
     MGBaseView *top;
+    NSMutableArray *cachedViews;
     NSMutableArray *subviews;
 }
 - (id)initWithDocument:(MGDocument *)document;

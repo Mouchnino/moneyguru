@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGMainWindowController.h"
 #import "MGConst.h"
+#import "MGCashculatorView.h"
 #import "MGDocPropsView.h"
 #import "MGEmptyView.h"
 #import "Utils.h"
@@ -34,7 +35,6 @@ http://www.hardcoded.net/licenses/bsd_license
     accountView = nil;
     scheduleView = nil;
     budgetView = nil;
-    cashculatorView = nil;
     ledgerView = nil;
     searchField = [[MGSearchField alloc] initWithPyRef:[[self model] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
@@ -44,6 +44,7 @@ http://www.hardcoded.net/licenses/bsd_license
     accountLookup = [[MGAccountLookup alloc] initWithPyRef:[[self model] accountLookup]];
     completionLookup = [[MGCompletionLookup alloc] initWithPyRef:[[self model] completionLookup]];
     dateRangeSelector = [[MGDateRangeSelector alloc] initWithPyRef:[[self model] daterangeSelector]];
+    cachedViews = [[NSMutableArray alloc] init];
     subviews = [[NSMutableArray alloc] init];
     
     // Setup the toolbar
@@ -81,7 +82,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [transactionView release];
     [scheduleView release];
     [budgetView release];
-    [cashculatorView release];
     [ledgerView release];
     [searchField release];
     [importWindow release];
@@ -91,6 +91,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [accountLookup release];
     [completionLookup release];
     [dateRangeSelector release];
+    [cachedViews release];
     [subviews release];
     [model release];
     [super dealloc];
@@ -196,10 +197,7 @@ http://www.hardcoded.net/licenses/bsd_license
         return budgetView;
     }
     else if (paneType == MGPaneTypeCashculator) {
-        if (cashculatorView == nil) {
-            cashculatorView = [[MGCashculatorView alloc] initWithPyRef:modelRef];
-        }
-        return cashculatorView;
+        return [[[MGCashculatorView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeGeneralLedger) {
         if (ledgerView == nil) {
@@ -615,8 +613,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)refreshPanes
 {
     [tabBar setDelegate:nil];
-    NSArray *oldsubviews = subviews;
-    subviews = [[NSMutableArray alloc] init];
+    [subviews removeAllObjects];
     NSInteger paneCount = [[self model] paneCount];
     while ([tabView numberOfTabViewItems] > paneCount) {
         NSTabViewItem *item = [tabView tabViewItemAtIndex:paneCount];
@@ -627,7 +624,7 @@ http://www.hardcoded.net/licenses/bsd_license
         NSString *label = [[self model] paneLabelAtIndex:i];
         PyObject *viewRef = [[self model] paneViewRefAtIndex:i];
         MGBaseView *view = nil;
-        for (MGBaseView *v in [subviews arrayByAddingObjectsFromArray:oldsubviews]) {
+        for (MGBaseView *v in cachedViews) {
             if ([[v model] modelRef] == viewRef) {
                 view = v;
                 break;
@@ -636,6 +633,7 @@ http://www.hardcoded.net/licenses/bsd_license
         if (view == nil) {
             NSInteger paneType = [[self model] paneTypeAtIndex:i];
             view = [self viewFromPaneType:paneType modelRef:viewRef];
+            [cachedViews addObject:view];
         }
         NSImage *tabIcon = [NSImage imageNamed:[view tabIconName]];
         [subviews addObject:view];
@@ -657,7 +655,6 @@ http://www.hardcoded.net/licenses/bsd_license
         PSMTabBarCell *tabCell = [tabBar cellForTab:item];
         [tabCell setIcon:tabIcon];
     }
-    [oldsubviews release];
     [tabBar setDelegate:self];
 }
 

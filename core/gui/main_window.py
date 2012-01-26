@@ -38,10 +38,6 @@ from .budget_view import BudgetView
 from .general_ledger_view import GeneralLedgerView
 from .docprops_view import DocPropsView
 from .empty_view import EmptyView
-try:
-    from .cashculator_view import CashculatorView
-except ImportError:
-    CashculatorView = None
 
 PANETYPE2LABEL = {
     PaneType.NetWorth: tr("Net Worth"),
@@ -54,6 +50,7 @@ PANETYPE2LABEL = {
     PaneType.DocProps: tr("Document Properties"),
     PaneType.Empty: tr("New Tab"),
 }
+
 class Preference:
     OpenedPanes = 'OpenedPanes'
     SelectedPane = 'SelectedPane'
@@ -115,10 +112,6 @@ class MainWindow(Repeater, GUIObject):
         self.aview = AccountView(self)
         self.scview = ScheduleView(self)
         self.bview = BudgetView(self)
-        if CashculatorView is not None:
-            self.ccview = CashculatorView(self)
-        else:
-            self.ccview = None
         self.glview = GeneralLedgerView(self)
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
@@ -176,7 +169,10 @@ class MainWindow(Repeater, GUIObject):
         elif pane_type == PaneType.Budget:
             result = self.bview
         elif pane_type == PaneType.Cashculator:
-            result = self.ccview
+            # OS X only, so we import he instead of at the top of the module
+            from .cashculator_view import CashculatorView
+            result = CashculatorView(self)
+            result.connect()
         elif pane_type == PaneType.GeneralLedger:
             result = self.glview
         elif pane_type == PaneType.DocProps:
@@ -289,10 +285,9 @@ class MainWindow(Repeater, GUIObject):
     
     def connect(self):
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
-            self.bview, self.ccview, self.glview]
+            self.bview, self.glview]
         for child in children:
-            if child is not None:
-                child.connect()
+            child.connect()
         Repeater.connect(self)
     
     #--- Public
