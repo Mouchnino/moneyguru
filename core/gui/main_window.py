@@ -88,7 +88,6 @@ class MainWindow(Repeater, GUIObject):
         self._selected_schedules = []
         self._selected_budgets = []
         self._account2visibleentries = {}
-        self._panetyp2view = {}
         self.panes = []
         self.hidden_areas = set()
         
@@ -146,8 +145,9 @@ class MainWindow(Repeater, GUIObject):
             return ViewPane(view, PANETYPE2LABEL[pane_type])
     
     def _get_view_for_pane_type(self, pane_type):
-        if pane_type in self._panetyp2view:
-            return self._panetyp2view[pane_type]
+        for pane in self.panes:
+            if pane.view.VIEW_TYPE == pane_type:
+                return pane.view
         if pane_type == PaneType.NetWorth:
             result = NetWorthView(self)
         elif pane_type == PaneType.Profit:
@@ -173,7 +173,6 @@ class MainWindow(Repeater, GUIObject):
         else:
             raise ValueError("Cannot create view of type {}".format(pane_type))
         result.connect()
-        self._panetyp2view[pane_type] = result
         return result
     
     def _invalidate_visible_entries(self):
@@ -224,6 +223,8 @@ class MainWindow(Repeater, GUIObject):
         # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, account)]
         self._current_pane = None
         self._current_pane_index = -1
+        for pane in self.panes:
+            pane.view.disconnect()
         self.panes = []
         for pane_type, account in pane_data:
             try:
@@ -283,7 +284,10 @@ class MainWindow(Repeater, GUIObject):
                 self.current_pane_index -= 1
             else:
                 self.current_pane_index += 1
+        pane = self.panes[index]
         del self.panes[index]
+        if not any(p.view is pane.view for p in self.panes):
+            pane.view.disconnect()
         self.view.view_closed(index)
         # The index of the current view might have changed
         newindex = self.panes.index(self._current_pane)

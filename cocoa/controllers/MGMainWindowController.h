@@ -49,7 +49,6 @@ http://www.hardcoded.net/licenses/bsd_license
     MGCompletionLookup *completionLookup;
     MGDateRangeSelector *dateRangeSelector;
     MGBaseView *top;
-    NSMutableArray *cachedViews;
     NSMutableArray *subviews;
 }
 - (id)initWithDocument:(MGDocument *)document;
