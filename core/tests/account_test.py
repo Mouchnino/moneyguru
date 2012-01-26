@@ -360,11 +360,11 @@ def app_different_account_types():
     app = TestApp()
     app.add_account('one')
     app.add_account('two')
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(transfer='three')
     app.show_pview()
     app.istatement.selected = app.istatement.income[0] # 'three'
-    app.istatement.show_selected_account()
+    app.show_account()
     return app
 
 @with_app(app_different_account_types)

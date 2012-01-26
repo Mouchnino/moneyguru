@@ -34,7 +34,7 @@ def test_dont_replace_split_instances_needlessly(app):
     # would result in the shown account to be displayed in the "Transfer" column.
     app.show_pview()
     app.istatement.selected = app.istatement.income[0]
-    app.istatement.show_selected_account()
+    app.show_account()
     eq_(app.etable[0].transfer, '')
     app.drsel.select_next_date_range()
     app.drsel.select_prev_date_range()
@@ -119,7 +119,7 @@ def test_budget_is_counted_in_etable_balance(app):
     # When an asset is a budget target, its balance is correctly incremented in the etable.
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     # The balance of the budget entry has a correctly decremented balance (the budget is an expense).
     eq_(app.etable[0].balance, '-100.00')
 

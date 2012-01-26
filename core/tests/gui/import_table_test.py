@@ -105,7 +105,7 @@ def app_import_checkbook_qif_with_existing_txns():
     # (the first is reconciled)
     app = TestApp()
     app.add_account('foo')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='01/01/2007', description='first entry', increase='1')
     app.aview.toggle_reconciliation_mode()
     app.etable.toggle_reconciled()

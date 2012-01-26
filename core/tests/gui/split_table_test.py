@@ -15,7 +15,7 @@ from ..base import TestApp, with_app
 def app_one_entry():
     app = TestApp()
     app.add_account('first', currency=CAD)
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(transfer='second', increase='42')
     return app
 
@@ -56,7 +56,7 @@ def test_changes_split_buffer_only():
     # Now, let's force a refresh of etable
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(app.etable[0].increase, 'CAD 42.00')
 
 def test_completion():
@@ -180,7 +180,7 @@ def app_eur_account_and_eur_transfer():
     app = TestApp()
     app.add_account('first', EUR)
     app.add_account('second', EUR)
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(transfer='first', increase='42') # EUR
     app.tpanel.load()
     return app

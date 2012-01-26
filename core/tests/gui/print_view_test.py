@@ -16,6 +16,7 @@ class TestDateRangeOnApril2009:
         monkeypatch.patch_today(2009, 4, 1)
         app = TestApp()
         app.drsel.select_month_range()
+        app.show_tview()
         app.pv = PrintView(app.tview)
         return app
     

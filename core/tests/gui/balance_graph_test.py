@@ -15,7 +15,7 @@ from ...model.account import AccountType
 def test_balgraph_yaxis_scaling_works_if_negative(app):
     # The y axis scaling (ymin being "higher" than 0) works when the balance is negative.
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('01/01/2010', decrease='1000')
     app.drsel.select_next_date_range()
     eq_(app.balgraph.ymax, -900)
@@ -26,7 +26,7 @@ class TestTwoLiabilityTransactions:
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account('Visa', account_type=AccountType.Liability)
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('3/1/2008', increase='120.00')
         app.add_entry('5/1/2008', decrease='40.00')
         return app
@@ -39,7 +39,7 @@ class TestTwoLiabilityTransactions:
         app.add_budget('expense', 'Visa', '100')
         app.show_nwview()
         app.bsheet.selected = app.bsheet.liabilities[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         expected = [('04/01/2008', '120.00'), ('05/01/2008', '120.00'), ('06/01/2008', '80.00'), 
             ('28/01/2008', '80.00'), ('01/02/2008', '180.00')]
         eq_(app.graph_data(), expected)
@@ -64,7 +64,7 @@ class TestTwoLiabilityTransactions:
         app.add_budget('expense', 'Visa', '100')
         app.show_nwview()
         app.bsheet.selected = app.bsheet.liabilities[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         # the amount at the 20th is supposed to include budgeting for the 20th, and the 21st data point
         # has to include budget for the 21st
         expected = [('04/01/2008', '120.00'), ('05/01/2008', '120.00'), ('06/01/2008', '80.00'), 
@@ -83,7 +83,7 @@ class TestForeignAccount:
     def do_setup(self):
         app = TestApp()
         app.add_account('Visa', currency=CAD)
-        app.mw.show_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -125,6 +125,7 @@ class TestTwoAccountsOneTransaction:
         # The data shown in the balgraph when showing account1 is accurate. Previously, the balgraph
         # would use data from the *selected* account, not the *shown* account.
         app.ttable.show_to_account()
+        app.link_aview()
         # No account is selected now
         eq_(app.graph_data()[0], ('13/01/2010', '42.00'))
         eq_(app.balgraph.title, 'account1')

@@ -332,7 +332,7 @@ def test_export_to_qif(tmpdir):
     app = TestApp()
     app.add_account('first')
     app.add_account('second')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='03/01/2009', description='transfer', transfer='first', increase='42')
     export_filename = str(tmpdir.join('export.qif'))
     app.mw.export()

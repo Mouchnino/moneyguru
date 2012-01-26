@@ -28,14 +28,14 @@ from ..model.date import MonthRange, QuarterRange, YearRange
 def test_can_use_another_amount_format():
     app = TestApp(app=Application(ApplicationGUI(), decimal_sep=',', grouping_sep=' '))
     app.add_account()
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(increase='1234567890.99')
     eq_(app.etable[0].increase, '1 234 567 890,99')
 
 def test_can_use_another_date_format():
     app = TestApp(Application(ApplicationGUI(), date_format='MM-dd-yyyy'))
     app.add_account()
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(date='2-15-2008')
     eq_(app.etable[0].date, '02-15-2008')
 
@@ -66,6 +66,7 @@ def test_close_document():
 
 def test_graph_yaxis():
     app = TestApp()
+    app.show_nwview()
     eq_(app.nwgraph.ymin, 0)
     eq_(app.nwgraph.ymax, 100)
     eq_(list(app.nwgraph.ytickmarks), list(range(0, 101, 20)))
@@ -115,6 +116,7 @@ def app_range_on_october2007(monkeypatch):
     monkeypatch.patch_today(2007, 10, 1)
     app = TestApp()
     app.drsel.select_month_range()
+    app.show_nwview()
     return app
 
 @with_app(app_range_on_october2007)
@@ -137,6 +139,7 @@ class TestRangeOnJuly2006:
     def do_setup(self):
         app = TestApp()
         app.doc.date_range = MonthRange(date(2006, 7, 1))
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -149,6 +152,7 @@ class TestRangeOnYearToDate:
         app = TestApp()
         monkeypatch.patch_today(2008, 11, 12)
         app.drsel.select_year_to_date_range()
+        app.show_nwview()
         return app
     
     @with_app(do_setup)
@@ -163,7 +167,7 @@ class TestOneEmptyAccountRangeOnOctober2007:
     def do_setup(self):
         app = TestApp()
         app.add_account('Checking', EUR)
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.clear_gui_calls()
         return app
@@ -213,7 +217,7 @@ class TestThreeAccountsAndOneEntry:
     def do_setup(self):
         app = TestApp()
         app.add_accounts('one', 'two')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry(transfer='three', increase='42')
         return app
     
@@ -223,11 +227,11 @@ class TestThreeAccountsAndOneEntry:
         # that account.
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.add_entry(transfer='three')
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 2)
     
 
@@ -236,7 +240,7 @@ class TestEntryInEditionMode:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.save_file()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.etable.add()
@@ -309,7 +313,7 @@ class TestOneEntryYearRange2007:
     def do_setup(self):
         app = TestApp()
         app.add_account('Checking')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
         app.doc.date_range = YearRange(date(2007, 1, 1))
         return app
@@ -351,7 +355,7 @@ class TestOneEntryYearRange2007:
         app.show_pview()
         eq_(app.istatement.income.children_count, 3)
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'Deposit')
     
@@ -367,7 +371,7 @@ class TestOneEntryYearRange2007:
         # Deleting the last entry of an income account does not remove that account.
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         app.etable.delete()
         eq_(app.account_names(), ['Checking', 'Salary'])
     
@@ -416,7 +420,7 @@ class TestOneEntryYearRange2007:
         # The other side of an Entry has the same edition rights as the Entry.
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         editable_columns = ['date', 'description', 'payee', 'transfer', 'increase', 'decrease', 'checkno']
         for colname in editable_columns:
             assert app.etable.can_edit_cell(colname, 0)
@@ -436,12 +440,12 @@ class TestOneEntryYearRange2007:
         # The 'Checking' account has a line graph. The 'Salary' account has a bar graph.
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.bar_graph_data(), [('01/10/2007', '01/11/2007', '42.00', '0.00')])
         eq_(app.bargraph.title, 'Salary')
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.graph_data(), [('11/10/2007', '42.00'), ('01/01/2008', '42.00')])
     
     @with_app(do_setup)
@@ -464,12 +468,12 @@ class TestTwoBoundEntries:
         app = TestApp()
         app.add_account('first')
         app.add_account('second')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry(description='transfer', transfer='first', increase='42')
         app.add_account('third')
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
-        app.bsheet.show_selected_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -478,13 +482,13 @@ class TestTwoBoundEntries:
         # Because of MCT, a transfer between asset/liability accounts stopped balancing itself
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         row = app.etable.selected_row
         row.decrease = '40'
         app.etable.save_edits()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable[0].increase, '40.00')
     
     @with_app(do_setup)
@@ -495,11 +499,11 @@ class TestTwoBoundEntries:
         app.etable.save_edits()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # first
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 0)
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2] # third
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 1)
     
     @with_app(do_setup)
@@ -507,17 +511,17 @@ class TestTwoBoundEntries:
         # Entry binding works both ways
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         row = app.etable.selected_row
         row.transfer = 'third'
         app.etable.save_edits()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 0)
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 1)
     
     @with_app(do_setup)
@@ -529,16 +533,16 @@ class TestTwoBoundEntries:
         app.etable.save_edits()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # first
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 0)
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[2] # third
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 0)
         # Make sure the entry don't try to unbind from 'first' again
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1] # second
-        app.bsheet.show_selected_account()
+        app.show_account()
         row = app.etable.selected_row
         row.transfer = 'yet-another'
         app.etable.save_edits() # shouldn't raise anything
@@ -561,7 +565,7 @@ class TestTwoBoundEntries:
         app.etable.delete()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 0)
     
 
@@ -570,7 +574,7 @@ class TestNegativeBoundEntryTest:
     def do_setup(self):
         app = TestApp()
         app.add_account('visa', account_type=AccountType.Liability)
-        app.mw.show_account()
+        app.show_account()
         app.add_entry(transfer='clothes', increase='42')
         return app
     
@@ -589,7 +593,7 @@ class TestOneEntryInPreviousRange:
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('1/1/2008')
         app.drsel.select_next_date_range()
         return app
@@ -610,7 +614,7 @@ class TestOneEntryInPreviousRange:
         app.apanel.save()
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 0)
     
     @with_app(do_setup)
@@ -628,7 +632,7 @@ class TestTwoEntriesInTwoMonthsRangeOnSecond:
     def do_setup(self):
         app = TestApp()
         app.add_account('Checking')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('3/9/2007', 'first', increase='102.00')
         app.add_entry('10/10/2007', 'second', increase='42.00')
         app.doc.date_range = MonthRange(date(2007, 10, 1))
@@ -694,7 +698,7 @@ class TestTwoEntriesInRange:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.add_entry('2/10/2007', 'first', increase='102')
         app.add_entry('4/10/2007', 'second', increase='42')
@@ -774,7 +778,7 @@ class TestTwoEntryOnTheSameDate:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.add_entry('3/10/2007', 'foo', increase='10000')
         app.add_entry('3/10/2007', 'bar', decrease='9000')
@@ -812,13 +816,13 @@ class TestTwoAccountsTwoEntriesInTheFirst:
         app = TestApp()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('3/10/2007', 'first', increase='1')
         app.add_entry('4/10/2007', 'second', increase='1')
         app.add_account()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -832,7 +836,7 @@ class TestAssetIncomeWithDecrease:
     def do_setup(self):
         app = TestApp()
         app.add_account('Operations')
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2008, 3, 1))
         app.add_entry('1/3/2008', description='MacroSoft', transfer='Salary', increase='42')
         app.add_entry('2/3/2008', description='Error Adjustment', transfer='Salary', decrease='2')
@@ -853,7 +857,7 @@ class TestAssetIncomeWithDecrease:
         # Salary's entries' balances are positive
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable[0].balance, '42.00')
     
     @with_app(do_setup)
@@ -861,7 +865,7 @@ class TestAssetIncomeWithDecrease:
         # The Error Adjustment transaction is an decrease in Salary
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable[1].decrease, '2.00')
     
     @with_app(do_setup)
@@ -869,7 +873,7 @@ class TestAssetIncomeWithDecrease:
         # The MacroSoft transaction is an increase in Salary
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable[0].increase, '42.00')
     
     @with_app(do_setup)
@@ -877,7 +881,7 @@ class TestAssetIncomeWithDecrease:
         # Setting an income entry's decrease actually sets the right side
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         row = app.etable.selected_row
         row.decrease = '4'
         eq_(app.etable[1].decrease, '4.00')
@@ -887,7 +891,7 @@ class TestAssetIncomeWithDecrease:
         # Setting an income entry's increase actually sets the right side
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         row = app.etable.selected_row
         row.increase = '4'
         eq_(app.etable[1].increase, '4.00')
@@ -898,7 +902,7 @@ class TestLiabilityExpenseWithDecrease:
     def do_setup(self):
         app = TestApp()
         app.add_account('Visa', account_type=AccountType.Liability)
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2008, 3, 1))
         # Visa is a liabilies, so increase/decrease are inverted
         # Clothes is created as an expense
@@ -911,7 +915,7 @@ class TestLiabilityExpenseWithDecrease:
         # The Rebate transaction is a decrease in Clothes
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable[1].decrease, '2.00')
     
     @with_app(do_setup)
@@ -919,7 +923,7 @@ class TestLiabilityExpenseWithDecrease:
         # The Shoes transaction is an increase in Clothes
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         eq_(app.etable[0].increase, '42.00')
     
     @with_app(do_setup)
@@ -960,7 +964,7 @@ class TestThreeEntriesInThreeMonthsRangeOnThird:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2007, 11, 1))
         app.add_entry('3/9/2007', 'first', increase='1')
         app.add_entry('10/10/2007', 'second', increase='2')
@@ -980,7 +984,7 @@ class TestEntriesWithZeroVariation:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.add_entry('1/10/2007', 'first', increase='100')
         app.add_entry('3/10/2007', 'third')
@@ -998,11 +1002,11 @@ class TestThreeEntriesInTwoAccountTypes:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.add_entry(description='first')
         app.add_entry(description='second')
         app.add_account(account_type=AccountType.Income)
-        app.mw.show_account()
+        app.show_account()
         app.add_entry(description='third') # selected
         return app
     
@@ -1029,14 +1033,14 @@ class TestThreeEntriesInTheSameExpenseAccount:
         app = TestApp()
         app.drsel.select_year_range()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('31/12/2007', 'entry0', transfer='Expense', decrease='42')
         app.add_entry('1/1/2008', 'entry1', transfer='Expense', decrease='100')
         app.add_entry('20/1/2008', 'entry2', transfer='Expense', decrease='200')
         app.add_entry('31/3/2008', 'entry3', transfer='Expense', decrease='150')
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -1086,7 +1090,7 @@ class TestFourEntriesInRange:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.add_entry('3/10/2007', 'first', increase='1')
         app.add_entry('4/10/2007', 'second', decrease='2')
@@ -1121,7 +1125,7 @@ class TestEightEntries:
         app = TestApp()
         app.add_account()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2008, 1, 1))
         app.add_entry('1/1/2007', description='previous', increase='1')
         app.add_entry('1/1/2008', description='entry 1', increase='9')
@@ -1229,7 +1233,7 @@ class TestFourEntriesOnTheSameDate:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2008, 1, 1))
         app.add_entry('1/1/2008', description='entry 1', increase='42.00')
         app.add_entry('1/1/2008', description='entry 2', increase='42.00')
@@ -1288,13 +1292,13 @@ class TestEntrySelectionOnAccountChange:
     def do_setup(self):
         app = TestApp()
         app.add_account('asset1')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('1/1/2008', transfer='expense1', decrease='42.00')
         app.add_entry('4/1/2008', transfer='expense2', decrease='42.00')
         app.add_entry('11/1/2008', transfer='expense3', decrease='42.00')
         app.add_entry('22/1/2008', transfer='expense3', decrease='42.00')
         app.add_account('asset2')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('1/1/2008', transfer='expense1', decrease='42.00')
         app.add_entry('12/1/2008', transfer='expense2', decrease='42.00')
         # selected account is asset2
@@ -1306,14 +1310,14 @@ class TestEntrySelectionOnAccountChange:
         app.etable.select([0]) # the transaction from asset2 to expense1
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[1] # expense2
-        app.istatement.show_selected_account()
+        app.show_account()
         # The nearest date in expense2 is 2008/1/4
         eq_(app.etable.selected_indexes, [0])
         # Now select the 2008/1/12 date
         app.etable.select([1])
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[2] # expense3
-        app.istatement.show_selected_account()
+        app.show_account()
         # The 2008/1/11 date is nearer than the 2008/1/22 date, so it should be selected
         eq_(app.etable.selected_indexes, [0])
     
@@ -1335,7 +1339,7 @@ class TestEntrySelectionOnAccountChange:
         app.etable.save_edits()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable.selected_indexes, [1]) #2008/1/4
     
 
@@ -1345,7 +1349,7 @@ class TestEntrySelectionOnDateRangeChange:
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('2/2/2007')
         app.add_entry('2/1/2008')
         app.add_entry('3/1/2008')
@@ -1382,7 +1386,7 @@ class TestExampleDocumentLoadTest:
         monkeypatch.patch_today(2009, 8, 27)
         app = TestApp()
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('01/03/2008')
         app.add_entry('29/10/2008') # this one will end up in february, but overflow
         app.add_entry('01/03/2009')

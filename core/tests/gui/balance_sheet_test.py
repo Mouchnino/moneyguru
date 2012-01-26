@@ -26,6 +26,7 @@ from ...model.date import MonthRange
 def test_add_account(app):
     # The default name for an account is 'New Account', and the selection goes from None to 0.
     # Then, on subsequent calls, a number is added next to 'New Account'.
+    app.show_nwview()
     app.bsheet.add_account()
     eq_(app.account_names(), ['New account'])
     eq_(app.bsheet.selected, app.bsheet.assets[0])
@@ -39,6 +40,7 @@ def test_add_account(app):
 @with_app(TestApp)
 def test_add_account_in_other_groups(app):
     # When groups other than Assets are selected, new accounts go underneath it.
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.liabilities
     app.bsheet.add_account()
     eq_(app.bsheet.selected, app.bsheet.liabilities[0])
@@ -56,6 +58,7 @@ def test_add_account_in_other_groups(app):
 @with_app(TestApp)
 def test_add_account_with_total_node_selected(app):
     # The added account will be of the type of the type node we're under
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.liabilities[0] # total node
     app.bsheet.add_account()
     eq_(app.bsheet.liabilities[0].name, 'New account')
@@ -63,6 +66,7 @@ def test_add_account_with_total_node_selected(app):
 @with_app(TestApp)
 def test_add_group(app):
     # add_group() creates a new account group in the selected base group.
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.liabilities
     app.bsheet.add_account_group()
     eq_(app.bsheet.selected, app.bsheet.liabilities[0])
@@ -73,6 +77,7 @@ def test_add_group(app):
 @with_app(TestApp)
 def test_add_group_with_total_node_selected(app):
     # The added group will be of the type of the type node we're under
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.liabilities[0] # total node
     app.bsheet.add_account_group()
     eq_(app.bsheet.liabilities[0].name, 'New group')
@@ -80,6 +85,7 @@ def test_add_group_with_total_node_selected(app):
 @with_app(TestApp)
 def test_balance_sheet(app):
     # The balance sheet is empty
+    app.show_nwview()
     eq_([x.name for x in app.bsheet], ['ASSETS',  'LIABILITIES',  'NET WORTH'])
     eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
     eq_(app.account_node_subaccount_count(app.bsheet.liabilities), 0)
@@ -87,11 +93,13 @@ def test_balance_sheet(app):
 @with_app(TestApp)
 def test_can_delete(app):
     # can_delete doesn't crash when nothing is selected
+    app.show_nwview()
     assert not app.bsheet.can_delete() # no crash
 
 @with_app(TestApp)
 def test_is_excluded_is_bool_for_empty_groups_and_type(app):
     # previously, empty lists would be returned, causing a crash in the gui
+    app.show_nwview()
     assert isinstance(app.bsheet.assets.is_excluded, bool)
     app.bsheet.add_account_group()
     assert isinstance(app.bsheet.assets[0].is_excluded, bool)
@@ -99,6 +107,7 @@ def test_is_excluded_is_bool_for_empty_groups_and_type(app):
 @with_app(TestApp)
 def test_root_nodes_initially_expanded(app):
     # When the preference doesn't say otherwise, root nodes are expanded.
+    app.show_nwview()
     eq_(app.bsheet.expanded_paths, [(0, ), (1, )])
 
 @with_app(TestApp)
@@ -106,6 +115,7 @@ def test_save_edits_doesnt_lead_to_infinite_loop(app, monkeypatch):
     # in save_edits, self.edited must be put to None asap because changes in the document could
     # lead to refreshes in the views that would call save_edits again and create an infinite
     # loop
+    app.show_nwview()
     app.bsheet.add_account()
     app.bsheet.assets[0].name = 'foo'
     def fake_refresh():
@@ -122,6 +132,7 @@ def test_refresh_on_connect():
     doc.date_range = MonthRange(date(2008, 2, 1))
     doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
     app = TestApp(app=mgapp, doc=doc)
+    app.show_nwview()
     eq_(app.account_node_subaccount_count(app.bsheet.assets), 2)
     eq_(app.bsheet.selected, app.bsheet.assets[0])
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
@@ -133,7 +144,7 @@ def test_show_account_then_select_other_report(app):
     app.add_account('income', account_type=AccountType.Income)
     app.show_pview()
     app.istatement.selected = app.istatement.income[0]
-    app.istatement.show_selected_account()
+    app.show_account()
     app.show_nwview()
     eq_(app.bsheet.selected, app.bsheet.assets[0])
 
@@ -142,10 +153,10 @@ def test_delta_perc_with_negative_start(app):
     # When the balance at the start is negative, use the absolute starting value as a base to
     # compute the change %
     app.add_account('Loan', account_type=AccountType.Liability)
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='31/12/2007', description='Starting balance', increase='1000')
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='1/1/2008', description='Salary', increase='1500.00')
     app.show_nwview()
     eq_(app.bsheet.net_worth.delta_perc, '+150.0%')
@@ -229,7 +240,7 @@ def test_show_selected_account(app):
     # show_selected_account() switches to the account view.
     app.bsheet.selected = app.bsheet.assets[0][0]
     app.clear_gui_calls()
-    app.bsheet.show_selected_account()
+    app.show_account()
     # no show_line_graph because it was already selected in the etable view before
     app.check_current_pane(PaneType.Account, account_name='Bank 1')
 
@@ -275,6 +286,7 @@ def test_selection_follows_account_after_editing(app):
 #--- Account in editing mode
 def app_account_in_editing_mode():
     app = TestApp()
+    app.show_nwview()
     app.bsheet.add_account()
     app.bsheet.selected.name = 'foo'
     return app
@@ -326,6 +338,7 @@ def test_toggle_exclusion_with_multiple_selection_doesnt_change_selection(app):
 #--- With group
 def app_with_group():
     app = TestApp()
+    app.show_nwview()
     app.add_group('Group')
     app.clear_gui_calls()
     return app
@@ -354,6 +367,7 @@ def test_save_edits_on_group(app):
 #--- Group in editing mode
 def app_group_in_editing_mode():
     app = TestApp()
+    app.show_nwview()
     app.bsheet.add_account_group()
     app.bsheet.selected.name = 'foo'
     return app
@@ -367,6 +381,7 @@ def test_add_account_while_editing_group(app):
 #---
 def app_with_two_groups_selected():
     app = TestApp()
+    app.show_nwview()
     app.add_group('group1')
     app.add_group('group2')
     app.bsheet.selected_nodes = app.bsheet.assets[:]
@@ -440,11 +455,11 @@ def app_accounts_and_entries():
     app.add_account('income', account_type=AccountType.Income)
     app.add_account('expense', account_type=AccountType.Expense)
     app.add_account('Account 1')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/01/2008', 'Entry 1', transfer='income', increase='100.00')
     app.add_entry('13/01/2008', 'Entry 2', transfer='income', increase='150.00')
     app.add_account('Account 2')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/12/2007', 'Entry 3', transfer='income', increase='100.00')
     app.add_entry('12/01/2008', 'Entry 4', transfer='expense', decrease='20.00')
     app.show_nwview()
@@ -565,7 +580,7 @@ def test_show_account_and_come_back(app):
     # When going back to a report, the selected account in the document is also selected in the
     # report.
     app.bsheet.selected = app.bsheet.assets[1] # Account 2
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.mw.navigate_back()
     eq_(app.bsheet.selected, app.bsheet.assets[1])
 
@@ -574,7 +589,7 @@ def test_shown_account_is_sticky(app):
     # When calling show_selected_account, soming back in a report and selecting another account
     # does not change the account that will be shown is show_aview() is called.
     app.bsheet.selected = app.bsheet.assets[0] # Account 1
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1] # Account 2
     app.show_aview()
@@ -599,12 +614,12 @@ def app_multiple_currencies():
     USD.set_CAD_value(0.9, date(2008, 1, 31))
     app.add_group('Group')
     app.add_account('USD account', currency=USD, group_name='Group')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2007', 'USD entry', increase='50.00')
     app.add_entry('1/1/2008', 'USD entry', increase='80.00')
     app.add_entry('31/1/2008', 'USD entry', increase='20.00')
     app.add_account('CAD account', currency=CAD, group_name='Group')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008', 'USD entry', increase='100.00')
     app.show_nwview()
     return app
@@ -670,7 +685,7 @@ def app_with_liabilities():
     app = TestApp()
     app.add_group('foo', account_type=AccountType.Liability)
     app.add_account('Credit card', account_type=AccountType.Liability, group_name='foo')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='31/12/2007', description='Starting balance', decrease='100.00')
     app.add_entry(date='1/1/2008', description='Expensive jewel', increase='1200.00')
     app.show_nwview()
@@ -706,6 +721,7 @@ def test_gui_calls_upon_exclusion(app):
 def test_save_and_load_account_exclusion(app):
     # account exclusion is persistent
     newapp = app.save_and_load()
+    newapp.show_nwview()
     assert newapp.bsheet.assets[1].is_excluded
 
 @with_app(app_excluded_account)

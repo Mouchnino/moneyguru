@@ -17,7 +17,7 @@ from ..base import TestApp, with_app
 def app_one_account():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     return app
 
 def test_add_empty_entry_and_save():
@@ -107,7 +107,7 @@ def test_toggle_debit_credit(app):
 def app_eur_account():
     app = TestApp()
     app.add_account(currency=EUR)
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_eur_account)
@@ -120,7 +120,7 @@ def test_total_line_balance_has_sign_in_front_of_amount(app):
 def app_three_accounts():
     app = TestApp()
     app.add_accounts('one', 'two', 'three') # three is the selected account (in second position)
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_three_accounts)
@@ -129,14 +129,14 @@ def test_add_transfer_entry(app):
     app.add_entry(transfer='one', increase='42.00')
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(app.etable_count(), 1)
 
 #--- Entry being added
 def app_entry_being_added():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.etable.add()
     app.clear_gui_calls()
     return app
@@ -167,7 +167,7 @@ def app_one_entry():
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42')
     app.clear_gui_calls()
     return app
@@ -194,7 +194,7 @@ def test_can_reconcile_expense(app):
     # income/expense entires can't be reconciled
     app.show_pview()
     app.istatement.selected = app.istatement.expenses[0] # second
-    app.istatement.show_selected_account()
+    app.show_account()
     assert not app.etable[0].can_reconcile()
 
 @with_app(app_one_entry)
@@ -315,7 +315,7 @@ def test_show_transfer_account_twice(app):
 def app_entry_without_transfer():
     app = TestApp()
     app.add_account('account')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(description='foobar', decrease='130')
     return app
 
@@ -334,7 +334,7 @@ def test_show_transfer_account_when_entry_has_no_transfer(app):
 def app_entry_with_decrease():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(decrease='42.00')
     return app
 
@@ -356,7 +356,7 @@ def test_set_increase_to_zero_with_non_zero_decrease(app):
 def app_entry_in_liability():
     app = TestApp()
     app.add_account('Credit card', account_type=AccountType.Liability)
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008', 'Payment', increase='10')
     return app
 
@@ -379,7 +379,7 @@ def test_transfer_column(app):
 def app_eur_account_with_eur_entries():
     app = TestApp()
     app.add_account(currency=EUR)
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(increase='42') # EUR
     app.add_entry(decrease='42') # EUR
     return app
@@ -396,7 +396,7 @@ def test_amounts_display(app):
 def app_two_entries():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', 'first', increase='42')
     app.add_entry('12/07/2008', 'second', decrease='12')
     app.clear_gui_calls()
@@ -432,7 +432,7 @@ def test_selection(app):
     app.clear_gui_calls()
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(app.etable.selected_indexes, [0])
     app.check_gui_calls(app.etable_gui, ['show_selected_row'])
 
@@ -453,7 +453,7 @@ def app_entry_in_previous_range():
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/06/2008', 'first')
     app.add_entry('11/07/2008', 'second')
     return app
@@ -474,10 +474,10 @@ def test_selection_after_date_range_change(app):
 def app_two_entries_in_two_accounts():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', 'first')
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('12/07/2008', 'second')
     return app
 
@@ -489,7 +489,7 @@ def test_selection_after_connect(app):
     app.ttable.select([0]) # first
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1]
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.tpanel.load()
     eq_(app.tpanel.description, 'second')
 
@@ -497,7 +497,7 @@ def test_selection_after_connect(app):
 def app_two_entries_with_one_reconciled():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(increase='1')
     app.add_entry(increase='2')
     app.aview.toggle_reconciliation_mode()
@@ -532,7 +532,7 @@ def test_toggle_both_twice(app):
 def app_two_entries_two_currencies():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(increase='1')
     app.add_entry(increase='2 cad')
     return app
@@ -562,7 +562,7 @@ def test_toggle_reconcilitation_on_both(app):
 def app_three_entries_different_dates():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('01/08/2008')
     app.add_entry('02/08/2008')
     # The date has to be "further" so select_nearest_date() doesn't pick it
@@ -580,7 +580,7 @@ def test_delete_second_entry(app):
 def app_split_transaction():
     app = TestApp()
     app.add_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
     app.tpanel.load()
     app.stable.add()
@@ -630,7 +630,7 @@ def test_show_transfer_account_with_unassigned_split():
 def app_two_splits_same_account():
     app = TestApp()
     app.add_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('08/11/2008', description='foobar', transfer='second', increase='42')
     app.tpanel.load()
     app.stable.select([0])
@@ -671,7 +671,7 @@ def test_budget_spawns(app):
 def app_unreconciled_between_two_reconciled():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('01/07/2010', description='one', reconciliation_date='01/07/2010')
     app.add_entry('02/07/2010', description='two')
     app.add_entry('03/07/2010', description='three', reconciliation_date='02/07/2010')
@@ -689,7 +689,7 @@ def test_sort_by_reconciliation_date_with_unreconciled_in_middle(app):
 def app_with_account_of_type(account_type):
     app = TestApp()
     app.add_account(account_type=account_type)
-    app.mw.show_account()
+    app.show_account()
     return app
 
 def test_amount_of_selected_entry():

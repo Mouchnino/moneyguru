@@ -155,7 +155,7 @@ class TestRangeOnYearStartsOnApril:
     def test_add_entry(self, app):
         # When adding an entry, don't revert to a jan-dec based year range
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('01/01/2008') # in the same date range
         # date range hasn't changed
         eq_(app.doc.date_range.start, date(2007, 4, 1))
@@ -254,7 +254,7 @@ class TestRangeOnRunningYear:
     def test_add_entry(self, app):
         # _adjust_date_range() on save_edits() caused a crash
         app.add_account()
-        app.mw.show_account()
+        app.show_account()
         app.etable.add()
         app.etable.save_edits() # no crash
     
@@ -311,7 +311,7 @@ class TestOneEntryYearRange2007:
     def do_setup(self):
         app = TestApp()
         app.add_account('Checking')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00', checkno='42')
         app.doc.date_range = YearRange(date(2007, 1, 1))
         return app
@@ -359,7 +359,7 @@ class TestTwoEntriesInDifferentQuartersWithYearRange:
         app = TestApp()
         app.doc.date_range = YearRange(date(2007, 1, 1))
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('1/1/2007', 'first', increase='1')
         app.add_entry('1/4/2007', 'second', increase='2')
         return app
@@ -385,7 +385,7 @@ class TestTwoEntriesInTwoMonthsRangeOnSecond:
     def do_setup(self):
         app = TestApp()
         app.add_account('Checking')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('3/9/2007', 'first', increase='102.00')
         app.add_entry('10/10/2007', 'second', increase='42.00')
         app.doc.date_range = MonthRange(date(2007, 10, 1))

@@ -17,6 +17,7 @@ def test_monthly_xtickmark_dont_start_at_zero(app):
     app.cdrpanel.start_date = '09/11/2007' # 22 days before the end of the month
     app.cdrpanel.end_date = '18/02/2008'
     app.cdrpanel.save() # changes the date range
+    app.show_nwview()
     first_mark = app.nwgraph.xtickmarks[1] # 0 is xmin
     eq_(first_mark - app.nwgraph.xmin, 22)
 
@@ -30,6 +31,7 @@ def test_yearly_xtickmark_dont_start_at_zero(app):
     app.cdrpanel.start_date = '09/12/2007' # 23 days before the end of the year
     app.cdrpanel.end_date = '18/02/2009'
     app.cdrpanel.save() # changes the date range
+    app.show_nwview()
     first_mark = app.nwgraph.xtickmarks[1] # 0 is xmin
     eq_(first_mark - app.nwgraph.xmin, 23)
     # also, don't make the label go left of the xmin
@@ -39,7 +41,7 @@ def test_yearly_xtickmark_dont_start_at_zero(app):
 def app_one_account():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_one_account)

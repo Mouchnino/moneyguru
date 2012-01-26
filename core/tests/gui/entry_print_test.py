@@ -15,7 +15,7 @@ from ...gui.transaction_print import EntryPrint
 def app_with_account():
     app = TestApp()
     app.add_account('foobar')
-    app.mw.show_account()
+    app.show_account()
     app.pv = EntryPrint(app.aview)
     return app
 
@@ -36,7 +36,7 @@ def app_split_transaction():
     ]
     app.add_txn_with_splits(splits)
     app.add_txn(from_='foo', to='bar', amount='42')
-    app.mw.show_account()
+    app.show_account()
     app.pv = EntryPrint(app.aview)
     return app
 
@@ -63,7 +63,7 @@ def app_entry_in_previous_range():
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008')
     app.drsel.select_next_date_range()
     app.pv = EntryPrint(app.aview)

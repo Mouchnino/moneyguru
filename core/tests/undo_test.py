@@ -62,12 +62,14 @@ def test_descriptions_initially(app):
 @with_app(TestApp)
 def test_undo_add_account(app, checkstate):
     # Undo after an add_account() removes that account.
+    app.show_nwview()
     app.bsheet.add_account()
     checkstate()
 
 @with_app(TestApp)
 def test_undo_add_group(app, checkstate):
     # It's possible to undo the addition of an account group.
+    app.show_nwview()
     app.bsheet.add_account_group()
     checkstate()
 
@@ -82,6 +84,7 @@ def test_add_schedule(app, checkstate):
 @with_app(TestApp)
 def test_add_transaction(app, checkstate):
     # It's possible to undo a transaction addition (from the ttable).
+    app.show_tview()
     app.ttable.add()
     row = app.ttable.edited
     # make sure that aut-created accounts go away as well.
@@ -104,7 +107,7 @@ def test_undo_shown_account(app):
     # the net worth sheet *before* triggering a refresh (otherwise, we crash).
     app.show_pview()
     app.mw.new_item()
-    app.mw.show_account()
+    app.show_account()
     app.doc.undo() # no crash
 
 #---
@@ -127,7 +130,7 @@ def test_undo_apanel_attrs(app, checkstate):
 def app_one_named_account():
     app = TestApp()
     app.add_account('foobar')
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_one_named_account)
@@ -236,7 +239,7 @@ def test_redo_delete_while_in_etable(app):
     app.bsheet.delete()
     app.doc.undo()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.clear_gui_calls()
     app.doc.redo()
     app.check_current_pane(PaneType.NetWorth)
@@ -305,6 +308,7 @@ def app_account_group():
 def test_descriptions_after_group(app):
     # All group descriptions are there.
     eq_(app.doc.undo_description(), 'Add group')
+    app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
     app.bsheet.selected.name = 'foobar'
     app.bsheet.save_edits()
@@ -334,7 +338,7 @@ def app_account_in_group():
     app = TestApp()
     app.add_group('group')
     app.add_account(group_name='group')
-    app.mainwindow.show_account()
+    app.show_account()
     return app
 
 @with_app(app_account_in_group)
@@ -378,7 +382,7 @@ def app_load_file():
     app.doc._cook()
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     return app
 
 @with_app(app_load_file)
@@ -537,7 +541,7 @@ def test_undo_schedule_entry_transfer(app):
 def app_two_txns_same_date():
     app = TestApp()
     app.add_account()
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry('19/6/2008', description='first')
     app.add_entry('19/6/2008', description='second')
     return app
@@ -559,7 +563,7 @@ def test_undo_reorder_entry(app, checkstate):
 def app_three_txns_reconciled():
     app = TestApp()
     app.add_account()
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry('19/6/2008', description='first')
     app.add_entry('19/6/2008', description='second')
     app.add_entry('20/6/2008', description='third')
@@ -576,7 +580,7 @@ def test_change_entry(app, checkstate):
     # (including the unreconciliation).
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.etable[0].date = '18/6/2008'
     app.etable.save_edits()
     checkstate()
@@ -624,7 +628,7 @@ def app_import_ofx():
     app.doc._cook()
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     return app
 
 @with_app(app_import_ofx)
@@ -654,7 +658,7 @@ def test_undo_import(app, checkstate):
 def app_with_autocreated_transfer():
     app = TestApp()
     app.add_account()
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry('19/6/2008', transfer='auto')
     return app
 

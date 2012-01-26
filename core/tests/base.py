@@ -74,7 +74,6 @@ class MainWindowGUI(CallLogger):
     # Link the view of lazily loaded elements.
     @log
     def refresh_panes(self):
-        print(repr(self), repr(self.testapp))
         app = self.testapp
         for i in range(app.mw.pane_count):
             app.link_gui(app.mw.pane_view(i))
@@ -125,20 +124,6 @@ class TestApp(TestAppBase):
         # reference.
         self.mw = self.mainwindow # shortcut. This one is often typed
         self.default_parent = self.mw
-        self.nwview = link_gui(self.mw._get_view_for_pane_type(PaneType.NetWorth))
-        self.pview = link_gui(self.mw._get_view_for_pane_type(PaneType.Profit))
-        self.tview = link_gui(self.mw._get_view_for_pane_type(PaneType.Transaction))
-        self.aview = link_gui(self.mw._get_view_for_pane_type(PaneType.Account))
-        self.scview = link_gui(self.mw._get_view_for_pane_type(PaneType.Schedule))
-        self.bview = link_gui(self.mw._get_view_for_pane_type(PaneType.Budget))
-        self.glview = link_gui(self.mw._get_view_for_pane_type(PaneType.GeneralLedger))
-        self.etable = link_gui(self.aview.etable)
-        self.etable_gui = self.etable.view
-        self.ttable = link_gui(self.tview.ttable)
-        self.ttable_gui = self.ttable.view
-        self.sctable = link_gui(self.scview.table)
-        self.btable = link_gui(self.bview.table)
-        self.gltable = link_gui(self.glview.gltable)
         self.apanel = link_gui(self.mw.account_panel)
         self.scpanel = link_gui(self.mw.schedule_panel)
         self.scsplittable = link_gui(self.scpanel.split_table)
@@ -149,24 +134,7 @@ class TestApp(TestAppBase):
         self.cdrpanel = link_gui(self.mw.custom_daterange_panel)
         self.arpanel = link_gui(self.mw.account_reassign_panel)
         self.expanel = link_gui(self.mw.export_panel)
-        self.balgraph = link_gui(self.aview.balgraph)
-        self.balgraph_gui = self.balgraph.view
-        self.bargraph = link_gui(self.aview.bargraph)
-        self.bargraph_gui = self.bargraph.view
-        self.nwgraph = link_gui(self.nwview.nwgraph)
-        self.nwgraph_gui = self.nwgraph.view
-        self.pgraph = link_gui(self.pview.pgraph)
-        self.bsheet = link_gui(self.nwview.bsheet)
-        self.bsheet_gui = self.bsheet.view
-        self.istatement = link_gui(self.pview.istatement)
-        self.istatement_gui = self.istatement.view
-        self.apie = link_gui(self.nwview.apie)
-        self.lpie = link_gui(self.nwview.lpie)
-        self.ipie = link_gui(self.pview.ipie)
-        self.epie = link_gui(self.pview.epie)
         self.sfield = link_gui(self.mw.search_field)
-        self.efbar = link_gui(self.aview.filter_bar)
-        self.tfbar = link_gui(self.tview.filter_bar)
         self.drsel = link_gui(self.mw.daterange_selector)
         make_gui('csvopt', CSVOptions, parent=self.doc)
         make_gui('iwin', ImportWindow, parent=self.doc)
@@ -186,7 +154,7 @@ class TestApp(TestAppBase):
             if elem is gui or elem is self.mw:
                 continue
             if isinstance(elem, GUIObject) and elem.view is None:
-                elem.view = self.make_logger()
+                self.link_gui(elem)
         return gui
     
     def tmppath(self):
@@ -218,14 +186,14 @@ class TestApp(TestAppBase):
         # This method simulates what a user would do to add an account with the specified attributes
         # Note that, undo-wise, this operation is not atomic.
         if account_type in (AccountType.Income, AccountType.Expense):
-            self.mw.select_pane_of_type(PaneType.Profit)
+            self.show_pview()
             sheet = self.istatement
             if account_type == AccountType.Income:
                 sheet.selected = sheet.income
             else:
                 sheet.selected = sheet.expenses
         else:
-            self.mw.select_pane_of_type(PaneType.NetWorth)
+            self.show_nwview()
             sheet = self.bsheet
             if account_type == AccountType.Asset:
                 sheet.selected = sheet.assets
@@ -258,7 +226,7 @@ class TestApp(TestAppBase):
     def add_budget(self, account_name, target_name, str_amount, start_date=None, repeat_type_index=2,
             repeat_every=1, stop_date=None):
         # if no target, set target_name to None
-        self.mainwindow.select_pane_of_type(PaneType.Budget)
+        self.show_bview()
         self.mainwindow.new_item()
         if start_date is None:
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
@@ -307,7 +275,7 @@ class TestApp(TestAppBase):
             repeat_type_index=0, repeat_every=1, stop_date=None):
         if start_date is None:
             start_date = self.app.format_date(date(date.today().year, date.today().month, 1))
-        self.mainwindow.select_pane_of_type(PaneType.Schedule)
+        self.show_scview()
         self.scpanel.new()
         self.scpanel.start_date = start_date
         self.scpanel.description = description
@@ -327,7 +295,7 @@ class TestApp(TestAppBase):
     
     def add_txn(self, date=None, description=None, payee=None, from_=None, to=None, amount=None,
             checkno=None):
-        self.mw.select_pane_of_type(PaneType.Transaction)
+        self.show_tview()
         self.ttable.add()
         row = self.ttable.edited
         if date is not None:
@@ -483,12 +451,12 @@ class TestApp(TestAppBase):
     def select_account(self, account_name):
         # Selects the account with `account_name` in the appropriate sheet
         predicate = lambda node: getattr(node, 'is_account', False) and node.name == account_name
-        self.mw.select_pane_of_type(PaneType.NetWorth)
+        self.show_nwview()
         node = self.bsheet.find(predicate)
         if node is not None:
             self.bsheet.selected = node
             return
-        self.mw.select_pane_of_type(PaneType.Profit)
+        self.show_pview()
         node = self.istatement.find(predicate)
         if node is not None:
             self.istatement.selected = node
@@ -496,10 +464,13 @@ class TestApp(TestAppBase):
         else:
             raise LookupError("Trying to show an account that doesn't exist")
         
-    def show_account(self, account_name):
+    def show_account(self, account_name=None):
         # Selects the account with `account_name` in the appropriate sheet and calls show_selected_account()
-        self.select_account(account_name)
+        # If account_name is None, we simply show the currently selected account.
+        if account_name:
+            self.select_account(account_name)
         self.mw.show_account()
+        self.link_aview()
     
     def set_column_visible(self, colname, visible):
         # Toggling column from the UI is rather simple for a human, but not for a program. The
@@ -531,34 +502,78 @@ class TestApp(TestAppBase):
         self.mw.new_tab()
         return self.current_view()
     
+    def link_aview(self):
+        if hasattr(self, 'aview'):
+            return
+        assert self.current_view().VIEW_TYPE == PaneType.Account
+        self.aview = self.link_gui(self.current_view())
+        self.etable = self.link_gui(self.aview.etable)
+        self.etable_gui = self.etable.view
+        self.balgraph = self.link_gui(self.aview.balgraph)
+        self.balgraph_gui = self.balgraph.view
+        self.bargraph = self.link_gui(self.aview.bargraph)
+        self.bargraph_gui = self.bargraph.view
+        self.efbar = self.link_gui(self.aview.filter_bar)
+    
     def show_nwview(self):
         self.mw.select_pane_of_type(PaneType.NetWorth)
-        return self.current_view()
+        if not hasattr(self, 'nwview'):
+            self.nwview = self.link_gui(self.current_view())
+            self.nwgraph = self.link_gui(self.nwview.nwgraph)
+            self.nwgraph_gui = self.nwgraph.view
+            self.bsheet = self.link_gui(self.nwview.bsheet)
+            self.bsheet_gui = self.bsheet.view
+            self.apie = self.link_gui(self.nwview.apie)
+            self.lpie = self.link_gui(self.nwview.lpie)
+        return self.nwview
     
     def show_pview(self):
         self.mw.select_pane_of_type(PaneType.Profit)
-        return self.current_view()
+        if not hasattr(self, 'pview'):
+            self.pview = self.link_gui(self.current_view())
+            self.pgraph = self.link_gui(self.pview.pgraph)
+            self.istatement = self.link_gui(self.pview.istatement)
+            self.istatement_gui = self.istatement.view
+            self.ipie = self.link_gui(self.pview.ipie)
+            self.epie = self.link_gui(self.pview.epie)
+        return self.pview
     
     def show_tview(self):
         self.mw.select_pane_of_type(PaneType.Transaction)
-        return self.current_view()
+        if not hasattr(self, 'tview'):
+            self.tview = self.link_gui(self.current_view())
+            self.ttable = self.link_gui(self.tview.ttable)
+            self.ttable_gui = self.ttable.view
+            self.tfbar = self.link_gui(self.tview.filter_bar)
+        return self.tview
     
     def show_aview(self):
         # This should only be used when a specific account has previously been shown before
         assert self.mw.shown_account is not None
+        # We don do GUI linking here because that method cannot be called unless the pane has
+        # already been brought up by a specific account-opening method. Call link_aview()
         self.mw.select_pane_of_type(PaneType.Account)
     
     def show_bview(self):
         self.mw.select_pane_of_type(PaneType.Budget)
-        return self.current_view()
+        if not hasattr(self, 'bview'):
+            self.bview = self.link_gui(self.current_view())
+            self.btable = self.link_gui(self.bview.table)
+        return self.bview
     
     def show_scview(self):
         self.mw.select_pane_of_type(PaneType.Schedule)
-        return self.current_view()
+        if not hasattr(self, 'scview'):
+            self.scview = self.link_gui(self.current_view())
+            self.sctable = self.link_gui(self.scview.table)
+        return self.scview
     
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
-        return self.current_view()
+        if not hasattr(self, 'glview'):
+            self.glview = self.link_gui(self.current_view())
+            self.gltable = self.link_gui(self.glview.gltable)
+        return self.glview
     
     def show_dpview(self):
         self.mw.select_pane_of_type(PaneType.DocProps)

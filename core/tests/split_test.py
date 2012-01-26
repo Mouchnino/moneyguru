@@ -17,7 +17,7 @@ def first_debit_credit_indexes(app):
 def app_empty_account():
     app = TestApp()
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_empty_account)
@@ -50,7 +50,7 @@ def test_add_entry_save_split(app):
 def app_one_entry():
     app = TestApp()
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', 'Deposit', transfer='Salary', increase='42.00')
     app.tpanel.load()
     return app
@@ -117,7 +117,7 @@ def test_set_split_account(app):
     app.show_nwview()
     eq_(app.bsheet.assets[1].name, 'foo') # The foo account was autocreated
     app.bsheet.selected = app.bsheet.assets[1]
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.tpanel.load()
     app.stable.select([1])
     row = app.stable.selected_row
@@ -133,7 +133,7 @@ def test_set_split_account(app):
 def app_entry_without_transfer():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(description='foobar', decrease='130.00')
     return app
 
@@ -246,7 +246,7 @@ def test_transfer_read_only(app):
 def app_split_with_no_account():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='2/1/2007', description='Split', transfer='expense1', decrease='100')
     app.tpanel.load()
     app.stable.add()

@@ -15,10 +15,12 @@ from ..model.account import AccountType
 @with_app(TestApp)
 def test_reconciliation_mode(app):
     #Toggling reconciliation mode on and off
+    app.add_account('foo')
+    app.show_account()
     app.clear_gui_calls()
     assert not app.aview.reconciliation_mode
     app.aview.toggle_reconciliation_mode()
-    app.check_gui_calls(app.aview.view, ['refresh_reconciliation_button'])
+    app.aview.view.check_gui_calls(['refresh_reconciliation_button'])
     assert app.aview.reconciliation_mode
     app.aview.toggle_reconciliation_mode()
     assert not app.aview.reconciliation_mode
@@ -27,7 +29,7 @@ def test_reconciliation_mode(app):
 def app_one_account():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_one_account)
@@ -52,7 +54,7 @@ def test_multiple_recdate_overlapping(app):
 def app_one_entry():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', decrease='42')
     return app
 
@@ -92,7 +94,7 @@ def test_toggle_entries_reconciled(app):
 def app_one_entry_reconciliation_mode():
     app = TestApp()    
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', decrease='42')
     app.aview.toggle_reconciliation_mode()
     return app
@@ -154,7 +156,7 @@ def app_entry_in_future(monkeypatch):
     monkeypatch.patch_today(2009, 12, 26)
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('27/12/2009', increase='42')
     app.aview.toggle_reconciliation_mode()
     return app
@@ -168,7 +170,7 @@ def test_can_reconcile_entry_in_future(app):
 def app_entry_in_liability():
     app = TestApp()
     app.add_account(account_type=AccountType.Liability)
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(increase='42')
     app.aview.toggle_reconciliation_mode()
     return app
@@ -183,7 +185,7 @@ def test_entry_balance_in_liability(app):
 def app_reconciled_entry():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', transfer='foo', decrease='42')
     app.aview.toggle_reconciliation_mode()
     app.etable.selected_row.toggle_reconciled()
@@ -200,10 +202,10 @@ def test_change_amount_currency_dereconciles_entry(app):
 @with_app(app_reconciled_entry)
 def test_change_amount_currency_from_other_side_dereconciles_entry(app):
     # Changing an entry's amount from the "other side" also de-reconcile that entry
-    app.mainwindow.show_account()
+    app.show_account()
     app.etable[0].increase = '12eur'
     app.etable.save_edits()
-    app.mainwindow.show_account()
+    app.show_account()
     assert not app.etable[0].reconciled
 
 @with_app(app_reconciled_entry)
@@ -236,7 +238,7 @@ def app_entry_different_reconciliation_date(monkeypatch):
     app = TestApp()
     monkeypatch.patch_today(2008, 7, 20)
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', decrease='42')
     app.etable[0].reconciliation_date = '12/07/2008'
     app.etable.save_edits()
@@ -246,15 +248,16 @@ def app_entry_different_reconciliation_date(monkeypatch):
 def test_save_and_load_different_reconciliation_date(app):
     # reconciliation date is correctly saved and loaded
     newapp = app.save_and_load()
+    newapp.show_nwview()
     newapp.bsheet.selected = newapp.bsheet.assets[0]
-    newapp.mw.show_account()
+    newapp.show_account()
     eq_(newapp.etable[0].reconciliation_date, '12/07/2008')
 
 #--- Three entries
 def app_three_entries():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008', 'one')
     app.add_entry('20/1/2008', 'two')
     app.add_entry('31/1/2008', 'three')
@@ -279,7 +282,7 @@ def test_toggle_reconcile_then_save(app):
 def app_three_entries_one_reconciled():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008', 'one', increase='1')
     app.add_entry('20/1/2008', 'two', increase='2')
     app.add_entry('31/1/2008', 'three', increase='3')
@@ -351,7 +354,7 @@ def test_can_change_other_account_attributes(app):
 def app_three_entries_all_reconciled():
     app = TestApp()
     app.add_account('account')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008', 'one', increase='1', reconciliation_date='1/1/2008')
     app.add_entry('2/1/2008', 'two', increase='2', reconciliation_date='2/1/2008')
     app.add_entry('3/1/2008', 'three', increase='4', reconciliation_date='3/1/2008')
@@ -375,7 +378,7 @@ def test_reconcile_schedule_spawn_by_setting_recdate(app):
 def app_different_reconciliation_date_order():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     # when sorting by reconciliation date, 'two' comes first.
     app.add_entry('19/1/2008', 'one', increase='1', reconciliation_date='22/1/2008')
     app.add_entry('20/1/2008', 'two', increase='2', reconciliation_date='20/1/2008')

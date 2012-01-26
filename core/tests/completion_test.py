@@ -23,7 +23,7 @@ def complete_etable(app, value, attrname):
 def app_one_empty_account():
     app = TestApp()
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     return app
 
 #--- Empty account with whitespace in name
@@ -31,7 +31,7 @@ def app_empty_account_with_whitespace_in_name():
     app = TestApp()
     app.add_account('  Foobar  ')
     app.add_account('foobaz')
-    app.mw.show_account()
+    app.show_account()
     return app
 
 #--- Three empty accounts
@@ -40,7 +40,7 @@ def app_three_empty_accounts():
     app.add_account('one')
     app.add_account('two')
     app.add_account('three') # This is the selected account (in second position)
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_three_empty_accounts)
@@ -57,7 +57,7 @@ def test_complete_description(app):
 def app_income_account_shown():
     app = TestApp()
     app.add_account('foobar', account_type=AccountType.Income)
-    app.mw.show_account()
+    app.show_account()
     return app
 
 #--- Different account types
@@ -65,14 +65,14 @@ def app_different_account_types():
     app = TestApp()
     app.add_account('income', account_type=AccountType.Income)
     app.add_account('asset')
-    app.mw.show_account()
+    app.show_account()
     return app
 
 #--- Entry in editing mode
 def app_entry_in_editing_mode():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.etable.add()
     row = app.etable.edited
     row.date = '1/10/2007'
@@ -89,7 +89,7 @@ def test_complete(app):
 def app_one_entry():
     app = TestApp()
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
     return app
 
@@ -208,7 +208,7 @@ def test_field_completion_on_set_entry_payee(app):
 def app_entry_with_blank_description():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
     return app
 
@@ -232,7 +232,7 @@ def test_complete_empty_string(app):
 def app_entry_with_whitespace_in_description():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', description='  foobar  ', increase='1')
     return app
 
@@ -250,7 +250,7 @@ def test_completion_strip_whitespace(app):
 def app_two_entries():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('2/10/2007', 'first', increase='102.00')
     app.add_entry('4/10/2007', 'second', increase='42.00')
     app.etable.select([0])
@@ -276,11 +276,11 @@ def test_amount_completion_already_set(app):
 def app_three_entries_in_two_account_types():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(description='first')
     app.add_entry(description='second')
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(description='third') # selected
     return app
 
@@ -299,7 +299,7 @@ def app_four_entries_with_description_and_category_collision(monkeypatch):
     # of the tests.
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     monkeypatch.setattr(time, 'time', lambda: 42)
     app.add_entry('2/10/2007', description='description', payee='payee', transfer='category', increase='42')
     monkeypatch.setattr(time, 'time', lambda: 43)
@@ -507,7 +507,7 @@ def test_persistence_of_completion(app, tmpdir, monkeypatch):
     app.doc.load_from_xml(filepath)
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     assert_completion_order_changed(app)
 
 #--- Account created through transaction table

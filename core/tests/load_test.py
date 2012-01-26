@@ -47,7 +47,7 @@ class TestLoadFile:
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'simple.moneyguru'))
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -155,7 +155,7 @@ class TestLoadMultiCurrency:
         app.doc.load_from_xml(testdata.filepath('moneyguru', 'multi_currency.moneyguru'))
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.etable.select([0])
         return app
     
@@ -198,11 +198,11 @@ class TestTwoAccountTwoEntriesInEachWithNonAsciiStrings:
         # is selected.
         app = TestApp()
         app.add_account('first_account\u0142', currency=PLN)
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('3/10/2007', 'first\u0142', transfer='other account', increase='1 usd')
         app.add_entry('4/10/2007', 'second\u0142', increase='2 usd') # Imbalance
         app.add_account('second_account\u0142', currency=CAD)
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('5/10/2007', 'third\u0142', transfer='first_account\u0142', decrease='1 usd')
         app.add_entry('6/10/2007', 'fourth\u0142', transfer='yet another account', decrease='2 usd')
         return app
@@ -227,6 +227,7 @@ class TestLoadInvalidAccountType:
     @with_app(do_setup)
     def test_account_type(self, app):
         # The account with the invalid type is imported as an asset account.
+        app.show_nwview()
         eq_(app.bsheet.assets.children_count, 3)
     
 
@@ -254,8 +255,9 @@ class TestLoadWithReferences1:
     @with_app(do_setup)
     def test_reconciliation(self, app):
         # legacy boolean reconciliation was correctly loaded
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # Account 1
-        app.mainwindow.show_account()
+        app.show_account()
         # 2 entries, first is not reconciled, second is.
         assert not app.etable[0].reconciled
         assert app.etable[1].reconciled
@@ -285,7 +287,7 @@ def app_transaction_with_payee_and_checkno():
 def app_entry_with_blank_description():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', description='', transfer='Salary', increase='42')
     return app
 
@@ -317,14 +319,14 @@ def app_transaction_with_memos():
 def app_entry_in_liability():
     app = TestApp()
     app.add_account('Credit card', account_type=AccountType.Liability)
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('1/1/2008', 'Payment', increase='10')
     return app
 
 def app_split_with_null_amount():
     app = TestApp()
     app.add_account('foo')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='2/1/2007', description='Split', transfer='bar')
     app.tpanel.load()
     app.stable.add()
@@ -366,7 +368,7 @@ def app_one_schedule_and_one_normal_txn():
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('account')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('19/09/2008', description='bar', increase='2')
     app.add_schedule(start_date='13/09/2008', description='foo', account='account', amount='1',
         repeat_every=3)

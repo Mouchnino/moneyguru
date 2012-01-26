@@ -46,7 +46,7 @@ def test_add_change_and_save(app):
     app.ttable.save_edits()
     app.show_pview()
     app.istatement.selected = app.istatement.income[0]
-    app.istatement.show_selected_account()
+    app.show_account()
     eq_(app.etable_count(), 1)
 
 @with_app(app_tview_shown)
@@ -262,7 +262,7 @@ def test_delete(app):
     eq_(app.ttable.row_count, 0)
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(list(app.balgraph.data), [])
     eq_(app.account_names(), ['first'])
 
@@ -323,7 +323,7 @@ def test_save_edits(app):
     eq_(app.istatement.expenses[0].name, 'newto')
     # now we want to verify that cooking has taken place
     app.istatement.selected = app.istatement.expenses[0]
-    app.istatement.show_selected_account()
+    app.show_account()
     row = app.etable[0]
     eq_(row.increase, '0.42')
 
@@ -441,7 +441,7 @@ def test_from_to_column_display_acct_number(app):
 def app_two_way_txn_inverted_splits():
     app = TestApp()
     app.add_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', transfer='second', increase='42')
     return app
 
@@ -494,7 +494,7 @@ def app_three_way_multi_currency_transaction():
     app = TestApp()
     USD.set_CAD_value(0.8, date(2008, 1, 1))
     app.add_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', transfer='second', decrease='42')
     app.tpanel.load()
     app.stable.select([1])
@@ -567,7 +567,7 @@ class TestTwoWayNullAmounts:
     def do_setup(self):
         app = TestApp()
         app.add_account('first')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('11/07/2008', transfer='second')
         app.show_tview()
         return app
@@ -622,7 +622,7 @@ class TestTwoTransactionsOneOutOfRange:
         app = TestApp()
         app.drsel.select_month_range()
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('11/06/2008', description='first')
         app.add_entry('11/07/2008', description='second') # The month range has now changed to July 2008
         app.show_tview()
@@ -655,7 +655,7 @@ class TestTwoTransactionsOneOutOfRange:
 def app_three_transactions():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', description='first', transfer='first', increase='1')
     app.add_entry('11/07/2008', description='second', transfer='second', increase='2')
     app.add_entry('12/07/2008', description='third', transfer='third', increase='3') 
@@ -714,17 +714,17 @@ def test_explicit_selection(app):
     # affect the ttable selection.
     app.show_pview()
     app.istatement.selected = app.istatement.income[1] # second
-    app.istatement.show_selected_account()
+    app.show_account()
     app.show_tview()
     eq_(app.ttable.selected_indexes, [2]) # explicit selection
     # the other way around too
     app.ttable.select([1])
     app.show_pview()
     app.istatement.selected = app.istatement.income[2]
-    app.istatement.show_selected_account()
+    app.show_account()
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(app.etable.selected_indexes, [1]) # explicit selection
 
 @with_app(app_three_transactions)
@@ -763,7 +763,7 @@ class TestThreeTransactionsEverythingReconciled:
         app.add_account('second')
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.add_entry('19/07/2008', description='entry 1', increase='1')
         app.add_entry('20/07/2008', description='entry 2', transfer='second', increase='2')
         app.add_entry('20/07/2008', description='entry 3', increase='3')
@@ -773,7 +773,7 @@ class TestThreeTransactionsEverythingReconciled:
         app.etable[2].toggle_reconciled()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
         app.aview.toggle_reconciliation_mode() # commit reconciliation
         app.show_tview()
@@ -868,7 +868,7 @@ def test_table_is_refreshed_upon_load(app):
 def app_autofill():
     app = TestApp()
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42')
     app.show_tview()
     return app
@@ -1005,7 +1005,7 @@ class TestSevenEntries:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2008, 1, 1))
         app.add_entry('1/1/2008', description='txn 1')
         app.add_entry('2/1/2008', description='txn 2')
@@ -1129,7 +1129,7 @@ class TestFourEntriesOnTheSameDate:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.doc.date_range = MonthRange(date(2008, 1, 1))
         app.add_entry('1/1/2008', description='txn 1')
         app.add_entry('1/1/2008', description='txn 2')

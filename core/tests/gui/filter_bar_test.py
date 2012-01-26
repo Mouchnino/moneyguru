@@ -16,7 +16,10 @@ class TestPristine:
     @with_app(TestApp)
     def test_attributes(self, app):
         # the filter bars start out as unfiltered, and both etable and ttable have one.
+        app.show_tview()
         assert app.tfbar.filter_type is None
+        app.add_account('foo')
+        app.show_account('foo')
         assert app.efbar.filter_type is None
     
 
@@ -25,7 +28,7 @@ class TestTransactionsOfEachType:
         app = TestApp()
         app.add_account('asset 1')
         app.add_account('asset 2')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry(description='first', transfer='Income', increase='1')
         app.add_entry(description='second', increase='2')
         app.add_entry(description='third', transfer='Expense', decrease='3')
@@ -96,14 +99,14 @@ class TestTransactionsOfEachType:
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.clear_gui_calls()
-        app.istatement.show_selected_account()
+        app.show_account()
         assert app.efbar.filter_type is None
         app.efbar.view.check_gui_calls(['refresh', 'disable_transfers'])
         app.show_tview()
         app.tfbar.view.check_gui_calls(['refresh']) # no disable
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.efbar.view.check_gui_calls(['refresh', 'enable_transfers'])
     
     @with_app(do_setup)
@@ -137,7 +140,7 @@ class TestThreeEntriesOneReconciled:
     def do_setup(self):
         app = TestApp()
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('1/1/2008', 'one')
         app.add_entry('20/1/2008', 'two')
         app.add_entry('31/1/2008', 'three')
@@ -174,7 +177,7 @@ def app_expense_split_between_asset_and_liability():
     app = TestApp()
     app.add_account('liability', account_type=AccountType.Liability)
     app.add_account('asset')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(transfer='expense', decrease='100')
     app.tpanel.load()
     app.stable.add()
@@ -195,7 +198,7 @@ def test_efbar_increase_decrease():
     # now, let's go to the liability side
     app.show_nwview()
     app.bsheet.selected = app.bsheet.liabilities[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     # we're still on FilterType.Expense (decrease)
     eq_(app.etable_count(), 0)
     app.efbar.filter_type = FilterType.Income # increase

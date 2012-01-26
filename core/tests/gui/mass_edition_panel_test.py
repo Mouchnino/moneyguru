@@ -64,10 +64,10 @@ def test_saving_nothing_does_nothing(app):
 def app_two_transactions_different_value():
     app = TestApp()
     app.add_account('from1')
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(date='06/07/2008', description='description1', payee='payee1', checkno='42', transfer='to1', decrease='42')
     app.add_account('from2')
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(date='07/07/2008', description='description2', payee='payee2', checkno='43', transfer='to2', decrease='43')
     app.show_tview()
     app.ttable.select([0, 1])
@@ -208,7 +208,7 @@ def test_change_description_only():
 def app_two_transactions_same_values():
     app = TestApp()
     app.add_account('account1')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
     app.etable.select([0, 1])
@@ -280,7 +280,7 @@ def test_load_again(app, monkeypatch):
 def app_two_transactions_one_split():
     app = TestApp()
     app.add_account('account1')
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
     app.add_entry(date='06/07/2008', description='description', payee='payee', checkno='42', transfer='account2', increase='42')
     app.tpanel.load()
@@ -303,7 +303,7 @@ def test_cant_change_accounts():
 def app_two_foreign_transactions():
     app = TestApp()
     app.add_account('account1')
-    app.mainwindow.show_account()
+    app.show_account()
     app.add_entry(increase='42 eur')
     app.add_entry(increase='42 eur')
     app.show_tview()

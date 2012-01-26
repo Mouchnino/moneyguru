@@ -120,7 +120,7 @@ def test_selected_account_is_updated_on_nonrevalidating_show(app):
     app.add_account('Income', account_type=AccountType.Income)
     app.show_nwview()
     app.show_pview() # no revalidation since nothing has changed
-    app.mw.show_account()
+    app.show_account()
     app.check_current_pane(PaneType.Account, account_name='Income')
 
 @with_app(TestApp)
@@ -182,16 +182,6 @@ def app_cleared_gui_calls():
     return app
 
 @with_app(app_cleared_gui_calls)
-def test_change_date_range(app):
-    app.doc.date_range = app.doc.date_range.prev()
-    expected_calls = ['refresh', 'animate_backward']
-    app.drsel.view.check_gui_calls(expected_calls)
-    app.check_gui_calls_partial(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.nwgraph_gui, ['refresh'])
-    app.check_gui_calls_partial(app.balgraph_gui, not_expected=['refresh'])
-    app.check_gui_calls_partial(app.bargraph_gui, not_expected=['refresh'])
-
-@with_app(app_cleared_gui_calls)
 def test_new_tab(app):
     emptyview = app.new_tab()
     eq_(app.mw.pane_count, 6)
@@ -203,6 +193,7 @@ def test_new_tab(app):
 
 @with_app(app_cleared_gui_calls)
 def test_toggle_area_visibility(app):
+    app.show_nwview()
     app.mw.toggle_area_visibility(PaneArea.BottomGraph)
     app.nwview.view.check_gui_calls(['update_visibility'])
     # It sends the message to the main window as well (so it can update its buttons)
@@ -221,7 +212,7 @@ def app_one_account():
 @with_app(app_one_account)
 def test_rename_opened_account_changes_tab_label(app):
     # Renaming the account with an opened tab renames that tab.
-    app.mw.show_account()
+    app.show_account()
     index = app.mw.current_pane_index
     app.show_nwview()
     app.clear_gui_calls()
@@ -233,7 +224,7 @@ def test_rename_opened_account_changes_tab_label(app):
 @with_app(app_one_account)
 def test_show_account_opens_a_new_tab(app):
     # Showing an account opens a new tab with the account shown in it.
-    app.mw.show_account()
+    app.show_account()
     eq_(app.mw.pane_count, 6)
     eq_(app.mw.current_pane_index, 5)
     eq_(app.mw.pane_type(5), PaneType.Account)
@@ -241,11 +232,24 @@ def test_show_account_opens_a_new_tab(app):
     expected = ['refresh_panes', 'change_current_pane']
     app.check_gui_calls_partial(app.mainwindow_gui, expected, verify_order=True)
 
+@with_app(app_one_account)
+def test_change_date_range(app):
+    app.show_account()
+    app.show_nwview()
+    app.clear_gui_calls()
+    app.doc.date_range = app.doc.date_range.prev()
+    expected_calls = ['refresh', 'animate_backward']
+    app.drsel.view.check_gui_calls(expected_calls)
+    app.check_gui_calls_partial(app.bsheet_gui, ['refresh'])
+    app.check_gui_calls(app.nwgraph_gui, ['refresh'])
+    app.check_gui_calls_partial(app.balgraph_gui, not_expected=['refresh'])
+    app.check_gui_calls_partial(app.bargraph_gui, not_expected=['refresh'])
+
 #--- Asset and Income accounts with txn
 def app_asset_and_income_accounts_with_txn():
     app = TestApp()
     app.add_account('Checking')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('10/10/2007', 'Deposit', payee='Payee', transfer='Salary', increase='42.00')
     app.doc.date_range = YearRange(date(2007, 1, 1))
     app.clear_gui_calls()
@@ -274,13 +278,13 @@ def test_navigate_back(app):
     # navigate_back() shows the appropriate sheet depending on which account entry table shows
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.clear_gui_calls()
     app.mw.navigate_back()
     eq_(app.mw.current_pane_index, 0)
     app.show_pview()
     app.istatement.selected = app.istatement.income[0]
-    app.istatement.show_selected_account()
+    app.show_account()
     app.clear_gui_calls()
     app.mw.navigate_back()
     eq_(app.mw.current_pane_index, 1)
@@ -291,11 +295,11 @@ def test_show_account_when_in_sheet(app):
     # has a tab opened, re-use that tab.
     app.show_nwview()
     app.clear_gui_calls()
-    app.mw.show_account()
+    app.show_account()
     eq_(app.mw.current_pane_index, 5) # The tab opened in setup is re-used
     app.show_pview()
     app.clear_gui_calls()
-    app.mw.show_account()
+    app.show_account()
     eq_(app.mw.current_pane_index, 6) # a new tab is opened for this one
 
 @with_app(app_asset_and_income_accounts_with_txn)
@@ -304,14 +308,14 @@ def test_switch_panes_through_show_account(app):
     app.show_pview()
     eq_(app.mw.current_pane_index, 1)
     app.istatement.selected = app.istatement.income[0]
-    app.istatement.show_selected_account()
+    app.show_account()
     eq_(app.mw.current_pane_index, 6)
     expected = ['show_bar_graph', 'refresh_reconciliation_button']
     app.check_gui_calls_partial(app.aview.view, expected)
     app.show_nwview()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(app.mw.current_pane_index, 5)
     expected = ['show_line_graph', 'refresh_reconciliation_button']
     app.check_gui_calls_partial(app.aview.view, expected)
@@ -340,10 +344,10 @@ def app_one_transaction():
 @with_app(app_one_transaction)
 def test_show_account_when_in_etable(app):
     app.show_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.check_current_pane(PaneType.Account, 'second')
 
 @with_app(app_one_transaction)
 def test_show_account_when_in_ttable(app):
-    app.mw.show_account()
+    app.show_account()
     app.check_current_pane(PaneType.Account, 'first')

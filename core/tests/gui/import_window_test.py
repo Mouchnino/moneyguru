@@ -80,10 +80,11 @@ class TestImportCheckbookQIF:
         eq_(len(app.iwin.panes), 1)
         eq_(app.iwin.panes[0].name, 'Account 2')
         app.check_gui_calls(app.iwin_gui, ['update_selected_pane', 'close_selected_tab'])
+        app.show_nwview()
         # The account & entries has been added
         eq_(app.bsheet.assets[0].name, 'Account 1')
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 5)
         # When importing the last pane, the window should close
         app.clear_gui_calls()
@@ -95,8 +96,9 @@ class TestImportCheckbookQIF:
         # When the will_import checkbox is unchecked, don't import the entry
         app.itable[0].will_import = False
         app.iwin.import_selected_pane()
+        app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 4)
     
     @with_app(do_setup)
@@ -185,7 +187,7 @@ class TestImportCheckbookQIFWithSomeExistingTransactions:
     def do_setup(self):
         app = TestApp()
         app.add_account('foo')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry(date='01/01/2007', description='first entry', increase='1')
         app.aview.toggle_reconciliation_mode()
         app.etable.toggle_reconciled()
@@ -204,7 +206,7 @@ class TestImportCheckbookQIFWithSomeExistingTransactions:
         app.iwin.import_selected_pane()
         eq_(app.bsheet.assets.children_count, 3) # did not add a new account
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 7) # The entries have been added
     
     @with_app(do_setup)

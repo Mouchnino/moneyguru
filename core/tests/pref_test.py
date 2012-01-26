@@ -20,7 +20,7 @@ def test_mainwindow_panes_reopen(app):
     # Main Window panes re-open themselves upon launch, in the same order
     app.mw.close_pane(4) # close budget pane
     app.add_account('foo')
-    app.mw.show_account() # we now have the 'foo' account opened.
+    app.show_account() # we now have the 'foo' account opened.
     app.mw.move_pane(4, 1) # move the 'foo' pane at the second position
     # The selected pane index is 1
     newapp = app.save_and_load()
@@ -33,12 +33,13 @@ def test_mainwindow_panes_reopen(app):
 def test_mainwindow_panes_reopen_except_nonexistant_accounts(app):
     # When re-opening tabs, ignore (and don't crash) tabs for accounts that aren't in the document.
     app.add_account('foo')
-    app.mw.show_account()
+    app.show_account()
     filename = app.save_file()
     app.doc.close()
     # now, we're going to remove the account from underneath
     meddling_app = TestApp()
     meddling_app.doc.load_from_xml(filename)
+    meddling_app.show_nwview()
     meddling_app.bsheet.selected = meddling_app.bsheet.assets[0]
     meddling_app.bsheet.delete()
     meddling_app.doc.save_to_xml(filename)
@@ -61,7 +62,9 @@ def test_gui_calls_after_pref_restore(app):
     # appropriate gui calls are made after pref restore
     app.clear_gui_calls()
     app = app.save_and_load()
+    app.show_tview()
     app.ttable.columns.view.check_gui_calls(['restore_columns'])
+    app.show_nwview()
     app.bsheet.view.check_gui_calls_partial(['refresh_expanded_paths'])
 
 @with_app(TestApp)
@@ -69,7 +72,7 @@ def test_numeric_account_name_pane_reopen(app):
     # Under Qt, prefs are weird. If a pref is saved as a string, but has a numerical value in it,
     # it will be read back as a int. This shouldn't cause a crash.
     app.add_account('12345')
-    app.mw.show_account()
+    app.show_account()
     filename = app.save_file()
     app.doc.close()
     # now let's go change the 'account_name' attr of the pane in the prefs to emulate Qt's behavior
@@ -88,43 +91,55 @@ def test_graph_visibility_is_restored(app):
     newapp.mw.view.check_gui_calls_partial(['update_area_visibility'])
 
 #--- Columns save/restore
-def assert_column_save_restore(app, tablename, colname):
+def assert_column_save_restore(app, tablename, colname, show_pane_func):
+    getattr(app, show_pane_func)()
     table = getattr(app, tablename)
     table.columns.move_column(colname, 0)
     table.columns.resize_column(colname, 999)
     newapp = app.save_and_load()
+    getattr(newapp, show_pane_func)()
     table = getattr(newapp, tablename)
     eq_(table.columns.colnames[0], colname)
     eq_(table.columns.column_width(colname), 999)
 
 @with_app(TestApp)
 def test_ttable_restores_columns(app):
-    assert_column_save_restore(app, 'ttable', 'payee')
+    assert_column_save_restore(app, 'ttable', 'payee', 'show_tview')
 
 @with_app(TestApp)
 def test_etable_restores_columns(app):
-    assert_column_save_restore(app, 'etable', 'payee')
+    app.add_account('foo')
+    app.show_account()
+    table = app.etable
+    table.columns.move_column('payee', 0)
+    table.columns.resize_column('payee', 999)
+    newapp = app.save_and_load()
+    newapp.show_account('foo')
+    table = app.etable
+    eq_(table.columns.colnames[0], 'payee')
+    eq_(table.columns.column_width('payee'), 999)
 
 @with_app(TestApp)
 def test_sctable_restores_columns(app):
-    assert_column_save_restore(app, 'sctable', 'payee')
+    assert_column_save_restore(app, 'sctable', 'payee', 'show_scview')
 
 @with_app(TestApp)
 def test_btable_restores_columns(app):
-    assert_column_save_restore(app, 'btable', 'target')
+    assert_column_save_restore(app, 'btable', 'target', 'show_bview')
 
 @with_app(TestApp)
 def test_bsheet_restores_columns(app):
-    assert_column_save_restore(app, 'bsheet', 'end')
+    assert_column_save_restore(app, 'bsheet', 'end', 'show_nwview')
 
 @with_app(TestApp)
 def test_istatement_restores_columns(app):
-    assert_column_save_restore(app, 'istatement', 'last_cash_flow')
+    assert_column_save_restore(app, 'istatement', 'last_cash_flow', 'show_pview')
 
 #--- Expanded group
 def app_expanded_group():
     app = TestApp()
     app.add_group('group')
+    app.show_nwview()
     app.bsheet.expand_node(app.bsheet.assets[0])
     return app
 
@@ -135,39 +150,46 @@ def test_expanded_nodes_are_restored_on_load(app):
     # sheet is not connected at close (and thus doesn't receive the document_will_close msg).
     app.show_pview()
     newapp = app.save_and_load()
+    newapp.show_nwview()
     assert (0, 0) in newapp.bsheet.expanded_paths
 
 #--- Two different documents
 def test_expanded_node_prefs_is_at_document_level():
     # Expanded node preferences are at the document level
     app1 = TestApp()
+    app1.show_nwview()
     app1.add_group('group')
     app1.bsheet.expand_node(app1.bsheet.assets[0])
     filename = app1.save_file()
     app1.doc.close()
     app2 = TestApp(app=app1.app)
+    app2.show_nwview()
     app2.add_group('group')
     app2.bsheet.collapse_node(app1.bsheet.assets[0])
     app2.doc.close() # when not doc based, this call will overwrite first doc's prefs
     newapp = TestApp(app=app1.app)
     newapp.doc.load_from_xml(filename)
+    newapp.show_nwview()
     assert (0, 0) in newapp.bsheet.expanded_paths
 
 def test_table_column_prefs_is_at_document_level():
     # table columns preferences are at the document level
     app1 = TestApp()
+    app1.show_tview()
     app1.ttable.columns.move_column('date', 5)
     app1.ttable.columns.resize_column('date', 42)
     app1.ttable.columns.set_column_visible('date', False)
     filename = app1.save_file()
     app1.doc.close()
     app2 = TestApp(app=app1.app)
+    app2.show_tview()
     app2.ttable.columns.move_column('date', 4)
     app2.ttable.columns.resize_column('date', 41)
     app2.ttable.columns.set_column_visible('date', True)
     app2.doc.close()
     newapp = TestApp(app=app1.app)
     newapp.doc.load_from_xml(filename)
+    newapp.show_tview()
     eq_(newapp.ttable.columns.colnames[5], 'date')
     eq_(newapp.ttable.columns.column_width('date'), 42)
     assert not newapp.ttable.columns.column_is_visible('date')
@@ -184,6 +206,7 @@ def test_account_exclusion_prefs_is_at_document_level():
     app2.doc.close()
     newapp = TestApp(app=app1.app)
     newapp.doc.load_from_xml(filename)
+    newapp.show_nwview()
     assert newapp.bsheet.assets[0].is_excluded
 
 def test_pane_prefs_is_at_document_level():

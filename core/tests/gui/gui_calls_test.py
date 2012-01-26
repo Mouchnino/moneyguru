@@ -19,6 +19,7 @@ from ..base import TestApp, with_app, testdata
 #--- No Setup
 def test_initial_gui_calls():
     app = TestApp()
+    app.show_nwview()
     app.bsheet.view.check_gui_calls(['refresh'])
     expected = ['refresh_panes', 'change_current_pane', 'refresh_status_line', 'update_area_visibility']
     app.mw.view.check_gui_calls(expected)
@@ -34,12 +35,13 @@ def app_cleared_gui_calls():
 def test_add_account_and_show_it(app):
     # When an account is shown, the reconciliation button is refreshed.
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.check_gui_calls_partial(app.aview.view, ['refresh_reconciliation_button'])
 
 def test_add_group():
     # Adding a group refreshes the view and goes into edit mode.
     app = app_cleared_gui_calls()
+    app.show_nwview()
     app.bsheet.add_account_group()
     expected_calls = ['stop_editing', 'start_editing', 'refresh', 'update_selection']
     app.check_gui_calls(app.bsheet_gui, expected_calls)
@@ -73,6 +75,7 @@ def test_change_column_visibility(app):
 def test_change_default_currency():
     # When the default currency is changed, all gui refresh themselves
     app = app_cleared_gui_calls()
+    app.show_nwview()
     app.doc.default_currency = EUR
     app.check_gui_calls(app.bsheet_gui, ['refresh'])
     app.check_gui_calls(app.nwgraph_gui, ['refresh'])
@@ -152,7 +155,7 @@ def test_show_account():
     app = app_cleared_gui_calls()
     app.add_account()
     app.clear_gui_calls()
-    app.mainwindow.show_account()
+    app.show_account()
     app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
 #--- On transaction view
@@ -178,7 +181,7 @@ def test_stop_editing_on_pane_change(app):
 def app_one_account():
     app = TestApp()
     app.add_account('foobar')
-    app.mainwindow.show_account()
+    app.show_account()
     app.clear_gui_calls()
     return app
     

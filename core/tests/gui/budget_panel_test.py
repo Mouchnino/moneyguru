@@ -15,7 +15,7 @@ from ..base import TestApp, with_app
 def app_one_asset_account():
     app = TestApp()
     app.add_account('asset')
-    app.mainwindow.show_account()
+    app.show_account()
     return app
 
 def test_can_create_new():

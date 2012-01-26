@@ -17,7 +17,7 @@ def app_one_transaction():
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('first')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', 'description', 'payee', transfer='second', decrease='42', checkno='24')
     app.show_tview()
     app.clear_gui_calls()
@@ -29,14 +29,16 @@ def test_make_schedule_from_selected(app):
     # of it, selects the schedule table, and pops the edition panel for it.
     app.mw.make_schedule_from_selected()
     app.check_current_pane(PaneType.Schedule)
+    scview = app.current_view()
+    sctable = scview.table
     app.scpanel.view.check_gui_calls_partial(['pre_load', 'post_load'])
-    eq_(len(app.sctable), 0) # It's a *new* schedule, only added if we press save
+    eq_(len(sctable), 0) # It's a *new* schedule, only added if we press save
     eq_(app.scpanel.start_date, '11/07/2008')
     eq_(app.scpanel.description, 'description')
     eq_(app.scpanel.repeat_type_list.selected_index, 2) # monthly
     eq_(app.scpanel.repeat_every, 1)
     app.scpanel.save()
-    eq_(len(app.sctable), 1) # now we have it
+    eq_(len(sctable), 1) # now we have it
     # When creating the schedule, we must delete the first occurrence because it overlapse with
     # the base transaction
     app.show_tview()
@@ -341,7 +343,7 @@ def app_one_schedule_and_one_normal_txn():
     app = TestApp()
     app.drsel.select_month_range()
     app.add_account('account')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('19/09/2008', description='bar', increase='2')
     app.add_schedule(start_date='13/09/2008', description='foo', account='account', amount='1',
         repeat_every=3)
@@ -609,6 +611,7 @@ def app_two_daily_schedules():
 @with_app(app_two_daily_schedules)
 def test_schedule_spawns_cant_be_reordered(app):
     # scheduled transactions can't be re-ordered
+    app.show_tview()
     assert not app.ttable.can_move([3], 2)
 
 #--- Daily schedule with one reconciled spawn

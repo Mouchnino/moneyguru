@@ -15,7 +15,7 @@ from ..base import TestApp, with_app
 def app_deleting_second_account():
     app = TestApp()
     app.add_accounts('one', 'two')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(transfer='three', increase='42')
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[1] # account 'two', the one with the entry
@@ -40,7 +40,7 @@ def test_reassign_to_one(app):
     app.arpanel.save()
     eq_(len(app.bsheet.assets), 3) # now, it's deleted
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     eq_(app.etable_count(), 1)
     eq_(app.etable[0].transfer, 'three')
     eq_(app.etable[0].increase, '42.00') # got the right side of the txn

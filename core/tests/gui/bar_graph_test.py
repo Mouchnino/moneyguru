@@ -24,7 +24,7 @@ class TestPristine:
         # until the end of the *overflow*, not the end of the date range.
         app.add_account('Checking')
         app.add_account('Income', account_type=AccountType.Income)
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('01/11/2008', transfer='Checking', increase='42') #sunday
         app.drsel.select_prev_date_range() # oct 2008
         app.add_entry('31/10/2008', transfer='Checking', increase='42')
@@ -37,7 +37,7 @@ class TestForeignAccount:
     def do_setup(self):
         app = TestApp()
         app.add_account('Visa', account_type=AccountType.Income, currency=CAD)
-        app.mainwindow.show_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -50,7 +50,7 @@ class TestSomeIncomeInTheFutureWithRangeOnYearToDate:
         monkeypatch.patch_today(2010, 1, 12)
         app = TestApp()
         app.add_account('Checking')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('13/01/2010', transfer='Income', increase='42')
         app.drsel.select_year_to_date_range()
         return app
@@ -68,7 +68,7 @@ class TestSomeIncomeTodayAndInTheFuture:
         app = TestApp()
         app.add_account('Checking')
         app.add_account('Income', account_type=AccountType.Income)
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('13/01/2010', transfer='Checking', increase='12')
         app.add_entry('12/01/2010', transfer='Checking', increase='30')
         app.drsel.select_year_range()
@@ -91,7 +91,7 @@ class TestAccountAndEntriesAndBudget:
         app.add_budget('Account 1', None, '400')
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
-        app.istatement.show_selected_account()
+        app.show_account()
         app.add_entry('10/01/2008', 'Entry 1', increase='100.00')
         app.add_entry('14/01/2008', 'Entry 2', increase='150.00')
         return app
@@ -111,7 +111,7 @@ class TestRunningYearWithSomeIncome:
         monkeypatch.patch_today(2008, 11, 1)
         app = TestApp()
         app.add_account('Checking')
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('11/09/2008', transfer='Income', increase='42')
         app.add_entry('24/09/2008', transfer='Income', increase='44')
         app.drsel.select_running_year_range()

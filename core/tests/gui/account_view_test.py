@@ -15,7 +15,7 @@ from ..base import TestApp, with_app
 def app_two_entries():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('11/07/2008', 'first', increase='42')
     app.add_entry('12/07/2008', 'second', decrease='12')
     return app
@@ -47,7 +47,7 @@ def test_totals_with_unicode_amount_format(app):
 def app_asset_shown():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_asset_shown)
@@ -59,7 +59,7 @@ def test_can_toggle_reconciliation_mode_with_asset_shown(app):
 def app_expense_shown():
     app = TestApp()
     app.add_account(account_type=AccountType.Expense)
-    app.mw.show_account()
+    app.show_account()
     return app
 
 @with_app(app_expense_shown)

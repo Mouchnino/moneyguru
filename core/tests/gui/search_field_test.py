@@ -30,7 +30,7 @@ def test_set_query_selects_transaction_pane(app):
 def app_two_transactions():
     app = TestApp()
     app.add_account('Desjardins')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry(description='a Deposit', payee='Joe SixPack', checkno='42A', transfer='Income', increase='212.12')
     # it's important for the test that this txns has no space in its fields
     app.add_entry(description='Withdrawal', payee='Dunno-What-To-Write', checkno='24B', transfer='Cash', decrease='140')

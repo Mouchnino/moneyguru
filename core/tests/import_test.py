@@ -55,6 +55,7 @@ def test_import_invalid_qif(app):
 def test_import_moneyguru_file(app):
     # Importing a moneyguru file works.
     importall(app, testdata.filepath('moneyguru', 'simple.moneyguru'))
+    app.show_nwview()
     # 2 assets, 1 expense
     eq_(app.bsheet.assets.children_count, 4)
     app.show_pview()
@@ -83,7 +84,7 @@ class TestQIFImport:
         importall(app, testdata.filepath('qif', 'checkbook.qif'))
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -112,7 +113,7 @@ class TestQIFImport:
         app.mainwindow.edit_item()
         app.apanel.currency = CAD
         app.apanel.save()
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable[0].increase, '42.32')
     
 
@@ -123,7 +124,7 @@ class TestOFXImport:
         importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         return app
     
     @with_app(do_setup)
@@ -158,7 +159,7 @@ class TestDoubleOFXImport:
         importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         # The entry that is in both files in the "retrait" one, which we'll edit
         app.etable.select([2]) # Previous Balance + Depot, then there is the Retrait one
         row = app.etable.selected_row
@@ -228,11 +229,11 @@ class TestAnotherDoubleOFXImport:
         # All accounts have the appropriate number of entries.
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 2)
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 1)
     
 
@@ -255,7 +256,7 @@ class TestTripleOFXImportAcrossSessions:
         # Previously, the transaction reference would be lost in a transaction conflict resolution
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         eq_(app.etable_count(), 3)
     
 
@@ -267,7 +268,7 @@ def app_double_ofx_import_with_split_in_the_middle():
     importall(app, testdata.filepath('ofx', 'desjardins.ofx'))
     app.show_nwview()
     app.bsheet.selected = app.bsheet.assets[0]
-    app.bsheet.show_selected_account()
+    app.show_account()
     app.etable.select([2]) #retrait
     row = app.etable.selected_row
     row.transfer = 'account1'
@@ -306,7 +307,7 @@ class TestTwoEntriesInRangeSaveThenLoad:
         app = TestApp()
         app.doc.date_range = MonthRange(date(2007, 10, 1))
         app.add_account()
-        app.mainwindow.show_account()
+        app.show_account()
         app.add_entry('1/10/2007', description='first')
         app.add_entry('1/10/2007', description='second')
         filename = str(tmpdir.join('foo.xml'))
@@ -314,7 +315,7 @@ class TestTwoEntriesInRangeSaveThenLoad:
         app.doc.load_from_xml(filename)
         # have been kicked back to bsheet. Select the account again
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.etable.select([0])
         return app
     
@@ -335,7 +336,7 @@ class TestTransferBetweenTwoReferencedAccounts:
         app.add_account('Account 4') # Add it as an asset
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.bsheet.show_selected_account()
+        app.show_account()
         app.etable.select([0])
         row = app.etable[0]
         row.transfer = 'Account 4'

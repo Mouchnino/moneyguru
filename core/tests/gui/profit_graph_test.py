@@ -24,7 +24,7 @@ class TestPristine:
         # When some data is included in a bar that overflows, we must not forget to ensure cooking
         # until the end of the *overflow*, not the end of the date range.
         app.add_account('Checking')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('01/11/2008', transfer='Income', increase='42') #sunday
         app.drsel.select_prev_date_range() # oct 2008
         app.add_entry('31/10/2008', transfer='Income', increase='42')
@@ -41,7 +41,7 @@ class TestIncomesAndExpensesInDifferentAccounts:
         USD.set_CAD_value(1.42, date(2008, 7, 1))
         # in july 2008, the first mondy is the 7th
         app.add_account('asset')
-        app.mw.show_account()
+        app.show_account()
         app.add_entry('12/6/2008', transfer='income1', increase='10') # will be ignored
         app.add_entry('3/7/2008', transfer='income1', increase='50') # 1st week
         app.add_entry('5/7/2008', transfer='income1', increase='80')

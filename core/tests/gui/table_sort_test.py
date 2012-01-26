@@ -88,7 +88,7 @@ def test_sort_by_description_considers_accents(app):
 def app_entries_with_reconciliation_date():
     app = TestApp()
     app.add_account()
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('05/01/2010')
     app.add_entry('05/01/2010')
     app.etable[1].reconciliation_date = '05/01/2010'
@@ -153,7 +153,7 @@ def app_mixed_up_schedule_and_budget(monkeypatch):
     app.drsel.select_month_range() # we just want 4 transactions
     app.add_account('expense', account_type=AccountType.Expense)
     app.add_account('asset')
-    app.mw.show_account()
+    app.show_account()
     app.add_entry('02/01/2010', description='reconciled')
     app.etable[0].reconciliation_date = '02/01/2010'
     app.etable.save_edits()
