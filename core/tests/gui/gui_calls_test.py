@@ -19,8 +19,9 @@ from ..base import TestApp, with_app, testdata
 #--- No Setup
 def test_initial_gui_calls():
     app = TestApp()
-    app.check_gui_calls(app.bsheet_gui, ['refresh'])
-    app.check_gui_calls(app.mainwindow_gui, ['refresh_panes', 'change_current_pane', 'refresh_status_line'])
+    app.bsheet.view.check_gui_calls(['refresh'])
+    expected = ['refresh_panes', 'change_current_pane', 'refresh_status_line', 'update_area_visibility']
+    app.mw.view.check_gui_calls(expected)
     app.drsel.view.check_gui_calls(['refresh_custom_ranges', 'refresh'])
 
 #--- Cleared GUI calls

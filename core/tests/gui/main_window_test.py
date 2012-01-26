@@ -193,11 +193,11 @@ def test_change_date_range(app):
 
 @with_app(app_cleared_gui_calls)
 def test_new_tab(app):
-    app.mw.new_tab()
+    emptyview = app.new_tab()
     eq_(app.mw.pane_count, 6)
     app.check_current_pane(PaneType.Empty)
     app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes', 'refresh_status_line'])
-    app.emptyview.select_pane_type(PaneType.Profit)
+    emptyview.select_pane_type(PaneType.Profit)
     app.check_current_pane(PaneType.Profit)
     app.check_gui_calls(app.mainwindow_gui, ['change_current_pane', 'refresh_panes', 'refresh_status_line'])
 

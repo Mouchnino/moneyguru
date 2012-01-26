@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGMainWindowController.h"
 #import "MGConst.h"
 #import "MGDocPropsView.h"
+#import "MGEmptyView.h"
 #import "Utils.h"
 
 @implementation MGMainWindowController
@@ -35,7 +36,6 @@ http://www.hardcoded.net/licenses/bsd_license
     budgetView = nil;
     cashculatorView = nil;
     ledgerView = nil;
-    emptyView = nil;
     searchField = [[MGSearchField alloc] initWithPyRef:[[self model] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
@@ -83,7 +83,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [budgetView release];
     [cashculatorView release];
     [ledgerView release];
-    [emptyView release];
     [searchField release];
     [importWindow release];
     [csvOptionsWindow release];
@@ -212,10 +211,7 @@ http://www.hardcoded.net/licenses/bsd_license
         return [[[MGDocPropsView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeEmpty) {
-        if (emptyView == nil) {
-            emptyView = [[MGEmptyView alloc] initWithPyRef:modelRef];
-        }
-        return emptyView;
+        return [[[MGEmptyView alloc] initWithPyRef:modelRef] autorelease];
     }
     else {
         return nil;

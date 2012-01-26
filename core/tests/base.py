@@ -132,7 +132,6 @@ class TestApp(TestAppBase):
         self.scview = link_gui(self.mw.scview)
         self.bview = link_gui(self.mw.bview)
         self.glview = link_gui(self.mw.glview)
-        self.emptyview = link_gui(self.mw.emptyview)
         self.etable = link_gui(self.aview.etable)
         self.etable_gui = self.etable.view
         self.ttable = link_gui(self.tview.ttable)
@@ -527,6 +526,10 @@ class TestApp(TestAppBase):
     #--- Shortcut for selecting a view type.
     def current_view(self):
         return self.mw.pane_view(self.mw.current_pane_index)
+    
+    def new_tab(self):
+        self.mw.new_tab()
+        return self.current_view()
     
     def show_nwview(self):
         self.mw.select_pane_of_type(PaneType.NetWorth)

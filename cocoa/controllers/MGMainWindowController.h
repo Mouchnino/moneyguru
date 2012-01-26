@@ -22,7 +22,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBudgetView.h"
 #import "MGCashculatorView.h"
 #import "MGGeneralLedgerView.h"
-#import "MGEmptyView.h"
 #import "MGSearchField.h"
 #import "MGImportWindow.h"
 #import "MGCSVImportOptions.h"
@@ -51,7 +50,6 @@ http://www.hardcoded.net/licenses/bsd_license
     MGBudgetView *budgetView;
     MGCashculatorView *cashculatorView;
     MGGeneralLedgerView *ledgerView;
-    MGEmptyView *emptyView;
     MGAccountProperties *accountProperties;
     MGTransactionInspector *transactionPanel;
     MGMassEditionPanel *massEditionPanel;

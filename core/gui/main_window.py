@@ -92,6 +92,7 @@ class MainWindow(Repeater, GUIObject):
         self._selected_budgets = []
         self._account2visibleentries = {}
         self._panetyp2view = {}
+        self.panes = []
         self.hidden_areas = set()
         
         self.search_field = SearchField(self)
@@ -119,7 +120,6 @@ class MainWindow(Repeater, GUIObject):
         else:
             self.ccview = None
         self.glview = GeneralLedgerView(self)
-        self.emptyview = EmptyView(self)
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
         self.bind_messages(msgs, self._invalidate_visible_entries)
@@ -183,7 +183,8 @@ class MainWindow(Repeater, GUIObject):
             result = DocPropsView(self)
             result.connect()
         elif pane_type == PaneType.Empty:
-            result = self.emptyview
+            result = EmptyView(self)
+            result.connect()
         else:
             raise ValueError("Cannot create view of type {}".format(pane_type))
         self._panetyp2view[pane_type] = result
@@ -282,11 +283,13 @@ class MainWindow(Repeater, GUIObject):
     def _view_updated(self):
         self.daterange_selector.refresh()
         self.daterange_selector.refresh_custom_ranges()
-        self._restore_default_panes()
+        self.document_restoring_preferences()
+        if not self.panes:
+            self._restore_default_panes()
     
     def connect(self):
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
-            self.bview, self.ccview, self.glview, self.emptyview]
+            self.bview, self.ccview, self.glview]
         for child in children:
             if child is not None:
                 child.connect()
