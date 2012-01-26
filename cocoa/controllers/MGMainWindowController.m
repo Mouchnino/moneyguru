@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGMainWindowController.h"
 #import "MGConst.h"
+#import "MGDocPropsView.h"
 #import "Utils.h"
 
 @implementation MGMainWindowController
@@ -34,7 +35,6 @@ http://www.hardcoded.net/licenses/bsd_license
     budgetView = nil;
     cashculatorView = nil;
     ledgerView = nil;
-    docpropsView = nil;
     emptyView = nil;
     searchField = [[MGSearchField alloc] initWithPyRef:[[self model] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
@@ -83,7 +83,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [budgetView release];
     [cashculatorView release];
     [ledgerView release];
-    [docpropsView release];
     [emptyView release];
     [searchField release];
     [importWindow release];
@@ -210,10 +209,7 @@ http://www.hardcoded.net/licenses/bsd_license
         return ledgerView;
     }
     else if (paneType == MGPaneTypeDocProps) {
-        if (docpropsView == nil) {
-            docpropsView = [[MGDocPropsView alloc] initWithPyRef:modelRef];
-        }
-        return docpropsView;
+        return [[[MGDocPropsView alloc] initWithPyRef:modelRef] autorelease];
     }
     else if (paneType == MGPaneTypeEmpty) {
         if (emptyView == nil) {
@@ -623,7 +619,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)refreshPanes
 {
     [tabBar setDelegate:nil];
-    [subviews removeAllObjects];
+    NSArray *oldsubviews = subviews;
+    subviews = [[NSMutableArray alloc] init];
     NSInteger paneCount = [[self model] paneCount];
     while ([tabView numberOfTabViewItems] > paneCount) {
         NSTabViewItem *item = [tabView tabViewItemAtIndex:paneCount];
@@ -634,7 +631,7 @@ http://www.hardcoded.net/licenses/bsd_license
         NSString *label = [[self model] paneLabelAtIndex:i];
         PyObject *viewRef = [[self model] paneViewRefAtIndex:i];
         MGBaseView *view = nil;
-        for (MGBaseView *v in subviews) {
+        for (MGBaseView *v in [subviews arrayByAddingObjectsFromArray:oldsubviews]) {
             if ([[v model] modelRef] == viewRef) {
                 view = v;
                 break;
@@ -664,6 +661,7 @@ http://www.hardcoded.net/licenses/bsd_license
         PSMTabBarCell *tabCell = [tabBar cellForTab:item];
         [tabCell setIcon:tabIcon];
     }
+    [oldsubviews release];
     [tabBar setDelegate:self];
 }
 

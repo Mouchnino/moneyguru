@@ -43,6 +43,17 @@ try:
 except ImportError:
     CashculatorView = None
 
+PANETYPE2LABEL = {
+    PaneType.NetWorth: tr("Net Worth"),
+    PaneType.Profit: tr("Profit & Loss"),
+    PaneType.Transaction: tr("Transactions"),
+    PaneType.Schedule: tr("Schedules"),
+    PaneType.Budget: tr("Budgets"),
+    PaneType.Cashculator: tr("Cashculator"),
+    PaneType.GeneralLedger: tr("General Ledger"),
+    PaneType.DocProps: tr("Document Properties"),
+    PaneType.Empty: tr("New Tab"),
+}
 class Preference:
     OpenedPanes = 'OpenedPanes'
     SelectedPane = 'SelectedPane'
@@ -80,6 +91,7 @@ class MainWindow(Repeater, GUIObject):
         self._selected_schedules = []
         self._selected_budgets = []
         self._account2visibleentries = {}
+        self._panetyp2view = {}
         self.hidden_areas = set()
         
         self.search_field = SearchField(self)
@@ -107,7 +119,6 @@ class MainWindow(Repeater, GUIObject):
         else:
             self.ccview = None
         self.glview = GeneralLedgerView(self)
-        self.dpview = DocPropsView(self)
         self.emptyview = EmptyView(self)
         
         msgs = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
@@ -143,28 +154,40 @@ class MainWindow(Repeater, GUIObject):
             self.close_pane(index)
     
     def _create_pane(self, pane_type, account=None):
-        if pane_type == PaneType.NetWorth:
-            return ViewPane(self.nwview, tr("Net Worth"))
-        elif pane_type == PaneType.Profit:
-            return ViewPane(self.pview, tr("Profit & Loss"))
-        elif pane_type == PaneType.Transaction:
-            return ViewPane(self.tview, tr("Transactions"))
-        elif pane_type == PaneType.Account:
-            return ViewPane(self.aview, account.name, account)
-        elif pane_type == PaneType.Schedule:
-            return ViewPane(self.scview, tr("Schedules"))
-        elif pane_type == PaneType.Budget:
-            return ViewPane(self.bview, tr("Budgets"))
-        elif pane_type == PaneType.Cashculator:
-            return ViewPane(self.ccview, tr("Cashculator"))
-        elif pane_type == PaneType.GeneralLedger:
-            return ViewPane(self.glview, tr("General Ledger"))
-        elif pane_type == PaneType.DocProps:
-            return ViewPane(self.dpview, tr("Document Properties"))
-        elif pane_type == PaneType.Empty:
-            return ViewPane(self.emptyview, tr("New Tab"))
+        view = self._get_view_for_pane_type(pane_type)
+        if pane_type == PaneType.Account:
+            return ViewPane(view, account.name, account)
         else:
-            raise ValueError("Cannot create pane of type {0}".format(pane_type))
+            return ViewPane(view, PANETYPE2LABEL[pane_type])
+    
+    def _get_view_for_pane_type(self, pane_type):
+        if pane_type in self._panetyp2view:
+            return self._panetyp2view[pane_type]
+        if pane_type == PaneType.NetWorth:
+            result = self.nwview
+        elif pane_type == PaneType.Profit:
+            result = self.pview
+        elif pane_type == PaneType.Transaction:
+            result = self.tview
+        elif pane_type == PaneType.Account:
+            result = self.aview
+        elif pane_type == PaneType.Schedule:
+            result = self.scview
+        elif pane_type == PaneType.Budget:
+            result = self.bview
+        elif pane_type == PaneType.Cashculator:
+            result = self.ccview
+        elif pane_type == PaneType.GeneralLedger:
+            result = self.glview
+        elif pane_type == PaneType.DocProps:
+            result = DocPropsView(self)
+            result.connect()
+        elif pane_type == PaneType.Empty:
+            result = self.emptyview
+        else:
+            raise ValueError("Cannot create view of type {}".format(pane_type))
+        self._panetyp2view[pane_type] = result
+        return result
     
     def _invalidate_visible_entries(self):
         self._account2visibleentries = {}
@@ -263,7 +286,7 @@ class MainWindow(Repeater, GUIObject):
     
     def connect(self):
         children = [self.nwview, self.pview, self.tview, self.aview, self.scview,
-            self.bview, self.ccview, self.glview, self.dpview, self.emptyview]
+            self.bview, self.ccview, self.glview, self.emptyview]
         for child in children:
             if child is not None:
                 child.connect()
