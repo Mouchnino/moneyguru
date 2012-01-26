@@ -15,7 +15,7 @@ from ..base import ApplicationGUI, TestApp, with_app
 #---
 def app_props_shown():
     app = TestApp()
-    app.show_dpview()
+    app.dpview = app.show_dpview()
     return app
 
 @with_app(app_props_shown)
@@ -54,11 +54,11 @@ def test_props_are_doc_based(app, tmpdir):
     app.doc.save_to_xml(fn)
     app = TestApp()
     app.doc.load_from_xml(fn)
-    app.show_dpview()
-    eq_(app.dpview.currency_list.selected_index, 42)
-    eq_(app.dpview.first_weekday_list.selected_index, 4)
-    eq_(app.dpview.ahead_months_list.selected_index, 5)
-    eq_(app.dpview.year_start_month_list.selected_index, 6)
+    dpview = app.show_dpview()
+    eq_(dpview.currency_list.selected_index, 42)
+    eq_(dpview.first_weekday_list.selected_index, 4)
+    eq_(dpview.ahead_months_list.selected_index, 5)
+    eq_(dpview.year_start_month_list.selected_index, 6)
 
 @with_app(app_props_shown)
 def test_setting_prop_makes_doc_dirty(app):
@@ -70,7 +70,7 @@ def test_setting_prop_makes_doc_dirty(app):
 def test_set_default_currency(app):
     app.dpview.currency_list.select(1) # EUR
     app.add_txn(amount='1')
-    app.show_dpview()
-    app.dpview.currency_list.select(0) # back to USD
-    app.show_tview()
-    eq_(app.ttable[0].amount, 'EUR 1.00')
+    dpview = app.show_dpview()
+    dpview.currency_list.select(0) # back to USD
+    tview = app.show_tview()
+    eq_(tview.ttable[0].amount, 'EUR 1.00')

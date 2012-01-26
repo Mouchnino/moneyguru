@@ -280,15 +280,6 @@ class Document(Repeater, GUIObject):
         excluded_account_names = [a.name for a in self.excluded_accounts]
         self.set_default(EXCLUDED_ACCOUNTS_PREFERENCE, excluded_account_names)
     
-    #--- Override
-    def add_listener(self, listener):
-        # Under Cocoa, load_from_xml() is called before children are connected. However, we want
-        # preferences to be restored after load, so what we do is that if we have a document ID,
-        # we re-issue the 'document_restoring_preferences' notification to that listener.
-        Repeater.add_listener(self, listener)
-        if self._document_id is not None:
-            listener.dispatch('document_restoring_preferences')
-    
     #--- Account
     def change_accounts(self, accounts, name=NOEDIT, type=NOEDIT, currency=NOEDIT, group=NOEDIT,
             account_number=NOEDIT, notes=NOEDIT):

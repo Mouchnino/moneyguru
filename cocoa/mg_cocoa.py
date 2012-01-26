@@ -1011,36 +1011,6 @@ class PyMainWindow(PyGUIObject):
     def exportPanel(self) -> pyref:
         return self.model.export_panel
     
-    def nwview(self) -> pyref:
-        return self.model.nwview
-    
-    def pview(self) -> pyref:
-        return self.model.pview
-    
-    def tview(self) -> pyref:
-        return self.model.tview
-    
-    def aview(self) -> pyref:
-        return self.model.aview
-    
-    def scview(self) -> pyref:
-        return self.model.scview
-    
-    def bview(self) -> pyref:
-        return self.model.bview
-    
-    def ccview(self) -> pyref:
-        return self.model.ccview
-    
-    def glview(self) -> pyref:
-        return self.model.glview
-    
-    def dpview(self) -> pyref:
-        return self.model.dpview
-    
-    def emptyview(self) -> pyref:
-        return self.model.emptyview
-    
     def selectNextView(self):
         self.model.select_next_view()
     

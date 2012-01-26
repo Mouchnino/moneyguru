@@ -62,13 +62,22 @@ class DocumentGUI(CallLogger):
     
 
 class MainWindowGUI(CallLogger):
-    def __init__(self):
+    def __init__(self, testapp):
         CallLogger.__init__(self)
         self.messages = []
+        self.testapp = testapp
     
     @log
     def show_message(self, message):
         self.messages.append(message)
+    
+    # Link the view of lazily loaded elements.
+    @log
+    def refresh_panes(self):
+        print(repr(self), repr(self.testapp))
+        app = self.testapp
+        for i in range(app.mw.pane_count):
+            app.link_gui(app.mw.pane_view(i))
     
 
 class DictLoader(base.Loader):
@@ -108,6 +117,12 @@ class TestApp(TestAppBase):
         self.mainwindow = MainWindow(self.doc)
         # we set mainwindow's view at the end because it triggers daterangeselector refreshes
         # which needs to have its own view set first.
+        # XXX The way our GUI instances are created in TestApp is incompatible with the lazy view
+        # creation path that moneyGuru is engaged in. Changing all tests is way too big a task,
+        # but we can at least make new tests comply with lazy view creation. Ideally, all these
+        # "nwview", "ttable" and others wouldn't exist in TestApp, we'd get a view instance by the
+        # return value of TestApp.show_*view() and access its child GUI objects through that
+        # reference.
         self.mw = self.mainwindow # shortcut. This one is often typed
         self.default_parent = self.mw
         self.nwview = link_gui(self.mw.nwview)
@@ -117,7 +132,6 @@ class TestApp(TestAppBase):
         self.scview = link_gui(self.mw.scview)
         self.bview = link_gui(self.mw.bview)
         self.glview = link_gui(self.mw.glview)
-        self.dpview = link_gui(self.mw.dpview)
         self.emptyview = link_gui(self.mw.emptyview)
         self.etable = link_gui(self.aview.etable)
         self.etable_gui = self.etable.view
@@ -161,7 +175,7 @@ class TestApp(TestAppBase):
         self.alookup = link_gui(self.mw.account_lookup)
         self.clookup = link_gui(self.mw.completion_lookup)
         self.doc.connect()
-        self.mw.view = self.make_logger(MainWindowGUI)
+        self.mw.view = self.make_logger(MainWindowGUI, self)
         self.mainwindow_gui = self.mw.view
         self.mw.connect()
     
@@ -511,20 +525,28 @@ class TestApp(TestAppBase):
         return [row.description for row in self.ttable.rows]
     
     #--- Shortcut for selecting a view type.
+    def current_view(self):
+        return self.mw.pane_view(self.mw.current_pane_index)
+    
     def show_nwview(self):
         self.mw.select_pane_of_type(PaneType.NetWorth)
+        return self.current_view()
     
     def show_pview(self):
         self.mw.select_pane_of_type(PaneType.Profit)
+        return self.current_view()
     
     def show_tview(self):
         self.mw.select_pane_of_type(PaneType.Transaction)
+        return self.current_view()
     
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
+        return self.current_view()
     
     def show_dpview(self):
         self.mw.select_pane_of_type(PaneType.DocProps)
+        return self.current_view()
     
 
 def compare_apps(first, second, qif_mode=False):

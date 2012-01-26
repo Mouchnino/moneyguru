@@ -76,7 +76,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGDocument *)document;
 /* Private */
 - (BOOL)validateAction:(SEL)action;
-- (MGBaseView *)viewFromPaneType:(NSInteger)paneType;
+- (MGBaseView *)viewFromPaneType:(NSInteger)paneType modelRef:(PyObject *)modelRef;
 
 /* Actions */
 - (IBAction)columnMenuClick:(id)sender;

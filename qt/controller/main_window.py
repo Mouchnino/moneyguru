@@ -57,6 +57,18 @@ PANETYPE2ICON = {
     PaneType.DocProps: 'gledger_16',
 }
 
+PANETYPE2VIEWCLASS = {
+    PaneType.NetWorth: NetWorthView,
+    PaneType.Profit: ProfitView,
+    PaneType.Transaction: TransactionView,
+    PaneType.Account: EntryView,
+    PaneType.Schedule: ScheduleView,
+    PaneType.Budget: BudgetView,
+    PaneType.GeneralLedger: GeneralLedgerView,
+    PaneType.DocProps: DocPropsView,
+    PaneType.Empty: NewView,
+}
+
 # IMPORTANT NOTE ABOUT TABS
 # Why don't we use a QTabWidget? Because it doesn't allow to add the same widget twice.
 
@@ -70,15 +82,7 @@ class MainWindow(QMainWindow):
         
         # Create base elements
         self.model = MainWindowModel(document=doc.model)
-        self.nwview = NetWorthView(model=self.model.nwview)
-        self.pview = ProfitView(model=self.model.pview)
-        self.tview = TransactionView(model=self.model.tview)
-        self.eview = EntryView(model=self.model.aview)
-        self.scview = ScheduleView(model=self.model.scview)
-        self.bview = BudgetView(model=self.model.bview)
-        self.glview = GeneralLedgerView(model=self.model.glview)
-        self.dpview = DocPropsView(model=self.model.dpview)
-        self.newview = NewView(model=self.model.emptyview)
+        self.model2view = {}
         self.apanel = AccountPanel(mainwindow=self)
         self.tpanel = TransactionPanel(mainwindow=self)
         self.mepanel = MassEditionPanel(mainwindow=self)
@@ -93,17 +97,6 @@ class MainWindow(QMainWindow):
         self.sfield = SearchField(model=self.model.search_field, view=self.searchLineEdit)
         self.recentDocuments = Recent(self.app, 'recentDocuments')
         self.recentDocuments.addMenu(self.menuOpenRecent)
-        
-        # Set main views
-        self.mainView.addWidget(self.nwview)
-        self.mainView.addWidget(self.pview)
-        self.mainView.addWidget(self.tview)
-        self.mainView.addWidget(self.eview)
-        self.mainView.addWidget(self.scview)
-        self.mainView.addWidget(self.bview)
-        self.mainView.addWidget(self.glview)
-        self.mainView.addWidget(self.dpview)
-        self.mainView.addWidget(self.newview)
         
         self.model.view = self
         self.model.connect()
@@ -413,31 +406,23 @@ class MainWindow(QMainWindow):
         currentView.fitViewsForPrint(viewPrinter)
         viewPrinter.render()
     
+    def _getViewforPane(self, pane_type, pane_view):
+        if pane_view in self.model2view:
+            view = self.model2view[pane_view]
+        else:
+            view = PANETYPE2VIEWCLASS[pane_type](model=pane_view)
+            self.model2view[pane_view] = view
+            self.mainView.addWidget(view)
+        return view
+    
     def _setTabIndex(self, index):
         if not self.tabBar.count():
             return
         self.tabBar.setCurrentIndex(index)
         self._updateActionsState()
         pane_type = self.model.pane_type(index)
-        view = None
-        if pane_type == PaneType.NetWorth:
-            view = self.nwview
-        elif pane_type == PaneType.Profit:
-            view = self.pview
-        elif pane_type == PaneType.Transaction:
-            view = self.tview
-        elif pane_type == PaneType.Account:
-            view = self.eview
-        elif pane_type == PaneType.Schedule:
-            view = self.scview
-        elif pane_type == PaneType.Budget:
-            view = self.bview
-        elif pane_type == PaneType.GeneralLedger:
-            view = self.glview
-        elif pane_type == PaneType.DocProps:
-            view = self.dpview
-        elif pane_type == PaneType.Empty:
-            view = self.newview
+        pane_view = self.model.pane_view(index)
+        view = self._getViewforPane(pane_type, pane_view)
         self.mainView.setCurrentWidget(view)
         view.setFocus()
     
@@ -642,6 +627,9 @@ class MainWindow(QMainWindow):
             pane_label = pane_label.replace('&', '&&')
             self.tabBar.setTabText(i, pane_label)
             pane_type = self.model.pane_type(i)
+            pane_view = self.model.pane_view(i)
+            # Ensure that the view's "view" has been created and bound
+            self._getViewforPane(pane_type, pane_view)
             iconname = PANETYPE2ICON.get(pane_type)
             icon = QIcon(QPixmap(':/{0}'.format(iconname))) if iconname else QIcon()
             self.tabBar.setTabIcon(i, icon)

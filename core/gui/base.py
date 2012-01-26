@@ -156,6 +156,14 @@ class ViewChild(Listener, GUIObject, HideableObject, DocumentNotificationsMixin,
         self.document = self.mainwindow.document
         self.app = self.document.app
     
+    def _process_message(self, msg):
+        # We never want to process messages (such as document_restoring_preferences) when our view
+        # is None because it will cause a crash.
+        if self.view is None:
+            return False
+        else:
+            return HideableObject._process_message(self, msg)
+    
     def dispatch(self, msg):
         if self._process_message(msg):
             Listener.dispatch(self, msg)

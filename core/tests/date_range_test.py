@@ -37,18 +37,18 @@ def test_all_transactions_range(app):
 @with_app(TestApp)
 def test_set_ahead_months(app):
     # setting the ahead_months preference doesn't change the current date range type
-    app.show_dpview()
-    app.dpview.ahead_months_list.select(5)
+    dpview = app.show_dpview()
+    dpview.ahead_months_list.select(5)
     assert isinstance(app.doc.date_range, YearRange)
 
 @with_app(TestApp)
 def test_year_start_month_same_as_ahead_month(app):
     # There was a stupid bug where setting year_start_month to the same value as ahead_months
     # wouldn't work.
-    app.show_dpview()
-    app.dpview.year_start_month_list.select(11) # I don't think ahead_month's default is every gonna be 11.
+    dpview = app.show_dpview()
+    dpview.year_start_month_list.select(11) # I don't think ahead_month's default is every gonna be 11.
     # +1 is because our actual year_start_month is always list-index + 1
-    app.dpview.year_start_month_list.select(app.dpview.ahead_months_list.selected_index-1)
+    dpview.year_start_month_list.select(dpview.ahead_months_list.selected_index-1)
     eq_(app.doc.year_start_month, app.doc.ahead_months)
 
 #---
@@ -147,7 +147,7 @@ class TestRangeOnYearStartsOnApril:
         monkeypatch.patch_today(2007, 4, 1)
         app = TestApp()
         app.drsel.select_year_range()
-        app.show_dpview()
+        app.dpview = app.show_dpview()
         app.dpview.year_start_month_list.select(3)
         return app
     
@@ -202,7 +202,8 @@ def test_select_next_prev_today_range(app):
 @with_app(app_range_on_year_to_date)
 def test_year_start_month_at_4(app):
     # when setting year_start_month at 4, the year-to-date range will start on april 1st
-    app.dpview.year_start_month_list.select(3)
+    dpview = app.show_dpview()
+    dpview.year_start_month_list.select(3)
     eq_(app.doc.date_range.start, date(2008, 4, 1))
     eq_(app.doc.date_range.end, date(2008, 11, 12))
 
@@ -210,7 +211,8 @@ def test_year_start_month_at_4(app):
 def test_year_start_month_at_12(app):
     # when the year_start_month is higher than the current month in YTD, the date range will
     # start in the previous year
-    app.dpview.year_start_month_list.select(11)
+    dpview = app.show_dpview()
+    dpview.year_start_month_list.select(11)
     eq_(app.doc.date_range.start, date(2007, 12, 1))
     eq_(app.doc.date_range.end, date(2008, 11, 12))
 
@@ -234,7 +236,8 @@ class TestRangeOnRunningYear:
     
     @with_app(do_setup)
     def test_11_ahead_months(self, app):
-        app.dpview.ahead_months_list.select(11)
+        dpview = app.show_dpview()
+        dpview.ahead_months_list.select(11)
         eq_(app.doc.date_range.start, date(2008, 12, 1))
         eq_(app.doc.date_range.end, date(2009, 11, 30))
     
@@ -242,7 +245,8 @@ class TestRangeOnRunningYear:
     def test_0_ahead_months(self, app):
         # When ahead month is 0, we end our range today. The start date is the first day of our
         # current month.
-        app.dpview.ahead_months_list.select(0)
+        dpview = app.show_dpview()
+        dpview.ahead_months_list.select(0)
         eq_(app.doc.date_range.start, date(2008, 2, 1))
         eq_(app.doc.date_range.end, date(2009, 1, 25))
     
@@ -273,7 +277,8 @@ class TestRangeOnRunningYearWithAheadMonths:
     def do_setup(self, monkeypatch):
         app = TestApp()
         monkeypatch.patch_today(2009, 1, 25)
-        app.dpview.ahead_months_list.select(5)
+        dpview = app.show_dpview()
+        dpview.ahead_months_list.select(5)
         app.drsel.select_running_year_range()
         app.clear_gui_calls()
         return app
@@ -422,7 +427,8 @@ class TestAllTransactionsRangeWithOneTransactionFarInThePast:
     @with_app(do_setup)
     def test_includes_ahead_months(self, app):
         # All Transactions range end_date is computed using the ahead_months pref
-        app.dpview.ahead_months_list.select(4) # triggers a date range update
+        dpview = app.show_dpview()
+        dpview.ahead_months_list.select(4) # triggers a date range update
         app.add_txn('30/04/2010')
         eq_(app.ttable.row_count, 3)
         # but not further...

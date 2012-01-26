@@ -25,16 +25,17 @@ http://www.hardcoded.net/licenses/bsd_license
     schedulePanel = [[MGSchedulePanel alloc] initWithParent:self];
     budgetPanel = [[MGBudgetPanel alloc] initWithParent:self];
     exportPanel = [[MGExportPanel alloc] initWithParent:self];
-    netWorthView = [[MGNetWorthView alloc] initWithPyRef:[[self model] nwview]];
-    profitView = [[MGProfitView alloc] initWithPyRef:[[self model] pview]];
-    transactionView = [[MGTransactionView alloc] initWithPyRef:[[self model] tview]];
-    accountView = [[MGAccountView alloc] initWithPyRef:[[self model] aview]];
-    scheduleView = [[MGScheduleView alloc] initWithPyRef:[[self model] scview]];
-    budgetView = [[MGBudgetView alloc] initWithPyRef:[[self model] bview]];
-    cashculatorView = [[MGCashculatorView alloc] initWithPyRef:[[self model] ccview]];
-    ledgerView = [[MGGeneralLedgerView alloc] initWithPyRef:[[self model] glview]];
-    docpropsView = [[MGDocPropsView alloc] initWithPyRef:[[self model] dpview]];
-    emptyView = [[MGEmptyView alloc] initWithPyRef:[[self model] emptyview]];
+    // Lazily instantiated
+    netWorthView = nil;
+    profitView = nil;
+    transactionView = nil;
+    accountView = nil;
+    scheduleView = nil;
+    budgetView = nil;
+    cashculatorView = nil;
+    ledgerView = nil;
+    docpropsView = nil;
+    emptyView = nil;
     searchField = [[MGSearchField alloc] initWithPyRef:[[self model] searchField]];
     importWindow = [[MGImportWindow alloc] initWithDocument:document];
     csvOptionsWindow = [[MGCSVImportOptions alloc] initWithDocument:document];
@@ -158,36 +159,66 @@ http://www.hardcoded.net/licenses/bsd_license
     return [m autorelease];
 }
 
-- (MGBaseView *)viewFromPaneType:(NSInteger)paneType
+- (MGBaseView *)viewFromPaneType:(NSInteger)paneType modelRef:(PyObject *)modelRef
 {
     if (paneType == MGPaneTypeNetWorth) {
+        if (netWorthView == nil) {
+            netWorthView = [[MGNetWorthView alloc] initWithPyRef:modelRef];
+        }
         return netWorthView;
     }
     else if (paneType == MGPaneTypeProfit) {
+        if (profitView == nil) {
+            profitView = [[MGProfitView alloc] initWithPyRef:modelRef];
+        }
         return profitView;
     }
     else if (paneType == MGPaneTypeTransaction) {
+        if (transactionView == nil) {
+            transactionView = [[MGTransactionView alloc] initWithPyRef:modelRef];
+        }
         return transactionView;
     }
     else if (paneType == MGPaneTypeAccount) {
+        if (accountView == nil) {
+            accountView = [[MGAccountView alloc] initWithPyRef:modelRef];
+        }
         return accountView;
     }
     else if (paneType == MGPaneTypeSchedule) {
+        if (scheduleView == nil) {
+            scheduleView = [[MGScheduleView alloc] initWithPyRef:modelRef];
+        }
         return scheduleView;
     }
     else if (paneType == MGPaneTypeBudget) {
+        if (budgetView == nil) {
+            budgetView = [[MGBudgetView alloc] initWithPyRef:modelRef];
+        }
         return budgetView;
     }
     else if (paneType == MGPaneTypeCashculator) {
+        if (cashculatorView == nil) {
+            cashculatorView = [[MGCashculatorView alloc] initWithPyRef:modelRef];
+        }
         return cashculatorView;
     }
     else if (paneType == MGPaneTypeGeneralLedger) {
+        if (ledgerView == nil) {
+            ledgerView = [[MGGeneralLedgerView alloc] initWithPyRef:modelRef];
+        }
         return ledgerView;
     }
     else if (paneType == MGPaneTypeDocProps) {
+        if (docpropsView == nil) {
+            docpropsView = [[MGDocPropsView alloc] initWithPyRef:modelRef];
+        }
         return docpropsView;
     }
     else if (paneType == MGPaneTypeEmpty) {
+        if (emptyView == nil) {
+            emptyView = [[MGEmptyView alloc] initWithPyRef:modelRef];
+        }
         return emptyView;
     }
     else {
@@ -611,7 +642,7 @@ http://www.hardcoded.net/licenses/bsd_license
         }
         if (view == nil) {
             NSInteger paneType = [[self model] paneTypeAtIndex:i];
-            view = [self viewFromPaneType:paneType];
+            view = [self viewFromPaneType:paneType modelRef:viewRef];
         }
         NSImage *tabIcon = [NSImage imageNamed:[view tabIconName]];
         [subviews addObject:view];
