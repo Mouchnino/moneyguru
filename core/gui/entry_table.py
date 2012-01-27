@@ -6,8 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import datetime
-
 from hscommon.trans import tr, trget
 from hscommon.gui.column import Column, Columns
 from .entry_table_base import EntryTableBase, PreviousBalanceRow, TotalRow
@@ -81,27 +79,7 @@ class EntryTable(EntryTableBase):
     def _get_totals_currency(self):
         return self._get_current_account().currency
     
-    def _restore_from_explicit_selection(self):
-        if self.mainwindow.explicitly_selected_transactions:
-            self.select_transactions(self.mainwindow.explicitly_selected_transactions)
-            if not self.selected_indexes:
-                self.select_nearest_date(self.mainwindow.explicitly_selected_transactions[0].date)
-            self.view.update_selection()
-    
     #--- Public
-    def select_nearest_date(self, target_date):
-        # This method assumes that self is sorted by date
-        last_delta = datetime.timedelta.max
-        for index, row in enumerate(self):
-            delta = abs(row._date - target_date)
-            if delta > last_delta:
-                # The last iteration was the correct one
-                self.selected_index = index - 1
-                break
-            last_delta = delta
-        else:
-            self.selected_index = len(self) - 1
-    
     def show_transfer_account(self):
         if not self.selected_entries:
             return
@@ -140,7 +118,7 @@ class EntryTable(EntryTableBase):
         self.refresh(refresh_view=False)
         self.select_transactions(self.mainwindow.selected_transactions)
         if not self.selected_indexes:
-            self.select_nearest_date(date_range.start + self._delta_before_change)
+            self._select_nearest_date(date_range.start + self._delta_before_change)
         self.view.refresh()
         self.view.show_selected_row()
         self.mainwindow.selected_transactions = self.selected_transactions

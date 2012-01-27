@@ -6,6 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import datetime
+
 from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 from .table import GUITable
 from .completable_edit import CompletableEdit
@@ -50,7 +52,22 @@ class TransactionTableBase(GUITable, ViewChild):
     def _restore_from_explicit_selection(self):
         if self.mainwindow.explicitly_selected_transactions:
             self.select_transactions(self.mainwindow.explicitly_selected_transactions)
+            if not self.selected_indexes:
+                self._select_nearest_date(self.mainwindow.explicitly_selected_transactions[0].date)
             self.view.update_selection()
+    
+    def _select_nearest_date(self, target_date):
+        # This method assumes that self is sorted by date
+        last_delta = datetime.timedelta.max
+        for index, row in enumerate(self):
+            delta = abs(row._date - target_date)
+            if delta > last_delta:
+                # The last iteration was the correct one
+                self.selected_index = index - 1
+                break
+            last_delta = delta
+        else:
+            self.selected_index = len(self) - 1
     
     #--- Public
     def can_move(self, row_indexes, position):
