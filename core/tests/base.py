@@ -471,6 +471,7 @@ class TestApp(TestAppBase):
             self.select_account(account_name)
         self.mw.show_account()
         self.link_aview()
+        return self.current_view()
     
     def set_column_visible(self, colname, visible):
         # Toggling column from the UI is rather simple for a human, but not for a program. The
@@ -503,8 +504,11 @@ class TestApp(TestAppBase):
         return self.current_view()
     
     def link_aview(self):
-        if hasattr(self, 'aview'):
-            return
+        # Unlike other views, we constantly overwrite our aview-based GUI's here because we have
+        # one view per opened account, but many legacy tests were designed with one account view in
+        # mind. link_aview() allows us to easily adapt legacy code, but future tests should stop
+        # using app.etable/app.balgraph/etc. and work directly with the return result of
+        # app.show_account(), which is an AccountView instance.
         assert self.current_view().VIEW_TYPE == PaneType.Account
         self.aview = self.link_gui(self.current_view())
         self.etable = self.link_gui(self.aview.etable)

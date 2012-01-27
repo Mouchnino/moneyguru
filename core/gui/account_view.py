@@ -21,8 +21,9 @@ class AccountView(BaseView):
         'date_range_changed', 'transactions_selected', 'shown_account_changed',
         'area_visibility_changed'}
     
-    def __init__(self, mainwindow):
+    def __init__(self, mainwindow, account):
         BaseView.__init__(self, mainwindow)
+        self.account = account
         self._shown_graph = None
         self._reconciliation_mode = False
         self.etable = EntryTable(self)

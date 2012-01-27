@@ -57,13 +57,19 @@ class Preference:
     HiddenAreas = 'HiddenAreas'
 
 class ViewPane:
-    def __init__(self, view, label, account=None):
+    def __init__(self, view, label):
         self.view = view
         self.label = label
-        self.account = account
     
     def __repr__(self):
         return '<ViewPane {}>'.format(self.label)
+    
+    @property
+    def account(self):
+        if self.view.VIEW_TYPE == PaneType.Account:
+            return self.view.account
+        else:
+            return None
     
 
 class MainWindow(Repeater, GUIObject):
@@ -138,13 +144,17 @@ class MainWindow(Repeater, GUIObject):
             self.close_pane(index)
     
     def _create_pane(self, pane_type, account=None):
-        view = self._get_view_for_pane_type(pane_type)
+        view = self._get_view_for_pane_type(pane_type, account)
         if pane_type == PaneType.Account:
-            return ViewPane(view, account.name, account)
+            return ViewPane(view, account.name)
         else:
             return ViewPane(view, PANETYPE2LABEL[pane_type])
     
-    def _get_view_for_pane_type(self, pane_type):
+    def _get_view_for_pane_type(self, pane_type, account):
+        if pane_type == PaneType.Account: # we don't cache Account panes
+            result = AccountView(self, account)
+            result.connect()
+            return result
         for pane in self.panes:
             if pane.view.VIEW_TYPE == pane_type:
                 return pane.view
@@ -154,8 +164,6 @@ class MainWindow(Repeater, GUIObject):
             result = ProfitView(self)
         elif pane_type == PaneType.Transaction:
             result = TransactionView(self)
-        elif pane_type == PaneType.Account:
-            result = AccountView(self)
         elif pane_type == PaneType.Schedule:
             result = ScheduleView(self)
         elif pane_type == PaneType.Budget:

@@ -259,7 +259,9 @@ def app_asset_and_income_accounts_with_txn():
 def test_close_pane_of_autocleaned_accounts(app):
     # When an account is auto cleaned, close its pane if it's opened
     app.etable.show_transfer_account() # the Salary account, which is auto-created
+    app.link_aview()
     app.etable.show_transfer_account() # We're back on the Checking account
+    app.link_aview()
     app.etable.delete() # the Salary pane is supposed to be closed.
     eq_(app.mw.pane_count, 6)
     eq_(app.mw.current_pane_index, 5) # we stay on the current index
@@ -327,9 +329,11 @@ def test_switch_panes_through_pane_index(app):
     app.etable.show_transfer_account()
     eq_(app.mw.pane_count, 7) # Now, the two last views are our 2 accounts
     app.mw.select_previous_view()
+    app.link_aview()
     # etable has change its values
     eq_(app.etable[0].transfer, "Salary")
     app.mw.select_next_view()
+    app.link_aview()
     # and again
     eq_(app.etable[0].transfer, "Checking")
 

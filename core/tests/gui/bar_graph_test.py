@@ -124,6 +124,7 @@ class TestRunningYearWithSomeIncome:
         app.add_txn('23/09/2008', from_='something else', to='Checking', amount='1')
         app.ttable.select([0])
         app.ttable.show_from_account()
+        app.link_aview()
         # shown: Income selected: Checking
         eq_(app.bargraph.title, 'Income')
         eq_(app.bar_graph_data()[0][2], '86.00') # *not* 87, like what would show with Checking

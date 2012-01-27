@@ -55,8 +55,9 @@ def test_split_values(app):
 @with_app(app_split_transaction)
 def test_main_split_always_first(app):
     # Always show the "main" split (the one represented by the entry) first.
-    app.show_account('bar')
-    eq_(app.pv.split_values(0, 0), ['bar', '', '-100.00'])
+    aview = app.show_account('bar')
+    pv = EntryPrint(aview)
+    eq_(pv.split_values(0, 0), ['bar', '', '-100.00'])
 
 #--- Entry in previous range
 def app_entry_in_previous_range():

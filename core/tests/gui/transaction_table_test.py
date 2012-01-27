@@ -763,19 +763,20 @@ class TestThreeTransactionsEverythingReconciled:
         app.add_account('second')
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0]
-        app.show_account()
+        aview = app.show_account()
         app.add_entry('19/07/2008', description='entry 1', increase='1')
         app.add_entry('20/07/2008', description='entry 2', transfer='second', increase='2')
         app.add_entry('20/07/2008', description='entry 3', increase='3')
-        app.aview.toggle_reconciliation_mode()
-        app.etable[0].toggle_reconciled()
-        app.etable[1].toggle_reconciled()
-        app.etable[2].toggle_reconciled()
+        aview.toggle_reconciliation_mode()
+        aview.etable[0].toggle_reconciled()
+        aview.etable[1].toggle_reconciled()
+        aview.etable[2].toggle_reconciled()
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[1]
-        app.show_account()
-        app.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
-        app.aview.toggle_reconciliation_mode() # commit reconciliation
+        aview = app.show_account()
+        aview.toggle_reconciliation_mode() # enable reconciliation in the other aview
+        aview.etable[0].toggle_reconciled() # we also reconcile the other side of the 2nd entry
+        aview.toggle_reconciliation_mode() # commit reconciliation
         app.show_tview()
         return app
     

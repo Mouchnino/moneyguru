@@ -290,6 +290,7 @@ def test_set_invalid_reconciliation_date(app):
 def test_show_transfer_account_entry_with_transfer_selected(app):
     # show_transfer_account() changes the shown account to 'second'
     app.etable.show_transfer_account()
+    app.link_aview()
     app.check_current_pane(PaneType.Account, account_name='second')
     # Previously, this was based on selected_account rather than shown_account
     assert not app.etable.columns.column_is_visible('balance')
@@ -299,6 +300,7 @@ def test_show_transfer_account_then_add_entry(app):
     # When a new entry is created, it is created in the *shown* account, not the *selected*
     # account.
     app.etable.show_transfer_account()
+    app.link_aview()
     app.mainwindow.new_item()
     app.etable.save_edits()
     eq_(app.etable_count(), 2)
@@ -307,7 +309,7 @@ def test_show_transfer_account_then_add_entry(app):
 def test_show_transfer_account_twice(app):
     # calling show_transfer_account() again brings the account view on 'first'
     app.etable.show_transfer_account()
-    app.clear_gui_calls()
+    app.link_aview()
     app.etable.show_transfer_account()
     app.check_current_pane(PaneType.Account, account_name='first')
 
@@ -609,10 +611,13 @@ def test_show_transfer_account():
     # show_transfer_account() cycles through all splits of the entry
     app = app_split_transaction()
     app.etable.show_transfer_account()
+    app.link_aview()
     app.check_current_pane(PaneType.Account, account_name='second')
     app.etable.show_transfer_account()
+    app.link_aview()
     app.check_current_pane(PaneType.Account, account_name='third')
     app.etable.show_transfer_account()
+    app.link_aview()
     app.check_current_pane(PaneType.Account, account_name='first')
 
 def test_show_transfer_account_with_unassigned_split():

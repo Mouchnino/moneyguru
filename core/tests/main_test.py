@@ -1317,9 +1317,9 @@ class TestEntrySelectionOnAccountChange:
         app.etable.select([1])
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[2] # expense3
-        app.show_account()
+        aview = app.show_account()
         # The 2008/1/11 date is nearer than the 2008/1/22 date, so it should be selected
-        eq_(app.etable.selected_indexes, [0])
+        eq_(aview.etable.selected_indexes, [0])
     
     @with_app(do_setup)
     def test_keep_transaction(self, app):

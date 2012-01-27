@@ -283,11 +283,13 @@ def app_transaction_between_income_and_expense():
 @with_app(app_transaction_between_income_and_expense)
 def test_etable_show_income_account(app):
     # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
-    app.show_account('income')
+    income_aview = app.show_account('income')
     app.clear_gui_calls()
     app.etable.show_transfer_account()
-    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh', 'stop_editing'])
-    app.check_gui_calls(app.bargraph_gui, ['refresh'])
+    app.link_aview()
+    income_aview.etable.view.check_gui_calls(['stop_editing'])
+    app.etable.view.check_gui_calls(['show_selected_row', 'refresh'])
+    app.bargraph.view.check_gui_calls(['refresh'])
 
 #--- Transaction between asset and liability
 def app_transaction_between_asset_and_liability():
@@ -301,11 +303,13 @@ def app_transaction_between_asset_and_liability():
 @with_app(app_transaction_between_asset_and_liability)
 def test_etable_show_asset_account(app):
     # show_transfer_account() correctly refreshes the gui even if the graph type deosn't change.
-    app.show_account('asset')
+    asset_aview = app.show_account('asset')
     app.clear_gui_calls()
     app.etable.show_transfer_account()
-    app.check_gui_calls(app.etable_gui, ['show_selected_row', 'refresh', 'stop_editing'])
-    app.check_gui_calls(app.balgraph_gui, ['refresh'])
+    app.link_aview()
+    asset_aview.etable.view.check_gui_calls(['stop_editing'])
+    app.etable.view.check_gui_calls(['show_selected_row', 'refresh'])
+    app.balgraph.view.check_gui_calls(['refresh'])
 
 #--- Transaction with panel loaded
 def app_transaction_with_panel_loaded():
