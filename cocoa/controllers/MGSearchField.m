@@ -16,6 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
     PyTextField *m = [[PyTextField alloc] initWithModel:aPyRef];
     self = [super initWithModel:m view:[searchView autorelease]];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
+    [m release];
     return self;
 }
 
