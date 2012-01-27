@@ -40,7 +40,7 @@ class TestTransactionsOfEachType:
     def test_efbar_filter_expenses(self, app):
         #The etable's expense filter makes it only show entries with a decrease
         app.efbar.filter_type = FilterType.Expense # decrease
-        app.check_gui_calls(app.etable_gui, ['refresh'])
+        app.etable.view.check_gui_calls_partial(['refresh'])
         eq_(app.etable_count(), 2)
         eq_(app.etable[0].description, 'third')
         eq_(app.etable[1].description, 'fourth')
@@ -55,7 +55,7 @@ class TestTransactionsOfEachType:
     def test_efbar_filter_income(self, app):
         #The etable's income filter makes it only show entries with an increase.
         app.efbar.filter_type = FilterType.Income
-        app.check_gui_calls(app.etable_gui, ['refresh'])
+        app.etable.view.check_gui_calls_partial(['refresh'])
         eq_(app.etable_count(), 2)
         eq_(app.etable[0].description, 'first')
         eq_(app.etable[1].description, 'second')
@@ -70,7 +70,7 @@ class TestTransactionsOfEachType:
     def test_efbar_filter_transfer(self, app):
         #The etable's transfer filter makes it only show entries with a transfer to an asset/liability.
         app.efbar.filter_type = FilterType.Transfer
-        app.check_gui_calls(app.etable_gui, ['refresh'])
+        app.etable.view.check_gui_calls_partial(['refresh'])
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'fourth')
         app.show_tview()
@@ -84,7 +84,7 @@ class TestTransactionsOfEachType:
         # The etable's unassigned filter makes it only show unassigned entries. going to ttable keeps
         # the filter on.
         app.efbar.filter_type = FilterType.Unassigned
-        app.check_gui_calls(app.etable_gui, ['refresh'])
+        app.etable.view.check_gui_calls_partial(['refresh'])
         eq_(app.etable_count(), 1)
         eq_(app.etable[0].description, 'second')
         app.show_tview()

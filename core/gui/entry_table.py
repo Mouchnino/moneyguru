@@ -86,6 +86,7 @@ class EntryTable(EntryTableBase):
             self.select_transactions(self.mainwindow.explicitly_selected_transactions)
             if not self.selected_indexes:
                 self.select_nearest_date(self.mainwindow.explicitly_selected_transactions[0].date)
+            self.view.update_selection()
     
     #--- Public
     def select_nearest_date(self, target_date):

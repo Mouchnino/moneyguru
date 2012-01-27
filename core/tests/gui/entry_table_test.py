@@ -132,6 +132,23 @@ def test_add_transfer_entry(app):
     app.show_account()
     eq_(app.etable_count(), 1)
 
+@with_app(app_three_accounts)
+def test_selection_is_kept_on_show_account(app):
+    # Performing a show_account() keeps the txn selection in the newly shown account.
+    app.add_entry(description='foo', transfer='one')
+    app.add_entry(description='bar', transfer='one')
+    # first, let's open the accounts to make sure that selection restoration is not based on
+    # simple initialization, but rather on the show_account() action
+    aview_one = app.show_account('one')
+    aview_three = app.show_account('three')
+    assert app.current_view() is aview_three
+    aview_three.etable.select([0])
+    aview_one.etable.view.clear_gui_calls()
+    aview_three.etable.show_transfer_account()
+    assert app.current_view() is aview_one
+    eq_(aview_one.etable.selected_indexes, [0])
+    aview_one.etable.view.check_gui_calls_partial(['update_selection'])
+
 #--- Entry being added
 def app_entry_being_added():
     app = TestApp()
@@ -158,7 +175,7 @@ def test_save(app, tmpdir):
     # Saving the document ends the edition mode and save the edits
     filepath = str(tmpdir.join('foo'))
     app.doc.save_to_xml(filepath)
-    app.check_gui_calls(app.etable_gui, ['stop_editing', 'refresh', 'show_selected_row'])
+    app.etable.view.check_gui_calls_partial(['stop_editing'])
     assert app.etable.edited is None
     eq_(app.etable_count(), 1)
 
@@ -204,7 +221,7 @@ def test_change_entry_gui_calls(app):
     row.date = '12/07/2008'
     app.clear_gui_calls()
     app.etable.save_edits()
-    app.check_gui_calls(app.etable_gui, ['refresh', 'show_selected_row'])
+    app.check_gui_calls(app.etable_gui, ['refresh', 'update_selection', 'show_selected_row'])
 
 @with_app(app_one_entry)
 def test_change_transfer(app):
@@ -436,7 +453,7 @@ def test_selection(app):
     app.bsheet.selected = app.bsheet.assets[0]
     app.show_account()
     eq_(app.etable.selected_indexes, [0])
-    app.check_gui_calls(app.etable_gui, ['show_selected_row'])
+    app.check_gui_calls(app.etable_gui, ['update_selection', 'show_selected_row'])
 
 @with_app(app_two_entries)
 def test_total_row(app):

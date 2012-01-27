@@ -81,7 +81,7 @@ def test_load_while_etable_is_editing():
     app.tpanel.load()
     assert app.etable.edited is None
     eq_(app.etable_count(), 2)
-    app.check_gui_calls(app.etable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
+    app.etable.view.check_gui_calls_partial(['stop_editing'])
 
 def test_load_while_ttable_is_editing():
     # loading the tpanel while ttable is editing saves the edits and stops editing mode.
