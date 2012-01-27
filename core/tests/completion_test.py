@@ -15,7 +15,8 @@ from ..model.account import AccountType
 
 # a little helper that creates a completable edit, sets the text and returns the completion
 def complete_etable(app, value, attrname):
-    ce = app.completable_edit(attrname)
+    ce = app.aview.etable.completable_edit
+    ce.attrname = attrname
     ce.text = value
     return ce.completion
 
@@ -515,6 +516,7 @@ def app_account_created_through_transaction_table():
     app = TestApp()
     app.add_txn(from_='foo', to='bar', amount='42')
     app.ttable.show_from_account()
+    app.link_aview()
     return app
 
 #--- Generators

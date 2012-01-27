@@ -552,8 +552,6 @@ class TestApp(TestAppBase):
         return self.tview
     
     def show_aview(self):
-        # This should only be used when a specific account has previously been shown before
-        assert self.mw.shown_account is not None
         # We don do GUI linking here because that method cannot be called unless the pane has
         # already been brought up by a specific account-opening method. Call link_aview()
         self.mw.select_pane_of_type(PaneType.Account)

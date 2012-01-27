@@ -21,6 +21,8 @@ class CompletableEdit(DocumentGUIObject):
         self._complete_completion = ''
         self.completion = ''
         self._text = ''
+        # If doing completion for an entry table, set the account attribute
+        self.account = None
         self.connect()
     
     #--- Private
@@ -33,12 +35,12 @@ class CompletableEdit(DocumentGUIObject):
             self._candidates = doc.transactions.descriptions
         elif attrname == 'payee':
             self._candidates = doc.transactions.payees
-        elif attrname in ('from', 'to', 'account', 'transfer'):
+        elif attrname in {'from', 'to', 'account', 'transfer'}:
             result = doc.transactions.account_names
             # `result` doesn't contain empty accounts' name, so we'll add them.
             result += [a.name for a in doc.accounts]
-            if attrname == 'transfer' and self.mainwindow.shown_account is not None:
-                result = [name for name in result if name != self.mainwindow.shown_account.name]
+            if attrname == 'transfer' and self.account is not None:
+                result = [name for name in result if name != self.account.name]
             self._candidates = result
         self._candidates = dedupe([name for name in self._candidates if name.strip()])
     

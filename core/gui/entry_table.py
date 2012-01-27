@@ -52,6 +52,7 @@ class EntryTable(EntryTableBase):
         EntryTableBase.__init__(self, account_view)
         self.columns = EntryTableColumns(self, prefaccess=account_view.document, savename=self.SAVENAME)
         self.account = account_view.account
+        self.completable_edit.account = self.account
         self._reconciliation_mode = False
     
     #--- Override
@@ -113,7 +114,7 @@ class EntryTable(EntryTableBase):
             account_to_show = accounts[index+1]
         else:
             account_to_show = accounts[0]
-        self.mainwindow.shown_account = account_to_show
+        self.mainwindow.open_account(account_to_show)
     
     def toggle_reconciled(self):
         """Toggle the reconcile flag of selected entries"""

@@ -88,7 +88,6 @@ class MainWindow(Repeater, GUIObject):
         GUIObject.__init__(self)
         self.document = document
         self.app = document.app
-        self._shown_account = None # the account that is shown when the entry table is selected
         self._selected_transactions = []
         self._explicitly_selected_transactions = []
         self._selected_schedules = []
@@ -126,9 +125,6 @@ class MainWindow(Repeater, GUIObject):
         if self._current_pane is not None:
             self._current_pane.view.hide()
         self._current_pane = pane
-        if pane.account is not None and pane.account is not self._shown_account:
-            self._shown_account = pane.account
-            self.notify('shown_account_changed')
         self._current_pane.view.show()
         self.view.change_current_pane()
         self.update_status_line()
@@ -374,6 +370,17 @@ class MainWindow(Repeater, GUIObject):
         self.view.refresh_panes()
         self.current_pane_index = len(self.panes) - 1
     
+    def open_account(self, account):
+        if account is not None:
+            # Try to find a suitable pane, or add a new one
+            index = first(i for i, p in enumerate(self.panes) if p.account is account)
+            if index is None:
+                self._add_pane(self._create_pane(PaneType.Account, account))
+            else:
+                self.current_pane_index = index
+        elif self._current_pane.view.VIEW_TYPE == PaneType.Account:
+            self.select_pane_of_type(PaneType.NetWorth)
+    
     def pane_label(self, index):
         pane = self.panes[index]
         return pane.label
@@ -507,26 +514,6 @@ class MainWindow(Repeater, GUIObject):
     def explicitly_selected_transactions(self, transactions):
         self._explicitly_selected_transactions = transactions
         self.selected_transactions = transactions
-    
-    @property
-    def shown_account(self):
-        return self._shown_account
-    
-    @shown_account.setter
-    def shown_account(self, account):
-        changed = account is not self._shown_account
-        self._shown_account = account
-        if changed:
-            self.notify('shown_account_changed')
-        if account is not None:
-            # Try to find a suitable pane, or add a new one
-            index = first(i for i, p in enumerate(self.panes) if p.account is account)
-            if index is None:
-                self._add_pane(self._create_pane(PaneType.Account, account))
-            else:
-                self.current_pane_index = index
-        elif self._current_pane.view.VIEW_TYPE == PaneType.Account:
-            self.select_pane_of_type(PaneType.NetWorth)
     
     @property
     def status_line(self):

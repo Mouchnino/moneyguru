@@ -62,9 +62,6 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
                 break
     
     def _update_selection(self):
-        account = self.mainwindow.shown_account
-        if account is not None:
-            self.selected = self.find(lambda n: getattr(n, 'account', None) is account)
         if not (isinstance(self.selected, Node) and self.selected.is_account):
             self._select_first()        
     
@@ -273,7 +270,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
         return fp.read()
     
     def show_selected_account(self):
-        self.mainwindow.shown_account = self.selected_account
+        self.mainwindow.open_account(self.selected_account)
     
     def toggle_excluded(self):
         nodes = self.selected_nodes

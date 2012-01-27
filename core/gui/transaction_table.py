@@ -70,7 +70,7 @@ class TransactionTable(TransactionTableBase):
         froms, tos = txn.splitted_splits()
         splits = tos if use_to_column else froms
         account_to_show = splits[0].account
-        self.mainwindow.shown_account = account_to_show
+        self.mainwindow.open_account(account_to_show)
     
     #--- Public
     def select_transactions(self, transactions):

@@ -6,7 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-class PrintView(object):
+from .account_view import AccountView
+
+class PrintView:
     def __init__(self, parent):
         self.parent = parent
         self.document = parent.document
@@ -16,8 +18,8 @@ class PrintView(object):
     def title(self):
         if not hasattr(self.parent, 'PRINT_TITLE_FORMAT'):
             return ''
-        if self.parent.mainwindow.shown_account is not None:
-            account_name = self.parent.mainwindow.shown_account.name
+        if isinstance(self.parent, AccountView):
+            account_name = self.parent.account.name
         title_format = self.parent.PRINT_TITLE_FORMAT
         start_date = self.app.format_date(self.document.date_range.start)
         end_date = self.app.format_date(self.document.date_range.end)
