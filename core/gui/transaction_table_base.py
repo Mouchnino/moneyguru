@@ -50,6 +50,7 @@ class TransactionTableBase(GUITable, ViewChild):
     def _restore_from_explicit_selection(self):
         if self.mainwindow.explicitly_selected_transactions:
             self.select_transactions(self.mainwindow.explicitly_selected_transactions)
+            self.view.update_selection()
     
     #--- Public
     def can_move(self, row_indexes, position):

@@ -94,7 +94,7 @@ def test_load_while_ttable_is_editing():
     app.tpanel.load()
     assert app.ttable.edited is None
     eq_(app.ttable.row_count, 2)
-    app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row', 'stop_editing'])
+    app.ttable.view.check_gui_calls_partial(['stop_editing'])
 
 def test_values():
     # The values of the panel are correct.

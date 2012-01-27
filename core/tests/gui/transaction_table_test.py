@@ -223,7 +223,7 @@ def test_change_transaction_gui_calls(app):
     row = app.ttable[0]
     row.date = '12/07/2008'
     app.ttable.save_edits()
-    app.check_gui_calls(app.ttable_gui, ['refresh', 'show_selected_row'])
+    app.ttable.view.check_gui_calls(['refresh', 'update_selection', 'show_selected_row'])
 
 @with_app(app_one_transaction)
 def test_duplicate_transaction(app):
@@ -736,7 +736,7 @@ def test_selection(app):
     app.etable.hide()
     app.ttable.show()
     eq_(app.ttable.selected_indexes, [0, 1])
-    app.check_gui_calls(app.ttable_gui, ['show_selected_row'])
+    app.ttable.view.check_gui_calls(['update_selection', 'show_selected_row'])
 
 @with_app(app_three_transactions)
 def test_selection_changed_when_filtering_out(app):
