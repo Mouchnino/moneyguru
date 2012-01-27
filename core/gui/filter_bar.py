@@ -6,13 +6,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hscommon.gui.base import NoopGUI
+from hscommon.gui.base import GUIObject
 
-class FilterBar:
+from ..document import FilterType
+
+class FilterBar(GUIObject):
     def __init__(self, parent_view):
+        GUIObject.__init__(self)
         self.mainwindow = parent_view.mainwindow
         self.document = parent_view.document
-        self.view = NoopGUI()
     
     #--- Public
     def refresh(self):
@@ -31,22 +33,17 @@ class FilterBar:
 class EntryFilterBar(FilterBar): # disables buttons
     def __init__(self, account_view):
         FilterBar.__init__(self, account_view)
-        self._disabled_buttons = False
-        self._previous_account = None
+        self._account = account_view.account
     
     #--- Override
+    def _view_updated(self):
+        if self._account.is_income_statement_account():
+            self.view.disable_transfers()
+        else:
+            self.view.enable_transfers()
+    
     def refresh(self):
         FilterBar.refresh(self)
-        account = self.mainwindow.shown_account
-        if account is not self._previous_account:
-            self._previous_account = account
-            if account is not None and account.is_income_statement_account():
-                self.document.filter_type = None
-                if not self._disabled_buttons:
-                    self.view.disable_transfers()
-                    self._disabled_buttons = True
-            else:
-                if self._disabled_buttons:
-                    self.view.enable_transfers()
-                    self._disabled_buttons = False
+        if self._account.is_income_statement_account() and self.filter_type is FilterType.Transfer:
+            self.filter_type = None
     

@@ -24,17 +24,15 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     PyFilterBar *m = [[PyFilterBar alloc] initWithModel:aPyRef];
     self = [super initWithModel:m view:aView];
-    [m bindCallback:createCallback(@"FilterBarView", self)];
-    [m release];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
-	[item setTitle:TR(@"All")];
-	[aView insertItem:item atIndex:0];
-	item = [[[AMButtonBarItem alloc] initWithIdentifier:MGINCOME] autorelease];
-	[item setTitle:forEntryTable ? TR(@"Increase") : TR(@"Income")];
-	[aView insertItem:item atIndex:1];
-	item = [[[AMButtonBarItem alloc] initWithIdentifier:MGEXPENSE] autorelease];
-	[item setTitle:forEntryTable ? TR(@"Decrease") : TR(@"Expenses")];
-	[aView insertItem:item atIndex:2];
+    [item setTitle:TR(@"All")];
+    [aView insertItem:item atIndex:0];
+    item = [[[AMButtonBarItem alloc] initWithIdentifier:MGINCOME] autorelease];
+    [item setTitle:forEntryTable ? TR(@"Increase") : TR(@"Income")];
+    [aView insertItem:item atIndex:1];
+    item = [[[AMButtonBarItem alloc] initWithIdentifier:MGEXPENSE] autorelease];
+    [item setTitle:forEntryTable ? TR(@"Decrease") : TR(@"Expenses")];
+    [aView insertItem:item atIndex:2];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGTRANSFER] autorelease];
     [item setTitle:TR(@"Transfers")];
     [aView insertItem:item atIndex:3];
@@ -48,7 +46,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [item setTitle:TR(@"Not Reconciled")];
     [aView insertItem:item atIndex:6];
     [aView selectItemWithIdentifier:MGALL];
-	[aView setDelegate:self];
+    [aView setDelegate:self];
+    [m bindCallback:createCallback(@"FilterBarView", self)];
+    [m release];
     return self;
 }
 

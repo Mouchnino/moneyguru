@@ -47,17 +47,16 @@ class EntryTable(EntryTableBase):
         Column('credit', display=trcol("Credit"), visible=False),
         Column('balance', display=trcol("Balance")),
     ]
-    INVALIDATING_MESSAGES = EntryTableBase.INVALIDATING_MESSAGES | {'shown_account_changed'}
     
     def __init__(self, account_view):
         EntryTableBase.__init__(self, account_view)
         self.columns = EntryTableColumns(self, prefaccess=account_view.document, savename=self.SAVENAME)
-        self.account = None
+        self.account = account_view.account
         self._reconciliation_mode = False
     
     #--- Override
     def _fill(self):
-        account = self.mainwindow.shown_account
+        account = self.account
         if account is None:
             return
         self.account = account
@@ -76,7 +75,7 @@ class EntryTable(EntryTableBase):
         self._restore_from_explicit_selection()
     
     def _get_current_account(self):
-        return self.mainwindow.shown_account
+        return self.account
     
     def _get_totals_currency(self):
         return self._get_current_account().currency
@@ -150,9 +149,6 @@ class EntryTable(EntryTableBase):
         date = transactions[0].date if transactions else date_range.end
         delta = date - date_range.start
         self._delta_before_change = delta
-    
-    def shown_account_changed(self):
-        self._invalidated = True
     
     def transaction_changed(self):
         EntryTableBase.transaction_changed(self)

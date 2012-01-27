@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2010-05-06
 # Copyright 2012 Hardcoded Software (http://www.hardcoded.net)
@@ -11,11 +10,11 @@ from ..model.date import DateRange
 from .balance_graph import BalanceGraph
 
 class AccountBalanceGraph(BalanceGraph):
-    INVALIDATING_MESSAGES = BalanceGraph.INVALIDATING_MESSAGES | set(['shown_account_changed'])
+    INVALIDATING_MESSAGES = BalanceGraph.INVALIDATING_MESSAGES
     
     def __init__(self, account_view):
         BalanceGraph.__init__(self, account_view)
-        self._account = None
+        self._account = account_view.account
     
     def _balance_for_date(self, date):
         if self._account is None:
@@ -27,20 +26,12 @@ class AccountBalanceGraph(BalanceGraph):
         date_range = DateRange(date.min, date)
         return self.document.budgeted_amount_for_target(self._account, date_range)
     
-    def compute_data(self):
-        self._account = self.mainwindow.shown_account
-        BalanceGraph.compute_data(self)
-    
     #--- Properties
     @property
     def title(self):
-        return self.mainwindow.shown_account.name
+        return self._account.name
     
     @property
     def currency(self):
         return self._account.currency
-    
-    #--- Event Handlers
-    def shown_account_changed(self):
-        self._invalidated = True
     

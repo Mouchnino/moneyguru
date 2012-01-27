@@ -86,9 +86,6 @@ class DocumentNotificationsMixin:
     
 
 class MainWindowNotificationsMixin:
-    def shown_account_changed(self):
-        pass
-    
     def transactions_selected(self):
         pass
     

@@ -18,8 +18,7 @@ class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
     PRINT_TITLE_FORMAT = tr('{account_name}\nEntries from {start_date} to {end_date}')
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied',
-        'date_range_changed', 'transactions_selected', 'shown_account_changed',
-        'area_visibility_changed'}
+        'date_range_changed', 'transactions_selected', 'area_visibility_changed'}
     
     def __init__(self, mainwindow, account):
         BaseView.__init__(self, mainwindow)
@@ -46,7 +45,7 @@ class AccountView(BaseView):
     
     def show(self):
         BaseView.show(self)
-        account = self.mainwindow.shown_account
+        account = self.account
         if account is None:
             return
         if account.is_balance_sheet_account():
@@ -64,7 +63,7 @@ class AccountView(BaseView):
     
     #--- Private
     def _refresh_totals(self):
-        account = self.mainwindow.shown_account
+        account = self.account
         if account is None:
             return
         selected, total, total_debit, total_credit = self.etable.get_totals()
@@ -91,7 +90,7 @@ class AccountView(BaseView):
     
     def navigate_back(self):
         """When the entry table is shown, go back to the appropriate report."""
-        if self.mainwindow.shown_account.is_balance_sheet_account():
+        if self.account.is_balance_sheet_account():
             self.mainwindow.select_pane_of_type(PaneType.NetWorth)
         else:
             self.mainwindow.select_pane_of_type(PaneType.Profit)
@@ -116,8 +115,7 @@ class AccountView(BaseView):
     #--- Properties
     @property
     def can_toggle_reconciliation_mode(self):
-        shown_account = self.mainwindow.shown_account
-        return shown_account is not None and shown_account.is_balance_sheet_account()
+        return self.account.is_balance_sheet_account()
     
     @property
     def reconciliation_mode(self):
@@ -139,11 +137,6 @@ class AccountView(BaseView):
     
     def performed_undo_or_redo(self):
         self._refresh_totals()
-    
-    # If the account view is visible when the message is broadcasted, we won't get automatically
-    # invalidated, so we have to do it automatically.
-    def shown_account_changed(self):
-        self._invalidated = True
     
     def transactions_selected(self):
         self._refresh_totals()

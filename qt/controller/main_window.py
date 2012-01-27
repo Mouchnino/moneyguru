@@ -426,17 +426,21 @@ class MainWindow(QMainWindow):
         self.mainView.setCurrentWidget(view)
         view.setFocus()
     
+    def _activeView(self):
+        paneIndex = self.model.current_pane_index
+        return self.model.pane_view(paneIndex)
+    
     def _updateActionsState(self):
         # Updates enable/disable checked/unchecked state of all actions. These state can change
         # under various conditions: main view change, date range type change and when reconciliation
         # mode is toggled
         
         # Determine what actions are enabled
-        viewType = self.model.pane_type(self.model.current_pane_index)
-        isSheet = viewType in (PaneType.NetWorth, PaneType.Profit)
-        isTransactionOrEntryTable = viewType in (PaneType.Transaction, PaneType.Account)
-        canToggleReconciliation = viewType == PaneType.Account and \
-            self.eview.model.can_toggle_reconciliation_mode
+        view = self._activeView()
+        viewType = view.VIEW_TYPE
+        isSheet = viewType in {PaneType.NetWorth, PaneType.Profit}
+        isTransactionOrEntryTable = viewType in {PaneType.Transaction, PaneType.Account}
+        canToggleReconciliation = viewType == PaneType.Account and view.can_toggle_reconciliation_mode
         
         newItemLabel = {
             PaneType.NetWorth: tr("New Account"),
@@ -455,8 +459,7 @@ class MainWindow(QMainWindow):
         self.actionMoveUp.setEnabled(isTransactionOrEntryTable)
         self.actionDuplicateTransaction.setEnabled(isTransactionOrEntryTable)
         self.actionMakeScheduleFromSelected.setEnabled(isTransactionOrEntryTable)
-        self.actionReconcileSelected.setEnabled(viewType == PaneType.Account and \
-            self.eview.model.reconciliation_mode)
+        self.actionReconcileSelected.setEnabled(viewType == PaneType.Account and view.reconciliation_mode)
         self.actionShowNextView.setEnabled(self.model.current_pane_index < self.model.pane_count-1)
         self.actionShowPreviousView.setEnabled(self.model.current_pane_index > 0)
         self.actionShowSelectedAccount.setEnabled(isSheet or isTransactionOrEntryTable)
@@ -534,17 +537,16 @@ class MainWindow(QMainWindow):
         self.model.make_schedule_from_selected()
     
     def reconcileSelectedTriggered(self):
-        self.eview.etable.model.toggle_reconciled()
+        self._activeView().etable.toggle_reconciled()
     
     def toggleReconciliationModeTriggered(self):
-        self.eview.model.toggle_reconciliation_mode()
+        self._activeView().toggle_reconciliation_mode()
+        self._updateActionsState()
     
     def toggleAccountExclusionTriggered(self):
         viewType = self.model.pane_type(self.model.current_pane_index)
-        if viewType == PaneType.NetWorth:
-            self.nwview.nwsheet.model.toggle_excluded()
-        elif viewType == PaneType.Profit:
-            self.pview.psheet.model.toggle_excluded()
+        if viewType in {PaneType.NetWorth, PaneType.Profit}:
+            self._activeView().sheet.toggle_excluded()
     
     def toggleGraphTriggered(self):
         self.model.toggle_area_visibility(PaneArea.BottomGraph)

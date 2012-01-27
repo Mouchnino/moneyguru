@@ -16,9 +16,9 @@ class FilterBar(QObject):
         # the view is a qtlib.RadioBox
         QObject.__init__(self, None)
         self.model = model
-        self.model.view = self
         self.view = view
         self.view.items = [title for title, _ in self.BUTTONS]
+        self.model.view = self
         
         self.view.itemSelected.connect(self.itemSelected)
     

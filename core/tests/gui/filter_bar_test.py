@@ -95,7 +95,7 @@ class TestTransactionsOfEachType:
     @with_app(do_setup)
     def test_enable_disable_buttons(self, app):
         # The enable disable mechanism of the income, expense and transfer buttons work as expected
-        app.efbar.filter_type = FilterType.Income
+        app.efbar.filter_type = FilterType.Transfer
         app.show_pview()
         app.istatement.selected = app.istatement.income[0]
         app.clear_gui_calls()
@@ -115,9 +115,12 @@ class TestTransactionsOfEachType:
         # accounts in etable. Previously, selected_account would be used instead of shown_account.
         app.etable.select([0]) # entry with transfer to income
         app.etable.show_transfer_account() # showing Income
+        app.link_aview()
         app.efbar.view.check_gui_calls(['refresh', 'disable_transfers'])
         app.etable.show_transfer_account() # showing asset 2
-        app.efbar.view.check_gui_calls(['refresh', 'enable_transfers'])
+        app.link_aview()
+        # We only enable/disable transfers on creation, not on every refresh
+        app.efbar.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_multiple_filters_at_the_same_time(self, app):
