@@ -22,8 +22,8 @@ class AccountView(BaseView):
     
     def __init__(self, mainwindow, account):
         BaseView.__init__(self, mainwindow)
+        assert account is not None
         self.account = account
-        self._shown_graph = None
         self._reconciliation_mode = False
         self.etable = EntryTable(self)
         self.maintable = self.etable
@@ -31,35 +31,23 @@ class AccountView(BaseView):
         self.balgraph = AccountBalanceGraph(self)
         self.bargraph = AccountFlowGraph(self)
         self.filter_bar = EntryFilterBar(self)
-        self._shown_graph = self.balgraph
-        self.balgraph.connect()
-        self.bargraph.connect()
-        # we count the graphs separately because the show/hide rules for them are special
-        self.set_children([self.etable])
+        if account.is_balance_sheet_account():
+            self._shown_graph = self.balgraph
+        else:
+            self._shown_graph = self.bargraph
+        self.set_children([self.etable, self._shown_graph])
+    
+    def _view_updated(self):
+        if self._shown_graph is self.balgraph:
+            self.view.show_line_graph()
+        else:
+            self.view.show_bar_graph()
     
     def _revalidate(self):
         self._refresh_totals()
         self.view.refresh_reconciliation_button()
         self.filter_bar.refresh()
         self.view.update_visibility()
-    
-    def show(self):
-        BaseView.show(self)
-        account = self.account
-        if account is None:
-            return
-        if account.is_balance_sheet_account():
-            self._shown_graph = self.balgraph
-            self.view.show_line_graph()
-        else:
-            self._shown_graph = self.bargraph
-            self.view.show_bar_graph()
-        self._shown_graph.show()
-    
-    def hide(self):
-        BaseView.hide(self)
-        self.balgraph.hide()
-        self.bargraph.hide()
     
     #--- Private
     def _refresh_totals(self):

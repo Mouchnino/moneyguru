@@ -12,7 +12,12 @@ class BaseView(QWidget):
     def __init__(self, model):
         QWidget.__init__(self)
         self.model = model
+        self._setup()
+        # self.model.view usually triggers calls that require the view's children to be set up.
         self.model.view = self
+    
+    def _setup(self):
+        raise NotImplementedError()
     
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fit(self, 42, 42, expandH=True, expandV=True)

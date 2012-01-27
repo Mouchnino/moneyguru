@@ -17,8 +17,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     PyAccountView *m = [[PyAccountView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
-    [m bindCallback:createCallback(@"AccountViewView", self)];
-    [m release];
     [NSBundle loadNibNamed:@"EntryTable" owner:self];
     entryTable = [[MGEntryTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:YES];
@@ -30,6 +28,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [graphView setAutoresizingMask:[graphPlaceholder autoresizingMask]];
     [wholeView replaceSubview:graphPlaceholder with:graphView];
     currentGraphView = [balanceGraph view];
+    [m bindCallback:createCallback(@"AccountViewView", self)];
+    [m release];
     return self;
 }
         

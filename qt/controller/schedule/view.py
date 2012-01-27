@@ -13,8 +13,7 @@ from ..base_view import BaseView
 from .table import ScheduleTable
 
 class ScheduleView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         self.sctable = ScheduleTable(model=self.model.table, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected

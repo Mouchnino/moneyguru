@@ -19,8 +19,7 @@ from ..chart import Chart
 from .sheet import NetWorthSheet
 
 class NetWorthView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         self.nwsheet = NetWorthSheet(self.model.bsheet, view=self.treeView)
         self.nwgraph = Chart(self.model.nwgraph, view=self.graphView)

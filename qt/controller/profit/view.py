@@ -19,8 +19,7 @@ from ..chart import Chart
 from .sheet import ProfitSheet
 
 class ProfitView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         self.psheet = ProfitSheet(self.model.istatement, view=self.treeView)
         self.pgraph = Chart(self.model.pgraph, view=self.graphView)

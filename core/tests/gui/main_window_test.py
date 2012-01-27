@@ -312,15 +312,15 @@ def test_switch_panes_through_show_account(app):
     app.istatement.selected = app.istatement.income[0]
     app.show_account()
     eq_(app.mw.current_pane_index, 6)
-    expected = ['show_bar_graph', 'refresh_reconciliation_button']
-    app.check_gui_calls_partial(app.aview.view, expected)
+    app.aview.view.check_gui_calls_partial(['show_bar_graph'])
     app.show_nwview()
     eq_(app.mw.current_pane_index, 0)
     app.bsheet.selected = app.bsheet.assets[0]
     app.show_account()
     eq_(app.mw.current_pane_index, 5)
-    expected = ['show_line_graph', 'refresh_reconciliation_button']
-    app.check_gui_calls_partial(app.aview.view, expected)
+    # this account was already created, so we don't have to refresh the graphs.
+    not_expected = ['show_line_graph']
+    app.aview.view.check_gui_calls_partial(not_expected=not_expected)
     app.show_tview()
     eq_(app.mw.current_pane_index, 2)
 

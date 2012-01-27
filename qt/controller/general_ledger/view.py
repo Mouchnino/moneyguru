@@ -13,8 +13,7 @@ from ..base_view import BaseView
 from .table import GeneralLedgerTable
 
 class GeneralLedgerView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         self.gltable = GeneralLedgerTable(model=self.model.gltable, view=self.tableView)
         self._setupColumns() # Can only be done after the model has been connected

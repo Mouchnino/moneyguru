@@ -24,8 +24,7 @@ from .table import EntryTable
 tr = trget('ui')
 
 class EntryView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         self.etable = EntryTable(self.model.etable, view=self.tableView)
         self.efbar = EntryFilterBar(model=self.model.filter_bar, view=self.filterBar)

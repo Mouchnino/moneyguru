@@ -16,8 +16,7 @@ from .filter_bar import TransactionFilterBar
 from .table import TransactionTable
 
 class TransactionView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         self.ttable = TransactionTable(self.model.ttable, view=self.tableView)
         self.tfbar = TransactionFilterBar(model=self.model.filter_bar, view=self.filterBar)

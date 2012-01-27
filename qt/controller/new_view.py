@@ -18,8 +18,7 @@ from .base_view import BaseView
 tr = trget('ui')
 
 class NewView(BaseView):
-    def __init__(self, model):
-        BaseView.__init__(self, model)
+    def _setup(self):
         self._setupUi()
         
         self.networthButton.clicked.connect(self.networthButtonClicked)
