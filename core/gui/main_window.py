@@ -554,6 +554,8 @@ class MainWindow(Repeater, GUIObject):
         self._save_preferences()
         for pane in self.panes:
             pane.view.save_preferences()
+        # if our current pane is an account view, we need to hide it for it to save its prefs.
+        self._current_pane.view.hide()
     
     def document_restoring_preferences(self):
         self._restore_opened_panes()

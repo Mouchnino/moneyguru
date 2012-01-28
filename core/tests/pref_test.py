@@ -102,6 +102,30 @@ def test_pane_save_pref_when_closed(app):
     tview = app.show_tview()
     eq_(tview.ttable.columns.column_width('description'), 4242)
 
+@with_app(TestApp)
+def test_account_prefs_are_saved_and_restored_on_pane_swapping(app):
+    # Account views share the same columns. When we have more than one of them opened, changing
+    # the columns on a view should also change the columns in the other account views.
+    app.save_file() # we need to save the file in order to have a document id
+    app.add_accounts('foo', 'bar')
+    barview = app.show_account('bar')
+    fooview = app.show_account('foo')
+    fooview.etable.columns.resize_column('description', 4242)
+    assert app.show_account('bar') is barview
+    eq_(barview.etable.columns.column_width('description'), 4242)
+
+@with_app(TestApp)
+def test_account_prefs_are_saved_if_app_is_closed_with_it_opened(app):
+    # There was a glitch where if an account view tab was opened and had changed its columns,
+    # closing the app without swapping the active pane wouldn't save the prefs for this account
+    # view.
+    app.add_account('foo')
+    aview = app.show_account()
+    aview.etable.columns.resize_column('description', 4242)
+    newapp = app.save_and_load()
+    aview = newapp.show_account()
+    eq_(aview.etable.columns.column_width('description'), 4242)
+
 #--- Columns save/restore
 def assert_column_save_restore(app, tablename, colname, show_pane_func):
     getattr(app, show_pane_func)()

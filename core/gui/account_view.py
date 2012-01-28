@@ -37,18 +37,6 @@ class AccountView(BaseView):
             self._shown_graph = self.bargraph
         self.set_children([self.etable, self._shown_graph])
     
-    def _view_updated(self):
-        if self._shown_graph is self.balgraph:
-            self.view.show_line_graph()
-        else:
-            self.view.show_bar_graph()
-    
-    def _revalidate(self):
-        self._refresh_totals()
-        self.view.refresh_reconciliation_button()
-        self.filter_bar.refresh()
-        self.view.update_visibility()
-    
     #--- Private
     def _refresh_totals(self):
         account = self.account
@@ -67,8 +55,32 @@ class AccountView(BaseView):
         self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     
     #--- Override
-    def save_preferences(self):
+    def _view_updated(self):
+        if self._shown_graph is self.balgraph:
+            self.view.show_line_graph()
+        else:
+            self.view.show_bar_graph()
+    
+    def _revalidate(self):
+        self._refresh_totals()
+        self.view.refresh_reconciliation_button()
+        self.filter_bar.refresh()
+        self.view.update_visibility()
+    
+    def show(self):
+        self.etable.columns.restore_columns()
+        BaseView.show(self)
+    
+    def hide(self):
         self.etable.columns.save_columns()
+        BaseView.hide(self)
+    
+    def save_preferences(self):
+        # Unlike other views, we don't save preferences on pane closing, but much more frequently:
+        # on pane swapping. We do this because AccountView columns are shared between multiple
+        # instances and changing a column in a pane should result in the same change being done
+        # in other tabs. That's why we save/restore in hide()/show().
+        pass
     
     #--- Public
     def delete_item(self):
