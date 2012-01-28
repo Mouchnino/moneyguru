@@ -252,6 +252,12 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
             node._name = node.account.name if node.is_account else node.group.name
             self.mainwindow.show_message(msg)
     
+    def save_preferences(self):
+        # Save node expansion state
+        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
+        self.document.set_default(prefname, self.expanded_paths)
+        self.columns.save_columns()
+    
     def selection_as_csv(self):
         csvrows = []
         columns = (self.columns.coldata[colname] for colname in self.columns.colnames)
@@ -308,12 +314,6 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     def date_range_changed(self):
         self.refresh()
-    
-    def document_will_close(self):
-        # Save node expansion state
-        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
-        self.document.set_default(prefname, self.expanded_paths)
-        self.columns.save_columns()
     
     def document_restoring_preferences(self):
         prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)

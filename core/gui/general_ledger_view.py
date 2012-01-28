@@ -29,6 +29,9 @@ class GeneralLedgerView(BaseView):
     def _revalidate(self):
         self._refresh_totals()
     
+    def save_preferences(self):
+        self.gltable.columns.save_columns()
+    
     #--- Public
     def delete_item(self):
         self.gltable.delete()

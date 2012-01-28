@@ -25,6 +25,10 @@ class BudgetView(BaseView):
     def _revalidate(self):
         self.table.refresh_and_show_selection()
     
+    #--- Override
+    def save_preferences(self):
+        self.table.columns.save_columns()
+    
     #--- Public
     def new_item(self):
         self.mainwindow.budget_panel.new()
@@ -36,9 +40,6 @@ class BudgetView(BaseView):
         self.table.delete()
     
     #--- Events
-    def document_will_close(self):
-        self.table.columns.save_columns()
-    
     def document_restoring_preferences(self):
         self.table.columns.restore_columns()
     

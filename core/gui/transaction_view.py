@@ -75,6 +75,10 @@ class TransactionView(BaseView):
             txns = [t for t in txns if all(not s.reconciled for s in t.splits)]
         self._visible_transactions = txns
     
+    #--- Override
+    def save_preferences(self):
+        self.ttable.columns.save_columns()
+    
     #--- Public
     def delete_item(self):
         self.ttable.delete()

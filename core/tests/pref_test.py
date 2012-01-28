@@ -90,6 +90,18 @@ def test_graph_visibility_is_restored(app):
     assert PaneArea.BottomGraph in newapp.mw.hidden_areas
     newapp.mw.view.check_gui_calls_partial(['update_area_visibility'])
 
+@with_app(TestApp)
+def test_pane_save_pref_when_closed(app):
+    # When a pane is closed, we save its prefs now or else the pane won't be around to save it
+    # when the document will close.
+    app.save_file() # we need to save the file in order to have a document id
+    tview = app.show_tview()
+    tview.ttable.columns.resize_column('description', 4242)
+    index = app.mw.current_pane_index
+    app.mw.close_pane(index)
+    tview = app.show_tview()
+    eq_(tview.ttable.columns.column_width('description'), 4242)
+
 #--- Columns save/restore
 def assert_column_save_restore(app, tablename, colname, show_pane_func):
     getattr(app, show_pane_func)()

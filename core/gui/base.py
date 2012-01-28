@@ -108,7 +108,7 @@ class HideableObject:
     # revalidated upon show)
     INVALIDATING_MESSAGES = set()
     # Messages that are always passed, even if the object is hidden.
-    ALWAYSON_MESSAGES = {'document_will_close', 'document_restoring_preferences'}
+    ALWAYSON_MESSAGES = {'document_restoring_preferences'}
     
     def __init__(self):
         self._hidden = True
@@ -269,6 +269,9 @@ class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, 
         mymethod = getattr(cls, action_name, None)
         assert mymethod is not None
         return mymethod is not getattr(BaseView, action_name, None)
+    
+    def save_preferences(self):
+        pass # Virtual
     
     #--- Properties
     @property

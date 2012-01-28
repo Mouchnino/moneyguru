@@ -66,6 +66,10 @@ class AccountView(BaseView):
         msg = tr("{0} out of {1} selected. Increase: {2} Decrease: {3}")
         self.status_line = msg.format(selected, total, total_increase_fmt, total_decrease_fmt)
     
+    #--- Override
+    def save_preferences(self):
+        self.etable.columns.save_columns()
+    
     #--- Public
     def delete_item(self):
         self.etable.delete()

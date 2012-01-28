@@ -62,6 +62,11 @@ class CashculatorView(BaseView):
             io.copy(self._ccdbpath, self._mgccdbpath)
         self._db = CashculatorDB(str(self._mgccdbpath))
     
+    #--- Override
+    def save_preferences(self):
+        if self._needs_reset:
+            self.reset_ccdb()
+    
     #--- Public
     def export_db(self):
         self._ensure_paths()
@@ -153,8 +158,4 @@ class CashculatorView(BaseView):
         p.wait()
         self._needs_reset = False
     
-    #--- Events
-    def document_will_close(self):
-        if self._needs_reset:
-            self.reset_ccdb()
     

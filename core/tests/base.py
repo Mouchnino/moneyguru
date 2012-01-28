@@ -529,7 +529,7 @@ class TestApp(TestAppBase):
             self.bsheet_gui = self.bsheet.view
             self.apie = self.link_gui(self.nwview.apie)
             self.lpie = self.link_gui(self.nwview.lpie)
-        return self.nwview
+        return self.current_view()
     
     def show_pview(self):
         self.mw.select_pane_of_type(PaneType.Profit)
@@ -540,7 +540,7 @@ class TestApp(TestAppBase):
             self.istatement_gui = self.istatement.view
             self.ipie = self.link_gui(self.pview.ipie)
             self.epie = self.link_gui(self.pview.epie)
-        return self.pview
+        return self.current_view()
     
     def show_tview(self):
         self.mw.select_pane_of_type(PaneType.Transaction)
@@ -549,33 +549,34 @@ class TestApp(TestAppBase):
             self.ttable = self.link_gui(self.tview.ttable)
             self.ttable_gui = self.ttable.view
             self.tfbar = self.link_gui(self.tview.filter_bar)
-        return self.tview
+        return self.current_view()
     
     def show_aview(self):
         # We don do GUI linking here because that method cannot be called unless the pane has
         # already been brought up by a specific account-opening method. Call link_aview()
         self.mw.select_pane_of_type(PaneType.Account)
+        return self.current_view()
     
     def show_bview(self):
         self.mw.select_pane_of_type(PaneType.Budget)
         if not hasattr(self, 'bview'):
             self.bview = self.link_gui(self.current_view())
             self.btable = self.link_gui(self.bview.table)
-        return self.bview
+        return self.current_view()
     
     def show_scview(self):
         self.mw.select_pane_of_type(PaneType.Schedule)
         if not hasattr(self, 'scview'):
             self.scview = self.link_gui(self.current_view())
             self.sctable = self.link_gui(self.scview.table)
-        return self.scview
+        return self.current_view()
     
     def show_glview(self):
         self.mw.select_pane_of_type(PaneType.GeneralLedger)
         if not hasattr(self, 'glview'):
             self.glview = self.link_gui(self.current_view())
             self.gltable = self.link_gui(self.glview.gltable)
-        return self.glview
+        return self.current_view()
     
     def show_dpview(self):
         self.mw.select_pane_of_type(PaneType.DocProps)

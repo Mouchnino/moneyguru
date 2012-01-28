@@ -291,6 +291,7 @@ class MainWindow(Repeater, GUIObject):
         pane = self.panes[index]
         del self.panes[index]
         if not any(p.view is pane.view for p in self.panes):
+            pane.view.save_preferences()
             pane.view.disconnect()
         self.view.view_closed(index)
         # The index of the current view might have changed
@@ -551,6 +552,8 @@ class MainWindow(Repeater, GUIObject):
     
     def document_will_close(self):
         self._save_preferences()
+        for pane in self.panes:
+            pane.view.save_preferences()
     
     def document_restoring_preferences(self):
         self._restore_opened_panes()

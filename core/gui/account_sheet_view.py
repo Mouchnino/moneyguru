@@ -25,6 +25,9 @@ class AccountSheetView(BaseView):
         BaseView._revalidate(self)
         self.view.update_visibility()
     
+    def save_preferences(self):
+        self.sheet.save_preferences()
+    
     #--- Public
     def collapse_group(self, group):
         group.expanded = False
