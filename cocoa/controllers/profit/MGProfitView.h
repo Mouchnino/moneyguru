@@ -8,19 +8,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyProfitView.h"
-#import "MGBaseView.h"
+#import "MGAccountSheetView.h"
 #import "HSOutlineView.h"
 #import "MGIncomeStatement.h"
 #import "MGPieChart.h"
 #import "MGBarGraph.h"
 #import "MGDoubleView.h"
 
-@interface MGProfitView : MGBaseView
+@interface MGProfitView : MGAccountSheetView
 {
     IBOutlet HSOutlineView *outlineView;
-    IBOutlet NSScrollView *outlineScrollView;
     IBOutlet MGDoubleView *pieChartsView;
-    IBOutlet NSView *profitGraphPlaceholder;
     
     MGIncomeStatement *incomeStatement;
     MGPieChart *incomePieChart;
@@ -33,7 +31,4 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Public */
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;
-
-/* model --> view */
-- (void)updateVisibility;
 @end

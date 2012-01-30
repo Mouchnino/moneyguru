@@ -26,10 +26,13 @@ http://www.hardcoded.net/licenses/bsd_license
     [pieChartsView setFirstView:[incomePieChart view]];
     [pieChartsView setSecondView:[expensesPieChart view]];
     profitGraph = [[MGBarGraph alloc] initWithPyRef:[[self model] pgraph]];
-    NSView *graphView = [profitGraph view];
-    [graphView setFrame:[profitGraphPlaceholder frame]];
-    [graphView setAutoresizingMask:[profitGraphPlaceholder autoresizingMask]];
-    [wholeView replaceSubview:profitGraphPlaceholder with:graphView];
+    graphView = [profitGraph view];
+    pieView = pieChartsView;
+    [graphView setFrame:NSMakeRect(0, 0, 1, 258)];
+    [wholeView addSubview:graphView];
+    [(NSSplitView *)wholeView adjustSubviews];
+    [(NSSplitView *)wholeView setDelegate:self];
+    [subSplitView setDelegate:self];
     return self;
 }
         
@@ -71,39 +74,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)toggleExcluded
 {
     [[incomeStatement model] toggleExcluded];
-}
-
-/* model --> view */
-- (void)updateVisibility
-{
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
-    BOOL graphVisible = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
-    BOOL pieVisible = ![hiddenAreas containsIndex:MGPaneAreaRightChart];
-    // Let's set initial rects
-    NSRect mainRect = [outlineScrollView frame];
-    NSRect pieRect = [pieChartsView frame];
-    NSRect graphRect = [[profitGraph view] frame];
-    if (graphVisible) {
-        pieRect.size.height = NSMaxY(pieRect) - NSMaxY(graphRect);
-        pieRect.origin.y = NSMaxY(graphRect);
-        mainRect.size.height = NSMaxY(mainRect) - NSMaxY(graphRect);
-        mainRect.origin.y = NSMaxY(graphRect);
-    }
-    else {
-        pieRect.size.height = NSMaxY(pieRect) - NSMinY(graphRect);
-        pieRect.origin.y = NSMinY(graphRect);
-        mainRect.size.height = NSMaxY(mainRect) - NSMinY(graphRect);
-        mainRect.origin.y = NSMinY(graphRect);
-    }
-    if (pieVisible) {
-        mainRect.size.width = NSMinX(mainRect) + NSMinX(pieRect);
-    }
-    else {
-        mainRect.size.width = NSMinX(mainRect) + NSMaxX(pieRect);
-    }
-    [pieChartsView setHidden:!pieVisible];
-    [[profitGraph view] setHidden:!graphVisible];
-    [outlineScrollView setFrame:mainRect];
-    [pieChartsView setFrame:pieRect];
 }
 @end

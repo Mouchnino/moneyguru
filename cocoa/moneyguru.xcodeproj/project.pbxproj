@@ -82,6 +82,7 @@
 		CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4FAC9C1451B34D00114555 /* columns_16.png */; };
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
+		CE5A79A914D75078006D10FC /* MGAccountSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5A79A814D75078006D10FC /* MGAccountSheetView.m */; };
 		CE5C2709114E35B0008F43F8 /* MGDateRangeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */; };
 		CE5CBBDD1038361D008AC465 /* MGSchedulePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5CBBDC1038361D008AC465 /* MGSchedulePanel.m */; };
 		CE5F433414CDB81B00F70DE1 /* PyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5F433314CDB81B00F70DE1 /* PyTextField.m */; };
@@ -434,6 +435,8 @@
 		CE55EB881047DC8500F3390F /* MGSchedulePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSchedulePrint.m; path = print/MGSchedulePrint.m; sourceTree = "<group>"; };
 		CE55EB8A1047DE0C00F3390F /* MGBudgetPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGBudgetPrint.h; path = print/MGBudgetPrint.h; sourceTree = "<group>"; };
 		CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGBudgetPrint.m; path = print/MGBudgetPrint.m; sourceTree = "<group>"; };
+		CE5A79A714D75078006D10FC /* MGAccountSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAccountSheetView.h; sourceTree = "<group>"; };
+		CE5A79A814D75078006D10FC /* MGAccountSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAccountSheetView.m; sourceTree = "<group>"; };
 		CE5C2707114E35B0008F43F8 /* MGDateRangeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDateRangeSelector.h; sourceTree = "<group>"; };
 		CE5C2708114E35B0008F43F8 /* MGDateRangeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateRangeSelector.m; sourceTree = "<group>"; };
 		CE5CBBDB1038361D008AC465 /* MGSchedulePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSchedulePanel.h; sourceTree = "<group>"; };
@@ -1067,6 +1070,8 @@
 				CEB60205123930AA002218CF /* general_ledger */,
 				CEB3AD6D10F9C8A60014EC80 /* MGBaseView.h */,
 				CEB3AD6E10F9C8A60014EC80 /* MGBaseView.m */,
+				CE5A79A714D75078006D10FC /* MGAccountSheetView.h */,
+				CE5A79A814D75078006D10FC /* MGAccountSheetView.m */,
 				CED4DB0714476BEF0041601F /* MGDocPropsView.h */,
 				CED4DB0814476BEF0041601F /* MGDocPropsView.m */,
 				CE74808B11995EF400D59C50 /* MGEmptyView.h */,
@@ -1979,6 +1984,7 @@
 				CE464C2014CC66D00074A658 /* HSOutline.m in Sources */,
 				CE5F433414CDB81B00F70DE1 /* PyTextField.m in Sources */,
 				CE5F433814CDB98E00F70DE1 /* HSTextField.m in Sources */,
+				CE5A79A914D75078006D10FC /* MGAccountSheetView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

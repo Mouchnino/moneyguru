@@ -8,19 +8,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyNetWorthView.h"
-#import "MGBaseView.h"
+#import "MGAccountSheetView.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
 #import "MGPieChart.h"
 #import "MGBalanceGraph.h"
 #import "MGDoubleView.h"
 
-@interface MGNetWorthView : MGBaseView
+@interface MGNetWorthView : MGAccountSheetView
 {
     IBOutlet HSOutlineView *outlineView;
-    IBOutlet NSScrollView *outlineScrollView;
     IBOutlet MGDoubleView *pieChartsView;
-    IBOutlet NSView *netWorthGraphPlaceholder;
     
     MGBalanceSheet *balanceSheet;
     MGPieChart *assetsPieChart;
@@ -33,7 +31,4 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Public */
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;
-
-/* model --> view */
-- (void)updateVisibility;
 @end

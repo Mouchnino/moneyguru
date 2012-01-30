@@ -9,12 +9,14 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "HSGUIController.h"
 #import "MGPrintView.h"
+#import "PyBaseView.h"
 
 @interface MGBaseView : HSGUIController
 {
     IBOutlet NSView *wholeView;
     IBOutlet NSResponder *mainResponder;
 }
+- (PyBaseView *)model;
 - (MGPrintView *)viewToPrint;
 - (NSResponder *)mainResponder;
 - (NSString *)tabIconName;

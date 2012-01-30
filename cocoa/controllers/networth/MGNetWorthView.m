@@ -26,10 +26,13 @@ http://www.hardcoded.net/licenses/bsd_license
     [pieChartsView setFirstView:[assetsPieChart view]];
     [pieChartsView setSecondView:[liabilitiesPieChart view]];
     netWorthGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] nwgraph]];
-    NSView *graphView = [netWorthGraph view];
-    [graphView setFrame:[netWorthGraphPlaceholder frame]];
-    [graphView setAutoresizingMask:[netWorthGraphPlaceholder autoresizingMask]];
-    [wholeView replaceSubview:netWorthGraphPlaceholder with:graphView];
+    graphView = [netWorthGraph view];
+    pieView = pieChartsView;
+    [graphView setFrame:NSMakeRect(0, 0, 1, 258)];
+    [wholeView addSubview:graphView];
+    [(NSSplitView *)wholeView adjustSubviews];
+    [(NSSplitView *)wholeView setDelegate:self];
+    [subSplitView setDelegate:self];
     return self;
 }
         
@@ -50,7 +53,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGPrintView *)viewToPrint
 {
     NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
-    NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : [netWorthGraph view];
+    NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : graphView;
     MGDoubleView *printPieChartView = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? nil : pieChartsView;
     MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[self model] outlineView:outlineView
         graphView:printGraphView pieViews:printPieChartView];
@@ -73,37 +76,4 @@ http://www.hardcoded.net/licenses/bsd_license
     [[balanceSheet model] toggleExcluded];
 }
 
-/* model --> view */
-- (void)updateVisibility
-{
-    NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
-    BOOL graphVisible = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
-    BOOL pieVisible = ![hiddenAreas containsIndex:MGPaneAreaRightChart];
-    // Let's set initial rects
-    NSRect mainRect = [outlineScrollView frame];
-    NSRect pieRect = [pieChartsView frame];
-    NSRect graphRect = [[netWorthGraph view] frame];
-    if (graphVisible) {
-        pieRect.size.height = NSMaxY(pieRect) - NSMaxY(graphRect);
-        pieRect.origin.y = NSMaxY(graphRect);
-        mainRect.size.height = NSMaxY(mainRect) - NSMaxY(graphRect);
-        mainRect.origin.y = NSMaxY(graphRect);
-    }
-    else {
-        pieRect.size.height = NSMaxY(pieRect) - NSMinY(graphRect);
-        pieRect.origin.y = NSMinY(graphRect);
-        mainRect.size.height = NSMaxY(mainRect) - NSMinY(graphRect);
-        mainRect.origin.y = NSMinY(graphRect);
-    }
-    if (pieVisible) {
-        mainRect.size.width = NSMinX(mainRect) + NSMinX(pieRect);
-    }
-    else {
-        mainRect.size.width = NSMinX(mainRect) + NSMaxX(pieRect);
-    }
-    [pieChartsView setHidden:!pieVisible];
-    [[netWorthGraph view] setHidden:!graphVisible];
-    [outlineScrollView setFrame:mainRect];
-    [pieChartsView setFrame:pieRect];
-}
 @end

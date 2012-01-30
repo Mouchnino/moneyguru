@@ -9,6 +9,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBaseView.h"
 
 @implementation MGBaseView
+- (PyBaseView *)model
+{
+    return (PyBaseView *)model;
+}
+
 - (NSView *)view
 {
     return wholeView;
