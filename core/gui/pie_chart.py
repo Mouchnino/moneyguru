@@ -14,6 +14,16 @@ from .chart import Chart
 
 SLICE_COUNT = 6 # If there is more than SLICE_COUNT items, the last item will group all the rest.
 
+#0xrrggbb
+COLORS = [
+    0x5dbc56,
+    0x3c5bce,
+    0xb6181f,
+    0xe99709,
+    0x9521e9,
+    0x808080, # Only for "Others"
+]
+
 class PieChart(Chart):
     #--- Virtual
     def _get_data(self):
@@ -26,14 +36,19 @@ class PieChart(Chart):
         data = self._get_data()
         data = [(name, float(amount)) for name, amount in data.items() if amount > 0]
         data.sort(key=lambda t: t[1], reverse=True)
+        data = [(name, amount, i % (len(COLORS)-1)) for i, (name, amount) in enumerate(data)]
         if len(data) > SLICE_COUNT:
             others = data[SLICE_COUNT - 1:]
-            others_total = sum(amount for name, amount in others)
+            others_total = sum(amount for _, amount, _ in others)
             del data[SLICE_COUNT - 1:]
-            data.append((tr('Others'), others_total))
-        total = sum(amount for name, amount in data)
+            data.append((tr('Others'), others_total, len(COLORS)-1))
+        total = sum(amount for _, amount, _ in data)
         if not total:
             return
         fmt = lambda name, amount: '%s %1.1f%%' % (name, amount / total * 100)
-        self._data = [(fmt(name, amount), amount) for name, amount in data]
+        self._data = [(fmt(name, amount), amount, color) for name, amount, color in data]
+    
+    #--- Public
+    def colors(self):
+        return COLORS
     

@@ -61,19 +61,7 @@ NSPoint rectCenter(NSRect r)
 - (id)init
 {
     self = [super init];
-    NSMutableArray *colors = [NSMutableArray array];
-    [colors addObject:[NSColor colorWithDeviceRed:0.365 green:0.737 blue:0.337 alpha:1.0]];
-    [colors addObject:[NSColor colorWithDeviceRed:0.235 green:0.357 blue:0.808 alpha:1.0]];
-    [colors addObject:[NSColor colorWithDeviceRed:0.714 green:0.094 blue:0.122 alpha:1.0]];
-    [colors addObject:[NSColor colorWithDeviceRed:0.914 green:0.592 blue:0.035 alpha:1.0]];
-    [colors addObject:[NSColor colorWithDeviceRed:0.584 green:0.129 blue:0.914 alpha:1.0]];
-    [colors addObject:[NSColor darkGrayColor]];
-    gradients = [[NSMutableArray array] retain];
-    for (NSColor *c in colors) {
-        NSColor *light = [c blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
-        NSGradient *g = [[NSGradient alloc] initWithStartingColor:c endingColor:light];
-        [gradients addObject:[g autorelease]];
-    }
+    gradients = nil;
     return self;
 }
 
@@ -81,6 +69,18 @@ NSPoint rectCenter(NSRect r)
 {
     [gradients release];
     [super dealloc];
+}
+
+- (void)setColors:(NSArray *)colors
+{
+    [gradients release];
+    gradients = [[NSMutableArray array] retain];
+    for (NSColor *c in colors) {
+        NSColor *light = [c blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
+        NSGradient *g = [[NSGradient alloc] initWithStartingColor:c endingColor:light];
+        [gradients addObject:g];
+        [g release];
+    }
 }
 
 /* Drawing */
@@ -120,18 +120,16 @@ NSPoint rectCenter(NSRect r)
     NSRect circleRect = NSMakeRect(circleX, circleY, circleSize, circleSize);
     
     // Draw the pie
-    NSEnumerator *e = [data objectEnumerator];
-    NSArray *pair;
     CGFloat total = 0;
-    while (pair = [e nextObject])
-        total += n2f([pair objectAtIndex:1]);
+    for (NSArray *dataPoint in data) {
+        total += n2f([dataPoint objectAtIndex:1]);
+    }
     NSMutableArray *legends = [NSMutableArray array];
     CGFloat startAngle = 0;
-    for (int i=0; i<[data count]; i++)
-    {
-        pair = [data objectAtIndex:i];
-        NSGradient *gradient = [gradients objectAtIndex:i % [gradients count]];
-        CGFloat fraction = n2f([pair objectAtIndex:1]) / total;
+    for (NSArray *dataPoint in data) {
+        NSInteger colorIndex = n2i([dataPoint objectAtIndex:2]);
+        NSGradient *gradient = [gradients objectAtIndex:colorIndex];
+        CGFloat fraction = n2f([dataPoint objectAtIndex:1]) / total;
         CGFloat angle = fraction * 360;
         CGFloat endAngle = startAngle + angle;
         
@@ -146,7 +144,7 @@ NSPoint rectCenter(NSRect r)
         [slice setLineWidth:LINE_WIDTH];
         [slice stroke];
         
-        NSString *legendText = [pair objectAtIndex:0];
+        NSString *legendText = [dataPoint objectAtIndex:0];
         NSPoint baseLegendPoint = pointInCircle(center, radius, deg2rad(startAngle + (angle / 2)));
         NSSize legendSize = [legendText sizeWithAttributes:legendAttributes];
         NSPoint legendPoint = NSMakePoint(baseLegendPoint.x - (legendSize.width / 2), baseLegendPoint.y);

@@ -53,10 +53,10 @@ class TestSomeAssetsAndLiabilities:
         # The asset pie chart values are sorted in reversed order of amount and have correct titles
         eq_(app.apie.title, 'Assets')
         expected = [
-            ('a2 40.0%', 4),
-            ('a4 30.0%', 3),
-            ('a3 20.0%', 2),
-            ('a1 10.1%', 1.01),
+            ('a2 40.0%', 4, 0),
+            ('a4 30.0%', 3, 1),
+            ('a3 20.0%', 2, 2),
+            ('a1 10.1%', 1.01, 3),
         ]
         eq_(app.apie.data, expected)
     
@@ -77,9 +77,9 @@ class TestSomeAssetsAndLiabilities:
         app.bsheet.selected = app.bsheet.assets[0]
         app.bsheet.toggle_excluded()
         expected = [
-            ('a2 44.4%', 4),
-            ('a4 33.3%', 3),
-            ('a3 22.2%', 2),
+            ('a2 44.4%', 4, 0),
+            ('a4 33.3%', 3, 1),
+            ('a3 22.2%', 2, 2),
         ]
         eq_(app.apie.data, expected)
         app.apie.view.check_gui_calls(['refresh'])
@@ -89,8 +89,8 @@ class TestSomeAssetsAndLiabilities:
         # the lpie also works
         eq_(app.lpie.title, 'Liabilities')
         expected = [
-            ('l2 62.5%', 5),
-            ('l1 37.5%', 3),
+            ('l2 62.5%', 5, 0),
+            ('l1 37.5%', 3, 1),
         ]
         eq_(app.lpie.data, expected)
     
@@ -109,10 +109,10 @@ class TestSomeAssetsAndLiabilitiesWithBudget:
         # the budget amounts used for the pie chart include all previous budgets
         app.drsel.select_next_date_range()
         expected = [
-            ('a3 60.0%', 12),
-            ('a2 20.0%', 4),
-            ('a4 15.0%', 3),
-            ('a1 5.0%', 1.01),
+            ('a3 60.0%', 12, 0),
+            ('a2 20.0%', 4, 1),
+            ('a4 15.0%', 3, 2),
+            ('a1 5.0%', 1.01, 3),
         ]
         eq_(app.apie.data, expected)
     
@@ -120,10 +120,10 @@ class TestSomeAssetsAndLiabilitiesWithBudget:
     def test_pie_values(self, app):
         # budgeted amounts are also reflected in the pie chart
         expected = [
-            ('a3 46.6%', 7),
-            ('a2 26.6%', 4),
-            ('a4 20.0%', 3),
-            ('a1 6.7%', 1.01),
+            ('a3 46.6%', 7, 0),
+            ('a2 26.6%', 4, 1),
+            ('a4 20.0%', 3, 2),
+            ('a1 6.7%', 1.01, 3),
         ]
         eq_(app.apie.data, expected)
     
@@ -144,7 +144,10 @@ class TestMoreThanSliceCountAssets:
         data = app.apie.data
         eq_(len(data), SLICE_COUNT)
         other = data[-1]
-        eq_(other, ('Others %1.1f%%' % (3 / (SLICE_COUNT + 2) * 100), 3))
+        expected_name = 'Others %1.1f%%' % (3 / (SLICE_COUNT + 2) * 100)
+        expected_amount = 3
+        expected_color = len(app.apie.colors())-1
+        eq_(other, (expected_name, expected_amount, expected_color))
     
 
 class TestSomeIncomeAndExpenses:
@@ -173,10 +176,10 @@ class TestSomeIncomeAndExpenses:
         app.add_budget('e1', None, '5')
         app.show_pview()
         expected = [
-            ('e1 41.7%', 5),
-            ('e3 33.3%', 4),
-            ('e4 16.7%', 2),
-            ('e2 8.3%', 1),
+            ('e1 41.7%', 5, 0),
+            ('e3 33.3%', 4, 1),
+            ('e4 16.7%', 2, 2),
+            ('e2 8.3%', 1, 3),
         ]
         eq_(app.epie.data, expected)
     
@@ -185,10 +188,10 @@ class TestSomeIncomeAndExpenses:
         # The expenses pie chart values are sorted in reversed order of amount and have correct titles
         eq_(app.epie.title, 'Expenses')
         expected = [
-            ('e3 40.0%', 4),
-            ('e1 30.0%', 3),
-            ('e4 20.0%', 2),
-            ('e2 10.0%', 1),
+            ('e3 40.0%', 4, 0),
+            ('e1 30.0%', 3, 1),
+            ('e4 20.0%', 2, 2),
+            ('e2 10.0%', 1, 3),
         ]
         eq_(app.epie.data, expected)
     
@@ -198,9 +201,9 @@ class TestSomeIncomeAndExpenses:
         app.istatement.selected = app.istatement.expenses[0]
         app.istatement.toggle_excluded()
         expected = [
-            ('e3 57.1%', 4),
-            ('e4 28.6%', 2),
-            ('e2 14.3%', 1),
+            ('e3 57.1%', 4, 0),
+            ('e4 28.6%', 2, 1),
+            ('e2 14.3%', 1, 2),
         ]
         eq_(app.epie.data, expected)
         app.epie.view.check_gui_calls(['refresh'])
@@ -211,10 +214,10 @@ class TestSomeIncomeAndExpenses:
         app.istatement.selected = app.istatement.income[0]
         eq_(app.ipie.title, 'Income')
         expected = [
-            ('i2 40.0%', 4),
-            ('i4 30.0%', 3),
-            ('i1 20.0%', 2),
-            ('i3 10.0%', 1),
+            ('i2 40.0%', 4, 0),
+            ('i4 30.0%', 3, 1),
+            ('i1 20.0%', 2, 2),
+            ('i3 10.0%', 1, 3),
         ]
         eq_(app.ipie.data, expected)
     
@@ -235,9 +238,9 @@ class TestDifferentDateRanges:
     @with_app(do_setup)
     def test_balance_pie_chart(self, app):
         # the data in the balance pie chart reflects the currencly selected date range
-        eq_(app.apie.data, [('foo 100.0%', 2)])
+        eq_(app.apie.data, [('foo 100.0%', 2, 0)])
         app.drsel.select_prev_date_range()
-        eq_(app.apie.data, [('foo 100.0%', 4)])
+        eq_(app.apie.data, [('foo 100.0%', 4, 0)])
         app.apie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
@@ -246,9 +249,9 @@ class TestDifferentDateRanges:
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
         app.clear_gui_calls()
-        eq_(app.epie.data, [('bar 100.0%', 2)])
+        eq_(app.epie.data, [('bar 100.0%', 2, 0)])
         app.drsel.select_prev_date_range()
-        eq_(app.epie.data, [('bar 100.0%', 1)])
+        eq_(app.epie.data, [('bar 100.0%', 1, 0)])
         app.epie.view.check_gui_calls(['refresh'])
     
 
@@ -271,8 +274,8 @@ class TestMultipleCurrencies:
     def test_balance_pie_chart(self, app):
         # the amounts are converted to the default currency before being weighted
         expected = [
-            ('CAD asset 55.6%', 1),
-            ('USD asset 44.4%', 0.8),
+            ('CAD asset 55.6%', 1, 0),
+            ('USD asset 44.4%', 0.8, 1),
         ]
         eq_(app.apie.data, expected)
     
@@ -281,8 +284,8 @@ class TestMultipleCurrencies:
         # the amounts are converted to the default currency before being weighted
         app.show_pview()
         expected = [
-            ('CAD income 55.6%', 1),
-            ('USD income 44.4%', 0.8),
+            ('CAD income 55.6%', 1, 0),
+            ('USD income 44.4%', 0.8, 1),
         ]
         eq_(app.ipie.data, expected)
     
@@ -300,7 +303,7 @@ class TestNegativeAssetValue:
     @with_app(do_setup)
     def test_balance_pie_chart(self, app):
         # negative balances are ignored
-        eq_(app.apie.data, [('bar 100.0%', 1)])
+        eq_(app.apie.data, [('bar 100.0%', 1, 0)])
     
 
 class TestAccountGroup:
@@ -333,8 +336,8 @@ class TestAccountGroup:
         # view event, refreshing the outline during that call causes a crash
         app.bsheet_gui.check_gui_calls_partial(not_expected=['refresh'])
         expected = [
-            ('baz 70.0%', 7),
-            ('group 30.0%', 3),
+            ('baz 70.0%', 7, 0),
+            ('group 30.0%', 3, 1),
         ]
         eq_(app.apie.data, expected)
     
@@ -344,9 +347,9 @@ class TestAccountGroup:
         app.bsheet.expand_node(app.bsheet.assets[0])
         app.bsheet_gui.check_gui_calls_partial(not_expected=['refresh']) # see test_collapse_group
         expected = [
-            ('baz 70.0%', 7),
-            ('bar 20.0%', 2),
-            ('foo 10.0%', 1),
+            ('baz 70.0%', 7, 0),
+            ('bar 20.0%', 2, 1),
+            ('foo 10.0%', 1, 2),
         ]
         eq_(app.apie.data, expected)
     
@@ -354,9 +357,9 @@ class TestAccountGroup:
     def test_pie_chart_data(self, app):
         # when the group is expanded, show all accounts individually
         expected = [
-            ('baz 70.0%', 7),
-            ('bar 20.0%', 2),
-            ('foo 10.0%', 1),
+            ('baz 70.0%', 7, 0),
+            ('bar 20.0%', 2, 1),
+            ('foo 10.0%', 1, 2),
         ]
         eq_(app.apie.data, expected)
     

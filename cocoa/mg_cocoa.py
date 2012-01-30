@@ -164,6 +164,9 @@ class PyChart(PyGUIObject):
     def currency(self) -> str:
         return self.model.currency.code
     
+    def colors(self) -> list:
+        return self.model.colors()
+    
 
 class PyGraph(PyChart):
     def xMin(self) -> float:

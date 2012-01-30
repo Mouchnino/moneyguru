@@ -13,4 +13,5 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSMutableArray *gradients;
 }
+- (void)setColors:(NSArray *)colors;
 @end

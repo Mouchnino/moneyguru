@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-08
 # Copyright 2012 Hardcoded Software (http://www.hardcoded.net)
@@ -7,7 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from itertools import combinations
 from math import radians, sin
 
 from PyQt4.QtCore import Qt, QPointF, QRectF, QSizeF
@@ -55,7 +53,7 @@ def pullRectIn(rect, container):
     elif rect.right() > container.right():
         rect.moveRight(container.right())
 
-class Legend(object):
+class Legend:
     PADDING = 2 # the padding between legend text and the rectangle behind it
     
     def __init__(self, text, color, angle):
@@ -87,24 +85,7 @@ class PieChartView(QWidget):
     def __init__(self, parent):
         QWidget.__init__(self, parent)
         self.dataSource = None
-        COLORS = [
-            (93, 188, 86),
-            (60, 91, 206),
-            (182, 24, 31),
-            (233, 151, 9),
-            (149, 33, 233),
-            (128, 128, 128),
-        ]
-        
-        gradients = []
-        for r, g, b in COLORS:
-            gradient = QLinearGradient(0, 0, 0, 1)
-            gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
-            color = QColor(r, g, b)
-            gradient.setColorAt(0, color)
-            gradient.setColorAt(1, color.lighter())
-            gradients.append(gradient)
-        self.gradients = gradients
+        self.gradients = None
         
         self.titleFont = QFont(QApplication.font())
         self.titleFont.setPointSize(self.TITLE_FONT_SIZE)
@@ -112,14 +93,27 @@ class PieChartView(QWidget):
         self.legendFont = QFont(QApplication.font())
         self.legendFont.setPointSize(self.LEGEND_FONT_SIZE)
     
+    def _gradientsFromColors(self, colors):
+        gradients = []
+        for rgbInt in colors:
+            gradient = QLinearGradient(0, 0, 0, 1)
+            gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
+            color = QColor(rgbInt)
+            gradient.setColorAt(0, color)
+            gradient.setColorAt(1, color.lighter())
+            gradients.append(gradient)
+        return gradients
+    
     def paintEvent(self, event):
         QWidget.paintEvent(self, event)
         if self.dataSource is None:
             return
+        ds = self.dataSource
+        if self.gradients is None:
+            self.gradients = self._gradientsFromColors(ds.colors())
         painter = QPainter(self)
         painter.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing)
         painter.fillRect(self.rect(), Qt.white)
-        ds = self.dataSource
         
         # view dimensions
         viewWidth = self.width()
@@ -151,10 +145,11 @@ class PieChartView(QWidget):
         painter.drawText(QPointF(titleX, titleY), titleText)
         
         # draw pie
-        totalAmount = sum(amount for _, amount in ds.data)
+        totalAmount = sum(amount for _, amount, _ in ds.data)
         startAngle = 0
         legends = []
-        for (legendText, amount), gradient in zip(ds.data, self.gradients):
+        for (legendText, amount, colorIndex) in ds.data:
+            gradient = self.gradients[colorIndex]
             fraction = amount / totalAmount
             angle = fraction * 360
             painter.setBrush(QBrush(gradient))
