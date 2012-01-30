@@ -331,7 +331,7 @@ class TestApp(TestAppBase):
             self.stable.save_edits()
         self.tpanel.save()
     
-    def account_names(self): # doesn't include Imbalance
+    def account_names(self):
         account_sort = {
             AccountType.Asset:0,
             AccountType.Liability: 1,
