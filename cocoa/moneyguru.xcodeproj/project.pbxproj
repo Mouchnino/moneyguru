@@ -19,9 +19,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		CE036D64103AE51100E172F8 /* MGPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE036D63103AE51100E172F8 /* MGPanel.m */; };
 		CE051CF2123A904F00D31D18 /* MGGeneralLedgerPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */; };
-		CE092729145061F3004BD916 /* graph_visibility_off_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092725145061F3004BD916 /* graph_visibility_off_16.png */; };
 		CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092726145061F3004BD916 /* graph_visibility_on_16.png */; };
-		CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092727145061F3004BD916 /* piechart_visibility_off_16.png */; };
 		CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE092728145061F3004BD916 /* piechart_visibility_on_16.png */; };
 		CE0DB09414C8CF9E002F5727 /* PyReport.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0DB09314C8CF9E002F5727 /* PyReport.m */; };
 		CE0E85C60F875C1800549758 /* MGBalancePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0E85C10F875C1800549758 /* MGBalancePrint.m */; };
@@ -324,9 +322,7 @@
 		CE036D63103AE51100E172F8 /* MGPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPanel.m; sourceTree = "<group>"; };
 		CE051CF0123A904F00D31D18 /* MGGeneralLedgerPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGGeneralLedgerPrint.h; path = print/MGGeneralLedgerPrint.h; sourceTree = SOURCE_ROOT; };
 		CE051CF1123A904F00D31D18 /* MGGeneralLedgerPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGGeneralLedgerPrint.m; path = print/MGGeneralLedgerPrint.m; sourceTree = SOURCE_ROOT; };
-		CE092725145061F3004BD916 /* graph_visibility_off_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph_visibility_off_16.png; sourceTree = "<group>"; };
 		CE092726145061F3004BD916 /* graph_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph_visibility_on_16.png; sourceTree = "<group>"; };
-		CE092727145061F3004BD916 /* piechart_visibility_off_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_off_16.png; sourceTree = "<group>"; };
 		CE092728145061F3004BD916 /* piechart_visibility_on_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piechart_visibility_on_16.png; sourceTree = "<group>"; };
 		CE0DB09214C8CF9E002F5727 /* PyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReport.h; sourceTree = "<group>"; };
 		CE0DB09314C8CF9E002F5727 /* PyReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyReport.m; sourceTree = "<group>"; };
@@ -1442,9 +1438,7 @@
 			isa = PBXGroup;
 			children = (
 				CE4FAC9C1451B34D00114555 /* columns_16.png */,
-				CE092725145061F3004BD916 /* graph_visibility_off_16.png */,
 				CE092726145061F3004BD916 /* graph_visibility_on_16.png */,
-				CE092727145061F3004BD916 /* piechart_visibility_off_16.png */,
 				CE092728145061F3004BD916 /* piechart_visibility_on_16.png */,
 				CEF5E63411DCCEE80048C9DF /* balance_sheet_16.png */,
 				CEF5E63511DCCEE80048C9DF /* entry_table_16.png */,
@@ -1797,9 +1791,7 @@
 				CE7869F0135D920500221226 /* about.xib in Resources */,
 				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
 				CED4DB05144767C20041601F /* DocProps.xib in Resources */,
-				CE092729145061F3004BD916 /* graph_visibility_off_16.png in Resources */,
 				CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */,
-				CE09272B145061F3004BD916 /* piechart_visibility_off_16.png in Resources */,
 				CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */,
 				CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */,
 				CEE0FE74147EA6C600713C87 /* locale in Resources */,

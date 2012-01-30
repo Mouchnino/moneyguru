@@ -385,6 +385,10 @@ http://www.hardcoded.net/licenses/bsd_license
             NSPoint popupPoint = NSMakePoint(NSMaxX(buttonRect)-lastSegmentWidth, NSMaxY(buttonRect));
             [m popUpMenuPositioningItem:nil atLocation:popupPoint inView:[[self window] contentView]];
         }
+        /* The segment is going to be automatically toggled if we don't do anything. Untoggle it
+           after each click.
+        */
+        [visibilitySegments setSelected:NO forSegment:2];
     }
 }
 
@@ -648,10 +652,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)updateAreaVisibility
 {
     NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
-    NSString *imgname = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? @"graph_visibility_off_16" : @"graph_visibility_on_16";
-    [visibilitySegments setImage:[NSImage imageNamed:imgname] forSegment:0];
-    imgname = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? @"piechart_visibility_off_16" : @"piechart_visibility_on_16";
-    [visibilitySegments setImage:[NSImage imageNamed:imgname] forSegment:1];
+    BOOL selected = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
+    [visibilitySegments setSelected:selected forSegment:0];
+    selected = ![hiddenAreas containsIndex:MGPaneAreaRightChart];
+    [visibilitySegments setSelected:selected forSegment:1];
 }
 
 - (void)viewClosedAtIndex:(NSInteger)index

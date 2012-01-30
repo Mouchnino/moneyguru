@@ -80,7 +80,7 @@
 						<object class="NSSegmentedControl" id="734865357">
 							<reference key="NSNextResponder" ref="1024620742"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{7, 1}, {89, 25}}</string>
+							<string key="NSFrame">{{7, 2}, {89, 23}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1012562456"/>
@@ -88,7 +88,7 @@
 							<object class="NSSegmentedCell" key="NSCell" id="5157376">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<object class="NSFont" key="NSSupport" id="1002475987">
+								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
@@ -126,13 +126,13 @@
 								</array>
 								<int key="NSSelectedSegment">1</int>
 								<int key="NSTrackingMode">2</int>
-								<int key="NSSegmentStyle">2</int>
+								<int key="NSSegmentStyle">5</int>
 							</object>
 						</object>
 						<object class="NSSegmentedControl" id="1012562456">
 							<reference key="NSNextResponder" ref="1024620742"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{104, 1}, {89, 25}}</string>
+							<string key="NSFrame">{{104, 2}, {89, 23}}</string>
 							<reference key="NSSuperview" ref="1024620742"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="318475319"/>
@@ -140,7 +140,7 @@
 							<object class="NSSegmentedCell" key="NSCell" id="461028361">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">0</int>
-								<reference key="NSSupport" ref="1002475987"/>
+								<reference key="NSSupport" ref="949252702"/>
 								<reference key="NSControlView" ref="1012562456"/>
 								<array class="NSMutableArray" key="NSSegmentImages">
 									<object class="NSSegmentItem">
@@ -175,8 +175,8 @@
 									</object>
 								</array>
 								<int key="NSSelectedSegment">1</int>
-								<int key="NSTrackingMode">2</int>
-								<int key="NSSegmentStyle">2</int>
+								<int key="NSTrackingMode">1</int>
+								<int key="NSSegmentStyle">5</int>
 							</object>
 						</object>
 						<object class="NSTextField" id="318475319">
@@ -348,9 +348,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="963846985"/>
 							<reference ref="619150477"/>
-							<reference ref="734865357"/>
 							<reference ref="318475319"/>
 							<reference ref="1012562456"/>
+							<reference ref="734865357"/>
 						</array>
 						<reference key="parent" ref="211527197"/>
 					</object>
