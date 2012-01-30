@@ -9,8 +9,7 @@
 from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 
 class Chart(ViewChild):
-    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | set(['accounts_excluded',
-        'date_range_changed'])
+    INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'accounts_excluded', 'date_range_changed'}
     
     #--- Override
     def _revalidate(self):
@@ -20,6 +19,11 @@ class Chart(ViewChild):
     #--- Virtual
     def compute(self):
         raise NotImplementedError()
+    
+    #--- Public
+    def set_view_size(self, width, height):
+        # Some charts behave differently depending on what size they're given.
+        self.view_size = (width, height)
     
     #--- Event Handlers
     def _data_changed(self):

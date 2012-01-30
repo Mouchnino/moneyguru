@@ -48,7 +48,7 @@ class ProfitView(BaseView):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(0)
         self.incomePieChart = PieChartView(self)
-        self.incomePieChart.setMinimumSize(QSize(250, 0))
+        self.incomePieChart.setMinimumSize(QSize(300, 0))
         self.verticalLayout.addWidget(self.incomePieChart)
         self.expensePieChart = PieChartView(self)
         self.verticalLayout.addWidget(self.expensePieChart)

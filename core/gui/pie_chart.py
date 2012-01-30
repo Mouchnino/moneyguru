@@ -12,7 +12,11 @@ from .chart import Chart
 # A pie chart's data is a list of (name, (float)amount). The name part is ready for display. It
 # is exactly what should be in the legend of the pie chat (it has amount and %)
 
-SLICE_COUNT = 6 # If there is more than SLICE_COUNT items, the last item will group all the rest.
+# Regardless of the view size, we always display this number of slices. If we have more, we group
+# them under "Others"
+MIN_SLICE_COUNT = 6
+MIN_VIEW_SIZE = 250 # Size at which we start counting for eventual extra slices
+SIZE_COST_FOR_SLICE = 30 # Number of pixels we need to count an extra slice
 
 #0xrrggbb
 COLORS = [
@@ -25,22 +29,36 @@ COLORS = [
 ]
 
 class PieChart(Chart):
+    def __init__(self, parent_view):
+        Chart.__init__(self, parent_view)
+        self._slice_count = MIN_SLICE_COUNT
+    
     #--- Virtual
     def _get_data(self):
         # Returns a list of {name: amount}
         raise NotImplementedError()
     
     #--- Override
+    def set_view_size(self, width, height):
+        Chart.set_view_size(self, width, height)
+        size = min(width, height)
+        slice_count = MIN_SLICE_COUNT
+        if size > MIN_VIEW_SIZE:
+            slice_count += (size - MIN_VIEW_SIZE) // SIZE_COST_FOR_SLICE
+        if slice_count != self._slice_count:
+            self._slice_count = slice_count
+            self._revalidate()
+    
     def compute(self):
         self._data = []
         data = self._get_data()
         data = [(name, float(amount)) for name, amount in data.items() if amount > 0]
         data.sort(key=lambda t: t[1], reverse=True)
         data = [(name, amount, i % (len(COLORS)-1)) for i, (name, amount) in enumerate(data)]
-        if len(data) > SLICE_COUNT:
-            others = data[SLICE_COUNT - 1:]
+        if len(data) > self.slice_count():
+            others = data[self.slice_count()-1:]
             others_total = sum(amount for _, amount, _ in others)
-            del data[SLICE_COUNT - 1:]
+            del data[self.slice_count()-1:]
             data.append((tr('Others'), others_total, len(COLORS)-1))
         total = sum(amount for _, amount, _ in data)
         if not total:
@@ -52,3 +70,5 @@ class PieChart(Chart):
     def colors(self):
         return COLORS
     
+    def slice_count(self):
+        return self._slice_count

@@ -24,12 +24,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [data release];
     [title release];
     [currency release];
+    [model release];
     [super dealloc];
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
     MGChartView *result = [[[self class] alloc] init];
+    [result setModel:model];
     [result setData:data];
     [result setTitle:title];
     [result setCurrency:currency];
@@ -45,6 +47,23 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)isOpaque
 {
 	return YES;
+}
+
+- (void)setFrameSize:(NSSize)newSize
+{
+    [super setFrameSize:newSize];
+    [[self model] setViewWidth:newSize.width height:newSize.height];
+}
+
+- (PyChart *)model
+{
+    return model;
+}
+
+- (void)setModel:(PyChart *)aModel
+{
+    [model release];
+    model = [aModel retain];
 }
 
 - (void)setData:(NSArray *)aData

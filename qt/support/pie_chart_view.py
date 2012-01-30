@@ -93,6 +93,7 @@ class PieChartView(QWidget):
         self.legendFont = QFont(QApplication.font())
         self.legendFont.setPointSize(self.LEGEND_FONT_SIZE)
     
+    #--- Private
     def _gradientsFromColors(self, colors):
         gradients = []
         for rgbInt in colors:
@@ -103,6 +104,10 @@ class PieChartView(QWidget):
             gradient.setColorAt(1, color.lighter())
             gradients.append(gradient)
         return gradients
+    
+    #--- Override
+    def resizeEvent(self, event):
+        self.dataSource.set_view_size(self.width(), self.height())
     
     def paintEvent(self, event):
         QWidget.paintEvent(self, event)

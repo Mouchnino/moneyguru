@@ -25,6 +25,12 @@ http://www.hardcoded.net/licenses/bsd_license
     return (MGChartView *)view;
 }
 
+- (void)setView:(MGChartView *)aView
+{
+    [super setView:aView];
+    [aView setModel:[self model]];
+}
+
 - (PyChart *)model
 {
     return (PyChart *)model;

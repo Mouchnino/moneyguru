@@ -7,17 +7,20 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyChart.h"
 
 @interface MGChartView : NSView <NSCopying>
 {
+    PyChart *model;
     NSArray *data;
     NSString *title;
     NSString *currency;
     NSColor *backgroundColor;
     NSColor *titleColor;
 }
+- (PyChart *)model;
+- (void)setModel:(PyChart *)aModel;
 - (void)setData:(NSArray *)aData;
 - (void)setTitle:(NSString *)aTitle;
 - (void)setCurrency:(NSString *)aCurrency;
-
 @end

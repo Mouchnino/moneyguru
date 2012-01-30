@@ -48,7 +48,7 @@ class NetWorthView(BaseView):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(0)
         self.assetPieChart = PieChartView(self)
-        self.assetPieChart.setMinimumSize(QSize(250, 0))
+        self.assetPieChart.setMinimumSize(QSize(300, 0))
         self.verticalLayout.addWidget(self.assetPieChart)
         self.liabilityPieChart = PieChartView(self)
         self.verticalLayout.addWidget(self.liabilityPieChart)

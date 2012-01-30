@@ -167,6 +167,9 @@ class PyChart(PyGUIObject):
     def colors(self) -> list:
         return self.model.colors()
     
+    def setViewWidth_height_(self, width: int, height: int):
+        self.model.set_view_size(width, height)
+    
 
 class PyGraph(PyChart):
     def xMin(self) -> float:

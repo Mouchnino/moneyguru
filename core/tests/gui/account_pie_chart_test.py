@@ -13,9 +13,37 @@ from hscommon.currency import Currency, USD, CAD
 
 from ..base import ApplicationGUI, TestApp, with_app
 from ...app import Application
-from ...gui.pie_chart import SLICE_COUNT
+from ...gui.pie_chart import MIN_SLICE_COUNT, MIN_VIEW_SIZE, SIZE_COST_FOR_SLICE
 from ...model.account import AccountType
 
+#--- Slice count
+def app_show_nwview():
+    app = TestApp()
+    app.show_nwview()
+    return app
+
+@with_app(app_show_nwview)
+def test_min_slice_count(app):
+    # There's a threshold under which we don't go for slice count
+    app.apie.set_view_size(1, 1)
+    eq_(app.apie.slice_count(), MIN_SLICE_COUNT)
+
+@with_app(app_show_nwview)
+def test_two_extra_slices(app):
+    size = MIN_VIEW_SIZE + (2 * SIZE_COST_FOR_SLICE)
+    app.apie.set_view_size(size, size)
+    eq_(app.apie.slice_count(), MIN_SLICE_COUNT + 2)
+
+@with_app(app_show_nwview)
+def test_min_between_width_and_height_used(app):
+    # The minimum value between width and height is used for calculating the number of slices
+    size = MIN_VIEW_SIZE + (2 * SIZE_COST_FOR_SLICE)
+    app.apie.set_view_size(size, 1)
+    eq_(app.apie.slice_count(), MIN_SLICE_COUNT)
+    app.apie.set_view_size(1, size)
+    eq_(app.apie.slice_count(), MIN_SLICE_COUNT)
+
+#---
 def app_some_assets_and_liabilities(monkeypatch):
     monkeypatch.patch_today(2009, 1, 29) # On the last day of the month, some tests fail
     app = TestApp()
@@ -127,28 +155,35 @@ class TestSomeAssetsAndLiabilitiesWithBudget:
         ]
         eq_(app.apie.data, expected)
     
+#---
+def app_more_assets_than_slice_count():
+    app = TestApp()
+    app.show_nwview()
+    for i in range(app.apie.slice_count() + 2):
+        app.add_account('account %d' % i)
+        app.show_account()
+        app.add_entry(increase='1')
+    app.show_nwview()
+    return app
 
-class TestMoreThanSliceCountAssets:
-    def do_setup(self):
-        app = TestApp()
-        for i in range(SLICE_COUNT + 2):
-            app.add_account('account %d' % i)
-            app.show_account()
-            app.add_entry(increase='1')
-        app.show_nwview()
-        return app
-    
-    @with_app(do_setup)
-    def test_assets_pie_chart_values(self, app):
-        # The pie chart values are sorted in reversed order of amount and have correct titles
-        data = app.apie.data
-        eq_(len(data), SLICE_COUNT)
-        other = data[-1]
-        expected_name = 'Others %1.1f%%' % (3 / (SLICE_COUNT + 2) * 100)
-        expected_amount = 3
-        expected_color = len(app.apie.colors())-1
-        eq_(other, (expected_name, expected_amount, expected_color))
-    
+@with_app(app_more_assets_than_slice_count)
+def test_others_slice_values(app):
+    # When there's more data point than max slice count, we group all data points in one and
+    # call it "Others".
+    data = app.apie.data
+    eq_(len(data), app.apie.slice_count())
+    other = data[-1]
+    expected_name = 'Others %1.1f%%' % (3 / (app.apie.slice_count() + 2) * 100)
+    expected_amount = 3
+    expected_color = len(app.apie.colors())-1
+    eq_(other, (expected_name, expected_amount, expected_color))
+
+@with_app(app_more_assets_than_slice_count)
+def test_recompute_data_on_view_size_change(app):
+    # When the view size change and that this change results in a change in slice count, recompute
+    # the data.
+    app.apie.set_view_size(9999, 9999)
+    eq_(len(app.apie.data), len(app.account_names()))
 
 class TestSomeIncomeAndExpenses:
     def do_setup(self):
