@@ -6,13 +6,16 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4 import QtCore, QtGui
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import (QVBoxLayout, QHBoxLayout, QSizePolicy, QPushButton, QAbstractItemView,
+    QStackedWidget, QSplitter)
 
 from core.const import PaneArea
 
 from hscommon.trans import trget
-
 from qtlib.radio_box import RadioBox
+from qtlib.util import horizontalSpacer
+
 from ...support.item_view import TableView
 from ...support.line_graph_view import LineGraphView
 from ...support.bar_graph_view import BarGraphView
@@ -36,49 +39,52 @@ class EntryView(BaseView):
     
     def _setupUi(self):
         self.resize(483, 423)
-        self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.verticalLayout = QVBoxLayout(self)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setMargin(0)
-        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setSpacing(0)
         self.filterBar = RadioBox(self)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.filterBar.sizePolicy().hasHeightForWidth())
         self.filterBar.setSizePolicy(sizePolicy)
         self.horizontalLayout.addWidget(self.filterBar)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.reconciliationButton = QtGui.QPushButton(tr("Reconciliation"))
+        self.horizontalLayout.addItem(horizontalSpacer())
+        self.reconciliationButton = QPushButton(tr("Reconciliation"))
         self.reconciliationButton.setCheckable(True)
         self.horizontalLayout.addWidget(self.reconciliationButton)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.splitterView = QSplitter()
+        self.splitterView.setOrientation(Qt.Vertical)
+        self.splitterView.setChildrenCollapsible(False)
         self.tableView = TableView(self)
         self.tableView.setAcceptDrops(True)
-        self.tableView.setEditTriggers(QtGui.QAbstractItemView.DoubleClicked|QtGui.QAbstractItemView.EditKeyPressed)
+        self.tableView.setEditTriggers(QAbstractItemView.DoubleClicked|QAbstractItemView.EditKeyPressed)
         self.tableView.setDragEnabled(True)
-        self.tableView.setDragDropMode(QtGui.QAbstractItemView.InternalMove)
-        self.tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tableView.setDragDropMode(QAbstractItemView.InternalMove)
+        self.tableView.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableView.setSortingEnabled(True)
         self.tableView.horizontalHeader().setHighlightSections(False)
         self.tableView.horizontalHeader().setMinimumSectionSize(18)
         self.tableView.verticalHeader().setVisible(False)
         self.tableView.verticalHeader().setDefaultSectionSize(18)
-        self.verticalLayout.addWidget(self.tableView)
-        self.graphView = QtGui.QStackedWidget(self)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        self.splitterView.addWidget(self.tableView)
+        self.graphView = QStackedWidget(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.graphView.sizePolicy().hasHeightForWidth())
         self.graphView.setSizePolicy(sizePolicy)
-        self.graphView.setMinimumSize(QtCore.QSize(0, 200))
+        self.graphView.setMinimumSize(0, 200)
         self.lineGraphView = LineGraphView()
         self.graphView.addWidget(self.lineGraphView)
         self.barGraphView = BarGraphView()
         self.graphView.addWidget(self.barGraphView)
-        self.verticalLayout.addWidget(self.graphView)
+        self.splitterView.addWidget(self.graphView)
         self.graphView.setCurrentIndex(1)
+        self.verticalLayout.addWidget(self.splitterView)
     
     def _setupColumns(self):
         h = self.tableView.horizontalHeader()

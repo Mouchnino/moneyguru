@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import QSize
-from PyQt4.QtGui import QVBoxLayout, QHBoxLayout, QFrame, QAbstractItemView
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QVBoxLayout, QFrame, QAbstractItemView, QSplitter, QWidget
 
 from core.const import PaneArea
 
@@ -28,11 +28,12 @@ class NetWorthView(BaseView):
     
     def _setupUi(self):
         self.resize(558, 447)
-        self.verticalLayout_2 = QVBoxLayout(self)
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setMargin(0)
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setSpacing(0)
+        self.mainLayout = QVBoxLayout(self)
+        self.splitterView = QSplitter()
+        self.splitterView.setChildrenCollapsible(False)
+        self.splitterView.setOrientation(Qt.Vertical)
+        self.subSplitterView = QSplitter()
+        self.subSplitterView.setChildrenCollapsible(False)
         self.treeView = TreeView(self)
         self.treeView.setAcceptDrops(True)
         self.treeView.setFrameShape(QFrame.NoFrame)
@@ -44,19 +45,27 @@ class NetWorthView(BaseView):
         self.treeView.setAllColumnsShowFocus(True)
         self.treeView.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.treeView.header().setStretchLastSection(False)
-        self.horizontalLayout.addWidget(self.treeView)
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setSpacing(0)
+        self.subSplitterView.addWidget(self.treeView)
+        self.pieHolder = QWidget()
+        self.pieLayout = QVBoxLayout()
+        self.pieLayout.setMargin(0)
+        self.pieLayout.setSpacing(0)
         self.assetPieChart = PieChartView(self)
-        self.assetPieChart.setMinimumSize(QSize(300, 0))
-        self.verticalLayout.addWidget(self.assetPieChart)
+        self.assetPieChart.setMinimumSize(300, 0)
+        self.pieLayout.addWidget(self.assetPieChart)
         self.liabilityPieChart = PieChartView(self)
-        self.verticalLayout.addWidget(self.liabilityPieChart)
-        self.horizontalLayout.addLayout(self.verticalLayout)
-        self.verticalLayout_2.addLayout(self.horizontalLayout)
+        self.pieLayout.addWidget(self.liabilityPieChart)
+        self.pieHolder.setLayout(self.pieLayout)
+        self.subSplitterView.addWidget(self.pieHolder)
+        self.splitterView.addWidget(self.subSplitterView)
         self.graphView = LineGraphView(self)
-        self.graphView.setMinimumSize(QSize(0, 200))
-        self.verticalLayout_2.addWidget(self.graphView)
+        self.graphView.setMinimumSize(0, 200)
+        self.splitterView.addWidget(self.graphView)
+        self.splitterView.setStretchFactor(0, 1)
+        self.splitterView.setStretchFactor(1, 0)
+        self.subSplitterView.setStretchFactor(0, 1)
+        self.subSplitterView.setStretchFactor(1, 0)
+        self.mainLayout.addWidget(self.splitterView)
     
     #--- QWidget override
     def setFocus(self):
@@ -76,6 +85,5 @@ class NetWorthView(BaseView):
     def update_visibility(self):
         hidden = self.model.mainwindow.hidden_areas
         self.graphView.setHidden(PaneArea.BottomGraph in hidden)
-        self.assetPieChart.setHidden(PaneArea.RightChart in hidden)
-        self.liabilityPieChart.setHidden(PaneArea.RightChart in hidden)
+        self.pieHolder.setHidden(PaneArea.RightChart in hidden)
     
