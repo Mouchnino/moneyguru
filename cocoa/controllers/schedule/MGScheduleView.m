@@ -16,13 +16,18 @@ http://www.hardcoded.net/licenses/bsd_license
     PyScheduleView *m = [[PyScheduleView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"ScheduleTable" owner:self];
+    tableView = [[MGTableView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
+    [self setupTableView:tableView];
+    mainResponder = tableView;
+    wholeView = [[tableView wrapInScrollView] retain];
     scheduleTable = [[MGScheduleTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
+    [tableView release];
     return self;
 }
         
 - (void)dealloc
 {
+    [wholeView release];
     [scheduleTable release];
     [super dealloc];
 }

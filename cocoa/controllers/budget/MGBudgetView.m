@@ -16,14 +16,19 @@ http://www.hardcoded.net/licenses/bsd_license
     PyBudgetView *m = [[PyBudgetView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"BudgetTable" owner:self];
+    tableView = [[MGTableView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
+    [self setupTableView:tableView];
+    mainResponder = tableView;
+    wholeView = [[tableView wrapInScrollView] retain];
     budgetTable = [[MGBudgetTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
+    [tableView release];
     return self;
 }
         
 - (void)dealloc
 {
     [budgetTable release];
+    [wholeView release];
     [super dealloc];
 }
 

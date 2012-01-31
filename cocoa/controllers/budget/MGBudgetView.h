@@ -14,8 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGBudgetView : MGBaseView
 {
-    IBOutlet MGTableView *tableView;
-    
+    MGTableView *tableView;
     MGBudgetTable *budgetTable;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;

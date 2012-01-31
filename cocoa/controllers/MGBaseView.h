@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSGUIController.h"
 #import "MGPrintView.h"
 #import "PyBaseView.h"
+#import "MGTableView.h"
 
 @interface MGBaseView : HSGUIController
 {
@@ -20,4 +21,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGPrintView *)viewToPrint;
 - (NSResponder *)mainResponder;
 - (NSString *)tabIconName;
+- (void)setupTableView:(MGTableView *)aTableView;
 @end

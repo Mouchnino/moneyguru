@@ -16,14 +16,19 @@ http://www.hardcoded.net/licenses/bsd_license
     PyGeneralLedgerView *m = [[PyGeneralLedgerView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"GeneralLedger" owner:self];
+    tableView = [[MGGeneralLedgerTableView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
+    [self setupTableView:tableView];
+    mainResponder = tableView;
+    wholeView = [[tableView wrapInScrollView] retain];
     ledgerTable = [[MGGeneralLedgerTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
+    [tableView release];
     return self;
 }
         
 - (void)dealloc
 {
     [ledgerTable release];
+    [wholeView release];
     [super dealloc];
 }
 

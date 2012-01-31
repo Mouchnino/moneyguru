@@ -10,11 +10,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyGeneralLedgerView.h"
 #import "MGBaseView.h"
 #import "MGGeneralLedgerTable.h"
+#import "MGGeneralLedgerTableView.h"
 
 @interface MGGeneralLedgerView : MGBaseView
 {
-    IBOutlet MGTableView *tableView;
-    
+    MGGeneralLedgerTableView *tableView;
     MGGeneralLedgerTable *ledgerTable;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;

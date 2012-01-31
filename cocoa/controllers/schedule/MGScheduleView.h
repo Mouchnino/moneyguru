@@ -14,8 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGScheduleView : MGBaseView
 {
-    IBOutlet MGTableView *tableView;
-    
+    MGTableView *tableView;
     MGScheduleTable *scheduleTable;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;

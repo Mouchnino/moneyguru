@@ -8,29 +8,21 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "NSTableViewAdditions.h"
+#import "HSTableView.h"
 
 @class MGTableView;
 
-@protocol MGTableViewDelegate <NSTableViewDelegate>
+@protocol MGTableViewDelegate <HSTableViewDelegate>
 - (NSString *)autoCompletionForColumn:(NSTableColumn *)column partialWord:(NSString *)partialWord;
 - (NSString *)currentValueForColumn:(NSTableColumn *)column;
 - (NSString *)prevValueForColumn:(NSTableColumn *)column;
 - (NSString *)nextValueForColumn:(NSTableColumn *)column;
-- (NSIndexSet *)selectedIndexes;
 - (NSString *)dataForCopyToPasteboard;
-- (void)tableViewDidEndEditing:(MGTableView *)tableView;
-- (void)tableViewCancelsEdition:(MGTableView *)tableView;
-- (void)tableViewWasDoubleClicked:(MGTableView *)tableView;
 @end
 
-@interface MGTableView : NSTableView 
-{
-    BOOL manualEditionStop;
-}
+@interface MGTableView : HSTableView {}
 - (id <MGTableViewDelegate>)delegate;
 - (void)setDelegate:(id <MGTableViewDelegate>)aDelegate;
-- (void)updateSelection;
-- (void)stopEditing;
 - (IBAction)copy:(id)sender;
 @end
 
