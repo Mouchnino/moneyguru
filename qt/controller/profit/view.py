@@ -29,6 +29,8 @@ class ProfitView(BaseView):
     def _setupUi(self):
         self.resize(558, 447)
         self.mainLayout = QVBoxLayout(self)
+        self.mainLayout.setSpacing(0)
+        self.mainLayout.setMargin(0)
         self.splitterView = QSplitter()
         self.splitterView.setChildrenCollapsible(False)
         self.splitterView.setOrientation(Qt.Vertical)
