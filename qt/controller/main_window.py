@@ -11,10 +11,10 @@ import os.path as op
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QProcess, QUrl
 from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
-    QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction)
+    QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction, QMenuBar)
 
 from qtlib.recent import Recent
-from qtlib.util import horizontalSpacer
+from qtlib.util import horizontalSpacer, setAccelKeys
 from hscommon.trans import trget
 from hscommon.plat import ISLINUX
 from core.const import PaneType, PaneArea
@@ -173,14 +173,14 @@ class MainWindow(QMainWindow):
         
         
         self.setCentralWidget(self.centralwidget)
-        self.menubar = QtGui.QMenuBar(self)
+        self.menubar = QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 700, 20))
-        self.menuFile = QtGui.QMenu(tr("File"))
-        self.menuOpenRecent = QtGui.QMenu(tr("Open Recent"))
-        self.menuView = QtGui.QMenu(tr("View"))
-        self.menuDateRange = QtGui.QMenu(tr("Date Range"))
-        self.menuEdit = QtGui.QMenu(tr("Edit"))
-        self.menuHelp = QtGui.QMenu(tr("Help"))
+        self.menuFile = QMenu(tr("File"))
+        self.menuOpenRecent = QMenu(tr("Open Recent"))
+        self.menuView = QMenu(tr("View"))
+        self.menuDateRange = QMenu(tr("Date Range"))
+        self.menuEdit = QMenu(tr("Edit"))
+        self.menuHelp = QMenu(tr("Help"))
         self.setMenuBar(self.menubar)
         self.actionOpenDocument = QAction(tr("Open..."), self)
         self.actionOpenDocument.setShortcut("Ctrl+O")
@@ -312,10 +312,11 @@ class MainWindow(QMainWindow):
         self.menuHelp.addAction(self.actionCheckForUpdate)
         self.menuHelp.addAction(self.actionOpenDebugLog)
         self.menuHelp.addAction(self.actionAbout)
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuEdit.menuAction())
-        self.menubar.addAction(self.menuView.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
+        mainmenus = [self.menuFile, self.menuEdit, self.menuView, self.menuHelp]
+        for menu in mainmenus:
+            self.menubar.addAction(menu.menuAction())
+            setAccelKeys(menu)
+        setAccelKeys(self.menubar)
         self.tabBar.setMovable(True)
         self.tabBar.setTabsClosable(True)
         
