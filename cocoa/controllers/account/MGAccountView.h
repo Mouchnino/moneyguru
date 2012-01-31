@@ -16,11 +16,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBalanceGraph.h"
 #import "MGBarGraph.h"
 
-@interface MGAccountView : MGBaseView
+@interface MGAccountView : MGBaseView <NSSplitViewDelegate>
 {
+    IBOutlet NSSplitView *splitView;
     IBOutlet MGTableView *tableView;
-    IBOutlet NSScrollView *tableScrollView;
-    IBOutlet NSView *graphPlaceholder;
     IBOutlet AMButtonBar *filterBarView;
     IBOutlet NSButton *reconciliationModeButton;
     
@@ -28,7 +27,9 @@ http://www.hardcoded.net/licenses/bsd_license
     MGFilterBar *filterBar;
     MGBalanceGraph *balanceGraph;
     MGBarGraph *barGraph;
-    NSView *currentGraphView;
+    NSView *graphView;
+    BOOL graphCollapsed;
+    CGFloat graphCollapseHeight;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyAccountView *)model;

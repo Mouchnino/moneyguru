@@ -22,14 +22,9 @@ http://www.hardcoded.net/licenses/bsd_license
     filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] balGraph]];
     barGraph = [[MGBarGraph alloc] initWithPyRef:[[self model] barGraph]];
-    // We have to put one of the graph in there before we link the prefs
-    NSView *graphView = [balanceGraph view];
-    [graphView setFrame:[graphPlaceholder frame]];
-    [graphView setAutoresizingMask:[graphPlaceholder autoresizingMask]];
-    [wholeView replaceSubview:graphPlaceholder with:graphView];
-    currentGraphView = [balanceGraph view];
     [m bindCallback:createCallback(@"AccountViewView", self)];
     [m release];
+    [splitView setDelegate:self];
     return self;
 }
         
@@ -50,7 +45,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGPrintView *)viewToPrint
 {
     NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
-    NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : currentGraphView;
+    NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : graphView;
     return [[[MGEntryPrint alloc] initWithPyParent:[self model] tableView:tableView
         graphView:printGraphView] autorelease];
 }
@@ -62,12 +57,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)showGraph:(HSGUIController *)graph
 {
-    NSView *oldView = currentGraphView;
-    NSView *graphView = [graph view];
-    [graphView setFrame:[oldView frame]];
-    [graphView setAutoresizingMask:[oldView autoresizingMask]];
-    [wholeView replaceSubview:oldView with:graphView];
-    currentGraphView = [graph view];
+    graphView = [graph view];
+    [graphView setFrame:NSMakeRect(0, 0, 1, 258)];
+    [splitView addSubview:graphView];
 }
 
 /* Public */
@@ -102,25 +94,50 @@ http://www.hardcoded.net/licenses/bsd_license
     [self toggleReconciliationMode];
 }
 
+/* Delegate */
+- (CGFloat)splitView:(NSSplitView *)aSplitView constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)dividerIndex
+{
+    if (aSplitView == splitView) {
+        return 200;
+    }
+    return proposedMin;
+}
+
+- (CGFloat)splitView:(NSSplitView *)aSplitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
+{
+    if (aSplitView == splitView) {
+        return NSHeight([splitView frame]) - 130;
+    }
+    return proposedMax;
+}
+
+- (BOOL)splitView:(NSSplitView *)aSplitView canCollapseSubview:(NSView *)subview
+{
+    if (subview == graphView) {
+        return graphCollapsed;
+    }
+    return NO;
+}
+
 /* Core --> Cocoa */
 - (void)updateVisibility
 {
     NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     BOOL graphVisible = ![hiddenAreas containsIndex:MGPaneAreaBottomGraph];
-    // Let's set initial rects
-    NSRect mainRect = [tableScrollView frame];
-    NSRect graphRect = [[balanceGraph view] frame];
     if (graphVisible) {
-        mainRect.size.height = NSMaxY(mainRect) - NSMaxY(graphRect);
-        mainRect.origin.y = NSMaxY(graphRect);
+        if (graphCollapsed) {
+            graphCollapsed = NO;
+            CGFloat pos = NSHeight([splitView frame]) - graphCollapseHeight - [splitView dividerThickness];
+            [splitView setPosition:pos ofDividerAtIndex:0];
+        }
     }
     else {
-        mainRect.size.height = NSMaxY(mainRect) - NSMinY(graphRect);
-        mainRect.origin.y = NSMinY(graphRect);
+        if (!graphCollapsed) {
+            graphCollapsed = YES;
+            graphCollapseHeight = NSHeight([graphView frame]);
+            [splitView setPosition:NSHeight([splitView frame]) ofDividerAtIndex:0];
+        }
     }
-    [[balanceGraph view] setHidden:!graphVisible];
-    [[barGraph view] setHidden:!graphVisible];
-    [tableScrollView setFrame:mainRect];
 }
 
 - (void)refreshReconciliationButton
