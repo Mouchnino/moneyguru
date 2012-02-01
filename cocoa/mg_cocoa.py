@@ -138,7 +138,7 @@ class PyDocument(PyGUIObject):
     #--- Python -> Cocoa
     @dontwrap
     def query_for_schedule_scope(self):
-        return self.cocoa.queryForScheduleScope()
+        return self.callback.queryForScheduleScope()
     
 
 #--- Root classes

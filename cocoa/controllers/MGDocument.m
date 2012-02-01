@@ -23,6 +23,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGAppDelegate *app = [NSApp delegate];
     model = [[PyDocument alloc] initWithApp:[[app model] pyRef]];
     [self setUndoManager:[[[MGUndoManager alloc] initWithDocumentModel:model] autorelease]];
+    [model bindCallback:createCallback(@"DocumentView", self)];
     return self;
 }
 
