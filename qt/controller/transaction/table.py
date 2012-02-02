@@ -44,6 +44,7 @@ class TransactionTable(TableWithTransactions):
         Column('from', 120, editor=ACCOUNT_EDIT),
         Column('to', 120, editor=ACCOUNT_EDIT),
         Column('amount', 100, alignment=Qt.AlignRight, cantTruncate=True),
+        Column('mtime', 140),
     ]
     
     def __init__(self, model, view):

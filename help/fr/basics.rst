@@ -34,6 +34,8 @@ La mince ligne rouge
 
 Toute l'information dans moneyGuru est affichée selon l'intervalle courant. Les choses deviennent intéressantes quand cet intervalle se termine dans le futur. Si vous avez des récurrences ou des budgets, les chiffres et les graphes que vous allez voir seront en fonction de ces prédictions. Dans les graphes, il y a une nette différence entre le passé et le future grâce à un ligne rouge verticale. Ce qui est à gauche est le passé, ce qui est à droite est le futur.
 
+.. todo:: Add "Visibility Options" section
+
 Valeur nette et Profits/Pertes
 ------------------------------
 
@@ -88,6 +90,8 @@ Au dessus de la liste de transactions, il y a une barre de filtre permettant d'a
 
 Cette vue contient aussi des petits |basics_show_account_arrow| qui servent aussi à montrer le compte correspondant dans un nouvel onglet.
 
+.. todo:: Add "Modification Time" paragraph
+
 Compte
 ------
 
@@ -121,13 +125,6 @@ Filtre
 .. todo:: Update from english version
 
 Le champ "Filtre" dans la barre d'outils sert a chercher vos transactions avec des requêtes textuelles. Lorsque vous entrez du texte dans ce champ, seulement les transaction contenant ce texte dans un de leurs champs (description, provenance, etc.) seront visibles. Vous pouvez chercher pour des comptes ou des groupes spécifique avec "account: compte1,compte2" ou "group: groupe1,groupe2". Très utile pour les :doc:`modifications multiples <editing>`.
-
-Options de visibilité
----------------------
-
-|basics_view_options|
-
-moneyGuru a une fenêtre controllant la visibilité de certaines colonnes et des graphiques. Vous pouvez invoquer cette fenêtre avec |cmd|\ J.
 
 Impression
 ----------

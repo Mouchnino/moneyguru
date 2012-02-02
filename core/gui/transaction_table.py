@@ -30,6 +30,7 @@ class TransactionTable(TransactionTableBase):
         Column('from', display=trcol('From')),
         Column('to', display=trcol('To')),
         Column('amount', display=trcol('Amount')),
+        Column('mtime', display=trcol('Modification Time'), visible=False, optional=True),
     ]
     
     #--- Override
@@ -102,7 +103,7 @@ class TransactionTable(TransactionTableBase):
         self.view.refresh()
     
 
-AUTOFILL_ATTRS = frozenset(['description', 'payee', 'from', 'to', 'amount'])
+AUTOFILL_ATTRS = {'description', 'payee', 'from', 'to', 'amount'}
 
 class TransactionTableRow(Row, RowWithDateMixIn):
     FIELDS = [
@@ -158,6 +159,11 @@ class TransactionTableRow(Row, RowWithDateMixIn):
         self._to = ', '.join(map(get_display, tos))
         self._amount = transaction.amount
         self._amount_fmt = None
+        self._mtime = datetime.datetime.fromtimestamp(transaction.mtime)
+        if transaction.mtime > 0:
+            self._mtime_fmt = self._mtime.strftime('%Y/%m/%d %H:%M')
+        else:
+            self._mtime_fmt = ''
         self._recurrent = isinstance(transaction, Spawn)
         self._reconciled = any(split.reconciled for split in splits)
         self._is_budget = getattr(transaction, 'is_budget', False)
@@ -227,6 +233,10 @@ class TransactionTableRow(Row, RowWithDateMixIn):
         self._amount_fmt = None
     
     @property
+    def mtime(self):
+        return self._mtime_fmt
+    
+    @property
     def reconciled(self):
         return self._reconciled
     
@@ -250,6 +260,7 @@ class TotalRow(Row):
         self.checkno = ''
         self.from_ = ''
         self.to = ''
+        self.mtime = ''
         self.reconciled = False
         self.recurrent = False
         self.is_budget = False

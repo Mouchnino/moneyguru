@@ -38,6 +38,14 @@ The thin red line
 
 All information in moneyGuru is displayed according to the currently selected date range. Things get interesting when the date range ends at a future date. If you have scheduled transactions or budget set up, the numbers you will see and the chart you will look at will include them. In the graphs, there is a sharp distinction between the past and the future. The past is displayed in green, and the future is displayed in gray, a thin red line separating both. So when you look at the grey part of graphs, you are looking at stuff that has not happened yet. Your net worth in your balance sheet will count the yet-to-happen scheduled transactions as well as budgets. Sometimes, you just want to know about your current financial situation. This is what the "Year to date" (|cmd_opt|\ 4) date range is for.
 
+Visibility Options
+------------------
+
+Many tab views have graphs and charts, and all of them have table columns. You can control the
+visibililty of those elements through the buttons at the bottom of the main window. If you click
+on the Columns visibility button, you'll get a list of all optional columns for the currently active
+tab view. Through that menu you can toggle these columns' visibility.
+
 Net Worth and Profit & Loss
 ---------------------------
 
@@ -55,7 +63,7 @@ The Net Worth and Profit & Loss views are where you do account management and ge
 
 **Graph:** The graph at the bottom of the view shows the progression of the primary view statistic (net worth or profit) over time.
 
-**Columns:** The sheets each have a different set of columns (customizable with |cmd|\ J).
+**Columns:** The sheets each have a different set of columns.
 
 * **Balance Sheet:**
 
@@ -91,6 +99,11 @@ Above the transactions list, there is a **filter bar** allowing you to see only 
 * **Not Reconciled:** Show only transactions having no reconciled entry.
 
 **From** and **To** cells have a little |basics_show_account_arrow| at their right. Similarly to the Net Worth and Profit views, you can click on it to show the account displayed in the cell (if, for transactions having more than 2 splits, there's more than one account in the cell, the first account is shown).
+
+The **Modification Time** column shows the time at which the transaction was last modificated. This
+value is useful for finding mistakes you may have made in past edits. Your totals are wrong and you
+don't know why? Sort your transaction by Modification Time to double-check if you've made a
+mistake in recent edits.
 
 Account
 -------
@@ -139,13 +152,6 @@ example "payee: Apple". The possible prefix values are:
 Account and group prefixes are special because you can search for multiple values by separating
 account/group names with a comma. For example, "account: Visa, Mastercard" will look for all
 transactions affecting the Visa or Mastercard accounts.
-
-View Options
-------------
-
-|basics_view_options|
-
-moneyGuru has a View options panel allowing you to hide some elements (such as charts). You can toggle its visibility with |cmd|\ J.
 
 What You See Is What You Print (Kinda)
 --------------------------------------

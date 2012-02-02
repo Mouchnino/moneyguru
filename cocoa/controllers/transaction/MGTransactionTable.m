@@ -40,6 +40,7 @@ http://www.hardcoded.net/licenses/bsd_license
         {@"from", 136, 70, 0, YES, [MGTextFieldCell class]},
         {@"to", 135, 70, 0, YES, [MGTextFieldCell class]},
         {@"amount", 90, 70, 0, YES, nil},
+        {@"mtime", 140, 50, 0, YES, nil},
         nil
     };
     [[self columns] initializeColumns:defs];

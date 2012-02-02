@@ -74,49 +74,55 @@ def test_account_only_qif_is_invalid(app):
         # any txns in it.
         importall(app, testdata.filepath('qif', 'only_accounts.qif'))
 
-class TestQIFImport:
+#---
+def app_qif_import():
     # One account named 'Account 1' and then an parse_file_for_import() call for the 'checkbook.qif' test file.
-    def do_setup(self):
-        app = TestApp(app=Application(ApplicationGUI(), default_currency=PLN))
-        app.doc.date_range = YearRange(date(2007, 1, 1))
-        app.add_account('Account 1')
-        app.add_account('Account 1 1')
-        importall(app, testdata.filepath('qif', 'checkbook.qif'))
-        app.show_nwview()
-        app.bsheet.selected = app.bsheet.assets[0]
-        app.show_account()
-        return app
+    app = TestApp(app=Application(ApplicationGUI(), default_currency=PLN))
+    app.doc.date_range = YearRange(date(2007, 1, 1))
+    app.add_account('Account 1')
+    app.add_account('Account 1 1')
+    importall(app, testdata.filepath('qif', 'checkbook.qif'))
+    app.show_nwview()
+    app.bsheet.selected = app.bsheet.assets[0]
+    app.show_account()
+    return app
     
-    @with_app(do_setup)
-    def test_asset_names(self, app):
-        # All accounts are added despite name collisions. Name collision for 'Account 1' is 
-        # resolved by appending ' 1', and that collision thereafter is resolved by appending ' 2'
-        # instead.
-        expected = ['Account 1', 'Account 1 1', 'Account 1 2', 'Account 2', 'Interest', 'Salary', 'Cash', 'Utilities']
-        actual = app.account_names()
-        eq_(actual, expected) 
-    
-    @with_app(do_setup)
-    def test_default_account_currency(self, app):
-        # This QIF has no currency. Therefore, the default currency should be used for accounts
-        app.show_nwview()
-        app.bsheet.selected = app.bsheet.assets[2]
-        app.mainwindow.edit_item()
-        eq_(app.apanel.currency, PLN)
-    
-    @with_app(do_setup)
-    def test_default_entry_currency(self, app):
-        # Entries default to their account's currency. Therefore, changing the account currency
-        # after the import should cause the entries to be cooked as amount with currency
-        app.show_nwview()
-        app.bsheet.selected = app.bsheet.assets[2]
-        app.mainwindow.edit_item()
-        app.apanel.currency = CAD
-        app.apanel.save()
-        app.show_account()
-        eq_(app.etable[0].increase, '42.32')
-    
+@with_app(app_qif_import)
+def test_asset_names_after_qif_import(app):
+    # All accounts are added despite name collisions. Name collision for 'Account 1' is 
+    # resolved by appending ' 1', and that collision thereafter is resolved by appending ' 2'
+    # instead.
+    expected = ['Account 1', 'Account 1 1', 'Account 1 2', 'Account 2', 'Interest', 'Salary', 'Cash', 'Utilities']
+    actual = app.account_names()
+    eq_(actual, expected) 
 
+@with_app(app_qif_import)
+def test_default_account_currency_after_qif_import(app):
+    # This QIF has no currency. Therefore, the default currency should be used for accounts
+    app.show_nwview()
+    app.bsheet.selected = app.bsheet.assets[2]
+    app.mainwindow.edit_item()
+    eq_(app.apanel.currency, PLN)
+
+@with_app(app_qif_import)
+def test_default_entry_currency_after_qif_import(app):
+    # Entries default to their account's currency. Therefore, changing the account currency
+    # after the import should cause the entries to be cooked as amount with currency
+    app.show_nwview()
+    app.bsheet.selected = app.bsheet.assets[2]
+    app.mainwindow.edit_item()
+    app.apanel.currency = CAD
+    app.apanel.save()
+    app.show_account()
+    eq_(app.etable[0].increase, '42.32')    
+
+@with_app(app_qif_import)
+def test_imported_txns_have_mtime(app):
+    # Transactions that are created through imports get a mtime
+    tview = app.show_tview()
+    assert tview.ttable[0].mtime != ''
+
+#---
 class TestOFXImport:
     # A pristine app importing an OFX file
     def do_setup(self):

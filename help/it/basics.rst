@@ -35,6 +35,7 @@ La sottile linea rossa
 
 Tutte le informazioni in moneyGuru sono mostrate coerentemente con l'intervallo di date selezionato. Le cose si fanno interessanti quando un intervallo di date termina nel futuro. Se avete delle pianificazioni o delle previsioni impostate, i numeri che vedrete e i grafici le includeranno. Nei grafici, c'è una netta distinzione tra passato e futuro. Il passato è disegnato in verde, mentre il futuro in grigio: una sottile linea rossa li separa. Quindi, quando si guarda alla parte grigia del grafico, si vede qualcosa che ancora non è avvenuto. Il Patrimonio Netto nella scheda Stato Patrimoniale terrà conto di queste transazioni ancore non avvenute, così come delle previsioni. A volte, interessa solamente sapere lo stato attuale della propria situazione finanziaria: questo è ciò a cui serve l'intervallo "Anno ad oggi" (|cmd_opt|\ 4).
 
+.. todo:: Add "Visibility Options" section
 
 Patrimonio Netto e Guadagni & Perdite
 -------------------------------------
@@ -91,6 +92,7 @@ Sopra alla lista di transazioni, c'è una **barra filtri** che permette di veder
 
 Le celle **Da** e **A** hanno una piccola |basics_show_account_arrow| alla loro destra. Analogamente ai fogli Stato Patrimoniale e Conto Economico, è possibile farvi click sopra per mostrare il conto. Se una transazione è multipla e quindi riporta più di un conto nella casella, solo il primo verrà aperto.
 
+.. todo:: Add "Modification Time" paragraph
 
 Conto
 -----
@@ -126,14 +128,6 @@ Filtraggio
 .. todo:: Update from english version
 
 Il campo Filtro nella barra dei pulsanti permette di vedere tutte le transazioni che corrispondono al testo inserito. Per usarlo, è sufficiente digitare qualcosa e premere invio. Solo le transazioni che hanno una corrispondenza nei campi Descrizione, Beneficiario, Conto #, Conto o Ammontare verranno visualizzate. Se si vogliono vedere le transazioni per alcuni conti o gruppi specifici, digitare "account: conto1,conto2" oppure "group: gruppo1,gruppo2". Questo è molto utile per la :doc:`modifica di massa <editing>`.
-
-Opzioni Vista
--------------
-
-|basics_view_options|
-
-moneyGuru ha un pannello di opzioni che permette di nascondere alcuni elementi (come i grafici). Si può visualizzare o nascondere premendo |cmd|\ J.
-
 
 Ciò che vedi, è ciò che stampi (circa)
 --------------------------------------

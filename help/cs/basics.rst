@@ -34,6 +34,8 @@ Při definování uživatelského časového rozmezí si ho také můžete ulož
 
 moneyGuru zobrazuje všechny informace podle aktuálně vybraného časového rozmezí. To je zajímavé, pokud časové rozmezí končí v budoucnu. Pokud máte naplánované transakce nebo vytvořený rozpočet, budou zahrnuté v grafech nebo číslech, na které se budete dívat. V grafech je minulost a budoucnost jasně odlišena. Minulost je zobrazena zeleně, budoucnost šedě. Odděluje je tenká červená linka. Pokud se tedy díváte na šedou část grafu, díváte se na transakce, které ještě neproběhly. Čisté jmění v rozvaze bude zahrnovat doposud neproběhlé naplánované transakce a transakce podle rozpočtu. Někdy vás zajímá pouze vaše aktuální finanční situace. K tomu je určeno časové rozmezí "Aktuální rok" (|cmd_opt|\ 4).
 
+.. todo:: Add "Visibility Options" section
+
 Čisté jmění a Zisky a ztráty
 ----------------------------
 
@@ -88,6 +90,8 @@ Nad seznamem transakcí je **lišta s filtry**, kde můžete ovlivňovat viditel
 
 Buňky **Z** a **Na** mají po pravé straně malou ikonu |basics_show_account_arrow|. Podobně jako u pohledů Čisté jmění a Zisky můžete klepnutím na ni zobrazit účet, kterého se záznam transakce týká (pokud je transakce rozdělena mezi více účtů, zobrazí se ten první z nich).
 
+.. todo:: Add "Modification Time" paragraph
+
 Účet
 ----
 
@@ -121,13 +125,6 @@ Filtrování
 .. todo:: Update from english version
 
 Pole pro zadání filtru v nástrojové liště vám umožňuje zobrazit ty transakce, které odpovídají zadanému výrazu. Chcete-li filtrovat transakce, napište něco do pole potvrďte stiskem klávesy Enter. V seznamu transakcí se zobrazí pouze ty, jejichž popis, příjemce, číslo šeku, název účtu nebo částka odpovídá napsanému výrazu. Pokud chcete vidět pouze transakce z určitých účtů nebo skupin účtů napište do pole pro zadání filtru "účet: účet1,účet2" nebo "skupina: skupina1,skupina2". To je velmi užitečné pro :doc:`hromadné úpravy <editing>`.
-
-Možnosti zobrazení
-------------------
-
-|basics_view_options|
-
-moneyGuru má panel Nastavení zobrazení, kde můžete skrýt některé prvky (jako např. grafy). Zobrazíte ho (a zase schováte) klávesovou zkratkou |cmd|\ J.
 
 Co Vidíte To Vytisknete (víceméně)
 ----------------------------------

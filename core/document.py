@@ -801,6 +801,7 @@ class Document(Repeater, GUIObject):
             else:
                 if entry.transaction not in self.transactions:
                     added_transactions.add(entry.transaction)
+                    entry.transaction.mtime = time.time()
             for split in entry.splits:
                 if split.account is None:
                     continue
