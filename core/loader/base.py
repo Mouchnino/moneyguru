@@ -96,6 +96,11 @@ class Loader:
         """
         raise NotImplementedError()
     
+    def _post_load(self):
+        """Perform post load processing, such as duplicate removal
+        """
+        pass
+    
     #--- Protected
     def clean_date(self, str_date):
         # return str_date without garbage around (such as timestamps) or None if impossible
@@ -327,6 +332,7 @@ class Loader:
             if info.repeat_every:
                 budget.repeat_every = info.repeat_every
             self.budgets.append(budget)
+        self._post_load()
         self.oven.cook(datetime.date.min, until_date=None)
         Currency.get_rates_db().ensure_rates(start_date, [x.code for x in currencies])
     

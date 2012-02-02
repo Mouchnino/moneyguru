@@ -9,6 +9,8 @@
 import logging
 import re
 from collections import namedtuple
+from itertools import groupby, combinations
+from operator import attrgetter
 
 from hscommon.util import first, stripfalse
 
@@ -131,9 +133,6 @@ class Loader(base.Loader):
         def parse_split_line(header, data):
             if header == 'S':
                 data = remove_brackets(data)
-                if data != self.account_info.name and data in seen_account_names:
-                    # This transaction has already been added from the other account(s)
-                    self.cancel_transaction()
                 self.split_info.account = data
             elif header == 'E':
                 self.split_info.memo = data
@@ -155,11 +154,7 @@ class Loader(base.Loader):
                 self.transaction_info.checkno = data
             elif header == 'L':
                 data = remove_brackets(data)
-                if data in seen_account_names:
-                    # This transaction has already been added from the other account(s)
-                    self.cancel_transaction()
-                else:
-                    self.transaction_info.transfer = data
+                self.transaction_info.transfer = data
             elif header == 'T':
                 self.transaction_info.amount = re_not_amount.sub('', data)
             elif header == '!': # yeah, this thing is in the entry data...
@@ -182,10 +177,11 @@ class Loader(base.Loader):
                     seen_account_names.add(self.account_info.name)
             elif block_type == BlockType.Entry:
                 if not seen_account_names:
-                    self.account_info.name = 'Account' # If no account has been seen yet, add the txn to a defult 'Account' one
+                    # If no account has been seen yet, add the txn to a default 'Account' one
+                    self.account_info.name = 'Account'
                 seen_split_fields = set()
                 for header, data in lines:
-                    if header in ('S', 'E', '$'): # splits field
+                    if header in {'S', 'E', '$'}: # splits field
                         if header in seen_split_fields: #must flush the split
                             self.flush_split()
                             seen_split_fields.clear()
@@ -209,4 +205,19 @@ class Loader(base.Loader):
                 else:
                     seen_account_names.add(self.account_info.name)
                     self.flush_account()
+    
+    def _post_load(self):
+        matches = []
+        for _, txns in groupby(self.transactions, key=attrgetter('date')):
+            for txn1, txn2 in combinations(txns, 2):
+                splits1 = {(s.account_name, s.amount) for s in txn1.splits}
+                splits2 = {(s.account_name, s.amount) for s in txn2.splits}
+                # If any of the splits' account *and* amount are the same, we have a match
+                if splits1 & splits2:
+                    matches.append((txn1, txn2))
+        for txn1, txn2 in matches:
+            if txn1 not in self.transactions or txn2 not in self.transactions:
+                continue
+            toremove = txn1 if len(txn2.splits) > len(txn1.splits) else txn2
+            self.transactions.remove(toremove)
     

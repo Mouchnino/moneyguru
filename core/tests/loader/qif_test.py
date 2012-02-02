@@ -307,8 +307,8 @@ def test_transfer():
     loader = Loader(USD)
     loader.parse(testdata.filepath('qif', 'transfer.qif'))
     loader.load()
-    eq_(len(loader.account_infos), 2)
-    eq_(len(loader.transaction_infos), 1)
+    eq_(len(loader.accounts), 2)
+    eq_(len(loader.transactions), 1)
 
 def test_extra_dline():
     # Ignore extra D lines which don't contain dates. Previously, these lines would cause a crash.
@@ -351,3 +351,16 @@ def test_transfer_splits():
     loader.load()
     eq_(len(loader.accounts), 3)
     eq_(len(loader.transactions), 1)
+
+def test_quicken_split_duplicate():
+    # Quicken's QIF have an annoying peculiarity: entries that are supposed to match to each other
+    # don't have the same split count. In this example, we have a 3 way split (Checking:-1000,
+    # Home:500, Interest:500) but the first split we encounter is only two way (Checking:-500,
+    # Home:500). What we have to do is to only keep the largest in a group of matching txns.
+    loader = Loader(USD)
+    loader.parse(testdata.filepath('qif', 'quicken_split_duplicate.qif'))
+    loader.load()
+    eq_(len(loader.transactions), 1)
+    eq_(len(loader.transactions[0].splits), 3)
+
+    
