@@ -243,6 +243,20 @@ Amount_repr(Amount *self)
     return r;
 }
 
+Py_hash_t
+Amount_hash(Amount *self)
+{
+    PyObject *hash_tuple, *int_value;
+    Py_hash_t r;
+    
+    int_value = PyLong_FromLongLong(self->ival);
+    hash_tuple = PyTuple_Pack(2, int_value, self->currency);
+    Py_DECREF(int_value);
+    r = PyObject_Hash(hash_tuple);
+    Py_DECREF(hash_tuple);
+    return r;
+}
+
 static PyObject *
 Amount_richcompare(PyObject *a, PyObject *b, int op)
 {
@@ -520,7 +534,7 @@ static PyTypeObject Amount_Type = {
     &Amount_as_number,          /*tp_as_number*/
     0,                         /*tp_as_sequence*/
     0,                         /*tp_as_mapping*/
-    0,                         /*tp_hash */
+    (hashfunc)Amount_hash,     /*tp_hash */
     0,                         /*tp_call*/
     0,                         /*tp_str*/
     0,                         /*tp_getattro*/

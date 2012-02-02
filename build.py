@@ -34,6 +34,8 @@ def parse_args():
         help="Update all .po files based on .pot files.")
     parser.add_argument('--cocoamod', action='store_true', dest='cocoamod',
         help="Build only Cocoa modules")
+    parser.add_argument('--ext', action='store_true', dest='ext',
+        help="Build only ext modules")
     args = parser.parse_args()
     return args
 
@@ -256,6 +258,8 @@ def main():
     elif args.cocoamod:
         build_cocoa_proxy_module()
         build_cocoa_bridging_interfaces()
+    elif args.ext:
+        build_ext()
     else:
         build_normal(ui, dev)
 

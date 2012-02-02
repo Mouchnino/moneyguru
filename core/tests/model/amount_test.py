@@ -164,6 +164,11 @@ def test_sub_zero():
     eq_(Amount(0, USD) - Amount(22, CAD), Amount(-22, CAD))
     eq_(Amount(2, CAD) - Amount(0, USD), Amount(2, CAD))
 
+def test_hash():
+    eq_(hash(Amount(2, CAD)), hash(Amount(2, CAD)))
+    assert hash(Amount(2, CAD)) != hash(Amount(3, CAD))
+    assert hash(Amount(2, CAD)) != hash(Amount(2, USD))
+
 #--- Parse amount
 def test_parse_comma_as_decimal_sep():
     # commas are correctly parsed when used instead of a dot for decimal separators.
