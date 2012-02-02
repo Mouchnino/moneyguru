@@ -15,6 +15,7 @@ from ..const import PaneType
 from ..document import FilterType
 from ..exception import OperationAborted
 from ..model.budget import BudgetSpawn
+from ..model.date import inc_month
 from ..model.recurrence import Recurrence, RepeatType
 from .base import MESSAGES_DOCUMENT_CHANGED
 from .search_field import SearchField
@@ -334,9 +335,9 @@ class MainWindow(Repeater, GUIObject):
             # new_schedule_from_transaction() or else the sctable's selection upon view switch will
             # overwrite our selection.
             self.select_pane_of_type(PaneType.Schedule)
-            ref = self.selected_transactions[0]
-            schedule = Recurrence(ref.replicate(), RepeatType.Monthly, 1)
-            schedule.delete_at(ref.date)
+            ref = self.selected_transactions[0].replicate()
+            ref.date = inc_month(ref.date, 1)
+            schedule = Recurrence(ref, RepeatType.Monthly, 1)
             self.selected_schedules = [schedule]
             self.edit_item()
     

@@ -33,7 +33,7 @@ def test_make_schedule_from_selected(app):
     sctable = scview.table
     app.scpanel.view.check_gui_calls_partial(['pre_load', 'post_load'])
     eq_(len(sctable), 0) # It's a *new* schedule, only added if we press save
-    eq_(app.scpanel.start_date, '11/07/2008')
+    eq_(app.scpanel.start_date, '11/08/2008')
     eq_(app.scpanel.description, 'description')
     eq_(app.scpanel.repeat_type_list.selected_index, 2) # monthly
     eq_(app.scpanel.repeat_every, 1)
@@ -50,6 +50,7 @@ def test_make_schedule_from_selected_weekly(app):
     # of the model txn.
     app.mw.make_schedule_from_selected()
     app.scpanel.repeat_type_list.select(1) # weekly
+    app.scpanel.start_date = '18/07/2008'
     app.scpanel.save()
     app.show_tview()
     eq_(app.ttable[1].date, '18/07/2008')
@@ -338,6 +339,27 @@ def test_oven_limits_take_global_date_delta_into_account(app):
     app.drsel.select_next_date_range()
     eq_(app.ttable.row_count, 11)
 
+@with_app(app_daily_schedule)
+def test_delete_spawns_until_global_change(app):
+    # Deleting spawns until a global change sets its ref with this global change and changing the
+    # schedule correctly affects the spawns globally.
+    app.show_tview()
+    app.ttable.select([2])
+    app.ttable[2].description = 'changed'
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
+    app.ttable.save_edits()
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Local
+    app.ttable.select([0, 1])
+    app.mw.delete_item()
+    eq_(app.ttable[0].description, 'changed')
+    scview = app.show_scview()
+    eq_(scview.table[0].description, 'changed')
+    app.mw.edit_item()
+    app.scpanel.description = 'changed again'
+    app.scpanel.save()
+    tview = app.show_tview()
+    eq_(tview.ttable[0].description, 'changed again')
+
 #--- One Schedule and one normal txn
 def app_one_schedule_and_one_normal_txn():
     app = TestApp()
@@ -438,6 +460,16 @@ def test_perform_another_global_change_before_first_global_change(app):
     app.ttable.save_edits()
     eq_(app.ttable[2].description, 'changed again')
 
+@with_app(app_schedule_with_global_change)
+def test_delete_spawns_past_global_change(app):
+    # Deleting spawns past a global change keeps that global change alive.
+    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Local
+    app.ttable.select([0, 1, 2])
+    app.mw.delete_item()
+    eq_(app.ttable[0].description, 'changed')
+    scview = app.show_scview()
+    eq_(scview.table[0].description, 'changed')
+
 #--- Schedule with local deletion
 def app_schedule_with_local_deletion(monkeypatch):
     monkeypatch.patch_today(2008, 9, 30)
@@ -505,6 +537,24 @@ def test_ttable_attrs_for_weekly_schedule(app):
     eq_(app.ttable.row_count, 2)
     eq_(app.ttable[0].date, '13/09/2008')
     eq_(app.ttable[1].date, '27/09/2008')
+
+@with_app(app_weekly_schedule)
+def test_global_change_on_first_spawn(app):
+    # Performing a global change on the first spawn changes the schedule itself
+    app.doc.view.query_for_schedule_scope_result = ScheduleScope.Global
+    app.ttable.select([0])
+    app.ttable[0].description = 'changed'
+    app.ttable.save_edits()
+    scview = app.show_scview()
+    eq_(scview.table[0].description, 'changed')
+
+@with_app(app_weekly_schedule)
+def test_deleting_first_spawn_changes_start_date(app):
+    # Deleting the first spawn changes the start date to the next spawn.
+    app.ttable.select([0])
+    app.mw.delete_item()
+    scview = app.show_scview()
+    eq_(scview.table[0].start_date, '27/09/2008')
 
 #--- Monthly schedule on 31st of the month
 def app_monthly_schedule_on_thirty_first():

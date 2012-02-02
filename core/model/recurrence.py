@@ -84,9 +84,6 @@ class Recurrence:
         self.ref = ref
         self._repeat_type = repeat_type
         self._repeat_every = repeat_every
-        # Schedules with their first spawn deleted are a special case that we want to preserve
-        # even when we reset all exceptions.
-        self._skip_first = False
         self.stop_date = None
         self.date2exception = {}
         self.date2globalchange = {}
@@ -111,6 +108,24 @@ class Recurrence:
     
     def _create_spawn(self, ref, date):
         return Spawn(self, ref, date)
+    
+    def _update_ref(self):
+        # Go through our recurrence dates and see if we should either move our start date due to
+        # deleted spawns or to update or ref transaction due to a global change that end up being
+        # on our first recurrence date.
+        date_counter = DateCounter(self.start_date, self.repeat_type, self.repeat_every, datetime.date.max)
+        for d in date_counter:
+            if d in self.date2exception and self.date2exception[d] is None:
+                continue
+            if d in self.date2globalchange:
+                self.ref = self.date2globalchange[d].replicate()
+            else:
+                self.ref.date = d
+            break
+        self.date2exception = {d: ex for d, ex in self.date2exception.items() if d > self.start_date}
+        self.date2globalchange = {d: ex for d, ex in self.date2globalchange.items() if d > self.start_date}
+        self.reset_spawn_cache()
+        self._update_rtype_descs()
     
     def _update_rtype_descs(self):
         date = self.start_date
@@ -144,15 +159,14 @@ class Recurrence:
                 del self.date2exception[date]
         self.date2globalchange[spawn.recurrence_date] = spawn
         self.date2exception[spawn.recurrence_date] = spawn
-        self.date2instances = {}
+        self._update_ref()
     
     def delete(self, spawn):
-        self.date2exception[spawn.recurrence_date] = None
+        self.delete_at(spawn.recurrence_date)
     
     def delete_at(self, date):
-        if date == self.start_date:
-            self._skip_first = True
         self.date2exception[date] = None
+        self._update_ref()
     
     def get_spawns(self, end):
         # END DATE ADJUSTMENT
@@ -209,8 +223,6 @@ class Recurrence:
     def reset_exceptions(self):
         self.date2exception = {}
         self.date2globalchange = {}
-        if self._skip_first:
-            self.delete_at(self.start_date)
     
     def reset_spawn_cache(self):
         self.date2instances = {}

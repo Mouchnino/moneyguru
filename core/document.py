@@ -176,7 +176,7 @@ class Document(Repeater, GUIObject):
     def _cook(self, from_date=None):
         self.oven.cook(from_date=from_date, until_date=self.date_range.end)
     
-    def _get_action_from_changed_transactions(self, transactions):
+    def _get_action_from_changed_transactions(self, transactions, global_scope=False):
         if len(transactions) == 1 and not isinstance(transactions[0], Spawn) \
                 and transactions[0] not in self.transactions:
             action = Action(tr('Add transaction'))
@@ -184,6 +184,10 @@ class Document(Repeater, GUIObject):
         else:
             action = Action(tr('Change transaction'))
             action.change_transactions(transactions)
+        if global_scope:
+            spawns, txns = extract(lambda x: isinstance(x, Spawn), transactions)
+            for schedule in {spawn.recurrence for spawn in spawns}:
+                action.change_schedule(schedule)
         return action
     
     def _query_for_scope_if_needed(self, transactions):
@@ -434,7 +438,7 @@ class Document(Repeater, GUIObject):
             global_scope = self._query_for_scope_if_needed(transactions)
         else:
             global_scope = False
-        action = self._get_action_from_changed_transactions(transactions)
+        action = self._get_action_from_changed_transactions(transactions, global_scope)
         self._undoer.record(action)
 
         min_date = date if date is not NOEDIT else datetime.date.max
@@ -447,6 +451,8 @@ class Document(Repeater, GUIObject):
         self._clean_empty_categories()
         if not self._adjust_date_range(transaction.date):
             self.notify('transaction_changed')
+        if action.changed_schedules:
+            self.notify('schedule_changed')
     
     @handle_abort
     def delete_transactions(self, transactions, from_account=None):
@@ -471,6 +477,8 @@ class Document(Repeater, GUIObject):
         self._cook(from_date=min_date)
         self._clean_empty_categories(from_account=from_account)
         self.notify('transaction_deleted')
+        if action.changed_schedules:
+            self.notify('schedule_changed')
     
     def duplicate_transactions(self, transactions):
         if not transactions:
@@ -510,7 +518,7 @@ class Document(Repeater, GUIObject):
             global_scope = self._query_for_scope_if_needed([entry.transaction])
         else:
             global_scope = False # It doesn't make sense to set a reconciliation date globally
-        action = self._get_action_from_changed_transactions([entry.transaction])
+        action = self._get_action_from_changed_transactions([entry.transaction], global_scope)
         self._undoer.record(action)
         
         candidate_dates = [entry.date, date, reconciliation_date, entry.reconciliation_date]
@@ -553,7 +561,8 @@ class Document(Repeater, GUIObject):
         min_date = min(entry.date for entry in entries)
         splits = [entry.split for entry in entries]
         spawns, splits = extract(lambda s: isinstance(s.transaction, Spawn), splits)
-        action.change_transactions([s.transaction for s in spawns]) # They're being deleted when materialized
+        for spawn in spawns:
+            action.change_schedule(spawn.transaction.recurrence)
         self._undoer.record(action)
         if newvalue:
             for split in splits:

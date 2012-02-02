@@ -16,7 +16,7 @@ ACCOUNT_SWAP_ATTRS = ['name', 'currency', 'type', 'group', 'account_number', 'no
 GROUP_SWAP_ATTRS = ['name', 'type']
 TRANSACTION_SWAP_ATTRS = ['date', 'description', 'payee', 'checkno', 'notes', 'position', 'splits']
 SPLIT_SWAP_ATTRS = ['account', 'amount', 'reconciliation_date']
-SCHEDULE_SWAP_ATTRS = ['start_date', 'repeat_type', 'repeat_every', 'stop_date', 'date2exception', 
+SCHEDULE_SWAP_ATTRS = ['repeat_type', 'repeat_every', 'stop_date', 'date2exception', 
                        'date2globalchange', 'date2instances']
 BUDGET_SWAP_ATTRS = SCHEDULE_SWAP_ATTRS + ['account', 'target', 'amount']
 
@@ -54,7 +54,6 @@ class Action:
     
     def change_schedule(self, schedule):
         self.changed_schedules.add((schedule, schedule.replicate()))
-        self.changed_transactions.add((schedule.ref, schedule.ref.replicate()))
     
     def change_budget(self, budget):
         self.changed_budgets.add((budget, budget.replicate()))
@@ -124,6 +123,7 @@ class Undoer:
             swapvalues(split, old, SPLIT_SWAP_ATTRS)
         for schedule, old in action.changed_schedules:
             swapvalues(schedule, old, SCHEDULE_SWAP_ATTRS)
+            swapvalues(schedule.ref, old.ref, TRANSACTION_SWAP_ATTRS)
         for budget, old in action.changed_budgets:
             swapvalues(budget, old, BUDGET_SWAP_ATTRS)
     
