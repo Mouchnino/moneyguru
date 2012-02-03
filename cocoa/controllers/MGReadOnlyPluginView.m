@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGReadOnlyPluginView.h"
+#import "MGTablePrint.h"
 #import "Utils.h"
 
 @implementation MGReadOnlyPluginView
@@ -37,5 +38,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyReadOnlyPluginView *)model
 {
     return (PyReadOnlyPluginView *)model;
+}
+
+- (MGPrintView *)viewToPrint
+{
+    return [[[MGTablePrint alloc] initWithPyParent:[self model] tableView:[table tableView]] autorelease];
 }
 @end
