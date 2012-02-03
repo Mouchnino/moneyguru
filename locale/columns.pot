@@ -64,58 +64,58 @@ msgstr ""
 msgid "Recurring"
 msgstr ""
 
-#: core/gui/entry_table.py:38 core/gui/general_ledger_table.py:37
+#: core/gui/entry_table.py:36 core/gui/general_ledger_table.py:37
 #: core/gui/import_table.py:19 core/gui/import_table.py:23
 #: core/gui/transaction_table.py:26
 msgid "Date"
 msgstr ""
 
-#: core/gui/entry_table.py:39 core/gui/general_ledger_table.py:38
+#: core/gui/entry_table.py:37 core/gui/general_ledger_table.py:38
 msgid "Reconciliation Date"
 msgstr ""
 
-#: core/gui/entry_table.py:40 core/gui/general_ledger_table.py:39
+#: core/gui/entry_table.py:38 core/gui/general_ledger_table.py:39
 #: core/gui/import_table.py:26 core/gui/schedule_table.py:25
 #: core/gui/transaction_table.py:27
 msgid "Check #"
 msgstr ""
 
-#: core/gui/entry_table.py:41 core/gui/general_ledger_table.py:40
+#: core/gui/entry_table.py:39 core/gui/general_ledger_table.py:40
 #: core/gui/import_table.py:20 core/gui/import_table.py:24
 #: core/gui/schedule_table.py:26 core/gui/transaction_table.py:28
 msgid "Description"
 msgstr ""
 
-#: core/gui/entry_table.py:42 core/gui/general_ledger_table.py:41
+#: core/gui/entry_table.py:40 core/gui/general_ledger_table.py:41
 #: core/gui/import_table.py:25 core/gui/schedule_table.py:27
 #: core/gui/transaction_table.py:29
 msgid "Payee"
 msgstr ""
 
-#: core/gui/entry_table.py:43 core/gui/general_ledger_table.py:42
+#: core/gui/entry_table.py:41 core/gui/general_ledger_table.py:42
 #: core/gui/import_table.py:27
 msgid "Transfer"
 msgstr ""
 
-#: core/gui/entry_table.py:44
+#: core/gui/entry_table.py:42
 msgid "Increase"
 msgstr ""
 
-#: core/gui/entry_table.py:45
+#: core/gui/entry_table.py:43
 msgid "Decrease"
 msgstr ""
 
-#: core/gui/entry_table.py:46 core/gui/general_ledger_table.py:43
+#: core/gui/entry_table.py:44 core/gui/general_ledger_table.py:43
 #: core/gui/split_table.py:19
 msgid "Debit"
 msgstr ""
 
-#: core/gui/entry_table.py:47 core/gui/general_ledger_table.py:44
+#: core/gui/entry_table.py:45 core/gui/general_ledger_table.py:44
 #: core/gui/split_table.py:20
 msgid "Credit"
 msgstr ""
 
-#: core/gui/entry_table.py:48 core/gui/general_ledger_table.py:45
+#: core/gui/entry_table.py:46 core/gui/general_ledger_table.py:45
 msgid "Balance"
 msgstr ""
 
@@ -141,5 +141,9 @@ msgstr ""
 
 #: core/gui/split_table.py:18
 msgid "Memo"
+msgstr ""
+
+#: core/gui/transaction_table.py:33
+msgid "Modification Time"
 msgstr ""
 
