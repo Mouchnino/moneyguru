@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-12-04
 # Copyright 2012 Hardcoded Software (http://www.hardcoded.net)
@@ -6,8 +5,6 @@
 # This software is licensed under the "BSD" License as described in the "LICENSE" file, 
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
-
-
 
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QPainter
@@ -24,7 +21,7 @@ from .item_view import (ItemViewLayoutElement, ItemViewPrintStats, TablePrintDat
 # the same problem:
 #http://lists.trolltech.com/pipermail/qt-interest/2009-November/015375.html
 
-class ViewPrinter(object):
+class ViewPrinter:
     def __init__(self, printer, baseView):
         self.document = baseView.model.document
         self.app = self.document.app
@@ -69,8 +66,7 @@ class ViewPrinter(object):
         self._fitItemView(TreePrintDatasource(tree))
     
     def render(self):
-        painter = QPainter()
-        painter.begin(self.printer)
+        painter = QPainter(self.printer)
         for page in self.layoutPages[:-1]:
             page.render(painter)
             self.printer.newPage()

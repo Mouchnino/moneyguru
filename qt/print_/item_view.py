@@ -62,9 +62,7 @@ class TablePrintDatasource(ItemPrintDatasource):
     def __init__(self, table):
         ItemPrintDatasource.__init__(self)
         self.table = table
-        h = table.view.horizontalHeader()
-        self.columns = [col for col in table.COLUMNS if not h.isSectionHidden(col.index)]
-        self.columns.sort(key=lambda c: h.visualIndex(c.index))
+        self.columns = [c for c in table.model.columns.ordered_columns if c.visible]
         self._rowFont = QFont(table.view.font())
         self._headerFont = QFont(self._rowFont)
         self._headerFont.setBold(True)
@@ -76,7 +74,7 @@ class TablePrintDatasource(ItemPrintDatasource):
         return self.table.rowCount(QModelIndex())
     
     def data(self, rowIndex, colIndex, role):
-        index = self.table.index(rowIndex, self.columns[colIndex].index)
+        index = self.table.index(rowIndex, self.columns[colIndex].logical_index)
         return self.table.data(index, role)
     
     def columnAtIndex(self, colIndex):
@@ -93,9 +91,7 @@ class TreePrintDatasource(ItemPrintDatasource):
     def __init__(self, tree):
         ItemPrintDatasource.__init__(self)
         self.tree = tree
-        h = tree.view.header()
-        self.columns = [col for col in tree.COLUMNS if not h.isSectionHidden(col.index)]
-        self.columns.sort(key=lambda c: h.visualIndex(c.index))
+        self.columns = [c for c in tree.model.columns.ordered_columns if c.visible]
         self._rowFont = QFont(tree.view.font())
         self._headerFont = QFont(self._rowFont)
         self._headerFont.setBold(True)
@@ -105,7 +101,7 @@ class TreePrintDatasource(ItemPrintDatasource):
     def _getIndex(self, rowIndex, colIndex):
         index = self.rows[rowIndex]
         # `index` is for the column 0 of the row, now we have to get the correct cell
-        index = index.sibling(index.row(), self.columns[colIndex].index)
+        index = index.sibling(index.row(), self.columns[colIndex].logical_index)
         return index
     
     def _mapRows(self):
@@ -223,7 +219,7 @@ class ItemViewLayoutElement(LayoutElement):
             col = colStats.col
             headerRect = QRect(left, self.rect.top(), colWidth, headerHeight)
             headerRect = applyMargin(headerRect, CELL_MARGIN)
-            painter.drawText(headerRect, col.alignment, col.title)
+            painter.drawText(headerRect, col.alignment, col.display)
             left += colWidth
         painter.restore()
         painter.drawLine(self.rect.left(), self.rect.top()+headerHeight, self.rect.right(), self.rect.top()+headerHeight)
@@ -247,7 +243,7 @@ class ItemViewLayoutElement(LayoutElement):
         painter.restore()
     
 
-class ItemViewPrintStats(object):
+class ItemViewPrintStats:
     def __init__(self, ds):
         ColumnStats = namedtuple('ColumnStats', 'index col avgWidth maxWidth minWidth')
         rowFM = QFontMetrics(ds.rowFont())
@@ -265,7 +261,7 @@ class ItemViewPrintStats(object):
             sumWidth = 0
             maxWidth = 0
             # We need to have *at least* the width of the header.
-            minWidth = headerFM.width(col.title) + CELL_MARGIN * 2
+            minWidth = headerFM.width(col.display) + CELL_MARGIN * 2
             for rowIndex in range(ds.rowCount()):
                 if rowIndex in spannedRowIndexes:
                     continue
