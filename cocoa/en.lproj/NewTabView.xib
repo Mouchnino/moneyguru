@@ -550,7 +550,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="128606418">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">138413056</int>
-									<string key="NSContents">Plugins</string>
+									<string key="NSContents">Plugins (double-click to open)</string>
 									<reference key="NSSupport" ref="438709707"/>
 									<reference key="NSControlView" ref="634645769"/>
 									<reference key="NSBackgroundColor" ref="965700696"/>
