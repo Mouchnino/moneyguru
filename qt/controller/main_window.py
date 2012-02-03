@@ -32,6 +32,7 @@ from .schedule.view import ScheduleView
 from .general_ledger.view import GeneralLedgerView
 from .docprops_view import DocPropsView
 from .new_view import NewView
+from .readonly_table_plugin_view import ReadOnlyTablePluginView
 from .lookup import Lookup
 from .account_panel import AccountPanel
 from .account_reassign_panel import AccountReassignPanel
@@ -67,6 +68,7 @@ PANETYPE2VIEWCLASS = {
     PaneType.GeneralLedger: GeneralLedgerView,
     PaneType.DocProps: DocPropsView,
     PaneType.Empty: NewView,
+    PaneType.ReadOnlyTablePlugin: ReadOnlyTablePluginView,
 }
 
 # IMPORTANT NOTE ABOUT TABS
@@ -451,9 +453,7 @@ class MainWindow(QMainWindow):
             PaneType.Schedule: tr("New Schedule"),
             PaneType.Budget: tr("New Budget"),
             PaneType.GeneralLedger: tr("New Transaction"),
-            PaneType.DocProps: tr("New Item"), #XXX make disabled
-            PaneType.Empty: tr("New Item"), #XXX make disabled
-        }[viewType]
+        }.get(viewType, tr("New Item")) #XXX make "New Item" disabled
         self.actionNewItem.setText(newItemLabel)
         self.actionNewAccountGroup.setEnabled(isSheet)
         self.actionMoveDown.setEnabled(isTransactionOrEntryTable)

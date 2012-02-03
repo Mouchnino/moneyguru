@@ -25,7 +25,7 @@ from .controller.import_.csv_options import CSVOptionsWindow
 from .controller.preferences_panel import PreferencesPanel
 from .support.date_edit import DateEdit
 from .preferences import Preferences
-from .plat import HELP_PATH
+from .plat import HELP_PATH, BASE_PATH
 
 class MoneyGuru(ApplicationBase):
     VERSION = MoneyGuruModel.VERSION
@@ -37,12 +37,15 @@ class MoneyGuru(ApplicationBase):
         self.prefs.load()
         locale = QLocale.system()
         dateFormat = self.prefs.dateFormat
-        decimalSep = str(locale.decimalPoint())
-        groupingSep = str(locale.groupSeparator())
-        cachePath = str(QDesktopServices.storageLocation(QDesktopServices.CacheLocation))
+        decimalSep = locale.decimalPoint()
+        groupingSep = locale.groupSeparator()
+        cachePath = QDesktopServices.storageLocation(QDesktopServices.CacheLocation)
+        appdata = QDesktopServices.storageLocation(QDesktopServices.DataLocation)
+        plugin_model_path = op.join(BASE_PATH, 'plugin_examples')
         DateEdit.DATE_FORMAT = dateFormat
         self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,
-            grouping_sep=groupingSep, cache_path=cachePath)
+            grouping_sep=groupingSep, cache_path=cachePath, appdata_path=appdata,
+            plugin_model_path=plugin_model_path)
         # on the Qt side, we're single document based, so it's one doc per app.
         self.doc = Document(app=self)
         self.doc.model.connect()

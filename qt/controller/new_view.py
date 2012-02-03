@@ -8,9 +8,11 @@
 
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QShortcut, QKeySequence, QGridLayout, QIcon, QPixmap, QPushButton, QLabel,
-    QSpacerItem, QSizePolicy, QVBoxLayout)
+    QVBoxLayout, QListView, QAbstractItemView)
 
 from hscommon.trans import trget
+from qtlib.util import horizontalSpacer, verticalSpacer
+from qtlib.selectable_list import ListviewModel
 from core.const import PaneType
 
 from .base_view import BaseView
@@ -21,6 +23,8 @@ class NewView(BaseView):
     def _setup(self):
         self._setupUi()
         
+        self.pluginList = ListviewModel(self.model.plugin_list, self.pluginListView)
+        self.pluginListView.doubleClicked.connect(self.model.open_selected_plugin)
         self.networthButton.clicked.connect(self.networthButtonClicked)
         self.profitButton.clicked.connect(self.profitButtonClicked)
         self.transactionButton.clicked.connect(self.transactionButtonClicked)
@@ -42,8 +46,7 @@ class NewView(BaseView):
         self.label = QLabel(tr("Choose a type for this tab:"))
         self.label.setAlignment(Qt.AlignCenter)
         self.gridLayout.addWidget(self.label, 0, 0, 1, 3)
-        spacerItem = QSpacerItem(95, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
+        self.gridLayout.addItem(horizontalSpacer(), 1, 0, 1, 1)
         self.verticalLayout = QVBoxLayout()
         self.networthButton = QPushButton(tr("1. Net Worth"))
         self.networthButton.setIcon(QIcon(QPixmap(':/balance_sheet_16')))
@@ -66,11 +69,15 @@ class NewView(BaseView):
         self.docpropsButton = QPushButton(tr("7. Document Properties"))
         self.docpropsButton.setIcon(QIcon(QPixmap(':/gledger_16')))
         self.verticalLayout.addWidget(self.docpropsButton)
+        self.pluginLabel = QLabel(tr("Plugins (double-click to open)"))
+        self.pluginLabel.setAlignment(Qt.AlignCenter)
+        self.verticalLayout.addWidget(self.pluginLabel)
+        self.pluginListView = QListView()
+        self.pluginListView.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.verticalLayout.addWidget(self.pluginListView)
         self.gridLayout.addLayout(self.verticalLayout, 1, 1, 1, 1)
-        spacerItem1 = QSpacerItem(95, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem1, 1, 2, 1, 1)
-        spacerItem2 = QSpacerItem(20, 71, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem2, 2, 1, 1, 1)
+        self.gridLayout.addItem(horizontalSpacer(), 1, 2, 1, 1)
+        self.gridLayout.addItem(verticalSpacer(), 2, 1, 1, 1)
         
         for i in range(1, 8):
             shortcut = QShortcut(QKeySequence(str(i)), self, None, None, Qt.WidgetShortcut)
