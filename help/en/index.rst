@@ -28,6 +28,7 @@ Contents:
    cash
    reconciliation
    forecast
+   plugins
    faq
    changelog
    credits
