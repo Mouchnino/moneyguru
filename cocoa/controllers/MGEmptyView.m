@@ -17,6 +17,9 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithModel:m];
     [m release];
     [NSBundle loadNibNamed:@"NewTabView" owner:self];
+    pluginList = [[HSSelectableList alloc] initWithPyRef:[[self model] pluginList] tableView:pluginTableView];
+    [pluginTableView setTarget:self];
+    [pluginTableView setDoubleAction:@selector(selectPluginView:)];
     return self;
 }
         
@@ -66,4 +69,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self model] selectPaneType:MGPaneTypeDocProps];
 }
 
+- (IBAction)selectPluginView:(id)sender
+{
+    [[self model] openSelectedPlugin];
+}
 @end

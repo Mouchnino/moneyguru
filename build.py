@@ -201,8 +201,8 @@ def build_cocoa_bridging_interfaces():
         PanelWithTransactionView, PyTransactionPanel, PySchedulePanel, SchedulePanelView,
         ViewWithGraphView, PyNetWorthView, PyProfitView, PyTransactionView, PyAccountView,
         AccountViewView, PyScheduleView, PyBudgetView, PyCashculatorView, PyGeneralLedgerView,
-        PyDocPropsView, PyEmptyView, PyMainWindow, MainWindowView, PyDocument, DocumentView,
-        PyMoneyGuruApp)
+        PyDocPropsView, PyEmptyView, PyReadOnlyPluginView, PyMainWindow, MainWindowView, PyDocument,
+        DocumentView, PyMoneyGuruApp)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject, PyTextField, PyTable, PyColumns, PyOutline, PySelectableList,
         PyFairware, PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget,
@@ -212,8 +212,8 @@ def build_cocoa_bridging_interfaces():
         PyMassEditionPanel, PyBudgetPanel, PyCustomDateRangePanel, PyAccountReassignPanel,
         PyExportPanel, PyPanelWithTransaction, PyTransactionPanel, PySchedulePanel, PyNetWorthView,
         PyProfitView, PyTransactionView, PyAccountView, PyScheduleView, PyBudgetView,
-        PyCashculatorView, PyGeneralLedgerView, PyDocPropsView, PyEmptyView, PyMainWindow,
-        PyDocument, PyMoneyGuruApp]
+        PyCashculatorView, PyGeneralLedgerView, PyDocPropsView, PyEmptyView, PyReadOnlyPluginView,
+        PyMainWindow, PyDocument, PyMoneyGuruApp]
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)

@@ -51,8 +51,7 @@ class CashculatorView(BaseView):
             return
         ccdb_folder = op.expanduser(proxy.prefValue_inDomain_('CCDB_Folder', 'com.apparentsoft.cashculator'))
         self._ccdbpath = Path(ccdb_folder) + 'CCDB'
-        appsupport = Path(proxy.getAppdataPath())
-        self._mgccdbpath = appsupport + 'moneyGuru/cc/CCDB'
+        self._mgccdbpath = Path(self.app.appdata_path) + 'moneyGuru/cc/CCDB'
     
     def _open_db(self):
         # If there's no CC db in moneyGuru's appdata folder, copy a model from CC's appdata.

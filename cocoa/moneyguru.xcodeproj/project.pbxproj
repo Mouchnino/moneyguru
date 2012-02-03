@@ -44,6 +44,8 @@
 		CE19151314C74FDD008B18EE /* Python in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19151214C74FDD008B18EE /* Python */; };
 		CE19151414C74FF2008B18EE /* Python in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE19151214C74FDD008B18EE /* Python */; };
 		CE2BFF381207F02B0098A2EC /* MGCashculatorAccountTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2BFF371207F02B0098A2EC /* MGCashculatorAccountTable.m */; };
+		CE2CE3B114DC1BF50031540E /* HSSelectableList.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2CE3B014DC1BF50031540E /* HSSelectableList.m */; };
+		CE2CE3B414DC2CA50031540E /* plugin_examples in Resources */ = {isa = PBXBuildFile; fileRef = CE2CE3B314DC2CA50031540E /* plugin_examples */; };
 		CE2DD6300E4C684000AB107B /* MGImportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2DD62F0E4C684000AB107B /* MGImportTable.m */; };
 		CE2F0BF411295E1A00F6FB55 /* HSOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BEF11295E1A00F6FB55 /* HSOutlineView.m */; };
 		CE2F0BF511295E1A00F6FB55 /* NSIndexPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2F0BF111295E1A00F6FB55 /* NSIndexPathAdditions.m */; };
@@ -219,6 +221,8 @@
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
 		CEC5CE590F45F8670042E33F /* MGDoubleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE580F45F8670042E33F /* MGDoubleView.m */; };
 		CEC941CA12D32F7600816473 /* HSAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC941C912D32F7600816473 /* HSAboutBox.m */; };
+		CECB080A14DB4C41008F55EA /* PyReadOnlyPluginView.m in Sources */ = {isa = PBXBuildFile; fileRef = CECB080914DB4C41008F55EA /* PyReadOnlyPluginView.m */; };
+		CECB080E14DB4C53008F55EA /* MGReadOnlyPluginView.m in Sources */ = {isa = PBXBuildFile; fileRef = CECB080D14DB4C53008F55EA /* MGReadOnlyPluginView.m */; };
 		CED1DF611440B1C5005F82B5 /* HSPopUpList.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1DF601440B1C5005F82B5 /* HSPopUpList.m */; };
 		CED1FC6D10F7851600634D72 /* MGTransactionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6C10F7851600634D72 /* MGTransactionTable.m */; };
 		CED1FC7410F7852000634D72 /* MGBalanceGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CED1FC6F10F7852000634D72 /* MGBalanceGraph.m */; };
@@ -356,6 +360,9 @@
 		CE19151214C74FDD008B18EE /* Python */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Python; path = ../build/Python; sourceTree = "<group>"; };
 		CE2BFF361207F02B0098A2EC /* MGCashculatorAccountTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCashculatorAccountTable.h; sourceTree = "<group>"; };
 		CE2BFF371207F02B0098A2EC /* MGCashculatorAccountTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCashculatorAccountTable.m; sourceTree = "<group>"; };
+		CE2CE3AF14DC1BF50031540E /* HSSelectableList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSelectableList.h; sourceTree = "<group>"; };
+		CE2CE3B014DC1BF50031540E /* HSSelectableList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSSelectableList.m; sourceTree = "<group>"; };
+		CE2CE3B314DC2CA50031540E /* plugin_examples */ = {isa = PBXFileReference; lastKnownFileType = folder; name = plugin_examples; path = ../plugin_examples; sourceTree = "<group>"; };
 		CE2DD62E0E4C684000AB107B /* MGImportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportTable.h; sourceTree = "<group>"; };
 		CE2DD62F0E4C684000AB107B /* MGImportTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportTable.m; sourceTree = "<group>"; };
 		CE2F0BEE11295E1A00F6FB55 /* HSOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSOutlineView.h; sourceTree = "<group>"; };
@@ -718,6 +725,10 @@
 		CEC5CE580F45F8670042E33F /* MGDoubleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDoubleView.m; sourceTree = "<group>"; };
 		CEC941C812D32F7600816473 /* HSAboutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSAboutBox.h; path = ../cocoalib/HSAboutBox.h; sourceTree = SOURCE_ROOT; };
 		CEC941C912D32F7600816473 /* HSAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSAboutBox.m; path = ../cocoalib/HSAboutBox.m; sourceTree = SOURCE_ROOT; };
+		CECB080814DB4C41008F55EA /* PyReadOnlyPluginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyReadOnlyPluginView.h; sourceTree = "<group>"; };
+		CECB080914DB4C41008F55EA /* PyReadOnlyPluginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyReadOnlyPluginView.m; sourceTree = "<group>"; };
+		CECB080C14DB4C53008F55EA /* MGReadOnlyPluginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGReadOnlyPluginView.h; sourceTree = "<group>"; };
+		CECB080D14DB4C53008F55EA /* MGReadOnlyPluginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGReadOnlyPluginView.m; sourceTree = "<group>"; };
 		CECEF77F144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/AccountPanel.xib; sourceTree = "<group>"; };
 		CECEF780144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/AccountReassignPanel.xib; sourceTree = "<group>"; };
 		CECEF781144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
@@ -1032,6 +1043,7 @@
 				CE19150E14C74FC6008B18EE /* py */,
 				CE4B8C000E656DB70017432D /* help */,
 				CEE0FE73147EA6C600713C87 /* locale */,
+				CE2CE3B314DC2CA50031540E /* plugin_examples */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				CEFEA33111E1DEA70034AB46 /* Localizable.strings */,
 				CE3B617B1037FCBB00BC5B4A /* dsa_pub.pem */,
@@ -1130,6 +1142,8 @@
 				CE66BD1812757587008EFA8A /* MGExportAccountTable.m */,
 				CE66BD1912757587008EFA8A /* MGExportPanel.h */,
 				CE66BD1A12757587008EFA8A /* MGExportPanel.m */,
+				CECB080C14DB4C53008F55EA /* MGReadOnlyPluginView.h */,
+				CECB080D14DB4C53008F55EA /* MGReadOnlyPluginView.m */,
 			);
 			includeInIndex = 1;
 			path = controllers;
@@ -1330,6 +1344,8 @@
 				CED5E6F21448B36700C4B843 /* HSComboBox.m */,
 				CE1204331441DE3D00933858 /* HSColumns.h */,
 				CE1204341441DE3D00933858 /* HSColumns.m */,
+				CE2CE3AF14DC1BF50031540E /* HSSelectableList.h */,
+				CE2CE3B014DC1BF50031540E /* HSSelectableList.m */,
 			);
 			name = controllers;
 			path = ../cocoalib/controllers;
@@ -1503,6 +1519,8 @@
 				CE464BF514CC48CC0074A658 /* PyDocPropsView.m */,
 				CE464BF614CC48CC0074A658 /* PyEmptyView.h */,
 				CE464BF714CC48CC0074A658 /* PyEmptyView.m */,
+				CECB080814DB4C41008F55EA /* PyReadOnlyPluginView.h */,
+				CECB080914DB4C41008F55EA /* PyReadOnlyPluginView.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -1780,6 +1798,7 @@
 				CEE0FE74147EA6C600713C87 /* locale in Resources */,
 				CE19150F14C74FC6008B18EE /* py in Resources */,
 				CE19151114C74FCC008B18EE /* mg_cocoa.py in Resources */,
+				CE2CE3B414DC2CA50031540E /* plugin_examples in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1964,6 +1983,9 @@
 				CE5F433814CDB98E00F70DE1 /* HSTextField.m in Sources */,
 				CE5A79A914D75078006D10FC /* MGAccountSheetView.m in Sources */,
 				CE307A8214D82D240098BC6A /* HSTableView.m in Sources */,
+				CECB080A14DB4C41008F55EA /* PyReadOnlyPluginView.m in Sources */,
+				CECB080E14DB4C53008F55EA /* MGReadOnlyPluginView.m in Sources */,
+				CE2CE3B114DC1BF50031540E /* HSSelectableList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

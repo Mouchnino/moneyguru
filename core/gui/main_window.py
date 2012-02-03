@@ -147,6 +147,11 @@ class MainWindow(Repeater, GUIObject):
         else:
             return ViewPane(view, PANETYPE2LABEL[pane_type])
     
+    def _create_pane_from_plugin(self, plugin):
+        plugin_inst = plugin(self)
+        plugin_inst.view.connect()
+        return ViewPane(plugin_inst.view, plugin_inst.NAME)
+    
     def _get_view_for_pane_type(self, pane_type, account):
         if pane_type == PaneType.Account: # we don't cache Account panes
             result = AccountView(self, account)
@@ -201,11 +206,17 @@ class MainWindow(Repeater, GUIObject):
         pane_data = []
         for data in stored_panes:
             pane_type = data['pane_type']
-            account_name = str(data.get('account_name', '')) # str() because the value might be an int
-            account = self.document.accounts.find(account_name)
-            if pane_type == PaneType.Account and account is None:
-                continue
-            pane_data.append((pane_type, account))
+            if pane_type == PaneType.Account:
+                account_name = str(data.get('account_name', '')) # str() because the value might be an int
+                account = self.document.accounts.find(account_name)
+                if account is None:
+                    continue
+                arg = account
+            elif pane_type >= PaneType.Plugin:
+                arg = str(data.get('plugin_name', ''))
+            else:
+                arg = None
+            pane_data.append((pane_type, arg))
         if pane_data:
             self._set_panes(pane_data)
             selected_pane_index = self.document.get_default(Preference.SelectedPane)
@@ -219,25 +230,40 @@ class MainWindow(Repeater, GUIObject):
             data['pane_type'] = pane.view.VIEW_TYPE
             if pane.account is not None:
                 data['account_name'] = pane.account.name
+            if pane.view.VIEW_TYPE >= PaneType.Plugin:
+                data['plugin_name'] = pane.view.plugin.NAME
             opened_panes.append(data)
         self.document.set_default(Preference.OpenedPanes, opened_panes)
         self.document.set_default(Preference.SelectedPane, self._current_pane_index)
         self.document.set_default(Preference.HiddenAreas, list(self.hidden_areas))
     
     def _set_panes(self, pane_data):
-        # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, account)]
+        # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, arg)]
         self._current_pane = None
         self._current_pane_index = -1
         for pane in self.panes:
             pane.view.disconnect()
         self.panes = []
-        for pane_type, account in pane_data:
-            try:
-                self.panes.append(self._create_pane(pane_type, account=account))
-            except ValueError:
-                self.panes.append(self._create_pane(PaneType.NetWorth))
+        for pane_type, arg in pane_data:
+            if pane_type >= PaneType.Plugin:
+                plugin = first(p for p in self.app.plugins if p.NAME == arg)
+                if plugin is not None:
+                    self.panes.append(self._create_pane_from_plugin(plugin))
+                else:
+                    self.panes.append(self._create_pane(PaneType.NetWorth))
+            else:
+                try:
+                    self.panes.append(self._create_pane(pane_type, account=arg))
+                except ValueError:
+                    self.panes.append(self._create_pane(PaneType.NetWorth))
         self.view.refresh_panes()
         self.current_pane_index = 0
+    
+    def _set_current_pane(self, newpane):
+        index = self.current_pane_index
+        self.panes[index] = newpane
+        self.view.refresh_panes()
+        self._change_current_pane(newpane)
     
     def _update_area_visibility(self):
         self.notify('area_visibility_changed')
@@ -414,11 +440,10 @@ class MainWindow(Repeater, GUIObject):
         self.current_pane_index -= 1
     
     def set_current_pane_type(self, pane_type):
-        index = self.current_pane_index
-        pane = self._create_pane(pane_type)
-        self.panes[index] = pane
-        self.view.refresh_panes()
-        self._change_current_pane(pane)
+        self._set_current_pane(self._create_pane(pane_type))
+    
+    def set_current_pane_with_plugin(self, plugin):
+        self._set_current_pane(self._create_pane_from_plugin(plugin))
     
     def show_account(self):
         """Shows the currently selected account in the Account view.

@@ -9,8 +9,14 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyEmptyView.h"
 #import "MGBaseView.h"
+#import "HSSelectableList.h"
 
-@interface MGEmptyView : MGBaseView {}
+@interface MGEmptyView : MGBaseView
+{
+    IBOutlet NSTableView *pluginTableView;
+    
+    HSSelectableList *pluginList;
+}
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyEmptyView *)model;
 
@@ -23,4 +29,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)selectCashculatorView:(id)sender;
 - (IBAction)selectGeneralLedgerView:(id)sender;
 - (IBAction)selectDocPropsView:(id)sender;
+- (IBAction)selectPluginView:(id)sender;
 @end

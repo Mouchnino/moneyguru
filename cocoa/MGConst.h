@@ -62,6 +62,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGPaneTypeGeneralLedger 7
 #define MGPaneTypeDocProps 8
 #define MGPaneTypeEmpty 100
+#define MGPaneTypePlugin 1000
+#define MGPaneTypeReadOnlyTablePlugin 1001
 
 // Synced with the core
 #define MGPaneAreaMain 1

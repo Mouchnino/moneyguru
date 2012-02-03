@@ -18,6 +18,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGCashculatorView.h"
 #import "MGDocPropsView.h"
 #import "MGEmptyView.h"
+#import "MGReadOnlyPluginView.h"
 #import "Utils.h"
 
 @implementation MGMainWindowController
@@ -179,6 +180,9 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     else if (paneType == MGPaneTypeEmpty) {
         return [[[MGEmptyView alloc] initWithPyRef:modelRef] autorelease];
+    }
+    else if (paneType == MGPaneTypeReadOnlyTablePlugin) {
+        return [[[MGReadOnlyPluginView alloc] initWithPyRef:modelRef] autorelease];
     }
     else {
         return nil;

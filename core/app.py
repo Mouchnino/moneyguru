@@ -6,10 +6,16 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import sys
+import os
+import os.path as op
+import shutil
+import logging
 import datetime
 import threading
 from collections import namedtuple
 import re
+import importlib
 
 from hscommon.currency import USD
 from hscommon.notify import Broadcaster
@@ -22,6 +28,7 @@ from .const import DATE_FORMAT_FOR_PREFERENCES
 from .model import currency
 from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
+from .plugin import Plugin
 
 HAD_FIRST_LAUNCH_PREFERENCE = 'HadFirstLaunch'
 AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
@@ -37,7 +44,7 @@ class Application(Broadcaster, RegistrableApplication):
     DEMO_LIMITATION = tr("will show this dialog on startup")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
-        default_currency=USD, cache_path=None):
+        default_currency=USD, cache_path=None, appdata_path=None, plugin_model_path=None):
         Broadcaster.__init__(self)
         RegistrableApplication.__init__(self, view=view, appid=2)
         self.cache_path = cache_path
@@ -49,6 +56,7 @@ class Application(Broadcaster, RegistrableApplication):
             db_path = cache_path + 'currency.db'
         else:
             db_path = ':memory:'
+        self.appdata_path = appdata_path
         currency.initialize_db(db_path)
         self.is_first_run = not self.get_default(HAD_FIRST_LAUNCH_PREFERENCE, False)
         if self.is_first_run:
@@ -62,6 +70,7 @@ class Application(Broadcaster, RegistrableApplication):
         self._auto_decimal_place = self.get_default(AUTO_DECIMAL_PLACE_PREFERENCE, False)
         self.saved_custom_ranges = [None] * 3
         self._load_custom_ranges()
+        self._load_plugins(plugin_model_path)
         self._update_autosave_timer()
     
     #--- Private
@@ -92,6 +101,28 @@ class Application(Broadcaster, RegistrableApplication):
                 self.saved_custom_ranges[index] = SavedCustomRange(name, start, end)
             else:
                 self.saved_custom_ranges[index] = None
+    
+    def _load_plugins(self, plugin_model_path):
+        self.plugins = []
+        if not self.appdata_path:
+            return
+        plpath = op.join(self.appdata_path, 'moneyguru_plugins')
+        if not op.exists(plpath):
+            shutil.copytree(plugin_model_path, plpath)
+        modulenames = [fn[:-3] for fn in os.listdir(plpath) if fn.endswith('.py') and fn != '__init__.py']
+        sys.path.insert(0, self.appdata_path)
+        for modulename in modulenames:
+            try:
+                mod = importlib.import_module('moneyguru_plugins.'+modulename)
+            except ImportError:
+                logging.warning("Couldn't import plugin %s", modulename)
+            for x in vars(mod).values():
+                try:
+                    if issubclass(x, Plugin) and x.NAME:
+                        self.plugins.append(x)
+                except TypeError: # not a class, we don't care and ignore
+                    pass
+        del sys.path[0]
     
     def _save_custom_ranges(self):
         custom_ranges = []
@@ -155,7 +186,7 @@ class Application(Broadcaster, RegistrableApplication):
     def shutdown(self):
         self._autosave_interval = 0
         self._update_autosave_timer()
-        
+    
     def get_default(self, key, fallback_value=None):
         result = nonone(self.view.get_default(key), fallback_value)
         if fallback_value is not None and not isinstance(result, type(fallback_value)):

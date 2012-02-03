@@ -4,8 +4,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-# index_path are arrays of int. Convert them from NSIndexPath with cocoalib.Utils.indexPath2Array
 import logging
+import os.path as op
 from objp.util import pyref, dontwrap
 
 from cocoa import install_exception_hook, proxy
@@ -39,6 +39,8 @@ class PyMoneyGuruApp(PyFairware):
         install_exception_hook()
         std_caches_path = Path(proxy.getCachePath())
         cache_path = std_caches_path + 'moneyGuru'
+        appdata_path = op.join(proxy.getAppdataPath(), 'moneyGuru')
+        plugin_model_path = op.join(proxy.getResourcePath(), 'plugin_examples')
         currency_code = nonone(proxy.systemCurrency(), 'USD')
         logging.info('Currency code: {0}'.format(currency_code))
         try:
@@ -54,7 +56,8 @@ class PyMoneyGuruApp(PyFairware):
         grouping_sep = proxy.systemNumberGroupingSeparator()
         logging.info('System numeric separators: %s and %s' % (grouping_sep, decimal_sep))
         model = Application(self, date_format=date_format, decimal_sep=decimal_sep, 
-            grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path)
+            grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path,
+            appdata_path=appdata_path, plugin_model_path=plugin_model_path)
         PyFairware.__init__(self, model)
     
     #--- Public
@@ -958,8 +961,19 @@ class PyDocPropsView(PyBaseView):
     
 
 class PyEmptyView(PyBaseView):
+    def pluginList(self) -> pyref:
+        return self.model.plugin_list
+    
     def selectPaneType_(self, paneType: int):
         self.model.select_pane_type(paneType)
+    
+    def openSelectedPlugin(self):
+        self.model.open_selected_plugin()
+    
+
+class PyReadOnlyPluginView(PyBaseView):
+    def table(self) -> pyref:
+        return self.model.table
     
 
 class MainWindowView(GUIObjectView):

@@ -21,6 +21,8 @@ class PaneType:
     GeneralLedger = 7
     DocProps = 8
     Empty = 100
+    Plugin = 1000
+    ReadOnlyTablePlugin = 1001
 
 # These constants are in sync with the GUI
 class PaneArea:
