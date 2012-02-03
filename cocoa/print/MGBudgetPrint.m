@@ -10,16 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 
 @implementation MGBudgetPrint
-+ (Class)pyClass
-{
-    return [PyPrintView class];
-}
-
-- (PyPrintView *)py
-{
-    return (PyPrintView *)py;
-}
-
 - (NSArray *)unresizableColumns
 {
     return [NSArray arrayWithObjects:@"start_date",@"stop_date",@"amount",nil];

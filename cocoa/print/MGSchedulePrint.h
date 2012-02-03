@@ -11,6 +11,4 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyPrintView.h"
 
 @interface MGSchedulePrint : MGTablePrint
-
-- (PyPrintView *)py;
 @end

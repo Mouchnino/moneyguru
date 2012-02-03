@@ -8,9 +8,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGTablePrint.h"
-#import "PyPrintView.h"
 
 @interface MGBudgetPrint : MGTablePrint
-
-- (PyPrintView *)py;
 @end
