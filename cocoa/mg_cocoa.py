@@ -64,6 +64,9 @@ class PyMoneyGuruApp(PyFairware):
     def isFirstRun(self) -> bool:
         return self.model.is_first_run
     
+    def openPluginFolder(self):
+        self.model.open_plugin_folder()
+    
     def shutdown(self):
         self.model.shutdown()
     
@@ -79,6 +82,11 @@ class PyMoneyGuruApp(PyFairware):
     
     def setAutoDecimalPlace_(self, value: bool):
         self.model.auto_decimal_place = value
+    
+    #--- model --> view
+    @dontwrap
+    def reveal_path(self, path):
+        proxy.revealPath_(str(path))
     
 
 class DocumentView(GUIObjectView):

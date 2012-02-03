@@ -120,6 +120,10 @@ class MoneyGuru(ApplicationBase):
         url = QUrl(url)
         QDesktopServices.openUrl(url)
     
+    def reveal_path(self, path):
+        url = QUrl.fromLocalFile(str(path))
+        QDesktopServices.openUrl(url)
+    
     def setup_as_registered(self):
         self.mainWindow.actionRegister.setVisible(False)
         self.aboutBox.registerButton.hide()

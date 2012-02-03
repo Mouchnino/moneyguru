@@ -38,6 +38,10 @@ CUSTOM_RANGES_PREFERENCE = 'CustomRanges'
 SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
 class Application(Broadcaster, RegistrableApplication):
+    #--- View interface
+    # reveal_path(path)
+    #
+    
     APP_NAME = "moneyGuru"
     PROMPT_NAME = APP_NAME
     VERSION = '2.4.3'
@@ -182,6 +186,10 @@ class Application(Broadcaster, RegistrableApplication):
         self.saved_custom_ranges[slot] = SavedCustomRange(name, start, end)
         self._save_custom_ranges()
         self.notify('saved_custom_ranges_changed')
+    
+    def open_plugin_folder(self):
+        plpath = op.join(self.appdata_path, 'moneyguru_plugins')
+        self.view.reveal_path(plpath)
     
     def shutdown(self):
         self._autosave_interval = 0

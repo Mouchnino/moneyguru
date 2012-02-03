@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">11C74</string>
+		<string key="IBDocument.SystemVersion">11D50</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.23</string>
-		<string key="IBDocument.HIToolboxVersion">567.00</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">1938</string>
@@ -263,6 +263,15 @@
 								<object class="NSMenuItem" id="761877295">
 									<reference key="NSMenu" ref="882329256"/>
 									<string key="NSTitle">Open Example Document</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="640623815"/>
+									<reference key="NSMixedImage" ref="176664579"/>
+								</object>
+								<object class="NSMenuItem" id="372712889">
+									<reference key="NSMenu" ref="882329256"/>
+									<string key="NSTitle">Open Plugin Folder</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -2059,6 +2068,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">openPluginFolder:</string>
+						<reference key="source" ref="1071329777"/>
+						<reference key="destination" ref="372712889"/>
+					</object>
+					<int key="connectionID">1471</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
 						<reference key="source" ref="887140590"/>
 						<reference key="destination" ref="937462810"/>
@@ -2343,6 +2360,7 @@
 							<reference ref="627886453"/>
 							<reference ref="1069299286"/>
 							<reference ref="123603377"/>
+							<reference ref="372712889"/>
 						</array>
 						<reference key="parent" ref="588997816"/>
 					</object>
@@ -3026,6 +3044,11 @@
 						<reference key="object" ref="363665734"/>
 						<reference key="parent" ref="644935139"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1468</int>
+						<reference key="object" ref="372712889"/>
+						<reference key="parent" ref="882329256"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3128,6 +3151,7 @@
 				<string key="1454.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1460.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1462.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1468.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3171,7 +3195,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1467</int>
+			<int key="maxID">1471</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3400,11 +3424,11 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">HSWindowController</string>
-					<string key="superclassName">NSWindowController</string>
+					<string key="className">HSTableView</string>
+					<string key="superclassName">NSTableView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/HSWindowController.h</string>
+						<string key="minorKey">./Classes/HSTableView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3423,9 +3447,8 @@
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="filterBarView">AMButtonBar</string>
-						<string key="graphPlaceholder">NSView</string>
 						<string key="reconciliationModeButton">NSButton</string>
-						<string key="tableScrollView">NSScrollView</string>
+						<string key="splitView">NSSplitView</string>
 						<string key="tableView">MGTableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -3433,17 +3456,13 @@
 							<string key="name">filterBarView</string>
 							<string key="candidateClassName">AMButtonBar</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="graphPlaceholder">
-							<string key="name">graphPlaceholder</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="reconciliationModeButton">
 							<string key="name">reconciliationModeButton</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="tableScrollView">
-							<string key="name">tableScrollView</string>
-							<string key="candidateClassName">NSScrollView</string>
+						<object class="IBToOneOutletInfo" key="splitView">
+							<string key="name">splitView</string>
+							<string key="candidateClassName">NSSplitView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="tableView">
 							<string key="name">tableView</string>
@@ -3461,6 +3480,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="openExampleDocument:">id</string>
 						<string key="openHelp:">id</string>
+						<string key="openPluginFolder:">id</string>
 						<string key="openWebsite:">id</string>
 						<string key="showAboutBox:">id</string>
 					</dictionary>
@@ -3471,6 +3491,10 @@
 						</object>
 						<object class="IBActionInfo" key="openHelp:">
 							<string key="name">openHelp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openPluginFolder:">
+							<string key="name">openPluginFolder:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="openWebsite:">
@@ -3720,7 +3744,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MGMainWindowController</string>
-					<string key="superclassName">HSWindowController</string>
+					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="columnMenuClick:">id</string>
 						<string key="delete:">id</string>
@@ -3946,7 +3970,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MGPanel</string>
-					<string key="superclassName">HSWindowController</string>
+					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="cancel:">id</string>
 						<string key="save:">id</string>
@@ -3987,7 +4011,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MGTableView</string>
-					<string key="superclassName">NSTableView</string>
+					<string key="superclassName">HSTableView</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">copy:</string>
 						<string key="NS.object.0">id</string>
@@ -4121,8 +4145,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NSMenuCheckmark">{9, 8}</string>
-			<string key="NSMenuMixedState">{7, 2}</string>
+			<string key="NSMenuCheckmark">{11, 11}</string>
+			<string key="NSMenuMixedState">{10, 3}</string>
 		</dictionary>
 	</data>
 </archive>
