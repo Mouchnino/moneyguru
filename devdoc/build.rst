@@ -12,7 +12,7 @@ General dependencies
 
 - Python 3.2 (http://www.python.org)
 - sgmllib3k (http://bitbucket.org/hsoft/sgmllib)
-- Sphinx 1.0.8 (http://sphinx.pocoo.org/)
+- Sphinx 1.1.2 (http://sphinx.pocoo.org/)
 - polib 0.7.0 (http://bitbucket.org/izi/polib)
 - pytest 2.0.0, to run unit tests. (http://pytest.org/)
 - pytest-monkeyplus, a pytest plugin. (http://bitbucket.org/hsoft/pytest-monkeyplus)
@@ -22,8 +22,8 @@ OS X prerequisites
 
 - XCode 4.1
 - Sparkle (http://sparkle.andymatuschak.org/)
-- PyObjC 2.3 (http://pyobjc.sourceforge.net/)
-- pluginbuilder 1.0.0 (http://bitbucket.org/hsoft/pluginbuilder)
+- objp 1.2.0 (http://bitbucket.org/hsoft/objp)
+- pluginbuilder 1.1.0 (http://bitbucket.org/hsoft/pluginbuilder)
   
 Windows prerequisites
 ---------------------
@@ -39,43 +39,18 @@ There's an easy way to install the majority of the prerequisites above, and it's
 
     pip install -r requirements-[osx|win|lnx].txt
 
-([osx|win|lnx] depends, of course, on your platform). Because Sphinx doesn't support Python 3 yet, it's not in the requirements file and you'll have to install it manually. You might have to compile PyObjC manually too (see gotchas below). Sparkle and Advanced Installer, having nothing to do with Python, are also manual installs.
+([osx|win|lnx] depends, of course, on your platform). Sparkle and Advanced Installer, having
+nothing to do with Python, have to be manually installed.
 
 PyQt isn't in the requirements file either (there's no package uploaded on PyPI) and you also have
 to install it manually.
 
-Prerequisite gotchas
---------------------
-
-Correctly installing the prerequisites is tricky. Make sure you have at least the version number 
-required for each prerequisite.
+Gotchas
+-------
 
 If you didn't use mercurial to download this source, you probably have an incomplete source folder!
 External projects (hscommon, qtlib, cocoalib) need to be at the root of the moneyGuru project 
 folder. You'll have to download those separately. Or use mercurial, it's much easier.
-
-As far as I can tell, you don't *have* to compile/install everything manually and you can normally
-use ``easy_install`` to install python dependencies. However, be aware that compiling/installing
-manually from the repositories of each project is what I personally do, so if you hit a snag 
-somewhere, you might want to try the manual way.
-
-PyObjC's website is badly outdated. Also, as far as I can tell, the package installable with
-``easy_install`` has good chances of not working. Your best bet is to download the latest tagged
-version from the repository and compile it from source.
-
-Also, on OS X, don't try to use the built-in python 2.x to install Sphinx on (the only pre-requisite
-that doesn't run on python 3 yet). There's some weird error popping up when moneyGuru tries to build 
-its help file. Install your own framework version of python 2.7, and then install Sphinx on that. 
-When Sphinx supports Python 3, things will be easier because you'll be able to install sphinx on the 
-same Python version you build moneyGuru with.
-
-Another one on OS X: I wouldn't use macports/fink/whatever. Whenever I tried using those, I always 
-ended up with problems.
-
-If compiling under under OS X Lion, make sure that you installed the latest version of macholib
-because there was a 10.7 related bug that was fixed recently. Right now, the fix hasn't even been
-released yet so you have to install directly from the repo ( http://bitbucket.org/ronaldoussoren/macholib ).
-The fix in question is at http://bitbucket.org/ronaldoussoren/macholib/changeset/4ab0de0f5b60
 
 Whenever you have a problem, always double-check that you're running the correct python version. 
 You'll probably have to tweak your $PATH.
