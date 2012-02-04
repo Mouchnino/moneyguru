@@ -2,5 +2,5 @@ sgmllib3k>=1.0.0
 polib>=0.7.0
 pytest>=2.0.0
 pytest-monkeyplus>=1.0.0
-pyobjc-core>=2.3
-pluginbuilder>=1.0.0
+objp>=1.2.0
+pluginbuilder>=1.1.0
