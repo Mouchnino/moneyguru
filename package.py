@@ -35,9 +35,8 @@ def package_windows(dev):
         for lib in libs:
             print_and_do("upx --best \"dist\\{0}\"".format(lib))
     
-    help_path = 'build\\help'
-    print("Copying {0} to dist\\help".format(help_path))
-    shutil.copytree(help_path, 'dist\\help')
+    shutil.copytree('build\\help', 'dist\\help')
+    shutil.copytree('plugin_examples', 'dist\\plugin_examples')
     
     if not dev:
         # AdvancedInstaller.com has to be in your PATH
