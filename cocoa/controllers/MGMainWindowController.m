@@ -26,9 +26,15 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super initWithWindowNibName:@"MainWindow"];
     model = [[PyMainWindow alloc] initWithDocument:[document pyRef]];
+    /*  WEIRD CRASH ALERT
+        The window retain call below results in a memory leak. That's bad, but it's always better
+        than a crash. Without this retain below, I was getting crashes (at random points in the
+        initialization process). To reproduce the crash, all I had to do was to do "New Document"
+        and then "Close Document" about 6-7 times.
+    */
+    [[self window] retain];
     /* Put a cute iTunes-like bottom bar */
     [[self window] setContentBorderThickness:28 forEdge:NSMinYEdge];
-    [self restoreState];
     accountProperties = [[MGAccountProperties alloc] initWithParent:self];
     transactionPanel = [[MGTransactionInspector alloc] initWithParent:self];
     massEditionPanel = [[MGMassEditionPanel alloc] initWithParent:self];
@@ -63,11 +69,14 @@ http://www.hardcoded.net/licenses/bsd_license
     [tabBar setDelegate:self];
     [[tabBar addTabButton] setTarget:self];
     [[tabBar addTabButton] setAction:@selector(newTab:)];
+    
+    [[self window] setDelegate:self];
     return self;
 }
 
 - (void)dealloc
 {
+    [[self window] setDelegate:nil];
     [transactionPanel release];
     [massEditionPanel release];
     [schedulePanel release];
@@ -407,25 +416,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Public */
 
-- (void)restoreState
-{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *frameData = [ud stringForKey:@"MainWindowFrame"];
-    if (frameData != nil)
-    {
-        NSRect frame = NSRectFromString(frameData);
-        [[self window] setFrame:frame display:YES];
-    }
-}
-
-- (void)saveState
-{
-    NSRect f = [[self window] frame];
-    NSString *frameData = NSStringFromRect(f);
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setValue:frameData forKey:@"MainWindowFrame"];
-}
-
 - (MGPrintView *)viewToPrint
 {
     return [top viewToPrint];
@@ -470,7 +460,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    [self saveState];
     [tabBar setDelegate:nil];
 }
 

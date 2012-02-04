@@ -99,8 +99,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Public */
 
-- (void)restoreState;
-- (void)saveState;
 - (MGPrintView *)viewToPrint;
 - (NSInteger)openedTabCount;
 - (void)closeActiveTab;
