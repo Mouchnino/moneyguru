@@ -1,3 +1,14 @@
+=== 2.5.0 (2012-02-04)
+
+* Plugins! moneyGuru's capabilities can now be expanded through Python plugins.
+* Graphs and charts can now be resized. (#105)
+* Improved pie charts by giving them a dyamic number of slices depending on chart size. (#277)
+* Added a "Modification Time" column in the transactions tab. (#305)
+* Improve schedules and spawn editing mechanisms. (#262)
+* Improved accessibility. (#300 #301)
+* Fixed a bug in QIF imports where splits were sometimes not imported. (#290)
+* Fixed selection glitch on tab swapping. (#252)
+
 === 2.4.3 (2012-01-21)
 
 * Fixed a crash on account deletion. (#298)
