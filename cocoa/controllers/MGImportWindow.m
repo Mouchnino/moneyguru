@@ -11,11 +11,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGImportWindow
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithDocument:(PyDocument *)aDocument
 {
     self = [super initWithWindowNibName:@"ImportWindow"];
     [self window];
-    model = [[PyImportWindow alloc] initWithDocument:[[aDocument model] pyRef]];
+    model = [[PyImportWindow alloc] initWithDocument:[aDocument pyRef]];
     importTable = [[MGImportTable alloc] initWithPyRef:[model importTable] view:importTableView];
     [model bindCallback:createCallback(@"ImportWindowView", self)];
     [tabBar setSizeCellsToFit:YES];

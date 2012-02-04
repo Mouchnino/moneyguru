@@ -61,12 +61,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)makeWindowControllers 
 {
-    MGMainWindowController *controller = [[MGMainWindowController alloc] initWithDocument:self];
-    /* Ok, this call below to set docoument to nil is hacky, but the thing is that we need to set
-     * the document during initialization to avoid crashes, and then we need to set it to nil here
-     * or else the window controller won't really get added in addWindowController:
-     */
-    [controller setDocument:nil];
+    MGMainWindowController *controller = [[MGMainWindowController alloc] initWithDocument:[self model]];
     [controller setShouldCloseDocument:YES];
     [self addWindowController:[controller autorelease]];
 }

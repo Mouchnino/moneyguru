@@ -22,11 +22,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGMainWindowController
-- (id)initWithDocument:(MGDocument *)document
+- (id)initWithDocument:(PyDocument *)document
 {
     self = [super initWithWindowNibName:@"MainWindow"];
-    model = [[PyMainWindow alloc] initWithDocument:[[document model] pyRef]];
-    [self setDocument:document];
+    model = [[PyMainWindow alloc] initWithDocument:[document pyRef]];
     /* Put a cute iTunes-like bottom bar */
     [[self window] setContentBorderThickness:28 forEdge:NSMinYEdge];
     [self restoreState];
@@ -91,11 +90,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyMainWindow *)model
 {
     return (PyMainWindow *)model;
-}
-
-- (MGDocument *)document
-{
-    return (MGDocument *)[super document];
 }
 
 /* Private */

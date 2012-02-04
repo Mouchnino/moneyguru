@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PSMTabBarControl.h"
-#import "MGDocument.h"
+#import "PyDocument.h"
 #import "MGTableView.h"
 #import "MGImportTable.h"
 #import "PyImportWindow.h"
@@ -28,7 +28,7 @@ http://www.hardcoded.net/licenses/bsd_license
     MGImportTable *importTable;
     NSInteger tabToRemoveIndex;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithDocument:(PyDocument *)aDocument;
 
 /* Actions */
 - (IBAction)changeTargetAccount:(id)sender;

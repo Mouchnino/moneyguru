@@ -51,9 +51,8 @@ http://www.hardcoded.net/licenses/bsd_license
     MGBaseView *top;
     NSMutableArray *subviews;
 }
-- (id)initWithDocument:(MGDocument *)document;
+- (id)initWithDocument:(PyDocument *)document;
 - (PyMainWindow *)model;
-- (MGDocument *)document;
 /* Private */
 - (BOOL)validateAction:(SEL)action;
 - (MGBaseView *)viewFromPaneType:(NSInteger)paneType modelRef:(PyObject *)modelRef;

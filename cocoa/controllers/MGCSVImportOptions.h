@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
+#import "PyDocument.h"
 #import "PyCSVImportOptions.h"
 
 @interface MGCSVImportOptions : NSWindowController
@@ -22,7 +22,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSInteger lastClickedColumnIndex;
     PyCSVImportOptions *model;
 }
-- (id)initWithDocument:(MGDocument *)aDocument;
+- (id)initWithDocument:(PyDocument *)aDocument;
 
 /* Actions */
 - (IBAction)cancel:(id)sender;

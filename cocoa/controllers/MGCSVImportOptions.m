@@ -11,11 +11,11 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGCSVImportOptions
-- (id)initWithDocument:(MGDocument *)aDocument
+- (id)initWithDocument:(PyDocument *)aDocument
 {
     self = [super initWithWindowNibName:@"CSVImportOptions"];
     [self window];
-    model = [[PyCSVImportOptions alloc] initWithDocument:[[aDocument model] pyRef]];
+    model = [[PyCSVImportOptions alloc] initWithDocument:[aDocument pyRef]];
     [model bindCallback:createCallback(@"CSVImportOptionsView", self)];
     [encodingSelector addItemsWithTitles:[model supportedEncodings]];
     return self;

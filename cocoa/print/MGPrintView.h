@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGDocument.h"
+#import "PyGUIObject.h"
 #import "PyPrintView.h"
 
 NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment align);
