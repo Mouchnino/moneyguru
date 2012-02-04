@@ -14,11 +14,17 @@
 /* Class = "NSButtonCell"; title = "Budgets"; ObjectID = "23"; */
 "23.title" = "Previsioni";
 
-/* Class = "NSTextFieldCell"; title = "Choose a view for this tab:"; ObjectID = "25"; */
-"25.title" = "Scegli una vista per questa scheda:";
+/* Class = "NSTextFieldCell"; title = "Choose a view for this tab"; ObjectID = "25"; */
+"25.title" = "Scegli una vista per questa scheda";
 
 /* Class = "NSButtonCell"; title = "Cashculator"; ObjectID = "40"; */
 "40.title" = "Cashculator";
 
 /* Class = "NSButtonCell"; title = "General Ledger"; ObjectID = "46"; */
 "46.title" = "Libro Mastro";
+
+/* Class = "NSButtonCell"; title = "Document Properties"; ObjectID = "52"; */
+"52.title" = "Document Properties";
+
+/* Class = "NSTextFieldCell"; title = "Plugins (double-click to open)"; ObjectID = "66"; */
+"66.title" = "Plugins (double-click to open)";
