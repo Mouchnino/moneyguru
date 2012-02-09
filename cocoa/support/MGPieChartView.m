@@ -71,16 +71,29 @@ NSPoint rectCenter(NSRect r)
     [super dealloc];
 }
 
-- (void)setColors:(NSArray *)colors
+- (id)copyWithZone:(NSZone *)zone
+{
+    MGPieChartView *result = [super copyWithZone:zone];
+    [result setGradients:gradients];
+    return result;
+}
+
+- (void)setGradients:(NSArray *)aGradients
 {
     [gradients release];
-    gradients = [[NSMutableArray array] retain];
+    gradients = [aGradients retain];
+}
+
+- (void)setColors:(NSArray *)colors
+{
+    NSMutableArray *grads = [NSMutableArray array];
     for (NSColor *c in colors) {
         NSColor *light = [c blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
         NSGradient *g = [[NSGradient alloc] initWithStartingColor:c endingColor:light];
-        [gradients addObject:g];
+        [grads addObject:g];
         [g release];
     }
+    [self setGradients:grads];
 }
 
 /* Drawing */
