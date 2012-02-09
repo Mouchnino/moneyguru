@@ -24,6 +24,9 @@ class SplitTable(Table):
     
     def __init__(self, model, view):
         Table.__init__(self, model, view)
+        # XXX If we don't call that, our columns will all be very small. Find a more elegant way,
+        # prefeably in the core, to avoid these situations.
+        self.columns.setColumnsWidth(None)
         view.keyPressed.connect(self.keyPressed)
     
     def _getFlags(self, row, column):
