@@ -36,7 +36,6 @@ class TableDelegate(ItemDelegate):
         elif editType == DATE_EDIT:
             return DateEdit(parent)
         elif editType in EDIT_TYPE2COMPLETABLE_EDIT:
-            print(repr(column.name), repr(editType))
             return EDIT_TYPE2COMPLETABLE_EDIT[editType](self._model.completable_edit, parent)
     
 
