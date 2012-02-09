@@ -49,7 +49,10 @@ class CashculatorView(BaseView):
     def _ensure_paths(self):
         if self._ccdbpath is not None:
             return
-        ccdb_folder = op.expanduser(proxy.prefValue_inDomain_('CCDB_Folder', 'com.apparentsoft.cashculator'))
+        ccdb_folder = proxy.prefValue_inDomain_('CCDB_Folder', 'com.apparentsoft.cashculator')
+        if not ccdb_folder:
+            return
+        ccdb_folder = op.expanduser(ccdb_folder)
         self._ccdbpath = Path(ccdb_folder) + 'CCDB'
         self._mgccdbpath = Path(self.app.appdata_path) + 'moneyGuru/cc/CCDB'
     
