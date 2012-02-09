@@ -23,7 +23,7 @@ class SplitTable(GUITable):
     def __init__(self, transaction_panel):
         GUITable.__init__(self, document=transaction_panel.mainwindow.document)
         self.panel = transaction_panel
-        self.mainwindow = transaction_panel.mainwindow # CompletableEdit on Qt requires a mainwindow member
+        self.completable_edit = self.panel.completable_edit
     
     #--- Override
     def _do_add(self):

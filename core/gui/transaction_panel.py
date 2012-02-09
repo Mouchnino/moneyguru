@@ -24,8 +24,10 @@ class PanelWithTransaction(MainWindowPanel):
         MainWindowPanel.__init__(self, mainwindow)
         self.transaction = Transaction(date.today())
         self._selected_splits = []
-        self.split_table = SplitTable(self)
+        # completable_edit has to be set before split_table is created because split table fetches
+        # our completable edit on __init__ (for Qt).
         self.completable_edit = CompletableEdit(mainwindow)
+        self.split_table = SplitTable(self)
     
     def change_split(self, split, account_name, amount, memo):
         if account_name:
