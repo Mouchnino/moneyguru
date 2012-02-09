@@ -981,6 +981,7 @@ class Document(Repeater, GUIObject):
     def filter_type(self, value):
         if value is self._filter_type:
             return
+        self.stop_edition()
         self._filter_type = value
         self.notify('filter_applied')
     

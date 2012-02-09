@@ -158,6 +158,14 @@ def test_show_account():
     app.show_account()
     app.check_gui_calls_partial(app.mainwindow_gui, ['refresh_status_line'])
 
+@with_app(app_cleared_gui_calls)
+def test_stop_editing_on_applying_filter(app):
+    # Applying a filter on the filter bar stops table editing.
+    tview = app.show_tview()
+    app.clear_gui_calls()
+    tview.filter_bar.filter_type = FilterType.Income
+    tview.ttable.view.check_gui_calls_partial(['stop_editing'])
+
 #--- On transaction view
 def app_on_transaction_view():
     app = TestApp()
