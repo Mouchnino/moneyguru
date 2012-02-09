@@ -36,6 +36,7 @@ def package_windows(dev):
             print_and_do("upx --best \"dist\\{0}\"".format(lib))
     
     shutil.copytree('build\\help', 'dist\\help')
+    shutil.copytree('build\\locale', 'dist\\locale')
     shutil.copytree('plugin_examples', 'dist\\plugin_examples')
     
     if not dev:
@@ -69,6 +70,7 @@ def package_debian():
     build_debian_changelog(op.join('help', 'changelog'), op.join(destpath, 'debian', 'changelog'),
         'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('build', 'help'), op.join(srcpath, 'help'))
+    shutil.copytree(op.join('build', 'locale'), op.join(srcpath, 'locale'))
     shutil.copy(op.join('images', 'logo_small.png'), srcpath)
     compileall.compile_dir(srcpath)
     os.chdir(destpath)
