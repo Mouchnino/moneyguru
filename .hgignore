@@ -16,6 +16,7 @@ conf.json
 cocoa/Info.plist
 cocoa/build
 cocoa/autogen
+cocoa/*.app
 cocoa/fr.lproj/*.xib
 cocoa/de.lproj/*.xib
 cocoa/it.lproj/*.xib

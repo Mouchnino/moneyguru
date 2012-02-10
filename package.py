@@ -82,7 +82,7 @@ def main():
     dev = conf['dev']
     print("Packaging moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
-        build_dmg('cocoa/build/release/moneyGuru.app', '.')
+        build_dmg('cocoa/moneyGuru.app', '.')
     elif ui == 'qt':
         if ISWINDOWS:
             package_windows(dev)
