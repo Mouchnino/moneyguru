@@ -13,6 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     NSSearchField *searchView = [[NSSearchField alloc] init];
+    [searchView setFrame:NSMakeRect(0, 0, 132, 24)];
     PyTextField *m = [[PyTextField alloc] initWithModel:aPyRef];
     self = [super initWithModel:m view:[searchView autorelease]];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
