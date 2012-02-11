@@ -14,6 +14,8 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSSearchField *searchView = [[NSSearchField alloc] init];
     [searchView setFrame:NSMakeRect(0, 0, 132, 24)];
+    [[searchView cell] setSendsSearchStringImmediately:NO];
+    [[searchView cell] setSendsWholeSearchString:YES];
     PyTextField *m = [[PyTextField alloc] initWithModel:aPyRef];
     self = [super initWithModel:m view:[searchView autorelease]];
     [m bindCallback:createCallback(@"GUIObjectView", self)];
