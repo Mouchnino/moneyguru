@@ -30,12 +30,17 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)setView:(NSSearchField *)aView
 {
+    if ([self view] != nil) {
+        [[self view] setTarget:nil];
+    }
     [super setView:aView];
-    /* The action on a NSSearchField happens when escape is pressed, something that isn't covered
-       by controlTextDidEndEditing: in HSTextField.
-    */
-    [aView setAction:@selector(changeQuery:)];
-    [aView setTarget:self];
+    if (aView != nil) {
+        /* The action on a NSSearchField happens when escape is pressed, something that isn't covered
+           by controlTextDidEndEditing: in HSTextField.
+        */
+        [aView setAction:@selector(changeQuery:)];
+        [aView setTarget:self];
+    }
 }
 
 /* Action */
