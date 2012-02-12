@@ -1,3 +1,13 @@
+=== 2.5.1 (2012-02-12)
+
+* Fixed hard crashes on closing the main window under 10.6. [Mac OS X] (#306)
+* Fixed filter field which disappeared under 10.6. [Mac OS X] (#310)
+* Fixed pie chart printing. [Mac OS X] (#308)
+* Fixed hard crash in the Cashculator tab. [Mac OS X] (#307)
+* Fixed a bug causing tables to be unstable when changing the filter while editing them. (#309)
+* Fixed languages packaging. [Windows, Linux]
+* Fixed crashes in split table editing and document properties. [Windows, Linux]
+
 === 2.5.0 (2012-02-04)
 
 * Plugins! moneyGuru's capabilities can now be expanded through Python plugins.
