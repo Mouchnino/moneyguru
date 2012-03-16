@@ -190,6 +190,11 @@ def build_cocoa_bridging_interfaces():
     add_to_pythonpath('cocoalib')
     from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, TableView, PyColumns,
         ColumnsView, PyOutline, PySelectableList, SelectableListView, PyFairware, FairwareView)
+    # This createPool() business is a bit hacky, but upon importing mg_cocoa, we call
+    # install_gettext_trans_under_cocoa() which uses proxy functions (and thus need an active
+    # autorelease pool). If we don't do that, we get leak warnings.
+    from cocoa import proxy
+    proxy.createPool()
     from mg_cocoa import (PyPanel, PanelView, PyBaseView,
         PyTableWithDate, PyCompletableEdit, PyDateWidget,
         PyCSVImportOptions, CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView,
@@ -214,6 +219,7 @@ def build_cocoa_bridging_interfaces():
         PyProfitView, PyTransactionView, PyAccountView, PyScheduleView, PyBudgetView,
         PyCashculatorView, PyGeneralLedgerView, PyDocPropsView, PyEmptyView, PyReadOnlyPluginView,
         PyMainWindow, PyDocument, PyMoneyGuruApp]
+    proxy.destroyPool()
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
