@@ -11,6 +11,8 @@ from PyQt4.QtCore import pyqtSignal, Qt
 from PyQt4.QtGui import (QToolButton, QLineEdit, QIcon, QPixmap, QStyle, QStyleOptionFrameV2,
     QPainter, QPalette)
 
+#XXX this unit has been copied to qtlib. remove this one and use the one from qtlib.
+
 class LineEditButton(QToolButton):
     def __init__(self, parent):
         QToolButton.__init__(self, parent)
