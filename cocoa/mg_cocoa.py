@@ -90,7 +90,7 @@ class PyMoneyGuruApp(PyFairware):
     
 
 class DocumentView(GUIObjectView):
-    def queryForScheduleScope(self) -> bool: pass
+    def queryForScheduleScope(self) -> int: pass
 
 class PyDocument(PyGUIObject):
     def __init__(self, app: pyref):

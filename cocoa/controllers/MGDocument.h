@@ -23,5 +23,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)stopEdition;
 
 /* Python -> Cocoa */
-- (BOOL)queryForScheduleScope;
+- (NSInteger)queryForScheduleScope;
 @end

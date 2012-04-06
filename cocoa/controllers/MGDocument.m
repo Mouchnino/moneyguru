@@ -133,9 +133,8 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Python -> Cocoa */
-// YES: affects the rest of the recurrence 
-// NO: affects just this instance
-- (BOOL)queryForScheduleScope
+// Returns ScheduleScope* const
+- (NSInteger)queryForScheduleScope
 {
     if (([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) == NSShiftKeyMask)
         return ScheduleScopeGlobal;
