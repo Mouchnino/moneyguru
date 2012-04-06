@@ -6,8 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 import re
 from itertools import groupby
 
@@ -19,14 +17,19 @@ except ImportError:
     print("Using amount_ref")
     from ._amount_ref import Amount
 
+re_arithmetic_operators = re.compile(r"[+\-*/()]")
 # The dash "-" has to be escaped even in []
 re_expression = re.compile(r'^[+\-*/()\d\s.]*$')
 # A zero not preceeded by a numeric character or dot and followed by a numeric character
 re_octal_zero = re.compile(r'(?<![\d.,\w])0(?=\d)')
 # 3 letters (capturing)
-re_currency = re.compile(r'([a-zA-Z]{3})')
-# grouping separator. a [.\s,'] that has digit before and after *if* the right part is separated by a dot
-re_grouping_sep = re.compile(r"(?<=[\d.])[.\s,'](?=\d+?\.\d)")
+re_currency = re.compile(r'([a-zA-Z]{3}\s*$)|(^\s*[a-zA-Z]{3})')
+# grouping separator. A thousand sep character that has digit before and after *if* the right part
+# has 3 digits. \xa0 is a non-breaking space. We sometimes end up with those in space-separated
+# environments.
+re_grouping_sep = re.compile(r"(?<=\d)[.\s\xA0,'](?=\d{3})")
+# A dot or comma followed by digits followed by the end of the string.
+re_decimal_sep = re.compile(r"[,.](?=\d+$)")
 # A valid amount
 re_amount = re.compile(r"\d+\.\d+|\.\d+|\d+")
 
@@ -83,16 +86,13 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
             string = re_currency.sub('', string)
     currency = currency or default_currency
     string = string.strip()
-    string = string.replace(',', '.')
-    string = re_grouping_sep.sub('', string)
-    # isdigit means that it's not an expression and there's not '.' in it
-    if auto_decimal_place and string.isdigit():
-        place = currency.exponent if currency is not None else 2
-        if place:
-            string = string.rjust(place, '0')
-            string = string[:-place] + '.' + string[-place:]
-            with_expression = False
+    # When we have an expression, we deal only with "simple" numbers. Turning expression off when
+    # there's no sign of arithmetic operators allow for complex number parsing so that we can
+    # correctly parse thousand separators.
+    if re_arithmetic_operators.search(string) is None:
+        with_expression = False
     if with_expression:
+        string = string.replace(',', '.')
         string = string.replace(' ', '')
         string = re_octal_zero.sub('', string)
         if re_expression.match(string) is None:
@@ -104,6 +104,18 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
         if not isinstance(value, (float, int)):
             raise ValueError('Invalid expression %r' % string)
     else:
+        # Now, we have a string that might have thousand separators and might or might not have
+        # a decimal separator, which might be either "," or ".". We'll first find our decimal sep
+        # and replace it with a placeholder char, find all thousand seps, replace them with nothing.
+        string = re_decimal_sep.sub('|', string)
+        string = re_grouping_sep.sub('', string)
+        string = string.replace('|', '.')
+        if auto_decimal_place and string.isdigit():
+            place = currency.exponent if currency is not None else 2
+            if place:
+                string = string.rjust(place, '0')
+                string = string[:-place] + '.' + string[-place:]
+                with_expression = False
         try:
             value = float(string)
         except ValueError:

@@ -240,6 +240,17 @@ def test_parse_space_as_thousand_sep():
     # When a space is used as a thousand separator, it doesn't prevent the number from being read.
     eq_(parse_amount('1 454,67', USD) , Amount(1454.67, USD))
 
+def test_parse_non_breaking_space_as_thousand_sep():
+    # Sometimes, when the thousand sep in the system is space, we actually end up with non-breaking
+    # space characters (xa0). We have to support those.
+    eq_(parse_amount('1\xa0234 567,89', USD) , Amount(1234567.89, USD))
+
+def test_parse_10000():
+    # In the thousand sep regexp, I used \u00A0 which ended up being a mistake because it somehow
+    # matched the '0' character which made '10000' be parsed as 1000! I'm glad I caught this because
+    # it wasn't directly tested.
+    eq_(parse_amount('10000', USD) , Amount(10000, USD))
+
 def test_parse_zero():
     eq_(parse_amount('0'), 0)
 
