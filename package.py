@@ -11,11 +11,19 @@ import os.path as op
 import compileall
 import shutil
 import json
+from argparse import ArgumentParser
 
 from core.app import Application as MoneyGuru
 from hscommon.plat import ISWINDOWS, ISLINUX
 from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, copy_qt_plugins,
     print_and_do)
+
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument('--sign', dest='sign_identity',
+        help="Sign app under specified identity before packaging (OS X only)")
+    args = parser.parse_args()
+    return args
 
 def package_windows(dev):
     if op.exists('dist'):
@@ -76,13 +84,25 @@ def package_debian():
     os.chdir(destpath)
     os.system("dpkg-buildpackage")
 
+def package_cocoa(sign_identity):
+    # Rather than signing our app in XCode during the build phase, we sign it during the package
+    # phase because running the app before packaging can modify it and we want to be sure to have
+    # a valid signature.
+    if sign_identity:
+        sign_identity = "Developer ID Application: {}".format(sign_identity)
+        print_and_do('codesign --force --sign "{}" cocoa/moneyGuru.app'.format(sign_identity))
+    else:
+        print("WARNING: packaging an unsigned application")
+    build_dmg('cocoa/moneyGuru.app', '.')
+
 def main():
+    args = parse_args()
     conf = json.load(open('conf.json'))
     ui = conf['ui']
     dev = conf['dev']
     print("Packaging moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
-        build_dmg('cocoa/moneyGuru.app', '.')
+        package_cocoa(args.sign_identity)
     elif ui == 'qt':
         if ISWINDOWS:
             package_windows(dev)
