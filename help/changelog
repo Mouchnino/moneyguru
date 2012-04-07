@@ -1,3 +1,9 @@
+=== 2.5.2 (2012-04-07)
+
+* Fixed amount parsing bug with locale having space as a thousand separator. (#316)
+* Fixed cancel button in schedule scope dialog which didn't cancel the operation. [Mac] (#319)
+* Fixed hard crashes on crash reporting.
+
 === 2.5.1 (2012-02-12)
 
 * Fixed hard crashes on closing the main window under 10.6. [Mac OS X] (#306)
