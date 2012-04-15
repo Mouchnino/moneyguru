@@ -363,4 +363,16 @@ def test_quicken_split_duplicate():
     eq_(len(loader.transactions), 1)
     eq_(len(loader.transactions[0].splits), 3)
 
-    
+def test_same_date_same_amount():
+    # There was a bug in QIF loading where two transactions with the same date and the same amount,
+    # regardless of whether they were transfers, would be detected as "duplicates" and de-duplicated.
+    loader = Loader(USD)
+    loader.parse(testdata.filepath('qif', 'same_date_same_amount.qif'))
+    loader.load()
+    eq_(len(loader.transactions), 3)
+
+def test_same_date_same_amount_transfer():
+    loader = Loader(USD)
+    loader.parse(testdata.filepath('qif', 'same_date_same_amount_transfer.qif'))
+    loader.load()
+    eq_(len(loader.transactions), 2)

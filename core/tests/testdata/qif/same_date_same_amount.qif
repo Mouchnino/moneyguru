@@ -1,0 +1,13 @@
+!Type:Bank
+D01/04/12
+MTransfer 1, Date 1, Amount 1
+T1.00
+^
+D01/04/12
+MTransfer 2, Date 1, Amount 1
+T1.00
+^
+D01/04/12
+MTransfer 3, Date 1, Amount 2
+T2.00
+^
