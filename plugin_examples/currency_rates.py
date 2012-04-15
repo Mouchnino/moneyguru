@@ -31,7 +31,7 @@ class CurrencyRatesPlugin(ReadOnlyTablePlugin):
         # Create a list of all splits so that we can access all our amounts.
         allsplits = flatten(t.splits for t in self.document.transactions)
         # Create a set of all used currencies
-        currencies = {s.amount.currency for s in allsplits}
+        currencies = {s.amount.currency for s in allsplits if s.amount}
         for currency in currencies:
             row = self.add_row()
             row.set_field('name', currency.name)
