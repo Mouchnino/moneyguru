@@ -31,40 +31,51 @@ def pytest_funcarg__fake_server(request):
     monkeypatch.setattr(Currency, 'rates_db', RatesDB(':memory:', False)) # async
     monkeypatch.setattr(currency, 'initialize_db', lambda path: None)
 
-class TestCaseNoSetup:
-    def test_cache_path_is_auto_created(self, fake_server, tmpdir):
-        # the cache_path directory is automatically created.
-        cache_path = str(tmpdir.join('foo/bar'))
-        app = Application(ApplicationGUI(), cache_path=cache_path)
-        assert io.exists(cache_path)
-    
-    def test_cache_path_is_none(self, fake_server, monkeypatch):
-        # currency.initialize_db() is called with :memory: when cache_path is None.
-        monkeypatch.setattr(currency, 'initialize_db', log_calls(currency.initialize_db))
-        app = Application(ApplicationGUI()) # default cache_path is None
-        expected = [
-            {'path': ':memory:'}
-        ]
-        eq_(currency.initialize_db.calls, expected)
-    
-    def test_cache_path_is_not_none(self, fake_server, monkeypatch, tmpdir):
-        # currency.initialize_db() is called with cache_path/currency.db when cache_path is not None.
-        cache_path = str(tmpdir)
-        monkeypatch.setattr(currency, 'initialize_db', log_calls(currency.initialize_db))
-        app = Application(ApplicationGUI(), cache_path=cache_path)
-        expected = [
-            {'path': cache_path + 'currency.db'}
-        ]
-        eq_(currency.initialize_db.calls, expected)
-    
-    def test_default_currency(self, fake_server):
-        # It's possible to specify a default currency at startup.
-        app = TestApp(app=Application(ApplicationGUI(), default_currency=PLN))
-        app.show_tview()
-        eq_(app.doc.default_currency, PLN)
-        app.add_account()
-        eq_(app.doc.default_currency, PLN)
-    
+#--- Pristine
+def test_cache_path_is_auto_created(fake_server, tmpdir):
+    # the cache_path directory is automatically created.
+    cache_path = str(tmpdir.join('foo/bar'))
+    app = Application(ApplicationGUI(), cache_path=cache_path)
+    assert io.exists(cache_path)
+
+def test_cache_path_is_none(fake_server, monkeypatch):
+    # currency.initialize_db() is called with :memory: when cache_path is None.
+    monkeypatch.setattr(currency, 'initialize_db', log_calls(currency.initialize_db))
+    app = Application(ApplicationGUI()) # default cache_path is None
+    expected = [
+        {'path': ':memory:'}
+    ]
+    eq_(currency.initialize_db.calls, expected)
+
+def test_cache_path_is_not_none(fake_server, monkeypatch, tmpdir):
+    # currency.initialize_db() is called with cache_path/currency.db when cache_path is not None.
+    cache_path = str(tmpdir)
+    monkeypatch.setattr(currency, 'initialize_db', log_calls(currency.initialize_db))
+    app = Application(ApplicationGUI(), cache_path=cache_path)
+    expected = [
+        {'path': cache_path + 'currency.db'}
+    ]
+    eq_(currency.initialize_db.calls, expected)
+
+def test_default_currency(fake_server):
+    # It's possible to specify a default currency at startup.
+    app = TestApp(app=Application(ApplicationGUI(), default_currency=PLN))
+    app.show_tview()
+    eq_(app.doc.default_currency, PLN)
+    app.add_account()
+    eq_(app.doc.default_currency, PLN)
+
+@with_app(TestApp)
+def test_set_account_list_currency_on_load(app, fake_server):
+    # Document.account.default_currency wasn't previously set on document loading which caused
+    # auto-created accounts to be of the wrong currency.
+    dpview = app.show_dpview()
+    dpview.currency_list.select(1) # EUR
+    app = app.save_and_load()
+    app.add_txn(from_='foo', amount='12')
+    pview = app.show_pview()
+    # Because our amount entered earlier is native, we shouldn't get stuff like "USD 15.76"
+    eq_(pview.istatement.income[0].cash_flow, '12.00')
 
 #--- One empty account EUR
 def app_one_empty_account_eur():

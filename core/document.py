@@ -739,6 +739,7 @@ class Document(Repeater, GUIObject):
             self.schedules.append(recurrence)
         for budget in loader.budgets:
             self.budgets.append(budget)
+        self.accounts.default_currency = self.default_currency
         self._cook()
         self._restore_preferences_after_load()
         self.notify('document_changed')
