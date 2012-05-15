@@ -9,6 +9,7 @@
 import datetime
 import time
 import uuid
+import logging
 
 from hscommon.currency import Currency
 from hscommon.notify import Repeater
@@ -254,6 +255,7 @@ class Document(Repeater, GUIObject):
     
     def _restore_preferences_after_load(self):
         # some preference need the file loaded before attempting a restore
+        logging.debug('restore_preferences_after_load() beginning')
         excluded_account_names = set(nonone(self.get_default(EXCLUDED_ACCOUNTS_PREFERENCE), []))
         self.excluded_accounts = {a for a in self.accounts if a.name in excluded_account_names}
         selected_range = self.app.get_default(SELECTED_DATE_RANGE_PREFERENCE)

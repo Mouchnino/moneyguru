@@ -6,6 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import logging
+
 from hscommon.notify import Repeater
 from hscommon.util import first, minmax
 from hscommon.trans import tr
@@ -201,6 +203,7 @@ class MainWindow(Repeater, GUIObject):
     
     def _restore_opened_panes(self):
         stored_panes = self.document.get_default(Preference.OpenedPanes)
+        logging.debug('Restoring panes from data %r', stored_panes)
         if not stored_panes:
             return
         pane_data = []
