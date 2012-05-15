@@ -32,7 +32,10 @@ def main(argv):
     appdata = QDesktopServices.storageLocation(QDesktopServices.DataLocation)
     if not op.exists(appdata):
         os.makedirs(appdata)
-    logging.basicConfig(filename=op.join(appdata, 'debug.log'), level=logging.WARNING)
+    settings = QSettings()
+    LOGGING_LEVEL = logging.DEBUG if settings.value('DebugMode').toBool() else logging.WARNING
+    logging.basicConfig(filename=op.join(appdata, 'debug.log'), level=LOGGING_LEVEL)
+    logging.debug('started in debug mode')
     if ISLINUX:
         stylesheetFile = QFile(':/stylesheet_lnx')
     else:
@@ -42,7 +45,6 @@ def main(argv):
     style = textStream.readAll()
     stylesheetFile.close()
     app.setStyleSheet(style)
-    settings = QSettings()
     lang = settings.value('Language').toString()
     locale_folder = op.join(BASE_PATH, 'locale')
     hscommon.trans.install_gettext_trans_under_qt(locale_folder, lang)

@@ -6,13 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import Qt, QSize
+from PyQt4.QtCore import Qt, QSize, QSettings
 from PyQt4.QtGui import (QDialog, QMessageBox, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
-    QComboBox, QSpinBox, QCheckBox, QLineEdit, QDialogButtonBox, QSizePolicy, QSpacerItem)
+    QComboBox, QSpinBox, QCheckBox, QLineEdit, QDialogButtonBox, QSizePolicy)
 
-from hscommon.currency import Currency
 from hscommon.trans import trget
 from qtlib.preferences import LANGNAMES
+from qtlib.util import verticalSpacer
 from core.model.date import clean_format
 
 tr = trget('ui')
@@ -67,8 +67,9 @@ class PreferencesPanel(QDialog):
         self.verticalLayout.addWidget(self.scopeDialogCheckBox)
         self.autoDecimalPlaceCheckBox = QCheckBox(tr("Automatically place decimals when typing"), self)
         self.verticalLayout.addWidget(self.autoDecimalPlaceCheckBox)
-        spacerItem = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem)
+        self.debugModeCheckBox = QCheckBox(tr("Debug mode (restart required)"), self)
+        self.verticalLayout.addWidget(self.debugModeCheckBox)
+        self.verticalLayout.addItem(verticalSpacer())
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
@@ -80,6 +81,7 @@ class PreferencesPanel(QDialog):
         self.dateFormatEdit.setText(self.app.prefs.dateFormat)
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
+        self.debugModeCheckBox.setChecked(QSettings().value('DebugMode').toBool())
         try:
             langindex = SUPPORTED_LANGUAGES.index(self.app.prefs.language)
         except ValueError:
@@ -95,6 +97,7 @@ class PreferencesPanel(QDialog):
         self.app.prefs.dateFormat = self.dateFormatEdit.text()
         self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
+        QSettings().setValue('DebugMode', self.debugModeCheckBox.isChecked())
         lang = SUPPORTED_LANGUAGES[self.languageComboBox.currentIndex()]
         oldlang = self.app.prefs.language
         if oldlang not in SUPPORTED_LANGUAGES:

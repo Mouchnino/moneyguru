@@ -274,3 +274,15 @@
 
 /* Class = "NSTextFieldCell"; title = "Printing Font size:"; ObjectID = "1454"; */
 "1454.title" = "Printing Font size:";
+
+/* Class = "NSMenuItem"; title = "Toggle Graph"; ObjectID = "1460"; */
+"1460.title" = "Toggle Graph";
+
+/* Class = "NSMenuItem"; title = "Toggle Pie Charts"; ObjectID = "1462"; */
+"1462.title" = "Toggle Pie Charts";
+
+/* Class = "NSMenuItem"; title = "Open Plugin Folder"; ObjectID = "1468"; */
+"1468.title" = "Open Plugin Folder";
+
+/* Class = "NSButtonCell"; title = "Debug mode (restart required)"; ObjectID = "1473"; */
+"1473.title" = "Debug mode (restart required)";

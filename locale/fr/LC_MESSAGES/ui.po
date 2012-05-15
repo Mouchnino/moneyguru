@@ -234,19 +234,19 @@ msgstr "Toutes les transactions"
 msgid "Custom..."
 msgstr "Personnalisé..."
 
-#: qt/controller/docprops_view.py:37
+#: qt/controller/docprops_view.py:36
 msgid "Native Currency:"
 msgstr "Devise principale:"
 
-#: qt/controller/docprops_view.py:41 cocoa/en.lproj/DocProps.strings:0
+#: qt/controller/docprops_view.py:40 cocoa/en.lproj/DocProps.strings:0
 msgid "First day of the week:"
 msgstr "Premier jour de la semaine:"
 
-#: qt/controller/docprops_view.py:45 cocoa/en.lproj/DocProps.strings:0
+#: qt/controller/docprops_view.py:44 cocoa/en.lproj/DocProps.strings:0
 msgid "Ahead months in Running Year:"
 msgstr "Nombre de mois flottants:"
 
-#: qt/controller/docprops_view.py:49 cocoa/en.lproj/DocProps.strings:0
+#: qt/controller/docprops_view.py:48 cocoa/en.lproj/DocProps.strings:0
 msgid "Year starts in:"
 msgstr "Début de l'année:"
 
@@ -501,7 +501,8 @@ msgstr "Supprimer la sélection"
 msgid "Show Info"
 msgstr "Montrer info"
 
-#: qt/controller/main_window.py:205 cocoa/en.lproj/MainWindow.strings:0
+#: qt/controller/main_window.py:205 cocoa/en.lproj/MainMenu.strings:0
+#: cocoa/en.lproj/MainWindow.strings:0
 msgid "Toggle Graph"
 msgstr ""
 
@@ -736,7 +737,7 @@ msgstr "Confirmer la portée des changements aux récurrences"
 msgid "Automatically place decimals when typing"
 msgstr "Placement automatique de décimale"
 
-#: qt/controller/preferences_panel.py:106
+#: qt/controller/preferences_panel.py:109
 msgid "moneyGuru has to restart for these changes to take effect"
 msgstr ""
 
@@ -1298,7 +1299,7 @@ msgstr ""
 msgid "Toggle Columns"
 msgstr ""
 
-#: qt/controller/main_window.py:223
+#: qt/controller/main_window.py:223 cocoa/en.lproj/MainMenu.strings:0
 msgid "Open Plugin Folder"
 msgstr ""
 
@@ -1309,3 +1310,11 @@ msgstr ""
 #: cocoa/en.lproj/NewTabView.strings:0
 msgid "Choose a view for this tab"
 msgstr "Choisissez un type d'onglet"
+
+#: qt/controller/preferences_panel.py:70 cocoa/en.lproj/MainMenu.strings:0
+msgid "Debug mode (restart required)"
+msgstr ""
+
+#: cocoa/en.lproj/MainMenu.strings:0
+msgid "Toggle Pie Charts"
+msgstr ""

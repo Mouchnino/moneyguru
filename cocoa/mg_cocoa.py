@@ -33,7 +33,7 @@ from core.model.date import clean_format
 
 class PyMoneyGuruApp(PyFairware):
     def __init__(self):
-        LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('debug') else logging.WARNING
+        LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('DebugMode') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
         logging.debug('started in debug mode')
         install_exception_hook()
