@@ -110,9 +110,6 @@ def build_localizations(ui):
     loc.compile_all_po('locale')
     loc.compile_all_po(op.join('hscommon', 'locale'))
     loc.merge_locale_dir(op.join('hscommon', 'locale'), 'locale')
-    if op.exists(op.join('build', 'locale')):
-        shutil.rmtree(op.join('build', 'locale'))
-    shutil.copytree('locale', op.join('build', 'locale'), ignore=shutil.ignore_patterns('*.po', '*.pot'))
     if ui == 'cocoa':
         print("Creating lproj folders based on .po files")
         enlproj = op.join('cocoa', 'en.lproj')
@@ -130,6 +127,9 @@ def build_localizations(ui):
     elif ui == 'qt':
         loc.compile_all_po(op.join('qtlib', 'locale'))
         loc.merge_locale_dir(op.join('qtlib', 'locale'), 'locale')
+    if op.exists(op.join('build', 'locale')):
+        shutil.rmtree(op.join('build', 'locale'))
+    shutil.copytree('locale', op.join('build', 'locale'), ignore=shutil.ignore_patterns('*.po', '*.pot'))
 
 def build_updatepot():
     print("Building .pot files from source files")
