@@ -100,6 +100,21 @@ def test_strip_account_name_in_from_to_columns(app):
     app.add_txn(from_='foo ', to=' bar') # reuse accounts
     eq_(app.account_names(), ['foo', 'bar'])
 
+@with_app(app_tview_shown)
+def test_schedule_spawn_sorting(app, monkeypatch):
+    # Ticket #328. Make sure that schedule spawns are correctly sorted when on the same date as
+    # normal transactions.
+    monkeypatch.patch_today(2012, 6, 18)
+    app.add_schedule(start_date='18/06/2012', description='schedule')
+    app.add_txn(date='18/06/2012', description='normal1')
+    app.add_txn(date='18/06/2012', description='normal2')
+    # We now have txns and a schedule spawn on the same day. We then sort it by desc date and sort
+    # it by asc date and see if the spawn comes last again.
+    app.ttable.sort_by('date', desc=True)
+    app.ttable.sort_by('date', desc=False)
+    eq_(app.ttable[2].description, 'schedule')
+
+#---
 class TestEditionMode:
     def do_setup(self):
         app = TestApp()
