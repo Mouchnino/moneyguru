@@ -62,15 +62,16 @@ class BarGraph(Graph):
                     future_amount = amount
                     past_amount = 0
             if past_amount + future_amount:
-                left = period.start.toordinal()
-                right = period.end.toordinal() + 1 # we want a 1 day period to have a width of 1
+                left = self._offset_xpos(period.start.toordinal())
+                # we want a 1 day period to have a width of 1
+                right = self._offset_xpos(period.end.toordinal() + 1)
                 padding = (right - left) / 5
                 self._data.append((left + padding, right - padding, past_amount, future_amount))
     
     def compute_x_axis(self):
         Graph.compute_x_axis(self)
-        self._xmin = self._min_date.toordinal()
-        self._xmax = self._max_date.toordinal()
+        self._xmin = self._offset_xpos(self._min_date.toordinal())
+        self._xmax = self._offset_xpos(self._max_date.toordinal())
     
     def yrange(self):
         if self._data:

@@ -18,13 +18,17 @@ from .chart import Chart
 # For the code, a Graph is a Chart with x and y axis.
 
 class Graph(Chart):
+    #--- Private
+    def _offset_xpos(self, xpos):
+        return xpos - self._xoffset
+    
     #--- Public    
     def compute_x_axis(self):
         date_range = self.document.date_range
-        self._xmin = date_range.start.toordinal()
-        self._xmax = date_range.end.toordinal() + 1
+        self._xmin = self._offset_xpos(date_range.start.toordinal())
+        self._xmax = self._offset_xpos(date_range.end.toordinal() + 1)
         tick = date_range.start
-        self._xtickmarks = [tick.toordinal()]
+        self._xtickmarks = [self._offset_xpos(tick.toordinal())]
         self._xlabels = []
         days = date_range.days
         if days > 366:
@@ -39,10 +43,10 @@ class Graph(Chart):
             newtick = inc_func(tick, 1)
             # 'tick' might be lower than xmin. ensure that it's not (for label pos)
             tick = tick if tick > date_range.start else date_range.start
-            tick_pos = tick.toordinal() + (newtick - tick).days / 2
+            tick_pos = self._offset_xpos(tick.toordinal()) + (newtick - tick).days / 2
             self._xlabels.append(dict(text=strftime(tick_format, tick), pos=tick_pos))
             tick = newtick
-            self._xtickmarks.append(tick.toordinal())
+            self._xtickmarks.append(self._offset_xpos(tick.toordinal()))
 
     def compute_y_axis(self):
         ymin, ymax = self.yrange()
@@ -73,6 +77,10 @@ class Graph(Chart):
         self._ylabels = [dict(text=str(x), pos=x) for x in self.ytickmarks]
 
     def compute(self):
+        # Our X data is based on ordinal date values, which can be quite big. On Qt, we get some
+        # weird overflow problem when translating our painter by this large offset. Therefore, it's
+        # better to offset this X value in the model.
+        self._xoffset = self.document.date_range.start.toordinal()
         self.compute_data()
         self.compute_x_axis()
         self.compute_y_axis()

@@ -55,7 +55,8 @@ class BalanceGraph(Graph):
         # if there's only zeroes, keep the data empty
         if any(date2value.values()):
             for date_point, value in sorted(date2value.items()):
-                self._data.append((date_point.toordinal(), float(value)))
+                pos = self._offset_xpos(date_point.toordinal())
+                self._data.append((pos, float(value)))
     
     def yrange(self):
         if self._data:
@@ -76,5 +77,5 @@ class BalanceGraph(Graph):
     @property
     def xtoday(self):
         """The X value representing today"""
-        return date.today().toordinal() + 1
+        return self._offset_xpos(date.today().toordinal() + 1)
     

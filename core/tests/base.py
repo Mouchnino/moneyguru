@@ -353,12 +353,13 @@ class TestApp(TestAppBase):
     
     def bar_graph_data(self):
         result = []
+        xoffset = self.bargraph._xoffset
         for x1, x2, y1, y2 in self.bargraph.data:
             # We have to account for the padding...
             padding = (x2 - x1) / 3
             x1 = int(round(x1 - padding))
             x2 = int(round(x2 + padding))
-            convert = lambda i: date.fromordinal(i).strftime('%d/%m/%Y')
+            convert = lambda i: date.fromordinal(i+xoffset).strftime('%d/%m/%Y')
             result.append((convert(x1), convert(x2), '%2.2f' % y1, '%2.2f' % y2))
         return result
     
@@ -418,7 +419,9 @@ class TestApp(TestAppBase):
         self.doc.notify('file_loaded_for_import')
     
     def graph_data(self):
-        return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.balgraph.data]
+        xoffset = self.balgraph._xoffset
+        convert = lambda i: date.fromordinal(i+xoffset).strftime('%d/%m/%Y')
+        return [(convert(x), '%2.2f' % y) for x, y in self.balgraph.data]
     
     def navigate_to_date(self, year, month, day):
         # navigate the current date range until target_date is in it. We use year month day to avoid
@@ -432,7 +435,9 @@ class TestApp(TestAppBase):
         return TestApp(app=app)
     
     def nw_graph_data(self):
-        return [(date.fromordinal(x).strftime('%d/%m/%Y'), '%2.2f' % y) for (x, y) in self.nwgraph.data]
+        xoffset = self.nwgraph._xoffset
+        convert = lambda i: date.fromordinal(i+xoffset).strftime('%d/%m/%Y')
+        return [(convert(x), '%2.2f' % y) for x, y in self.nwgraph.data]
     
     def save_and_load(self):
         # saves the current document and returns a new app with that document loaded
