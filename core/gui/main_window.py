@@ -583,8 +583,13 @@ class MainWindow(Repeater, GUIObject):
         self._save_preferences()
         for pane in self.panes:
             pane.view.save_preferences()
-        # if our current pane is an account view, we need to hide it for it to save its prefs.
-        self._current_pane.view.hide()
+        if self._current_pane.view.VIEW_TYPE == PaneType.Account:
+            # if our current pane is an account view, we need to hide it for it to save its prefs.
+            # Since account panes are closed with the document, it doesn't matter if we hide them.
+            # However, it's a bit of a kludge and if hide() is called on another type of pane, you
+            # risk getting view refresh bugs under Qt because in there, closing a document doesn't
+            # always mean closing the window (unlike under Cocoa).
+            self._current_pane.view.hide()
     
     def document_restoring_preferences(self):
         self._restore_opened_panes()
