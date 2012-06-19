@@ -24,7 +24,8 @@ class AccountBalanceGraph(BalanceGraph):
     
     def _budget_for_date(self, date):
         date_range = DateRange(date.min, date)
-        return self.document.budgeted_amount_for_target(self._account, date_range)
+        return self.document.budgeted_amount_for_target(self._account, date_range,
+            filter_excluded=False)
     
     #--- Properties
     @property

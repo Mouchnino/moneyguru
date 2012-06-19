@@ -91,27 +91,37 @@ class TestForeignAccount:
         eq_(app.balgraph.currency, CAD)
     
 
-class TestBudgetAndNoTranaction:
-    def do_setup(self, monkeypatch):
-        monkeypatch.patch_today(2008, 1, 1)
-        app = TestApp()
-        app.drsel.select_month_range()
-        app.add_account('asset')
-        app.add_account('income', account_type=AccountType.Income)
-        app.add_budget('income', 'asset', '100')
-        return app
+#---
+def app_budget_and_no_txn(monkeypatch):
+    monkeypatch.patch_today(2008, 1, 1)
+    app = TestApp()
+    app.drsel.select_month_range()
+    app.add_account('asset')
+    app.add_account('income', account_type=AccountType.Income)
+    app.add_budget('income', 'asset', '100')
+    return app
     
-    @with_app(do_setup)
-    def test_future_date_range(self, app):
-        # There was a bug where when in a future date range, and also in a range with no transaction,
-        # no budget data would be drawn.
-        app.drsel.select_next_date_range()
-        app.show_nwview()
-        # Now, we're supposed to see a graph starting at 100 and ending at 200
-        expected = [('01/02/2008', '100.00'), ('01/03/2008', '200.00')]
-        eq_(app.nw_graph_data(), expected)
-    
+@with_app(app_budget_and_no_txn)
+def test_future_date_range(app):
+    # There was a bug where when in a future date range, and also in a range with no transaction,
+    # no budget data would be drawn.
+    app.drsel.select_next_date_range()
+    app.show_nwview()
+    # Now, we're supposed to see a graph starting at 100 and ending at 200
+    expected = [('01/02/2008', '100.00'), ('01/03/2008', '200.00')]
+    eq_(app.nw_graph_data(), expected)
 
+@with_app(app_budget_and_no_txn)
+def test_show_budget_data_even_when_account_is_excluded(app):
+    # Ticket #332. When accounts were excluded, budget data wouldn't show in the account's balgraph.
+    nwview = app.show_nwview()
+    app.select_account('asset')
+    nwview.bsheet.toggle_excluded()
+    app.show_account('asset')
+    expected = [('02/01/2008', '0.00'), ('01/02/2008', '100.00')]
+    eq_(app.graph_data(), expected)
+
+#---
 class TestTwoAccountsOneTransaction:
     def do_setup(self):
         app = TestApp()

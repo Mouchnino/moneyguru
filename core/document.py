@@ -580,7 +580,7 @@ class Document(Repeater, GUIObject):
         self.notify('transaction_changed')
     
     #--- Budget
-    def budgeted_amount_for_target(self, target, date_range):
+    def budgeted_amount_for_target(self, target, date_range, filter_excluded=True):
         """Returns the sum of all the budgeted amounts targeting 'target'. The currency of the 
         result is target's currency. The result is normalized (reverted if target is a liability).
         If target is None, all accounts are used.
@@ -591,9 +591,11 @@ class Document(Repeater, GUIObject):
         else:
             budgets = self.budgets.budgets_for_target(target)
             currency = target.currency
-        # we must remove any budget touching an excluded account.
-        is_not_excluded = lambda b: b.account not in self.excluded_accounts and b.target not in self.excluded_accounts
-        budgets = list(filter(is_not_excluded, budgets))
+        if filter_excluded:
+            # we must remove any budget touching an excluded account.
+            is_not_excluded = lambda b: (b.account not in self.excluded_accounts)\
+                and (b.target not in self.excluded_accounts)
+            budgets = list(filter(is_not_excluded, budgets))
         if not budgets:
             return 0
         budgeted_amount = sum(-b.amount_for_date_range(date_range, currency=currency) for b in budgets)
