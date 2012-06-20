@@ -236,6 +236,7 @@ class MainWindow(Repeater, GUIObject):
             if pane.view.VIEW_TYPE >= PaneType.Plugin:
                 data['plugin_name'] = pane.view.plugin.NAME
             opened_panes.append(data)
+        logging.debug('Saving panes with data %r', opened_panes)
         self.document.set_default(Preference.OpenedPanes, opened_panes)
         self.document.set_default(Preference.SelectedPane, self._current_pane_index)
         self.document.set_default(Preference.HiddenAreas, list(self.hidden_areas))
