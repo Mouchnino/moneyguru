@@ -1,3 +1,12 @@
+=== 2.5.4 (2012-06-20)
+
+* Fixed sorting inconsistency in transaction tables when schedule spawns were involved. (#328)
+* Fixed "Previous Balance" entries which ignored budget entries. (#333)
+* Fixed a bug in account graphs where budgeted data was mistakely ignored if the account was
+  excluded. (#332)
+* Fixed visual glitch in balance graphs. [Windows, Linux] (#330)
+* Fixed a net worth view refresh glitch on "New Document". [Windows, Linux]
+
 === 2.5.3 (2012-05-15)
 
 * Fixed a bug in QIF loading causing some false positives in duplicate transaction detection and
