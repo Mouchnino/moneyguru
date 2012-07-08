@@ -6,7 +6,7 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 #: qt/controller/transaction/filter_bar.py:18
 #: cocoa/en.lproj/ExportPanel.strings:0 cocoa/en.lproj/Localizable.strings:0
 msgid "All"
-msgstr "All"
+msgstr "Alle"
 
 #: qt/controller/account/filter_bar.py:19
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -47,7 +47,7 @@ msgstr "Niet vereffend"
 
 #: qt/controller/account/view.py:55 cocoa/en.lproj/EntryTable.strings:0
 msgid "Reconciliation"
-msgstr ""
+msgstr "Vereffening"
 
 #: qt/controller/account_panel.py:39 cocoa/en.lproj/AccountPanel.strings:0
 msgid "Account Info"
@@ -137,7 +137,7 @@ msgstr "Rekening:"
 #: qt/controller/budget_panel.py:78 qt/controller/import_/csv_options.py:62
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "Target:"
-msgstr "Rekening:"
+msgstr "Doel:"
 
 #: qt/controller/budget_panel.py:83 qt/controller/mass_edition_panel.py:106
 msgid "Amount:"
@@ -264,8 +264,7 @@ msgstr "Kies een bestand om te importeren"
 
 #: qt/controller/document.py:59
 msgid "Supported files (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
-msgstr ""
-"Understeunde bestandsformaten (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
+msgstr "Ondersteunde bestandsformaten (*.moneyguru *.ofx *.qfx *.qif *.csv *.txt)"
 
 #: qt/controller/document.py:65
 msgid "Cannot import file"
@@ -305,20 +304,20 @@ msgstr "Export formaat:"
 
 #: qt/controller/export_panel.py:74 cocoa/en.lproj/ExportPanel.strings:0
 msgid "Export scope:"
-msgstr ""
+msgstr "Export periode:"
 
 #: qt/controller/export_panel.py:76 cocoa/en.lproj/ExportPanel.strings:0
 msgid "Current date range only"
-msgstr ""
+msgstr "Alleen de geselecteerde periode"
 
 #: qt/controller/export_panel.py:82 qt/controller/export_panel.py:96
 #: cocoa/en.lproj/ExportPanel.strings:0
 msgid "Export"
-msgstr "Export"
+msgstr "Exporteer"
 
 #: qt/controller/export_panel.py:98
 msgid "{0} Files (*.{1})"
-msgstr ""
+msgstr "{0} Bestanden (*.{1})"
 
 #: qt/controller/import_/csv_options.py:40
 msgid "CSV Options"
@@ -353,7 +352,7 @@ msgstr "Opnieuw inlezen"
 #: qt/controller/import_/csv_options.py:80
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "Encoding:"
-msgstr "Encoding:"
+msgstr "Codering:"
 
 #: qt/controller/import_/csv_options.py:97
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -379,7 +378,7 @@ msgstr "Kies een naam voor uw indeling:"
 #: qt/controller/import_/csv_options.py:158
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "New Layout..."
-msgstr "Nieuwe indeling"
+msgstr "Nieuwe indeling..."
 
 #: qt/controller/import_/csv_options.py:159
 #: cocoa/en.lproj/CSVImportOptions.strings:0
@@ -436,7 +435,7 @@ msgstr "Omwisselen"
 
 #: qt/controller/lookup.py:35
 msgid "Lookup"
-msgstr ""
+msgstr "Zoeken"
 
 #: qt/controller/main_window.py:171
 msgid "Status"
@@ -505,11 +504,11 @@ msgstr "Details"
 #: qt/controller/main_window.py:205 cocoa/en.lproj/MainMenu.strings:0
 #: cocoa/en.lproj/MainWindow.strings:0
 msgid "Toggle Graph"
-msgstr ""
+msgstr "Saldografiek aan/uit"
 
 #: qt/controller/main_window.py:207 cocoa/en.lproj/MainWindow.strings:0
 msgid "Toggle Pie Chart"
-msgstr ""
+msgstr "Cirkeldiagram aan/uit"
 
 #: qt/controller/main_window.py:209 cocoa/en.lproj/MainMenu.strings:0
 msgid "Move Up"
@@ -716,7 +715,7 @@ msgstr "Instellingen"
 
 #: qt/controller/preferences_panel.py:47 cocoa/en.lproj/MainMenu.strings:0
 msgid "minute(s) (0 for none)"
-msgstr "Minute(n) (0 = niet actief)"
+msgstr "Minuten (0 = niet actief)"
 
 #: qt/controller/preferences_panel.py:49 cocoa/en.lproj/MainMenu.strings:0
 msgid "Auto-save interval:"
@@ -724,11 +723,11 @@ msgstr "Automatisch opslaan elke:"
 
 #: qt/controller/preferences_panel.py:53
 msgid "Date Format:"
-msgstr "Datumformaat"
+msgstr "Datumformaat:"
 
 #: qt/controller/preferences_panel.py:63
 msgid "Language:"
-msgstr ""
+msgstr "Taal:"
 
 #: qt/controller/preferences_panel.py:66 cocoa/en.lproj/MainMenu.strings:0
 msgid "Show scope dialog when modifying a scheduled transaction"
@@ -740,7 +739,7 @@ msgstr "Automatisch decimalen plaatsen tijdens invoer"
 
 #: qt/controller/preferences_panel.py:109
 msgid "moneyGuru has to restart for these changes to take effect"
-msgstr ""
+msgstr "moneyGuru moet herstart worden om de wijzigingen toe te passen."
 
 #: qt/controller/schedule_panel.py:51 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Schedule Info"
@@ -829,12 +828,12 @@ msgstr "Valutasaldo"
 
 #: cocoa/en.lproj/AccountPanel.strings:0
 msgid "Account Properties"
-msgstr ""
+msgstr "Rekeningeigenschappen"
 
 #: cocoa/en.lproj/AccountReassignPanel.strings:0
 #: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "Window"
-msgstr ""
+msgstr "Venster"
 
 #: cocoa/en.lproj/AccountReassignPanel.strings:0
 msgid "No Account"
@@ -846,11 +845,11 @@ msgstr "Begindatum"
 
 #: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Repeat"
-msgstr ""
+msgstr "Herhaal"
 
 #: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Every"
-msgstr ""
+msgstr "Elke"
 
 #: cocoa/en.lproj/BudgetPanel.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 msgid "Stop Date"
@@ -872,19 +871,19 @@ msgstr "Bedrag"
 
 #: cocoa/en.lproj/CashculatorView.strings:0
 msgid "Export Accounts"
-msgstr ""
+msgstr "Exporteer rekeningen"
 
 #: cocoa/en.lproj/CashculatorView.strings:0
 msgid "Export accounts to Cashculator"
-msgstr ""
+msgstr "Exporteer rekeningen naar Cashculator"
 
 #: cocoa/en.lproj/CashculatorView.strings:0
 msgid "Launch Cashculator"
-msgstr ""
+msgstr "Start Cashculator"
 
 #: cocoa/en.lproj/CashculatorView.strings:0
 msgid "Please read instructions in the Forecast section of the help file."
-msgstr ""
+msgstr "Lees de instructies in het Forecast deel van de help."
 
 #: cocoa/en.lproj/CSVImportOptions.strings:0
 msgid "CSV Import Options"
@@ -932,11 +931,11 @@ msgstr "Standaard"
 
 #: cocoa/en.lproj/CSVLayoutName.strings:0
 msgid "Layout Name"
-msgstr ""
+msgstr "Schemanaam"
 
 #: cocoa/en.lproj/CSVLayoutName.strings:0
 msgid "Layout Name:"
-msgstr ""
+msgstr "Schemanaam:"
 
 #: cocoa/en.lproj/CSVLayoutName.strings:0
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
@@ -945,11 +944,11 @@ msgstr ""
 
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "Custom date range"
-msgstr ""
+msgstr "Eigen datumperiode"
 
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "Select start and end dates for your custom range:"
-msgstr ""
+msgstr "Selecteer de start- en einddatum voor de periode:"
 
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "Start"
@@ -961,25 +960,25 @@ msgstr "Einde"
 
 #: cocoa/en.lproj/CustomDateRangePanel.strings:0
 msgid "Save this custom range in slot:"
-msgstr ""
+msgstr "Bewaar de periode onder nummer:"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 msgid "Custom date range..."
-msgstr ""
+msgstr "Eigen datumperiode"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Running year"
-msgstr ""
+msgstr "Lopend jaar"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Year to date"
-msgstr ""
+msgstr "Jaar tot vandaag"
 
 #: cocoa/en.lproj/DocProps.strings:0 cocoa/en.lproj/NewTabView.strings:0
 msgid "Document Properties"
-msgstr ""
+msgstr "Documenteigenschappen"
 
 #: cocoa/en.lproj/ImportWindow.strings:0
 msgid "< New Account >"
@@ -987,15 +986,15 @@ msgstr "< Nieuwe rekening >"
 
 #: cocoa/en.lproj/ImportWindow.strings:0
 msgid "Are some fields wrong? Swap them!"
-msgstr ""
+msgstr "Zijn sommige velden onjuist? Wissel ze!"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Account Lookup"
-msgstr ""
+msgstr "Zoek rekening"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Completion Lookup"
-msgstr ""
+msgstr "Aanvullen"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Filter"
@@ -1003,93 +1002,94 @@ msgstr ""
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Profit/Loss"
-msgstr ""
+msgstr "Winst/Verlies"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "%@ (Page %d of %d)"
-msgstr ""
+msgstr "%@ (Pagina %d van %d)"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid ""
 "This is your first time running moneyGuru. Do you want to open the example "
 "file?"
 msgstr ""
+"Dit is de eerste keer dat je moneyGuru opent. Wil je de voorbeelddata openen?"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "moneyGuru is about to restart"
-msgstr ""
+msgstr "moneyGuru wordt herstart"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Select a file to import"
-msgstr ""
+msgstr "Selecteer een importbestand"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Export to file"
-msgstr ""
+msgstr "Exporteer naar bestand"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Breng alle naar voren"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Minimize"
-msgstr ""
+msgstr "Minimaliseer"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Close"
-msgstr ""
+msgstr "Sluit"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Save As…"
-msgstr ""
+msgstr "Opslaan als…"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Clear Menu"
-msgstr ""
+msgstr "Maak het menu leeg"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Preferences…"
-msgstr ""
+msgstr "Instellingen…"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Services"
-msgstr ""
+msgstr "Diensten"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Hide moneyGuru"
-msgstr ""
+msgstr "Verberg moneyGuru"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Hide Others"
-msgstr ""
+msgstr "Verberg andere"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Show All"
-msgstr ""
+msgstr "Toon alle"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Copy"
-msgstr ""
+msgstr "Kopieer"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Find"
-msgstr ""
+msgstr "Zoek"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Cut"
-msgstr ""
+msgstr "Knip"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Delete"
-msgstr ""
+msgstr "Verwijder"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Paste"
-msgstr ""
+msgstr "Plak"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Select All"
-msgstr ""
+msgstr "Selecteer alles"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Spelling"
@@ -1101,11 +1101,11 @@ msgstr ""
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Check Spelling"
-msgstr ""
+msgstr "Controleer spelling"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Check Spelling as You Type"
-msgstr ""
+msgstr "Controleer spelling terwijl je typt"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Zoom"
@@ -1118,29 +1118,29 @@ msgstr ""
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Previous Date Range"
-msgstr ""
+msgstr "Vorige periode"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Next Date Range"
-msgstr ""
+msgstr "Volgende periode"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Search..."
-msgstr ""
+msgstr "Zoek…"
 
 #: cocoa/en.lproj/MainMenu.strings:0 cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Next Tab"
-msgstr ""
+msgstr "Volgend tabblad"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Previous Tab"
-msgstr ""
+msgstr "Vorig tabblad"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Check For Update..."
-msgstr ""
+msgstr "Op updates controleren…"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Hardcoded Software Website"
@@ -1148,47 +1148,47 @@ msgstr ""
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "moneyGuru Preferences"
-msgstr ""
+msgstr "moneyGuru instellingen"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Automatically check for updates"
-msgstr ""
+msgstr "Automatisch op updates controleren"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Font size:"
-msgstr ""
+msgstr "Lettergrootte"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Today's Date Range"
-msgstr ""
+msgstr "Vandaag"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Custom Date Range..."
-msgstr ""
+msgstr "Eigen datumperiode…"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Print"
-msgstr ""
+msgstr "Afdrukken"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Page Setup..."
-msgstr ""
+msgstr "Paginainstellingen"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Duplicate"
-msgstr ""
+msgstr "Dupliceer"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Lookup Completion..."
-msgstr ""
+msgstr "Completeer Zoeken"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Close Window"
-msgstr ""
+msgstr "Sluit venster"
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Printing Font size:"
-msgstr ""
+msgstr "Lettergrootte bij afdrukken"
 
 #: cocoa/en.lproj/MassEditingPanel.strings:0
 msgid "From"
@@ -1212,98 +1212,102 @@ msgstr "Grootboek"
 
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid "Modification Scope"
-msgstr ""
+msgstr "Wijzigingsperiode"
 
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid ""
 "Do you want this change to affect all future occurrences of this "
 "transaction?"
 msgstr ""
+"Moet deze wijziging worden toegepast op alle toekomstige "
+"herhalingen van deze transactie?"
 
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid ""
 "You can force global scope (in other words, changing all future occurences) "
 "by holding ⇧ when you perform the change."
 msgstr ""
+"Een wijziging kan voor alle toekomstige herhalingen worden toegepast door "
+"⇧ ingedrukt te houden tijdens de wijziging."
 
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid "Show this dialog next time"
-msgstr ""
+msgstr "Toon dit venster de volgende keer"
 
 #: cocoa/en.lproj/RecurrenceScopeDialog.strings:0
 msgid "All future occurences"
-msgstr ""
+msgstr "Alle toekomstige herhalingen"
 
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "You can navigate tabs with ⌘⌥→ and ⌘⌥←"
-msgstr ""
+msgstr "Je kunt van tabblad wisselen met ⌘⌥→ en ⌘⌥←"
 
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Prev Tab"
-msgstr ""
+msgstr "Vorige tabblad"
 
 #: cocoa/en.lproj/SchedulePanel.strings:0
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Use ⌥+Return to insert a new line."
-msgstr ""
+msgstr "Gebruik ⌥+Return om een nieuwe regel in te voegen."
 
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Transaction Inspector"
-msgstr ""
+msgstr "Transactie controle"
 
 #: cocoa/en.lproj/TransactionPanel.strings:0
 msgid "Multi-Currency Balance"
-msgstr ""
+msgstr "Balans met meervoudige valuta"
 
 #: qt/controller/mass_edition_panel.py:90
 msgid "From:"
-msgstr ""
+msgstr "Van:"
 
 #: qt/controller/mass_edition_panel.py:98
 msgid "To:"
-msgstr ""
+msgstr "Tot:"
 
 #: qt/controller/mass_edition_panel.py:114
 msgid "Currency:"
-msgstr ""
+msgstr "Valuta:"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 msgid "Date range buttons"
-msgstr ""
+msgstr "Datum selectie knoppen"
 
 #: cocoa/en.lproj/DateRangeSelector.strings:0
 msgid "Placeholder for the date range menu"
-msgstr ""
+msgstr "Plaatshouder voor het datumperiode menu"
 
 #: cocoa/en.lproj/MainWindow.strings:0
 msgid "Delete Selected"
-msgstr ""
+msgstr "Verwijder de geselecteerde"
 
 #: cocoa/en.lproj/MainWindow.strings:0
 msgid "Edit Selected"
-msgstr ""
+msgstr "Wijzig de geselecteerde"
 
 #: cocoa/en.lproj/MainWindow.strings:0
 msgid "Status label"
-msgstr ""
+msgstr "Statusmelding"
 
 #: cocoa/en.lproj/MainWindow.strings:0
 msgid "Toggle Columns"
-msgstr ""
+msgstr "Wissel kolommen"
 
 #: qt/controller/main_window.py:223 cocoa/en.lproj/MainMenu.strings:0
 msgid "Open Plugin Folder"
-msgstr ""
+msgstr "Open Plugin-map"
 
 #: qt/controller/new_view.py:72 cocoa/en.lproj/NewTabView.strings:0
 msgid "Plugins (double-click to open)"
-msgstr ""
+msgstr "Plugins (double-click om te openen)"
 
 #: cocoa/en.lproj/NewTabView.strings:0
 msgid "Choose a view for this tab"
-msgstr ""
+msgstr "Kies een type voor het nieuwe tabblad"
 
 #: qt/controller/preferences_panel.py:70 cocoa/en.lproj/MainMenu.strings:0
 msgid "Debug mode (restart required)"
@@ -1311,4 +1315,4 @@ msgstr ""
 
 #: cocoa/en.lproj/MainMenu.strings:0
 msgid "Toggle Pie Charts"
-msgstr ""
+msgstr "Cirkeldiagrammen aan/uit"

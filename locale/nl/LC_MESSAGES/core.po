@@ -4,7 +4,7 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 #: core/app.py:37
 msgid "will show this dialog on startup"
-msgstr ""
+msgstr "Toon dit venster tijdens het opstarten"
 
 #: core/document.py:181
 msgid "Add transaction"
@@ -88,7 +88,7 @@ msgstr "Periodieke boeking verwijderen"
 
 #: core/document.py:724
 msgid "\"%s\" is not a moneyGuru file"
-msgstr ""
+msgstr "\"%s\" is geen moneyGuru bestand
 
 #: core/document.py:770
 msgid "%s is of an unknown format."
@@ -134,7 +134,7 @@ msgstr "Geen rekening"
 msgid ""
 "{account_name}\n"
 "Entries from {start_date} to {end_date}"
-msgstr ""
+msgstr "Transacties van {start_date} tot {end_data}"
 
 #: core/gui/account_view.py:78
 msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
@@ -168,13 +168,14 @@ msgstr "Budgetten vanaf {start_date}tot {end_date}"
 
 #: core/gui/cashculator_view.py:30
 msgid "Exported database not present. Click on Export Accounts first."
-msgstr ""
+msgstr "Geëxporteerde database is niet aanwezig. Klik eerst op Exporteer Rekeningen"
 
 #: core/gui/cashculator_view.py:31
 msgid ""
 "Base Cashculator database not present. You must run and quit Cashculator at "
 "least once before using the export feature."
-msgstr ""
+msgstr "Cashculator database is niet aanwezig. Sluit de Cashculator tenminste 1 keer af"
+"voor de export functie gebruikt wordt."
 
 #: core/gui/csv_options.py:21
 msgid "Date"
@@ -363,7 +364,7 @@ msgstr "Grootboek"
 
 #: core/gui/main_window.py:176
 msgid "Document Properties"
-msgstr ""
+msgstr "Documenteigenschappen"
 
 #: core/gui/main_window.py:178
 msgid "New Tab"
@@ -371,7 +372,7 @@ msgstr "Nieuw Tabblad"
 
 #: core/gui/networth_view.py:18
 msgid "Net Worth at {end_date}, starting from {start_date}"
-msgstr "Eigenkapital vom {end_date}, beginnend am {start_date}"
+msgstr "Vermogen op {end_date}, beginnend op {start_date}"
 
 #: core/gui/pie_chart.py:33
 msgid "Others"
@@ -383,7 +384,7 @@ msgstr "Winst en verlies vanaf {start_date} tot {end_date}"
 
 #: core/gui/report.py:191
 msgid "Total "
-msgstr "Total "
+msgstr "Totaal "
 
 #: core/gui/report.py:211
 msgid "TOTAL "

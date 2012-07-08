@@ -140,8 +140,8 @@ msgstr "Memo"
 
 #: core/gui/cashculator_account_table.py:22
 msgid "Recurring"
-msgstr ""
+msgstr "Herhalend"
 
 #: core/gui/transaction_table.py:33
 msgid "Modification Time"
-msgstr ""
+msgstr "Wijzigingstijd"
