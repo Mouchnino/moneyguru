@@ -16,14 +16,14 @@ from argparse import ArgumentParser
 from core.app import Application as MoneyGuru
 from hscommon.plat import ISWINDOWS, ISLINUX
 from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, copy_qt_plugins,
-    print_and_do)
+    print_and_do, move, copy_all, setup_package_argparser, package_cocoa_app_in_dmg)
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument('--sign', dest='sign_identity',
-        help="Sign app under specified identity before packaging (OS X only)")
-    args = parser.parse_args()
-    return args
+    setup_package_argparser(parser)
+    parser.add_argument('--source', action='store_true', dest='source_pkg',
+        help="Build only a source debian package (Linux only).")
+    return parser.parse_args()
 
 def package_windows(dev):
     if op.exists('dist'):
@@ -56,7 +56,7 @@ def package_windows(dev):
         os.remove('installer_tmp.aip')
     
 
-def package_debian():
+def package_debian(source_pkg):
     destpath = op.join('build', 'moneyguru-{0}'.format(MoneyGuru.VERSION))
     if op.exists(destpath):
         shutil.rmtree(destpath)
@@ -64,17 +64,13 @@ def package_debian():
     os.makedirs(srcpath)
     shutil.copy('run.py', op.join(srcpath, 'run.py'))
     copy_packages(['qt', 'hscommon', 'core', 'qtlib', 'plugin_examples'], srcpath)
-    import sip, PyQt4, sgmllib
-    shutil.copy(sip.__file__, srcpath)
-    qtsrcpath = op.dirname(PyQt4.__file__)
-    qtdestpath = op.join(srcpath, 'PyQt4')
-    os.makedirs(qtdestpath)
-    shutil.copy(op.join(qtsrcpath, '__init__.py'), qtdestpath)
-    shutil.copy(op.join(qtsrcpath, 'Qt.so'), qtdestpath)
-    shutil.copy(op.join(qtsrcpath, 'QtCore.so'), qtdestpath)
-    shutil.copy(op.join(qtsrcpath, 'QtGui.so'), qtdestpath)
+    import sgmllib
     shutil.copy(sgmllib.__file__, srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
+    move(op.join(destpath, 'debian', 'Makefile'), op.join(destpath, 'Makefile'))
+    move(op.join(destpath, 'debian', 'build_modules.py'), op.join(destpath, 'build_modules.py'))
+    os.mkdir(op.join(destpath, 'modules'))
+    copy_all(op.join('core', 'modules', '*.*'), op.join(destpath, 'modules'))
     build_debian_changelog(op.join('help', 'changelog'), op.join(destpath, 'debian', 'changelog'),
         'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('build', 'help'), op.join(srcpath, 'help'))
@@ -82,18 +78,10 @@ def package_debian():
     shutil.copy(op.join('images', 'logo_small.png'), srcpath)
     compileall.compile_dir(srcpath)
     os.chdir(destpath)
-    os.system("dpkg-buildpackage")
-
-def package_cocoa(sign_identity):
-    # Rather than signing our app in XCode during the build phase, we sign it during the package
-    # phase because running the app before packaging can modify it and we want to be sure to have
-    # a valid signature.
-    if sign_identity:
-        sign_identity = "Developer ID Application: {}".format(sign_identity)
-        print_and_do('codesign --force --sign "{}" cocoa/moneyGuru.app'.format(sign_identity))
-    else:
-        print("WARNING: packaging an unsigned application")
-    build_dmg('cocoa/moneyGuru.app', '.')
+    cmd = "dpkg-buildpackage"
+    if source_pkg:
+        cmd += " -S"
+    os.system(cmd)
 
 def main():
     args = parse_args()
@@ -102,12 +90,12 @@ def main():
     dev = conf['dev']
     print("Packaging moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
-        package_cocoa(args.sign_identity)
+        package_cocoa_app_in_dmg('cocoa/moneyGuru.app', '.', args)
     elif ui == 'qt':
         if ISWINDOWS:
             package_windows(dev)
         elif ISLINUX:
-            package_debian()
+            package_debian(args.source_pkg)
         else:
             print("Qt packaging only works under Windows or Linux.")
 
