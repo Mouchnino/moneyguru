@@ -68,12 +68,6 @@ def test_lots_of_noise():
     loader.parse(testdata.filepath('csv/lots_of_noise.csv'))
     assert all(len(line) == 6 for line in loader.lines)
 
-def test_no_transactions():
-    # a Deutsch Bank export without transactions in it. It would raise an error during sniffing
-    loader = Loader(USD)
-    with raises(FileFormatError):
-        loader.parse(testdata.filepath('csv/no_transaction.csv'))
-
 def test_unquoted_with_footer():
     # It seems that the sniffer has problems with regular csv files that end with a non-data
     # footer. This is strange, since the "lots_of_noise" file has way more "noise" than this
@@ -95,4 +89,11 @@ def test_null_character():
     # crashes.
     loader = Loader(USD)
     loader.parse(testdata.filepath('csv/null_character.csv')) # no exception
+    eq_(len(loader.lines), 4)
+
+def test_quoted_sep():
+    # When quoted strings contain separator characters, the sniffer is confused and we must resort
+    # to trying manual dialects.
+    loader = Loader(USD)
+    loader.parse(testdata.filepath('csv/quoted_sep.csv'))
     eq_(len(loader.lines), 4)
