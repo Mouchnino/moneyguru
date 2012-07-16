@@ -189,6 +189,18 @@ def test_expanded_nodes_are_restored_on_load(app):
     newapp.show_nwview()
     assert (0, 0) in newapp.bsheet.expanded_paths
 
+@with_app(app_expanded_group)
+def test_expanded_nodes_are_restored_under_cocoa(app):
+    # Under cocoa, the document is loaded before the views are created. Simulate this condition and
+    # see that expanded nodes are indeed restored.
+    app.show_pview()
+    newapp = app.save_and_load()
+    doc = newapp.doc
+    # Create an app with an already loaded doc
+    newapp = TestApp(doc=doc)
+    newapp.show_nwview()
+    assert (0, 0) in newapp.bsheet.expanded_paths
+
 #--- Two different documents
 def test_expanded_node_prefs_is_at_document_level():
     # Expanded node preferences are at the document level

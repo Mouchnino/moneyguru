@@ -941,6 +941,13 @@ class Document(Repeater, GUIObject):
         their edits and stop edition.
         """
         self.notify('edition_must_stop')
+
+    def can_restore_from_prefs(self):
+        """Returns whether the document has preferences to restore from.
+        
+        In other words, returns whether we have a document ID.
+        """
+        return self._document_id is not None
     
     def get_default(self, key, fallback_value=None):
         if self._document_id is None:

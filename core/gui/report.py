@@ -12,7 +12,7 @@ from hscommon.trans import tr
 from hscommon.gui.column import Columns
 
 from ..exception import DuplicateAccountNameError
-from .base import ViewChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
+from .base import RestorableChild, SheetViewNotificationsMixin, MESSAGES_DOCUMENT_CHANGED
 
 # used in both bsheet and istatement
 def get_delta_perc(delta_amount, start_amount):
@@ -21,23 +21,35 @@ def get_delta_perc(delta_amount, start_amount):
     else:
         return '---'
 
-class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
+class Report(RestorableChild, tree.Tree, SheetViewNotificationsMixin):
     SAVENAME = ''
     COLUMNS = []
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'accounts_excluded', 'date_range_changed'}
     
     def __init__(self, parent_view):
-        ViewChild.__init__(self, parent_view)
+        RestorableChild.__init__(self, parent_view)
         tree.Tree.__init__(self)
         self.columns = Columns(self, prefaccess=parent_view.document, savename=self.SAVENAME)
         self.edited = None
         self._expanded_paths = {(0, ), (1, )}
     
     #--- Override
+    def _do_restore_view(self):
+        if not self.document.can_restore_from_prefs():
+            return False
+        prefname = '{}.ExpandedPaths'.format(self.SAVENAME)
+        expanded = self.document.get_default(prefname, list())
+        if expanded:
+            self._expanded_paths = {tuple(p) for p in expanded}
+            self.view.refresh_expanded_paths()
+        self.columns.restore_columns()
+        return True
+    
     def _revalidate(self):
         self.refresh(refresh_view=False)
         self._update_selection()
         self.view.refresh()
+        self.restore_view()
     
     #--- Virtual
     def _compute_account_node(self, node):
@@ -254,7 +266,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     
     def save_preferences(self):
         # Save node expansion state
-        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
+        prefname = '{}.ExpandedPaths'.format(self.SAVENAME)
         self.document.set_default(prefname, self.expanded_paths)
         self.columns.save_columns()
     
@@ -315,17 +327,7 @@ class Report(ViewChild, tree.Tree, SheetViewNotificationsMixin):
     def date_range_changed(self):
         self.refresh()
     
-    def document_restoring_preferences(self):
-        prefname = '{0}.ExpandedPaths'.format(self.SAVENAME)
-        expanded = self.document.get_default(prefname, list())
-        if expanded:
-            self._expanded_paths = {tuple(p) for p in expanded}
-            # Expanded paths are refreshed on the basic refresh() call, but there are some
-            # synchronization problems when we load a document, which makes the refresh() call
-            # happen *before* the expanded paths are restored. Therefore, we must make a separate
-            # call to refresh paths.
-            self.view.refresh_expanded_paths()
-        self.columns.restore_columns()
+    document_restoring_preferences = RestorableChild.restore_view
     
     def edition_must_stop(self):
         self.view.stop_editing()
