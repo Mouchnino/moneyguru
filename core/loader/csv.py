@@ -67,12 +67,20 @@ class Loader(base.Loader):
         try:
             self.dialect = csv.Sniffer().sniff('\n'.join(stripped_lines))
         except csv.Error:
-            # sometimes, it's the footer that plays trick with the sniffer. Let's try again, with
-            # the last line removed
-            try:
-                self.dialect = csv.Sniffer().sniff('\n'.join(stripped_lines[:-1]))
-            except csv.Error:
+            # The sniffer failed, let's manually try a couple of delimiters. We'll first count
+            # how many of each delimiter we have per line and we'll use the most popular. Because we
+            # don't want to accept something obviously not-CSV as a CSV, we'll have a minimal
+            # standard, that is 3 columns. To ensure that, we could say that the mean number of
+            # delimiters per line has to be at least 2, but headers and/or footers can have less,
+            # do to play on the safe side, we go with 1.5.
+            DELIMITERS = set(';,\t|')
+            delim2count = {delim: content.count(delim) for delim in DELIMITERS}
+            delim, count = max(delim2count.items(), key=lambda x: x[1])
+            if count / len(lines) < 1.5:
                 raise FileFormatError()
+            class ManualDialect(csv.excel):
+                delimiter = delim
+            self.dialect = ManualDialect
         self.rawlines = lines
     
     def _scan_lines(self, encoding=None):

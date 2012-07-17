@@ -299,7 +299,7 @@ NSArray* convertPaths(NSArray *paths)
     for (NSArray *arrayPath in expandedPaths) {
         NSIndexPath *path = a2p(arrayPath);
         if (path != nil) {
-            [[self view] expandItem:path];
+            [self expandItem:path];
         }
     }
 }

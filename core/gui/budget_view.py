@@ -39,7 +39,3 @@ class BudgetView(BaseView):
     def delete_item(self):
         self.table.delete()
     
-    #--- Events
-    def document_restoring_preferences(self):
-        self.table.columns.restore_columns()
-    

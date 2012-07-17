@@ -166,6 +166,23 @@ class ViewChild(Listener, GUIObject, HideableObject, DocumentNotificationsMixin,
             Listener.dispatch(self, msg)
     
 
+class RestorableChild(ViewChild):
+    def __init__(self, parent_view):
+        ViewChild.__init__(self, parent_view)
+        self._was_restored = False
+    
+    def _do_restore_view(self):
+        # Virtual. Override this and perform actual restore process. Return True if restoration
+        # could be done and False otherwise (for example, if our doc doesn't have a document ID yet
+        # or other stuff like that).
+        return False
+    
+    def restore_view(self):
+        if not self._was_restored:
+            if self._do_restore_view():
+                self._was_restored = True
+    
+
 class GUIPanel(GUIObject):
     def __init__(self, document):
         GUIObject.__init__(self)
