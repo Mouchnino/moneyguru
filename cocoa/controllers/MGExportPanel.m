@@ -73,7 +73,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [sp setCanCreateDirectories:YES];
     [sp setTitle:TR(@"Export to file")];
     NSString *filename = [exportFormatButtons selectedRow] == 0 ? @"export.qif" : @"export.csv";
-    if ([sp runModalForDirectory:nil file:filename] == NSOKButton) {
+    [sp setNameFieldStringValue:filename];
+    if ([sp runModal] == NSOKButton) {
         NSString *filepath = [[sp URL] path];
         [[self model] setExportPath:filepath];
         [self save:sender];

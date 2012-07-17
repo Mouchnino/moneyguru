@@ -110,12 +110,10 @@ http://www.hardcoded.net/licenses/bsd_license
     [op setCanChooseDirectories:NO];
     [op setAllowsMultipleSelection:NO];
     [op setTitle:TR(@"Select a file to import")];
-    if ([op runModalForTypes:nil] == NSOKButton)
-    {
-        NSString *filename = [[op filenames] objectAtIndex:0];
+    if ([op runModal] == NSOKButton) {
+        NSString *filename = [[[op URLs] objectAtIndex:0] path];
         NSString *error = [model import:filename];
-        if (error != nil)
-        {
+        if (error != nil) {
             [Dialogs showMessage:error];
         }
     }

@@ -2371,21 +2371,23 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
+                FRAMEWORK_SEARCH_PATHS = "/Library/Frameworks";
+                HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
+                LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+                MACOSX_DEPLOYMENT_TARGET = 10.6;
+                SDKROOT = macosx10.7;
+            };
+            name = release;
+        };
+        CEEB7259111B36B8000E8328 /* dev */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                GCC_C_LANGUAGE_STANDARD = c99;
+                FRAMEWORK_SEARCH_PATHS = "/Library/Frameworks";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = macosx10.6;
-			};
-			name = release;
-		};
-		CEEB7259111B36B8000E8328 /* dev */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = dev;
 		};
