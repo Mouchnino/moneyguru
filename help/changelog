@@ -1,3 +1,8 @@
+=== 2.5.5 (2012-07-17)
+
+* Fixed CSV parsing in cases where there are delimiters in quoted strings. (#338)
+* Fixed account group expanded state restoration on startup. [Mac] (#335)
+
 === 2.5.4 (2012-06-20)
 
 * Fixed sorting inconsistency in transaction tables when schedule spawns were involved. (#328)
