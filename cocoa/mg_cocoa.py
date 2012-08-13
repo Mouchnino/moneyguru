@@ -31,6 +31,10 @@ from core.gui.print_view import PrintView
 from core.gui.transaction_print import TransactionPrint, EntryPrint
 from core.model.date import clean_format
 
+# When built under virtualenv, the dependency collector misses this module, so we have to force it
+# to see the module.
+import distutils.sysconfig
+
 class PyMoneyGuruApp(PyFairware):
     def __init__(self):
         LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('DebugMode') else logging.WARNING
