@@ -502,34 +502,34 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
     if ([itemIdentifier isEqual:MGSearchFieldToolbarItemIdentifier]) {
-        [toolbarItem setLabel: TR(@"Filter")];
+        [toolbarItem setLabel:NSLocalizedString(@"Filter", @"")];
         [toolbarItem setView:[searchField view]];
         [toolbarItem setMinSize:[[searchField view] frame].size];
         [toolbarItem setMaxSize:[[searchField view] frame].size];
     }
     else if ([itemIdentifier isEqual:MGDateRangeToolbarItemIdentifier]) {
-        [toolbarItem setLabel: TR(@"Date Range")];
+        [toolbarItem setLabel:NSLocalizedString(@"Date Range", @"")];
         [toolbarItem setView:[dateRangeSelector view]];
         [toolbarItem setMinSize:[[dateRangeSelector view] frame].size];
         [toolbarItem setMaxSize:[[dateRangeSelector view] frame].size];
     }
     else if ([itemIdentifier isEqual:MGBalanceSheetToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:TR(@"Net Worth")];
+        [toolbarItem setLabel:NSLocalizedString(@"Net Worth", @"")];
         [toolbarItem setImage:[NSImage imageNamed:@"balance_sheet_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showBalanceSheet:)];
     }
     else if ([itemIdentifier isEqual:MGIncomeStatementToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:TR(@"Profit/Loss")];
+        [toolbarItem setLabel:NSLocalizedString(@"Profit/Loss", @"")];
         [toolbarItem setImage:[NSImage imageNamed:@"income_statement_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showIncomeStatement:)];
     }
     else if ([itemIdentifier isEqual:MGTransactionsToolbarItemIdentifier])
     {
-        [toolbarItem setLabel:TR(@"Transactions")];
+        [toolbarItem setLabel:NSLocalizedString(@"Transactions", @"")];
         [toolbarItem setImage:[NSImage imageNamed:@"transaction_table_48"]];
         [toolbarItem setTarget:self];
         [toolbarItem setAction:@selector(showTransactionTable:)];
@@ -543,15 +543,15 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)validateMenuItem:(NSMenuItem *)aItem
 {
     if ([aItem tag] == MGNewItemMenuItem) {
-        NSString *title = TR(@"New Item");
+        NSString *title = NSLocalizedString(@"New Item", @"");
         if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
-            title = TR(@"New Account");
+            title = NSLocalizedString(@"New Account", @"");
         else if ([top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]])
-            title = TR(@"New Transaction");
+            title = NSLocalizedString(@"New Transaction", @"");
         else if ([top isKindOfClass:[MGScheduleView class]])
-            title = TR(@"New Schedule");
+            title = NSLocalizedString(@"New Schedule", @"");
         else if ([top isKindOfClass:[MGBudgetView class]])
-            title = TR(@"New Budget");
+            title = NSLocalizedString(@"New Budget", @"");
         [aItem setTitle:title];
     }
     return [self validateUserInterfaceItem:aItem];

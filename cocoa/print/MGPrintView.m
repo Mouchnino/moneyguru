@@ -84,7 +84,7 @@ NSDictionary* changeAttributesAlignment(NSDictionary *attrs, NSTextAlignment ali
 {
     [super drawRect:rect];
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    NSString *title = fmt(TR(@"%@ (Page %d of %d)"),baseTitle,pageNumber,pageCount);
+    NSString *title = fmt(NSLocalizedString(@"%@ (Page %d of %d)", @""),baseTitle,pageNumber,pageCount);
     NSRect titleRect = NSMakeRect(rect.origin.x, rect.origin.y, rect.size.width, headerHeight);
     [title drawInRect:titleRect withAttributes:headerAttributes];
 }

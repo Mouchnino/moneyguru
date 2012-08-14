@@ -6,10 +6,6 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/bsd_license
 */
 
-/* i18n */
-// NSLocalizedString is way too long
-#define TR(s) NSLocalizedString(s, @"")
-
 /* Pasteboard types */
 
 #define MGEntryPasteboardType @"MGEntryPasteboardType"

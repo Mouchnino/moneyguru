@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGExportPanel.h"
-#import "MGConst.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
@@ -71,7 +70,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSSavePanel *sp = [NSSavePanel savePanel];
     [sp setCanCreateDirectories:YES];
-    [sp setTitle:TR(@"Export to file")];
+    [sp setTitle:NSLocalizedString(@"Export to file", @"")];
     NSString *filename = [exportFormatButtons selectedRow] == 0 ? @"export.qif" : @"export.csv";
     [sp setNameFieldStringValue:filename];
     if ([sp runModal] == NSOKButton) {

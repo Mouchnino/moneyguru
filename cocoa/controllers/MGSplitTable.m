@@ -36,7 +36,7 @@ http://www.hardcoded.net/licenses/bsd_license
     };
     [[self columns] initializeColumns:defs];
     NSTableColumn *c = [[self tableView] tableColumnWithIdentifier:@"account"];
-    [[c dataCell] setPlaceholderString:TR(@"Unassigned")];
+    [[c dataCell] setPlaceholderString:NSLocalizedString(@"Unassigned", @"")];
     c = [[self tableView] tableColumnWithIdentifier:@"debit"];
     [[c headerCell] setAlignment:NSRightTextAlignment];
     [[c dataCell] setAlignment:NSRightTextAlignment];

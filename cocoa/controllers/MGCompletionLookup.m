@@ -7,13 +7,12 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGCompletionLookup.h"
-#import "MGConst.h"
 
 @implementation MGCompletionLookup
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     self = [super initWithPyRef:aPyRef];
-    [[self window] setTitle:TR(@"Completion Lookup")];
+    [[self window] setTitle:NSLocalizedString(@"Completion Lookup", @"")];
     return self;
 }
 @end

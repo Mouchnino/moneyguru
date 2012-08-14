@@ -7,13 +7,12 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGAccountLookup.h"
-#import "MGConst.h"
 
 @implementation MGAccountLookup
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     self = [super initWithPyRef:aPyRef];
-    [[self window] setTitle:TR(@"Account Lookup")];
+    [[self window] setTitle:NSLocalizedString(@"Account Lookup", @"")];
     return self;
 }
 @end

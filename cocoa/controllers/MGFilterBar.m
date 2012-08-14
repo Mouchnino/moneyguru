@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGFilterBar.h"
-#import "MGConst.h"
 #import "AMButtonBarItem.h"
 #import "HSPyUtil.h"
 
@@ -25,25 +24,25 @@ http://www.hardcoded.net/licenses/bsd_license
     PyFilterBar *m = [[PyFilterBar alloc] initWithModel:aPyRef];
     self = [super initWithModel:m view:aView];
     AMButtonBarItem *item = [[[AMButtonBarItem alloc] initWithIdentifier:MGALL] autorelease];
-    [item setTitle:TR(@"All")];
+    [item setTitle:NSLocalizedString(@"All", @"")];
     [aView insertItem:item atIndex:0];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGINCOME] autorelease];
-    [item setTitle:forEntryTable ? TR(@"Increase") : TR(@"Income")];
+    [item setTitle:forEntryTable ? NSLocalizedString(@"Increase", @"") : NSLocalizedString(@"Income", @"")];
     [aView insertItem:item atIndex:1];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGEXPENSE] autorelease];
-    [item setTitle:forEntryTable ? TR(@"Decrease") : TR(@"Expenses")];
+    [item setTitle:forEntryTable ? NSLocalizedString(@"Decrease", @"") : NSLocalizedString(@"Expenses", @"")];
     [aView insertItem:item atIndex:2];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGTRANSFER] autorelease];
-    [item setTitle:TR(@"Transfers")];
+    [item setTitle:NSLocalizedString(@"Transfers", @"")];
     [aView insertItem:item atIndex:3];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGUNASSIGNED] autorelease];
-    [item setTitle:TR(@"Unassigned")];
+    [item setTitle:NSLocalizedString(@"Unassigned", @"")];
     [aView insertItem:item atIndex:4];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGRECONCILED] autorelease];
-    [item setTitle:TR(@"Reconciled")];
+    [item setTitle:NSLocalizedString(@"Reconciled", @"")];
     [aView insertItem:item atIndex:5];
     item = [[[AMButtonBarItem alloc] initWithIdentifier:MGNOTRECONCILED] autorelease];
-    [item setTitle:TR(@"Not Reconciled")];
+    [item setTitle:NSLocalizedString(@"Not Reconciled", @"")];
     [aView insertItem:item atIndex:6];
     [aView selectItemWithIdentifier:MGALL];
     [aView setDelegate:self];
