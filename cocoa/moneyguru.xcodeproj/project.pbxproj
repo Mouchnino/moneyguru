@@ -102,6 +102,8 @@
 		CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1812757587008EFA8A /* MGExportAccountTable.m */; };
 		CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1A12757587008EFA8A /* MGExportPanel.m */; };
 		CE682CA015DADBAD0020063C /* HSPyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CE682C9F15DADBAD0020063C /* HSPyUtil.m */; };
+		CE6A1ECF15DAE0D800121965 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6A1ECE15DAE0D800121965 /* Sparkle.framework */; };
+		CE6A1ED015DAE24B00121965 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE6A1ECE15DAE0D800121965 /* Sparkle.framework */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38070F93648E00FA8460 /* Dialogs.m */; };
 		CE6D38160F93648E00FA8460 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D380F0F93648E00FA8460 /* Utils.m */; };
@@ -179,8 +181,6 @@
 		CEA6DE9D1101E6970028E125 /* ReadMe.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = CEA6DE421101E6970028E125 /* ReadMe.rtfd */; };
 		CEACD4FB0E73DCFA00E9A2AB /* account_in_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEACD4F90E73DCFA00E9A2AB /* account_in_16.png */; };
 		CEACD4FC0E73DCFA00E9A2AB /* account_out_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CEACD4FA0E73DCFA00E9A2AB /* account_out_16.png */; };
-		CEAF7FB20E612A2E00765ADD /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF7FB10E612A2E00765ADD /* Sparkle.framework */; };
-		CEAF7FD00E612C4400765ADD /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEAF7FB10E612A2E00765ADD /* Sparkle.framework */; };
 		CEAFD2590E518B9B00A1E707 /* MGImportBindingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAFD2580E518B9B00A1E707 /* MGImportBindingCell.m */; };
 		CEB1E0B41031A386001FC4B4 /* budget_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1E0B21031A386001FC4B4 /* budget_48.png */; };
 		CEB1E0B51031A386001FC4B4 /* schedules_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB1E0B31031A386001FC4B4 /* schedules_48.png */; };
@@ -297,8 +297,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CEAF7FD00E612C4400765ADD /* Sparkle.framework in CopyFiles */,
 				CE19151414C74FF2008B18EE /* Python in CopyFiles */,
+				CE6A1ED015DAE24B00121965 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +480,7 @@
 		CE66BD1A12757587008EFA8A /* MGExportPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGExportPanel.m; path = controllers/MGExportPanel.m; sourceTree = SOURCE_ROOT; };
 		CE682C9E15DADBAD0020063C /* HSPyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSPyUtil.h; path = ../cocoalib/HSPyUtil.h; sourceTree = "<group>"; };
 		CE682C9F15DADBAD0020063C /* HSPyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSPyUtil.m; path = ../cocoalib/HSPyUtil.m; sourceTree = "<group>"; };
+		CE6A1ECE15DAE0D800121965 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../cocoalib/Sparkle.framework; sourceTree = "<group>"; };
 		CE6C6FEF0E74324B003B5062 /* MGChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChart.h; sourceTree = "<group>"; };
 		CE6C6FF00E74324B003B5062 /* MGChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChart.m; sourceTree = "<group>"; };
 		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
@@ -649,7 +650,6 @@
 		CEA6DE421101E6970028E125 /* ReadMe.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = ReadMe.rtfd; sourceTree = "<group>"; };
 		CEACD4F90E73DCFA00E9A2AB /* account_in_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account_in_16.png; sourceTree = "<group>"; };
 		CEACD4FA0E73DCFA00E9A2AB /* account_out_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account_out_16.png; sourceTree = "<group>"; };
-		CEAF7FB10E612A2E00765ADD /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = /Library/Frameworks/Sparkle.framework; sourceTree = "<absolute>"; };
 		CEAFD2570E518B9B00A1E707 /* MGImportBindingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGImportBindingCell.h; sourceTree = "<group>"; };
 		CEAFD2580E518B9B00A1E707 /* MGImportBindingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGImportBindingCell.m; sourceTree = "<group>"; };
 		CEB1E0B21031A386001FC4B4 /* budget_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = budget_48.png; sourceTree = "<group>"; };
@@ -904,8 +904,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				CEAF7FB20E612A2E00765ADD /* Sparkle.framework in Frameworks */,
 				CE19151314C74FDD008B18EE /* Python in Frameworks */,
+				CE6A1ECF15DAE0D800121965 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -916,7 +916,7 @@
 			isa = PBXGroup;
 			children = (
 				CE19151214C74FDD008B18EE /* Python */,
-				CEAF7FB10E612A2E00765ADD /* Sparkle.framework */,
+				CE6A1ECE15DAE0D800121965 /* Sparkle.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -2333,6 +2333,10 @@
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../cocoalib\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(PROJECT_DIR)";
 				LIBRARY_SEARCH_PATHS = (
@@ -2375,6 +2379,10 @@
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../cocoalib\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(PROJECT_DIR)";
 				LIBRARY_SEARCH_PATHS = (

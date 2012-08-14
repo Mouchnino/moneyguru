@@ -8,7 +8,7 @@ import logging
 import os.path as op
 from objp.util import pyref, dontwrap
 
-from cocoa import install_exception_hook, proxy
+from cocoa import install_exception_hook, proxy, install_cocoa_logger
 from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, PyColumns, PyOutline,
     OutlineView, PySelectableList, PyFairware)
 from hscommon.currency import Currency, USD
@@ -39,8 +39,9 @@ class PyMoneyGuruApp(PyFairware):
     def __init__(self):
         LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('DebugMode') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
-        logging.debug('started in debug mode')
         install_exception_hook()
+        install_cocoa_logger()
+        logging.debug('started in debug mode')
         std_caches_path = Path(proxy.getCachePath())
         cache_path = std_caches_path + 'moneyGuru'
         appdata_path = op.join(proxy.getAppdataPath(), 'moneyGuru')
