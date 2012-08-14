@@ -8,7 +8,7 @@
 
 from pytest import raises
 from hscommon.testutil import eq_
-from hscommon.currency import CAD, EUR, PLN, USD, CZK, TND, JPY
+from hscommon.currency import CAD, EUR, PLN, USD, CZK, TND, JPY, BHD
 
 from ...model.amount import format_amount, parse_amount, Amount
 
@@ -234,7 +234,6 @@ def test_parse_quote_as_grouping_sep():
 def test_parse_simple_amounts():
     eq_(parse_amount('1 EUR'), Amount(1, EUR))
     eq_(parse_amount('1.23 CAD'), Amount(1.23, CAD))
-    eq_(parse_amount('1.234 PLN'), Amount(1.23, PLN))
 
 def test_parse_space_as_thousand_sep():
     # When a space is used as a thousand separator, it doesn't prevent the number from being read.
@@ -293,6 +292,18 @@ def test_parse_zero_division():
     # division by zero.
     with raises(ValueError):
         parse_amount('42/0')
+
+def test_parse_thousand_sep():
+    # Thousand separators are correctly seen as such (in bug #336, it was mistaken for a decimal
+    # sep).
+    eq_(parse_amount('1,000', default_currency=USD), Amount(1000, USD))
+
+def test_parse_dinars():
+    # Dinars have 3 decimal places, making them awkward to parse because for "normal" currencies, we
+    # specifically look for 2 digits after the separator to avoid confusion with thousand sep. For
+    # dinars, however, we look for 3 digits adter the decimal sep. So yes, we are vulnerable to
+    # confusion with the thousand sep, but well, there isn't much we can do about that.
+    eq_(parse_amount('1,000 BHD'), Amount(1, BHD))
 
 #--- Format amount
 def test_format_blank_zero():

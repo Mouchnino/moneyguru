@@ -29,7 +29,10 @@ re_currency = re.compile(r'([a-zA-Z]{3}\s*$)|(^\s*[a-zA-Z]{3})')
 # environments.
 re_grouping_sep = re.compile(r"(?<=\d)[.\s\xA0,'](?=\d{3})")
 # A dot or comma followed by digits followed by the end of the string.
-re_decimal_sep = re.compile(r"[,.](?=\d+$)")
+# currencies with 2 decimal places
+re_decimal_sep_2 = re.compile(r"[,.](?=\d{1,2}$)")
+# currencies with 3 decimal places
+re_decimal_sep_3 = re.compile(r"[,.](?=\d{1,3}$)")
 # A valid amount
 re_amount = re.compile(r"\d+\.\d+|\.\d+|\d+")
 
@@ -85,6 +88,7 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
         else:
             string = re_currency.sub('', string)
     currency = currency or default_currency
+    exponent = currency.exponent if currency is not None else 2
     string = string.strip()
     # When we have an expression, we deal only with "simple" numbers. Turning expression off when
     # there's no sign of arithmetic operators allow for complex number parsing so that we can
@@ -107,14 +111,18 @@ def parse_amount(string, default_currency=None, with_expression=True, auto_decim
         # Now, we have a string that might have thousand separators and might or might not have
         # a decimal separator, which might be either "," or ".". We'll first find our decimal sep
         # and replace it with a placeholder char, find all thousand seps, replace them with nothing.
-        string = re_decimal_sep.sub('|', string)
+        if exponent == 3:
+            string = re_decimal_sep_3.sub('|', string)
+        elif exponent == 2:
+            string = re_decimal_sep_2.sub('|', string)
+        else:
+            pass # No decimal sep
         string = re_grouping_sep.sub('', string)
         string = string.replace('|', '.')
         if auto_decimal_place and string.isdigit():
-            place = currency.exponent if currency is not None else 2
-            if place:
-                string = string.rjust(place, '0')
-                string = string[:-place] + '.' + string[-place:]
+            if exponent:
+                string = string.rjust(exponent, '0')
+                string = string[:-exponent] + '.' + string[-exponent:]
                 with_expression = False
         try:
             value = float(string)
