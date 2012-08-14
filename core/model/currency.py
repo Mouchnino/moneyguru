@@ -39,8 +39,11 @@ class RatesDB(RatesDBBase):
                     end = xmlrpc.client.DateTime(datetime(fetch_end.year, fetch_end.month, fetch_end.day))
                     values = server.get_CAD_values(start, end, currency)
                 except (socket.gaierror, socket.error, xmlrpc.client.Error) as e:
-                    logging.warning('Communication problem with currency.hardcoded.net: %s' % str(e))
+                    logging.warning("Communication problem with currency.hardcoded.net: %s", e)
                     return # We can't connect
+                except Exception as e:
+                    logging.warning("Unknown error while doing currency rates fetching: %s", e)
+                    return                
                 else:
                     self._fetched_values.put((values, currency))
         
