@@ -305,6 +305,9 @@ def test_parse_dinars():
     # confusion with the thousand sep, but well, there isn't much we can do about that.
     eq_(parse_amount('1,000 BHD'), Amount(1, BHD))
 
+def test_parse_expression_with_thousand_and_decimal_seps():
+    eq_(parse_amount('1,000.00*1.1', default_currency=USD), Amount(1100, USD))
+
 #--- Format amount
 def test_format_blank_zero():
     # When blank_zero is True, 0 is rendered as an empty string.
