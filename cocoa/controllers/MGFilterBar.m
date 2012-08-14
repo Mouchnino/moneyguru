@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGFilterBar.h"
 #import "MGConst.h"
 #import "AMButtonBarItem.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 #define MGALL @"all"
 #define MGINCOME @"income"

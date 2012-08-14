@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGBudgetPanel.h"
 #import "MGMainWindowController.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGBudgetPanel
 - (id)initWithParent:(MGMainWindowController *)aParent

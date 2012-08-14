@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGImportWindow.h"
 #import "PSMTabBarCell.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGImportWindow
 - (id)initWithDocument:(PyDocument *)aDocument

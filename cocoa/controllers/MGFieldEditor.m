@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGFieldEditor.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGFieldEditor
 - (id)initWithPyRef:(PyObject *)aPyRef

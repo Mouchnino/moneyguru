@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGBudgetTable.h"
 #import "MGTableView.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGBudgetTable
 - (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView

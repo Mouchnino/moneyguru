@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGScheduleTable.h"
 #import "MGConst.h"
 #import "MGTableView.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGScheduleTable
 - (id)initWithPyRef:(PyObject *)aPyRef tableView:(MGTableView *)aTableView

@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGImportTable.h"
 #import "MGConst.h"
 #import "MGImportBindingCell.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGImportTable

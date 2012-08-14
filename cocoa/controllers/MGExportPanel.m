@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGExportPanel.h"
 #import "MGConst.h"
 #import "MGMainWindowController.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 // Synced with the core
 #define MGExportFormatQIF 0

@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGFieldEditor.h"
 #import "MGReconciliationCell.h"
 #import "MGTextFieldCell.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGTransactionTable

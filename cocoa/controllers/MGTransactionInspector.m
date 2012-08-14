@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGTransactionInspector.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
 #import "NSEventAdditions.h"

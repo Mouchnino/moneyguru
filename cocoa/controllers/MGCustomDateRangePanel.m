@@ -7,9 +7,8 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGCustomDateRangePanel.h"
-#import "Utils.h"
 #import "MGMainWindowController.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGCustomDateRangePanel
 - (id)initWithParent:(MGMainWindowController *)aParent

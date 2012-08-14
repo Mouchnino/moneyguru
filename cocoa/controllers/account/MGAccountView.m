@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountView.h"
 #import "MGConst.h"
 #import "MGEntryPrint.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 #import "PyMainWindow.h"
 

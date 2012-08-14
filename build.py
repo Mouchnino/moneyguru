@@ -17,8 +17,10 @@ from setuptools import setup, Extension
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
 from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, move_all, move,
-    copy, symlink, hardlink, add_to_pythonpath, copy_sysconfig_files_for_embed)
+    copy, symlink, hardlink, add_to_pythonpath, copy_sysconfig_files_for_embed,
+    build_cocoalib_xibless)
 from hscommon import loc
+from hscommon.util import ensure_folder
 
 def parse_args():
     parser = ArgumentParser()
@@ -36,13 +38,16 @@ def parse_args():
         help="Build only Cocoa modules")
     parser.add_argument('--ext', action='store_true', dest='ext',
         help="Build only ext modules")
+    parser.add_argument('--xibless', action='store_true', dest='xibless',
+        help="Build only xibless UIs")
     args = parser.parse_args()
     return args
 
 def build_cocoa(dev):
+    print("Building xibless UIs")
+    build_cocoalib_xibless()
     print("Building the cocoa layer")
-    if not op.exists('build/py'):
-        os.mkdir('build/py')
+    ensure_folder('build/py')
     build_cocoa_proxy_module()
     build_cocoa_bridging_interfaces()
     from pluginbuilder import copy_embeddable_python_dylib, get_python_header_folder, collect_dependencies
@@ -178,9 +183,10 @@ def build_cocoa_proxy_module():
     import objp.p2o
     objp.p2o.generate_python_proxy_code('cocoalib/cocoa/CocoaProxy.h', 'build/CocoaProxy.m')
     build_cocoa_ext("CocoaProxy", 'cocoalib/cocoa',
-        ['cocoalib/cocoa/CocoaProxy.m', 'build/CocoaProxy.m', 'build/ObjP.m', 'cocoalib/HSErrorReportWindow.m'],
+        ['cocoalib/cocoa/CocoaProxy.m', 'build/CocoaProxy.m', 'build/ObjP.m', 
+            'cocoalib/HSErrorReportWindow.m', 'cocoa/autogen/HSErrorReportWindow_UI.m'],
         ['AppKit', 'CoreServices'],
-        ['cocoalib'])
+        ['cocoalib', 'cocoa/autogen'])
 
 def build_cocoa_bridging_interfaces():
     print("Building Cocoa Bridging Interfaces")
@@ -245,7 +251,7 @@ def main():
     conf = json.load(open('conf.json'))
     ui = conf['ui']
     dev = conf['dev']
-    print("Building moneyGuru with UI {0}".format(ui))
+    print("Building moneyGuru with UI {}".format(ui))
     if dev:
         print("Building in Dev mode")
     if args.clean:
@@ -266,6 +272,8 @@ def main():
         build_cocoa_bridging_interfaces()
     elif args.ext:
         build_ext()
+    elif args.xibless:
+        build_cocoalib_xibless()
     else:
         build_normal(ui, dev)
 

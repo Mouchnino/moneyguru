@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGRecurrenceScopeDialog.h"
 #import "MGAppDelegate.h"
 #import "MGPrintView.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGDocument
 - (id)init

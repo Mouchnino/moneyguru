@@ -44,6 +44,7 @@ class Application(Broadcaster, RegistrableApplication):
     
     APP_NAME = "moneyGuru"
     PROMPT_NAME = APP_NAME
+    NAME = APP_NAME
     VERSION = '2.5.5'
     DEMO_LIMITATION = tr("will show this dialog on startup")
     

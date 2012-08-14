@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGSchedulePanel.h"
 #import "MGMainWindowController.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGSchedulePanel
 - (id)initWithParent:(MGMainWindowController *)aParent

@@ -19,6 +19,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDocPropsView.h"
 #import "MGEmptyView.h"
 #import "MGReadOnlyPluginView.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGMainWindowController

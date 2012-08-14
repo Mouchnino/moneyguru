@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountProperties.h"
 #import "MGConst.h"
 #import "MGMainWindowController.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGAccountProperties
 - (id)initWithParent:(MGMainWindowController *)aParent

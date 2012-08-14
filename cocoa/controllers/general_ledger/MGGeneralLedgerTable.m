@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGGeneralLedgerTable.h"
 #import "MGTableView.h"
 #import "MGReconciliationCell.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGGeneralLedgerTable

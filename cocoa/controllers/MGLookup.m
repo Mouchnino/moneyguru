@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGLookup.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 #import "NSEventAdditions.h"
 
 @implementation MGLookup

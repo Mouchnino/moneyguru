@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGDateRangeSelector.h"
 #import "MGConst.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 #import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector

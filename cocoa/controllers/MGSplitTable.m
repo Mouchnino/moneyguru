@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGSplitTable.h"
 #import "MGConst.h"
 #import "NSEventAdditions.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 #define MGSplitPasteboardType @"MGSplitPasteboardType"
 

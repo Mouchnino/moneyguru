@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGSearchField.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGSearchField
 - (id)initWithPyRef:(PyObject *)aPyRef

@@ -39,6 +39,13 @@
 		CE14AF790E6FB3B500E75B76 /* MGPieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14AF780E6FB3B500E75B76 /* MGPieChartView.m */; };
 		CE16B0260E715B3F001290F7 /* backward_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16B0240E715B3F001290F7 /* backward_32.png */; };
 		CE16B0270E715B3F001290F7 /* forward_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16B0250E715B3F001290F7 /* forward_32.png */; };
+		CE16CD0415DADA7B00356EFF /* HSAboutBox_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CCF715DADA7B00356EFF /* HSAboutBox_UI.m */; };
+		CE16CD0515DADA7B00356EFF /* HSDemoReminder_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CCF915DADA7B00356EFF /* HSDemoReminder_UI.m */; };
+		CE16CD0615DADA7B00356EFF /* HSEnterCode_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CCFB15DADA7B00356EFF /* HSEnterCode_UI.m */; };
+		CE16CD0715DADA7B00356EFF /* HSErrorReportWindow_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CCFD15DADA7B00356EFF /* HSErrorReportWindow_UI.m */; };
+		CE16CD0815DADA7B00356EFF /* HSFairwareReminder_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CCFF15DADA7B00356EFF /* HSFairwareReminder_UI.m */; };
+		CE16CD0915DADA7B00356EFF /* ProgressController_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CD0115DADA7B00356EFF /* ProgressController_UI.m */; };
+		CE16CD0A15DADA7B00356EFF /* XiblessSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16CD0315DADA7B00356EFF /* XiblessSupport.m */; };
 		CE19150F14C74FC6008B18EE /* py in Resources */ = {isa = PBXBuildFile; fileRef = CE19150E14C74FC6008B18EE /* py */; };
 		CE19151114C74FCC008B18EE /* mg_cocoa.py in Resources */ = {isa = PBXBuildFile; fileRef = CE19151014C74FCC008B18EE /* mg_cocoa.py */; };
 		CE19151314C74FDD008B18EE /* Python in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19151214C74FDD008B18EE /* Python */; };
@@ -94,6 +101,7 @@
 		CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE66BD111275751B008EFA8A /* ExportPanel.xib */; };
 		CE66BD1B12757587008EFA8A /* MGExportAccountTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1812757587008EFA8A /* MGExportAccountTable.m */; };
 		CE66BD1C12757587008EFA8A /* MGExportPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE66BD1A12757587008EFA8A /* MGExportPanel.m */; };
+		CE682CA015DADBAD0020063C /* HSPyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CE682C9F15DADBAD0020063C /* HSPyUtil.m */; };
 		CE6C6FF10E74324B003B5062 /* MGChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6C6FF00E74324B003B5062 /* MGChart.m */; };
 		CE6D38120F93648E00FA8460 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D38070F93648E00FA8460 /* Dialogs.m */; };
 		CE6D38160F93648E00FA8460 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6D380F0F93648E00FA8460 /* Utils.m */; };
@@ -101,13 +109,10 @@
 		CE6E000F0F4ECD0B00FE7628 /* MGChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E000E0F4ECD0B00FE7628 /* MGChartView.m */; };
 		CE6E00160F4ED61800FE7628 /* MGGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E00150F4ED61800FE7628 /* MGGraph.m */; };
 		CE6E77A512538AF200A1754B /* HSFairwareReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6E77A312538AF200A1754B /* HSFairwareReminder.m */; };
-		CE6E77AB12538B0F00A1754B /* FairwareReminder.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6E77A912538B0F00A1754B /* FairwareReminder.xib */; };
 		CE720A5B0F84BF71005C4D5B /* MGOutlinePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */; };
 		CE720A5F0F84CB39005C4D5B /* MGTablePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE720A5E0F84CB39005C4D5B /* MGTablePrint.m */; };
 		CE74544612082C5B003A2794 /* cashculator_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE74544512082C5B003A2794 /* cashculator_16.png */; };
 		CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74808C11995EF400D59C50 /* MGEmptyView.m */; };
-		CE7869F0135D920500221226 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7869EC135D920500221226 /* about.xib */; };
-		CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7869EE135D920500221226 /* ErrorReportWindow.xib */; };
 		CE7990B212082D53000A4846 /* cashculator_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7990B112082D53000A4846 /* cashculator_48.png */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
 		CE873AB30E21622F004F63E9 /* MGAccountProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE873A710E21622F004F63E9 /* MGAccountProperties.m */; };
@@ -355,6 +360,20 @@
 		CE14AF780E6FB3B500E75B76 /* MGPieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPieChartView.m; sourceTree = "<group>"; };
 		CE16B0240E715B3F001290F7 /* backward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward_32.png; sourceTree = "<group>"; };
 		CE16B0250E715B3F001290F7 /* forward_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward_32.png; sourceTree = "<group>"; };
+		CE16CCF615DADA7B00356EFF /* HSAboutBox_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSAboutBox_UI.h; sourceTree = "<group>"; };
+		CE16CCF715DADA7B00356EFF /* HSAboutBox_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSAboutBox_UI.m; sourceTree = "<group>"; };
+		CE16CCF815DADA7B00356EFF /* HSDemoReminder_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSDemoReminder_UI.h; sourceTree = "<group>"; };
+		CE16CCF915DADA7B00356EFF /* HSDemoReminder_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSDemoReminder_UI.m; sourceTree = "<group>"; };
+		CE16CCFA15DADA7B00356EFF /* HSEnterCode_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSEnterCode_UI.h; sourceTree = "<group>"; };
+		CE16CCFB15DADA7B00356EFF /* HSEnterCode_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSEnterCode_UI.m; sourceTree = "<group>"; };
+		CE16CCFC15DADA7B00356EFF /* HSErrorReportWindow_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSErrorReportWindow_UI.h; sourceTree = "<group>"; };
+		CE16CCFD15DADA7B00356EFF /* HSErrorReportWindow_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSErrorReportWindow_UI.m; sourceTree = "<group>"; };
+		CE16CCFE15DADA7B00356EFF /* HSFairwareReminder_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSFairwareReminder_UI.h; sourceTree = "<group>"; };
+		CE16CCFF15DADA7B00356EFF /* HSFairwareReminder_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSFairwareReminder_UI.m; sourceTree = "<group>"; };
+		CE16CD0015DADA7B00356EFF /* ProgressController_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressController_UI.h; sourceTree = "<group>"; };
+		CE16CD0115DADA7B00356EFF /* ProgressController_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressController_UI.m; sourceTree = "<group>"; };
+		CE16CD0215DADA7B00356EFF /* XiblessSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiblessSupport.h; sourceTree = "<group>"; };
+		CE16CD0315DADA7B00356EFF /* XiblessSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiblessSupport.m; sourceTree = "<group>"; };
 		CE19150E14C74FC6008B18EE /* py */ = {isa = PBXFileReference; lastKnownFileType = folder; name = py; path = ../build/py; sourceTree = "<group>"; };
 		CE19151014C74FCC008B18EE /* mg_cocoa.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = mg_cocoa.py; path = ../build/mg_cocoa.py; sourceTree = "<group>"; };
 		CE19151214C74FDD008B18EE /* Python */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Python; path = ../build/Python; sourceTree = "<group>"; };
@@ -459,6 +478,8 @@
 		CE66BD1812757587008EFA8A /* MGExportAccountTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGExportAccountTable.m; path = controllers/MGExportAccountTable.m; sourceTree = SOURCE_ROOT; };
 		CE66BD1912757587008EFA8A /* MGExportPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGExportPanel.h; path = controllers/MGExportPanel.h; sourceTree = SOURCE_ROOT; };
 		CE66BD1A12757587008EFA8A /* MGExportPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGExportPanel.m; path = controllers/MGExportPanel.m; sourceTree = SOURCE_ROOT; };
+		CE682C9E15DADBAD0020063C /* HSPyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSPyUtil.h; path = ../cocoalib/HSPyUtil.h; sourceTree = "<group>"; };
+		CE682C9F15DADBAD0020063C /* HSPyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSPyUtil.m; path = ../cocoalib/HSPyUtil.m; sourceTree = "<group>"; };
 		CE6C6FEF0E74324B003B5062 /* MGChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChart.h; sourceTree = "<group>"; };
 		CE6C6FF00E74324B003B5062 /* MGChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChart.m; sourceTree = "<group>"; };
 		CE6D38060F93648E00FA8460 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
@@ -491,18 +512,12 @@
 		CE6D50B5147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/SchedulePanel.xib; sourceTree = "<group>"; };
 		CE6D50B8147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/TransactionPanel.xib; sourceTree = "<group>"; };
 		CE6D50B9147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/TransactionTable.xib; sourceTree = "<group>"; };
-		CE6D50D5147EC6D900FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = ../nl.lproj/about.xib; sourceTree = "<group>"; };
-		CE6D50D6147EC6D900FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = ../nl.lproj/ErrorReportWindow.xib; sourceTree = "<group>"; };
-		CE6D50D7147EC6D900FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = ../nl.lproj/FairwareReminder.xib; sourceTree = "<group>"; };
 		CE6E000D0F4ECD0B00FE7628 /* MGChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChartView.h; sourceTree = "<group>"; };
 		CE6E000E0F4ECD0B00FE7628 /* MGChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGChartView.m; sourceTree = "<group>"; };
 		CE6E00140F4ED61800FE7628 /* MGGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGGraph.h; sourceTree = "<group>"; };
 		CE6E00150F4ED61800FE7628 /* MGGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGGraph.m; sourceTree = "<group>"; };
 		CE6E77A212538AF200A1754B /* HSFairwareReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSFairwareReminder.h; path = ../cocoalib/HSFairwareReminder.h; sourceTree = SOURCE_ROOT; };
 		CE6E77A312538AF200A1754B /* HSFairwareReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSFairwareReminder.m; path = ../cocoalib/HSFairwareReminder.m; sourceTree = SOURCE_ROOT; };
-		CE6E77AA12538B0F00A1754B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../cocoalib/en.lproj/FairwareReminder.xib; sourceTree = SOURCE_ROOT; };
-		CE6E77AC12538B1F00A1754B /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = ../cocoalib/fr.lproj/FairwareReminder.xib; sourceTree = SOURCE_ROOT; };
-		CE6E77AD12538B2E00A1754B /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = ../cocoalib/de.lproj/FairwareReminder.xib; sourceTree = SOURCE_ROOT; };
 		CE720A590F84BF71005C4D5B /* MGOutlinePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGOutlinePrint.h; path = print/MGOutlinePrint.h; sourceTree = "<group>"; };
 		CE720A5A0F84BF71005C4D5B /* MGOutlinePrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGOutlinePrint.m; path = print/MGOutlinePrint.m; sourceTree = "<group>"; };
 		CE720A5D0F84CB39005C4D5B /* MGTablePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTablePrint.h; path = print/MGTablePrint.h; sourceTree = "<group>"; };
@@ -510,14 +525,6 @@
 		CE74544512082C5B003A2794 /* cashculator_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_16.png; sourceTree = "<group>"; };
 		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
 		CE74808C11995EF400D59C50 /* MGEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEmptyView.m; sourceTree = "<group>"; };
-		CE7869ED135D920500221226 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../cocoalib/en.lproj/about.xib; sourceTree = SOURCE_ROOT; };
-		CE7869EF135D920500221226 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../cocoalib/en.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
-		CE7869F2135D921600221226 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = ../cocoalib/fr.lproj/about.xib; sourceTree = SOURCE_ROOT; };
-		CE7869F3135D921600221226 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = ../cocoalib/fr.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
-		CE7869F4135D922000221226 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = ../cocoalib/de.lproj/about.xib; sourceTree = SOURCE_ROOT; };
-		CE7869F5135D922000221226 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = ../cocoalib/de.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
-		CE7869F6135D922D00221226 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = ../cocoalib/it.lproj/about.xib; sourceTree = SOURCE_ROOT; };
-		CE7869F7135D922D00221226 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = ../cocoalib/it.lproj/ErrorReportWindow.xib; sourceTree = SOURCE_ROOT; };
 		CE7990B112082D53000A4846 /* cashculator_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_48.png; sourceTree = "<group>"; };
 		CE80D93C11DA3964007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CE80D94911DA399E007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainWindow.xib; sourceTree = "<group>"; };
@@ -752,9 +759,6 @@
 		CECEF797144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/TransactionPanel.xib; sourceTree = "<group>"; };
 		CECEF798144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/TransactionTable.xib; sourceTree = "<group>"; };
 		CECEF7B814421A0400EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CECEF7BE14421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/about.xib; sourceTree = "<group>"; };
-		CECEF7BF14421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/ErrorReportWindow.xib; sourceTree = "<group>"; };
-		CECEF7C014421A7A00EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = ../cs.lproj/FairwareReminder.xib; sourceTree = "<group>"; };
 		CED1DF5F1440B1C5005F82B5 /* HSPopUpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSPopUpList.h; sourceTree = "<group>"; };
 		CED1DF601440B1C5005F82B5 /* HSPopUpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSPopUpList.m; sourceTree = "<group>"; };
 		CED1FC6B10F7851600634D72 /* MGTransactionTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionTable.h; sourceTree = "<group>"; };
@@ -890,7 +894,6 @@
 		CEFF4EC71303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/SchedulePanel.xib; sourceTree = "<group>"; };
 		CEFF4ECA1303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/TransactionPanel.xib; sourceTree = "<group>"; };
 		CEFF4ECB1303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/TransactionTable.xib; sourceTree = "<group>"; };
-		CEFF4ED01303FBBA009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = ../cocoalib/it.lproj/FairwareReminder.xib; sourceTree = SOURCE_ROOT; };
 		CEFFC6A912B0E9EE003739F6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ExportPanel.xib; sourceTree = "<group>"; };
 		CEFFC6AA12B0E9FB003739F6 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ExportPanel.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -996,6 +999,27 @@
 			name = print;
 			sourceTree = "<group>";
 		};
+		CE16CCF515DADA6000356EFF /* xibless */ = {
+			isa = PBXGroup;
+			children = (
+				CE16CCF615DADA7B00356EFF /* HSAboutBox_UI.h */,
+				CE16CCF715DADA7B00356EFF /* HSAboutBox_UI.m */,
+				CE16CCF815DADA7B00356EFF /* HSDemoReminder_UI.h */,
+				CE16CCF915DADA7B00356EFF /* HSDemoReminder_UI.m */,
+				CE16CCFA15DADA7B00356EFF /* HSEnterCode_UI.h */,
+				CE16CCFB15DADA7B00356EFF /* HSEnterCode_UI.m */,
+				CE16CCFC15DADA7B00356EFF /* HSErrorReportWindow_UI.h */,
+				CE16CCFD15DADA7B00356EFF /* HSErrorReportWindow_UI.m */,
+				CE16CCFE15DADA7B00356EFF /* HSFairwareReminder_UI.h */,
+				CE16CCFF15DADA7B00356EFF /* HSFairwareReminder_UI.m */,
+				CE16CD0015DADA7B00356EFF /* ProgressController_UI.h */,
+				CE16CD0115DADA7B00356EFF /* ProgressController_UI.m */,
+				CE16CD0215DADA7B00356EFF /* XiblessSupport.h */,
+				CE16CD0315DADA7B00356EFF /* XiblessSupport.m */,
+			);
+			name = xibless;
+			sourceTree = "<group>";
+		};
 		CE2F0BED11295E1A00F6FB55 /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1017,7 +1041,6 @@
 			children = (
 				CE2F0BED11295E1A00F6FB55 /* views */,
 				CEBA331711294DE5009C782F /* controllers */,
-				CEBA330A11294D2B009C782F /* xib */,
 				CE6D38060F93648E00FA8460 /* Dialogs.h */,
 				CE6D38070F93648E00FA8460 /* Dialogs.m */,
 				CE6E77A212538AF200A1754B /* HSFairwareReminder.h */,
@@ -1028,6 +1051,8 @@
 				CE2F0C1F112965C600F6FB55 /* NSEventAdditions.m */,
 				CE6D380E0F93648E00FA8460 /* Utils.h */,
 				CE6D380F0F93648E00FA8460 /* Utils.m */,
+				CE682C9E15DADBAD0020063C /* HSPyUtil.h */,
+				CE682C9F15DADBAD0020063C /* HSPyUtil.m */,
 				CE6D38100F93648E00FA8460 /* ValueTransformers.h */,
 				CE6D38110F93648E00FA8460 /* ValueTransformers.m */,
 				CE42F4041440916E00B3B9A9 /* HSGeometry.h */,
@@ -1291,6 +1316,7 @@
 		CEB46FB214C86C3600C56775 /* autogen */ = {
 			isa = PBXGroup;
 			children = (
+				CE16CCF515DADA6000356EFF /* xibless */,
 				CEF44AEF14CB778F003FD363 /* base */,
 				CEF44AF014CB77B0003FD363 /* view */,
 				CEF44AF114CB77F8003FD363 /* edit */,
@@ -1314,17 +1340,6 @@
 				CEB60209123930BF002218CF /* MGGeneralLedgerView.m */,
 			);
 			name = general_ledger;
-			sourceTree = "<group>";
-		};
-		CEBA330A11294D2B009C782F /* xib */ = {
-			isa = PBXGroup;
-			children = (
-				CE7869EC135D920500221226 /* about.xib */,
-				CE7869EE135D920500221226 /* ErrorReportWindow.xib */,
-				CE6E77A912538B0F00A1754B /* FairwareReminder.xib */,
-			);
-			name = xib;
-			path = ../cocoalib/xib;
 			sourceTree = "<group>";
 		};
 		CEBA331711294DE5009C782F /* controllers */ = {
@@ -1787,10 +1802,7 @@
 				CE7990B212082D53000A4846 /* cashculator_48.png in Resources */,
 				CEB7CCEC123B61270020DAF6 /* gledger_16.png in Resources */,
 				CEB7CCED123B61270020DAF6 /* gledger_48.png in Resources */,
-				CE6E77AB12538B0F00A1754B /* FairwareReminder.xib in Resources */,
 				CE66BD131275751B008EFA8A /* ExportPanel.xib in Resources */,
-				CE7869F0135D920500221226 /* about.xib in Resources */,
-				CE7869F1135D920500221226 /* ErrorReportWindow.xib in Resources */,
 				CED4DB05144767C20041601F /* DocProps.xib in Resources */,
 				CE09272A145061F3004BD916 /* graph_visibility_on_16.png in Resources */,
 				CE09272C145061F3004BD916 /* piechart_visibility_on_16.png in Resources */,
@@ -1986,6 +1998,14 @@
 				CECB080A14DB4C41008F55EA /* PyReadOnlyPluginView.m in Sources */,
 				CECB080E14DB4C53008F55EA /* MGReadOnlyPluginView.m in Sources */,
 				CE2CE3B114DC1BF50031540E /* HSSelectableList.m in Sources */,
+				CE16CD0415DADA7B00356EFF /* HSAboutBox_UI.m in Sources */,
+				CE16CD0515DADA7B00356EFF /* HSDemoReminder_UI.m in Sources */,
+				CE16CD0615DADA7B00356EFF /* HSEnterCode_UI.m in Sources */,
+				CE16CD0715DADA7B00356EFF /* HSErrorReportWindow_UI.m in Sources */,
+				CE16CD0815DADA7B00356EFF /* HSFairwareReminder_UI.m in Sources */,
+				CE16CD0915DADA7B00356EFF /* ProgressController_UI.m in Sources */,
+				CE16CD0A15DADA7B00356EFF /* XiblessSupport.m in Sources */,
+				CE682CA015DADBAD0020063C /* HSPyUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2017,48 +2037,6 @@
 			);
 			name = ExportPanel.xib;
 			sourceTree = "<group>";
-		};
-		CE6E77A912538B0F00A1754B /* FairwareReminder.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE6E77AA12538B0F00A1754B /* en */,
-				CE6E77AC12538B1F00A1754B /* fr */,
-				CE6E77AD12538B2E00A1754B /* de */,
-				CEFF4ED01303FBBA009706BE /* it */,
-				CECEF7C014421A7A00EBF1C4 /* cs */,
-				CE6D50D7147EC6D900FCF8CD /* nl */,
-			);
-			name = FairwareReminder.xib;
-			path = ../cocoalib/xib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE7869EC135D920500221226 /* about.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE7869ED135D920500221226 /* en */,
-				CE7869F2135D921600221226 /* fr */,
-				CE7869F4135D922000221226 /* de */,
-				CE7869F6135D922D00221226 /* it */,
-				CECEF7BE14421A7A00EBF1C4 /* cs */,
-				CE6D50D5147EC6D900FCF8CD /* nl */,
-			);
-			name = about.xib;
-			path = ../cocoalib/xib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE7869EE135D920500221226 /* ErrorReportWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE7869EF135D920500221226 /* en */,
-				CE7869F3135D921600221226 /* fr */,
-				CE7869F5135D922000221226 /* de */,
-				CE7869F7135D922D00221226 /* it */,
-				CECEF7BF14421A7A00EBF1C4 /* cs */,
-				CE6D50D6147EC6D900FCF8CD /* nl */,
-			);
-			name = ErrorReportWindow.xib;
-			path = ../cocoalib/xib;
-			sourceTree = SOURCE_ROOT;
 		};
 		CEC3677B11D10E1D00EB0222 /* AccountPanel.xib */ = {
 			isa = PBXVariantGroup;
@@ -2370,20 +2348,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = c99;
-                FRAMEWORK_SEARCH_PATHS = "/Library/Frameworks";
-                HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
-                LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-                MACOSX_DEPLOYMENT_TARGET = 10.6;
-                SDKROOT = macosx10.7;
-            };
-            name = release;
-        };
-        CEEB7259111B36B8000E8328 /* dev */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                GCC_C_LANGUAGE_STANDARD = c99;
-                FRAMEWORK_SEARCH_PATHS = "/Library/Frameworks";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx10.7;
+			};
+			name = release;
+		};
+		CEEB7259111B36B8000E8328 /* dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../build/PythonHeaders\"";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

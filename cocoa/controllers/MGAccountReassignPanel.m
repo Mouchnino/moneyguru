@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGAccountReassignPanel.h"
 #import "MGMainWindowController.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGAccountReassignPanel
 - (id)initWithParent:(MGMainWindowController *)aParent

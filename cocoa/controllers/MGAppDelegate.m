@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAppDelegate.h"
 #import "MGDocument.h"
 #import "MGConst.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 #import "HSFairwareReminder.h"
 #import "Dialogs.h"

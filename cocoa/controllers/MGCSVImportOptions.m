@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGCSVImportOptions.h"
 #import "MGCSVLayoutNameDialog.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGCSVImportOptions

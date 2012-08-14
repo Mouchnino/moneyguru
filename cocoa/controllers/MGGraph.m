@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGGraph.h"
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 @implementation MGGraph
 - (id)initWithPyRef:(PyObject *)aPyRef

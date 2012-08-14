@@ -10,7 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Python.h>
 #import <wchar.h>
 #import <locale.h>
-#import "Utils.h"
+#import "HSPyUtil.h"
 
 int main(int argc, char *argv[])
 {
