@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGRecurrenceScopeDialog.h"
 #import "MGConst.h"
+#import "MGRecurrenceScopeDialog_UI.h"
 
 @implementation MGRecurrenceScopeDialog
 + (NSInteger)shouldUseGlobalScope
@@ -15,24 +16,25 @@ http://www.hardcoded.net/licenses/bsd_license
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if (![ud boolForKey:ShowRecurrenceScopeDialog])
         return ScheduleScopeLocal;
-    MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] initWithWindowNibName:@"RecurrenceScopeDialog"];
+    MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] initWithWindow:nil];
+    [dialog setWindow:createMGRecurrenceScopeDialog_UI(dialog)];
     NSInteger result = [NSApp runModalForWindow:[dialog window]];
     [[dialog window] close];
     [dialog release];
     return result;
 }
 
-- (IBAction)cancel:(id)sender
+- (void)cancel
 {
     [NSApp stopModalWithCode:ScheduleScopeCancel];
 }
 
-- (IBAction)chooseGlobalScope:(id)sender
+- (void)chooseGlobalScope
 {
     [NSApp stopModalWithCode:ScheduleScopeGlobal];
 }
 
-- (IBAction)chooseLocalScope:(id)sender
+- (void)chooseLocalScope
 {
     [NSApp stopModalWithCode:ScheduleScopeLocal];
 }

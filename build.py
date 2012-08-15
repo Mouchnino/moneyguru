@@ -48,6 +48,7 @@ def build_xibless(dest='cocoa/autogen'):
     ensure_folder(dest)
     FNPAIRS = [
         ('lookup.py', 'MGLookup_UI'),
+        ('schedule_scope_dialog.py', 'MGRecurrenceScopeDialog_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),

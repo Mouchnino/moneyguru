@@ -31,3 +31,12 @@
 "moneyGuru is about to restart" = "moneyGuru is about to restart";
 "Select a file to import" = "Select a file to import";
 "Export to file" = "Export to file";
+
+/* Schedule Scope Dialog */
+"Modification Scope" = "Modification Scope";
+"Do you want this change to affect all future occurrences of this transaction?" = "Do you want this change to affect all future occurrences of this transaction?";
+"You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change." = "You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change.";
+"Show this dialog next time" = "Show this dialog next time";
+"Just this one" = "Just this one";
+"All future occurences" = "All future occurences";
+"Cancel" = "Cancel";
