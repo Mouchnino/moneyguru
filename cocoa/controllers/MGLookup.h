@@ -9,15 +9,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import "PyLookup.h"
 
-@interface MGLookup : NSWindowController {
-    IBOutlet NSSearchField *searchField;
-    IBOutlet NSTableView *namesTable;
+@interface MGLookup : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate>
+{
+    NSSearchField *searchField;
+    NSTableView *namesTable;
     
     PyLookup *model;
     NSArray *currentNames;
 }
+
+@property (readwrite, retain) NSSearchField *searchField;
+@property (readwrite, retain) NSTableView *namesTable;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 
-- (IBAction)go:(id)sender;
-- (IBAction)updateQuery:(id)sender;
+- (void)go;
+- (void)updateQuery;
 @end

@@ -9,17 +9,25 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGLookup.h"
 #import "HSPyUtil.h"
 #import "NSEventAdditions.h"
+#import "MGLookup_UI.h"
 
 @implementation MGLookup
+
+@synthesize searchField;
+@synthesize namesTable;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
-    self = [super initWithWindowNibName:@"Lookup"];
+    self = [super initWithWindow:nil];
     model = [[PyLookup alloc] initWithModel:aPyRef];
     [model bindCallback:createCallback(@"LookupView", self)];
+    [self setWindow:createMGLookup_UI(self)];
     currentNames = [[NSArray array] retain];
-    [self window]; // Initialize the window
+    [namesTable setDataSource:self];
+    [namesTable setDelegate:self];
     [namesTable setTarget:self];
-    [namesTable setDoubleAction:@selector(go:)];
+    [searchField setDelegate:self];
+    [namesTable setDoubleAction:@selector(go)];
     return self;
 }
 
@@ -37,12 +45,12 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)go:(id)sender
+- (void)go
 {
     [model go];
 }
 
-- (IBAction)updateQuery:(id)sender
+- (void)updateQuery
 {
     [model setSearchQuery:[searchField stringValue]];
 }

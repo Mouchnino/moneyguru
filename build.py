@@ -43,9 +43,20 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def build_xibless(dest='cocoa/autogen'):
+    import xibless
+    ensure_folder(dest)
+    FNPAIRS = [
+        ('lookup.py', 'MGLookup_UI'),
+    ]
+    for srcname, dstname in FNPAIRS:
+        xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),
+            localizationTable='Localizable')
+
 def build_cocoa(dev):
     print("Building xibless UIs")
     build_cocoalib_xibless()
+    build_xibless()
     print("Building the cocoa layer")
     ensure_folder('build/py')
     build_cocoa_proxy_module()
@@ -274,6 +285,7 @@ def main():
         build_ext()
     elif args.xibless:
         build_cocoalib_xibless()
+        build_xibless()
     else:
         build_normal(ui, dev)
 
