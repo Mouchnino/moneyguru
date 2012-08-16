@@ -40,3 +40,14 @@
 "Just this one" = "Just this one";
 "All future occurences" = "All future occurences";
 "Cancel" = "Cancel";
+
+/* Custom date range panel */
+
+"Custom date range" = "Custom date range";
+"Select start and end dates for your custom range:" = "Select start and end dates for your custom range:";
+"Start" = "Start";
+"End" = "End";
+"OK" = "OK";
+"Save this custom range in slot:" = "Save this custom range in slot:";
+"None" = "None";
+"Under the name:" = "Under the name:";

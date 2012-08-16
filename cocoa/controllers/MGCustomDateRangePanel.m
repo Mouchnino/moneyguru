@@ -7,16 +7,24 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGCustomDateRangePanel.h"
+#import "MGCustomDateRangePanel_UI.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
 @implementation MGCustomDateRangePanel
+
+@synthesize startDateField;
+@synthesize endDateField;
+@synthesize slotIndexSelector;
+@synthesize slotNameField;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PyCustomDateRangePanel *m = [[PyCustomDateRangePanel alloc] initWithModel:[[aParent model] customDateRangePanel]];
-    self = [super initWithNibName:@"CustomDateRangePanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
+    [self setWindow:createMGCustomDateRangePanel_UI(self)];
     return self;
 }
 

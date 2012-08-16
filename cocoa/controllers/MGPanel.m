@@ -20,6 +20,16 @@ http://www.hardcoded.net/licenses/bsd_license
     return self;
 }
 
+- (id)initWithModel:(PyPanel *)aModel parent:(NSWindowController *)aParent
+{
+    self = [super initWithWindow:nil];
+    model = [aModel retain];
+    parentWindow = [aParent window];
+    customFieldEditor = nil; // instantiated by subclasses
+    customDateFieldEditor = [[MGDateFieldEditor alloc] init];
+    return self;
+}
+
 - (void)dealloc
 {
     [model release];

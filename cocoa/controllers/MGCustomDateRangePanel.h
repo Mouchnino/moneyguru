@@ -13,12 +13,18 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @class MGMainWindowController;
 
-@interface MGCustomDateRangePanel : MGPanel {
-    IBOutlet NSTextField *startDateField;
-    IBOutlet NSTextField *endDateField;
-    IBOutlet NSPopUpButton *slotIndexSelector;
-    IBOutlet NSTextField *slotNameField;
+@interface MGCustomDateRangePanel : MGPanel <NSWindowDelegate, NSTextFieldDelegate> {
+    NSTextField *startDateField;
+    NSTextField *endDateField;
+    NSPopUpButton *slotIndexSelector;
+    NSTextField *slotNameField;
 }
+
+@property (readwrite, retain) NSTextField *startDateField;
+@property (readwrite, retain) NSTextField *endDateField;
+@property (readwrite, retain) NSPopUpButton *slotIndexSelector;
+@property (readwrite, retain) NSTextField *slotNameField;
+
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyCustomDateRangePanel *)model;
 @end

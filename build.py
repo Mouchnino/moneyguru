@@ -49,6 +49,7 @@ def build_xibless(dest='cocoa/autogen'):
     FNPAIRS = [
         ('lookup.py', 'MGLookup_UI'),
         ('schedule_scope_dialog.py', 'MGRecurrenceScopeDialog_UI'),
+        ('custom_date_range_dialog.py', 'MGCustomDateRangePanel_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),
