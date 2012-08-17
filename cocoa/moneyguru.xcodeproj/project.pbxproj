@@ -118,6 +118,7 @@
 		CE73E46415DE7EBC00F97C58 /* MGAccountReassignPanel_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73E46315DE7EBC00F97C58 /* MGAccountReassignPanel_UI.m */; };
 		CE74544612082C5B003A2794 /* cashculator_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE74544512082C5B003A2794 /* cashculator_16.png */; };
 		CE74808D11995EF400D59C50 /* MGEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE74808C11995EF400D59C50 /* MGEmptyView.m */; };
+		CE76FDB315DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76FDB215DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.m */; };
 		CE7990B212082D53000A4846 /* cashculator_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7990B112082D53000A4846 /* cashculator_48.png */; };
 		CE7DA84F15DC3ADC0030186B /* MGRecurrenceScopeDialog_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7DA84E15DC3ADC0030186B /* MGRecurrenceScopeDialog_UI.m */; };
 		CE80FF3E0E34ABC4001CB573 /* MGSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */; };
@@ -211,7 +212,6 @@
 		CEC367AB11D10E1E00EB0222 /* BalanceSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3677F11D10E1E00EB0222 /* BalanceSheet.xib */; };
 		CEC367AC11D10E1E00EB0222 /* BudgetPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678111D10E1E00EB0222 /* BudgetPanel.xib */; };
 		CEC367AE11D10E1E00EB0222 /* CSVImportOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678511D10E1E00EB0222 /* CSVImportOptions.xib */; };
-		CEC367AF11D10E1E00EB0222 /* CSVLayoutName.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678711D10E1E00EB0222 /* CSVLayoutName.xib */; };
 		CEC367B111D10E1E00EB0222 /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */; };
 		CEC367B211D10E1E00EB0222 /* EntryTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678D11D10E1E00EB0222 /* EntryTable.xib */; };
 		CEC367B311D10E1E00EB0222 /* ImportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678F11D10E1E00EB0222 /* ImportWindow.xib */; };
@@ -499,7 +499,6 @@
 		CE6D50A2147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
 		CE6D50A4147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CashculatorView.xib; sourceTree = "<group>"; };
 		CE6D50A5147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
-		CE6D50A6147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
 		CE6D50A8147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CE6D50A9147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/DocProps.xib; sourceTree = "<group>"; };
 		CE6D50AA147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/EntryTable.xib; sourceTree = "<group>"; };
@@ -528,6 +527,8 @@
 		CE74544512082C5B003A2794 /* cashculator_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_16.png; sourceTree = "<group>"; };
 		CE74808B11995EF400D59C50 /* MGEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGEmptyView.h; sourceTree = "<group>"; };
 		CE74808C11995EF400D59C50 /* MGEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGEmptyView.m; sourceTree = "<group>"; };
+		CE76FDB115DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCSVLayoutNameDialog_UI.h; sourceTree = "<group>"; };
+		CE76FDB215DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCSVLayoutNameDialog_UI.m; sourceTree = "<group>"; };
 		CE7990B112082D53000A4846 /* cashculator_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashculator_48.png; sourceTree = "<group>"; };
 		CE7DA84D15DC3ADC0030186B /* MGRecurrenceScopeDialog_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGRecurrenceScopeDialog_UI.h; sourceTree = "<group>"; };
 		CE7DA84E15DC3ADC0030186B /* MGRecurrenceScopeDialog_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog_UI.m; sourceTree = "<group>"; };
@@ -545,7 +546,6 @@
 		CE80D95511DA3A28007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SchedulePanel.xib; sourceTree = "<group>"; };
 		CE80D95611DA3A36007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
 		CE80D95811DA3A52007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
-		CE80D95911DA3A52007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
 		CE80D95B11DA3A52007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/ImportWindow.xib; sourceTree = "<group>"; };
 		CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSearchField.h; sourceTree = "<group>"; };
 		CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSearchField.m; sourceTree = "<group>"; };
@@ -690,7 +690,6 @@
 		CEC3678011D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
 		CEC3678211D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
 		CEC3678611D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
-		CEC3678811D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
 		CEC3678C11D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CEC3678E11D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/EntryTable.xib; sourceTree = "<group>"; };
 		CEC3679011D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ImportWindow.xib; sourceTree = "<group>"; };
@@ -706,7 +705,6 @@
 		CEC367C211D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/BalanceSheet.xib; sourceTree = "<group>"; };
 		CEC367C311D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
 		CEC367C511D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
-		CEC367C611D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
 		CEC367C811D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CEC367C911D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/EntryTable.xib; sourceTree = "<group>"; };
 		CEC367CA11D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/ImportWindow.xib; sourceTree = "<group>"; };
@@ -733,7 +731,6 @@
 		CECEF782144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
 		CECEF784144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/CashculatorView.xib; sourceTree = "<group>"; };
 		CECEF785144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
-		CECEF786144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
 		CECEF788144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CECEF789144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/EntryTable.xib; sourceTree = "<group>"; };
 		CECEF78A144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/ExportPanel.xib; sourceTree = "<group>"; };
@@ -865,7 +862,6 @@
 		CEFF4EB51303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/BudgetPanel.xib; sourceTree = "<group>"; };
 		CEFF4EB71303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/CashculatorView.xib; sourceTree = "<group>"; };
 		CEFF4EB81303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/CSVImportOptions.xib; sourceTree = "<group>"; };
-		CEFF4EB91303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/CSVLayoutName.xib; sourceTree = "<group>"; };
 		CEFF4EBB1303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CEFF4EBC1303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/EntryTable.xib; sourceTree = "<group>"; };
 		CEFF4EBD1303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/ExportPanel.xib; sourceTree = "<group>"; };
@@ -986,6 +982,8 @@
 		CE16CCF515DADA6000356EFF /* xibless */ = {
 			isa = PBXGroup;
 			children = (
+				CE76FDB115DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.h */,
+				CE76FDB215DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.m */,
 				CE73E46215DE7EBC00F97C58 /* MGAccountReassignPanel_UI.h */,
 				CE73E46315DE7EBC00F97C58 /* MGAccountReassignPanel_UI.m */,
 				CE0E186F15DD4D8C00410771 /* MGCustomDateRangePanel_UI.h */,
@@ -1401,7 +1399,6 @@
 				CE66BD111275751B008EFA8A /* ExportPanel.xib */,
 				CEC3678F11D10E1E00EB0222 /* ImportWindow.xib */,
 				CEC3678511D10E1E00EB0222 /* CSVImportOptions.xib */,
-				CEC3678711D10E1E00EB0222 /* CSVLayoutName.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -1763,7 +1760,6 @@
 				CEC367AB11D10E1E00EB0222 /* BalanceSheet.xib in Resources */,
 				CEC367AC11D10E1E00EB0222 /* BudgetPanel.xib in Resources */,
 				CEC367AE11D10E1E00EB0222 /* CSVImportOptions.xib in Resources */,
-				CEC367AF11D10E1E00EB0222 /* CSVLayoutName.xib in Resources */,
 				CEC367B111D10E1E00EB0222 /* DateRangeSelector.xib in Resources */,
 				CEC367B211D10E1E00EB0222 /* EntryTable.xib in Resources */,
 				CEC367B311D10E1E00EB0222 /* ImportWindow.xib in Resources */,
@@ -1994,6 +1990,7 @@
 				CE7DA84F15DC3ADC0030186B /* MGRecurrenceScopeDialog_UI.m in Sources */,
 				CE0E187115DD4D8C00410771 /* MGCustomDateRangePanel_UI.m in Sources */,
 				CE73E46415DE7EBC00F97C58 /* MGAccountReassignPanel_UI.m in Sources */,
+				CE76FDB315DE86550011F0B5 /* MGCSVLayoutNameDialog_UI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2076,19 +2073,6 @@
 				CE6D50A5147EC6B500FCF8CD /* nl */,
 			);
 			name = CSVImportOptions.xib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CEC3678711D10E1E00EB0222 /* CSVLayoutName.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEC3678811D10E1E00EB0222 /* en */,
-				CEC367C611D10E4A00EB0222 /* fr */,
-				CE80D95911DA3A52007B8E05 /* de */,
-				CEFF4EB91303FAFB009706BE /* it */,
-				CECEF786144219E700EBF1C4 /* cs */,
-				CE6D50A6147EC6B500FCF8CD /* nl */,
-			);
-			name = CSVLayoutName.xib;
 			sourceTree = SOURCE_ROOT;
 		};
 		CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */ = {

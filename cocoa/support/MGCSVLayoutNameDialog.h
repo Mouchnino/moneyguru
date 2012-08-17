@@ -10,13 +10,16 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGCSVLayoutNameDialog : NSWindowController
 {
-    IBOutlet NSTextField *nameTextField;
+    NSTextField *nameTextField;
 }
+
+@property (readwrite, retain) NSTextField *nameTextField;
+
 + (NSString *)askForLayoutName;
 + (NSString *)askForLayoutNameBasedOnOldName:(NSString *)oldName;
 
-- (IBAction)ok:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (void)ok;
+- (void)cancel;
 
 - (NSString *)layoutName;
 - (void)setLayoutName:(NSString *)name;

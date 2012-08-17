@@ -7,9 +7,13 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGCSVLayoutNameDialog.h"
+#import "MGCSVLayoutNameDialog_UI.h"
 #import "MGConst.h"
 
 @implementation MGCSVLayoutNameDialog
+
+@synthesize nameTextField;
+
 + (NSString *)askForLayoutName
 {
     return [MGCSVLayoutNameDialog askForLayoutNameBasedOnOldName:@""];
@@ -17,8 +21,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 + (NSString *)askForLayoutNameBasedOnOldName:(NSString *)oldName
 {
-    MGCSVLayoutNameDialog *dialog = [[MGCSVLayoutNameDialog alloc] initWithWindowNibName:@"CSVLayoutName"];
-    [dialog window]; // Initialize outlets
+    MGCSVLayoutNameDialog *dialog = [[MGCSVLayoutNameDialog alloc] initWithWindow:nil];
+    [dialog setWindow:createMGCSVLayoutNameDialog_UI(dialog)];
     [dialog setLayoutName:oldName];
     NSString *result = [NSApp runModalForWindow:[dialog window]] == NSRunStoppedResponse ? [dialog layoutName] : nil;
     [[dialog window] close];
@@ -26,12 +30,12 @@ http://www.hardcoded.net/licenses/bsd_license
     return result;
 }
 
-- (IBAction)ok:(id)sender
+- (void)ok
 {
     [NSApp stopModal];
 }
 
-- (IBAction)cancel:(id)sender
+- (void)cancel
 {
     [NSApp abortModal];
 }

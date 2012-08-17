@@ -33,6 +33,7 @@ for label in [startLabel, endLabel]:
     label.textColor = fieldColor
 for field in [startField, endField]:
     field.controlSize = ControlSize.Small
+slotNameField.controlSize = ControlSize.Small
 
 cancelButton.keyEquivalent = '\\e'
 okButton.keyEquivalent = '\\r'

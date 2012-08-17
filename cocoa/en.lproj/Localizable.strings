@@ -55,3 +55,7 @@
 "You're about to delete a non-empty account. Select an account to re-assign its transactions to." = "You're about to delete a non-empty account. Select an account to re-assign its transactions to.";
 "No Account" = "No Account";
 "Continue" = "Continue";
+
+/* CSV Layout Name */
+"Layout Name" = "Layout Name";
+"Layout Name:" = "Layout Name:";
