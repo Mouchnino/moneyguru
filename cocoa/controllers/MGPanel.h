@@ -11,7 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGFieldEditor.h"
 #import "PyPanel.h"
 
-@interface MGPanel : NSWindowController {
+@interface MGPanel : NSWindowController <NSWindowDelegate> {
     PyPanel *model;
     NSWindow *parentWindow;
     MGFieldEditor *customFieldEditor;

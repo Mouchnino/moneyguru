@@ -42,7 +42,6 @@
 "Cancel" = "Cancel";
 
 /* Custom date range panel */
-
 "Custom date range" = "Custom date range";
 "Select start and end dates for your custom range:" = "Select start and end dates for your custom range:";
 "Start" = "Start";
@@ -51,3 +50,8 @@
 "Save this custom range in slot:" = "Save this custom range in slot:";
 "None" = "None";
 "Under the name:" = "Under the name:";
+
+/* Account reassign panel */
+"You're about to delete a non-empty account. Select an account to re-assign its transactions to." = "You're about to delete a non-empty account. Select an account to re-assign its transactions to.";
+"No Account" = "No Account";
+"Continue" = "Continue";

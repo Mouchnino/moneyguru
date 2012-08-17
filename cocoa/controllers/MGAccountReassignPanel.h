@@ -15,10 +15,13 @@ http://www.hardcoded.net/licenses/bsd_license
 @class MGMainWindowController;
 
 @interface MGAccountReassignPanel : MGPanel {
-    IBOutlet NSPopUpButton *accountSelector;
+    NSPopUpButton *accountSelector;
     
     HSPopUpList *accountPopUp;
 }
+
+@property (readwrite, retain) NSPopUpButton *accountSelector;
+
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyAccountReassignPanel *)model;
 @end

@@ -13,7 +13,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @class MGMainWindowController;
 
-@interface MGCustomDateRangePanel : MGPanel <NSWindowDelegate, NSTextFieldDelegate> {
+@interface MGCustomDateRangePanel : MGPanel <NSTextFieldDelegate> {
     NSTextField *startDateField;
     NSTextField *endDateField;
     NSPopUpButton *slotIndexSelector;
