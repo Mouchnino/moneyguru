@@ -10,31 +10,39 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyDocument.h"
 #import "PyCSVImportOptions.h"
 
-@interface MGCSVImportOptions : NSWindowController
+@interface MGCSVImportOptions : NSWindowController <NSTableViewDelegate, NSTableViewDataSource>
 {
-    IBOutlet NSTableView *csvDataTable;
-    IBOutlet NSMenu *columnMenu;
-    IBOutlet NSPopUpButton *layoutSelector;
-    IBOutlet NSPopUpButton *encodingSelector;
-    IBOutlet NSPopUpButton *targetSelector;
-    IBOutlet NSTextField *delimiterTextField;
+    NSTableView *csvDataTable;
+    NSMenu *columnMenu;
+    NSPopUpButton *layoutSelector;
+    NSPopUpButton *encodingSelector;
+    NSPopUpButton *targetSelector;
+    NSTextField *delimiterTextField;
     
     NSInteger lastClickedColumnIndex;
     PyCSVImportOptions *model;
 }
+
+@property (readwrite, retain) NSTableView *csvDataTable;
+@property (readwrite, retain) NSMenu *columnMenu;
+@property (readwrite, retain) NSPopUpButton *layoutSelector;
+@property (readwrite, retain) NSPopUpButton *encodingSelector;
+@property (readwrite, retain) NSPopUpButton *targetSelector;
+@property (readwrite, retain) NSTextField *delimiterTextField;
+
 - (id)initWithDocument:(PyDocument *)aDocument;
 
 /* Actions */
-- (IBAction)cancel:(id)sender;
-- (IBAction)continueImport:(id)sender;
-- (IBAction)deleteSelectedLayout:(id)sender;
-- (IBAction)newLayout:(id)sender;
-- (IBAction)renameSelectedLayout:(id)sender;
-- (IBAction)rescan:(id)sender;
-- (IBAction)selectLayout:(id)sender;
-- (IBAction)selectTarget:(id)sender;
-- (IBAction)setColumnField:(id)sender;
-- (IBAction)toggleLineExclusion:(id)sender;
+- (void)cancel;
+- (void)continueImport;
+- (void)deleteSelectedLayout;
+- (void)newLayout;
+- (void)renameSelectedLayout;
+- (void)rescan;
+- (void)selectLayout:(id)sender;
+- (void)selectTarget;
+- (void)setColumnField:(id)sender;
+- (void)toggleLineExclusion;
 
 /* Public */
 - (BOOL)canDeleteLayout;

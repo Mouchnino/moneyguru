@@ -7,17 +7,26 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGCSVImportOptions.h"
+#import "MGCSVImportOptions_UI.h"
 #import "MGCSVLayoutNameDialog.h"
 #import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGCSVImportOptions
+
+@synthesize csvDataTable;
+@synthesize columnMenu;
+@synthesize layoutSelector;
+@synthesize encodingSelector;
+@synthesize targetSelector;
+@synthesize delimiterTextField;
+
 - (id)initWithDocument:(PyDocument *)aDocument
 {
-    self = [super initWithWindowNibName:@"CSVImportOptions"];
-    [self window];
+    self = [super initWithWindow:nil];
     model = [[PyCSVImportOptions alloc] initWithDocument:[aDocument pyRef]];
     [model bindCallback:createCallback(@"CSVImportOptionsView", self)];
+    [self setWindow:createMGCSVImportOptions_UI(self)];
     [encodingSelector addItemsWithTitles:[model supportedEncodings]];
     return self;
 }
@@ -30,22 +39,22 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Actions */
 
-- (IBAction)cancel:(id)sender
+- (void)cancel
 {
     [[self window] orderOut:self];
 }
 
-- (IBAction)continueImport:(id)sender
+- (void)continueImport
 {
     [model continueImport];
 }
 
-- (IBAction)deleteSelectedLayout:(id)sender
+- (void)deleteSelectedLayout
 {
     [model deleteSelectedLayout];
 }
 
-- (IBAction)newLayout:(id)sender
+- (void)newLayout
 {
     NSString *layoutName = [MGCSVLayoutNameDialog askForLayoutName];
     if (layoutName != nil)
@@ -54,7 +63,7 @@ http://www.hardcoded.net/licenses/bsd_license
         [layoutSelector selectItemWithTitle:[model selectedLayoutName]];
 }
 
-- (IBAction)renameSelectedLayout:(id)sender
+- (void)renameSelectedLayout
 {
     NSString *layoutName = [MGCSVLayoutNameDialog askForLayoutNameBasedOnOldName:[model selectedLayoutName]];
     if (layoutName != nil)
@@ -63,14 +72,14 @@ http://www.hardcoded.net/licenses/bsd_license
         [layoutSelector selectItemWithTitle:[model selectedLayoutName]];
 }
 
-- (IBAction)rescan:(id)sender
+- (void)rescan
 {
     [model setFieldSeparator:[delimiterTextField stringValue]];
     [model setEncodingIndex:[encodingSelector indexOfSelectedItem]];
     [model rescan];
 }
 
-- (IBAction)selectLayout:(id)sender
+- (void)selectLayout:(id)sender
 {
     NSMenuItem *item = sender;
     if ([layoutSelector indexOfItem:item] == 0) // Default
@@ -79,17 +88,17 @@ http://www.hardcoded.net/licenses/bsd_license
         [model selectLayout:[item title]];
 }
 
-- (IBAction)selectTarget:(id)sender
+- (void)selectTarget
 {
     [model setSelectedTargetIndex:[targetSelector indexOfSelectedItem]];
 }
 
-- (IBAction)setColumnField:(id)sender
+- (void)setColumnField:(id)sender
 {
     [model setColumn:lastClickedColumnIndex-1 fieldForTag:[sender tag]];
 }
 
-- (IBAction)toggleLineExclusion:(id)sender
+- (void)toggleLineExclusion
 {
     [model toggleLineExclusion:[csvDataTable selectedRow]];
 }

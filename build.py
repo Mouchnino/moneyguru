@@ -52,6 +52,7 @@ def build_xibless(dest='cocoa/autogen'):
         ('custom_date_range_dialog.py', 'MGCustomDateRangePanel_UI'),
         ('account_reassign_panel.py', 'MGAccountReassignPanel_UI'),
         ('csv_layout_name.py', 'MGCSVLayoutNameDialog_UI'),
+        ('csv_import_options.py', 'MGCSVImportOptions_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),

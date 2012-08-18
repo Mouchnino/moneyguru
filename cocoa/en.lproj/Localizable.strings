@@ -59,3 +59,29 @@
 /* CSV Layout Name */
 "Layout Name" = "Layout Name";
 "Layout Name:" = "Layout Name:";
+
+/* CSV Import Options */
+"CSV Import Options" = "CSV Import Options";
+"Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transactio" = "Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transaction (header, footer, comments).";
+"Import" = "Import";
+"Continue Import" = "Continue Import";
+"Date" = "Date";
+"Description" = "Description";
+"Payee" = "Payee";
+"Check #" = "Check #";
+"Transfer" = "Transfer";
+"Amount" = "Amount";
+"Currency" = "Currency";
+"Transaction ID" = "Transaction ID";
+"Layout:" = "Layout:";
+"Default" = "Default";
+"New Layout..." = "New Layout...";
+"Rename Selected Layout..." = "Rename Selected Layout...";
+"Delete Selected Layout" = "Delete Selected Layout";
+"New Account" = "New Account";
+"Target:" = "Target:";
+"Increase" = "Increase";
+"Decrease" = "Decrease";
+"Delimiter:" = "Delimiter:";
+"Rescan" = "Rescan";
+"Encoding:" = "Encoding:";
