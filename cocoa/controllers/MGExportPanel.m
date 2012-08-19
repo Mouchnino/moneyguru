@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGExportPanel.h"
+#import "MGExportPanel_UI.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
@@ -15,12 +16,20 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGExportFormatCSV 1
 
 @implementation MGExportPanel
+
+@synthesize exportAllButtons;
+@synthesize exportButton;
+@synthesize accountTableView;
+@synthesize exportFormatButtons;
+@synthesize currentDateRangeOnlyButton;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PyExportPanel *m = [[PyExportPanel alloc] initWithModel:[[aParent model] exportPanel]];
-    self = [super initWithNibName:@"ExportPanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"ExportPanelView", self)];
     [m release];
+    [self setWindow:createMGExportPanel_UI(self)];
     accountTable = [[MGExportAccountTable alloc] initWithPyRef:[[self model] accountTable] tableView:accountTableView];
     return self;
 }
@@ -60,13 +69,13 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)exportAllToggled:(id)sender
+- (void)exportAllToggled
 {
     BOOL exportAll = [exportAllButtons selectedRow] == 0;
     [[self model] setExportAll:exportAll];
 }
 
-- (IBAction)export:(id)sender
+- (void)export
 {
     NSSavePanel *sp = [NSSavePanel savePanel];
     [sp setCanCreateDirectories:YES];
@@ -76,7 +85,7 @@ http://www.hardcoded.net/licenses/bsd_license
     if ([sp runModal] == NSOKButton) {
         NSString *filepath = [[sp URL] path];
         [[self model] setExportPath:filepath];
-        [self save:sender];
+        [self save:nil];
     }
 }
 

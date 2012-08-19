@@ -54,6 +54,7 @@ def build_xibless(dest='cocoa/autogen'):
         ('csv_layout_name.py', 'MGCSVLayoutNameDialog_UI'),
         ('csv_import_options.py', 'MGCSVImportOptions_UI'),
         ('import_window.py', 'MGImportWindow_UI'),
+        ('export_panel.py', 'MGExportPanel_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),

@@ -96,3 +96,12 @@
 "Apply to all accounts" = "Apply to all accounts";
 "Description <--> Payee" = "Description <--> Payee";
 "Invert Amounts" = "Invert Amounts";
+
+/* Export Panel */
+"Export Options" = "Export Options";
+"Which accounts do you want to export?" = "Which accounts do you want to export?";
+"Selected" = "Selected";
+"Export" = "Export";
+"Export format:" = "Export format:";
+"Export scope:" = "Export scope:";
+"Current date range only" = "Current date range only";

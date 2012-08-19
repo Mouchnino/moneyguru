@@ -15,17 +15,24 @@ http://www.hardcoded.net/licenses/bsd_license
 @class MGMainWindowController;
 
 @interface MGExportPanel : MGPanel {
-    IBOutlet NSMatrix *exportAllButtons;
-    IBOutlet NSButton *exportButton;
-    IBOutlet MGTableView *accountTableView;
-    IBOutlet NSMatrix *exportFormatButtons;
-    IBOutlet NSButton *currentDateRangeOnlyButton;
+    NSMatrix *exportAllButtons;
+    NSButton *exportButton;
+    MGTableView *accountTableView;
+    NSMatrix *exportFormatButtons;
+    NSButton *currentDateRangeOnlyButton;
     
     MGExportAccountTable *accountTable;
 }
+
+@property (readwrite, retain) NSMatrix *exportAllButtons;
+@property (readwrite, retain) NSButton *exportButton;
+@property (readwrite, retain) MGTableView *accountTableView;
+@property (readwrite, retain) NSMatrix *exportFormatButtons;
+@property (readwrite, retain) NSButton *currentDateRangeOnlyButton;
+
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyExportPanel *)model;
 /* Actions */
-- (IBAction)exportAllToggled:(id)sender;
-- (IBAction)export:(id)sender;
+- (void)exportAllToggled;
+- (void)export;
 @end
