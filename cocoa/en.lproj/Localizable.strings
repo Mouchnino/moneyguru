@@ -85,3 +85,14 @@
 "Delimiter:" = "Delimiter:";
 "Rescan" = "Rescan";
 "Encoding:" = "Encoding:";
+
+/* Import Window */
+"Target Account:" = "Target Account:";
+"Are some fields wrong? Swap them!" = "Are some fields wrong? Swap them!";
+"Day <--> Month" = "Day <--> Month";
+"Month <--> Year" = "Month <--> Year";
+"Day <--> Year" = "Day <--> Year";
+"Swap" = "Swap";
+"Apply to all accounts" = "Apply to all accounts";
+"Description <--> Payee" = "Description <--> Payee";
+"Invert Amounts" = "Invert Amounts";

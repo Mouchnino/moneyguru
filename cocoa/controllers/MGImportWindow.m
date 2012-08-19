@@ -7,14 +7,25 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGImportWindow.h"
+#import "MGImportWindow_UI.h"
 #import "PSMTabBarCell.h"
 #import "HSPyUtil.h"
 
 @implementation MGImportWindow
+
+@synthesize tabBar;
+@synthesize tabView;
+@synthesize mainView;
+@synthesize targetAccountsPopup;
+@synthesize switchDateFieldsPopup;
+@synthesize applySwapToAllCheckbox;
+@synthesize swapButton;
+@synthesize importTableView;
+
 - (id)initWithDocument:(PyDocument *)aDocument
 {
-    self = [super initWithWindowNibName:@"ImportWindow"];
-    [self window];
+    self = [super initWithWindow:nil];
+    [self setWindow:createMGImportWindow_UI(self)];
     model = [[PyImportWindow alloc] initWithDocument:[aDocument pyRef]];
     importTable = [[MGImportTable alloc] initWithPyRef:[model importTable] view:importTableView];
     [model bindCallback:createCallback(@"ImportWindowView", self)];
@@ -37,24 +48,24 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)changeTargetAccount:(id)sender
+- (void)changeTargetAccount
 {
     [model setSelectedTargetAccountIndex:[targetAccountsPopup indexOfSelectedItem]];
     [importTable updateOneOrTwoSided];
 }
 
-- (IBAction)importSelectedPane:(id)sender
+- (void)importSelectedPane
 {
     [model importSelectedPane];
 }
 
-- (IBAction)selectSwapType:(id)sender
+- (void)selectSwapType
 {
     [model setSwapTypeIndex:[switchDateFieldsPopup indexOfSelectedItem]];
     [swapButton setEnabled:[model canPerformSwap]];
 }
 
-- (IBAction)switchDateFields:(id)sender
+- (void)switchDateFields
 {
     BOOL applyToAll = [applySwapToAllCheckbox state] == NSOnState;
     if ([model canPerformSwap]) {

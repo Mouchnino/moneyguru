@@ -15,26 +15,36 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGImportWindow : NSWindowController
 {
-    IBOutlet PSMTabBarControl *tabBar;
-    IBOutlet NSTabView *tabView;
-    IBOutlet NSView *mainView;
-    IBOutlet NSPopUpButton *targetAccountsPopup;
-    IBOutlet NSPopUpButton *switchDateFieldsPopup;
-    IBOutlet NSButton *applySwapToAllCheckbox;
-    IBOutlet NSButton *swapButton;
-    IBOutlet MGTableView *importTableView;
+    PSMTabBarControl *tabBar;
+    NSTabView *tabView;
+    NSView *mainView;
+    NSPopUpButton *targetAccountsPopup;
+    NSPopUpButton *switchDateFieldsPopup;
+    NSButton *applySwapToAllCheckbox;
+    NSButton *swapButton;
+    MGTableView *importTableView;
     
     PyImportWindow *model;
     MGImportTable *importTable;
     NSInteger tabToRemoveIndex;
 }
+
+@property (readwrite, retain) PSMTabBarControl *tabBar;
+@property (readwrite, retain) NSTabView *tabView;
+@property (readwrite, retain) NSView *mainView;
+@property (readwrite, retain) NSPopUpButton *targetAccountsPopup;
+@property (readwrite, retain) NSPopUpButton *switchDateFieldsPopup;
+@property (readwrite, retain) NSButton *applySwapToAllCheckbox;
+@property (readwrite, retain) NSButton *swapButton;
+@property (readwrite, retain) MGTableView *importTableView;
+
 - (id)initWithDocument:(PyDocument *)aDocument;
 
 /* Actions */
-- (IBAction)changeTargetAccount:(id)sender;
-- (IBAction)importSelectedPane:(id)sender;
-- (IBAction)selectSwapType:(id)sender;
-- (IBAction)switchDateFields:(id)sender;
+- (void)changeTargetAccount;
+- (void)importSelectedPane;
+- (void)selectSwapType;
+- (void)switchDateFields;
 
 /* Python callbacks */
 - (void)close;
