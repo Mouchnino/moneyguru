@@ -1,11 +1,13 @@
+from common import FieldLabel
+
 ownerclass = 'MGCustomDateRangePanel'
 ownerimport = 'MGCustomDateRangePanel.h'
 
 result = Window(362, 202, "Custom date range")
 promptLabel = Label(result, "Select start and end dates for your custom range:")
-startLabel = Label(result, "Start")
+startLabel = FieldLabel(result, "Start")
 startField = TextField(result, "")
-endLabel = Label(result, "End")
+endLabel = FieldLabel(result, "End")
 endField = TextField(result, "")
 slotLabel = Label(result, "Save this custom range in slot:")
 slotPopup = Popup(result, ["None", NLSTR("#1"), NLSTR("#2"), NLSTR("#3")])
@@ -24,13 +26,6 @@ endField.delegate = owner
 
 
 result.canResize = result.canMinimize = False
-fieldFont = Font("Lucida Grande", 11, [FontTrait.Bold])
-fieldColor = Color(0x80, 0x80, 0x80) # light gray
-for label in [startLabel, endLabel]:
-    label.controlSize = ControlSize.Small
-    label.font = fieldFont
-    label.alignment = TextAlignment.Right
-    label.textColor = fieldColor
 for field in [startField, endField]:
     field.controlSize = ControlSize.Small
 slotNameField.controlSize = ControlSize.Small

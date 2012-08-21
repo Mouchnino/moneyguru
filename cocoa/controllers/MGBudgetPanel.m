@@ -7,16 +7,29 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGBudgetPanel.h"
+#import "MGBudgetPanel_UI.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
 @implementation MGBudgetPanel
+
+@synthesize startDateField;
+@synthesize repeatEveryField;
+@synthesize repeatEveryDescLabel;
+@synthesize repeatTypePopUpView;
+@synthesize stopDateField;
+@synthesize accountSelector;
+@synthesize targetSelector;
+@synthesize amountField;
+@synthesize notesField;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PyBudgetPanel *m = [[PyBudgetPanel alloc] initWithModel:[[aParent model] budgetPanel]];
-    self = [super initWithNibName:@"BudgetPanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"BudgetPanelView", self)];
     [m release];
+    [self setWindow:createMGBudgetPanel_UI(self)];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
     accountPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] accountList] popupView:accountSelector];
     targetPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] targetList] popupView:targetSelector];

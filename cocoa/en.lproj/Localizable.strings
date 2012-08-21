@@ -105,3 +105,15 @@
 "Export format:" = "Export format:";
 "Export scope:" = "Export scope:";
 "Current date range only" = "Current date range only";
+
+/* Budget Panel */
+"Start Date" = "Start Date";
+"Budget Info" = "Budget Info";
+"Save" = "Save";
+"Budget Info" = "Budget Info";
+"Repeat" = "Repeat";
+"Every" = "Every";
+"Stop Date" = "Stop Date";
+"Account" = "Account";
+"Target" = "Target";
+"Notes" = "Notes";
