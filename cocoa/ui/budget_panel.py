@@ -1,4 +1,4 @@
-from common import FieldLabel
+from common import FieldLabel, PANEL_TITLE_FONT
 
 ownerclass = 'MGBudgetPanel'
 ownerimport = 'MGBudgetPanel.h'
@@ -35,14 +35,13 @@ owner.startDateField = startDateField
 owner.stopDateField = stopDateField
 owner.targetSelector = targetPopup
 startDateField.delegate = owner
-stopDateField.delegate = owner
 everyField.delegate = owner
 result.delegate = owner
 
 result.canResize = False
 cancelButton.keyEquivalent = '\\e'
 saveButton.keyEquivalent = '\\r'
-titleLabel.font = Font("Lucida Grande", 18, [FontTrait.Bold])
+titleLabel.font = PANEL_TITLE_FONT
 titleLabel.alignment = TextAlignment.Center
 everyField.formatter = NumberFormatter(NumberStyle.Decimal)
 everyField.formatter.maximumFractionDigits = 0
@@ -62,6 +61,7 @@ everyDescLabel.width = 100
 for field in [startDateField, stopDateField, amountField]:
     field.width = 111
 notesField.height *= 2 # 2 lines
+cancelButton.width = saveButton.width = 84
 
 layout = VHLayout([
     [titleLabel],

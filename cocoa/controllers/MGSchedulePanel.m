@@ -7,16 +7,31 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGSchedulePanel.h"
+#import "MGSchedulePanel_UI.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
 @implementation MGSchedulePanel
+
+@synthesize tabView;
+@synthesize startDateField;
+@synthesize repeatEveryField;
+@synthesize repeatEveryDescLabel;
+@synthesize repeatTypePopUpView;
+@synthesize stopDateField;
+@synthesize descriptionField;
+@synthesize payeeField;
+@synthesize checknoField;
+@synthesize notesField;
+@synthesize splitTableView;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PySchedulePanel *m = [[PySchedulePanel alloc] initWithModel:[[aParent model] schedulePanel]];
-    self = [super initWithNibName:@"SchedulePanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"SchedulePanelView", self)];
     [m release];
+    [self setWindow:createMGSchedulePanel_UI(self)];
     splitTable = [[MGSplitTable alloc] initWithPyRef:[[self model] splitTable] tableView:splitTableView];
     repeatTypePopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] repeatTypeList] popupView:repeatTypePopUpView];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
@@ -94,12 +109,12 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)addSplit:(id)sender
+- (void)addSplit
 {
     [[splitTable model] add];
 }
 
-- (IBAction)deleteSplit:(id)sender
+- (void)deleteSplit
 {
     [[splitTable model] deleteSelectedRows];
 }

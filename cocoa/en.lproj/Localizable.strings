@@ -117,3 +117,11 @@
 "Account" = "Account";
 "Target" = "Target";
 "Notes" = "Notes";
+
+/* Schedule Panel */
+"Schedule Info" = "Schedule Info";
+"Transfers" = "Transfers";
+"Info" = "Info";
+"You can navigate tabs with ⌘⌥→ and ⌘⌥←" = "You can navigate tabs with ⌘⌥→ and ⌘⌥←";
+"Use ⌥+Return to insert a new line." = "Use ⌥+Return to insert a new line.";
+

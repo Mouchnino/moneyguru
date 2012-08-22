@@ -15,27 +15,40 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @class MGMainWindowController;
 
-@interface MGSchedulePanel : MGPanel {
-    IBOutlet NSTabView *tabView;
-    IBOutlet NSTextField *startDateField;
-    IBOutlet NSTextField *repeatEveryField;
-    IBOutlet NSTextField *repeatEveryDescLabel;
-    IBOutlet NSPopUpButton *repeatTypePopUpView;
-    IBOutlet NSTextField *stopDateField;
-    IBOutlet NSTextField *descriptionField;
-    IBOutlet NSTextField *payeeField;
-    IBOutlet NSTextField *checknoField;
-    IBOutlet NSTextField *notesField;
-    IBOutlet MGTableView *splitTableView;
+@interface MGSchedulePanel : MGPanel <NSTextFieldDelegate> {
+    NSTabView *tabView;
+    NSTextField *startDateField;
+    NSTextField *repeatEveryField;
+    NSTextField *repeatEveryDescLabel;
+    NSPopUpButton *repeatTypePopUpView;
+    NSTextField *stopDateField;
+    NSTextField *descriptionField;
+    NSTextField *payeeField;
+    NSTextField *checknoField;
+    NSTextField *notesField;
+    MGTableView *splitTableView;
     
     MGSplitTable *splitTable;
     HSPopUpList *repeatTypePopUp;
 }
+
+@property (readwrite, retain) NSTabView *tabView;
+@property (readwrite, retain) NSTextField *startDateField;
+@property (readwrite, retain) NSTextField *repeatEveryField;
+@property (readwrite, retain) NSTextField *repeatEveryDescLabel;
+@property (readwrite, retain) NSPopUpButton *repeatTypePopUpView;
+@property (readwrite, retain) NSTextField *stopDateField;
+@property (readwrite, retain) NSTextField *descriptionField;
+@property (readwrite, retain) NSTextField *payeeField;
+@property (readwrite, retain) NSTextField *checknoField;
+@property (readwrite, retain) NSTextField *notesField;
+@property (readwrite, retain) MGTableView *splitTableView;
+
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PySchedulePanel *)model;
 /* Actions */
-- (IBAction)addSplit:(id)sender;
-- (IBAction)deleteSplit:(id)sender;
+- (void)addSplit;
+- (void)deleteSplit;
 /* Python --> Cocoa */
 - (void)refreshRepeatEvery;
 @end
