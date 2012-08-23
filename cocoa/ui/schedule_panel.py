@@ -121,16 +121,15 @@ infoLayout = VHLayout([
     [transfersLabel, transfersTable],
     [None, addTransferButton, removeTransferButton],
     [navigateNoticeLabel],
-], fillers={descriptionField, payeeField, transfersTable, navigateNoticeLabel}, vmargin=6, valign=Pack.Middle)
+    ],
+    hfillers={descriptionField, payeeField, transfersTable, navigateNoticeLabel},
+    vfiller=transfersTable, vmargin=6, valign=Pack.Middle)
 # The transfer row is aligned above
 infoLayout.subviews[-3].align = Pack.Above
 infoLayout.moveTo(Pack.UpperLeft, margin=0)
-infoLayout.fill(Pack.LowerRight)
+infoLayout.fill(Pack.Right)
+infoLayout.fill(Pack.Below, margin=6)
 infoLayout.setAnchor(Pack.Left, growX=True)
-transfersTable.setAnchor(Pack.UpperLeft, growX=True, growY=True)
-addTransferButton.setAnchor(Pack.LowerRight)
-removeTransferButton.setAnchor(Pack.LowerRight)
-navigateNoticeLabel.setAnchor(Pack.LowerLeft, growX=True)
 
 notesField.moveTo(Pack.UpperLeft)
 notesNoticeLabel.moveNextTo(notesField, Pack.Below)

@@ -74,7 +74,7 @@ layout = VHLayout([
     [amountLabel, amountField],
     [notesLabel, notesField],
     [None, cancelButton, saveButton],
-], fillers={repeatPopup, accountPopup, targetPopup, notesField}, vmargin=6, valign=Pack.Middle)
+], hfillers={repeatPopup, accountPopup, targetPopup, notesField}, vmargin=6, valign=Pack.Middle)
 # We want to align the "Notes" label to the top instead of the middle
 layout.subviews[-2].align = Pack.Above
 layout.moveTo(Pack.UpperLeft, margin=11)
