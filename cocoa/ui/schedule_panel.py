@@ -1,10 +1,10 @@
-from common import FieldLabel, PANEL_TITLE_FONT
+from common import FieldLabel, TitleLabel
 
 ownerclass = 'MGSchedulePanel'
 ownerimport = 'MGSchedulePanel.h'
 
 result = Window(514, 426, "")
-titleLabel = Label(result, "Schedule Info")
+titleLabel = TitleLabel(result, "Schedule Info")
 tabView = TabView(result)
 infoTab = tabView.addTab("Info")
 notesTab = tabView.addTab("Notes")
@@ -57,8 +57,6 @@ result.delegate = owner
 result.minSize = Size(result.width, result.height)
 cancelButton.shortcut = 'esc'
 saveButton.shortcut = 'return'
-titleLabel.font = PANEL_TITLE_FONT
-titleLabel.alignment = TextAlignment.Center
 everyField.formatter = NumberFormatter(NumberStyle.Decimal)
 everyField.formatter.maximumFractionDigits = 0
 transfersTable.allowsColumnReordering = False
@@ -85,7 +83,6 @@ fields = [startDateField, repeatPopup, everyField, stopDateField, descriptionFie
 for field in fields:
     field.controlSize = ControlSize.Small
 
-titleLabel.height = 22
 labels = [startDateLabel, repeatLabel, everyLabel, everyDescLabel, stopDateLabel, descriptionLabel, 
     payeeLabel, checknoLabel, transfersLabel]
 for label in labels:

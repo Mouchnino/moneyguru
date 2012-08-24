@@ -15,22 +15,22 @@ http://www.hardcoded.net/licenses/bsd_license
 @class MGMainWindowController;
 
 @interface MGMassEditionPanel : MGPanel {
-    IBOutlet NSTextField *dateFieldView;
-    IBOutlet NSTextField *descriptionFieldView;
-    IBOutlet NSTextField *payeeFieldView;
-    IBOutlet NSTextField *checknoFieldView;
-    IBOutlet NSTextField *fromFieldView;
-    IBOutlet NSTextField *toFieldView;
-    IBOutlet NSTextField *amountFieldView;
-    IBOutlet NSComboBox *currencyComboBoxView;
-    IBOutlet NSButton *dateCheckBox;
-    IBOutlet NSButton *descriptionCheckBox;
-    IBOutlet NSButton *payeeCheckBox;
-    IBOutlet NSButton *checknoCheckBox;
-    IBOutlet NSButton *fromCheckBox;
-    IBOutlet NSButton *toCheckBox;
-    IBOutlet NSButton *amountCheckBox;
-    IBOutlet NSButton *currencyCheckBox;
+    NSTextField *dateFieldView;
+    NSTextField *descriptionFieldView;
+    NSTextField *payeeFieldView;
+    NSTextField *checknoFieldView;
+    NSTextField *fromFieldView;
+    NSTextField *toFieldView;
+    NSTextField *amountFieldView;
+    NSComboBox *currencyComboBoxView;
+    NSButton *dateCheckBox;
+    NSButton *descriptionCheckBox;
+    NSButton *payeeCheckBox;
+    NSButton *checknoCheckBox;
+    NSButton *fromCheckBox;
+    NSButton *toCheckBox;
+    NSButton *amountCheckBox;
+    NSButton *currencyCheckBox;
     
     HSTextField *dateField;
     HSTextField *descriptionField;
@@ -41,6 +41,24 @@ http://www.hardcoded.net/licenses/bsd_license
     HSTextField *amountField;
     HSComboBox *currencyComboBox;
 }
+
+@property (readwrite, retain) NSTextField *dateFieldView;
+@property (readwrite, retain) NSTextField *descriptionFieldView;
+@property (readwrite, retain) NSTextField *payeeFieldView;
+@property (readwrite, retain) NSTextField *checknoFieldView;
+@property (readwrite, retain) NSTextField *fromFieldView;
+@property (readwrite, retain) NSTextField *toFieldView;
+@property (readwrite, retain) NSTextField *amountFieldView;
+@property (readwrite, retain) NSComboBox *currencyComboBoxView;
+@property (readwrite, retain) NSButton *dateCheckBox;
+@property (readwrite, retain) NSButton *descriptionCheckBox;
+@property (readwrite, retain) NSButton *payeeCheckBox;
+@property (readwrite, retain) NSButton *checknoCheckBox;
+@property (readwrite, retain) NSButton *fromCheckBox;
+@property (readwrite, retain) NSButton *toCheckBox;
+@property (readwrite, retain) NSButton *amountCheckBox;
+@property (readwrite, retain) NSButton *currencyCheckBox;
+
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyMassEditionPanel *)model;
 @end

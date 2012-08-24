@@ -14,3 +14,10 @@ class FieldLabel(Label):
         self.font = FIELD_LABEL_FONT
         self.alignment = TextAlignment.Right
         self.textColor = FIELD_LABEL_COLOR
+
+class TitleLabel(Label):
+    def __init__(self, parent, text):
+        Label.__init__(self, parent, text)
+        self.font = PANEL_TITLE_FONT
+        self.alignment = TextAlignment.Center
+        self.height = 22

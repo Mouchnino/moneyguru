@@ -1,10 +1,10 @@
-from common import FieldLabel, PANEL_TITLE_FONT
+from common import FieldLabel, TitleLabel
 
 ownerclass = 'MGBudgetPanel'
 ownerimport = 'MGBudgetPanel.h'
 
 result = Window(342, 290, "")
-titleLabel = Label(result, "Budget Info")
+titleLabel = TitleLabel(result, "Budget Info")
 startDateLabel = FieldLabel(result, "Start Date")
 startDateField = TextField(result, "")
 repeatLabel = FieldLabel(result, "Repeat")
@@ -41,8 +41,6 @@ result.delegate = owner
 result.canResize = False
 cancelButton.keyEquivalent = '\\e'
 saveButton.keyEquivalent = '\\r'
-titleLabel.font = PANEL_TITLE_FONT
-titleLabel.alignment = TextAlignment.Center
 everyField.formatter = NumberFormatter(NumberStyle.Decimal)
 everyField.formatter.maximumFractionDigits = 0
 
@@ -51,7 +49,6 @@ fields = [startDateField, repeatPopup, everyField, stopDateField, accountPopup, 
 for field in fields:
     field.controlSize = ControlSize.Small
 
-titleLabel.height = 22
 labels = [startDateLabel, repeatLabel, everyLabel, everyDescLabel, stopDateLabel, accountLabel, 
     targetLabel, amountLabel, notesLabel]
 for label in labels:

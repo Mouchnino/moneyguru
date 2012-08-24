@@ -125,3 +125,8 @@
 "You can navigate tabs with ⌘⌥→ and ⌘⌥←" = "You can navigate tabs with ⌘⌥→ and ⌘⌥←";
 "Use ⌥+Return to insert a new line." = "Use ⌥+Return to insert a new line.";
 
+/* Mass Editing Panel */
+"From" = "From";
+"To" = "To";
+"Mass Editing" = "Mass Editing";
+

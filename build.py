@@ -57,6 +57,7 @@ def build_xibless(dest='cocoa/autogen'):
         ('export_panel.py', 'MGExportPanel_UI'),
         ('budget_panel.py', 'MGBudgetPanel_UI'),
         ('schedule_panel.py', 'MGSchedulePanel_UI'),
+        ('mass_editing_panel.py', 'MGMassEditionPanel_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),

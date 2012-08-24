@@ -7,17 +7,36 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGMassEditionPanel.h"
+#import "MGMassEditionPanel_UI.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
 @implementation MGMassEditionPanel
+
+@synthesize dateFieldView;
+@synthesize descriptionFieldView;
+@synthesize payeeFieldView;
+@synthesize checknoFieldView;
+@synthesize fromFieldView;
+@synthesize toFieldView;
+@synthesize amountFieldView;
+@synthesize currencyComboBoxView;
+@synthesize dateCheckBox;
+@synthesize descriptionCheckBox;
+@synthesize payeeCheckBox;
+@synthesize checknoCheckBox;
+@synthesize fromCheckBox;
+@synthesize toCheckBox;
+@synthesize amountCheckBox;
+@synthesize currencyCheckBox;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PyMassEditionPanel *m = [[PyMassEditionPanel alloc] initWithModel:[[aParent model] massEditPanel]];
-    self = [super initWithNibName:@"MassEditingPanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
-    [self window];
+    [self setWindow:createMGMassEditionPanel_UI(self)];
     dateField = [[HSTextField alloc] initWithPyRef:[[self model] dateField] view:dateFieldView];
     descriptionField = [[HSTextField alloc] initWithPyRef:[[self model] descriptionField] view:descriptionFieldView];
     payeeField = [[HSTextField alloc] initWithPyRef:[[self model] payeeField] view:payeeFieldView];
@@ -25,6 +44,7 @@ http://www.hardcoded.net/licenses/bsd_license
     fromField = [[HSTextField alloc] initWithPyRef:[[self model] fromField] view:fromFieldView];
     toField = [[HSTextField alloc] initWithPyRef:[[self model] toField] view:toFieldView];
     amountField = [[HSTextField alloc] initWithPyRef:[[self model] amountField] view:amountFieldView];
+    currencyComboBoxView.completes = YES;
     currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencyComboBoxView];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
