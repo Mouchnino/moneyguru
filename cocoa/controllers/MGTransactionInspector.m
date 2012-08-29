@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGTransactionInspector.h"
+#import "MGTransactionInspector_UI.h"
 #import "HSPyUtil.h"
 #import "MGFieldEditor.h"
 #import "MGDateFieldEditor.h"
@@ -14,12 +15,23 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGMainWindowController.h"
 
 @implementation MGTransactionInspector
+
+@synthesize tabView;
+@synthesize dateField;
+@synthesize descriptionField;
+@synthesize payeeField;
+@synthesize checknoField;
+@synthesize notesField;
+@synthesize splitTableView;
+@synthesize mctBalanceButton;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PyTransactionPanel *m = [[PyTransactionPanel alloc] initWithModel:[[aParent model] transactionPanel]];
-    self = [super initWithNibName:@"TransactionPanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"PanelWithTransactionView", self)];
     [m release];
+    [self setWindow:createMGTransactionInspector_UI(self)];
     splitTable = [[MGSplitTable alloc] initWithPyRef:[[self model] splitTable] tableView:splitTableView];
     customFieldEditor = [[MGFieldEditor alloc] initWithPyRef:[[self model] completableEdit]];
     return self;
@@ -97,17 +109,17 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)addSplit:(id)sender
+- (void)addSplit
 {
     [[splitTable model] add];
 }
 
-- (IBAction)deleteSplit:(id)sender
+- (void)deleteSplit
 {
     [[splitTable model] deleteSelectedRows];
 }
 
-- (IBAction)mctBalance:(id)sender
+- (void)mctBalance
 {
     [[self model] mctBalance];
 }
