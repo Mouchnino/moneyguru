@@ -17,9 +17,12 @@ http://www.hardcoded.net/licenses/bsd_license
     IBOutlet NSView *wholeView;
     IBOutlet NSResponder *mainResponder;
 }
+
+@property (readwrite, retain) NSView *wholeView;
+@property (readwrite, retain) NSResponder *mainResponder;
+
 - (PyBaseView *)model;
 - (MGPrintView *)viewToPrint;
-- (NSResponder *)mainResponder;
 - (NSString *)tabIconName;
 - (void)setupTableView:(MGTableView *)aTableView;
 @end

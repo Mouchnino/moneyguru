@@ -138,3 +138,12 @@
 "Name" = "Name";
 "Type" = "Type";
 "Account #" = "Account #";
+
+/* New Tab View */
+"Profit & Loss" = "Profit & Loss";
+"Transactions" = "Transactions";
+"Choose a view for this tab" = "Choose a view for this tab";
+"Cashculator" = "Cashculator";
+"General Ledger" = "General Ledger";
+"Document Properties" = "Document Properties";
+"Plugins (double-click to open)" = "Plugins (double-click to open)";

@@ -9,6 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBaseView.h"
 
 @implementation MGBaseView
+
+@synthesize wholeView;
+@synthesize mainResponder;
+
 - (PyBaseView *)model
 {
     return (PyBaseView *)model;
@@ -22,11 +26,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGPrintView *)viewToPrint
 {
     return nil;
-}
-
-- (NSResponder *)mainResponder
-{
-    return mainResponder;
 }
 
 - (NSString *)tabIconName

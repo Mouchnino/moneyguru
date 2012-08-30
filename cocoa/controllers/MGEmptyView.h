@@ -13,21 +13,24 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGEmptyView : MGBaseView
 {
-    IBOutlet NSTableView *pluginTableView;
+    NSTableView *pluginTableView;
     
     HSSelectableList *pluginList;
 }
+
+@property (readwrite, retain) NSTableView *pluginTableView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyEmptyView *)model;
 
 /* Actions */
-- (IBAction)selectNetWorthView:(id)sender;
-- (IBAction)selectProfitView:(id)sender;
-- (IBAction)selectTransactionView:(id)sender;
-- (IBAction)selectScheduleView:(id)sender;
-- (IBAction)selectBudgetView:(id)sender;
-- (IBAction)selectCashculatorView:(id)sender;
-- (IBAction)selectGeneralLedgerView:(id)sender;
-- (IBAction)selectDocPropsView:(id)sender;
-- (IBAction)selectPluginView:(id)sender;
+- (void)selectNetWorthView;
+- (void)selectProfitView;
+- (void)selectTransactionView;
+- (void)selectScheduleView;
+- (void)selectBudgetView;
+- (void)selectCashculatorView;
+- (void)selectGeneralLedgerView;
+- (void)selectDocPropsView;
+- (void)selectPluginView;
 @end

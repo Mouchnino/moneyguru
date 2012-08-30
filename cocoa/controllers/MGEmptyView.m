@@ -7,19 +7,23 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGEmptyView.h"
+#import "MGEmptyView_UI.h"
 #import "MGConst.h"
 #import "Utils.h"
 
 @implementation MGEmptyView
+
+@synthesize pluginTableView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyEmptyView *m = [[PyEmptyView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"NewTabView" owner:self];
+    self.wholeView = createMGEmptyView_UI(self);
     pluginList = [[HSSelectableList alloc] initWithPyRef:[[self model] pluginList] tableView:pluginTableView];
     [pluginTableView setTarget:self];
-    [pluginTableView setDoubleAction:@selector(selectPluginView:)];
+    [pluginTableView setDoubleAction:@selector(selectPluginView)];
     return self;
 }
         
@@ -29,47 +33,47 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)selectNetWorthView:(id)sender
+- (void)selectNetWorthView
 {
     [[self model] selectPaneType:MGPaneTypeNetWorth];
 }
 
-- (IBAction)selectProfitView:(id)sender
+- (void)selectProfitView
 {
     [[self model] selectPaneType:MGPaneTypeProfit];
 }
 
-- (IBAction)selectTransactionView:(id)sender
+- (void)selectTransactionView
 {
     [[self model] selectPaneType:MGPaneTypeTransaction];
 }
 
-- (IBAction)selectScheduleView:(id)sender
+- (void)selectScheduleView
 {
     [[self model] selectPaneType:MGPaneTypeSchedule];
 }
 
-- (IBAction)selectBudgetView:(id)sender
+- (void)selectBudgetView
 {
     [[self model] selectPaneType:MGPaneTypeBudget];
 }
 
-- (IBAction)selectCashculatorView:(id)sender
+- (void)selectCashculatorView
 {
     [[self model] selectPaneType:MGPaneTypeCashculator];
 }
 
-- (IBAction)selectGeneralLedgerView:(id)sender
+- (void)selectGeneralLedgerView
 {
     [[self model] selectPaneType:MGPaneTypeGeneralLedger];
 }
 
-- (IBAction)selectDocPropsView:(id)sender
+- (void)selectDocPropsView
 {
     [[self model] selectPaneType:MGPaneTypeDocProps];
 }
 
-- (IBAction)selectPluginView:(id)sender
+- (void)selectPluginView
 {
     [[self model] openSelectedPlugin];
 }
