@@ -7,18 +7,26 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGAccountProperties.h"
+#import "MGAccountProperties_UI.h"
 #import "MGConst.h"
 #import "MGMainWindowController.h"
 #import "HSPyUtil.h"
 
 @implementation MGAccountProperties
+
+@synthesize nameTextField;
+@synthesize typeSelector;
+@synthesize currencySelector;
+@synthesize accountNumberTextField;
+@synthesize notesTextField;
+
 - (id)initWithParent:(MGMainWindowController *)aParent
 {
     PyAccountPanel *m = [[PyAccountPanel alloc] initWithModel:[[aParent model] accountPanel]];
-    self = [super initWithNibName:@"AccountPanel" model:m parent:aParent];
+    self = [super initWithModel:m parent:aParent];
     [m bindCallback:createCallback(@"PanelView", self)];
     [m release];
-    [self window];
+    [self setWindow:createMGAccountProperties_UI(self)];
     typePopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] typeList] popupView:typeSelector];
     currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencySelector];
     return self;

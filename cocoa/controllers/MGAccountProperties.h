@@ -15,15 +15,22 @@ http://www.hardcoded.net/licenses/bsd_license
 @class MGMainWindowController;
 
 @interface MGAccountProperties : MGPanel {
-    IBOutlet NSTextField *nameTextField;
-    IBOutlet NSPopUpButton *typeSelector;
-    IBOutlet NSComboBox *currencySelector;
-    IBOutlet NSTextField *accountNumberTextField;
-    IBOutlet NSTextField *notesTextField;
+    NSTextField *nameTextField;
+    NSPopUpButton *typeSelector;
+    NSComboBox *currencySelector;
+    NSTextField *accountNumberTextField;
+    NSTextField *notesTextField;
     
     HSPopUpList *typePopUp;
     HSComboBox *currencyComboBox;
 }
+
+@property (readwrite, retain) NSTextField *nameTextField;
+@property (readwrite, retain) NSPopUpButton *typeSelector;
+@property (readwrite, retain) NSComboBox *currencySelector;
+@property (readwrite, retain) NSTextField *accountNumberTextField;
+@property (readwrite, retain) NSTextField *notesTextField;
+
 - (id)initWithParent:(MGMainWindowController *)aParent;
 - (PyAccountPanel *)model;
 @end

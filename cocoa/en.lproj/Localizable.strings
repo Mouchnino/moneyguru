@@ -132,3 +132,9 @@
 
 /* Transaction Panel */
 "Transaction Info" = "Transaction Info";
+
+/* Account Panel */
+"Account Info" = "Account Info";
+"Name" = "Name";
+"Type" = "Type";
+"Account #" = "Account #";
