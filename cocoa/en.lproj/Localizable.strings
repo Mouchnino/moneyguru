@@ -147,3 +147,9 @@
 "General Ledger" = "General Ledger";
 "Document Properties" = "Document Properties";
 "Plugins (double-click to open)" = "Plugins (double-click to open)";
+
+/* DocProps View */
+"Year starts in:" = "Year starts in:";
+"Ahead months in Running Year:" = "Ahead months in Running Year:";
+"First day of the week:" = "First day of the week:";
+"Document Properties" = "Document Properties";

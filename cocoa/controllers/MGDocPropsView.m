@@ -7,15 +7,22 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGDocPropsView.h"
+#import "MGDocPropsView_UI.h"
 #import "Utils.h"
 
 @implementation MGDocPropsView
+
+@synthesize currencyComboBoxView;
+@synthesize firstWeekdayPopUpView;
+@synthesize aheadMonthsPopUpView;
+@synthesize yearStartMonthPopUpView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyDocPropsView *m = [[PyDocPropsView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"DocProps" owner:self];
+    self.wholeView = createMGDocPropsView_UI(self);
     currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencyComboBoxView];
     firstWeekdayPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] firstWeekdayList] popupView:firstWeekdayPopUpView];
     aheadMonthsPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] aheadMonthsList] popupView:aheadMonthsPopUpView];

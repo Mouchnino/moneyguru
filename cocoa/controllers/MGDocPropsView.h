@@ -14,16 +14,22 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGDocPropsView : MGBaseView
 {
-    IBOutlet NSComboBox *currencyComboBoxView;
-    IBOutlet NSPopUpButton *firstWeekdayPopUpView;
-    IBOutlet NSPopUpButton *aheadMonthsPopUpView;
-    IBOutlet NSPopUpButton *yearStartMonthPopUpView;
+    NSComboBox *currencyComboBoxView;
+    NSPopUpButton *firstWeekdayPopUpView;
+    NSPopUpButton *aheadMonthsPopUpView;
+    NSPopUpButton *yearStartMonthPopUpView;
     
     HSComboBox *currencyComboBox;
     HSPopUpList *firstWeekdayPopUp;
     HSPopUpList *aheadMonthsPopUp;
     HSPopUpList *yearStartMonthPopUp;
 }
+
+@property (readwrite, retain) NSComboBox *currencyComboBoxView;
+@property (readwrite, retain) NSPopUpButton *firstWeekdayPopUpView;
+@property (readwrite, retain) NSPopUpButton *aheadMonthsPopUpView;
+@property (readwrite, retain) NSPopUpButton *yearStartMonthPopUpView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyDocPropsView *)model;
 @end
