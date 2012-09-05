@@ -7,15 +7,19 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGCashculatorView.h"
+#import "MGCashculatorView_UI.h"
 #import "Utils.h"
 
 @implementation MGCashculatorView
+
+@synthesize accountTableView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyCashculatorView *m = [[PyCashculatorView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"CashculatorView" owner:self];
+    self.wholeView = createMGCashculatorView_UI(self);
     accountTable = [[MGCashculatorAccountTable alloc] initWithPyRef:[[self model] table] view:accountTableView];
     return self;
 }
@@ -34,15 +38,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (NSString *)tabIconName
 {
     return @"cashculator_16";
-}
-
-- (IBAction)exportDB:(id)sender
-{
-    [[self model] exportDB];
-}
-
-- (IBAction)launchCC:(id)sender
-{
-    [[self model] launchCC];
 }
 @end

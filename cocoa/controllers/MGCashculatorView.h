@@ -13,13 +13,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGCashculatorView : MGBaseView
 {
-    IBOutlet MGTableView *accountTableView;
+    MGTableView *accountTableView;
     
     MGCashculatorAccountTable *accountTable;
 }
+
+@property (readwrite, retain) MGTableView *accountTableView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyCashculatorView *)model;
-
-- (IBAction)exportDB:(id)sender;
-- (IBAction)launchCC:(id)sender;
 @end

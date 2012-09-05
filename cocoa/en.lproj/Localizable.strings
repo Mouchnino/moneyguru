@@ -153,3 +153,9 @@
 "Ahead months in Running Year:" = "Ahead months in Running Year:";
 "First day of the week:" = "First day of the week:";
 "Document Properties" = "Document Properties";
+
+/* Cashculator View */
+"Export Accounts" = "Export Accounts";
+"Export accounts to Cashculator" = "Export accounts to Cashculator";
+"Launch Cashculator" = "Launch Cashculator";
+"Please read instructions in the Forecast section of the help file." = "Please read instructions in the Forecast section of the help file.";
