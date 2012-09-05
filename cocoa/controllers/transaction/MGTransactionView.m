@@ -7,16 +7,21 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGTransactionView.h"
+#import "MGTransactionView_UI.h"
 #import "MGTransactionPrint.h"
 #import "Utils.h"
 
 @implementation MGTransactionView
+
+@synthesize tableView;
+@synthesize filterBarView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyTransactionView *m = [[PyTransactionView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    [NSBundle loadNibNamed:@"TransactionTable" owner:self];
+    self.wholeView = createMGTransactionView_UI(self);
     transactionTable = [[MGTransactionTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:NO];
     return self;

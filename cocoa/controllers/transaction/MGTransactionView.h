@@ -16,12 +16,16 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGTransactionView : MGBaseView
 {
-    IBOutlet MGTableView *tableView;
-    IBOutlet AMButtonBar *filterBarView;
+    MGTableView *tableView;
+    AMButtonBar *filterBarView;
     
     MGTransactionTable *transactionTable;
     MGFilterBar *filterBar;
 }
+
+@property (readwrite, retain) MGTableView *tableView;
+@property (readwrite, retain) AMButtonBar *filterBarView;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 
 - (PyTransactionView *)model;
