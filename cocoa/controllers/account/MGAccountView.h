@@ -18,10 +18,10 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGAccountView : MGBaseView <NSSplitViewDelegate>
 {
-    IBOutlet NSSplitView *splitView;
-    IBOutlet MGTableView *tableView;
-    IBOutlet AMButtonBar *filterBarView;
-    IBOutlet NSButton *reconciliationModeButton;
+    NSSplitView *splitView;
+    MGTableView *tableView;
+    AMButtonBar *filterBarView;
+    NSButton *reconciliationModeButton;
     
     MGEntryTable *entryTable;
     MGFilterBar *filterBar;
@@ -31,6 +31,12 @@ http://www.hardcoded.net/licenses/bsd_license
     BOOL graphCollapsed;
     CGFloat graphCollapseHeight;
 }
+
+@property (readwrite, retain) NSSplitView *splitView;
+@property (readwrite, retain) MGTableView *tableView;
+@property (readwrite, retain) AMButtonBar *filterBarView;
+@property (readwrite, retain) NSButton *reconciliationModeButton;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (PyAccountView *)model;
 
@@ -40,9 +46,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (BOOL)inReconciliationMode;
 - (void)toggleReconciliationMode;
 - (void)toggleReconciled;
-
-/* Actions */
-- (IBAction)toggleReconciliationMode:(id)sender;
 
 /* model --> view */
 - (void)updateVisibility;

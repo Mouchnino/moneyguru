@@ -64,6 +64,7 @@ def build_xibless(dest='cocoa/autogen'):
         ('docprops_view.py', 'MGDocPropsView_UI'),
         ('cashculator_view.py', 'MGCashculatorView_UI'),
         ('transaction_view.py', 'MGTransactionView_UI'),
+        ('account_view.py', 'MGAccountView_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),

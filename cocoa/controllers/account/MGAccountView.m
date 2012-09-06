@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGAccountView.h"
+#import "MGAccountView_UI.h"
 #import "MGConst.h"
 #import "MGEntryPrint.h"
 #import "HSPyUtil.h"
@@ -14,11 +15,17 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyMainWindow.h"
 
 @implementation MGAccountView
+
+@synthesize splitView;
+@synthesize tableView;
+@synthesize filterBarView;
+@synthesize reconciliationModeButton;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyAccountView *m = [[PyAccountView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
-    [NSBundle loadNibNamed:@"EntryTable" owner:self];
+    self.wholeView = createMGAccountView_UI(self);
     entryTable = [[MGEntryTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] balGraph]];
@@ -87,12 +94,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)toggleReconciled
 {
     [[entryTable model] toggleReconciled];
-}
-
-/* Actions */
-- (IBAction)toggleReconciliationMode:(id)sender
-{
-    [self toggleReconciliationMode];
 }
 
 /* Delegate */

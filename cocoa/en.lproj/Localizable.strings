@@ -159,3 +159,6 @@
 "Export accounts to Cashculator" = "Export accounts to Cashculator";
 "Launch Cashculator" = "Launch Cashculator";
 "Please read instructions in the Forecast section of the help file." = "Please read instructions in the Forecast section of the help file.";
+
+/* Account View */
+"Reconciliation" = "Reconciliation";
