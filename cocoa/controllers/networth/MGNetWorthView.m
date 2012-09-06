@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGNetWorthView.h"
+#import "MGAccountSheetView_UI.h"
 #import "MGBalancePrint.h"
 #import "MGConst.h"
 #import "HSPyUtil.h"
@@ -20,7 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"ViewWithGraphView", self)];
     [m release];
-    [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
+    self.wholeView = createMGAccountSheetView_UI(self);
     balanceSheet = [[MGBalanceSheet alloc] initWithPyRef:[[self model] sheet] view:outlineView];
     assetsPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] apie]];
     liabilitiesPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] lpie]];

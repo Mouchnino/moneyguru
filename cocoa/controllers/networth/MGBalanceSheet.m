@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBalanceSheet.h"
 #import "MGConst.h"
 #import "MGAmountCell.h"
+#import "MGTextFieldCell.h"
 
 @implementation MGBalanceSheet
 - (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView
@@ -21,7 +22,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)initializeColumns
 {
     HSColumnDef defs[] = {
-        /* Account column is defined in XIB */
+        {@"name", 200, 16, 0, NO, [MGTextFieldCell class]}, 
         {@"account_number", 64, 10, 0, NO, nil},
         {@"end", 100, 10, 0, NO, [MGAmountCell class]},
         {@"delta", 100, 10, 0, NO, [MGAmountCell class]},
@@ -36,6 +37,7 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     NSTableColumn *c = [[self view] tableColumnWithIdentifier:@"name"];
     [c setEditable:YES]; // Only account name is editable.
+    [[self view] setOutlineTableColumn:c];
     c = [[self view] tableColumnWithIdentifier:@"end"];
     [[c dataCell] setAlignment:NSRightTextAlignment];
     NSFontManager *fontManager = [NSFontManager sharedFontManager];

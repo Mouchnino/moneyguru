@@ -11,6 +11,12 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGAccountSheetView
+
+@synthesize mainSplitView;
+@synthesize subSplitView;
+@synthesize outlineView;
+@synthesize pieChartsView;
+
 /* Delegate */
 
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)dividerIndex

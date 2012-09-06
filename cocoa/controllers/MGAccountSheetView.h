@@ -19,10 +19,11 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 @interface MGAccountSheetView : MGBaseView <NSSplitViewDelegate>
 {
-    IBOutlet NSSplitView *mainSplitView;
-    IBOutlet NSSplitView *subSplitView;
-    IBOutlet HSOutlineView *outlineView;
-    IBOutlet MGDoubleView *pieChartsView;
+    NSSplitView *mainSplitView;
+    NSSplitView *subSplitView;
+    HSOutlineView *outlineView;
+    MGDoubleView *pieChartsView;
+    
     /* Set these two during initialization */
     NSView *graphView;
     NSView *pieView;
@@ -32,6 +33,12 @@ http://www.hardcoded.net/licenses/bsd_license
     CGFloat graphCollapseHeight;
     CGFloat pieCollapseWidth;
 }
+
+@property (readwrite, retain) NSSplitView *mainSplitView;
+@property (readwrite, retain) NSSplitView *subSplitView;
+@property (readwrite, retain) HSOutlineView *outlineView;
+@property (readwrite, retain) MGDoubleView *pieChartsView;
+
 /* model --> view */
 - (void)updateVisibility;
 @end

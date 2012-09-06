@@ -20,7 +20,7 @@ from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, m
     copy, symlink, hardlink, add_to_pythonpath, copy_sysconfig_files_for_embed,
     build_cocoalib_xibless)
 from hscommon import loc
-from hscommon.util import ensure_folder
+from hscommon.util import ensure_folder, modified_after
 
 def parse_args():
     parser = ArgumentParser()
@@ -65,10 +65,13 @@ def build_xibless(dest='cocoa/autogen'):
         ('cashculator_view.py', 'MGCashculatorView_UI'),
         ('transaction_view.py', 'MGTransactionView_UI'),
         ('account_view.py', 'MGAccountView_UI'),
+        ('account_sheet_view.py', 'MGAccountSheetView_UI'),
     ]
     for srcname, dstname in FNPAIRS:
-        xibless.generate(op.join('cocoa', 'ui', srcname), op.join(dest, dstname),
-            localizationTable='Localizable')
+        srcpath = op.join('cocoa', 'ui', srcname)
+        dstpath = op.join(dest, dstname)
+        if modified_after(srcpath, dstpath + '.h'):
+            xibless.generate(srcpath, dstpath, localizationTable='Localizable')
 
 def build_cocoa(dev):
     print("Building xibless UIs")
