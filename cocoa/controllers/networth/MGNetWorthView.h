@@ -17,9 +17,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGNetWorthView : MGAccountSheetView
 {
-    IBOutlet HSOutlineView *outlineView;
-    IBOutlet MGDoubleView *pieChartsView;
-    
     MGBalanceSheet *balanceSheet;
     MGPieChart *assetsPieChart;
     MGPieChart *liabilitiesPieChart;

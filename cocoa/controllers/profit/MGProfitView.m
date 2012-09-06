@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"ViewWithGraphView", self)];
     [m release];
-    [NSBundle loadNibNamed:@"IncomeStatement" owner:self];
+    [NSBundle loadNibNamed:@"BalanceSheet" owner:self];
     incomeStatement = [[MGIncomeStatement alloc] initWithPyRef:[[self model] sheet] view:outlineView];
     incomePieChart = [[MGPieChart alloc] initWithPyRef:[[self model] ipie]];
     expensesPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] epie]];

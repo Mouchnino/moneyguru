@@ -19,9 +19,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 @interface MGAccountSheetView : MGBaseView <NSSplitViewDelegate>
 {
-    /* Set these two in IB */
     IBOutlet NSSplitView *mainSplitView;
     IBOutlet NSSplitView *subSplitView;
+    IBOutlet HSOutlineView *outlineView;
+    IBOutlet MGDoubleView *pieChartsView;
     /* Set these two during initialization */
     NSView *graphView;
     NSView *pieView;

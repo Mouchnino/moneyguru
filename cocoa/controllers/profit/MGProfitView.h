@@ -17,9 +17,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGProfitView : MGAccountSheetView
 {
-    IBOutlet HSOutlineView *outlineView;
-    IBOutlet MGDoubleView *pieChartsView;
-    
     MGIncomeStatement *incomeStatement;
     MGPieChart *incomePieChart;
     MGPieChart *expensesPieChart;
