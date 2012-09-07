@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGAppDelegate.h"
+#import "MGPreferencesPanel_UI.h"
 #import "MGDocument.h"
 #import "MGConst.h"
 #import "HSPyUtil.h"
@@ -18,6 +19,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Sparkle/SUUpdater.h>
 
 @implementation MGAppDelegate
+
+@synthesize preferencesPanel;
+@synthesize autoSaveIntervalField;
+@synthesize autoDecimalPlaceButton;
 
 + (void)initialize
 {
@@ -44,6 +49,10 @@ http://www.hardcoded.net/licenses/bsd_license
     // through [NSApp delegate] would be created before the NIB unarchiver would set the delegate
     // This is why we set it here.
     [NSApp setDelegate:self];
+    self.preferencesPanel = createMGPreferencesPanel_UI(self);
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUEnableAutomaticChecks"]) {
+        [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+    }
 }
 
 - (void)dealloc
@@ -99,6 +108,11 @@ http://www.hardcoded.net/licenses/bsd_license
         _aboutBox = [[HSAboutBox alloc] initWithApp:model];
     }
     [[_aboutBox window] makeKeyAndOrderFront:sender];
+}
+
+- (IBAction)showPreferencesPanel:(id)sender
+{
+    [self.preferencesPanel makeKeyAndOrderFront:sender];
 }
 
 /* Public */

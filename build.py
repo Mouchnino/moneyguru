@@ -68,6 +68,7 @@ def build_xibless(dest='cocoa/autogen'):
         ('account_sheet_view.py', 'MGAccountSheetView_UI'),
         ('date_range_selector.py', 'MGDateRangeSelector_UI'),
         ('main_window.py', 'MGMainWindowController_UI'),
+        ('preferences_panel.py', 'MGPreferencesPanel_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         srcpath = op.join('cocoa', 'ui', srcname)

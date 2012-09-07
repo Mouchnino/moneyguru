@@ -177,10 +177,19 @@
 "Month" = "Month";
 
 /* Main Window */
-"New Item" = "New Item";
 "Delete Selected" = "Delete Selected";
 "Edit Selected" = "Edit Selected";
 "Status label" = "Status label";
 "Toggle Graph" = "Toggle Graph";
 "Toggle Pie Chart" = "Toggle Pie Chart";
 "Toggle Columns" = "Toggle Columns";
+
+/* Preferences Panel */
+"Automatically check for updates" = "Automatically check for updates";
+"Show scope dialog when modifying a scheduled transaction" = "Show scope dialog when modifying a scheduled transaction";
+"Font size:" = "Font size:";
+"Auto-save interval:" = "Auto-save interval:";
+"minute(s) (0 for none)" = "minute(s) (0 for none)";
+"Automatically place decimals when typing" = "Automatically place decimals when typing";
+"Printing Font size:" = "Printing Font size:";
+"Debug mode (restart required)" = "Debug mode (restart required)";

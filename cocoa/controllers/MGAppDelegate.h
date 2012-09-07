@@ -12,8 +12,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGAppDelegate : NSObject
 {
-    IBOutlet NSTextField *autoSaveIntervalField;
-    IBOutlet NSButton *autoDecimalPlaceButton;
+    NSWindow *preferencesPanel;
+    NSTextField *autoSaveIntervalField;
+    NSButton *autoDecimalPlaceButton;
     IBOutlet NSMenuItem *customDateRangeItem1;
     IBOutlet NSMenuItem *customDateRangeItem2;
     IBOutlet NSMenuItem *customDateRangeItem3;
@@ -23,6 +24,10 @@ http://www.hardcoded.net/licenses/bsd_license
     HSAboutBox *_aboutBox;
 }
 
+@property (readwrite, retain) NSWindow *preferencesPanel;
+@property (readwrite, retain) NSTextField *autoSaveIntervalField;
+@property (readwrite, retain) NSButton *autoDecimalPlaceButton;
+
 - (PyMoneyGuruApp *)model;
 
 - (IBAction)openExampleDocument:(id)sender;
@@ -30,6 +35,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)openHelp:(id)sender;
 - (IBAction)openPluginFolder:(id)sender;
 - (IBAction)showAboutBox:(id)sender;
+- (IBAction)showPreferencesPanel:(id)sender;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 

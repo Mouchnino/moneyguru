@@ -212,15 +212,6 @@
 /* Class = "NSWindow"; title = "moneyGuru Preferences"; ObjectID = "1305"; */
 "1305.title" = "moneyGuru Preferences";
 
-/* Class = "NSButtonCell"; title = "Automatically check for updates"; ObjectID = "1308"; */
-"1308.title" = "Automatically check for updates";
-
-/* Class = "NSButtonCell"; title = "Show scope dialog when modifying a scheduled transaction"; ObjectID = "1327"; */
-"1327.title" = "Show scope dialog when modifying a scheduled transaction";
-
-/* Class = "NSTextFieldCell"; title = "Font size:"; ObjectID = "1330"; */
-"1330.title" = "Font size:";
-
 /* Class = "NSMenuItem"; title = "Today's Date Range"; ObjectID = "1338"; */
 "1338.title" = "Today's Date Range";
 
@@ -242,20 +233,11 @@
 /* Class = "NSMenuItem"; title = "Make Schedule from Selected"; ObjectID = "1382"; */
 "1382.title" = "Make Schedule from Selected";
 
-/* Class = "NSTextFieldCell"; title = "Auto-save interval:"; ObjectID = "1406"; */
-"1406.title" = "Auto-save interval:";
-
-/* Class = "NSTextFieldCell"; title = "minute(s) (0 for none)"; ObjectID = "1410"; */
-"1410.title" = "minute(s) (0 for none)";
-
 /* Class = "NSMenuItem"; title = "Duplicate"; ObjectID = "1414"; */
 "1414.title" = "Duplicate";
 
 /* Class = "NSMenuItem"; title = "All Transactions"; ObjectID = "1417"; */
 "1417.title" = "All Transactions";
-
-/* Class = "NSButtonCell"; title = "Automatically place decimals when typing"; ObjectID = "1421"; */
-"1421.title" = "Automatically place decimals when typing";
 
 /* Class = "NSMenuItem"; title = "Jump to Account..."; ObjectID = "1425"; */
 "1425.title" = "Jump to Account...";
@@ -272,9 +254,6 @@
 /* Class = "NSMenuItem"; title = "Toggle Exclusion Status of Account"; ObjectID = "1449"; */
 "1449.title" = "Toggle Exclusion Status of Account";
 
-/* Class = "NSTextFieldCell"; title = "Printing Font size:"; ObjectID = "1454"; */
-"1454.title" = "Printing Font size:";
-
 /* Class = "NSMenuItem"; title = "Toggle Graph"; ObjectID = "1460"; */
 "1460.title" = "Toggle Graph";
 
@@ -283,6 +262,3 @@
 
 /* Class = "NSMenuItem"; title = "Open Plugin Folder"; ObjectID = "1468"; */
 "1468.title" = "Open Plugin Folder";
-
-/* Class = "NSButtonCell"; title = "Debug mode (restart required)"; ObjectID = "1473"; */
-"1473.title" = "Debug mode (restart required)";
