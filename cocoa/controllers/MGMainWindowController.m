@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGMainWindowController.h"
+#import "MGMainWindowController_UI.h"
 #import "MGConst.h"
 #import "MGAccountView.h"
 #import "MGNetWorthView.h"
@@ -23,10 +24,17 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGMainWindowController
+
+@synthesize tabView;
+@synthesize tabBar;
+@synthesize statusLabel;
+@synthesize visibilitySegments;
+
 - (id)initWithDocument:(PyDocument *)document
 {
-    self = [super initWithWindowNibName:@"MainWindow"];
+    self = [super initWithWindow:nil];
     model = [[PyMainWindow alloc] initWithDocument:[document pyRef]];
+    [self setWindow:createMGMainWindowController_UI(self)];
     /*  WEIRD CRASH ALERT
         The window retain call below results in a memory leak. That's bad, but it's always better
         than a crash. Without this retain below, I was getting crashes (at random points in the
@@ -194,29 +202,29 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)columnMenuClick:(id)sender
+- (void)columnMenuClick:(id)sender
 {
     NSMenuItem *mi = (NSMenuItem *)sender;
     NSInteger index = [mi tag];
     [[self model] toggleColumnMenuItemAtIndex:index];
 }
 
-- (IBAction)delete:(id)sender
+- (void)delete:(id)sender
 {
     [[self model] deleteItem];
 }
 
-- (IBAction)duplicateItem:(id)sender
+- (void)duplicateItem:(id)sender
 {
     [[self model] duplicateItem];
 }
 
-- (IBAction)editItemInfo:(id)sender
+- (void)editItemInfo:(id)sender
 {
     [[self model] editItem];
 }
 
-- (IBAction)itemSegmentClicked:(id)sender
+- (void)itemSegmentClicked:(id)sender
 {
     NSInteger index = [(NSSegmentedControl *)sender selectedSegment];
     if (index == 0) {
@@ -230,152 +238,152 @@ http://www.hardcoded.net/licenses/bsd_license
     }
 }
 
-- (IBAction)jumpToAccount:(id)sender
+- (void)jumpToAccount:(id)sender
 {
     [[self model] jumpToAccount];
 }
 
-- (IBAction)makeScheduleFromSelected:(id)sender
+- (void)makeScheduleFromSelected:(id)sender
 {
     [[self model] makeScheduleFromSelected];
 }
 
-- (IBAction)moveSelectionDown:(id)sender
+- (void)moveSelectionDown:(id)sender
 {
     [[self model] moveDown];
 }
 
-- (IBAction)moveSelectionUp:(id)sender
+- (void)moveSelectionUp:(id)sender
 {
     [[self model] moveUp];
 }
 
-- (IBAction)navigateBack:(id)sender
+- (void)navigateBack:(id)sender
 {
     [[self model] navigateBack];
 }
 
-- (IBAction)newGroup:(id)sender
+- (void)newGroup:(id)sender
 {
     [[self model] newGroup];
 }
 
-- (IBAction)newItem:(id)sender
+- (void)newItem:(id)sender
 {
     [[self model] newItem];
 }
 
-- (IBAction)newTab:(id)sender
+- (void)newTab:(id)sender
 {
     [[self model] newTab];
 }
 
-- (IBAction)search:(id)sender
+- (void)search:(id)sender
 {
     [[self window] makeFirstResponder:[searchField view]];
 }
 
-- (IBAction)selectMonthRange:(id)sender
+- (void)selectMonthRange:(id)sender
 {
     [[dateRangeSelector model] selectMonthRange];
 }
 
-- (IBAction)selectNextDateRange:(id)sender
+- (void)selectNextDateRange:(id)sender
 {
     [[dateRangeSelector model] selectNextDateRange];
 }
 
-- (IBAction)selectPrevDateRange:(id)sender
+- (void)selectPrevDateRange:(id)sender
 {
     [[dateRangeSelector model] selectPrevDateRange];
 }
 
-- (IBAction)selectTodayDateRange:(id)sender
+- (void)selectTodayDateRange:(id)sender
 {
     [[dateRangeSelector model] selectTodayDateRange];
 }
 
-- (IBAction)selectQuarterRange:(id)sender
+- (void)selectQuarterRange:(id)sender
 {
     [[dateRangeSelector model] selectQuarterRange];
 }
 
-- (IBAction)selectYearRange:(id)sender
+- (void)selectYearRange:(id)sender
 {
     [[dateRangeSelector model] selectYearRange];
 }
 
-- (IBAction)selectYearToDateRange:(id)sender
+- (void)selectYearToDateRange:(id)sender
 {
     [[dateRangeSelector model] selectYearToDateRange];
 }
 
-- (IBAction)selectRunningYearRange:(id)sender
+- (void)selectRunningYearRange:(id)sender
 {
     [[dateRangeSelector model] selectRunningYearRange];
 }
 
-- (IBAction)selectAllTransactionsRange:(id)sender
+- (void)selectAllTransactionsRange:(id)sender
 {
     [[dateRangeSelector model] selectAllTransactionsRange];
 }
 
-- (IBAction)selectCustomDateRange:(id)sender
+- (void)selectCustomDateRange:(id)sender
 {
     [[dateRangeSelector model] selectCustomDateRange];
 }
 
-- (IBAction)selectSavedCustomRange:(id)sender
+- (void)selectSavedCustomRange:(id)sender
 {
     [dateRangeSelector selectSavedCustomRange:sender];
 }
 
-- (IBAction)showBalanceSheet:(id)sender
+- (void)showBalanceSheet:(id)sender
 {
     [[self model] showPaneOfType:MGPaneTypeNetWorth];
 }
 
-- (IBAction)showIncomeStatement:(id)sender
+- (void)showIncomeStatement:(id)sender
 {
     [[self model] showPaneOfType:MGPaneTypeProfit];
 }
 
-- (IBAction)showTransactionTable:(id)sender
+- (void)showTransactionTable:(id)sender
 {
     [[self model] showPaneOfType:MGPaneTypeTransaction];
 }
 
-- (IBAction)showNextView:(id)sender
+- (void)showNextView:(id)sender
 {
     [[self model] selectNextView];
 }
 
-- (IBAction)showPreviousView:(id)sender
+- (void)showPreviousView:(id)sender
 {
     [[self model] selectPreviousView];
 }
 
-- (IBAction)showSelectedAccount:(id)sender
+- (void)showSelectedAccount:(id)sender
 {
     [[self model] showAccount];
 }
 
-- (IBAction)toggleEntriesReconciled:(id)sender
+- (void)toggleEntriesReconciled:(id)sender
 {
     [(MGAccountView *)top toggleReconciled];
 }
 
-- (IBAction)toggleExcluded:(id)sender
+- (void)toggleExcluded:(id)sender
 {
     [(id)top toggleExcluded];
 }
 
-- (IBAction)toggleReconciliationMode:(id)sender
+- (void)toggleReconciliationMode:(id)sender
 {
     [(MGAccountView *)top toggleReconciliationMode];
 }
 
-- (IBAction)toggleAreaVisibility:(id)sender
+- (void)toggleAreaVisibility:(id)sender
 {
     NSSegmentedControl *sc = (NSSegmentedControl *)sender;
     NSInteger index = [sc selectedSegment];
@@ -400,17 +408,17 @@ http://www.hardcoded.net/licenses/bsd_license
     }
 }
 
-- (IBAction)toggleGraph:(id)sender
+- (void)toggleGraph:(id)sender
 {
     [[self model] toggleAreaVisibility:MGPaneAreaBottomGraph];
 }
 
-- (IBAction)togglePieChart:(id)sender
+- (void)togglePieChart:(id)sender
 {
     [[self model] toggleAreaVisibility:MGPaneAreaRightChart];
 }
 
-- (IBAction)export:(id)sender
+- (void)export:(id)sender
 {
     [[self model] export];
 }

@@ -175,3 +175,12 @@
 "Year" = "Year";
 "Quarter" = "Quarter";
 "Month" = "Month";
+
+/* Main Window */
+"New Item" = "New Item";
+"Delete Selected" = "Delete Selected";
+"Edit Selected" = "Edit Selected";
+"Status label" = "Status label";
+"Toggle Graph" = "Toggle Graph";
+"Toggle Pie Chart" = "Toggle Pie Chart";
+"Toggle Columns" = "Toggle Columns";

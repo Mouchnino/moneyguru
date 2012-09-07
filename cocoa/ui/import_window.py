@@ -34,7 +34,7 @@ importButton.action = Action(owner, 'importSelectedPane')
 swapPopup.action = Action(owner, 'selectSwapType')
 swapButton.action = Action(owner, 'switchDateFields')
 
-tabView.properties['tabViewType'] = const.NSNoTabsNoBorder
+tabView.tabViewType = const.NSNoTabsNoBorder
 importTable.alternatingRows = True
 importTable.allowsColumnSelection = False
 importTable.allowsColumnReordering = False
@@ -49,10 +49,7 @@ importButton.width = 105
 
 tabBarControl.moveTo(Pack.UpperLeft, margin=0)
 tabBarControl.fill(Pack.Right, margin=0)
-# Normally, the margin should be 0, but for some reason, the tab view goes too high when I do this.
-# This margin problem only seems to be present when the tabview is in tabless mode, so it's probably
-# just xibless' lack of support for this.
-tabView.moveNextTo(tabBarControl, Pack.Below, margin=8)
+tabView.moveNextTo(tabBarControl, Pack.Below, margin=0)
 tabView.fill(Pack.LowerRight, margin=0)
 tabBarControl.setAnchor(Pack.UpperLeft, growX=True)
 tabView.setAnchor(Pack.UpperLeft, growX=True, growY=True)
