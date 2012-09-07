@@ -277,52 +277,52 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (IBAction)selectMonthRange:(id)sender
 {
-    [dateRangeSelector selectMonthRange:sender];
+    [[dateRangeSelector model] selectMonthRange];
 }
 
 - (IBAction)selectNextDateRange:(id)sender
 {
-    [dateRangeSelector selectNextDateRange:sender];
+    [[dateRangeSelector model] selectNextDateRange];
 }
 
 - (IBAction)selectPrevDateRange:(id)sender
 {
-    [dateRangeSelector selectPrevDateRange:sender];
+    [[dateRangeSelector model] selectPrevDateRange];
 }
 
 - (IBAction)selectTodayDateRange:(id)sender
 {
-    [dateRangeSelector selectTodayDateRange:sender];
+    [[dateRangeSelector model] selectTodayDateRange];
 }
 
 - (IBAction)selectQuarterRange:(id)sender
 {
-    [dateRangeSelector selectQuarterRange:sender];
+    [[dateRangeSelector model] selectQuarterRange];
 }
 
 - (IBAction)selectYearRange:(id)sender
 {
-    [dateRangeSelector selectYearRange:sender];
+    [[dateRangeSelector model] selectYearRange];
 }
 
 - (IBAction)selectYearToDateRange:(id)sender
 {
-    [dateRangeSelector selectYearToDateRange:sender];
+    [[dateRangeSelector model] selectYearToDateRange];
 }
 
 - (IBAction)selectRunningYearRange:(id)sender
 {
-    [dateRangeSelector selectRunningYearRange:sender];
+    [[dateRangeSelector model] selectRunningYearRange];
 }
 
 - (IBAction)selectAllTransactionsRange:(id)sender
 {
-    [dateRangeSelector selectAllTransactionsRange:sender];
+    [[dateRangeSelector model] selectAllTransactionsRange];
 }
 
 - (IBAction)selectCustomDateRange:(id)sender
 {
-    [dateRangeSelector selectCustomDateRange:sender];
+    [[dateRangeSelector model] selectCustomDateRange];
 }
 
 - (IBAction)selectSavedCustomRange:(id)sender

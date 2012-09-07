@@ -162,3 +162,16 @@
 
 /* Account View */
 "Reconciliation" = "Reconciliation";
+
+/* Date Range Selector */
+"Date range buttons" = "Date range buttons";
+"Previous Date Range" = "Previous Date Range";
+"Placeholder for the date range menu" = "Placeholder for the date range menu";
+"Next Date Range" = "Next Date Range";
+"All Transactions" = "All Transactions";
+"Custom date range..." = "Custom date range...";
+"Running year" = "Running year";
+"Year to date" = "Year to date";
+"Year" = "Year";
+"Quarter" = "Quarter";
+"Month" = "Month";

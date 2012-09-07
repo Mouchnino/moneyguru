@@ -7,19 +7,23 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGDateRangeSelector.h"
+#import "MGDateRangeSelector_UI.h"
 #import "MGConst.h"
 #import "HSPyUtil.h"
 #import "MGAppDelegate.h"
 
 @implementation MGDateRangeSelector
+
+@synthesize dateRangePopUp;
+@synthesize segmentedControl;
+
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
     PyDateRangeSelector *m = [[PyDateRangeSelector alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"DateRangeSelectorView", self)];
     [m release];
-    [NSBundle loadNibNamed:@"DateRangeSelector" owner:self];
-    [self setView:linkedView];
+    [self setView:createMGDateRangeSelector_UI(self)];
     /* In popups, there's the invisible first item, which is why we start our indexing at 8! */
     NSMenuItem *custom1 = [dateRangePopUp itemAtIndex:8];
     NSMenuItem *custom2 = [dateRangePopUp itemAtIndex:9];
@@ -65,7 +69,7 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)segmentClicked:(id)sender
+- (void)segmentClicked
 {
     NSInteger index = [segmentedControl selectedSegment];
     if (index == 0) {
@@ -76,57 +80,7 @@ http://www.hardcoded.net/licenses/bsd_license
     }
 }
 
-- (IBAction)selectMonthRange:(id)sender
-{
-    [[self model] selectMonthRange];
-}
-
-- (IBAction)selectNextDateRange:(id)sender
-{
-    [[self model] selectNextDateRange];
-}
-
-- (IBAction)selectPrevDateRange:(id)sender
-{
-    [[self model] selectPrevDateRange];
-}
-
-- (IBAction)selectTodayDateRange:(id)sender
-{
-    [[self model] selectTodayDateRange];
-}
-
-- (IBAction)selectQuarterRange:(id)sender
-{
-    [[self model] selectQuarterRange];
-}
-
-- (IBAction)selectYearRange:(id)sender
-{
-    [[self model] selectYearRange];
-}
-
-- (IBAction)selectYearToDateRange:(id)sender
-{
-    [[self model] selectYearToDateRange];
-}
-
-- (IBAction)selectRunningYearRange:(id)sender
-{
-    [[self model] selectRunningYearRange];
-}
-
-- (IBAction)selectAllTransactionsRange:(id)sender
-{
-    [[self model] selectAllTransactionsRange];
-}
-
-- (IBAction)selectCustomDateRange:(id)sender
-{
-    [[self model] selectCustomDateRange];
-}
-
-- (IBAction)selectSavedCustomRange:(id)sender
+- (void)selectSavedCustomRange:(id)sender
 {
     NSInteger slot = [(NSMenuItem *)sender tag] - MGCustomSavedRangeStart;
     [[self model] selectSavedRange:slot];

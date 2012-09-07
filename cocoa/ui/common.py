@@ -1,5 +1,5 @@
-from xibless.textfield import Label, TextAlignment
-from xibless.control import ControlSize
+from xibless.textfield import Label
+from xibless.control import ControlSize, TextAlignment
 from xibless.font import Font, FontTrait
 from xibless.color import Color
 

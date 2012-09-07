@@ -97,6 +97,7 @@
 		CE4CD3890F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4CD3880F2B7B0D003F1738 /* MGCSVLayoutNameDialog.m */; };
 		CE4FAC9D1451B34D00114555 /* columns_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4FAC9C1451B34D00114555 /* columns_16.png */; };
 		CE50C99F15DC322800C22112 /* MGLookup_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE50C99E15DC322800C22112 /* MGLookup_UI.m */; };
+		CE5260D415F93F0C00A0976B /* MGDateRangeSelector_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5260D315F93F0C00A0976B /* MGDateRangeSelector_UI.m */; };
 		CE55B7FB15F7D316004A3DA9 /* MGTransactionView_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55B7FA15F7D316004A3DA9 /* MGTransactionView_UI.m */; };
 		CE55EB891047DC8500F3390F /* MGSchedulePrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB881047DC8500F3390F /* MGSchedulePrint.m */; };
 		CE55EB8C1047DE0C00F3390F /* MGBudgetPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CE55EB8B1047DE0C00F3390F /* MGBudgetPrint.m */; };
@@ -219,7 +220,6 @@
 		CEBB2FFD10F76BD100FC4C7A /* MGBudgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB2FFC10F76BD100FC4C7A /* MGBudgetView.m */; };
 		CEBB300510F76E3600FC4C7A /* MGScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBB300410F76E3600FC4C7A /* MGScheduleView.m */; };
 		CEBE22CD15E7D04000B5FBD2 /* MGMassEditionPanel_UI.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE22CC15E7D04000B5FBD2 /* MGMassEditionPanel_UI.m */; };
-		CEC367B111D10E1E00EB0222 /* DateRangeSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */; };
 		CEC367B611D10E1E00EB0222 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679511D10E1E00EB0222 /* MainMenu.xib */; };
 		CEC367B711D10E1E00EB0222 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3679711D10E1E00EB0222 /* MainWindow.xib */; };
 		CEC5CE500F45D8060042E33F /* MGPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5CE4F0F45D8060042E33F /* MGPieChart.m */; };
@@ -465,6 +465,8 @@
 		CE4FAC9C1451B34D00114555 /* columns_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = columns_16.png; sourceTree = "<group>"; };
 		CE50C99D15DC322800C22112 /* MGLookup_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLookup_UI.h; sourceTree = "<group>"; };
 		CE50C99E15DC322800C22112 /* MGLookup_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLookup_UI.m; sourceTree = "<group>"; };
+		CE5260D215F93F0C00A0976B /* MGDateRangeSelector_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDateRangeSelector_UI.h; sourceTree = "<group>"; };
+		CE5260D315F93F0C00A0976B /* MGDateRangeSelector_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDateRangeSelector_UI.m; sourceTree = "<group>"; };
 		CE55B7F915F7D316004A3DA9 /* MGTransactionView_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTransactionView_UI.h; sourceTree = "<group>"; };
 		CE55B7FA15F7D316004A3DA9 /* MGTransactionView_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTransactionView_UI.m; sourceTree = "<group>"; };
 		CE55EB871047DC8500F3390F /* MGSchedulePrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSchedulePrint.h; path = print/MGSchedulePrint.h; sourceTree = "<group>"; };
@@ -499,7 +501,6 @@
 		CE6D38100F93648E00FA8460 /* ValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValueTransformers.h; path = ../cocoalib/ValueTransformers.h; sourceTree = SOURCE_ROOT; };
 		CE6D38110F93648E00FA8460 /* ValueTransformers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValueTransformers.m; path = ../cocoalib/ValueTransformers.m; sourceTree = SOURCE_ROOT; };
 		CE6D509C147EC66E00FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE6D50A8147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CE6D50B0147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CE6D50B1147EC6B500FCF8CD /* nl */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nl; path = nl.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		CE6E000D0F4ECD0B00FE7628 /* MGChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGChartView.h; sourceTree = "<group>"; };
@@ -526,7 +527,6 @@
 		CE7DA84E15DC3ADC0030186B /* MGRecurrenceScopeDialog_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGRecurrenceScopeDialog_UI.m; sourceTree = "<group>"; };
 		CE80D93C11DA3964007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CE80D94911DA399E007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		CE80D94A11DA39AA007B8E05 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CE80FF3C0E34ABC4001CB573 /* MGSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSearchField.h; sourceTree = "<group>"; };
 		CE80FF3D0E34ABC4001CB573 /* MGSearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSearchField.m; sourceTree = "<group>"; };
 		CE82D96A15F7FF4A00A9FE86 /* MGAccountView_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAccountView_UI.h; sourceTree = "<group>"; };
@@ -676,10 +676,8 @@
 		CEBB300410F76E3600FC4C7A /* MGScheduleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScheduleView.m; sourceTree = "<group>"; };
 		CEBE22CB15E7D04000B5FBD2 /* MGMassEditionPanel_UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMassEditionPanel_UI.h; sourceTree = "<group>"; };
 		CEBE22CC15E7D04000B5FBD2 /* MGMassEditionPanel_UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMassEditionPanel_UI.m; sourceTree = "<group>"; };
-		CEC3678C11D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CEC3679611D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CEC3679811D10E1E00EB0222 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		CEC367C811D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CEC367CC11D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CEC367CD11D10E4A00EB0222 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		CEC5CE4E0F45D8060042E33F /* MGPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPieChart.h; sourceTree = "<group>"; };
@@ -692,7 +690,6 @@
 		CECB080914DB4C41008F55EA /* PyReadOnlyPluginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyReadOnlyPluginView.m; sourceTree = "<group>"; };
 		CECB080C14DB4C53008F55EA /* MGReadOnlyPluginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGReadOnlyPluginView.h; sourceTree = "<group>"; };
 		CECB080D14DB4C53008F55EA /* MGReadOnlyPluginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGReadOnlyPluginView.m; sourceTree = "<group>"; };
-		CECEF788144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CECEF78F144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CECEF790144219E700EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		CECEF7B814421A0400EBF1C4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -810,7 +807,6 @@
 		CEFEA42114CA05E1004BCD8D /* PyAccountPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyAccountPanel.m; sourceTree = "<group>"; };
 		CEFEA43514CA0BFC004BCD8D /* PyMassEditionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyMassEditionPanel.h; sourceTree = "<group>"; };
 		CEFEA43614CA0BFC004BCD8D /* PyMassEditionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PyMassEditionPanel.m; sourceTree = "<group>"; };
-		CEFF4EBB1303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/DateRangeSelector.xib; sourceTree = "<group>"; };
 		CEFF4EC21303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CEFF4EC31303FAFB009706BE /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/MainWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -919,6 +915,8 @@
 		CE16CCF515DADA6000356EFF /* xibless */ = {
 			isa = PBXGroup;
 			children = (
+				CE5260D215F93F0C00A0976B /* MGDateRangeSelector_UI.h */,
+				CE5260D315F93F0C00A0976B /* MGDateRangeSelector_UI.m */,
 				CE94932E15F8F74A00956EBF /* MGAccountSheetView_UI.h */,
 				CE94932F15F8F74A00956EBF /* MGAccountSheetView_UI.m */,
 				CE82D96A15F7FF4A00A9FE86 /* MGAccountView_UI.h */,
@@ -1348,7 +1346,6 @@
 			children = (
 				CEC3679511D10E1E00EB0222 /* MainMenu.xib */,
 				CEC3679711D10E1E00EB0222 /* MainWindow.xib */,
-				CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -1706,7 +1703,6 @@
 				CEA6DE911101E6970028E125 /* TabNewMetalPressed.png in Resources */,
 				CEA6DE921101E6970028E125 /* TabNewMetalRollover.png in Resources */,
 				CEA6DE9D1101E6970028E125 /* ReadMe.rtfd in Resources */,
-				CEC367B111D10E1E00EB0222 /* DateRangeSelector.xib in Resources */,
 				CEC367B611D10E1E00EB0222 /* MainMenu.xib in Resources */,
 				CEC367B711D10E1E00EB0222 /* MainWindow.xib in Resources */,
 				CEF5E63911DCCEE80048C9DF /* balance_sheet_16.png in Resources */,
@@ -1940,25 +1936,13 @@
 				CE55B7FB15F7D316004A3DA9 /* MGTransactionView_UI.m in Sources */,
 				CE82D96C15F7FF4A00A9FE86 /* MGAccountView_UI.m in Sources */,
 				CE94933015F8F74A00956EBF /* MGAccountSheetView_UI.m in Sources */,
+				CE5260D415F93F0C00A0976B /* MGDateRangeSelector_UI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CEC3678B11D10E1E00EB0222 /* DateRangeSelector.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEC3678C11D10E1E00EB0222 /* en */,
-				CEC367C811D10E4A00EB0222 /* fr */,
-				CE80D94A11DA39AA007B8E05 /* de */,
-				CEFF4EBB1303FAFB009706BE /* it */,
-				CECEF788144219E700EBF1C4 /* cs */,
-				CE6D50A8147EC6B500FCF8CD /* nl */,
-			);
-			name = DateRangeSelector.xib;
-			sourceTree = SOURCE_ROOT;
-		};
 		CEC3679511D10E1E00EB0222 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

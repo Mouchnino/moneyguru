@@ -12,12 +12,15 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGDateRangeSelector : HSGUIController <NSAnimationDelegate>
 {
-    IBOutlet NSView *linkedView;
-    IBOutlet NSPopUpButton *dateRangePopUp;
-    IBOutlet NSSegmentedControl *segmentedControl;
+    NSPopUpButton *dateRangePopUp;
+    NSSegmentedControl *segmentedControl;
     
     NSArray *customRangeItems;
 }
+
+@property (readwrite, retain) NSPopUpButton *dateRangePopUp;
+@property (readwrite, retain) NSSegmentedControl *segmentedControl;
+
 - (id)initWithPyRef:(PyObject *)aPyRef;
 
 /* Virtual */
@@ -27,16 +30,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)animate:(BOOL)forward;
 
 /* Actions */
-- (IBAction)segmentClicked:(id)sender;
-- (IBAction)selectMonthRange:(id)sender;
-- (IBAction)selectNextDateRange:(id)sender;
-- (IBAction)selectPrevDateRange:(id)sender;
-- (IBAction)selectTodayDateRange:(id)sender;
-- (IBAction)selectQuarterRange:(id)sender;
-- (IBAction)selectYearRange:(id)sender;
-- (IBAction)selectYearToDateRange:(id)sender;
-- (IBAction)selectRunningYearRange:(id)sender;
-- (IBAction)selectAllTransactionsRange:(id)sender;
-- (IBAction)selectCustomDateRange:(id)sender;
-- (IBAction)selectSavedCustomRange:(id)sender;
+- (void)segmentClicked;
+- (void)selectSavedCustomRange:(id)sender;
 @end

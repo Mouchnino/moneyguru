@@ -66,6 +66,7 @@ def build_xibless(dest='cocoa/autogen'):
         ('transaction_view.py', 'MGTransactionView_UI'),
         ('account_view.py', 'MGAccountView_UI'),
         ('account_sheet_view.py', 'MGAccountSheetView_UI'),
+        ('date_range_selector.py', 'MGDateRangeSelector_UI'),
     ]
     for srcname, dstname in FNPAIRS:
         srcpath = op.join('cocoa', 'ui', srcname)
