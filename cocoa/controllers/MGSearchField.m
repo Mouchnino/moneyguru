@@ -38,13 +38,13 @@ http://www.hardcoded.net/licenses/bsd_license
         /* The action on a NSSearchField happens when escape is pressed, something that isn't covered
            by controlTextDidEndEditing: in HSTextField.
         */
-        [aView setAction:@selector(changeQuery:)];
+        [aView setAction:@selector(changeQuery)];
         [aView setTarget:self];
     }
 }
 
 /* Action */
-- (IBAction)changeQuery:(id)sender
+- (void)changeQuery
 {
     [[self model] setText:[[self view] stringValue]];
 }

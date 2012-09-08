@@ -16,5 +16,4 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Public */
 - (PyEntryTable *)model;
-- (void)showTransferAccount:(id)sender;
 @end

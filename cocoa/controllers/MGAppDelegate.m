@@ -103,11 +103,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [[NSWorkspace sharedWorkspace] openURL:u];
 }
 
-- (void)openPluginFolder
-{
-    [[self model] openPluginFolder];
-}
-
 - (void)showAboutBox
 {
     if (_aboutBox == nil) {

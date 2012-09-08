@@ -13,5 +13,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (NSSearchField *)view;
 - (void)setView:(NSSearchField *)aView;
-- (IBAction)changeQuery:(id)sender;
+- (void)changeQuery;
 @end

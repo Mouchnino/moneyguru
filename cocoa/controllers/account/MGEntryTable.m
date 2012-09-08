@@ -197,8 +197,8 @@ http://www.hardcoded.net/licenses/bsd_license
             [cell setHasArrow:NO];
         } else {
             [cell setHasArrow:YES];
-            [cell setArrowTarget:self];
-            [cell setArrowAction:@selector(showTransferAccount:)];
+            [cell setArrowTarget:[self model]];
+            [cell setArrowAction:@selector(showTransferAccount)];
             [cell setHasDarkBackground:isSelected && isFocused];
         }
     }
@@ -208,11 +208,5 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [[self model] toggleReconciled];
     return YES;
-}
-
-/* Public */
-- (void)showTransferAccount:(id)sender
-{
-    [[self model] showTransferAccount];
 }
 @end

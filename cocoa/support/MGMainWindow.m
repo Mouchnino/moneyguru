@@ -45,18 +45,18 @@ http://www.hardcoded.net/licenses/bsd_license
     SEL action = nil;
     if ((!isEditing) && ([event modifierKeysFlags] == (NSCommandKeyMask | NSShiftKeyMask))) {
         if ([event isLeft]) {
-            action = @selector(showPreviousView:);
+            action = @selector(showPreviousView);
         }
         else if ([event isRight]) {
-            action = @selector(showNextView:);
+            action = @selector(showNextView);
         }
     }
     else if ((!isEditing) && ([event modifierKeysFlags] == NSCommandKeyMask)) {
         if ([event isLeft]) {
-            action = @selector(navigateBack:);
+            action = @selector(navigateBack);
         }
         else if ([event isRight]) {
-            action = @selector(showSelectedAccount:);
+            action = @selector(showSelectedAccount);
         }
     }
     MGMainWindowController *delegate = [self delegate];

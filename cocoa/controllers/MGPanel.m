@@ -76,12 +76,12 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)cancel:(id)sender
+- (void)cancel:(id)sender
 {
     [NSApp endSheet:[self window]];
 }
 
-- (IBAction)save:(id)sender
+- (void)save:(id)sender
 {
     [self save];
     [NSApp endSheet:[self window]];

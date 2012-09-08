@@ -17,6 +17,4 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Public */
 - (PyTransactionTable *)model;
-- (void)showFromAccount:(id)sender;
-- (void)showToAccount:(id)sender;
 @end

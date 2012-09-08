@@ -41,7 +41,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)openExampleDocument;
 - (void)openWebsite;
 - (void)openHelp;
-- (void)openPluginFolder;
 - (void)showAboutBox;
 - (void)showPreferencesPanel;
 

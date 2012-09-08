@@ -18,7 +18,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView;
 - (PyReport *)model;
 
-- (IBAction)showSelectedAccount:(id)sender;
+- (void)showSelectedAccount;
+- (void)toggleExcluded;
 - (BOOL)canShowSelectedAccount;
 - (HSColumns *)columns;
 @end

@@ -29,6 +29,6 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Public */
 - (void)save;
 /* Actions */
-- (IBAction)cancel:(id)sender;
-- (IBAction)save:(id)sender;
+- (void)cancel:(id)sender;
+- (void)save:(id)sender;
 @end

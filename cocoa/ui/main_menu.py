@@ -28,7 +28,7 @@ fileMenu.addItem("New Tab", Action(None, 'newTab'), 'cmd+t')
 fileMenu.addItem("Open...", Action(None, 'openDocument:'), 'cmd+o')
 # The "Open Recent" item will be automatically added here, don't ask me why. Some kind of NSDocument magic.
 fileMenu.addItem("Open Example Document", Action(None, 'openExampleDocument'))
-fileMenu.addItem("Open Plugin Folder", Action(None, 'openPluginFolder'))
+fileMenu.addItem("Open Plugin Folder", Action(owner.model, 'openPluginFolder'))
 fileMenu.addItem("Import...", Action(None, 'import'), 'cmd+alt+i')
 fileMenu.addItem("Export...", Action(None, 'export'), 'cmd+alt+e')
 fileMenu.addSeparator()

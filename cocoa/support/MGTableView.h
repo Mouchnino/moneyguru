@@ -23,6 +23,6 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface MGTableView : HSTableView {}
 - (id <MGTableViewDelegate>)delegate;
 - (void)setDelegate:(id <MGTableViewDelegate>)aDelegate;
-- (IBAction)copy:(id)sender;
+- (void)copy:(id)sender;
 @end
 

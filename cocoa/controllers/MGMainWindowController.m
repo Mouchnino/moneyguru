@@ -77,7 +77,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [tabBar setCellMinWidth:130];
     [tabBar setDelegate:self];
     [[tabBar addTabButton] setTarget:self];
-    [[tabBar addTabButton] setAction:@selector(newTab:)];
+    [[tabBar addTabButton] setAction:@selector(newTab)];
     
     [[self window] setDelegate:self];
     return self;
@@ -113,31 +113,31 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Private */
 - (BOOL)validateAction:(SEL)action
 {
-    if ((action == @selector(newGroup:)) || (action == @selector(toggleExcluded:)))
+    if ((action == @selector(newGroup)) || (action == @selector(toggleExcluded)))
         return [top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]];
-    else if ((action == @selector(moveUp:)) ||
-             (action == @selector(moveDown:)) ||
-             (action == @selector(duplicateItem:)) ||
-             (action == @selector(makeScheduleFromSelected:)))
+    else if ((action == @selector(moveSelectionUp)) ||
+             (action == @selector(moveSelectionDown)) ||
+             (action == @selector(duplicateItem)) ||
+             (action == @selector(makeScheduleFromSelected)))
         return [top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]];
-    else if (action == @selector(toggleEntriesReconciled:))
+    else if (action == @selector(toggleEntriesReconciled))
         return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top inReconciliationMode];
-    else if (action == @selector(showNextView:))
+    else if (action == @selector(showNextView))
         return [[self model] currentPaneIndex] < [[self model] paneCount]-1;
-    else if (action == @selector(showPreviousView:))
+    else if (action == @selector(showPreviousView))
         return [[self model] currentPaneIndex] > 0;
-    else if (action == @selector(showSelectedAccount:)) {
+    else if (action == @selector(showSelectedAccount)) {
         if ([top isKindOfClass:[MGNetWorthView class]] || [top isKindOfClass:[MGProfitView class]])
             return [(id)top canShowSelectedAccount];
         else
             return [top isKindOfClass:[MGTransactionView class]] || [top isKindOfClass:[MGAccountView class]];
     }
-    else if (action == @selector(navigateBack:))
+    else if (action == @selector(navigateBack))
         return [top isKindOfClass:[MGAccountView class]];
-    else if (action == @selector(toggleReconciliationMode:))
+    else if (action == @selector(toggleReconciliationMode))
         return [top isKindOfClass:[MGAccountView class]] && [(MGAccountView *)top canToggleReconciliationMode];
-    else if ((action == @selector(selectPrevDateRange:)) || (action == @selector(selectNextDateRange:))
-        || (action == @selector(selectTodayDateRange:)))
+    else if ((action == @selector(selectPrevDateRange)) || (action == @selector(selectNextDateRange))
+        || (action == @selector(selectTodayDateRange)))
         return [[dateRangeSelector model] canNavigate];
     return YES;
 }
@@ -526,21 +526,21 @@ http://www.hardcoded.net/licenses/bsd_license
         [toolbarItem setLabel:NSLocalizedString(@"Net Worth", @"")];
         [toolbarItem setImage:[NSImage imageNamed:@"balance_sheet_48"]];
         [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showBalanceSheet:)];
+        [toolbarItem setAction:@selector(showBalanceSheet)];
     }
     else if ([itemIdentifier isEqual:MGIncomeStatementToolbarItemIdentifier])
     {
         [toolbarItem setLabel:NSLocalizedString(@"Profit/Loss", @"")];
         [toolbarItem setImage:[NSImage imageNamed:@"income_statement_48"]];
         [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showIncomeStatement:)];
+        [toolbarItem setAction:@selector(showIncomeStatement)];
     }
     else if ([itemIdentifier isEqual:MGTransactionsToolbarItemIdentifier])
     {
         [toolbarItem setLabel:NSLocalizedString(@"Transactions", @"")];
         [toolbarItem setImage:[NSImage imageNamed:@"transaction_table_48"]];
         [toolbarItem setTarget:self];
-        [toolbarItem setAction:@selector(showTransactionTable:)];
+        [toolbarItem setAction:@selector(showTransactionTable)];
     }
     else {
         toolbarItem = nil;

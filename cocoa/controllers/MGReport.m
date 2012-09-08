@@ -48,12 +48,12 @@ NSArray* convertPaths(NSArray *paths)
 }
 
 /* Actions */
-- (IBAction)showSelectedAccount:(id)sender
+- (void)showSelectedAccount
 {
     [[self model] showSelectedAccount];
 }
 
-- (IBAction)toggleExcluded:(id)sender
+- (void)toggleExcluded
 {
     if (toggleExcludedIsEnabled) {
         [[self model] toggleExcluded];
@@ -176,7 +176,7 @@ NSArray* convertPaths(NSArray *paths)
         {
             [cell setHasArrow:YES];
             [cell setArrowTarget:self];
-            [cell setArrowAction:@selector(showSelectedAccount:)];            
+            [cell setArrowAction:@selector(showSelectedAccount)];            
         }
         else
             [cell setHasArrow:NO];
@@ -192,7 +192,7 @@ NSArray* convertPaths(NSArray *paths)
             NSString *imageName = isExcluded ? @"account_in_16" : @"account_out_16";
             [cell setButtonImageName:imageName];
             [cell setButtonTarget:self];
-            [cell setButtonAction:@selector(toggleExcluded:)];
+            [cell setButtonAction:@selector(toggleExcluded)];
         }
         else
             [cell setButtonImageName:nil];

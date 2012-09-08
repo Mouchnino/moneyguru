@@ -126,17 +126,6 @@ http://www.hardcoded.net/licenses/bsd_license
     [super tableView:aTableView setObjectValue:value forTableColumn:column row:row];
 }
 
-/* Public */
-- (void)showFromAccount:(id)sender
-{
-    [[self model] showFromAccount];
-}
-
-- (void)showToAccount:(id)sender
-{
-    [[self model] showToAccount];
-}
-
 /* Delegate */
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
@@ -180,11 +169,11 @@ http://www.hardcoded.net/licenses/bsd_license
             [cell setHasArrow:NO];
         } else {
             [cell setHasArrow:YES];
-            [cell setArrowTarget:self];
+            [cell setArrowTarget:[self model]];
             if ([[column identifier] isEqualToString:@"from"])
-                [cell setArrowAction:@selector(showFromAccount:)];
+                [cell setArrowAction:@selector(showFromAccount)];
             else
-                [cell setArrowAction:@selector(showToAccount:)];
+                [cell setArrowAction:@selector(showToAccount)];
             [cell setHasDarkBackground:isSelected && isFocused];
         }
     }

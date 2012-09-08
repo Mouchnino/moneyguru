@@ -21,7 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)copy:(id)sender
+- (void)copy:(id)sender
 {
     NSString *data = [[self delegate] dataForCopyToPasteboard];
     NSPasteboard *p = [NSPasteboard generalPasteboard];
