@@ -5,23 +5,15 @@ syntax: glob
 *.so
 *.pyd
 *.mo
-*.tm_build_errors
 *.back.aip
-*.xcodeproj/xcuserdata
-*.xcodeproj/project.xcworkspace/xcuserdata
-*.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 build
 _build
 conf.json
 cocoa/Info.plist
 cocoa/build
 cocoa/autogen
-cocoa/*.app
-cocoa/fr.lproj
-cocoa/de.lproj
-cocoa/it.lproj
-cocoa/cs.lproj
-cocoa/nl.lproj
+cocoa/.waf*
+cocoa/.lock-waf*
 
 qt/*_rc.py
 qt/ui/*_ui.py

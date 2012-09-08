@@ -6,18 +6,20 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+import sys
 import os
 import os.path as op
 import shutil
 import json
+import glob
 from argparse import ArgumentParser
 
 from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
-from hscommon.build import (print_and_do, copy_packages, move_all, move, copy, symlink, hardlink,
-    add_to_pythonpath, copy_sysconfig_files_for_embed, build_cocoalib_xibless)
+from hscommon.build import (print_and_do, copy_packages, move_all, move, copy, hardlink, filereplace,
+    add_to_pythonpath, copy_sysconfig_files_for_embed, build_cocoalib_xibless, OSXAppStructure)
 from hscommon import loc
 from hscommon.util import ensure_folder, modified_after
 
@@ -37,10 +39,18 @@ def parse_args():
         help="Build only Cocoa modules")
     parser.add_argument('--ext', action='store_true', dest='ext',
         help="Build only ext modules")
+    parser.add_argument('--cocoa-compile', action='store_true', dest='cocoa_compile',
+        help="Build only Cocoa executable")
     parser.add_argument('--xibless', action='store_true', dest='xibless',
         help="Build only xibless UIs")
     args = parser.parse_args()
     return args
+
+def cocoa_compile_command():
+    return '{0} waf configure && {0} waf'.format(sys.executable)
+
+def cocoa_app():
+    return OSXAppStructure('build/moneyGuru.app')
 
 def build_xibless(dest='cocoa/autogen'):
     import xibless
@@ -77,49 +87,50 @@ def build_xibless(dest='cocoa/autogen'):
             xibless.generate(srcpath, dstpath, localizationTable='Localizable')
 
 def build_cocoa(dev):
+    print("Creating OS X app structure")
+    app = cocoa_app()
+    # We import this here because we don't want opened module to prevent us replacing .pyd files.
+    from core.app import Application as MoneyGuruApp
+    app_version = MoneyGuruApp.VERSION
+    filereplace('cocoa/InfoTemplate.plist', 'build/Info.plist', version=app_version)
+    app.create('build/Info.plist')
+    print("Building localizations")
+    build_localizations('cocoa')
     print("Building xibless UIs")
     build_cocoalib_xibless()
     build_xibless()
-    print("Building the cocoa layer")
-    ensure_folder('build/py')
+    print("Building Python extensions")
     build_cocoa_proxy_module()
     build_cocoa_bridging_interfaces()
-    from pluginbuilder import copy_embeddable_python_dylib, get_python_header_folder, collect_dependencies
+    print("Building the cocoa layer")
+    from pluginbuilder import copy_embeddable_python_dylib, collect_dependencies
     copy_embeddable_python_dylib('build')
-    symlink(get_python_header_folder(), 'build/PythonHeaders')
-    tocopy = ['core', 'hscommon', 'cocoalib/cocoa']
-    copy_packages(tocopy, 'build')
+    pydep_folder = op.join(app.resources, 'py')
+    ensure_folder(pydep_folder)
     if dev:
         hardlink('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
     else:
         copy('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
-    os.chdir('build')
-    collect_dependencies('mg_cocoa.py', 'py', excludes=['PyQt4'])
-    os.chdir('..')
+    tocopy = ['core', 'hscommon', 'cocoalib/cocoa']
+    copy_packages(tocopy, 'build')
+    sys.path.insert(0, 'build')
+    collect_dependencies('build/mg_cocoa.py', pydep_folder, excludes=['PyQt4'])
+    del sys.path[0]
     if dev:
-        copy_packages(tocopy, 'build/py', create_links=True)
-    copy_sysconfig_files_for_embed('build/py')
+        copy_packages(tocopy, pydep_folder, create_links=True)
+    copy_sysconfig_files_for_embed(pydep_folder)
+    print("Compiling with WAF")
     os.chdir('cocoa')
-    print('Generating Info.plist')
-    # We import this here because we don't want opened module to prevent us replacing .pyd files.
-    from core.app import Application as MoneyGuruApp
-    contents = open('InfoTemplate.plist').read()
-    contents = contents.replace('{version}', MoneyGuruApp.VERSION)
-    open('Info.plist', 'w').write(contents)
-    print("Building the XCode project")
-    args = ['-project moneyguru.xcodeproj']
-    if dev:
-        args.append('-configuration dev')
-    else:
-        args.append('-configuration release')
-    args = ' '.join(args)
-    os.system('xcodebuild {0}'.format(args))
+    print_and_do(cocoa_compile_command())
     os.chdir('..')
+    app.copy_executable('cocoa/build/moneyGuru')
+    print("Copying resources and frameworks")
+    resources = ['cocoa/dsa_pub.pem', 'build/mg_cocoa.py', 'build/help'] + glob.glob('images/*')
+    app.copy_resources(*resources, use_symlinks=dev)
+    app.copy_frameworks('build/Python', 'cocoalib/Sparkle.framework')
     print("Creating the run.py file")
-    subfolder = 'dev' if dev else 'release'
-    app_path = 'cocoa/build/{0}/moneyGuru.app'.format(subfolder)
     tmpl = open('run_template_cocoa.py', 'rt').read()
-    run_contents = tmpl.replace('{{app_path}}', app_path)
+    run_contents = tmpl.replace('{{app_path}}', app.dest)
     open('run.py', 'wt').write(run_contents)
 
 def build_qt(dev):
@@ -144,30 +155,44 @@ def build_help(dev):
     confrepl = {'platform': platform}
     sphinxgen.gen(help_basepath, help_destpath, changelog_path, tixurl, confrepl, confpath)
 
-def build_localizations(ui):
-    print("Building localizations")
+def build_base_localizations():
     loc.compile_all_po('locale')
     loc.compile_all_po(op.join('hscommon', 'locale'))
     loc.merge_locale_dir(op.join('hscommon', 'locale'), 'locale')
+
+def build_cocoa_localizations():
+    print("Creating lproj folders based on .po files")
+    app = cocoa_app()
+    en_stringsfile = op.join('cocoa', 'en.lproj', 'Localizable.strings')
+    en_cocoastringsfile = op.join('cocoalib', 'en.lproj', 'cocoalib.strings')
+    for lang in loc.get_langs('locale'):
+        pofile = op.join('locale', lang, 'LC_MESSAGES', 'ui.po')
+        dest_lproj = op.join(app.resources, lang + '.lproj')
+        ensure_folder(dest_lproj)
+        loc.po2strings(pofile, en_stringsfile, op.join(dest_lproj, 'Localizable.strings'))
+        pofile = op.join('cocoalib', 'locale', lang, 'LC_MESSAGES', 'cocoalib.po')
+        loc.po2strings(pofile, en_cocoastringsfile, op.join(dest_lproj, 'cocoalib.strings'))
+    # We also have to copy the "en.lproj" strings
+    en_lproj = op.join(app.resources, 'en.lproj')
+    ensure_folder(en_lproj)
+    copy(en_stringsfile, en_lproj)
+    copy(en_cocoastringsfile, en_lproj)
+
+def build_qt_localizations():
+    loc.compile_all_po(op.join('qtlib', 'locale'))
+    loc.merge_locale_dir(op.join('qtlib', 'locale'), 'locale')
+
+def build_localizations(ui):
+    build_base_localizations()
     if ui == 'cocoa':
-        print("Creating lproj folders based on .po files")
-        en_lproj = op.join('cocoa', 'en.lproj')
-        en_cocoastringsfile = op.join('cocoalib', 'en.lproj', 'cocoalib.strings')
-        for lang in loc.get_langs('locale'):
-            if lang == 'en':
-                continue
-            pofile = op.join('locale', lang, 'LC_MESSAGES', 'ui.po')
-            dest_lproj = op.join('cocoa', lang + '.lproj')
-            loc.po2strings(pofile, op.join(en_lproj, 'Localizable.strings'), op.join(dest_lproj, 'Localizable.strings'))
-            pofile = op.join('cocoalib', 'locale', lang, 'LC_MESSAGES', 'cocoalib.po')
-            loc.po2strings(pofile, en_cocoastringsfile, op.join(dest_lproj, 'cocoalib.strings'))
-        copy(en_cocoastringsfile, op.join(en_lproj, 'cocoalib.strings'))
+        build_cocoa_localizations()
+        locale_dest = op.join(cocoa_app().resources, 'locale')
     elif ui == 'qt':
-        loc.compile_all_po(op.join('qtlib', 'locale'))
-        loc.merge_locale_dir(op.join('qtlib', 'locale'), 'locale')
-    if op.exists(op.join('build', 'locale')):
-        shutil.rmtree(op.join('build', 'locale'))
-    shutil.copytree('locale', op.join('build', 'locale'), ignore=shutil.ignore_patterns('*.po', '*.pot'))
+        build_qt_localizations()
+        locale_dest = op.join('build', 'locale')
+    if op.exists(locale_dest):
+        shutil.rmtree(locale_dest)
+    shutil.copytree('locale', locale_dest, ignore=shutil.ignore_patterns('*.po', '*.pot'))
 
 def build_updatepot():
     print("Building .pot files from source files")
@@ -268,7 +293,9 @@ def build_cocoa_bridging_interfaces():
         SchedulePanelView, ViewWithGraphView, AccountViewView, MainWindowView, DocumentView]
     clsspecs = [objp.o2p.spec_from_python_class(class_) for class_ in allclasses]
     objp.p2o.generate_python_proxy_code_from_clsspec(clsspecs, 'build/CocoaViews.m')
-    build_cocoa_ext('CocoaViews', 'build/py', ['build/CocoaViews.m', 'build/ObjP.m'])
+    py_folder = op.join(cocoa_app().resources, 'py')
+    ensure_folder(py_folder)
+    build_cocoa_ext('CocoaViews', py_folder, ['build/CocoaViews.m', 'build/ObjP.m'])
 
 def build_normal(ui, dev):
     build_help(dev)
@@ -305,6 +332,11 @@ def main():
         build_cocoa_bridging_interfaces()
     elif args.ext:
         build_ext()
+    elif args.cocoa_compile:
+        os.chdir('cocoa')
+        print_and_do(cocoa_compile_command())
+        os.chdir('..')
+        cocoa_app().copy_executable('cocoa/build/moneyGuru')
     elif args.xibless:
         build_cocoalib_xibless()
         build_xibless()

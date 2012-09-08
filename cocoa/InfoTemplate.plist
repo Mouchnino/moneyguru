@@ -90,7 +90,7 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>moneyGuru</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>moneyguru_help</string>
 	<key>CFBundleHelpBookName</key>
@@ -102,7 +102,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>moneyGuru</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
