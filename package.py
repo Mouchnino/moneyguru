@@ -15,8 +15,8 @@ from argparse import ArgumentParser
 
 from core.app import Application as MoneyGuru
 from hscommon.plat import ISWINDOWS, ISLINUX
-from hscommon.build import (build_dmg, copy_packages, build_debian_changelog, copy_qt_plugins,
-    print_and_do, move, copy_all, setup_package_argparser, package_cocoa_app_in_dmg)
+from hscommon.build import (copy_packages, build_debian_changelog, copy_qt_plugins, print_and_do,
+    move, copy_all, setup_package_argparser, package_cocoa_app_in_dmg)
 
 def parse_args():
     parser = ArgumentParser()
@@ -90,7 +90,7 @@ def main():
     dev = conf['dev']
     print("Packaging moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
-        package_cocoa_app_in_dmg('cocoa/moneyGuru.app', '.', args)
+        package_cocoa_app_in_dmg('build/moneyGuru.app', '.', args)
     elif ui == 'qt':
         if ISWINDOWS:
             package_windows(dev)
