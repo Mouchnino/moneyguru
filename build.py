@@ -195,6 +195,12 @@ def build_localizations(ui):
     shutil.copytree('locale', locale_dest, ignore=shutil.ignore_patterns('*.po', '*.pot'))
 
 def build_updatepot():
+    if ISOSX:
+        print("Updating Cocoa strings file.")
+        build_cocoalib_xibless('cocoalib/autogen')
+        loc.generate_cocoa_strings_from_code('cocoalib', 'cocoalib/en.lproj')
+        build_xibless()
+        loc.generate_cocoa_strings_from_code('cocoa', 'cocoa/en.lproj')
     print("Building .pot files from source files")
     print("Building core.pot")
     loc.generate_pot(['core'], op.join('locale', 'core.pot'), ['tr'])
@@ -206,9 +212,13 @@ def build_updatepot():
     loc.generate_pot(['hscommon'], op.join('hscommon', 'locale', 'hscommon.pot'), ['tr'])
     print("Building qtlib.pot")
     loc.generate_pot(['qtlib'], op.join('qtlib', 'locale', 'qtlib.pot'), ['tr'])
-    print("Enhancing ui.pot with Cocoa's strings files")
-    loc.allstrings2pot(op.join('cocoa', 'en.lproj'), op.join('locale', 'ui.pot'),
-        excludes={'core', 'message', 'columns'})
+    if ISOSX:
+        print("Building cocoalib.pot")
+        cocoalib_pot = op.join('cocoalib', 'locale', 'cocoalib.pot')
+        os.remove(cocoalib_pot)
+        loc.strings2pot(op.join('cocoalib', 'en.lproj', 'cocoalib.strings'), cocoalib_pot)
+        print("Enhancing ui.pot with Cocoa's strings files")
+        loc.strings2pot(op.join('cocoa', 'en.lproj', 'Localizable.strings'), op.join('locale', 'ui.pot'))
 
 def build_mergepot():
     print("Updating .po files using .pot files")

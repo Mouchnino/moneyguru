@@ -1,266 +1,207 @@
-"New Item" = "New Item";
-"New Account" = "New Account";
-"New Transaction" = "New Transaction";
-"New Schedule" = "New Schedule";
-"New Budget" = "New Budget";
-
-"Account Lookup" = "Account Lookup";
-"Completion Lookup" = "Completion Lookup";
-
-"All" = "All";
-"Increase" = "Increase";
-"Decrease" = "Decrease";
-"Income" = "Income";
-"Expenses" = "Expenses";
-"Transfers" = "Transfers";
-"Unassigned" = "Unassigned";
-"Reconciled" = "Reconciled";
-"Not Reconciled" = "Not Reconciled";
-
-"Filter" = "Filter";
-"Date Range" = "Date Range";
-"Net Worth" = "Net Worth";
-"Profit/Loss" = "Profit/Loss";
-"Schedules" = "Schedules";
-"Budgets" = "Budgets";
 
 "%@ (Page %d of %d)" = "%@ (Page %d of %d)";
-
-/* Messages */
-"This is your first time running moneyGuru. Do you want to open the example file?" = "This is your first time running moneyGuru. Do you want to open the example file?";
-"moneyGuru is about to restart" = "moneyGuru is about to restart";
-"Select a file to import" = "Select a file to import";
-"Export to file" = "Export to file";
-
-/* Schedule Scope Dialog */
-"Modification Scope" = "Modification Scope";
-"Do you want this change to affect all future occurrences of this transaction?" = "Do you want this change to affect all future occurrences of this transaction?";
-"You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change." = "You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change.";
-"Show this dialog next time" = "Show this dialog next time";
-"Just this one" = "Just this one";
-"All future occurences" = "All future occurences";
-"Cancel" = "Cancel";
-
-/* Custom date range panel */
-"Custom date range" = "Custom date range";
-"Select start and end dates for your custom range:" = "Select start and end dates for your custom range:";
-"Start" = "Start";
-"End" = "End";
-"OK" = "OK";
-"Save this custom range in slot:" = "Save this custom range in slot:";
-"None" = "None";
-"Under the name:" = "Under the name:";
-
-/* Account reassign panel */
-"You're about to delete a non-empty account. Select an account to re-assign its transactions to." = "You're about to delete a non-empty account. Select an account to re-assign its transactions to.";
-"No Account" = "No Account";
-"Continue" = "Continue";
-
-/* CSV Layout Name */
-"Layout Name" = "Layout Name";
-"Layout Name:" = "Layout Name:";
-
-/* CSV Import Options */
-"CSV Import Options" = "CSV Import Options";
-"Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transactio" = "Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transaction (header, footer, comments).";
-"Import" = "Import";
-"Continue Import" = "Continue Import";
-"Date" = "Date";
-"Description" = "Description";
-"Payee" = "Payee";
-"Check #" = "Check #";
-"Transfer" = "Transfer";
-"Amount" = "Amount";
-"Currency" = "Currency";
-"Transaction ID" = "Transaction ID";
-"Layout:" = "Layout:";
-"Default" = "Default";
-"New Layout..." = "New Layout...";
-"Rename Selected Layout..." = "Rename Selected Layout...";
-"Delete Selected Layout" = "Delete Selected Layout";
-"New Account" = "New Account";
-"Target:" = "Target:";
-"Increase" = "Increase";
-"Decrease" = "Decrease";
-"Delimiter:" = "Delimiter:";
-"Rescan" = "Rescan";
-"Encoding:" = "Encoding:";
-
-/* Import Window */
-"Target Account:" = "Target Account:";
-"Are some fields wrong? Swap them!" = "Are some fields wrong? Swap them!";
-"Day <--> Month" = "Day <--> Month";
-"Month <--> Year" = "Month <--> Year";
-"Day <--> Year" = "Day <--> Year";
-"Swap" = "Swap";
-"Apply to all accounts" = "Apply to all accounts";
-"Description <--> Payee" = "Description <--> Payee";
-"Invert Amounts" = "Invert Amounts";
-
-/* Export Panel */
-"Export Options" = "Export Options";
-"Which accounts do you want to export?" = "Which accounts do you want to export?";
-"Selected" = "Selected";
-"Export" = "Export";
-"Export format:" = "Export format:";
-"Export scope:" = "Export scope:";
-"Current date range only" = "Current date range only";
-
-/* Budget Panel */
-"Start Date" = "Start Date";
-"Budget Info" = "Budget Info";
-"Save" = "Save";
-"Budget Info" = "Budget Info";
-"Repeat" = "Repeat";
-"Every" = "Every";
-"Stop Date" = "Stop Date";
+"About moneyGuru" = "About moneyGuru";
 "Account" = "Account";
-"Target" = "Target";
-"Notes" = "Notes";
-
-/* Schedule Panel */
-"Schedule Info" = "Schedule Info";
-"Transfers" = "Transfers";
-"Info" = "Info";
-"You can navigate tabs with ⌘⌥→ and ⌘⌥←" = "You can navigate tabs with ⌘⌥→ and ⌘⌥←";
-"Use ⌥+Return to insert a new line." = "Use ⌥+Return to insert a new line.";
-
-/* Mass Editing Panel */
-"From" = "From";
-"To" = "To";
-"Mass Editing" = "Mass Editing";
-
-/* Transaction Panel */
-"Transaction Info" = "Transaction Info";
-
-/* Account Panel */
-"Account Info" = "Account Info";
-"Name" = "Name";
-"Type" = "Type";
 "Account #" = "Account #";
-
-/* New Tab View */
-"Profit & Loss" = "Profit & Loss";
-"Transactions" = "Transactions";
-"Choose a view for this tab" = "Choose a view for this tab";
-"Cashculator" = "Cashculator";
-"General Ledger" = "General Ledger";
-"Document Properties" = "Document Properties";
-"Plugins (double-click to open)" = "Plugins (double-click to open)";
-
-/* DocProps View */
-"Year starts in:" = "Year starts in:";
+"Account Info" = "Account Info";
+"Account Lookup" = "Account Lookup";
 "Ahead months in Running Year:" = "Ahead months in Running Year:";
-"First day of the week:" = "First day of the week:";
+"All" = "All";
+"All future occurences" = "All future occurences";
+"All transactions" = "All transactions";
+"Amount" = "Amount";
+"Apply to all accounts" = "Apply to all accounts";
+"Are some fields wrong? Swap them!" = "Are some fields wrong? Swap them!";
+"Auto-save interval:" = "Auto-save interval:";
+"Automatically check for updates" = "Automatically check for updates";
+"Automatically place decimals when typing" = "Automatically place decimals when typing";
+"Bring All to Front" = "Bring All to Front";
+"Budget Info" = "Budget Info";
+"Budgets" = "Budgets";
+"Cancel" = "Cancel";
+"Cashculator" = "Cashculator";
+"Check #" = "Check #";
+"Check for update..." = "Check for update...";
+"Choose a view for this tab" = "Choose a view for this tab";
+"Close" = "Close";
+"Close Window" = "Close Window";
+"Completion Lookup" = "Completion Lookup";
+"Continue" = "Continue";
+"Continue Import" = "Continue Import";
+"Copy" = "Copy";
+"CSV Import Options" = "CSV Import Options";
+"Currency" = "Currency";
+"Current date range only" = "Current date range only";
+"Custom date range" = "Custom date range";
+"Custom date range..." = "Custom date range...";
+"Cut" = "Cut";
+"Date" = "Date";
+"Date Range" = "Date Range";
+"Date range buttons" = "Date range buttons";
+"Date range type selector" = "Date range type selector";
+"Day <--> Month" = "Day <--> Month";
+"Day <--> Year" = "Day <--> Year";
+"Debug mode (restart required)" = "Debug mode (restart required)";
+"Decrease" = "Decrease";
+"Default" = "Default";
+"Delete" = "Delete";
+"Delete Selected" = "Delete Selected";
+"Delete Selected Layout" = "Delete Selected Layout";
+"Delimiter:" = "Delimiter:";
+"Description" = "Description";
+"Description <--> Payee" = "Description <--> Payee";
+"Do you want this change to affect all future occurrences of this transaction?" = "Do you want this change to affect all future occurrences of this transaction?";
+"Document" = "Document";
 "Document Properties" = "Document Properties";
-
-/* Cashculator View */
+"Duplicate" = "Duplicate";
+"Edit" = "Edit";
+"Edit Selected" = "Edit Selected";
+"Encoding:" = "Encoding:";
+"End" = "End";
+"Every" = "Every";
+"Expenses" = "Expenses";
+"Export" = "Export";
 "Export Accounts" = "Export Accounts";
 "Export accounts to Cashculator" = "Export accounts to Cashculator";
-"Launch Cashculator" = "Launch Cashculator";
-"Please read instructions in the Forecast section of the help file." = "Please read instructions in the Forecast section of the help file.";
-
-/* Account View */
-"Reconciliation" = "Reconciliation";
-
-/* Date Range Selector */
-"Date range buttons" = "Date range buttons";
-"Previous Date Range" = "Previous Date Range";
-"Placeholder for the date range menu" = "Placeholder for the date range menu";
-"Next Date Range" = "Next Date Range";
-"All Transactions" = "All Transactions";
-"Custom date range..." = "Custom date range...";
-"Running year" = "Running year";
-"Year to date" = "Year to date";
-"Year" = "Year";
-"Quarter" = "Quarter";
-"Month" = "Month";
-
-/* Main Window */
-"Delete Selected" = "Delete Selected";
-"Edit Selected" = "Edit Selected";
-"Status label" = "Status label";
-"Toggle Graph" = "Toggle Graph";
-"Toggle Pie Chart" = "Toggle Pie Chart";
-"Toggle Columns" = "Toggle Columns";
-
-/* Preferences Panel */
-"Automatically check for updates" = "Automatically check for updates";
-"Show scope dialog when modifying a scheduled transaction" = "Show scope dialog when modifying a scheduled transaction";
+"Export format:" = "Export format:";
+"Export Options" = "Export Options";
+"Export scope:" = "Export scope:";
+"Export to file" = "Export to file";
+"Export..." = "Export...";
+"File" = "File";
+"Filter" = "Filter";
+"First day of the week:" = "First day of the week:";
 "Font size:" = "Font size:";
-"Auto-save interval:" = "Auto-save interval:";
-"minute(s) (0 for none)" = "minute(s) (0 for none)";
-"Automatically place decimals when typing" = "Automatically place decimals when typing";
-"Printing Font size:" = "Printing Font size:";
-"Debug mode (restart required)" = "Debug mode (restart required)";
-
-/* Main Menu */
-"Bring All to Front" = "Bring All to Front";
-"Window" = "Window";
+"From" = "From";
+"General Ledger" = "General Ledger";
+"Go Back" = "Go Back";
+"Help" = "Help";
+"Hide moneyGuru" = "Hide moneyGuru";
+"Hide Others" = "Hide Others";
+"Import" = "Import";
+"Import..." = "Import...";
+"Income" = "Income";
+"Increase" = "Increase";
+"Info" = "Info";
+"Invert Amounts" = "Invert Amounts";
+"Jump to Account..." = "Jump to Account...";
+"Just this one" = "Just this one";
+"Launch Cashculator" = "Launch Cashculator";
+"Layout Name" = "Layout Name";
+"Layout Name:" = "Layout Name:";
+"Layout:" = "Layout:";
+"Lookup" = "Lookup";
+"Lookup Completion..." = "Lookup Completion...";
+"Make Schedule from Selected" = "Make Schedule from Selected";
+"Mass Editing" = "Mass Editing";
 "Minimize" = "Minimize";
-"Window" = "Window";
-"About moneyGuru" = "About moneyGuru";
+"minute(s) (0 for none)" = "minute(s) (0 for none)";
+"Modification Scope" = "Modification Scope";
+"moneyGuru" = "moneyGuru";
+"moneyGuru Help" = "moneyGuru Help";
+"moneyGuru is about to restart" = "moneyGuru is about to restart";
+"moneyGuru Preferences" = "moneyGuru Preferences";
+"moneyGuru Website" = "moneyGuru Website";
+"Month" = "Month";
+"Month <--> Year" = "Month <--> Year";
+"Move Down" = "Move Down";
+"Move Up" = "Move Up";
+"Multi-Currency Balance" = "Multi-Currency Balance";
+"Name" = "Name";
+"Native Currency:" = "Native Currency:";
+"Net Worth" = "Net Worth";
+"New Account" = "New Account";
+"New Account Group" = "New Account Group";
+"New Budget" = "New Budget";
+"New Document" = "New Document";
+"New Item" = "New Item";
+"New Layout..." = "New Layout...";
+"New Schedule" = "New Schedule";
+"New Tab" = "New Tab";
+"New Transaction" = "New Transaction";
+"Next Date Range" = "Next Date Range";
+"Next Tab" = "Next Tab";
+"No Account" = "No Account";
+"None" = "None";
+"Not Reconciled" = "Not Reconciled";
+"Notes" = "Notes";
+"OK" = "OK";
+"Open Example Document" = "Open Example Document";
+"Open Plugin Folder" = "Open Plugin Folder";
 "Open..." = "Open...";
-"Close" = "Close";
+"Page Setup..." = "Page Setup...";
+"Paste" = "Paste";
+"Payee" = "Payee";
+"Placeholder for the date range menu" = "Placeholder for the date range menu";
+"Please read instructions in the Forecast section of the help file." = "Please read instructions in the Forecast section of the help file.";
+"Plugins (double-click to open)" = "Plugins (double-click to open)";
+"Preferences..." = "Preferences...";
+"Previous Date Range" = "Previous Date Range";
+"Previous Tab" = "Previous Tab";
+"Print" = "Print";
+"Printing font size:" = "Printing font size:";
+"Profit & Loss" = "Profit & Loss";
+"Profit/Loss" = "Profit/Loss";
+"Quarter" = "Quarter";
+"Quit moneyGuru" = "Quit moneyGuru";
+"Reconcile Selection" = "Reconcile Selection";
+"Reconciled" = "Reconciled";
+"Reconciliation" = "Reconciliation";
+"Redo" = "Redo";
+"Rename Selected Layout..." = "Rename Selected Layout...";
+"Repeat" = "Repeat";
+"Rescan" = "Rescan";
+"Running year" = "Running year";
 "Save" = "Save";
 "Save As..." = "Save As...";
-"File" = "File";
-"Help" = "Help";
-"moneyGuru Help" = "moneyGuru Help";
-"Open Recent" = "Open Recent";
-"Clear Menu" = "Clear Menu";
-"Preferences…" = "Preferences…";
-"Services" = "Services";
-"Hide moneyGuru" = "Hide moneyGuru";
-"Quit moneyGuru" = "Quit moneyGuru";
-"Hide Others" = "Hide Others";
-"Show All" = "Show All";
-"Copy" = "Copy";
-"Undo" = "Undo";
-"Cut" = "Cut";
-"Edit" = "Edit";
-"Delete" = "Delete";
-"Edit" = "Edit";
-"Paste" = "Paste";
-"Select All" = "Select All";
-"Redo" = "Redo";
-"Zoom" = "Zoom";
-"Import..." = "Import...";
-"Document" = "Document";
-"Move Up" = "Move Up";
-"Move Down" = "Move Down";
-"View" = "View";
-"Previous Date Range" = "Previous Date Range";
-"Next Date Range" = "Next Date Range";
-"New Document" = "New Document";
-"Show Info" = "Show Info";
-"Reconcile Selection" = "Reconcile Selection";
-"New Account Group" = "New Account Group";
+"Save this custom range in slot:" = "Save this custom range in slot:";
+"Schedule Info" = "Schedule Info";
+"Schedules" = "Schedules";
 "Search..." = "Search...";
-"Export..." = "Export...";
+"Select a file to import" = "Select a file to import";
+"Select All" = "Select All";
+"Select start and end dates for your custom range:" = "Select start and end dates for your custom range:";
+"Services" = "Services";
 "Show Account" = "Show Account";
-"Go Back" = "Go Back";
-"Net Worth" = "Net Worth";
-"Profit & Loss" = "Profit & Loss";
-"Transactions" = "Transactions";
-"Next Tab" = "Next Tab";
-"Previous Tab" = "Previous Tab";
-"Toggle Reconciliation Mode" = "Toggle Reconciliation Mode";
-"Check For Update..." = "Check For Update...";
-"Open Example Document" = "Open Example Document";
-"Hardcoded Software Website" = "Hardcoded Software Website";
-"moneyGuru Preferences" = "moneyGuru Preferences";
+"Show All" = "Show All";
+"Show Info" = "Show Info";
+"Show scope dialog when modifying a scheduled transaction" = "Show scope dialog when modifying a scheduled transaction";
+"Show this dialog next time" = "Show this dialog next time";
+"Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transaction (header, footer, comments)." = "Specify which CSV columns correspond to which transaction fields. You must also uncheck the \"Import\" column for lines that don't represent a transaction (header, footer, comments).";
+"Start" = "Start";
+"Start Date" = "Start Date";
+"Status label" = "Status label";
+"Stop Date" = "Stop Date";
+"Swap" = "Swap";
+"Target" = "Target";
+"Target Account:" = "Target Account:";
+"Target:" = "Target:";
+"This is your first time running moneyGuru. Do you want to open the example file?" = "This is your first time running moneyGuru. Do you want to open the example file?";
+"To" = "To";
 "Today's Date Range" = "Today's Date Range";
-"Print" = "Print";
-"Page Setup..." = "Page Setup...";
-"Make Schedule from Selected" = "Make Schedule from Selected";
-"Duplicate" = "Duplicate";
-"All Transactions" = "All Transactions";
-"Jump to Account..." = "Jump to Account...";
-"Lookup Completion..." = "Lookup Completion...";
-"Close Window" = "Close Window";
-"New Tab" = "New Tab";
+"Toggle Columns" = "Toggle Columns";
 "Toggle Exclusion Status of Account" = "Toggle Exclusion Status of Account";
 "Toggle Graph" = "Toggle Graph";
+"Toggle Pie Chart" = "Toggle Pie Chart";
 "Toggle Pie Charts" = "Toggle Pie Charts";
-"Open Plugin Folder" = "Open Plugin Folder";
+"Toggle Reconciliation Mode" = "Toggle Reconciliation Mode";
+"Transaction ID" = "Transaction ID";
+"Transaction Info" = "Transaction Info";
+"Transactions" = "Transactions";
+"Transfer" = "Transfer";
+"Transfers" = "Transfers";
+"Type" = "Type";
+"Unassigned" = "Unassigned";
+"Under the name:" = "Under the name:";
+"Undo" = "Undo";
+"Use ⌥+Return to insert a new line." = "Use ⌥+Return to insert a new line.";
+"View" = "View";
+"Which accounts do you want to export?" = "Which accounts do you want to export?";
+"Window" = "Window";
+"Year" = "Year";
+"Year starts in:" = "Year starts in:";
+"Year to date" = "Year to date";
+"You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change." = "You can force global scope (in other words, changing all future occurences) by holding ⇧ when you perform the change.";
+"You can navigate tabs with ⌘⌥→ and ⌘⌥←" = "You can navigate tabs with ⌘⌥→ and ⌘⌥←";
+"You're about to delete a non-empty account. Select an account to re-assign its transactions to." = "You're about to delete a non-empty account. Select an account to re-assign its transactions to.";
+"Zoom" = "Zoom";
