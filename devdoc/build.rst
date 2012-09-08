@@ -20,11 +20,11 @@ General dependencies
 OS X prerequisites
 ------------------
 
-- XCode 4.1
-- Sparkle (http://sparkle.andymatuschak.org/)
-- objp 1.2.0 (http://bitbucket.org/hsoft/objp)
-- pluginbuilder 1.1.0 (http://bitbucket.org/hsoft/pluginbuilder)
-  
+- XCode 4.2's command line tools
+- objp 1.2.0 (https://bitbucket.org/hsoft/objp)
+- pluginbuilder 1.1.0 (https://bitbucket.org/hsoft/pluginbuilder)
+- xibless 0.5.0 (https://bitbucket.org/hsoft/xibless)
+
 Windows prerequisites
 ---------------------
 
@@ -62,7 +62,7 @@ First, make sure you meet the dependencies listed in the section above. Then you
 
 	python configure.py
 	
-If you want, you can specify a UI to use with the ``--ui`` option. So, if you want to build moneyGuru with Qt on OS X, then you have to type ``python configure.py --ui=qt``. You can also use the ``--dev`` flag to indicate a dev build (it will build ``mg_cocoa.plugin`` in alias mode).
+If you want, you can specify a UI to use with the ``--ui`` option. So, if you want to build moneyGuru with Qt on OS X, then you have to type ``python configure.py --ui=qt``. You can also use the ``--dev`` flag to indicate a dev build.
 
 Then, just build the thing and then run it with::
 
