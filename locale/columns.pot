@@ -2,6 +2,7 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: utf-8\n"
 
 #: core/gui/balance_sheet.py:21 core/gui/budget_table.py:25
 #: core/gui/cashculator_account_table.py:21

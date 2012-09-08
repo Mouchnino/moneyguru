@@ -1,6 +1,7 @@
 # 
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: utf-8\n"
 
 #: qt/controller/account/filter_bar.py:18 qt/controller/export_panel.py:48
 #: qt/controller/transaction/filter_bar.py:18
