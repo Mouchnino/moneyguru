@@ -11,6 +11,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <wchar.h>
 #import <locale.h>
 #import "HSPyUtil.h"
+#import "MGMainMenu_UI.h"
+#import "MGAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
@@ -36,8 +38,14 @@ int main(int argc, char *argv[])
         PyThreadState_Swap(NULL);
         PyEval_ReleaseLock();
     }
+    
+    [NSApplication sharedApplication];
+    MGAppDelegate *appDelegate = [[MGAppDelegate alloc] init];
+    [NSApp setDelegate:appDelegate];
+    [NSApp setMainMenu:createMGMainMenu_UI(appDelegate)];
+    [appDelegate finalizeInit];
     [pool release];
-    int result = NSApplicationMain(argc,  (const char **) argv);
+    [NSApp run];
     Py_Finalize();
-    return result;
+    return 0;
 }

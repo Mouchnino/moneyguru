@@ -90,7 +90,7 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* Actions */
-- (IBAction)lookupCompletion:(id)sender
+- (void)lookupCompletion
 {
     [py lookup];
 }

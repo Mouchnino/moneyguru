@@ -17,7 +17,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyDocument *)model;
 
 /* Actions */
-- (IBAction)import:(id)sender;
+- (void)import;
 
 /* Misc */
 - (void)stopEdition;

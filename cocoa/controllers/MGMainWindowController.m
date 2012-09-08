@@ -214,12 +214,12 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self model] deleteItem];
 }
 
-- (void)duplicateItem:(id)sender
+- (void)duplicateItem
 {
     [[self model] duplicateItem];
 }
 
-- (void)editItemInfo:(id)sender
+- (void)editItemInfo
 {
     [[self model] editItem];
 }
@@ -228,107 +228,107 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSInteger index = [(NSSegmentedControl *)sender selectedSegment];
     if (index == 0) {
-        [self newItem:sender];
+        [self newItem];
     }
     else if (index == 1) {
         [self delete:sender];
     }
     else if (index == 2) {
-        [self editItemInfo:sender];
+        [self editItemInfo];
     }
 }
 
-- (void)jumpToAccount:(id)sender
+- (void)jumpToAccount
 {
     [[self model] jumpToAccount];
 }
 
-- (void)makeScheduleFromSelected:(id)sender
+- (void)makeScheduleFromSelected
 {
     [[self model] makeScheduleFromSelected];
 }
 
-- (void)moveSelectionDown:(id)sender
+- (void)moveSelectionDown
 {
     [[self model] moveDown];
 }
 
-- (void)moveSelectionUp:(id)sender
+- (void)moveSelectionUp
 {
     [[self model] moveUp];
 }
 
-- (void)navigateBack:(id)sender
+- (void)navigateBack
 {
     [[self model] navigateBack];
 }
 
-- (void)newGroup:(id)sender
+- (void)newGroup
 {
     [[self model] newGroup];
 }
 
-- (void)newItem:(id)sender
+- (void)newItem
 {
     [[self model] newItem];
 }
 
-- (void)newTab:(id)sender
+- (void)newTab
 {
     [[self model] newTab];
 }
 
-- (void)search:(id)sender
+- (void)search
 {
     [[self window] makeFirstResponder:[searchField view]];
 }
 
-- (void)selectMonthRange:(id)sender
+- (void)selectMonthRange
 {
     [[dateRangeSelector model] selectMonthRange];
 }
 
-- (void)selectNextDateRange:(id)sender
+- (void)selectNextDateRange
 {
     [[dateRangeSelector model] selectNextDateRange];
 }
 
-- (void)selectPrevDateRange:(id)sender
+- (void)selectPrevDateRange
 {
     [[dateRangeSelector model] selectPrevDateRange];
 }
 
-- (void)selectTodayDateRange:(id)sender
+- (void)selectTodayDateRange
 {
     [[dateRangeSelector model] selectTodayDateRange];
 }
 
-- (void)selectQuarterRange:(id)sender
+- (void)selectQuarterRange
 {
     [[dateRangeSelector model] selectQuarterRange];
 }
 
-- (void)selectYearRange:(id)sender
+- (void)selectYearRange
 {
     [[dateRangeSelector model] selectYearRange];
 }
 
-- (void)selectYearToDateRange:(id)sender
+- (void)selectYearToDateRange
 {
     [[dateRangeSelector model] selectYearToDateRange];
 }
 
-- (void)selectRunningYearRange:(id)sender
+- (void)selectRunningYearRange
 {
     [[dateRangeSelector model] selectRunningYearRange];
 }
 
-- (void)selectAllTransactionsRange:(id)sender
+- (void)selectAllTransactionsRange
 {
     [[dateRangeSelector model] selectAllTransactionsRange];
 }
 
-- (void)selectCustomDateRange:(id)sender
+- (void)selectCustomDateRange
 {
     [[dateRangeSelector model] selectCustomDateRange];
 }
@@ -338,47 +338,47 @@ http://www.hardcoded.net/licenses/bsd_license
     [dateRangeSelector selectSavedCustomRange:sender];
 }
 
-- (void)showBalanceSheet:(id)sender
+- (void)showBalanceSheet
 {
     [[self model] showPaneOfType:MGPaneTypeNetWorth];
 }
 
-- (void)showIncomeStatement:(id)sender
+- (void)showIncomeStatement
 {
     [[self model] showPaneOfType:MGPaneTypeProfit];
 }
 
-- (void)showTransactionTable:(id)sender
+- (void)showTransactionTable
 {
     [[self model] showPaneOfType:MGPaneTypeTransaction];
 }
 
-- (void)showNextView:(id)sender
+- (void)showNextView
 {
     [[self model] selectNextView];
 }
 
-- (void)showPreviousView:(id)sender
+- (void)showPreviousView
 {
     [[self model] selectPreviousView];
 }
 
-- (void)showSelectedAccount:(id)sender
+- (void)showSelectedAccount
 {
     [[self model] showAccount];
 }
 
-- (void)toggleEntriesReconciled:(id)sender
+- (void)toggleEntriesReconciled
 {
     [(MGAccountView *)top toggleReconciled];
 }
 
-- (void)toggleExcluded:(id)sender
+- (void)toggleExcluded
 {
     [(id)top toggleExcluded];
 }
 
-- (void)toggleReconciliationMode:(id)sender
+- (void)toggleReconciliationMode
 {
     [(MGAccountView *)top toggleReconciliationMode];
 }
@@ -408,17 +408,17 @@ http://www.hardcoded.net/licenses/bsd_license
     }
 }
 
-- (void)toggleGraph:(id)sender
+- (void)toggleGraph
 {
     [[self model] toggleAreaVisibility:MGPaneAreaBottomGraph];
 }
 
-- (void)togglePieChart:(id)sender
+- (void)togglePieChart
 {
     [[self model] toggleAreaVisibility:MGPaneAreaRightChart];
 }
 
-- (void)export:(id)sender
+- (void)export
 {
     [[self model] export];
 }

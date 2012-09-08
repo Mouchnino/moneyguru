@@ -17,5 +17,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (void)setAttrname:(NSString *)attrname;
 /* Actions */
-- (IBAction)lookupCompletion:(id)sender;
+- (void)lookupCompletion;
 @end

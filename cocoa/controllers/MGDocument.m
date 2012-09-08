@@ -103,7 +103,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Actions */
 
-- (IBAction)import:(id)sender
+- (void)import
 {
     NSOpenPanel *op = [NSOpenPanel openPanel];
     [op setCanChooseFiles:YES];

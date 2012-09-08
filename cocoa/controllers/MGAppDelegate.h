@@ -10,6 +10,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Sparkle/SUUpdater.h>
 #import "PyMoneyGuruApp.h"
 #import "HSAboutBox.h"
+#import "MGConst.h" // to have MG consts in the main_menu UI script.
 
 @interface MGAppDelegate : NSObject
 {
@@ -17,9 +18,9 @@ http://www.hardcoded.net/licenses/bsd_license
     NSTextField *autoSaveIntervalField;
     NSButton *autoDecimalPlaceButton;
     SUUpdater *updater;
-    IBOutlet NSMenuItem *customDateRangeItem1;
-    IBOutlet NSMenuItem *customDateRangeItem2;
-    IBOutlet NSMenuItem *customDateRangeItem3;
+    NSMenuItem *customDateRangeItem1;
+    NSMenuItem *customDateRangeItem2;
+    NSMenuItem *customDateRangeItem3;
     
     NSInvocation *continueUpdate;
     PyMoneyGuruApp *model;
@@ -30,16 +31,19 @@ http://www.hardcoded.net/licenses/bsd_license
 @property (readwrite, retain) NSTextField *autoSaveIntervalField;
 @property (readwrite, retain) NSButton *autoDecimalPlaceButton;
 @property (readwrite, retain) SUUpdater *updater;
+@property (readwrite, retain) NSMenuItem *customDateRangeItem1;
+@property (readwrite, retain) NSMenuItem *customDateRangeItem2;
+@property (readwrite, retain) NSMenuItem *customDateRangeItem3;
 
 - (PyMoneyGuruApp *)model;
+- (void)finalizeInit;
 
-- (IBAction)openExampleDocument:(id)sender;
-- (IBAction)openWebsite:(id)sender;
-- (IBAction)openHelp:(id)sender;
-- (IBAction)openPluginFolder:(id)sender;
-- (IBAction)showAboutBox:(id)sender;
-- (IBAction)showPreferencesPanel:(id)sender;
-- (IBAction)checkForUpdates:(id)sender;
+- (void)openExampleDocument;
+- (void)openWebsite;
+- (void)openHelp;
+- (void)openPluginFolder;
+- (void)showAboutBox;
+- (void)showPreferencesPanel;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 

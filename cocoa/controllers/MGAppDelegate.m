@@ -9,7 +9,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAppDelegate.h"
 #import "MGPreferencesPanel_UI.h"
 #import "MGDocument.h"
-#import "MGConst.h"
 #import "HSPyUtil.h"
 #import "Utils.h"
 #import "HSFairwareReminder.h"
@@ -23,6 +22,9 @@ http://www.hardcoded.net/licenses/bsd_license
 @synthesize autoSaveIntervalField;
 @synthesize autoDecimalPlaceButton;
 @synthesize updater;
+@synthesize customDateRangeItem1;
+@synthesize customDateRangeItem2;
+@synthesize customDateRangeItem3;
 
 + (void)initialize
 {
@@ -41,17 +43,19 @@ http://www.hardcoded.net/licenses/bsd_license
     [ud registerDefaults:d];
 }
 
-- (void)awakeFromNib
+- (id)init
 {
+    self = [super init];
     model = [[PyMoneyGuruApp alloc] init];
     [model bindCallback:createCallback(@"FairwareView", self)];
-    // Some weird bug showed up, and the first document instance (which get access to MGAppDelegate)
-    // through [NSApp delegate] would be created before the NIB unarchiver would set the delegate
-    // This is why we set it here.
-    [NSApp setDelegate:self];
-    self.preferencesPanel = createMGPreferencesPanel_UI(self);
     self.updater = [SUUpdater sharedUpdater];
     self.updater.delegate = self;
+    return self;
+}
+
+- (void)finalizeInit
+{
+    self.preferencesPanel = createMGPreferencesPanel_UI(self);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUEnableAutomaticChecks"]) {
         [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
     }
@@ -70,7 +74,7 @@ http://www.hardcoded.net/licenses/bsd_license
     return model;
 }
 
-- (IBAction)openExampleDocument:(id)sender
+- (void)openExampleDocument
 {
     // The goal here is to create a document that behaves as a new document (requires save as), but
     // has the content of the example file.
@@ -86,12 +90,12 @@ http://www.hardcoded.net/licenses/bsd_license
     [doc showWindows];
 }
 
-- (IBAction)openWebsite:(id)sender
+- (void)openWebsite
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.hardcoded.net/moneyguru/"]];
 }
 
-- (IBAction)openHelp:(id)sender
+- (void)openHelp
 {
     NSBundle *b = [NSBundle mainBundle];
     NSString *p = [b pathForResource:@"index" ofType:@"html" inDirectory:@"help"];
@@ -99,27 +103,22 @@ http://www.hardcoded.net/licenses/bsd_license
     [[NSWorkspace sharedWorkspace] openURL:u];
 }
 
-- (IBAction)openPluginFolder:(id)sender
+- (void)openPluginFolder
 {
     [[self model] openPluginFolder];
 }
 
-- (IBAction)showAboutBox:(id)sender
+- (void)showAboutBox
 {
     if (_aboutBox == nil) {
         _aboutBox = [[HSAboutBox alloc] initWithApp:model];
     }
-    [[_aboutBox window] makeKeyAndOrderFront:sender];
+    [[_aboutBox window] makeKeyAndOrderFront:nil];
 }
 
-- (IBAction)showPreferencesPanel:(id)sender
+- (void)showPreferencesPanel
 {
-    [self.preferencesPanel makeKeyAndOrderFront:sender];
-}
-
-- (IBAction)checkForUpdates:(id)sender
-{
-    [self.updater checkForUpdates:sender];
+    [self.preferencesPanel makeKeyAndOrderFront:nil];
 }
 
 /* Public */
@@ -168,7 +167,7 @@ http://www.hardcoded.net/licenses/bsd_license
     if (isFirstRun) {
         NSString *msg = NSLocalizedString(@"This is your first time running moneyGuru. Do you want to open the example file?", @"");
         if ([Dialogs askYesNo:msg] == NSAlertFirstButtonReturn) {
-            [self openExampleDocument:self];
+            [self openExampleDocument];
         }
         else {
             NSError *error;
