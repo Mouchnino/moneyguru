@@ -1011,9 +1011,6 @@
 			<object class="NSCustomObject" id="1071329777">
 				<string key="NSClassName">MGAppDelegate</string>
 			</object>
-			<object class="NSCustomObject" id="887140590">
-				<string key="NSClassName">SUUpdater</string>
-			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -1612,18 +1609,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
-						<reference key="source" ref="887140590"/>
+						<reference key="source" ref="1071329777"/>
 						<reference key="destination" ref="937462810"/>
 					</object>
-					<int key="connectionID">1294</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="887140590"/>
-						<reference key="destination" ref="1071329777"/>
-					</object>
-					<int key="connectionID">1419</int>
+					<int key="connectionID">1479</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2219,12 +2208,6 @@
 						<reference key="parent" ref="657949865"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1292</int>
-						<reference key="object" ref="887140590"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Updater</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1293</int>
 						<reference key="object" ref="937462810"/>
 						<reference key="parent" ref="342460988"/>
@@ -2388,7 +2371,6 @@
 				<string key="1285.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="129.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1290.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1292.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1293.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1298.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2463,7 +2445,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1478</int>
+			<int key="maxID">1479</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2695,13 +2677,19 @@
 					<string key="className">MGAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="checkForUpdates:">id</string>
 						<string key="openExampleDocument:">id</string>
 						<string key="openHelp:">id</string>
 						<string key="openPluginFolder:">id</string>
 						<string key="openWebsite:">id</string>
 						<string key="showAboutBox:">id</string>
+						<string key="showPreferencesPanel:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="checkForUpdates:">
+							<string key="name">checkForUpdates:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="openExampleDocument:">
 							<string key="name">openExampleDocument:</string>
 							<string key="candidateClassName">id</string>
@@ -2722,23 +2710,17 @@
 							<string key="name">showAboutBox:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="showPreferencesPanel:">
+							<string key="name">showPreferencesPanel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="autoDecimalPlaceButton">NSButton</string>
-						<string key="autoSaveIntervalField">NSTextField</string>
 						<string key="customDateRangeItem1">NSMenuItem</string>
 						<string key="customDateRangeItem2">NSMenuItem</string>
 						<string key="customDateRangeItem3">NSMenuItem</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="autoDecimalPlaceButton">
-							<string key="name">autoDecimalPlaceButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="autoSaveIntervalField">
-							<string key="name">autoSaveIntervalField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="customDateRangeItem1">
 							<string key="name">customDateRangeItem1</string>
 							<string key="candidateClassName">NSMenuItem</string>
@@ -2910,36 +2892,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NSPageController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SUUpdater</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">checkForUpdates:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">checkForUpdates:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">checkForUpdates:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/SUUpdater.h</string>
 					</object>
 				</object>
 			</array>

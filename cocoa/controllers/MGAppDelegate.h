@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import <Sparkle/SUUpdater.h>
 #import "PyMoneyGuruApp.h"
 #import "HSAboutBox.h"
 
@@ -15,6 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSWindow *preferencesPanel;
     NSTextField *autoSaveIntervalField;
     NSButton *autoDecimalPlaceButton;
+    SUUpdater *updater;
     IBOutlet NSMenuItem *customDateRangeItem1;
     IBOutlet NSMenuItem *customDateRangeItem2;
     IBOutlet NSMenuItem *customDateRangeItem3;
@@ -27,6 +29,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @property (readwrite, retain) NSWindow *preferencesPanel;
 @property (readwrite, retain) NSTextField *autoSaveIntervalField;
 @property (readwrite, retain) NSButton *autoDecimalPlaceButton;
+@property (readwrite, retain) SUUpdater *updater;
 
 - (PyMoneyGuruApp *)model;
 
@@ -36,6 +39,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)openPluginFolder:(id)sender;
 - (IBAction)showAboutBox:(id)sender;
 - (IBAction)showPreferencesPanel:(id)sender;
+- (IBAction)checkForUpdates:(id)sender;
 
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 

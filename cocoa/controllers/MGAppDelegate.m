@@ -16,13 +16,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Dialogs.h"
 #import "ValueTransformers.h"
 #import "MGDocumentController.h"
-#import <Sparkle/SUUpdater.h>
 
 @implementation MGAppDelegate
 
 @synthesize preferencesPanel;
 @synthesize autoSaveIntervalField;
 @synthesize autoDecimalPlaceButton;
+@synthesize updater;
 
 + (void)initialize
 {
@@ -50,6 +50,8 @@ http://www.hardcoded.net/licenses/bsd_license
     // This is why we set it here.
     [NSApp setDelegate:self];
     self.preferencesPanel = createMGPreferencesPanel_UI(self);
+    self.updater = [SUUpdater sharedUpdater];
+    self.updater.delegate = self;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"SUEnableAutomaticChecks"]) {
         [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
     }
@@ -113,6 +115,11 @@ http://www.hardcoded.net/licenses/bsd_license
 - (IBAction)showPreferencesPanel:(id)sender
 {
     [self.preferencesPanel makeKeyAndOrderFront:sender];
+}
+
+- (IBAction)checkForUpdates:(id)sender
+{
+    [self.updater checkForUpdates:sender];
 }
 
 /* Public */
