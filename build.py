@@ -16,9 +16,8 @@ from setuptools import setup, Extension
 
 from hscommon import sphinxgen
 from hscommon.plat import ISOSX
-from hscommon.build import (print_and_do, copy_packages, build_all_cocoa_locs, move_all, move,
-    copy, symlink, hardlink, add_to_pythonpath, copy_sysconfig_files_for_embed,
-    build_cocoalib_xibless)
+from hscommon.build import (print_and_do, copy_packages, move_all, move, copy, symlink, hardlink,
+    add_to_pythonpath, copy_sysconfig_files_for_embed, build_cocoalib_xibless)
 from hscommon import loc
 from hscommon.util import ensure_folder, modified_after
 
@@ -152,18 +151,17 @@ def build_localizations(ui):
     loc.merge_locale_dir(op.join('hscommon', 'locale'), 'locale')
     if ui == 'cocoa':
         print("Creating lproj folders based on .po files")
-        enlproj = op.join('cocoa', 'en.lproj')
+        en_lproj = op.join('cocoa', 'en.lproj')
+        en_cocoastringsfile = op.join('cocoalib', 'en.lproj', 'cocoalib.strings')
         for lang in loc.get_langs('locale'):
             if lang == 'en':
                 continue
             pofile = op.join('locale', lang, 'LC_MESSAGES', 'ui.po')
             dest_lproj = op.join('cocoa', lang + '.lproj')
-            loc.po2allxibstrings(pofile, enlproj, dest_lproj)
-            loc.po2strings(pofile, op.join(enlproj, 'Localizable.strings'), op.join(dest_lproj, 'Localizable.strings'))
+            loc.po2strings(pofile, op.join(en_lproj, 'Localizable.strings'), op.join(dest_lproj, 'Localizable.strings'))
             pofile = op.join('cocoalib', 'locale', lang, 'LC_MESSAGES', 'cocoalib.po')
-            loc.po2allxibstrings(pofile, op.join('cocoalib', 'en.lproj'), op.join('cocoalib', lang + '.lproj'))
-        build_all_cocoa_locs('cocoalib')
-        build_all_cocoa_locs('cocoa')
+            loc.po2strings(pofile, en_cocoastringsfile, op.join(dest_lproj, 'cocoalib.strings'))
+        copy(en_cocoastringsfile, op.join(en_lproj, 'cocoalib.strings'))
     elif ui == 'qt':
         loc.compile_all_po(op.join('qtlib', 'locale'))
         loc.merge_locale_dir(op.join('qtlib', 'locale'), 'locale')
