@@ -22,7 +22,6 @@ OS X prerequisites
 
 - XCode 4.2's command line tools
 - objp 1.2.0 (https://bitbucket.org/hsoft/objp)
-- pluginbuilder 1.1.0 (https://bitbucket.org/hsoft/pluginbuilder)
 - xibless 0.5.0 (https://bitbucket.org/hsoft/xibless)
 
 Windows prerequisites

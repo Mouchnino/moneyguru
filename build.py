@@ -12,6 +12,7 @@ import os.path as op
 import shutil
 import json
 import glob
+import compileall
 from argparse import ArgumentParser
 
 from setuptools import setup, Extension
@@ -20,9 +21,9 @@ from hscommon import sphinxgen
 from hscommon.plat import ISOSX
 from hscommon.build import (print_and_do, copy_packages, move_all, copy, hardlink, filereplace,
     add_to_pythonpath, copy_sysconfig_files_for_embed, build_cocoalib_xibless, OSXAppStructure,
-    build_cocoa_ext)
+    build_cocoa_ext, copy_embeddable_python_dylib, collect_stdlib_dependencies)
 from hscommon import loc
-from hscommon.util import ensure_folder, modified_after
+from hscommon.util import ensure_folder, modified_after, delete_files_with_pattern
 
 def parse_args():
     parser = ArgumentParser()
@@ -104,7 +105,6 @@ def build_cocoa(dev):
     build_cocoa_proxy_module()
     build_cocoa_bridging_interfaces()
     print("Building the cocoa layer")
-    from pluginbuilder import copy_embeddable_python_dylib, collect_dependencies
     copy_embeddable_python_dylib('build')
     pydep_folder = op.join(app.resources, 'py')
     ensure_folder(pydep_folder)
@@ -112,14 +112,18 @@ def build_cocoa(dev):
         hardlink('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
     else:
         copy('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
-    tocopy = ['core', 'hscommon', 'cocoalib/cocoa']
-    copy_packages(tocopy, 'build')
+    tocopy = ['core', 'hscommon', 'cocoalib/cocoa', 'objp', 'sgmllib']
+    copy_packages(tocopy, pydep_folder)
     sys.path.insert(0, 'build')
-    collect_dependencies('build/mg_cocoa.py', pydep_folder, excludes=['PyQt4'])
+    collect_stdlib_dependencies('build/mg_cocoa.py', pydep_folder)
     del sys.path[0]
     if dev:
         copy_packages(tocopy, pydep_folder, create_links=True)
     copy_sysconfig_files_for_embed(pydep_folder)
+    copy_sysconfig_files_for_embed(pydep_folder)
+    compileall.compile_dir(pydep_folder, force=True, legacy=True)
+    delete_files_with_pattern(pydep_folder, '*.py')
+    delete_files_with_pattern(pydep_folder, '__pycache__')
     print("Compiling with WAF")
     os.chdir('cocoa')
     print_and_do(cocoa_compile_command())
