@@ -154,11 +154,11 @@ http://www.hardcoded.net/licenses/bsd_license
     NSInteger columnCount = [model numberOfColumns] + 1; // we have to count the "import" column
     while ([[csvDataTable tableColumns] count] > columnCount)
         [csvDataTable removeTableColumn:[[csvDataTable tableColumns] objectAtIndex:columnCount]];
-    while ([[csvDataTable tableColumns] count] < columnCount)
-    {
+    while ([[csvDataTable tableColumns] count] < columnCount) {
         NSInteger colId = [[csvDataTable tableColumns] count] - 1;
         NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:[i2n(colId) stringValue]] autorelease];
         [column setWidth:80];
+        [column setEditable:NO];
         NSFont *font = [[column dataCell] font];
         font = [[NSFontManager sharedFontManager] convertFont:font toSize:11];
         [[column dataCell] setFont:font];
