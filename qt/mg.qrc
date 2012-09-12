@@ -33,7 +33,7 @@
     <file alias="info_gray_12">../images/info_gray_12.png</file>
     <file alias="nav_left_9">../images/nav_left_9.png</file>
     <file alias="nav_right_9">../images/nav_right_9.png</file>
-    <file alias="search_clear_13">../images/search_clear_13.png</file>
+    <file alias="search_clear_13">../qtlib/images/search_clear_13.png</file>
     <file alias="graph_visibility_on_16">../images/graph_visibility_on_16.png</file>
     <file alias="graph_visibility_off_16">../images/graph_visibility_off_16.png</file>
     <file alias="piechart_visibility_on_16">../images/piechart_visibility_on_16.png</file>

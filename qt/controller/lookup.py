@@ -11,7 +11,7 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QShortcut, QKeySequence
 
 from hscommon.trans import trget
-from ..support.search_edit import SearchEdit
+from qtlib.search_edit import SearchEdit
 
 tr = trget('ui')
 

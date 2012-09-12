@@ -14,6 +14,7 @@ from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
     QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction, QMenuBar)
 
 from qtlib.recent import Recent
+from qtlib.search_edit import SearchEdit
 from qtlib.util import horizontalSpacer, setAccelKeys
 from hscommon.trans import trget
 from hscommon.plat import ISLINUX
@@ -21,7 +22,6 @@ from core.const import PaneType, PaneArea
 from core.gui.main_window import MainWindow as MainWindowModel
 
 from ..support.date_range_selector_view import DateRangeSelectorView
-from ..support.search_edit import SearchEdit
 from ..print_ import ViewPrinter
 from .account.view import EntryView
 from .budget.view import BudgetView
