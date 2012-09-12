@@ -576,7 +576,7 @@ class MainWindow(QMainWindow):
     def columnsMenuItemWasClicked(self):
         action = self.sender()
         if action is not None:
-            index, ok = action.data().toInt()
+            index = action.data()
             self.model.toggle_column_menu_item(index)
     
     def registerTriggered(self):

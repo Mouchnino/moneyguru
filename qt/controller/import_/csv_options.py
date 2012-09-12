@@ -258,7 +258,7 @@ class CSVOptionsTableModel(QAbstractTableModel):
     #--- Event Handling
     def columnMenuItemClicked(self):
         action = self.sender()
-        index, _ = action.data().toInt()
+        index = action.data()
         fieldId = FIELD_ORDER[index]
         self.model.set_column_field(self._lastClickedColumn-1, fieldId)
     
