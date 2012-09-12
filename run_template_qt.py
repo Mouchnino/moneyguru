@@ -10,15 +10,15 @@
 import sys
 import gc
 import logging
-import os
 import os.path as op
 
 from PyQt4.QtCore import QFile, QTextStream, QSettings
-from PyQt4.QtGui import QApplication, QIcon, QPixmap, QDesktopServices
+from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
 import hscommon.trans
 from hscommon.plat import ISLINUX
 from qtlib.error_report_dialog import install_excepthook
+from qtlib.util import setupQtLogging
 import qt.mg_rc
 from qt.plat import BASE_PATH
 
@@ -27,12 +27,9 @@ def main(argv):
     app.setWindowIcon(QIcon(QPixmap(":/logo_small")))
     app.setOrganizationName('Hardcoded Software')
     app.setApplicationName('moneyGuru')
-    appdata = QDesktopServices.storageLocation(QDesktopServices.DataLocation)
-    if not op.exists(appdata):
-        os.makedirs(appdata)
     settings = QSettings()
     LOGGING_LEVEL = logging.DEBUG if settings.value('DebugMode') else logging.WARNING
-    logging.basicConfig(filename=op.join(appdata, 'debug.log'), level=LOGGING_LEVEL)
+    setupQtLogging(level=LOGGING_LEVEL)
     logging.debug('started in debug mode')
     if ISLINUX:
         stylesheetFile = QFile(':/stylesheet_lnx')

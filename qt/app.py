@@ -15,6 +15,7 @@ from PyQt4.QtGui import QDialog, QDesktopServices, QApplication, QMessageBox
 from qtlib.about_box import AboutBox
 from qtlib.app import Application as ApplicationBase
 from qtlib.reg import Registration
+from qtlib.util import getAppData
 
 from core.app import Application as MoneyGuruModel
 
@@ -40,7 +41,7 @@ class MoneyGuru(ApplicationBase):
         decimalSep = locale.decimalPoint()
         groupingSep = locale.groupSeparator()
         cachePath = QDesktopServices.storageLocation(QDesktopServices.CacheLocation)
-        appdata = QDesktopServices.storageLocation(QDesktopServices.DataLocation)
+        appdata = getAppData()
         plugin_model_path = op.join(BASE_PATH, 'plugin_examples')
         DateEdit.DATE_FORMAT = dateFormat
         self.model = MoneyGuruModel(view=self, date_format=dateFormat, decimal_sep=decimalSep,

@@ -15,7 +15,7 @@ from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
 
 from qtlib.recent import Recent
 from qtlib.search_edit import SearchEdit
-from qtlib.util import horizontalSpacer, setAccelKeys
+from qtlib.util import horizontalSpacer, setAccelKeys, getAppData
 from hscommon.trans import trget
 from hscommon.plat import ISLINUX
 from core.const import PaneType, PaneArea
@@ -589,8 +589,7 @@ class MainWindow(QMainWindow):
         self.app.showAboutBox()
     
     def openDebugLogTriggered(self):
-        appdata = QDesktopServices.storageLocation(QDesktopServices.DataLocation)
-        debugLogPath = op.join(appdata, 'debug.log')
+        debugLogPath = op.join(getAppData(), 'debug.log')
         url = QUrl.fromLocalFile(debugLogPath)
         QDesktopServices.openUrl(url)
     
