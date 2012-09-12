@@ -201,7 +201,6 @@ class AccountSheet(TreeModel):
             node = index.internalPointer()
             column = self.model.columns.column_by_index(index.column())
             rowattr = column.name
-            value = value.toString()
             setattr(node.ref, rowattr, value)
             return True
         return False

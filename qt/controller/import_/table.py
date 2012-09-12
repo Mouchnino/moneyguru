@@ -62,7 +62,7 @@ class ImportTable(Table):
     def _setData(self, row, column, value, role):
         if column.name == 'will_import':
             if role == Qt.CheckStateRole:
-                row.will_import = value.toBool()
+                row.will_import = value
                 return True
             else:
                 return False

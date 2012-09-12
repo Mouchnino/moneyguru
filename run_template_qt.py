@@ -12,8 +12,6 @@ import gc
 import logging
 import os
 import os.path as op
-import sip
-sip.setapi('QVariant', 1)
 
 from PyQt4.QtCore import QFile, QTextStream, QSettings
 from PyQt4.QtGui import QApplication, QIcon, QPixmap, QDesktopServices
@@ -33,7 +31,7 @@ def main(argv):
     if not op.exists(appdata):
         os.makedirs(appdata)
     settings = QSettings()
-    LOGGING_LEVEL = logging.DEBUG if settings.value('DebugMode').toBool() else logging.WARNING
+    LOGGING_LEVEL = logging.DEBUG if settings.value('DebugMode') else logging.WARNING
     logging.basicConfig(filename=op.join(appdata, 'debug.log'), level=LOGGING_LEVEL)
     logging.debug('started in debug mode')
     if ISLINUX:
@@ -45,7 +43,7 @@ def main(argv):
     style = textStream.readAll()
     stylesheetFile.close()
     app.setStyleSheet(style)
-    lang = settings.value('Language').toString()
+    lang = settings.value('Language')
     locale_folder = op.join(BASE_PATH, 'locale')
     hscommon.trans.install_gettext_trans_under_qt(locale_folder, lang)
     # Many strings are translated at import time, so this is why we only import after the translator

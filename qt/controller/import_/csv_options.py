@@ -126,7 +126,7 @@ class CSVOptionsWindow(QWidget):
             self.model.select_layout(layout_name)
         else:
             self.layoutComboBox.setCurrentIndex(self.layoutComboBox.findText(self.model.layout.name))
-            data = str(self.layoutComboBox.itemData(index).toString())
+            data = str(self.layoutComboBox.itemData(index))
             if data == NEW_LAYOUT:
                 self._newLayout()
             elif data == RENAME_LAYOUT:

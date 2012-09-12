@@ -81,7 +81,7 @@ class PreferencesPanel(QDialog):
         self.dateFormatEdit.setText(self.app.prefs.dateFormat)
         self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
-        self.debugModeCheckBox.setChecked(QSettings().value('DebugMode').toBool())
+        self.debugModeCheckBox.setChecked(QSettings().value('DebugMode'))
         try:
             langindex = SUPPORTED_LANGUAGES.index(self.app.prefs.language)
         except ValueError:
