@@ -32,7 +32,7 @@ from ..model.transaction_list import TransactionList
 
 BASE_DATE_FORMATS = ['%m/%d/%y', '%m/%d/%Y', '%d/%m/%Y', '%d/%m/%y', '%Y/%m/%d', '%d/%b/%Y',
     '%d/%b/%y']
-EXTRA_DATE_SEPS = ['.', '-']
+EXTRA_DATE_SEPS = ['.', '-', ' ']
 DATE_FORMATS = BASE_DATE_FORMATS[:]
 # Re-add all date formats with their separator replaced
 for sep in EXTRA_DATE_SEPS:

@@ -30,6 +30,10 @@ def test_default_currency():
     eq_(len(loader.account_infos), 1)
     assert loader.account_infos[0].currency is None
 
+def test_guess_date_formats():
+    loader = base.Loader('USD')
+    eq_(loader.guess_date_format(['04 APR 2012']), '%d %b %Y')
+
 #--- One account
 def loader_one_account():
     loader = base.Loader('USD')
