@@ -42,8 +42,8 @@ for sep in EXTRA_DATE_SEPS:
 DATE_FORMATS += ['%m/%d\'%y', '%Y%m%d']
 
 POSSIBLE_PATTERNS = [
-    r'[\d/.-]{6,10}',
-    r'\d{1,2}[/.-]\w{3}[/.-]\d{2,4}',
+    r'[\d/.\- ]{6,10}',
+    r'\d{1,2}[/.\- ]\w{3}[/.\- ]\d{2,4}',
     r"\d{1,2}/\d{1,2}'\d{2,4}",
 ]
 re_possibly_a_date = re.compile('|'.join(POSSIBLE_PATTERNS))
