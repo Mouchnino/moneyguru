@@ -113,17 +113,17 @@ def build_cocoa(dev):
     else:
         copy('cocoa/mg_cocoa.py', 'build/mg_cocoa.py')
     tocopy = ['core', 'hscommon', 'cocoalib/cocoa', 'objp', 'sgmllib']
-    copy_packages(tocopy, pydep_folder)
+    copy_packages(tocopy, pydep_folder, create_links=dev)
     sys.path.insert(0, 'build')
     collect_stdlib_dependencies('build/mg_cocoa.py', pydep_folder)
     del sys.path[0]
-    if dev:
-        copy_packages(tocopy, pydep_folder, create_links=True)
     copy_sysconfig_files_for_embed(pydep_folder)
-    copy_sysconfig_files_for_embed(pydep_folder)
-    compileall.compile_dir(pydep_folder, force=True, legacy=True)
-    delete_files_with_pattern(pydep_folder, '*.py')
-    delete_files_with_pattern(pydep_folder, '__pycache__')
+    if not dev:
+        # Important: Don't ever run delete_files_with_pattern('*.py') on dev builds because you'll
+        # be deleting all py files in symlinked folders.
+        compileall.compile_dir(pydep_folder, force=True, legacy=True)
+        delete_files_with_pattern(pydep_folder, '*.py')
+        delete_files_with_pattern(pydep_folder, '__pycache__')
     print("Compiling with WAF")
     os.chdir('cocoa')
     print_and_do(cocoa_compile_command())
