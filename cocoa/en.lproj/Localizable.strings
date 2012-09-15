@@ -39,8 +39,6 @@
 "Date Range" = "Date Range";
 "Date range buttons" = "Date range buttons";
 "Date range type selector" = "Date range type selector";
-"Day <--> Month" = "Day <--> Month";
-"Day <--> Year" = "Day <--> Year";
 "Debug mode (restart required)" = "Debug mode (restart required)";
 "Decrease" = "Decrease";
 "Default" = "Default";
@@ -49,7 +47,6 @@
 "Delete Selected Layout" = "Delete Selected Layout";
 "Delimiter:" = "Delimiter:";
 "Description" = "Description";
-"Description <--> Payee" = "Description <--> Payee";
 "Do you want this change to affect all future occurrences of this transaction?" = "Do you want this change to affect all future occurrences of this transaction?";
 "Document" = "Document";
 "Document Properties" = "Document Properties";
@@ -83,7 +80,6 @@
 "Income" = "Income";
 "Increase" = "Increase";
 "Info" = "Info";
-"Invert Amounts" = "Invert Amounts";
 "Jump to Account..." = "Jump to Account...";
 "Just this one" = "Just this one";
 "Launch Cashculator" = "Launch Cashculator";
@@ -103,7 +99,6 @@
 "moneyGuru Preferences" = "moneyGuru Preferences";
 "moneyGuru Website" = "moneyGuru Website";
 "Month" = "Month";
-"Month <--> Year" = "Month <--> Year";
 "Move Down" = "Move Down";
 "Move Up" = "Move Up";
 "Multi-Currency Balance" = "Multi-Currency Balance";

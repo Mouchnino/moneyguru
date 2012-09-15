@@ -20,7 +20,7 @@ class TestImportCheckbookQIF:
         app.clear_gui_calls()
         app.doc.date_range = YearRange(date(2007, 1, 1))
         app.doc.parse_file_for_import(testdata.filepath('qif/checkbook.qif'))
-        app.check_gui_calls(app.iwin_gui, ['refresh_tabs', 'refresh_target_accounts', 'show'])
+        app.check_gui_calls(app.iwin.view, ['refresh_tabs', 'refresh_target_accounts', 'show'])
         return app
     
     @with_app(do_setup)
@@ -79,7 +79,7 @@ class TestImportCheckbookQIF:
         # The pane has been closed
         eq_(len(app.iwin.panes), 1)
         eq_(app.iwin.panes[0].name, 'Account 2')
-        app.check_gui_calls(app.iwin_gui, ['update_selected_pane', 'close_selected_tab'])
+        app.check_gui_calls(app.iwin.view, ['update_selected_pane', 'close_selected_tab', 'set_swap_button_enabled'])
         app.show_nwview()
         # The account & entries has been added
         eq_(app.bsheet.assets[0].name, 'Account 1')
@@ -89,7 +89,7 @@ class TestImportCheckbookQIF:
         # When importing the last pane, the window should close
         app.clear_gui_calls()
         app.iwin.import_selected_pane()
-        app.check_gui_calls(app.iwin_gui, ['close_selected_tab', 'close'])
+        app.check_gui_calls(app.iwin.view, ['close_selected_tab', 'close'])
     
     @with_app(do_setup)
     def test_import_selected_pane_with_some_entries_disabled(self, app):
@@ -103,7 +103,7 @@ class TestImportCheckbookQIF:
     
     @with_app(do_setup)
     def test_invert_amounts(self, app):
-        app.iwin.swap_type_index = SwapType.InvertAmount
+        app.iwin.swap_type_list.select(SwapType.InvertAmount)
         app.iwin.perform_swap()
         eq_(app.itable[0].amount_import, '-42.32')
         eq_(app.itable[1].amount_import, '-100.00')
@@ -116,7 +116,7 @@ class TestImportCheckbookQIF:
         app.iwin.selected_target_account_index = 1
         app.clear_gui_calls()
         app.iwin.selected_pane_index = 1
-        app.check_gui_calls(app.iwin_gui, ['update_selected_pane'])
+        app.check_gui_calls(app.iwin.view, ['update_selected_pane', 'set_swap_button_enabled'])
         eq_(app.iwin.selected_target_account_index, 0)
         app.iwin.selected_target_account_index = 1
         app.iwin.selected_pane_index = 0
@@ -135,7 +135,7 @@ class TestImportCheckbookQIF:
     
     @with_app(do_setup)
     def test_switch_description_payee(self, app):
-        app.iwin.swap_type_index = SwapType.DescriptionPayee
+        app.iwin.swap_type_list.select(SwapType.DescriptionPayee)
         app.iwin.perform_swap()
         # the 4th entry is the Hydro Quebec entry
         eq_(app.itable[3].description_import, 'Hydro-Quebec')
@@ -146,17 +146,17 @@ class TestImportCheckbookQIF:
         # Target accounts are updated when accounts are added/removed
         eq_(app.iwin.target_account_names, ['< New Account >'])
         app.add_account('Foo')
-        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        app.check_gui_calls(app.iwin.view, ['refresh_target_accounts'])
         app.add_account('bar')
-        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        app.check_gui_calls(app.iwin.view, ['refresh_target_accounts'])
         eq_(app.iwin.target_account_names, ['< New Account >', 'bar', 'Foo'])
         app.show_nwview()
         app.bsheet.selected = app.bsheet.assets[0] # bar
         app.bsheet.delete()
-        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        app.check_gui_calls(app.iwin.view, ['refresh_target_accounts'])
         eq_(app.iwin.target_account_names, ['< New Account >', 'Foo'])
         app.add_account()
-        app.check_gui_calls(app.iwin_gui, ['refresh_target_accounts'])
+        app.check_gui_calls(app.iwin.view, ['refresh_target_accounts'])
         eq_(app.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
     
 
@@ -175,7 +175,7 @@ class TestImportCheckbookQIFTwice:
     
     @with_app(do_setup)
     def test_switch_description_payee_apply_to_all(self, app):
-        app.iwin.swap_type_index = SwapType.DescriptionPayee
+        app.iwin.swap_type_list.select(SwapType.DescriptionPayee)
         app.iwin.perform_swap(apply_to_all=True)
         # the 4th entry is the Hydro Quebec entry
         app.iwin.selected_pane_index = 2
@@ -349,16 +349,16 @@ class TestImportTransactionsWithLowDateFields:
     @with_app(do_setup)
     def test_can_switch_fields(self, app):
         # all fields can be switched
-        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.swap_type_list.select(SwapType.DayMonth)
         assert app.iwin.can_perform_swap()
-        app.iwin.swap_type_index = SwapType.DayYear
+        app.iwin.swap_type_list.select(SwapType.DayYear)
         assert app.iwin.can_perform_swap()
-        app.iwin.swap_type_index = SwapType.MonthYear
+        app.iwin.swap_type_list.select(SwapType.MonthYear)
         assert app.iwin.can_perform_swap()
     
     @with_app(do_setup)
     def test_switch_day_month(self, app):
-        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.swap_type_list.select(SwapType.DayMonth)
         app.iwin.perform_swap()
         eq_(app.itable[0].date_import, '11/05/2008')
         eq_(app.itable[1].date_import, '01/12/2009')
@@ -366,7 +366,7 @@ class TestImportTransactionsWithLowDateFields:
     
     @with_app(do_setup)
     def test_switch_day_year(self, app):
-        app.iwin.swap_type_index = SwapType.DayYear
+        app.iwin.swap_type_list.select(SwapType.DayYear)
         app.iwin.perform_swap()
         eq_(app.itable[0].date_import, '08/11/2005')
         eq_(app.itable[1].date_import, '09/01/2012')
@@ -382,11 +382,11 @@ class TestImportTransactionsWithHighDayField:
     @with_app(do_setup)
     def test_can_switch_fields(self, app):
         # the day can't be switched with month
-        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.swap_type_list.select(SwapType.DayMonth)
         assert not app.iwin.can_perform_swap()
-        app.iwin.swap_type_index = SwapType.DayYear
+        app.iwin.swap_type_list.select(SwapType.DayYear)
         assert app.iwin.can_perform_swap()
-        app.iwin.swap_type_index = SwapType.MonthYear
+        app.iwin.swap_type_list.select(SwapType.MonthYear)
         assert app.iwin.can_perform_swap()
     
 
@@ -399,11 +399,11 @@ class TestImportTransactionsWithHighYearField:
     @with_app(do_setup)
     def test_can_switch_fields(self, app):
         # the year can't be switched because 99 is too high
-        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.swap_type_list.select(SwapType.DayMonth)
         assert not app.iwin.can_perform_swap()
-        app.iwin.swap_type_index = SwapType.DayYear
+        app.iwin.swap_type_list.select(SwapType.DayYear)
         assert not app.iwin.can_perform_swap()
-        app.iwin.swap_type_index = SwapType.MonthYear
+        app.iwin.swap_type_list.select(SwapType.MonthYear)
         assert not app.iwin.can_perform_swap()
     
 
@@ -418,7 +418,7 @@ class TestImportTransactionWithDayOn31stAndYearCorrespondingToLowMonth:
     @with_app(do_setup)
     def test_can_switch_fields(self, app):
         # September has 30 days, so it's impossible to swap the month and the year.
-        app.iwin.swap_type_index = SwapType.MonthYear
+        app.iwin.swap_type_list.select(SwapType.MonthYear)
         assert not app.iwin.can_perform_swap()
 
 class TestThreeImportsTwoOfThemWithLowDateFields:
@@ -432,7 +432,7 @@ class TestThreeImportsTwoOfThemWithLowDateFields:
     @with_app(do_setup)
     def test_switch_apply_to_all(self, app):
         # when the 'apply_to_all' argument is passed, the swucth happens in all applicable accounts
-        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.swap_type_list.select(SwapType.DayMonth)
         app.iwin.perform_swap(apply_to_all=True)
         app.iwin.selected_pane_index = 1
         eq_(app.itable[0].date_import, '11/05/2008') # switched
@@ -464,14 +464,14 @@ class TestTwoAccountsWithCommonTransaction:
     @with_app(do_setup)
     def test_switch_date(self, app):
         # the transaction in the 2 accounts is the same. *don't* switch it twice!
-        app.iwin.swap_type_index = SwapType.DayMonth
+        app.iwin.swap_type_list.select(SwapType.DayMonth)
         app.iwin.perform_swap(apply_to_all=True)
         eq_(app.itable[0].date_import, '11/05/2008')
     
     @with_app(do_setup)
     def test_switch_description_payee(self, app):
         # same as with dates: don't switch twice
-        app.iwin.swap_type_index = SwapType.DescriptionPayee
+        app.iwin.swap_type_list.select(SwapType.DescriptionPayee)
         app.iwin.perform_swap(apply_to_all=True)
         eq_(app.itable[0].description_import, 'bar')
         eq_(app.itable[0].payee_import, 'foo')

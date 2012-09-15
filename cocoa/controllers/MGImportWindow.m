@@ -28,6 +28,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [self setWindow:createMGImportWindow_UI(self)];
     model = [[PyImportWindow alloc] initWithDocument:[aDocument pyRef]];
     importTable = [[MGImportTable alloc] initWithPyRef:[model importTable] view:importTableView];
+    swapTypePopUp = [[HSPopUpList alloc] initWithPyRef:[model swapTypeList] popupView:switchDateFieldsPopup];
     [model bindCallback:createCallback(@"ImportWindowView", self)];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCanCloseOnlyTab:YES];
@@ -38,6 +39,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [model release];
     [importTable release];
+    [swapTypePopUp release];
     [super dealloc];
 }
 
@@ -59,18 +61,10 @@ http://www.hardcoded.net/licenses/bsd_license
     [model importSelectedPane];
 }
 
-- (void)selectSwapType
-{
-    [model setSwapTypeIndex:[switchDateFieldsPopup indexOfSelectedItem]];
-    [swapButton setEnabled:[model canPerformSwap]];
-}
-
 - (void)switchDateFields
 {
     BOOL applyToAll = [applySwapToAllCheckbox state] == NSOnState;
-    if ([model canPerformSwap]) {
-        [model performSwap:applyToAll];
-    }
+    [model performSwap:applyToAll];
 }
 
 /* Delegate */
@@ -136,6 +130,11 @@ http://www.hardcoded.net/licenses/bsd_license
     [targetAccountsPopup addItemsWithTitles:[model targetAccountNames]];
 }
 
+- (void)setSwapButtonEnabled:(BOOL)enabled
+{
+    [swapButton setEnabled:enabled];
+}
+
 - (void)show
 {
     [[self window] makeKeyAndOrderFront:self];
@@ -145,7 +144,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [targetAccountsPopup selectItemAtIndex:[model selectedTargetAccountIndex]];
     [importTable updateOneOrTwoSided];
-    [swapButton setEnabled:[model canPerformSwap]];
 }
 
 @end

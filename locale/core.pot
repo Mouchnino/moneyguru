@@ -219,7 +219,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:298
+#: core/gui/csv_options.py:248 core/gui/import_window.py:321
 msgid "< New Account >"
 msgstr ""
 
@@ -317,6 +317,26 @@ msgstr ""
 
 #: core/gui/general_ledger_view.py:50
 msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
+msgstr ""
+
+#: core/gui/import_window.py:133
+msgid "Day <--> Month"
+msgstr ""
+
+#: core/gui/import_window.py:134
+msgid "Month <--> Year"
+msgstr ""
+
+#: core/gui/import_window.py:135
+msgid "Day <--> Year"
+msgstr ""
+
+#: core/gui/import_window.py:136
+msgid "Description <--> Payee"
+msgstr ""
+
+#: core/gui/import_window.py:137
+msgid "Invert Amounts"
 msgstr ""
 
 #: core/gui/income_statement.py:66

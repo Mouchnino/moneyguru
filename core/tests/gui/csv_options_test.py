@@ -46,7 +46,7 @@ def test_continue_import_without_columns(app):
     # because the columns haven't been set, the iwin is not supposed to be brought and an error
     # message is supposed to pop.
     app.csvopt.continue_import()
-    app.iwin_gui.check_gui_calls_partial(not_expected=['show'])
+    app.iwin.view.check_gui_calls_partial(not_expected=['show'])
     app.csvopt_gui.check_gui_calls(['show_message'])
 
 @with_app(app_import_fortis)
@@ -115,7 +115,7 @@ def test_continue_import_with_fields_set(app):
     # sets the columns in app.doc.loader and continues importing
     app.csvopt.continue_import()
     app.csvopt_gui.check_gui_calls(['hide'])
-    app.iwin_gui.check_gui_calls(['refresh_tabs', 'refresh_target_accounts', 'show'])
+    app.iwin.view.check_gui_calls(['refresh_tabs', 'refresh_target_accounts', 'show'])
     eq_(len(app.iwin.panes), 1)
     eq_(app.iwin.panes[0].name, 'CSV Import')
     eq_(app.iwin.panes[0].count, 18)

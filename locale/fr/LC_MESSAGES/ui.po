@@ -1,6 +1,7 @@
 # 
 msgid ""
-msgstr "Content-Type: text/plain; charset=utf-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: utf-8\n"
 
 #: qt/controller/account/filter_bar.py:18 qt/controller/export_panel.py:48
@@ -368,44 +369,24 @@ msgstr "Renommer la configuration sélectionnée..."
 msgid "Delete Selected Layout"
 msgstr "Supprimer la configuration sélectionnée"
 
-#: qt/controller/import_/csv_options.py:233 qt/controller/import_/window.py:39
-#: qt/controller/import_/window.py:82 cocoa/en.lproj/Localizable.strings:0
+#: qt/controller/import_/csv_options.py:233 qt/controller/import_/window.py:40
+#: qt/controller/import_/window.py:78 cocoa/en.lproj/Localizable.strings:0
 msgid "Import"
 msgstr "Importer"
 
-#: qt/controller/import_/window.py:46 cocoa/en.lproj/Localizable.strings:0
+#: qt/controller/import_/window.py:47 cocoa/en.lproj/Localizable.strings:0
 msgid "Target Account:"
 msgstr "Compte cible:"
 
-#: qt/controller/import_/window.py:53
+#: qt/controller/import_/window.py:54
 msgid "Some fields are wrong? Swap them!"
 msgstr "Champs incorrectes? Interchangez!"
 
-#: qt/controller/import_/window.py:56 cocoa/en.lproj/Localizable.strings:0
-msgid "Day <--> Month"
-msgstr "Jour <--> Mois"
-
-#: qt/controller/import_/window.py:57 cocoa/en.lproj/Localizable.strings:0
-msgid "Month <--> Year"
-msgstr "Mois <--> Année"
-
 #: qt/controller/import_/window.py:58 cocoa/en.lproj/Localizable.strings:0
-msgid "Day <--> Year"
-msgstr "Jour <--> Année"
-
-#: qt/controller/import_/window.py:59 cocoa/en.lproj/Localizable.strings:0
-msgid "Description <--> Payee"
-msgstr "Description <--> Tiers"
-
-#: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
-msgid "Invert Amounts"
-msgstr "Inverser les montants"
-
-#: qt/controller/import_/window.py:62 cocoa/en.lproj/Localizable.strings:0
 msgid "Apply to all accounts"
 msgstr "Appliquer à tous"
 
-#: qt/controller/import_/window.py:64 cocoa/en.lproj/Localizable.strings:0
+#: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
 msgid "Swap"
 msgstr "Zap!"
 
@@ -638,7 +619,7 @@ msgstr "Défaire {0}"
 msgid "Redo {0}"
 msgstr "Refaire {0}"
 
-#: qt/controller/main_window.py:651
+#: qt/controller/main_window.py:650
 msgid "Warning"
 msgstr "Avertissement"
 

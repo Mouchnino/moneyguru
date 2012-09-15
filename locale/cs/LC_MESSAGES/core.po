@@ -1,6 +1,7 @@
 # 
 msgid ""
-msgstr "Content-Type: text/plain; charset=utf-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: utf-8\n"
 
 #: core/app.py:49
@@ -225,7 +226,7 @@ msgstr "ID transakce"
 msgid "Default"
 msgstr "Standardní"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:298
+#: core/gui/csv_options.py:248 core/gui/import_window.py:321
 msgid "< New Account >"
 msgstr "< Nový účet >"
 
@@ -521,3 +522,23 @@ msgstr "Každý %s %s v měsíci"
 #: core/model/recurrence.py:138
 msgid "Every last %s of the month"
 msgstr "Poslední %s v měsíci"
+
+#: core/gui/import_window.py:133
+msgid "Day <--> Month"
+msgstr "Den <--> Měsíc"
+
+#: core/gui/import_window.py:134
+msgid "Month <--> Year"
+msgstr "Měsíc <--> Rok"
+
+#: core/gui/import_window.py:135
+msgid "Day <--> Year"
+msgstr "Den <--> Rok"
+
+#: core/gui/import_window.py:136
+msgid "Description <--> Payee"
+msgstr "Popis <--> Příjemce"
+
+#: core/gui/import_window.py:137
+msgid "Invert Amounts"
+msgstr "Převrátit částky"

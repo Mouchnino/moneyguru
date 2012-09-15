@@ -10,7 +10,7 @@ from hscommon.util import flatten, dedupe, first
 from hscommon.trans import tr
 
 from ..exception import OperationAborted
-from .base import DocumentGUIObject
+from .base import DocumentGUIObject, LinkedSelectableList
 from .import_table import ImportTable
 
 DAY = 'day'
@@ -113,11 +113,30 @@ class AccountPane:
     
 
 class ImportWindow(DocumentGUIObject):
+    #--- View interface
+    # close()
+    # close_selected_tab()
+    # refresh_tabs()
+    # refresh_target_accounts()
+    # set_swap_button_enabled(enabled: bool)
+    # show()
+    # update_selected_pane()
+    #
+    
     def __init__(self, document):
         DocumentGUIObject.__init__(self, document)
         self._selected_pane_index = 0
         self._selected_target_index = 0
-        self.swap_type_index = SwapType.DayMonth
+        def setfunc(index):
+            self.view.set_swap_button_enabled(self.can_perform_swap())
+        self.swap_type_list = LinkedSelectableList(items=[
+            tr("Day <--> Month"),
+            tr("Month <--> Year"),
+            tr("Day <--> Year"),
+            tr("Description <--> Payee"),
+            tr("Invert Amounts"),
+        ], setfunc=setfunc)
+        self.swap_type_list.selected_index = SwapType.DayMonth
         self.panes = []
         self.import_table = ImportTable(self)
     
@@ -184,13 +203,18 @@ class ImportWindow(DocumentGUIObject):
             switch_func(txn)
         self.import_table.refresh()
     
+    def _update_selected_pane(self):
+        self.import_table.refresh()
+        self.view.update_selected_pane()
+        self.view.set_swap_button_enabled(self.can_perform_swap())
+    
     #--- Override
     def _view_updated(self):
         self.connect()
     
     #--- Public
     def can_perform_swap(self):
-        index = self.swap_type_index
+        index = self.swap_type_list.selected_index
         if index == SwapType.DayMonth:
             return self._can_swap_date_fields(DAY, MONTH)
         elif index == SwapType.MonthYear:
@@ -208,8 +232,8 @@ class ImportWindow(DocumentGUIObject):
             return
         self._selected_pane_index = min(self._selected_pane_index, len(self.panes) - 1)
         if was_selected:
-            self.import_table.refresh()
-            self.view.update_selected_pane()
+            self._update_selected_pane()
+            
     
     def import_selected_pane(self):
         pane = self.selected_pane
@@ -229,7 +253,7 @@ class ImportWindow(DocumentGUIObject):
             self.view.close_selected_tab()
     
     def perform_swap(self, apply_to_all=False):
-        index = self.swap_type_index
+        index = self.swap_type_list.selected_index
         if index == SwapType.DayMonth:
             self._swap_date_fields(DAY, MONTH, apply_to_all=apply_to_all)
         elif index == SwapType.MonthYear:
@@ -275,8 +299,7 @@ class ImportWindow(DocumentGUIObject):
             return
         self._selected_pane_index = value
         self._refresh_target_selection()
-        self.import_table.refresh()
-        self.view.update_selected_pane()
+        self._update_selected_pane()
     
     @property
     def selected_target_account(self):

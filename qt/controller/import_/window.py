@@ -8,9 +8,10 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QWidget, QTabBar
+from PyQt4.QtGui import QWidget, QTabBar, QComboBox
 
 from hscommon.trans import trget
+from qtlib.selectable_list import ComboboxModel
 
 from core.gui.import_window import ImportWindow as ImportWindowModel
 from ...support.item_view import TableView
@@ -24,6 +25,7 @@ class ImportWindow(QWidget):
         self._setupUi()
         self.doc = doc
         self.model = ImportWindowModel(document=doc.model)
+        self.swapOptionsComboBox = ComboboxModel(model=self.model.swap_type_list, view=self.swapOptionsComboBoxView)
         self.table = ImportTable(model=self.model.import_table, view=self.tableView)
         self.model.view = self
         self._setupColumns() # Can only be done after the model has been connected
@@ -32,7 +34,6 @@ class ImportWindow(QWidget):
         self.tabView.currentChanged.connect(self.currentTabChanged)
         self.targetAccountComboBox.currentIndexChanged.connect(self.targetAccountChanged)
         self.importButton.clicked.connect(self.importClicked)
-        self.swapOptionsComboBox.currentIndexChanged.connect(self.swapTypeChanged)
         self.swapButton.clicked.connect(self.swapClicked)
     
     def _setupUi(self):
@@ -45,20 +46,15 @@ class ImportWindow(QWidget):
         self.targetAccountLayout = QtGui.QHBoxLayout()
         self.targetAccountLabel = QtGui.QLabel(tr("Target Account:"))
         self.targetAccountLayout.addWidget(self.targetAccountLabel)
-        self.targetAccountComboBox = QtGui.QComboBox(self)
+        self.targetAccountComboBox = QComboBox(self)
         self.targetAccountComboBox.setMinimumSize(QtCore.QSize(150, 0))
         self.targetAccountLayout.addWidget(self.targetAccountComboBox)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.targetAccountLayout.addItem(spacerItem)
         self.groupBox = QtGui.QGroupBox(tr("Some fields are wrong? Swap them!"))
         self.gridLayout = QtGui.QGridLayout(self.groupBox)
-        self.swapOptionsComboBox = QtGui.QComboBox(self.groupBox)
-        self.swapOptionsComboBox.addItem(tr("Day <--> Month"))
-        self.swapOptionsComboBox.addItem(tr("Month <--> Year"))
-        self.swapOptionsComboBox.addItem(tr("Day <--> Year"))
-        self.swapOptionsComboBox.addItem(tr("Description <--> Payee"))
-        self.swapOptionsComboBox.addItem(tr("Invert Amounts"))
-        self.gridLayout.addWidget(self.swapOptionsComboBox, 0, 0, 1, 2)
+        self.swapOptionsComboBoxView = QComboBox(self.groupBox)
+        self.gridLayout.addWidget(self.swapOptionsComboBoxView, 0, 0, 1, 2)
         self.applyToAllCheckBox = QtGui.QCheckBox(tr("Apply to all accounts"))
         self.gridLayout.addWidget(self.applyToAllCheckBox, 1, 0, 1, 1)
         self.swapButton = QtGui.QPushButton(tr("Swap"))
@@ -101,13 +97,8 @@ class ImportWindow(QWidget):
         self.model.import_selected_pane()
     
     def swapClicked(self):
-        if self.model.can_perform_swap():
-            applyToAll = self.applyToAllCheckBox.isChecked()
-            self.model.perform_swap(applyToAll)
-    
-    def swapTypeChanged(self, index):
-        self.model.swap_type_index = index
-        self.swapButton.setEnabled(self.model.can_perform_swap())
+        applyToAll = self.applyToAllCheckBox.isChecked()
+        self.model.perform_swap(applyToAll)
     
     def tabCloseRequested(self, index):
         self.model.close_pane(index)
@@ -138,6 +129,9 @@ class ImportWindow(QWidget):
         for pane in self.model.panes:
             self.tabView.addTab(pane.name)
     
+    def set_swap_button_enabled(self, enabled):
+        self.swapButton.setEnabled(enabled)
+    
     def show(self):
         # For non-modal dialogs, show() is not enough to bring the window at the forefront, we have
         # to call raise() as well
@@ -150,5 +144,4 @@ class ImportWindow(QWidget):
             self.tabView.setCurrentIndex(index)
         self.targetAccountComboBox.setCurrentIndex(self.model.selected_target_account_index)
         self.table.updateColumnsVisibility()
-        self.swapButton.setEnabled(self.model.can_perform_swap())
     

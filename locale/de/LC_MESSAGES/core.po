@@ -1,6 +1,7 @@
 # 
 msgid ""
-msgstr "Content-Type: text/plain; charset=utf-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: utf-8\n"
 
 #: core/app.py:49
@@ -226,7 +227,7 @@ msgstr "Transaktionsnummer"
 msgid "Default"
 msgstr "Verzug"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:298
+#: core/gui/csv_options.py:248 core/gui/import_window.py:321
 msgid "< New Account >"
 msgstr "< Neues Konto >"
 
@@ -524,3 +525,23 @@ msgstr "Jeden %s %s im Monat"
 #: core/model/recurrence.py:138
 msgid "Every last %s of the month"
 msgstr "Jeden letzten %s im Monat"
+
+#: core/gui/import_window.py:133
+msgid "Day <--> Month"
+msgstr "Tag <--> Monat"
+
+#: core/gui/import_window.py:134
+msgid "Month <--> Year"
+msgstr "Monat <--> Jahr"
+
+#: core/gui/import_window.py:135
+msgid "Day <--> Year"
+msgstr "Tag <--> Jahr"
+
+#: core/gui/import_window.py:136
+msgid "Description <--> Payee"
+msgstr "Beschreibung <--> Wechselnehmer"
+
+#: core/gui/import_window.py:137
+msgid "Invert Amounts"
+msgstr ""

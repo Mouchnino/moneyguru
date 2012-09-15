@@ -1188,6 +1188,7 @@ class ImportWindowView(GUIObjectView):
     def closeSelectedTab(self): pass
     def refreshTabs(self): pass
     def refreshTargetAccounts(self): pass
+    def setSwapButtonEnabled_(self, enabled: bool): pass
     def show(self): pass
     def updateSelectedPane(self): pass
 
@@ -1199,14 +1200,14 @@ class PyImportWindow(PyGUIObject):
     def importTable(self) -> pyref:
         return self.model.import_table
     
+    def swapTypeList(self) -> pyref:
+        return self.model.swap_type_list
+    
     def accountCountAtIndex_(self, index: int) -> int:
         return self.model.panes[index].count
     
     def accountNameAtIndex_(self, index: int) -> str:
         return self.model.panes[index].name
-    
-    def canPerformSwap(self) -> bool:
-        return self.model.can_perform_swap()
     
     def closePaneAtIndex_(self, index: int):
         self.model.close_pane(index)
@@ -1229,9 +1230,6 @@ class PyImportWindow(PyGUIObject):
     def setSelectedAccountIndex_(self, index: int):
         self.model.selected_pane_index = index
     
-    def setSwapTypeIndex_(self, index: int):
-        self.model.swap_type_index = index
-    
     def targetAccountNames(self) -> list:
         return self.model.target_account_names
     
@@ -1251,6 +1249,10 @@ class PyImportWindow(PyGUIObject):
     @dontwrap
     def refresh_target_accounts(self):
         self.callback.refreshTargetAccounts()
+    
+    @dontwrap
+    def set_swap_button_enabled(self, enabled):
+        self.callback.setSwapButtonEnabled_(enabled)
     
     @dontwrap
     def show(self):

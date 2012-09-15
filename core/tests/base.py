@@ -137,7 +137,7 @@ class TestApp(TestAppBase):
         self.sfield = link_gui(self.mw.search_field)
         self.drsel = link_gui(self.mw.daterange_selector)
         make_gui('csvopt', CSVOptions, parent=self.doc)
-        make_gui('iwin', ImportWindow, parent=self.doc)
+        self.iwin = link_gui(ImportWindow(self.doc))
         self.itable = link_gui(self.iwin.import_table)
         self.alookup = link_gui(self.mw.account_lookup)
         self.clookup = link_gui(self.mw.completion_lookup)

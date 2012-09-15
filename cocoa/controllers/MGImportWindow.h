@@ -11,6 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "PyDocument.h"
 #import "MGTableView.h"
 #import "MGImportTable.h"
+#import "HSPopUpList.h"
 #import "PyImportWindow.h"
 
 @interface MGImportWindow : NSWindowController
@@ -26,6 +27,7 @@ http://www.hardcoded.net/licenses/bsd_license
     
     PyImportWindow *model;
     MGImportTable *importTable;
+    HSPopUpList *swapTypePopUp;
     NSInteger tabToRemoveIndex;
 }
 
@@ -43,7 +45,6 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Actions */
 - (void)changeTargetAccount;
 - (void)importSelectedPane;
-- (void)selectSwapType;
 - (void)switchDateFields;
 
 /* Python callbacks */

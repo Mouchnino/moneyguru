@@ -12,8 +12,7 @@ importTable = TableView(importView)
 importTable.OBJC_CLASS = 'MGTableView'
 importButton = Button(importView, "Import")
 swapBox = Box(importView, "Are some fields wrong? Swap them!")
-swapPopup = Popup(swapBox, ["Day <--> Month", "Month <--> Year", "Day <--> Year",
-    "Description <--> Payee", "Invert Amounts"])
+swapPopup = Popup(swapBox)
 swapAllCheckbox = Checkbox(swapBox, "Apply to all accounts")
 swapButton = Button(swapBox, "Swap")
 
@@ -31,7 +30,6 @@ tabView.delegate = tabBarControl
 
 targetPopup.action = Action(owner, 'changeTargetAccount')
 importButton.action = Action(owner, 'importSelectedPane')
-swapPopup.action = Action(owner, 'selectSwapType')
 swapButton.action = Action(owner, 'switchDateFields')
 
 tabView.tabViewType = const.NSNoTabsNoBorder
