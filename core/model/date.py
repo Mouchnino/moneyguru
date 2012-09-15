@@ -22,8 +22,8 @@ class DateRange:
         self.end = end
     
     def __repr__(self):
-        start_date_str = strftime('%Y/%m/%d', self.start) if self.start.year > 1900 else 'MINDATE'
-        return '<%s %s - %s>' % (type(self).__name__, start_date_str, strftime('%Y/%m/%d', self.end))
+        start_date_str = self.start.strftime('%Y/%m/%d') if self.start.year > 1900 else 'MINDATE'
+        return '<%s %s - %s>' % (type(self).__name__, start_date_str, self.end.strftime('%Y/%m/%d'))
     
     def __bool__(self):
         return self.start <= self.end
@@ -122,7 +122,7 @@ class MonthRange(NavigableDateRange):
     
     @property
     def display(self):
-        return strftime('%B %Y', self.start)
+        return self.start.strftime('%B %Y')
     
 
 class QuarterRange(NavigableDateRange):
@@ -166,7 +166,7 @@ class YearRange(NavigableDateRange):
     
     @property
     def display(self):
-        return '{0} - {1}'.format(strftime('%b %Y', self.start), strftime('%b %Y', self.end))
+        return '{0} - {1}'.format(self.start.strftime('%b %Y'), self.end.strftime('%b %Y'))
     
 
 class YearToDateRange(DateRange):
@@ -185,7 +185,7 @@ class YearToDateRange(DateRange):
     
     @property
     def display(self):
-        return tr('{0} - Now').format(strftime('%b %Y', self.start))
+        return tr('{0} - Now').format(self.start.strftime('%b %Y'))
     
 
 def compute_ahead_months(ahead_months):
@@ -213,7 +213,7 @@ class RunningYearRange(DateRange):
     
     @property
     def display(self):
-        return tr('Running year ({0} - {1})').format(strftime('%b', self.start), strftime('%b', self.end))
+        return tr('Running year ({0} - {1})').format(self.start.strftime('%b'), self.end.strftime('%b'))
     
 
 class AllTransactionsRange(DateRange):
@@ -334,10 +334,3 @@ def format_year_month_day(year, month, day, format):
     result = result.replace('dd', '%02d' % day)
     result = result.replace('d', '%d' % day)
     return result
-
-#--- Misc
-def strftime(fmt, date):
-    # Under Python 2, there used to be problems with unicode/str results and strftime, problems that
-    # aren't there under Python3 anymore. Use of this function should be phased out and replaced
-    # with a simple date.strftime() call.
-    return date.strftime(fmt)
