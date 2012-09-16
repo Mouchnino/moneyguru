@@ -10,6 +10,7 @@ from hscommon.util import flatten, dedupe, first
 from hscommon.trans import tr
 
 from ..exception import OperationAborted
+from ..model.date import DateFormat
 from .base import DocumentGUIObject, LinkedSelectableList
 from .import_table import ImportTable
 
@@ -34,13 +35,26 @@ def swapped_date(date, first, second):
         newattrs[YEAR] += 2000
     return date.replace(**newattrs)
 
+def swap_format_elements(format, first, second):
+    # format is a DateFormat
+    swapped = format.copy()
+    elems = swapped.elements
+    TYPE2CHAR = {DAY: 'd', MONTH: 'M', YEAR: 'y'}
+    first_char = TYPE2CHAR[first]
+    second_char = TYPE2CHAR[second]
+    first_index = [i for i, x in enumerate(elems) if x.startswith(first_char)][0]
+    second_index = [i for i, x in enumerate(elems) if x.startswith(second_char)][0]
+    elems[first_index], elems[second_index] = elems[second_index], elems[first_index]
+    return swapped
+
 class AccountPane:
-    def __init__(self, account, target_account):
+    def __init__(self, account, target_account, parsing_date_format):
         self.account = account
         self._selected_target = target_account
         self.name = account.name
         self.count = len(account.entries)
         self.matches = [] # [[ref, imported]]
+        self.parsing_date_format = parsing_date_format
         self.max_day = 31
         self.max_month = 12
         self.max_year = 99 # 2 digits
@@ -130,9 +144,9 @@ class ImportWindow(DocumentGUIObject):
         def setfunc(index):
             self.view.set_swap_button_enabled(self.can_perform_swap())
         self.swap_type_list = LinkedSelectableList(items=[
-            tr("Day <--> Month"),
-            tr("Month <--> Year"),
-            tr("Day <--> Year"),
+            "<placeholder> Day <--> Month",
+            "<placeholder> Month <--> Year",
+            "<placeholder> Day <--> Year",
             tr("Description <--> Payee"),
             tr("Invert Amounts"),
         ], setfunc=setfunc)
@@ -173,6 +187,16 @@ class ImportWindow(DocumentGUIObject):
             except ValueError:
                 pass
     
+    def _refresh_swap_list_items(self):
+        if not self.panes:
+            return
+        items = []
+        basefmt = self.selected_pane.parsing_date_format
+        for first, second in [(DAY, MONTH), (MONTH, YEAR), (DAY, YEAR)]:
+            swapped = swap_format_elements(basefmt, first, second)
+            items.append("{} --> {}".format(basefmt.iso_format, swapped.iso_format))
+        self.swap_type_list[:3] = items
+    
     def _swap_date_fields(self, first, second, apply_to_all): # 'day', 'month', 'year'
         assert self._can_swap_date_fields(first, second)
         if apply_to_all:
@@ -184,6 +208,12 @@ class ImportWindow(DocumentGUIObject):
             txn.date = swapped_date(txn.date, first, second)
         
         self._swap_fields(panes, switch_func)
+        # Now, lets' change the date format on these panes
+        for pane in panes:
+            basefmt = self.selected_pane.parsing_date_format
+            swapped = swap_format_elements(basefmt, first, second)
+            pane.parsing_date_format = swapped
+        self._refresh_swap_list_items()
     
     def _swap_description_payee(self, apply_to_all):
         if apply_to_all:
@@ -205,6 +235,7 @@ class ImportWindow(DocumentGUIObject):
     
     def _update_selected_pane(self):
         self.import_table.refresh()
+        self._refresh_swap_list_items()
         self.view.update_selected_pane()
         self.view.set_swap_button_enabled(self.can_perform_swap())
     
@@ -274,14 +305,17 @@ class ImportWindow(DocumentGUIObject):
             return
         self.refresh_targets()
         accounts = [a for a in self.document.loader.accounts if a.is_balance_sheet_account() and a.entries]
+        parsing_date_format = DateFormat.from_sysformat(self.document.loader.parsing_date_format)
         for account in accounts:
             target_account = None
             if self.document.loader.target_account is not None:
                 target_account = self.document.loader.target_account
             elif account.reference:
                 target_account = first(t for t in self.target_accounts if t.reference == account.reference)
-            self.panes.append(AccountPane(account, target_account))
+            self.panes.append(AccountPane(account, target_account, parsing_date_format))
+        # XXX Should replace by _update_selected_pane()?
         self._refresh_target_selection()
+        self._refresh_swap_list_items()
         self.import_table.refresh()
     
     #--- Properties

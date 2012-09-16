@@ -11,10 +11,10 @@ targetPopup = Popup(importView)
 importTable = TableView(importView)
 importTable.OBJC_CLASS = 'MGTableView'
 importButton = Button(importView, "Import")
-swapBox = Box(importView, "Are some fields wrong? Swap them!")
+swapBox = Box(importView, "Are some fields wrong? Fix them!")
 swapPopup = Popup(swapBox)
 swapAllCheckbox = Checkbox(swapBox, "Apply to all accounts")
-swapButton = Button(swapBox, "Swap")
+swapButton = Button(swapBox, "Fix")
 
 owner.applySwapToAllCheckbox = swapAllCheckbox
 owner.importTableView = importTable

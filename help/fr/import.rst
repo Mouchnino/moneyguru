@@ -17,6 +17,8 @@ Arranger les descriptions et provenances
 
 Il arrive qu'un fichier mal généré par une autre application se trompe de champ et que vous ayez ainsi les champs Description et Tiers interchangés. Vous n'avez qu'à utiliser la fonction "Description <--> Tiers" pour régler tout ça.
 
+.. todo:: Update the 2 section below with the new "Fix broken fields" section.
+
 Importer dans un compte existant
 --------------------------------
 

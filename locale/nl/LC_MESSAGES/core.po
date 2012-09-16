@@ -92,11 +92,11 @@ msgstr "Periodieke boeking verwijderen"
 msgid "\"%s\" is not a moneyGuru file"
 msgstr "\"%s\" is geen moneyGuru bestan"
 
-#: core/document.py:776
+#: core/document.py:777
 msgid "%s is of an unknown format."
 msgstr "%s heeft een onbekend formaat"
 
-#: core/document.py:820
+#: core/document.py:821
 msgid "Import"
 msgstr "Importeren"
 
@@ -226,7 +226,7 @@ msgstr "Transactienummer"
 msgid "Default"
 msgstr "Standaard"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:321
+#: core/gui/csv_options.py:248 core/gui/import_window.py:355
 msgid "< New Account >"
 msgstr "< Nieuwe rekening >"
 
@@ -523,22 +523,10 @@ msgstr "Elke %s %s van de maand"
 msgid "Every last %s of the month"
 msgstr "Elke laatste %s van de maand"
 
-#: core/gui/import_window.py:133
-msgid "Day <--> Month"
-msgstr "Dag <--> Maand"
-
-#: core/gui/import_window.py:134
-msgid "Month <--> Year"
-msgstr "Maand <--> Jaar"
-
-#: core/gui/import_window.py:135
-msgid "Day <--> Year"
-msgstr "Dag <--> Jaar"
-
-#: core/gui/import_window.py:136
+#: core/gui/import_window.py:150
 msgid "Description <--> Payee"
 msgstr "Omschrijving <--> Ontvanger"
 
-#: core/gui/import_window.py:137
+#: core/gui/import_window.py:151
 msgid "Invert Amounts"
 msgstr "Bedrag omkeren"

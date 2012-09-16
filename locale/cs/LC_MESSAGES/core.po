@@ -92,11 +92,11 @@ msgstr "Odstranit plán"
 msgid "\"%s\" is not a moneyGuru file"
 msgstr "\"%s\" není souborem moneyGuru"
 
-#: core/document.py:776
+#: core/document.py:777
 msgid "%s is of an unknown format."
 msgstr "%s nemá známý formát."
 
-#: core/document.py:820
+#: core/document.py:821
 msgid "Import"
 msgstr "Import"
 
@@ -226,7 +226,7 @@ msgstr "ID transakce"
 msgid "Default"
 msgstr "Standardní"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:321
+#: core/gui/csv_options.py:248 core/gui/import_window.py:355
 msgid "< New Account >"
 msgstr "< Nový účet >"
 
@@ -523,22 +523,10 @@ msgstr "Každý %s %s v měsíci"
 msgid "Every last %s of the month"
 msgstr "Poslední %s v měsíci"
 
-#: core/gui/import_window.py:133
-msgid "Day <--> Month"
-msgstr "Den <--> Měsíc"
-
-#: core/gui/import_window.py:134
-msgid "Month <--> Year"
-msgstr "Měsíc <--> Rok"
-
-#: core/gui/import_window.py:135
-msgid "Day <--> Year"
-msgstr "Den <--> Rok"
-
-#: core/gui/import_window.py:136
+#: core/gui/import_window.py:150
 msgid "Description <--> Payee"
 msgstr "Popis <--> Příjemce"
 
-#: core/gui/import_window.py:137
+#: core/gui/import_window.py:151
 msgid "Invert Amounts"
 msgstr "Převrátit částky"

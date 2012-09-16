@@ -379,17 +379,9 @@ msgstr "Importeren"
 msgid "Target Account:"
 msgstr "Rekening:"
 
-#: qt/controller/import_/window.py:54
-msgid "Some fields are wrong? Swap them!"
-msgstr "Onjuiste velden? Wissel ze om!"
-
 #: qt/controller/import_/window.py:58 cocoa/en.lproj/Localizable.strings:0
 msgid "Apply to all accounts"
 msgstr "Op alle rekeningen toepassen"
-
-#: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
-msgid "Swap"
-msgstr "Omwisselen"
 
 #: qt/controller/lookup.py:35 cocoa/en.lproj/Localizable.strings:0
 msgid "Lookup"
@@ -902,10 +894,6 @@ msgid "Document Properties"
 msgstr "Documenteigenschappen"
 
 #: cocoa/en.lproj/Localizable.strings:0
-msgid "Are some fields wrong? Swap them!"
-msgstr "Zijn sommige velden onjuist? Wissel ze!"
-
-#: cocoa/en.lproj/Localizable.strings:0
 msgid "Account Lookup"
 msgstr "Zoek rekening"
 
@@ -1196,3 +1184,11 @@ msgstr ""
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Printing font size:"
 msgstr "Lettergrootte bij afdrukken"
+
+#: qt/controller/import_/window.py:54 cocoa/en.lproj/Localizable.strings:0
+msgid "Are some fields wrong? Fix them!"
+msgstr ""
+
+#: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
+msgid "Fix"
+msgstr ""

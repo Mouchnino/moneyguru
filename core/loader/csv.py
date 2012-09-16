@@ -31,8 +31,8 @@ MERGABLE_FIELDS = {CsvField.Description, CsvField.Payee}
 
 class Loader(base.Loader):
     FILE_ENCODING = 'latin-1'
-    def __init__(self, default_currency):
-        base.Loader.__init__(self, default_currency)
+    def __init__(self, default_currency, default_date_format=None):
+        base.Loader.__init__(self, default_currency, default_date_format)
         self.columns = []
         self.lines = []
         self.dialect = None # last used dialect
@@ -149,14 +149,14 @@ class Loader(base.Loader):
         if not (hasdate and hasamount):
             raise FileLoadError(tr("The Date and Amount columns must be set."))
         self.account_info.name = 'CSV Import'
-        date_format, lines_to_load = self._parse_date_format(lines, ci)
+        self.parsing_date_format, lines_to_load = self._parse_date_format(lines, ci)
         self._check_amount_values(lines_to_load, ci)
         for line in lines_to_load:
             self.start_transaction()
             for attr, index in ci.items():
                 value = line[index]
                 if attr == CsvField.Date:
-                    value = self.parse_date_str(value, date_format)
+                    value = self.parse_date_str(value, self.parsing_date_format)
                 elif attr == CsvField.Increase:
                     attr = CsvField.Amount
                 elif attr == CsvField.Decrease:

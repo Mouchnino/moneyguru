@@ -296,32 +296,18 @@ def inc_last_weekday_in_month(date, count):
 # Why not just convert the Unicode format to strftime's format? Because the strftime formatting
 # does not support padding-less month and day.
 
-re_separators = re.compile(r'/|-|\.')
-re_year = re.compile(r'y{4}|y{2}')
-re_month = re.compile(r'M{1,2}')
-re_day = re.compile(r'd{1,2}')
+re_separators = re.compile(r'/|-|\.| ')
 
 def clean_format(format):
     """Removes any format element that is not supported. If the result is an invalid format, return
     a fallback format
     """
-    m_separators = re_separators.search(format)
-    m_day = re_day.search(format)
-    m_month = re_month.search(format)
-    m_year = re_year.search(format)
-    if any(m is None for m in (m_separators, m_day, m_month, m_year)):
-        return 'dd/MM/yyyy'
-    separator = m_separators.group()
-    matches = [m_day, m_month, m_year]
-    matches.sort(key=lambda m: m.start()) # sort matches in order of appearance
-    return separator.join(m.group() for m in matches)
+    format = DateFormat(format)
+    format.make_numerical()
+    return format.iso_format
 
 def parse_date(string, format):
-    format = format.replace('yyyy', '%Y')
-    format = format.replace('yy', '%y')
-    format = re_month.sub('%m', format)
-    format = re_day.sub('%d', format)
-    return datetime.strptime(string, format).date()
+    return DateFormat(format).parse_date(string)
 
 def format_date(date, format):
     return format_year_month_day(date.year, date.month, date.day, format)
@@ -334,3 +320,49 @@ def format_year_month_day(year, month, day, format):
     result = result.replace('dd', '%02d' % day)
     result = result.replace('d', '%d' % day)
     return result
+
+class DateFormat:
+    ISO2SYS = {'yyyy': '%Y', 'yy': '%y', 'MMM': '%b', 'MM': '%m', 'M': '%m', 'dd': '%d', 'd': '%d'}
+    SYS2ISO = {'%Y': 'yyyy', '%y': 'yy', '%m': 'MM', '%b': 'MMM', '%d': 'dd'}
+    
+    def __init__(self, format):
+        if format is None:
+            format = ''
+        # Default values in case we can't parse
+        self.separator = '/'
+        self.elements = ['dd', 'MM', 'yyyy']
+        m_separators = re_separators.search(format)
+        if m_separators:
+            self.separator = m_separators.group()
+            elements = format.split(self.separator)
+            if all(elem in self.ISO2SYS for elem in elements):
+                self.elements = elements
+    
+    @staticmethod
+    def from_sysformat(format):
+        if format is None:
+            format = ''
+        for key, value in DateFormat.SYS2ISO.items():
+            format = format.replace(key, value)
+        return DateFormat(format)
+    
+    def copy(self):
+        return DateFormat(self.iso_format)
+    
+    def parse_date(self, string):
+        return datetime.strptime(string, self.sys_format).date()
+    
+    def make_numerical(self):
+        # If the date format contains a non-numerical month, change it to a numerical one.
+        if 'MMM' in self.elements:
+            self.elements[self.elements.index('MMM')] = 'MM'
+    
+    @property
+    def iso_format(self):
+        return self.separator.join(self.elements)
+    
+    @property
+    def sys_format(self):
+        repl_elems = [self.ISO2SYS[elem] for elem in self.elements]
+        return self.separator.join(repl_elems)
+

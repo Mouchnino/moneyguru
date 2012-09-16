@@ -373,8 +373,8 @@ msgstr ""
 msgid "Target Account:"
 msgstr ""
 
-#: qt/controller/import_/window.py:54
-msgid "Some fields are wrong? Swap them!"
+#: qt/controller/import_/window.py:54 cocoa/en.lproj/Localizable.strings:0
+msgid "Are some fields wrong? Fix them!"
 msgstr ""
 
 #: qt/controller/import_/window.py:58 cocoa/en.lproj/Localizable.strings:0
@@ -382,7 +382,7 @@ msgid "Apply to all accounts"
 msgstr ""
 
 #: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
-msgid "Swap"
+msgid "Fix"
 msgstr ""
 
 #: qt/controller/lookup.py:35 cocoa/en.lproj/Localizable.strings:0
@@ -811,10 +811,6 @@ msgstr ""
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Amount"
-msgstr ""
-
-#: cocoa/en.lproj/Localizable.strings:0
-msgid "Are some fields wrong? Swap them!"
 msgstr ""
 
 #: cocoa/en.lproj/Localizable.strings:0

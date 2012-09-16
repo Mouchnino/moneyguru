@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 import os.path as op
-from datetime import date, datetime
+from datetime import date
 from operator import attrgetter
 
 import pytest
@@ -26,6 +26,7 @@ from ..gui.import_window import ImportWindow
 from ..gui.main_window import MainWindow
 from ..loader import base
 from ..model.account import AccountType
+from ..model.date import DateFormat
 
 testdata = TestData(op.join(op.dirname(__file__), 'testdata'))
 
@@ -81,10 +82,12 @@ class MainWindowGUI(CallLogger):
 
 class DictLoader(base.Loader):
     """Used for fake_import"""
-    def __init__(self, default_currency, account_name, transactions):
-        base.Loader.__init__(self, default_currency)
+    def __init__(self, default_currency, account_name, transactions, default_date_format='%d/%m/%Y'):
+        base.Loader.__init__(self, default_currency, default_date_format)
         self.account_name = account_name
         self.transaction_dicts = transactions
+        str_dates = [txn['date'] for txn in transactions]
+        self.parsing_date_format = self.guess_date_format(str_dates)
     
     def _parse(self, infile):
         pass
@@ -95,7 +98,7 @@ class DictLoader(base.Loader):
             self.start_transaction()
             for attr, value in txn.items():
                 if attr == 'date':
-                    value = datetime.strptime(value, '%d/%m/%Y').date()
+                    value = self.parse_date_str(value)
                 setattr(self.transaction_info, attr, value)
 
 class TestApp(TestAppBase):
@@ -413,8 +416,10 @@ class TestApp(TestAppBase):
     def fake_import(self, account_name, transactions):
         # When you want to test the post-parsing import process, rather than going through the hoops,
         # use this methods. 'transactions' is a list of dicts, the dicts being attribute values.
-        # dates are strings in '%d/%m/%Y'.
-        self.doc.loader = DictLoader(self.doc.default_currency, account_name, transactions)
+        # dates are strings in the app's default date format.
+        default_date_format = DateFormat(self.app.date_format).sys_format
+        self.doc.loader = DictLoader(self.doc.default_currency, account_name, transactions,
+            default_date_format=default_date_format)
         self.doc.loader.load()
         self.doc.notify('file_loaded_for_import')
     

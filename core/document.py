@@ -25,7 +25,7 @@ from .model.account import Account, Group, AccountList, GroupList, AccountType
 from .model.amount import parse_amount, format_amount
 from .model.budget import BudgetList
 from .model.date import (MonthRange, QuarterRange, YearRange, YearToDateRange, RunningYearRange,
-    AllTransactionsRange, CustomDateRange, inc_month)
+    AllTransactionsRange, CustomDateRange, inc_month, DateFormat)
 from .model.oven import Oven
 from .model.recurrence import Spawn
 from .model.transaction_list import TransactionList
@@ -764,9 +764,10 @@ class Document(Repeater, GUIObject):
             self._dirty_flag = False
     
     def parse_file_for_import(self, filename):
+        default_date_format = DateFormat(self.app.date_format).sys_format
         for loaderclass in (native.Loader, ofx.Loader, qif.Loader, csv.Loader):
             try:
-                loader = loaderclass(self.default_currency)
+                loader = loaderclass(self.default_currency, default_date_format=default_date_format)
                 loader.parse(filename)
                 break
             except FileFormatError:

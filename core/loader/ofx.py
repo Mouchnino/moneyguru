@@ -17,9 +17,11 @@ from . import base
 
 class Loader(SGMLParser, base.Loader):
     FILE_ENCODING = 'cp1252'
-    def __init__(self, default_currency):
+    NATIVE_DATE_FORMAT = '%Y%m%d'
+    
+    def __init__(self, default_currency, default_date_format=None):
         SGMLParser.__init__(self)
-        base.Loader.__init__(self, default_currency)
+        base.Loader.__init__(self, default_currency, default_date_format)
         self.data = ''
         self.data_handler = None
     
@@ -133,7 +135,7 @@ class Loader(SGMLParser, base.Loader):
         self.data_handler = self.handle_dtposted
 
     def handle_dtposted(self, data):
-        self.transaction_info.date = self.parse_date_str(data[:8], '%Y%m%d')
+        self.transaction_info.date = self.parse_date_str(data[:8])
 
     def start_trnamt(self, attributes):
         self.data_handler = self.handle_trnamt

@@ -17,6 +17,8 @@ Prohození popisu a příjemce
 
 V některých případech jsou zaměněna pole popis a příjemce. Mohlo se tak stát v důsledku omylu v aplikaci, která vytvořila importní soubor, kvůli nejednoznačnosti souborového formátu, nebo z jakéhokoli jiného důvodu. Na příčině nezáleží, protože to můžete napravit v okně Import. Stačí vybrat v rozbalovacím seznamu "Popis <--> Příjemce a stisknout tlačítko "Prohodit". A je to.
 
+.. todo:: Update the 2 section below with the new "Fix broken fields" section.
+
 Import do existujícího účtu
 ---------------------------
 

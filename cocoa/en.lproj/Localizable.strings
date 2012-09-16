@@ -11,7 +11,7 @@
 "All transactions" = "All transactions";
 "Amount" = "Amount";
 "Apply to all accounts" = "Apply to all accounts";
-"Are some fields wrong? Swap them!" = "Are some fields wrong? Swap them!";
+"Are some fields wrong? Fix them!" = "Are some fields wrong? Fix them!";
 "Auto-save interval:" = "Auto-save interval:";
 "Automatically check for updates" = "Automatically check for updates";
 "Automatically place decimals when typing" = "Automatically place decimals when typing";
@@ -68,6 +68,7 @@
 "File" = "File";
 "Filter" = "Filter";
 "First day of the week:" = "First day of the week:";
+"Fix" = "Fix";
 "Font size:" = "Font size:";
 "From" = "From";
 "General Ledger" = "General Ledger";
@@ -167,7 +168,6 @@
 "Start Date" = "Start Date";
 "Status label" = "Status label";
 "Stop Date" = "Stop Date";
-"Swap" = "Swap";
 "Target" = "Target";
 "Target Account:" = "Target Account:";
 "Target:" = "Target:";

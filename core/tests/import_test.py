@@ -16,6 +16,7 @@ from hscommon.currency import PLN, CAD
 from .base import ApplicationGUI, TestApp, with_app, testdata
 from ..app import Application
 from ..exception import FileFormatError
+from ..loader.csv import CsvField
 from ..model.date import MonthRange, YearRange
 
 def importall(app, filename):
@@ -73,6 +74,25 @@ def test_account_only_qif_is_invalid(app):
         # is a more appropriate error though because the file is a valid QIF, it just doesn't have
         # any txns in it.
         importall(app, testdata.filepath('qif', 'only_accounts.qif'))
+
+def test_csv_import_tries_default_dateformat_first():
+    # When guessing date format in a CSV file, try the default date format first.
+    app = TestApp(app=Application(ApplicationGUI(), date_format='yy/dd/MM'))
+    app.doc.parse_file_for_import(testdata.filepath('csv/ambiguous_date.csv'))
+    app.csvopt.set_column_field(0, CsvField.Date)
+    app.csvopt.set_column_field(1, CsvField.Amount)
+    app.csvopt.continue_import()
+    # Normally, the dates we test are expected in our default, dd/MM/yyyy, but since we've changed
+    # the date format...
+    eq_(app.itable[0].date_import, '01/02/03')
+
+def test_qif_import_tries_native_dateformat_first():
+    # When guessing date format in a QIF file, try the *native* date format first, that is,
+    # mm/dd/yy.
+    app = TestApp(app=Application(ApplicationGUI(), date_format='dd/MM/yy'))
+    app.doc.parse_file_for_import(testdata.filepath('qif/ambiguous_date.qif'))
+    # We parsed "01/02/03" with mm/dd/yy
+    eq_(app.itable[0].date_import, '02/01/03')
 
 #---
 def app_qif_import():

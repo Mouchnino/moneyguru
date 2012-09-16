@@ -209,6 +209,10 @@ class Application(Broadcaster, RegistrableApplication):
     def set_default(self, key, value):
         self.view.set_default(key, value)
     
+    @property
+    def date_format(self):
+        return self._date_format
+    
     #--- Preferences
     @property
     def autosave_interval(self):

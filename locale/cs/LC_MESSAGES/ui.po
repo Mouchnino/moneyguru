@@ -378,17 +378,9 @@ msgstr "Import"
 msgid "Target Account:"
 msgstr "Cílový účet:"
 
-#: qt/controller/import_/window.py:54
-msgid "Some fields are wrong? Swap them!"
-msgstr ""
-
 #: qt/controller/import_/window.py:58 cocoa/en.lproj/Localizable.strings:0
 msgid "Apply to all accounts"
 msgstr "Použít pro všechny účty"
-
-#: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
-msgid "Swap"
-msgstr "Prohodit"
 
 #: qt/controller/lookup.py:35 cocoa/en.lproj/Localizable.strings:0
 msgid "Lookup"
@@ -907,10 +899,6 @@ msgid "Document Properties"
 msgstr "Document Properties"
 
 #: cocoa/en.lproj/Localizable.strings:0
-msgid "Are some fields wrong? Swap them!"
-msgstr "Jsou některá pole chybně? Prohoďte je!"
-
-#: cocoa/en.lproj/Localizable.strings:0
 msgid "Account Lookup"
 msgstr "Vyhledání účtu"
 
@@ -1190,3 +1178,11 @@ msgstr ""
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Printing font size:"
 msgstr "Velikost písma pro tisk:"
+
+#: qt/controller/import_/window.py:54 cocoa/en.lproj/Localizable.strings:0
+msgid "Are some fields wrong? Fix them!"
+msgstr ""
+
+#: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
+msgid "Fix"
+msgstr ""

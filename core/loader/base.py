@@ -13,7 +13,7 @@ from itertools import groupby
 from operator import attrgetter
 
 from hscommon.currency import Currency
-from hscommon.util import nonone, flatten, stripfalse
+from hscommon.util import nonone, flatten, stripfalse, dedupe
 
 from ..exception import FileFormatError
 from ..model.account import Account, Group, AccountList, GroupList, AccountType
@@ -56,9 +56,15 @@ class Loader:
     """
     FILE_OPEN_MODE = 'rt'
     FILE_ENCODING = 'utf-8'
+    # Native date format is a format native to the file type. It doesn't necessarily means that it's
+    # the only possible date format in it, but it's the one that will be tried first when guessing
+    # (before the default date format). If guessing never occurs, it will be the parsing date format.
+    # This format is a sys format (%-based)
+    NATIVE_DATE_FORMAT = None
     
-    def __init__(self, default_currency):
+    def __init__(self, default_currency, default_date_format=None):
         self.default_currency = default_currency
+        self.default_date_format = default_date_format
         self.groups = GroupList()
         self.accounts = AccountList(default_currency)
         self.transactions = TransactionList()
@@ -82,6 +88,10 @@ class Loader:
         self.recurrence_info = RecurrenceInfo()
         self.budget_info = BudgetInfo()
         self.document_id = None
+        # The Loader subclass should set parsing_date_format to the format used (system-type) when
+        # parsing dates. This format is used in the ImportWindow. It is also used in
+        # self.parse_date_str as a default value
+        self.parsing_date_format = self.NATIVE_DATE_FORMAT
     
     #--- Virtual
     def _parse(self, infile):
@@ -108,7 +118,12 @@ class Loader:
         return match.group() if match is not None else None
     
     def guess_date_format(self, str_dates):
-        for format in DATE_FORMATS:
+        totry = DATE_FORMATS[:]
+        if self.default_date_format:
+            totry.insert(0, self.default_date_format)
+        if self.NATIVE_DATE_FORMAT:
+            totry.insert(0, self.NATIVE_DATE_FORMAT)
+        for format in dedupe(totry):
             found_at_least_one = False
             for str_date in str_dates:
                 try:
@@ -123,9 +138,11 @@ class Loader:
                     return format
         return None    
     
-    def parse_date_str(self, date_str, date_format):
+    def parse_date_str(self, date_str, date_format=None):
         """Parses date_str using date_format and perform heuristic fixes if needed.
         """
+        if not date_format:
+            date_format = self.parsing_date_format
         result = datetime.datetime.strptime(date_str, date_format).date()
         if result.year < 1900:
             # we have a typo in the house. Just use 2000 + last-two-digits

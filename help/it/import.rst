@@ -17,6 +17,8 @@ Scambiare descrizione e beneficiario
 
 In alcuni casi, i campi descrizione e beneficiario sono scambiati. Potrebbe essere un errore dell'applicazione che ha creato il file, o un'ambiguità nel formato del file, o qualsiasi cosa. Non importa, perché lo si può correggere nella finestra di importazione selezionando "Descrizione <--> Beneficiario" nel selettore dello scambio, e poi premendo "Scambia". Problema risolto. 
 
+.. todo:: Update the 2 section below with the new "Fix broken fields" section.
+
 Importare in un conto esistente
 -------------------------------
 

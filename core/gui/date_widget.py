@@ -6,17 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import re
-from calendar import monthrange
-from datetime import date, timedelta
+from datetime import date
 
-from ..model.date import format_year_month_day, parse_date, inc_day, inc_month, inc_year
+from ..model.date import format_year_month_day, inc_day, inc_month, inc_year, DateFormat
 
 DAY = 'day'
 MONTH = 'month'
 YEAR = 'year'
-
-re_sep = re.compile(r'(/|-|\.)')
 
 FMT_ELEM = {
     'dd': DAY,
@@ -29,11 +25,10 @@ FMT_ELEM = {
 
 class DateWidget:
     def __init__(self, format):
-        # format is a Unicode format. The format has to be cleaned first. This class don't have 
-        # tolerance for garbage in the format.
+        if not isinstance(format, DateFormat):
+            format = DateFormat(format)
         self._format = format
-        self._sep = re_sep.search(format).groups()[0]
-        fmt_elems = format.split(self._sep)
+        fmt_elems = format.elements
         self._order = [FMT_ELEM[elem] for elem in fmt_elems]
         self._elem2fmt = dict(zip(self._order, fmt_elems))
         self._selected = DAY
@@ -113,7 +108,7 @@ class DateWidget:
         self._selected = self._order[index]
     
     def type(self, stuff):
-        if stuff == self._sep:
+        if stuff == self._format.separator:
             if self._flush_buffer():
                 self._next()
             return
@@ -152,7 +147,7 @@ class DateWidget:
             self._year = value.year
             self._month = value.month
             self._day = value.day
-        fmt_elems = self._format.split(self._sep)
+        fmt_elems = self._format.elements
         pos = 0
         self._elem_pos = {}
         for fmt_elem in fmt_elems:
@@ -181,13 +176,13 @@ class DateWidget:
                 elem2fmt[elem] = '-' * len(elem2fmt[elem])
         if self._buffer:
             elem2fmt[self._selected] = self._buffer.ljust(max(2, len(elem2fmt[self._selected])))
-        format = self._sep.join([elem2fmt[elem] for elem in self._order])
+        format = self._format.separator.join([elem2fmt[elem] for elem in self._order])
         return format_year_month_day(self._year, self._month, self._day, format)
     
     @text.setter
     def text(self, value):
         try:
-            self.date = parse_date(value, self._format)
+            self.date = self._format.parse_date(value)
         except ValueError: # invalid date
             self.date = None
     

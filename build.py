@@ -187,6 +187,8 @@ def build_updatepot():
         print("Updating Cocoa strings file.")
         build_cocoalib_xibless('cocoalib/autogen')
         loc.generate_cocoa_strings_from_code('cocoalib', 'cocoalib/en.lproj')
+        # If we don't delete 'cocoalib/autogen', it messes with compilation
+        shutil.rmtree('cocoalib/autogen')
         build_xibless()
         loc.generate_cocoa_strings_from_code('cocoa', 'cocoa/en.lproj')
     print("Building .pot files from source files")

@@ -92,11 +92,11 @@ msgstr "Supprimer récurrence"
 msgid "\"%s\" is not a moneyGuru file"
 msgstr "\"%s\" n'est pas un fichier moneyGuru"
 
-#: core/document.py:776
+#: core/document.py:777
 msgid "%s is of an unknown format."
 msgstr "%s est d'un format inconnu"
 
-#: core/document.py:820
+#: core/document.py:821
 msgid "Import"
 msgstr "Importer"
 
@@ -228,7 +228,7 @@ msgstr "ID transaction"
 msgid "Default"
 msgstr "Défaut"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:321
+#: core/gui/csv_options.py:248 core/gui/import_window.py:355
 msgid "< New Account >"
 msgstr "< Nouveau compte >"
 
@@ -526,22 +526,10 @@ msgstr "Chaque %s %s du mois"
 msgid "Every last %s of the month"
 msgstr "Chaque dernier %s du mois"
 
-#: core/gui/import_window.py:133
-msgid "Day <--> Month"
-msgstr "Jour <--> Mois"
-
-#: core/gui/import_window.py:134
-msgid "Month <--> Year"
-msgstr "Mois <--> Année"
-
-#: core/gui/import_window.py:135
-msgid "Day <--> Year"
-msgstr "Jour <--> Année"
-
-#: core/gui/import_window.py:136
+#: core/gui/import_window.py:150
 msgid "Description <--> Payee"
 msgstr "Description <--> Tiers"
 
-#: core/gui/import_window.py:137
+#: core/gui/import_window.py:151
 msgid "Invert Amounts"
 msgstr "Inverser les montants"

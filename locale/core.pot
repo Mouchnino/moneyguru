@@ -92,11 +92,11 @@ msgstr ""
 msgid "\"%s\" is not a moneyGuru file"
 msgstr ""
 
-#: core/document.py:776
+#: core/document.py:777
 msgid "%s is of an unknown format."
 msgstr ""
 
-#: core/document.py:820
+#: core/document.py:821
 msgid "Import"
 msgstr ""
 
@@ -219,7 +219,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:321
+#: core/gui/csv_options.py:248 core/gui/import_window.py:355
 msgid "< New Account >"
 msgstr ""
 
@@ -319,23 +319,11 @@ msgstr ""
 msgid "{0} out of {1} selected. Debit: {2} Credit: {3}"
 msgstr ""
 
-#: core/gui/import_window.py:133
-msgid "Day <--> Month"
-msgstr ""
-
-#: core/gui/import_window.py:134
-msgid "Month <--> Year"
-msgstr ""
-
-#: core/gui/import_window.py:135
-msgid "Day <--> Year"
-msgstr ""
-
-#: core/gui/import_window.py:136
+#: core/gui/import_window.py:150
 msgid "Description <--> Payee"
 msgstr ""
 
-#: core/gui/import_window.py:137
+#: core/gui/import_window.py:151
 msgid "Invert Amounts"
 msgstr ""
 

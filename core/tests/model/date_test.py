@@ -12,31 +12,40 @@ from pytest import raises
 from hscommon.testutil import eq_
 
 from ...model.date import (parse_date, format_date, clean_format, DateRange, MonthRange,
-    QuarterRange, YearRange, RunningYearRange, YearToDateRange)
+    QuarterRange, YearRange, RunningYearRange, YearToDateRange, DateFormat)
 
-class TestDateStuff:
-    def test_clean_format(self):
-        eq_(clean_format('foobar'), 'dd/MM/yyyy') # fallback
-        eq_(clean_format('yyyy-MM-ddfoobar'), 'yyyy-MM-dd') # just remove the garbage
-        eq_(clean_format('yyyy.MM.ddfoobar'), 'yyyy.MM.dd') # keep the dot in
-        eq_(clean_format('yy.M.d'), 'yy.M.d') # short versions are accepted
-        # We don't end up with a format starting with '/'
-        eq_(clean_format('EEEE/MMMM/dd/yyyy'), 'MM/dd/yyyy')
-    
-    def test_parse_date(self):
-        eq_(parse_date('11/10/2007', 'dd/MM/yyyy'), date(2007, 10, 11))
-        eq_(parse_date('02/01/2007', 'dd/MM/yyyy'), date(2007, 1, 2))
-        eq_(parse_date('2007-01-02', 'yyyy-MM-dd'), date(2007, 1, 2))
-        eq_(parse_date('07-01-02', 'yy-MM-dd'), date(2007, 1, 2))
-        eq_(parse_date('07-1-2', 'yy-M-d'), date(2007, 1, 2))
-    
-    def test_format_date(self):
-        eq_(format_date(date(2007, 10, 11), 'dd/MM/yyyy'), '11/10/2007')
-        eq_(format_date(date(2007, 1, 2), 'dd/MM/yyyy'), '02/01/2007')
-        eq_(format_date(date(2007, 1, 2), 'yyyy-MM-dd'), '2007-01-02')
-        eq_(format_date(date(2007, 1, 2), 'yy-MM-dd'), '07-01-02')
-        eq_(format_date(date(2007, 1, 2), 'yy-M-d'), '07-1-2')
-    
+def test_clean_format():
+    eq_(clean_format('foobar'), 'dd/MM/yyyy')
+    eq_(clean_format('yyyy-MM-ddfoobar'), 'dd-MM-yyyy') # keep the dash in
+    eq_(clean_format('yyyy.MM.ddfoobar'), 'dd.MM.yyyy') # keep the dot in
+    eq_(clean_format('yy.M.d'), 'yy.M.d') # short versions are accepted
+    # We don't end up with a format starting with '/'
+    eq_(clean_format('EEEE/MMMM/dd/yyyy'), 'dd/MM/yyyy')
+    # We force a numerical date format (this means no MMM)
+    eq_(clean_format('MMM.yyyy.dd'), 'MM.yyyy.dd')
+
+def test_parse_date():
+    eq_(parse_date('11/10/2007', 'dd/MM/yyyy'), date(2007, 10, 11))
+    eq_(parse_date('02/01/2007', 'dd/MM/yyyy'), date(2007, 1, 2))
+    eq_(parse_date('2007-01-02', 'yyyy-MM-dd'), date(2007, 1, 2))
+    eq_(parse_date('07-01-02', 'yy-MM-dd'), date(2007, 1, 2))
+    eq_(parse_date('07-1-2', 'yy-M-d'), date(2007, 1, 2))
+    eq_(parse_date('16 sep 2012', 'dd MMM yyyy'), date(2012, 9, 16))
+
+def test_format_date():
+    eq_(format_date(date(2007, 10, 11), 'dd/MM/yyyy'), '11/10/2007')
+    eq_(format_date(date(2007, 1, 2), 'dd/MM/yyyy'), '02/01/2007')
+    eq_(format_date(date(2007, 1, 2), 'yyyy-MM-dd'), '2007-01-02')
+    eq_(format_date(date(2007, 1, 2), 'yy-MM-dd'), '07-01-02')
+    eq_(format_date(date(2007, 1, 2), 'yy-M-d'), '07-1-2')
+
+def test_dateformat_from_sysformat():
+    eq_(DateFormat.from_sysformat('%y-%m-%d').iso_format, 'yy-MM-dd')
+
+def test_dateformat_supports_MMM():
+    # In some cases, we have to parse MMM date format (%b in sysformat).
+    eq_(DateFormat('yy-MMM-dd').sys_format, '%y-%b-%d')
+    eq_(DateFormat.from_sysformat('%y-%b-%d').iso_format, 'yy-MMM-dd')
 
 class TestRanges:
     def setup_method(self, method):

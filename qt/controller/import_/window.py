@@ -8,7 +8,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QWidget, QTabBar, QComboBox
+from PyQt4.QtGui import QWidget, QTabBar, QComboBox, QGroupBox, QPushButton
 
 from hscommon.trans import trget
 from qtlib.selectable_list import ComboboxModel
@@ -51,13 +51,13 @@ class ImportWindow(QWidget):
         self.targetAccountLayout.addWidget(self.targetAccountComboBox)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.targetAccountLayout.addItem(spacerItem)
-        self.groupBox = QtGui.QGroupBox(tr("Some fields are wrong? Swap them!"))
+        self.groupBox = QGroupBox(tr("Are some fields wrong? Fix them!"))
         self.gridLayout = QtGui.QGridLayout(self.groupBox)
         self.swapOptionsComboBoxView = QComboBox(self.groupBox)
         self.gridLayout.addWidget(self.swapOptionsComboBoxView, 0, 0, 1, 2)
         self.applyToAllCheckBox = QtGui.QCheckBox(tr("Apply to all accounts"))
         self.gridLayout.addWidget(self.applyToAllCheckBox, 1, 0, 1, 1)
-        self.swapButton = QtGui.QPushButton(tr("Swap"))
+        self.swapButton = QPushButton(tr("Fix"))
         self.gridLayout.addWidget(self.swapButton, 1, 1, 1, 1)
         self.targetAccountLayout.addWidget(self.groupBox)
         self.verticalLayout.addLayout(self.targetAccountLayout)
@@ -75,7 +75,7 @@ class ImportWindow(QWidget):
         self.horizontalLayout = QtGui.QHBoxLayout()
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        self.importButton = QtGui.QPushButton(tr("Import"))
+        self.importButton = QPushButton(tr("Import"))
         self.horizontalLayout.addWidget(self.importButton)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.tabView.setTabsClosable(True)

@@ -17,6 +17,8 @@ Vertauschen von Beschreibung und Empfänger
 
 Sollten die Felder "Beschreibung" und "Empfänger" aus unerfindlichen Gründen vertauscht sein, so können Sie im Dropdown-Feld "Beschreibung <--> Empfänger" auswählen und "Tausch" klicken.
 
+.. todo:: Update the 2 section below with the new "Fix broken fields" section.
+
 Import in bereits bestehendes Konto
 -----------------------------------
 

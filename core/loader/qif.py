@@ -58,6 +58,8 @@ class Block:
     
 
 class Loader(base.Loader):
+    NATIVE_DATE_FORMAT = '%m/%d/%y'
+    
     def _parse(self, infile):
         content = infile.read()
         lines = stripfalse(content.split('\n'))
@@ -109,8 +111,8 @@ class Loader(base.Loader):
         entry_blocks = [block for block in blocks if block.type == BlockType.Entry]
         date_lines = (block.get_line('D') for block in entry_blocks)
         str_dates = [line.data for line in date_lines if line]
-        self.date_format = self.guess_date_format(str_dates)
-        if self.date_format is None:
+        self.parsing_date_format = self.guess_date_format(str_dates)
+        if self.parsing_date_format is None:
             raise FileFormatError()
         self.blocks = blocks
         self.autoswitch_blocks = autoswitch_blocks
@@ -141,7 +143,7 @@ class Loader(base.Loader):
         def parse_entry_line(header, data):
             if header == 'D':
                 try:
-                    self.transaction_info.date = self.parse_date_str(data, self.date_format)
+                    self.transaction_info.date = self.parse_date_str(data, self.parsing_date_format)
                 except ValueError:
                     pass
             elif header == 'M':

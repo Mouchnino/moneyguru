@@ -92,11 +92,11 @@ msgstr "Elimina Pianificazione"
 msgid "\"%s\" is not a moneyGuru file"
 msgstr "\"%s\" non è un file moneyGuru"
 
-#: core/document.py:776
+#: core/document.py:777
 msgid "%s is of an unknown format."
 msgstr "%s ha un formato sconosciuto."
 
-#: core/document.py:820
+#: core/document.py:821
 msgid "Import"
 msgstr "Importa"
 
@@ -226,7 +226,7 @@ msgstr "ID Transazione"
 msgid "Default"
 msgstr "Default"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:321
+#: core/gui/csv_options.py:248 core/gui/import_window.py:355
 msgid "< New Account >"
 msgstr "< Crea Conto >"
 
@@ -526,22 +526,10 @@ msgstr "Ogni %s %s del mese"
 msgid "Every last %s of the month"
 msgstr "Ogni ultimo %s del mese"
 
-#: core/gui/import_window.py:133
-msgid "Day <--> Month"
-msgstr "Giorno <--> Mese"
-
-#: core/gui/import_window.py:134
-msgid "Month <--> Year"
-msgstr "Mese <--> Anno"
-
-#: core/gui/import_window.py:135
-msgid "Day <--> Year"
-msgstr "Giorno <--> Anno"
-
-#: core/gui/import_window.py:136
+#: core/gui/import_window.py:150
 msgid "Description <--> Payee"
 msgstr "Descrizione <--> Beneficiario"
 
-#: core/gui/import_window.py:137
+#: core/gui/import_window.py:151
 msgid "Invert Amounts"
 msgstr "Inverti Ammontare"

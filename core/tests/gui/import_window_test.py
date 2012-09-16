@@ -14,6 +14,18 @@ from ..base import TestApp, with_app, DictLoader, testdata
 from ...model.date import YearRange
 from ...gui.import_window import SwapType
 
+#--- No setup
+
+@with_app(TestApp)
+def test_MMM_date_formats_are_supported(app):
+    TXNS = [
+        {'date': '16 SEP 2012', 'amount': '1'},
+    ]
+    app.fake_import('foo', TXNS)
+    app.iwin.import_selected_pane()
+    eq_(app.itable[0].date_import, '16/09/2012')
+    eq_(app.iwin.swap_type_list[0], "dd MMM yyyy --> MMM dd yyyy")
+
 #---
 def app_import_checkbook_qif():
     app = TestApp()
@@ -159,6 +171,27 @@ def test_target_accounts(app):
     app.check_gui_calls(app.iwin.view, ['refresh_target_accounts'])
     eq_(app.iwin.target_account_names, ['< New Account >', 'Foo', 'New account'])
 
+@with_app(app_import_checkbook_qif)
+def test_swap_date_texts(app):
+    # The first three items in the swap type list are date swapping actions and their text are in
+    # the format <current date format> --> <format after swapping>.
+    # checkbook.qif dates have the format MM/dd/yy
+    eq_(app.iwin.swap_type_list[0], "MM/dd/yy --> dd/MM/yy")
+    eq_(app.iwin.swap_type_list[1], "MM/dd/yy --> yy/dd/MM")
+    eq_(app.iwin.swap_type_list[2], "MM/dd/yy --> MM/yy/dd")
+    eq_(len(app.iwin.swap_type_list), 5) # the 3 date swaps + description swap + amount invert
+
+@with_app(app_import_checkbook_qif)
+def test_swap_date_texts_after_swap(app):
+    # After a swap, the old date format becomes the new base date format, but only in the affected
+    # pane.
+    app.iwin.perform_swap() # Swap Day <--> Month
+    eq_(app.iwin.swap_type_list[0], "dd/MM/yy --> MM/dd/yy")
+    eq_(app.iwin.swap_type_list[1], "dd/MM/yy --> dd/yy/MM")
+    eq_(app.iwin.swap_type_list[2], "dd/MM/yy --> yy/MM/dd")
+    # ... but only the selected pane
+    app.iwin.selected_pane_index = 1
+    eq_(app.iwin.swap_type_list[0], "MM/dd/yy --> dd/MM/yy")
 
 #---
 def app_import_checkbook_qif_twice():

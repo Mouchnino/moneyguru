@@ -92,11 +92,11 @@ msgstr "Wiederholung löschen"
 msgid "\"%s\" is not a moneyGuru file"
 msgstr "\"%s\" ist keine moneyGuru-Datei"
 
-#: core/document.py:776
+#: core/document.py:777
 msgid "%s is of an unknown format."
 msgstr "%s ist ein unbekanntes Format"
 
-#: core/document.py:820
+#: core/document.py:821
 msgid "Import"
 msgstr "Importieren"
 
@@ -227,7 +227,7 @@ msgstr "Transaktionsnummer"
 msgid "Default"
 msgstr "Verzug"
 
-#: core/gui/csv_options.py:248 core/gui/import_window.py:321
+#: core/gui/csv_options.py:248 core/gui/import_window.py:355
 msgid "< New Account >"
 msgstr "< Neues Konto >"
 
@@ -526,22 +526,10 @@ msgstr "Jeden %s %s im Monat"
 msgid "Every last %s of the month"
 msgstr "Jeden letzten %s im Monat"
 
-#: core/gui/import_window.py:133
-msgid "Day <--> Month"
-msgstr "Tag <--> Monat"
-
-#: core/gui/import_window.py:134
-msgid "Month <--> Year"
-msgstr "Monat <--> Jahr"
-
-#: core/gui/import_window.py:135
-msgid "Day <--> Year"
-msgstr "Tag <--> Jahr"
-
-#: core/gui/import_window.py:136
+#: core/gui/import_window.py:150
 msgid "Description <--> Payee"
 msgstr "Beschreibung <--> Wechselnehmer"
 
-#: core/gui/import_window.py:137
+#: core/gui/import_window.py:151
 msgid "Invert Amounts"
 msgstr ""

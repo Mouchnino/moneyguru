@@ -7,15 +7,38 @@ moneyGuru support QIF, OFX, QFX and CSV formats for import. To import a file, us
 
 For each account present in the import file a tab will be added in the import window. This dialog is rather straightforward to use. The leftmost column with a checkbox determines which transactions will be imported. Review the transaction to import, uncheck any transaction you don't want to import, click on import. Only one account (the selected one) is imported at once.
 
-Fixing the dates
-----------------
+Fix broken fields
+-----------------
 
-moneyGuru automatically determines the date format of any file you import. It looks at all the dates and only chooses a date format that makes sense for all these dates. However, imported files sometimes only contain ambiguous dates (like "01/02/03"), so moneyGuru can't guess a date format with certainty. In these cases, moneyGuru will just pick the first fitting format. What happens when it picks the wrong one? Use the Swap button! For example, if moneyGuru chose dd/mm/yy but your file in fact contained mm/dd/yy, select "Day <--> Month" in the top right box and then click Swap. You can apply the swap to all accounts in the Import window by checking the "Apply to all accounts" box before you do the swap.
+moneyGuru does its best to automatically import the correct data from the files you import. However,
+doing it 100% of the time is impossible because sometimes, the value is ambiguous (especially in
+the case of date formats). When this happens, moneyGuru will import the value that it thinks is best
+and give you the opportunity to fix the manually through the box at the upper-right part of the
+import window. This box has a list of 5 fixes you can apply:
 
-Swapping description and payee
-------------------------------
+* The 3 first fixes are for dates.
+* The 4th swaps the Payee and Description fields.
+* The last inverts amounts.
 
-In some cases, description and payee fields are swapped. It might be caused by a mistake from the application that created the file, or an ambiguity in the file format, or whatever. It doesn't matter, because you can fix it in the import window. Just select the "Description <--> Payee" in the swap selector, and click "Swap". Problem fixed.
+It's possible to have an imported file where all dates are ambiguous (like "01/02/03"). moneyGuru
+won't be able, in these cases, to determine a correct format. It will pick the one it thinks is
+correct, but it might very well be wrong. The first 3 elements will allow you to fix this situation.
+Their text will show something like "dd/MM/yy --> MM/dd/yy". The left part is the format that was
+used to read the dates and the right part will the format that will be used if you click on "Fix".
+It's possible that when you select one of the 3 date-fixing elements, the "Fix" button becomes
+disabled. That's because performing this fix would result in one or more dates being incorrect
+(for example, a date on the 13th month). moneyGuru won't perform such fixes.
+
+In some cases, description and payee fields are swapped. It might be caused by a mistake from the
+application that created the file, or an ambiguity in the file format, or whatever. It doesn't
+matter, because you can fix it with the 4th element in the fix list.
+
+Lastly, the last element in the list allow you to invert amounts, that is, convert "42.00" in
+"-42.00". You're rarely going to need it, but if you do, you're going to be happy that the option
+is there.
+
+Lastly, and this for any fix, enabling the "Apply to all accounts" will apply the fix in all
+imported accounts for which the fix is doable.
 
 Importing into an existing account
 ----------------------------------

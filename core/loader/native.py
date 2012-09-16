@@ -18,6 +18,7 @@ from . import base
 
 class Loader(base.Loader):
     FILE_OPEN_MODE = 'rb'
+    NATIVE_DATE_FORMAT = '%Y-%m-%d'
     
     def _parse(self, infile):
         try:
@@ -32,7 +33,7 @@ class Loader(base.Loader):
         TODAY = datetime.now().date()
         def str2date(s, default=None):
             try:
-                return self.parse_date_str(s, '%Y-%m-%d')
+                return self.parse_date_str(s)
             except (ValueError, TypeError):
                 return default
         
