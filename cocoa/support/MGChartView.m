@@ -83,4 +83,11 @@ http://www.hardcoded.net/licenses/bsd_license
     [currency autorelease];
     currency = [aCurrency retain];
 }
+
+- (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs
+{
+    [NSGraphicsContext saveGraphicsState];
+    [aText drawInRect:aRect withAttributes:aAttrs];
+    [NSGraphicsContext restoreGraphicsState];
+}
 @end

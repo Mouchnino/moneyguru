@@ -254,8 +254,8 @@ def build_cocoa_bridging_interfaces():
         PyCSVImportOptions, CSVImportOptionsView, PyImportTable, PySplitTable, PyLookup, LookupView,
         PyDateRangeSelector, DateRangeSelectorView, PyImportWindow, ImportWindowView,
         PyFilterBar, FilterBarView, PyReport, ReportView, PyScheduleTable, PyBudgetTable,
-        PyEntryTable, PyTransactionTable, PyGeneralLedgerTable, PyChart, PyGraph, PyAccountPanel,
-        PyMassEditionPanel, PyBudgetPanel, BudgetPanelView, PyCustomDateRangePanel,
+        PyEntryTable, PyTransactionTable, PyGeneralLedgerTable, PyChart, ChartView, PyGraph,
+        PyAccountPanel, PyMassEditionPanel, PyBudgetPanel, BudgetPanelView, PyCustomDateRangePanel,
         PyAccountReassignPanel, PyExportPanel, ExportPanelView, PyPanelWithTransaction,
         PanelWithTransactionView, PyTransactionPanel, PySchedulePanel, SchedulePanelView,
         ViewWithGraphView, PyNetWorthView, PyProfitView, PyTransactionView, PyAccountView,
@@ -280,7 +280,8 @@ def build_cocoa_bridging_interfaces():
     allclasses = [GUIObjectView, TableView, ColumnsView, SelectableListView, FairwareView, 
         PanelView, CSVImportOptionsView, LookupView, DateRangeSelectorView, ImportWindowView,
         FilterBarView, ReportView, BudgetPanelView, ExportPanelView, PanelWithTransactionView,
-        SchedulePanelView, ViewWithGraphView, AccountViewView, MainWindowView, DocumentView]
+        SchedulePanelView, ViewWithGraphView, AccountViewView, MainWindowView, DocumentView,
+        ChartView]
     clsspecs = [objp.o2p.spec_from_python_class(class_) for class_ in allclasses]
     objp.p2o.generate_python_proxy_code_from_clsspec(clsspecs, 'build/CocoaViews.m')
     py_folder = op.join(cocoa_app().resources, 'py')

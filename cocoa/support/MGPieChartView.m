@@ -118,8 +118,9 @@ NSPoint rectCenter(NSRect r)
     NSFont *legendFont = [NSFont systemFontOfSize:[ud integerForKey:TableFontSize]];
     NSDictionary *legendAttributes = [NSDictionary dictionaryWithObjectsAndKeys:legendFont, NSFontAttributeName, legendColor, NSForegroundColorAttributeName, nil];
     
+    [self.model draw];
 	// Draw the title
-    [title drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];
+    // [title drawAtPoint:NSMakePoint(titleX, titleY) withAttributes:titleAttributes];
     
     CGFloat maxWidth = viewSize.width - (CHART_PADDING * 2);
     CGFloat maxHeight = titleY - CHART_PADDING;

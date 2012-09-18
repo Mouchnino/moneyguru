@@ -9,8 +9,10 @@
 from math import radians, sin
 
 from PyQt4.QtCore import Qt, QPointF, QRectF, QSizeF
-from PyQt4.QtGui import (QApplication, QWidget, QPainter, QFont, QPen, QColor, QBrush,
+from PyQt4.QtGui import (QApplication, QPainter, QFont, QPen, QColor, QBrush,
     QLinearGradient)
+
+from .chart_view import ChartView
 
 def pointInCircle(center, radius, angle):
     # Returns the point at the edge of a circle with specified center/radius/angle
@@ -76,14 +78,14 @@ class Legend:
         return not self.labelRect.contains(self.basePoint)
     
 
-class PieChartView(QWidget):
-    PADDING = 4
+class PieChartView(ChartView):
+    PADDING = 6
     TITLE_FONT_SIZE = 12
     LEGEND_FONT_SIZE = 8
     LINE_WIDTH = 1
     
     def __init__(self, parent):
-        QWidget.__init__(self, parent)
+        ChartView.__init__(self, parent)
         self.dataSource = None
         self.gradients = None
         
@@ -106,17 +108,21 @@ class PieChartView(QWidget):
         return gradients
     
     #--- Override
+    def fontForID(self, fontId):
+        return self.titleFont
+    
     def resizeEvent(self, event):
         self.dataSource.set_view_size(self.width(), self.height())
     
     def paintEvent(self, event):
-        QWidget.paintEvent(self, event)
+        ChartView.paintEvent(self, event)
         if self.dataSource is None:
             return
         ds = self.dataSource
         if self.gradients is None:
             self.gradients = self._gradientsFromColors(ds.colors())
         painter = QPainter(self)
+        self.current_painter = painter
         painter.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing)
         painter.fillRect(self.rect(), Qt.white)
         
@@ -127,10 +133,10 @@ class PieChartView(QWidget):
         # title dimensions
         painter.setFont(self.titleFont)
         fm = painter.fontMetrics()
-        titleText = ds.title
+        # titleText = ds.title
         titleHeight = fm.height()
-        titleAscent = fm.ascent()
-        titleWidth = fm.width(titleText)
+        # titleAscent = fm.ascent()
+        # titleWidth = fm.width(titleText)
         
         # circle coords
         maxWidth = viewWidth - (self.PADDING * 2)
@@ -144,10 +150,11 @@ class PieChartView(QWidget):
         circleRect = QRectF(center.x() - radius, center.y() - radius, circleSize, circleSize)
         
         # draw title
-        painter.setFont(self.titleFont)
-        titleX = (viewWidth - titleWidth) / 2
-        titleY = self.PADDING + titleAscent
-        painter.drawText(QPointF(titleX, titleY), titleText)
+        ds.draw()
+        # painter.setFont(self.titleFont)
+        # titleX = (viewWidth - titleWidth) / 2
+        # titleY = self.PADDING + titleAscent
+        # painter.drawText(QPointF(titleX, titleY), titleText)
         
         # draw pie
         totalAmount = sum(amount for _, amount, _ in ds.data)
@@ -221,4 +228,6 @@ class PieChartView(QWidget):
             painter.setPen(QPen(Qt.black))
             legend.computeTextRect()
             painter.drawText(legend.textRect, 0, legend.text) # the text
+        
+        del self.current_painter
     

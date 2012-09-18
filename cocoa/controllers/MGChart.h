@@ -16,6 +16,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGChartView *)view;
 - (PyChart *)model;
 
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
+
 /* Python callbacks */
 - (void)refresh;
+- (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID;
+- (NSSize)sizeForText:(NSString *)aText withFontID:(NSInteger)aFontID;
 @end

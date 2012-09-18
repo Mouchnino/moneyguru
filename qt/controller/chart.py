@@ -6,6 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4.QtGui import QApplication, QFont, QFontMetrics
+
 class Chart:
     CHART_MODEL_CLASS = None
     
@@ -21,3 +23,13 @@ class Chart:
     #--- model --> view
     def refresh(self):
         self.view.update()
+    
+    def draw_text(self, text, rect, font_id):
+        font = self.view.fontForID(font_id)
+        self.view.draw_text(text, self.view.flipRect(rect), font)
+    
+    def text_size(self, text, font_id):
+        font = self.view.fontForID(font_id)
+        fm = QFontMetrics(font)
+        return (fm.width(text), fm.height())
+    

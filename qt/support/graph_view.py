@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-11-06
 # Copyright 2012 Hardcoded Software (http://www.hardcoded.net)
@@ -8,9 +7,11 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QPoint
-from PyQt4.QtGui import QWidget, QPainter, QFont, QFontMetrics, QPen, QColor, QBrush, QLinearGradient
+from PyQt4.QtGui import QPainter, QFont, QFontMetrics, QPen, QColor, QBrush, QLinearGradient
 
-class GraphView(QWidget):
+from .chart_view import ChartView
+
+class GraphView(ChartView):
     PADDING = 16
     LINE_WIDTH = 2
     OVERLAY_AXIS_WIDTH = 0.2
@@ -22,7 +23,7 @@ class GraphView(QWidget):
     DRAW_XAXIS_OVERLAY = True
     
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        ChartView.__init__(self, parent)
         self.dataSource = None
         pen = QPen()
         pen.setColor(QColor(20, 158, 11))
@@ -44,7 +45,7 @@ class GraphView(QWidget):
         raise NotImplementedError()
     
     def paintEvent(self, event):
-        QWidget.paintEvent(self, event)
+        ChartView.paintEvent(self, event)
         if self.dataSource is None:
             return
         painter = QPainter(self)

@@ -9,6 +9,11 @@
 from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 
 class Chart(ViewChild):
+    #--- model --> view
+    # draw_text(text, rect, font_id)
+    # text_size(text, font_id) --> (width, height)
+    #
+    
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'accounts_excluded', 'date_range_changed'}
     
     #--- Override
@@ -19,6 +24,9 @@ class Chart(ViewChild):
     #--- Virtual
     def compute(self):
         raise NotImplementedError()
+    
+    def draw(self):
+        pass
     
     #--- Public
     def set_view_size(self, width, height):

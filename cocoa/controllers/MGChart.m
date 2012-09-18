@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     PyChart *m = [[PyChart alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
-    [m bindCallback:createCallback(@"GUIObjectView", self)];
+    [m bindCallback:createCallback(@"ChartView", self)];
     [m release];
     return self;
 }
@@ -38,6 +38,14 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyChart *)model;
 }
 
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
+{
+    /* Returns a dictionary with the appropriate elements for a usage in NSString.drawText or
+       NSString.sizeWithAttributes().
+    */
+    return nil;
+}
+
 /* Python callbacks */
 - (void)refresh
 {
@@ -47,4 +55,15 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self view] setNeedsDisplay:YES];
 }
 
+- (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID
+{
+    NSDictionary *attrs = [self fontAttributesForID:aFontID];
+    [self.view drawText:aText inRect:aRect withAttributes:attrs];
+}
+
+- (NSSize)sizeForText:(NSString *)aText withFontID:(NSInteger)aFontID
+{
+    NSDictionary *attrs = [self fontAttributesForID:aFontID];
+    return [aText sizeWithAttributes:attrs];
+}
 @end

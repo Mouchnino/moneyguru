@@ -17,6 +17,7 @@ from .chart import Chart
 MIN_SLICE_COUNT = 6
 MIN_VIEW_SIZE = 250 # Size at which we start counting for eventual extra slices
 SIZE_COST_FOR_SLICE = 30 # Number of pixels we need to count an extra slice
+CHART_PADDING = 6
 
 #0xrrggbb
 COLORS = [
@@ -65,6 +66,14 @@ class PieChart(Chart):
             return
         fmt = lambda name, amount: '%s %1.1f%%' % (name, amount / total * 100)
         self._data = [(fmt(name, amount), amount, color) for name, amount, color in data]
+    
+    def draw(self):
+        vieww, viewh = self.view_size
+        title = self.title
+        titlew, titleh = self.view.text_size(title, 1)
+        titley = viewh - titleh - CHART_PADDING
+        title_rect = (0, titley, vieww, titleh)
+        self.view.draw_text(title, title_rect, 1)
     
     #--- Public
     def colors(self):

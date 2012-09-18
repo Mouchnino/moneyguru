@@ -6,7 +6,7 @@
 
 import logging
 import os.path as op
-from objp.util import pyref, dontwrap
+from objp.util import pyref, dontwrap, nsrect, nssize
 
 from cocoa import install_exception_hook, proxy, install_cocoa_logger
 from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, PyColumns, PyOutline,
@@ -169,6 +169,10 @@ class PyTableWithDate(PyTable):
         return self.model.edited.is_date_in_past()
     
 
+class ChartView(GUIObjectView):
+    def drawText_inRect_withFontID_(self, text: str, rect: nsrect, font_id: int): pass
+    def sizeForText_withFontID_(self, text: str, font_id: int) -> nssize: pass
+
 class PyChart(PyGUIObject):
     def data(self) -> list:
         return self.model.data
@@ -184,6 +188,18 @@ class PyChart(PyGUIObject):
     
     def setViewWidth_height_(self, width: int, height: int):
         self.model.set_view_size(width, height)
+    
+    def draw(self):
+        self.model.draw()
+    
+    #--- Python -> Cocoa
+    @dontwrap
+    def draw_text(self, text, rect, font_id):
+        self.callback.drawText_inRect_withFontID_(text, rect, font_id)
+    
+    @dontwrap
+    def text_size(self, text, font_id):
+        return self.callback.sizeForText_withFontID_(text, font_id)
     
 
 class PyGraph(PyChart):

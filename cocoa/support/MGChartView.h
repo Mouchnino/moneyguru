@@ -23,4 +23,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setData:(NSArray *)aData;
 - (void)setTitle:(NSString *)aTitle;
 - (void)setCurrency:(NSString *)aCurrency;
+- (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs;
 @end
