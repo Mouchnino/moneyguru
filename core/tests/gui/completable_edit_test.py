@@ -87,13 +87,10 @@ def app_with_match(monkeypatch):
     # We mock time.time() because the completion order depends on it and on windows, it's possible
     # to call time.time() twice fast enough to get the same value.
     app = TestApp()
-    monkeypatch.setattr(time, 'time', lambda: 42)
+    monkeypatch.patch_time_ticking()
     app.add_txn(description='Bazooka')
-    monkeypatch.setattr(time, 'time', lambda: 43)
     app.add_txn(description='buz')
-    monkeypatch.setattr(time, 'time', lambda: 44)
     app.add_txn(description='bar')
-    monkeypatch.setattr(time, 'time', lambda: 45)
     app.add_txn(description='foo')
     app.ce = app.completable_edit('description')
     app.ce.text = 'b'

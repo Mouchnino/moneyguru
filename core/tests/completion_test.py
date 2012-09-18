@@ -301,16 +301,15 @@ def app_four_entries_with_description_and_category_collision(monkeypatch):
     app = TestApp()
     app.add_account()
     app.show_account()
-    monkeypatch.setattr(time, 'time', lambda: 42)
+    # We call patch_time_ticking so that mtime are correctly used as an ordering key. force_int_diff
+    # is because we record mtime as integers in the save file and there's a test below testing the
+    # persistence of orders.
+    monkeypatch.patch_time_ticking(force_int_diff=True)
     app.add_entry('2/10/2007', description='description', payee='payee', transfer='category', increase='42')
-    monkeypatch.setattr(time, 'time', lambda: 43)
     app.add_entry('3/10/2007', description='desc1', payee='pay1', transfer='cat1', increase='1')
-    monkeypatch.setattr(time, 'time', lambda: 44)
     app.add_entry('4/10/2007', description='desc1', payee='pay1', transfer='cat2', increase='2')
-    monkeypatch.setattr(time, 'time', lambda: 45)
     app.add_entry('5/10/2007', description='desc2', payee='pay1', transfer='cat1', increase='3')
     app.etable.select([1])
-    monkeypatch.setattr(time, 'time', lambda: 46)
     return app
 
 def assert_completion_order_changed(app):
@@ -494,7 +493,6 @@ def test_previous_completion_twice(app):
 @with_app(app_four_entries_with_description_and_category_collision)
 def test_persistence_of_completion(app, tmpdir, monkeypatch):
     # Completion (including its order) is persistent.
-    monkeypatch.patch_today(2007, 10, 6) # the test fails otherwise
     row = app.etable.selected_row
     row.transfer = 'cat12'
     app.etable.save_edits()

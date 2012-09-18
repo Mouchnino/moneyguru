@@ -36,10 +36,10 @@ The easy way!
 
 There's an easy way to install the majority of the prerequisites above, and it's `pip <http://www.pip-installer.org/>`_ which has recently started to support Python 3. So install it and then run::
 
-    pip install -r requirements-[osx|win|lnx].txt
+    pip install -r requirements-[osx|win].txt
 
-([osx|win|lnx] depends, of course, on your platform). Sparkle and Advanced Installer, having
-nothing to do with Python, have to be manually installed.
+[osx|win] depends on your platform. On Linux, run the base requirements file, requirements.txt.
+Sparkle and Advanced Installer, having nothing to do with Python, have to be manually installed.
 
 PyQt isn't in the requirements file either (there's no package uploaded on PyPI) and you also have
 to install it manually.
