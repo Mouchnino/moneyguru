@@ -6,7 +6,7 @@
 
 import logging
 import os.path as op
-from objp.util import pyref, dontwrap, nsrect, nssize
+from objp.util import pyref, dontwrap, nsrect, nssize, nspoint
 
 from cocoa import install_exception_hook, proxy, install_cocoa_logger
 from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, PyColumns, PyOutline,
@@ -170,6 +170,7 @@ class PyTableWithDate(PyTable):
     
 
 class ChartView(GUIObjectView):
+    def drawPieWithCenter_radius_startAngle_spanAngle_colorIndex_(self, center: nspoint, radius: float, start_angle: float, span_angle: float, color_index: int): pass
     def drawText_inRect_withFontID_(self, text: str, rect: nsrect, font_id: int): pass
     def sizeForText_withFontID_(self, text: str, font_id: int) -> nssize: pass
 
@@ -193,6 +194,10 @@ class PyChart(PyGUIObject):
         self.model.draw()
     
     #--- Python -> Cocoa
+    @dontwrap
+    def draw_pie(self, center, radius, start_angle, span_angle, color_index):
+        self.callback.drawPieWithCenter_radius_startAngle_spanAngle_colorIndex_(center, radius, start_angle, span_angle, color_index)
+    
     @dontwrap
     def draw_text(self, text, rect, font_id):
         self.callback.drawText_inRect_withFontID_(text, rect, font_id)

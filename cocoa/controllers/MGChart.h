@@ -16,10 +16,9 @@ http://www.hardcoded.net/licenses/bsd_license
 - (MGChartView *)view;
 - (PyChart *)model;
 
-- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
-
 /* Python callbacks */
 - (void)refresh;
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex;
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID;
 - (NSSize)sizeForText:(NSString *)aText withFontID:(NSInteger)aFontID;
 @end

@@ -96,12 +96,29 @@ NSPoint rectCenter(NSRect r)
     [self setGradients:grads];
 }
 
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
+{
+    NSFont *titleFont = [NSFont boldSystemFontOfSize:15.0];
+    NSMutableParagraphStyle *pstyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    [pstyle setAlignment:NSCenterTextAlignment];
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+        titleFont, NSFontAttributeName,
+        [NSColor grayColor], NSForegroundColorAttributeName,
+        pstyle, NSParagraphStyleAttributeName,
+        nil];
+}
+
+- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex
+{
+    return [gradients objectAtIndex:aColorIndex];
+}
+
 /* Drawing */
 - (void)drawRect:(NSRect)rect 
 {	
     [super drawRect:rect];
 	// Calculate the graph dimensions
-	NSSize viewSize = [self bounds].size;
+    NSSize viewSize = [self bounds].size;
     CGFloat chartX = CHART_PADDING;
     CGFloat chartY = CHART_PADDING;
     CGFloat chartWidth = viewSize.width - CHART_PADDING * 2;
@@ -147,16 +164,16 @@ NSPoint rectCenter(NSRect r)
         CGFloat angle = fraction * 360;
         CGFloat endAngle = startAngle + angle;
         
-        NSBezierPath *slice = [NSBezierPath bezierPath];
-        [slice moveToPoint:center];
-        [slice appendBezierPathWithArcWithCenter:center radius:radius startAngle:startAngle endAngle:endAngle];
-        [slice lineToPoint:center];
-        [NSGraphicsContext saveGraphicsState];
-        [slice addClip];
-        [gradient drawInRect:circleRect angle:90];
-        [NSGraphicsContext restoreGraphicsState];
-        [slice setLineWidth:LINE_WIDTH];
-        [slice stroke];
+        // NSBezierPath *slice = [NSBezierPath bezierPath];
+        // [slice moveToPoint:center];
+        // [slice appendBezierPathWithArcWithCenter:center radius:radius startAngle:startAngle endAngle:endAngle];
+        // [slice lineToPoint:center];
+        // [NSGraphicsContext saveGraphicsState];
+        // [slice addClip];
+        // [gradient drawInRect:circleRect angle:90];
+        // [NSGraphicsContext restoreGraphicsState];
+        // [slice setLineWidth:LINE_WIDTH];
+        // [slice stroke];
         
         NSString *legendText = [dataPoint objectAtIndex:0];
         NSPoint baseLegendPoint = pointInCircle(center, radius, deg2rad(startAngle + (angle / 2)));

@@ -7,6 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.trans import tr
+from hscommon.geometry import Rect
 from .chart import Chart
 
 # A pie chart's data is a list of (name, (float)amount). The name part is ready for display. It
@@ -68,12 +69,33 @@ class PieChart(Chart):
         self._data = [(fmt(name, amount), amount, color) for name, amount, color in data]
     
     def draw(self):
-        vieww, viewh = self.view_size
+        view_rect = Rect(0, 0, *self.view_size)
         title = self.title
-        titlew, titleh = self.view.text_size(title, 1)
-        titley = viewh - titleh - CHART_PADDING
-        title_rect = (0, titley, vieww, titleh)
+        _, title_height = self.view.text_size(title, 1)
+        titley = view_rect.h - title_height - CHART_PADDING
+        title_rect = (0, titley, view_rect.w, title_height)
         self.view.draw_text(title, title_rect, 1)
+        
+        if not hasattr(self, '_data'):
+            return
+        
+        # circle coords
+        # circleBounds is the area in which the circle is allwed to be drawn (important for legend text)
+        circle_bounds = view_rect.scaled_rect(-CHART_PADDING, -CHART_PADDING)
+        circle_bounds.h -= title_height
+        # circle_bounds = Rect(CHART_PADDING, CHART_PADDING + title_height, max_width, max_height)
+        circle_size = min(circle_bounds.w, circle_bounds.h)
+        radius = circle_size / 2
+        center = circle_bounds.center()
+        
+        # draw pie
+        total_amount = sum(amount for _, amount, _ in self.data)
+        start_angle = 0
+        for _, amount, color_index in self.data:
+            fraction = amount / total_amount
+            angle = fraction * 360
+            self.view.draw_pie(center, radius, start_angle, angle, color_index)
+            start_angle += angle
     
     #--- Public
     def colors(self):

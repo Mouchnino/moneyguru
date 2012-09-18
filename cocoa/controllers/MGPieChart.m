@@ -32,16 +32,4 @@ static NSColor* intToColor(NSInteger i)
     [self setView:[myview autorelease]];
     return self;
 }
-
-- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
-{
-    NSFont *titleFont = [NSFont boldSystemFontOfSize:15.0];
-    NSMutableParagraphStyle *pstyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-    [pstyle setAlignment:NSCenterTextAlignment];
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-        titleFont, NSFontAttributeName,
-        [NSColor grayColor], NSForegroundColorAttributeName,
-        pstyle, NSParagraphStyleAttributeName,
-        nil];
-}
 @end

@@ -147,7 +147,7 @@ class PieChartView(ChartView):
         radius = circleSize / 2
         center = circleBounds.center()
         # cirectRect is the area that the pie drawing use for bounds
-        circleRect = QRectF(center.x() - radius, center.y() - radius, circleSize, circleSize)
+        # circleRect = QRectF(center.x() - radius, center.y() - radius, circleSize, circleSize)
         
         # draw title
         ds.draw()
@@ -164,9 +164,9 @@ class PieChartView(ChartView):
             gradient = self.gradients[colorIndex]
             fraction = amount / totalAmount
             angle = fraction * 360
-            painter.setBrush(QBrush(gradient))
+            # painter.setBrush(QBrush(gradient))
             # pie slices have to be drawn with 1/16th of an angle as argument
-            painter.drawPie(circleRect, startAngle*16, angle*16)
+            # painter.drawPie(circleRect, startAngle*16, angle*16)
             # stops is a QVector<QPair<qreal, QColor>>. We chose the dark color of the gardient.
             legendColor = gradient.stops()[0][1]
             legendAngle = startAngle + (angle / 2)

@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtGui import QApplication, QFont, QFontMetrics
+from PyQt4.QtGui import QFontMetrics
 
 class Chart:
     CHART_MODEL_CLASS = None
@@ -23,6 +23,9 @@ class Chart:
     #--- model --> view
     def refresh(self):
         self.view.update()
+    
+    def draw_pie(self, center, radius, start_angle, span_angle, color_index):
+        self.view.draw_pie(center, radius, start_angle, span_angle, color_index)
     
     def draw_text(self, text, rect, font_id):
         font = self.view.fontForID(font_id)

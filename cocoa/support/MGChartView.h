@@ -23,5 +23,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setData:(NSArray *)aData;
 - (void)setTitle:(NSString *)aTitle;
 - (void)setCurrency:(NSString *)aCurrency;
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
+- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex;
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex;
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs;
 @end

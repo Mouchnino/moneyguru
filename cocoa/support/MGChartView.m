@@ -84,6 +84,40 @@ http://www.hardcoded.net/licenses/bsd_license
     currency = [aCurrency retain];
 }
 
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
+{
+    /* Returns a dictionary with the appropriate elements for a usage in NSString.drawText or
+       NSString.sizeWithAttributes().
+    */
+    return nil;
+}
+
+- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex
+{
+    return nil;
+}
+
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex
+{
+    NSGradient *gradient = [self gradientForIndex:aColorIndex];
+    CGFloat endAngle = aStartAngle + aSpanAngle;
+    CGFloat circleX = aCenter.x - aRadius;
+    CGFloat circleY = aCenter.y - aRadius;
+    CGFloat diameter = aRadius * 2;
+    NSRect circleRect = NSMakeRect(circleX, circleY, diameter, diameter);
+    
+    NSBezierPath *slice = [NSBezierPath bezierPath];
+    [slice moveToPoint:aCenter];
+    [slice appendBezierPathWithArcWithCenter:aCenter radius:aRadius startAngle:aStartAngle endAngle:endAngle];
+    [slice lineToPoint:aCenter];
+    [NSGraphicsContext saveGraphicsState];
+    [slice addClip];
+    [gradient drawInRect:circleRect angle:90];
+    [NSGraphicsContext restoreGraphicsState];
+    [slice setLineWidth:1.0];
+    [slice stroke];
+}
+
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs
 {
     [NSGraphicsContext saveGraphicsState];

@@ -38,14 +38,6 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyChart *)model;
 }
 
-- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
-{
-    /* Returns a dictionary with the appropriate elements for a usage in NSString.drawText or
-       NSString.sizeWithAttributes().
-    */
-    return nil;
-}
-
 /* Python callbacks */
 - (void)refresh
 {
@@ -55,15 +47,20 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self view] setNeedsDisplay:YES];
 }
 
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex
+{
+    [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle colorIndex:aColorIndex];
+}
+
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID
 {
-    NSDictionary *attrs = [self fontAttributesForID:aFontID];
+    NSDictionary *attrs = [self.view fontAttributesForID:aFontID];
     [self.view drawText:aText inRect:aRect withAttributes:attrs];
 }
 
 - (NSSize)sizeForText:(NSString *)aText withFontID:(NSInteger)aFontID
 {
-    NSDictionary *attrs = [self fontAttributesForID:aFontID];
+    NSDictionary *attrs = [self.view fontAttributesForID:aFontID];
     return [aText sizeWithAttributes:attrs];
 }
 @end
