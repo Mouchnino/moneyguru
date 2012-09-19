@@ -24,12 +24,18 @@ class Chart:
     def refresh(self):
         self.view.update()
     
+    def draw_line(self, p1, p2, color_index):
+        self.view.draw_line(p1, p2, color_index)
+    
+    def draw_rect(self, rect, line_color_index, bg_color_index):
+        self.view.draw_rect(rect, line_color_index, bg_color_index)
+    
     def draw_pie(self, center, radius, start_angle, span_angle, color_index):
         self.view.draw_pie(center, radius, start_angle, span_angle, color_index)
     
     def draw_text(self, text, rect, font_id):
         font = self.view.fontForID(font_id)
-        self.view.draw_text(text, self.view.flipRect(rect), font)
+        self.view.draw_text(text, rect, font)
     
     def text_size(self, text, font_id):
         font = self.view.fontForID(font_id)

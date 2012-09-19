@@ -92,14 +92,44 @@ http://www.hardcoded.net/licenses/bsd_license
     return nil;
 }
 
-- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex
+- (NSColor *)colorForIndex:(NSInteger)aColorIndex
 {
     return nil;
 }
 
+- (NSGradient *)gradientFromColor:(NSColor *)aColor
+{
+    NSColor *light = [aColor blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
+    return [[[NSGradient alloc] initWithStartingColor:aColor endingColor:light] autorelease];
+}
+
+- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSInteger)aColorIndex
+{
+    NSColor *color = [self colorForIndex:aColorIndex];
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path moveToPoint:aP1];
+    [path lineToPoint:aP2];
+    [path setLineWidth:1.0];
+    [color setStroke];
+    [path stroke];
+}
+
+- (void)drawRect:(NSRect)aRect lineColor:(NSInteger)aLineColor bgColor:(NSInteger)aBgColor
+{
+    NSColor *lineColor = [self colorForIndex:aLineColor];
+    NSColor *bgColor = [self colorForIndex:aBgColor];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
+    [path setLineWidth:1.0];
+    [bgColor setFill];
+    [lineColor setStroke];
+    [path fill];
+    [path stroke];
+}
+
 - (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex
 {
-    NSGradient *gradient = [self gradientForIndex:aColorIndex];
+    NSColor *color = [self colorForIndex:aColorIndex];
+    NSGradient *gradient = [self gradientFromColor:color];
     CGFloat endAngle = aStartAngle + aSpanAngle;
     CGFloat circleX = aCenter.x - aRadius;
     CGFloat circleY = aCenter.y - aRadius;

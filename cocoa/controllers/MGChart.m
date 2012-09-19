@@ -47,6 +47,16 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self view] setNeedsDisplay:YES];
 }
 
+- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSInteger)aColorIndex
+{
+    [self.view drawLineFrom:aP1 to:aP2 colorIndex:aColorIndex];
+}
+
+- (void)drawRect:(NSRect)aRect lineColor:(NSInteger)aLineColor bgColor:(NSInteger)aBgColor
+{
+    [self.view drawRect:aRect lineColor:aLineColor bgColor:aBgColor];
+}
+
 - (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex
 {
     [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle colorIndex:aColorIndex];

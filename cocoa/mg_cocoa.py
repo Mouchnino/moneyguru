@@ -170,6 +170,8 @@ class PyTableWithDate(PyTable):
     
 
 class ChartView(GUIObjectView):
+    def drawLineFrom_to_colorIndex_(self, p1: nspoint, p2: nspoint, color_index: int): pass
+    def drawRect_lineColor_bgColor_(self, rect: nsrect, line_color_index: int, bg_color_index: int): pass
     def drawPieWithCenter_radius_startAngle_spanAngle_colorIndex_(self, center: nspoint, radius: float, start_angle: float, span_angle: float, color_index: int): pass
     def drawText_inRect_withFontID_(self, text: str, rect: nsrect, font_id: int): pass
     def sizeForText_withFontID_(self, text: str, font_id: int) -> nssize: pass
@@ -194,6 +196,14 @@ class PyChart(PyGUIObject):
         self.model.draw()
     
     #--- Python -> Cocoa
+    @dontwrap
+    def draw_line(self, p1, p2, color_index):
+        self.callback.drawLineFrom_to_colorIndex_(p1, p2, color_index)
+    
+    @dontwrap
+    def draw_rect(self, rect, line_color_index, bg_color_index):
+        self.callback.drawRect_lineColor_bgColor_(rect, line_color_index, bg_color_index)
+    
     @dontwrap
     def draw_pie(self, center, radius, start_angle, span_angle, color_index):
         self.callback.drawPieWithCenter_radius_startAngle_spanAngle_colorIndex_(center, radius, start_angle, span_angle, color_index)

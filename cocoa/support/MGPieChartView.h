@@ -11,8 +11,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGPieChartView : MGChartView
 {
-    NSArray *gradients;
+    NSArray *colors;
 }
-- (void)setGradients:(NSArray *)aGradients;
 - (void)setColors:(NSArray *)aColors;
 @end

@@ -5,13 +5,23 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import Qt, QRectF
-from PyQt4.QtGui import QWidget, QBrush
+from PyQt4.QtCore import Qt, QRectF, QPointF
+from PyQt4.QtGui import QWidget, QBrush, QPen, QLinearGradient
 
+def gradientFromColor(color):
+    gradient = QLinearGradient(0, 0, 0, 1)
+    gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
+    gradient.setColorAt(0, color)
+    gradient.setColorAt(1, color.lighter())
+    return gradient
+    
 class ChartView(QWidget):
     #--- Virtual
     def fontForID(self, fontId):
         # Return a QFont instance that is represented by fontId
+        pass
+    
+    def colorForIndex(self, colorIndex):
         pass
     
     #--- Public
@@ -28,11 +38,30 @@ class ChartView(QWidget):
         return (x, y)
     
     #--- model --> view
+    def draw_line(self, p1, p2, color_index):
+        color = self.colorForIndex(color_index)
+        pen = QPen(color)
+        pen.setWidth(1)
+        painter = self.current_painter
+        painter.setPen(pen)
+        painter.drawLine(QPointF(*self.flipPoint(p1)), QPointF(*self.flipPoint(p2)))
+    
+    def draw_rect(self, rect, line_color_index, bg_color_index):
+        line_color = self.colorForIndex(line_color_index)
+        bg_color = self.colorForIndex(bg_color_index)
+        pen = QPen(line_color)
+        pen.setWidth(1)
+        painter = self.current_painter
+        painter.setPen(pen)
+        painter.setBrush(QBrush(bg_color))
+        painter.drawRect(QRectF(*self.flipRect(rect)))
+    
     def draw_pie(self, center, radius, start_angle, span_angle, color_index):
         center = self.flipPoint(center)
         centerX, centerY = center
         painter = self.current_painter
-        gradient = self.gradients[color_index]
+        color = self.colorForIndex(color_index)
+        gradient = gradientFromColor(color)
         painter.setBrush(QBrush(gradient))
         diameter = radius * 2
         # circleRect is the area that the pie drawing use for bounds
@@ -41,9 +70,10 @@ class ChartView(QWidget):
         painter.drawPie(circleRect, start_angle*16, span_angle*16)
     
     def draw_text(self, text, rect, font):
-        rect = QRectF(*rect)
+        rect = QRectF(*self.flipRect(rect))
         painter = self.current_painter
         painter.save()
         painter.setFont(font)
+        painter.setPen(QPen(Qt.black))
         painter.drawText(rect, Qt.AlignHCenter|Qt.AlignVCenter, text)
         painter.restore()
