@@ -18,19 +18,10 @@ from .chart import Chart
 # Regardless of the view size, we always display this number of slices. If we have more, we group
 # them under "Others"
 MIN_SLICE_COUNT = 6
+COLOR_COUNT = 6
 MIN_VIEW_SIZE = 250 # Size at which we start counting for eventual extra slices
 SIZE_COST_FOR_SLICE = 30 # Number of pixels we need to count an extra slice
 CHART_PADDING = 6
-
-#0xrrggbb
-COLORS = [
-    0x5dbc56,
-    0x3c5bce,
-    0xb6181f,
-    0xe99709,
-    0x9521e9,
-    0x808080, # Only for "Others"
-]
 
 def pointInCircle(center, radius, angle):
     # Returns the point at the edge of a circle with specified center/radius/angle
@@ -131,12 +122,12 @@ class PieChart(Chart):
         data = self._get_data()
         data = [(name, float(amount)) for name, amount in data.items() if amount > 0]
         data.sort(key=lambda t: t[1], reverse=True)
-        data = [(name, amount, i % (len(COLORS)-1)) for i, (name, amount) in enumerate(data)]
+        data = [(name, amount, i % (COLOR_COUNT-1)) for i, (name, amount) in enumerate(data)]
         if len(data) > self.slice_count():
             others = data[self.slice_count()-1:]
             others_total = sum(amount for _, amount, _ in others)
             del data[self.slice_count()-1:]
-            data.append((tr('Others'), others_total, len(COLORS)-1))
+            data.append((tr('Others'), others_total, COLOR_COUNT-1))
         total = sum(amount for _, amount, _ in data)
         if not total:
             return
@@ -220,8 +211,5 @@ class PieChart(Chart):
             self.view.draw_text(legend.text, legend.text_rect, FontID.Legend)
     
     #--- Public
-    def colors(self):
-        return COLORS
-    
     def slice_count(self):
         return self._slice_count

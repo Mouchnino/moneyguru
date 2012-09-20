@@ -13,5 +13,4 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSArray *colors;
 }
-- (void)setColors:(NSArray *)aColors;
 @end

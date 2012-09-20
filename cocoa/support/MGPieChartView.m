@@ -15,11 +15,35 @@ http://www.hardcoded.net/licenses/bsd_license
 #define FontIDLegend 2
 #define ColorIndexLegendBackground 7
 
+//0xrrggbb
+static NSInteger PIE_CHART_COLORS[] = {
+    0x5dbc56,
+    0x3c5bce,
+    0xb6181f,
+    0xe99709,
+    0x9521e9,
+    0x808080, //# Only for "Others"
+    -1 // Sentinel
+};
+
+static NSColor* intToColor(NSInteger i)
+{
+    CGFloat r = ((i >> 16) & 255) / 255.0;
+    CGFloat g = ((i >> 8) & 255) / 255.0;
+    CGFloat b = (i & 255) / 255.0;
+    return [NSColor colorWithDeviceRed:r green:g blue:b alpha:1.0];
+}
+
 @implementation MGPieChartView
 - (id)init
 {
     self = [super init];
-    colors = nil;
+    NSMutableArray *buildingColors = [NSMutableArray array];
+    for (NSInteger i=0; PIE_CHART_COLORS[i]>=0; i++) {
+        NSColor *c = intToColor(PIE_CHART_COLORS[i]);
+        [buildingColors addObject:c];
+    }
+    colors = [buildingColors retain];
     return self;
 }
 
@@ -27,19 +51,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [colors release];
     [super dealloc];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    MGPieChartView *result = [super copyWithZone:zone];
-    [result setColors:colors];
-    return result;
-}
-
-- (void)setColors:(NSArray *)aColors
-{
-    [colors release];
-    colors = [aColors retain];
 }
 
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID

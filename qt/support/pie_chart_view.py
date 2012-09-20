@@ -12,6 +12,16 @@ from PyQt4.QtGui import QApplication, QPainter, QFont, QColor
 from core.gui.pie_chart import FontID, ColorIndex
 from .chart_view import ChartView
 
+#0xrrggbb
+COLORS = [
+    0x5dbc56,
+    0x3c5bce,
+    0xb6181f,
+    0xe99709,
+    0x9521e9,
+    0x808080, # Only for "Others"
+]
+
 class PieChartView(ChartView):
     TITLE_FONT_SIZE = 12
     LEGEND_FONT_SIZE = 8
@@ -19,7 +29,7 @@ class PieChartView(ChartView):
     def __init__(self, parent):
         ChartView.__init__(self, parent)
         self.dataSource = None
-        self.colors = None
+        self.colors = [QColor(rgbInt) for rgbInt in COLORS]
         
         self.titleFont = QFont(QApplication.font())
         self.titleFont.setPointSize(self.TITLE_FONT_SIZE)
@@ -48,8 +58,6 @@ class PieChartView(ChartView):
         if self.dataSource is None:
             return
         ds = self.dataSource
-        if self.colors is None:
-            self.colors = [QColor(rgbInt) for rgbInt in self.dataSource.colors()]
         painter = QPainter(self)
         self.current_painter = painter
         painter.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing)
