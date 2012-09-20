@@ -18,12 +18,13 @@ from .chart import Chart
 # Regardless of the view size, we always display this number of slices. If we have more, we group
 # them under "Others"
 MIN_SLICE_COUNT = 6
+# This is the number of colors that our GUI layers must have. If we display more slices than we have
+# colors, we cycle through them (except of the last color, which is always for the "Others" pie).
 COLOR_COUNT = 6
 MIN_VIEW_SIZE = 250 # Size at which we start counting for eventual extra slices
 SIZE_COST_FOR_SLICE = 30 # Number of pixels we need to count an extra slice
-CHART_PADDING = 6
 
-def pointInCircle(center, radius, angle):
+def point_in_circle(center, radius, angle):
     # Returns the point at the edge of a circle with specified center/radius/angle
     # a/sin(A) = b/sin(B) = c/sin(C) = 2R
     # the start point is (center.x + radius, center.y) and goes counterclockwise
@@ -44,14 +45,14 @@ def pointInCircle(center, radius, angle):
     else:
         return Point(center.x + b, center.y + a)
 
-def rectFromCenter(center, size):
+def rect_from_center(center, size):
     # Returns a Rect centered on `center` with size `size`
     w, h = size
     x = center.x - w / 2
     y = center.y - h / 2
     return Rect(x, y, w, h)
 
-def pullRectIn(rect, container):
+def pull_rect_in(rect, container):
     # The top and bottom denomination are reversed (in hscommon.geometry, rect.top is rect.y and
     # in here, it's rect.y + rect.h) but it doesn't matter because the < and > comparison stay the
     # same. It's a bit of a mind bender, but it works.
@@ -97,9 +98,11 @@ class Legend:
     
 
 class PieChart(Chart):
+    PADDING = 6
+    
     def __init__(self, parent_view):
         Chart.__init__(self, parent_view)
-        self._slice_count = MIN_SLICE_COUNT
+        self.slice_count = MIN_SLICE_COUNT
     
     #--- Virtual
     def _get_data(self):
@@ -113,8 +116,8 @@ class PieChart(Chart):
         slice_count = MIN_SLICE_COUNT
         if size > MIN_VIEW_SIZE:
             slice_count += (size - MIN_VIEW_SIZE) // SIZE_COST_FOR_SLICE
-        if slice_count != self._slice_count:
-            self._slice_count = slice_count
+        if slice_count != self.slice_count:
+            self.slice_count = slice_count
             self._revalidate()
     
     def compute(self):
@@ -123,10 +126,10 @@ class PieChart(Chart):
         data = [(name, float(amount)) for name, amount in data.items() if amount > 0]
         data.sort(key=lambda t: t[1], reverse=True)
         data = [(name, amount, i % (COLOR_COUNT-1)) for i, (name, amount) in enumerate(data)]
-        if len(data) > self.slice_count():
-            others = data[self.slice_count()-1:]
+        if len(data) > self.slice_count:
+            others = data[self.slice_count-1:]
             others_total = sum(amount for _, amount, _ in others)
-            del data[self.slice_count()-1:]
+            del data[self.slice_count-1:]
             data.append((tr('Others'), others_total, COLOR_COUNT-1))
         total = sum(amount for _, amount, _ in data)
         if not total:
@@ -138,7 +141,7 @@ class PieChart(Chart):
         view_rect = Rect(0, 0, *self.view_size)
         title = self.title
         _, title_height = self.view.text_size(title, 1)
-        titley = view_rect.h - title_height - CHART_PADDING
+        titley = view_rect.h - title_height - self.PADDING
         title_rect = (0, titley, view_rect.w, title_height)
         self.view.draw_text(title, title_rect, FontID.Title)
         
@@ -146,10 +149,10 @@ class PieChart(Chart):
             return
         
         # circle coords
-        # circle_bounds is the area in which the circle is allwed to be drawn (important for legend text)
-        circle_bounds = view_rect.scaled_rect(-CHART_PADDING, -CHART_PADDING)
+        # circle_bounds is the area in which the circle is allowed to be drawn (important for legend text)
+        circle_bounds = view_rect.scaled_rect(-self.PADDING, -self.PADDING)
         circle_bounds.h -= title_height
-        # circle_bounds = Rect(CHART_PADDING, CHART_PADDING + title_height, max_width, max_height)
+        # circle_bounds = Rect(self.PADDING, self.PADDING + title_height, max_width, max_height)
         circle_size = min(circle_bounds.w, circle_bounds.h)
         radius = circle_size / 2
         center = circle_bounds.center()
@@ -170,14 +173,14 @@ class PieChart(Chart):
         # compute legend rects
         _, legend_height = self.view.text_size('', FontID.Legend)
         for legend in legends:
-            legend.base_point = pointInCircle(center, radius, legend.angle)
+            legend.base_point = point_in_circle(center, radius, legend.angle)
             legend_width, _ = self.view.text_size(legend.text, FontID.Legend)
-            legend.text_rect = rectFromCenter(legend.base_point, (legend_width, legend_height))
+            legend.text_rect = rect_from_center(legend.base_point, (legend_width, legend_height))
             legend.compute_label_rect()
         
         # make sure they're inside circle_bounds
         for legend in legends:
-            pullRectIn(legend.label_rect, circle_bounds)
+            pull_rect_in(legend.label_rect, circle_bounds)
         
         # send to the sides of the chart
         for legend in legends:
@@ -210,6 +213,3 @@ class PieChart(Chart):
             legend.compute_text_rect()
             self.view.draw_text(legend.text, legend.text_rect, FontID.Legend)
     
-    #--- Public
-    def slice_count(self):
-        return self._slice_count
