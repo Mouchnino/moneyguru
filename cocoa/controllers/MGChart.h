@@ -11,10 +11,17 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGChartView.h"
 #import "PyChart.h"
 
-@interface MGChart : HSGUIController {}
+@interface MGChart : HSGUIController
+{
+    NSMutableDictionary *fontAttrsCache;
+    NSMutableDictionary *gradientsCache;
+}
 - (id)initWithPyRef:(PyObject *)aPyRef;
 - (MGChartView *)view;
 - (PyChart *)model;
+
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
+- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex;
 
 /* Python callbacks */
 - (void)refresh;

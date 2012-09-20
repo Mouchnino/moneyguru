@@ -6,14 +6,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QRectF, QPointF
-from PyQt4.QtGui import QWidget, QBrush, QPen, QLinearGradient
-
-def gradientFromColor(color):
-    gradient = QLinearGradient(0, 0, 0, 1)
-    gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
-    gradient.setColorAt(0, color)
-    gradient.setColorAt(1, color.lighter())
-    return gradient
+from PyQt4.QtGui import QWidget, QBrush, QPen
     
 class ChartView(QWidget):
     #--- Virtual
@@ -38,17 +31,14 @@ class ChartView(QWidget):
         return (x, y)
     
     #--- model --> view
-    def draw_line(self, p1, p2, color_index):
-        color = self.colorForIndex(color_index)
+    def draw_line(self, p1, p2, color):
         pen = QPen(color)
         pen.setWidth(1)
         painter = self.current_painter
         painter.setPen(pen)
         painter.drawLine(QPointF(*self.flipPoint(p1)), QPointF(*self.flipPoint(p2)))
     
-    def draw_rect(self, rect, line_color_index, bg_color_index):
-        line_color = self.colorForIndex(line_color_index)
-        bg_color = self.colorForIndex(bg_color_index)
+    def draw_rect(self, rect, line_color, bg_color):
         pen = QPen(line_color)
         pen.setWidth(1)
         painter = self.current_painter
@@ -56,12 +46,10 @@ class ChartView(QWidget):
         painter.setBrush(QBrush(bg_color))
         painter.drawRect(QRectF(*self.flipRect(rect)))
     
-    def draw_pie(self, center, radius, start_angle, span_angle, color_index):
+    def draw_pie(self, center, radius, start_angle, span_angle, gradient):
         center = self.flipPoint(center)
         centerX, centerY = center
         painter = self.current_painter
-        color = self.colorForIndex(color_index)
-        gradient = gradientFromColor(color)
         painter.setBrush(QBrush(gradient))
         diameter = radius * 2
         # circleRect is the area that the pie drawing use for bounds

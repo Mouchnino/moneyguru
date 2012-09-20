@@ -25,9 +25,8 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setCurrency:(NSString *)aCurrency;
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
 - (NSColor *)colorForIndex:(NSInteger)aColorIndex;
-- (NSGradient *)gradientFromColor:(NSColor *)aColor;
-- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSInteger)aColorIndex;
-- (void)drawRect:(NSRect)aRect lineColor:(NSInteger)aLineColor bgColor:(NSInteger)aBgColor;
-- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex;
+- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSColor *)aColor;
+- (void)drawRect:(NSRect)aRect lineColor:(NSColor *)aLineColor bgColor:(NSColor *)aBgColor;
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle gradient:(NSGradient *)aGradient;
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs;
 @end

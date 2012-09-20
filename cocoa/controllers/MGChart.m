@@ -8,6 +8,13 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGChart.h"
 #import "HSPyUtil.h"
+#import "Utils.h"
+
+static NSGradient* gradientFromColor(NSColor *aColor)
+{
+    NSColor *light = [aColor blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
+    return [[[NSGradient alloc] initWithStartingColor:aColor endingColor:light] autorelease];
+}
 
 @implementation MGChart
 - (id)initWithPyRef:(PyObject *)aPyRef
@@ -16,7 +23,16 @@ http://www.hardcoded.net/licenses/bsd_license
     self = [super initWithModel:m];
     [m bindCallback:createCallback(@"ChartView", self)];
     [m release];
+    fontAttrsCache = [[NSMutableDictionary dictionary] retain];
+    gradientsCache = [[NSMutableDictionary dictionary] retain];
     return self;
+}
+
+- (void)dealloc
+{
+    [fontAttrsCache release];
+    [gradientsCache release];
+    [super dealloc];
 }
 
 /* Override */
@@ -38,6 +54,27 @@ http://www.hardcoded.net/licenses/bsd_license
     return (PyChart *)model;
 }
 
+- (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
+{
+    NSDictionary *result = [fontAttrsCache objectForKey:i2n(aFontID)];
+    if (result == nil) {
+        result = [self.view fontAttributesForID:aFontID];
+        [fontAttrsCache setObject:result forKey:i2n(aFontID)];
+    }
+    return result;
+}
+
+- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex
+{
+    NSGradient *result = [gradientsCache objectForKey:i2n(aColorIndex)];
+    if (result == nil) {
+        NSColor *color = [self.view colorForIndex:aColorIndex];
+        result = gradientFromColor(color);
+        [gradientsCache setObject:result forKey:i2n(aColorIndex)];
+    }
+    return result;
+}
+
 /* Python callbacks */
 - (void)refresh
 {
@@ -49,28 +86,32 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSInteger)aColorIndex
 {
-    [self.view drawLineFrom:aP1 to:aP2 colorIndex:aColorIndex];
+    NSColor *color = [self.view colorForIndex:aColorIndex];
+    [self.view drawLineFrom:aP1 to:aP2 colorIndex:color];
 }
 
 - (void)drawRect:(NSRect)aRect lineColor:(NSInteger)aLineColor bgColor:(NSInteger)aBgColor
 {
-    [self.view drawRect:aRect lineColor:aLineColor bgColor:aBgColor];
+    NSColor *lineColor = [self.view colorForIndex:aLineColor];
+    NSColor *bgColor = [self.view colorForIndex:aBgColor];
+    [self.view drawRect:aRect lineColor:lineColor bgColor:bgColor];
 }
 
 - (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex
 {
-    [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle colorIndex:aColorIndex];
+    NSGradient *gradient = [self gradientForIndex:aColorIndex];
+    [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle gradient:gradient];
 }
 
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID
 {
-    NSDictionary *attrs = [self.view fontAttributesForID:aFontID];
+    NSDictionary *attrs = [self fontAttributesForID:aFontID];
     [self.view drawText:aText inRect:aRect withAttributes:attrs];
 }
 
 - (NSSize)sizeForText:(NSString *)aText withFontID:(NSInteger)aFontID
 {
-    NSDictionary *attrs = [self.view fontAttributesForID:aFontID];
+    NSDictionary *attrs = [self fontAttributesForID:aFontID];
     return [aText sizeWithAttributes:attrs];
 }
 @end

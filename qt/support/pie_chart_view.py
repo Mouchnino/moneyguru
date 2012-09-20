@@ -30,19 +30,16 @@ class PieChartView(ChartView):
         ChartView.__init__(self, parent)
         self.dataSource = None
         self.colors = [QColor(rgbInt) for rgbInt in COLORS]
-        
-        self.titleFont = QFont(QApplication.font())
-        self.titleFont.setPointSize(self.TITLE_FONT_SIZE)
-        self.titleFont.setBold(True)
-        self.legendFont = QFont(QApplication.font())
-        self.legendFont.setPointSize(self.LEGEND_FONT_SIZE)
     
     #--- Override
     def fontForID(self, fontId):
+        result = QFont(QApplication.font())
         if fontId == FontID.Title:
-            return self.titleFont
+            result.setPointSize(self.TITLE_FONT_SIZE)
+            result.setBold(True)
         else:
-            return self.legendFont
+            result.setPointSize(self.LEGEND_FONT_SIZE)
+        return result
     
     def colorForIndex(self, colorIndex):
         if colorIndex == ColorIndex.LegendBackground:
