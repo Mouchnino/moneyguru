@@ -6,16 +6,20 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from datetime import date
 from math import ceil, floor, log10
+
+from hscommon.geometry import Point
 
 from ..model.date import inc_month, inc_year
 from .chart import Chart
 
 # A graph is a chart or drawing that shows the relationship between changing things.
 # For the code, a Graph is a Chart with x and y axis.
+
+class PenID:
+    Axis = 1
+    AxisOverlay = 2
 
 class Graph(Chart):
     #--- Private
@@ -85,8 +89,25 @@ class Graph(Chart):
         self.compute_x_axis()
         self.compute_y_axis()
     
-    #--- Properties
+    def draw_axis_overlay_x(self, xfactor, yfactor):
+        graphBottom = round(self.ymin * yfactor)
+        # XXX Translate that one everything has been pushed to core§
+        # if graphBottom < 0:
+        #     # We have a graph with negative values and we need some extra space to draw the lowest values
+        #     graphBottom -= 2 * self.LINE_WIDTH
+        graphTop = round(self.ymax * yfactor)
+        for tickPos in self.xtickmarks[:-1]:
+            tickX = tickPos * xfactor
+            self.view.draw_line(Point(tickX, graphBottom), Point(tickX, graphTop), PenID.AxisOverlay)
     
+    def draw_axis_overlay_y(self, xfactor, yfactor):
+        graphLeft = round(self.xmin * xfactor)
+        graphRight = round(self.xmax * xfactor)
+        for tickPos in self.ytickmarks[:-1]:
+            tickY = tickPos * yfactor
+            self.view.draw_line(Point(graphLeft, tickY), Point(graphRight, tickY), PenID.AxisOverlay)
+    
+    #--- Properties
     @property
     def xmin(self):
         return self._xmin

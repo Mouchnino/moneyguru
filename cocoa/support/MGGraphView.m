@@ -9,6 +9,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGGraphView.h"
 #import "Utils.h"
 
+// Synced with core
+#define MGPenIDAxis 1
+#define MGPenIDAxisOverlay 2
+
 static NSArray* arrayWithoutLastElement(NSArray *a) {
     if ([a count]) {
         return [a subarrayWithRange:NSMakeRange(0, [a count]-1)];
@@ -64,7 +68,15 @@ static NSArray* arrayWithoutLastElement(NSArray *a) {
     return (PyGraph *)[super model];
 }
 
-- (void)drawGraph {}
+- (MGPen *)penForID:(NSInteger)aPenID
+{
+    if (aPenID == MGPenIDAxisOverlay) {
+        return [MGPen penWithColor:axisColor width:GRAPH_AXIS_OVERLAY_WIDTH];
+    }
+    else {
+        return [super penForID:aPenID];
+    }
+}
 
 - (void)drawRect:(NSRect)rect 
 {
@@ -122,7 +134,7 @@ static NSArray* arrayWithoutLastElement(NSArray *a) {
     [moveOrigin concat];
 
     // Draw the graph
-    [self drawGraph];
+    [self.model drawWithXFactor:xFactor yFactor:yFactor];
     
     // Draw the X axis.
     [axisColor setStroke];
@@ -177,36 +189,6 @@ static NSArray* arrayWithoutLastElement(NSArray *a) {
     
     [moveOrigin invert];
     [moveOrigin concat];
-}
-
-- (void)drawAxisOverlayX
-{
-    [NSGraphicsContext saveGraphicsState];
-    [axisColor setStroke];
-    NSBezierPath *xOverlayAxisPath = [NSBezierPath bezierPath];
-    [xOverlayAxisPath setLineWidth:GRAPH_AXIS_OVERLAY_WIDTH];
-    for (NSNumber *tickMark in arrayWithoutLastElement(xTickMarks)) {
-        CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * xFactor));
-        [xOverlayAxisPath moveToPoint:NSMakePoint(tickMarkPos, NSMinY(graphBounds))];
-        [xOverlayAxisPath lineToPoint:NSMakePoint(tickMarkPos, NSMaxY(graphBounds))];
-    }
-    [xOverlayAxisPath stroke];
-    [NSGraphicsContext restoreGraphicsState];
-}
-
-- (void)drawAxisOverlayY
-{
-    [NSGraphicsContext saveGraphicsState];
-    [axisColor setStroke];
-    NSBezierPath *yOverlayAxisPath = [NSBezierPath bezierPath];
-    [yOverlayAxisPath setLineWidth:GRAPH_AXIS_OVERLAY_WIDTH];
-    for (NSNumber *tickMark in arrayWithoutLastElement(yTickMarks)) {
-        CGFloat tickMarkPos = roundf((float)(n2f(tickMark) * yFactor));
-        [yOverlayAxisPath moveToPoint:NSMakePoint(NSMinX(graphBounds), tickMarkPos)];
-        [yOverlayAxisPath lineToPoint:NSMakePoint(NSMaxX(graphBounds), tickMarkPos)];
-    }
-    [yOverlayAxisPath stroke];
-    [NSGraphicsContext restoreGraphicsState];
 }
 
 - (void)setMinX:(CGFloat)aMinX

@@ -80,7 +80,10 @@ class ChartView(QWidget):
         painter = self.current_painter
         painter.setPen(pen)
         painter.setBrush(brush)
-        painter.drawPolyline(*points)
+        if brush.style() == Qt.NoBrush:
+            painter.drawPolyline(*points)
+        else:
+            painter.drawPolygon(*points)
     
     def draw_text(self, text, rect, font):
         rect = QRectF(*self.flipRect(rect))

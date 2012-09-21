@@ -9,9 +9,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBarGraphView.h"
 
 // Synced with core
-#define MGPenIDAxis 1
-#define MGPenIDBar 2
-#define MGPenIDTodayLine 3
+#define MGPenIDBar 3
+#define MGPenIDTodayLine 4
 
 #define MGBrushIDNormalBar 1
 #define MGBrushIDFutureBar 2
@@ -26,7 +25,7 @@ http://www.hardcoded.net/licenses/bsd_license
         return [MGPen penWithColor:[NSColor redColor] width:GRAPH_LINE_WIDTH];
     }
     else {
-        return nil;
+        return [super penForID:aPenID];
     }
 }
 
@@ -40,14 +39,7 @@ http://www.hardcoded.net/licenses/bsd_license
         return [MGBrush brushWithColor:[NSColor lightGrayColor] isGradient:YES];
     }
     else {
-        return nil;
+        return [super brushForID:aBrushID];
     }
 }
-- (void)drawGraph
-{
-    [self.model drawWithXFactor:xFactor yFactor:yFactor];
-    [self drawAxisOverlayY];
-    /* We don't draw the X overlay in a bar graph */
-}
-
 @end

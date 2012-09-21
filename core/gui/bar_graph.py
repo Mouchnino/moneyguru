@@ -11,12 +11,11 @@ from datetime import date, timedelta
 from hscommon.geometry import Rect, Point
 
 from ..model.date import DateRange, MonthRange, YearToDateRange
-from .graph import Graph
+from .graph import Graph, PenID as PenIDBase
 
-class PenID:
-    Axis = 1
-    Bar = 2
-    TodayLine = 3
+class PenID(PenIDBase):
+    Bar = 3
+    TodayLine = 4
 
 class BrushID:
     NormalBar = 1
@@ -134,6 +133,9 @@ class BarGraph(Graph):
                 lineY = 0 if different_side else h1
                 # XXX Under Qt, the red line is overshoadowed by the horizontal axis line when lineY == 0
                 self.view.draw_line(Point(x1, lineY), Point(x2, lineY), PenID.TodayLine)
+        
+        # We don't draw the X overlay in a bar graph
+        self.draw_axis_overlay_y(xfactor, yfactor)
     
     @property
     def title(self):

@@ -13,7 +13,6 @@ from core.gui.bar_graph import PenID, BrushID
 from .graph_view import GraphView
 
 class BarGraphView(GraphView):
-    DRAW_XAXIS_OVERLAY = False
     FLIP_COORDS = False
     
     def penForID(self, penId):
@@ -23,16 +22,12 @@ class BarGraphView(GraphView):
             pen = QPen(self.linePen)
             pen.setColor(Qt.red)
             return pen
+        else:
+            return GraphView.penForID(self, penId)
     
     def brushForID(self, brushId):
         if brushId == BrushID.NormalBar:
             return self.graphBrush
         elif brushId == BrushID.FutureBar:
             return self.graphFutureBrush
-    
-    def _drawGraph(self, painter, xFactor, yFactor):
-        ds = self.dataSource
-        self.current_painter = painter
-        ds.draw(xFactor, yFactor)
-        del self.current_painter
     

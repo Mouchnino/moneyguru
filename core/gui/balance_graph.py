@@ -6,11 +6,20 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
 from datetime import date
 
+from hscommon.geometry import Point
+
 from ..model.date import ONE_DAY
-from .graph import Graph
+from .graph import Graph, PenID as PenIDBase
+
+class PenID(PenIDBase):
+    Graph = 3
+    TodayLine = 4
+
+class BrushID:
+    GraphNormal = 1
+    GraphFuture = 2
 
 class BalanceGraph(Graph):
     # BalanceGraph's data point is (float x, float y)
@@ -65,6 +74,52 @@ class BalanceGraph(Graph):
             return (ymin, ymax)
         else:
             return (0, 1)
+    
+    def draw(self, xfactor, yfactor):
+        if len(self.data) < 2:
+            return
+        
+        points = [Point(x*xfactor, y*yfactor) for x, y in self.data]
+        
+        # close the polygons and fill them.
+        # The closing point depends if we have a positive graph, a negative one or a mixed up
+        if self.ymin >= 0: # positive
+            yClose = round(self.ymin * yfactor)
+        elif self.ymax < 0: # negative
+            yClose = round(self.ymax * yfactor)
+        else: # mixed up
+            yClose = 0
+        # painter.setPen(QPen(Qt.NoPen))
+        xTodayfactored = self.xtoday * xfactor;
+        pastPoints = [p for p in points if p.x <= xTodayfactored]
+        futurePoints = [p for p in points if p.x > xTodayfactored]
+        if pastPoints and futurePoints:
+            meetingPoint = Point(xTodayfactored, pastPoints[-1].y)
+            pastPoints.append(meetingPoint)
+            futurePoints.insert(0, meetingPoint)
+        else:
+            meetingPoint = None
+        # start with past
+        if pastPoints:
+            firstPoint = pastPoints[0]
+            lastPoint = pastPoints[-1]
+            pastPoints.append(Point(lastPoint.x, yClose))
+            pastPoints.append(Point(firstPoint.x, yClose))
+            self.view.draw_polygon(pastPoints, None, BrushID.GraphNormal)
+        if futurePoints:
+            firstPoint = futurePoints[0]
+            lastPoint = futurePoints[-1]
+            futurePoints.append(Point(lastPoint.x, yClose))
+            futurePoints.append(Point(firstPoint.x, yClose))
+            self.view.draw_polygon(futurePoints, None, BrushID.GraphFuture)
+        if meetingPoint is not None:
+            self.view.draw_line(Point(xTodayfactored, yClose), meetingPoint, PenID.TodayLine)
+        
+        self.draw_axis_overlay_y(xfactor, yfactor)
+        self.draw_axis_overlay_x(xfactor, yfactor)
+        
+        # draw the main graph line. It looks better when that line is drawn after the overlay.
+        self.view.draw_polygon(points, PenID.Graph, None)
     
     @property
     def title(self):

@@ -40,8 +40,6 @@ http://www.hardcoded.net/licenses/bsd_license
     NSGradient *futureGradient;
 }
 - (PyGraph *)model;
-- (void)drawAxisOverlayX;
-- (void)drawAxisOverlayY;
 - (void)setMinX:(CGFloat)aMinX;
 - (void)setMaxX:(CGFloat)aMaxX;
 - (void)setMinY:(CGFloat)aMinY;

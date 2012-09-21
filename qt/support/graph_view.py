@@ -9,6 +9,7 @@
 from PyQt4.QtCore import Qt, QPoint
 from PyQt4.QtGui import QPainter, QFont, QFontMetrics, QPen, QColor, QBrush, QLinearGradient
 
+from core.gui.graph import PenID
 from .chart_view import ChartView
 
 class GraphView(ChartView):
@@ -20,7 +21,6 @@ class GraphView(ChartView):
     TICKMARKS_LENGTH = 5
     XLABELS_PADDING = 3
     YLABELS_PADDING = 8
-    DRAW_XAXIS_OVERLAY = True
     
     def __init__(self, parent=None):
         ChartView.__init__(self, parent)
@@ -40,6 +40,13 @@ class GraphView(ChartView):
         gradient.setColorAt(0, Qt.darkGray)
         gradient.setColorAt(1, Qt.lightGray)
         self.graphFutureBrush = QBrush(gradient)
+    
+    def penForID(self, penId):
+        if penId == PenID.AxisOverlay:
+            pen = QPen()
+            pen.setColor(Qt.darkGray)
+            pen.setWidthF(self.OVERLAY_AXIS_WIDTH)
+            return pen
     
     def _drawGraph(self, painter, xFactor, yFactor):
         raise NotImplementedError()
@@ -90,7 +97,9 @@ class GraphView(ChartView):
         painter.setPen(axisPen)
         
         painter.save()
-        self._drawGraph(painter, xFactor, yFactor)
+        self.current_painter = painter
+        ds.draw(xFactor, yFactor)
+        del self.current_painter
         painter.restore()
         
         # X/Y axis
@@ -110,20 +119,6 @@ class GraphView(ChartView):
         for tickPos in ds.ytickmarks:
             tickY = tickPos * yFactor
             painter.drawLine(graphLeft, tickY, tickLeftX, tickY)
-        
-        # Overlay axis
-        painter.save()
-        overlayPen = QPen(axisPen)
-        overlayPen.setWidthF(self.OVERLAY_AXIS_WIDTH)
-        painter.setPen(overlayPen)
-        if self.DRAW_XAXIS_OVERLAY:
-            for tickPos in ds.xtickmarks[:-1]:
-                tickX = tickPos * xFactor
-                painter.drawLine(tickX, graphBottom, tickX, graphTop)
-        for tickPos in ds.ytickmarks[:-1]:
-            tickY = tickPos * yFactor
-            painter.drawLine(graphLeft, tickY, graphRight, tickY)
-        painter.restore()
         
         # X Labels
         # We have to invert the Y scale again or else the text is drawn upside down
