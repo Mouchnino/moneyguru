@@ -59,6 +59,11 @@ static NSArray* arrayWithoutLastElement(NSArray *a) {
     return result;
 }
 
+- (PyGraph *)model
+{
+    return (PyGraph *)[super model];
+}
+
 - (void)drawGraph {}
 
 - (void)drawRect:(NSRect)rect 

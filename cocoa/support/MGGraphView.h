@@ -9,6 +9,7 @@ http://www.hardcoded.net/licenses/bsd_license
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
 #import "MGChartView.h"
+#import "PyGraph.h"
 
 #define GRAPH_PADDING 20.0
 #define GRAPH_LINE_WIDTH 2.0
@@ -38,6 +39,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSGradient *fillGradient;
     NSGradient *futureGradient;
 }
+- (PyGraph *)model;
 - (void)drawAxisOverlayX;
 - (void)drawAxisOverlayY;
 - (void)setMinX:(CGFloat)aMinX;

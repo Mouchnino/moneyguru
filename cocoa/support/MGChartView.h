@@ -31,5 +31,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 pen:(MGPen *)aPen;
 - (void)drawRect:(NSRect)aRect pen:(MGPen *)aPen brush:(MGBrush *)aBrush;
 - (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle brush:(MGBrush *)aBrush;
+- (void)drawPolygonWithPoints:(NSArray *)aPoints pen:(MGPen *)aPen brush:(MGBrush *)aBrush;
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs;
 @end

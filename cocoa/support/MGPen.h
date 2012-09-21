@@ -14,7 +14,9 @@ http://www.hardcoded.net/licenses/bsd_license
     CGFloat width;
 }
 + (id)penWithColor:(NSColor *)aColor width:(CGFloat)aWidth;
++ (id)nullPen;
 - (id)initWithColor:(NSColor *)aColor width:(CGFloat)aWidth;
+- (void)stroke:(NSBezierPath *)aPath;
 @property (readwrite, retain) NSColor *color;
 @property (readwrite) CGFloat width;
 @end

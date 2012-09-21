@@ -17,6 +17,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return [[[MGBrush alloc] initWithColor:aColor isGradient:aIsGradient] autorelease];
 }
 
++ (id)nullBrush
+{
+    return [MGBrush brushWithColor:nil isGradient:NO];
+}
+
 - (id)initWithColor:(NSColor *)aColor isGradient:(BOOL)aIsGradient
 {
     self = [super init];
@@ -29,5 +34,22 @@ http://www.hardcoded.net/licenses/bsd_license
         self.gradient = nil;
     }
     return self;
+}
+
+- (void)fill:(NSBezierPath *)aPath
+{
+    if (self.color == nil) {
+        return;
+    }
+    if (self.gradient != nil) {
+        [NSGraphicsContext saveGraphicsState];
+        [aPath addClip];
+        [self.gradient drawInRect:[aPath bounds] angle:90];
+        [NSGraphicsContext restoreGraphicsState];        
+    }
+    else {
+        [self.color setFill];
+        [aPath fill];
+    }
 }
 @end

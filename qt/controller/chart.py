@@ -6,7 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtGui import QFontMetrics
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QFontMetrics, QPen, QBrush
 
 class Chart:
     CHART_MODEL_CLASS = None
@@ -19,6 +20,8 @@ class Chart:
         self.id2font = {}
         self.index2pen = {}
         self.index2brush = {}
+        self.noPen = QPen(Qt.NoPen)
+        self.noBrush = QBrush(Qt.NoBrush)
         if self.CHART_MODEL_CLASS is not None:
             self.model = self.CHART_MODEL_CLASS(self, parent_or_model.model)
         else:
@@ -35,6 +38,8 @@ class Chart:
         return result
     
     def penForID(self, penID):
+        if penID is None:
+            return self.noPen
         try:
             result = self.index2pen[penID]
         except KeyError:
@@ -43,6 +48,8 @@ class Chart:
         return result
     
     def brushForID(self, brushID):
+        if brushID is None:
+            return self.noBrush
         try:
             result = self.index2brush[brushID]
         except KeyError:
@@ -55,17 +62,22 @@ class Chart:
         self.view.update()
     
     def draw_line(self, p1, p2, pen_id):
-        pen = self.view.penForID(pen_id)
+        pen = self.penForID(pen_id)
         self.view.draw_line(p1, p2, pen)
     
     def draw_rect(self, rect, pen_id, brush_id):
-        pen = self.view.penForID(pen_id)
-        brush = self.view.brushForID(brush_id)
+        pen = self.penForID(pen_id)
+        brush = self.brushForID(brush_id)
         self.view.draw_rect(rect, pen, brush)
     
     def draw_pie(self, center, radius, start_angle, span_angle, brush_id):
-        brush = self.view.brushForID(brush_id)
+        brush = self.brushForID(brush_id)
         self.view.draw_pie(center, radius, start_angle, span_angle, brush)
+    
+    def draw_polygon(self, points, pen_id, brush_id):
+        pen = self.penForID(pen_id)
+        brush = self.brushForID(brush_id)
+        self.view.draw_polygon(points, pen, brush)
     
     def draw_text(self, text, rect, font_id):
         font = self.fontForID(font_id)

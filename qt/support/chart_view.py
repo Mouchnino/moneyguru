@@ -17,6 +17,8 @@ def gradientFromColor(color):
     return gradient
 
 class ChartView(QWidget):
+    FLIP_COORDS = True
+    
     #--- Virtual
     def fontForID(self, fontId):
         # Return a QFont instance that is represented by fontId
@@ -28,15 +30,24 @@ class ChartView(QWidget):
     def brushForID(self, brushId):
         pass
     
+    #--- Override
+    def resizeEvent(self, event):
+        if self.dataSource is not None:
+            self.dataSource.set_view_size(self.width(), self.height())
+    
     #--- Public
     def flipRect(self, rect):
         # Coordinates from the core are based on the origin being at the *lower* left corner. In
         # Qt, it's at the upper left corner. We have to flip that.
+        if not self.FLIP_COORDS:
+            return rect
         x, y, w, h = rect
         y = self.height() - y - h
         return (x, y, w, h)
     
     def flipPoint(self, point):
+        if not self.FLIP_COORDS:
+            return point
         x, y = point
         y = self.height() - y
         return (x, y)
@@ -63,6 +74,13 @@ class ChartView(QWidget):
         circleRect = QRectF(centerX - radius, centerY - radius, diameter, diameter)
         # pie slices have to be drawn with 1/16th of an angle as argument
         painter.drawPie(circleRect, start_angle*16, span_angle*16)
+    
+    def draw_polygon(self, points, pen, brush):
+        points = [QPointF(*self.flipPoint(p)) for p in points]
+        painter = self.current_painter
+        painter.setPen(pen)
+        painter.setBrush(brush)
+        painter.drawPolyline(*points)
     
     def draw_text(self, text, rect, font):
         rect = QRectF(*self.flipRect(rect))

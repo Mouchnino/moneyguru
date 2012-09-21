@@ -173,6 +173,7 @@ class ChartView(GUIObjectView):
     def drawLineFrom_to_penID_(self, p1: nspoint, p2: nspoint, pen_id: int): pass
     def drawRect_penID_brushID_(self, rect: nsrect, pen_id: int, brush_id: int): pass
     def drawPieWithCenter_radius_startAngle_spanAngle_brushID_(self, center: nspoint, radius: float, start_angle: float, span_angle: float, brush_id: int): pass
+    def drawPolygonWithPoints_penID_brushID_(self, points: list, pen_id: int, brush_id: int): pass
     def drawText_inRect_withFontID_(self, text: str, rect: nsrect, font_id: int): pass
     def sizeForText_withFontID_(self, text: str, font_id: int) -> nssize: pass
 
@@ -199,11 +200,16 @@ class PyChart(PyGUIObject):
     
     @dontwrap
     def draw_rect(self, rect, pen_id, brush_id):
-        self.callback.drawRect_penID_brushID_(rect, pen_id, brush_id)
+        self.callback.drawRect_penID_brushID_(rect, nonone(pen_id, -1), nonone(brush_id, -1))
     
     @dontwrap
     def draw_pie(self, center, radius, start_angle, span_angle, brush_id):
         self.callback.drawPieWithCenter_radius_startAngle_spanAngle_brushID_(center, radius, start_angle, span_angle, brush_id)
+    
+    @dontwrap
+    def draw_polygon(self, points, pen_id, brush_id):
+        points = [list(p) for p in points]
+        self.callback.drawPolygonWithPoints_penID_brushID_(points, nonone(pen_id, -1), nonone(brush_id, -1))
     
     @dontwrap
     def draw_text(self, text, rect, font_id):
@@ -215,6 +221,9 @@ class PyChart(PyGUIObject):
     
 
 class PyGraph(PyChart):
+    def drawWithXFactor_yFactor_(self, xFactor: float, yFactor: float):
+        self.model.draw(xFactor, yFactor)
+    
     def xMin(self) -> float:
         return self.model.xmin
 

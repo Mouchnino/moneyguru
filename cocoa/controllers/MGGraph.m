@@ -14,7 +14,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     PyGraph *m = [[PyGraph alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
-    [m bindCallback:createCallback(@"GUIObjectView", self)];
+    [m bindCallback:createCallback(@"ChartView", self)];
     [m release];
     return self;
 }

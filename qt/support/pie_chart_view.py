@@ -55,9 +55,6 @@ class PieChartView(ChartView):
             gradient = gradientFromColor(color)
             return QBrush(gradient)
     
-    def resizeEvent(self, event):
-        self.dataSource.set_view_size(self.width(), self.height())
-    
     def paintEvent(self, event):
         ChartView.paintEvent(self, event)
         if self.dataSource is None:

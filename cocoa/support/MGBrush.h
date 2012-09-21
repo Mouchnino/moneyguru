@@ -14,7 +14,9 @@ http://www.hardcoded.net/licenses/bsd_license
     NSGradient *gradient;
 }
 + (id)brushWithColor:(NSColor *)aColor isGradient:(BOOL)aIsGradient;
++ (id)nullBrush;
 - (id)initWithColor:(NSColor *)aColor isGradient:(BOOL)aIsGradient;
+- (void)fill:(NSBezierPath *)aPath;
 @property (readwrite, retain) NSColor *color;
 @property (readwrite, retain) NSGradient *gradient; 
 @end

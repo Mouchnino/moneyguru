@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGChartView.h"
+#import "Utils.h"
 
 @implementation MGChartView
 - (id)init
@@ -107,19 +108,14 @@ http://www.hardcoded.net/licenses/bsd_license
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path moveToPoint:aP1];
     [path lineToPoint:aP2];
-    [path setLineWidth:aPen.width];
-    [aPen.color setStroke];
-    [path stroke];
+    [aPen stroke:path];
 }
 
 - (void)drawRect:(NSRect)aRect pen:(MGPen *)aPen brush:(MGBrush *)aBrush
 {
     NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
-    [path setLineWidth:aPen.width];
-    [aBrush.color setFill];
-    [aPen.color setStroke];
-    [path fill];
-    [path stroke];
+    [aBrush fill:path];
+    [aPen stroke:path];
 }
 
 - (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle brush:(MGBrush *)aBrush
@@ -140,6 +136,25 @@ http://www.hardcoded.net/licenses/bsd_license
     [NSGraphicsContext restoreGraphicsState];
     [slice setLineWidth:1.0];
     [slice stroke];
+}
+
+- (void)drawPolygonWithPoints:(NSArray *)aPoints pen:(MGPen *)aPen brush:(MGBrush *)aBrush
+{
+    NSInteger pointCount = [aPoints count];
+    if (pointCount < 2) {
+        return;
+    }
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    NSArray *pointList = [aPoints objectAtIndex:0];
+    NSPoint pt = NSMakePoint(n2f([pointList objectAtIndex:0]), n2f([pointList objectAtIndex:1]));
+    [path moveToPoint:pt];
+    NSArray *restOfPoints = [aPoints subarrayWithRange:NSMakeRange(1, pointCount-1)];
+    for (pointList in restOfPoints) {
+        pt = NSMakePoint(n2f([pointList objectAtIndex:0]), n2f([pointList objectAtIndex:1]));
+        [path lineToPoint:pt];
+    }
+    [aBrush fill:path];
+    [aPen stroke:path];
 }
 
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs

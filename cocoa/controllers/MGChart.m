@@ -62,6 +62,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (MGPen *)penForID:(NSInteger)aPenID
 {
+    if (aPenID < 0) {
+        return [MGPen nullPen];
+    }
     MGPen *result = [penCache objectForKey:i2n(aPenID)];
     if (result == nil) {
         result = [self.view penForID:(NSInteger)aPenID];
@@ -72,6 +75,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (MGBrush *)brushForID:(NSInteger)aBrushID
 {
+    if (aBrushID < 0) {
+        return [MGBrush nullBrush];
+    }
     MGBrush *result = [brushCache objectForKey:i2n(aBrushID)];
     if (result == nil) {
         result = [self.view brushForID:aBrushID];
@@ -106,6 +112,13 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     MGBrush *brush = [self.view brushForID:aBrushID];
     [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle brush:brush];
+}
+
+- (void)drawPolygonWithPoints:(NSArray *)aPoints penID:(NSInteger)aPenID brushID:(NSInteger)aBrushID
+{
+    MGPen *pen = [self.view penForID:aPenID];
+    MGBrush *brush = [self.view brushForID:aBrushID];
+    [self.view drawPolygonWithPoints:aPoints pen:pen brush:brush];
 }
 
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID
