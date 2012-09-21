@@ -71,9 +71,9 @@ class FontID:
     Title = 1
     Legend = 2
 
-class ColorIndex:
-    # Indexes 0 to 5 are for COLORS indexes
-    LegendBackground = 7
+class BrushID:
+    # Indexes 0 to COLOR_COUNT-1 are for the different pie slices brush
+    Legend = 10
 
 class Legend:
     # XXX We might have to adjust that: On Cocoa, Legend Padding was 4.
@@ -209,7 +209,7 @@ class PieChart(Chart):
                     continue
                 self.view.draw_line(legend.label_rect.center(), legend.base_point, legend.color)
         for legend in legends:
-            self.view.draw_rect(legend.label_rect, legend.color, ColorIndex.LegendBackground)
+            self.view.draw_rect(legend.label_rect, legend.color, BrushID.Legend)
             legend.compute_text_rect()
             self.view.draw_text(legend.text, legend.text_rect, FontID.Legend)
     

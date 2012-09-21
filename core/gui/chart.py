@@ -10,7 +10,9 @@ from .base import ViewChild, MESSAGES_DOCUMENT_CHANGED
 
 class Chart(ViewChild):
     #--- model --> view
-    # draw_pie(center, radius, start_angle, span_angle, color_index)
+    # draw_line(p1, p2, pen_id)
+    # draw_rect(rect, pen_id, brush_id)
+    # draw_pie(center, radius, start_angle, span_angle, brush_id)
     # draw_text(text, rect, font_id)
     # text_size(text, font_id) --> (width, height)
     #

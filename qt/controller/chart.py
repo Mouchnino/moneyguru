@@ -6,14 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtGui import QFontMetrics, QLinearGradient
-
-def gradientFromColor(color):
-    gradient = QLinearGradient(0, 0, 0, 1)
-    gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
-    gradient.setColorAt(0, color)
-    gradient.setColorAt(1, color.lighter())
-    return gradient
+from PyQt4.QtGui import QFontMetrics
 
 class Chart:
     CHART_MODEL_CLASS = None
@@ -21,10 +14,11 @@ class Chart:
     def __init__(self, parent_or_model, view):
         self.view = view
         # Drawing related methods are called very, very often. I don't know how expensive to create
-        # gradients and fonts are, but it's probably more expensive than a dictionary lookup, so
-        # there, we cache fonts and gradients.
+        # pen, brushes and fonts are, but it's probably more expensive than a dictionary lookup, so
+        # there, we cache them.
         self.id2font = {}
-        self.index2gradient = {}
+        self.index2pen = {}
+        self.index2brush = {}
         if self.CHART_MODEL_CLASS is not None:
             self.model = self.CHART_MODEL_CLASS(self, parent_or_model.model)
         else:
@@ -40,31 +34,38 @@ class Chart:
             self.id2font[fontId] = result
         return result
     
-    def gradientForColorIndex(self, colorIndex):
+    def penForID(self, penID):
         try:
-            result = self.index2gradient[colorIndex]
+            result = self.index2pen[penID]
         except KeyError:
-            color = self.view.colorForIndex(colorIndex)
-            result = gradientFromColor(color)
-            self.index2gradient[colorIndex] = result
+            result = self.view.penForID(penID)
+            self.index2pen[penID] = result
+        return result
+    
+    def brushForID(self, brushID):
+        try:
+            result = self.index2brush[brushID]
+        except KeyError:
+            result = self.view.brushForID(brushID)
+            self.index2brush[brushID] = result
         return result
     
     #--- model --> view
     def refresh(self):
         self.view.update()
     
-    def draw_line(self, p1, p2, color_index):
-        color = self.view.colorForIndex(color_index)
-        self.view.draw_line(p1, p2, color)
+    def draw_line(self, p1, p2, pen_id):
+        pen = self.view.penForID(pen_id)
+        self.view.draw_line(p1, p2, pen)
     
-    def draw_rect(self, rect, line_color_index, bg_color_index):
-        line_color = self.view.colorForIndex(line_color_index)
-        bg_color = self.view.colorForIndex(bg_color_index)
-        self.view.draw_rect(rect, line_color, bg_color)
+    def draw_rect(self, rect, pen_id, brush_id):
+        pen = self.view.penForID(pen_id)
+        brush = self.view.brushForID(brush_id)
+        self.view.draw_rect(rect, pen, brush)
     
-    def draw_pie(self, center, radius, start_angle, span_angle, color_index):
-        gradient = self.gradientForColorIndex(color_index)
-        self.view.draw_pie(center, radius, start_angle, span_angle, gradient)
+    def draw_pie(self, center, radius, start_angle, span_angle, brush_id):
+        brush = self.view.brushForID(brush_id)
+        self.view.draw_pie(center, radius, start_angle, span_angle, brush)
     
     def draw_text(self, text, rect, font_id):
         font = self.fontForID(font_id)

@@ -92,32 +92,37 @@ http://www.hardcoded.net/licenses/bsd_license
     return nil;
 }
 
-- (NSColor *)colorForIndex:(NSInteger)aColorIndex
+- (MGPen *)penForID:(NSInteger)aPenID
 {
     return nil;
 }
 
-- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSColor *)aColor
+- (MGBrush *)brushForID:(NSInteger)aBrushID
+{
+    return nil;
+}
+
+- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 pen:(MGPen *)aPen
 {
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path moveToPoint:aP1];
     [path lineToPoint:aP2];
-    [path setLineWidth:1.0];
-    [aColor setStroke];
+    [path setLineWidth:aPen.width];
+    [aPen.color setStroke];
     [path stroke];
 }
 
-- (void)drawRect:(NSRect)aRect lineColor:(NSColor *)aLineColor bgColor:(NSColor *)aBgColor
+- (void)drawRect:(NSRect)aRect pen:(MGPen *)aPen brush:(MGBrush *)aBrush
 {
     NSBezierPath *path = [NSBezierPath bezierPathWithRect:aRect];
-    [path setLineWidth:1.0];
-    [aBgColor setFill];
-    [aLineColor setStroke];
+    [path setLineWidth:aPen.width];
+    [aBrush.color setFill];
+    [aPen.color setStroke];
     [path fill];
     [path stroke];
 }
 
-- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle gradient:(NSGradient *)aGradient
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle brush:(MGBrush *)aBrush
 {
     CGFloat endAngle = aStartAngle + aSpanAngle;
     CGFloat circleX = aCenter.x - aRadius;
@@ -131,7 +136,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [slice lineToPoint:aCenter];
     [NSGraphicsContext saveGraphicsState];
     [slice addClip];
-    [aGradient drawInRect:circleRect angle:90];
+    [aBrush.gradient drawInRect:circleRect angle:90];
     [NSGraphicsContext restoreGraphicsState];
     [slice setLineWidth:1.0];
     [slice stroke];

@@ -7,10 +7,10 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QApplication, QPainter, QFont, QColor
+from PyQt4.QtGui import QApplication, QPainter, QFont, QColor, QBrush, QPen
 
-from core.gui.pie_chart import FontID, ColorIndex
-from .chart_view import ChartView
+from core.gui.pie_chart import FontID, BrushID
+from .chart_view import ChartView, gradientFromColor
 
 #0xrrggbb
 COLORS = [
@@ -41,11 +41,19 @@ class PieChartView(ChartView):
             result.setPointSize(self.LEGEND_FONT_SIZE)
         return result
     
-    def colorForIndex(self, colorIndex):
-        if colorIndex == ColorIndex.LegendBackground:
-            return Qt.white
+    def penForID(self, penId):
+        color = self.colors[penId]
+        pen = QPen(color)
+        pen.setWidth(1)
+        return pen
+    
+    def brushForID(self, brushId):
+        if brushId == BrushID.Legend:
+            return QBrush(Qt.white)
         else:
-            return self.colors[colorIndex]
+            color = self.colors[brushId]
+            gradient = gradientFromColor(color)
+            return QBrush(gradient)
     
     def resizeEvent(self, event):
         self.dataSource.set_view_size(self.width(), self.height())

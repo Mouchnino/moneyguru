@@ -10,12 +10,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "HSPyUtil.h"
 #import "Utils.h"
 
-static NSGradient* gradientFromColor(NSColor *aColor)
-{
-    NSColor *light = [aColor blendedColorWithFraction:0.5 ofColor:[NSColor whiteColor]];
-    return [[[NSGradient alloc] initWithStartingColor:aColor endingColor:light] autorelease];
-}
-
 @implementation MGChart
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
@@ -24,14 +18,16 @@ static NSGradient* gradientFromColor(NSColor *aColor)
     [m bindCallback:createCallback(@"ChartView", self)];
     [m release];
     fontAttrsCache = [[NSMutableDictionary dictionary] retain];
-    gradientsCache = [[NSMutableDictionary dictionary] retain];
+    penCache = [[NSMutableDictionary dictionary] retain];
+    brushCache = [[NSMutableDictionary dictionary] retain];
     return self;
 }
 
 - (void)dealloc
 {
     [fontAttrsCache release];
-    [gradientsCache release];
+    [penCache release];
+    [brushCache release];
     [super dealloc];
 }
 
@@ -64,13 +60,22 @@ static NSGradient* gradientFromColor(NSColor *aColor)
     return result;
 }
 
-- (NSGradient *)gradientForIndex:(NSInteger)aColorIndex
+- (MGPen *)penForID:(NSInteger)aPenID
 {
-    NSGradient *result = [gradientsCache objectForKey:i2n(aColorIndex)];
+    MGPen *result = [penCache objectForKey:i2n(aPenID)];
     if (result == nil) {
-        NSColor *color = [self.view colorForIndex:aColorIndex];
-        result = gradientFromColor(color);
-        [gradientsCache setObject:result forKey:i2n(aColorIndex)];
+        result = [self.view penForID:(NSInteger)aPenID];
+        [penCache setObject:result forKey:i2n(aPenID)];
+    }
+    return result;
+}
+
+- (MGBrush *)brushForID:(NSInteger)aBrushID
+{
+    MGBrush *result = [brushCache objectForKey:i2n(aBrushID)];
+    if (result == nil) {
+        result = [self.view brushForID:aBrushID];
+        [brushCache setObject:result forKey:i2n(aBrushID)];
     }
     return result;
 }
@@ -84,23 +89,23 @@ static NSGradient* gradientFromColor(NSColor *aColor)
     [[self view] setNeedsDisplay:YES];
 }
 
-- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSInteger)aColorIndex
+- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 penID:(NSInteger)aPenID
 {
-    NSColor *color = [self.view colorForIndex:aColorIndex];
-    [self.view drawLineFrom:aP1 to:aP2 colorIndex:color];
+    MGPen *pen = [self.view penForID:aPenID];
+    [self.view drawLineFrom:aP1 to:aP2 pen:pen];
 }
 
-- (void)drawRect:(NSRect)aRect lineColor:(NSInteger)aLineColor bgColor:(NSInteger)aBgColor
+- (void)drawRect:(NSRect)aRect penID:(NSInteger)aPenID brushID:(NSInteger)aBrushID
 {
-    NSColor *lineColor = [self.view colorForIndex:aLineColor];
-    NSColor *bgColor = [self.view colorForIndex:aBgColor];
-    [self.view drawRect:aRect lineColor:lineColor bgColor:bgColor];
+    MGPen *pen = [self.view penForID:aPenID];
+    MGBrush *brush = [self.view brushForID:aBrushID];
+    [self.view drawRect:aRect pen:pen brush:brush];
 }
 
-- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle colorIndex:(NSInteger)aColorIndex
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle brushID:(NSInteger)aBrushID
 {
-    NSGradient *gradient = [self gradientForIndex:aColorIndex];
-    [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle gradient:gradient];
+    MGBrush *brush = [self.view brushForID:aBrushID];
+    [self.view drawPieWithCenter:aCenter radius:aRadius startAngle:aStartAngle spanAngle:aSpanAngle brush:brush];
 }
 
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withFontID:(NSInteger)aFontID

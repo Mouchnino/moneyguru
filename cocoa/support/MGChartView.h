@@ -8,6 +8,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyChart.h"
+#import "MGPen.h"
+#import "MGBrush.h"
 
 @interface MGChartView : NSView <NSCopying>
 {
@@ -24,9 +26,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setTitle:(NSString *)aTitle;
 - (void)setCurrency:(NSString *)aCurrency;
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
-- (NSColor *)colorForIndex:(NSInteger)aColorIndex;
-- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 colorIndex:(NSColor *)aColor;
-- (void)drawRect:(NSRect)aRect lineColor:(NSColor *)aLineColor bgColor:(NSColor *)aBgColor;
-- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle gradient:(NSGradient *)aGradient;
+- (MGPen *)penForID:(NSInteger)aPenID;
+- (MGBrush *)brushForID:(NSInteger)aBrushID;
+- (void)drawLineFrom:(NSPoint)aP1 to:(NSPoint)aP2 pen:(MGPen *)aPen;
+- (void)drawRect:(NSRect)aRect pen:(MGPen *)aPen brush:(MGBrush *)aBrush;
+- (void)drawPieWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius startAngle:(CGFloat)aStartAngle spanAngle:(CGFloat)aSpanAngle brush:(MGBrush *)aBrush;
 - (void)drawText:(NSString *)aText inRect:(NSRect)aRect withAttributes:(NSDictionary *)aAttrs;
 @end

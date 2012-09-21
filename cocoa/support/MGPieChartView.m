@@ -11,9 +11,10 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "HSGeometry.h"
 
+// Synced with core
 #define FontIDTitle 1
 #define FontIDLegend 2
-#define ColorIndexLegendBackground 7
+#define BrushIDLegend 10
 
 //0xrrggbb
 static NSInteger PIE_CHART_COLORS[] = {
@@ -35,24 +36,6 @@ static NSColor* intToColor(NSInteger i)
 }
 
 @implementation MGPieChartView
-- (id)init
-{
-    self = [super init];
-    NSMutableArray *buildingColors = [NSMutableArray array];
-    for (NSInteger i=0; PIE_CHART_COLORS[i]>=0; i++) {
-        NSColor *c = intToColor(PIE_CHART_COLORS[i]);
-        [buildingColors addObject:c];
-    }
-    colors = [buildingColors retain];
-    return self;
-}
-
-- (void)dealloc
-{
-    [colors release];
-    [super dealloc];
-}
-
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
 {
     NSMutableParagraphStyle *pstyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
@@ -77,13 +60,18 @@ static NSColor* intToColor(NSInteger i)
     }
 }
 
-- (NSColor *)colorForIndex:(NSInteger)aColorIndex
+- (MGPen *)penForID:(NSInteger)aPenID
 {
-    if (aColorIndex == ColorIndexLegendBackground) {
-        return backgroundColor;
+    return [MGPen penWithColor:intToColor(PIE_CHART_COLORS[aPenID]) width:1.0];
+}
+
+- (MGBrush *)brushForID:(NSInteger)aBrushID
+{
+    if (aBrushID == BrushIDLegend) {
+        return [MGBrush brushWithColor:backgroundColor isGradient:NO];
     }
     else {
-        return [colors objectAtIndex:aColorIndex];
+        return [MGBrush brushWithColor:intToColor(PIE_CHART_COLORS[aBrushID]) isGradient:YES];
     }
 }
 

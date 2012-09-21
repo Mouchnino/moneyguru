@@ -7,7 +7,14 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGChartView.h"
 
-@interface MGPieChartView : MGChartView {}
+@interface MGPen : NSObject
+{
+    NSColor *color;
+    CGFloat width;
+}
++ (id)penWithColor:(NSColor *)aColor width:(CGFloat)aWidth;
+- (id)initWithColor:(NSColor *)aColor width:(CGFloat)aWidth;
+@property (readwrite, retain) NSColor *color;
+@property (readwrite) CGFloat width;
 @end

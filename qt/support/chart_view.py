@@ -6,15 +6,26 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QRectF, QPointF
-from PyQt4.QtGui import QWidget, QBrush, QPen
-    
+from PyQt4.QtGui import QWidget, QPen, QLinearGradient
+
+# Used by subclasses for brush creation
+def gradientFromColor(color):
+    gradient = QLinearGradient(0, 0, 0, 1)
+    gradient.setCoordinateMode(QLinearGradient.ObjectBoundingMode)
+    gradient.setColorAt(0, color)
+    gradient.setColorAt(1, color.lighter())
+    return gradient
+
 class ChartView(QWidget):
     #--- Virtual
     def fontForID(self, fontId):
         # Return a QFont instance that is represented by fontId
         pass
     
-    def colorForIndex(self, colorIndex):
+    def penForID(self, penId):
+        pass
+    
+    def brushForID(self, brushId):
         pass
     
     #--- Public
@@ -31,26 +42,22 @@ class ChartView(QWidget):
         return (x, y)
     
     #--- model --> view
-    def draw_line(self, p1, p2, color):
-        pen = QPen(color)
-        pen.setWidth(1)
+    def draw_line(self, p1, p2, pen):
         painter = self.current_painter
         painter.setPen(pen)
         painter.drawLine(QPointF(*self.flipPoint(p1)), QPointF(*self.flipPoint(p2)))
     
-    def draw_rect(self, rect, line_color, bg_color):
-        pen = QPen(line_color)
-        pen.setWidth(1)
+    def draw_rect(self, rect, pen, brush):
         painter = self.current_painter
         painter.setPen(pen)
-        painter.setBrush(QBrush(bg_color))
+        painter.setBrush(brush)
         painter.drawRect(QRectF(*self.flipRect(rect)))
     
-    def draw_pie(self, center, radius, start_angle, span_angle, gradient):
+    def draw_pie(self, center, radius, start_angle, span_angle, brush):
         center = self.flipPoint(center)
         centerX, centerY = center
         painter = self.current_painter
-        painter.setBrush(QBrush(gradient))
+        painter.setBrush(brush)
         diameter = radius * 2
         # circleRect is the area that the pie drawing use for bounds
         circleRect = QRectF(centerX - radius, centerY - radius, diameter, diameter)

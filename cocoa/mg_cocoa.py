@@ -170,9 +170,9 @@ class PyTableWithDate(PyTable):
     
 
 class ChartView(GUIObjectView):
-    def drawLineFrom_to_colorIndex_(self, p1: nspoint, p2: nspoint, color_index: int): pass
-    def drawRect_lineColor_bgColor_(self, rect: nsrect, line_color_index: int, bg_color_index: int): pass
-    def drawPieWithCenter_radius_startAngle_spanAngle_colorIndex_(self, center: nspoint, radius: float, start_angle: float, span_angle: float, color_index: int): pass
+    def drawLineFrom_to_penID_(self, p1: nspoint, p2: nspoint, pen_id: int): pass
+    def drawRect_penID_brushID_(self, rect: nsrect, pen_id: int, brush_id: int): pass
+    def drawPieWithCenter_radius_startAngle_spanAngle_brushID_(self, center: nspoint, radius: float, start_angle: float, span_angle: float, brush_id: int): pass
     def drawText_inRect_withFontID_(self, text: str, rect: nsrect, font_id: int): pass
     def sizeForText_withFontID_(self, text: str, font_id: int) -> nssize: pass
 
@@ -194,16 +194,16 @@ class PyChart(PyGUIObject):
     
     #--- Python -> Cocoa
     @dontwrap
-    def draw_line(self, p1, p2, color_index):
-        self.callback.drawLineFrom_to_colorIndex_(p1, p2, color_index)
+    def draw_line(self, p1, p2, pen_id):
+        self.callback.drawLineFrom_to_penID_(p1, p2, pen_id)
     
     @dontwrap
-    def draw_rect(self, rect, line_color_index, bg_color_index):
-        self.callback.drawRect_lineColor_bgColor_(rect, line_color_index, bg_color_index)
+    def draw_rect(self, rect, pen_id, brush_id):
+        self.callback.drawRect_penID_brushID_(rect, pen_id, brush_id)
     
     @dontwrap
-    def draw_pie(self, center, radius, start_angle, span_angle, color_index):
-        self.callback.drawPieWithCenter_radius_startAngle_spanAngle_colorIndex_(center, radius, start_angle, span_angle, color_index)
+    def draw_pie(self, center, radius, start_angle, span_angle, brush_id):
+        self.callback.drawPieWithCenter_radius_startAngle_spanAngle_brushID_(center, radius, start_angle, span_angle, brush_id)
     
     @dontwrap
     def draw_text(self, text, rect, font_id):
