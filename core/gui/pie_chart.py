@@ -76,7 +76,6 @@ class BrushID:
     Legend = 10
 
 class Legend:
-    # XXX We might have to adjust that: On Cocoa, Legend Padding was 4.
     PADDING = 2 # the padding between legend text and the rectangle behind it
     
     def __init__(self, text, color, angle):

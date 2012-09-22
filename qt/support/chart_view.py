@@ -6,7 +6,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QRectF, QPointF
-from PyQt4.QtGui import QWidget, QPen, QLinearGradient
+from PyQt4.QtGui import QWidget, QPen, QLinearGradient, QPainter
 
 # Used by subclasses for brush creation
 def gradientFromColor(color):
@@ -32,6 +32,17 @@ class ChartView(QWidget):
     def resizeEvent(self, event):
         if self.dataSource is not None:
             self.dataSource.set_view_size(self.width(), self.height())
+    
+    def paintEvent(self, event):
+        QWidget.paintEvent(self, event)
+        if self.dataSource is None:
+            return
+        painter = QPainter(self)
+        self.current_painter = painter
+        painter.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing)
+        painter.fillRect(self.rect(), Qt.white)
+        self.dataSource.draw()
+        del self.current_painter
     
     #--- Public
     def flipRect(self, rect):

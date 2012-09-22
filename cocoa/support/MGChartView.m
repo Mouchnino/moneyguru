@@ -37,6 +37,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [backgroundColor setFill];
 	[NSBezierPath fillRect:rect];
+    [self.model draw];
 }
 
 - (BOOL)isOpaque

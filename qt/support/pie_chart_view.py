@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QApplication, QPainter, QFont, QColor, QBrush, QPen
+from PyQt4.QtGui import QApplication, QFont, QColor, QBrush, QPen
 
 from core.gui.pie_chart import FontID, BrushID
 from .chart_view import ChartView, gradientFromColor
@@ -54,16 +54,4 @@ class PieChartView(ChartView):
             color = self.colors[brushId]
             gradient = gradientFromColor(color)
             return QBrush(gradient)
-    
-    def paintEvent(self, event):
-        ChartView.paintEvent(self, event)
-        if self.dataSource is None:
-            return
-        ds = self.dataSource
-        painter = QPainter(self)
-        self.current_painter = painter
-        painter.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing)
-        painter.fillRect(self.rect(), Qt.white)
-        ds.draw()
-        del self.current_painter
     

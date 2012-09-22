@@ -90,7 +90,7 @@ class BalanceGraph(Graph):
         else: # mixed up
             yClose = 0
         # painter.setPen(QPen(Qt.NoPen))
-        xTodayfactored = self.xtoday * context.xfactor;
+        xTodayfactored = self._offset_xpos(date.today().toordinal() + 1) * context.xfactor;
         pastPoints = [p for p in points if p.x <= xTodayfactored]
         futurePoints = [p for p in points if p.x > xTodayfactored]
         if pastPoints and futurePoints:
@@ -124,15 +124,6 @@ class BalanceGraph(Graph):
         self.view.draw_polygon(context.trpoints(points), PenID.Graph, None)
     
     @property
-    def title(self):
-        return ''
-    
-    @property
     def currency(self):
         return None
-    
-    @property
-    def xtoday(self):
-        """The X value representing today"""
-        return self._offset_xpos(date.today().toordinal() + 1)
     

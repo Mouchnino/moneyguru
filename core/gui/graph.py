@@ -54,6 +54,7 @@ class Graph(Chart):
     TICKMARKS_LENGTH = 5
     XLABELS_PADDING = 3
     YLABELS_PADDING = 8
+    YAXIS_EXTRA_SPACE_ON_NEGATIVE = 3
     
     #--- Private
     def _offset_xpos(self, xpos):
@@ -62,11 +63,11 @@ class Graph(Chart):
     #--- Public    
     def compute_x_axis(self):
         date_range = self.document.date_range
-        self._xmin = self._offset_xpos(date_range.start.toordinal())
-        self._xmax = self._offset_xpos(date_range.end.toordinal() + 1)
+        self.xmin = self._offset_xpos(date_range.start.toordinal())
+        self.xmax = self._offset_xpos(date_range.end.toordinal() + 1)
         tick = date_range.start
-        self._xtickmarks = [self._offset_xpos(tick.toordinal())]
-        self._xlabels = []
+        self.xtickmarks = [self._offset_xpos(tick.toordinal())]
+        self.xlabels = []
         days = date_range.days
         if days > 366:
             tick_format = '%Y'
@@ -81,9 +82,9 @@ class Graph(Chart):
             # 'tick' might be lower than xmin. ensure that it's not (for label pos)
             tick = tick if tick > date_range.start else date_range.start
             tick_pos = self._offset_xpos(tick.toordinal()) + (newtick - tick).days / 2
-            self._xlabels.append(dict(text=tick.strftime(tick_format), pos=tick_pos))
+            self.xlabels.append(dict(text=tick.strftime(tick_format), pos=tick_pos))
             tick = newtick
-            self._xtickmarks.append(self._offset_xpos(tick.toordinal()))
+            self.xtickmarks.append(self._offset_xpos(tick.toordinal()))
 
     def compute_y_axis(self):
         ymin, ymax = self.yrange()
@@ -108,10 +109,10 @@ class Graph(Chart):
             ystep = yfactor // 2
         else:
             ystep = yfactor
-        self._ymin = ymin
-        self._ymax = ymax
-        self._ytickmarks = list(range(ymin, ymax + 1, ystep))
-        self._ylabels = [dict(text=str(x), pos=x) for x in self.ytickmarks]
+        self.ymin = ymin
+        self.ymax = ymax
+        self.ytickmarks = list(range(ymin, ymax + 1, ystep))
+        self.ylabels = [dict(text=str(x), pos=x) for x in self.ytickmarks]
 
     def compute(self):
         # Our X data is based on ordinal date values, which can be quite big. On Qt, we get some
@@ -134,18 +135,23 @@ class Graph(Chart):
         data_height = self.ymax - self.ymin
         y_labels_width = max(self.view.text_size(label['text'], FontID.AxisLabel)[0] for label in self.ylabels)
         labels_height = self.view.text_size('', FontID.AxisLabel)[1]
-        graph_width = view_rect.w - y_labels_width - (self.PADDING * 2)
-        graph_height = view_rect.h - labels_height - (self.PADDING * 2)
+        title = "{} ({})".format(self.title, self.currency.code)
+        title_width, title_height = self.view.text_size(title, FontID.Title)
+        titley = view_rect.h - self.TITLE_PADDING - title_height
         graphx = y_labels_width + self.PADDING
         graphy = labels_height + self.PADDING
+        graph_width = view_rect.w - graphx - self.PADDING
+        graph_height = view_rect.h - graphy - title_height - self.TITLE_PADDING
         graph_rect = Rect(graphx, graphy, graph_width, graph_height)
         xfactor = graph_width / data_width
         yfactor = graph_height / data_height
         graph_left = round(self.xmin * xfactor)
         graph_bottom = round(self.ymin * yfactor)
+        if graph_bottom < 0:
+            # We have a graph with negative values and we need some extra space to draw the lowest values
+            graph_bottom -= self.YAXIS_EXTRA_SPACE_ON_NEGATIVE
         graph_top = round(self.ymax * yfactor)
         xoffset = graph_rect.left
-        # yoffset = graph_rect.y + graph_bottom
         yoffset = -(graph_bottom - graph_rect.y)
         context = GraphContext(xfactor, yfactor, xoffset, yoffset)
         
@@ -196,66 +202,28 @@ class Graph(Chart):
             text_rect = context.trrect(Rect(labelX, labelY, labelWidth, labels_height))
             self.view.draw_text(labelText, text_rect, FontID.AxisLabel)
         
-        # Graph title
-        title = "{} ({})".format(self.title, self.currency.code)
-        title_width, title_height = self.view.text_size(title, FontID.Title)
-        titley = view_rect.h - self.TITLE_PADDING - title_height
+        # Title
         self.view.draw_text(title, Rect(0, titley, view_rect.w, title_height), FontID.Title)
         
         self.draw_graph_after_axis(context)
     
     def draw_axis_overlay_x(self, context):
-        graphBottom = round(self.ymin * context.yfactor)
-        # XXX Translate that one everything has been pushed to core
-        # if graphBottom < 0:
-        #     # We have a graph with negative values and we need some extra space to draw the lowest values
-        #     graphBottom -= 2 * self.LINE_WIDTH
-        graphTop = round(self.ymax * context.yfactor)
+        graph_bottom = round(self.ymin * context.yfactor)
+        if graph_bottom < 0:
+            graph_bottom -= self.YAXIS_EXTRA_SPACE_ON_NEGATIVE
+        graph_top = round(self.ymax * context.yfactor)
         for tickPos in self.xtickmarks[:-1]:
             tickX = tickPos * context.xfactor
-            p1 = context.trpoint(Point(tickX, graphBottom))
-            p2 = context.trpoint(Point(tickX, graphTop))
+            p1 = context.trpoint(Point(tickX, graph_bottom))
+            p2 = context.trpoint(Point(tickX, graph_top))
             self.view.draw_line(p1, p2, PenID.AxisOverlay)
     
     def draw_axis_overlay_y(self, context):
-        graphLeft = round(self.xmin * context.xfactor)
-        graphRight = round(self.xmax * context.xfactor)
+        graph_left = round(self.xmin * context.xfactor)
+        graph_right = round(self.xmax * context.xfactor)
         for tickPos in self.ytickmarks[:-1]:
             tickY = tickPos * context.yfactor
-            p1 = context.trpoint(Point(graphLeft, tickY))
-            p2 = context.trpoint(Point(graphRight, tickY))
+            p1 = context.trpoint(Point(graph_left, tickY))
+            p2 = context.trpoint(Point(graph_right, tickY))
             self.view.draw_line(p1, p2, PenID.AxisOverlay)
-    
-    #--- Properties
-    @property
-    def xmin(self):
-        return self._xmin
-    
-    @property
-    def xmax(self):
-        return self._xmax
-    
-    @property
-    def xlabels(self):
-        return self._xlabels
-    
-    @property
-    def xtickmarks(self):
-        return self._xtickmarks
-    
-    @property
-    def ymin(self):
-        return self._ymin
-    
-    @property
-    def ymax(self):
-        return self._ymax
-    
-    @property
-    def ylabels(self):
-        return self._ylabels
-    
-    @property
-    def ytickmarks(self):
-        return self._ytickmarks
     

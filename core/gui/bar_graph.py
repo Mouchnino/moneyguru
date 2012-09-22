@@ -79,8 +79,8 @@ class BarGraph(Graph):
     
     def compute_x_axis(self):
         Graph.compute_x_axis(self)
-        self._xmin = self._offset_xpos(self._min_date.toordinal())
-        self._xmax = self._offset_xpos(self._max_date.toordinal())
+        self.xmin = self._offset_xpos(self._min_date.toordinal())
+        self.xmax = self._offset_xpos(self._max_date.toordinal())
     
     def yrange(self):
         if self._data:
@@ -142,10 +142,6 @@ class BarGraph(Graph):
         if hasattr(context, 'today_line'):
             p1, p2 = context.today_line
             self.view.draw_line(p1, p2, PenID.TodayLine)
-    
-    @property
-    def title(self):
-        return ''
     
     @property
     def currency(self):

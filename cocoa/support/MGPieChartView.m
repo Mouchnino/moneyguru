@@ -7,9 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGPieChartView.h"
-#import "Utils.h"
 #import "MGConst.h"
-#import "HSGeometry.h"
 
 // Synced with core
 #define FontIDTitle 1
@@ -73,12 +71,5 @@ static NSColor* intToColor(NSInteger i)
     else {
         return [MGBrush brushWithColor:intToColor(PIE_CHART_COLORS[aBrushID]) isGradient:YES];
     }
-}
-
-/* Drawing */
-- (void)drawRect:(NSRect)rect 
-{	
-    [super drawRect:rect];
-    [self.model draw];
 }
 @end

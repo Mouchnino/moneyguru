@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QFont, QPen, QColor, QBrush, QLinearGradient, QApplication, QPainter
+from PyQt4.QtGui import QFont, QPen, QColor, QBrush, QLinearGradient, QApplication
 
 from core.gui.graph import PenID, FontID
 from .chart_view import ChartView
@@ -55,17 +55,4 @@ class GraphView(ChartView):
             pen.setColor(Qt.darkGray)
             pen.setWidthF(self.OVERLAY_AXIS_WIDTH)
         return pen
-    
-    def paintEvent(self, event):
-        # XXX Reimplement that later
-        # if graphBottom < 0:
-        #     # We have a graph with negative values and we need some extra space to draw the lowest values
-        #     graphBottom -= 2 * self.LINE_WIDTH
-        painter = QPainter(self)
-        painter.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing)
-        painter.fillRect(self.rect(), Qt.white)
-        ds = self.dataSource
-        self.current_painter = painter
-        ds.draw()
-        del self.current_painter
     

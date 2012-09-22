@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import "MGGraphView.h"
-#import "Utils.h"
 
 // Synced with core
 #define MGFontIDTitle 1
@@ -70,11 +69,5 @@ http://www.hardcoded.net/licenses/bsd_license
     else {
         return [super penForID:aPenID];
     }
-}
-
-- (void)drawRect:(NSRect)rect 
-{
-    [super drawRect:rect];
-    [self.model draw];
 }
 @end
