@@ -75,22 +75,22 @@ class BalanceGraph(Graph):
         else:
             return (0, 1)
     
-    def draw(self, xfactor, yfactor):
+    def draw_graph(self, context):
         if len(self.data) < 2:
             return
         
-        points = [Point(x*xfactor, y*yfactor) for x, y in self.data]
+        points = [Point(x*context.xfactor, y*context.yfactor) for x, y in self.data]
         
         # close the polygons and fill them.
         # The closing point depends if we have a positive graph, a negative one or a mixed up
         if self.ymin >= 0: # positive
-            yClose = round(self.ymin * yfactor)
+            yClose = round(self.ymin * context.yfactor)
         elif self.ymax < 0: # negative
-            yClose = round(self.ymax * yfactor)
+            yClose = round(self.ymax * context.yfactor)
         else: # mixed up
             yClose = 0
         # painter.setPen(QPen(Qt.NoPen))
-        xTodayfactored = self.xtoday * xfactor;
+        xTodayfactored = self.xtoday * context.xfactor;
         pastPoints = [p for p in points if p.x <= xTodayfactored]
         futurePoints = [p for p in points if p.x > xTodayfactored]
         if pastPoints and futurePoints:
@@ -105,21 +105,23 @@ class BalanceGraph(Graph):
             lastPoint = pastPoints[-1]
             pastPoints.append(Point(lastPoint.x, yClose))
             pastPoints.append(Point(firstPoint.x, yClose))
-            self.view.draw_polygon(pastPoints, None, BrushID.GraphNormal)
+            self.view.draw_polygon(context.trpoints(pastPoints), None, BrushID.GraphNormal)
         if futurePoints:
             firstPoint = futurePoints[0]
             lastPoint = futurePoints[-1]
             futurePoints.append(Point(lastPoint.x, yClose))
             futurePoints.append(Point(firstPoint.x, yClose))
-            self.view.draw_polygon(futurePoints, None, BrushID.GraphFuture)
+            self.view.draw_polygon(context.trpoints(futurePoints), None, BrushID.GraphFuture)
         if meetingPoint is not None:
-            self.view.draw_line(Point(xTodayfactored, yClose), meetingPoint, PenID.TodayLine)
+            p1 = context.trpoint(Point(xTodayfactored, yClose))
+            p2 = context.trpoint(meetingPoint)
+            self.view.draw_line(p1, p2, PenID.TodayLine)
         
-        self.draw_axis_overlay_y(xfactor, yfactor)
-        self.draw_axis_overlay_x(xfactor, yfactor)
+        self.draw_axis_overlay_y(context)
+        self.draw_axis_overlay_x(context)
         
         # draw the main graph line. It looks better when that line is drawn after the overlay.
-        self.view.draw_polygon(points, PenID.Graph, None)
+        self.view.draw_polygon(context.trpoints(points), PenID.Graph, None)
     
     @property
     def title(self):

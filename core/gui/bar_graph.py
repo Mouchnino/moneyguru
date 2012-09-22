@@ -90,12 +90,12 @@ class BarGraph(Graph):
         else:
             return (0, 1)
     
-    def draw(self, xfactor, yfactor):
+    def draw_graph(self, context):
         for x1, x2, h1, h2 in self.data:
-            x1 *= xfactor
-            x2 *= xfactor
-            h1 *= yfactor
-            h2 *= yfactor
+            x1 *= context.xfactor
+            x2 *= context.xfactor
+            h1 *= context.yfactor
+            h2 *= context.yfactor
             
             # Compute and fill past and future rectangles
             different_side = (h1 >= 0) != (h2 >= 0)
@@ -113,29 +113,35 @@ class BarGraph(Graph):
                 future_rect.bottom = h2
             else:
                 future_rect.top = h2            
-            self.view.draw_rect(past_rect, None, BrushID.NormalBar)
-            self.view.draw_rect(future_rect, None, BrushID.FutureBar)
+            self.view.draw_rect(context.trrect(past_rect), None, BrushID.NormalBar)
+            self.view.draw_rect(context.trrect(future_rect), None, BrushID.FutureBar)
             
             # Compute and draw rect lines
             union = past_rect.united(future_rect)
             if (union.top < 0) and (union.bottom > 0): # we draw 4 sides instead of 3
-                self.view.draw_rect(union, PenID.Bar, None)
+                self.view.draw_rect(context.trrect(union), PenID.Bar, None)
             else:
                 # One of bottom and top is 0. Use the other one. We're working with floats here,
                 # comparison with 0 are hazardous, so I'm avoiding them.
                 h = union.top if abs(union.top) >= abs(union.bottom) else union.bottom
                 points = [Point(x1, 0), Point(x1, h), Point(x2, h), Point(x2, 0)]
-                self.view.draw_polygon(points, PenID.Bar, None)
+                self.view.draw_polygon(context.trpoints(points), PenID.Bar, None)
             
             
             # draw red line
             if (h1 != 0) and (h2 != 0):
                 lineY = 0 if different_side else h1
-                # XXX Under Qt, the red line is overshoadowed by the horizontal axis line when lineY == 0
-                self.view.draw_line(Point(x1, lineY), Point(x2, lineY), PenID.TodayLine)
+                p1 = context.trpoint(Point(x1, lineY))
+                p2 = context.trpoint(Point(x2, lineY))
+                context.today_line = (p1, p2) # will be drawn in draw_graph_after_axis()
         
         # We don't draw the X overlay in a bar graph
-        self.draw_axis_overlay_y(xfactor, yfactor)
+        self.draw_axis_overlay_y(context)
+    
+    def draw_graph_after_axis(self, context):
+        if hasattr(context, 'today_line'):
+            p1, p2 = context.today_line
+            self.view.draw_line(p1, p2, PenID.TodayLine)
     
     @property
     def title(self):

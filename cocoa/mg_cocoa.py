@@ -221,9 +221,6 @@ class PyChart(PyGUIObject):
     
 
 class PyGraph(PyChart):
-    def drawWithXFactor_yFactor_(self, xFactor: float, yFactor: float):
-        self.model.draw(xFactor, yFactor)
-    
     def xMin(self) -> float:
         return self.model.xmin
 

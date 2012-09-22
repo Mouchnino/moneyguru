@@ -9,7 +9,7 @@
 from datetime import date
 from math import ceil, floor, log10
 
-from hscommon.geometry import Point
+from hscommon.geometry import Point, Rect
 
 from ..model.date import inc_month, inc_year
 from .chart import Chart
@@ -17,11 +17,44 @@ from .chart import Chart
 # A graph is a chart or drawing that shows the relationship between changing things.
 # For the code, a Graph is a Chart with x and y axis.
 
+class FontID:
+    Title = 1
+    AxisLabel = 2
+
 class PenID:
     Axis = 1
     AxisOverlay = 2
 
+class GraphContext:
+    def __init__(self, xfactor, yfactor, xoffset, yoffset):
+        self.xfactor = xfactor
+        self.yfactor = yfactor
+        self.xoffset = xoffset
+        self.yoffset = yoffset
+    
+    def trpoint(self, p):
+        x, y = p
+        x += self.xoffset
+        y += self.yoffset
+        return Point(x, y)
+    
+    def trpoints(self, pts):
+        return [self.trpoint(p) for p in pts]
+    
+    def trrect(self, r):
+        x, y, w, h = r
+        x += self.xoffset
+        y += self.yoffset
+        return Rect(x, y, w, h)
+    
+
 class Graph(Chart):
+    PADDING = 16
+    TITLE_PADDING = 4
+    TICKMARKS_LENGTH = 5
+    XLABELS_PADDING = 3
+    YLABELS_PADDING = 8
+    
     #--- Private
     def _offset_xpos(self, xpos):
         return xpos - self._xoffset
@@ -89,23 +122,109 @@ class Graph(Chart):
         self.compute_x_axis()
         self.compute_y_axis()
     
-    def draw_axis_overlay_x(self, xfactor, yfactor):
-        graphBottom = round(self.ymin * yfactor)
-        # XXX Translate that one everything has been pushed to core§
+    def draw_graph(self, context):
+        pass
+    
+    def draw_graph_after_axis(self, context):
+        pass
+    
+    def draw(self):
+        view_rect = Rect(0, 0, *self.view_size)
+        data_width = self.xmax - self.xmin
+        data_height = self.ymax - self.ymin
+        y_labels_width = max(self.view.text_size(label['text'], FontID.AxisLabel)[0] for label in self.ylabels)
+        labels_height = self.view.text_size('', FontID.AxisLabel)[1]
+        graph_width = view_rect.w - y_labels_width - (self.PADDING * 2)
+        graph_height = view_rect.h - labels_height - (self.PADDING * 2)
+        graphx = y_labels_width + self.PADDING
+        graphy = labels_height + self.PADDING
+        graph_rect = Rect(graphx, graphy, graph_width, graph_height)
+        xfactor = graph_width / data_width
+        yfactor = graph_height / data_height
+        graph_left = round(self.xmin * xfactor)
+        graph_bottom = round(self.ymin * yfactor)
+        graph_top = round(self.ymax * yfactor)
+        xoffset = graph_rect.left
+        # yoffset = graph_rect.y + graph_bottom
+        yoffset = -(graph_bottom - graph_rect.y)
+        context = GraphContext(xfactor, yfactor, xoffset, yoffset)
+        
+        self.draw_graph(context)
+        
+        # X/Y axis
+        p1 = context.trpoint(Point(0, graph_bottom))
+        p2 = context.trpoint(Point(graph_width, graph_bottom))
+        p3 = context.trpoint(Point(0, graph_top))
+        self.view.draw_line(p1, p2, PenID.Axis)
+        self.view.draw_line(p1, p3, PenID.Axis)
+        if graph_bottom < 0:
+            p1 = context.trpoint(Point(0, 0))
+            p2 = context.trpoint(Point(graph_width, 0))
+            self.view.draw_line(p1, p2, PenID.Axis)
+        
+        # X tickmarks
+        tickBottomY = graph_bottom - self.TICKMARKS_LENGTH
+        for tickPos in self.xtickmarks:
+            tickX = tickPos * xfactor
+            p1 = context.trpoint(Point(tickX, graph_bottom))
+            p2 = context.trpoint(Point(tickX, tickBottomY))
+            self.view.draw_line(p1, p2, PenID.Axis)
+        
+        # Y tickmarks
+        tickLeftX = graph_left - self.TICKMARKS_LENGTH
+        for tickPos in self.ytickmarks:
+            tickY = tickPos * yfactor
+            p1 = context.trpoint(Point(graph_left, tickY))
+            p2 = context.trpoint(Point(tickLeftX, tickY))
+            self.view.draw_line(p1, p2, PenID.Axis)
+        
+        # X Labels
+        labelY = graph_bottom - labels_height - self.XLABELS_PADDING
+        for label in self.xlabels:
+            labelText = label['text']
+            labelWidth = self.view.text_size(labelText, FontID.AxisLabel)[0]
+            labelX = (label['pos'] * xfactor) - (labelWidth / 2)
+            text_rect = context.trrect(Rect(labelX, labelY, labelWidth, labels_height))
+            self.view.draw_text(labelText, text_rect, FontID.AxisLabel)
+        
+        # Y Labels
+        for label in self.ylabels:
+            labelText = label['text']
+            labelWidth = self.view.text_size(labelText, FontID.AxisLabel)[0]
+            labelX = graph_left - self.YLABELS_PADDING - labelWidth
+            labelY = (label['pos'] * yfactor) - (labels_height / 2)
+            text_rect = context.trrect(Rect(labelX, labelY, labelWidth, labels_height))
+            self.view.draw_text(labelText, text_rect, FontID.AxisLabel)
+        
+        # Graph title
+        title = "{} ({})".format(self.title, self.currency.code)
+        title_width, title_height = self.view.text_size(title, FontID.Title)
+        titley = view_rect.h - self.TITLE_PADDING - title_height
+        self.view.draw_text(title, Rect(0, titley, view_rect.w, title_height), FontID.Title)
+        
+        self.draw_graph_after_axis(context)
+    
+    def draw_axis_overlay_x(self, context):
+        graphBottom = round(self.ymin * context.yfactor)
+        # XXX Translate that one everything has been pushed to core
         # if graphBottom < 0:
         #     # We have a graph with negative values and we need some extra space to draw the lowest values
         #     graphBottom -= 2 * self.LINE_WIDTH
-        graphTop = round(self.ymax * yfactor)
+        graphTop = round(self.ymax * context.yfactor)
         for tickPos in self.xtickmarks[:-1]:
-            tickX = tickPos * xfactor
-            self.view.draw_line(Point(tickX, graphBottom), Point(tickX, graphTop), PenID.AxisOverlay)
+            tickX = tickPos * context.xfactor
+            p1 = context.trpoint(Point(tickX, graphBottom))
+            p2 = context.trpoint(Point(tickX, graphTop))
+            self.view.draw_line(p1, p2, PenID.AxisOverlay)
     
-    def draw_axis_overlay_y(self, xfactor, yfactor):
-        graphLeft = round(self.xmin * xfactor)
-        graphRight = round(self.xmax * xfactor)
+    def draw_axis_overlay_y(self, context):
+        graphLeft = round(self.xmin * context.xfactor)
+        graphRight = round(self.xmax * context.xfactor)
         for tickPos in self.ytickmarks[:-1]:
-            tickY = tickPos * yfactor
-            self.view.draw_line(Point(graphLeft, tickY), Point(graphRight, tickY), PenID.AxisOverlay)
+            tickY = tickPos * context.yfactor
+            p1 = context.trpoint(Point(graphLeft, tickY))
+            p2 = context.trpoint(Point(graphRight, tickY))
+            self.view.draw_line(p1, p2, PenID.AxisOverlay)
     
     #--- Properties
     @property

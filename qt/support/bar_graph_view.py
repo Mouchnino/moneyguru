@@ -13,8 +13,6 @@ from core.gui.bar_graph import PenID, BrushID
 from .graph_view import GraphView
 
 class BarGraphView(GraphView):
-    FLIP_COORDS = False
-    
     def penForID(self, penId):
         if penId == PenID.Bar:
             return self.linePen

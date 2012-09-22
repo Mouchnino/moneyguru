@@ -13,8 +13,6 @@ from core.gui.balance_graph import PenID, BrushID
 from .graph_view import GraphView
 
 class LineGraphView(GraphView):
-    FLIP_COORDS = False
-    
     def penForID(self, penId):
         if penId == PenID.Graph:
             return self.linePen

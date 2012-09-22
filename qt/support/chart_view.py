@@ -17,8 +17,6 @@ def gradientFromColor(color):
     return gradient
 
 class ChartView(QWidget):
-    FLIP_COORDS = True
-    
     #--- Virtual
     def fontForID(self, fontId):
         # Return a QFont instance that is represented by fontId
@@ -39,15 +37,11 @@ class ChartView(QWidget):
     def flipRect(self, rect):
         # Coordinates from the core are based on the origin being at the *lower* left corner. In
         # Qt, it's at the upper left corner. We have to flip that.
-        if not self.FLIP_COORDS:
-            return rect
         x, y, w, h = rect
         y = self.height() - y - h
         return (x, y, w, h)
     
     def flipPoint(self, point):
-        if not self.FLIP_COORDS:
-            return point
         x, y = point
         y = self.height() - y
         return (x, y)
