@@ -178,15 +178,6 @@ class ChartView(GUIObjectView):
     def sizeForText_withFontID_(self, text: str, font_id: int) -> nssize: pass
 
 class PyChart(PyGUIObject):
-    def data(self) -> list:
-        return self.model.data
-    
-    def title(self) -> str:
-        return self.model.title
-    
-    def currency(self) -> str:
-        return self.model.currency.code
-    
     def setViewWidth_height_(self, width: int, height: int):
         self.model.set_view_size(width, height)
     
@@ -218,35 +209,6 @@ class PyChart(PyGUIObject):
     @dontwrap
     def text_size(self, text, font_id):
         return self.callback.sizeForText_withFontID_(text, font_id)
-    
-
-class PyGraph(PyChart):
-    def xMin(self) -> float:
-        return self.model.xmin
-
-    def xMax(self) -> float:
-        return self.model.xmax
-    
-    def yMin(self) -> float:
-        return self.model.ymin
-    
-    def yMax(self) -> float:
-        return self.model.ymax
-    
-    def xToday(self) -> float:
-        return getattr(self.model, 'xtoday', 0) # bar charts don't have a xtoday attr
-    
-    def xLabels(self) -> list:
-        return self.model.xlabels
-    
-    def xTickMarks(self) -> list:
-        return self.model.xtickmarks
-    
-    def yLabels(self) -> list:
-        return self.model.ylabels
-    
-    def yTickMarks(self) -> list:
-        return self.model.ytickmarks
     
 
 class ReportView(OutlineView):

@@ -7,10 +7,10 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGGraph.h"
+#import "MGChart.h"
 #import "MGLineGraphView.h"
 
 
-@interface MGBalanceGraph : MGGraph {}
+@interface MGBalanceGraph : MGChart {}
 - (id)initWithPyRef:(PyObject *)aPyRef;
 @end

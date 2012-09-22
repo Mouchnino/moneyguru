@@ -14,17 +14,11 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface MGChartView : NSView <NSCopying>
 {
     PyChart *model;
-    NSArray *data;
-    NSString *title;
-    NSString *currency;
     NSColor *backgroundColor;
     NSColor *titleColor;
 }
 - (PyChart *)model;
 - (void)setModel:(PyChart *)aModel;
-- (void)setData:(NSArray *)aData;
-- (void)setTitle:(NSString *)aTitle;
-- (void)setCurrency:(NSString *)aCurrency;
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID;
 - (MGPen *)penForID:(NSInteger)aPenID;
 - (MGBrush *)brushForID:(NSInteger)aBrushID;

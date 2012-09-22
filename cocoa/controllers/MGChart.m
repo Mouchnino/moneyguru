@@ -89,9 +89,6 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Python callbacks */
 - (void)refresh
 {
-    [[self view] setData:[[self model] data]];
-    [[self view] setTitle:[[self model] title]];
-    [[self view] setCurrency:[[self model] currency]];
     [[self view] setNeedsDisplay:YES];
 }
 

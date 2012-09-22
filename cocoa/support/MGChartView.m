@@ -22,9 +22,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [backgroundColor release];
     [titleColor release];
-    [data release];
-    [title release];
-    [currency release];
     [model release];
     [super dealloc];
 }
@@ -33,9 +30,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     MGChartView *result = [[[self class] alloc] init];
     [result setModel:model];
-    [result setData:data];
-    [result setTitle:title];
-    [result setCurrency:currency];
     return result;
 }
 
@@ -65,24 +59,6 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [model release];
     model = [aModel retain];
-}
-
-- (void)setData:(NSArray *)aData
-{
-    [data autorelease];
-    data = [aData retain];
-}
-
-- (void)setTitle:(NSString *)aTitle
-{
-    [title autorelease];
-    title = [aTitle retain];
-}
-
-- (void)setCurrency:(NSString *)aCurrency
-{
-    [currency autorelease];
-    currency = [aCurrency retain];
 }
 
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID

@@ -8,8 +8,8 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGBarGraphView.h"
-#import "MGGraph.h"
+#import "MGChart.h"
 
-@interface MGBarGraph : MGGraph {}
+@interface MGBarGraph : MGChart {}
 - (id)initWithPyRef:(PyObject *)aPyRef;
 @end

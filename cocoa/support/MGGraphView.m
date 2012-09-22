@@ -16,15 +16,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #define MGPenIDAxis 1
 #define MGPenIDAxisOverlay 2
 
-static NSArray* arrayWithoutLastElement(NSArray *a) {
-    if ([a count]) {
-        return [a subarrayWithRange:NSMakeRange(0, [a count]-1)];
-    }
-    else {
-        return a;
-    }
-}
-
 @implementation MGGraphView
 - (id)init
 {
@@ -41,33 +32,9 @@ static NSArray* arrayWithoutLastElement(NSArray *a) {
 
 - (void)dealloc
 {
-    [xLabels release];
-    [yLabels release];
-    [xTickMarks release];
-    [yTickMarks release];
     [fillGradient release];
     [futureGradient release];
     [super dealloc];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    MGGraphView *result = [super copyWithZone:zone];
-    [result setMinX:minX];
-    [result setMaxX:maxX];
-    [result setMinY:minY];
-    [result setMaxY:maxY];
-    [result setXToday:xToday];
-    [result setXLabels:xLabels];
-    [result setYLabels:yLabels];
-    [result setXTickMarks:xTickMarks];
-    [result setYTickMarks:yTickMarks];
-    return result;
-}
-
-- (PyGraph *)model
-{
-    return (PyGraph *)[super model];
 }
 
 - (NSDictionary *)fontAttributesForID:(NSInteger)aFontID
@@ -109,54 +76,5 @@ static NSArray* arrayWithoutLastElement(NSArray *a) {
 {
     [super drawRect:rect];
     [self.model draw];
-}
-
-- (void)setMinX:(CGFloat)aMinX
-{
-    minX = aMinX;
-}
-
-- (void)setMaxX:(CGFloat)aMaxX
-{
-    maxX = aMaxX;
-}
-
-- (void)setMinY:(CGFloat)aMinY
-{
-    minY = aMinY;
-}
-
-- (void)setMaxY:(CGFloat)aMaxY
-{
-    maxY = aMaxY;
-}
-
-- (void)setXToday:(CGFloat)aXToday
-{
-    xToday = aXToday;
-}
-
-- (void)setXLabels:(NSArray *)aXLabels
-{
-    [xLabels autorelease];
-    xLabels = [aXLabels retain];
-}
-
-- (void)setYLabels:(NSArray *)aYLabels
-{
-    [yLabels autorelease];
-    yLabels = [aYLabels retain];
-}
-
-- (void)setXTickMarks:(NSArray *)aXTickMarks
-{
-    [xTickMarks autorelease];
-    xTickMarks = [aXTickMarks retain];
-}
-
-- (void)setYTickMarks:(NSArray *)aYTickMarks
-{
-    [yTickMarks autorelease];
-    yTickMarks = [aYTickMarks retain];
 }
 @end
