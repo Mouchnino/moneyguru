@@ -130,19 +130,18 @@ class PieChart(Chart):
             data.append((tr('Others'), others_total, COLOR_COUNT-1))
         total = sum(amount for _, amount, _ in data)
         if not total:
-            return
+            return None
         fmt = lambda name, amount: '%s %1.1f%%' % (name, amount / total * 100)
         return [(fmt(name, amount), amount, color) for name, amount, color in data]
     
     def compute(self):
         pie1, pie2 = self._get_data()
         self.pie1 = self.compute_pie_data(pie1)
-        if pie2 is not None:
-            self.pie2 = self.compute_pie_data(pie2)
-        else:
-            self.pie2 = None
+        self.pie2 = self.compute_pie_data(pie2)
     
     def draw_pie(self, data, circle_bounds):
+        if not data:
+            return
         circle_size = min(circle_bounds.w, circle_bounds.h)
         radius = circle_size / 2
         center = circle_bounds.center()
@@ -219,21 +218,19 @@ class PieChart(Chart):
         circle_bounds = view_rect.scaled_rect(-self.PADDING, -self.PADDING)
         circle_bounds.h -= title_height
         
-        if self.pie2 is not None:
-            if circle_bounds.w > circle_bounds.h:
-                circle_bounds.w = (circle_bounds.w - self.PADDING) / 2
-                circle_bounds2 = Rect(circle_bounds.right + self.PADDING, circle_bounds.y,
-                    circle_bounds.w, circle_bounds.h)
-            else:
-                circle_bounds.h = (circle_bounds.h - self.PADDING) / 2
-                # We want the first circle to be on top
-                circle_bounds.y += circle_bounds.h + self.PADDING
-                # hscommon.geometry has a top-left origin, we use "top" when we mean "bottom".
-                circle_bounds2 = Rect(circle_bounds.x,
-                    circle_bounds.top - circle_bounds.h - self.PADDING, circle_bounds.w,
-                    circle_bounds.h)
+        if circle_bounds.w > circle_bounds.h:
+            circle_bounds.w = (circle_bounds.w - self.PADDING) / 2
+            circle_bounds2 = Rect(circle_bounds.right + self.PADDING, circle_bounds.y,
+                circle_bounds.w, circle_bounds.h)
+        else:
+            circle_bounds.h = (circle_bounds.h - self.PADDING) / 2
+            # We want the first circle to be on top
+            circle_bounds.y += circle_bounds.h + self.PADDING
+            # hscommon.geometry has a top-left origin, we use "top" when we mean "bottom".
+            circle_bounds2 = Rect(circle_bounds.x,
+                circle_bounds.top - circle_bounds.h - self.PADDING, circle_bounds.w,
+                circle_bounds.h)
         
         self.draw_pie(self.pie1, circle_bounds)
-        if self.pie2 is not None:
-            self.draw_pie(self.pie2, circle_bounds2)
+        self.draw_pie(self.pie2, circle_bounds2)
     
