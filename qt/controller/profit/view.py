@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QVBoxLayout, QFrame, QAbstractItemView, QSplitter, QWidget
+from PyQt4.QtGui import QVBoxLayout, QFrame, QAbstractItemView, QSplitter
 
 from core.const import PaneArea
 
@@ -23,8 +23,7 @@ class ProfitView(BaseView):
         self._setupUi()
         self.psheet = ProfitSheet(self.model.istatement, view=self.treeView)
         self.pgraph = Chart(self.model.pgraph, view=self.graphView)
-        self.ipiechart = Chart(self.model.ipie, view=self.incomePieChart)
-        self.epiechart = Chart(self.model.epie, view=self.expensePieChart)
+        self.piechart = Chart(self.model.pie, view=self.pieChart)
     
     def _setupUi(self):
         self.resize(558, 447)
@@ -48,17 +47,9 @@ class ProfitView(BaseView):
         self.treeView.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.treeView.header().setStretchLastSection(False)
         self.subSplitterView.addWidget(self.treeView)
-        self.pieHolder = QWidget()
-        self.pieLayout = QVBoxLayout()
-        self.pieLayout.setMargin(0)
-        self.pieLayout.setSpacing(0)
-        self.incomePieChart = PieChartView(self)
-        self.incomePieChart.setMinimumSize(300, 0)
-        self.pieLayout.addWidget(self.incomePieChart)
-        self.expensePieChart = PieChartView(self)
-        self.pieLayout.addWidget(self.expensePieChart)
-        self.pieHolder.setLayout(self.pieLayout)
-        self.subSplitterView.addWidget(self.pieHolder)
+        self.pieChart = PieChartView(self)
+        self.pieChart.setMinimumSize(300, 0)
+        self.subSplitterView.addWidget(self.pieChart)
         self.splitterView.addWidget(self.subSplitterView)
         self.graphView = BarGraphView(self)
         self.graphView.setMinimumSize(0, 200)
@@ -78,8 +69,7 @@ class ProfitView(BaseView):
         hidden = self.model.mainwindow.hidden_areas
         viewPrinter.fitTree(self.psheet)
         if PaneArea.RightChart not in hidden:
-            viewPrinter.fit(self.ipiechart.view, 150, 150, expandH=True)
-            viewPrinter.fit(self.epiechart.view, 150, 150, expandH=True)
+            viewPrinter.fit(self.piechart.view, 150, 300, expandH=True)
         if PaneArea.BottomGraph not in hidden:
             viewPrinter.fit(self.pgraph.view, 300, 150, expandH=True, expandV=True)
     
@@ -87,6 +77,6 @@ class ProfitView(BaseView):
     def update_visibility(self):
         hidden = self.model.mainwindow.hidden_areas
         self.graphView.setHidden(PaneArea.BottomGraph in hidden)
-        self.pieHolder.setHidden(PaneArea.RightChart in hidden)
+        self.pieChart.setHidden(PaneArea.RightChart in hidden)
     
     

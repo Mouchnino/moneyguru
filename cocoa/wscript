@@ -40,8 +40,7 @@ def build(ctx):
     cocoalib_folders = ['controllers', 'views']
     cocoalib_includes = [cocoalib_node] + [cocoalib_node.find_dir(folder) for folder in cocoalib_folders]
     cocoalib_uses = ['NSEventAdditions', 'Dialogs', 'HSAboutBox', 'HSFairwareReminder', 'Utils',
-        'HSPyUtil', 'ValueTransformers', 'HSGeometry',
-        'NSImageAdditions', 'NSNotificationAdditions',
+        'HSPyUtil', 'ValueTransformers', 'NSImageAdditions', 'NSNotificationAdditions',
         'views/HSTableView', 'views/HSOutlineView', 'views/NSIndexPathAdditions',
         'views/NSTableViewAdditions',
         'controllers/HSColumns', 'controllers/HSGUIController', 'controllers/HSTable',

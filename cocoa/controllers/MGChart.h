@@ -20,6 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
     NSMutableDictionary *brushCache;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;
+- (id)initWithPyRef:(PyObject *)aPyRef view:(MGChartView *)aView;
 - (MGChartView *)view;
 - (PyChart *)model;
 

@@ -5,14 +5,14 @@ result = SplitView(None, 0, vertical=False)
 subSplit = SplitView(result, 0, vertical=True)
 outline = OutlineView(subSplit)
 outline.OBJC_CLASS = 'HSOutlineView'
-doubleView = View(subSplit, 329, 1)
-doubleView.OBJC_CLASS = 'MGDoubleView'
+pieView = View(subSplit, 329, 1)
+pieView.OBJC_CLASS = 'MGPieChartView'
 
 owner.mainResponder = outline
 owner.mainSplitView = result
 owner.subSplitView = subSplit
 owner.outlineView = outline
-owner.pieChartsView = doubleView
+owner.pieChartsView = pieView
 
 result.dividerStyle = subSplit.dividerStyle = const.NSSplitViewDividerStyleThin
 outline.allowsColumnReordering = True

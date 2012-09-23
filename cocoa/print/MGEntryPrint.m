@@ -10,17 +10,21 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGConst.h"
 #import "PyEntryPrint.h"
 
-#define GRAPH_HEIGHT_PROPORTION 0.4
+#define VIEW_TO_PRINT_PROPORTIONS 0.7
 
 @implementation MGEntryPrint
 - (id)initWithPyParent:(PyGUIObject *)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView
 {
     self = [super initWithPyParent:pyParent tableView:aTableView];
+    /* See MGSheetPrint for comments on chart drawing in a printing context.
+    */
     if (aGraphView != nil) {
-        graphView = [aGraphView copy];
+        [aGraphView lockFocus];
+        graphImage = [[NSImage alloc] initWithData:[aGraphView dataWithPDFInsideRect:[aGraphView bounds]]];
+        [aGraphView unlockFocus];
     }
     else {
-        graphView = nil;
+        graphImage = nil;
     }
     return self;
 }
@@ -28,24 +32,27 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setUpWithPrintInfo:(NSPrintInfo *)pi
 {
     [super setUpWithPrintInfo:pi];
-    if (graphView != nil)
-    {
-        graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;
-        [graphView setHidden:YES];
-        [self addSubview:graphView];
-        graphY = lastRowYOnLastPage;
-        if (graphY + graphHeight > pageHeight)
-        {
-            pageCount++;
-            graphY = headerHeight;
+    graphPage = -1;
+    if (graphImage != nil) {
+        graphRect.size = graphImage.size;
+        graphRect.size.width *= VIEW_TO_PRINT_PROPORTIONS;
+        graphRect.size.height *= VIEW_TO_PRINT_PROPORTIONS;
+        if (graphRect.size.width > pageWidth) {
+            graphRect.size.width = pageWidth;
         }
-        [graphView setFrame:NSMakeRect(0, graphY, pageWidth, graphHeight)];
+        graphRect.origin.x = 0;
+        graphRect.origin.y = pageHeight - graphRect.size.height;
+        if (lastRowYOnLastPage > graphRect.origin.y) {
+            pageCount++;
+            graphRect.origin.y = headerHeight;
+        }
+        graphPage = pageCount;
     }
 }
 
 - (void)dealloc
 {
-    [graphView release];
+    [graphImage release];
     [super dealloc];
 }
 
@@ -73,9 +80,10 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)drawRect:(NSRect)rect
 {
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    if (graphView != nil) {
-        BOOL shouldShowGraph = pageNumber == pageCount;
-        [graphView setHidden:!shouldShowGraph];
+    if (pageNumber == graphPage) {
+        // If the simple drawRect: is used, our image is drawn flipped.
+        [graphImage drawInRect:graphRect fromRect:NSZeroRect operation:NSCompositeSourceOver
+            fraction:1.0 respectFlipped:YES hints:nil];
     }
     [super drawRect:rect];
 }

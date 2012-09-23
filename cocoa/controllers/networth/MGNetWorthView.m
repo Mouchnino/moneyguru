@@ -23,13 +23,9 @@ http://www.hardcoded.net/licenses/bsd_license
     [m release];
     self.wholeView = createMGAccountSheetView_UI(self);
     balanceSheet = [[MGBalanceSheet alloc] initWithPyRef:[[self model] sheet] view:outlineView];
-    assetsPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] apie]];
-    liabilitiesPieChart = [[MGPieChart alloc] initWithPyRef:[[self model] lpie]];
-    [pieChartsView setFirstView:[assetsPieChart view]];
-    [pieChartsView setSecondView:[liabilitiesPieChart view]];
+    pieChart = [[MGChart alloc] initWithPyRef:[[self model] pie] view:pieChartsView];
     netWorthGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] nwgraph]];
     graphView = [netWorthGraph view];
-    pieView = pieChartsView;
     [graphView setFrame:NSMakeRect(0, 0, 1, 258)];
     [wholeView addSubview:graphView];
     [(NSSplitView *)wholeView adjustSubviews];
@@ -42,8 +38,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     [balanceSheet release];
     [netWorthGraph release];
-    [assetsPieChart release];
-    [liabilitiesPieChart release];
+    [pieChart release];
     [super dealloc];
 }
 
@@ -56,9 +51,9 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     NSIndexSet *hiddenAreas = [Utils array2IndexSet:[[self model] hiddenAreas]];
     NSView *printGraphView = [hiddenAreas containsIndex:MGPaneAreaBottomGraph] ? nil : graphView;
-    MGDoubleView *printPieChartView = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? nil : pieChartsView;
+    MGPieChartView *printPieChartView = [hiddenAreas containsIndex:MGPaneAreaRightChart] ? nil : pieChartsView;
     MGBalancePrint *p = [[MGBalancePrint alloc] initWithPyParent:[self model] outlineView:outlineView
-        graphView:printGraphView pieViews:printPieChartView];
+        graphView:printGraphView pieView:printPieChartView];
     return [p autorelease];
 }
 

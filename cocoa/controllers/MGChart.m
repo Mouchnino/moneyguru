@@ -23,6 +23,13 @@ http://www.hardcoded.net/licenses/bsd_license
     return self;
 }
 
+- (id)initWithPyRef:(PyObject *)aPyRef view:(MGChartView *)aView
+{
+    self = [self initWithPyRef:aPyRef];
+    [self setView:aView];
+    return self;
+}
+
 - (void)dealloc
 {
     [fontAttrsCache release];

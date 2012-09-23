@@ -537,8 +537,6 @@ class TestApp(TestAppBase):
             self.nwgraph_gui = self.nwgraph.view
             self.bsheet = self.link_gui(self.nwview.bsheet)
             self.bsheet_gui = self.bsheet.view
-            self.apie = self.link_gui(self.nwview.apie)
-            self.lpie = self.link_gui(self.nwview.lpie)
         return self.current_view()
     
     def show_pview(self):
@@ -548,8 +546,6 @@ class TestApp(TestAppBase):
             self.pgraph = self.link_gui(self.pview.pgraph)
             self.istatement = self.link_gui(self.pview.istatement)
             self.istatement_gui = self.istatement.view
-            self.ipie = self.link_gui(self.pview.ipie)
-            self.epie = self.link_gui(self.pview.epie)
         return self.current_view()
     
     def show_tview(self):

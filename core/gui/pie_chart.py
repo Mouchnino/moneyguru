@@ -105,7 +105,7 @@ class PieChart(Chart):
     
     #--- Virtual
     def _get_data(self):
-        # Returns a list of {name: amount}
+        # Returns a 2-sized tuple of list of {name: amount}
         raise NotImplementedError()
     
     #--- Override
@@ -119,9 +119,7 @@ class PieChart(Chart):
             self.slice_count = slice_count
             self._revalidate()
     
-    def compute(self):
-        self._data = []
-        data = self._get_data()
+    def compute_pie_data(self, data):
         data = [(name, float(amount)) for name, amount in data.items() if amount > 0]
         data.sort(key=lambda t: t[1], reverse=True)
         data = [(name, amount, i % (COLOR_COUNT-1)) for i, (name, amount) in enumerate(data)]
@@ -134,33 +132,26 @@ class PieChart(Chart):
         if not total:
             return
         fmt = lambda name, amount: '%s %1.1f%%' % (name, amount / total * 100)
-        self._data = [(fmt(name, amount), amount, color) for name, amount, color in data]
+        return [(fmt(name, amount), amount, color) for name, amount, color in data]
     
-    def draw(self):
-        view_rect = Rect(0, 0, *self.view_size)
-        title = self.title
-        _, title_height = self.view.text_size(title, 1)
-        titley = view_rect.h - title_height - self.PADDING
-        title_rect = (0, titley, view_rect.w, title_height)
-        self.view.draw_text(title, title_rect, FontID.Title)
-        
-        if not hasattr(self, '_data'):
-            return
-        
-        # circle coords
-        # circle_bounds is the area in which the circle is allowed to be drawn (important for legend text)
-        circle_bounds = view_rect.scaled_rect(-self.PADDING, -self.PADDING)
-        circle_bounds.h -= title_height
-        # circle_bounds = Rect(self.PADDING, self.PADDING + title_height, max_width, max_height)
+    def compute(self):
+        pie1, pie2 = self._get_data()
+        self.pie1 = self.compute_pie_data(pie1)
+        if pie2 is not None:
+            self.pie2 = self.compute_pie_data(pie2)
+        else:
+            self.pie2 = None
+    
+    def draw_pie(self, data, circle_bounds):
         circle_size = min(circle_bounds.w, circle_bounds.h)
         radius = circle_size / 2
         center = circle_bounds.center()
         
         # draw pie
-        total_amount = sum(amount for _, amount, _ in self.data)
+        total_amount = sum(amount for _, amount, _ in data)
         start_angle = 0
         legends = []
-        for legend_text, amount, color_index in self.data:
+        for legend_text, amount, color_index in data:
             fraction = amount / total_amount
             angle = fraction * 360
             self.view.draw_pie(center, radius, start_angle, angle, color_index)
@@ -211,4 +202,38 @@ class PieChart(Chart):
             self.view.draw_rect(legend.label_rect, legend.color, BrushID.Legend)
             legend.compute_text_rect()
             self.view.draw_text(legend.text, legend.text_rect, FontID.Legend)
+    
+    def draw(self):
+        view_rect = Rect(0, 0, *self.view_size)
+        title = self.title
+        _, title_height = self.view.text_size(title, 1)
+        titley = view_rect.h - title_height - self.PADDING
+        title_rect = (0, titley, view_rect.w, title_height)
+        self.view.draw_text(title, title_rect, FontID.Title)
+        
+        if not hasattr(self, 'pie1'):
+            return
+        
+        # circle coords
+        # circle_bounds is the area in which the circle is allowed to be drawn (important for legend text)
+        circle_bounds = view_rect.scaled_rect(-self.PADDING, -self.PADDING)
+        circle_bounds.h -= title_height
+        
+        if self.pie2 is not None:
+            if circle_bounds.w > circle_bounds.h:
+                circle_bounds.w = (circle_bounds.w - self.PADDING) / 2
+                circle_bounds2 = Rect(circle_bounds.right + self.PADDING, circle_bounds.y,
+                    circle_bounds.w, circle_bounds.h)
+            else:
+                circle_bounds.h = (circle_bounds.h - self.PADDING) / 2
+                # We want the first circle to be on top
+                circle_bounds.y += circle_bounds.h + self.PADDING
+                # hscommon.geometry has a top-left origin, we use "top" when we mean "bottom".
+                circle_bounds2 = Rect(circle_bounds.x,
+                    circle_bounds.top - circle_bounds.h - self.PADDING, circle_bounds.w,
+                    circle_bounds.h)
+        
+        self.draw_pie(self.pie1, circle_bounds)
+        if self.pie2 is not None:
+            self.draw_pie(self.pie2, circle_bounds2)
     

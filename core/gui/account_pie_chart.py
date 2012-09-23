@@ -23,17 +23,17 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
     INVALIDATING_MESSAGES = PieChart.INVALIDATING_MESSAGES | {'accounts_excluded',
         'group_expanded_state_changed'}
     
-    def __init__(self, parent_view, account_type, title):
+    def __init__(self, parent_view, title):
         PieChart.__init__(self, parent_view)
-        self._account_type = account_type
         self._title = title
     
     #--- Protected
-    def _get_account_data(self): # Virtual
+    def _get_account_data(self, accounts): # Virtual
         raise NotImplementedError()
     
-    def _get_data(self): # Override
-        account_data = self._get_account_data()
+    def _get_data_for_account_type(self, account_type): # Override
+        accounts = self._accounts(account_type)
+        account_data = self._get_account_data(accounts)
         data = defaultdict(int)
         for account, amount in account_data:
             name = account.name
@@ -42,8 +42,8 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
             data[name] += amount
         return data
     
-    def _accounts(self):
-        accounts = {a for a in self.document.accounts if a.type == self._account_type}
+    def _accounts(self, account_type):
+        accounts = {a for a in self.document.accounts if a.type == account_type}
         return accounts - self.document.excluded_accounts
     
     #--- Properties
@@ -59,9 +59,12 @@ class _AccountPieChart(PieChart, SheetViewNotificationsMixin):
         self._revalidate()
     
 
-class _BalancePieChart(_AccountPieChart):
+class BalancePieChart(_AccountPieChart):
+    def __init__(self, networth_view):
+        _AccountPieChart.__init__(self, networth_view, tr('Assets & Liabilities'))
+    
     #--- Override
-    def _get_account_data(self):
+    def _get_account_data(self, accounts):
         date = self.document.date_range.end
         currency = self.document.default_currency
         def get_value(account):
@@ -71,22 +74,18 @@ class _BalancePieChart(_AccountPieChart):
             budgeted = convert_amount(budgeted, currency, date)
             return balance + budgeted
         
-        return [(a, get_value(a)) for a in self._accounts()]
+        return [(a, get_value(a)) for a in accounts]
     
+    def _get_data(self):
+        return (self._get_data_for_account_type(AccountType.Asset),
+            self._get_data_for_account_type(AccountType.Liability))
 
-class AssetsPieChart(_BalancePieChart):
-    def __init__(self, networth_view):
-        _BalancePieChart.__init__(self, networth_view, AccountType.Asset, tr('Assets'))
+class CashFlowPieChart(_AccountPieChart):
+    def __init__(self, profit_view):
+        _AccountPieChart.__init__(self, profit_view, tr('Income & Expenses'))
     
-
-class LiabilitiesPieChart(_BalancePieChart):
-    def __init__(self, networth_view):
-        _BalancePieChart.__init__(self, networth_view, AccountType.Liability, tr('Liabilities'))
-    
-
-class _CashFlowPieChart(_AccountPieChart):
     #--- Override
-    def _get_account_data(self):
+    def _get_account_data(self, accounts):
         date_range = self.document.date_range
         currency = self.document.default_currency
         def get_value(account):
@@ -94,15 +93,9 @@ class _CashFlowPieChart(_AccountPieChart):
             budgeted = self.document.budgets.normal_amount_for_account(account, date_range, currency=currency)
             return cash_flow + budgeted
         
-        return [(a, get_value(a)) for a in self._accounts()]
+        return [(a, get_value(a)) for a in accounts]
     
-
-class IncomePieChart(_CashFlowPieChart):
-    def __init__(self, profit_view):
-        _CashFlowPieChart.__init__(self, profit_view, AccountType.Income, tr('Income'))
-    
-
-class ExpensesPieChart(_CashFlowPieChart):
-    def __init__(self, profit_view):
-        _CashFlowPieChart.__init__(self, profit_view, AccountType.Expense, tr('Expenses'))
+    def _get_data(self):
+        return (self._get_data_for_account_type(AccountType.Income),
+            self._get_data_for_account_type(AccountType.Expense))
     

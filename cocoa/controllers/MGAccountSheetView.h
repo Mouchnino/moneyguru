@@ -11,9 +11,8 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGBaseView.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
-#import "MGPieChart.h"
 #import "MGBalanceGraph.h"
-#import "MGDoubleView.h"
+#import "MGPieChartView.h"
 
 /* This base class is to share the pie/graph visibility logic between netwroth and profit views
 */
@@ -22,11 +21,10 @@ http://www.hardcoded.net/licenses/bsd_license
     NSSplitView *mainSplitView;
     NSSplitView *subSplitView;
     HSOutlineView *outlineView;
-    MGDoubleView *pieChartsView;
+    MGPieChartView *pieChartsView;
     
-    /* Set these two during initialization */
+    /* Set this during initialization */
     NSView *graphView;
-    NSView *pieView;
     
     BOOL graphCollapsed;
     BOOL pieCollapsed;
@@ -37,7 +35,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @property (readwrite, retain) NSSplitView *mainSplitView;
 @property (readwrite, retain) NSSplitView *subSplitView;
 @property (readwrite, retain) HSOutlineView *outlineView;
-@property (readwrite, retain) MGDoubleView *pieChartsView;
+@property (readwrite, retain) MGPieChartView *pieChartsView;
 
 /* model --> view */
 - (void)updateVisibility;

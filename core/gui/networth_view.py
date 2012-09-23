@@ -11,7 +11,7 @@ from ..const import PaneType
 from .account_sheet_view import AccountSheetView
 from .balance_sheet import BalanceSheet
 from .net_worth_graph import NetWorthGraph
-from .account_pie_chart import AssetsPieChart, LiabilitiesPieChart
+from .account_pie_chart import BalancePieChart
 
 class NetWorthView(AccountSheetView):
     VIEW_TYPE = PaneType.NetWorth
@@ -22,7 +22,6 @@ class NetWorthView(AccountSheetView):
         self.bsheet = BalanceSheet(self)
         self.columns = self.bsheet.columns
         self.nwgraph = NetWorthGraph(self)
-        self.apie = AssetsPieChart(self)
-        self.lpie = LiabilitiesPieChart(self)
-        self.set_children([self.bsheet, self.nwgraph, self.apie, self.lpie])
+        self.pie = BalancePieChart(self)
+        self.set_children([self.bsheet, self.nwgraph, self.pie])
     

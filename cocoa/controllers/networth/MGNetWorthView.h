@@ -11,15 +11,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountSheetView.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
-#import "MGPieChart.h"
+#import "MGChart.h"
 #import "MGBalanceGraph.h"
-#import "MGDoubleView.h"
 
 @interface MGNetWorthView : MGAccountSheetView
 {
     MGBalanceSheet *balanceSheet;
-    MGPieChart *assetsPieChart;
-    MGPieChart *liabilitiesPieChart;
+    MGChart *pieChart;
     MGBalanceGraph *netWorthGraph;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;

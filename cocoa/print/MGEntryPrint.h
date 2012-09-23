@@ -11,9 +11,9 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGEntryPrint : MGTableWithSplitsPrint
 {
-    NSView *graphView;
-    CGFloat graphY;
-    CGFloat graphHeight;
+    NSImage *graphImage;
+    NSRect graphRect;
+    NSInteger graphPage;
 }
 - (id)initWithPyParent:(PyGUIObject *)pyParent tableView:(NSTableView *)aTableView graphView:(NSView *)aGraphView;
 @end

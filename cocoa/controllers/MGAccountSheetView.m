@@ -43,7 +43,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
-    if (subview == pieView) {
+    if (subview == pieChartsView) {
         return pieCollapsed;
     }
     if (subview == graphView) {
@@ -82,7 +82,7 @@ http://www.hardcoded.net/licenses/bsd_license
     else {
         if (!pieCollapsed) {
             pieCollapsed = YES;
-            pieCollapseWidth = NSWidth([pieView frame]);
+            pieCollapseWidth = NSWidth([pieChartsView frame]);
             [subSplitView setPosition:NSWidth([subSplitView frame]) ofDividerAtIndex:0];
         }
     }

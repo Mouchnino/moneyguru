@@ -11,7 +11,7 @@ from ..const import PaneType
 from .account_sheet_view import AccountSheetView
 from .income_statement import IncomeStatement
 from .profit_graph import ProfitGraph
-from .account_pie_chart import IncomePieChart, ExpensesPieChart
+from .account_pie_chart import CashFlowPieChart
 
 class ProfitView(AccountSheetView):
     VIEW_TYPE = PaneType.Profit
@@ -22,7 +22,6 @@ class ProfitView(AccountSheetView):
         self.istatement = IncomeStatement(self)
         self.columns = self.istatement.columns
         self.pgraph = ProfitGraph(self)
-        self.ipie = IncomePieChart(self)
-        self.epie = ExpensesPieChart(self)
-        self.set_children([self.istatement, self.pgraph, self.ipie, self.epie])
+        self.pie = CashFlowPieChart(self)
+        self.set_children([self.istatement, self.pgraph, self.pie])
     

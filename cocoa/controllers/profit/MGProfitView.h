@@ -11,15 +11,13 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountSheetView.h"
 #import "HSOutlineView.h"
 #import "MGIncomeStatement.h"
-#import "MGPieChart.h"
+#import "MGChart.h"
 #import "MGBarGraph.h"
-#import "MGDoubleView.h"
 
 @interface MGProfitView : MGAccountSheetView
 {
     MGIncomeStatement *incomeStatement;
-    MGPieChart *incomePieChart;
-    MGPieChart *expensesPieChart;
+    MGChart *pieChart;
     MGBarGraph *profitGraph;
 }
 - (id)initWithPyRef:(PyObject *)aPyRef;

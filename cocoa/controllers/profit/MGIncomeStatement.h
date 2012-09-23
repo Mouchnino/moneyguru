@@ -8,9 +8,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "MGReport.h"
-#import "MGPieChart.h"
-#import "MGBarGraph.h"
-#import "MGDoubleView.h"
 
 @interface MGIncomeStatement : MGReport {}
 - (id)initWithPyRef:(PyObject *)aPyRef view:(HSOutlineView *)aOutlineView;

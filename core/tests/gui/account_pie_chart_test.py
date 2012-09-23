@@ -25,23 +25,23 @@ def app_show_nwview():
 @with_app(app_show_nwview)
 def test_min_slice_count(app):
     # There's a threshold under which we don't go for slice count
-    app.apie.set_view_size(1, 1)
-    eq_(app.apie.slice_count, MIN_SLICE_COUNT)
+    app.nwview.pie.set_view_size(1, 1)
+    eq_(app.nwview.pie.slice_count, MIN_SLICE_COUNT)
 
 @with_app(app_show_nwview)
 def test_two_extra_slices(app):
     size = MIN_VIEW_SIZE + (2 * SIZE_COST_FOR_SLICE)
-    app.apie.set_view_size(size, size)
-    eq_(app.apie.slice_count, MIN_SLICE_COUNT + 2)
+    app.nwview.pie.set_view_size(size, size)
+    eq_(app.nwview.pie.slice_count, MIN_SLICE_COUNT + 2)
 
 @with_app(app_show_nwview)
 def test_min_between_width_and_height_used(app):
     # The minimum value between width and height is used for calculating the number of slices
     size = MIN_VIEW_SIZE + (2 * SIZE_COST_FOR_SLICE)
-    app.apie.set_view_size(size, 1)
-    eq_(app.apie.slice_count, MIN_SLICE_COUNT)
-    app.apie.set_view_size(1, size)
-    eq_(app.apie.slice_count, MIN_SLICE_COUNT)
+    app.nwview.pie.set_view_size(size, 1)
+    eq_(app.nwview.pie.slice_count, MIN_SLICE_COUNT)
+    app.nwview.pie.set_view_size(1, size)
+    eq_(app.nwview.pie.slice_count, MIN_SLICE_COUNT)
 
 #---
 def app_some_assets_and_liabilities(monkeypatch):
@@ -79,14 +79,14 @@ class TestSomeAssetsAndLiabilities:
     @with_app(do_setup)
     def test_asset_pie_chart_values(self, app):
         # The asset pie chart values are sorted in reversed order of amount and have correct titles
-        eq_(app.apie.title, 'Assets')
+        eq_(app.nwview.pie.title, 'Assets & Liabilities')
         expected = [
             ('a2 40.0%', 4, 0),
             ('a4 30.0%', 3, 1),
             ('a3 20.0%', 2, 2),
             ('a1 10.1%', 1.01, 3),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     
     @with_app(do_setup)
     def test_budget_multiple_currency(self, app):
@@ -109,18 +109,17 @@ class TestSomeAssetsAndLiabilities:
             ('a4 33.3%', 3, 1),
             ('a3 22.2%', 2, 2),
         ]
-        eq_(app.apie.data, expected)
-        app.apie.view.check_gui_calls(['refresh'])
+        eq_(app.nwview.pie.pie1, expected)
+        app.nwview.pie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_liabilities_pie(self, app):
-        # the lpie also works
-        eq_(app.lpie.title, 'Liabilities')
+        # the liability pie also works
         expected = [
             ('l2 62.5%', 5, 0),
             ('l1 37.5%', 3, 1),
         ]
-        eq_(app.lpie.data, expected)
+        eq_(app.nwview.pie.pie2, expected)
     
 
 class TestSomeAssetsAndLiabilitiesWithBudget:
@@ -142,7 +141,7 @@ class TestSomeAssetsAndLiabilitiesWithBudget:
             ('a4 15.0%', 3, 2),
             ('a1 5.0%', 1.01, 3),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     
     @with_app(do_setup)
     def test_pie_values(self, app):
@@ -153,13 +152,13 @@ class TestSomeAssetsAndLiabilitiesWithBudget:
             ('a4 20.0%', 3, 2),
             ('a1 6.7%', 1.01, 3),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     
 #---
 def app_more_assets_than_slice_count():
     app = TestApp()
     app.show_nwview()
-    for i in range(app.apie.slice_count + 2):
+    for i in range(app.nwview.pie.slice_count + 2):
         app.add_account('account %d' % i)
         app.show_account()
         app.add_entry(increase='1')
@@ -170,10 +169,10 @@ def app_more_assets_than_slice_count():
 def test_others_slice_values(app):
     # When there's more data point than max slice count, we group all data points in one and
     # call it "Others".
-    data = app.apie.data
-    eq_(len(data), app.apie.slice_count)
+    data = app.nwview.pie.pie1
+    eq_(len(data), app.nwview.pie.slice_count)
     other = data[-1]
-    expected_name = 'Others %1.1f%%' % (3 / (app.apie.slice_count + 2) * 100)
+    expected_name = 'Others %1.1f%%' % (3 / (app.nwview.pie.slice_count + 2) * 100)
     expected_amount = 3
     expected_color = COLOR_COUNT-1
     eq_(other, (expected_name, expected_amount, expected_color))
@@ -182,8 +181,8 @@ def test_others_slice_values(app):
 def test_recompute_data_on_view_size_change(app):
     # When the view size change and that this change results in a change in slice count, recompute
     # the data.
-    app.apie.set_view_size(9999, 9999)
-    eq_(len(app.apie.data), len(app.account_names()))
+    app.nwview.pie.set_view_size(9999, 9999)
+    eq_(len(app.nwview.pie.pie1), len(app.account_names()))
 
 class TestSomeIncomeAndExpenses:
     def do_setup(self):
@@ -216,19 +215,18 @@ class TestSomeIncomeAndExpenses:
             ('e4 16.7%', 2, 2),
             ('e2 8.3%', 1, 3),
         ]
-        eq_(app.epie.data, expected)
+        eq_(app.pview.pie.pie2, expected)
     
     @with_app(do_setup)
     def test_expenses_pie_chart_values(self, app):
         # The expenses pie chart values are sorted in reversed order of amount and have correct titles
-        eq_(app.epie.title, 'Expenses')
         expected = [
             ('e3 40.0%', 4, 0),
             ('e1 30.0%', 3, 1),
             ('e4 20.0%', 2, 2),
             ('e2 10.0%', 1, 3),
         ]
-        eq_(app.epie.data, expected)
+        eq_(app.pview.pie.pie2, expected)
     
     @with_app(do_setup)
     def test_exclude_account(self, app):
@@ -240,21 +238,21 @@ class TestSomeIncomeAndExpenses:
             ('e4 28.6%', 2, 1),
             ('e2 14.3%', 1, 2),
         ]
-        eq_(app.epie.data, expected)
-        app.epie.view.check_gui_calls(['refresh'])
+        eq_(app.pview.pie.pie2, expected)
+        app.pview.pie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_income_pie(self, app):
-        # the ipie also works
+        # the income pie also works
         app.istatement.selected = app.istatement.income[0]
-        eq_(app.ipie.title, 'Income')
+        eq_(app.pview.pie.title, 'Income & Expenses')
         expected = [
             ('i2 40.0%', 4, 0),
             ('i4 30.0%', 3, 1),
             ('i1 20.0%', 2, 2),
             ('i3 10.0%', 1, 3),
         ]
-        eq_(app.ipie.data, expected)
+        eq_(app.pview.pie.pie1, expected)
     
 
 class TestDifferentDateRanges:
@@ -273,10 +271,10 @@ class TestDifferentDateRanges:
     @with_app(do_setup)
     def test_balance_pie_chart(self, app):
         # the data in the balance pie chart reflects the currencly selected date range
-        eq_(app.apie.data, [('foo 100.0%', 2, 0)])
+        eq_(app.nwview.pie.pie1, [('foo 100.0%', 2, 0)])
         app.drsel.select_prev_date_range()
-        eq_(app.apie.data, [('foo 100.0%', 4, 0)])
-        app.apie.view.check_gui_calls(['refresh'])
+        eq_(app.nwview.pie.pie1, [('foo 100.0%', 4, 0)])
+        app.nwview.pie.view.check_gui_calls(['refresh'])
     
     @with_app(do_setup)
     def test_cash_flow_pie_chart(self, app):
@@ -284,10 +282,10 @@ class TestDifferentDateRanges:
         app.show_pview()
         app.istatement.selected = app.istatement.expenses[0]
         app.clear_gui_calls()
-        eq_(app.epie.data, [('bar 100.0%', 2, 0)])
+        eq_(app.pview.pie.pie2, [('bar 100.0%', 2, 0)])
         app.drsel.select_prev_date_range()
-        eq_(app.epie.data, [('bar 100.0%', 1, 0)])
-        app.epie.view.check_gui_calls(['refresh'])
+        eq_(app.pview.pie.pie2, [('bar 100.0%', 1, 0)])
+        app.pview.pie.view.check_gui_calls(['refresh'])
     
 
 class TestMultipleCurrencies:
@@ -312,7 +310,7 @@ class TestMultipleCurrencies:
             ('CAD asset 55.6%', 1, 0),
             ('USD asset 44.4%', 0.8, 1),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     
     @with_app(do_setup)
     def test_cash_flow_pie_chart(self, app):
@@ -322,7 +320,7 @@ class TestMultipleCurrencies:
             ('CAD income 55.6%', 1, 0),
             ('USD income 44.4%', 0.8, 1),
         ]
-        eq_(app.ipie.data, expected)
+        eq_(app.pview.pie.pie1, expected)
     
 
 class TestNegativeAssetValue:
@@ -338,7 +336,7 @@ class TestNegativeAssetValue:
     @with_app(do_setup)
     def test_balance_pie_chart(self, app):
         # negative balances are ignored
-        eq_(app.apie.data, [('bar 100.0%', 1, 0)])
+        eq_(app.nwview.pie.pie1, [('bar 100.0%', 1, 0)])
     
 
 class TestAccountGroup:
@@ -374,7 +372,7 @@ class TestAccountGroup:
             ('baz 70.0%', 7, 0),
             ('group 30.0%', 3, 1),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     
     @with_app(do_setup)
     def test_expand_group(self, app):
@@ -386,7 +384,7 @@ class TestAccountGroup:
             ('bar 20.0%', 2, 1),
             ('foo 10.0%', 1, 2),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     
     @with_app(do_setup)
     def test_pie_chart_data(self, app):
@@ -396,5 +394,5 @@ class TestAccountGroup:
             ('bar 20.0%', 2, 1),
             ('foo 10.0%', 1, 2),
         ]
-        eq_(app.apie.data, expected)
+        eq_(app.nwview.pie.pie1, expected)
     

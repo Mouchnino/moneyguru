@@ -8,31 +8,39 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGSheetPrint.h"
 
-#define GRAPH_HEIGHT_PROPORTION 0.4
-#define PIE_GRAPH_MIN_WIDTH 170
+/* I have no idea why (must be something like DPI and stuff), but the charts being drawn during
+   print are drawn bigger than what they look like on screen. That's why we adjust chart size with
+   this ratio below.
+*/
+#define VIEW_TO_PRINT_PROPORTIONS 0.7
 
 @implementation MGSheetPrint
 - (id)initWithPyParent:(PyGUIObject *)pyParent outlineView:(NSOutlineView *)aOutlineView 
-    graphView:(NSView *)aGraphView pieViews:(MGDoubleView *)aPieViews
+    graphView:(NSView *)aGraphView pieView:(MGPieChartView *)aPieView
 {
     self = [super initWithPyParent:pyParent tableView:aOutlineView];
+    /* In the realm of "I have no idea why but it works":
+       One other way to extract an image from drawing a view inside it is by using 
+       [[NSBitmapImageRep alloc] initWithFocusedViewRect:[view bounds]];
+       It works, but the result of it is an image drawn with a bad quality (which is strange
+       because if you save the image to a file, the quality is alright). dataWithPDFInsideRect:
+       needs to be used to have a good quality. So I have no idea why, but it works...
+    */
     if (aGraphView != nil) {
-        graphView = [aGraphView copy];
-        [graphView setHidden:YES];
-        [self addSubview:graphView];
+        [aGraphView lockFocus];
+        graphImage = [[NSImage alloc] initWithData:[aGraphView dataWithPDFInsideRect:[aGraphView bounds]]];
+        [aGraphView unlockFocus];
     }
     else {
-        graphView = nil;
+        graphImage = nil;
     }
-    if (aPieViews != nil) {
-        pieViews = [[MGDoubleView alloc] init];
-        [pieViews setHidden:YES];
-        [self addSubview:pieViews];
-        [pieViews setFirstView:[[[aPieViews firstView] copy] autorelease]];
-        [pieViews setSecondView:[[[aPieViews secondView] copy] autorelease]];
+    if (aPieView != nil) {
+        [aPieView lockFocus];
+        pieImage = [[NSImage alloc] initWithData:[aPieView dataWithPDFInsideRect:[aPieView bounds]]];
+        [aPieView unlockFocus];
     }
     else {
-        pieViews = nil;
+        pieImage = nil;
     }
     
     return self;
@@ -43,62 +51,65 @@ http://www.hardcoded.net/licenses/bsd_license
     [super setUpWithPrintInfo:pi];
     CGFloat columnsTotalWidth = [self columnsTotalWidth];
     CGFloat bottomY = lastRowYOnLastPage;
-    CGFloat pieX = columnsTotalWidth;
-    CGFloat pieY = headerHeight;
-    CGFloat pieWidth = pageWidth - columnsTotalWidth;
-    CGFloat pieHeight = pageHeight - pieY;
-    piePage = 1;
-    BOOL isPieOnSide = pieWidth >= PIE_GRAPH_MIN_WIDTH;
-    if ((pieViews != nil) && !isPieOnSide) {
-        pieX = 0;
-        pieY = bottomY;
-        pieWidth = pageWidth;
-        pieHeight = pieWidth * GRAPH_HEIGHT_PROPORTION;
-        bottomY = pieY + pieHeight;
-        if (bottomY > pageHeight) {
-            pageCount++;
-            pieY = headerHeight;
-            bottomY = pieY + pieHeight;
+    piePage = -1;
+    if (pieImage != nil) {
+        pieRect.size = pieImage.size;
+        pieRect.size.width *= VIEW_TO_PRINT_PROPORTIONS;
+        pieRect.size.height *= VIEW_TO_PRINT_PROPORTIONS;
+        if (pageWidth - columnsTotalWidth >= pieRect.size.width) {
+            // We have enough space to fit the pie chart at the right of the sheet.
+            pieRect.origin.x = columnsTotalWidth;
+            pieRect.origin.y = headerHeight;
+            piePage = 1;
         }
-        piePage = pageCount;
+        else {
+            pieRect.origin.x = 0;
+            pieRect.origin.y = bottomY;
+            bottomY = pieRect.origin.y + pieRect.size.height;
+            if (bottomY > pageHeight) {
+                pageCount++;
+                pieRect.origin.y = headerHeight;
+                bottomY = pieRect.origin.y + pieRect.size.height;
+            }
+            piePage = pageCount;
+        }
     }
-    CGFloat graphHeight = pageWidth * GRAPH_HEIGHT_PROPORTION;
-    CGFloat graphY = pageHeight - graphHeight;
-    if ((graphView != nil) && (bottomY > graphY)) {
-        pageCount++;
-        graphY = headerHeight;
-    }
-    graphPage = pageCount;
-
-    
-    // if there's only one page, the pies must stop when the graph starts
-    if (isPieOnSide && (graphView != nil) && (pageCount == 1))
-        pieHeight = graphY - pieY;
-    if (pieViews != nil) {
-        [pieViews setFrame:NSMakeRect(pieX, pieY, pieWidth, pieHeight)];
-    }
-    if (graphView != nil) {
-        [graphView setFrame:NSMakeRect(0, graphY, pageWidth, graphHeight)];
+    graphPage = -1;
+    if (graphImage != nil) {
+        graphRect.size = graphImage.size;
+        graphRect.size.width *= VIEW_TO_PRINT_PROPORTIONS;
+        graphRect.size.height *= VIEW_TO_PRINT_PROPORTIONS;
+        if (graphRect.size.width > pageWidth) {
+            graphRect.size.width = pageWidth;
+        }
+        graphRect.origin.x = 0;
+        graphRect.origin.y = pageHeight - graphRect.size.height;
+        if (bottomY > graphRect.origin.y) {
+            pageCount++;
+            graphRect.origin.y = headerHeight;
+        }
+        graphPage = pageCount;
     }
 }
 
 - (void)dealloc
 {
-    [graphView release];
-    [pieViews release];
+    [graphImage release];
+    [pieImage release];
     [super dealloc];
 }
 
 - (void)drawRect:(NSRect)rect
 {
     NSInteger pageNumber = [[NSPrintOperation currentOperation] currentPage];
-    if (graphView != nil) {
-        BOOL showGraph = pageNumber == graphPage;
-        [graphView setHidden:!showGraph];
+    if (pageNumber == graphPage) {
+        // If the simple drawRect: is used, our image is drawn flipped.
+        [graphImage drawInRect:graphRect fromRect:NSZeroRect operation:NSCompositeSourceOver
+            fraction:1.0 respectFlipped:YES hints:nil];
     }
-    if (pieViews != nil) {
-        BOOL showPie = pageNumber == piePage;
-        [pieViews setHidden:!showPie];
+    if (pageNumber == piePage) {
+        [pieImage drawInRect:pieRect fromRect:NSZeroRect operation:NSCompositeSourceOver
+            fraction:1.0 respectFlipped:YES hints:nil];
     }
     [super drawRect:rect];
 }

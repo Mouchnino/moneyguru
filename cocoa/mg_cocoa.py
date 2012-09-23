@@ -841,11 +841,8 @@ class PyNetWorthView(PyBaseView):
     def nwgraph(self) -> pyref:
         return self.model.nwgraph
     
-    def apie(self) -> pyref:
-        return self.model.apie
-    
-    def lpie(self) -> pyref:
-        return self.model.lpie
+    def pie(self) -> pyref:
+        return self.model.pie
     
     #Python --> Cocoa
     @dontwrap
@@ -860,11 +857,8 @@ class PyProfitView(PyBaseView):
     def pgraph(self) -> pyref:
         return self.model.pgraph
     
-    def ipie(self) -> pyref:
-        return self.model.ipie
-    
-    def epie(self) -> pyref:
-        return self.model.epie
+    def pie(self) -> pyref:
+        return self.model.pie
     
     #Python --> Cocoa
     @dontwrap

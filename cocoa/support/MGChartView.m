@@ -10,11 +10,23 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "Utils.h"
 
 @implementation MGChartView
+- (void)commonInit
+{
+    backgroundColor = [[NSColor whiteColor] retain];
+    titleColor = [[NSColor grayColor] retain];
+}
+
 - (id)init
 {
     self = [super init];
-    backgroundColor = [[NSColor whiteColor] retain];
-    titleColor = [[NSColor grayColor] retain];
+    [self commonInit];
+    return self;
+}
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+    self = [super initWithFrame:frameRect];
+    [self commonInit];
     return self;
 }
 
@@ -111,6 +123,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [slice addClip];
     [aBrush.gradient drawInRect:circleRect angle:90];
     [NSGraphicsContext restoreGraphicsState];
+    [[NSColor blackColor] setStroke];
     [slice setLineWidth:1.0];
     [slice stroke];
 }
