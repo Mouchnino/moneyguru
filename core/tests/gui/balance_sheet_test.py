@@ -448,6 +448,14 @@ def test_delete_both_account_and_group_at_once(app):
     app.mw.delete_item()
     eq_(app.account_node_subaccount_count(app.bsheet.assets), 0)
 
+@with_app(app_account_in_group)
+def test_invalid_expanded_paths_are_removed_on_refreshes(app):
+    # When a nodes pointed to by the expanded_node property disappear, remove those pointers from
+    # expanded_nodes as well (they caused crash on Qt).
+    app.bsheet.expand_node(app.bsheet.assets[0])
+    app.doc.clear()
+    eq_(app.bsheet.expanded_paths, [(0, ), (1, )])
+    
 #--- Accounts and entries (Re-used in sub-app funcs below)
 def app_accounts_and_entries():
     app = TestApp()

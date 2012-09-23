@@ -67,6 +67,17 @@ class Report(RestorableChild, tree.Tree, SheetViewNotificationsMixin):
     def _node_of_account(self, account):
         return self.find(lambda n: getattr(n, 'account', None) is account)
     
+    def _prune_invalid_expanded_paths(self):
+        newpaths = set()
+        for path in self._expanded_paths:
+            try:
+                node = self.get_node(path)
+                if node.is_group or node.is_type:
+                    newpaths.add(path)
+            except IndexError:
+                pass
+        self._expanded_paths = newpaths
+    
     def _select_first(self):
         for type_node in self:
             if len(type_node) > 2: # total + blank
@@ -244,6 +255,7 @@ class Report(RestorableChild, tree.Tree, SheetViewNotificationsMixin):
             self.selected_nodes = selected_nodes
         else:
             self.selected_paths = selected_paths
+        self._prune_invalid_expanded_paths()
         if refresh_view:
             self.view.refresh()
     
