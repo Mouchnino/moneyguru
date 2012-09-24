@@ -130,7 +130,7 @@ def build_cocoa(dev):
     os.chdir('..')
     app.copy_executable('cocoa/build/moneyGuru')
     print("Copying resources and frameworks")
-    resources = ['cocoa/dsa_pub.pem', 'build/mg_cocoa.py', 'build/help'] + glob.glob('images/*')
+    resources = ['cocoa/dsa_pub.pem', 'build/mg_cocoa.py', 'build/help', 'plugin_examples'] + glob.glob('images/*')
     app.copy_resources(*resources, use_symlinks=dev)
     app.copy_frameworks('build/Python', 'cocoalib/Sparkle.framework')
     print("Creating the run.py file")
