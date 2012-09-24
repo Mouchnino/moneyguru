@@ -73,6 +73,7 @@ class ChartView(QWidget):
         center = self.flipPoint(center)
         centerX, centerY = center
         painter = self.current_painter
+        painter.setPen(QPen())
         painter.setBrush(brush)
         diameter = radius * 2
         # circleRect is the area that the pie drawing use for bounds
