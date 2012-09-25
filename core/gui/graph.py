@@ -130,6 +130,8 @@ class Graph(Chart):
         pass
     
     def draw(self):
+        if not hasattr(self, 'xmax'): # we haven't computed yet
+            return
         view_rect = Rect(0, 0, *self.view_size)
         data_width = self.xmax - self.xmin
         data_height = self.ymax - self.ymin
